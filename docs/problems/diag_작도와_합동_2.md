@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/작도와_합동.md, docs/concepts/삼각형_합동조건.md]
+concepts: [docs/concepts/삼각형_합동조건.md, docs/concepts/수선_작도.md, docs/concepts/작도.md, docs/concepts/작도와_합동.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

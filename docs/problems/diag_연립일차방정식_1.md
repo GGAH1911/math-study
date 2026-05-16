@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/연립일차방정식.md, docs/concepts/대입법.md]
+concepts: [docs/concepts/가감법.md, docs/concepts/농도_연립_응용.md, docs/concepts/대입법.md, docs/concepts/연립방정식.md, docs/concepts/연립일차방정식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

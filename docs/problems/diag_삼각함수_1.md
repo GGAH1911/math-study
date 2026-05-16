@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/삼각함수.md, docs/concepts/피타고라스_삼각공식.md]
+concepts: [docs/concepts/단위원_삼각함수.md, docs/concepts/사인_코사인_법칙.md, docs/concepts/사인_코사인_법칙_적용.md, docs/concepts/삼각함수.md, docs/concepts/주기성.md, docs/concepts/피타고라스_삼각공식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

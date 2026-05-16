@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/유리수와_순환소수.md, docs/concepts/유리수의_소수표현.md]
+concepts: [docs/concepts/순환마디.md, docs/concepts/순환소수를_분수로.md, docs/concepts/유리수와_순환소수.md, docs/concepts/유리수의_소수표현.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

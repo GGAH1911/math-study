@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/집합과_명제.md, docs/concepts/드모르간_법칙.md]
+concepts: [docs/concepts/귀류법_증명.md, docs/concepts/드모르간_법칙.md, docs/concepts/명제와_조건.md, docs/concepts/명제의_대우.md, docs/concepts/집합과_명제.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

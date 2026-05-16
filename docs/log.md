@@ -29,6 +29,8 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 
 ## [2026-05-16] feat(chat) | 컨텍스트 가드 추가. system prompt에 "대화 범위" 섹션: 수학·시험전략·수학자 일화·학습법 허용, 연예인/게임/정치/개인상담 거부. 거부 형식 — 한 줄 + 단원 질문 제안. 검증: 점심 추천 거부, 가우스 일화 허용, 오답노트 정리법 허용, BTS 앨범 거부.
 
+## [2026-05-17] feat | 학습 자료 링크 보강 3종 동시 적용. **(A)** 모든 unit 페이지 본문의 "다룰 정의/정리/예제" 글머리표를 자동으로 실제 spoke 파일 링크로 변환 — 125 bullets relinked across 49 units (휴리스틱: spoke의 label이 글머리표 시작에 매칭). 매칭 안 된 항목 커버용으로 **각 unit 페이지 끝에 "이 단원의 모든 노드" 섹션 추가** — 모든 정의/정리/예제 spoke를 type별로 그루핑 + 직접 링크. 49 unit 모두 업데이트. **(B)** Tools 시드 — 한국 수능 표준 자료 17개(자이스토리·마더텅·EBS 수능특강/완성·일품·쎈·정석·개념원리·현우진·정승제·한석원·EBSi·KICE·Desmos·GeoGebra·SymPy·오르비). 각 자료에 frontmatter(kind/title/url/concepts) + 요약·활용법·관련 단원 링크. D5 원칙(raw 텍스트 복붙 금지) 준수. **(C)** 진단 문제 concepts 매핑 보강 — 98개 diag_*.md의 `concepts:` 필드에 단원 unit + 모든 theorem spoke + 첫 definition + 첫 example 추가. D14 gap detection 정밀도 향상. tools hub 재생성 (kind별 그루핑 + URL 테이블). JIT audit ✅, 빌드 ✅.
+
 ## [2026-05-16] curriculum(complete) | **Phase 1+2+3 완전 시드** (사용자 "남은 모든 단계 다 실행" 요청). 추가 작업:
   - **선택과목 단원 추가** (Phase 1 확장): 미적분 7개(수열의극한, 여러가지함수의극한·미분, 합성함수의미분, 도함수의활용심화, 여러가지적분법, 정적분의활용) + 기하 3개(이차곡선, 평면벡터, 공간도형과공간벡터) = **49 units 총**
   - **Phase 2 spokes**: 모든 단원의 정의/정리/예제 시드. 정의 115 + 정리 102 + 예제 124 = **341 spokes**. 본문은 stub (페이지 채팅에서 학습 시 채움).

@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/원의_성질.md, docs/concepts/원주각_성질.md]
+concepts: [docs/concepts/내접_외접.md, docs/concepts/원의_성질.md, docs/concepts/원주각_각도_계산.md, docs/concepts/원주각_성질.md, docs/concepts/원주각_중심각.md, docs/concepts/접선과_반지름.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

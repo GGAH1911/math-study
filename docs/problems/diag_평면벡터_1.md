@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/평면벡터.md, docs/concepts/내적의_기하적_의미.md]
+concepts: [docs/concepts/내적.md, docs/concepts/내적_각도_계산.md, docs/concepts/내적의_기하적_의미.md, docs/concepts/두_벡터의_평행_수직_조건.md, docs/concepts/평면벡터.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

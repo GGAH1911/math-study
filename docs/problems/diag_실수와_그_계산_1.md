@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/실수와_그_계산.md, docs/concepts/제곱근의_성질.md]
+concepts: [docs/concepts/무리수.md, docs/concepts/분모의_유리화.md, docs/concepts/실수와_그_계산.md, docs/concepts/유리화_예제.md, docs/concepts/제곱근의_성질.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

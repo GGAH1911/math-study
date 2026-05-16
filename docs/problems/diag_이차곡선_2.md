@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/이차곡선.md, docs/concepts/이차곡선_표준형.md]
+concepts: [docs/concepts/쌍곡선_정의.md, docs/concepts/이차곡선.md, docs/concepts/이차곡선_접선.md, docs/concepts/이차곡선_접선_방정식.md, docs/concepts/이차곡선_표준형.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

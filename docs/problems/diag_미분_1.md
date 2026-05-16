@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/미분.md, docs/concepts/다항함수_미분공식.md]
+concepts: [docs/concepts/그래프_개형.md, docs/concepts/극값_판정.md, docs/concepts/다항함수_미분공식.md, docs/concepts/미분.md, docs/concepts/미분계수.md, docs/concepts/미분의_사칙연산.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/이차방정식.md, docs/concepts/근의_공식.md]
+concepts: [docs/concepts/근_중근.md, docs/concepts/근과_계수의_관계.md, docs/concepts/근의_공식.md, docs/concepts/근의공식_적용_예제.md, docs/concepts/이차방정식.md, docs/concepts/판별식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

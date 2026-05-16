@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/도형의_성질.md, docs/concepts/이등변삼각형_성질.md]
+concepts: [docs/concepts/도형의_성질.md, docs/concepts/마름모_정사각형.md, docs/concepts/이등변삼각형_성질.md, docs/concepts/평행사변형_됨_증명.md, docs/concepts/평행사변형_성질.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

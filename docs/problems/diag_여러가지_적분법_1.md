@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/여러가지_적분법.md, docs/concepts/치환적분_규칙.md]
+concepts: [docs/concepts/로그_적분.md, docs/concepts/부분적분.md, docs/concepts/부분적분_LIATE.md, docs/concepts/여러가지_적분법.md, docs/concepts/치환적분_규칙.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/도형의_방정식.md, docs/concepts/두_점_거리_공식.md]
+concepts: [docs/concepts/도형의_방정식.md, docs/concepts/두_점_거리_공식.md, docs/concepts/두_직선의_관계.md, docs/concepts/원과_직선_위치관계.md, docs/concepts/원의_방정식.md, docs/concepts/접선의_방정식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/수열의_극한.md, docs/concepts/등비급수_수렴조건.md]
+concepts: [docs/concepts/급수.md, docs/concepts/급수_수렴판정.md, docs/concepts/등비급수_수렴조건.md, docs/concepts/등비급수_합_계산.md, docs/concepts/수열의_극한.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

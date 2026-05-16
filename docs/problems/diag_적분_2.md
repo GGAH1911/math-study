@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/적분.md, docs/concepts/미적분의_기본정리.md]
+concepts: [docs/concepts/넓이_구하기.md, docs/concepts/미적분의_기본정리.md, docs/concepts/부정적분.md, docs/concepts/적분.md, docs/concepts/적분_공식_다항함수.md, docs/concepts/정적분_성질.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

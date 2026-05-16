@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/공간도형과_공간벡터.md, docs/concepts/공간_두_점_거리.md]
+concepts: [docs/concepts/공간_두_점_거리.md, docs/concepts/공간_두점_거리_예제.md, docs/concepts/공간도형과_공간벡터.md, docs/concepts/공간벡터.md, docs/concepts/두_벡터의_외적.md, docs/concepts/평면의_법선벡터.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

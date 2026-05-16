@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/닮음과_피타고라스.md, docs/concepts/피타고라스_정리.md]
+concepts: [docs/concepts/닮음.md, docs/concepts/닮음_그림자_문제.md, docs/concepts/닮음과_피타고라스.md, docs/concepts/중점연결_정리.md, docs/concepts/피타고라스_역.md, docs/concepts/피타고라스_정리.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

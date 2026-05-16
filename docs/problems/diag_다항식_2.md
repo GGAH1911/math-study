@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/다항식.md, docs/concepts/나머지정리.md]
+concepts: [docs/concepts/고차_다항식_인수분해.md, docs/concepts/나눗셈_정리.md, docs/concepts/나머지정리.md, docs/concepts/다항식.md, docs/concepts/인수정리.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

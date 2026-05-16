@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/방정식과_부등식.md, docs/concepts/이차방정식_판별식.md]
+concepts: [docs/concepts/근과_계수의_관계_활용.md, docs/concepts/방정식과_부등식.md, docs/concepts/복소수.md, docs/concepts/이차방정식_판별식.md, docs/concepts/이차부등식의_해.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

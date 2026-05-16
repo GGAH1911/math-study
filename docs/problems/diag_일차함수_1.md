@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/일차함수.md, docs/concepts/두_직선_관계.md]
+concepts: [docs/concepts/기울기.md, docs/concepts/두_점에서_식_구하기.md, docs/concepts/두_직선_관계.md, docs/concepts/일차함수.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

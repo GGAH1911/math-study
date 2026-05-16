@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/지수와_로그.md, docs/concepts/지수법칙_일반화.md]
+concepts: [docs/concepts/거듭제곱근_계산.md, docs/concepts/로그.md, docs/concepts/로그의_성질.md, docs/concepts/밑변환_공식.md, docs/concepts/지수법칙_일반화.md, docs/concepts/지수와_로그.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

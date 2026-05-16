@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/대푯값과_산포도.md, docs/concepts/분산과_표준편차_관계.md]
+concepts: [docs/concepts/대푯값과_산포도.md, docs/concepts/두_집단_비교.md, docs/concepts/분산과_표준편차_관계.md, docs/concepts/편차_분산_표준편차.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/함수의_극한과_연속.md, docs/concepts/극한의_사칙연산.md]
+concepts: [docs/concepts/극한.md, docs/concepts/극한의_사칙연산.md, docs/concepts/부정형_처리.md, docs/concepts/연속_판별.md, docs/concepts/연속함수의_성질.md, docs/concepts/함수의_극한과_연속.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

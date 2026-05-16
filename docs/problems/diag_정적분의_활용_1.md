@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/정적분의_활용.md, docs/concepts/두_곡선_사이_넓이.md]
+concepts: [docs/concepts/곡선의_길이.md, docs/concepts/두_곡선_넓이_예제.md, docs/concepts/두_곡선_사이_넓이.md, docs/concepts/정적분의_활용.md, docs/concepts/회전체_부피_공식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

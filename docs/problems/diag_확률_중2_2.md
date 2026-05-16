@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/확률_중2.md, docs/concepts/합의_법칙.md]
+concepts: [docs/concepts/곱의_법칙.md, docs/concepts/사건과_경우의_수.md, docs/concepts/여사건.md, docs/concepts/여사건_활용.md, docs/concepts/합의_법칙.md, docs/concepts/확률_중2.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/경우의_수_고1.md, docs/concepts/순열_조합_관계.md]
+concepts: [docs/concepts/같은것이_있는_순열.md, docs/concepts/경우의_수_고1.md, docs/concepts/뽑기_조합.md, docs/concepts/순열.md, docs/concepts/순열_조합_관계.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

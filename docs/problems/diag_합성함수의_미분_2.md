@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/합성함수의_미분.md, docs/concepts/역함수_미분법.md]
+concepts: [docs/concepts/매개변수_미분.md, docs/concepts/매개변수_접선.md, docs/concepts/역함수_미분법.md, docs/concepts/합성함수의_미분.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

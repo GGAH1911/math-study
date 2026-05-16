@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/도함수의_활용_심화.md, docs/concepts/평균값_정리.md]
+concepts: [docs/concepts/그래프_개형_심화.md, docs/concepts/도함수의_활용_심화.md, docs/concepts/롤의_정리.md, docs/concepts/변곡점.md, docs/concepts/이계도함수_활용.md, docs/concepts/평균값_정리.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

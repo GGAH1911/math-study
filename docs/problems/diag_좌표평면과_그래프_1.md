@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/좌표평면과_그래프.md, docs/concepts/정비례_그래프.md]
+concepts: [docs/concepts/반비례.md, docs/concepts/반비례_그래프.md, docs/concepts/반비례_그래프_그리기.md, docs/concepts/정비례_그래프.md, docs/concepts/좌표평면과_그래프.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

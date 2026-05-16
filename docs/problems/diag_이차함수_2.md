@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/이차함수.md, docs/concepts/이차함수_그래프.md]
+concepts: [docs/concepts/꼭짓점_좌표_구하기.md, docs/concepts/꼭짓점_축.md, docs/concepts/이차함수.md, docs/concepts/이차함수_x축_교점.md, docs/concepts/이차함수_그래프.md, docs/concepts/이차함수_최댓값_최솟값.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/여러가지함수의_극한.md, docs/concepts/sinx_over_x_극한.md]
+concepts: [docs/concepts/sinx_over_x_극한.md, docs/concepts/삼각함수_극한_예제.md, docs/concepts/여러가지함수의_극한.md, docs/concepts/자연상수_e.md, docs/concepts/지수로그_극한.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

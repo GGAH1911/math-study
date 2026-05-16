@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/일차방정식.md, docs/concepts/등식의_성질.md]
+concepts: [docs/concepts/등식의_성질.md, docs/concepts/방정식.md, docs/concepts/비례식_응용.md, docs/concepts/이항.md, docs/concepts/일차방정식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

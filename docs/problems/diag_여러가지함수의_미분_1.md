@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/여러가지함수의_미분.md, docs/concepts/곱의_미분.md]
+concepts: [docs/concepts/곱몫미분_혼합.md, docs/concepts/곱의_미분.md, docs/concepts/로그함수_미분.md, docs/concepts/몫의_미분.md, docs/concepts/여러가지함수의_미분.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

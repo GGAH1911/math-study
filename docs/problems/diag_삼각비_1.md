@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/삼각비.md, docs/concepts/삼각비_관계.md]
+concepts: [docs/concepts/각도_구하기.md, docs/concepts/삼각비.md, docs/concepts/삼각비_관계.md, docs/concepts/특수각.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/식의_계산.md, docs/concepts/지수법칙.md]
+concepts: [docs/concepts/다항식_곱셈_전개.md, docs/concepts/단항식.md, docs/concepts/식의_계산.md, docs/concepts/지수법칙.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

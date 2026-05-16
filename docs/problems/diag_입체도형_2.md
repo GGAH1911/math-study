@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/입체도형.md, docs/concepts/뿔과_기둥의_부피_관계.md]
+concepts: [docs/concepts/구의_부피_겉넓이.md, docs/concepts/구의_부피_계산.md, docs/concepts/다면체.md, docs/concepts/뿔과_기둥의_부피_관계.md, docs/concepts/입체도형.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

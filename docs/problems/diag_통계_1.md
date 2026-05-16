@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/통계.md, docs/concepts/확률변수_기댓값_분산_공식.md]
+concepts: [docs/concepts/기댓값_분산.md, docs/concepts/이항분포_정규근사.md, docs/concepts/이항분포_확률_계산.md, docs/concepts/통계.md, docs/concepts/표본평균의_분포.md, docs/concepts/확률변수_기댓값_분산_공식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/확률.md, docs/concepts/확률의_곱셈정리.md]
+concepts: [docs/concepts/독립_판별.md, docs/concepts/독립사건.md, docs/concepts/전체확률_베이즈.md, docs/concepts/확률.md, docs/concepts/확률의_곱셈정리.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

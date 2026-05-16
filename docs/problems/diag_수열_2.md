@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/수열.md, docs/concepts/등차수열의_합.md]
+concepts: [docs/concepts/귀납법_증명_예제.md, docs/concepts/등비수열.md, docs/concepts/등비수열의_합.md, docs/concepts/등차수열의_합.md, docs/concepts/수열.md, docs/concepts/수학적_귀납법.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

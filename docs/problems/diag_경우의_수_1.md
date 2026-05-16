@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/경우의_수.md, docs/concepts/이항정리.md]
+concepts: [docs/concepts/경우의_수.md, docs/concepts/구분안되는_공_나누기.md, docs/concepts/이항계수.md, docs/concepts/이항정리.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

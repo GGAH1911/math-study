@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/평면도형.md, docs/concepts/내각의_합_공식.md]
+concepts: [docs/concepts/내각_외각.md, docs/concepts/내각의_합_공식.md, docs/concepts/부채꼴_넓이_예제.md, docs/concepts/부채꼴_호와_넓이.md, docs/concepts/평면도형.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

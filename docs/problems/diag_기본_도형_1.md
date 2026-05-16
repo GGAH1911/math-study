@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/기본_도형.md, docs/concepts/맞꼭지각.md]
+concepts: [docs/concepts/각도_구하기_예제.md, docs/concepts/각의_종류.md, docs/concepts/기본_도형.md, docs/concepts/동위각_엇각.md, docs/concepts/맞꼭지각.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

@@ -11,7 +11,7 @@ source:
   number: 2
   score: 4
 problem_id: null
-concepts: [docs/concepts/함수와_그래프.md, docs/concepts/역함수_그래프.md]
+concepts: [docs/concepts/무리함수_그래프.md, docs/concepts/역함수.md, docs/concepts/역함수_그래프.md, docs/concepts/함수와_그래프.md, docs/concepts/합성함수의_결합법칙.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

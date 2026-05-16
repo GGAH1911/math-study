@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/문자와_식.md, docs/concepts/일차식_연산_규칙.md]
+concepts: [docs/concepts/괄호_풀기.md, docs/concepts/동류항.md, docs/concepts/문자와_식.md, docs/concepts/일차식_연산_규칙.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

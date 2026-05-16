@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/지수함수와_로그함수.md, docs/concepts/지수_로그_역함수_관계.md]
+concepts: [docs/concepts/로그부등식_풀이.md, docs/concepts/로그함수.md, docs/concepts/지수_로그_역함수_관계.md, docs/concepts/지수함수_단조성.md, docs/concepts/지수함수와_로그함수.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new

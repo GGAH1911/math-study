@@ -11,7 +11,7 @@ source:
   number: 1
   score: 4
 problem_id: null
-concepts: [docs/concepts/인수분해.md, docs/concepts/곱셈공식.md]
+concepts: [docs/concepts/곱셈공식.md, docs/concepts/공통인수_묶기.md, docs/concepts/인수.md, docs/concepts/인수분해.md, docs/concepts/인수분해_공식.md]
 status: unsolved
 difficulty: 4점 (placeholder)
 review_state: new
