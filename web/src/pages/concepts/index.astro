@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConceptCard from '../../components/ConceptCard.astro';
+import { getCollection } from 'astro:content';
+
+const concepts = await getCollection('concepts');
+concepts.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
+
+const byMastery = {
+  unknown: 0, learning: 0, proficient: 0, mastered: 0,
+} as Record<string, number>;
+for (const c of concepts) byMastery[c.data.mastery]++;
+---
+<BaseLayout title="Concepts">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header class="flex items-end justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight">Concepts</h1>
+        <p class="text-sm text-[color:var(--color-muted)] mt-1">
+          {concepts.length}개 concept · definition / theorem / lemma / example
+        </p>
+      </div>
+      <div class="flex items-center gap-2 text-xs">
+        <span class="chip chip-mastery-unknown">unknown {byMastery.unknown}</span>
+        <span class="chip chip-mastery-learning">learning {byMastery.learning}</span>
+        <span class="chip chip-mastery-proficient">proficient {byMastery.proficient}</span>
+        <span class="chip chip-mastery-mastered">mastered {byMastery.mastered}</span>
+      </div>
+    </header>
+
+    {concepts.length === 0 ? (
+      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">
+        아직 개념이 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 markdown 페이지를 만들어보세요.
+      </p>
+    ) : (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {concepts.map((c) => (
+          <li>
+            <ConceptCard
+              href={`/concepts/${encodeURIComponent(c.id)}`}
+              title={c.id}
+              chips={[
+                { label: c.data.mastery, class: `chip-mastery-${c.data.mastery}` },
+                { label: c.data.concept_type, class: '' },
+              ]}
+              meta={[
+                { key: '선수', value: c.data.prerequisites.length > 0 ? c.data.prerequisites.map((p) => p.split('/').pop()?.replace(/\.md$/, '')).join(', ') : '—' },
+                { key: '사용처', value: c.data.enables.length > 0 ? c.data.enables.map((p) => p.split('/').pop()?.replace(/\.md$/, '')).join(', ') : '—' },
+              ]}
+            />
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</BaseLayout>

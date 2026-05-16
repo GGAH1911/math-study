@@ -1,0 +1,31 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  chips?: Array<{ label: string; class: string }>;
+  meta?: Array<{ key: string; value: string }>;
+  description?: string;
+}
+const { href, title, chips = [], meta = [], description } = Astro.props;
+---
+<a href={href} class="card card-link block">
+  <div class="flex items-start justify-between gap-3">
+    <h3 class="text-base font-semibold leading-snug">{title}</h3>
+    <div class="flex flex-wrap gap-1 justify-end">
+      {chips.map((c) => <span class={`chip ${c.class}`}>{c.label}</span>)}
+    </div>
+  </div>
+  {description && (
+    <p class="text-sm text-[color:var(--color-muted)] mt-2 line-clamp-2">{description}</p>
+  )}
+  {meta.length > 0 && (
+    <dl class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-[color:var(--color-subtle)]">
+      {meta.map((m) => (
+        <div class="flex justify-between gap-2">
+          <dt class="uppercase tracking-wider">{m.key}</dt>
+          <dd class="text-[color:var(--color-muted)] truncate text-right">{m.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )}
+</a>

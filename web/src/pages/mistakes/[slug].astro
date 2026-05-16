@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('mistakes');
+  return items.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fm = entry.data;
+const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+---
+<BaseLayout title={entry.id}>
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+    <article class="prose prose-invert max-w-none">
+      <Content />
+    </article>
+
+    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Mistake meta</h3>
+        <dl class="text-sm space-y-1.5">
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">error</dt><dd><span class={`chip chip-error-${fm.error_type}`}>{fm.error_type}</span></dd></div>
+          {fm.revisit_date && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">revisit</dt><dd>{fm.revisit_date.toISOString().slice(0,10)}</dd></div>}
+          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
+        </dl>
+        {fm.lesson && (
+          <p class="text-xs text-[color:var(--color-muted)] mt-3 leading-relaxed">{fm.lesson}</p>
+        )}
+      </section>
+
+      {fm.problem && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">원 문제</h3>
+          <a class="text-sm text-[color:var(--color-accent)] hover:underline" href={`/problems/${encodeURIComponent(fmtPath(fm.problem))}`}>{fmtPath(fm.problem)} →</a>
+        </section>
+      )}
+    </aside>
+  </div>
+</BaseLayout>

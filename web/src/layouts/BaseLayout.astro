@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  containerClass?: string;
+}
+
+const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 신경망', containerClass = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} · Math Study</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  </head>
+  <body class="min-h-screen flex">
+    <Sidebar />
+    <div class="flex-1 min-w-0 flex flex-col">
+      <Header />
+      <main class={`flex-1 min-w-0 ${containerClass}`}>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

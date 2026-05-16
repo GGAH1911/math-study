@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('problems');
+  return items.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fm = entry.data;
+const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+---
+<BaseLayout title={entry.id}>
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+    <article class="prose prose-invert max-w-none">
+      <Content />
+    </article>
+
+    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">상태</h3>
+        <dl class="text-sm space-y-1.5">
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">status</dt><dd><span class={`chip chip-status-${fm.status}`}>{fm.status}</span></dd></div>
+          {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">difficulty</dt><dd>{fm.difficulty}</dd></div>}
+          {fm.last_attempted && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">attempted</dt><dd>{fm.last_attempted.toISOString().slice(0,10)}</dd></div>}
+          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
+        </dl>
+      </section>
+
+      {fm.source && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">출처</h3>
+          <dl class="text-sm space-y-1">
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">시행</dt><dd>{fm.source.agency} · {fm.source.exam_type}</dd></div>
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">년도</dt><dd>{fm.source.year}{fm.source.session ? ` · ${fm.source.session}` : ''}</dd></div>
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">과목</dt><dd>{fm.source.subject}</dd></div>
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">번호</dt><dd>{fm.source.number}번 · {fm.source.score ?? '?'}점</dd></div>
+          </dl>
+        </section>
+      )}
+
+      {fm.concepts.length > 0 && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">매핑된 개념</h3>
+          <ul class="space-y-1.5 text-sm">
+            {fm.concepts.map((p) => {
+              const slug = fmtPath(p);
+              return <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(slug)}`}>{slug}</a></li>;
+            })}
+          </ul>
+        </section>
+      )}
+    </aside>
+  </div>
+</BaseLayout>

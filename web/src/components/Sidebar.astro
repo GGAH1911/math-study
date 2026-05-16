@@ -1,0 +1,44 @@
+---
+const { pathname } = Astro.url;
+function active(prefix: string) {
+  if (prefix === '/') return pathname === '/' ? 'active' : '';
+  return pathname.startsWith(prefix) ? 'active' : '';
+}
+const links: Array<{ href: string; label: string; icon: string }> = [
+  { href: '/',          label: 'Dashboard',  icon: '◉' },
+  { href: '/graph',     label: 'Concept Graph', icon: '◈' },
+  { href: '/concepts',  label: 'Concepts',   icon: '⊕' },
+  { href: '/problems',  label: 'Problems',   icon: '∎' },
+  { href: '/mistakes',  label: 'Mistakes',   icon: '✕' },
+  { href: '/tools',     label: 'Tools',      icon: '⚒' },
+  { href: '/paths',     label: 'Paths',      icon: '↝' },
+  { href: '/log',       label: 'Log',        icon: '☴' },
+];
+---
+
+<aside class="sticky top-0 h-screen w-60 shrink-0 border-r border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-4 py-5 hidden lg:flex flex-col gap-1">
+  <a href="/" class="flex items-center gap-2 px-2 py-1 mb-4 group">
+    <span class="text-2xl">📐</span>
+    <span>
+      <div class="text-sm font-semibold tracking-tight">Math Study</div>
+      <div class="text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-subtle)]">LWIP knowledge mesh</div>
+    </span>
+  </a>
+
+  <nav class="flex flex-col gap-0.5">
+    {links.map(({ href, label, icon }) => (
+      <a href={href} class={`nav-link ${active(href)}`}>
+        <span class="inline-block w-4 text-center text-[color:var(--color-subtle)] text-xs">{icon}</span>
+        <span>{label}</span>
+      </a>
+    ))}
+  </nav>
+
+  <div class="mt-auto pt-4 border-t border-[color:var(--color-border)] text-[11px] text-[color:var(--color-subtle)]">
+    <div class="flex items-center justify-between">
+      <span>Chapter 7 D1–D16</span>
+      <span class="font-mono">v1.2</span>
+    </div>
+    <div class="mt-1">정답률 0%부터 다시 시작.</div>
+  </div>
+</aside>

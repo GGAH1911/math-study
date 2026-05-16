@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readLog } from '../lib/health.ts';
+
+const entries = readLog();
+
+const groups = new Map<string, typeof entries>();
+for (const e of entries) {
+  if (!groups.has(e.date)) groups.set(e.date, []);
+  groups.get(e.date)!.push(e);
+}
+
+const iconFor = (op: string): string => {
+  if (op.startsWith('init')) return '✦';
+  if (op.startsWith('smoke')) return '⌬';
+  if (op.startsWith('ingest')) return '↧';
+  if (op.startsWith('prune')) return '✂';
+  if (op.startsWith('merge')) return '⇄';
+  if (op.startsWith('env')) return '⚙';
+  return '·';
+};
+---
+<BaseLayout title="Operation Log">
+  <div class="max-w-4xl mx-auto px-6 py-8 space-y-6">
+    <header>
+      <h1 class="text-2xl font-semibold tracking-tight">Operation Log</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mt-1">{entries.length}개 엔트리 · docs/log.md (append-only)</p>
+    </header>
+
+    {Array.from(groups.entries()).map(([date, items]) => (
+      <section class="space-y-3">
+        <h2 class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-subtle)] sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10">{date}</h2>
+        <ol class="space-y-2 ml-2 border-l border-[color:var(--color-border)]">
+          {items.map((e) => (
+            <li class="relative pl-6 pr-2 py-2">
+              <span class="absolute -left-3 top-3 inline-flex items-center justify-center size-6 rounded-full bg-[color:var(--color-surface)] border border-[color:var(--color-border)] text-xs text-[color:var(--color-accent)]">{iconFor(e.operation)}</span>
+              <div class="text-sm font-medium">{e.operation}</div>
+              <div class="text-xs text-[color:var(--color-muted)] mt-1 leading-relaxed">{e.subject}</div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+
+    {entries.length === 0 && (
+      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">로그가 비어 있습니다.</p>
+    )}
+  </div>
+</BaseLayout>

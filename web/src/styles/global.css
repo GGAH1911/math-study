@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-bg: #09090b;
+  --color-surface: #18181b;
+  --color-surface-2: #1f1f23;
+  --color-border: #27272a;
+  --color-border-strong: #3f3f46;
+  --color-text: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-subtle: #71717a;
+  --color-accent: #818cf8;
+  --color-accent-strong: #6366f1;
+
+  --color-mastery-unknown: #f43f5e;
+  --color-mastery-learning: #f59e0b;
+  --color-mastery-proficient: #10b981;
+  --color-mastery-mastered: #0ea5e9;
+
+  --color-status-solved: #10b981;
+  --color-status-unsolved: #71717a;
+  --color-status-review: #f59e0b;
+
+  --color-error-concept_gap: #f43f5e;
+  --color-error-careless: #a1a1aa;
+  --color-error-wrong_approach: #f59e0b;
+  --color-error-unknown_method: #818cf8;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "ss02", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: rgba(129, 140, 248, 0.35);
+    color: white;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 5px;
+    border: 2px solid var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
+
+  /* KaTeX color tweaks for dark theme */
+  .katex { color: var(--color-text); }
+  .katex-display { margin: 1em 0; overflow-x: auto; overflow-y: hidden; }
+
+  /* Prose adjustments */
+  .prose { color: var(--color-text); }
+  .prose :where(h1, h2, h3, h4) { color: var(--color-text); }
+  .prose :where(strong) { color: var(--color-text); }
+  .prose :where(a) { color: var(--color-accent); text-decoration: none; }
+  .prose :where(a):hover { color: var(--color-accent-strong); text-decoration: underline; }
+  .prose :where(code) {
+    color: #f4f4f5;
+    background: var(--color-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-weight: 500;
+  }
+  .prose :where(code)::before,
+  .prose :where(code)::after { content: none; }
+  .prose :where(pre) {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border);
+  }
+  .prose :where(blockquote) {
+    border-left-color: var(--color-border-strong);
+    color: var(--color-muted);
+    font-style: normal;
+  }
+  .prose :where(blockquote p)::before,
+  .prose :where(blockquote p)::after { content: none; }
+  .prose :where(table) {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .prose :where(thead) {
+    background: var(--color-surface-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .prose :where(th, td) {
+    border-color: var(--color-border);
+  }
+  .prose :where(hr) { border-color: var(--color-border); }
+  .prose :where(img) {
+    border-radius: 8px;
+    background: white;
+    padding: 8px;
+  }
+}
+
+@layer components {
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card:hover {
+    border-color: var(--color-border-strong);
+  }
+  .card-link:hover {
+    border-color: var(--color-accent);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.5;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+    color: var(--color-muted);
+  }
+  .chip-mastery-unknown   { color: var(--color-mastery-unknown);   border-color: color-mix(in srgb, var(--color-mastery-unknown) 40%, var(--color-border)); }
+  .chip-mastery-learning  { color: var(--color-mastery-learning);  border-color: color-mix(in srgb, var(--color-mastery-learning) 40%, var(--color-border)); }
+  .chip-mastery-proficient{ color: var(--color-mastery-proficient);border-color: color-mix(in srgb, var(--color-mastery-proficient) 40%, var(--color-border)); }
+  .chip-mastery-mastered  { color: var(--color-mastery-mastered);  border-color: color-mix(in srgb, var(--color-mastery-mastered) 40%, var(--color-border)); }
+
+  .chip-status-solved   { color: var(--color-status-solved);   border-color: color-mix(in srgb, var(--color-status-solved) 40%, var(--color-border)); }
+  .chip-status-unsolved { color: var(--color-status-unsolved); }
+  .chip-status-review   { color: var(--color-status-review);   border-color: color-mix(in srgb, var(--color-status-review) 40%, var(--color-border)); }
+
+  .chip-error-concept_gap     { color: var(--color-error-concept_gap);     border-color: color-mix(in srgb, var(--color-error-concept_gap) 40%, var(--color-border)); }
+  .chip-error-careless        { color: var(--color-error-careless); }
+  .chip-error-wrong_approach  { color: var(--color-error-wrong_approach);  border-color: color-mix(in srgb, var(--color-error-wrong_approach) 40%, var(--color-border)); }
+  .chip-error-unknown_method  { color: var(--color-error-unknown_method);  border-color: color-mix(in srgb, var(--color-error-unknown_method) 40%, var(--color-border)); }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 120ms ease, color 120ms ease;
+  }
+  .nav-link:hover { background: var(--color-surface); color: var(--color-text); }
+  .nav-link.active {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+
+  .stat-num {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .glow-hero {
+    background:
+      radial-gradient(60% 100% at 20% 0%, rgba(129,140,248,0.15) 0%, transparent 60%),
+      radial-gradient(40% 80% at 100% 0%, rgba(244,63,94,0.1) 0%, transparent 60%);
+  }
+}

@@ -1,0 +1,23 @@
+---
+import { readHealth } from '../lib/health.ts';
+const h = readHealth();
+
+const cards = [
+  { label: 'Pages',       value: h.pages,       hint: 'docs/ 내 총 spoke 페이지' },
+  { label: 'Orphans',     value: h.orphans,     hint: 'hub 미등록 노드',
+    danger: h.orphans > 0 },
+  { label: 'Conflicts',   value: h.conflicts,   hint: '동기화 충돌',
+    danger: h.conflicts > 0 },
+  { label: 'DAG',         value: h.dagIntegrity, hint: 'prerequisite ↔ enables 정합',
+    danger: h.dagIntegrity !== 'ok' },
+];
+---
+<section class="grid grid-cols-2 md:grid-cols-4 gap-3">
+  {cards.map((c) => (
+    <div class="card">
+      <div class="text-[11px] uppercase tracking-[0.15em] text-[color:var(--color-subtle)]">{c.label}</div>
+      <div class={`stat-num mt-1 text-2xl ${c.danger ? 'text-[color:var(--color-mastery-unknown)]' : ''}`}>{c.value}</div>
+      <div class="text-xs text-[color:var(--color-muted)] mt-0.5">{c.hint}</div>
+    </div>
+  ))}
+</section>

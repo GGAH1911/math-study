@@ -1,0 +1,39 @@
+{
+  "name": "web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "prebuild": "node scripts/sync-assets.mjs && node scripts/build-concept-graph.mjs",
+    "predev": "node scripts/sync-assets.mjs && node scripts/build-concept-graph.mjs",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "graph": "node scripts/build-concept-graph.mjs",
+    "sync-assets": "node scripts/sync-assets.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/react": "^5.0.5",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/dagre": "^0.7.54",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@xyflow/react": "^12.10.2",
+    "astro": "^6.3.3",
+    "chart.js": "^4.5.1",
+    "dagre": "^0.8.5",
+    "gray-matter": "^4.0.3",
+    "katex": "^0.16.47",
+    "react": "^19.2.6",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^19.2.6",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.3.0"
+  }
+}

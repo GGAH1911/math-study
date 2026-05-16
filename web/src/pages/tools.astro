@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const tools = await getCollection('tools');
+---
+<BaseLayout title="Tools">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header>
+      <h1 class="text-2xl font-semibold tracking-tight">Tools (학습 자료)</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mt-1">책 · 강의 · 문제집 · 사이트 · 기타 — D5: raw 복붙 금지, 요약과 출처만</p>
+    </header>
+
+    {tools.length === 0 ? (
+      <div class="card text-center py-12">
+        <p class="text-base">아직 등록된 학습 자료가 없습니다.</p>
+        <p class="text-sm text-[color:var(--color-muted)] mt-2">
+          외부 자료를 추가하려면 <code class="text-[color:var(--color-accent)]">docs/tools/</code>에 markdown 페이지를 만들고
+          frontmatter에 <code class="text-[color:var(--color-accent)]">kind</code>·<code class="text-[color:var(--color-accent)]">title</code>·<code class="text-[color:var(--color-accent)]">url</code> 등을 적어주세요.
+        </p>
+      </div>
+    ) : (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {tools.map((t) => (
+          <li class="card">
+            <h3 class="font-semibold">{t.data.title ?? t.id}</h3>
+            {t.data.kind && <span class="chip mt-2">{t.data.kind}</span>}
+            {t.data.url && <a href={t.data.url} class="text-xs text-[color:var(--color-accent)] hover:underline mt-2 block truncate" target="_blank">{t.data.url}</a>}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</BaseLayout>

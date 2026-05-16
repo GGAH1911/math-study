@@ -10,3 +10,13 @@ temp_*.sh
 .venv/
 __pycache__/
 *.pyc
+
+# Web (Astro) build artifacts
+web/node_modules/
+web/dist/
+web/.astro/
+web/src/data/concept-graph.json
+web/public/assets/
+
+# Editor
+.vscode/

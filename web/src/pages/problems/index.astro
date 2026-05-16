@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConceptCard from '../../components/ConceptCard.astro';
+import { getCollection } from 'astro:content';
+
+const problems = await getCollection('problems');
+problems.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
+---
+<BaseLayout title="Problems">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header>
+      <h1 class="text-2xl font-semibold tracking-tight">Problems</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mt-1">{problems.length}개 문제 · 한국 수능·평가원·교육청 기출 (현재는 smoke 1건)</p>
+    </header>
+
+    {problems.length === 0 ? (
+      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 문제가 없습니다.</p>
+    ) : (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {problems.map((p) => {
+          const src = p.data.source;
+          return (
+            <li>
+              <ConceptCard
+                href={`/problems/${encodeURIComponent(p.id)}`}
+                title={p.id}
+                chips={[
+                  { label: p.data.status, class: `chip-status-${p.data.status}` },
+                  ...(p.data.difficulty ? [{ label: p.data.difficulty, class: '' }] : []),
+                ]}
+                meta={[
+                  { key: '출처', value: src ? `${src.agency}·${src.exam_type} ${src.year}${src.session ? ' '+src.session : ''}` : '—' },
+                  { key: '과목', value: src ? `${src.subject} ${src.number}번` : '—' },
+                ]}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </div>
+</BaseLayout>

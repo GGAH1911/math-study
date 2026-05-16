@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const concepts = await getCollection('concepts');
+  return concepts.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fm = entry.data;
+
+const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+---
+<BaseLayout title={entry.id}>
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+    <article class="prose prose-invert max-w-none">
+      <Content />
+    </article>
+
+    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Meta</h3>
+        <dl class="text-sm space-y-1.5">
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">type</dt><dd>{fm.concept_type}</dd></div>
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">mastery</dt><dd><span class={`chip chip-mastery-${fm.mastery}`}>{fm.mastery}</span></dd></div>
+          {fm.review_state && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">review</dt><dd>{fm.review_state}</dd></div>}
+          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next_review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
+          {fm.updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">updated</dt><dd>{fm.updated.toISOString().slice(0,10)}</dd></div>}
+        </dl>
+      </section>
+
+      {fm.prerequisites.length > 0 && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">선수 (prerequisites)</h3>
+          <ul class="space-y-1.5 text-sm">
+            {fm.prerequisites.map((p) => {
+              const slug = fmtPath(p);
+              return (
+                <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(slug)}`}>← {slug}</a></li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {fm.enables.length > 0 && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">enables</h3>
+          <ul class="space-y-1.5 text-sm">
+            {fm.enables.map((p) => {
+              const slug = fmtPath(p);
+              return (
+                <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(slug)}`}>{slug} →</a></li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Graph</h3>
+        <a href={`/graph?node=${encodeURIComponent(entry.id)}`} class="block text-center px-3 py-2 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium transition">
+          그래프에서 보기 →
+        </a>
+      </section>
+    </aside>
+  </div>
+</BaseLayout>

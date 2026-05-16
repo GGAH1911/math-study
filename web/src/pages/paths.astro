@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Learning Paths">
+  <div class="max-w-4xl mx-auto px-6 py-8 space-y-6">
+    <header>
+      <h1 class="text-2xl font-semibold tracking-tight">Learning Paths</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mt-1">D15 — 목표 concept을 지정하면 미숙 선행 노드의 위상정렬된 학습 시퀀스 자동 생성</p>
+    </header>
+
+    <div class="card text-center py-12">
+      <p class="text-base">아직 생성된 학습 경로가 없습니다.</p>
+      <p class="text-sm text-[color:var(--color-muted)] mt-2 max-w-md mx-auto">
+        Librarian에게 다음과 같이 요청해보세요:<br/>
+        <span class="text-[color:var(--color-accent)]">"미적분 4점 킬러를 풀고 싶어. 학습 경로 만들어줘."</span>
+      </p>
+      <p class="text-xs text-[color:var(--color-subtle)] mt-4">
+        산출물은 <code class="text-[color:var(--color-accent)]">docs/paths/&lt;목표명&gt;.md</code>에 저장됩니다.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

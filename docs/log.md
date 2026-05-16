@@ -18,3 +18,5 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 ## [2026-05-16] smoke | D14 | fake problem (tangent_secant_smoke) + fake mistake (smoke_d14_gap_detection) created. Gap Detection reverse-BFS correctly identified 극한 (depth=1, mastery=unknown) as root hole over 미분계수 (depth=0, mastery=learning).
 
 ## [2026-05-16] env | added project-local .venv (uv) with sympy 1.14 + matplotlib 3.10 + numpy 2.4; .gitignore + requirements.txt updated.
+
+## [2026-05-16] init | web/ Astro 5 + Tailwind v4 + React + react-flow scaffold. 13 pages (dashboard / fullscreen DAG / concepts·problems·mistakes·tools list+detail / paths / log). docs/ remains SSOT; web reads via content collections. SVG assets synced docs/assets/ → public/assets/ at build. Initial production build = 2.2MB, all routes HTTP 200, KaTeX/Mermaid/SVG render verified.

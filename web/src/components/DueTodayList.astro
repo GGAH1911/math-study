@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+type Row = { href: string; title: string; collection: string; chip: string; chipClass: string };
+
+const rows: Row[] = [];
+
+const concepts = await getCollection('concepts');
+for (const c of concepts) {
+  if (c.data.next_review && new Date(c.data.next_review) <= today) {
+    rows.push({
+      href: `/concepts/${encodeURIComponent(c.id)}`,
+      title: c.id,
+      collection: 'concept',
+      chip: c.data.mastery,
+      chipClass: `chip-mastery-${c.data.mastery}`,
+    });
+  }
+}
+const problems = await getCollection('problems');
+for (const p of problems) {
+  if (p.data.next_review && new Date(p.data.next_review) <= today) {
+    rows.push({
+      href: `/problems/${encodeURIComponent(p.id)}`,
+      title: p.id,
+      collection: 'problem',
+      chip: p.data.status,
+      chipClass: `chip-status-${p.data.status}`,
+    });
+  }
+}
+const mistakes = await getCollection('mistakes');
+for (const m of mistakes) {
+  if (m.data.next_review && new Date(m.data.next_review) <= today) {
+    rows.push({
+      href: `/mistakes/${encodeURIComponent(m.id)}`,
+      title: m.id,
+      collection: 'mistake',
+      chip: m.data.error_type,
+      chipClass: `chip-error-${m.data.error_type}`,
+    });
+  }
+}
+---
+<section class="card">
+  <header class="flex items-center justify-between mb-3">
+    <div>
+      <h2 class="text-sm font-semibold">Due Today</h2>
+      <p class="text-xs text-[color:var(--color-muted)]">오늘 복습할 페이지 (D7 간격 반복)</p>
+    </div>
+    <span class="stat-num text-lg">{rows.length}</span>
+  </header>
+  {rows.length === 0 ? (
+    <p class="text-sm text-[color:var(--color-subtle)] py-4 text-center">
+      ✨ 모두 일정대로 진행 중입니다. 새 자료 ingest하거나 다음 단계로 진행하세요.
+    </p>
+  ) : (
+    <ul class="space-y-1.5">
+      {rows.map((r) => (
+        <li>
+          <a href={r.href} class="flex items-center justify-between gap-2 px-2 py-1.5 -mx-2 rounded-md hover:bg-[color:var(--color-surface-2)] transition">
+            <span class="text-sm truncate">{r.title}</span>
+            <span class={`chip ${r.chipClass}`}>{r.chip}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</section>

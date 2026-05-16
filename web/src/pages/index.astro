@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HealthCards from '../components/HealthCards.astro';
+import DueTodayList from '../components/DueTodayList.astro';
+import ActivityFeed from '../components/ActivityFeed.astro';
+import MasteryDonut from '../components/MasteryDonut.tsx';
+import ConceptDAG from '../components/ConceptDAG.tsx';
+import { readHealth, readConceptGraph } from '../lib/health.ts';
+
+const health = readHealth();
+const graph = readConceptGraph();
+const m = health.mastery;
+const total = m.unknown + m.learning + m.proficient + m.mastered;
+---
+<BaseLayout title="Dashboard">
+  <div class="glow-hero">
+    <div class="max-w-6xl mx-auto px-6 pt-8 pb-6">
+      <div class="flex items-end justify-between gap-6 flex-wrap">
+        <div>
+          <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-subtle)]">2026-05-16 · LWIP v1.2 + Math Study Ch.7</p>
+          <h1 class="mt-2 text-3xl md:text-4xl font-semibold tracking-tight">
+            <span class="bg-gradient-to-r from-zinc-50 via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+              학습 신경망 대시보드
+            </span>
+          </h1>
+          <p class="mt-2 text-sm text-[color:var(--color-muted)] max-w-2xl">
+            한국 수능·평가원·교육청 기출 기반의 개념 의존성 그래프와 mastery 추적. 오답이 발생하면 D14가 자동으로
+            루트 구멍 concept을 짚어 학습 경로를 제시합니다.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/graph" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium transition">
+            <span>◈</span><span>Concept Graph 열기</span>
+          </a>
+        </div>
+      </div>
+      <div class="mt-5">
+        <p class="text-xs text-[color:var(--color-subtle)]"><span class="text-[color:var(--color-muted)]">권장 다음 작업:</span> {health.suggestedAction}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 py-6 space-y-6">
+    <HealthCards />
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <!-- Concept Network preview, large -->
+      <section class="card lg:col-span-2 p-0 overflow-hidden">
+        <header class="flex items-center justify-between px-5 pt-4 pb-2">
+          <div>
+            <h2 class="text-sm font-semibold">Concept Network</h2>
+            <p class="text-xs text-[color:var(--color-muted)]">개념 의존성 DAG 미리보기 · 노드 색 = mastery</p>
+          </div>
+          <a href="/graph" class="text-xs text-[color:var(--color-accent)] hover:underline">풀스크린 →</a>
+        </header>
+        <div class="h-[340px] border-t border-[color:var(--color-border)]">
+          {graph.stats.nodes > 0 ? (
+            <ConceptDAG client:load data={graph} variant="mini" />
+          ) : (
+            <p class="text-sm text-[color:var(--color-muted)] p-6">아직 concept 노드가 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 첫 페이지를 시드해보세요.</p>
+          )}
+        </div>
+      </section>
+
+      <!-- Mastery donut -->
+      <section class="card">
+        <header class="mb-3">
+          <h2 class="text-sm font-semibold">Mastery 분포</h2>
+          <p class="text-xs text-[color:var(--color-muted)]">{total}개 concept · D13 카운터</p>
+        </header>
+        <MasteryDonut client:load unknown={m.unknown} learning={m.learning} proficient={m.proficient} mastered={m.mastered} />
+        <ul class="mt-4 space-y-1.5 text-sm">
+          <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-unknown)]"></span><span class="text-[color:var(--color-muted)]">unknown</span><span class="ml-auto stat-num">{m.unknown}</span></li>
+          <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-learning)]"></span><span class="text-[color:var(--color-muted)]">learning</span><span class="ml-auto stat-num">{m.learning}</span></li>
+          <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-proficient)]"></span><span class="text-[color:var(--color-muted)]">proficient</span><span class="ml-auto stat-num">{m.proficient}</span></li>
+          <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-mastered)]"></span><span class="text-[color:var(--color-muted)]">mastered</span><span class="ml-auto stat-num">{m.mastered}</span></li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <DueTodayList />
+      <ActivityFeed />
+    </div>
+  </div>
+</BaseLayout>

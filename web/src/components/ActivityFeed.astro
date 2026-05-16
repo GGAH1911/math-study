@@ -1,0 +1,39 @@
+---
+import { readLog } from '../lib/health.ts';
+const entries = readLog(8);
+
+const iconFor = (op: string): string => {
+  if (op.startsWith('init')) return '✦';
+  if (op.startsWith('smoke')) return '⌬';
+  if (op.startsWith('ingest')) return '↧';
+  if (op.startsWith('prune')) return '✂';
+  if (op.startsWith('merge')) return '⇄';
+  if (op.startsWith('env')) return '⚙';
+  return '·';
+};
+---
+<section class="card">
+  <header class="mb-3">
+    <h2 class="text-sm font-semibold">Recent Activity</h2>
+    <p class="text-xs text-[color:var(--color-muted)]">최근 작업 기록 (docs/log.md)</p>
+  </header>
+  {entries.length === 0 ? (
+    <p class="text-sm text-[color:var(--color-subtle)]">기록 없음.</p>
+  ) : (
+    <ol class="space-y-3 relative">
+      {entries.map((e) => (
+        <li class="flex gap-3 items-start">
+          <span class="mt-0.5 inline-flex items-center justify-center size-6 rounded-full bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] text-xs text-[color:var(--color-accent)]">{iconFor(e.operation)}</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-baseline gap-2">
+              <time class="font-mono text-[11px] text-[color:var(--color-subtle)]">{e.date}</time>
+              <span class="text-xs font-medium text-[color:var(--color-muted)]">{e.operation}</span>
+            </div>
+            <div class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-2">{e.subject}</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )}
+  <a href="/log" class="block mt-3 text-center text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] transition">전체 기록 보기 →</a>
+</section>
