@@ -43,6 +43,14 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      allowedHosts: [
+        'localhost',
+        '127.0.0.1',
+        '.ts.net',           // any Tailscale MagicDNS hostname
+        '.tailf47aa4.ts.net', // this tailnet specifically
+      ],
+    },
   },
   markdown: {
     remarkPlugins: [remarkMath, remarkRewritePaths],

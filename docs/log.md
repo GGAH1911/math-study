@@ -20,3 +20,5 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 ## [2026-05-16] env | added project-local .venv (uv) with sympy 1.14 + matplotlib 3.10 + numpy 2.4; .gitignore + requirements.txt updated.
 
 ## [2026-05-16] init | web/ Astro 5 + Tailwind v4 + React + react-flow scaffold. 13 pages (dashboard / fullscreen DAG / concepts·problems·mistakes·tools list+detail / paths / log). docs/ remains SSOT; web reads via content collections. SVG assets synced docs/assets/ → public/assets/ at build. Initial production build = 2.2MB, all routes HTTP 200, KaTeX/Mermaid/SVG render verified.
+
+## [2026-05-16] deploy | exposed dev server via Tailscale. Astro bound to 0.0.0.0:4321 (HTTP via tailnet IP). Added `tailscale serve --https=8443 http://127.0.0.1:4321` for HTTPS at tme-laptop.tailf47aa4.ts.net:8443. astro.config.mjs allowedHosts includes `.ts.net` and the specific tailnet. Existing :8000 serve preserved.
