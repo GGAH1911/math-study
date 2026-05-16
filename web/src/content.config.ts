@@ -4,7 +4,7 @@ import { glob } from 'astro/loaders';
 const masteryEnum = z.enum(['unknown', 'learning', 'proficient', 'mastered']);
 const reviewStateEnum = z.enum(['new', 'learning', 'mature']);
 
-const gradeEnum = z.enum(['중1', '중2', '중3', '고1', '수학1', '수학2', '확률과통계']);
+const gradeEnum = z.enum(['중1', '중2', '중3', '고1', '수학1', '수학2', '미적분', '기하', '확률과통계']);
 
 const concepts = defineCollection({
   loader: glob({ pattern: '*.md', base: '../docs/concepts' }),

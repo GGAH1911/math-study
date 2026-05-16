@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ConceptCard from '../../components/ConceptCard.astro';
 import { getCollection } from 'astro:content';
 
-const GRADE_ORDER = ['중1', '중2', '중3', '고1', '수학1', '수학2', '확률과통계'];
+const GRADE_ORDER = ['중1', '중2', '중3', '고1', '수학1', '수학2', '미적분', '기하', '확률과통계'];
 const GRADE_COLOR: Record<string, string> = {
   '중1': '#94a3b8',
   '중2': '#64748b',
@@ -12,6 +12,8 @@ const GRADE_COLOR: Record<string, string> = {
   '고1': '#a78bfa',
   '수학1': '#8b5cf6',
   '수학2': '#7c3aed',
+  '미적분': '#6d28d9',
+  '기하': '#22d3ee',
   '확률과통계': '#ec4899',
 };
 

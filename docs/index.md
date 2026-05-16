@@ -1,15 +1,15 @@
 ---
 health: Optimal
-pages: 44
+pages: 490
 orphans: 0
 conflicts: 0
 due_today: 0
-mastery_unknown: 41
+mastery_unknown: 489
 mastery_learning: 1
 mastery_proficient: 0
 mastery_mastered: 0
 dag_integrity: ok
-suggested_action: "Phase 1 골격 완료 (42 concept). 다음: 사용자가 학습 시작하는 단원의 정의/정리/예제 spoke 추가 (Phase 2). 권장 출발점: 이차방정식 단원."
+suggested_action: "Phase 1+2+3 골격 완료 (390 concept + 99 problem). 학습 시작 가능. 권장 출발점: 이차방정식 단원의 진단 1번 풀어보고, 막히면 채팅창에서 튜터와 본문 채워가기."
 last_updated: 2026-05-16
 ---
 
