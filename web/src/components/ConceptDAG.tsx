@@ -207,20 +207,29 @@ function Inner({ data, variant = 'full', highlight }: Props) {
 
   const selectedNode = data.nodes.find((n) => n.id === selected);
 
+  // Single-select-with-reset:
+  //   default = all selected (전체)
+  //   click pill X (when all active or other subset active) → narrow to {X}
+  //   click pill X (when only X is active) → back to all
+  const ALL_MASTERY = ['unknown', 'learning', 'proficient', 'mastered'] as const;
   const toggleMastery = (m: string) => {
     setMasteryFilter((prev) => {
-      const next = new Set(prev);
-      if (next.has(m)) next.delete(m); else next.add(m);
-      return next;
+      if (prev.size === 1 && prev.has(m)) return new Set(ALL_MASTERY);
+      return new Set([m]);
     });
   };
+  const resetMastery = () => setMasteryFilter(new Set(ALL_MASTERY));
+
   const toggleGrade = (g: string) => {
     setGradeFilter((prev) => {
-      const next = new Set(prev);
-      if (next.has(g)) next.delete(g); else next.add(g);
-      return next;
+      if (prev.size === 1 && prev.has(g)) return new Set(gradesInData);
+      return new Set([g]);
     });
   };
+  const resetGrade = () => setGradeFilter(new Set(gradesInData));
+
+  const masteryAllActive = masteryFilter.size === ALL_MASTERY.length;
+  const gradeAllActive = gradeFilter.size === gradesInData.length;
 
   return (
     <div className={`relative w-full ${variant === 'mini' ? 'h-[320px]' : 'h-full'}`}>
@@ -256,7 +265,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
       {variant === 'full' && (
         <>
           {/* Left filter panel */}
-          <div className="absolute top-4 left-4 z-10 w-60 card p-3 space-y-3 max-h-[calc(100%-2rem)] overflow-auto">
+          <div className="absolute top-4 left-4 z-10 w-72 card p-3 space-y-3 max-h-[calc(100%-2rem)] overflow-auto">
             <div>
               <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">검색</label>
               <input
@@ -267,51 +276,91 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               />
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-2">Mastery 필터</label>
-              <div className="space-y-1">
-                {(['unknown', 'learning', 'proficient', 'mastered'] as const).map((m) => (
-                  <label key={m} className="flex items-center gap-2 text-sm cursor-pointer hover:text-zinc-100 transition">
-                    <input
-                      type="checkbox"
-                      checked={masteryFilter.has(m)}
-                      onChange={() => toggleMastery(m)}
-                      className="accent-indigo-400"
-                    />
-                    <span
-                      className="inline-block size-2 rounded-full"
-                      style={{ background: MASTERY_COLOR[m] }}
-                    />
-                    <span className="text-zinc-300">{m}</span>
-                    <span className="ml-auto text-xs text-zinc-500">
-                      {data.nodes.filter((n) => n.mastery === m).length}
-                    </span>
-                  </label>
-                ))}
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500">Mastery</label>
+                <button
+                  onClick={resetMastery}
+                  disabled={masteryAllActive}
+                  className={`text-[10px] uppercase tracking-wider transition ${
+                    masteryAllActive
+                      ? 'text-emerald-400 cursor-default'
+                      : 'text-zinc-500 hover:text-zinc-100 cursor-pointer'
+                  }`}
+                >
+                  {masteryAllActive ? '● 전체' : '○ 전체로'}
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {(['unknown', 'learning', 'proficient', 'mastered'] as const).map((m) => {
+                  const isActive = masteryFilter.has(m);
+                  const isSole = masteryFilter.size === 1 && isActive;
+                  const color = MASTERY_COLOR[m];
+                  return (
+                    <button
+                      key={m}
+                      onClick={() => toggleMastery(m)}
+                      className="px-2 py-1 rounded-md text-xs font-medium transition border flex items-center gap-1.5"
+                      style={{
+                        background: isSole ? `${color}30` : (isActive ? `${color}10` : 'transparent'),
+                        borderColor: isSole ? color : (isActive ? `${color}55` : '#27272a'),
+                        color: isActive ? color : '#52525b',
+                        opacity: !masteryAllActive && !isActive ? 0.4 : 1,
+                      }}
+                      title={isSole ? '클릭하면 전체로 복귀' : '이것만 보기'}
+                    >
+                      <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
+                      <span>{m}</span>
+                      <span className="text-zinc-500 font-normal">
+                        {data.nodes.filter((n) => n.mastery === m).length}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {gradesInData.length > 0 && (
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-2">학년 필터</label>
-                <div className="space-y-1">
-                  {gradesInData.map((g) => (
-                    <label key={g} className="flex items-center gap-2 text-sm cursor-pointer hover:text-zinc-100 transition">
-                      <input
-                        type="checkbox"
-                        checked={gradeFilter.has(g)}
-                        onChange={() => toggleGrade(g)}
-                        className="accent-indigo-400"
-                      />
-                      <span
-                        className="inline-block size-2 rounded-full"
-                        style={{ background: GRADE_COLOR[g] ?? '#71717a' }}
-                      />
-                      <span className="text-zinc-300">{g}</span>
-                      <span className="ml-auto text-xs text-zinc-500">
-                        {data.nodes.filter((n) => n.grade === g).length}
-                      </span>
-                    </label>
-                  ))}
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500">학년</label>
+                  <button
+                    onClick={resetGrade}
+                    disabled={gradeAllActive}
+                    className={`text-[10px] uppercase tracking-wider transition ${
+                      gradeAllActive
+                        ? 'text-emerald-400 cursor-default'
+                        : 'text-zinc-500 hover:text-zinc-100 cursor-pointer'
+                    }`}
+                  >
+                    {gradeAllActive ? '● 전체' : '○ 전체로'}
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {gradesInData.map((g) => {
+                    const isActive = gradeFilter.has(g);
+                    const isSole = gradeFilter.size === 1 && isActive;
+                    const color = GRADE_COLOR[g] ?? '#71717a';
+                    return (
+                      <button
+                        key={g}
+                        onClick={() => toggleGrade(g)}
+                        className="px-2 py-1 rounded-md text-xs font-medium transition border flex items-center gap-1.5"
+                        style={{
+                          background: isSole ? `${color}30` : (isActive ? `${color}10` : 'transparent'),
+                          borderColor: isSole ? color : (isActive ? `${color}55` : '#27272a'),
+                          color: isActive ? color : '#52525b',
+                          opacity: !gradeAllActive && !isActive ? 0.4 : 1,
+                        }}
+                        title={isSole ? '클릭하면 전체로 복귀' : '이 학년만 보기'}
+                      >
+                        <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
+                        <span>{g}</span>
+                        <span className="text-zinc-500 font-normal">
+                          {data.nodes.filter((n) => n.grade === g).length}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
