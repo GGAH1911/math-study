@@ -1,6 +1,8 @@
 ---
+export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import ChatPanel from '../../components/ChatPanel.tsx';
 
 export async function getStaticPaths() {
   const concepts = await getCollection('concepts');
@@ -15,8 +17,11 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
 ---
 <BaseLayout title={entry.id}>
   <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
-    <article class="prose prose-invert max-w-none">
-      <Content />
+    <article class="max-w-none">
+      <div class="prose prose-invert max-w-none">
+        <Content />
+      </div>
+      <ChatPanel client:load slug={entry.id} unitTitle={fm.unit ?? entry.id} />
     </article>
 
     <aside class="lg:sticky lg:top-20 self-start space-y-4">
