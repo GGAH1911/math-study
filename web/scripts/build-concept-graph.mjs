@@ -30,8 +30,11 @@ function readConcepts() {
       return {
         id: slugFromPath(f),
         slug: slugFromPath(f),
-        label: slugFromPath(f),
+        label: slugFromPath(f).replace(/_/g, ' '),
         concept_type: fm.concept_type ?? 'definition',
+        grade: fm.grade ?? null,
+        unit: fm.unit ?? null,
+        subunit: fm.subunit ?? null,
         mastery: fm.mastery ?? 'unknown',
         prerequisites: (fm.prerequisites ?? []).map(slugFromPath),
         enables: (fm.enables ?? []).map(slugFromPath),
@@ -56,7 +59,7 @@ function buildEdges(concepts) {
 
 function layout(concepts, edges) {
   const g = new dagre.graphlib.Graph();
-  g.setGraph({ rankdir: 'TB', nodesep: 60, ranksep: 90, marginx: 30, marginy: 30 });
+  g.setGraph({ rankdir: 'TB', nodesep: 50, ranksep: 70, marginx: 30, marginy: 30 });
   g.setDefaultEdgeLabel(() => ({}));
   for (const c of concepts) {
     g.setNode(c.id, { width: 180, height: 70 });
@@ -98,8 +101,10 @@ function main() {
 
   const byMastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 };
   for (const c of concepts) byMastery[c.mastery] = (byMastery[c.mastery] ?? 0) + 1;
-  const byType = { definition: 0, theorem: 0, lemma: 0, example: 0 };
+  const byType = { unit: 0, definition: 0, theorem: 0, lemma: 0, example: 0 };
   for (const c of concepts) byType[c.concept_type] = (byType[c.concept_type] ?? 0) + 1;
+  const byGrade = {};
+  for (const c of concepts) if (c.grade) byGrade[c.grade] = (byGrade[c.grade] ?? 0) + 1;
 
   const out = {
     generatedAt: new Date().toISOString(),
@@ -111,6 +116,7 @@ function main() {
       cycles,
       byMastery,
       byType,
+      byGrade,
     },
   };
 

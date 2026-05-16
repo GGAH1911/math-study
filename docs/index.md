@@ -1,15 +1,15 @@
 ---
 health: Optimal
-pages: 5
+pages: 44
 orphans: 0
 conflicts: 0
 due_today: 0
-mastery_unknown: 2
+mastery_unknown: 41
 mastery_learning: 1
 mastery_proficient: 0
 mastery_mastered: 0
 dag_integrity: ok
-suggested_action: "Smoke test 통과. 다음: 실제 평가원 기출 ingest 또는 PostgreSQL 스키마 설계."
+suggested_action: "Phase 1 골격 완료 (42 concept). 다음: 사용자가 학습 시작하는 단원의 정의/정리/예제 spoke 추가 (Phase 2). 권장 출발점: 이차방정식 단원."
 last_updated: 2026-05-16
 ---
 

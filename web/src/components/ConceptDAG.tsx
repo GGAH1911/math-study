@@ -19,7 +19,10 @@ type GraphNode = {
   id: string;
   slug: string;
   label: string;
-  concept_type: 'definition' | 'theorem' | 'lemma' | 'example' | string;
+  concept_type: 'unit' | 'definition' | 'theorem' | 'lemma' | 'example' | string;
+  grade: string | null;
+  unit: string | null;
+  subunit: string | null;
   mastery: 'unknown' | 'learning' | 'proficient' | 'mastered' | string;
   prerequisites: string[];
   enables: string[];
@@ -35,7 +38,12 @@ type GraphData = {
   generatedAt: string;
   nodes: GraphNode[];
   edges: GraphEdge[];
-  stats: { nodes: number; edges: number; cycles: number };
+  stats: {
+    nodes: number; edges: number; cycles: number;
+    byMastery?: Record<string, number>;
+    byType?: Record<string, number>;
+    byGrade?: Record<string, number>;
+  };
 };
 
 type Props = {
@@ -52,48 +60,74 @@ const MASTERY_COLOR: Record<string, string> = {
 };
 
 const TYPE_ICON: Record<string, string> = {
+  unit: '◆',
   definition: '○',
   theorem: '◇',
   lemma: '△',
   example: '□',
 };
 
+const GRADE_ORDER = ['중1', '중2', '중3', '고1', '수학1', '수학2', '확률과통계'];
+const GRADE_COLOR: Record<string, string> = {
+  '중1': '#94a3b8',
+  '중2': '#64748b',
+  '중3': '#475569',
+  '고1': '#a78bfa',
+  '수학1': '#8b5cf6',
+  '수학2': '#7c3aed',
+  '확률과통계': '#ec4899',
+};
+
 function ConceptNode({ data }: { data: GraphNode & { highlighted?: boolean; dimmed?: boolean } }) {
   const color = MASTERY_COLOR[data.mastery] ?? '#a1a1aa';
+  const isUnit = data.concept_type === 'unit';
+  const gradeColor = data.grade ? (GRADE_COLOR[data.grade] ?? '#71717a') : '#71717a';
   return (
     <div
       className="relative"
       style={{
-        opacity: data.dimmed ? 0.25 : 1,
-        transform: data.highlighted ? 'scale(1.05)' : undefined,
+        opacity: data.dimmed ? 0.18 : 1,
+        transform: data.highlighted ? 'scale(1.06)' : undefined,
         transition: 'opacity 200ms ease, transform 200ms ease',
       }}
     >
       <Handle type="target" position={Position.Top} style={{ visibility: 'hidden' }} />
       <div
-        className="rounded-lg px-3 py-2 min-w-[140px] border-2 backdrop-blur"
+        className="rounded-xl backdrop-blur"
         style={{
-          borderColor: color,
+          minWidth: isUnit ? 168 : 140,
+          padding: isUnit ? '10px 14px' : '8px 12px',
+          border: `${isUnit ? 2.5 : 2}px solid ${color}`,
           background: data.highlighted ? `${color}30` : '#18181b',
-          boxShadow: data.highlighted ? `0 0 0 4px ${color}40` : `0 2px 12px ${color}20`,
+          boxShadow: data.highlighted
+            ? `0 0 0 4px ${color}40, 0 0 24px ${color}30`
+            : isUnit
+              ? `0 4px 16px ${color}25, inset 0 0 0 1px ${gradeColor}30`
+              : `0 2px 12px ${color}20`,
         }}
       >
         <div className="flex items-center justify-between gap-2">
-          <span
-            className="text-base"
-            style={{ color }}
-            title={`${data.concept_type}`}
-          >
+          <span className="text-base leading-none" style={{ color }} title={data.concept_type}>
             {TYPE_ICON[data.concept_type] ?? '·'}
           </span>
           <span
-            className="text-[10px] uppercase tracking-wider font-medium"
+            className="text-[9px] uppercase tracking-wider font-semibold"
             style={{ color }}
           >
             {data.mastery}
           </span>
         </div>
-        <div className="mt-1 text-sm font-semibold text-zinc-50">{data.label}</div>
+        <div className={`mt-1 font-semibold text-zinc-50 ${isUnit ? 'text-sm' : 'text-xs'}`}>
+          {data.label}
+        </div>
+        {data.grade && (
+          <div
+            className="mt-1.5 inline-block text-[9px] font-medium px-1.5 py-0.5 rounded"
+            style={{ background: `${gradeColor}25`, color: gradeColor }}
+          >
+            {data.grade}
+          </div>
+        )}
       </div>
       <Handle type="source" position={Position.Bottom} style={{ visibility: 'hidden' }} />
     </div>
@@ -107,6 +141,11 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   const [masteryFilter, setMasteryFilter] = useState<Set<string>>(
     new Set(['unknown', 'learning', 'proficient', 'mastered']),
   );
+  const gradesInData = useMemo(
+    () => GRADE_ORDER.filter((g) => data.nodes.some((n) => n.grade === g)),
+    [data.nodes],
+  );
+  const [gradeFilter, setGradeFilter] = useState<Set<string>>(new Set(gradesInData));
   const [searchTerm, setSearchTerm] = useState('');
   const rf = useReactFlow();
 
@@ -114,10 +153,11 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     return new Set(
       data.nodes
         .filter((n) => masteryFilter.has(n.mastery))
+        .filter((n) => !n.grade || gradeFilter.has(n.grade))
         .filter((n) => !searchTerm || n.label.includes(searchTerm))
         .map((n) => n.id),
     );
-  }, [data.nodes, masteryFilter, searchTerm]);
+  }, [data.nodes, masteryFilter, gradeFilter, searchTerm]);
 
   const nodes: Node[] = useMemo(
     () =>
@@ -171,6 +211,13 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     setMasteryFilter((prev) => {
       const next = new Set(prev);
       if (next.has(m)) next.delete(m); else next.add(m);
+      return next;
+    });
+  };
+  const toggleGrade = (g: string) => {
+    setGradeFilter((prev) => {
+      const next = new Set(prev);
+      if (next.has(g)) next.delete(g); else next.add(g);
       return next;
     });
   };
@@ -242,6 +289,32 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                 ))}
               </div>
             </div>
+
+            {gradesInData.length > 0 && (
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-2">학년 필터</label>
+                <div className="space-y-1">
+                  {gradesInData.map((g) => (
+                    <label key={g} className="flex items-center gap-2 text-sm cursor-pointer hover:text-zinc-100 transition">
+                      <input
+                        type="checkbox"
+                        checked={gradeFilter.has(g)}
+                        onChange={() => toggleGrade(g)}
+                        className="accent-indigo-400"
+                      />
+                      <span
+                        className="inline-block size-2 rounded-full"
+                        style={{ background: GRADE_COLOR[g] ?? '#71717a' }}
+                      />
+                      <span className="text-zinc-300">{g}</span>
+                      <span className="ml-auto text-xs text-zinc-500">
+                        {data.nodes.filter((n) => n.grade === g).length}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="text-[11px] text-zinc-500 pt-2 border-t border-zinc-800">
               <div className="flex justify-between">
                 <span>nodes</span><span className="font-mono">{data.stats.nodes}</span>
@@ -268,6 +341,17 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               <div className="flex gap-1.5 flex-wrap">
                 <span className={`chip chip-mastery-${selectedNode.mastery}`}>{selectedNode.mastery}</span>
                 <span className="chip">{selectedNode.concept_type}</span>
+                {selectedNode.grade && (
+                  <span
+                    className="chip"
+                    style={{
+                      color: GRADE_COLOR[selectedNode.grade] ?? '#a1a1aa',
+                      borderColor: `${GRADE_COLOR[selectedNode.grade] ?? '#a1a1aa'}55`,
+                    }}
+                  >
+                    {selectedNode.grade}
+                  </span>
+                )}
                 {selectedNode.review_state && <span className="chip">review: {selectedNode.review_state}</span>}
               </div>
               {selectedNode.prerequisites.length > 0 && (

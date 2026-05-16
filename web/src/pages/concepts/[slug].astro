@@ -24,6 +24,9 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
         <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Meta</h3>
         <dl class="text-sm space-y-1.5">
           <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">type</dt><dd>{fm.concept_type}</dd></div>
+          {fm.grade && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">grade</dt><dd>{fm.grade}</dd></div>}
+          {fm.unit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">unit</dt><dd>{fm.unit}</dd></div>}
+          {fm.subunit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">subunit</dt><dd>{fm.subunit}</dd></div>}
           <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">mastery</dt><dd><span class={`chip chip-mastery-${fm.mastery}`}>{fm.mastery}</span></dd></div>
           {fm.review_state && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">review</dt><dd>{fm.review_state}</dd></div>}
           {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next_review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}

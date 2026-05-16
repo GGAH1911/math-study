@@ -79,14 +79,19 @@ This constitution is a **living document**, not a static tablet of stone. As the
 - `problems/*.md` frontmatter에 `concepts:` 필드(관련 개념 페이지 경로 배열) 필수.
 - 각 concept 페이지 본문에는 자신을 사용하는 문제 목록(역링크 테이블)을 유지.
 
-### D3. 선수 개념 + 타입 명시
+### D3. 선수 개념 + 타입 + 학년/단원 명시
 concept 페이지 frontmatter에 다음 필수 필드:
 ```yaml
-concept_type: definition   # definition / theorem / lemma / example
+concept_type: unit         # unit / definition / theorem / lemma / example
+grade: 중3                  # 중1 / 중2 / 중3 / 고1 / 수학1 / 수학2 / 확률과통계
+unit: 이차방정식            # 단원명
+subunit: null              # 소단원 (있을 때만, 선택)
 prerequisites: [docs/concepts/<선수1>.md, docs/concepts/<선수2>.md]
 enables: [docs/concepts/<후속1>.md]
 ```
-**파일 경로 컨벤션**: spoke 페이지는 카테고리별 하위 폴더 — concept은 `docs/concepts/`, 문제는 `docs/problems/`, 자료는 `docs/tools/`, 오답은 `docs/mistakes/`.
+- **`unit`** 타입은 한국 교육과정의 *단원 컨테이너*를 표현한다. 단원 노드는 그 단원의 정의/정리/예제 spoke들의 prerequisite 역할을 하며, 단원 간 학습 경로를 형성한다 (Phase 1 골격).
+- **`grade`/`unit`** 은 학년별 클러스터·필터링·진척률 시각화에 사용된다 (`concepts.md` hub의 `by_grade` 카운터, `concept_graph.md`의 학년별 subgraph, web의 학년 필터).
+- **파일 경로 컨벤션**: spoke 페이지는 카테고리별 하위 폴더 — concept은 `docs/concepts/`(flat), 문제는 `docs/problems/`, 자료는 `docs/tools/`, 오답은 `docs/mistakes/`. 동명이의 단원·개념은 grade suffix로 disambiguate (예: `함수_수학1.md`, `확률_중2.md`).
 `concepts.md` hub는 `concept_type`별 테이블 4개와 `mastery`별 카운터/테이블로 렌더링한다.
 
 ### D4. 풀이 상태 추적

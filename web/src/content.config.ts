@@ -4,13 +4,18 @@ import { glob } from 'astro/loaders';
 const masteryEnum = z.enum(['unknown', 'learning', 'proficient', 'mastered']);
 const reviewStateEnum = z.enum(['new', 'learning', 'mature']);
 
+const gradeEnum = z.enum(['중1', '중2', '중3', '고1', '수학1', '수학2', '확률과통계']);
+
 const concepts = defineCollection({
   loader: glob({ pattern: '*.md', base: '../docs/concepts' }),
   schema: z.object({
     sources: z.array(z.string()).optional().default([]),
     created: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
-    concept_type: z.enum(['definition', 'theorem', 'lemma', 'example']),
+    concept_type: z.enum(['unit', 'definition', 'theorem', 'lemma', 'example']),
+    grade: gradeEnum.optional(),
+    unit: z.string().optional(),
+    subunit: z.string().nullable().optional(),
     prerequisites: z.array(z.string()).optional().default([]),
     enables: z.array(z.string()).optional().default([]),
     mastery: masteryEnum,

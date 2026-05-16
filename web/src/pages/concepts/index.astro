@@ -3,24 +3,48 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ConceptCard from '../../components/ConceptCard.astro';
 import { getCollection } from 'astro:content';
 
-const concepts = await getCollection('concepts');
-concepts.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
+const GRADE_ORDER = ['중1', '중2', '중3', '고1', '수학1', '수학2', '확률과통계'];
+const GRADE_COLOR: Record<string, string> = {
+  '중1': '#94a3b8',
+  '중2': '#64748b',
+  '중3': '#475569',
+  '고1': '#a78bfa',
+  '수학1': '#8b5cf6',
+  '수학2': '#7c3aed',
+  '확률과통계': '#ec4899',
+};
 
-const byMastery = {
-  unknown: 0, learning: 0, proficient: 0, mastered: 0,
-} as Record<string, number>;
+const concepts = await getCollection('concepts');
+
+// Group by grade
+const byGrade: Record<string, typeof concepts> = {};
+for (const c of concepts) {
+  const g = c.data.grade ?? 'misc';
+  (byGrade[g] ??= []).push(c);
+}
+for (const g of Object.keys(byGrade)) {
+  byGrade[g].sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
+}
+
+const byMastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 } as Record<string, number>;
 for (const c of concepts) byMastery[c.data.mastery]++;
+
+const byType = { unit: 0, definition: 0, theorem: 0, lemma: 0, example: 0 } as Record<string, number>;
+for (const c of concepts) byType[c.data.concept_type]++;
+
+const orderedGrades = [
+  ...GRADE_ORDER.filter((g) => byGrade[g]),
+  ...Object.keys(byGrade).filter((g) => !GRADE_ORDER.includes(g)),
+];
 ---
 <BaseLayout title="Concepts">
   <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
-    <header class="flex items-end justify-between gap-4 flex-wrap">
-      <div>
-        <h1 class="text-2xl font-semibold tracking-tight">Concepts</h1>
-        <p class="text-sm text-[color:var(--color-muted)] mt-1">
-          {concepts.length}개 concept · definition / theorem / lemma / example
-        </p>
-      </div>
-      <div class="flex items-center gap-2 text-xs">
+    <header class="space-y-3">
+      <h1 class="text-2xl font-semibold tracking-tight">Concepts</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        {concepts.length}개 노드 · unit {byType.unit} · definition {byType.definition} · theorem {byType.theorem} · lemma {byType.lemma} · example {byType.example}
+      </p>
+      <div class="flex items-center gap-2 text-xs flex-wrap">
         <span class="chip chip-mastery-unknown">unknown {byMastery.unknown}</span>
         <span class="chip chip-mastery-learning">learning {byMastery.learning}</span>
         <span class="chip chip-mastery-proficient">proficient {byMastery.proficient}</span>
@@ -29,28 +53,37 @@ for (const c of concepts) byMastery[c.data.mastery]++;
     </header>
 
     {concepts.length === 0 ? (
-      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">
-        아직 개념이 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 markdown 페이지를 만들어보세요.
-      </p>
+      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 개념이 없습니다.</p>
     ) : (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {concepts.map((c) => (
-          <li>
-            <ConceptCard
-              href={`/concepts/${encodeURIComponent(c.id)}`}
-              title={c.id}
-              chips={[
-                { label: c.data.mastery, class: `chip-mastery-${c.data.mastery}` },
-                { label: c.data.concept_type, class: '' },
-              ]}
-              meta={[
-                { key: '선수', value: c.data.prerequisites.length > 0 ? c.data.prerequisites.map((p) => p.split('/').pop()?.replace(/\.md$/, '')).join(', ') : '—' },
-                { key: '사용처', value: c.data.enables.length > 0 ? c.data.enables.map((p) => p.split('/').pop()?.replace(/\.md$/, '')).join(', ') : '—' },
-              ]}
-            />
-          </li>
-        ))}
-      </ul>
+      orderedGrades.map((g) => (
+        <section class="space-y-3">
+          <header class="flex items-baseline gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">
+            <h2 class="text-base font-semibold flex items-center gap-2">
+              <span class="size-2 rounded-full inline-block" style={`background:${GRADE_COLOR[g] ?? '#71717a'}`}></span>
+              {g}
+            </h2>
+            <span class="text-xs text-[color:var(--color-muted)]">{byGrade[g].length}개 단원</span>
+          </header>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {byGrade[g].map((c) => (
+              <li>
+                <ConceptCard
+                  href={`/concepts/${encodeURIComponent(c.id)}`}
+                  title={c.id.replace(/_/g, ' ')}
+                  chips={[
+                    { label: c.data.mastery, class: `chip-mastery-${c.data.mastery}` },
+                    { label: c.data.concept_type, class: '' },
+                  ]}
+                  meta={[
+                    { key: '선수', value: c.data.prerequisites.length > 0 ? c.data.prerequisites.map((p) => p.split('/').pop()?.replace(/\.md$/, '').replace(/_/g, ' ')).join(', ') : '—' },
+                    { key: '다음', value: c.data.enables.length > 0 ? c.data.enables.map((p) => p.split('/').pop()?.replace(/\.md$/, '').replace(/_/g, ' ')).join(', ') : '—' },
+                  ]}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
     )}
   </div>
 </BaseLayout>
