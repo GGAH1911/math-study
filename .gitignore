@@ -5,3 +5,8 @@ Thumbs.db
 *~
 temp_*.py
 temp_*.sh
+
+# Python project-local venv (D11/D16 sympy + matplotlib)
+.venv/
+__pycache__/
+*.pyc

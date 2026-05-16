@@ -83,9 +83,10 @@ This constitution is a **living document**, not a static tablet of stone. As the
 concept 페이지 frontmatter에 다음 필수 필드:
 ```yaml
 concept_type: definition   # definition / theorem / lemma / example
-prerequisites: [docs/<선수1>.md, docs/<선수2>.md]
-enables: [docs/<후속1>.md]
+prerequisites: [docs/concepts/<선수1>.md, docs/concepts/<선수2>.md]
+enables: [docs/concepts/<후속1>.md]
 ```
+**파일 경로 컨벤션**: spoke 페이지는 카테고리별 하위 폴더 — concept은 `docs/concepts/`, 문제는 `docs/problems/`, 자료는 `docs/tools/`, 오답은 `docs/mistakes/`.
 `concepts.md` hub는 `concept_type`별 테이블 4개와 `mastery`별 카운터/테이블로 렌더링한다.
 
 ### D4. 풀이 상태 추적
@@ -153,8 +154,8 @@ DB 스키마/ingest 파이프라인은 별도 후속 작업. DB가 없는 동안
 ### D12. Concept Dependency Graph (개념 신경망)
 모든 concept spoke frontmatter는 양방향 의존성 필드를 유지:
 ```yaml
-prerequisites: [docs/극한.md, docs/연속함수.md]   # 이 개념을 이해하려면 먼저 필요한 노드
-enables: [docs/평균값정리.md, docs/도함수의활용.md]  # 이 개념이 가능케 하는 후속 노드
+prerequisites: [docs/concepts/극한.md, docs/concepts/연속함수.md]   # 이 개념을 이해하려면 먼저 필요한 노드
+enables: [docs/concepts/평균값정리.md, docs/concepts/도함수의활용.md]  # 이 개념이 가능케 하는 후속 노드
 ```
 - **DAG 불변식**: 순환 금지. 페이지 생성/수정 시 JIT 스크립트로 frontmatter 전수 파싱 → topological sort 가능 여부 검증.
 - **그래프 산출물**: `docs/concept_graph.md`에 Mermaid `graph TD` 다이어그램을 librarian이 regenerate(append-only 아님). 노드 색은 mastery로 칠함 (D13).
@@ -170,6 +171,7 @@ mastery_evidence:              # 이 mastery 등급의 근거가 된 문제 페�
   - docs/problems/2025_9월모평_미적분_18.md
 mastery_updated: 2026-05-16
 ```
+참고: 문제 페이지는 `docs/problems/`, 오답 페이지는 `docs/mistakes/`, 학습 자료는 `docs/tools/`에 저장한다 (D3 컨벤션).
 - **승급 규칙**: 평가원 출처의 동일/상위 난도 문제를 일정 횟수 무오답 통과 시 단계 상승.
   - `unknown → learning`: 임의 출처 1회 통과 또는 사용자 명시
   - `learning → proficient`: **4점 문항 2회 무오답 통과**

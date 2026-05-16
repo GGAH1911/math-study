@@ -4,10 +4,10 @@ created: 2026-05-16
 updated: 2026-05-16
 hub_type: problems
 counts:
-  total: 0
+  total: 1
   by_status:
     unsolved: 0
-    solved: 0
+    solved: 1
     review: 0
 ---
 
@@ -29,7 +29,7 @@ counts:
 ### Solved (풀이 완료)
 | Page | Source | Subject | Number | Concepts | Last Attempted |
 | :--- | :--- | :--- | ---: | :--- | :--- |
-| *(empty)* | | | | | |
+| [tangent_secant_smoke](../problems/tangent_secant_smoke.md) | 자체-smoke (2026) | 미적분 | 0 | [미분계수](../concepts/미분계수.md) | 2026-05-16 |
 
 ### Review (재검토 큐)
 | Page | Source | Subject | Number | Reason | Next Review |

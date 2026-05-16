@@ -1,15 +1,15 @@
 ---
 health: Optimal
-pages: 0
+pages: 5
 orphans: 0
 conflicts: 0
 due_today: 0
-mastery_unknown: 0
-mastery_learning: 0
+mastery_unknown: 2
+mastery_learning: 1
 mastery_proficient: 0
 mastery_mastered: 0
 dag_integrity: ok
-suggested_action: "Initial setup — seed first concepts (예: 극한 / 미분계수 / 도함수) or ingest first 기출 문제."
+suggested_action: "Smoke test 통과. 다음: 실제 평가원 기출 ingest 또는 PostgreSQL 스키마 설계."
 last_updated: 2026-05-16
 ---
 
@@ -30,14 +30,16 @@ last_updated: 2026-05-16
 
 | Page | concept_type | Mastery | Prerequisites | Sources |
 | :--- | :--- | :--- | :--- | :--- |
-| *(empty — agent will populate)* | | | | |
+| [극한](concepts/극한.md) | definition | 🟥 unknown | — | — |
+| [미분계수](concepts/미분계수.md) | definition | 🟧 learning | [극한](concepts/극한.md) | — |
+| [도함수](concepts/도함수.md) | definition | 🟥 unknown | [미분계수](concepts/미분계수.md) | — |
 
 ### Problems (기출 문제)
 *(상태별 상세 분류는 [hubs/problems.md](hubs/problems.md) 참조)*
 
 | Page | Source | Subject | Status | Concepts |
 | :--- | :--- | :--- | :--- | :--- |
-| *(empty)* | | | | |
+| [tangent_secant_smoke](problems/tangent_secant_smoke.md) | 자체-smoke 2026 | 미적분 | solved | [미분계수](concepts/미분계수.md) |
 
 ### Tools (학습 자료)
 *(종류별 상세는 [hubs/tools.md](hubs/tools.md) 참조)*
@@ -51,7 +53,7 @@ last_updated: 2026-05-16
 
 | Page | error_type | Root Hole Concept | Revisit |
 | :--- | :--- | :--- | :--- |
-| *(empty)* | | | |
+| [smoke_d14_gap_detection](mistakes/smoke_d14_gap_detection.md) | concept_gap | [극한](concepts/극한.md) | 2026-05-19 |
 
 ### Syntheses & Analyses (Q&A → 영구 페이지)
 *(lifecycle.md의 Query & Promote 결과)*

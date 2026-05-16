@@ -4,15 +4,15 @@ created: 2026-05-16
 updated: 2026-05-16
 hub_type: concepts
 counts:
-  total: 0
+  total: 3
   by_type:
-    definition: 0
+    definition: 3
     theorem: 0
     lemma: 0
     example: 0
   by_mastery:
-    unknown: 0
-    learning: 0
+    unknown: 2
+    learning: 1
     proficient: 0
     mastered: 0
 ---
@@ -29,10 +29,10 @@ counts:
 
 | Mastery | Count | Pages |
 | :--- | ---: | :--- |
-| `mastered` | 0 | *(none yet)* |
-| `proficient` | 0 | *(none yet)* |
-| `learning` | 0 | *(none yet)* |
-| `unknown` | 0 | *(none yet)* |
+| 🟦 `mastered` | 0 | *(none yet)* |
+| 🟩 `proficient` | 0 | *(none yet)* |
+| 🟧 `learning` | 1 | [미분계수](../concepts/미분계수.md) |
+| 🟥 `unknown` | 2 | [극한](../concepts/극한.md), [도함수](../concepts/도함수.md) |
 
 ---
 
@@ -41,7 +41,9 @@ counts:
 ### Definitions (정의)
 | Page | Korean Name | Prerequisites | Mastery | Updated |
 | :--- | :--- | :--- | :--- | :--- |
-| *(empty — agent will populate)* | | | | |
+| [극한](../concepts/극한.md) | 극한 (Limit) | — (기초 노드) | 🟥 unknown | 2026-05-16 |
+| [미분계수](../concepts/미분계수.md) | 미분계수 (Derivative at a point) | [극한](../concepts/극한.md) | 🟧 learning | 2026-05-16 |
+| [도함수](../concepts/도함수.md) | 도함수 (Derivative function) | [미분계수](../concepts/미분계수.md) | 🟥 unknown | 2026-05-16 |
 
 ### Theorems (정리)
 | Page | Korean Name | Prerequisites | Mastery | Updated |

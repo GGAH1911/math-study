@@ -4,9 +4,9 @@ created: 2026-05-16
 updated: 2026-05-16
 hub_type: mistakes
 counts:
-  total: 0
+  total: 1
   by_error_type:
-    concept_gap: 0
+    concept_gap: 1
     careless: 0
     wrong_approach: 0
     unknown_method: 0
@@ -25,7 +25,7 @@ counts:
 ### Concept Gap (개념 부족 — 가장 우선 처리)
 | Page | Problem | Concept Chain | Root Hole | Revisit |
 | :--- | :--- | :--- | :--- | :--- |
-| *(empty — agent will populate)* | | | | |
+| [smoke_d14_gap_detection](../mistakes/smoke_d14_gap_detection.md) | [tangent_secant_smoke](../problems/tangent_secant_smoke.md) | 극한 → 미분계수 → 문제 | [극한](../concepts/극한.md) (unknown) | 2026-05-19 |
 
 ### Wrong Approach (접근법 오류)
 | Page | Problem | What Went Wrong | Better Approach | Revisit |
