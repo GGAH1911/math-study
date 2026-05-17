@@ -62,7 +62,10 @@ function readProblem(slug: string): { slug: string; fm: Record<string, any>; bod
  * problem text + mapped concepts. Otherwise (default 'concepts') uses the
  * concept-tutor prompt with prereq chain.
  */
-export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' = 'concepts'): { systemPrompt: string; pageTitle: string } {
+export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string } {
+  if (collection === 'dashboard') {
+    return buildDashboardPrompt();
+  }
   if (collection === 'problems') {
     return buildProblemPrompt(pageSlug);
   }
@@ -215,4 +218,70 @@ proficient ${masteryCount.proficient} / learning ${masteryCount.learning} / unkn
 허용: 본 문제의 풀이·해석·관련 개념·유사 문제 비교·시험 전략. 거부: 다른 잡담은 한 줄로 거부 후 본 문제로 복귀.`;
 
   return { systemPrompt, pageTitle: title || slug };
+}
+
+function buildDashboardPrompt(): { systemPrompt: string; pageTitle: string } {
+  const all = listAllConcepts();
+  const byGrade: Record<string, ConceptFM[]> = {};
+  for (const c of all) {
+    (byGrade[c.grade ?? '미분류'] ??= []).push(c);
+  }
+  const gradeOrder = ['중1','중2','중3','고1','수학1','수학2','미적분','기하','확률과통계','미분류'];
+  const masteryByLevel: Record<string, ConceptFM[]> = { unknown: [], learning: [], proficient: [], mastered: [] };
+  for (const c of all) (masteryByLevel[c.mastery] ??= []).push(c);
+
+  // Compact catalog: grade → unit list + first 4 spoke slugs
+  const catalog = gradeOrder
+    .filter((g) => byGrade[g]?.length)
+    .map((g) => {
+      const units = byGrade[g].filter((c) => c.concept_type === 'unit').map((c) => c.slug);
+      const spokesOfUnit: Record<string, string[]> = {};
+      byGrade[g].forEach((c) => {
+        if (c.concept_type === 'unit') return;
+        for (const pre of c.prerequisites) {
+          const ps = pre.split('/').pop()?.replace(/\.md$/, '');
+          if (ps && units.includes(ps)) { (spokesOfUnit[ps] ??= []).push(c.slug); break; }
+        }
+      });
+      const lines = units.map((u) => {
+        const sp = (spokesOfUnit[u] ?? []).slice(0, 6);
+        return sp.length ? `  - ${u}: ${sp.join(', ')}` : `  - ${u}`;
+      });
+      return `[${g}] (${units.length} units, ${byGrade[g].length} nodes)\n${lines.join('\n')}`;
+    })
+    .join('\n\n');
+
+  const masterySummary =
+    `proficient: ${masteryByLevel.proficient.map(c=>c.slug).join(', ') || '(없음)'}\n` +
+    `learning: ${masteryByLevel.learning.map(c=>c.slug).join(', ') || '(없음)'}\n` +
+    `unknown: ${masteryByLevel.unknown.length}개`;
+
+  const systemPrompt = `당신은 한국 수능을 준비하는 학생의 **학습 길잡이(navigator)** 입니다. 학생이 어떤 개념·문제로 가야 할지 *대시보드*에서 묻습니다.
+
+학생 정보:
+- 자기 보고 수준: 2차방정식까지 (≒ 중3 후반)
+- 목표: 수능 미적분 + 확통/기하 선택
+- 시스템: LWIP wiki, 모든 개념·문제가 단일 그래프
+
+--- Wiki Concept 카탈로그 (학년 → unit → 주요 spoke) ---
+${catalog.slice(0, 12000)}
+
+--- 학생 mastery 분포 ---
+${masterySummary}
+
+--- 튜터 길잡이 원칙 ---
+1. **항상 wiki 링크로 답변**. 단원/spoke를 추천할 땐 \`[근의 공식](/concepts/근의_공식)\` 형식의 markdown 링크 사용. 문제는 \`[2025 수능 미적분 30번](/problems/2025_수능_미적분_30)\` 형식.
+2. 학생이 "삼각함수 잘 모르겠어" 같이 막연히 물으면:
+   (a) 그 단원의 prereq 체인을 거꾸로 따라가서 가장 기초적인 미숙 노드 식별
+   (b) 학습 순서를 위상정렬로 제시 (3-5단계, 각 단계마다 단원 링크)
+   (c) 각 단원의 진단 문제 1-2개 함께 추천
+3. 학생이 단원명/개념명을 헷갈리면 가장 가까운 wiki 노드를 추천.
+4. 학생이 "오늘 뭐 공부하지?" 물으면 mastery=learning 인 단원 우선, 없으면 학생 현재 위치(이차방정식)에서 enables로 한 단계 진행 제안.
+5. **답변은 짧게 (3-7줄)**. 자세한 설명은 추천한 페이지에서 하라고 안내.
+6. 단계 제시 시 markdown 번호 목록 또는 글머리 사용. KaTeX inline \`$...$\` 가능.
+
+--- 대화 범위 ---
+허용: 학습 안내·단원 추천·진도 상담·시험 전략·학습 방법론. 거부: 잡담은 한 줄 거부 + 학습 질문 제안.`;
+
+  return { systemPrompt, pageTitle: '학습 길잡이' };
 }

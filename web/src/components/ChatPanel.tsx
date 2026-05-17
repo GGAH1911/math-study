@@ -9,7 +9,7 @@ type ChatMessage = {
 type Props = {
   slug: string;
   unitTitle: string;
-  collection?: 'concepts' | 'problems';
+  collection?: 'concepts' | 'problems' | 'dashboard';
 };
 
 const STORAGE_PREFIX = 'math-study:chat:';
@@ -160,6 +160,14 @@ function Message({ msg, onPromote, busy }: { msg: ChatMessage; onPromote?: () =>
 }
 
 export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: Props) {
+  const placeholderHint =
+    collection === 'dashboard' ? '예: 삼각함수가 헷갈리는데 어디부터 봐야 해?' :
+    collection === 'problems'  ? '예: 이 문제 어떻게 풀어?' :
+                                  '예: 근의 공식이 왜 저렇게 생겼어?';
+  const subtitle =
+    collection === 'dashboard' ? '학습 길잡이 — 무엇을 모르는지 말하면 어디로 가야 할지 알려드립니다.' :
+    collection === 'problems'  ? `"${unitTitle}" 문제에 한정한 LLM 튜터.` :
+                                  `"${unitTitle}" 단원에 한정한 LLM 튜터.`;
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -293,9 +301,9 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
     <section className="card mt-6">
       <header className="flex items-center justify-between mb-3">
         <div>
-          <h3 className="text-sm font-semibold">🤖 튜터 대화</h3>
+          <h3 className="text-sm font-semibold">{collection === 'dashboard' ? '🧭 학습 길잡이' : '🤖 튜터 대화'}</h3>
           <p className="text-xs text-[color:var(--color-muted)]">
-            "{unitTitle}" 단원에 한정한 LLM 튜터. 대화는 이 브라우저(localStorage)에 저장.
+            {subtitle} 대화는 이 브라우저(localStorage)에 저장.
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs">
@@ -324,9 +332,11 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
       >
         {messages.length === 0 ? (
           <p className="text-sm text-[color:var(--color-subtle)] py-8 text-center">
-            "{unitTitle}" 단원에 대해 무엇이든 물어보세요.
+            {collection === 'dashboard'
+              ? '무엇이 헷갈리는지 / 어디서 막혔는지 알려주세요.'
+              : `"${unitTitle}"에 대해 무엇이든 물어보세요.`}
             <br />
-            예: <span className="text-[color:var(--color-accent)]">근의 공식이 왜 저렇게 생겼어?</span>
+            <span className="text-[color:var(--color-accent)]">{placeholderHint}</span>
           </p>
         ) : (
           messages.map((m, i) => (

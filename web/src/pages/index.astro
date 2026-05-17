@@ -6,6 +6,7 @@ import DueTodayList from '../components/DueTodayList.astro';
 import ActivityFeed from '../components/ActivityFeed.astro';
 import MasteryDonut from '../components/MasteryDonut.tsx';
 import ConceptDAG from '../components/ConceptDAG.tsx';
+import ChatPanel from '../components/ChatPanel.tsx';
 import { readHealth, readConceptGraph } from '../lib/health.ts';
 
 const health = readHealth();
@@ -83,5 +84,7 @@ const total = m.unknown + m.learning + m.proficient + m.mastered;
       <DueTodayList />
       <ActivityFeed />
     </div>
+
+    <ChatPanel client:load slug="__nav__" unitTitle="학습 길잡이" collection="dashboard" />
   </div>
 </BaseLayout>

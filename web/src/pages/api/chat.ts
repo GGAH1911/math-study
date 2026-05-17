@@ -7,8 +7,8 @@ export const prerender = false;
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
 type ChatRequest = {
-  slug: string;            // <collection>/<slug> the chat is anchored to
-  collection?: 'concepts' | 'problems';
+  slug: string;            // <collection>/<slug> the chat is anchored to ('__nav__' for dashboard)
+  collection?: 'concepts' | 'problems' | 'dashboard';
   messages: ChatMessage[]; // full conversation history, last entry is the new user msg
   model?: 'haiku' | 'sonnet' | 'opus';
 };
