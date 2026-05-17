@@ -4,6 +4,7 @@ created: 2026-05-16
 updated: 2026-05-16
 concept_type: definition
 grade: 미적분
+domain: 함수
 unit: 여러가지 함수의 극한과 연속
 prerequisites: [docs/concepts/여러가지함수의_극한.md]
 enables: []

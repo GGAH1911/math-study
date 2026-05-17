@@ -5,6 +5,7 @@ const masteryEnum = z.enum(['unknown', 'learning', 'proficient', 'mastered']);
 const reviewStateEnum = z.enum(['new', 'learning', 'mature']);
 
 const gradeEnum = z.enum(['중1', '중2', '중3', '고1', '수학1', '수학2', '미적분', '기하', '확률과통계']);
+const domainEnum = z.enum(['수와식', '방정식', '함수', '도형', '확률통계', '논리']);
 
 const concepts = defineCollection({
   loader: glob({ pattern: '*.md', base: '../docs/concepts' }),
@@ -14,6 +15,7 @@ const concepts = defineCollection({
     updated: z.coerce.date().optional(),
     concept_type: z.enum(['unit', 'definition', 'theorem', 'lemma', 'example']),
     grade: gradeEnum.optional(),
+    domain: domainEnum.optional(),
     unit: z.string().optional(),
     subunit: z.string().nullable().optional(),
     prerequisites: z.array(z.string()).optional().default([]),

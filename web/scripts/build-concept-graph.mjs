@@ -33,6 +33,7 @@ function readConcepts() {
         label: slugFromPath(f).replace(/_/g, ' '),
         concept_type: fm.concept_type ?? 'definition',
         grade: fm.grade ?? null,
+        domain: fm.domain ?? null,
         unit: fm.unit ?? null,
         subunit: fm.subunit ?? null,
         mastery: fm.mastery ?? 'unknown',
@@ -105,6 +106,8 @@ function main() {
   for (const c of concepts) byType[c.concept_type] = (byType[c.concept_type] ?? 0) + 1;
   const byGrade = {};
   for (const c of concepts) if (c.grade) byGrade[c.grade] = (byGrade[c.grade] ?? 0) + 1;
+  const byDomain = {};
+  for (const c of concepts) if (c.domain) byDomain[c.domain] = (byDomain[c.domain] ?? 0) + 1;
 
   const out = {
     generatedAt: new Date().toISOString(),
@@ -117,6 +120,7 @@ function main() {
       byMastery,
       byType,
       byGrade,
+      byDomain,
     },
   };
 

@@ -21,6 +21,7 @@ type GraphNode = {
   label: string;
   concept_type: 'unit' | 'definition' | 'theorem' | 'lemma' | 'example' | string;
   grade: string | null;
+  domain: string | null;
   unit: string | null;
   subunit: string | null;
   mastery: 'unknown' | 'learning' | 'proficient' | 'mastered' | string;
@@ -80,10 +81,24 @@ const GRADE_COLOR: Record<string, string> = {
   '확률과통계': '#ec4899',
 };
 
-function ConceptNode({ data }: { data: GraphNode & { highlighted?: boolean; dimmed?: boolean } }) {
-  const color = MASTERY_COLOR[data.mastery] ?? '#a1a1aa';
+const DOMAIN_ORDER = ['수와식', '방정식', '함수', '도형', '확률통계', '논리'];
+const DOMAIN_COLOR: Record<string, string> = {
+  '수와식':   '#f59e0b',  // amber
+  '방정식':   '#ef4444',  // red
+  '함수':     '#3b82f6',  // blue (가장 큰 도메인, 메인)
+  '도형':     '#22d3ee',  // cyan
+  '확률통계': '#ec4899',  // pink
+  '논리':     '#a78bfa',  // violet
+};
+
+function ConceptNode({ data }: { data: GraphNode & { highlighted?: boolean; dimmed?: boolean; colorMode?: 'domain' | 'mastery' } }) {
   const isUnit = data.concept_type === 'unit';
+  const masteryColor = MASTERY_COLOR[data.mastery] ?? '#a1a1aa';
+  const domainColor = data.domain ? (DOMAIN_COLOR[data.domain] ?? '#71717a') : '#71717a';
   const gradeColor = data.grade ? (GRADE_COLOR[data.grade] ?? '#71717a') : '#71717a';
+  // Primary outline color = domain (학습 본질). Mastery shown as small dot.
+  const mode = data.colorMode ?? 'domain';
+  const primary = mode === 'domain' ? domainColor : masteryColor;
   return (
     <div
       className="relative"
@@ -99,37 +114,46 @@ function ConceptNode({ data }: { data: GraphNode & { highlighted?: boolean; dimm
         style={{
           minWidth: isUnit ? 168 : 140,
           padding: isUnit ? '10px 14px' : '8px 12px',
-          border: `${isUnit ? 2.5 : 2}px solid ${color}`,
-          background: data.highlighted ? `${color}30` : '#18181b',
+          border: `${isUnit ? 2.5 : 2}px solid ${primary}`,
+          background: data.highlighted ? `${primary}30` : '#18181b',
           boxShadow: data.highlighted
-            ? `0 0 0 4px ${color}40, 0 0 24px ${color}30`
+            ? `0 0 0 4px ${primary}40, 0 0 24px ${primary}30`
             : isUnit
-              ? `0 4px 16px ${color}25, inset 0 0 0 1px ${gradeColor}30`
-              : `0 2px 12px ${color}20`,
+              ? `0 4px 16px ${primary}25`
+              : `0 2px 12px ${primary}20`,
         }}
       >
         <div className="flex items-center justify-between gap-2">
-          <span className="text-base leading-none" style={{ color }} title={data.concept_type}>
+          <span className="text-base leading-none" style={{ color: primary }} title={data.concept_type}>
             {TYPE_ICON[data.concept_type] ?? '·'}
           </span>
           <span
-            className="text-[9px] uppercase tracking-wider font-semibold"
-            style={{ color }}
-          >
-            {data.mastery}
-          </span>
+            className="inline-block size-2 rounded-full"
+            style={{ background: masteryColor }}
+            title={`mastery: ${data.mastery}`}
+          />
         </div>
         <div className={`mt-1 font-semibold text-zinc-50 ${isUnit ? 'text-sm' : 'text-xs'}`}>
           {data.label}
         </div>
-        {data.grade && (
-          <div
-            className="mt-1.5 inline-block text-[9px] font-medium px-1.5 py-0.5 rounded"
-            style={{ background: `${gradeColor}25`, color: gradeColor }}
-          >
-            {data.grade}
-          </div>
-        )}
+        <div className="mt-1.5 flex gap-1 flex-wrap">
+          {data.domain && (
+            <span
+              className="text-[9px] font-medium px-1.5 py-0.5 rounded"
+              style={{ background: `${domainColor}25`, color: domainColor }}
+            >
+              {data.domain}
+            </span>
+          )}
+          {data.grade && (
+            <span
+              className="text-[9px] font-medium px-1.5 py-0.5 rounded opacity-70"
+              style={{ background: `${gradeColor}20`, color: gradeColor }}
+            >
+              {data.grade}
+            </span>
+          )}
+        </div>
       </div>
       <Handle type="source" position={Position.Bottom} style={{ visibility: 'hidden' }} />
     </div>
@@ -147,7 +171,12 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     () => GRADE_ORDER.filter((g) => data.nodes.some((n) => n.grade === g)),
     [data.nodes],
   );
+  const domainsInData = useMemo(
+    () => DOMAIN_ORDER.filter((d) => data.nodes.some((n) => n.domain === d)),
+    [data.nodes],
+  );
   const [gradeFilter, setGradeFilter] = useState<Set<string>>(new Set(gradesInData));
+  const [domainFilter, setDomainFilter] = useState<Set<string>>(new Set(domainsInData));
   const [searchTerm, setSearchTerm] = useState('');
   const rf = useReactFlow();
 
@@ -156,10 +185,11 @@ function Inner({ data, variant = 'full', highlight }: Props) {
       data.nodes
         .filter((n) => masteryFilter.has(n.mastery))
         .filter((n) => !n.grade || gradeFilter.has(n.grade))
+        .filter((n) => !n.domain || domainFilter.has(n.domain))
         .filter((n) => !searchTerm || n.label.includes(searchTerm))
         .map((n) => n.id),
     );
-  }, [data.nodes, masteryFilter, gradeFilter, searchTerm]);
+  }, [data.nodes, masteryFilter, gradeFilter, domainFilter, searchTerm]);
 
   const nodes: Node[] = useMemo(
     () =>
@@ -230,8 +260,17 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   };
   const resetGrade = () => setGradeFilter(new Set(gradesInData));
 
+  const toggleDomain = (d: string) => {
+    setDomainFilter((prev) => {
+      if (prev.size === 1 && prev.has(d)) return new Set(domainsInData);
+      return new Set([d]);
+    });
+  };
+  const resetDomain = () => setDomainFilter(new Set(domainsInData));
+
   const masteryAllActive = masteryFilter.size === ALL_MASTERY.length;
   const gradeAllActive = gradeFilter.size === gradesInData.length;
+  const domainAllActive = domainFilter.size === domainsInData.length;
 
   return (
     <div className={`relative w-full ${variant === 'mini' ? 'h-[320px]' : 'h-full'}`}>
@@ -321,10 +360,56 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               </div>
             </div>
 
+            {domainsInData.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500">도메인 (학습 본질)</label>
+                  <button
+                    onClick={resetDomain}
+                    disabled={domainAllActive}
+                    className={`text-[10px] uppercase tracking-wider transition ${
+                      domainAllActive
+                        ? 'text-emerald-400 cursor-default'
+                        : 'text-zinc-500 hover:text-zinc-100 cursor-pointer'
+                    }`}
+                  >
+                    {domainAllActive ? '● 전체' : '○ 전체로'}
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {domainsInData.map((d) => {
+                    const isActive = domainFilter.has(d);
+                    const isSole = domainFilter.size === 1 && isActive;
+                    const color = DOMAIN_COLOR[d] ?? '#71717a';
+                    return (
+                      <button
+                        key={d}
+                        onClick={() => toggleDomain(d)}
+                        className="px-2 py-1 rounded-md text-xs font-medium transition border flex items-center gap-1.5"
+                        style={{
+                          background: isSole ? `${color}30` : (isActive ? `${color}10` : 'transparent'),
+                          borderColor: isSole ? color : (isActive ? `${color}55` : '#27272a'),
+                          color: isActive ? color : '#52525b',
+                          opacity: !domainAllActive && !isActive ? 0.4 : 1,
+                        }}
+                        title={isSole ? '클릭하면 전체로 복귀' : '이 도메인만 보기'}
+                      >
+                        <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
+                        <span>{d}</span>
+                        <span className="text-zinc-500 font-normal">
+                          {data.nodes.filter((n) => n.domain === d).length}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {gradesInData.length > 0 && (
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500">학년</label>
+                  <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500">학년 (보조)</label>
                   <button
                     onClick={resetGrade}
                     disabled={gradeAllActive}
@@ -392,6 +477,17 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               <div className="flex gap-1.5 flex-wrap">
                 <span className={`chip chip-mastery-${selectedNode.mastery}`}>{selectedNode.mastery}</span>
                 <span className="chip">{selectedNode.concept_type}</span>
+                {selectedNode.domain && (
+                  <span
+                    className="chip"
+                    style={{
+                      color: DOMAIN_COLOR[selectedNode.domain] ?? '#a1a1aa',
+                      borderColor: `${DOMAIN_COLOR[selectedNode.domain] ?? '#a1a1aa'}55`,
+                    }}
+                  >
+                    {selectedNode.domain}
+                  </span>
+                )}
                 {selectedNode.grade && (
                   <span
                     className="chip"

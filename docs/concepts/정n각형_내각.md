@@ -4,6 +4,7 @@ created: 2026-05-16
 updated: 2026-05-16
 concept_type: example
 grade: 중1
+domain: 도형
 unit: 평면도형
 prerequisites: [docs/concepts/평면도형.md]
 enables: []
