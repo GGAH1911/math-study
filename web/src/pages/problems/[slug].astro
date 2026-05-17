@@ -32,7 +32,19 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
           {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">tier</dt><dd><span class="chip">{fm.killer_tier}</span></dd></div>}
           {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">cognitive</dt><dd>{fm.cognitive_type}</dd></div>}
           {fm.expected_time_sec && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">예상 시간</dt><dd>{Math.round(fm.expected_time_sec / 60)}분</dd></div>}
-          {fm.answer && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답</dt><dd class="font-mono">{fm.answer}</dd></div>}
+          {fm.answer && (
+            <div class="flex justify-between items-center"><dt class="text-[color:var(--color-muted)]">정답</dt>
+              <dd>
+                <button
+                  type="button"
+                  class="answer-blur font-mono text-sm px-2 py-0.5 rounded border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] hover:border-[color:var(--color-accent)] transition cursor-pointer"
+                  data-answer={fm.answer}
+                  aria-label="정답 보기"
+                  onclick="this.classList.toggle('revealed')"
+                >{fm.answer}</button>
+              </dd>
+            </div>
+          )}
           {fm.official_pass_rate && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답률</dt><dd>{fm.official_pass_rate}%</dd></div>}
           {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">difficulty</dt><dd>{fm.difficulty}</dd></div>}
           {fm.last_attempted && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">attempted</dt><dd>{fm.last_attempted.toISOString().slice(0,10)}</dd></div>}

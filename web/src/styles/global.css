@@ -184,4 +184,26 @@
       radial-gradient(60% 100% at 20% 0%, rgba(129,140,248,0.15) 0%, transparent 60%),
       radial-gradient(40% 80% at 100% 0%, rgba(244,63,94,0.1) 0%, transparent 60%);
   }
+
+  /* Spoiler / answer reveal */
+  .answer-blur {
+    filter: blur(7px);
+    user-select: none;
+    color: var(--color-muted);
+    transition: filter 200ms ease, color 200ms ease;
+  }
+  .answer-blur::before {
+    content: "🔒 ";
+    filter: blur(0);
+    color: var(--color-subtle);
+    font-family: var(--font-sans);
+  }
+  .answer-blur.revealed {
+    filter: none;
+    color: var(--color-accent);
+    user-select: text;
+  }
+  .answer-blur.revealed::before {
+    content: "";
+  }
 }
