@@ -3,6 +3,7 @@ export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
+import RegenerateBodyButton from '../../components/RegenerateBodyButton.tsx';
 
 export async function getStaticPaths() {
   const concepts = await getCollection('concepts');
@@ -73,6 +74,13 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
           그래프에서 보기 →
         </a>
       </section>
+
+      {fm.concept_type !== 'unit' && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">본문 갱신</h3>
+          <RegenerateBodyButton client:load slug={entry.id} />
+        </section>
+      )}
     </aside>
   </div>
 </BaseLayout>

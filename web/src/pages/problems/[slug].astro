@@ -24,10 +24,21 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
         <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">상태</h3>
         <dl class="text-sm space-y-1.5">
           <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">status</dt><dd><span class={`chip chip-status-${fm.status}`}>{fm.status}</span></dd></div>
+          {fm.format && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">format</dt><dd>{fm.format}</dd></div>}
+          {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">tier</dt><dd><span class="chip">{fm.killer_tier}</span></dd></div>}
+          {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">cognitive</dt><dd>{fm.cognitive_type}</dd></div>}
+          {fm.expected_time_sec && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">예상 시간</dt><dd>{Math.round(fm.expected_time_sec / 60)}분</dd></div>}
+          {fm.answer && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답</dt><dd class="font-mono">{fm.answer}</dd></div>}
+          {fm.official_pass_rate && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답률</dt><dd>{fm.official_pass_rate}%</dd></div>}
           {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">difficulty</dt><dd>{fm.difficulty}</dd></div>}
           {fm.last_attempted && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">attempted</dt><dd>{fm.last_attempted.toISOString().slice(0,10)}</dd></div>}
           {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
         </dl>
+        {fm.exam_intent && (
+          <p class="mt-3 pt-3 border-t border-[color:var(--color-border)] text-xs text-[color:var(--color-muted)] leading-relaxed">
+            🎯 {fm.exam_intent}
+          </p>
+        )}
       </section>
 
       {fm.source && (

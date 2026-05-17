@@ -50,6 +50,19 @@ const problems = defineCollection({
     review_state: reviewStateEnum.optional(),
     next_review: z.coerce.date().optional(),
     figure_engine: z.string().optional(),
+    // Tier 1 extended (Stage 1 KICE ingest)
+    format: z.enum(['choice', 'numeric', 'descriptive']).optional(),
+    has_image: z.boolean().optional(),
+    image_paths: z.array(z.string()).optional().default([]),
+    answer: z.string().nullable().optional(),
+    official_pass_rate: z.number().nullable().optional(),
+    official_solution_url: z.string().nullable().optional(),
+    // Tier 2 (LLM-mapped)
+    unit: z.string().nullable().optional(),
+    exam_intent: z.string().optional(),
+    killer_tier: z.enum(['early', 'mid', 'high', 'killer']).nullable().optional(),
+    cognitive_type: z.enum(['계산', '개념', '응용', '추론', '통합']).nullable().optional(),
+    expected_time_sec: z.number().nullable().optional(),
   }),
 });
 
