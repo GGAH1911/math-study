@@ -6,6 +6,7 @@ import matter from 'gray-matter';
 
 const WEB_ROOT = process.cwd();
 const CONCEPTS_DIR = resolve(WEB_ROOT, '..', 'docs', 'concepts');
+const PROBLEMS_DIR = resolve(WEB_ROOT, '..', 'docs', 'problems');
 
 type ConceptFM = {
   slug: string;
@@ -48,15 +49,23 @@ function listAllConcepts(): ConceptFM[] {
     .filter((c): c is ConceptFM => c !== null);
 }
 
+function readProblem(slug: string): { slug: string; fm: Record<string, any>; body: string } | null {
+  const p = join(PROBLEMS_DIR, `${slug}.md`);
+  if (!existsSync(p)) return null;
+  const parsed = matter(readFileSync(p, 'utf-8'));
+  return { slug, fm: parsed.data, body: parsed.content };
+}
+
 /**
  * Build the math-tutor system prompt for a given page slug.
- * Includes:
- *  - the page's own markdown body (학습 목표 + 다룰 정의/정리/예제)
- *  - each direct prerequisite's body excerpt (학습 목표만)
- *  - the student's mastery overview across the whole graph
- *  - LWIP Chapter 7 governance summary (so the tutor follows house rules)
+ * If `collection === 'problems'`, builds a problem-tutor prompt with the
+ * problem text + mapped concepts. Otherwise (default 'concepts') uses the
+ * concept-tutor prompt with prereq chain.
  */
-export function buildTutorPrompt(pageSlug: string): { systemPrompt: string; pageTitle: string } {
+export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' = 'concepts'): { systemPrompt: string; pageTitle: string } {
+  if (collection === 'problems') {
+    return buildProblemPrompt(pageSlug);
+  }
   const page = readConcept(pageSlug);
   if (!page) {
     return {
@@ -144,4 +153,66 @@ ${enablesInfo || '(아직 정의 안 됨)'}
 **경계 판단**: 애매하면 "이게 학생의 수학 학습에 직접 도움이 되는가?"를 기준으로. 도움이 된다고 판단되면 답변, 아니면 거부. 학생이 잠시 휴식 차원에서 한두 마디 잡담을 시도하면 한 줄로 받아주되 곧 학습 본문으로 복귀.`;
 
   return { systemPrompt, pageTitle: page.unit ?? page.slug };
+}
+
+function buildProblemPrompt(slug: string): { systemPrompt: string; pageTitle: string } {
+  const prob = readProblem(slug);
+  if (!prob) {
+    return {
+      systemPrompt: `You are a Korean high-school math tutor. The problem slug "${slug}" was not found. Apologize politely.`,
+      pageTitle: slug,
+    };
+  }
+  const fm = prob.fm;
+  const src = fm.source ?? {};
+  const conceptSlugs: string[] = (fm.concepts ?? []).map((c: string) => c.split('/').pop()?.replace(/\.md$/, '') ?? '').filter(Boolean);
+  const conceptInfo = conceptSlugs.slice(0, 6).map((s) => {
+    const c = readConcept(s);
+    return c ? `  - ${c.slug} (${c.concept_type}, mastery=${c.mastery})` : `  - ${s}`;
+  }).join('\n');
+
+  const allConcepts = listAllConcepts();
+  const masteryCount = { unknown: 0, learning: 0, proficient: 0, mastered: 0 } as Record<string, number>;
+  for (const c of allConcepts) masteryCount[c.mastery] = (masteryCount[c.mastery] ?? 0) + 1;
+
+  const title = `${src.year ?? ''} ${src.exam_type ?? ''} ${src.subject ?? ''} ${src.number ?? ''}번`.trim();
+
+  const systemPrompt = `당신은 한국 수능을 준비하는 학생의 수학 튜터입니다. 학생이 지금 보고 있는 문제 한 개에 대해 풀이를 돕습니다.
+
+학생 정보:
+- 자기 보고 수준: 2차방정식까지 (≒ 중3 후반)
+- 목표: 수능 수학Ⅱ 미적분
+- 학습 시스템: LWIP 기반 개념 신경망 wiki
+
+--- 현재 문제 ---
+${title} (${src.score ?? '?'}점)
+출처: ${src.agency ?? '?'} · ${src.year ?? '?'}학년도 ${src.exam_type ?? ''} ${src.session ?? ''} · ${src.subject ?? ''}
+정답: ${fm.answer || '(미공개)'}
+출제 의도: ${fm.exam_intent || '(미상)'}
+난이도: ${fm.killer_tier || '?'} · cognitive: ${fm.cognitive_type || '?'} · 예상 ${fm.expected_time_sec ?? '?'}초
+매핑된 단원: ${fm.unit || '?'}
+
+문제 본문:
+${prob.body.trim().slice(0, 3500)}
+
+--- 매핑된 개념 (학생이 이미 wiki에서 학습 중) ---
+${conceptInfo || '(없음)'}
+
+--- 학생 전체 mastery 분포 ---
+proficient ${masteryCount.proficient} / learning ${masteryCount.learning} / unknown ${masteryCount.unknown} / mastered ${masteryCount.mastered}
+
+--- 튜터 원칙 ---
+1. 한국어로 답변. 수식은 KaTeX inline \`$...$\` 또는 display \`$$...$$\`.
+2. **풀이는 단계별로**. 각 단계마다 "왜 이걸 하는가"를 한 줄.
+3. 학생이 막힌 단계만 짧게 힌트 (정답 즉시 공개 X). 학생이 "정답 알려줘"라고 명시 요청하면 풀이 + 정답.
+4. 학생의 mastery 상태 고려 — 모르는 상위 개념 끌어들이지 말 것.
+5. 풀이에 수치/대수 계산이 있으면 sympy로 검산 가능한 표현 유지.
+6. 답변은 markdown. 짧고 정확하게.
+7. 학생이 풀고 정답 맞췄다면 칭찬 + 핵심 통찰 한 줄 정리 → mastery 승급 기준 알림.
+8. 틀린 답을 가져오면 어느 단계가 어긋났는지 짚어주고, 매핑된 개념의 어느 정의/정리에 해당하는지 안내.
+
+--- 대화 범위 ---
+허용: 본 문제의 풀이·해석·관련 개념·유사 문제 비교·시험 전략. 거부: 다른 잡담은 한 줄로 거부 후 본 문제로 복귀.`;
+
+  return { systemPrompt, pageTitle: title || slug };
 }

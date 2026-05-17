@@ -9,6 +9,7 @@ type ChatMessage = {
 type Props = {
   slug: string;
   unitTitle: string;
+  collection?: 'concepts' | 'problems';
 };
 
 const STORAGE_PREFIX = 'math-study:chat:';
@@ -158,7 +159,7 @@ function Message({ msg, onPromote, busy }: { msg: ChatMessage; onPromote?: () =>
   );
 }
 
-export default function ChatPanel({ slug, unitTitle }: Props) {
+export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: Props) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
@@ -166,15 +167,17 @@ export default function ChatPanel({ slug, unitTitle }: Props) {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
+  const storageKey = `${collection}:${slug}`;
+
   // Load history on mount
   useEffect(() => {
-    setMessages(loadHistory(slug));
-  }, [slug]);
+    setMessages(loadHistory(storageKey));
+  }, [storageKey]);
 
   // Persist on every change
   useEffect(() => {
-    if (messages.length > 0) saveHistory(slug, messages);
-  }, [slug, messages]);
+    if (messages.length > 0) saveHistory(storageKey, messages);
+  }, [storageKey, messages]);
 
   // Auto-scroll to bottom on new content
   useEffect(() => {
@@ -199,7 +202,7 @@ export default function ChatPanel({ slug, unitTitle }: Props) {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, messages: all, model }),
+        body: JSON.stringify({ slug, collection, messages: all, model }),
       });
       if (!res.ok || !res.body) {
         throw new Error(`HTTP ${res.status}`);
@@ -283,7 +286,7 @@ export default function ChatPanel({ slug, unitTitle }: Props) {
   const clearChat = () => {
     if (!confirm('대화를 모두 지울까요?')) return;
     setMessages([]);
-    try { window.localStorage.removeItem(STORAGE_PREFIX + slug); } catch {}
+    try { window.localStorage.removeItem(STORAGE_PREFIX + storageKey); } catch {}
   };
 
   return (

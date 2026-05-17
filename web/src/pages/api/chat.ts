@@ -7,7 +7,8 @@ export const prerender = false;
 type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
 type ChatRequest = {
-  slug: string;            // concepts/<slug> the chat is anchored to
+  slug: string;            // <collection>/<slug> the chat is anchored to
+  collection?: 'concepts' | 'problems';
   messages: ChatMessage[]; // full conversation history, last entry is the new user msg
   model?: 'haiku' | 'sonnet' | 'opus';
 };
@@ -26,7 +27,7 @@ function formatHistory(messages: ChatMessage[]): string {
 
 export const POST: APIRoute = async ({ request }) => {
   const body = (await request.json()) as ChatRequest;
-  const { slug, messages, model = 'haiku' } = body;
+  const { slug, collection = 'concepts', messages, model = 'haiku' } = body;
 
   if (!slug || !Array.isArray(messages) || messages.length === 0) {
     return new Response(JSON.stringify({ error: 'slug + messages required' }), {
@@ -42,7 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const { systemPrompt } = buildTutorPrompt(slug);
+  const { systemPrompt } = buildTutorPrompt(slug, collection);
   const userPrompt = (formatHistory(messages) + '\n' + lastUser.content).trim();
 
   const args = [
