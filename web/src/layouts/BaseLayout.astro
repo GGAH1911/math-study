@@ -31,5 +31,73 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
         <slot />
       </main>
     </div>
+
+    <!-- Auto-enhance any ```python code block with a Run button (sympy via /api/sympy) -->
+    <script is:inline>
+      (function () {
+        const RUNNABLE_LANGS = ['python', 'py'];
+        function enhance() {
+          const blocks = document.querySelectorAll('pre > code');
+          blocks.forEach((code) => {
+            const pre = code.parentElement;
+            if (!pre || pre.dataset.sympyEnhanced) return;
+            const cls = code.className || '';
+            const m = cls.match(/language-(\w+)/);
+            if (!m || !RUNNABLE_LANGS.includes(m[1].toLowerCase())) return;
+            pre.dataset.sympyEnhanced = '1';
+            pre.style.position = 'relative';
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = '▶ 실행';
+            btn.className = 'sympy-run-btn';
+            btn.title = 'sympy로 이 코드 실행';
+            pre.appendChild(btn);
+
+            const out = document.createElement('div');
+            out.className = 'sympy-out';
+            out.hidden = true;
+            pre.insertAdjacentElement('afterend', out);
+
+            btn.addEventListener('click', async () => {
+              if (btn.disabled) return;
+              btn.disabled = true;
+              btn.textContent = '⏳ 실행 중…';
+              out.hidden = false;
+              out.className = 'sympy-out running';
+              out.textContent = '...';
+              try {
+                const res = await fetch('/api/sympy', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ code: code.textContent || '' }),
+                });
+                const j = await res.json();
+                if (j.ok) {
+                  out.className = 'sympy-out success';
+                  out.textContent = j.stdout || '(no output)';
+                } else {
+                  out.className = 'sympy-out error';
+                  out.textContent = (j.stderr || j.error || `exit ${j.exit_code}`).trim();
+                }
+                if (j.truncated) out.textContent += '\n... (truncated)';
+              } catch (e) {
+                out.className = 'sympy-out error';
+                out.textContent = '요청 실패: ' + (e instanceof Error ? e.message : String(e));
+              } finally {
+                btn.disabled = false;
+                btn.textContent = '▶ 다시 실행';
+              }
+            });
+          });
+        }
+        enhance();
+        // Astro view transitions / SPA navigation
+        document.addEventListener('astro:page-load', enhance);
+        // Streaming markdown in ChatPanel — observe DOM mutations
+        const obs = new MutationObserver(() => enhance());
+        obs.observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
   </body>
 </html>

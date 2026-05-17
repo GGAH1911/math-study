@@ -185,6 +185,43 @@
       radial-gradient(40% 80% at 100% 0%, rgba(244,63,94,0.1) 0%, transparent 60%);
   }
 
+  /* Inline sympy run button + output */
+  .sympy-run-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: #c7d2fe;
+    background: rgba(129, 140, 248, 0.15);
+    border: 1px solid rgba(129, 140, 248, 0.4);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 120ms, color 120ms;
+  }
+  .sympy-run-btn:hover { background: rgba(129, 140, 248, 0.3); color: white; }
+  .sympy-run-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .sympy-out {
+    margin: -0.5rem 0 0.75rem;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    border-radius: 0 0 6px 6px;
+    border: 1px solid var(--color-border);
+    border-top: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+  }
+  .sympy-out.running { background: rgba(129,140,248,0.07); color: var(--color-muted); }
+  .sympy-out.success { background: rgba(16,185,129,0.08); color: #6ee7b7; }
+  .sympy-out.error   { background: rgba(244,63,94,0.08);  color: #fda4af; }
+  .sympy-out::before { content: '⮑ '; opacity: 0.6; font-family: var(--font-sans); }
+
   /* Spoiler / answer reveal */
   .answer-blur {
     filter: blur(7px);
