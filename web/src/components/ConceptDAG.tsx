@@ -226,15 +226,64 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     [data.edges, filteredIds, selected],
   );
 
+  // Center-and-zoom helper: smooth pan to a node + comfortable zoom
+  const flyTo = useCallback((nodeId: string) => {
+    const n = data.nodes.find((x) => x.id === nodeId);
+    if (!n) return;
+    rf.setCenter(n.x, n.y, { zoom: 1.25, duration: 500 });
+  }, [rf, data.nodes]);
+
+  const goto = useCallback((nodeId: string) => {
+    setSelected(nodeId);
+    flyTo(nodeId);
+  }, [flyTo]);
+
   const onNodeClick: NodeMouseHandler = useCallback((_, node) => {
-    setSelected(node.id);
-  }, []);
+    goto(node.id);
+  }, [goto]);
 
   useEffect(() => {
     const t = setTimeout(() => {
-      rf.fitView({ padding: 0.2, duration: 400 });
+      if (highlight) {
+        goto(highlight);
+      } else {
+        rf.fitView({ padding: 0.2, duration: 400 });
+      }
     }, 50);
     return () => clearTimeout(t);
+  }, [rf, highlight, goto]);
+
+  // 검색어가 정확히 한 노드만 매치하면 그리로 이동
+  useEffect(() => {
+    if (!searchTerm) return;
+    const matches = data.nodes.filter((n) => n.label.includes(searchTerm));
+    if (matches.length === 1) {
+      const id = matches[0].id;
+      setSelected(id);
+      flyTo(id);
+    } else if (matches.length > 1 && matches.length <= 12) {
+      // 다수 매치: 매치된 노드들이 다 보이도록 fit
+      rf.fitView({ nodes: matches.map((m) => ({ id: m.id })), padding: 0.3, duration: 400 });
+    }
+  }, [searchTerm, data.nodes, rf, flyTo]);
+
+  // 키보드 단축키 (입력란에 포커스 없을 때만)
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') {
+        if (e.key === 'Escape') (e.target as HTMLElement).blur();
+        return;
+      }
+      if (e.key === 'f') { rf.fitView({ padding: 0.2, duration: 400 }); e.preventDefault(); }
+      else if (e.key === 'Escape') { setSelected(null); }
+      else if (e.key === '/') {
+        const inp = document.querySelector<HTMLInputElement>('.dag-search-input');
+        if (inp) { inp.focus(); e.preventDefault(); }
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
   }, [rf]);
 
   const selectedNode = data.nodes.find((n) => n.id === selected);
@@ -286,8 +335,13 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         fitView
         fitViewOptions={{ padding: 0.2 }}
         defaultEdgeOptions={{ type: 'smoothstep' }}
-        minZoom={0.3}
+        minZoom={0.15}
         maxZoom={2.5}
+        zoomOnScroll={true}
+        panOnScroll={false}
+        panOnDrag={true}
+        selectionOnDrag={false}
+        zoomActivationKeyCode={null}
       >
         <Background gap={20} size={1} color="#27272a" />
         {variant === 'full' && (
@@ -308,13 +362,16 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           {/* Left filter panel */}
           <div className="absolute top-4 left-4 z-10 w-72 card p-3 space-y-3 max-h-[calc(100%-2rem)] overflow-auto">
             <div>
-              <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">검색</label>
+              <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">검색 <span className="text-zinc-600 normal-case tracking-normal">(/ 키)</span></label>
               <input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="개념 이름…"
-                className="w-full px-2 py-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-sm focus:outline-none focus:border-indigo-400"
+                className="dag-search-input w-full px-2 py-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-sm focus:outline-none focus:border-indigo-400"
               />
+              <p className="mt-1 text-[10px] text-zinc-600">
+                f = fit · esc = 닫기 · 노드/링크 클릭 = 자동 이동
+              </p>
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -508,7 +565,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                     {selectedNode.prerequisites.map((p) => (
                       <li key={p}>
                         <button
-                          onClick={() => setSelected(p)}
+                          onClick={() => goto(p)}
                           className="text-indigo-400 hover:underline text-left"
                         >{p}</button>
                       </li>
@@ -523,7 +580,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                     {selectedNode.enables.map((p) => (
                       <li key={p}>
                         <button
-                          onClick={() => setSelected(p)}
+                          onClick={() => goto(p)}
                           className="text-indigo-400 hover:underline text-left"
                         >{p}</button>
                       </li>
