@@ -1,0 +1,15 @@
+{
+  "text_sha": "a1ad967c4919",
+  "meta": {
+    "searchable_text": "그림과 같이 입체도형을 그린 4개의 포스터가 있다. 이 중에서 서로 다른 2개의 포스터를 택하여 출입문의 상단과 하단에 각각 붙이는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열을 이용한 입체도형 포스터 배치 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

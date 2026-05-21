@@ -1,0 +1,18 @@
+{
+  "text_sha": "fa67a92fadb1",
+  "meta": {
+    "searchable_text": "그림과 같이 BC = 6인 삼각형 ABC에서 선분 AC를 4:3으로 내분하는 점을 D라 하자. 선분 BD 위의 점 E가 ∠DAE = ∠DBC, $\\frac{\\sin \\angle DAE}{\\sin \\angle EDA} = \\frac{1}{3}$을 만족시킨다. AE = 5일 때, 삼각형 BCD의 외접원의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "외접원",
+      "내분점",
+      "각의_조건"
+    ],
+    "exam_intent": "정현법칙과 외접원의 성질을 이용한 원의 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

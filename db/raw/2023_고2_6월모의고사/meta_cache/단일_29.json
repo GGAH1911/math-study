@@ -1,0 +1,17 @@
+{
+  "text_sha": "d9d00413f253",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = AC = 1$, $\\angle BAC = \\frac{2\\pi}{3}$인 삼각형 ABC 모양의 종이가 있다. 선분 BC 위의 점 D, 선분 AB 위의 점 E, 선분 AC 위의 점 F에 대하여 선분 EF를 접는 선으로 하여 점 A가 점 D와 겹쳐지도록 접었다. 삼각형 BDE와 삼각형 DCF의 외접원의 반지름의 길이의 비가 2:1일 때, 선분 DF의 길이는 $\\frac{\\sqrt{a}}{b}$이다. $a+b$의 값을 구하시오. (단, 종이의 두께는 고려하지 않으며, $a$와 $b$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "외접원",
+      "반지름의_비"
+    ],
+    "exam_intent": "종이접기 조건과 외접원 반지름 비를 이용한 기하문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

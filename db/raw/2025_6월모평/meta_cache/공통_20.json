@@ -1,0 +1,17 @@
+{
+  "text_sha": "9a98c9f1c61b",
+  "meta": {
+    "searchable_text": "5 이하의 두 자연수 $m$, $n$에 대하여 열린구간 $(0, 2\\pi)$에서 정의된 함수 $y = \\sin x$의 그래프가 직선과 만나는 점의 집합들 $A$, $B$, $C$를 정의한다. $|A \\cup B \\cup C| = 3$이 되도록 하는 순서쌍 $(m, n)$에 대하여 특정 값의 최댓값 $M$과 최솟값 $m$을 구하여 $M \\times m$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수",
+      "함수와_그래프",
+      "경우의_수"
+    ],
+    "exam_intent": "삼각함수 그래프와 직선의 교점 개수 조건을 이용한 경우의 수 분석 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

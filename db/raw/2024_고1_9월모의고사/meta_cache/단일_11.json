@@ -1,0 +1,16 @@
+{
+  "text_sha": "96bd26328ce3",
+  "meta": {
+    "searchable_text": "연립부등식 $x^2 - x - 12 \\leq 0$, $x^2 - 3x + 2 \\geq 0$을 만족시키는 모든 정수 $x$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "이차부등식"
+    ],
+    "exam_intent": "연립부등식의 해를 구하고 정수해의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

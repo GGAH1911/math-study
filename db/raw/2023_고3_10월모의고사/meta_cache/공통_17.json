@@ -1,0 +1,16 @@
+{
+  "text_sha": "ce264cac855c",
+  "meta": {
+    "searchable_text": "삼차함수 $f(x)$에 대하여 함수 $g(x) = f(x)^2$라 하자. 곡선 위의 점 $(3, f(3)^2)$에서의 접선의 기울기가 4일 때, $g'(3)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_기울기",
+      "합성함수의_미분"
+    ],
+    "exam_intent": "삼차함수 제곱에서 미분과 접선 기울기 조건을 활용한 도함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

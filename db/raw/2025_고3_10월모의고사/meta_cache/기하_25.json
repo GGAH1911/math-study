@@ -1,0 +1,18 @@
+{
+  "text_sha": "274ca7874c01",
+  "meta": {
+    "searchable_text": "한 변의 길이가 2인 정사각형 BCDE를 밑면으로 하고 $AB = AC = AD = AE$인 사각뿔 ABCDE가 있다. 직선 AC와 평면 BCDE가 이루는 각의 크기가 $\\frac{\\pi}{3}$일 때, 삼각형 ABC의 넓이를 구하는 문제이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "직선과_평면이_이루는_각",
+      "사각뿔",
+      "공간_좌표",
+      "삼각형의_넓이_계산"
+    ],
+    "exam_intent": "직선과 평면이 이루는 각을 이용해 입체도형의 높이를 구하고 삼각형 넓이를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

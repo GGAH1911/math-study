@@ -1,0 +1,17 @@
+{
+  "text_sha": "b3058d0c0a9c",
+  "meta": {
+    "searchable_text": "초점이 F인 포물선 $x^2 = 4py$ (단, $p > 0$) 위의 점 중 제1사분면에 있는 점 A에서의 접선의 기울기와 직선 OA의 기울기의 곱이 $\\frac{2}{3}$이다. $AF = 14$일 때, $p$의 값은? (단, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_방정식",
+      "접선의_기울기",
+      "거리공식"
+    ],
+    "exam_intent": "포물선의 기울기 조건과 거리로부터 매개변수를 구하는 능력을 평가한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

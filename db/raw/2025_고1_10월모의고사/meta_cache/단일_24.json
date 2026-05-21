@@ -1,0 +1,16 @@
+{
+  "text_sha": "478fd71b6850",
+  "meta": {
+    "searchable_text": "두 행렬 $A = \\begin{pmatrix} a & 4 \\\\ 3 & 4 \\end{pmatrix}$, $B = \\begin{pmatrix} b & 8 \\\\ 2 & 8 \\end{pmatrix}$에 대하여 주어진 조건을 만족할 때, 미지수의 값을 구하는 문제. (단, $a$, $b$는 상수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "행렬",
+      "선형방정식"
+    ],
+    "exam_intent": "행렬 연산과 미지수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

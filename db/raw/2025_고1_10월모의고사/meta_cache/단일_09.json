@@ -1,0 +1,16 @@
+{
+  "text_sha": "d5c2a941c0ac",
+  "meta": {
+    "searchable_text": "x에 대한 다항식을 일차식으로 나누었을 때의 나머지가 주어진 상수일 조건에서, 다항식의 계수인 상수의 값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "나머지정리를 이용해 다항식의 계수를 결정하는 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

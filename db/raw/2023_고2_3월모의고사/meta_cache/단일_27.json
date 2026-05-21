@@ -1,0 +1,16 @@
+{
+  "text_sha": "daa964cf1eb2",
+  "meta": {
+    "searchable_text": "서로 다른 네 종류의 인형이 각각 2개씩 있다. 이 8개의 인형 중에서 5개를 선택하는 경우의 수를 구하시오. (단, 같은 종류의 인형끼리는 서로 구별하지 않는다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "제약조건"
+    ],
+    "exam_intent": "제한 조건이 있는 중복조합 문제 해결 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

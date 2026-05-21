@@ -1,0 +1,16 @@
+{
+  "text_sha": "d1af9f6e0b35",
+  "meta": {
+    "searchable_text": "제곱근이 포함된 식의 계산. ⋄(근호 글리프)와 숫자 8, 4, 32로 이루어진 계산 문제. 정확한 연산 구조는 글리프 손실로 인해 불완전하나, 제곱근의 성질을 이용한 기본 계산으로 추정됨.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "근호계산",
+      "제곱근의_성질"
+    ],
+    "exam_intent": "제곱근이 포함된 식의 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

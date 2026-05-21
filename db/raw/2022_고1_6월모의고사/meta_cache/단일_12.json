@@ -1,0 +1,16 @@
+{
+  "text_sha": "11978cc0877d",
+  "meta": {
+    "searchable_text": "연립방정식의 해를 $x, y$라 할 때, $x^2 + y^2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "연립일차방정식의_해",
+      "대수적_계산"
+    ],
+    "exam_intent": "연립일차방정식을 풀고 해에 대한 식의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

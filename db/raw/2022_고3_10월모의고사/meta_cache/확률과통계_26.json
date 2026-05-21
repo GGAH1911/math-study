@@ -1,0 +1,16 @@
+{
+  "text_sha": "f84866c8316d",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 자연수 $a, b, c, d$의 모든 순서쌍 $(a, b, c, d)$의 개수는? (가) $a \\times b \\times c \\times d = 8$ (나) $a + b + c + d \\leq 10$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "경우의_수",
+      "순열"
+    ],
+    "exam_intent": "곱과 합 조건을 동시에 만족하는 자연수 순서쌍의 개수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

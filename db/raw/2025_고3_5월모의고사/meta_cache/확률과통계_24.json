@@ -1,0 +1,15 @@
+{
+  "text_sha": "a8de13ebcd47",
+  "meta": {
+    "searchable_text": "다항식 $\\left(\\frac{1}{x^2} + x\\right)^8$의 전개식에서 $x^5$의 계수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "이항정리"
+    ],
+    "exam_intent": "이항정리로 특정 차수 항의 계수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "5a538d7985a8",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 등비수열이고, 수열 $\\{b_n\\}$을 모든 자연수 $n$에 대하여 정의할 때, 수열 $\\{b_n\\}$은 다음 조건을 만족한다. (가) 급수 $\\sum_{n=1}^{\\infty} (a_{2n-1} + b_n)$은 수렴하고 그 합은 3이다. (나) 급수 $\\sum_{n=1}^{\\infty} a_{2n}$은 수렴하고 그 합은 8이다. 주어진 조건에서 $\\sum_{n=1}^{\\infty} b_n$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등비급수",
+      "급수의_수렴성",
+      "등비수열"
+    ],
+    "exam_intent": "등비수열 조건과 부분 급수 합으로부터 관련 급수의 합 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "cda802c44dee",
+  "meta": {
+    "searchable_text": "사각형 ABCD가 다음 조건을 만족시킨다. (가) 두 벡터 $\\vec{AD}$, $\\vec{BC}$는 서로 평행하다. (나) $\\vec{AC} = 3\\vec{AB} + 2\\vec{AD}$를 만족시키는 실수가 존재한다. 삼각형 ABD의 넓이가 12일 때, 사각형 ABCD의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_평행",
+      "벡터_분해",
+      "사각형의_넓이"
+    ],
+    "exam_intent": "벡터 조건으로부터 사다리꼴의 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

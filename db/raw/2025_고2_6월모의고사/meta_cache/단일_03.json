@@ -1,0 +1,16 @@
+{
+  "text_sha": "89f06ff9d711",
+  "meta": {
+    "searchable_text": "반지름의 길이가 2이고 넓이가 $2\\sqrt{3}$인 부채꼴의 중심각의 크기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "부채꼴의_넓이",
+      "중심각"
+    ],
+    "exam_intent": "부채꼴 넓이 공식으로부터 중심각을 구할 수 있는지 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

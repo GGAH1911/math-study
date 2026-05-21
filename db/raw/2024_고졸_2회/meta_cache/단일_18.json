@@ -1,0 +1,17 @@
+{
+  "text_sha": "f838ffe843b8",
+  "meta": {
+    "searchable_text": "무리함수를 x축 방향으로, y축 방향으로 각각 평행이동하여 다른 무리함수의 그래프가 되도록 할 때, 평행이동 거리를 나타내는 두 상수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "무리함수",
+      "평행이동",
+      "함수의_변환"
+    ],
+    "exam_intent": "무리함수의 평행이동 개념 이해 및 상수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

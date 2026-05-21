@@ -1,0 +1,17 @@
+{
+  "text_sha": "e6ae154d1c83",
+  "meta": {
+    "searchable_text": "다항식의 거듭제곱을 전개한 식에서 특정 항의 계수 조건을 만족하는 상수의 값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식_전개",
+      "이항정리",
+      "계수_계산"
+    ],
+    "exam_intent": "다항식 전개와 계수 비교를 통한 미지수 결정 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

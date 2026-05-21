@@ -1,0 +1,17 @@
+{
+  "text_sha": "5a03e51fe37b",
+  "meta": {
+    "searchable_text": "공비가 $\\frac{1}{2}$인 등비수열 $\\{a_n\\}$과 수열 $\\{b_n\\}$이 다음 조건을 만족시킨다.\n\n(가) 모든 자연수 $n$에 대하여 $a_n + b_n = 10$이다.\n\n(나) $\\sum_{n=N}^{\\infty} \\frac{1}{a_n b_n} = 2^{1-N}$을 만족시키는 자연수 $N$의 최솟값은 2이다.\n\n$a_1 + 3b_2 + 3b_3 + 5b_4 = [\\text{조건값}]$일 때, $\\sum_{n=1}^{\\infty} b_n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등비수열",
+      "무한급수의_수렴",
+      "급수의_합"
+    ],
+    "exam_intent": "기하급수와 조건부 수열의 합을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

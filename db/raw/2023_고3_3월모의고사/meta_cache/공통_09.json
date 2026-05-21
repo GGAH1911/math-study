@@ -1,0 +1,15 @@
+{
+  "text_sha": "24dae1f34016",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^3 + bx^2 + cx + d$는 두 점에서 극값을 가진다. 주어진 조건을 만족할 때 실수의 값은 (단, $a, b$는 $a \\neq b$인 상수)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값"
+    ],
+    "exam_intent": "3차 함수의 극값 조건으로 상수값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

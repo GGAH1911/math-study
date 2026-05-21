@@ -1,0 +1,17 @@
+{
+  "text_sha": "682b7bf9d684",
+  "meta": {
+    "searchable_text": "확률변수 $X$가 평균 $m$, 표준편차 $\\sigma$인 정규분포를 따른다. 음수 $a$에 대한 조건과 $P(X \\leq m+2\\sigma) = 0.9772$가 주어질 때, 표준정규분포표를 이용하여 $P(X \\leq 8)$을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "정규분포",
+      "표준화",
+      "표준정규분포표"
+    ],
+    "exam_intent": "정규분포 표준화와 표준정규분포표 활용 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "85923761c069",
+  "meta": {
+    "searchable_text": "다항식 $P(x)$는 $(x-a)^2$으로 나누어떨어지고, $P(x)$를 $(x-b)^4$로 나누었을 때의 나머지가 12이다. $P(x)$를 $(x-a)^2(x-b)^2(x-c)$로 나누었을 때의 나머지를 $R(x)$라 할 때, $R(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "인수정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "나머지정리와 인수분해를 이용하여 다항식의 나머지를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "6f763695b1cf",
+  "meta": {
+    "searchable_text": "네 가지 문자 중에서 중복을 허락하여 3개를 택해 일렬로 나열하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복순열",
+      "곱의_법칙"
+    ],
+    "exam_intent": "중복을 허용한 순열의 경우의 수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

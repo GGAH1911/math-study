@@ -1,0 +1,17 @@
+{
+  "text_sha": "04932c7fd817",
+  "meta": {
+    "searchable_text": "함수가 실수 전체의 집합에서 연속일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "연속함수의_조건",
+      "극한값",
+      "상수_결정"
+    ],
+    "exam_intent": "함수의 연속 조건을 이용해 미정 상수값을 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

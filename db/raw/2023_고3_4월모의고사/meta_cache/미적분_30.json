@@ -1,0 +1,18 @@
+{
+  "text_sha": "8cc6118484eb",
+  "meta": {
+    "searchable_text": "$t \\geq 0$에서 정의된 함수 $f$가 다음 조건을 만족시킨다. (가) $0 \\leq t \\leq 1$일 때 $f(t) = 2t$, $1 \\leq t \\leq 2$일 때 $f(t) = 4(t^2 - 1)$ (나) 모든 양의 실수 $t$에 대하여 $f'(t) = 2f(t) - 1$ $t \\geq 0$에서 정의된 함수 $g$를 $g(t) = \\lim_{h \\to 0} \\frac{f(t+h) - f(t)}{h}$ 라 할 때, $\\lim_{t \\to 0^+} \\frac{g(t) - 2^t}{t} = \\frac{24\\ln 2}{4}$를 만족시키는 모든 자연수의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "미분방정식",
+      "극한값",
+      "미분가능성",
+      "연속성"
+    ],
+    "exam_intent": "미분방정식과 구간함수의 연속성으로부터 함수 결정 후 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

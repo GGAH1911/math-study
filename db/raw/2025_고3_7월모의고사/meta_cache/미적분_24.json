@@ -1,0 +1,16 @@
+{
+  "text_sha": "3520fc2a2c55",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 곡선 $x = t\\sin t$, $y = 4\\cos t - 2\\sin 2t$에서 $t = \\frac{\\pi}{3}$일 때, $\\frac{dy}{dx}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "매개변수_곡선",
+      "도함수"
+    ],
+    "exam_intent": "매개변수 곡선에서 도함수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

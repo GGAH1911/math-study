@@ -1,0 +1,16 @@
+{
+  "text_sha": "7dfa88a3c36b",
+  "meta": {
+    "searchable_text": "전기에너지 $U(\\text{J})$, 전기용량 $C(\\text{F})$, 전압 $V(\\text{V})$일 때, 축전기의 저장 전기에너지는 $U = \\frac{1}{2}CV^2$를 따른다. 축전기 $A$와 $B$에서 $A$의 전기용량은 $B$의 3배이고, $A$의 전압은 $B$의 $\\frac{2}{\\sqrt{3}}$배이다. 두 축전기에 저장된 전기에너지를 각각 $U_A$, $U_B$라 할 때, $\\frac{U_A}{U_B}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "비율_계산",
+      "문자식_정리"
+    ],
+    "exam_intent": "축전기 에너지 공식에서 용량·전압 비로부터 에너지의 비율 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

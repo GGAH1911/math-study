@@ -1,0 +1,17 @@
+{
+  "text_sha": "80726e7bd99e",
+  "meta": {
+    "searchable_text": "다항식을 다항식으로 나눈 몫과 나머지를 구하고, 이들을 이용하여 주어진 식의 값을 계산하는 문제",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지_정리",
+      "몫과_나머지"
+    ],
+    "exam_intent": "다항식 나눗셈의 몫과 나머지를 구하고 이를 활용하여 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

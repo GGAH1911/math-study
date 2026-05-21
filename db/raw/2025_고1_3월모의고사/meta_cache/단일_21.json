@@ -1,0 +1,13 @@
+{
+  "text_sha": "c211291d3caa",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 30$, $BC = 45$, $\\angle CBA = 90°$인 평행사변형 $ABCD$가 있다. 각 $C$의 이등분선과 직선 $AB$가 만나는 점을 $E$라 하고, 직선 $CE$가 선분 $BD$와 만나는 점을 $F$라 하자. 선분 $CD$ 위의 $DG = 10$인 점 $G$에 대하여 직선 $EG$가 선분 $BD$와 만나는 점을 $H$라 하자. 삼각형 $DHG$의 넓이가 35일 때, 삼각형 $EFH$의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [],
+    "exam_intent": "평행사변형과 각의 이등분선을 이용한 복합 기하 넓이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

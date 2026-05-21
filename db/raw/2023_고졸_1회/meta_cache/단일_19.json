@@ -1,0 +1,15 @@
+{
+  "text_sha": "97674c921fdb",
+  "meta": {
+    "searchable_text": "3명의 수학자 사진이 있다. 이 중에서 서로 다른 2명의 사진을 택하여 수학 신문의 1면과 2면에 각각 싣는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수_고1",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열의 기본 개념 이해 및 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

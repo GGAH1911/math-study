@@ -1,0 +1,15 @@
+{
+  "text_sha": "ea6d49134e0e",
+  "meta": {
+    "searchable_text": "학생 20명을 대상으로 진로활동 A와 진로활동 B에 대한 선호도를 조사했다. 각 학년별로 선택한 학생 수는 다음 표와 같다: 1학년은 A 7명 B 5명(합 12명), 2학년은 A 4명 B 4명(합 8명). 조사에 참여한 20명 중에서 임의로 선택한 한 명이 진로활동 B를 선택한 학생일 때, 이 학생이 1학년일 조건부확률 $P(\\text{1학년} \\mid \\text{B})$을 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부확률"
+    ],
+    "exam_intent": "표로 주어진 데이터에서 조건부확률을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "failed_crops": [
+    {
+      "subject": "단일",
+      "number": 5,
+      "reason": "crop_error: cannot write empty image"
+    },
+    {
+      "subject": "단일",
+      "number": 13,
+      "reason": "crop_error: cannot write empty image"
+    },
+    {
+      "subject": "단일",
+      "number": 15,
+      "reason": "crop_error: cannot write empty image"
+    },
+    {
+      "subject": "단일",
+      "number": 17,
+      "reason": "crop_error: cannot write empty image"
+    },
+    {
+      "subject": "단일",
+      "number": 19,
+      "reason": "crop_error: cannot write empty image"
+    },
+    {
+      "subject": "단일",
+      "number": 24,
+      "reason": "crop_error: cannot write empty image"
+    },
+    {
+      "subject": "단일",
+      "number": 27,
+      "reason": "crop_error: cannot write empty image"
+    }
+  ],
+  "crop_validation_warnings": [
+    {
+      "subject": "단일",
+      "number": 4,
+      "reason": "bottom_clip: need=325pt > img=37pt"
+    },
+    {
+      "subject": "단일",
+      "number": 6,
+      "reason": "bottom_clip: need=339pt > img=70pt"
+    },
+    {
+      "subject": "단일",
+      "number": 9,
+      "reason": "bottom_clip: need=325pt > img=64pt"
+    },
+    {
+      "subject": "단일",
+      "number": 11,
+      "reason": "bottom_clip: need=627pt > img=137pt"
+    },
+    {
+      "subject": "단일",
+      "number": 14,
+      "reason": "bottom_clip: need=627pt > img=244pt"
+    },
+    {
+      "subject": "단일",
+      "number": 16,
+      "reason": "bottom_clip: need=627pt > img=143pt"
+    },
+    {
+      "subject": "단일",
+      "number": 18,
+      "reason": "bottom_clip: need=627pt > img=365pt"
+    },
+    {
+      "subject": "단일",
+      "number": 20,
+      "reason": "bottom_clip: need=627pt > img=175pt"
+    },
+    {
+      "subject": "단일",
+      "number": 22,
+      "reason": "bottom_clip: need=110pt > img=94pt"
+    },
+    {
+      "subject": "단일",
+      "number": 23,
+      "reason": "right_clip: text x=299pt > img=152pt"
+    },
+    {
+      "subject": "단일",
+      "number": 25,
+      "reason": "bottom_clip: need=337pt > img=45pt"
+    },
+    {
+      "subject": "단일",
+      "number": 28,
+      "reason": "bottom_clip: need=627pt > img=194pt"
+    },
+    {
+      "subject": "단일",
+      "number": 29,
+      "reason": "bottom_clip: need=622pt > img=180pt"
+    }
+  ],
+  "ts": "2026-05-18T18:30:35"
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "77b1c6d7e72e",
+  "meta": {
+    "searchable_text": "이차부등식 $x^2 - 5x + a \\leq 0$을 만족시키는 모든 $x$의 값의 범위가 $1 \\leq x \\leq 4$일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차부등식의 해가 주어진 범위일 때 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

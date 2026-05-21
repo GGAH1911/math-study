@@ -1,0 +1,17 @@
+{
+  "text_sha": "5743eebbcb31",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 사차함수 $f(x)$가 모든 실수 $x$에 대하여 [어떤 조건]을 만족시킨다. 함수 $f(x)$가 $x=2$에서 극솟값 $f(2)=6$을 가질 때, 함수 $f(x)$의 극댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "사차함수",
+      "극댓값과_극솟값"
+    ],
+    "exam_intent": "주어진 극값 조건으로부터 사차함수를 결정하여 다른 극값을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

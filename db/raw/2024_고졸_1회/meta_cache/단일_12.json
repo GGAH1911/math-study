@@ -1,0 +1,17 @@
+{
+  "text_sha": "082b39e9558f",
+  "meta": {
+    "searchable_text": "직선에 평행하고, 특정 점을 지나는 직선의 방정식을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "직선의_기울기",
+      "평행선의_성질",
+      "직선의_방정식"
+    ],
+    "exam_intent": "평행 조건과 점의 좌표를 이용하여 직선의 방정식을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

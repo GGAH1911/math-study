@@ -1,0 +1,17 @@
+{
+  "text_sha": "9ad7f3e701ab",
+  "meta": {
+    "searchable_text": "함수 $f(x) = x^2 - 4x + 5$와 두 상수 $a, b$에 대하여 정의된 함수가 실수 전체에서 연속이다. 함수의 그래프와 직선 $y = t$의 교점 개수를 $n(t)$라 할 때, 극한 조건을 만족하는 실수값 1, 4, 5에 대하여 $a + 4b$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "연속성",
+      "교점_개수"
+    ],
+    "exam_intent": "분할 함수의 연속 조건과 극한 관계 파악",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

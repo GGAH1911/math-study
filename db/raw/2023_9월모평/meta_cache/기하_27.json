@@ -1,0 +1,17 @@
+{
+  "text_sha": "230476a24bb3",
+  "meta": {
+    "searchable_text": "밑면 반지름 4, 높이 3인 원기둥이 있다. AB는 한 밑면의 지름이고, C, D는 다른 밑면 둘레 위의 서로 다른 두 점이다. 삼각형 ABC의 넓이가 16일 때, 직선 AB와 직선 CD가 평행하면, 선분 CD의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간좌표",
+      "점과_직선의_거리",
+      "평행_조건"
+    ],
+    "exam_intent": "공간도형에서 거리와 평행 조건 활용하여 선분 길이 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

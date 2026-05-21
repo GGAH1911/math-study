@@ -1,0 +1,16 @@
+{
+  "text_sha": "4dda09479015",
+  "meta": {
+    "searchable_text": "수직선 위의 두 점 $A(-5)$, $B(1)$에 대하여 선분 AB를 3:1로 외분하는 점의 좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "외분점",
+      "분할점"
+    ],
+    "exam_intent": "외분점 공식을 이용한 좌표 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

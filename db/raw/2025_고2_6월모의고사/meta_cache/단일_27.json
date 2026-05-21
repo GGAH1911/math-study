@@ -1,0 +1,17 @@
+{
+  "text_sha": "5f512a19f955",
+  "meta": {
+    "searchable_text": "두 자연수 m, n에 대하여 모든 m의 값의 합을 구하시오. (가) m의 양의 제곱근은 n의 양의 네제곱근의 2배이다. 즉, $\\sqrt{m} = 2\\sqrt[4]{n}$ (나) 특정 조건을 만족한다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수",
+      "근호",
+      "자연수조건"
+    ],
+    "exam_intent": "지수와 근호의 관계식에서 자연수 조건을 만족하는 해의 합 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

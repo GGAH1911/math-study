@@ -1,0 +1,16 @@
+{
+  "text_sha": "ae4d50a097ec",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 + 2x - 7 = 0$의 서로 다른 두 근을 $\\alpha, \\beta$라 할 때, $\\alpha^2 + \\beta^2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계",
+      "비에타_공식"
+    ],
+    "exam_intent": "근과 계수의 관계를 이용하여 근의 제곱합을 구하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

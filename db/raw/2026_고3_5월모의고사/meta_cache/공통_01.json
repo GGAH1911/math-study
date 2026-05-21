@@ -1,0 +1,15 @@
+{
+  "text_sha": "5442ca330434",
+  "meta": {
+    "searchable_text": "$2 \\cdot \\text{⋄3} \\cdot 1 \\times \\text{⋄} \\div (3\\text{⋄} \\cdot 32)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_계산"
+    ],
+    "exam_intent": "지수 표기와 계산의 기본 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

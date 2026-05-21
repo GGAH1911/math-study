@@ -1,0 +1,16 @@
+{
+  "text_sha": "82e1d4fb8f59",
+  "meta": {
+    "searchable_text": "연립부등식이 3, 6, 10을 포함하고 있으며, 해가 2를 포함하는 범위일 때 상수의 값을 구하는 문제. (수식 글리프로 인해 부등호 및 정확한 식의 형태는 불명확)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "연립부등식",
+      "부등식의_해"
+    ],
+    "exam_intent": "연립부등식의 해로부터 매개변수값을 역으로 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "0e335b2a9b1f",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $x^2 + ax + b = 0$의 두 근을 $\\alpha$, $\\beta$라 할 때, $\\frac{\\alpha}{\\alpha^2 + 1} + \\frac{\\beta}{\\beta^2 + 1}$과 관련된 조건을 만족시키는 상수값을 구하는 문제",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수 관계를 이용한 대칭식 정리 및 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

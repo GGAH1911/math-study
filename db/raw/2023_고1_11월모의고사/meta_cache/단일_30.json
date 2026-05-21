@@ -1,0 +1,17 @@
+{
+  "text_sha": "c272f3db68bb",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 두 함수 $f(x)$, $g(x)$는 $f(x) = x^2 - 2ax + 2a^2$, $g(x) = x^2 - 2a$이다. 실수 $t$ ($t \\geq 1$)에 대하여 집합 $S_t = \\{x \\mid f(x) = t$ 또는 $g(x) = t, x \\in \\mathbb{R}\\}$의 모든 원소의 합을 $h(t)$라 하자. 함수 $h$의 치역의 모든 원소의 합이 19일 때, $a$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차방정식",
+      "근과_계수의_관계",
+      "함수의_치역"
+    ],
+    "exam_intent": "이차방정식의 근과 계수의 관계를 이용한 함수의 치역 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

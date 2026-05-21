@@ -1,0 +1,18 @@
+{
+  "text_sha": "6e18dbb8a9e4",
+  "meta": {
+    "searchable_text": "곡선 $y = \\frac{1}{2}\\cos x$ ($\\frac{4\\pi}{3} \\le x \\le \\frac{5\\pi}{3}$), $y$축 및 두 직선 $x = \\frac{4\\pi}{3}$, $x = \\frac{5\\pi}{3}$으로 둘러싸인 부분을 밑면으로 하는 입체도형이 있다. 이 입체도형을 $x$축에 수직인 평면으로 자른 단면이 모두 정사각형일 때, 이 입체도형의 부피는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "부피",
+      "삼각함수",
+      "단면적"
+    ],
+    "exam_intent": "삼각함수를 한 변으로 하는 정사각형 단면의 입체 부피를 정적분으로 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

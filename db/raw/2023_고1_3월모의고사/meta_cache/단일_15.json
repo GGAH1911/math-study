@@ -1,0 +1,17 @@
+{
+  "text_sha": "0348fa22f33a",
+  "meta": {
+    "searchable_text": "직사각형 ABCD에서 점 B를 중심으로 하고 점 A를 지나는 원이 선분 BC와 만나는 점을 P, 점 C를 중심으로 하고 점 P를 지나는 원이 선분 CD와 만나는 점을 Q라 할 때, 사각형 APQD의 넓이가 주어진 값일 때 특정 길이를 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원의_정의와_반지름",
+      "좌표계를_이용한_넓이_계산",
+      "기하학적_조건_해석"
+    ],
+    "exam_intent": "원의 성질과 도형의 넓이를 이용한 길이 값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "3a63c7a6bd8b",
+  "meta": {
+    "searchable_text": "함수가 실수 전체의 집합에서 연속일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_연속성",
+      "상수_결정"
+    ],
+    "exam_intent": "분할 함수의 연속성 조건으로부터 상수값을 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

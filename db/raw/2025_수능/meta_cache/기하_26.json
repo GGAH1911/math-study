@@ -1,0 +1,18 @@
+{
+  "text_sha": "fd3ca5cd46ec",
+  "meta": {
+    "searchable_text": "자연수 $n$ ($n \\geq 2$)에 대하여 직선이 두 타원과 만나는 제1사분면 위의 점을 각각 P, Q라 하자. 타원 1 위의 점 P에서의 접선의 x절편을 $a$, 타원 2 위의 점 Q에서의 접선의 x절편을 $b$라 할 때, $6 \\leq a+b \\leq 15$가 되도록 하는 모든 $n$의 개수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "접선",
+      "절편",
+      "자연수_조건"
+    ],
+    "exam_intent": "타원 접선의 절편 조건으로부터 매개변수 범위에서의 경우의 수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

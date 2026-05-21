@@ -1,0 +1,17 @@
+{
+  "text_sha": "5ef12cc6482e",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$과 상수 $c$에 대하여 $\\sum_{k=1}^{9} a_k = 16$, $\\sum_{k=1}^{9} (a_k + c)k = 24$일 때, 특정 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "급수",
+      "조건식",
+      "합"
+    ],
+    "exam_intent": "주어진 합 조건으로부터 수열의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

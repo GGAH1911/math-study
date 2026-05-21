@@ -1,0 +1,17 @@
+{
+  "text_sha": "1293a466fe94",
+  "meta": {
+    "searchable_text": "다항함수 $f$에서 $f(3)=2$, $f'(3)=1$이고, 최고차항의 계수가 1인 이차함수 $g$가 극한 조건을 만족할 때 $f(1)+g(1)$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "도함수",
+      "함수의_결정"
+    ],
+    "exam_intent": "극한 조건과 도함수를 이용한 다항함수와 이차함수의 형태 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

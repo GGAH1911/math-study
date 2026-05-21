@@ -1,0 +1,16 @@
+{
+  "text_sha": "ecbf351286e1",
+  "meta": {
+    "searchable_text": "6개의 숫자 1, 1, 2, 2, 2, 3을 일렬로 나열하여 만들 수 있는 여섯 자리의 자연수 중 홀수의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복순열",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "중복 원소 포함 순열에서 홀수 조건을 만족하는 경우의 수",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

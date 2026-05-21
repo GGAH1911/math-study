@@ -1,0 +1,16 @@
+{
+  "text_sha": "3252f28b2507",
+  "meta": {
+    "searchable_text": "$\\lim_{x \\to 3}$ \\frac{\\text{(분자: 미지의 다항식)}}{{\\text{(분모: 미지의 다항식)}}}$ — OCR 글리프 손상으로 정확한 식 복원 불가. 계수/지수로 보이는 수: 3, 2, 5, 1",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한값_계산",
+      "유리함수의_극한"
+    ],
+    "exam_intent": "다항식/유리함수 극한값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

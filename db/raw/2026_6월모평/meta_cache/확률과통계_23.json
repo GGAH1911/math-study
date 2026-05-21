@@ -1,0 +1,16 @@
+{
+  "text_sha": "255006bfac9d",
+  "meta": {
+    "searchable_text": "6개의 문자를 모두 일렬로 나열하는 경우의 수 (※ PDF 글리프 손상으로 구체적인 문자 종류 및 개수 불명확, 선택지로 보아 중복순열 문제로 추정)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "중복순열"
+    ],
+    "exam_intent": "중복을 포함한 여러 문자의 배열 경우의 수 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

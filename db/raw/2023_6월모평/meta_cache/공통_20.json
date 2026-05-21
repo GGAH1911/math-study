@@ -1,0 +1,16 @@
+{
+  "text_sha": "22a6026d87e2",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 2인 이차함수 $f(x)$에 대하여 함수 $|f(x)|$는 $x=1$과 $x=4$에서 극소이다. $f(0)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "절댓값_함수의_극값",
+      "이차함수의_영점"
+    ],
+    "exam_intent": "절댓값 함수의 극값 조건으로부터 이차함수의 계수를 결정하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "ce349a3e4527",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 $P$의 시각 $t$ ($t \\geq 0$)에서의 위치 $x(t) = \\frac{1}{3}t^3 + 6t^2 + 2t$이다. 양수 $t$에 대하여 시각 $t$에서 점 $P$의 속도가 1일 때, 시각 $2t$에서 점 $P$의 가속도는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "속도와_가속도",
+      "3차_함수의_미분"
+    ],
+    "exam_intent": "속도 조건으로부터 시각을 구하고 가속도를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

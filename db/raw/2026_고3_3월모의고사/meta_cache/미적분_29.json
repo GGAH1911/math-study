@@ -1,0 +1,17 @@
+{
+  "text_sha": "1e85d6932638",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 $AC = n$, $BC = 4n - 2$인 사각형 $ABCD$가 있다. 선분 $AB$의 중점을 $P$, 선분 $BC$의 중점을 $Q$라 하고, 선분 $DQ$가 선분 $AC$와 만나는 점을 $R$이라 하자. $\\angle CAB = \\angle PQR$, $CP^2 = 15n^2 + 16n + 4$, $\\frac{DR}{DC} = \\frac{1}{2}$일 때, $\\lim_{n \\to \\infty} \\frac{DR}{\\frac{3}{4}n} = \\frac{m}{p}$이다. $m$의 값을 구하시오. (단, $m$과 $p$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "기하학적_조건",
+      "닮음"
+    ],
+    "exam_intent": "기하 조건과 극한값을 결합한 계산 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

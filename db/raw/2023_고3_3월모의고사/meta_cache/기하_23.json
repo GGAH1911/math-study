@@ -1,0 +1,16 @@
+{
+  "text_sha": "2a0cabc758b3",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{16} + \\frac{y^2}{5} = 1$의 장축의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_표준형",
+      "장축의_정의"
+    ],
+    "exam_intent": "타원의 표준형에서 장축의 길이를 구하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

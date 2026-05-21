@@ -1,0 +1,16 @@
+{
+  "text_sha": "346007ca41f1",
+  "meta": {
+    "searchable_text": "x에 대한 이차방정식 $x^2 + 4x + (a - 5) = 0$이 중근을 갖도록 하는 상수 a의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "중근",
+      "판별식"
+    ],
+    "exam_intent": "이차방정식이 중근을 가질 조건(판별식 = 0)을 적용하는 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

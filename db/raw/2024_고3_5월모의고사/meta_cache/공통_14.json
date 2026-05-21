@@ -1,0 +1,17 @@
+{
+  "text_sha": "466ecf8a38d0",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$와 실수 $a$에 대하여 곡선 $y=f(x)$ 위의 점 $(a, f(a))$에서의 접선의 $y$절편을 $g(a)$라 하자. 두 함수 $f, g$가 다음 조건을 만족시킨다. $f(a)=g(a)$를 만족시키는 실수 $a$의 개수는 2이다. (추가 조건)일 때, $f(4)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "접선",
+      "삼차함수"
+    ],
+    "exam_intent": "삼차함수의 도함수와 접선의 y절편 개념을 이용한 함숫값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

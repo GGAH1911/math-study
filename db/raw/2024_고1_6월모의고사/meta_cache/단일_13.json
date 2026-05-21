@@ -1,0 +1,17 @@
+{
+  "text_sha": "f43e79bcf8f9",
+  "meta": {
+    "searchable_text": "x, y에 대한 연립방정식이 주어져 있고, 그 해가 특정 형태로 표현될 때 두 해가 서로 다른 실수가 되도록 하는 자연수 매개변수의 최댓값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립방정식",
+      "해의_존재_조건",
+      "자연수_범위"
+    ],
+    "exam_intent": "연립방정식 해의 조건으로부터 매개변수의 최댓값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

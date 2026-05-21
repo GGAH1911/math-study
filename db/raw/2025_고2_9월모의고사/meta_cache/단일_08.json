@@ -1,0 +1,17 @@
+{
+  "text_sha": "0f6d5a3357f0",
+  "meta": {
+    "searchable_text": "수열의 일반항이 주어졌을 때, $\\sum_{n=1}^{8} a_n$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "일반항",
+      "부분합",
+      "합의공식"
+    ],
+    "exam_intent": "주어진 일반항으로부터 수열의 부분합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

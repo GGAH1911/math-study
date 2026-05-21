@@ -1,0 +1,16 @@
+{
+  "text_sha": "441f45f23b6f",
+  "meta": {
+    "searchable_text": "두 다항식에 대하여 최대공약수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_최대공약수",
+      "인수분해"
+    ],
+    "exam_intent": "두 다항식의 최대공약수를 인수분해로 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

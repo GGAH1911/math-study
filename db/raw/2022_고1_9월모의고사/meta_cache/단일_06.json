@@ -1,0 +1,16 @@
+{
+  "text_sha": "911755b48782",
+  "meta": {
+    "searchable_text": "부등식 $|2x-1|<7$의 해가 $-3<x<4$일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "절댓값_부등식",
+      "부등식의_해"
+    ],
+    "exam_intent": "절댓값 부등식의 해 범위로부터 계수를 결정하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "c1b60512312d",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 음이 아닌 정수 $a, b, c, d$의 모든 순서쌍 $(a, b, c, d)$의 개수는? $a + b + c + d = 4$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합"
+    ],
+    "exam_intent": "중복조합 공식으로 음이 아닌 정수해의 개수를 구하는 기본 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "8952ac17884f",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 속도 $v$와 가속도 $a$가 다음 조건을 만족시킨다. (가) $0 \\leq t \\leq 2$일 때, $v = 2t^2 + 3t + 8$이다. (나) $t \\geq 2$일 때, $a = 6t - 4$이다. 시각 $t=0$에서 $t=3$까지 점 P가 움직인 거리를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "속도와_거리",
+      "구간별_함수"
+    ],
+    "exam_intent": "구간별 속도/가속도 조건에서 정적분으로 이동거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

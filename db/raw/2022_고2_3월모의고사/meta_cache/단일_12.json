@@ -1,0 +1,15 @@
+{
+  "text_sha": "f03e2b8bc597",
+  "meta": {
+    "searchable_text": "두 실수 $a, b$에 대하여 이차방정식의 한 근이 주어졌을 때 계수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근의_대입"
+    ],
+    "exam_intent": "이차방정식의 근을 대입하여 미지 계수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

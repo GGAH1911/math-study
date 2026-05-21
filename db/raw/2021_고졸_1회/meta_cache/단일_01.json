@@ -1,0 +1,15 @@
+{
+  "text_sha": "d8e930828070",
+  "meta": {
+    "searchable_text": "두 다항식 $\\square x^2 + \\square x + 1$, $\\square x + 2$에 대하여 $\\square$는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_덧셈"
+    ],
+    "exam_intent": "두 다항식의 덧셈을 이용한 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

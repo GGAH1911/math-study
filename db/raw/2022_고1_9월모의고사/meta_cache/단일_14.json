@@ -1,0 +1,16 @@
+{
+  "text_sha": "74e8a6e83503",
+  "meta": {
+    "searchable_text": "중심이 점 $(3, 2)$이고 반지름의 길이가 $\\sqrt{5}$인 원 위의 점과 직선 $2x + 8y = 0$ 사이의 거리의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "점과_직선의_거리"
+    ],
+    "exam_intent": "원과 직선 사이의 최단거리를 중심-직선 거리에서 반지름을 빼어 구하는 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

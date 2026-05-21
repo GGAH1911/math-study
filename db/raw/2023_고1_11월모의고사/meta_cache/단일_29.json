@@ -1,0 +1,16 @@
+{
+  "text_sha": "92909291dc09",
+  "meta": {
+    "searchable_text": "집합 $\\{-3, -2, -1, 0, 1, 2\\}$에서 실수 전체의 집합으로의 일대일함수 $f$가 다음 조건을 만족시킨다. (가) 집합의 모든 원소 $x$에 대하여 주어진 조건을 만족하고, (나) $f(0) \\times f(1) \\times f(2) = 0$이다. $f(-3) + f(-2) + f(-1) + f(0) + f(1) + f(2)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "일대일함수",
+      "함수의_조건"
+    ],
+    "exam_intent": "주어진 조건을 만족하는 함수를 찾고 함수값의 합을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

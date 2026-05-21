@@ -1,0 +1,17 @@
+{
+  "text_sha": "ef28e92842a1",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5 중에서 서로 다른 4개를 택해 일렬로 나열하여 만들 수 있는 모든 네 자리의 자연수 중에서 임의로 하나의 수를 택할 때, 택한 수가 5의 배수 또는 3500 이상일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "순열",
+      "경우의_수",
+      "포함-배제_원리"
+    ],
+    "exam_intent": "순열과 경우의 수로 복합 조건의 확률 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

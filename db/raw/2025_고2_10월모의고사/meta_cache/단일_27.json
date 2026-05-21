@@ -1,0 +1,16 @@
+{
+  "text_sha": "da25b9db1659",
+  "meta": {
+    "searchable_text": "$AB = 6$인 삼각형 $ABC$에 대하여 $2\\sin A \\sin B$와 $\\cos C$의 관계식이 주어질 때, 삼각형 $ABC$의 넓이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각형의_넓이",
+      "삼각함수_항등식"
+    ],
+    "exam_intent": "삼각함수 조건에서 삼각형 넓이 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

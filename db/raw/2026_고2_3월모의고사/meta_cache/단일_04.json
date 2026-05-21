@@ -1,0 +1,16 @@
+{
+  "text_sha": "56df19d208f1",
+  "meta": {
+    "searchable_text": "그림은 함수를 나타낸 것이다. 주어진 함수에서 특정 값들의 합 또는 함수값을 구하는 문제이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_정의",
+      "함수값_계산"
+    ],
+    "exam_intent": "함수 그래프에서 함수값을 읽고 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

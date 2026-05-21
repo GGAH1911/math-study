@@ -1,0 +1,16 @@
+{
+  "text_sha": "8636d9c84fd6",
+  "meta": {
+    "searchable_text": "$2^3 \\times 4^{-1/2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수법칙",
+      "분수_지수"
+    ],
+    "exam_intent": "지수 연산과 분수 지수 개념 이해도 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

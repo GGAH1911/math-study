@@ -1,0 +1,17 @@
+{
+  "text_sha": "90a5136a1bb7",
+  "meta": {
+    "searchable_text": "부등식 $\\log_3 \\square < 5 < \\log_9 2$를 만족시키는 정수 $\\square$의 최댓값과 최솟값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_부등식",
+      "밑_변환",
+      "로그의_정의"
+    ],
+    "exam_intent": "로그 부등식을 풀어 정수 범위를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

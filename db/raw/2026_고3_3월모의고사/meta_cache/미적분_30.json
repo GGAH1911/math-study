@@ -1,0 +1,16 @@
+{
+  "text_sha": "6482d84d54fb",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 모든 자연수 $n$의 값의 합을 구하시오. (단, $n$은 20 이하의 자연수이다.) 두 정수 $a, b$에 대하여 극한값이 모두 존재하며 두 극한이 같아지도록 하는 모든 순서쌍 $(a, b)$의 개수는 19이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_존재_조건",
+      "극한값의_동치성"
+    ],
+    "exam_intent": "매개변수 조건에서 극한 존재성을 판정하고 경우의 수 탐색",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

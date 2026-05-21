@@ -1,0 +1,18 @@
+{
+  "text_sha": "abb54e502fed",
+  "meta": {
+    "searchable_text": "열린구간 $(0, \\infty)$에서 정의된 함수가 극한으로 주어진다. $f'(x) = 0$일 때, 방정식 $f(x) = 3$의 모든 실근의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극한",
+      "미분",
+      "임계점",
+      "함수의_성질"
+    ],
+    "exam_intent": "극한으로 정의된 함수의 미분과 임계점을 이용한 방정식 해의 합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

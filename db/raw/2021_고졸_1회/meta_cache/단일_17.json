@@ -1,0 +1,16 @@
+{
+  "text_sha": "4de3de5a1040",
+  "meta": {
+    "searchable_text": "두 함수 $f: \\mathbb{R} \\to \\mathbb{R}$, $g: \\mathbb{R} \\to \\mathbb{R}$가 그림과 같을 때, $(f \\circ g)(2)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수의_값"
+    ],
+    "exam_intent": "그래프를 이용한 합성함수의 함수값 계산 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

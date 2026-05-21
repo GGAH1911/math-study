@@ -1,0 +1,17 @@
+{
+  "text_sha": "c4938ea0afe9",
+  "meta": {
+    "searchable_text": "네 개의 서로 다른 문자와 그 대소문자 형태 8가지에서 중복을 허락하여 6개를 택해 일렬로 나열하는 경우의 수. 조건 (가) 양 끝 모두에 대문자가 나온다. 조건 (나) 특정 문자(소문자)는 한 번만 나온다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조건부_경우의_수",
+      "중복순열",
+      "경우의_수_분류"
+    ],
+    "exam_intent": "조건부 경우의 수 계산으로 체계적 분류 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

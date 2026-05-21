@@ -1,0 +1,17 @@
+{
+  "text_sha": "58d65cc086a4",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 사차함수 $f(x)$가 다음 조건을 만족시킨다. $x_1 \\leq x_2$인 모든 실수 $x_1, x_2$에 대하여 부등식 $\\int_{x_1}^{x_2} f(x)dx \\geq a\\int_{x_1}^{x_2} f'(x)dx$를 만족시키는 모든 실수 $a$의 값의 범위가 $a \\leq a_1$ 또는 $a \\geq 3$이다. $f(a_1) \\leq 15, f'(1) \\leq 1$일 때, $f(4) - f(0)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "사차함수",
+      "도함수",
+      "적분"
+    ],
+    "exam_intent": "사차함수의 도함수 성질과 적분 조건을 활용한 함수값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

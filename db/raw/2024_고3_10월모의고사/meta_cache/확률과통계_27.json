@@ -1,0 +1,16 @@
+{
+  "text_sha": "62688b8e6d7e",
+  "meta": {
+    "searchable_text": "7개의 공이 들어 있는 상자가 있다. 각각의 공에는 1 또는 2 또는 3 중 하나의 숫자가 적혀 있다. 이 상자에서 임의로 2개의 공을 동시에 꺼내어 확인한 두 개의 수의 곱을 확률변수 $X$라 하자. 확률변수 $X$가 $P(X=4)=\\frac{1}{21}$, $2P(X=2)=3P(X=6)$을 만족시킬 때, $P(X \\leq 3)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률변수",
+      "확률분포"
+    ],
+    "exam_intent": "주어진 조건으로부터 확률변수의 분포를 결정하고 누적확률을 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

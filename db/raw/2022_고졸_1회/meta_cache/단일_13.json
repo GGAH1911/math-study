@@ -1,0 +1,16 @@
+{
+  "text_sha": "ed3606a080bf",
+  "meta": {
+    "searchable_text": "중심의 좌표가 (a, b)이고 반지름의 길이가 3인 원의 방정식은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_표준형_방정식",
+      "중심과_반지름"
+    ],
+    "exam_intent": "중심과 반지름으로부터 원의 표준형 방정식을 세우는 기초 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

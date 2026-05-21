@@ -1,0 +1,16 @@
+{
+  "text_sha": "cfd66ab9b8d2",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 $AB = 5$, $AC = 6$이고 $\\cos\\angle BAC$가 주어졌을 때, 삼각형 ABC의 넓이를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각형의_넓이",
+      "삼각비_기본공식"
+    ],
+    "exam_intent": "두 변과 그 사이각의 코사인 값으로부터 삼각형 넓이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

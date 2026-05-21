@@ -1,0 +1,17 @@
+{
+  "text_sha": "df9292dcb338",
+  "meta": {
+    "searchable_text": "함수에 대하여 다음 조건을 만족시키는 자연수의 개수가 2일 때, 상수의 값은? 조건: 어떤 수의 네제곱근 중 실수인 것을 모두 곱한 값이 특정 값이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수",
+      "네제곱근",
+      "함수의_활용"
+    ],
+    "exam_intent": "네제곱근의 성질과 함수 조건을 결합하여 상수값을 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "1f5cc371152c",
+  "meta": {
+    "searchable_text": "두 양수 $a$, $b$에 대하여 $\\log_2 a + 2\\log_2 b = 2$, $\\log_2 a + 5\\log_2 b = 3\\log_2 a$일 때, $\\dfrac{a}{b}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그방정식",
+      "변수치환"
+    ],
+    "exam_intent": "로그 연립방정식을 풀어 두 양수의 비율 관계를 구하는 계산력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

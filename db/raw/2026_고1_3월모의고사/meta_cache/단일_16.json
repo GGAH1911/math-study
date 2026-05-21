@@ -1,0 +1,17 @@
+{
+  "text_sha": "a516c4e1237b",
+  "meta": {
+    "searchable_text": "한 변의 길이가 1인 두 정육각형 ABCDEF, AGHIJK 가 있다. 점 G 가 정육각형 ABCDEF 의 내부에 있고 $\\angle BAG = 45°$일 때, 사각형 AGEF 의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "정육각형",
+      "각도",
+      "사각형의_넓이"
+    ],
+    "exam_intent": "정육각형의 성질과 각도 조건을 활용하여 사각형의 넓이를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

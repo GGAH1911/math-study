@@ -1,0 +1,16 @@
+{
+  "text_sha": "d9a876840722",
+  "meta": {
+    "searchable_text": "반지름의 길이가 8이고 넓이가 $28\\pi$인 부채꼴의 호의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "부채꼴의_호의_길이",
+      "부채꼴의_넓이"
+    ],
+    "exam_intent": "부채꼴의 호의 길이와 넓이 공식 적용",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

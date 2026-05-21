@@ -1,0 +1,15 @@
+{
+  "text_sha": "47a402844c1d",
+  "meta": {
+    "searchable_text": "다항식 $2x^3 + 3x^2 + 3x + 2x + 1$을 $x - 1$로 나누었을 때, 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리"
+    ],
+    "exam_intent": "나머지정리를 이용한 일차식 나머지 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

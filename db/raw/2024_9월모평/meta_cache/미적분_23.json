@@ -1,0 +1,16 @@
+{
+  "text_sha": "1d258651ba26",
+  "meta": {
+    "searchable_text": "$$\\lim_{x \\to 0} \\frac{\\sqrt{2x+1}}{\\sqrt{7x+1}}$$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한",
+      "함수"
+    ],
+    "exam_intent": "함수의 극한값을 직접 대입으로 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "8728e2ae2daa",
+  "meta": {
+    "searchable_text": "부등식 $|ax-1| \\leq 2$의 해를 수직선 위에 나타낸 것이 그림과 같을 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "절댓값_부등식",
+      "부등식의_해"
+    ],
+    "exam_intent": "절댓값 부등식의 해를 수직선에서 역으로 읽어 미지상수를 구하는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

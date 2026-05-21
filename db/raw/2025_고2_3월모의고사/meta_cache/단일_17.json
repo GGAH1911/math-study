@@ -1,0 +1,17 @@
+{
+  "text_sha": "76cfbebd2b83",
+  "meta": {
+    "searchable_text": "이차함수 $f(x)$가 있다. 실수 $t$에 대하여 $f(x) = t$에 대한 방정식의 서로 다른 실근의 개수를 $n(t)$라 하자. 특정 조건을 만족하는 모든 $t$의 값의 합은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "근의_개수",
+      "이차함수의_그래프",
+      "방정식의_실근"
+    ],
+    "exam_intent": "이차함수의 그래프와 수평선의 교점 개수 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e42a0320e800",
+  "meta": {
+    "searchable_text": "함수 $y = a\\log_3(x - c) + b$의 그래프가 점 $(5, 0)$을 지나고, 점근선이 직선 $x = 4$일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_점근선",
+      "로그함수의_그래프",
+      "함수의_기본조건"
+    ],
+    "exam_intent": "로그함수의 수직 점근선과 그래프상의 점을 이용한 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

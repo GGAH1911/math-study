@@ -1,0 +1,17 @@
+{
+  "text_sha": "e7754f56dc0b",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 $a_1 = 7, a_8 = 8$일 때, 특정 항들의 합의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "일반항",
+      "합"
+    ],
+    "exam_intent": "등차수열의 조건으로부터 특정 항들의 합을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

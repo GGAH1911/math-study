@@ -1,0 +1,18 @@
+{
+  "text_sha": "c3ee86974e7b",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 좌표평면에서 점 $A\\left(\\frac{\\sqrt{a^2-1}}{a}, \\frac{1}{a}\\right)$를 직선 $y=x$에 대하여 대칭이동한 점을 $B$라 하고, 두 동경 $\\overrightarrow{OA}$, $\\overrightarrow{OB}$가 나타내는 각의 크기를 각각 $\\alpha$, $\\beta$라 하자. $\\cos\\alpha \\sin\\beta = \\frac{1}{3}$일 때, $\\tan 2\\beta$의 값을 구하시오. (단, $O$는 원점이고, $x$축의 양의 방향을 시초선으로 한다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "대칭이동",
+      "동경과_각",
+      "삼각함수의_곱",
+      "2배각_공식"
+    ],
+    "exam_intent": "좌표평면의 대칭이동과 삼각함수 조건으로부터 2배각 함수값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

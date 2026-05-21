@@ -1,0 +1,15 @@
+{
+  "text_sha": "f50e7d5d157a",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 + 2x + p = 0$의 서로 다른 두 근을 $\\alpha, \\beta$라 할 때, $\\alpha^2 + \\beta^2 = 8$이다. 상수 $p$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수의 관계를 이용하여 이차방정식의 계수를 구하는 능력을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

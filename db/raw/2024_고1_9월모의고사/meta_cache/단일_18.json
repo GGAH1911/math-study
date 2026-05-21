@@ -1,0 +1,16 @@
+{
+  "text_sha": "d9537f98bf28",
+  "meta": {
+    "searchable_text": "다항식 $P(x)$가 다음 조건을 만족한다. (가) $P(x)$를 $x^2 - 3x - 1$로 나눈 몫과 나머지는 서로 같다. (나) $P(x)$는 $x^2 - 2x - 1$로 나누어떨어진다. $P(x)$를 $x^2$으로 나눈 나머지가 72일 때, $P(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지정리"
+    ],
+    "exam_intent": "다항식 나눗셈 조건을 분석하여 다항식을 결정하고 함숫값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

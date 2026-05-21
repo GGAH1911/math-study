@@ -1,0 +1,18 @@
+{
+  "text_sha": "221c0bf3a709",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t \\geq 0$에서의 속도 $v$가 $v = at^3 + 2t - 4a$이다. 시각 $t = 0$에서 점 P의 위치는 0이고, 시각 $t = 1$에서 점 P의 위치는 $-3$이다. 시각 $t = 1$에서 $t = 3$까지 점 P의 위치의 변화량을 구하시오. (단, $a$는 상수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "부정적분",
+      "상수결정",
+      "운동거리"
+    ],
+    "exam_intent": "주어진 속도함수에서 상수를 조건으로 구하고 정적분으로 변위를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

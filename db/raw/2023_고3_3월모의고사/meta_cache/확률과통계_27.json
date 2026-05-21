@@ -1,0 +1,17 @@
+{
+  "text_sha": "12d71f93ee64",
+  "meta": {
+    "searchable_text": "방정식을 만족시키는 자연수들의 모든 순서쌍의 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "선형_디오판토스_방정식",
+      "자연수_해의_개수"
+    ],
+    "exam_intent": "선형 방정식의 자연수 해의 개수를 구하는 계산능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

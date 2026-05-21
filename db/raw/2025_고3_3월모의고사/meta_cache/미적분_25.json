@@ -1,0 +1,16 @@
+{
+  "text_sha": "9b7bc17eec2c",
+  "meta": {
+    "searchable_text": "자연수 $a$에 대하여 수열 $\\{a_n\\}$의 일반항이 $a, 10, a, a^2, a^9, a^{30}$을 포함하는 식으로 주어질 때, 수열 $\\{a_n\\}$이 수렴하도록 하는 모든 자연수 $a$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수렴과_발산",
+      "극한값_판정"
+    ],
+    "exam_intent": "매개변수 조건에서 수열의 수렴성을 판정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

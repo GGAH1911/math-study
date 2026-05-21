@@ -1,0 +1,17 @@
+{
+  "text_sha": "fd55c2ebc580",
+  "meta": {
+    "searchable_text": "쌍곡선의 점근선 중 기울기가 양수인 직선과 $x$축, $y$축으로 둘러싸인 부분의 넓이",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선",
+      "넓이"
+    ],
+    "exam_intent": "쌍곡선 점근선과 축으로 둘러싸인 영역의 넓이를 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

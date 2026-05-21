@@ -1,0 +1,16 @@
+{
+  "text_sha": "f1fcba11b323",
+  "meta": {
+    "searchable_text": "조립제법을 이용하여 주어진 다항식을 일차식으로 나누어 몫과 나머지를 구하는 문제. 조립제법 과정의 표가 제시되고, 이를 통해 몫을 구한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "조립제법",
+      "다항식_나눗셈"
+    ],
+    "exam_intent": "조립제법으로 다항식을 일차식으로 나눈 몫을 구하는 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

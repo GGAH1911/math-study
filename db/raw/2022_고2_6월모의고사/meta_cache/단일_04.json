@@ -1,0 +1,17 @@
+{
+  "text_sha": "18eff08ce812",
+  "meta": {
+    "searchable_text": "sin α + cos α = √3/2일 때, 방정식 tan α = 1의 해는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "반각공식",
+      "tan값"
+    ],
+    "exam_intent": "주어진 조건에서 삼각함수값을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

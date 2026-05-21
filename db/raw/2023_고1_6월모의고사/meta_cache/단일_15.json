@@ -1,0 +1,18 @@
+{
+  "text_sha": "cb93ba474c4d",
+  "meta": {
+    "searchable_text": "그림과 같이 직선이 두 이차함수 $y = a_1x^2 + b_1x + 1$, $y = a_2x^2 + b_2x + 1$의 그래프와 만나는 점을 각각 $P$, $Q$라 하자. 두 점 $A(0, 1)$, $B(3, 1)$에 대하여 사각형 $PAQB$의 넓이의 최솟값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_그래프",
+      "교점",
+      "도형의_넓이",
+      "최솟값"
+    ],
+    "exam_intent": "이차함수와 직선의 교점으로 형성된 사각형의 넓이 최솟값",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "crop_validation_warnings": [
+    {
+      "subject": "단일",
+      "number": 2,
+      "reason": "bottom_clip: need=330pt > img=56pt"
+    },
+    {
+      "subject": "단일",
+      "number": 3,
+      "reason": "right_clip: text x=517pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 4,
+      "reason": "right_clip: text x=515pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 6,
+      "reason": "bottom_clip: need=315pt > img=192pt"
+    },
+    {
+      "subject": "단일",
+      "number": 7,
+      "reason": "right_clip: text x=524pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 9,
+      "reason": "bottom_clip: need=341pt > img=82pt"
+    },
+    {
+      "subject": "단일",
+      "number": 10,
+      "reason": "right_clip: text x=534pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 11,
+      "reason": "bottom_clip: need=667pt > img=304pt"
+    },
+    {
+      "subject": "단일",
+      "number": 12,
+      "reason": "right_clip: text x=523pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 13,
+      "reason": "bottom_clip: need=662pt > img=322pt"
+    },
+    {
+      "subject": "단일",
+      "number": 14,
+      "reason": "right_clip: text x=534pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 15,
+      "reason": "bottom_clip: need=662pt > img=187pt"
+    },
+    {
+      "subject": "단일",
+      "number": 16,
+      "reason": "right_clip: text x=523pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 17,
+      "reason": "bottom_clip: need=659pt > img=381pt"
+    },
+    {
+      "subject": "단일",
+      "number": 18,
+      "reason": "right_clip: text x=533pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 19,
+      "reason": "bottom_clip: need=662pt > img=599pt"
+    },
+    {
+      "subject": "단일",
+      "number": 20,
+      "reason": "right_clip: text x=535pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 21,
+      "reason": "bottom_clip: need=662pt > img=329pt"
+    },
+    {
+      "subject": "단일",
+      "number": 22,
+      "reason": "right_clip: text x=500pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 23,
+      "reason": "right_clip: text x=533pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 25,
+      "reason": "bottom_clip: need=327pt > img=66pt"
+    },
+    {
+      "subject": "단일",
+      "number": 26,
+      "reason": "right_clip: text x=533pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 27,
+      "reason": "bottom_clip: need=662pt > img=376pt"
+    },
+    {
+      "subject": "단일",
+      "number": 28,
+      "reason": "right_clip: text x=532pt > img=298pt"
+    },
+    {
+      "subject": "단일",
+      "number": 29,
+      "reason": "bottom_clip: need=662pt > img=207pt"
+    },
+    {
+      "subject": "단일",
+      "number": 30,
+      "reason": "right_clip: text x=527pt > img=298pt"
+    }
+  ],
+  "ts": "2026-05-18T18:20:19"
+}

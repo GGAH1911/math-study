@@ -1,0 +1,16 @@
+{
+  "text_sha": "21c502e3692c",
+  "meta": {
+    "searchable_text": "$10^{1/3 \\times 3} \\times 10^{1/2 \\times 3} \\times 10^{1/1}$의 값을 구하시오. 지수법칙: 같은 밑의 거듭제곱의 곱은 지수를 더한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수법칙",
+      "거듭제곱의_계산"
+    ],
+    "exam_intent": "지수의 덧셈 법칙을 이용한 거듭제곱 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

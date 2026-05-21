@@ -1,0 +1,16 @@
+{
+  "text_sha": "be2d6eb59466",
+  "meta": {
+    "searchable_text": "매개변수 $t$ ($t > 0$)으로 나타내어진 곡선 $x = t^2 + 2$, $y = t \\ln t$ 에서 $t = 1$일 때, $\\frac{dy}{dx}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_곡선의_미분",
+      "연쇄법칙"
+    ],
+    "exam_intent": "매개변수 곡선에서 접선의 기울기를 구할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

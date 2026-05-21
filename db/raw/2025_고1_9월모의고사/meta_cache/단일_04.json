@@ -1,0 +1,16 @@
+{
+  "text_sha": "3c71e5072137",
+  "meta": {
+    "searchable_text": "다항식 항등식에서 계수를 비교하여 미지수 상수들의 값을 결정하고 그 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "계수_비교"
+    ],
+    "exam_intent": "항등식의 계수 비교를 통한 상수 결정 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

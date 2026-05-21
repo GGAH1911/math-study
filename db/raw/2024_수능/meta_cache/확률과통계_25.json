@@ -1,0 +1,16 @@
+{
+  "text_sha": "0d8402c0a382",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5, 6이 하나씩 적혀 있는 6장의 카드가 있다. 이 6장의 카드를 모두 한 번씩 사용하여 일렬로 임의로 나열할 때, 양 끝에 놓인 카드에 적힌 두 수의 합이 10 이하가 되도록 카드가 놓일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "경우의수",
+      "확률"
+    ],
+    "exam_intent": "조건을 만족하는 경우의 수를 정확히 파악하고 확률을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

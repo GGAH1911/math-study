@@ -1,0 +1,15 @@
+{
+  "text_sha": "1f6e78b98a74",
+  "meta": {
+    "searchable_text": "두 집합 A = {1, 3, 4, 5}, B = {2, 4}에 대하여 주어진 집합 연산의 결과는? 보기: ① {1} ② {3, 4} ③ {1, 3, 5} ④ {1, 3, 4, 5}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_연산"
+    ],
+    "exam_intent": "두 집합의 기본 연산 결과 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

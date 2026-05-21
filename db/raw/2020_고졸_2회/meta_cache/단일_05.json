@@ -1,0 +1,16 @@
+{
+  "text_sha": "267ab9d21692",
+  "meta": {
+    "searchable_text": "다음 이차방정식 중에서 서로 다른 두 실근을 갖는 것은? ① $x^2 - 3x = 0$ ② $x^2 - 2x = 0$ ③ $x^2 - 2x + 1 = 0$ ④ $x^2 - 3x + 5 = 0$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "실근의_개수"
+    ],
+    "exam_intent": "판별식을 이용하여 이차방정식의 실근 개수를 판단할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

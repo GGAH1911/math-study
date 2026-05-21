@@ -1,0 +1,16 @@
+{
+  "text_sha": "dc342ac764d5",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^3 + bx^5 + cx^8$에 대하여 $f'(2)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "미분"
+    ],
+    "exam_intent": "다항식의 도함수를 구하고 특정점에서의 값을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

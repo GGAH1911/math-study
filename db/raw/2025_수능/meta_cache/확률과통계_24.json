@@ -1,0 +1,16 @@
+{
+  "text_sha": "305a8bdb17ae",
+  "meta": {
+    "searchable_text": "두 사건 $A$, $B$에 대하여 $P(A) = \\frac{1}{2}$, $P(B) = \\frac{1}{2}$, $P(A \\cap B) = \\frac{1}{5}$일 때, $P(A \\cup B)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률의_덧셈_정리",
+      "합사건의_확률"
+    ],
+    "exam_intent": "확률의 덧셈 정리를 이용한 합집합 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

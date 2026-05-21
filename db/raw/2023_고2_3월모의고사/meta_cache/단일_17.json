@@ -1,0 +1,18 @@
+{
+  "text_sha": "6fcab247a851",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 허수 z가 존재하도록 하는 두 정수 a, b에 대하여 a+b의 최솟값은? (단, z̄는 z의 켤레복소수이다.)\n(가) az² + bz + 10 = 0\n(나) |z|² = 8",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차방정식의_근",
+      "근과_계수의_관계",
+      "켤레복소수",
+      "절댓값_조건"
+    ],
+    "exam_intent": "이차방정식의 복소수해와 켤레근, 절댓값 조건을 종합적으로 다루는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "f69779d86f93",
+  "meta": {
+    "searchable_text": "다음 식의 값을 구하시오: $\\dfrac{\\sqrt{\\dfrac{1}{6}\\sqrt{1+2}}}{\\sqrt{\\dfrac{1}{5}\\sqrt{1+2}}}$",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "제곱근의_성질",
+      "분수식_간단히_하기"
+    ],
+    "exam_intent": "중첩된 제곱근을 포함한 분수식 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

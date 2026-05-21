@@ -1,0 +1,17 @@
+{
+  "text_sha": "529978e90da1",
+  "meta": {
+    "searchable_text": "이차함수 $f(x) = -2x^2 + 4x + 3$의 그래프의 꼭짓점의 $y$좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "꼭짓점",
+      "완전제곱식",
+      "이차함수의_최솟값"
+    ],
+    "exam_intent": "이차함수를 표준형으로 변형하여 꼭짓점의 y좌표를 구하는 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

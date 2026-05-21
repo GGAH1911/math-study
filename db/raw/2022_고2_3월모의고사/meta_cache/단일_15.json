@@ -1,0 +1,16 @@
+{
+  "text_sha": "e51d88981a8c",
+  "meta": {
+    "searchable_text": "연립부등식을 만족시키는 모든 정수의 값의 합이 7이 되도록 하는 정수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "부등식의_정수해",
+      "해의_합_조건"
+    ],
+    "exam_intent": "부등식의 정수해의 합으로부터 매개변수를 역으로 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

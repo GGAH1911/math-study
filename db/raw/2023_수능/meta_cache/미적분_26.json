@@ -1,0 +1,17 @@
+{
+  "text_sha": "6bf57fa37f83",
+  "meta": {
+    "searchable_text": "그림과 같이 곡선(삼각함수: sec, tan 포함), $0 \\leq x \\leq \\pi/3$와 $x$축, $y$축 및 직선 $x = \\pi/3$로 둘러싸인 부분을 밑면으로 하는 입체도형이 있다. 이 입체도형을 $x$축에 수직인 평면으로 자른 단면이 모두 정사각형일 때, 이 입체도형의 부피는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "부피",
+      "단면",
+      "삼각함수"
+    ],
+    "exam_intent": "주어진 단면 조건을 이용해 입체도형의 부피를 정적분으로 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

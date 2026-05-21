@@ -1,0 +1,18 @@
+{
+  "text_sha": "1e01d68f6cec",
+  "meta": {
+    "searchable_text": "쌍곡선 $\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1$의 주축의 길이가 6이고 한 점근선의 방정식이 $y = 2x$일 때, 두 초점 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선",
+      "초점",
+      "주축"
+    ],
+    "exam_intent": "쌍곡선의 표준형에서 주축과 점근선 조건으로부터 초점 거리를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

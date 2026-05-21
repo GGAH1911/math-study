@@ -1,0 +1,17 @@
+{
+  "text_sha": "834af388f7ed",
+  "meta": {
+    "searchable_text": "순환소수 $0.\\overline{a}0\\overline{b}2$를 분수로 나타내면 $\\frac{p}{q}$일 때, 자연수 $n$에 대하여 $\\frac{6n}{11q}$가 자연수가 되도록 하는 $n$의 최솟값을 구하시오. (단, $p$와 $q$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "유리수와_순환소수",
+    "concepts": [
+      "순환소수",
+      "분수로의_변환",
+      "최소공배수"
+    ],
+    "exam_intent": "순환소수를 분수로 변환하고 조건을 만족하는 자연수 최솟값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

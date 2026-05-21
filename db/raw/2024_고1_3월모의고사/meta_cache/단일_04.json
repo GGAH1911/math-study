@@ -1,0 +1,16 @@
+{
+  "text_sha": "c0da0bd78b6c",
+  "meta": {
+    "searchable_text": "∠B = 90°인 직각삼각형 ABC에서 AB = 3, BC = 2일 때, 선분 AC를 한 변으로 하는 정사각형의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "피타고라스_정리",
+      "직각삼각형"
+    ],
+    "exam_intent": "피타고라스 정리를 적용하여 빗변의 제곱을 구하는 기초 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

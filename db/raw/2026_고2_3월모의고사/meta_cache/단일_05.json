@@ -1,0 +1,17 @@
+{
+  "text_sha": "46b788e4591c",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 $(3, 1)$을 지나고 직선 $3x + y + 1 = 0$에 수직인 직선의 $y$절편은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "수직_조건",
+      "절편"
+    ],
+    "exam_intent": "두 직선의 수직 조건을 이용하여 직선의 y절편을 구하는 기본 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

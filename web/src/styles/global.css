@@ -243,4 +243,171 @@
   .answer-blur.revealed::before {
     content: "";
   }
+
+  /* v2 problem PNGs — cropped from white-background PDF. The site is
+   * hard dark-mode; invert + hue-rotate flips white→dark while keeping
+   * any colored ink roughly the same hue. 0.92 not 1.0 so pure-black
+   * ink becomes near-white but not eye-burning bright. */
+  .problem-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    background: white;
+    filter: invert(0.92) hue-rotate(180deg);
+    border-radius: 4px;
+  }
 }
+
+/* ---- Function-plot graphs ---------------------------------------- */
+/* function-plot writes some inline styles that fight our setAttribute
+   post-processing. Mirror them with !important so dark-mode legibility
+   always wins. */
+.graph-host svg { background: transparent; overflow: visible; }
+.graph-host .x.axis path.domain,
+.graph-host .y.axis path.domain,
+.graph-host .axis path.domain {
+  stroke: #fafafa !important;
+  stroke-width: 1.6 !important;
+  fill: none !important;
+}
+.graph-host .axis g.tick line {
+  stroke: #a1a1aa !important;
+  stroke-width: 1 !important;
+}
+.graph-host .axis g.tick text,
+.graph-host .axis text {
+  fill: #fafafa !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+}
+.graph-host .graph .grid line,
+.graph-host g.grid line {
+  stroke: #3f3f46 !important;
+  stroke-width: 0.5 !important;
+  opacity: 0.6;
+}
+.graph-host .graph .line path,
+.graph-host path.line,
+.graph-host g.graph path {
+  stroke-width: 2.25 !important;
+  fill: none !important;
+}
+.graph-host .tip-x-line,
+.graph-host .tip-y-line,
+.graph-host .tip line {
+  stroke: #a5b4fc !important;
+  stroke-width: 1 !important;
+  stroke-dasharray: 4 3 !important;
+}
+.graph-host .tip text { fill: #fafafa !important; font-size: 11px !important; }
+.graph-host .tip rect { fill: rgba(24,24,27,0.95) !important; stroke: #52525b !important; }
+
+/* Origin (x=0, y=0) axes drawn through the plot interior. */
+.graph-host .origin-axis {
+  stroke: #fafafa !important;
+  stroke-width: 1.4 !important;
+}
+
+/* Snap marker on hover — bigger + glow so the user feels the snap. */
+.graph-host .tip circle,
+.graph-host circle.tip-circle,
+.graph-host .tip .point {
+  r: 6 !important;
+  fill: #fbbf24 !important;          /* amber-400 */
+  stroke: #fafafa !important;
+  stroke-width: 2 !important;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
+}
+.graph-host .tip-x-line,
+.graph-host .tip-y-line {
+  stroke: #fbbf24 !important;
+  stroke-width: 1.2 !important;
+  stroke-dasharray: 5 3 !important;
+  opacity: 0.9;
+}
+
+/* Smooth expand/collapse + layout transitions for the concept graph.
+   React Flow updates node positions via inline `transform: translate(...)`,
+   so animating that property gives the visual reflow we want. Opacity
+   covers fade-in for nodes that get unhidden by `+/-` clicks. */
+.react-flow__node {
+  transition:
+    transform 360ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 240ms ease-out;
+}
+.react-flow__edge {
+  transition: opacity 240ms ease-out;
+}
+.react-flow__edge-path {
+  transition: stroke 200ms ease;
+}
+/* Make spokes pop in (instead of just appearing) when their parent
+   unit expands. */
+@keyframes graph-node-pop {
+  from { opacity: 0; transform-origin: center; }
+  to   { opacity: 1; }
+}
+.react-flow__node.graph-node-entering {
+  animation: graph-node-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* React Flow Controls — dark theme override. The default control panel is
+   white with white SVG icons, illegible against the dark canvas. */
+.react-flow__controls.dag-controls {
+  background: rgba(24, 24, 27, 0.92);
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+.react-flow__controls.dag-controls .react-flow__controls-button {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #27272a;
+  color: #d4d4d8;
+  width: 30px;
+  height: 30px;
+  transition: background 120ms ease, color 120ms ease;
+}
+.react-flow__controls.dag-controls .react-flow__controls-button:last-child {
+  border-bottom: none;
+}
+.react-flow__controls.dag-controls .react-flow__controls-button:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+}
+.react-flow__controls.dag-controls .react-flow__controls-button svg {
+  fill: currentColor;
+  width: 14px;
+  height: 14px;
+  max-width: 14px;
+  max-height: 14px;
+}
+
+/* Geometry / Numberline overlay labels. Without absolute positioning the
+   divs (which carry inline left/top styles only) collapse into document
+   flow at the bottom of the canvas, breaking chat layout.
+   The font-size is set via the `--geom-label-size` CSS variable that each
+   canvas wrapper computes from its rendered width — so labels stay legible
+   at any panel size without going overboard.
+   The subtle dark background + tight padding masks lines passing under
+   the label (e.g. an axis line or a vector through the origin) so the
+   glyph stays readable regardless of where it lands. */
+.geom-label {
+  position: absolute;
+  pointer-events: none;
+  color: #fafafa;
+  font-size: var(--geom-label-size, 12px);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  background: rgba(10, 10, 11, 0.72);
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-shadow:
+    0 0 4px rgba(0, 0, 0, 0.9),
+    0 0 2px rgba(0, 0, 0, 0.9);
+}
+.geom-label .katex { font-size: 1em; }

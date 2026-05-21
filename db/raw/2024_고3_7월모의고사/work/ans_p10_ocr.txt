@@ -1,0 +1,203 @@
+PF' = PF + 2a = \(\frac{5}{2}\) a 
+
+
+∠F'PF = \(\frac{\pi}{2}\), PF = \(\frac{a}{2}\), PF' = \(\frac{5}{2}\) a 이므로 
+
+
+\[ \overline{FF'} = \frac{\sqrt{26}}{2}a \quad \dots \quad \text{①} \]
+
+
+두 점 F, F'은 
+
+
+쌍곡선 \(\frac{x^2}{a^2} - \frac{y^2}{3} = 1\) 의 두 초점이므로 
+
+
+\[ \overline{FF'} = 2\sqrt{a^2 + 3} \quad \dots \quad \text{②} \]
+
+
+두 식 ①, ②에 의하여 26a² = 16a² + 48 
+
+
+따라서 a² = \(\frac{24}{5}\) 
+
+
+29. [출제의도] 평면벡터의 내적의 성질을 활용하여 문제 해결하기 
+
+
+조건 (가)에 의하여 AP · BP = 0 이므로 점 P 는 선분 AB 를 지름으로 하는 원 위에 있고 OP · OC ≥ 0 이므로 점 P 의 y 좌표는 0 이상이다. 그러므로 점 P 는 곡선 (x - 4)² + y² = 4 (y ≥ 0) 위에 있다. 
+
+
+조건 (나)에 의하여 AB = 4QP 이므로 
+
+
+두 벡터 AB, QP 는 방향이 서로 같고 
+
+
+\[ |\overline{QP}| = \frac{1}{4} |\overline{AB}| = 1 \text{ 이므로 점 Q 는 점 P 를} \]
+
+
+x 축의 방향으로 -1 만큼 평행이동한 점과 일치한다. 
+
+
+그러므로 점 Q 는 곡선 
+
+
+\[ (x - 3)^2 + y^2 = 4 (y \ge 0) \quad \dots \quad \text{③} \]
+
+
+위에 있다. 
+
+
+\[ |\overline{QA}| = 2 \text{ 이므로 점 Q 는 중심이 A 이고} \]
+
+
+반지름의 길이가 2 인 원 
+
+
+\[ (x - 2)^2 + y^2 = 4 \quad \dots \quad \text{④} \]
+
+
+위에 있다. 
+
+
+두 식 ①, ②을 연립하면 
+
+
+\[ Q(\frac{5}{2}, \frac{\sqrt{15}}{2}), P(\frac{7}{2}, \frac{\sqrt{15}}{2}) \]
+
+
+\[ \overline{AP} = (\frac{3}{2}, \frac{\sqrt{15}}{2}), \overline{AQ} = (\frac{1}{2}, \frac{\sqrt{15}}{2}) \]
+
+
+\[ \overline{AP} \cdot \overline{AQ} = (\frac{3}{2}, \frac{\sqrt{15}}{2}) \cdot (\frac{1}{2}, \frac{\sqrt{15}}{2}) = \frac{3}{4} + \frac{15}{4} = \frac{9}{2} \]
+
+
+따라서 20 × k = 90 
+
+
+[다른 풀이] 
+
+
+조건 (가)에 의하여 P 는 선분 AB 를 지름으로 하는 원 위의 점 g 좌표가 0 이상인 점이다. 
+
+
+조건 (나)에 의하여 AB = 4QP 이므로 
+
+
+두 벡터 AB, QP 는 방향이 서로 같고 
+
+
+\[ |\overline{QP}| = 1 \text{ 이므로 점 Q 는 점 P 류 벡터 AB 의} \]
+
+
+방향으로 -1 만큼 평행이동한 점과 일치한다. 
+
+
+\[ |\overline{QA}| = 2 \text{를 만족시키는 점 Q 는 중심이 A 이고} \]
+
+
+반지름의 길이가 2 인 원 위에 있으므로 조건을 
+
+
+만족시키는 두 점 P, Q 의 위치는 다음 그림과 
+
+
+같다. 
+
+
+ 
+
+
+선분 AB 의 중점을 M 이라 하고 두 점 
+
+
+P, Q 에서 직선 AB 에 내린 수선의 발을 각각 
+
+
+R, S 라 하면 \(\overline{AS} = \overline{RM} = \frac{1}{2}\) 
+
+
+\[ \overline{AP} \cdot \overline{AQ} = (\overline{AQ} + \overline{QP}) \cdot \overline{AQ} \]
+
+
+\[ = |\overline{AQ}|^2 + \overline{QP} \cdot \overline{AQ} \]
+
+
+\[ = 4 + \overline{SR} \cdot \overline{AQ} \]
+
+
+\[ = 4 + 2\overline{AS} \cdot \overline{AQ} \]
+
+
+\[ = 4 + 2|\overline{AS}|^2 = \frac{9}{2} \]
+
+
+따라서 20 × k = 90 
+
+
+30. [출제의도] 정사영의 성질을 활용하여 추론하기 
+
+
+삼각형 A'PB'은 이등변삼각형이므로 
+
+
+\[ \overline{A'M} = \sqrt{\overline{A'P}^2 - \overline{PM}^2} = \sqrt{5^2 - 4^2} = 3 \]
+
+
+\[ \overline{A'A'} \perp \alpha, \text{선분 A'M은 평면 } \alpha \text{에 포함되므로} \]
+
+
+\[ \overline{A'A'} \perp \overline{A'M} \]
+
+
+\[ \angle \overline{A'A'M} = \frac{\pi}{2} \text{인 직각삼각형 } \overline{A'A'M} \text{에서} \]
+
+
+\[ \overline{AM} = \sqrt{\overline{A'A'}^2 + \overline{A'M}^2} = \sqrt{9^2 + 3^2} = 3\sqrt{10} \]
+
+
+\[ \overline{A'A'} \perp \alpha, \overline{A'M} \perp \overline{PB'} \text{이므로} \]
+
+
+삼수선의 정리에 의하여 \(\overline{AM} \perp \overline{PB'} \quad \dots \quad \text{⑤}\)
+
+
+ 
+
+
+점 B 의 평면 APB' 위의 정사영을 점 H 라 하면, 선분 BM 의 평면 APB' 위의 정사영은
+HM 이다. 
+
+
+직각삼각형 MAB 에서 \(\overline{AM} \perp \overline{AB}\) 
+
+
+BH ⊥ (평면 APB') 이므로 
+
+
+삼수선의 정리에 의하여 
+
+
+\[ \overline{AM} \perp \overline{AH} \quad \dots \quad \text{⑥} \]
+
+
+BH ⊥ (평면 APB'), PB' ⊥ BB' 이므로 
+
+
+삼수선의 정리에 의하여 PB' ⊥ HB' ... ⑥ 
+
+
+①, ②, ③에 의하여 
+
+
+사각형 AMB'H 가 직사각형이므로 
+
+
+\[ \overline{HM} = \sqrt{\overline{AM}^2 + \overline{AH}^2} = \sqrt{\overline{AM}^2 + \overline{MB'}^2} \]
+
+
+\[ = \sqrt{(3\sqrt{10})^2 + 4^2} = \sqrt{106} \]
+
+
+두 직선 AM, HB'은 서로 평행하고

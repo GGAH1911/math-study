@@ -1,0 +1,18 @@
+{
+  "text_sha": "3c715da1b9ae",
+  "meta": {
+    "searchable_text": "2학년 학생 4명(A 포함)과 3학년 학생 4명(B 포함)이 원 모양의 탁자에 앉는 경우의 수. 조건: (가) 각 학생은 이웃한 두 학생 중 적어도 한 명과 같은 학년; (나) A와 B는 이웃하지 않음. 회전하여 일치하는 것은 같은 것으로 봄.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "원형순열",
+      "조건부경우의수",
+      "그룹배치",
+      "포함배제원리"
+    ],
+    "exam_intent": "여러 제약 조건 하에서 원탁 배치의 경우의 수를 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

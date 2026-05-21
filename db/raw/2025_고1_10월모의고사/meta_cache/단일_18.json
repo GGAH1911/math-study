@@ -1,0 +1,17 @@
+{
+  "text_sha": "659d4edce7c1",
+  "meta": {
+    "searchable_text": "x에 대한 다항식 $ax^3 + bx^2 + cx + d$가 $(x-p)^2$으로 인수분해되도록 하는 세 실수 a, b, c에 대하여 일정 식의 최댓값을 M, 최솟값을 m이라 할 때, M-m의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "다중근",
+      "다항식의_인수분해",
+      "계수_관계식"
+    ],
+    "exam_intent": "인수분해 조건으로부터 계수 간 관계를 도출하고 최댓값·최솟값을 구한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

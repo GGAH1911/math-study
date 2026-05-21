@@ -1,0 +1,17 @@
+{
+  "text_sha": "f5968fd0f74a",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 곡선과 직선이 만나는 두 점을 각각 $P_n$, $Q_n$이라 하자. 선분 $P_n Q_n$을 대각선으로 하는 정사각형의 넓이를 $S_n$이라 할 때, $\\sum_{n=1}^{\\infty} \\frac{S_n}{n(n+1)}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한급수",
+      "부분분수분해",
+      "거리공식"
+    ],
+    "exam_intent": "곡선과 직선의 교점 기하를 이용한 무한급수 수렴값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

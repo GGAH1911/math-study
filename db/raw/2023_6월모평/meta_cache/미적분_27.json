@@ -1,0 +1,17 @@
+{
+  "text_sha": "8dd67f677108",
+  "meta": {
+    "searchable_text": "첫째항이 4인 등차수열 $\\{a_n\\}$에 대하여 급수 $\\sum_{n=1}^{\\infty} \\frac{1}{a_n a_{n+1}}$이 실수 $S$에 수렴할 때, 공차의 값은? ① $\\frac{1}{2}$ ② $1$ ③ $\\frac{3}{2}$ ④ $2$ ⑤ $\\frac{5}{2}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "급수의_수렴",
+      "텔레스코핑"
+    ],
+    "exam_intent": "등차수열과 급수의 수렴 조건을 활용하여 공차를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

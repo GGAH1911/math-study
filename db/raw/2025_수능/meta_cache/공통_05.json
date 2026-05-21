@@ -1,0 +1,16 @@
+{
+  "text_sha": "a2120d5e41d8",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 $f'(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "다항함수의_미분"
+    ],
+    "exam_intent": "다항함수의 도함수를 구하고 특정점에서의 값을 계산하는 기본 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

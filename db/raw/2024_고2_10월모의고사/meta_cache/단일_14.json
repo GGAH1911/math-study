@@ -1,0 +1,17 @@
+{
+  "text_sha": "c990e2548829",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 연속인 함수 $f$가 다음 조건을 만족시킬 때, $f(0)$의 값은? (가) $x \\geq 1$인 모든 실수 $x$에 대하여 $f(x) = ax^2 + bx + 1$이다. (단, $a$와 $b$는 상수이다.) (나) $f(4) = 2$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_연속성",
+      "조건부_함수",
+      "상수_결정"
+    ],
+    "exam_intent": "조건부 함수에서 연속성과 함수값 조건을 이용한 상수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

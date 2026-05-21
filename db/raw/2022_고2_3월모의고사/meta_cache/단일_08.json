@@ -1,0 +1,16 @@
+{
+  "text_sha": "0432ad313eac",
+  "meta": {
+    "searchable_text": "두 점 $A(0, a)$, $B(2, b)$에 대하여 선분 AB를 3:1로 내분하는 점이 x축 위에 있을 때, 선분 AB의 길이는? ① $2\\sqrt{5}$ ② $3\\sqrt{5}$ ③ $4\\sqrt{5}$ ④ $5\\sqrt{5}$ ⑤ $6\\sqrt{5}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "내분점",
+      "거리공식"
+    ],
+    "exam_intent": "내분점 조건으로부터 미지수를 결정하고 거리를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

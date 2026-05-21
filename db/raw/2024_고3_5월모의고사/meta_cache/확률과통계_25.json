@@ -1,0 +1,16 @@
+{
+  "text_sha": "3316b87126c5",
+  "meta": {
+    "searchable_text": "4 ≤ a ≤ b ≤ c ≤ d ≤ 12를 만족시키는 짝수 $a, b, c, d$의 모든 순서쌍의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "부등식_조건"
+    ],
+    "exam_intent": "중복조합을 이용해 조건을 만족하는 경우의 수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

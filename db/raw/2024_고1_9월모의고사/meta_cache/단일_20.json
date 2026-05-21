@@ -1,0 +1,17 @@
+{
+  "text_sha": "d003a661e2f6",
+  "meta": {
+    "searchable_text": "좌표평면 위에 세 점 A, B, C가 있다. 선분 AB를 $2:1$로 내분하는 점을 P라 할 때, 직선 PC가 삼각형 AOB의 넓이를 이등분한다. 양수 a의 값은? (단, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "내분점",
+      "삼각형의_넓이",
+      "직선과_도형"
+    ],
+    "exam_intent": "내분점 조건과 넓이 이등분 조건을 이용해 좌표 매개변수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

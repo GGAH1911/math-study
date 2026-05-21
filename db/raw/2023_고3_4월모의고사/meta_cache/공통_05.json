@@ -1,0 +1,16 @@
+{
+  "text_sha": "a9a9128b9d7c",
+  "meta": {
+    "searchable_text": "0이 아닌 모든 실수 $a$에 대하여 다항함수 $f(x)$에서 $x$의 값이 1에서 $1+a$까지 변할 때의 평균변화율이 $3a^2 + 2a + 3$일 때, $f'(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "평균변화율",
+      "도함수"
+    ],
+    "exam_intent": "평균변화율과 도함수의 관계 이해 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

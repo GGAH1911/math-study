@@ -1,0 +1,17 @@
+{
+  "text_sha": "c38ada2323ab",
+  "meta": {
+    "searchable_text": "두 각 $\\alpha$, $\\beta$에 대해 $2\\cos\\alpha = 3\\sin\\beta$이고 $\\tan\\alpha = 1$일 때, $\\tan\\beta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_정의",
+      "삼각항등식",
+      "특수각의_삼각함수값"
+    ],
+    "exam_intent": "삼각함수 관계식과 특수각을 이용한 삼각함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

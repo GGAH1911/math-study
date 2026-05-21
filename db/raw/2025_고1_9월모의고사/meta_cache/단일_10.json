@@ -1,0 +1,16 @@
+{
+  "text_sha": "4e359b7d6217",
+  "meta": {
+    "searchable_text": "연립방정식의 해를 구하고 주어진 식의 값을 계산하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "일차방정식",
+      "연립방정식의_해법"
+    ],
+    "exam_intent": "연립일차방정식을 풀고 구한 해를 이용한 식의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

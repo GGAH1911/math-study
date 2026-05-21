@@ -1,0 +1,16 @@
+{
+  "text_sha": "01bd48b957f5",
+  "meta": {
+    "searchable_text": "$0 \\leq \\theta \\leq 2\\pi$일 때, 방정식 $\\cos 2\\theta = 1 + 2\\sin \\theta$의 모든 해의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "배각공식"
+    ],
+    "exam_intent": "배각공식을 이용하여 삼각방정식의 해를 구하고 그 합을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

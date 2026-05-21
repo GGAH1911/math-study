@@ -1,0 +1,17 @@
+{
+  "text_sha": "dd32654b13ad",
+  "meta": {
+    "searchable_text": "부등식 $2^{2x} + 3^x + 2 \\leq 17 \\times 2^x$을 만족시키는 정수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "부등식",
+      "지수_계산"
+    ],
+    "exam_intent": "지수함수를 포함한 부등식의 정수 해 개수 판정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

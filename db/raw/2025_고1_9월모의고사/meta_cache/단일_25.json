@@ -1,0 +1,16 @@
+{
+  "text_sha": "f54a7ff81bd8",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차다항식 $P(x)$를 $x-1$로 나눈 나머지가 2이고, $x-2$로 나눈 나머지가 3이다. $P(x)$를 $(x-1)(x-2)$로 나눈 나머지를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식_나눗셈"
+    ],
+    "exam_intent": "나머지정리로 조건을 이용해 다항식의 나머지 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

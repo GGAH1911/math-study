@@ -1,0 +1,16 @@
+{
+  "text_sha": "d7edc8000add",
+  "meta": {
+    "searchable_text": "두 벡터에 대한 조건이 주어졌을 때, 특정 실수값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_크기",
+      "벡터의_내적"
+    ],
+    "exam_intent": "벡터 조건에서 미지수 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

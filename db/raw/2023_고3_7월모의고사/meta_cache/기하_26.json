@@ -1,0 +1,17 @@
+{
+  "text_sha": "3058f21d3cb7",
+  "meta": {
+    "searchable_text": "포물선의 초점 F를 지나는 직선이 포물선과 서로 다른 두 점 A, B에서 만날 때, A와 B에서 포물선의 준선에 내린 수선의 발을 각각 C, D라 하자. $\\overline{AC} + \\overline{BD} = 21$이고 사각형 ACDB의 넓이가 $12\\sqrt{2}$일 때, 선분 AB의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_성질",
+      "초점을_지나는_현",
+      "포물선의_정의"
+    ],
+    "exam_intent": "포물선의 초점과 준선의 성질을 이용하여 초점현의 길이를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

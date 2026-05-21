@@ -1,0 +1,16 @@
+{
+  "text_sha": "0739aafadb16",
+  "meta": {
+    "searchable_text": "6개 지역의 일일 최저 기온: $-2, 1, 7, 6, -3, x$ (℃). 중앙값이 2일 때, 분산을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "대푯값과_산포도",
+    "concepts": [
+      "중앙값",
+      "분산"
+    ],
+    "exam_intent": "중앙값 조건으로 미지수를 결정하고 분산을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

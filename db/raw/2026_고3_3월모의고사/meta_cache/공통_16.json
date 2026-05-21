@@ -1,0 +1,16 @@
+{
+  "text_sha": "b1c253a44f04",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 $a_1 = 3$이고, 모든 자연수 $n$에 대하여 점화식을 만족시킨다. $a_3$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "귀납적_정의"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 특정 항값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

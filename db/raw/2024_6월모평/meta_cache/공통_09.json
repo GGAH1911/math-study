@@ -1,0 +1,16 @@
+{
+  "text_sha": "b3d6ee54b8a1",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 점화식을 만족할 때, $\\sum_{n=1}^{10} a_n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "급수"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 부분합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

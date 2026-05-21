@@ -1,0 +1,15 @@
+{
+  "text_sha": "549035520544",
+  "meta": {
+    "searchable_text": "$\\log_3 36 - \\log_3 4$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질"
+    ],
+    "exam_intent": "로그의 차 성질을 이용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

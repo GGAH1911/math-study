@@ -1,0 +1,16 @@
+{
+  "text_sha": "e3af1f4a26bd",
+  "meta": {
+    "searchable_text": "다항식을 완전세제곱식으로 인수분해하는 조건에서 상수값 구하기. 계수로 3, 9, 27 등이 포함된 형태",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "인수분해",
+      "완전세제곱식"
+    ],
+    "exam_intent": "완전세제곱 형태 인식 및 계수 비교를 통한 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "8ce85ab03960",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점을 축에 대하여 대칭이동한 점의 좌표를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "대칭이동",
+      "좌표"
+    ],
+    "exam_intent": "좌표평면에서 축에 대한 점의 대칭이동 개념 확인",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

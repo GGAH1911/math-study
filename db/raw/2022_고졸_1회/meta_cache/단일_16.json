@@ -1,0 +1,15 @@
+{
+  "text_sha": "790248298d7b",
+  "meta": {
+    "searchable_text": "명제 '정삼각형이면 이등변삼각형이다.'의 역은?\n①이등변삼각형이면 정삼각형이다.\n②정삼각형이면 이등변삼각형이 아니다.\n③정삼각형이 아니면 이등변삼각형이다.\n④이등변삼각형이 아니면 정삼각형이 아니다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제의_역"
+    ],
+    "exam_intent": "명제의 역을 올바르게 구성할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

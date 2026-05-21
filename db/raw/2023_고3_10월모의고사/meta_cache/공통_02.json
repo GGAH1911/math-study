@@ -1,0 +1,16 @@
+{
+  "text_sha": "525f70b6d804",
+  "meta": {
+    "searchable_text": "함수 (계수 2, 3, 3 포함)에 대하여 $\\lim_{x \\to 0}$의 극한값을 구하는 문제입니다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한의_계산",
+      "함수의_극한"
+    ],
+    "exam_intent": "기본적인 함수의 극한값 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

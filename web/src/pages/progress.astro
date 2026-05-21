@@ -1,0 +1,18 @@
+---
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProgressView from '../components/ProgressView.tsx';
+---
+<BaseLayout title="진행 로그">
+  <div class="max-w-7xl mx-auto px-6 py-6 space-y-4">
+    <header class="flex items-baseline justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight">진행 로그</h1>
+        <p class="text-sm text-[color:var(--color-muted)]">
+          extract_all_answers + fill_spoke_bodies — /tmp/post_manifest.log
+        </p>
+      </div>
+    </header>
+    <ProgressView client:load />
+  </div>
+</BaseLayout>

@@ -1,0 +1,18 @@
+{
+  "text_sha": "58e6f7e6be71",
+  "meta": {
+    "searchable_text": "한 변의 길이가 2인 정사각형을 밑면으로 하고 $AB = AC = AD = AE = 4$인 정사각뿔 $A-BCDE$가 있다. 두 선분 $BC$, $CD$의 중점을 각각 $P$, $Q$라 하고, 선분 $CA$를 $1:7$로 내분하는 점을 $R$이라 하자. 네 점 $C$, $P$, $Q$, $R$을 모두 지나는 구 위의 점 중에서 직선 $AB$와의 거리가 최소인 점을 $S$라 하자. 삼각형 $ABS$의 평면 $BCD$ 위로의 정사영의 넓이가 $\\alpha\\sqrt{2}$일 때, $60 \\times \\alpha$의 값을 구하시오. (단, $\\alpha$는 유리수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "정사각뿔",
+      "구의_기하학",
+      "정사영",
+      "최소거리"
+    ],
+    "exam_intent": "공간도형에서 구의 성질과 정사영을 이용한 최소거리 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

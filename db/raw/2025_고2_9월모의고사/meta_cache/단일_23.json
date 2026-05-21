@@ -1,0 +1,17 @@
+{
+  "text_sha": "b05176568d54",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_k\\}$, $\\{b_k\\}$에 대하여 $\\sum_{k=1}^{10} a_k = 80$, $\\sum_{k=1}^{10} b_k = 30$일 때, $\\sum_{k=1}^{10} (a_k + b_k)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "수열의_합",
+      "시그마_기호",
+      "합의_선형성"
+    ],
+    "exam_intent": "수열의 합의 선형성 이해: 두 수열의 합의 시그마는 각 시그마의 합",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

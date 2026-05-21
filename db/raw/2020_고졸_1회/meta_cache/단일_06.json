@@ -1,0 +1,16 @@
+{
+  "text_sha": "2820819b11f9",
+  "meta": {
+    "searchable_text": "부등식 $|x-3| \\leq 1$을 만족하는 정수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "절댓값",
+      "일차부등식"
+    ],
+    "exam_intent": "절댓값 일차부등식을 풀고 정수해의 개수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

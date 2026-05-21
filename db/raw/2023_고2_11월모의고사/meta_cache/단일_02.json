@@ -1,0 +1,16 @@
+{
+  "text_sha": "39ff185f45fb",
+  "meta": {
+    "searchable_text": "곡선 $y = x^3 + x^2 + 5$ 위의 점에서의 접선의 기울기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_기울기",
+      "도함수"
+    ],
+    "exam_intent": "도함수를 이용하여 곡선 위의 점에서의 접선의 기울기를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

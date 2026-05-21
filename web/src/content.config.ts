@@ -40,6 +40,7 @@ const problems = defineCollection({
       exam_type: z.string(),
       year: z.union([z.string(), z.number()]),
       session: z.string().optional(),
+      grade: z.string().optional(),
       subject: z.string(),
       number: z.union([z.string(), z.number()]),
       score: z.union([z.string(), z.number()]).optional(),
@@ -65,6 +66,19 @@ const problems = defineCollection({
     killer_tier: z.enum(['early', 'mid', 'high', 'killer']).nullable().optional(),
     cognitive_type: z.enum(['계산', '개념', '응용', '추론', '통합']).nullable().optional(),
     expected_time_sec: z.number().nullable().optional(),
+    // v2 (PNG-First) — body is a single PNG crop; searchable_text is the
+    // vision-extracted plain-text shadow used by the tutor LLM and search.
+    problem_image: z.string().optional(),
+    has_figure: z.boolean().optional(),
+    searchable_text: z.string().optional(),
+    // Stage C — vision LLM이 ingest 시 추출한 도형 spec (geometry/plot/numberline/chart).
+    // 채워져 있으면 problem 페이지가 raw PNG 외에 spec 기반 SVG 도 함께 렌더 가능.
+    // 모든 수능 도형이 이 spec으로 표현 가능한 건 아님 — fallback은 PNG.
+    figure_spec: z.object({
+      kind: z.enum(['geometry', 'plot', 'numberline', 'chart']),
+      spec: z.record(z.unknown()),
+      confidence: z.number().min(0).max(1).optional(),
+    }).optional(),
   }),
 });
 

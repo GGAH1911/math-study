@@ -1,0 +1,17 @@
+{
+  "text_sha": "658af50a3499",
+  "meta": {
+    "searchable_text": "두 밑변 AD, BC의 길이가 각각 $2\\sqrt{3}$, $2\\sqrt{6}$이고 높이가 4인 사다리꼴 ABCD가 있다. 선분 CD의 중점을 E라 할 때, 사각형 ABED의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "사다리꼴의_성질",
+      "중점의_활용",
+      "도형의_넓이_계산"
+    ],
+    "exam_intent": "사다리꼴에서 중점을 이용한 부분 도형의 넓이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

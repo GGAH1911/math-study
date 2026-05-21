@@ -1,0 +1,18 @@
+{
+  "text_sha": "cc590a8070f3",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = AC$, $\\angle A = 90°$인 이등변삼각형 ABC의 외심을 O라 하자. 점 O에서 선분 AB에 내린 수선의 발을 D라 하고, 직선 AO와 선분 BC의 교점을 E라 하자. $AO = 3 \\cdot OE$이고 삼각형 ADO의 넓이가 6일 때, 삼각형 ABC의 넓이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외심",
+      "이등변삼각형",
+      "수직",
+      "넓이"
+    ],
+    "exam_intent": "외심의 성질과 기하학적 관계식을 이용한 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

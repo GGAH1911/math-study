@@ -1,0 +1,16 @@
+{
+  "text_sha": "22bcb60eb67d",
+  "meta": {
+    "searchable_text": "∠B = 90°, AB = 10인 삼각형 ABC의 넓이가 30이고, 선분 BC 위의 점 D에 대하여 BD = 4이다. 직선 AB를 회전축으로 하여 삼각형 ADC를 1회전시킬 때 생기는 회전체의 부피를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "회전체의_부피",
+      "원판법"
+    ],
+    "exam_intent": "회전체 부피를 정적분으로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

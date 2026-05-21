@@ -1,0 +1,17 @@
+{
+  "text_sha": "b7f898997754",
+  "meta": {
+    "searchable_text": "양의 실수 전체의 집합에서 정의되고 미분가능한 두 함수 $f$, $g$가 있다. $g$는 $f$의 역함수이고, $f' \\circ g$는 양의 실수 전체의 집합에서 연속이다. 모든 양수 $x$에 대하여 $$\\int_1^x \\frac{f'(t)}{t^2 \\ln t \\ln(t+1) \\ln 2} dt = f(2x)$$ 이고 $f(1) = 8$일 때, $f(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지적분법",
+    "concepts": [
+      "역함수의_미분",
+      "정적분",
+      "함수방정식"
+    ],
+    "exam_intent": "정적분과 역함수 미분을 이용한 함수값 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "826576d1bd3a",
+  "meta": {
+    "searchable_text": "1≤x≤2에서 이차함수 $f(x)=ax^2+bx+c$의 최솟값이 5일 때, 두 실수 $a$, $b$에 대하여 옳은 것만을 <보기>에서 있는 대로 고른 것은? [4점]\n\nㄱ. $a>3$일 때, $b<-5$이다.\nㄴ. $a≤1$일 때, $f(2)-f(1)≤2a+4$이다.\nㄷ. $b$의 최댓값은 $-\\frac{4}{a}+29$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최솟값",
+      "정의역_제한",
+      "계수의_관계"
+    ],
+    "exam_intent": "정의역 제한에서 이차함수의 최솟값 조건으로 계수 간 관계 파악",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

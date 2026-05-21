@@ -1,0 +1,18 @@
+{
+  "text_sha": "4541d2abe3f9",
+  "meta": {
+    "searchable_text": "중심각의 크기가 주어지고 호의 길이가 $4\\pi$인 부채꼴의 넓이를 구하는 문제",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "부채꼴",
+      "호의_길이",
+      "중심각",
+      "넓이"
+    ],
+    "exam_intent": "부채꼴의 호의 길이·중심각·반지름·넓이 관계식을 이용한 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

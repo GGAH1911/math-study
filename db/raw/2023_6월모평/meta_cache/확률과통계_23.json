@@ -1,0 +1,16 @@
+{
+  "text_sha": "11524478b549",
+  "meta": {
+    "searchable_text": "5개의 문자를 모두 일렬로 나열하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "중복순열"
+    ],
+    "exam_intent": "중복 원소를 포함하는 순열의 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

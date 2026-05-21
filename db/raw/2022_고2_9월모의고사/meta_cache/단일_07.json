@@ -1,0 +1,16 @@
+{
+  "text_sha": "4d97b690e4a3",
+  "meta": {
+    "searchable_text": "중심각의 크기가 $\\frac{\\pi}{6}$이고 호의 길이가 $\\pi$인 부채꼴의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "부채꼴의_넓이",
+      "호의_길이"
+    ],
+    "exam_intent": "호의 길이와 중심각으로부터 부채꼴의 넓이를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -7,7 +7,7 @@ import { readConceptGraph } from '../lib/health.ts';
 const graph = readConceptGraph();
 const highlight = Astro.url.searchParams.get('node') ?? undefined;
 ---
-<BaseLayout title="Concept Graph" containerClass="h-[calc(100vh-3.5rem)]">
+<BaseLayout title="개념 지도" containerClass="h-[calc(100vh-3.5rem)]">
   <div class="h-full">
     {graph.stats.nodes > 0 ? (
       <ConceptDAG client:load data={graph} variant="full" highlight={highlight} />
@@ -15,7 +15,7 @@ const highlight = Astro.url.searchParams.get('node') ?? undefined;
       <div class="flex items-center justify-center h-full text-[color:var(--color-muted)]">
         <div class="text-center">
           <div class="text-5xl mb-3">◈</div>
-          <p class="text-lg">아직 그래프가 비어 있습니다.</p>
+          <p class="text-lg">아직 개념 지도가 비어 있습니다.</p>
           <p class="text-sm mt-1">docs/concepts/ 에 첫 개념을 시드해주세요.</p>
         </div>
       </div>

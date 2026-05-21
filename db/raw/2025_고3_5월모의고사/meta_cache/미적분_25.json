@@ -1,0 +1,17 @@
+{
+  "text_sha": "827e48a87fee",
+  "meta": {
+    "searchable_text": "두 양수 $a, b$에 대하여 극한식이 주어진 조건을 만족할 때, $a$의 값은? (PDF 수식 글리프 손상 — 부분 복원 불가)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_성질",
+      "무한대에서의_극한",
+      "유리함수의_극한"
+    ],
+    "exam_intent": "매개변수가 있는 복합 극한 조건에서 미지수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

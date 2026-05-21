@@ -1,0 +1,17 @@
+{
+  "text_sha": "8da72cb30839",
+  "meta": {
+    "searchable_text": "그림과 같이 반지름의 길이가 5인 원 위의 네 점 $A, B, C, D$에 대하여 두 직선 $AD, BC$는 서로 평행하고 $\\angle DCB = 110°$이다. 점 $A$를 포함하지 않는 두 호 $BC, CD$의 길이의 비가 $4:3$일 때, 점 $B$를 포함하지 않는 호 $DA$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "호의_길이와_중심각",
+      "원주각",
+      "평행현의_성질"
+    ],
+    "exam_intent": "호의 길이 비와 각도 조건에서 원 위의 특정 호의 길이를 구하는 종합 사고력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

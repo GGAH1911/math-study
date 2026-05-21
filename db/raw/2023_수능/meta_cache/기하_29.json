@@ -1,0 +1,17 @@
+{
+  "text_sha": "37ea5edc4a1a",
+  "meta": {
+    "searchable_text": "평면 위에 $AB \\parallel CD$, $AD = 2$, $\\angle ABC = \\angle BCD = \\frac{3\\pi}{4}$인 사다리꼴 $ABCD$가 있다. 다음 조건을 만족하는 평면 위의 두 점 $P, Q$에 대하여 $\\vec{CP} \\cdot \\vec{DQ}$의 값을 구하시오. [4점] (가) (나) $\\vec{AC} \\cdot \\vec{PQ} = 6$ (다)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "사다리꼴의_성질",
+      "기하_제약_조건"
+    ],
+    "exam_intent": "기하 조건과 벡터 연산을 활용한 통합 문제 해결",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

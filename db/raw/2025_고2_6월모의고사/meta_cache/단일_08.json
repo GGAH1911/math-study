@@ -1,0 +1,16 @@
+{
+  "text_sha": "26f9c26f67e4",
+  "meta": {
+    "searchable_text": "함수 $y = \\log_a(2x+7)$가 $x$의 값이 증가할 때 $y$의 값도 증가하도록 하는 모든 정수 $a$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_단조성",
+      "로그함수의_밑_조건"
+    ],
+    "exam_intent": "로그함수의 증가 조건에서 정수 밑의 범위를 찾아 합 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

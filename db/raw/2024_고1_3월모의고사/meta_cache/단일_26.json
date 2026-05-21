@@ -1,0 +1,17 @@
+{
+  "text_sha": "d908d09c3a05",
+  "meta": {
+    "searchable_text": "한 변의 길이가 $4\\sqrt{2}$인 정사각형 ABCD의 선분 AD 위에 $DE = 2\\sqrt{2}$인 점 E가 있다. 정사각형 내부의 한 점 F에 대하여 $\\angle CFE = 90°$이고 $EF = FC = 4\\sqrt{7}$이다. 정사각형 ABCD에서 사각형 EFCD를 잘라내어 도형을 만들었을 때, 이 도형의 둘레의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "정사각형",
+      "직각삼각형",
+      "피타고라스_정리"
+    ],
+    "exam_intent": "기하 조건을 종합하여 도형의 둘레를 정확히 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

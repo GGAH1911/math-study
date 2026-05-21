@@ -1,0 +1,18 @@
+{
+  "text_sha": "923ba336aae2",
+  "meta": {
+    "searchable_text": "그림과 같이 반비례 관계 $y = \\frac{k}{x}$ (단, $k > 0$)의 그래프가 두 정비례 관계 $y = ax$, $y = bx$의 그래프와 제1사분면에서 만나는 점을 각각 P, Q라 하자. 점 P를 지나고 x축과 평행한 직선이 정비례 관계 $y = bx$의 그래프와 만나는 점 R에 대하여 삼각형 PRQ의 넓이가 $\\frac{2}{3}$이다. 점 Q의 x좌표가 점 P의 x좌표의 2배일 때, 실수 a의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "반비례함수",
+      "일차함수",
+      "교점",
+      "도형의넓이"
+    ],
+    "exam_intent": "함수의 교점과 도형의 넓이 조건을 이용한 계수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

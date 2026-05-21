@@ -1,0 +1,17 @@
+{
+  "text_sha": "4c4eac33e878",
+  "meta": {
+    "searchable_text": "다항함수 $f$가 모든 실수 $x$에 대하여 도함수 관련 조건을 만족한다. 함수값 조건이 주어질 때, $f(3)$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "함수의_결정",
+      "초기조건"
+    ],
+    "exam_intent": "도함수 조건으로부터 다항함수를 결정하고 함수값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

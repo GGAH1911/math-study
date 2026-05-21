@@ -1,0 +1,16 @@
+{
+  "text_sha": "2e2e7b7567b2",
+  "meta": {
+    "searchable_text": "11. 그림과 같이 실수 $a$ ($0 < a < 1$)에 대하여 곡선 $y = x^2$ 위의 점 중에서 직선 $y = 2a - 1$과의 거리가 최소인 점을 $P$라 하고, 직선 $OP$가 직선 $y = 2a - 1$과 만나는 점을 $Q$라 할 때, $\\lim_{a \\to 1^-} \\frac{PQ}{1-a}$의 값은? (단, $O$는 원점이다.) [4점]",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "최솟값",
+      "극한"
+    ],
+    "exam_intent": "곡선 위의 점과 직선 사이 거리의 최솟값을 이용한 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

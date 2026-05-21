@@ -1,0 +1,15 @@
+{
+  "text_sha": "5f22b68735a5",
+  "meta": {
+    "searchable_text": "다항식 $2x^3 - 3x^2 + 2x + 4$를 $(x-1)$로 나눈 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리"
+    ],
+    "exam_intent": "나머지정리를 이용하여 다항식을 일차식으로 나눈 나머지를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

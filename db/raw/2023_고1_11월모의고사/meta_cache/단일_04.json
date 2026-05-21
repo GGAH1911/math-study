@@ -1,0 +1,17 @@
+{
+  "text_sha": "1428acca6415",
+  "meta": {
+    "searchable_text": "연립부등식 $3x \\geq 2x + 3$, $x - 10 \\leq -x$를 만족시키는 모든 정수 $x$의 값의 합",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "연립부등식",
+      "정수해",
+      "부등식의_성질"
+    ],
+    "exam_intent": "일차 연립부등식의 해 범위를 구하고 정수해의 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

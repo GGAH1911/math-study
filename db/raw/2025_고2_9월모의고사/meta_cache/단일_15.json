@@ -1,0 +1,17 @@
+{
+  "text_sha": "b7efb787ecb9",
+  "meta": {
+    "searchable_text": "자연수 n에 대해 정의된 이차함수의 그래프와 직선이 만나는 서로 다른 두 점을 A, B라 하고, 원점 O와 함께 삼각형 AOB를 이루며, 이 삼각형의 넓이를 구하여 주어진 조건을 만족하는 값을 계산하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "교점",
+      "삼각형넓이",
+      "이차방정식"
+    ],
+    "exam_intent": "이차함수와 직선의 교점을 이용하여 삼각형의 넓이를 계산할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "19f29c26ad3f",
+  "meta": {
+    "searchable_text": "길이가 2인 선분 AB를 지름으로 하는 반원의 호 AB 위의 점 P에 대하여 ∠BAP = θ (단, 0 < θ < π/2)라 하고, 점 P를 지나고 선분 AB에 평행한 직선이 호 AB와 만나는 점 중 P가 아닌 점을 Q라 하자. 사각형 ABQP의 넓이를 S(θ)라 하고, ∫₀^a AP · BP dθ = 1/3이 되도록 하는 a의 값을 α라 할 때, ∫₀^α S'(θ) dθ의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "삼각함수",
+      "도함수",
+      "기하학적_최적화"
+    ],
+    "exam_intent": "적분 조건으로부터 매개변수를 결정하고 정적분의 기본정리를 적용하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

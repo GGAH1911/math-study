@@ -1,0 +1,17 @@
+{
+  "text_sha": "d4b2714a8167",
+  "meta": {
+    "searchable_text": "공차가 3인 등차수열 $\\{a_n\\}$이 다음 조건을 만족시킬 때, $a_{10}$의 값은?\n(가) $a_5 \\times a_7 \\leq 0$\n(나) 항들의 합으로 표현되는 분수 조건식",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "일반항",
+      "조건식"
+    ],
+    "exam_intent": "등차수열의 조건으로 첫째항 결정, 특정항 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "a0a0c561ae63",
+  "meta": {
+    "searchable_text": "시각 $t=0$일 때 동시에 원점을 출발하여 수직선 위를 움직이는 두 점 P, Q의 시각 $t$ ($t \\geq 0$)에서의 속도가 각각 $v_P(t) = t^3 - 3t^2 - 6t + 2$, $v_Q(t) = 2t^2 + 2t + 6$ 이다. 출발한 시각부터 두 점 P, Q가 다시 만날 때까지 점 Q가 움직인 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "이동거리"
+    ],
+    "exam_intent": "정적분으로 두 점의 만남 시각 찾기 및 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

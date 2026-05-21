@@ -1,0 +1,17 @@
+{
+  "text_sha": "3292b961defb",
+  "meta": {
+    "searchable_text": "길이가 10인 선분 AB를 지름으로 하는 원 위에 점 C(AC = 4)가 있다. 원 위의 점 P를 $\\angle PCB = \\theta$가 되도록 잡고, P를 지나고 AB에 수직인 직선이 원과 만나는 점 Q와 함께 삼각형 PCQ를 이룬다. 삼각형 PCQ의 넓이 $S(\\theta)$에 대해 주어진 식의 값을 구하시오. (단, $0 < \\theta < \\frac{\\pi}{2}$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "넓이함수",
+      "미분"
+    ],
+    "exam_intent": "각도 매개변수를 이용한 넓이함수의 도함수와 극값",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "523c1d20a01d",
+  "meta": {
+    "searchable_text": "등식 ⋄2⋄3⋄4가 ⋄에 대한 항등식일 때, 두 상수 ⋄, ⋄에 대하여 ⋄×⋄의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "계수비교"
+    ],
+    "exam_intent": "항등식에서 계수 비교를 통해 미지 상수의 곱 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

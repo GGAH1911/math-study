@@ -1,0 +1,17 @@
+{
+  "text_sha": "1e8f023bed86",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$에 대하여 함수 $g(x)$를 $$g(x) = xf(3x+1)$$라 하자. $f(1) = 2$, $f'(1) = 3$일 때, $g'(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "곱의_미분법",
+      "연쇄법칙",
+      "합성함수의_미분"
+    ],
+    "exam_intent": "곱의 미분법과 연쇄법칙을 결합하여 도함수 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

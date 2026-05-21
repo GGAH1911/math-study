@@ -1,0 +1,17 @@
+{
+  "text_sha": "bb2fa87f85f1",
+  "meta": {
+    "searchable_text": "두 사건 $A$, $B$에 대하여 $A$와 $B'$는 서로 배반사건이고, $P(B) = \\frac{1}{2}$, $P(A' \\cap B) = \\frac{2}{7}$일 때, $P(A)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "배반사건",
+      "여사건",
+      "확률의덧셈"
+    ],
+    "exam_intent": "배반사건과 여사건을 이용한 확률 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

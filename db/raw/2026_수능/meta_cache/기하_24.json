@@ -1,0 +1,18 @@
+{
+  "text_sha": "3180775ab6eb",
+  "meta": {
+    "searchable_text": "포물선 $y^2 = 12x$의 초점과 준선 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선",
+      "초점",
+      "준선",
+      "표준형"
+    ],
+    "exam_intent": "포물선의 초점과 준선 사이의 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

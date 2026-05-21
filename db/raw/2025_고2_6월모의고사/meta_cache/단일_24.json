@@ -1,0 +1,17 @@
+{
+  "text_sha": "ea41fe0d2245",
+  "meta": {
+    "searchable_text": "부등식 $1 < \\log_2 x < 5$를 만족시키는 모든 자연수 $x$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_부등식",
+      "로그의_정의와_성질",
+      "자연수_범위_결정"
+    ],
+    "exam_intent": "로그 부등식을 풀어 주어진 범위의 자연수 개수를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

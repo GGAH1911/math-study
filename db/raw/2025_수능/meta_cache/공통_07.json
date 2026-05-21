@@ -1,0 +1,16 @@
+{
+  "text_sha": "2170d5d77afb",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$가 모든 실수 $x$에 대하여 $\\int_0^x f(t)dt = x^3 + 3x^2 + \\cdots$를 만족시킬 때, $f(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "기본정리"
+    ],
+    "exam_intent": "적분 조건으로부터 기본정리를 이용하여 도함수를 구하고 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

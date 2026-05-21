@@ -1,0 +1,16 @@
+{
+  "text_sha": "ae96e53a2011",
+  "meta": {
+    "searchable_text": "$\\sqrt{3} - \\frac{1}{\\sqrt{3}}$의 값은? (단, 분모 양수)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "무리수의_계산",
+      "분모의_유리화"
+    ],
+    "exam_intent": "무리수 식을 정리하고 계산하는 기본 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

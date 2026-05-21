@@ -1,0 +1,16 @@
+{
+  "text_sha": "8a7c545cc944",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 복소수 $z$가 존재하도록 하는 모든 실수값의 곱은? (단, $\\bar{z}$는 $z$의 켤레복소수이다.) 조건 (가), (나)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수",
+      "켤레복소수"
+    ],
+    "exam_intent": "복소수 조건을 만족하는 실수값의 존재성 판정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

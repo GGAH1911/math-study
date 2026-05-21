@@ -1,0 +1,17 @@
+{
+  "text_sha": "8bfbc0598e5b",
+  "meta": {
+    "searchable_text": "$\\cos\\theta = \\frac{\\sqrt{2}}{2}$이고 $\\sin\\theta > 0$일 때, $\\tan\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "기본_삼각함수값",
+      "각의_사분면_판정",
+      "탄젠트_계산"
+    ],
+    "exam_intent": "기본 각의 삼각함수값을 이용하여 탄젠트값을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

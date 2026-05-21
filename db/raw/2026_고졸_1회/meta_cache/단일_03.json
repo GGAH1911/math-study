@@ -1,0 +1,16 @@
+{
+  "text_sha": "0dc06e381164",
+  "meta": {
+    "searchable_text": "다항식 $2x^3 + 3x^2 + 5x + 1$을 $x - 1$로 나누었을 때, 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식_나머지_정리",
+      "인수정리"
+    ],
+    "exam_intent": "나머지 정리를 이용하여 일차식으로 나눈 나머지를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

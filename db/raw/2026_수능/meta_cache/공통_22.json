@@ -1,0 +1,17 @@
+{
+  "text_sha": "98a96070c50a",
+  "meta": {
+    "searchable_text": "곡선 위의 점 A와 곡선 위의 점 B가 제1사분면에 있다. 점 A를 직선에 대하여 대칭이동한 점이 직선 OB 위에 있고, 선분 AB의 중점의 좌표가 주어질 때, 답을 구하시오. (O는 원점, 답은 기약분수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "대칭이동"
+    ],
+    "exam_intent": "역함수의 대칭성과 중점 좌표를 활용한 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

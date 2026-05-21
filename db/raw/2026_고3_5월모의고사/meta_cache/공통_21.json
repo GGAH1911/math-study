@@ -1,0 +1,18 @@
+{
+  "text_sha": "2c0c395fdab3",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1이고 $f(0)=0$인 삼차함수 $f$가 있다. 양수 $a$와 실수 $b$ ($b\\neq 0$)에 대하여 함수 $g(x)=\\begin{cases}f(x) & x<a \\\\ |b|x-a & x\\geq a\\end{cases}$가 다음 조건을 만족시킨다. (가) 함수 $g$는 실수 전체의 집합에서 미분가능하다. (나) $g$에 대한 방정식 $g(x)=0$의 서로 다른 모든 실근의 합이 $2a$이다. 함수 $g$의 극값 중 가장 큰 값이 $\\frac{2}{3}a^3$일 때, $a+4b$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "미분가능성",
+      "절댓값함수",
+      "삼차함수"
+    ],
+    "exam_intent": "분할함수의 미분가능성과 극값 조건으로 매개변수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

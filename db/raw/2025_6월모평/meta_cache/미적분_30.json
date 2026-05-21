@@ -1,0 +1,17 @@
+{
+  "text_sha": "f445eca0bb90",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\frac{10}{x}$의 그래프와 함수 $g(x) = x\\tan(\\pi x)$의 그래프가 만나는 모든 점의 $x$좌표를 작은 수부터 크기순으로 나열할 때, $n$번째 수를 $a_n$이라 하자. $\\lim_{n \\to \\infty} \\frac{n(3\\tan(2a_n) - 1)}{a_n}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_수렴",
+      "극한값_계산",
+      "함수의_교점"
+    ],
+    "exam_intent": "삼각함수 교점 수열의 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

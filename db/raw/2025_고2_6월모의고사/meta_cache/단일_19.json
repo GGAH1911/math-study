@@ -1,0 +1,17 @@
+{
+  "text_sha": "ec970bb48324",
+  "meta": {
+    "searchable_text": "7 이하의 두 자연수 $a$, $b$에 대하여 함수 $f(x) = a^2 x \\cos(b^2 x)$가 있다. $0 \\le x \\le 2\\pi$에서 방정식 $a^2 x - 25\\sin(b^2 x) - 24x - 29 = 0$의 서로 다른 실근의 개수가 6이 되도록 하는 $a, b$의 모든 순서쌍의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수",
+      "함수의_영점",
+      "실근의_개수"
+    ],
+    "exam_intent": "삼각함수 방정식의 실근 개수 조건을 만족하는 매개변수 순서쌍 개수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

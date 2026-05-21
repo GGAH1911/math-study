@@ -1,0 +1,17 @@
+{
+  "text_sha": "699c07546dd5",
+  "meta": {
+    "searchable_text": "방정식 $\\log_2 x + 5 = \\log_4 x + 7$을 만족시키는 실수 $x$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그",
+      "로그방정식",
+      "밑변환"
+    ],
+    "exam_intent": "로그 밑변환을 이용한 로그방정식 풀이 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

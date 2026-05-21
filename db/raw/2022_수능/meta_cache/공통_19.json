@@ -1,0 +1,17 @@
+{
+  "text_sha": "536932612a3b",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\frac{1}{3}x^3 + ax^2 - 2x + c$ (또는 유사 형태)이 실수 전체의 집합에서 증가하도록 하는 실수 $a$의 최댓값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "증가함수",
+      "판별식"
+    ],
+    "exam_intent": "도함수로 함수의 증가 조건을 분석하여 매개변수의 최댓값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

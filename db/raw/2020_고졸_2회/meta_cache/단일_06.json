@@ -1,0 +1,16 @@
+{
+  "text_sha": "50e987751e8f",
+  "meta": {
+    "searchable_text": "1≤x≤4일 때, 이차함수 $f(x) = x^2 - 2x + 3$의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최댓값",
+      "정의역_제한_내_극값"
+    ],
+    "exam_intent": "주어진 범위에서 이차함수의 최댓값을 계산하는 능력 측정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

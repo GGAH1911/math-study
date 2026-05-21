@@ -1,0 +1,18 @@
+{
+  "text_sha": "ed2262433595",
+  "meta": {
+    "searchable_text": "좌표공간에 평면 $\\alpha$가 있다. 평면 $\\alpha$ 위에 있지 않은 서로 다른 두 점 $A$, $B$의 평면 $\\alpha$ 위로의 정사영을 각각 $A'$, $B'$이라 할 때, $|AB|^2 + |A'B'|^2 = 6$이다. 선분 $AB$의 중점 $M$의 평면 $\\alpha$ 위로의 정사영을 $M'$이라 할 때, $PM' \\perp A'B'$, $|PM'| = 6$이 되도록 평면 $\\alpha$ 위에 점 $P$를 잡는다. 삼각형 $A'B'P$의 평면 $ABP$ 위로의 정사영의 넓이가 $\\frac{2\\sqrt{3}}{9}$일 때, 선분 $PM$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "정사영",
+      "공간벡터",
+      "거리계산",
+      "평면과직선의수직관계"
+    ],
+    "exam_intent": "공간도형의 정사영과 벡터 개념을 통합하여 거리 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

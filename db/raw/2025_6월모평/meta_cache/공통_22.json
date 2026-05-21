@@ -1,0 +1,17 @@
+{
+  "text_sha": "6fd3dc6c9178",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 $a_2 = 1$의 초기조건과 $n \\geq 2$일 때의 조각별 정의된 점화식을 만족할 때, $a_{15} = 1$이 되도록 하는 모든 $a_1$의 값의 곱을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "조건부_정의",
+      "역추적"
+    ],
+    "exam_intent": "조각별 점화식을 역방향으로 추적하여 초기값 조건을 찾는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

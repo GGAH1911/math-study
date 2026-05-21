@@ -1,0 +1,16 @@
+{
+  "text_sha": "4725aed0b2bb",
+  "meta": {
+    "searchable_text": "곡선 $y = x^2 - 1$ 위의 점 중 제2사분면에 있는 점을 중심으로 하고, $x$축과 $y$축에 동시에 접하는 원의 방정식은 $x^2 + y^2 + Dx + Ey + F = 0$이다. $D + E + F$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "접선_조건"
+    ],
+    "exam_intent": "곡선 위의 조건을 만족하는 점에서 좌표축에 접하는 원의 방정식을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

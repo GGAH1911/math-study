@@ -1,0 +1,16 @@
+{
+  "text_sha": "6f4a7aa09d15",
+  "meta": {
+    "searchable_text": "$0 \\leq x \\leq 3$에서 정의된 함수 $f(x)$의 최댓값과 최솟값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "최댓값과_최솟값",
+      "정의역_제한"
+    ],
+    "exam_intent": "정의역이 제한된 이차함수의 최댓값과 최솟값의 합을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

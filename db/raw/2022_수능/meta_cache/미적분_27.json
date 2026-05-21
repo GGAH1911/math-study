@@ -1,0 +1,13 @@
+{
+  "text_sha": "3770990dfe2c",
+  "meta": {
+    "searchable_text": "좌표평면 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 위치가 곡선 $y=x^2$과 직선이 만나는 서로 다른 두 점의 중점일 때, 시각 $t=1$에서 $t=e$까지 점 P가 움직인 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [],
+    "exam_intent": "매개변수 곡선의 호장을 적분으로 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

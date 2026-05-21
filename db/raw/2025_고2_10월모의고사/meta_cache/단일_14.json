@@ -1,0 +1,16 @@
+{
+  "text_sha": "e6b35fdee438",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$의 첫째항부터 제$n$항까지의 합을 $S_n$이라 하자. 주어진 조건들을 만족할 때, 특정값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "부분합",
+      "일반항"
+    ],
+    "exam_intent": "부분합 조건으로부터 수열값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "83f57848d450",
+  "meta": {
+    "searchable_text": "좌표평면 위에 길이가 6인 선분 AB를 지름으로 하는 원이 있다. 원 위의 서로 다른 두 점 C, D가 $\\vec{AB} \\cdot \\vec{AC} = 27$, $\\vec{AB} \\cdot \\vec{AD} = 9$, $|CD| = 3$을 만족한다. 선분 AC 위의 서로 다른 두 점 P, Q와 상수 $k$가 주어진 조건들을 만족할 때 관련 식의 값을 구하는 기하 문제",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_응용"
+    ],
+    "exam_intent": "원 위의 점에 대한 벡터 조건을 이용한 계산 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

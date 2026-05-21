@@ -1,0 +1,17 @@
+{
+  "text_sha": "1948bac6a8b3",
+  "meta": {
+    "searchable_text": "$\\frac{1}{\\int_0^3 2\\sqrt{x}\\ln\\frac{1}{x}dx} = 2\\ln\\text{?}$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "정적분",
+      "로그함수",
+      "부정적분"
+    ],
+    "exam_intent": "로그함수를 포함한 정적분 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

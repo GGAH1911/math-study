@@ -1,0 +1,15 @@
+{
+  "text_sha": "6d9be53310b9",
+  "meta": {
+    "searchable_text": "⋄2⋄, ⋄2⋄일 때, ⋄4⋄2⋄2⋄4의 값은? (단, ⋄⋄1이다.) [3점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "식의_계산"
+    ],
+    "exam_intent": "주어진 조건으로부터 식의 값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

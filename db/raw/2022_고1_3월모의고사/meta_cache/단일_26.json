@@ -1,0 +1,13 @@
+{
+  "text_sha": "fdf8620ebd70",
+  "meta": {
+    "searchable_text": "길이가 1인 선분 AB 위의 점 C에 대하여 선분 AC를 한 변으로 하는 정사각형 ACDE가 있다. 선분 CD를 삼등분하는 점 중 점 D에 가까운 점을 F라 하자. 정사각형 ACDE의 넓이와 삼각형 BFC의 넓이의 합이 $\\frac{8}{5}$일 때, $AC = \\frac{a}{b}$이다. $a+b$의 값을 구하시오. (단, $a$와 $b$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [],
+    "exam_intent": "좌표 설정과 기하 조건을 이용한 방정식 풀이",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

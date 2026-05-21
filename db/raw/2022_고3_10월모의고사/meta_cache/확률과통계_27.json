@@ -1,0 +1,18 @@
+{
+  "text_sha": "cd6c00219f77",
+  "meta": {
+    "searchable_text": "1부터 10까지의 자연수가 하나씩 적혀 있는 10장의 카드 중 4장을 동시에 꺼낸다. 카드의 수를 작은 순서대로 $a_1, a_2, a_3, a_4$라 할 때, $a_1 \\times a_2$가 홀수이고 $a_3 + a_4 \\geq 16$일 확률을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조합",
+      "경우의_수",
+      "조건부_확률",
+      "홀짝성"
+    ],
+    "exam_intent": "조건을 만족하는 경우를 체계적으로 세어 확률을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

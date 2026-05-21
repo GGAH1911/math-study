@@ -1,0 +1,17 @@
+{
+  "text_sha": "6d6ff46335c6",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 집합 $A$의 개수는?\n(가) $\\{0, 1\\} \\subset A \\subset \\mathbb{R}$\n(나) $x^2 - 2x \\notin A$이면 $x \\notin A$이다.\n(다) $4 \\in A$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_포함관계",
+      "조건부_명제",
+      "폐성"
+    ],
+    "exam_intent": "함수의 폐성을 만족하는 부분집합의 개수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

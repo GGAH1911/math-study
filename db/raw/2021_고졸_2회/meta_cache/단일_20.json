@@ -1,0 +1,15 @@
+{
+  "text_sha": "d99f649e68ad",
+  "meta": {
+    "searchable_text": "그림과 같이 5개의 정다면체가 있다. 이 5개의 정다면체에서 서로 다른 2개의 정다면체를 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합"
+    ],
+    "exam_intent": "5개 중 2개를 선택하는 조합의 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

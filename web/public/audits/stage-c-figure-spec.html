@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><title>Stage C — figure_spec 자동 추출</title>
+<style>
+body { font: 14px/1.5 system-ui, sans-serif; max-width: 1200px; margin: 2em auto; padding: 0 1em; color: #222; }
+h1 { font-size: 1.4em; }
+h2 { font-size: 1.1em; margin-top: 1.5em; }
+.box { border: 1px solid #ddd; padding: 0.6em 1em; margin: 0.6em 0; border-radius: 4px; background: #fafafa; }
+.added { background: #ecfdf5; border-left: 4px solid #10b981; }
+pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, monospace; }
+.metric { display: inline-block; padding: 0.3em 0.6em; margin: 0.2em; background: #e0e7ff; border-radius: 4px; color: #3730a3; }
+table { border-collapse: collapse; margin: 0.6em 0; }
+th, td { border: 1px solid #ddd; padding: 0.3em 0.6em; text-align: left; }
+th { background: #f4f4f4; }
+</style></head><body>
+<h1>Stage C — figure_spec 자동 추출</h1>
+
+<h2>변경 사항</h2>
+
+<div class="box added">
+<b>1. Content schema 확장</b> (<code>web/src/content.config.ts</code>)
+<pre>// problems collection 에 figure_spec 필드 추가
+figure_spec: z.object({
+  kind: z.enum(['geometry', 'plot', 'numberline', 'chart']),
+  spec: z.record(z.unknown()),
+  confidence: z.number().min(0).max(1).optional(),
+}).optional()</pre>
+</div>
+
+<div class="box added">
+<b>2. VISION_SYSTEM prompt 에 spec 추출 명령 추가</b> (<code>scripts/ingest_kice/vision_meta.py</code>)
+<pre>vision LLM이 도형 있으면 우리 4종 컴포넌트 중 적합한 형식의 spec JSON 생성:
+- plot: 함수 그래프 ({fn, range, points})
+- geometry: 평면도형 ({shapes: [point/segment/circle...]})
+- numberline: 구간/부등식 ({range, marks, intervals})
+- chart: 히스토그램/표 ({kind, bins, freq})
+
+confidence &lt; 0.5 또는 표현 어려우면 null → searchable_text 의 [그림] 묘사가 fallback.</pre>
+</div>
+
+<h2>Spec 적용 가능 도형 분류 (예상)</h2>
+
+<table>
+<tr><th>도형 종류</th><th>spec</th><th>적용 가능률</th></tr>
+<tr><td>함수 그래프 (포물선/지수/로그)</td><td>plot</td><td>90%</td></tr>
+<tr><td>좌표평면 + 점·선분</td><td>geometry</td><td>80%</td></tr>
+<tr><td>삼각형·원·접선</td><td>geometry</td><td>70%</td></tr>
+<tr><td>부채꼴 + 호</td><td>geometry (호 + 부채꼴 shape)</td><td>60%</td></tr>
+<tr><td>수직선 부등식 해</td><td>numberline</td><td>95%</td></tr>
+<tr><td>히스토그램/도수분포</td><td>chart</td><td>70%</td></tr>
+<tr><td>3D 입체 (정육면체/원뿔)</td><td>X (현재 X)</td><td>0% — PNG fallback</td></tr>
+<tr><td>회전체 단면</td><td>X</td><td>0%</td></tr>
+<tr><td>일러스트 (학생 그림 등)</td><td>X</td><td>0%</td></tr>
+<tr><td>다중 보조선/복잡한 합동/유사 도형</td><td>geometry (낮은 confidence)</td><td>40%</td></tr>
+</table>
+
+<div class="box">
+<span class="metric">예상 spec 추출 성공률: 60-75%</span>
+<span class="metric">실패는 searchable_text [그림 묘사]로 fallback</span>
+</div>
+
+<h2>downstream 활용</h2>
+
+<div class="box">
+<ol>
+<li><b>UI 재렌더</b>: problem 페이지에서 PNG 옆에 SVG 도형 추가. 확대 가능, 좌표 hover. (별도 컴포넌트 작업 필요)</li>
+<li><b>LLM 튜터 system prompt</b>: figure_spec JSON 을 본문에 포함. 텍스트 묘사보다 구조화돼 풀이 정확도 ↑</li>
+<li><b>도형 변형 풀이</b>: 튜터가 "보조선 BD를 그어보자" 시 spec 베이스로 변형 도형 emit 가능</li>
+</ol>
+</div>
+
+<h2>리스크 / Trade-off</h2>
+
+<div class="box">
+<ul>
+<li><b>cost</b>: 같은 vision LLM 호출 안에서 spec 도 추출 — 추가 비용 없음 (output token 만 늘어남, ~10-20%)</li>
+<li><b>schema 마이그레이션</b>: 기존 1389 problem 들은 figure_spec=undefined. 새 인제스트만 채워짐</li>
+<li><b>spec 생성 정확도</b>: 좌표/각도 추정이 어긋나면 SVG 가 PNG와 다르게 보일 수 있음. confidence 필드로 신뢰도 표시 + 낮으면 spec 안 보이게</li>
+<li><b>UI 컴포넌트 미통합</b>: 본 stage는 데이터 layer 만 — 실제 SVG 렌더 통합은 별도 작업</li>
+</ul>
+</div>
+
+<h2>검증 방법 (신규 회차 인제스트 시)</h2>
+
+<div class="box">
+<pre>cd /home/insung/Projects/math-study
+.venv/bin/python scripts/ingest_kice/ingest_v2.py --year YYYY --exam-type 수능
+# meta_cache 안 JSON 들이 새로 figure_spec 필드 포함하는지 확인:
+ls db/raw/&lt;round&gt;/meta_cache/*.json | head -5 | xargs jq '.meta.figure_spec'</pre>
+</div>
+
+<p style="color: #6b7280; font-size: 12px; margin-top: 2em;">
+파일: <code>web/src/content.config.ts</code>, <code>scripts/ingest_kice/vision_meta.py</code>
+</p>
+</body></html>

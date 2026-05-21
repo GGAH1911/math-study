@@ -1,0 +1,16 @@
+{
+  "text_sha": "a8f3ae18d75a",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 세 자리 자연수의 개수를 구하시오. (가) 백의 자리의 수, 십의 자리의 수, 일의 자리의 수 중 7의 개수는 1이다. (나) 백의 자리의 수와 일의 자리의 수의 곱을 2로 나눈 나머지는 1이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "곱의_법칙과_합의_법칙",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "여러 조건의 동시 만족 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

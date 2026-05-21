@@ -1,0 +1,17 @@
+{
+  "text_sha": "1679c7bacc46",
+  "meta": {
+    "searchable_text": "일차함수 $y = 2x + 4$의 그래프가 $x$축, $y$축과 만나는 점을 각각 $A$, $B$라 하고, 일차함수 $y = ax + b$ ($a \\neq 0$)의 그래프가 $x$축, $y$축과 만나는 점을 각각 $C$, $D$라 하자. 사각형 $ADCB$가 사다리꼴이 되도록 하는 모든 상수의 값의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "일차함수",
+    "concepts": [
+      "일차함수의_그래프",
+      "좌표축과의_교점",
+      "사다리꼴의_성질"
+    ],
+    "exam_intent": "기울기 조건으로 사다리꼴을 만족하는 미지수 값 찾기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "3e048d60a4a7",
+  "meta": {
+    "searchable_text": "삼차방정식 $x^3 + ax^2 + bx + c = 0$의 한 허근을 $\\alpha$라 할 때, $\\alpha^2 + \\bar{\\alpha}^2$의 값은? (단, $a$, $b$는 실수이고, $c \\neq 1$이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수",
+      "비에타의_정리"
+    ],
+    "exam_intent": "허근을 가진 삼차방정식에서 근과 계수의 관계 활용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

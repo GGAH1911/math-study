@@ -1,0 +1,16 @@
+{
+  "text_sha": "2aead8b01dac",
+  "meta": {
+    "searchable_text": "반지름 4인 원에 내접하는 삼각형 ABC의 둘레가 12일 때, $\\sin A \\cdot \\sin B \\cdot \\sin C$의 값",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "정현법칙",
+      "외접원"
+    ],
+    "exam_intent": "외접원 반지름과 둘레 조건에서 삼각함수의 곱 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

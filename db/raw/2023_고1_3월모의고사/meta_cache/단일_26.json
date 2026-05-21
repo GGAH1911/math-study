@@ -1,0 +1,17 @@
+{
+  "text_sha": "73c55d27e075",
+  "meta": {
+    "searchable_text": "자료 $9, 5, 6, 4, 8, 1, a, b$의 중앙값이 $6.5$, 평균이 $6$, 최빈값이 특정값일 때 미지수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "대푯값과_산포도",
+    "concepts": [
+      "중앙값",
+      "평균",
+      "최빈값"
+    ],
+    "exam_intent": "중앙값, 평균, 최빈값 조건으로부터 미지수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

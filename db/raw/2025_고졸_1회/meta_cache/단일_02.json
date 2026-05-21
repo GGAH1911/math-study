@@ -1,0 +1,16 @@
+{
+  "text_sha": "10413d6f18f6",
+  "meta": {
+    "searchable_text": "3차 다항식이 $(x-1)$로 나누어떨어질 조건에서 특정 상수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "인수정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "인수정리로 다항식의 계수를 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

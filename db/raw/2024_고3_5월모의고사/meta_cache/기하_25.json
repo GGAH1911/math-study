@@ -1,0 +1,19 @@
+{
+  "text_sha": "feff7754b791",
+  "meta": {
+    "searchable_text": "한 초점이 $F(c, 0)$인 타원 $\\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1$ 위의 제1사분면의 점 $P(x_1, y_1)$에서의 접선의 기울기와 직선 $PF$의 기울기의 곱이 $-1$일 때, 특정 식의 값은? (단, $x_1 \\neq a$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "초점",
+      "접선",
+      "기울기_관계",
+      "좌표_계산"
+    ],
+    "exam_intent": "이차곡선의 초점, 접선 성질과 수직 관계 조건을 활용하여 점의 좌표와 곡선의 매개변수 관계를 구하는 통합 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

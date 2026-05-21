@@ -1,0 +1,16 @@
+{
+  "text_sha": "7f47d0d6a5e8",
+  "meta": {
+    "searchable_text": "일차부등식을 만족시키는 자연수의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "일차부등식_풀이",
+      "자연수_범위"
+    ],
+    "exam_intent": "부등식의 해 범위에서 자연수 최솟값 찾기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

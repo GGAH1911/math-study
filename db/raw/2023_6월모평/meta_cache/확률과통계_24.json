@@ -1,0 +1,13 @@
+{
+  "text_sha": "0d416e937705",
+  "meta": {
+    "searchable_text": "주머니 A에는 1부터 3까지의 자연수가 하나씩 적혀 있는 3장의 카드가 들어 있고, 주머니 B에는 1부터 5까지의 자연수가 하나씩 적혀 있는 5장의 카드가 들어 있다. 두 주머니 A, B에서 각각 카드를 임의로 한 장씩 꺼낼 때, 꺼낸 두 장의 카드에 적힌 수의 차가 1일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [],
+    "exam_intent": "카드 조합 중 차가 1인 경우를 찾아 확률을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "35aa2f6077fd",
+  "meta": {
+    "searchable_text": "어떤 조건일 때, 실수의 값은? (단, 어떤 값 ≠ 1)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "None",
+    "concepts": [],
+    "exam_intent": "주어진 조건을 만족하는 실수의 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

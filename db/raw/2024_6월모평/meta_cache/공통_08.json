@@ -1,0 +1,16 @@
+{
+  "text_sha": "3cef7b0e7b41",
+  "meta": {
+    "searchable_text": "두 곡선이 만나는 점의 개수가 2가 되도록 하는 양수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "교점의_개수",
+      "매개변수"
+    ],
+    "exam_intent": "곡선의 교점 개수 조건에서 매개변수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

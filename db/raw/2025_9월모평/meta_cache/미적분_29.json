@@ -1,0 +1,17 @@
+{
+  "text_sha": "75c21e511d11",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$의 첫째항부터 제n항까지의 합을 $S_n$이라 하자. 모든 자연수 n에 대하여 주어진 조건이 만족될 때, 특정값을 구하시오. (단, 답은 기약분수이고 분자와 분모는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "부분합과_일반항의_관계",
+      "무한급수",
+      "점화식"
+    ],
+    "exam_intent": "부분합 조건으로부터 수열의 극한값을 구하는 종합 응용 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

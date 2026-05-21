@@ -1,0 +1,16 @@
+{
+  "text_sha": "f79866fdd72e",
+  "meta": {
+    "searchable_text": "극한값 $\\lim_{x \\to 2} \\frac{f(x)}{g(x)}$를 구하는 문제. 분자와 분모의 정확한 함수는 PDF 글리프 손상으로 복원 불가능하나, x→2 형태의 기본 극한 계산 문제로 추정됨",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "극한값_계산"
+    ],
+    "exam_intent": "함수의 극한값을 직접 계산하는 기본 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "d0b06dc5a0cc",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 곡선 위의 점에서의 접선의 기울기가 3일 때, 매개변수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "매개변수_곡선의_접선",
+      "매개변수_미분",
+      "접선의_기울기"
+    ],
+    "exam_intent": "매개변수 곡선의 접선 기울기 조건에서 매개변수값을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

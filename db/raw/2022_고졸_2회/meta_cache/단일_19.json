@@ -1,0 +1,15 @@
+{
+  "text_sha": "e1c4c6ec3869",
+  "meta": {
+    "searchable_text": "4점의 작품이 있다. 이 중에서 서로 다른 3점의 작품을 택하여 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열의 기본 계산으로 4개 중 3개를 선택·배열하는 경우의 수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

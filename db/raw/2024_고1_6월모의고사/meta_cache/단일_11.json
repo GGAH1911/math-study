@@ -1,0 +1,17 @@
+{
+  "text_sha": "3a575acd954a",
+  "meta": {
+    "searchable_text": "x에 대한 두 다항식이 공통 인수로 나누어떨어질 때 미지수 값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지_정리",
+      "공통_인수",
+      "인수분해"
+    ],
+    "exam_intent": "다항식의 공통 근을 조건으로 하는 미지수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

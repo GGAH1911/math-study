@@ -1,0 +1,17 @@
+{
+  "text_sha": "8ffdefaea716",
+  "meta": {
+    "searchable_text": "$(a\\sqrt{x} + \\frac{1}{\\sqrt[5]{x}})^5$ 전개식에서 $x^k$ 항의 계수와 $x^m$ 항의 계수가 같을 때, 양수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이항정리",
+      "조합",
+      "계수_비교"
+    ],
+    "exam_intent": "이항정리 전개식에서 계수 조건을 이용해 미지수 값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

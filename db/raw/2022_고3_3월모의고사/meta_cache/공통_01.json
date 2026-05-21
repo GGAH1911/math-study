@@ -1,0 +1,16 @@
+{
+  "text_sha": "9c7ad60746d7",
+  "meta": {
+    "searchable_text": "$\\sqrt[3]{3} \\times \\sqrt[3]{3} \\times \\sqrt[3]{3} \\times \\frac{3^2}{3}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호",
+      "거듭제곱의_계산"
+    ],
+    "exam_intent": "3제곱근과 지수를 포함한 기본 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

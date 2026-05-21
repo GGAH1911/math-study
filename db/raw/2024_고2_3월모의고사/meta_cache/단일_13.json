@@ -1,0 +1,17 @@
+{
+  "text_sha": "32d4b365a83c",
+  "meta": {
+    "searchable_text": "좌표평면에서 원과 직선이 서로 다른 두 점 A, B에서 만나고, 현의 길이 조건으로부터 원의 계수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "직선과_원의_교점",
+      "현의_길이"
+    ],
+    "exam_intent": "원과 직선의 교점 조건과 현의 길이 공식을 적용하여 미지수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

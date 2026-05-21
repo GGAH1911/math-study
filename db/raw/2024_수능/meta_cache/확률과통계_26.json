@@ -1,0 +1,17 @@
+{
+  "text_sha": "d06d362dd750",
+  "meta": {
+    "searchable_text": "4개의 동전을 동시에 던져서 앞면이 나오는 동전의 개수를 확률변수 $X$라 하고, 이산확률변수 $Y$를 다음과 같이 정의한다: $$Y = \\begin{cases} 1 & \\text{if } X = 0 \\text{ 또는 } 1 \\\\ 2 & \\text{if } X \\geq 2 \\end{cases}$$ $E[Y]$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률변수",
+      "기댓값",
+      "이항분포"
+    ],
+    "exam_intent": "조건부 정의 확률변수의 기댓값 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e05365b670cb",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 BC = 3√2, ∠ABC = 60°이고, 삼각형의 외접원의 넓이가 7π일 때, 삼각형 ABC의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "외접원",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "외접원의 조건으로부터 삼각형의 넓이 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

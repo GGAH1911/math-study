@@ -1,0 +1,16 @@
+{
+  "text_sha": "e9fea0686300",
+  "meta": {
+    "searchable_text": "두 양수 $a$, $b$가 $\\log_a 3 = 2$, $\\log_b 9 = \\frac{4}{5}$를 만족시킬 때, $\\frac{a}{b}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의",
+      "로그방정식"
+    ],
+    "exam_intent": "로그의 정의를 이용한 지수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

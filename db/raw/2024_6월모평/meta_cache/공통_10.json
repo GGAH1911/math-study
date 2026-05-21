@@ -1,0 +1,17 @@
+{
+  "text_sha": "a0b73292ee97",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 함수 $f(x) = x^2(a - x)$이다. 곡선 $y = f(x)$와 $x$축이 원점 $O$와 두 점 $P$, $Q$ ($OP < OQ$)에서 만난다. 곡선과 선분 $OP$로 둘러싸인 영역을 $S_1$, 곡선과 선분 $PQ$로 둘러싸인 영역을 $S_2$라 하자. $\\frac{S_1}{S_2} = \\frac{1}{3}$일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "곡선_아래_영역의_넓이",
+      "적분과_넓이의_관계"
+    ],
+    "exam_intent": "적분으로 곡선 아래 두 영역의 넓이를 구하고 조건에 맞는 매개변수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

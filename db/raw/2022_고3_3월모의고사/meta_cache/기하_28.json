@@ -1,0 +1,18 @@
+{
+  "text_sha": "8ae9f4aa0083",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1$ (단, $a > b > 0$)의 두 초점을 $F, F'$이라 하자. 선분 $FF'$을 지름으로 하는 원을 $C$라 하자. 원 $C$가 타원과 제1사분면에서 만나는 점을 $P$라 하고, 원 $C$가 $x$축과 만나는 점 중 $x$좌표가 양수인 점을 $Q$라 하자. 두 직선 $F'P, QF$가 이루는 예각의 크기를 $\\theta$라 할 때, $\\cos\\theta = \\frac{3}{5}$이다. $\\frac{a^2}{b^2}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "초점",
+      "원과_곡선의_교점",
+      "각도"
+    ],
+    "exam_intent": "원과 타원의 교점, 각도 조건으로부터 타원의 매개변수 비 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

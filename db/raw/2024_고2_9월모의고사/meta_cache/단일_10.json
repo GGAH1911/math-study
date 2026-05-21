@@ -1,0 +1,16 @@
+{
+  "text_sha": "03fa251fa776",
+  "meta": {
+    "searchable_text": "공비가 양수인 등비수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. 주어진 조건에서 $S_4$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비급수"
+    ],
+    "exam_intent": "등비수열의 합 공식을 적용하여 미지수를 결정하고 특정 항의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

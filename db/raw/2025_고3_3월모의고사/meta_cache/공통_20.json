@@ -1,0 +1,17 @@
+{
+  "text_sha": "db5862f7378b",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 BC를 3:1로 내분하는 점을 D라 하고, $\\angle ADB = \\theta$라 하자. $AD = 2$, AB와 AC의 조건, $\\cos \\theta$ 값이 주어질 때, 삼각형 ABD의 외접원의 넓이가 $\\frac{m\\pi}{n}$일 때 $m + n$을 구하시오. (단, $m$과 $n$은 서로소인 자연수)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "정현_법칙",
+      "외접원",
+      "코사인_법칙"
+    ],
+    "exam_intent": "정현 법칙으로 외접원 반지름을 구하고 넓이를 계산하는 응용 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

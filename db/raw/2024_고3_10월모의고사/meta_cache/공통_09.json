@@ -1,0 +1,17 @@
+{
+  "text_sha": "69d0dd7c9494",
+  "meta": {
+    "searchable_text": "좌표평면 위에 두 점 $A(a, 4\\log_3 a)$, $B(\\log_2 2, 2\\log_3 2/3)$이 있다. 선분 AB를 3:1로 외분하는 점이 직선 $y=4$ 위에 있을 때, 양수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "외분점의_좌표",
+      "직선의_방정식",
+      "로그의_성질"
+    ],
+    "exam_intent": "외분점 공식과 로그를 활용하여 조건을 만족하는 매개변수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

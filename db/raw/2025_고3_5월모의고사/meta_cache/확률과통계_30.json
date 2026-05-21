@@ -1,0 +1,13 @@
+{
+  "text_sha": "4c310661f804",
+  "meta": {
+    "searchable_text": "1부터 6까지의 자연수가 하나씩 적혀 있는 6개의 전구가 있고, 모두 꺼져 있다. 주사위를 한 번 던져 나온 눈의 수를 $k$라 할 때, $k$ 이하의 숫자가 적힌 모든 전구의 전원 버튼을 한 번씩 누른다. 이 시행을 5번 반복할 때, 5번째 시행 후 전구가 모두 켜져 있도록 하는 모든 순서쌍의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "복합 조건을 만족하는 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

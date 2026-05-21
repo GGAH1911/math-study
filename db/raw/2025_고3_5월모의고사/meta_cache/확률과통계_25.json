@@ -1,0 +1,17 @@
+{
+  "text_sha": "7e700d4159ef",
+  "meta": {
+    "searchable_text": "세 주사위 A, B, C를 동시에 던져서 나오는 눈의 수를 각각 $a$, $b$, $c$라 할 때, $a \\times b \\times c$의 값이 3의 배수일 확률을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "여사건의_확률",
+      "배수_판정법",
+      "확률의_정의"
+    ],
+    "exam_intent": "여사건을 이용한 확률 계산과 배수 조건 파악",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

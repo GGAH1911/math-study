@@ -1,0 +1,19 @@
+{
+  "text_sha": "1a8160895f21",
+  "meta": {
+    "searchable_text": "길이가 6인 선분 AB를 지름으로 하는 반원이 있다. 호 AB 위에 점 C를 $\\cos \\angle CAB = \\frac{1}{3}$이 되도록 잡고, 선분 AB 위에 점 D를 $AC = DB$가 되도록 잡는다. 점 B를 지나고 선분 CD와 평행한 직선이 호 AB와 만나는 점 중 B가 아닌 점을 E라 할 때, 선분 CE의 길이를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각비",
+      "반원의_성질",
+      "좌표_기하학",
+      "평행선",
+      "원_위의_점"
+    ],
+    "exam_intent": "삼각비와 좌표를 활용하여 도형의 위치 관계를 파악하고 거리를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "f9e71e595a74",
+  "meta": {
+    "searchable_text": "한 변의 길이가 2인 정삼각형 ABC에 대하여 변 BC의 중점을 P라 하고, 선분 AP 위의 점 Q에 대하여 선분 PQ의 길이를 $t$라 하자. 식 $f(t) = AQ^2 + BQ^2 + CQ^2$이 $t$에서 최솟값을 가질 때, 그 최솟값을 구하시오. (단, $0 \\le t \\le \\sqrt{3}$이고, $t$는 실수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "정삼각형의_성질",
+      "좌표와_거리_공식",
+      "이차함수의_최솟값"
+    ],
+    "exam_intent": "좌표계에서 정삼각형의 성질을 이용해 거리 제곱의 합의 최솟값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

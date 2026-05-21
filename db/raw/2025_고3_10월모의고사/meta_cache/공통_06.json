@@ -1,0 +1,16 @@
+{
+  "text_sha": "e9223423133a",
+  "meta": {
+    "searchable_text": "주어진 범위의 $\\theta$에 대하여 $\\tan\\theta = 2$일 때, $\\cos\\theta - \\sin\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "탄젠트와_사인,_코사인의_관계",
+      "기본_삼각함수_항등식"
+    ],
+    "exam_intent": "주어진 탄젠트값으로부터 삼각함수식의 값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

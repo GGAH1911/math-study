@@ -1,0 +1,18 @@
+{
+  "text_sha": "f9ef5ec41027",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 증가하고 미분가능한 함수 $f$가 다음 조건을 만족시킨다. (가) $f(1) = 1$, $f\\left(\\frac{1}{2}\\right) = \\frac{4}{5}$ (나) 함수 $f$의 역함수를 $g$라 할 때, $x \\geq 1$인 모든 실수 $x$에 대하여 $g(x) + 2f(x) = 2x$이다. $\\int_1^8 g'(x)\\,dx$를 계산하여 기약분수 $\\frac{p}{q}$로 나타낼 때, $p + q$의 값을 구하시오. (단, $p$와 $q$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "역함수",
+      "정적분",
+      "미분",
+      "부분적분"
+    ],
+    "exam_intent": "역함수의 성질과 조건을 이용한 정적분 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

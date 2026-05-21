@@ -1,0 +1,16 @@
+{
+  "text_sha": "7742561b76d8",
+  "meta": {
+    "searchable_text": "cos θ = 0이고 sin θ/√(1 + cos θ) = ... 일 때, sin θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_기본값",
+      "반각공식"
+    ],
+    "exam_intent": "주어진 삼각함수 조건에서 함수값을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

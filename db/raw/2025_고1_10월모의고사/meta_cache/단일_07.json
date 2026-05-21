@@ -1,0 +1,16 @@
+{
+  "text_sha": "c4bbaa26983e",
+  "meta": {
+    "searchable_text": "두 개의 $2 \\times 2$ 행렬의 성분 조건이 주어질 때, 행렬 연산 후 특정 성분을 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_성분",
+      "벡터_연산"
+    ],
+    "exam_intent": "행렬 성분 표현과 기본 연산 이해",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

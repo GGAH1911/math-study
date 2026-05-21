@@ -1,0 +1,16 @@
+{
+  "text_sha": "770d7775738a",
+  "meta": {
+    "searchable_text": "근호를 포함한 분수식 $\\frac{\\sqrt{3\\sqrt{5\\sqrt{1}}}}{3\\sqrt{5\\sqrt{1}}}$의 값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "제곱근의_계산",
+      "근호의_성질"
+    ],
+    "exam_intent": "중첩 제곱근을 포함한 식의 간소화 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

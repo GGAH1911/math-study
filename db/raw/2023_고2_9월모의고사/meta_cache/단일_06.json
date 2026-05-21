@@ -1,0 +1,17 @@
+{
+  "text_sha": "b85c94f367f9",
+  "meta": {
+    "searchable_text": "$0 < \\theta < \\frac{3\\pi}{2}$인 $\\theta$에 대하여 $\\tan\\theta = 2$일 때, $\\cos\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "사분면과_부호",
+      "삼각함수의_정의"
+    ],
+    "exam_intent": "tan θ 값과 각도 범위에서 항등식으로 cos θ 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

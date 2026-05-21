@@ -1,0 +1,13 @@
+{
+  "text_sha": "67f901f26577",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1,2,3,4,5\\}$, $B = \\{1,2,3\\}$에 대하여 다음 조건을 만족시키는 함수 $f: A \\to B$의 개수는? [3점] 집합 $A$의 모든 원소 $x$에 대하여 $x \\times f(x) \\leq 10$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "부등식 조건을 만족하는 함수의 개수를 곱의 법칙으로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

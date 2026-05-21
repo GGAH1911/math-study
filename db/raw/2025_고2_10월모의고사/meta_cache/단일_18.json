@@ -1,0 +1,17 @@
+{
+  "text_sha": "a2007e288268",
+  "meta": {
+    "searchable_text": "함수 $f(x) = a\\sin(bx)$가 다음 조건을 만족시키도록 하는 $3\\pi$보다 작은 모든 양수 $a$의 값의 합은? [4점]\n닫힌구간 $[0, \\pi]$에서 함수 $f(x)$의 최댓값과 최솟값을 각각 $M$, $m$이라 할 때, $2M - m = 3$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_극값",
+      "매개변수_조건",
+      "방정식_풀이"
+    ],
+    "exam_intent": "극값 조건으로부터 매개변수를 결정하고 양수해의 합을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

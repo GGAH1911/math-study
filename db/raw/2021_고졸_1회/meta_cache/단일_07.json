@@ -1,0 +1,16 @@
+{
+  "text_sha": "35ccad2167e3",
+  "meta": {
+    "searchable_text": "정의역 $1 \\le x \\le 2$에서 이차함수의 최댓값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최댓값",
+      "정의역_제한"
+    ],
+    "exam_intent": "정의역이 제한된 이차함수의 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

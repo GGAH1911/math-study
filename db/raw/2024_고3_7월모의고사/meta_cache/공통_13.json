@@ -1,0 +1,18 @@
+{
+  "text_sha": "e92a584e1b73",
+  "meta": {
+    "searchable_text": "그림과 같이 $BC = \\frac{7\\sqrt{7}}{36}$, $\\sin \\angle BAC = \\frac{\\sqrt{2}}{2}$, $\\angle ACB = \\frac{\\pi}{3}$인 삼각형 ABC가 있다. 삼각형 ABC의 외접원의 중심을 O, 직선 AO가 변 BC와 만나는 점을 D라 하자. 삼각형 ADC의 외접원의 중심을 O'이라 할 때, $AO' = \\frac{5\\sqrt{3}}{3}$이다. $OO'^2$의 값은? (단, $0 < \\angle BAC < \\frac{\\pi}{2}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외접원",
+      "원의_중심",
+      "삼각형의_기하",
+      "수치_계산"
+    ],
+    "exam_intent": "외접원의 성질과 삼각형의 기하학적 조건을 종합하여 두 원의 중심 사이 거리의 제곱을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

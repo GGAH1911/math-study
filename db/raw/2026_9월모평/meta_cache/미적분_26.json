@@ -1,0 +1,17 @@
+{
+  "text_sha": "71987e1023aa",
+  "meta": {
+    "searchable_text": "곡선이 두 직선과 만나는 점을 각각 $A$, $B$라 하자. 곡선과 직선 $AB$로 둘러싸인 부분의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "곡선_사이의_넓이",
+      "교점과_적분_범위"
+    ],
+    "exam_intent": "정적분으로 곡선과 직선 사이 영역의 넓이를 계산할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

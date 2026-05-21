@@ -1,0 +1,19 @@
+{
+  "text_sha": "906802b6dec5",
+  "meta": {
+    "searchable_text": "그림과 같이 사각형 $ABCD$가 한 원에 내접하고 $AB : CD = 1 : 3$, $BC = AD$일 때, 직선 $AB$와 직선 $CD$가 만나는 점을 $P$라 하자. 다음은 $PB : PC : BC = 7 : 5 : 14$이고 $AD = 4\\sqrt{13}$일 때, 삼각형 $BPC$의 외접원의 반지름의 길이를 구하는 과정이다. $\\angle BPC = \\alpha$라 할 때, $PB : PC : BC = 7 : 5 : 14$이므로 삼각형 $BPC$에서 코사인 법칙에 의하여 $\\cos \\alpha = \\frac{7}{6}$이다. $PB : PC = 7 : 5$에서 $PB = 7k$, $PC = 5k$, $AB : CD = 1 : 3$에서 $AB = m$, $CD = 3m$이라 하자. 원의 성질에 의하여 삼각형 $BPC$와 삼각형 $DPA$가 서로 닮음이므로 $\\frac{PB}{PD} = \\frac{PC}{PA} = \\frac{BC}{DA}$이고, (가) $= k \\times m$이다. 삼각형 $BPC$와 삼각형 $DPA$의 닮음비가 $1 : $ (나)이므로 $BC = \\frac{1}{\\text{(나)}} \\times AD$이다. 따라서 삼각형 $BPC$의 외접원의 반지름의 길이를 $R$이라 할 때, 삼각형 $BPC$에서 사인 법칙에 의하여 $R = $ (다)이다. 위의 (가), (나), (다)에 알맞은 수를 각각 $a$, $b$, $c$라 할 때, $a+b+c$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원에_내접하는_사각형",
+      "닮음",
+      "코사인_법칙",
+      "사인_법칙",
+      "외접원의_반지름"
+    ],
+    "exam_intent": "원에 내접하는 사각형의 성질과 닮음, 삼각법칙을 종합적으로 활용",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

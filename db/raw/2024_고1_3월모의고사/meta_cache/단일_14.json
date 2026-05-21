@@ -1,0 +1,16 @@
+{
+  "text_sha": "9f6c241759e7",
+  "meta": {
+    "searchable_text": "과수원 A의 사과 6개 당도: 평균 = 11, 분산 = 3/5. 과수원 B의 사과 6개 당도: 11, 9, 12, 9, $x$, $y$ (미지수). 과수원 B의 평균 = 11 (A와 동일). 조건을 만족하는 과수원 B의 분산을 구하시오. [4점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "대푯값과_산포도",
+    "concepts": [
+      "평균",
+      "분산"
+    ],
+    "exam_intent": "주어진 조건에서 미지수를 구하고 분산을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -60,7 +60,7 @@ function buildEdges(concepts) {
 
 function layout(concepts, edges) {
   const g = new dagre.graphlib.Graph();
-  g.setGraph({ rankdir: 'TB', nodesep: 50, ranksep: 70, marginx: 30, marginy: 30 });
+  g.setGraph({ rankdir: 'LR', nodesep: 30, ranksep: 120, marginx: 30, marginy: 30 });
   g.setDefaultEdgeLabel(() => ({}));
   for (const c of concepts) {
     g.setNode(c.id, { width: 180, height: 70 });

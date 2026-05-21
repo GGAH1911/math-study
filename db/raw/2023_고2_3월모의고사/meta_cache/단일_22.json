@@ -1,0 +1,16 @@
+{
+  "text_sha": "031b41ae92e9",
+  "meta": {
+    "searchable_text": "집합 $A = \\{7, 5, 3\\}$과 $B = \\{7, 5, 9\\}$에 대하여 $A \\cap B$의 모든 원소의 곱을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "교집합",
+      "집합의_연산"
+    ],
+    "exam_intent": "두 집합의 교집합을 구하고 원소의 곱을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "7778d0f1f697",
+  "meta": {
+    "searchable_text": "$\\log_8 \\frac{1}{2} \\div \\log_8 \\frac{1}{4}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_나눗셈",
+      "로그의_성질"
+    ],
+    "exam_intent": "로그의 성질과 나눗셈을 이용한 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "46c373350de9",
+  "meta": {
+    "searchable_text": "방정식 $2x^3 + ax^2 + 6x + 20 = 0$의 서로 다른 양의 실근의 개수가 2가 되도록 하는 정수 $a$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "함수의_개형",
+      "근의_개수"
+    ],
+    "exam_intent": "3차 함수의 극값을 이용한 근의 개수 판정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

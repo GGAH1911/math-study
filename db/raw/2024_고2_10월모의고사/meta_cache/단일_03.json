@@ -1,0 +1,15 @@
+{
+  "text_sha": "8f69306548d8",
+  "meta": {
+    "searchable_text": "함수 $\\cos\\left(\\frac{\\pi x}{4}\\right)$의 주기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "주기"
+    ],
+    "exam_intent": "삼각함수 주기의 정의 이해 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

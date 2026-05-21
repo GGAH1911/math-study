@@ -1,0 +1,16 @@
+{
+  "text_sha": "d7ea66e4b1d7",
+  "meta": {
+    "searchable_text": "다항식 $(x^2 + y^2)^5$의 전개식에서 $x^6y^4$의 계수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "다항정리"
+    ],
+    "exam_intent": "이항정리를 이용한 다항식 전개 중 특정 항의 계수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

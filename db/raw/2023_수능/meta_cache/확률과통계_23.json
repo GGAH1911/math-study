@@ -1,0 +1,16 @@
+{
+  "text_sha": "50c8e5320f02",
+  "meta": {
+    "searchable_text": "다항식의 5제곱 전개식에서 9차 항의 계수를 다항정리로 구한다",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항정리",
+      "조합"
+    ],
+    "exam_intent": "다항식 전개에서 특정 차수 항의 계수를 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

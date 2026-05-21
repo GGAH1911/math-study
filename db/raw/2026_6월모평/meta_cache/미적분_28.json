@@ -1,0 +1,18 @@
+{
+  "text_sha": "1e48f00f75f1",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 이계도함수를 갖는 함수 $f(x)$와 두 상수 $a, b$가 다음 조건을 만족시킬 때, $a \\times b$의 값은? (4점) (가) 모든 실수 $x$에 대하여 도함수 부등식 조건이 성립한다. (나) $f(3) = 3a = 0$, $f'(2) = 0$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "미분가능",
+      "극값",
+      "부등식_조건"
+    ],
+    "exam_intent": "도함수 부등식과 특정점 조건으로부터 미지수를 결정하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

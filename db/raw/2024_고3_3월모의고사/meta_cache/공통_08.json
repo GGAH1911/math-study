@@ -1,0 +1,17 @@
+{
+  "text_sha": "ee6f3f7ae11d",
+  "meta": {
+    "searchable_text": "두 다항함수 $f$, $g$에 대하여 주어진 조건들 일 때, $f'(0) + g'(0)$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "다항함수의_도함수",
+      "도함수_값의_계산",
+      "함수의_미분"
+    ],
+    "exam_intent": "주어진 조건으로부터 다항함수의 도함수 값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

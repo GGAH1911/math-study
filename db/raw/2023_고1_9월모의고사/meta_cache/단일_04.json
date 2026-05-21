@@ -1,0 +1,16 @@
+{
+  "text_sha": "7aef86f27a2a",
+  "meta": {
+    "searchable_text": "연립부등식 $x - 6 \\leq 4x$, $3x - 4 \\leq 16$을 만족시키는 정수 $x$의 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "정수해"
+    ],
+    "exam_intent": "일차부등식 연립의 해의 범위에서 정수 개수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

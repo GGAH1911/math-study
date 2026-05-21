@@ -1,0 +1,17 @@
+{
+  "text_sha": "4999af522ab7",
+  "meta": {
+    "searchable_text": "직선이 두 포물선과 만나는 점을 각각 P, Q라 하고, 두 포물선의 초점을 각각 F₁, F₂라 할 때, 사각형 PQF₂F₁의 둘레가 41일 때 넓이를 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_정의",
+      "초점과_준선",
+      "도형의_넓이"
+    ],
+    "exam_intent": "포물선의 초점 성질을 이용하여 둘레 조건으로부터 넓이를 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "03dbe4ee6a68",
+  "meta": {
+    "searchable_text": "$\\sin\\theta = \\frac{5}{13}$이고 $\\cos\\theta > 0$일 때, $\\tan\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각함수의_관계식",
+      "피타고라스_정리"
+    ],
+    "exam_intent": "주어진 삼각비로부터 피타고라스 정리를 이용해 다른 삼각함수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "c0e855c3cc71",
+  "meta": {
+    "searchable_text": "삼차함수 $f(x)$가 $\\lim_{x \\to 0} \\frac{f(x)}{x}$와 $\\lim_{x \\to 1} \\frac{f(x) - f(1)}{x-1}$의 극한 조건을 만족할 때, $f'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "함수의_극한",
+      "도함수",
+      "삼차함수"
+    ],
+    "exam_intent": "극한 조건으로부터 삼차함수를 결정하고 도함수 값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

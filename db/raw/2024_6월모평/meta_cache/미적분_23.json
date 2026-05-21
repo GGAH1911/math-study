@@ -1,0 +1,16 @@
+{
+  "text_sha": "8f12c562dbfc",
+  "meta": {
+    "searchable_text": "lim_{n→∞} √(n² + 9n) / √(n² + 4n)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "무리식"
+    ],
+    "exam_intent": "최고차항 계수가 같은 무리식 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

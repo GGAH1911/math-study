@@ -1,0 +1,18 @@
+{
+  "text_sha": "a2994bfab424",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 ABC가 있다. AB = 4, AC = 5, cos∠BAC = 1/8이다. 선분 BC를 1:2로 내분하는 점을 D라 하고, 직선 AD가 삼각형 ABC의 외접원과 만나는 점 중 A가 아닌 점을 E라 하자. 점 D에서 선분 CE에 내린 수선의 발을 F라 할 때, 선분 FC의 길이는 a/11이다. a의 값을 구하시오. (단, a는 11과 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외접원",
+      "내분점",
+      "수선의_발",
+      "코사인_법칙"
+    ],
+    "exam_intent": "원의 성질과 기하학적 계산을 종합적으로 적용",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

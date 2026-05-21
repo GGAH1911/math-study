@@ -1,0 +1,17 @@
+{
+  "text_sha": "6f8b77168e7a",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3 중에서 중복을 허락하여 4개를 택해 일렬로 나열하여 만들 수 있는 네 자리 자연수 중 홀수의 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "곱의법칙",
+      "홀짝성",
+      "중복순열"
+    ],
+    "exam_intent": "조건을 만족하는 경우의 수 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

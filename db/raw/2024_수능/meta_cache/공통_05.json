@@ -1,0 +1,17 @@
+{
+  "text_sha": "1aa5efa88d3b",
+  "meta": {
+    "searchable_text": "다항함수 $f$가 $f'(x) = 3x^2 + 2$, $f(1) = 6$을 만족할 때, $f(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "부정적분",
+      "도함수",
+      "초기값_조건"
+    ],
+    "exam_intent": "부정적분과 초기조건을 이용한 함수 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

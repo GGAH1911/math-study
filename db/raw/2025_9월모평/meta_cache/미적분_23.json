@@ -1,0 +1,16 @@
+{
+  "text_sha": "6007970f05d5",
+  "meta": {
+    "searchable_text": "lim_{x→0} \\frac{\\sin(5x)}{x}의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "표준_극한_공식"
+    ],
+    "exam_intent": "sin(ax)/x 극한 공식의 직접 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

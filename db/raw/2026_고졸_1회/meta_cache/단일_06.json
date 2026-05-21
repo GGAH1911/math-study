@@ -1,0 +1,16 @@
+{
+  "text_sha": "dfa5fbcd664b",
+  "meta": {
+    "searchable_text": "이차방정식 $ax^2 + 4x + a = 0$이 중근을 가질 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "중근",
+      "판별식"
+    ],
+    "exam_intent": "이차방정식의 중근 조건에서 판별식을 이용한 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

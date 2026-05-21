@@ -1,0 +1,17 @@
+{
+  "text_sha": "af07265f672d",
+  "meta": {
+    "searchable_text": "그림과 같이 반비례 관계 $y = \\frac{k}{x}$의 그래프가 두 직선 $x=2, y=2$와 만나는 점을 각각 A, B라 하자. 점 C(2, 2)에 대하여 사각형 OACB의 넓이가 $\\frac{7}{22}$일 때, 상수 k의 값은? (단, O는 원점이고, 점 A의 x좌표는 2보다 작다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "반비례함수",
+      "직선과_곡선의_교점",
+      "좌표기하"
+    ],
+    "exam_intent": "반비례함수와 직선의 교점, 사각형 넓이 조건으로부터 함수의 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

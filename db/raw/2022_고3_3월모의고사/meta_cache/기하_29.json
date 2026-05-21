@@ -1,0 +1,17 @@
+{
+  "text_sha": "86c62ca15e75",
+  "meta": {
+    "searchable_text": "두 점 F, F'을 초점으로 하는 쌍곡선 위의 점 A. 조건 (가): 거리 조건. 조건 (나): 선분 AF의 수직이등분선이 점 F'을 지남. 선분 AF의 중점 M, 직선 MF'과 쌍곡선의 교점 중 A에 가까운 점 B. 삼각형 BFM의 둘레를 이용한 값 계산",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "쌍곡선",
+      "초점",
+      "수직이등분선"
+    ],
+    "exam_intent": "쌍곡선의 정의와 거리 조건을 이용한 기하학적 성질 파악 및 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

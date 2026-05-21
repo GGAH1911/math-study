@@ -1,0 +1,17 @@
+{
+  "text_sha": "dec7b374f376",
+  "meta": {
+    "searchable_text": "반지름의 길이가 $\\sqrt{3}$인 원 $\\Omega$에 내접하는 삼각형 $ABC$에 대하여 $\\angle BAC$의 이등분선이 원 $\\Omega$와 만나는 점 중 $A$가 아닌 점을 $D$라 하고, 두 선분 $BC$, $AD$의 교점을 $E$라 하자. $BD = \\sqrt{3}$일 때, 주어진 보기 중 옳은 것을 고르시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원주각",
+      "각의_이등분선",
+      "정현법칙"
+    ],
+    "exam_intent": "원에 내접하는 삼각형의 성질과 각의 이등분선을 이용해 삼각비와 도형의 성질을 종합적으로 판단",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

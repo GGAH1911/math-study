@@ -1,0 +1,17 @@
+{
+  "text_sha": "0a7cb71f2189",
+  "meta": {
+    "searchable_text": "cos θ = 2/√5일 때, (1 - cos 2θ)/sin θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각함수_기본_항등식",
+      "배각공식",
+      "삼각함수_값_계산"
+    ],
+    "exam_intent": "삼각함수 기본 공식을 이용한 식의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

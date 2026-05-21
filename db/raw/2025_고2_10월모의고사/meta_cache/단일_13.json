@@ -1,0 +1,18 @@
+{
+  "text_sha": "0395e6473811",
+  "meta": {
+    "searchable_text": "두 양수 $a$, $b$에 대하여 함수 $y = a\\tan bx$의 그래프와 직선 $y = cx$가 제1사분면에서 만나는 모든 점의 $x$좌표를 작은 수부터 크기순으로 나열할 때, $n$번째 수를 $x_n$이라 하자. $x_4 = 2x_2 + 6x_1$이고 $x_1 = 1$일 때, $a \\times b$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "탄젠트_함수",
+      "직선과_곡선의_교점",
+      "초월방정식",
+      "매개변수_결정"
+    ],
+    "exam_intent": "삼각함수와 직선의 교점 조건을 이용하여 매개변수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

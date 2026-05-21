@@ -1,0 +1,16 @@
+{
+  "text_sha": "3bb9609d78fa",
+  "meta": {
+    "searchable_text": "어느 문화 센터에서 운영하는 5개의 프로그램이 있다. 이 중에서 서로 다른 2개의 프로그램을 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수_고1",
+    "concepts": [
+      "조합",
+      "경우의수계산"
+    ],
+    "exam_intent": "기본 조합을 이용한 경우의 수 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

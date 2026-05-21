@@ -1,0 +1,16 @@
+{
+  "text_sha": "7d038d41de65",
+  "meta": {
+    "searchable_text": "좌표공간의 점 $A(2, 1, 3)$을 $xy$평면에 대하여 대칭이동한 점을 $P$라 하고, 점 $A$를 $yz$평면에 대하여 대칭이동한 점을 $Q$라 할 때, 선분 $PQ$의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "대칭이동",
+      "공간거리"
+    ],
+    "exam_intent": "3차원 좌표에서 평면 대칭점의 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

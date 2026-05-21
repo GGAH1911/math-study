@@ -1,0 +1,16 @@
+{
+  "text_sha": "b4a60e4b534d",
+  "meta": {
+    "searchable_text": "연립방정식의 해가 $x=2, y=$일 때, 두 상수 $a, b$에 대하여 $a+b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "연립방정식의_해",
+      "미지의_상수_결정"
+    ],
+    "exam_intent": "연립방정식의 해를 이용해 계수(상수)를 구하는 기초 계산 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

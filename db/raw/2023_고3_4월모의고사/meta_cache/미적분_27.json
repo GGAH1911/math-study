@@ -1,0 +1,18 @@
+{
+  "text_sha": "48068732d998",
+  "meta": {
+    "searchable_text": "좌표평면 위에 점 $A(0, 1)$을 중심으로 하고 반지름의 길이가 1인 원 $C$가 있다. 원점 $O$를 지나고 $x$축의 양의 방향과 이루는 각의 크기가 $\\theta$인 직선이 원 $C$와 만나는 점 중 $O$가 아닌 점을 $P$라 하고, 호 $OP$ 위에 점 $Q$를 $\\angle OPQ = \\frac{\\theta}{3}$가 되도록 잡는다. 삼각형 $POQ$의 넓이를 $S(\\theta)$라 할 때, $\\lim_{\\theta \\to 0+} \\frac{S(\\theta)}{\\theta^3}$의 값은? (단, 점 $Q$는 제1사분면 위의 점이고, $0 < \\theta < \\pi$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "도형의_넓이",
+      "로피탈_정리",
+      "기하학적_극한"
+    ],
+    "exam_intent": "기하학적 상황에서 고차 극한을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

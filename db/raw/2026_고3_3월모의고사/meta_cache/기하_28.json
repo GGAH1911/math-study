@@ -1,0 +1,17 @@
+{
+  "text_sha": "5c0379e9f396",
+  "meta": {
+    "searchable_text": "그림과 같이 두 점 $F(c, 0)$, $F'(-c, 0)$을 초점으로 하는 쌍곡선이 있다. 이 쌍곡선 위의 점 중 제1사분면에 있는 점 $P$에 대하여 선분 $F'P$가 이 쌍곡선과 만나는 점 중 $P$가 아닌 점을 $Q$라 하고, 점 $P$를 중심으로 하고 점 $Q$를 지나는 원을 $\\omega$라 하자. 원 $\\omega$가 $x$축과 점 $F$에서 접하고 $PQ \\perp FQ$일 때, 원 $\\omega$의 반지름의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_성질",
+      "원과_접선",
+      "기하적_조건"
+    ],
+    "exam_intent": "쌍곡선과 원의 기하 조건을 종합하여 반지름 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

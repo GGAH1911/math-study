@@ -1,0 +1,18 @@
+{
+  "text_sha": "af3b3fc5e2bb",
+  "meta": {
+    "searchable_text": "정규분포를 따르는 두 확률변수 $X$, $Y$의 확률밀도함수를 각각 $f_X$, $f_Y$라 할 때, 모든 실수 $x$에 대하여 $f_X(x) = 6f_Y(6x)$이다. 두 확률변수 $X$, $Y$와 상수 $a$가 다음 조건을 만족시킨다. (가) $P(X \\leq 11) = P(Y \\geq 23)$ (나) $P(Y \\leq a) = P(X \\leq a+1)$ 오른쪽 표준정규분포표를 이용하여 구한 $P(X \\leq a) - P(Y \\geq a)$의 값이 0.1336일 때, $E(XY)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "정규분포",
+      "확률밀도함수",
+      "표준정규분포",
+      "확률변수의_변환"
+    ],
+    "exam_intent": "정규분포의 확률밀도함수 관계식을 이용해 모수를 결정하고 조건식으로 기댓값을 구한다.",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

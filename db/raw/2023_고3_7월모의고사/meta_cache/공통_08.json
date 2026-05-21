@@ -1,0 +1,17 @@
+{
+  "text_sha": "d9ad5886d9b5",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 t ≥ 0에서의 속도가 $v(t) = t^2 - 4t + 3$이다. 점 P가 시각 $t=1, t=3$에서 운동 방향을 바꿀 때, 점 P가 시각 $t=0$에서 $t=3$까지 움직인 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분과_거리",
+      "속도함수의_부호",
+      "구간별_적분"
+    ],
+    "exam_intent": "속도함수에서 운동 방향 전환을 고려하여 이동거리를 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

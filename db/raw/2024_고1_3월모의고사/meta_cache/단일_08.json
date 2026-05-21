@@ -1,0 +1,16 @@
+{
+  "text_sha": "e42fccaa25d4",
+  "meta": {
+    "searchable_text": "서로 다른 두 개의 주사위를 동시에 던질 때, 각각의 주사위에서 나오는 눈의 수의 차가 2 또는 4일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "주사위_확률",
+      "경우의_수"
+    ],
+    "exam_intent": "두 주사위 눈의 수 차를 이용한 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

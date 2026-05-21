@@ -1,0 +1,17 @@
+{
+  "text_sha": "56675d4cd0cc",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{2^n + 3^n}{4 \\times 3^{n+1}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "지수수열의_극한",
+      "수렴성",
+      "극한값_계산"
+    ],
+    "exam_intent": "지수 항으로 이루어진 수열의 극한값을 올바르게 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "a4369e8c6796",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 점화식을 만족시킨다. $\\lim_{n\\to\\infty}\\frac{a_{n+1}}{2a_n}=3$일 때, $a_{10}$의 값은? (단, $a_1>0$)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "점화식",
+      "극한",
+      "수렴"
+    ],
+    "exam_intent": "점화식의 극한 조건을 이용한 수열의 특정항 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

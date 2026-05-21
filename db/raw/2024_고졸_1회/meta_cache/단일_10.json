@@ -1,0 +1,16 @@
+{
+  "text_sha": "fcd32d6833c5",
+  "meta": {
+    "searchable_text": "이차부등식 $(x-2)(x-4) \\leq 0$의 해는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "인수분해"
+    ],
+    "exam_intent": "이차부등식의 해를 인수분해로 구하는 기본 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

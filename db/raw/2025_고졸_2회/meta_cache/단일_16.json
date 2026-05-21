@@ -1,0 +1,15 @@
+{
+  "text_sha": "f37d1e3273ca",
+  "meta": {
+    "searchable_text": "명제의 역: 명제 '$p \\Rightarrow q$'의 역은 '$q \\Rightarrow p$'이다. 주어진 명제의 역을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제의_역"
+    ],
+    "exam_intent": "명제의 역의 정의를 이해하고 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

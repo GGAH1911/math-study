@@ -1,0 +1,16 @@
+{
+  "text_sha": "4f52d3c4ad3c",
+  "meta": {
+    "searchable_text": "실수 $a$에 대한 두 조건이 주어져 있다. 한 조건이 다른 조건의 부정에 대한 필요조건이 되도록 하는 실수 $a$의 최댓값을 $M$, 최솟값을 $m$이라 할 때, $M+m$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "필요조건과_충분조건",
+      "부등식의_해집합"
+    ],
+    "exam_intent": "필요조건 정의를 이용한 집합의 포함 관계 판정 및 매개변수 범위 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

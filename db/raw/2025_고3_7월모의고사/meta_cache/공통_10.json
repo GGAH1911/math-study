@@ -1,0 +1,17 @@
+{
+  "text_sha": "87c44bb6e8f0",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 2에서 정의된 함수 f가 있다. 1 ≤ x ≤ 2일 때, f(x)는 삼각함수를 포함한 식으로 주어진다 (구체적 식은 글리프로 표현됨). 함수 f의 그래프 위의 점 중 y좌표가 자연수인 점의 개수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "구간별_함수",
+      "함수의_그래프",
+      "정수점_개수"
+    ],
+    "exam_intent": "구간별 정의 함수의 그래프에서 자연수 y좌표를 갖는 점의 개수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "9eaaa09c3826",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 주어진 조건을 만족시킬 때, $\\lim_{n \\to \\infty} a_n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_극한",
+      "점화식",
+      "수렴"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 극한값을 계산할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

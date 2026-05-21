@@ -1,0 +1,16 @@
+{
+  "text_sha": "a6e7885ee69d",
+  "meta": {
+    "searchable_text": "$\\frac{5^2 \\cdot 5^{-1}}{5^2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "지수_계산",
+      "지수_법칙"
+    ],
+    "exam_intent": "지수 법칙을 이용한 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

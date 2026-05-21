@@ -1,0 +1,17 @@
+{
+  "text_sha": "9464733d5fe8",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1, 2, 3, 4, 5\\}$, $B = \\{1, 2, 3, 4\\}$에 대하여 함수 $f: A \\to B$의 개수는?\n(가) $f(1) \\leq f(2) \\leq f(3) \\leq f(4) \\leq f(5)$ (비감소 함수)\n(나) 1과 3은 함수 $f$의 치역의 원소이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "비감소함수",
+      "포함배제원리",
+      "중복조합"
+    ],
+    "exam_intent": "비감소 함수에서 포함-배제 원리로 특정 원소를 포함하는 경우의 수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

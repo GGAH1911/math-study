@@ -1,0 +1,16 @@
+{
+  "text_sha": "e86c7cc5c44a",
+  "meta": {
+    "searchable_text": "함수 $f$가 그림과 같을 때, $f^{-1}(a)$의 값은? (단, $f^{-1}$는 $f$의 역함수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "함수의_그래프"
+    ],
+    "exam_intent": "역함수의 개념 이해 및 그래프 해석",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

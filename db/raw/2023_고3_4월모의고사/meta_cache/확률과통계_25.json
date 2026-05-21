@@ -1,0 +1,16 @@
+{
+  "text_sha": "d4bca1c7157f",
+  "meta": {
+    "searchable_text": "세 학생 A, B, C를 포함한 7명의 학생 중에서 A, B, C를 포함하여 5명을 선택하고, 이 5명의 학생 모두를 일정한 간격으로 원 모양의 탁자에 둘러앉게 하는 경우의 수는? (회전하여 일치하는 것은 같은 것으로 본다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "원순열"
+    ],
+    "exam_intent": "조합과 원순열 개념을 종합 적용하여 제약 조건 하의 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

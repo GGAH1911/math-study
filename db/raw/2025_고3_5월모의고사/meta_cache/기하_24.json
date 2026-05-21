@@ -1,0 +1,16 @@
+{
+  "text_sha": "27483baa6780",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{m^2} + \\frac{y^2}{4} = 1$의 장축의 길이가 단축의 길이의 2배가 되도록 하는 모든 양수 $m$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "장축과_단축"
+    ],
+    "exam_intent": "타원의 장축·단축 조건으로부터 매개변수 값을 결정하고 합을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

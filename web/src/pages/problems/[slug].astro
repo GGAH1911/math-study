@@ -1,15 +1,17 @@
 ---
-export const prerender = true;
+// SSR — frontmatter 변경 (audit/fix) 시 즉시 반영. prerender=true 면 dev 시작
+// 시점 캐시라 stale. concept 페이지와 동일 패턴.
+export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
+import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 
-export async function getStaticPaths() {
-  const items = await getCollection('problems');
-  return items.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+const slug = Astro.params.slug as string;
+const entry = await getEntry('problems', slug);
+if (!entry) {
+  return new Response('Not found', { status: 404 });
 }
-
-const { entry } = Astro.props;
 const { Content } = await render(entry);
 const fm = entry.data;
 const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
@@ -19,6 +21,9 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
     <article class="max-w-none">
       <div class="prose prose-invert max-w-none">
         <Content />
+      </div>
+      <div class="my-6">
+        <ProblemAttemptPanel client:load slug={entry.id} />
       </div>
       <ChatPanel client:load slug={entry.id} unitTitle={fm.source?.subject ? `${fm.source.year} ${fm.source.exam_type} ${fm.source.subject} ${fm.source.number}번` : entry.id} collection="problems" />
     </article>
@@ -31,7 +36,6 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
           {fm.format && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">format</dt><dd>{fm.format}</dd></div>}
           {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">tier</dt><dd><span class="chip">{fm.killer_tier}</span></dd></div>}
           {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">cognitive</dt><dd>{fm.cognitive_type}</dd></div>}
-          {fm.expected_time_sec && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">예상 시간</dt><dd>{Math.round(fm.expected_time_sec / 60)}분</dd></div>}
           {fm.answer && (
             <div class="flex justify-between items-center"><dt class="text-[color:var(--color-muted)]">정답</dt>
               <dd>

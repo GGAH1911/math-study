@@ -1,0 +1,16 @@
+{
+  "text_sha": "5d5fea48c38b",
+  "meta": {
+    "searchable_text": "두 함수 f, g가 그림과 같을 때, (f∘g)(1)의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수값"
+    ],
+    "exam_intent": "합성함수의 함수값을 그래프에서 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

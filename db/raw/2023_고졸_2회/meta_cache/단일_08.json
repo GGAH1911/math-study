@@ -1,0 +1,16 @@
+{
+  "text_sha": "c840a24b48db",
+  "meta": {
+    "searchable_text": "사차방정식의 한 근이 2일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_근",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "특정 값이 근일 때 다항식의 계수를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

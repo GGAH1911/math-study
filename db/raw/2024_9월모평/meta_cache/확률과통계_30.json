@@ -1,0 +1,13 @@
+{
+  "text_sha": "b05928d70c02",
+  "meta": {
+    "searchable_text": "13 이하의 자연수 $a, b, c, d$의 모든 순서쌍 $(a, b, c, d)$의 개수를 구하시오. (가) $a \\leq b \\leq c \\leq d$ (나) $a \\times b$는 홀수이고, $c$는 짝수이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "순서와 홀짝 조건을 동시에 만족하는 경우의 수를 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

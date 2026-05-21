@@ -1,0 +1,16 @@
+{
+  "text_sha": "ee07da5f3565",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5가 적힌 카드 5장에서 2장을 동시에 뽑을 때, 카드에 적힌 수의 합이 3의 배수인 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "배수"
+    ],
+    "exam_intent": "주어진 조건을 만족하는 경우의 수를 세는 조합 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

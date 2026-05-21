@@ -1,0 +1,17 @@
+{
+  "text_sha": "bd10fc0c1f3a",
+  "meta": {
+    "searchable_text": "평행사변형 ABCD에서 각 B의 이등분선이 선분 AD와 만나는 점을 E라 하자. 선분 ED 위의 한 점 F에 대하여 $\\angle FDC = 2\\angle DCF$이다. 직선 BE와 직선 CF의 교점을 G라 할 때, $EG = 3$, $\\frac{FG}{FD} = 2$이다. 선분 EF의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "평행사변형의_성질",
+      "각의_이등분선",
+      "삼각형의_각의_성질"
+    ],
+    "exam_intent": "평행사변형과 각의 이등분선 성질을 이용한 선분 길이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

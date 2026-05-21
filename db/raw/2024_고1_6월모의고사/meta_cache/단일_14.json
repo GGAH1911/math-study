@@ -1,0 +1,18 @@
+{
+  "text_sha": "9ef68122e430",
+  "meta": {
+    "searchable_text": "그림과 같이 이차함수의 그래프와 직선이 한 점 A에서만 만난다. 이차함수의 그래프가 $x$축과 만나는 두 점 B, C에 대하여 삼각형 ABC의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_그래프",
+      "직선과의_교점",
+      "이차방정식의_근",
+      "넓이_계산"
+    ],
+    "exam_intent": "이차함수와 직선의 접점, x축 교점을 이용한 삼각형 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

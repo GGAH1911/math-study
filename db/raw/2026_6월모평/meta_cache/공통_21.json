@@ -1,0 +1,18 @@
+{
+  "text_sha": "f05126c57879",
+  "meta": {
+    "searchable_text": "함수 $f(x)$와 최고차항의 계수가 1인 사차함수 $g(x)$가 다음 조건을 만족한다. 모든 실수 $x$에 대하여 $\\lim_{x \\to a} \\frac{f(x)}{x \\cdot g(x)}$의 값과 $\\lim_{x \\to a} \\frac{f(x)}{g(x)}$의 값이 모두 존재한다. $f(1)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "함수의_극한",
+      "연속성",
+      "인수분해",
+      "다항함수"
+    ],
+    "exam_intent": "조건으로부터 함수의 구조를 파악하고 함수값을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

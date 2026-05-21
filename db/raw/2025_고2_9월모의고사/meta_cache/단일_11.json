@@ -1,0 +1,17 @@
+{
+  "text_sha": "e794b9dd268c",
+  "meta": {
+    "searchable_text": "함수 $f(x) = a\\log_b x$의 그래프가 그림과 같을 때, $f(15)$의 값은? (단, $a$, $b$는 상수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "함수의_성질",
+      "상수_결정"
+    ],
+    "exam_intent": "그래프에서 로그함수의 상수를 결정하고 함수값을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

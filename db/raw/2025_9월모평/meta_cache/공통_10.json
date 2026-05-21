@@ -1,0 +1,17 @@
+{
+  "text_sha": "844d9da02b71",
+  "meta": {
+    "searchable_text": "∠A = 90°인 삼각형 ABC의 꼭짓점 A에서 선분 BC에 내린 수선의 발을 H라 하자. AB, AC의 길이가 주어진 조건을 만족하고 AH = 2이며, 삼각형 ABC의 외접원의 넓이가 50π일 때, 선분 BH의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "직각삼각형",
+      "외접원",
+      "높이와_변의_관계"
+    ],
+    "exam_intent": "외접원의 넓이와 높이 관계식을 이용하여 직각삼각형의 변의 길이를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "10ff8f88afb8",
+  "meta": {
+    "searchable_text": "$\\int_0^{\\pi/3} \\cos(x) dx$의 값은? (원문 텍스트 손상: 글리프 ⋄로 인해 적분 구간과 피적분함수 정확도 저하)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "정적분",
+      "삼각함수",
+      "부정적분"
+    ],
+    "exam_intent": "삼각함수의 정적분 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

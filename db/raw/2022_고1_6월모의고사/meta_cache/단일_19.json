@@ -1,0 +1,17 @@
+{
+  "text_sha": "3aa2146c1405",
+  "meta": {
+    "searchable_text": "이차함수의 그래프와 직선으로 둘러싸인 도형의 내부에 있는 점 중에서 $x$좌표와 $y$좌표가 모두 정수인 점의 개수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수",
+      "격자점",
+      "영역"
+    ],
+    "exam_intent": "이차함수와 직선으로 둘러싸인 영역 내의 정수 좌표점 개수를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

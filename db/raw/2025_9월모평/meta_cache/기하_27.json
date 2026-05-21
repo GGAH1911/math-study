@@ -1,0 +1,18 @@
+{
+  "text_sha": "1877b53c3880",
+  "meta": {
+    "searchable_text": "한 변의 길이가 각각 4, 6인 두 정사각형 $ABCD$, $EFGH$를 밑면으로 하고 $AE \\parallel BF \\parallel CG \\parallel DH$인 사각뿔대 $ABCD-EFGH$가 있다. 사각뿔대의 높이가 $\\sqrt{14}$일 때, 사각형 $AEHD$의 평면 $BFGC$ 위로의 정사영의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "정사영",
+      "사각뿔대",
+      "공간_좌표계",
+      "벡터의_각도"
+    ],
+    "exam_intent": "공간도형에서 평면 간 각도를 이용한 정사영 넓이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

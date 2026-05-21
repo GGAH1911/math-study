@@ -1,0 +1,18 @@
+{
+  "text_sha": "a54d91817ba6",
+  "meta": {
+    "searchable_text": "상수 $a$ ($a > 1$)과 실수 $b$ ($b < 0$)에 대하여 곡선 $y = a^x$ 위의 점 $A(b, a^b)$에서의 접선을 $l$이라 하자. 점 $A$를 지나고 직선 $l$에 수직인 직선이 $x$축과 만나는 점을 $B$, $y$축과 만나는 점을 $C$라 하자. $\\frac{|AB|}{|AC|}$의 값이 최대일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "지수함수",
+      "접선의_기울기",
+      "법선",
+      "거리비_최적화"
+    ],
+    "exam_intent": "지수함수의 접선과 법선을 이용한 기하학적 거리 최적화",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

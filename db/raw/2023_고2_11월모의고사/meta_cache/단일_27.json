@@ -1,0 +1,15 @@
+{
+  "text_sha": "918c0d1bcca5",
+  "meta": {
+    "searchable_text": "공차가 $d$인 등차수열 $\\{a_n\\}$이 다음 조건을 만족시키도록 하는 모든 자연수 $d$의 값의 합을 구하시오. [4점] (가) $a_8$, $a_2$, 5, $a_{10}$ 사이의 관계식 [원문 글리프 손상으로 정확한 형태 불명확] (나) 모든 자연수 $n$에 대하여 $a_n \\times a_{n+1} \\geq 0$이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열"
+    ],
+    "exam_intent": "주어진 조건들을 만족하는 등차수열의 공차를 찾아내는 종합적 추론 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "7b3772ff33bf",
+  "meta": {
+    "searchable_text": "한 변의 길이가 2인 정사각형 ABCD에서 두 선분 AD, CD의 중점을 각각 M, N이라 할 때, 벡터 $\\vec{BM} \\cdot \\vec{DN}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_성분_표현",
+      "좌표를_이용한_벡터_계산"
+    ],
+    "exam_intent": "좌표계에서 벡터의 내적을 정확히 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

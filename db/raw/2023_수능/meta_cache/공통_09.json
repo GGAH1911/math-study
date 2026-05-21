@@ -1,0 +1,17 @@
+{
+  "text_sha": "100ecff1ff2a",
+  "meta": {
+    "searchable_text": "함수 $f(x)$가 닫힌 구간 $[\\alpha, \\beta]$에서 최댓값 7, 최솟값 3을 가질 때, $\\alpha \\times \\beta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값과_최솟값",
+      "주기함수",
+      "정의역"
+    ],
+    "exam_intent": "삼각함수의 최댓값·최솟값 조건으로부터 정의역 끝점의 곱 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

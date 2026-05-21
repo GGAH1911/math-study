@@ -1,0 +1,13 @@
+{
+  "text_sha": "54b41cea2213",
+  "meta": {
+    "searchable_text": "원점의 점 A를 주사위 16200번 던져 이동시킨다. 주사위 눈이 4 이하이면 양의 방향으로 1, 5 이상이면 음의 방향으로 1만큼 이동. 최종 위치가 5700 이하일 확률을 표준정규분포표로 구하여 $\\alpha$라 할 때, $1000\\alpha$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [],
+    "exam_intent": "이항분포를 정규분포로 근사하여 표준정규분포표로 확률을 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

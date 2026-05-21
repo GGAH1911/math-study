@@ -1,0 +1,18 @@
+{
+  "text_sha": "d8a80abd79b4",
+  "meta": {
+    "searchable_text": "초점이 F인 포물선 $y^2=8x$ 위의 한 점 A에서 포물선의 준선에 내린 수선의 발을 B라 하고, 직선 BF와 포물선이 만나는 두 점을 각각 C, D라 하자. BC = CD일 때, 삼각형 ABD의 넓이는? (단, CF = DF이고, 점 A는 원점이 아니다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_초점과_준선",
+      "현의_성질",
+      "좌표와_거리",
+      "도형의_넓이"
+    ],
+    "exam_intent": "포물선의 초점·준선 성질과 현의 성질을 이용한 종합 기하 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

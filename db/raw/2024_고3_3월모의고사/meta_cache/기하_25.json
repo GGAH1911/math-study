@@ -1,0 +1,17 @@
+{
+  "text_sha": "4167a0ccf916",
+  "meta": {
+    "searchable_text": "두 초점이 $x$축 위에 있고, 두 초점 사이의 거리가 30인 쌍곡선의 한 점근선의 방정식이 $y = \\frac{4}{3}x$일 때, 이 쌍곡선의 주축의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선",
+      "초점"
+    ],
+    "exam_intent": "쌍곡선의 점근선과 초점 거리로부터 주축 길이를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

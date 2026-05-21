@@ -1,0 +1,17 @@
+{
+  "text_sha": "76cc0f011671",
+  "meta": {
+    "searchable_text": "직사각형 모양으로 연결된 도로망을 따라 P 지점에서 출발하여 Q 지점까지 최단 거리로 가는 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "최단경로",
+      "조합",
+      "격자경로"
+    ],
+    "exam_intent": "격자 도로망에서 최단 경로의 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

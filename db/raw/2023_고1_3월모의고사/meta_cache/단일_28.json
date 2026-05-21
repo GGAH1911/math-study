@@ -1,0 +1,17 @@
+{
+  "text_sha": "4bce298cb2c2",
+  "meta": {
+    "searchable_text": "$p > q$인 두 소수 $p$, $q$에 대하여 어떤 부등식을 만족하는 자연수의 개수가 308일 때, $p$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "소수",
+      "부등식",
+      "경우의수"
+    ],
+    "exam_intent": "소수 조건과 경우의 수 역산으로 미지수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

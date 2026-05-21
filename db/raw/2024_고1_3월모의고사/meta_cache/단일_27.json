@@ -1,0 +1,16 @@
+{
+  "text_sha": "4a11eae2f126",
+  "meta": {
+    "searchable_text": "네 수 $-21, -56, -43, -92$ 중 서로 다른 두 수를 곱하여 나올 수 있는 값으로 가장 큰 수를 $M$, 가장 작은 수를 $m$이라 할 때, 특정 식의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "정수의_곱셈"
+    ],
+    "exam_intent": "여러 수 중 두 개씩 선택하여 곱한 값의 최댓값과 최솟값을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

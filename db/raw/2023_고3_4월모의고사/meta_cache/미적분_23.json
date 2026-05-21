@@ -1,0 +1,16 @@
+{
+  "text_sha": "e36bc75afbff",
+  "meta": {
+    "searchable_text": "극한값을 구하시오: $\\lim_{n \\to \\infty} \\frac{4n^2 + 3n}{4n^2 + n}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "최고차항_비교",
+      "무한대에서의_극한"
+    ],
+    "exam_intent": "고차 다항식의 비에서 극한값을 최고차 계수 비로 구하는 기본 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

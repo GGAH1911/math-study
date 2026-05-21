@@ -1,0 +1,18 @@
+{
+  "text_sha": "76dcefa87fbd",
+  "meta": {
+    "searchable_text": "두 초점이 $F(c, 0)$, $F'(-c, 0)$ (단, $c > 0$)인 쌍곡선 $\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1$ 위의 제2사분면의 점 $P$에 대하여 직선 $PF$가 타원 $\\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1$ (단, $0 < b < a$)에 점 $Q$에서 접한다. 점 $Q$의 $x$좌표 조건과 $|PQ| + |PF'| = 2a$ 조건이 주어질 때, $30(a^2 + b^2)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "타원의_정의",
+      "곡선의_접선",
+      "거리_조건"
+    ],
+    "exam_intent": "쌍곡선과 타원의 접선 조건을 종합 활용하여 곡선의 계수를 결정하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

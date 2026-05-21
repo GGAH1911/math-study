@@ -1,0 +1,16 @@
+{
+  "text_sha": "42ed5d611a92",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5가 하나씩 적혀 있는 5장의 카드를 모두 일렬로 나열할 때, 짝수가 적혀 있는 카드끼리 서로 이웃하지 않도록 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "조건부_배열"
+    ],
+    "exam_intent": "제약 조건 하에서 배열의 경우의 수를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

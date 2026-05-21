@@ -1,0 +1,17 @@
+{
+  "text_sha": "c71a25e81fef",
+  "meta": {
+    "searchable_text": "1이 아닌 세 양수 $a, b, c$가 로그 조건식을 만족시킨다. $ab$의 값이 300 이하의 자연수가 되도록 하는 모든 자연수 $c$의 값의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_방정식",
+      "로그의_성질",
+      "밑의_변환"
+    ],
+    "exam_intent": "로그 조건에서 범위 내 자연수 해의 합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

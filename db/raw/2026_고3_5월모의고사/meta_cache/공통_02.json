@@ -1,0 +1,16 @@
+{
+  "text_sha": "6da0446974f0",
+  "meta": {
+    "searchable_text": "곡선 위의 점에서의 접선의 기울기를 구하는 문제. 곡선의 도함수를 이용하여 주어진 점에서의 접선의 기울기를 계산한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "접선의_기울기"
+    ],
+    "exam_intent": "곡선 위의 특정 점에서 도함수를 이용해 접선의 기울기를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

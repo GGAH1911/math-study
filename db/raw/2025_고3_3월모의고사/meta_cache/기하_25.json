@@ -1,0 +1,17 @@
+{
+  "text_sha": "d7e8782679f1",
+  "meta": {
+    "searchable_text": "초점이 $F$인 포물선 $y^2 = 16x$ 위의 점 $P$에 대하여 선분 $FP$를 지름으로 하는 원의 넓이가 $25\\pi$일 때, 이 원의 중심에서 포물선의 준선까지의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_정의",
+      "초점과_준선",
+      "원의_성질"
+    ],
+    "exam_intent": "포물선의 정의와 원의 성질을 이용한 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

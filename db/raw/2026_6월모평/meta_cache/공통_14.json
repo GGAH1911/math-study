@@ -1,0 +1,17 @@
+{
+  "text_sha": "e14574c1589f",
+  "meta": {
+    "searchable_text": "$AB = 2\\sqrt{7}$인 삼각형 ABC에서 선분 BC의 중점을 P, 선분 BC를 5:1로 내분하는 점을 Q라 하자. $AQ = 3\\sqrt{2}$, $\\frac{\\sin\\angle QAP}{\\sin\\angle APQ} = \\frac{2}{3}$일 때, 삼각형 ABC의 외접원의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "사인_법칙",
+      "외접원",
+      "내분점"
+    ],
+    "exam_intent": "삼각비와 사인 법칙을 이용해 외접원의 반지름과 넓이를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

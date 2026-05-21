@@ -1,0 +1,16 @@
+{
+  "text_sha": "e46a3bcc47b7",
+  "meta": {
+    "searchable_text": "집합 $A = \\{x | -5 \\leq x \\leq 5, x \\in \\mathbb{Z}\\}$의 공집합이 아닌 부분집합 $B$에 대하여, $C = \\{\\sqrt[4]{x} | x \\in B\\}$, $D = \\{\\sqrt[3]{x} | x \\in B\\}$라 하자. $|C| = 9, |D| = 7$을 만족하는 $B$의 모든 원소의 합의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "부분집합",
+      "실수근"
+    ],
+    "exam_intent": "집합 조건을 만족하는 부분집합 선택에서 합 최대화",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

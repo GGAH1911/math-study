@@ -1,0 +1,18 @@
+{
+  "text_sha": "722b15aaa1b3",
+  "meta": {
+    "searchable_text": "두 함수 $f(x) = ax^2 + b$, $g(x) = c\\sin x$가 다음 조건을 만족시킬 때, $f(2)$의 값은? (단, $a, b, c$는 상수이고, $0 \\leq c \\leq 2$이다.) (가) 조건1 (나) $0 \\leq x \\leq 2\\pi$일 때, 방정식 $f(x) = g(x)$의 모든 해의 합은 $\\frac{5\\pi}{2}$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "방정식의_해",
+      "도함수",
+      "함수의_대칭성"
+    ],
+    "exam_intent": "두 함수의 교점 조건으로부터 상수를 결정하고 함수값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

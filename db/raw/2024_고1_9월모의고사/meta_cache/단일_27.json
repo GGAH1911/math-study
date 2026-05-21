@@ -1,0 +1,18 @@
+{
+  "text_sha": "e6e5825de10f",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 $A(a, 2\\sqrt{a})$를 직선 $y=x$에 대하여 대칭이동한 점을 $B$, 점 $B$를 $x$축에 대하여 대칭이동한 점을 $C$라 하자. 두 삼각형 $ABC$, $AOC$의 외접원의 반지름의 길이를 각각 $r_1$, $r_2$라 할 때, $r_1 \\times r_2 = 18\\sqrt{2}$이다. 상수 $a$에 대하여 $r_2$의 값을 구하시오. (단, $O$는 원점이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "대칭이동",
+      "외접원",
+      "원의_반지름",
+      "좌표기하"
+    ],
+    "exam_intent": "좌표 대칭이동과 외접원의 반지름 계산을 통한 종합기하 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

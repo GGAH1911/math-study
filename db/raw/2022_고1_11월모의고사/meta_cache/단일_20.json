@@ -1,0 +1,18 @@
+{
+  "text_sha": "424c39c2c47d",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 좌표평면 위에 두 점 $A(a, 0)$, $B$가 있다. 삼각형 $OAB$의 내부에 있으며 $\\angle AOP = \\angle BAP$를 만족시키는 점 $P$에 대하여 점 $P$의 $y$좌표의 최댓값을 구하는 문제이다. 원의 접선과 그 접점을 지나는 현이 이루는 각의 크기는 이 각의 내부에 있는 호에 대한 원주각의 크기와 같다. 점 $O$를 지나고 직선 $AB$와 점 $A$에서 접하는 원 $\\omega$를 생각할 때, $\\angle AOP = \\angle BAP$를 만족시키는 점 $P$는 원 $\\omega$ 위의 점이다. 원 $\\omega$의 중심을 $C$라 하면 $\\angle OAC = 45^\\circ$이므로 점 $C$의 좌표는 (가), 원 $\\omega$의 반지름의 길이는 (나)이다. 점 $P$의 $y$좌표는 $\\angle PCO = 45^\\circ$일 때 최대이므로 (다)이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "접선-현_정리",
+      "원주각",
+      "좌표_계산",
+      "원의_접선_조건"
+    ],
+    "exam_intent": "접선-현 정리를 이용해 점의 자취인 원을 파악하고 각도 조건으로 좌표 최댓값 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

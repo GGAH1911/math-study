@@ -1,0 +1,17 @@
+{
+  "text_sha": "2b26c5dbcc53",
+  "meta": {
+    "searchable_text": "함수가 삼각함수 $\\sin\\alpha\\cos\\alpha$와 $\\sin\\beta\\cos\\beta$의 곱으로 표현되며, 주어진 조건 (가)와 (나)를 만족하는 서로 다른 두 실수 $\\alpha, \\beta$의 순서쌍에 대하여 어떤 식의 최솟값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "삼각함수의_미분",
+      "최솟값",
+      "제약_조건_하의_최적화"
+    ],
+    "exam_intent": "복합 삼각함수 식의 최솟값을 미분으로 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

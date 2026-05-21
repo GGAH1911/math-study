@@ -1,0 +1,17 @@
+{
+  "text_sha": "e4ddc681061d",
+  "meta": {
+    "searchable_text": "매개변수 a를 포함하는 x에 대한 연립부등식 (여러 조건 포함, $x \\leq 4$ 등, 일부는 글리프로 표현 불가)을 만족하는 정수 x의 개수가 정확히 3이 되는 모든 정수 a의 값의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "부등식",
+      "정수해",
+      "매개변수"
+    ],
+    "exam_intent": "매개변수가 있는 부등식에서 정수해 개수를 제어하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

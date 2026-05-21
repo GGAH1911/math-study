@@ -1,0 +1,17 @@
+{
+  "text_sha": "23198b95df48",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 그래프가 그림과 같다. $\\lim_{x \\to 0^-} f(x) + \\lim_{x \\to 2^+} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한값",
+      "좌극한과_우극한",
+      "함수의_그래프_읽기"
+    ],
+    "exam_intent": "그래프에서 특정 점의 좌극한·우극한값을 읽고 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

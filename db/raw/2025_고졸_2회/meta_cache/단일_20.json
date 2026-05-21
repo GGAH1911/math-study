@@ -1,0 +1,16 @@
+{
+  "text_sha": "44eb3708466f",
+  "meta": {
+    "searchable_text": "4종류의 잡곡(보리, 콩, 팥, 조) 중에서 서로 다른 2종류를 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "경우의_수"
+    ],
+    "exam_intent": "조합 공식을 이용하여 경우의 수를 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "1ecd90431b31",
+  "meta": {
+    "searchable_text": "한 개의 주사위를 네 번 던질 때 나오는 눈의 수를 차례로 $a, b, c, d$라 하자. 네 수 $a, b, c, d$의 곱 $a \\times b \\times c \\times d$가 27의 배수일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [],
+    "exam_intent": "소인수분해를 통한 배수 조건 판정과 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

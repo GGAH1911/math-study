@@ -1,0 +1,16 @@
+{
+  "text_sha": "4c6ef52fc976",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 그래프가 그림과 같다. $\\lim_{x \\to 0} f(x) \\cdot \\lim_{x \\to 1} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한값",
+      "함수의_그래프_해석"
+    ],
+    "exam_intent": "그래프로부터 특정점에서의 극한값을 읽고 곱셈 연산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

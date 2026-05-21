@@ -1,0 +1,13 @@
+{
+  "text_sha": "8d45a6db6d43",
+  "meta": {
+    "searchable_text": "조건식을 만족하는 실수의 값을 구하는 문제. 조건에 숫자 5, 2, 1, 4, 4가 포함되며, 제약 조건으로 실수가 1이 아님. 선택지는 숫자 또는 특수 기호 포함 형태.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [],
+    "exam_intent": "조건을 만족하는 실수값을 계산으로 구한다",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

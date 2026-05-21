@@ -1,0 +1,16 @@
+{
+  "text_sha": "be9f681aa917",
+  "meta": {
+    "searchable_text": "중심이 $O$이고 길이가 2인 선분 $AB$를 지름으로 하는 반원이 있다. 호 $AB$ 위의 세 점 $C, D, E$가 $DE = EB$, $CD = DE = \\frac{1}{2}$, $\\angle COE = 2\\angle OBE$를 만족시킨다. $\\cos(\\angle OBE)$의 값은? (단, 점 $D$는 점 $B$가 아니다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "현의_길이",
+      "중심각과_원주각"
+    ],
+    "exam_intent": "반원 위의 현의 길이 조건에서 특정 각의 코사인 값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

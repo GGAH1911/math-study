@@ -1,0 +1,16 @@
+{
+  "text_sha": "764510bb5ec8",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 두 자리의 자연수 $n$의 최댓값을 구하시오. (가) $n$은 4의 배수이다. (나) $n$의 소인수의 개수가 3이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정수와_유리수",
+    "concepts": [
+      "소인수분해",
+      "약수와배수"
+    ],
+    "exam_intent": "소인수분해를 통해 조건을 동시에 만족하는 자연수의 최댓값을 찾는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

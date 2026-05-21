@@ -1,0 +1,19 @@
+{
+  "text_sha": "3d8f14103d9d",
+  "meta": {
+    "searchable_text": "두 평면 $\\alpha$, $\\beta$의 교선 위에 $AB = 18$인 두 점 A, B가 있다. 선분 AB를 지름으로 하는 원 $C_1$이 평면 $\\alpha$ 위에 있고, 선분 AB를 장축으로 하며 초점 F, F'을 갖는 타원 $C_2$가 평면 $\\beta$ 위에 있다. 원 $C_1$ 위의 점 P에서 평면 $\\beta$에 내린 수선의 발을 H라 할 때, $\\vec{HF'} \\cdot \\vec{HF}$이고 $\\angle HFF' = 60°$이다. 직선 HF와 타원 $C_2$의 교점 중 H에 가까운 점을 Q라 하면 $\\vec{FH} \\cdot \\vec{FQ}$이다. H를 중심으로 Q를 지나는 평면 $\\beta$ 위의 원은 반지름 4이고 직선 AB에 접한다. 두 평면 $\\alpha$, $\\beta$가 이루는 각을 $\\theta$라 할 때 $\\cos\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간의_두_평면과_교선",
+      "수선의_성질",
+      "타원의_기본_성질",
+      "벡터의_내적",
+      "좌표계_설정과_계산"
+    ],
+    "exam_intent": "공간도형과 이차곡선의 기본 성질을 활용하여 평면 간의 각도를 구하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

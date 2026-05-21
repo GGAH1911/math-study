@@ -1,0 +1,16 @@
+{
+  "text_sha": "4ff4fba60ea4",
+  "meta": {
+    "searchable_text": "1 < a < 4인 실수 a에 대하여 함수 y = log_a x의 그래프와 함수 y = 1/x의 그래프가 만나는 점을 A(p, q)라 할 때, ㄱ. p > 1 ㄴ. a = 2일 때, q > 2 ㄷ. 원점 O와 점 B(a, 0)에 대하여 삼각형 AOB의 넓이를 S라 할 때, S < (1/2)(a - 1)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "함수의_교점"
+    ],
+    "exam_intent": "로그함수의 교점을 분석하고 기하학적 성질을 파악",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

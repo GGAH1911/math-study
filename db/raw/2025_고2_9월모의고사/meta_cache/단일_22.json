@@ -1,0 +1,16 @@
+{
+  "text_sha": "e234af729350",
+  "meta": {
+    "searchable_text": "방정식 $25^x + 5^{1-x} = 150$을 만족시키는 실수 $x$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_방정식",
+      "치환"
+    ],
+    "exam_intent": "지수 방정식을 치환을 이용해 풀 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

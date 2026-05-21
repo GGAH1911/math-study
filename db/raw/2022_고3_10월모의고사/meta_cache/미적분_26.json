@@ -1,0 +1,17 @@
+{
+  "text_sha": "c096f11f627e",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\sum_{k=1}^{n} \\frac{1}{n} \\cdot 2^{k/n}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지적분법",
+    "concepts": [
+      "리만합",
+      "정적분",
+      "극한"
+    ],
+    "exam_intent": "리만합 개념으로 지수함수의 정적분 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

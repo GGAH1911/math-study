@@ -1,0 +1,17 @@
+{
+  "text_sha": "c3ae9260494d",
+  "meta": {
+    "searchable_text": "집합 $\\{-2, -1, 0, 1, 2\\}$에 대하여 함수 $f: A \\to A$가 역함수가 존재하고 다음 조건을 만족시킨다. (가) 합성함수 조건 (나) $x = 0, 1$일 때, $f(x) \\times (f(x) - 2) \\leq 0$이다. 특정 함수값들의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "합성함수",
+      "함수의_조건"
+    ],
+    "exam_intent": "역함수 존재 조건과 주어진 함수 조건으로부터 함수를 결정하고 함수값의 합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

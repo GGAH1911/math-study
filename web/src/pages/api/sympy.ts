@@ -9,8 +9,102 @@ const MAX_OUTPUT = 4096;
 const TIMEOUT_MS = 10_000;
 
 const HEADER = `import sympy
-from sympy import Symbol, symbols, solve, simplify, expand, factor, diff, integrate, limit, Sum, Product, oo, pi, E, I, sqrt, sin, cos, tan, log, ln, exp, Matrix, Rational, S
+from sympy import Symbol, symbols, solve, simplify, expand, factor, diff, integrate, limit, Sum, Product, oo, pi, E, I, sqrt, sin, cos, tan, log, ln, exp, Matrix, Rational, S, Point, Line, Segment, Ray, nsimplify
 x, y, z, n, k, t, a, b, c = symbols('x y z n k t a b c')
+
+# --- geom helpers — 작도 검증·교점·이등분선 표준화 ---
+def L(p1, p2):
+    return Line(Point(*p1), Point(*p2))
+
+def intersect(o1, o2):
+    return o1.intersection(o2)
+
+def angle_bisector_dir(vertex, a, b):
+    va = Matrix(a) - Matrix(vertex)
+    vb = Matrix(b) - Matrix(vertex)
+    na = va.norm(); nb = vb.norm()
+    if na == 0 or nb == 0:
+        raise ValueError("angle_bisector_dir: degenerate ray")
+    d = va / na + vb / nb
+    nd = d.norm()
+    if nd == 0:
+        raise ValueError("angle_bisector_dir: rays opposite")
+    d = d / nd
+    return (d[0], d[1])
+
+def _close(value, target=0, tol=1e-9):
+    try:
+        s = simplify(value - target)
+        if s == 0:
+            return True
+        return abs(float(s)) < tol
+    except Exception:
+        try:
+            return abs(float(value) - float(target)) < tol
+        except Exception:
+            return False
+
+def assert_on_line(point, p1, p2, tag):
+    line = L(p1, p2)
+    P = Point(*point)
+    d = line.distance(P)
+    if _close(d):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            dval = float(d)
+        except Exception:
+            dval = d
+        print(f"[VERIFY FAIL] {tag}: point {tuple(point)} not on line {tuple(p1)}-{tuple(p2)} (dist={dval})")
+
+def assert_on_circle(point, center, radius, tag):
+    d = sqrt((point[0]-center[0])**2 + (point[1]-center[1])**2)
+    if _close(d, radius):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            dval = float(d); rval = float(radius)
+        except Exception:
+            dval, rval = d, radius
+        print(f"[VERIFY FAIL] {tag}: dist={dval} != r={rval}")
+
+def assert_distance(p1, p2, expected, tag):
+    d = sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
+    if _close(d, expected):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            dval = float(d); eval_ = float(expected)
+        except Exception:
+            dval, eval_ = d, expected
+        print(f"[VERIFY FAIL] {tag}: |{p1}-{p2}|={dval} != {eval_}")
+
+def assert_angle(vertex, a, b, expected, tag):
+    """∠a-vertex-b 가 expected (radian) 인지. 부호·사분면 오류 직격 검증."""
+    from sympy import acos
+    va = Matrix(a) - Matrix(vertex)
+    vb = Matrix(b) - Matrix(vertex)
+    na = va.norm(); nb = vb.norm()
+    if na == 0 or nb == 0:
+        print(f"[VERIFY FAIL] {tag}: degenerate ray (zero-length vector)")
+        return
+    cosv = (va.dot(vb)) / (na * nb)
+    # clamp numerical noise
+    try:
+        cv = float(cosv)
+        if cv > 1: cv = 1
+        elif cv < -1: cv = -1
+        ang_val = float(acos(cv))
+    except Exception:
+        ang_val = acos(cosv)
+    if _close(ang_val, expected):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            eval_ = float(expected)
+        except Exception:
+            eval_ = expected
+        print(f"[VERIFY FAIL] {tag}: angle={ang_val} != {eval_}")
 `;
 
 type RunRequest = { code: string };

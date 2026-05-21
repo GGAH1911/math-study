@@ -1,0 +1,16 @@
+{
+  "text_sha": "54abbe5b2875",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 역함수의 그래프가 특정 점을 지날 때, 상수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "함수의_그래프"
+    ],
+    "exam_intent": "역함수의 정의와 그래프 성질을 이용한 상수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

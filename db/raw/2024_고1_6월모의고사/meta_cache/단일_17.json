@@ -1,0 +1,16 @@
+{
+  "text_sha": "4d3b50cc48fa",
+  "meta": {
+    "searchable_text": "실수 a에 대하여 복소수 z를 정의할 때, z²이 음의 실수 조건 하에서 주어진 식을 만족하는 100 이하의 자연수 a의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수",
+      "조건식_분석"
+    ],
+    "exam_intent": "복소수 조건과 부등식을 동시에 만족하는 자연수를 찾는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

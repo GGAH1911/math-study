@@ -1,0 +1,16 @@
+{
+  "text_sha": "1e47b0c1f274",
+  "meta": {
+    "searchable_text": "두 함수 $f(x)$, $g(x)$에 대하여 $(f \\circ g)(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수값"
+    ],
+    "exam_intent": "합성함수의 정의를 이용하여 함수값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

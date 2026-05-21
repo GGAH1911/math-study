@@ -1,0 +1,16 @@
+{
+  "text_sha": "18be77d6c557",
+  "meta": {
+    "searchable_text": "$x$에 대한 연립부등식이 해를 갖지 않도록 하는 자연수의 개수 (상세 부등식은 PDF 텍스트 추출 오류로 원본 확인 필요)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "부등식의_해의_존재_조건"
+    ],
+    "exam_intent": "매개변수를 포함한 연립부등식이 해를 갖지 않는 자연수 값의 개수 판정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

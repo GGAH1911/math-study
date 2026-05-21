@@ -1,0 +1,17 @@
+{
+  "text_sha": "b902903bf518",
+  "meta": {
+    "searchable_text": "평면 위의 네 점 A, B, C, D가 다음 조건을 만족시킬 때, AD의 값은?\n(가) $|\\vec{AB}| = 2$, $\\vec{AB} \\cdot \\vec{CD} = 0$\n(나) $\\vec{BD} \\cdot (\\vec{BA} + \\vec{BC}) = 6$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "수직_조건",
+      "벡터_연산"
+    ],
+    "exam_intent": "벡터 내적과 수직 조건을 이용한 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

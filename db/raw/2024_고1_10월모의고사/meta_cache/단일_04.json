@@ -1,0 +1,16 @@
+{
+  "text_sha": "991ae35e26f0",
+  "meta": {
+    "searchable_text": "직선 $y = 2x + 4$를 $x$축의 방향으로 1만큼, $y$축의 방향으로 3만큼 평행이동한 직선의 $y$절편은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_평행이동",
+      "일차함수"
+    ],
+    "exam_intent": "일차함수의 평행이동에 따른 절편 변화",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

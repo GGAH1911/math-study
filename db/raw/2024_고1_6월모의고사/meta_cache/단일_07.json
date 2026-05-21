@@ -1,0 +1,16 @@
+{
+  "text_sha": "7f0a34175981",
+  "meta": {
+    "searchable_text": "$a$에 대한 이차방정식이 서로 다른 두 허근을 갖도록 하는 자연수 $a$의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "허근"
+    ],
+    "exam_intent": "판별식 조건으로 매개변수의 최솟값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

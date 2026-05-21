@@ -1,0 +1,17 @@
+{
+  "text_sha": "aa6c68108438",
+  "meta": {
+    "searchable_text": "이차다항식 $f(x)$와 일차다항식 $g(x)$에 대하여 $f(x)$를 이차식으로 나누었을 때의 몫은 일차식이고 나머지는 일차식 이하이다. 주어진 조건을 만족하는 특정 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지_정리",
+      "인수분해"
+    ],
+    "exam_intent": "다항식 나눗셈과 나머지 정리를 활용한 계산 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

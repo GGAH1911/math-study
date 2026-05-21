@@ -1,0 +1,16 @@
+{
+  "text_sha": "4a6fe4640ca8",
+  "meta": {
+    "searchable_text": "함수 f(x)의 그래프가 그림과 같다. $$\\lim_{x \\to 1^-} f(x) + \\lim_{x \\to 2^-} f(x)$$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "그래프_해석"
+    ],
+    "exam_intent": "함수의 그래프로부터 좌극한값을 읽어 극한의 합을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e820c38ac243",
+  "meta": {
+    "searchable_text": "AB = AC, BC = 2인 삼각형 ABC에 대하여 선분 AB를 지름으로 하는 원이 선분 AC와 만나는 점 중 A가 아닌 점을 D라 하고, 선분 AB의 중점을 E라 하자. ∠BAC = θ일 때, 삼각형 CDE의 넓이를 $S(\\theta)$라 하자. $60 \\times \\lim_{\\theta \\to 0} \\frac{S(\\theta)}{\\theta}$의 값을 구하시오. (단, $0 < \\theta < \\frac{\\pi}{2}$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한",
+      "삼각함수",
+      "기하"
+    ],
+    "exam_intent": "극한과 기하를 결합한 복합 문제해결력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

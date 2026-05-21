@@ -1,0 +1,17 @@
+{
+  "text_sha": "3046d3f3599b",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 닫힌구간 $[0, n\\pi]$에서 함수 $f(x) = 2\\sin\\left(\\frac{\\pi x}{6n}\\right) + 1$의 최댓값을 $M$, 최솟값을 $m$이라 할 때, 부등식 $2M - 4m = 4$를 만족시키는 모든 $n$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값과_최솟값",
+      "부등식",
+      "자연수_조건"
+    ],
+    "exam_intent": "매개변수를 포함한 삼각함수의 극값 조건을 분석하여 정수해의 합 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

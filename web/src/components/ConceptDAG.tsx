@@ -1,9 +1,9 @@
-import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef, memo } from 'react';
+import dagre from 'dagre';
 import {
   ReactFlow,
   Background,
   Controls,
-  MiniMap,
   type Node,
   type Edge,
   type NodeMouseHandler,
@@ -60,6 +60,27 @@ const MASTERY_COLOR: Record<string, string> = {
   mastered: '#0ea5e9',
 };
 
+const TYPE_LABEL_KO: Record<string, string> = {
+  definition: '정의',
+  theorem: '정리',
+  lemma: '보조정리',
+  example: '예제',
+  unit: '단원',
+};
+// Edge color is keyed off the *other* node's concept_type — i.e. when
+// the user selects a unit, every line leading to a 정의 is blue, to a
+// 정리 is purple, to a 예제 is pink, etc. Makes it visible at a glance
+// what kind of spoke is downstream.
+const TYPE_EDGE_COLOR: Record<string, string> = {
+  definition: '#60a5fa', // blue-400
+  theorem:    '#c084fc', // purple-400
+  lemma:      '#fbbf24', // amber-400
+  example:    '#fb7185', // rose-400
+  unit:       '#2dd4bf', // teal-400
+};
+// Column order when laying out a unit's expanded spokes: definitions
+// first (학습 흐름의 시작), then theorems, lemmas, examples last.
+const TYPE_COL_ORDER: string[] = ['definition', 'theorem', 'lemma', 'example'];
 const TYPE_ICON: Record<string, string> = {
   unit: '◆',
   definition: '○',
@@ -91,50 +112,73 @@ const DOMAIN_COLOR: Record<string, string> = {
   '논리':     '#a78bfa',  // violet
 };
 
-function ConceptNode({ data }: { data: GraphNode & { highlighted?: boolean; dimmed?: boolean; colorMode?: 'domain' | 'mastery' } }) {
+type ColorMode = 'domain' | 'mastery' | 'grade';
+
+function ConceptNodeImpl({ data }: { data: GraphNode & {
+  highlighted?: boolean;
+  filterDimmed?: boolean;   // excluded by mastery/grade/domain filter → aggressive dim
+  focusDimmed?: boolean;    // not related to current selection → soft dim, stays readable
+  colorMode?: ColorMode;
+  childCount?: number; expanded?: boolean;
+  onToggleExpand?: (id: string) => void;
+} }) {
   const isUnit = data.concept_type === 'unit';
   const masteryColor = MASTERY_COLOR[data.mastery] ?? '#a1a1aa';
   const domainColor = data.domain ? (DOMAIN_COLOR[data.domain] ?? '#71717a') : '#71717a';
   const gradeColor = data.grade ? (GRADE_COLOR[data.grade] ?? '#71717a') : '#71717a';
-  // Primary outline color = domain (학습 본질). Mastery shown as small dot.
-  const mode = data.colorMode ?? 'domain';
-  const primary = mode === 'domain' ? domainColor : masteryColor;
+  const mode: ColorMode = data.colorMode ?? 'domain';
+  const primary =
+    mode === 'mastery' ? masteryColor :
+    mode === 'grade'   ? gradeColor :
+                         domainColor;
+  // Filter-dim wins over focus-dim (excluded nodes stay clearly excluded).
+  const opacity = data.filterDimmed ? 0.10 : (data.focusDimmed ? 0.35 : 1);
   return (
     <div
       className="relative"
-      style={{
-        opacity: data.dimmed ? 0.18 : 1,
-        transform: data.highlighted ? 'scale(1.06)' : undefined,
-        transition: 'opacity 200ms ease, transform 200ms ease',
-      }}
+      style={{ opacity, transition: 'opacity 200ms ease' }}
     >
-      <Handle type="target" position={Position.Top} style={{ visibility: 'hidden' }} />
+      <Handle type="target" position={Position.Left} style={{ visibility: 'hidden' }} />
       <div
-        className="rounded-xl backdrop-blur"
+        className="rounded-xl"
         style={{
           minWidth: isUnit ? 168 : 140,
           padding: isUnit ? '10px 14px' : '8px 12px',
-          border: `${isUnit ? 2.5 : 2}px solid ${primary}`,
+          border: `${isUnit ? (data.highlighted ? 4 : 2.5) : (data.highlighted ? 3 : 2)}px solid ${primary}`,
           background: data.highlighted ? `${primary}30` : '#18181b',
-          boxShadow: data.highlighted
-            ? `0 0 0 4px ${primary}40, 0 0 24px ${primary}30`
-            : isUnit
-              ? `0 4px 16px ${primary}25`
-              : `0 2px 12px ${primary}20`,
         }}
       >
         <div className="flex items-center justify-between gap-2">
-          <span className="text-base leading-none" style={{ color: primary }} title={data.concept_type}>
+          <span className="text-base leading-none" style={{ color: primary }}
+                title={`${TYPE_LABEL_KO[data.concept_type] ?? '기타'} (${data.concept_type})`}>
             {TYPE_ICON[data.concept_type] ?? '·'}
           </span>
-          <span
-            className="inline-block size-2 rounded-full"
-            style={{ background: masteryColor }}
-            title={`mastery: ${data.mastery}`}
-          />
+          <div className="flex items-center gap-1.5">
+            {isUnit && typeof data.childCount === 'number' && data.childCount > 0 && (
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); data.onToggleExpand?.(data.id); }}
+                onDoubleClick={(e) => e.stopPropagation()}
+                className="text-[11px] font-mono px-2 py-0.5 rounded-full hover:scale-105 transition cursor-pointer leading-none"
+                style={{
+                  background: data.expanded ? `${primary}40` : '#27272a',
+                  color: data.expanded ? primary : '#d4d4d8',
+                  border: `1px solid ${data.expanded ? primary : '#3f3f46'}`,
+                }}
+                title={data.expanded ? `접기 (${data.childCount}개 spoke)` : `펼치기 (${data.childCount}개 spoke)`}
+              >
+                {data.expanded ? '−' : '+'} {data.childCount}
+              </button>
+            )}
+            <span
+              className="inline-block size-2 rounded-full"
+              style={{ background: masteryColor }}
+              title={`mastery: ${data.mastery}`}
+            />
+          </div>
         </div>
         <div className={`mt-1 font-semibold text-zinc-50 ${isUnit ? 'text-sm' : 'text-xs'}`}>
-          {data.label}
+          {data.label.replace(/_/g, ' ')}
         </div>
         <div className="mt-1.5 flex gap-1 flex-wrap">
           {data.domain && (
@@ -155,12 +199,57 @@ function ConceptNode({ data }: { data: GraphNode & { highlighted?: boolean; dimm
           )}
         </div>
       </div>
-      <Handle type="source" position={Position.Bottom} style={{ visibility: 'hidden' }} />
+      <Handle type="source" position={Position.Right} style={{ visibility: 'hidden' }} />
     </div>
   );
 }
 
+const ConceptNode = memo(ConceptNodeImpl);
 const nodeTypes = { conceptNode: ConceptNode };
+const FIT_VIEW_OPTIONS = { padding: 0.2 };
+// `bezier` (default) curves around other nodes more gracefully than
+// `smoothstep`, which liked to right-angle straight through unrelated
+// nodes and made it look like A was connected to B when it wasn't.
+const DEFAULT_EDGE_OPTIONS = { type: 'bezier' as const };
+
+// Re-layout the visible subset of the graph with dagre so collapsed-only
+// (unit-only) view doesn't leave nodes scattered at their original (full-
+// graph) coordinates.
+function dagreLayout(
+  visibleNodes: GraphNode[],
+  visibleEdges: GraphEdge[],
+): Map<string, { x: number; y: number }> {
+  const g = new dagre.graphlib.Graph();
+  g.setGraph({
+    rankdir: 'LR',
+    nodesep: 120,
+    ranksep: 240,
+    edgesep: 40,
+    marginx: 60,
+    marginy: 60,
+  });
+  g.setDefaultEdgeLabel(() => ({}));
+  for (const n of visibleNodes) {
+    const isUnit = n.concept_type === 'unit';
+    // Allow per-node width/height override (used to reserve grid space
+    // for an expanded unit's spoke cluster).
+    const w = (n as unknown as { _width?: number })._width
+      ?? (isUnit ? 200 : 160);
+    const h = (n as unknown as { _height?: number })._height
+      ?? (isUnit ? 80 : 64);
+    g.setNode(n.id, { width: w, height: h });
+  }
+  for (const e of visibleEdges) {
+    if (g.hasNode(e.source) && g.hasNode(e.target)) g.setEdge(e.source, e.target);
+  }
+  dagre.layout(g);
+  const out = new Map<string, { x: number; y: number }>();
+  for (const n of visibleNodes) {
+    const node = g.node(n.id);
+    if (node) out.set(n.id, { x: node.x, y: node.y });
+  }
+  return out;
+}
 
 function Inner({ data, variant = 'full', highlight }: Props) {
   const [selected, setSelected] = useState<string | null>(highlight ?? null);
@@ -178,94 +267,389 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   const [gradeFilter, setGradeFilter] = useState<Set<string>>(new Set(gradesInData));
   const [domainFilter, setDomainFilter] = useState<Set<string>>(new Set(domainsInData));
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedTerm, setDebouncedTerm] = useState('');
+  const [colorBy, setColorBy] = useState<ColorMode>('domain');
+  // Collapsed-by-default: only unit nodes show until the user expands one.
+  // Set of unit ids whose direct-prereq spokes are visible.
+  const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
+  const [collapseMode, setCollapseMode] = useState<boolean>(true);
   const rf = useReactFlow();
 
+  // Map each spoke to its "home unit": the first unit reached by walking
+  // its prerequisites chain. Computed once per data load.
+  const homeUnitOf = useMemo(() => {
+    const byId = new Map(data.nodes.map((n) => [n.id, n]));
+    const cache = new Map<string, string | null>();
+    const resolve = (id: string, seen: Set<string> = new Set()): string | null => {
+      if (cache.has(id)) return cache.get(id)!;
+      if (seen.has(id)) return null;
+      seen.add(id);
+      const n = byId.get(id);
+      if (!n) return null;
+      if (n.concept_type === 'unit') { cache.set(id, id); return id; }
+      for (const ref of n.prerequisites ?? []) {
+        const r = resolve(ref, seen);
+        if (r) { cache.set(id, r); return r; }
+      }
+      cache.set(id, null);
+      return null;
+    };
+    const out = new Map<string, string | null>();
+    for (const n of data.nodes) out.set(n.id, resolve(n.id));
+    return out;
+  }, [data.nodes]);
+
+  // Reusable toggle — bound to the inline +/− button on each unit and
+  // also fired by double-clicking the whole unit node. Defined here
+  // (before nodes useMemo) so the memo callback can reference it.
+  const toggleExpand = useCallback((unitId: string) => {
+    setExpandedUnits((prev) => {
+      const next = new Set(prev);
+      if (next.has(unitId)) next.delete(unitId);
+      else next.add(unitId);
+      return next;
+    });
+  }, []);
+
+  // Pre-compute spoke count per unit (for the "+N" badge).
+  const spokeCountByUnit = useMemo(() => {
+    const c = new Map<string, number>();
+    for (const n of data.nodes) {
+      if (n.concept_type === 'unit') continue;
+      const u = homeUnitOf.get(n.id);
+      if (u) c.set(u, (c.get(u) ?? 0) + 1);
+    }
+    return c;
+  }, [data.nodes, homeUnitOf]);
+
+  const allUnitIds = useMemo(() =>
+    data.nodes.filter((n) => n.concept_type === 'unit').map((n) => n.id),
+    [data.nodes]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedTerm(searchTerm), 200);
+    return () => clearTimeout(t);
+  }, [searchTerm]);
+
+  // Search auto-expands the matching spoke's home unit so it's actually
+  // visible. Computed separately from the user-toggled expansion set.
+  const searchAutoExpanded = useMemo(() => {
+    if (!debouncedTerm) return new Set<string>();
+    const out = new Set<string>();
+    for (const n of data.nodes) {
+      if (n.label.includes(debouncedTerm)) {
+        const u = homeUnitOf.get(n.id);
+        if (u) out.add(u);
+      }
+    }
+    return out;
+  }, [debouncedTerm, data.nodes, homeUnitOf]);
+
   const filteredIds = useMemo(() => {
+    const effectiveExpanded = new Set([...expandedUnits, ...searchAutoExpanded]);
     return new Set(
       data.nodes
         .filter((n) => masteryFilter.has(n.mastery))
         .filter((n) => !n.grade || gradeFilter.has(n.grade))
         .filter((n) => !n.domain || domainFilter.has(n.domain))
-        .filter((n) => !searchTerm || n.label.includes(searchTerm))
+        .filter((n) => !debouncedTerm || n.label.includes(debouncedTerm))
+        .filter((n) => {
+          if (!collapseMode) return true;
+          if (n.concept_type === 'unit') return true;
+          const u = homeUnitOf.get(n.id);
+          // Orphan spokes (no home unit) always show — usually rare top-level nodes.
+          if (!u) return true;
+          return effectiveExpanded.has(u);
+        })
         .map((n) => n.id),
     );
-  }, [data.nodes, masteryFilter, gradeFilter, domainFilter, searchTerm]);
+  }, [data.nodes, masteryFilter, gradeFilter, domainFilter, debouncedTerm,
+      collapseMode, expandedUnits, searchAutoExpanded, homeUnitOf]);
+
+  // When a node is selected, compute the set of nodes that are *related*
+  // (the selected node + every direct prereq / enables target). Other
+  // nodes get heavily dimmed so the user can read the relationship
+  // without the whole canvas competing for attention.
+  const relatedToSelected = useMemo(() => {
+    if (!selected) return null;            // null = "no focus mode"
+    const out = new Set<string>([selected]);
+    for (const e of data.edges) {
+      if (e.source === selected) out.add(e.target);
+      else if (e.target === selected) out.add(e.source);
+    }
+    return out;
+  }, [selected, data.edges]);
+
+  // When collapse mode is on:
+  //   1. Run dagre on the visible *units only* — laying out spoke nodes
+  //      with dagre alongside is fine for tens of spokes but breaks down
+  //      at 100+ (the column for the unit gets monstrously tall).
+  //   2. For each expanded unit, place its spoke nodes in a typed grid
+  //      to the right of the unit. Columns = {정의, 정리, 보조정리, 예제},
+  //      each column wraps after MAX_ROWS rows into another sub-column.
+  //      Layout is deterministic and dense, so even units with 165 spokes
+  //      fit in roughly 4 cols × 40 rows of compact tiles.
+  const positions = useMemo(() => {
+    if (!collapseMode) {
+      const m = new Map<string, { x: number; y: number }>();
+      for (const n of data.nodes) m.set(n.id, { x: n.x, y: n.y });
+      return m;
+    }
+
+    // (1) dagre on units only (always visible in collapse mode)
+    const unitNodes = data.nodes.filter((n) => n.concept_type === 'unit');
+    const uSet = new Set(unitNodes.map((n) => n.id));
+    // Pre-size each unit's dagre box by how much horizontal real estate
+    // it'll need for its spoke grid — keeps adjacent units from overlapping.
+    // Generous vertical spacing so edges have room to weave under the
+    // nodes without crowding the labels.
+    const COL_W = 240;
+    const ROW_H = 130;
+    const MAX_ROWS = 9;
+    const expandedSet = new Set([...expandedUnits, ...searchAutoExpanded]);
+    // Pre-compute spoke grid metrics per expanded unit. We reserve a
+    // box that wraps BOTH the unit card and the entire spoke grid so
+    // dagre won't overlap us with a neighbouring unit.
+    const UNIT_W = 200;
+    const UNIT_MARGIN = 100;             // gap between unit and spoke grid
+    const sizedUnits = unitNodes.map((u) => {
+      if (!expandedSet.has(u.id)) return u;
+      const spokes = data.nodes.filter((n) =>
+        n.concept_type !== 'unit' && homeUnitOf.get(n.id) === u.id);
+      const byType: Record<string, number> = {};
+      for (const s of spokes) byType[s.concept_type] = (byType[s.concept_type] ?? 0) + 1;
+      let totalCols = 0;
+      for (const t of TYPE_COL_ORDER) {
+        const n = byType[t] ?? 0;
+        totalCols += Math.max(0, Math.ceil(n / MAX_ROWS));
+      }
+      const cols = Math.max(1, totalCols);
+      const tallestCol = Math.min(MAX_ROWS, Math.max(1, ...Object.values(byType)));
+      // Full bounding box: unit + margin + spoke grid + right margin
+      const w = UNIT_W + UNIT_MARGIN + cols * COL_W + 40;
+      const h = Math.max(80, tallestCol * ROW_H + 60);
+      return { ...u, _width: w, _height: h, _cols: cols } as GraphNode & {
+        _width?: number; _height?: number; _cols?: number;
+      };
+    });
+
+    // dagre only sees the unit↔unit prereq subgraph
+    const unitEdges = data.edges.filter((e) => uSet.has(e.source) && uSet.has(e.target));
+    const unitPositions = dagreLayout(
+      sizedUnits as unknown as GraphNode[],
+      unitEdges,
+    );
+
+    const out = new Map<string, { x: number; y: number }>();
+    const sizedById = new Map(sizedUnits.map((u) => [u.id, u]));
+
+    for (const u of unitNodes) {
+      const dagreCenter = unitPositions.get(u.id);
+      if (!dagreCenter) continue;
+      const meta = sizedById.get(u.id) as GraphNode & { _width?: number; _cols?: number };
+      const w = meta._width ?? UNIT_W;
+      // dagre placed the *bounding box center* at dagreCenter; shift the
+      // unit card itself to the box's left side so the spoke grid fits
+      // entirely to its right (and inside the reserved box).
+      const boxLeft = dagreCenter.x - w / 2;
+      const unitX = boxLeft + UNIT_W / 2;            // unit card centered at box left + 100
+      out.set(u.id, { x: unitX, y: dagreCenter.y });
+    }
+
+    // (2) place spokes in typed grids inside each expanded unit's box
+    for (const unit of unitNodes) {
+      if (!expandedSet.has(unit.id)) continue;
+      const dagreCenter = unitPositions.get(unit.id);
+      if (!dagreCenter) continue;
+      const meta = sizedById.get(unit.id) as GraphNode & { _width?: number; _cols?: number };
+      const w = meta._width ?? UNIT_W;
+      const boxLeft = dagreCenter.x - w / 2;
+
+      const spokes = data.nodes.filter((n) =>
+        n.concept_type !== 'unit' && homeUnitOf.get(n.id) === unit.id && filteredIds.has(n.id));
+      const groups: Record<string, GraphNode[]> = {};
+      for (const s of spokes) (groups[s.concept_type] ??= []).push(s);
+      const orderedTypes = [
+        ...TYPE_COL_ORDER.filter((t) => groups[t]?.length),
+        ...Object.keys(groups).filter((t) => !TYPE_COL_ORDER.includes(t)),
+      ];
+
+      // Spoke grid starts to the right of the unit card with a clear gap.
+      let xCursor = boxLeft + UNIT_W + UNIT_MARGIN;
+      for (const t of orderedTypes) {
+        const list = groups[t];
+        const subCols = Math.max(1, Math.ceil(list.length / MAX_ROWS));
+        for (let i = 0; i < list.length; i++) {
+          const subCol = Math.floor(i / MAX_ROWS);
+          const row = i % MAX_ROWS;
+          const colHeight = Math.min(MAX_ROWS, list.length - subCol * MAX_ROWS);
+          const x = xCursor + subCol * COL_W + COL_W / 2;
+          const y = dagreCenter.y + (row - (colHeight - 1) / 2) * ROW_H;
+          out.set(list[i].id, { x, y });
+        }
+        xCursor += subCols * COL_W;
+      }
+    }
+    return out;
+  }, [collapseMode, filteredIds, data.nodes, data.edges,
+      expandedUnits, searchAutoExpanded, homeUnitOf]);
 
   const nodes: Node[] = useMemo(
     () =>
-      data.nodes.map((n) => ({
-        id: n.id,
-        type: 'conceptNode',
-        position: { x: n.x, y: n.y },
-        data: {
-          ...n,
-          highlighted: n.id === selected,
-          dimmed: !filteredIds.has(n.id),
-        },
-      })),
-    [data.nodes, selected, filteredIds],
+      data.nodes.map((n) => {
+        const pos = positions.get(n.id) ?? { x: n.x, y: n.y };
+        // Two dim modes — filter-dim wins (user explicitly excluded the
+        // node) and is aggressive (~0.10). Focus-dim (not related to a
+        // selection) is softer (~0.35) so the rest of the map stays
+        // readable instead of going pitch black.
+        const filterDimmed = !filteredIds.has(n.id);
+        const focusDimmed = !filterDimmed && relatedToSelected !== null && !relatedToSelected.has(n.id);
+        return {
+          id: n.id,
+          type: 'conceptNode',
+          position: pos,
+          // Nodes sit above ordinary edges. Only edges from the focused
+          // node get elevated above this (we set their zIndex to 1000).
+          zIndex: 10,
+          hidden: collapseMode && n.concept_type !== 'unit' && !filteredIds.has(n.id),
+          data: {
+            ...n,
+            highlighted: n.id === selected,
+            filterDimmed,
+            focusDimmed,
+            colorMode: colorBy,
+            childCount: n.concept_type === 'unit' ? (spokeCountByUnit.get(n.id) ?? 0) : undefined,
+            expanded: expandedUnits.has(n.id) || searchAutoExpanded.has(n.id),
+            onToggleExpand: toggleExpand,
+          },
+        };
+      }),
+    [data.nodes, positions, selected, filteredIds, colorBy, collapseMode, spokeCountByUnit, expandedUnits, searchAutoExpanded, toggleExpand, relatedToSelected],
   );
 
   const edges: Edge[] = useMemo(
     () =>
       data.edges.map((e) => {
         const visible = filteredIds.has(e.source) && filteredIds.has(e.target);
+        const touchesSel = selected != null && (e.source === selected || e.target === selected);
+        // Pick the "other end" node so we can color by its type.
+        const otherId = e.source === selected ? e.target : e.source;
+        const otherType = touchesSel
+          ? data.nodes.find((n) => n.id === otherId)?.concept_type
+          : null;
+        const hiColor: string | null = touchesSel
+          ? (otherType ? (TYPE_EDGE_COLOR[otherType] ?? '#a1a1aa') : '#a1a1aa')
+          : null;
         return {
           id: e.id,
           source: e.source,
           target: e.target,
-          animated: e.source === selected || e.target === selected,
+          hidden: collapseMode && (!filteredIds.has(e.source) || !filteredIds.has(e.target)),
+          animated: touchesSel,
+          // All edges sit *below* the nodes (nodes have zIndex 10).
+          // Unrelated nodes are dimmed enough that the focused edge
+          // still reads through them; related nodes light up.
+          zIndex: 0,
           style: {
-            stroke: visible ? '#52525b' : '#27272a',
-            strokeWidth: e.source === selected || e.target === selected ? 2 : 1.5,
-            opacity: visible ? 1 : 0.3,
+            stroke: hiColor ?? (visible ? '#3f3f46' : '#1f1f23'),
+            strokeWidth: touchesSel ? 2.5 : 1,
+            ...(touchesSel ? { strokeDasharray: '8 4' } : {}),
+            // When a node is selected, edges that don't touch it used to
+            // drop to 0.05 — that made the whole map go nearly black.
+            // 0.22 keeps the secondary graph structure readable so users
+            // can still trace context around the focused subtree.
+            opacity: touchesSel ? 1 : (selected ? 0.22 : (visible ? 0.55 : 0.2)),
           },
-          markerEnd: { type: MarkerType.ArrowClosed, color: '#52525b' },
+          markerEnd: { type: MarkerType.ArrowClosed, color: hiColor ?? '#3f3f46' },
         };
       }),
-    [data.edges, filteredIds, selected],
+    [data.edges, filteredIds, selected, collapseMode],
   );
 
-  // Center-and-zoom helper: smooth pan to a node + comfortable zoom
+  const nodeById = useMemo(
+    () => new Map(data.nodes.map((n) => [n.id, n])),
+    [data.nodes],
+  );
+
+  // Keep latest positions accessible from callbacks without invalidating
+  // their identity each layout pass.
+  const positionsRef = useRef(positions);
+  useEffect(() => { positionsRef.current = positions; }, [positions]);
+
+  // Center-and-zoom helper: smooth pan to a node using the *current* dagre
+  // position (not the raw n.x/n.y from the data file, which is wrong in
+  // collapse mode).
   const flyTo = useCallback((nodeId: string) => {
+    const pos = positionsRef.current.get(nodeId);
+    if (pos) {
+      rf.setCenter(pos.x, pos.y, { zoom: 1.25, duration: 500 });
+      return;
+    }
     const n = data.nodes.find((x) => x.id === nodeId);
-    if (!n) return;
-    rf.setCenter(n.x, n.y, { zoom: 1.25, duration: 500 });
+    if (n) rf.setCenter(n.x, n.y, { zoom: 1.25, duration: 500 });
   }, [rf, data.nodes]);
 
   const goto = useCallback((nodeId: string) => {
     setSelected(nodeId);
-    flyTo(nodeId);
-  }, [flyTo]);
+    const target = nodeById.get(nodeId);
+    // If clicking a spoke from a list and its home unit is collapsed,
+    // expand it first so the spoke becomes visible — otherwise we'd fly
+    // the camera to an empty (hidden) area.
+    if (target && target.concept_type !== 'unit') {
+      const home = homeUnitOf.get(nodeId);
+      if (home && !expandedUnits.has(home) && !searchAutoExpanded.has(home)) {
+        setExpandedUnits((p) => new Set([...p, home]));
+      }
+    }
+    // Defer the camera move so dagre has a frame to re-layout when we
+    // just expanded a unit. positionsRef will then hold the new coords.
+    window.setTimeout(() => flyTo(nodeId), 80);
+  }, [flyTo, nodeById, homeUnitOf, expandedUnits, searchAutoExpanded]);
 
   const onNodeClick: NodeMouseHandler = useCallback((_, node) => {
-    goto(node.id);
-  }, [goto]);
+    // Select only — don't fly/zoom. Auto-zoom was disorienting; the user
+    // could easily lose context (panned to an off-screen blank area).
+    setSelected(node.id);
+  }, []);
+
+  const onNodeDoubleClick: NodeMouseHandler = useCallback((_, node) => {
+    const d = node.data as GraphNode;
+    if (d.concept_type !== 'unit') return;
+    toggleExpand(node.id);
+  }, [toggleExpand]);
+
+  const expandAll = useCallback(() => setExpandedUnits(new Set(allUnitIds)), [allUnitIds]);
+  const collapseAll = useCallback(() => setExpandedUnits(new Set()), []);
 
   useEffect(() => {
     const t = setTimeout(() => {
       if (highlight) {
+        // Only the explicit ?highlight=... param flies the camera.
         goto(highlight);
       } else {
         rf.fitView({ padding: 0.2, duration: 400 });
       }
     }, 50);
     return () => clearTimeout(t);
-  }, [rf, highlight, goto]);
+    // goto intentionally excluded — we don't want this to re-fire on
+    // every render of goto's closure deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rf, highlight]);
 
-  // 검색어가 정확히 한 노드만 매치하면 그리로 이동
+  // (No automatic camera fit on expand/collapse — the user explicitly
+  // doesn't want the view to fly around. Press `f` to manually fit.)
+
+  // 검색어 매치 노드를 selected로만 잡아둠 (자동 zoom/pan 안 함).
+  // 다수 매치는 fitView로 한 화면에 모아주는 것까지만 (그건 길 잃지 않음).
   useEffect(() => {
-    if (!searchTerm) return;
-    const matches = data.nodes.filter((n) => n.label.includes(searchTerm));
+    if (!debouncedTerm) return;
+    const matches = data.nodes.filter((n) => n.label.includes(debouncedTerm));
     if (matches.length === 1) {
-      const id = matches[0].id;
-      setSelected(id);
-      flyTo(id);
+      setSelected(matches[0].id);
     } else if (matches.length > 1 && matches.length <= 12) {
-      // 다수 매치: 매치된 노드들이 다 보이도록 fit
       rf.fitView({ nodes: matches.map((m) => ({ id: m.id })), padding: 0.3, duration: 400 });
     }
-  }, [searchTerm, data.nodes, rf, flyTo]);
+  }, [debouncedTerm, data.nodes, rf]);
 
   // 키보드 단축키 (입력란에 포커스 없을 때만)
   useEffect(() => {
@@ -286,35 +670,72 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     return () => window.removeEventListener('keydown', handler);
   }, [rf]);
 
-  const selectedNode = data.nodes.find((n) => n.id === selected);
+  const selectedNode = selected ? nodeById.get(selected) ?? null : null;
 
-  // Single-select-with-reset:
-  //   default = all selected (전체)
-  //   click pill X (when all active or other subset active) → narrow to {X}
-  //   click pill X (when only X is active) → back to all
-  const ALL_MASTERY = ['unknown', 'learning', 'proficient', 'mastered'] as const;
-  const toggleMastery = (m: string) => {
-    setMasteryFilter((prev) => {
-      if (prev.size === 1 && prev.has(m)) return new Set(ALL_MASTERY);
-      return new Set([m]);
-    });
+  // Display label: replace underscores with spaces (slugs use _ as separator).
+  const prettyLabel = (ref: string) => {
+    const n = nodeById.get(ref);
+    return (n?.label ?? ref).replace(/_/g, ' ');
   };
+
+  // Group an id list (prereqs or enables) by concept_type, preserving the
+  // canonical type order (unit → definition → theorem → lemma → example → 기타).
+  const groupRefsByType = (refs: string[]) => {
+    const groups = new Map<string, string[]>();
+    for (const ref of refs) {
+      const t = nodeById.get(ref)?.concept_type ?? 'other';
+      const arr = groups.get(t) ?? [];
+      arr.push(ref);
+      groups.set(t, arr);
+    }
+    const ordered: Array<[string, string[]]> = [];
+    for (const t of ['unit', ...TYPE_COL_ORDER]) {
+      const arr = groups.get(t);
+      if (arr?.length) ordered.push([t, arr]);
+    }
+    for (const [t, arr] of groups) {
+      if (t !== 'unit' && !TYPE_COL_ORDER.includes(t)) ordered.push([t, arr]);
+    }
+    return ordered;
+  };
+
+  // Memoized pill counts — avoid O(N) re-filter on every render
+  const masteryCounts = useMemo(() => {
+    const c: Record<string, number> = { unknown: 0, learning: 0, proficient: 0, mastered: 0 };
+    for (const n of data.nodes) c[n.mastery] = (c[n.mastery] ?? 0) + 1;
+    return c;
+  }, [data.nodes]);
+  const domainCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const n of data.nodes) if (n.domain) c[n.domain] = (c[n.domain] ?? 0) + 1;
+    return c;
+  }, [data.nodes]);
+  const gradeCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const n of data.nodes) if (n.grade) c[n.grade] = (c[n.grade] ?? 0) + 1;
+    return c;
+  }, [data.nodes]);
+
+  // Multi-select toggle:
+  //   default = all selected (전체)
+  //   click pill X → toggle X in/out of the active set
+  //   if user deselects last one → snap back to all (avoid showing nothing)
+  //   "전체로" 버튼 = explicit reset to all
+  const ALL_MASTERY = ['unknown', 'learning', 'proficient', 'mastered'] as const;
+  const toggleInSet = <T extends string>(prev: Set<string>, item: T, all: readonly T[]): Set<string> => {
+    const next = new Set(prev);
+    if (next.has(item)) next.delete(item);
+    else next.add(item);
+    if (next.size === 0) return new Set(all);
+    return next;
+  };
+  const toggleMastery = (m: string) => setMasteryFilter((p) => toggleInSet(p, m, ALL_MASTERY));
   const resetMastery = () => setMasteryFilter(new Set(ALL_MASTERY));
 
-  const toggleGrade = (g: string) => {
-    setGradeFilter((prev) => {
-      if (prev.size === 1 && prev.has(g)) return new Set(gradesInData);
-      return new Set([g]);
-    });
-  };
+  const toggleGrade = (g: string) => setGradeFilter((p) => toggleInSet(p, g, gradesInData));
   const resetGrade = () => setGradeFilter(new Set(gradesInData));
 
-  const toggleDomain = (d: string) => {
-    setDomainFilter((prev) => {
-      if (prev.size === 1 && prev.has(d)) return new Set(domainsInData);
-      return new Set([d]);
-    });
-  };
+  const toggleDomain = (d: string) => setDomainFilter((p) => toggleInSet(p, d, domainsInData));
   const resetDomain = () => setDomainFilter(new Set(domainsInData));
 
   const masteryAllActive = masteryFilter.size === ALL_MASTERY.length;
@@ -328,13 +749,15 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         edges={edges}
         nodeTypes={nodeTypes}
         onNodeClick={onNodeClick}
+        onNodeDoubleClick={onNodeDoubleClick}
+        onPaneClick={() => setSelected(null)}
         proOptions={{ hideAttribution: true }}
         nodesDraggable={variant === 'full'}
         nodesConnectable={false}
         elementsSelectable
         fitView
-        fitViewOptions={{ padding: 0.2 }}
-        defaultEdgeOptions={{ type: 'smoothstep' }}
+        fitViewOptions={FIT_VIEW_OPTIONS}
+        defaultEdgeOptions={DEFAULT_EDGE_OPTIONS}
         minZoom={0.15}
         maxZoom={2.5}
         zoomOnScroll={true}
@@ -343,24 +766,15 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         selectionOnDrag={false}
         zoomActivationKeyCode={null}
       >
-        <Background gap={20} size={1} color="#27272a" />
         {variant === 'full' && (
-          <>
-            <Controls position="top-right" showInteractive={false} className="!bg-zinc-900 !border !border-zinc-800" />
-            <MiniMap
-              position="bottom-right"
-              maskColor="rgba(9,9,11,0.7)"
-              nodeColor={(n) => MASTERY_COLOR[(n.data as any).mastery] ?? '#a1a1aa'}
-              style={{ background: '#18181b', border: '1px solid #27272a' }}
-            />
-          </>
+          <Controls position="bottom-right" showInteractive={false} className="dag-controls" />
         )}
       </ReactFlow>
 
       {variant === 'full' && (
         <>
           {/* Left filter panel */}
-          <div className="absolute top-4 left-4 z-10 w-72 card p-3 space-y-3 max-h-[calc(100%-2rem)] overflow-auto">
+          <div className="absolute top-4 bottom-24 left-4 z-10 w-72 card p-3 space-y-3 overflow-auto">
             <div>
               <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">검색 <span className="text-zinc-600 normal-case tracking-normal">(/ 키)</span></label>
               <input
@@ -370,8 +784,55 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                 className="dag-search-input w-full px-2 py-1.5 rounded-md bg-zinc-900 border border-zinc-800 text-sm focus:outline-none focus:border-indigo-400"
               />
               <p className="mt-1 text-[10px] text-zinc-600">
-                f = fit · esc = 닫기 · 노드/링크 클릭 = 자동 이동
+                f = fit · esc = 닫기 · 클릭 = 이동 · <strong>더블클릭(unit) = 펼치기/접기</strong>
               </p>
+            </div>
+
+            <div>
+              <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">접기/펼치기</label>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setCollapseMode((v) => !v)}
+                  className={`flex-1 text-xs px-2 py-1 rounded border transition ${
+                    collapseMode
+                      ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300'
+                      : 'border-zinc-700 text-zinc-400 hover:text-zinc-100'
+                  }`}
+                  title="끄면 모든 spoke 강제 표시"
+                >
+                  접기 모드 {collapseMode ? 'ON' : 'OFF'}
+                </button>
+                <button onClick={expandAll}
+                        className="text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-300 hover:bg-zinc-800">
+                  모두 펼침
+                </button>
+                <button onClick={collapseAll}
+                        className="text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-300 hover:bg-zinc-800">
+                  모두 접기
+                </button>
+              </div>
+              <p className="mt-1 text-[10px] text-zinc-600">
+                펼쳐진 unit: <span className="text-zinc-300">{expandedUnits.size}/{allUnitIds.length}</span>
+                {searchAutoExpanded.size > 0 && (
+                  <span className="text-emerald-400"> · 검색 매치 unit {searchAutoExpanded.size}개 자동 펼침</span>
+                )}
+              </p>
+            </div>
+            <div>
+              <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">노드 색상 기준</label>
+              <div className="inline-flex rounded-md border border-zinc-800 overflow-hidden text-xs">
+                {(['domain', 'mastery', 'grade'] as const).map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setColorBy(c)}
+                    className={`px-2.5 py-1 transition ${
+                      colorBy === c ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-500 hover:text-zinc-200'
+                    }`}
+                  >
+                    {c === 'domain' ? '도메인' : c === 'mastery' ? '마스터리' : '학년'}
+                  </button>
+                ))}
+              </div>
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -404,12 +865,12 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                         color: isActive ? color : '#52525b',
                         opacity: !masteryAllActive && !isActive ? 0.4 : 1,
                       }}
-                      title={isSole ? '클릭하면 전체로 복귀' : '이것만 보기'}
+                      title="클릭하여 토글"
                     >
                       <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
                       <span>{m}</span>
                       <span className="text-zinc-500 font-normal">
-                        {data.nodes.filter((n) => n.mastery === m).length}
+                        {masteryCounts[m] ?? 0}
                       </span>
                     </button>
                   );
@@ -449,12 +910,12 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                           color: isActive ? color : '#52525b',
                           opacity: !domainAllActive && !isActive ? 0.4 : 1,
                         }}
-                        title={isSole ? '클릭하면 전체로 복귀' : '이 도메인만 보기'}
+                        title="클릭하여 토글"
                       >
                         <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
                         <span>{d}</span>
                         <span className="text-zinc-500 font-normal">
-                          {data.nodes.filter((n) => n.domain === d).length}
+                          {domainCounts[d] ?? 0}
                         </span>
                       </button>
                     );
@@ -495,12 +956,12 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                           color: isActive ? color : '#52525b',
                           opacity: !gradeAllActive && !isActive ? 0.4 : 1,
                         }}
-                        title={isSole ? '클릭하면 전체로 복귀' : '이 학년만 보기'}
+                        title="클릭하여 토글"
                       >
                         <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
                         <span>{g}</span>
                         <span className="text-zinc-500 font-normal">
-                          {data.nodes.filter((n) => n.grade === g).length}
+                          {gradeCounts[g] ?? 0}
                         </span>
                       </button>
                     );
@@ -528,7 +989,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           {selectedNode && (
             <div className="absolute top-4 right-4 z-10 w-72 card p-4 space-y-3">
               <header className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold">{selectedNode.label}</h3>
+                <h3 className="text-sm font-semibold">{selectedNode.label.replace(/_/g, ' ')}</h3>
                 <button onClick={() => setSelected(null)} className="text-zinc-500 hover:text-zinc-100 text-lg leading-none">×</button>
               </header>
               <div className="flex gap-1.5 flex-wrap">
@@ -560,32 +1021,54 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               </div>
               {selectedNode.prerequisites.length > 0 && (
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1">선수 (prerequisites)</div>
-                  <ul className="text-sm space-y-0.5">
-                    {selectedNode.prerequisites.map((p) => (
-                      <li key={p}>
-                        <button
-                          onClick={() => goto(p)}
-                          className="text-indigo-400 hover:underline text-left"
-                        >{p}</button>
-                      </li>
+                  <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1.5">선수 (prerequisites)</div>
+                  <div className="space-y-2">
+                    {groupRefsByType(selectedNode.prerequisites).map(([t, refs]) => (
+                      <div key={t}>
+                        <div className="flex items-center gap-1.5 text-[10px] text-zinc-500 mb-0.5">
+                          <span style={{ color: TYPE_EDGE_COLOR[t] ?? '#71717a' }}>{TYPE_ICON[t] ?? '·'}</span>
+                          <span>{TYPE_LABEL_KO[t] ?? t}</span>
+                          <span className="text-zinc-600 font-mono">{refs.length}</span>
+                        </div>
+                        <ul className="text-sm space-y-0.5 pl-4">
+                          {refs.map((p) => (
+                            <li key={p}>
+                              <button
+                                onClick={() => goto(p)}
+                                className="text-indigo-400 hover:underline text-left"
+                              >{prettyLabel(p)}</button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
               {selectedNode.enables.length > 0 && (
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1">enables</div>
-                  <ul className="text-sm space-y-0.5">
-                    {selectedNode.enables.map((p) => (
-                      <li key={p}>
-                        <button
-                          onClick={() => goto(p)}
-                          className="text-indigo-400 hover:underline text-left"
-                        >{p}</button>
-                      </li>
+                  <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1.5">enables</div>
+                  <div className="space-y-2">
+                    {groupRefsByType(selectedNode.enables).map(([t, refs]) => (
+                      <div key={t}>
+                        <div className="flex items-center gap-1.5 text-[10px] text-zinc-500 mb-0.5">
+                          <span style={{ color: TYPE_EDGE_COLOR[t] ?? '#71717a' }}>{TYPE_ICON[t] ?? '·'}</span>
+                          <span>{TYPE_LABEL_KO[t] ?? t}</span>
+                          <span className="text-zinc-600 font-mono">{refs.length}</span>
+                        </div>
+                        <ul className="text-sm space-y-0.5 pl-4">
+                          {refs.map((p) => (
+                            <li key={p}>
+                              <button
+                                onClick={() => goto(p)}
+                                className="text-indigo-400 hover:underline text-left"
+                              >{prettyLabel(p)}</button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
               <a
@@ -600,11 +1083,19 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           {/* Legend bottom-left */}
           <div className="absolute bottom-4 left-4 z-10 card px-3 py-2 text-xs">
             <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1.5">노드 모양</div>
-            <div className="flex gap-3 text-zinc-300">
+            <div className="flex gap-4 text-zinc-300">
               {(['definition', 'theorem', 'lemma', 'example'] as const).map((t) => (
-                <span key={t} className="flex items-center gap-1">
-                  <span className="text-base">{TYPE_ICON[t]}</span>
-                  <span>{t}</span>
+                <span key={t} className="flex items-center gap-1.5">
+                  <span className="text-base" style={{ color: TYPE_EDGE_COLOR[t] }}>{TYPE_ICON[t]}</span>
+                  <span className="flex items-baseline gap-1">
+                    <span>{TYPE_LABEL_KO[t]}</span>
+                    <span className="text-[9px] text-zinc-600 lowercase">{t}</span>
+                  </span>
+                  <span
+                    className="inline-block rounded-sm"
+                    style={{ background: TYPE_EDGE_COLOR[t], width: 14, height: 2 }}
+                    title="연결선 색"
+                  />
                 </span>
               ))}
             </div>

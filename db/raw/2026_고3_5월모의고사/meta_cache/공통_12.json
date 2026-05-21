@@ -1,0 +1,17 @@
+{
+  "text_sha": "969cf253dd18",
+  "meta": {
+    "searchable_text": "시각 $t=0$일 때 원점을 출발하여 수직선 위를 움직이는 점 P의 시각 $t \\geq 0$에서의 속도가 $v(t) = 3t^2 - 11t + 8$이다. 다음 명제들 중 옳은 것만을 있는 대로 고른 것은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "속도와_가속도_분석",
+      "부호_변화를_이용한_운동_방향",
+      "정적분을_이용한_거리_계산"
+    ],
+    "exam_intent": "미분과 적분을 이용한 실생활 운동 문제 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

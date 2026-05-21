@@ -1,0 +1,17 @@
+{
+  "text_sha": "4a30527bb8ea",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_n\\}$, $\\{b_n\\}$에 대하여 $\\lim_{n \\to \\infty} \\frac{a_n - 1}{b_n - 3}$, $\\lim_{n \\to \\infty} \\frac{a_n - 4}{2b_n + 1} = 1$일 때, $\\lim_{n \\to \\infty} \\frac{a_n - 2}{2b_n - 1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "수렴",
+      "극한의_성질"
+    ],
+    "exam_intent": "조건부 극한으로부터 새로운 극한값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

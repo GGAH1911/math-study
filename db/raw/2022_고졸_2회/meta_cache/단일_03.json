@@ -1,0 +1,16 @@
+{
+  "text_sha": "bd41fd9e816b",
+  "meta": {
+    "searchable_text": "다항식을 다항식으로 나누었을 때 나머지를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식_나눗셈",
+      "나머지_정리"
+    ],
+    "exam_intent": "다항식 나눗셈 후 나머지를 구할 수 있는지 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

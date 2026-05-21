@@ -1,0 +1,16 @@
+{
+  "text_sha": "284bbba8fe3e",
+  "meta": {
+    "searchable_text": "그림은 유네스코에 등재된 우리나라 세계 기록 유산 5개(일성록, 난중일기, 동의보감, 훈민정음, 승정원일기) 중에서 서로 다른 2개를 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "경우의_수"
+    ],
+    "exam_intent": "조합 공식으로 5개 중 2개를 선택하는 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

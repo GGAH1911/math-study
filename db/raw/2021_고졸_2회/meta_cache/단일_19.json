@@ -1,0 +1,15 @@
+{
+  "text_sha": "192957f728b3",
+  "meta": {
+    "searchable_text": "그림은 어느 하계 올림픽 경기 종목 중 4개의 종목을 나타낸 것이다. 이 4개의 종목에서 서로 다른 2개의 종목을 택하여 일렬로 나열하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "4개 대상 중 2개를 선택하여 순서있게 배열할 때의 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

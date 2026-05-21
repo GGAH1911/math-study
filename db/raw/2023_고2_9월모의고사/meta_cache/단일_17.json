@@ -1,0 +1,16 @@
+{
+  "text_sha": "7c4c4496c4f0",
+  "meta": {
+    "searchable_text": "모든 항이 양수이고 다음 조건을 만족하는 수열 $\\{a_n\\}$에 대하여 $a_4 + a_6$의 최솟값을 구하시오. (가) 모든 자연수 $n$에 대하여 $2a_{n+1} = a_n + 2$ (나) $a_2 \\times a_3 \\leq 2a_7 \\times a_8 \\leq 10$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열의합"
+    ],
+    "exam_intent": "점화식을 만족하는 수열에서 부등식 조건 하 특정항의 합의 최솟값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

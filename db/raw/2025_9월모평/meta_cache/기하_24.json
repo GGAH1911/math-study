@@ -1,0 +1,17 @@
+{
+  "text_sha": "6e7304282ad2",
+  "meta": {
+    "searchable_text": "타원의 두 초점 사이의 거리가 6일 때, 특정 매개변수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "초점",
+      "초점거리"
+    ],
+    "exam_intent": "타원의 초점 정의를 이용한 매개변수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

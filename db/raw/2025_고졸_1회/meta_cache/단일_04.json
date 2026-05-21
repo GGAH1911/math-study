@@ -1,0 +1,16 @@
+{
+  "text_sha": "71f3c69287b5",
+  "meta": {
+    "searchable_text": "복소수 $z = a + 2i$에 대하여 주어진 조건을 만족할 때, 실수 $a$의 값은? (단, $i^2 = -1$이고, $\\bar{z}$는 $z$의 켤레복소수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수",
+      "켤레복소수"
+    ],
+    "exam_intent": "복소수와 켤레복소수의 성질 이용하여 실수부 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

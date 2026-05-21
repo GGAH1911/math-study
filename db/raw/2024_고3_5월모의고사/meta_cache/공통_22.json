@@ -1,0 +1,18 @@
+{
+  "text_sha": "bee7c52f6416",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 4이고 서로 다른 세 극값을 갖는 사차함수 $f(x)$와 두 함수 $g(x)$, $h(x)$가 있다. 세 함수가 다음 조건을 만족시킨다. (가) 모든 실수 $x$에 대하여 $f(x) \\geq g(x)$이고, $\\lim_{x \\to 0} \\frac{g(x)}{f'(x)} = 0$이다. (나) 함수 $h(x)$는 실수 전체의 집합에서 연속이다. $h(0) = \\frac{3}{40}$일 때, $f(1) \\times f(3)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "극한",
+      "연속성",
+      "사차함수"
+    ],
+    "exam_intent": "극한과 연속성 조건으로부터 사차함수의 극값을 구하는 추론 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

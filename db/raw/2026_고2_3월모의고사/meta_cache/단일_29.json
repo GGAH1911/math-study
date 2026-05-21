@@ -1,0 +1,16 @@
+{
+  "text_sha": "b09b5da09405",
+  "meta": {
+    "searchable_text": "영행렬이 아닌 두 2×2 행렬 A, B가 있다. rank(A) = rank(B) = 2이고, 각 위치 (i, j)에서 $a_{ij} \\times b_{ij} = 0$, $a_{ij} + b_{ij} \\neq 0$을 만족한다. 행렬 A의 모든 성분의 합이 -1이고 곱이 -8일 때, $\\frac{a_{12} + 3b_{21}}{3}$의 값을 구하시오. (A의 모든 성분은 실수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "행렬과_선형방정식",
+      "행렬_성분_조건"
+    ],
+    "exam_intent": "행렬의 곱셈과 부분 영성분 조건을 이용한 성분 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

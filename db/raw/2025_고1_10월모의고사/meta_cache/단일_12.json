@@ -1,0 +1,13 @@
+{
+  "text_sha": "062d8a3959e7",
+  "meta": {
+    "searchable_text": "실수 $a$에 대하여 복소수 $z$를 정의하되, $z^2$이 실수가 되도록 하는 모든 $a$의 값의 합을 구하는 문제. (단, 조건 $a > 1$ 등 범위 제한 있음)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [],
+    "exam_intent": "복소수의 제곱이 실수가 되는 조건에서 모수의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

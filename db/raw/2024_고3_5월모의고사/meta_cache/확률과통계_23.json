@@ -1,0 +1,16 @@
+{
+  "text_sha": "56e40c98a90b",
+  "meta": {
+    "searchable_text": "두 사건 $A$, $B$에 대하여 $P(A) \\cdot P(B) = 4 \\times P(A \\cap B)$ 조건 하에서 $P(A \\cap B)$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률의_덧셈_정리",
+      "독립사건"
+    ],
+    "exam_intent": "확률 조건식으로부터 교집합 확률 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

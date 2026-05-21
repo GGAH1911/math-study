@@ -1,0 +1,18 @@
+{
+  "text_sha": "cdfdc7905549",
+  "meta": {
+    "searchable_text": "직각삼각형 ABC에서 ∠A = 90°, BC = 10이다. 선분 AB 위의 점 P, 선분 BC 위의 두 점 Q, R, 선분 AC 위의 점 S를 사각형 PQRS가 정사각형이 되도록 잡는다. PQ = (7/2)√10일 때, AB·AC의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "정사각형",
+      "직각삼각형",
+      "좌표기하",
+      "닮음"
+    ],
+    "exam_intent": "직각삼각형에 내접하는 정사각형의 기하 조건으로 변의 길이 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

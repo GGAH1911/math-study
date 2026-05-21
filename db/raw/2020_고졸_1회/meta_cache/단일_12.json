@@ -1,0 +1,17 @@
+{
+  "text_sha": "f645814bc77c",
+  "meta": {
+    "searchable_text": "전체집합을 $\\{1, 2, 3, 4, 5, 6\\}$이라 하고, 두 부분집합 $A = \\{6\\text{의 약수}\\}$, $B = \\{2, 3\\}$에 대하여 $A - B$를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "약수",
+      "부분집합",
+      "차집합"
+    ],
+    "exam_intent": "6의 약수를 파악하고 부분집합의 차집합을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

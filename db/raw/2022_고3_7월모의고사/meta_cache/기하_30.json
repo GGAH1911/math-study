@@ -1,0 +1,18 @@
+{
+  "text_sha": "e63216b07157",
+  "meta": {
+    "searchable_text": "공간에서 중심이 O이고 반지름의 길이가 4인 구와 점 O를 지나는 평면 α가 있다. 평면 α와 구가 만나서 생기는 원 위의 서로 다른 세 점 A, B, C에 대하여 두 직선 OA, BC가 서로 수직일 때, 구 위의 점 P가 다음 조건을 만족시킨다. (가) $\\angle PAO = \\frac{3\\pi}{4}$ (나) 점 P의 평면 α 위로의 정사영은 선분 OA 위에 있다. $\\cos \\angle PAB = \\frac{\\sqrt{8}}{10}$일 때, 삼각형 PAB의 평면 PAC 위로의 정사영의 넓이를 S라 하자. $30 \\times S^2$의 값을 구하시오. (단, $0 < \\angle BAC < \\frac{\\pi}{2}$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "구의_단면원",
+      "공간각의_계산",
+      "벡터의_정사영",
+      "평면_위의_정사영"
+    ],
+    "exam_intent": "공간도형의 각도·정사영 조건으로부터 삼각형 정사영의 넓이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

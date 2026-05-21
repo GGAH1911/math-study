@@ -1,0 +1,17 @@
+{
+  "text_sha": "3f3ac1f7dc02",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{4n^2 + n + 1}{n^2 + 2}$의 극한값을 구하는 문제. 분자와 분모를 최고차항으로 나누어 계산하면 극한값은 4이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "함수의_극한",
+      "무한대_극한",
+      "다항식의_극한"
+    ],
+    "exam_intent": "다항함수의 극한에서 최고차항 비율을 이용한 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

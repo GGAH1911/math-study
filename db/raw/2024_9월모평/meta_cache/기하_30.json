@@ -1,0 +1,17 @@
+{
+  "text_sha": "c5b07fa2391a",
+  "meta": {
+    "searchable_text": "좌표평면에서 $AB = AC$이고 $\\angle BAC = 90°$인 직각삼각형 ABC에 대하여 두 점 P, Q가 다음 조건을 만족시킨다. (가) 삼각형 APQ는 정삼각형이고, $9|PQ|^2 = 4|AB|^2$이다. (나) $\\vec{AC} \\cdot \\vec{AQ} = 0$ (다) $\\vec{PQ} \\cdot \\vec{CB} = 24$ 선분 AQ 위의 점 X에 대하여 $\\vec{XA} \\cdot \\vec{XB}$의 최솟값을 $m$이라 할 때, $m^2$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "정삼각형",
+      "최솟값"
+    ],
+    "exam_intent": "벡터 내적 조건과 도형의 성질로 최솟값을 구하는 통합 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

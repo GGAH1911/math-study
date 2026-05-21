@@ -1,4 +1,24 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import MathField from './MathField.tsx';
+import Graph, { GraphModal, type PlotSpec } from './Graph.tsx';
+import Geometry, { type GeomSpec } from './Geometry.tsx';
+import Geometry3D, { type Geom3DSpec } from './Geometry3D.tsx';
+import Numberline, { type NumberlineSpec } from './Numberline.tsx';
+import StatsChart, { type ChartSpec } from './StatsChart.tsx';
+import Interactive from './Interactive.tsx';
+import PromotionCard from './PromotionCard.tsx';
+import type { InteractiveSpec } from '../data/interactive-samples';
+import { ensureKatex } from '../lib/mathish';
+import { tryParseTable } from '../lib/markdown';
+import { runSympyLocal, prewarmPyodide } from '../lib/pyodide-client';
+
+type ChatModalState =
+  | { kind: 'plot' | 'svg'; spec?: PlotSpec; svg?: string }
+  | { kind: 'geom'; geomSpec: GeomSpec }
+  | { kind: 'geom3d'; geom3dSpec: Geom3DSpec }
+  | { kind: 'numberline'; numberlineSpec: NumberlineSpec }
+  | { kind: 'chart'; chartSpec: ChartSpec }
+  | { kind: 'interactive'; interactiveSpec: InteractiveSpec };
 
 type ChatMessage = {
   role: 'user' | 'assistant';
@@ -62,6 +82,13 @@ function renderMarkdown(text: string): string {
       const paras = tok.split(/\n{2,}/);
       for (const para of paras) {
         if (!para.trim()) continue;
+        // 표 detect — escape + inline은 셀 단위로 적용. 표가 paragraph 전체를
+        // 차지하는 경우에만 매칭 (혼합 텍스트는 null 반환 → 기존 처리).
+        const tableHtml = tryParseTable(para, (cell) => inline(escape(cell)));
+        if (tableHtml) {
+          parts.push(tableHtml);
+          continue;
+        }
         const escaped = escape(para);
         // Re-instate inline markdown after escape — but escape made angle brackets safe;
         // inline regex only touches *, _, ` so it's still safe.
@@ -72,75 +99,329 @@ function renderMarkdown(text: string): string {
   return parts.join('');
 }
 
-// KaTeX rendering: process $...$ and $$...$$ in the rendered HTML after markdown.
-// Returns HTML with KaTeX spans inserted. Loads katex from CDN on demand.
-declare global {
-  interface Window {
-    katex?: {
-      renderToString: (tex: string, opts?: { displayMode?: boolean; throwOnError?: boolean }) => string;
+// Split a message body into a list of segments. ```plot``` and ```svg```
+// fenced blocks become "graph" segments; everything else stays as a "md"
+// (markdown) segment. Order preserved.
+export type PromoteSpec = {
+  to: 'unknown' | 'learning' | 'proficient' | 'mastered';
+  reason?: string;
+  // 선택: LLM이 명시한 추가 증거 path (problem md, mistake md 등).
+  evidence?: string[];
+};
+
+type Segment =
+  | { type: 'md'; content: string }
+  | { type: 'graph'; kind: 'plot' | 'svg'; spec?: PlotSpec; svg?: string; raw: string }
+  | { type: 'geom'; spec: GeomSpec; raw: string }
+  | { type: 'geom3d'; spec: Geom3DSpec; raw: string }
+  | { type: 'numberline'; spec: NumberlineSpec; raw: string }
+  | { type: 'chart'; spec: ChartSpec; raw: string }
+  | { type: 'interactive'; spec: InteractiveSpec; raw: string }
+  | { type: 'promote'; spec: PromoteSpec; raw: string }
+  | { type: 'error'; kind: string; message: string; body: string };
+
+export function parseGraphSegments(text: string): Segment[] {
+  const out: Segment[] = [];
+  const re = /```(plot|svg|geometry3d|geometry|numberline|chart|interactive|promote)\n?([\s\S]*?)```/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) out.push({ type: 'md', content: text.slice(last, m.index) });
+    const kind = m[1];
+    const body = m[2].trim();
+    // Surface JSON parse failures with a visible error segment instead of
+    // silently falling back to raw markdown — otherwise the user just sees
+    // a code block dump with no hint that the LLM emitted broken JSON.
+    // LLM 이 string literal 안에 raw newline·tab 박는 케이스 (특히 interactive 의 scope) 자동 escape.
+    // " ... " 사이의 \n\r\t 를 \\n\\r\\t 로. backslash 는 이미 escape 된 거 보존.
+    const sanitizeJSON = (s: string): string =>
+      s.replace(/"((?:[^"\\]|\\.)*)"/g, (m, inner: string) => {
+        const fixed = inner
+          .replace(/\r\n/g, '\\n')
+          .replace(/\n/g, '\\n')
+          .replace(/\r/g, '\\n')
+          .replace(/\t/g, '\\t');
+        return `"${fixed}"`;
+      });
+    const tryParseJSON = <T,>(make: (spec: T) => Segment): void => {
+      try { out.push(make(JSON.parse(body) as T)); return; }
+      catch { /* 1차 실패 — sanitize 후 재시도 */ }
+      try { out.push(make(JSON.parse(sanitizeJSON(body)) as T)); }
+      catch (e) {
+        out.push({
+          type: 'error', kind,
+          message: (e as Error).message ?? 'JSON parse failed',
+          body,
+        });
+      }
     };
+    if (kind === 'plot') {
+      tryParseJSON<PlotSpec>((spec) => ({ type: 'graph', kind, spec, raw: m![0] }));
+    } else if (kind === 'geometry') {
+      tryParseJSON<GeomSpec>((spec) => ({ type: 'geom', spec, raw: m![0] }));
+    } else if (kind === 'geometry3d') {
+      tryParseJSON<Geom3DSpec>((spec) => ({ type: 'geom3d', spec, raw: m![0] }));
+    } else if (kind === 'numberline') {
+      tryParseJSON<NumberlineSpec>((spec) => ({ type: 'numberline', spec, raw: m![0] }));
+    } else if (kind === 'chart') {
+      tryParseJSON<ChartSpec>((spec) => ({ type: 'chart', spec, raw: m![0] }));
+    } else if (kind === 'interactive') {
+      tryParseJSON<InteractiveSpec>((spec) => ({ type: 'interactive', spec, raw: m![0] }));
+    } else if (kind === 'promote') {
+      tryParseJSON<PromoteSpec>((spec) => ({ type: 'promote', spec, raw: m![0] }));
+    } else {
+      out.push({ type: 'graph', kind: 'svg', svg: body, raw: m[0] });
+    }
+    last = m.index + m[0].length;
   }
+  if (last < text.length) out.push({ type: 'md', content: text.slice(last) });
+  return out.length > 0 ? out : [{ type: 'md', content: text }];
 }
 
-async function ensureKatex(): Promise<typeof window.katex | null> {
-  if (typeof window === 'undefined') return null;
-  if (window.katex) return window.katex;
-  // Try dynamic import from same JS bundle — KaTeX is already a dep
-  try {
-    const mod = await import('katex');
-    window.katex = mod.default ?? mod;
-    return window.katex;
-  } catch {
-    return null;
-  }
+// KaTeX rendering: process $...$ and $$...$$ in the rendered HTML after markdown.
+// Loader/cache lives in `lib/mathish` so all graphic components share one
+// KaTeX instance.
+type KatexImpl = {
+  renderToString: (tex: string, opts?: { displayMode?: boolean; throwOnError?: boolean }) => string;
+};
+
+// Haiku 같은 작은 모델이 `$...$` 마커를 까먹고 부등식·절댓값·LaTeX 명령어를
+// raw로 출력해도 화면이 깨지지 않도록 escape된 `&lt;`/`&gt;`/`&amp;le;` 등을
+// 수학 문맥에서만 KaTeX로 복원. HTML 태그(예: `&lt;div&gt;`)와 헷갈리지
+// 않도록 양옆에 수학 토큰이 있을 때만 적용.
+//
+// MATH_TOKEN: 단일 식별자/숫자/연산자, LaTeX 백슬래시 명령어(`\frac`, `\quad`),
+// 절댓값 `|`, 괄호. 이 토큰들이 공백으로 이어진 run을 매칭.
+const MATH_TOKEN = String.raw`(?:[A-Za-z0-9\-+*/^=,.]+|\\[A-Za-z]+(?:\{[^}]*\})*|\||\(|\)|\{|\})`;
+const ENTITY_OP = String.raw`(?:&lt;|&gt;|&le;|&ge;|&amp;le;|&amp;ge;)=?`;
+// 줄 안 부등호 chain: `a < b < c < ...` 모두 한 번에 변환.
+// left → (op left)+ 구조로 chain 캡처. KaTeX가 chain 그대로 받아서 잘 렌더.
+const INEQUALITY_RUN = new RegExp(
+  `(${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)(\\s*${ENTITY_OP}\\s*${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)+`,
+  'g',
+);
+const ENTITY_TO_LATEX: Record<string, string> = {
+  '&lt;': '<', '&gt;': '>',
+  '&lt;=': '\\le', '&gt;=': '\\ge',
+  '&le;': '\\le', '&ge;': '\\ge',
+  '&amp;le;': '\\le', '&amp;ge;': '\\ge',
+};
+
+// raw `\command` 단독 (또는 sequence)를 KaTeX로. 부등호 없이도 `\quad`, `\frac{a}{b}`
+// 같이 명령어만 raw로 흘러 들어온 경우 처리. 한국어/일반 텍스트와 섞이면
+// 명령어 토큰 직접 주변만 wrap.
+const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+[A-Za-z0-9\-+*/^=.,()|\\{}]+)*)/g;
+
+function decodeEntities(s: string): string {
+  return s
+    .replace(/&amp;(le|ge)=?;/g, (_, k) => k === 'le' ? '\\le' : '\\ge')
+    .replace(/&le;=?/g, '\\le')
+    .replace(/&ge;=?/g, '\\ge')
+    .replace(/&lt;=/g, '\\le')
+    .replace(/&gt;=/g, '\\ge')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
 }
 
-function applyKatex(html: string, katex: NonNullable<typeof window.katex>): string {
-  // Display $$...$$
-  html = html.replace(/\$\$([^$]+?)\$\$/g, (_, tex) => {
-    try {
-      return katex.renderToString(tex, { displayMode: true, throwOnError: false });
-    } catch {
-      return _;
-    }
+function recoverBareMath(html: string, katex: KatexImpl): string {
+  // ① 부등호 chain
+  html = html.replace(INEQUALITY_RUN, (full) => {
+    if (/[<>]/.test(full)) return full; // 실제 raw 태그 끼이면 건드리지 않음
+    const tex = decodeEntities(full);
+    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true }); }
+    catch { return full; }
   });
-  // Inline $...$
-  html = html.replace(/\$([^\n$]+?)\$/g, (_, tex) => {
-    try {
-      return katex.renderToString(tex, { displayMode: false, throwOnError: false });
-    } catch {
-      return _;
-    }
+  // ② raw `\command` 토큰 — 부등호 없이도 KaTeX로 시도. `\command` 가 KaTeX에
+  // 모르는 명령어면 throw → 원본 반환.
+  html = html.replace(LATEX_CMD_RUN, (full) => {
+    // 이미 KaTeX SVG로 변환된 영역(<span class="katex">) 안은 건드리지 않음.
+    // 단순 휴리스틱: full 안에 `<` 가 있으면 skip (HTML 태그 영역).
+    if (/[<>]/.test(full)) return full;
+    const tex = decodeEntities(full).trim();
+    if (tex.length < 2) return full;
+    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true }); }
+    catch { return full; }
   });
+  // ENTITY_TO_LATEX는 future-proof로 유지 (현재는 decodeEntities로 통합).
+  void ENTITY_TO_LATEX;
   return html;
 }
 
-function Message({ msg, onPromote, busy }: { msg: ChatMessage; onPromote?: () => void; busy?: boolean }) {
-  const [html, setHtml] = useState<string>('');
+function applyKatex(html: string, katex: KatexImpl): string {
+  // throwOnError: true 가 핵심 — false면 KaTeX가 파싱 실패 시 빨간색(#cc0000)
+  // error HTML을 부분 출력해 DOM에 raw `<span style="color:#cc0000">5 &gt; 3</span>`
+  // 같은 잔재가 들어간다 (실제 LLM이 그런 HTML을 출력한 게 아니라 KaTeX의 errorColor).
+  // true로 두면 fail 시 throw → catch → 원본 `$...$` 텍스트가 그대로 보임 (안전).
+  //
+  // tex 안에 `&lt;`/`&gt;` 같은 escape된 entity가 들어오면 KaTeX는 이해 못함.
+  // decode 후 KaTeX 호출.
+  html = html.replace(/\$\$([^$]+?)\$\$/g, (_, tex) => {
+    try {
+      return katex.renderToString(decodeEntities(tex), { displayMode: true, throwOnError: true });
+    } catch {
+      return _;
+    }
+  });
+  html = html.replace(/\$([^\n$]+?)\$/g, (_, tex) => {
+    try {
+      return katex.renderToString(decodeEntities(tex), { displayMode: false, throwOnError: true });
+    } catch {
+      return _;
+    }
+  });
+  // Fallback: LLM이 `$...$`를 까먹은 raw 부등식 복원.
+  html = recoverBareMath(html, katex);
+  return html;
+}
+
+// Visible fallback when an LLM-emitted fenced block has invalid JSON.
+// Without this, parse failures silently render the raw fence as a code
+// block and the user has no signal that they should re-prompt.
+export function ErrorSegment({ kind, message, body }: { kind: string; message: string; body: string }) {
+  return (
+    <div className="my-2 rounded-lg border border-rose-500/40 bg-rose-500/10 p-2.5 text-xs">
+      <div className="flex items-baseline gap-2 text-rose-300 font-medium">
+        <span>⚠</span>
+        <span>{`\`${kind}\` 블록 JSON 파싱 실패`}</span>
+      </div>
+      <pre className="mt-1 text-rose-200/80 whitespace-pre-wrap break-words">{message}</pre>
+      <details className="mt-1">
+        <summary className="cursor-pointer text-rose-400/70 hover:text-rose-300 text-[10px] uppercase tracking-wider">
+          원문 보기
+        </summary>
+        <pre className="mt-1 p-1.5 rounded bg-zinc-950/80 text-zinc-400 whitespace-pre-wrap break-words font-mono text-[10px] max-h-40 overflow-auto">{body}</pre>
+      </details>
+    </div>
+  );
+}
+
+function MdSegment({ content }: { content: string }) {
+  // 동기 markdown 처리 (escape + inline + 표). 이걸 첫 paint 시점에 바로 표시해서
+  // KaTeX 모듈 import 완료 전에 raw content가 DOM에 들어가는 사고를 막는다.
+  // (이전: `html || content` 가 fallback이라 LLM이 raw `<span>` 같은 HTML을
+  //  emit하면 그대로 해석되어 XSS 위험 + 화면 깨짐).
+  const baseHtml = useMemo(() => renderMarkdown(content), [content]);
+  const [html, setHtml] = useState<string>(baseHtml);
   useEffect(() => {
+    // content 변경 시 stale KaTeX-적용본을 베이스로 즉시 교체.
+    setHtml(baseHtml);
     let cancelled = false;
     (async () => {
       const k = await ensureKatex();
-      let rendered = renderMarkdown(msg.content);
-      if (k) rendered = applyKatex(rendered, k);
-      if (!cancelled) setHtml(rendered);
+      if (k && !cancelled) setHtml(applyKatex(baseHtml, k));
     })();
     return () => { cancelled = true; };
-  }, [msg.content]);
+  }, [baseHtml]);
+  return <div className="prose-chat" dangerouslySetInnerHTML={{ __html: html }} />;
+}
 
+function Message({ msg, onPromote, busy, slug, collection, isStreaming }: {
+  msg: ChatMessage; onPromote?: () => void; busy?: boolean;
+  slug: string; collection: 'concepts' | 'problems' | 'dashboard';
+  isStreaming?: boolean;
+}) {
+  // 자동 계산 결과 inject 된 user message 는 내부 protocol — 사용자에겐 chip 만 표시.
   const isUser = msg.role === 'user';
+  if (isUser && msg.content.startsWith('[자동 계산 결과 — 검증 실패]')) {
+    return (
+      <div className="flex flex-col items-end">
+        <div className="text-[10px] px-2 py-1 rounded-full bg-amber-700/30 text-amber-300 border border-amber-700/50">
+          ⚠ 검증 재계산
+        </div>
+      </div>
+    );
+  }
+  if (isUser && msg.content.startsWith('[자동 계산 결과]')) {
+    return (
+      <div className="flex flex-col items-end">
+        <div className="text-[10px] px-2 py-1 rounded-full bg-zinc-700/40 text-zinc-400 border border-zinc-600">
+          ⚙ 정확한 좌표 계산 완료
+        </div>
+      </div>
+    );
+  }
+  if (isUser && msg.content.startsWith('[시각 검증]')) {
+    return (
+      <div className="flex flex-col items-end">
+        <div className="text-[10px] px-2 py-1 rounded-full bg-zinc-700/40 text-zinc-400 border border-zinc-600">
+          🔍 도형 검증 중…
+        </div>
+      </div>
+    );
+  }
+  if (!isUser && msg.content.trim() === '[검증 통과]') {
+    return (
+      <div className="flex flex-col items-start">
+        <div className="text-[10px] px-2 py-1 rounded-full bg-emerald-700/30 text-emerald-300 border border-emerald-700/50">
+          ✓ 도형 검증 완료
+        </div>
+      </div>
+    );
+  }
+  const segments = parseGraphSegments(msg.content);
+  const [modal, setModal] = useState<ChatModalState | null>(null);
   return (
     <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
       <div
-        className={`max-w-[92%] rounded-xl px-3.5 py-2 text-sm leading-relaxed
+        className={`max-w-[92%] rounded-xl px-3.5 py-2 text-sm leading-relaxed space-y-2
           ${isUser
             ? 'bg-indigo-500/10 border border-indigo-500/30 text-zinc-100'
             : 'bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] text-zinc-100'}`}
       >
-        <div
-          className="prose-chat"
-          dangerouslySetInnerHTML={{ __html: html || msg.content }}
-        />
+        {segments.map((s, i) => {
+          if (s.type === 'md') return <MdSegment key={i} content={s.content} />;
+          // Streaming 중 partial JSON parse 실패는 silent — 완성되면 정상 segment 로 바뀜.
+          // 사용자에게 "실패" 처럼 보이는 일시 오류를 숨김.
+          if (s.type === 'error') {
+            if (isStreaming) return null;
+            return <ErrorSegment key={i} kind={s.kind} message={s.message} body={s.body} />;
+          }
+          if (s.type === 'geom') {
+            return <Geometry key={i} spec={s.spec}
+                             onOpen={() => setModal({ kind: 'geom', geomSpec: s.spec })} />;
+          }
+          if (s.type === 'geom3d') {
+            return <Geometry3D key={i} spec={s.spec}
+                               onOpen={() => {
+                                 setModal({ kind: 'geom3d', geom3dSpec: s.spec });
+                                 window.dispatchEvent(new CustomEvent('math-study:geom3d-modal', { detail: { open: true } }));
+                               }} />;
+          }
+          if (s.type === 'numberline') {
+            return <Numberline key={i} spec={s.spec}
+                               onOpen={() => setModal({ kind: 'numberline', numberlineSpec: s.spec })} />;
+          }
+          if (s.type === 'chart') {
+            return <StatsChart key={i} spec={s.spec}
+                               onOpen={() => setModal({ kind: 'chart', chartSpec: s.spec })} />;
+          }
+          if (s.type === 'interactive') {
+            return <Interactive key={i} spec={s.spec}
+                                onOpen={() => setModal({ kind: 'interactive', interactiveSpec: s.spec })} />;
+          }
+          if (s.type === 'promote') {
+            // mastery 승급 카드는 concept 페이지에서만 의미 있음. 다른 collection에선
+            // skip (ErrorSegment 안내).
+            if (collection !== 'concepts') {
+              return <ErrorSegment key={i} kind="promote"
+                       message="mastery 승급은 concept 페이지에서만 적용 가능합니다."
+                       body={s.raw} />;
+            }
+            return <PromotionCard key={i} slug={slug}
+                                  to={s.spec.to} reason={s.spec.reason}
+                                  evidence={s.spec.evidence} />;
+          }
+          return (
+            <Graph
+              key={i}
+              kind={s.kind}
+              spec={s.spec}
+              svg={s.svg}
+              onOpen={() => setModal({ kind: s.kind, spec: s.spec, svg: s.svg })}
+            />
+          );
+        })}
       </div>
       {!isUser && onPromote && (
         <button
@@ -154,6 +435,23 @@ function Message({ msg, onPromote, busy }: { msg: ChatMessage; onPromote?: () =>
         >
           {msg.promoted ? `✓ wiki에 저장됨 (${msg.promoted.path.split('/').pop()})` : '↑ wiki에 영구화 (Promote)'}
         </button>
+      )}
+      {modal && (
+        <GraphModal
+          open
+          kind={modal.kind}
+          spec={modal.kind === 'plot' || modal.kind === 'svg' ? modal.spec : undefined}
+          svg={modal.kind === 'svg' ? modal.svg : undefined}
+          geomSpec={modal.kind === 'geom' ? modal.geomSpec : undefined}
+          geom3dSpec={modal.kind === 'geom3d' ? modal.geom3dSpec : undefined}
+          numberlineSpec={modal.kind === 'numberline' ? modal.numberlineSpec : undefined}
+          chartSpec={modal.kind === 'chart' ? modal.chartSpec : undefined}
+          interactiveSpec={modal.kind === 'interactive' ? modal.interactiveSpec : undefined}
+          onClose={() => {
+            setModal(null);
+            window.dispatchEvent(new CustomEvent('math-study:geom3d-modal', { detail: { open: false } }));
+          }}
+        />
       )}
     </div>
   );
@@ -173,13 +471,67 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
   const [streaming, setStreaming] = useState(false);
   const [model, setModel] = useState<'haiku' | 'sonnet'>('haiku');
   const [error, setError] = useState<string | null>(null);
+  const [mathOpen, setMathOpen] = useState(false);
+  const [mathLatex, setMathLatex] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
+  // Insert "$...$" at the current cursor position in the textarea
+  const insertMath = useCallback((latex: string) => {
+    if (!latex.trim()) return;
+    const ta = textareaRef.current;
+    const wrapped = `$${latex}$`;
+    if (!ta) { setInput((prev) => prev + (prev.endsWith(' ') ? '' : ' ') + wrapped); return; }
+    const start = ta.selectionStart ?? input.length;
+    const end = ta.selectionEnd ?? input.length;
+    const before = input.slice(0, start);
+    const after = input.slice(end);
+    const sep = before && !before.endsWith(' ') ? ' ' : '';
+    const next = before + sep + wrapped + after;
+    setInput(next);
+    setMathLatex('');
+    setMathOpen(false);
+    // restore focus + cursor after the inserted block
+    setTimeout(() => {
+      ta.focus();
+      const pos = (before + sep + wrapped).length;
+      ta.setSelectionRange(pos, pos);
+    }, 0);
+  }, [input]);
+
   const storageKey = `${collection}:${slug}`;
+
+  // Interactive 컴포넌트가 '📋 현재 상태 채팅에 첨부' 버튼을 누르면
+  // window CustomEvent로 한 줄 메타가 날아온다. textarea 앞에 prepend.
+  // 같은 종류의 메타가 이미 있으면 교체 (누적되지 않게).
+  useEffect(() => {
+    const onInsert = (e: Event) => {
+      const detail = (e as CustomEvent<{ text: string }>).detail;
+      if (!detail?.text) return;
+      setInput((prev) => {
+        // 기존 [현재 상태] ... 라인이 맨 앞에 있으면 떼어내고 새 것으로 교체.
+        const cleaned = prev.replace(/^\[현재 상태\][^\n]*\n?/, '');
+        return `${detail.text}\n${cleaned}`;
+      });
+      // focus + cursor를 본문 끝으로
+      setTimeout(() => {
+        const ta = textareaRef.current;
+        if (ta) {
+          ta.focus();
+          const len = ta.value.length;
+          ta.setSelectionRange(len, len);
+        }
+      }, 0);
+    };
+    window.addEventListener('math-study:chat-insert', onInsert as EventListener);
+    return () => window.removeEventListener('math-study:chat-insert', onInsert as EventListener);
+  }, []);
 
   // Load history on mount
   useEffect(() => {
     setMessages(loadHistory(storageKey));
+    // pyodide worker 선제 로드 — 첫 sympy 호출 시 대기 ↓
+    prewarmPyodide();
   }, [storageKey]);
 
   // Persist on every change
@@ -202,62 +554,197 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
 
     const newUserMsg: ChatMessage = { role: 'user', content: text };
     const placeholder: ChatMessage = { role: 'assistant', content: '' };
-    const all = [...messages.slice(-MAX_HISTORY_TURNS), newUserMsg];
     setMessages([...messages, newUserMsg, placeholder]);
     setStreaming(true);
 
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, collection, messages: all, model }),
-      });
-      if (!res.ok || !res.body) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buf = '';
+    // python block 을 채팅창에 노출하지 않기 위한 display sanitize.
+    // python block 만 있는 응답은 chip 으로, geometry 등 다른 본문이 있으면 그대로.
+    const sanitizeForDisplay = (s: string) => {
+      const stripped = s.replace(/```(?:python|py|sympy)[\s\S]*?```/g, '').trim();
+      const hadPy = stripped !== s.trim();
+      if (hadPy && stripped.length < 50) return '⚙ 정확한 좌표 계산 중…';
+      return stripped;
+    };
+
+    // raw conversation (LLM 호출용, python/geometry 등 원본 보존)
+    const rawHistory: ChatMessage[] = [...messages.slice(-MAX_HISTORY_TURNS), newUserMsg];
+    // 표시 누적 — setMessages 인자로 직접 전달.
+    let displayMessages: ChatMessage[] = [...messages, newUserMsg, placeholder];
+
+    // 한 turn LLM 호출 + 마지막 placeholder 자리에 streaming 갱신. raw 텍스트 반환.
+    const callLLM = async (history: ChatMessage[]): Promise<string> => {
       let assistantText = '';
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        buf += decoder.decode(value, { stream: true });
-        // SSE: events separated by blank lines
-        let idx;
-        while ((idx = buf.indexOf('\n\n')) !== -1) {
-          const block = buf.slice(0, idx);
-          buf = buf.slice(idx + 2);
-          let event = 'message';
-          let data = '';
-          for (const line of block.split('\n')) {
-            if (line.startsWith('event: ')) event = line.slice(7).trim();
-            else if (line.startsWith('data: ')) data = line.slice(6);
-          }
-          if (!data) continue;
-          try {
-            const parsed = JSON.parse(data);
-            if (event === 'delta' && typeof parsed.text === 'string') {
-              assistantText += parsed.text;
-              setMessages((curr) => {
-                const next = [...curr];
-                next[next.length - 1] = { role: 'assistant', content: assistantText };
-                return next;
-              });
-            } else if (event === 'error') {
-              setError(parsed.message ?? 'unknown error');
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slug, collection, messages: history.slice(-MAX_HISTORY_TURNS), model }),
+        });
+        if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+          let idx;
+          while ((idx = buf.indexOf('\n\n')) !== -1) {
+            const block = buf.slice(0, idx); buf = buf.slice(idx + 2);
+            let event = 'message', data = '';
+            for (const line of block.split('\n')) {
+              if (line.startsWith('event: ')) event = line.slice(7).trim();
+              else if (line.startsWith('data: ')) data = line.slice(6);
             }
-          } catch {
-            // ignore bad chunk
+            if (!data) continue;
+            try {
+              const parsed = JSON.parse(data);
+              if (event === 'delta' && typeof parsed.text === 'string') {
+                assistantText += parsed.text;
+                const display = sanitizeForDisplay(assistantText);
+                setMessages((curr) => {
+                  const next = [...curr];
+                  next[next.length - 1] = { role: 'assistant', content: display };
+                  return next;
+                });
+              } else if (event === 'error') {
+                setError(parsed.message ?? 'unknown error');
+              }
+            } catch { /* ignore */ }
           }
         }
+      } catch (e) {
+        setError((e as Error).message);
       }
-    } catch (e) {
-      setError((e as Error).message);
+      return assistantText;
+    };
+
+    // sympy 실행 (pyodide → server fallback)
+    const runSympy = async (code: string): Promise<{ ok: boolean; stdout: string }> => {
+      let sjson: { ok: boolean; stdout?: string; stderr?: string; error?: string; exit_code?: number };
+      try { sjson = await runSympyLocal(code); }
+      catch {
+        const sres = await fetch('/api/sympy', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
+        sjson = await sres.json();
+      }
+      const stdout = (sjson.ok ? (sjson.stdout || '(no output)') : (sjson.stderr || sjson.error || `exit ${sjson.exit_code}`)).trim();
+      return { ok: !!sjson.ok, stdout };
+    };
+
+    // 새 user/assistant pair 를 displayMessages + setMessages 동시 갱신
+    const appendTurn = (userMsg: ChatMessage) => {
+      const ph: ChatMessage = { role: 'assistant', content: '' };
+      displayMessages = [...displayMessages, userMsg, ph];
+      setMessages(displayMessages);
+      rawHistory.push(userMsg);
+    };
+    const finalizeAssistant = (rawText: string, display?: string) => {
+      const shown = display ?? sanitizeForDisplay(rawText);
+      displayMessages = [...displayMessages.slice(0, -1), { role: 'assistant', content: shown }];
+      setMessages(displayMessages);
+      rawHistory.push({ role: 'assistant', content: rawText });
+    };
+
+    try {
+      // ===== Turn 1: 초기 응답 =====
+      let assistantText = await callLLM(rawHistory);
+      finalizeAssistant(assistantText);
+
+      // ===== Sympy auto-exec + VERIFY FAIL retry (1회 cap) =====
+      const extractPy = (s: string) => s.match(/```(?:python|py|sympy)\s*\n([\s\S]*?)```/);
+      const isFollowupInput = text.startsWith('[자동 계산 결과]') || text.startsWith('[시각 검증]');
+      const MAX_SYMPY_ROUNDS = 3;
+      let rounds = 0;
+      const hasGeometry = (s: string) => /```geometry(3d)?\s*\n/.test(s);
+      while (!isFollowupInput && rounds < MAX_SYMPY_ROUNDS) {
+        if (hasGeometry(assistantText)) break; // 도형 emit 완료
+        const m = extractPy(assistantText);
+        if (!m) break; // python 도 도형도 없음 → 종료
+        const sympyResult = await runSympy(m[1]);
+        const failed = /\[VERIFY FAIL\]/.test(sympyResult.stdout);
+        const prefix = failed ? '[자동 계산 결과 — 검증 실패]' : '[자동 계산 결과]';
+        const tail = failed
+          ? '\n\n위 출력에 `[VERIFY FAIL]` 항목이 있다. **이전 가정/수식이 어디서 틀렸는지** 찾아 단계 정의를 다시 읽고 sympy 코드를 다시 작성해 재계산하라. 추정 금지.'
+          : '\n\n위 출력의 각 점 좌표를 **글자 그대로 ```geometry``` spec 의 `at: [x, y]` 에 옮겨 적어라**. 추정·반올림 금지. 이번 응답에서 바로 geometry block 작성, 대기 메시지 금지, 기술 용어 노출 금지.';
+        const injected = `${prefix}\n\`\`\`\n${sympyResult.stdout}\n\`\`\`${tail}`;
+        appendTurn({ role: 'user', content: injected });
+        assistantText = await callLLM(rawHistory);
+        finalizeAssistant(assistantText);
+        rounds++;
+      }
+
+      // ===== Visual self-check (problems 페이지 + geometry emit 시 1회) =====
+      const geomMatch = assistantText.match(/```geometry(3d)?\s*\n([\s\S]*?)```/);
+      if (collection === 'problems' && geomMatch && !isFollowupInput) {
+        const is3d = !!geomMatch[1];
+        const specStr = geomMatch[2].trim();
+        const checkMsg = [
+          '[시각 검증]',
+          '방금 emit 한 geometry spec:',
+          '```json',
+          specStr,
+          '```',
+          '',
+          '원본 문제 도형 이미지를 Read 로 다시 본 뒤, **명백한 좌표 오류**만',
+          '잡는다. 기본 응답은 `[검증 통과]`. 다시 그리는 비용이 크므로',
+          '왠만하면 통과시킬 것.',
+          '',
+          '**다시 그릴 사유 — 다음 둘 중 하나만 해당하면 emit**:',
+          '1. 점의 *사분면 부호*가 거꾸로 (이미지에선 P 가 왼쪽 위인데 spec',
+          '   에선 오른쪽 위 같은 거울 대칭) → 좌표 derive 자체가 틀린 신호.',
+          '   **3D 의 경우 정육면체 ABCD-EFGH 의 ABCD 가 위 면인지 / EFGH 가 위',
+          '   인지 — 위/아래 면 거꾸로 박혔는지 반드시 확인.**',
+          '2. 곡선 *종류*가 틀림 (이미지가 타원인데 spec 은 원, 쌍곡선인데 포물선)',
+          ...(is3d ? [
+            '3. **3D 한정: 문제에 없는 보조 segment 가 잔뜩 추가**',
+            '   (예: 정육면체의 모든 vertex 쌍 사이 대각선). 문제에서 명시된 핵심',
+            '   선분(FM, NP, 정사영 등)만 남기고 나머지 segment3d 는 제거.',
+            '4. **3D 한정: parametricSurface / plane 이 spec 에 들어가 있음** → 완전 제거.',
+          ] : []),
+          '',
+          '**무시할 차이 — 무조건 통과**:',
+          '- 라벨 위치(NE/SW 등) 미세 차이',
+          '- 색·선 두께·fill opacity 차이',
+          '- **이미지가 반원(호)인데 spec 이 전체 원(circle)** — Geometry 컴포넌트가',
+          '  호(arc)를 지원하지 않으므로 의도된 한계. 다시 안 그림.',
+          '- 호를 polygon vertex 로 근사 (Geometry 컴포넌트 한계)',
+          '- segment 가 여러 조각으로 나뉘어 그려진 경우 (시각적으로 같음)',
+          '- 점의 상대 위치가 대략 비슷하면 (정확한 픽셀 위치 X)',
+          '- 보조선·음영 일부 누락 (핵심 점·곡선만 맞으면 OK)',
+          '- 점 라벨 1-2개 누락 또는 추가',
+          '- **각도 호(∠θ 표시), 영역 label(S₁/S₂/f(θ)/g(θ)), 텍스트 주석 누락** — 보조 표시는 통과',
+          '- 선이 연장선이 아닌 segment 로 표현되는 등 표현 방식 차이',
+          '',
+          '판정:',
+          '- 다시 그릴 사유 없음 → 정확히 `[검증 통과]` 한 줄만 응답 (다른 텍스트 X)',
+          '- 부호/종류 오류 있음 → 1줄로 어긋난 항목 짚고 수정된 ```geometry``` emit',
+        ].join('\n');
+        appendTurn({ role: 'user', content: checkMsg });
+        const checkText = await callLLM(rawHistory);
+        finalizeAssistant(checkText, checkText);
+
+        // visual check 결과에 python 블록이 있으면 → 좌표 자체가 틀렸다는 신호.
+        // 재계산 cycle 한 번 더 (sympy 실행 → [자동 계산 결과] inject → geometry 재emit)
+        const recalcPy = checkText.match(/```(?:python|py|sympy)\s*\n([\s\S]*?)```/);
+        if (recalcPy) {
+          const sympyResult = await runSympy(recalcPy[1]);
+          const failed = /\[VERIFY FAIL\]/.test(sympyResult.stdout);
+          const prefix = failed ? '[자동 계산 결과 — 검증 실패]' : '[자동 계산 결과]';
+          const tail = failed
+            ? '\n\n위 [VERIFY FAIL] 항목을 확인하고 단계 정의를 다시 읽고 좌표를 재계산.'
+            : '\n\n위 출력의 점 좌표를 글자 그대로 ```geometry``` spec 에 옮겨 재emit.';
+          const injected = `${prefix}\n\`\`\`\n${sympyResult.stdout}\n\`\`\`${tail}`;
+          appendTurn({ role: 'user', content: injected });
+          const finalText = await callLLM(rawHistory);
+          finalizeAssistant(finalText);
+        }
+      }
     } finally {
       setStreaming(false);
     }
-  }, [input, streaming, messages, slug, model]);
+  }, [input, streaming, messages, slug, model, collection]);
 
   const promote = useCallback(
     async (idx: number) => {
@@ -344,6 +831,9 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
               key={i}
               msg={m}
               busy={streaming}
+              isStreaming={streaming && i === messages.length - 1}
+              slug={slug}
+              collection={collection}
               onPromote={m.role === 'assistant' && m.content.trim().length > 0 && !streaming ? () => promote(i) : undefined}
             />
           ))
@@ -362,6 +852,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
 
       <div className="flex gap-2 items-end">
         <textarea
+          ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -375,14 +866,53 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
           disabled={streaming}
           className="flex-1 bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded-lg px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400 resize-none"
         />
-        <button
-          onClick={send}
-          disabled={streaming || !input.trim()}
-          className="px-4 py-2 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {streaming ? '전송 중…' : '전송'}
-        </button>
+        <div className="flex flex-col gap-1.5">
+          <button
+            onClick={() => setMathOpen((v) => !v)}
+            disabled={streaming}
+            title="수식 입력 (LaTeX)"
+            className={`px-2.5 py-1.5 rounded border text-xs transition ${
+              mathOpen
+                ? 'bg-indigo-500/30 border-indigo-500/50 text-indigo-200'
+                : 'bg-[color:var(--color-surface-2)] border-[color:var(--color-border)] text-zinc-400 hover:text-zinc-100'
+            }`}
+          >∑ 수식</button>
+          <button
+            onClick={send}
+            disabled={streaming || !input.trim()}
+            className="px-4 py-2 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {streaming ? '전송 중…' : '전송'}
+          </button>
+        </div>
       </div>
+
+      {mathOpen && (
+        <div className="mt-2 rounded-lg border border-indigo-500/30 bg-indigo-500/5 p-2 space-y-2">
+          <p className="text-[11px] text-zinc-400 px-1">
+            수식 입력 후 <kbd className="px-1 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[10px]">Enter</kbd>로 메시지에 삽입 ($수식$ 형식). 가상 키보드는 우측 하단 아이콘에서.
+          </p>
+          <MathField
+            value={mathLatex}
+            onChange={setMathLatex}
+            onSubmit={() => insertMath(mathLatex)}
+            placeholder="예: \\frac{1}{2} 또는 \\int_0^1 x^2 dx"
+            autoFocus
+            rows={2}
+          />
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => { setMathLatex(''); setMathOpen(false); }}
+              className="text-[11px] text-zinc-500 hover:text-zinc-200 px-2 py-1"
+            >취소</button>
+            <button
+              onClick={() => insertMath(mathLatex)}
+              disabled={!mathLatex.trim()}
+              className="text-[11px] px-2.5 py-1 rounded bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/30 disabled:opacity-40"
+            >메시지에 삽입</button>
+          </div>
+        </div>
+      )}
 
       <style>{`
         .prose-chat p { margin: 0.25rem 0; }
@@ -407,6 +937,22 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
         .prose-chat pre code { background: none; padding: 0; }
         .prose-chat .katex { color: inherit; }
         .prose-chat .katex-display { margin: 0.5rem 0; }
+        .prose-chat table {
+          border-collapse: collapse;
+          margin: 0.6em 0;
+          font-size: 0.92em;
+          width: auto;
+        }
+        .prose-chat th, .prose-chat td {
+          border: 1px solid var(--color-border);
+          padding: 0.3em 0.6em;
+          text-align: left;
+          vertical-align: top;
+        }
+        .prose-chat th {
+          background: var(--color-surface-2);
+          font-weight: 600;
+        }
       `}</style>
     </section>
   );

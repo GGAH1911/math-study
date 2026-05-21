@@ -1,0 +1,15 @@
+{
+  "text_sha": "3bb78623a095",
+  "meta": {
+    "searchable_text": "함수 $f$가 그림과 같을 때, $f^{-1}(5)$의 값은? (단, $f^{-1}$는 $f$의 역함수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수"
+    ],
+    "exam_intent": "역함수의 정의를 이용한 함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

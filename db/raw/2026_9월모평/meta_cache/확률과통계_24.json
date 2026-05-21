@@ -1,0 +1,16 @@
+{
+  "text_sha": "cc6ef9d33839",
+  "meta": {
+    "searchable_text": "두 사건 A, B에 대하여 P(A ∪ B) = 5/6, P(A ∩ B) = 1/4일 때, P(A)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률의_덧셈_정리",
+      "합사건과_교집합의_확률"
+    ],
+    "exam_intent": "합사건·교집합의 확률 조건으로부터 사건의 확률을 구하는 역산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

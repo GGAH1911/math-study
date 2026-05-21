@@ -1,0 +1,17 @@
+{
+  "text_sha": "bd4adfcc72b6",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1이고 $\\lim_{x \\to 0} \\frac{f(x)}{x^2} = 1$인 사차함수 $f(x)$와 실수 전체의 집합에서 연속인 함수 $g(x)$가 모든 실수 $x$에 대하여 $(g(x))^2 \\geq f(x)$를 만족시킨다. 함수 $g$가 다음 조건을 만족시킬 때, 구하는 값의 합은? (가) $\\lim_{x \\to 2} \\frac{g(x) - f(x)}{(x-2)^2}$의 값은 존재하지 않는다. (나) $x \\geq a$인 모든 실수 $x$에 대하여 $(g(x))^2 = f(x)$를 만족시키는 실수 $a$의 최솟값은 4이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "연속성",
+      "부등식과_함수"
+    ],
+    "exam_intent": "극한·연속성·부등식 조건으로 사차함수와 연속함수를 결정하는 종합 사고력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "871a93c73815",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 속도가 3차식이다. 점 P의 시각 $t=0$에서의 위치는 0이고, $t \\geq 0$에서 점 P의 위치가 0이 되는 순간은 한 번뿐이다. $s(8)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "속도와_위치의_관계",
+      "조건_해석"
+    ],
+    "exam_intent": "속도함수 적분으로 위치함수를 구하고 조건으로 미지수 결정한 후 특정값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

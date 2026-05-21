@@ -1,0 +1,17 @@
+{
+  "text_sha": "f0f8e339d4b6",
+  "meta": {
+    "searchable_text": "첫째항이 1인 등차수열 $\\{a_n\\}$에 대하여 $a_5 - a_3 = 8$일 때, $a_2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차",
+      "일반항"
+    ],
+    "exam_intent": "등차수열의 일반항 공식을 이용해 공차를 구하고 특정 항을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

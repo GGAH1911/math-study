@@ -1,0 +1,17 @@
+{
+  "text_sha": "00d7deb7c0c4",
+  "meta": {
+    "searchable_text": "좌표공간의 점 $A(3, 0, 2)$를 평면에 대하여 대칭이동한 점을 $B$라 하자. 점 $C(0, 4, 2)$에 대하여 선분 $BC$의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "좌표공간",
+      "점의_대칭이동",
+      "거리_공식"
+    ],
+    "exam_intent": "3차원 공간에서 좌표를 이용한 점의 대칭과 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

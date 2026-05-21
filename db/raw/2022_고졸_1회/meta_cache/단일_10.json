@@ -1,0 +1,16 @@
+{
+  "text_sha": "58db4443252a",
+  "meta": {
+    "searchable_text": "이차부등식 $(x-3)(x-1) \\le 0$의 해는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "인수분해"
+    ],
+    "exam_intent": "인수분해로 이차부등식 해 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

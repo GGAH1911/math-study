@@ -1,0 +1,16 @@
+{
+  "text_sha": "8addab8cafa2",
+  "meta": {
+    "searchable_text": "두 양수 $a$, $b$에 대하여 함수 $f(x) = a \\cos\\frac{x}{4} - b$가 $0 \\le x \\le \\pi$에서 최댓값 4, 최솟값을 가질 때, $b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "코사인_함수",
+      "최댓값과_최솟값"
+    ],
+    "exam_intent": "최댓값·최솟값 조건으로부터 삼각함수 계수 역산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

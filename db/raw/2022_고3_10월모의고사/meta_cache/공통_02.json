@@ -1,0 +1,15 @@
+{
+  "text_sha": "3ba75792921c",
+  "meta": {
+    "searchable_text": "$\\int_0^2 (3x^2 + 3x + 2)dx$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "정적분"
+    ],
+    "exam_intent": "다항식의 정적분 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

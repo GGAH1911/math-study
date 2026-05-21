@@ -1,0 +1,16 @@
+{
+  "text_sha": "0ea1687f16fc",
+  "meta": {
+    "searchable_text": "등식이 어떤 변수에 대한 항등식일 때 상수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "계수_비교"
+    ],
+    "exam_intent": "항등식의 정의를 이용하여 상수를 구하는 기본 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

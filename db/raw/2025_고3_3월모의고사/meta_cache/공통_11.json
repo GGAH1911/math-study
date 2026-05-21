@@ -1,0 +1,17 @@
+{
+  "text_sha": "a08822f3434a",
+  "meta": {
+    "searchable_text": "0이 아닌 실수 $a$에 대하여 함수 $f(x) = x^3 - 3ax^2 + 4a$라 하자. 함수 $f(x)$의 극솟값이 $-40$일 때, $a^2 + b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "도함수",
+      "3차함수"
+    ],
+    "exam_intent": "도함수로 극값을 구하고 조건을 이용해 미지수를 결정하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

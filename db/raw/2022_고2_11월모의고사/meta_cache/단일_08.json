@@ -1,0 +1,16 @@
+{
+  "text_sha": "dbf1b4c54f56",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\log_a(3x+1) - 2$가 닫힌 구간 $[0, 5]$에서 최솟값 $\\frac{3}{2}$를 가질 때, 상수 $a$의 값은? (단, $a$는 1이 아닌 양의 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그함수의_성질",
+      "로그방정식"
+    ],
+    "exam_intent": "로그함수의 최솟값 조건으로부터 밑을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

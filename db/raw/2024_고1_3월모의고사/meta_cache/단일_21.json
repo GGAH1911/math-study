@@ -1,0 +1,18 @@
+{
+  "text_sha": "9cc929a8c1cb",
+  "meta": {
+    "searchable_text": "이등변삼각형 $ABC$에서 $AB = AC = 25$, $BC = 40$이다. 점 $C$에서 직선 $AB$에 내린 수선의 발을 $D$라 하자. 삼각형 $ABC$의 내심을 $I$, 삼각형 $DBC$의 내심을 $J$라 할 때, 선분 $IJ$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "내심",
+      "이등변삼각형",
+      "수선의_발",
+      "거리_계산"
+    ],
+    "exam_intent": "삼각형의 내심 성질을 이용한 좌표 및 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

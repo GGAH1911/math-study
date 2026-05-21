@@ -1,0 +1,17 @@
+{
+  "text_sha": "824559821218",
+  "meta": {
+    "searchable_text": "좌표평면 위의 원점 O에서 x축의 양의 방향으로 시초선을 잡을 때, 원점 O와 점 P를 지나는 동경 $OP$가 나타내는 각의 크기를 $\\theta$, 선분 $OP$의 길이를 $r$이라 하자. $\\sin\\theta - 2\\cos\\theta = 1$일 때, $r$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_정의",
+      "동경과_각도",
+      "좌표평면"
+    ],
+    "exam_intent": "삼각함수의 정의와 주어진 조건식으로부터 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

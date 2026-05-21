@@ -1,0 +1,17 @@
+{
+  "text_sha": "ea1a3209a6a7",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f$와 실수 $a$에 대하여 방정식 $f'(x)=0$이 닫힌구간 $[-2, a]$에서 갖는 실근의 개수를 $g(a)$라 할 때, 함수 $g$는 다음 조건을 만족시킨다. (가) 모든 실수 $a$에 대하여 $\\lim_{a \\to \\infty} g(a) + \\lim_{a \\to -\\infty} g(a) \\leq 2$이다. (나) $g(1)=4, g(2)=2, g(0)=1$. 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "삼차함수의_극값",
+      "도함수와_실근",
+      "함수의_극한과_연속성"
+    ],
+    "exam_intent": "도함수를 통한 실근 개수 변화와 함수 조건 종합 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

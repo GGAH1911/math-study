@@ -1,0 +1,17 @@
+{
+  "text_sha": "fbfc4032c4dc",
+  "meta": {
+    "searchable_text": "두 초점이 $F(c, 0)$, $F'(-c, 0)$인 쌍곡선이 있다. 이 쌍곡선 위의 제1사분면의 점 $P$에 대하여 직선 $PF$는 쌍곡선의 한 점근선과 평행하다. 직선 $PF$가 $y$축과 만나는 점을 $Q$라 할 때, $\\angle QPF' = \\frac{\\pi}{2}$, $QF = 20$이다. 삼각형 $OPQ$의 넓이를 구하시오. (단, $O$는 원점이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선",
+      "초점"
+    ],
+    "exam_intent": "쌍곡선의 점근선과 직각 조건을 이용한 도형의 넓이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

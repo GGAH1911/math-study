@@ -1,0 +1,17 @@
+{
+  "text_sha": "4eb1cac168e4",
+  "meta": {
+    "searchable_text": "좌표공간의 점 $A(-8, -6, -2)$를 $xy$평면에 대하여 대칭이동한 점을 $B$라 할 때, 선분 $AB$의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간좌표계",
+      "점의_대칭이동",
+      "거리"
+    ],
+    "exam_intent": "공간좌표에서 평면 대칭이동 후 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

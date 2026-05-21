@@ -1,0 +1,17 @@
+{
+  "text_sha": "608c1ed18975",
+  "meta": {
+    "searchable_text": "π/2 < θ < π인 θ에 대하여 cos θ = -√3/3일 때, tan θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_정의",
+      "피타고라스_항등식",
+      "각도_범위와_부호"
+    ],
+    "exam_intent": "주어진 코사인 값과 각도 범위에서 탄젠트 값을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

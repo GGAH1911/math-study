@@ -1,0 +1,17 @@
+{
+  "text_sha": "a691882c4e56",
+  "meta": {
+    "searchable_text": "함수의 그래프가 그림과 같다. $\\lim_{x \\to 1} f(x)$와 $\\lim_{x \\to 2} f(x)$의 연산값을 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "함수의_극한",
+      "그래프_해석",
+      "극한의_성질"
+    ],
+    "exam_intent": "함수의 그래프에서 특정 점의 극한값을 파악하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

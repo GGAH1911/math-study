@@ -1,0 +1,15 @@
+{
+  "text_sha": "73b971109815",
+  "meta": {
+    "searchable_text": "다항식 $P(x)$를 $(x-1)$로 나눈 나머지는 3이고, $(x-2)$로 나눈 나머지는 5이다. 다항식 $P(x)$를 $(x-1)(x-2)$로 나눈 나머지를 $R(x)$라 할 때, $R(3)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리"
+    ],
+    "exam_intent": "나머지정리와 연립 조건을 이용하여 나머지 다항식의 함숫값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

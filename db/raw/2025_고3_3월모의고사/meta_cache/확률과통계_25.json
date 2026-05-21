@@ -1,0 +1,16 @@
+{
+  "text_sha": "fb440a31d004",
+  "meta": {
+    "searchable_text": "네 개의 서로 다른 문자 중에서 중복을 허락하여 4개를 선택해 일렬로 나열할 때, 특정 문자가 적어도 한 번 이상 나타나는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복순열",
+      "여사건"
+    ],
+    "exam_intent": "중복순열과 여사건을 활용한 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

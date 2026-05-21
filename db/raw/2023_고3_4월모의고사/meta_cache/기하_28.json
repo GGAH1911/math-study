@@ -1,0 +1,18 @@
+{
+  "text_sha": "447716b63066",
+  "meta": {
+    "searchable_text": "초점이 $F$인 포물선 $y^2=4px$ 위의 점 중 제1사분면에 있는 점 $P$가 있다. 선분 $PF$를 지름으로 하는 원을 $\\Gamma$라 할 때, 원 $\\Gamma$는 포물선과 서로 다른 두 점에서 만난다. 원 $\\Gamma$가 포물선과 만나는 점 중 $P$가 아닌 점을 $Q$, 점 $P$에서 포물선의 준선에 내린 수선의 발을 $H$라 하자. $\\angle QHP = \\alpha$, $\\angle HPQ = \\beta$라 할 때, $\\frac{\\tan\\alpha}{\\tan\\beta} = 3$이다. $\\frac{PQ}{QH}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_정의와_성질",
+      "원의_성질",
+      "삼각함수의_활용",
+      "좌표기하"
+    ],
+    "exam_intent": "포물선과 원의 교점에서 각도 조건을 이용한 거리의 비 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

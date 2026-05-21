@@ -1,0 +1,17 @@
+{
+  "text_sha": "d20f6a913eb5",
+  "meta": {
+    "searchable_text": "두 양수 $a, b$에 대하여 확률변수 $X$는 정규분포 $N(12, a^2)$, 확률변수 $Y$는 정규분포 $N(2b, 16b^2)$을 따르고, $P(X \\leq 0) = P(Y \\leq 0)$을 만족한다. $a$의 최솟값을 주는 $b$의 값을 $b_1$이라 할 때, $b = b_1$인 경우 $P(X \\geq 1) = P(Y \\leq c)$를 만족하는 상수 $c$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "정규분포",
+      "표준화",
+      "확률의_성질"
+    ],
+    "exam_intent": "정규분포 표준화를 통한 확률 조건 해석 및 최적화 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

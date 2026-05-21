@@ -1,0 +1,16 @@
+{
+  "text_sha": "6fda1ec95f73",
+  "meta": {
+    "searchable_text": "삼차방정식 $ax^3 + ax^2 + 2x + 1 = 0$의 한 근이 1일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "근",
+      "삼차방정식"
+    ],
+    "exam_intent": "주어진 근을 방정식에 대입하여 미지 계수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

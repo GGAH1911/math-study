@@ -1,0 +1,16 @@
+{
+  "text_sha": "af7c6544f228",
+  "meta": {
+    "searchable_text": "좌표평면 위에 세 점 $A(0, 4)$, $B(4, 4)$, $C(4, 0)$이 있다. 세 선분 $OA$, $AB$, $BC$를 내분하는 점을 각각 $P$, $Q$, $R$이라 하고, 세 점 $P$, $Q$, $R$을 지나는 원을 $\\gamma$라 할 때, 보기에서 옳은 것만을 있는 대로 고른 것은? (단, $O$는 원점이다.) [4점]",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "거리"
+    ],
+    "exam_intent": "내분점을 통해 원의 성질을 이해하고 조건에 따른 거리 계산 능력을 평가한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

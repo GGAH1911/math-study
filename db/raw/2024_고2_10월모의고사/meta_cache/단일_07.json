@@ -1,0 +1,17 @@
+{
+  "text_sha": "1fe1442f4462",
+  "meta": {
+    "searchable_text": "함수가 특정 점에서 미분가능할 때, 상수의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "미분가능성",
+      "연속성",
+      "도함수"
+    ],
+    "exam_intent": "구간별 정의 함수의 미분가능 조건으로 상수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

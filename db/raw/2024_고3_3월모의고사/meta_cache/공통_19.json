@@ -1,0 +1,17 @@
+{
+  "text_sha": "d31ae3fc1c3d",
+  "meta": {
+    "searchable_text": "실수 $a$에 대하여 함수 $f(x) = ax^3 + bx^2 + 5ax + 2$이다. 곡선 $y = f(x)$ 위의 두 점 $A(0, 2)$, $B(2, 2)$에서의 접선을 각각 $\\ell$, $m$이라 하자. 두 직선 $\\ell$, $m$이 만나는 점이 $x$축 위에 있을 때, $60a^2b$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "접선의_방정식",
+      "교점_조건"
+    ],
+    "exam_intent": "접선의 교점 조건으로 미지수를 결정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

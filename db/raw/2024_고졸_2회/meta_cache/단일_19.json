@@ -1,0 +1,16 @@
+{
+  "text_sha": "f054733818ab",
+  "meta": {
+    "searchable_text": "4종류의 카드가 각각 한 장씩 있다. 이 중에서 서로 다른 3장의 카드를 택하여 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "경우의_수_기초"
+    ],
+    "exam_intent": "순열을 이용하여 4개 중 3개를 선택해 배열하는 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

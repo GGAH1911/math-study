@@ -1,0 +1,17 @@
+{
+  "text_sha": "5e058647d60b",
+  "meta": {
+    "searchable_text": "좌표평면에서 점 $(1, 0)$을 중심으로 하고 반지름의 길이가 6인 원을 $C$라 하자. 포물선 $y^2=4px$ 위의 점 $(p, 2p)$에서의 접선이 원 $C$와 만나도록 하는 자연수 $p$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_접선",
+      "원의_방정식",
+      "판별식"
+    ],
+    "exam_intent": "포물선 위의 점에서의 접선이 원과 만나는 조건을 판별식으로 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

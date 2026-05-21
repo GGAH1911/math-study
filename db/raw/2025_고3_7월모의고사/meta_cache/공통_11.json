@@ -1,0 +1,17 @@
+{
+  "text_sha": "1d6a5d6d3167",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 두 점 P, Q의 시각 $t \\geq 0$에서의 위치가 각각 $\\frac{1}{3}t^3 - \\frac{5}{2}t^2 + 10t$, $\\frac{2}{3}t^3 - \\frac{5}{2}t^2 + 2t + 10$이다. 두 점 P, Q 사이의 거리가 최소가 되는 순간 점 P의 가속도는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "가속도",
+      "거리_최소화"
+    ],
+    "exam_intent": "거리 최소 조건 도출 및 가속도 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

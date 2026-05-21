@@ -1,0 +1,17 @@
+{
+  "text_sha": "e157af7295ff",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$가 모든 정수 $n$에 대하여 $2n-8 \\le \\frac{f(n)-n^2}{n-2} \\le 4n-2n-14$를 만족시킬 때, $f'(1)+3f(1)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "삼차함수",
+      "도함수",
+      "부등식_조건"
+    ],
+    "exam_intent": "부등식 조건으로부터 삼차함수 계수를 결정하고 도함수값을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

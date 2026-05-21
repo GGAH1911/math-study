@@ -1,0 +1,17 @@
+{
+  "text_sha": "d0cc8a218e0a",
+  "meta": {
+    "searchable_text": "다항함수 $f$가 $\\lim_{x \\to \\infty} \\frac{f(x)}{x^2} = 2$, $\\lim_{x \\to 1} \\frac{f(x)-1}{x-3} = 3$을 만족시킬 때, $f(3)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "다항함수",
+      "함수값_계산"
+    ],
+    "exam_intent": "극한 조건으로부터 다항함수를 결정하고 함수값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

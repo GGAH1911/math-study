@@ -1,0 +1,18 @@
+{
+  "text_sha": "cc78a239e9f7",
+  "meta": {
+    "searchable_text": "반지름 4, 중심각 120°인 부채꼴 OAB와 중심 C, 반지름 1인 원이 한 평면 위에 있다. 벡터 $\\vec{OA}$, $\\vec{OB}$, $\\vec{OC}$가 내적 조건을 만족할 때, 호 AB 위를 움직이는 점 P와 원 위를 움직이는 점 Q에 대하여 $\\vec{OP} \\cdot \\vec{PQ}$의 최댓값 M과 최솟값 m을 구해 $M - m$을 계산하는 문제.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "원_위의_점",
+      "극값",
+      "벡터의_기하학적_응용"
+    ],
+    "exam_intent": "동시에 움직이는 두 점에 대한 벡터식의 최댓값과 최솟값을 내적으로 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

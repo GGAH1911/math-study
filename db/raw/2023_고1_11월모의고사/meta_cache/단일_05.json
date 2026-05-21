@@ -1,0 +1,16 @@
+{
+  "text_sha": "e43b254102b9",
+  "meta": {
+    "searchable_text": "좌표평면에서 원 $(x-a)^2 + (y-4)^2 = 16$을 $x$축의 방향으로 2만큼, $y$축의 방향으로 5만큼 평행이동한 도형이 원 $(x-8)^2 + (y-9)^2 = 16$일 때, $a$의 값은? (단, $a, b$는 상수)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "평행이동"
+    ],
+    "exam_intent": "원의 평행이동 후 중심 좌표 변화 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "b886da3d12c4",
+  "meta": {
+    "searchable_text": "그림과 같이 두 상수 $a$, $b$에 대하여 함수 $f(x) = a\\sin(bx)$ ($0 \\le x \\le 2\\pi/5$)의 그래프와 직선 $y = 5$가 만나는 점을 $x$좌표가 작은 것부터 차례로 A, B, C라 하자. $\\dfrac{BC}{AB} = 6$이고 삼각형 AOB의 넓이가 $\\dfrac{\\sqrt{2}}{15}$일 때, $a^2 + b^2$의 값은? (단, $a > 4$, $b > 0$이고, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "도형의_성질"
+    ],
+    "exam_intent": "삼각함수 그래프와 직선의 교점 관계, 도형의 넓이 조건으로 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

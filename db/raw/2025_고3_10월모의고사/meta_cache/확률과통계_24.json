@@ -1,0 +1,16 @@
+{
+  "text_sha": "02eb77b749e1",
+  "meta": {
+    "searchable_text": "두 사건 $A$와 $B$는 서로 배반사건이고, $P(A \\cup B) = \\frac{1}{3}$, $P(A) = \\frac{1}{2}$일 때, $P(B)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "배반사건",
+      "확률의_덧셈정리"
+    ],
+    "exam_intent": "배반사건의 성질을 이용한 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "18b51df6cd7e",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 - 3x - 1 = 0$의 두 근 중 양수인 근을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근의_공식"
+    ],
+    "exam_intent": "근의 공식을 적용하여 양수인 근을 정확히 구하는 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

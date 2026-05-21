@@ -1,0 +1,17 @@
+{
+  "text_sha": "2552c9a41c0c",
+  "meta": {
+    "searchable_text": "자연수 $a$에 대하여 $x$에 대한 연립부등식을 만족시키는 자연수 $x$의 개수가 2가 되도록 하는 모든 $a$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "이차부등식",
+      "자연수_해의_개수"
+    ],
+    "exam_intent": "매개변수 조건과 자연수 해 개수 제약으로부터 매개변수 값을 결정하고 합을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

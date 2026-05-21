@@ -1,0 +1,17 @@
+{
+  "text_sha": "38600d8034cc",
+  "meta": {
+    "searchable_text": "2≤n≤10인 자연수 n에 대하여 n²-n+1의 n제곱근 중 실수인 것의 개수를 f(n), n²-8n+12의 n제곱근 중 실수인 것의 개수를 g(n)이라 하자. f(n)=2g(n)을 만족시키는 모든 자연수 n의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "거듭제곱근의_성질",
+      "실근의_개수_판정",
+      "부호와_홀짝성에_따른_경우_분석"
+    ],
+    "exam_intent": "거듭제곱근의 실수 개수를 판정하고 조건을 만족하는 자연수를 찾는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

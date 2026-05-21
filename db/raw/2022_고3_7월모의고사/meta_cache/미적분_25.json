@@ -1,0 +1,16 @@
+{
+  "text_sha": "e3e380a6ef47",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타낸 곡선 $x = 2\\ln t + 3$, $y = 6t + 1$에서 $t=1$일 때, $\\frac{dy}{dx}$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_미분",
+      "미분계수"
+    ],
+    "exam_intent": "매개변수로 표현된 곡선의 접선 기울기를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

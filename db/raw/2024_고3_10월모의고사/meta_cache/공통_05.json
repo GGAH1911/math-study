@@ -1,0 +1,17 @@
+{
+  "text_sha": "3a34815bc2e4",
+  "meta": {
+    "searchable_text": "함수가 실수 전체의 집합에서 연속이 되도록 하는 모든 상수의 값의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "연속성",
+      "극한",
+      "구간별_함수"
+    ],
+    "exam_intent": "구간별 함수의 연속 조건으로부터 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

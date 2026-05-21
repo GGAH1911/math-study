@@ -1,0 +1,18 @@
+{
+  "text_sha": "948f5a7c36ce",
+  "meta": {
+    "searchable_text": "중심 O, 반지름 8인 부채꼴 OAB(중심각 명시)에서 호 AB 위의 점 C, 점 B에서 OC에 내린 수선의 발 D, 선분 BD·CD와 호 BC에 동시에 접하는 원 γ. O에서 원 γ의 접선 중 C를 지나지 않는 직선과 호 AB의 교점 E. $\\cos(\\angle COE) = \\frac{p}{q}$, $\\sin(\\angle AOE) = \\frac{r}{s}$ (유리수)일 때, $200 \\times$ [값]을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원의_접선",
+      "부채꼴과_호",
+      "삼각함수",
+      "수선의_발"
+    ],
+    "exam_intent": "원의 접선 조건과 삼각함수를 이용한 복잡 기하 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

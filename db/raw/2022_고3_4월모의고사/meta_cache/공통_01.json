@@ -1,0 +1,17 @@
+{
+  "text_sha": "3cf0ebc820dd",
+  "meta": {
+    "searchable_text": "$$\\frac{\\sqrt{27} \\times \\sqrt{8} \\times \\sqrt{3}}{\\sqrt{2}}$$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "제곱근의_성질",
+      "무리수의_계산",
+      "근호_안_곱셈_및_나눗셈"
+    ],
+    "exam_intent": "제곱근의 성질을 이용한 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

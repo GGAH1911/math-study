@@ -1,0 +1,16 @@
+{
+  "text_sha": "0843bb911cb5",
+  "meta": {
+    "searchable_text": "두 자연수 $a, b$에 대하여 두 함수 $f(x), g(x)$를 정의할 때, 함수가 실수 전체의 집합에서 미분가능하도록 하는 모든 순서쌍 $(a, b)$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "분할함수의_미분가능성",
+      "연속성_조건"
+    ],
+    "exam_intent": "분할함수의 미분가능 조건을 이용하여 자연수 순서쌍 개수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

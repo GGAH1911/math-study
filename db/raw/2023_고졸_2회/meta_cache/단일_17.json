@@ -1,0 +1,16 @@
+{
+  "text_sha": "e86c7cc5c44a",
+  "meta": {
+    "searchable_text": "함수 $f$의 그래프가 주어진 그림과 같을 때, 역함수 $f^{-1}$의 함수값은? (단, $f^{-1}$는 $f$의 역함수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "함수의_그래프_해석"
+    ],
+    "exam_intent": "주어진 함수의 그래프로부터 역함수의 함수값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "5aeb1a32973e",
+  "meta": {
+    "searchable_text": "두 상수 $a$ (단, $a > 0$)와 $b$에 대하여 실수 전체의 집합에서 연속인 함수 $f(x)$가 주어진 두 조건을 만족할 때, $a \\times b$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "삼각함수",
+      "부등식",
+      "정적분"
+    ],
+    "exam_intent": "도함수 조건과 적분 조건으로부터 상수값을 결정하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

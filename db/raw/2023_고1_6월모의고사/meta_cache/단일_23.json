@@ -1,0 +1,17 @@
+{
+  "text_sha": "d49f5a98522c",
+  "meta": {
+    "searchable_text": "$x$에 대한 부등식 $ax^2 + bx + c \\leq 0$의 해가 $2 \\leq x \\leq 4$일 때, $a$의 값을 구하시오. (단, $a$, $b$는 상수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "부등식의_해",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차부등식의 해의 범위로부터 이차항 계수를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

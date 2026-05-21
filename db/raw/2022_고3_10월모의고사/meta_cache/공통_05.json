@@ -1,0 +1,16 @@
+{
+  "text_sha": "6e49d58967a2",
+  "meta": {
+    "searchable_text": "0 < θ < π인 θ에 대하여 sin θ = 2cos θ일 때, cos θ · tan θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_정의",
+      "삼각항등식"
+    ],
+    "exam_intent": "삼각함수 기본 관계식을 이용한 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

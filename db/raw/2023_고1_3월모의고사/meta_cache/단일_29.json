@@ -1,0 +1,17 @@
+{
+  "text_sha": "b518efb260fd",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 ABC의 선분 AC 위의 점 D와 직선 BD 위의 점 E에 대하여 DE : DA : DB = 1 : 2 : 4이다. 점 D를 지나고 직선 BC와 평행한 직선이 두 선분 AB, EC와 만나는 점을 각각 F, G라 할 때, FD = 2, DG = 1이고 삼각형 AFD의 넓이가 3이다. 삼각형 EDG의 넓이가 $\\frac{b}{a}$일 때, $a+b$의 값을 구하시오. (단, 점 E는 삼각형 ABC의 외부에 있고, $a$와 $b$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "닮음",
+      "평행선과_비례",
+      "삼각형_넓이"
+    ],
+    "exam_intent": "평행선과 닮음을 이용한 삼각형 넓이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

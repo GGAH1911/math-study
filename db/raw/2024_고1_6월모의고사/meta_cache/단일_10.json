@@ -1,0 +1,17 @@
+{
+  "text_sha": "a477e44798db",
+  "meta": {
+    "searchable_text": "사차방정식의 서로 다른 두 실근을 $\\alpha$, $\\beta$라 할 때, 특정값을 구하시오",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "사차방정식",
+      "실근",
+      "근과계수의관계"
+    ],
+    "exam_intent": "사차방정식의 근과 계수 관계를 이용하여 실근의 합 또는 곱 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

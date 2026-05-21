@@ -1,0 +1,17 @@
+{
+  "text_sha": "d5cac5ae6762",
+  "meta": {
+    "searchable_text": "공간에 선분 $AB$를 포함하는 평면 $\\alpha$가 있다. 평면 $\\alpha$ 위에 있지 않은 점 $C$에서 평면 $\\alpha$에 내린 수선의 발을 $H$라 할 때, 점 $H$가 다음 조건을 만족시킨다. (가) $\\angle AHB = 90°$ (나) $\\sin(\\angle CAH) \\cdot \\sin(\\angle ABH) = \\frac{\\sqrt{3}}{3}$ 평면 $ABC$와 평면 $\\alpha$가 이루는 예각의 크기를 $\\theta$라 할 때, $\\cos\\theta$의 값은? (단, 점 $H$는 선분 $AB$ 위에 있지 않다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "이면각",
+      "수직",
+      "삼각함수"
+    ],
+    "exam_intent": "공간도형의 수직 조건과 삼각함수를 이용한 이면각 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

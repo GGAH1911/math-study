@@ -1,0 +1,16 @@
+{
+  "text_sha": "2f45ca986cd1",
+  "meta": {
+    "searchable_text": "$2^1 \\times 8$을 $2^3$으로 나눈 값은? (원본: $\\frac{2^1 \\times 8}{2^3}$로 추정)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_법칙",
+      "거듭제곱의_나눗셈"
+    ],
+    "exam_intent": "지수 법칙을 이용한 기본 지수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

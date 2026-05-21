@@ -1,0 +1,16 @@
+{
+  "text_sha": "92f5d922b0f4",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차다항식 $f(x)$가 다음 조건을 만족할 때, $f(4)$의 값은? (가) $f(x)$를 $(x-1)$로 나누었을 때의 나머지는 1이다. (나) $f(x)$를 $(x-2)$로 나누었을 때의 나머지는 2이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "이차다항식"
+    ],
+    "exam_intent": "나머지정리를 이용하여 이차다항식의 계수를 결정하고 함숫값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

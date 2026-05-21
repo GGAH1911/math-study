@@ -1,0 +1,18 @@
+{
+  "text_sha": "9d0fc9874a5f",
+  "meta": {
+    "searchable_text": "평행사변형 ABCD가 있다. 점 A에서 선분 BD에 내린 수선의 발을 E라 하고, 직선 CE가 선분 AB와 만나는 점을 F라 하자. $\\cos\\angle AFC = \\frac{\\sqrt{10}}{10}$, $EC = 10$이고 삼각형 CDE의 외접원의 반지름의 길이가 $5\\sqrt{2}$일 때, 삼각형 AFE의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "외접원",
+      "평행사변형",
+      "삼각형_넓이",
+      "삼각비"
+    ],
+    "exam_intent": "외접원과 삼각비 조건으로부터 평행사변형 내 도형의 넓이를 구하는 종합력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "통합"
+  }
+}

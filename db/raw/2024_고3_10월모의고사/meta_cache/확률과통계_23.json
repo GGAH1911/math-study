@@ -1,0 +1,16 @@
+{
+  "text_sha": "1cf7ff175b19",
+  "meta": {
+    "searchable_text": "4개의 문자를 모두 일렬로 나열하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "동일원소_포함_순열"
+    ],
+    "exam_intent": "제약 조건이 있는 순열의 경우의 수를 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

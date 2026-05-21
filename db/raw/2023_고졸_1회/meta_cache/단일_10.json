@@ -1,0 +1,15 @@
+{
+  "text_sha": "3679a71ec522",
+  "meta": {
+    "searchable_text": "이차부등식 $(x+3)(x-2) \\geq 0$의 해는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식"
+    ],
+    "exam_intent": "이차부등식의 해를 인수분해로 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

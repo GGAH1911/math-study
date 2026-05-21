@@ -1,0 +1,15 @@
+{
+  "text_sha": "1e12c62b95e2",
+  "meta": {
+    "searchable_text": "두 함수 $f$, $g$가 그림과 같을 때, $(g \\circ f)(3)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수"
+    ],
+    "exam_intent": "두 함수의 합성과 함수값 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

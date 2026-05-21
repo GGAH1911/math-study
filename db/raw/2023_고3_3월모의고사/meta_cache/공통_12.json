@@ -1,0 +1,17 @@
+{
+  "text_sha": "efbe1190a8a2",
+  "meta": {
+    "searchable_text": "곡선 $y = x^2$과 기울기가 1인 직선이 서로 다른 두 점 A, B에서 만난다. 양의 실수 $a$에 대하여 선분 AB의 길이가 $2a$가 되도록 하는 직선의 y절편을 $c$라 할 때, $\\lim_{a \\to \\infty} \\frac{c}{a^2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "포물선과_직선의_교점",
+      "거리_공식",
+      "극한"
+    ],
+    "exam_intent": "거리 조건으로부터 매개변수 관계식 유도 및 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

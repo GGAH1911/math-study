@@ -1,0 +1,16 @@
+{
+  "text_sha": "08d2798941d5",
+  "meta": {
+    "searchable_text": "$\\log_3 7 \\times \\log_7 9$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_밑변환공식",
+      "로그_성질"
+    ],
+    "exam_intent": "로그의 밑변환 공식을 이용한 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

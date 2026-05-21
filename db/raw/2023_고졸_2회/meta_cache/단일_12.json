@@ -1,0 +1,17 @@
+{
+  "text_sha": "c52100945ae4",
+  "meta": {
+    "searchable_text": "직선 $l_2$에 수직이고, 점 $(4, 0)$을 지나는 직선의 방정식은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_기울기",
+      "수직선의_기울기_관계",
+      "직선의_방정식"
+    ],
+    "exam_intent": "수직인 두 직선의 기울기 관계와 직선의 방정식 공식 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

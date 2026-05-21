@@ -1,0 +1,16 @@
+{
+  "text_sha": "a6271d9968ae",
+  "meta": {
+    "searchable_text": "수열의 조건이 주어질 때 특정 값을 계산하는 문제 (텍스트 레이어 손상으로 원문 재구성 불가)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "일반항",
+      "합"
+    ],
+    "exam_intent": "수열의 일반항이나 부분합을 계산하는 기초 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

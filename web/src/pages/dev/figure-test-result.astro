@@ -1,0 +1,85 @@
+---
+export const prerender = false;
+import { readFileSync, existsSync } from 'node:fs';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Geometry from '../../components/Geometry.tsx';
+
+const path = '/tmp/test_figure_result.json';
+const result = existsSync(path) ? JSON.parse(readFileSync(path, 'utf-8')) : null;
+
+// 원본 PNG inline (base64) 비교용
+const pngPath = '/home/insung/Projects/math-study/db/raw/2022_9월모평/images/2022_9월모평_기하_28.png';
+const pngDataUrl = existsSync(pngPath)
+  ? `data:image/png;base64,${readFileSync(pngPath).toString('base64')}`
+  : '';
+
+// LLM final assistant 응답에서 ```geometry``` block 정리
+const finalText: string = result?.turn2 ?? '';
+const geoMatch = finalText.match(/```geometry\n([\s\S]*?)```/);
+const geoSpec = geoMatch ? JSON.parse(geoMatch[1]) : null;
+
+// LLM 응답 본문에서 ```geometry``` 블록을 제거한 markdown 텍스트
+const markdownText = finalText.replace(/```geometry\n[\s\S]*?```/g, '[여기에 도형 렌더링]');
+---
+<BaseLayout title="LLM 튜터 도형 테스트 결과">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">LLM 튜터 도형 테스트 결과</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        <code>/problems/2022_9월모평_기하_28</code> 페이지에서 "그래프 그려줘" 요청 →
+        LLM 튜터가 sympy 코드 emit → 백엔드 자동 실행 → 정확한 좌표로 도형 emit 한 결과.
+      </p>
+    </header>
+
+    {!result && <p class="text-rose-400">/tmp/test_figure_result.json 없음 — 먼저 테스트 실행 필요</p>}
+
+    {result && (
+      <>
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="card border border-zinc-700 rounded p-3">
+            <h3 class="text-xs uppercase tracking-wider text-zinc-500 mb-2">원본 PNG</h3>
+            {pngDataUrl && <img src={pngDataUrl} alt="problem" class="max-w-full bg-white rounded" />}
+          </div>
+          <div class="card border border-indigo-500/40 rounded p-3 bg-indigo-500/5">
+            <h3 class="text-xs uppercase tracking-wider text-indigo-300 mb-2">LLM 튜터가 emit 한 도형 (Geometry 컴포넌트 렌더)</h3>
+            {geoSpec && <Geometry client:load spec={geoSpec} />}
+            {!geoSpec && <p class="text-rose-400 text-sm">geometry block 없음</p>}
+          </div>
+        </section>
+
+        <section class="card border border-zinc-700 rounded p-4">
+          <h3 class="text-sm font-semibold mb-2">검증 결과</h3>
+          <ul class="text-sm space-y-1">
+            <li>타원: <span class={result.checks.has_ellipse ? "text-emerald-400" : "text-rose-400"}>{result.checks.has_ellipse ? "✓ 있음" : "✗ 없음"}</span></li>
+            <li>선 (line/segment) 개수: <b>{result.checks.line_count}</b> (요구: ≥3)</li>
+            <li>발견된 라벨: <code class="text-xs">{result.checks.labels.join(', ')}</code></li>
+            <li>누락 라벨: {result.checks.missing_labels.length === 0
+              ? <span class="text-emerald-400">없음 ✓</span>
+              : <span class="text-rose-400">{result.checks.missing_labels.join(', ')}</span>}</li>
+          </ul>
+        </section>
+
+        <section class="card border border-zinc-700 rounded p-4">
+          <h3 class="text-sm font-semibold mb-2">LLM 응답 본문 (도형 fence 제외)</h3>
+          <details>
+            <summary class="cursor-pointer text-xs text-zinc-500">turn 1 (sympy 코드 emit) — {result.turn1.length} chars</summary>
+            <pre class="text-xs mt-2 whitespace-pre-wrap bg-zinc-950 p-2 rounded max-h-[300px] overflow-auto">{result.turn1}</pre>
+          </details>
+          <details class="mt-2">
+            <summary class="cursor-pointer text-xs text-zinc-500">sympy 실행 결과 stdout</summary>
+            <pre class="text-xs mt-2 whitespace-pre-wrap bg-zinc-950 p-2 rounded max-h-[300px] overflow-auto">{result.sympy_stdout}</pre>
+          </details>
+          <details class="mt-2" open>
+            <summary class="cursor-pointer text-xs text-zinc-500">turn 2 (최종 응답 + geometry fence) — {result.turn2.length} chars</summary>
+            <pre class="text-xs mt-2 whitespace-pre-wrap bg-zinc-950 p-2 rounded max-h-[500px] overflow-auto">{markdownText}</pre>
+          </details>
+        </section>
+
+        <section class="card border border-zinc-700 rounded p-4">
+          <h3 class="text-sm font-semibold mb-2">Geometry spec JSON</h3>
+          <pre class="text-xs whitespace-pre-wrap bg-zinc-950 p-2 rounded max-h-[400px] overflow-auto">{JSON.stringify(geoSpec, null, 2)}</pre>
+        </section>
+      </>
+    )}
+  </div>
+</BaseLayout>

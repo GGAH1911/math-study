@@ -1,0 +1,17 @@
+{
+  "text_sha": "a3cc2869ee12",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 두 점 P, Q의 시각 $t$ ($t \\geq 0$)에서의 위치가 각각 $t^3 + t^2 + 6$, $2t^3 + 3t^2 + 7t + 2$이다. 두 점 P, Q의 위치가 같아지는 순간 두 점 P, Q의 가속도를 각각 $a$, $b$라 할 때, $a + b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "미분",
+      "가속도",
+      "함수의_방정식"
+    ],
+    "exam_intent": "위치 함수의 미분을 통해 가속도를 구하고 주어진 조건에서 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

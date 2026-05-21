@@ -1,0 +1,15 @@
+{
+  "text_sha": "358def8ad878",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\sin 4x$라 할 때, $0 \\leq x \\leq 16\\pi$에서 부등식 $\\sin 4x \\geq \\frac{1}{2}$을 만족시키는 모든 자연수 $x$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식과_부등식"
+    ],
+    "exam_intent": "삼각함수 부등식 풀이와 자연수 조건의 합 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

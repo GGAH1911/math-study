@@ -1,0 +1,16 @@
+{
+  "text_sha": "0cf812e4c8cc",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $x^2 + 2kx + 2k - 20 = 0$이 서로 다른 두 실근 $\\alpha, \\beta$를 가질 때, 근의 조건을 만족하는 모든 자연수 $k$의 개수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차방정식의 판별식과 근의 성질로 자연수 매개변수 범위 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,20 +1,102 @@
 ---
-export const prerender = true;
+// SSR (prerender=false) — mastery 승급 같은 frontmatter 변경이 즉시 페이지에
+// 반영되도록. Astro content collection은 내부 캐시가 있어 외부에서 file을
+// write해도 SSR 시 stale 값을 반환할 수 있으므로, mastery 같은 빠르게
+// 변하는 필드는 fs에서 직접 다시 읽어 override한다.
+export const prerender = false;
+import { readFileSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import RegenerateBodyButton from '../../components/RegenerateBodyButton.tsx';
+import NotesPanel from '../../components/NotesPanel.tsx';
 
-export async function getStaticPaths() {
-  const concepts = await getCollection('concepts');
-  return concepts.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+const slug = Astro.params.slug as string;
+const entry = await getEntry('concepts', slug);
+if (!entry) {
+  return new Response('Not found', { status: 404 });
+}
+const { Content } = await render(entry);
+const fm = { ...entry.data } as typeof entry.data;
+
+// content collection cache bypass — frontmatter의 동적 필드(mastery,
+// mastery_updated)를 디스크에서 직접 다시 읽어 override.
+const mdPath = resolve(process.cwd(), '..', 'docs', 'concepts', `${slug}.md`);
+if (existsSync(mdPath)) {
+  const raw = readFileSync(mdPath, 'utf-8');
+  const m1 = raw.match(/^mastery:\s*(\w+)/m);
+  if (m1) fm.mastery = m1[1] as typeof fm.mastery;
+  const m2 = raw.match(/^mastery_updated:\s*(\S+)/m);
+  if (m2) {
+    const d = new Date(m2[1]);
+    if (!isNaN(d.getTime())) fm.mastery_updated = d;
+  }
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
-const fm = entry.data;
-
 const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+const prettySlug = (s: string) => s.replace(/_/g, ' ');
+
+// 타입별 그루핑 — 노드 맵의 라벨/순서와 동일 (ConceptDAG.tsx).
+const TYPE_LABEL: Record<string, string> = {
+  unit: '단원', definition: '정의', theorem: '정리',
+  lemma: '보조정리', example: '예제',
+};
+const TYPE_ORDER: string[] = ['unit', 'definition', 'theorem', 'lemma', 'example'];
+
+// 모든 concept frontmatter를 한 번에 로드해 link slug → concept_type 매핑.
+const all = await getCollection('concepts');
+const typeBySlug = new Map<string, string>();
+for (const c of all) typeBySlug.set(c.id, c.data.concept_type ?? 'other');
+
+function groupByType(paths: string[]): { type: string; label: string; items: { slug: string; label: string }[] }[] {
+  const buckets: Record<string, { slug: string; label: string }[]> = {};
+  for (const p of paths) {
+    const slug = fmtPath(p);
+    const t = typeBySlug.get(slug) ?? 'other';
+    buckets[t] = buckets[t] ?? [];
+    buckets[t].push({ slug, label: prettySlug(slug) });
+  }
+  // 알려진 type 순서대로 + 그 외 type을 알파벳 순으로
+  const knownOrder = TYPE_ORDER.filter((t) => buckets[t]?.length);
+  const otherTypes = Object.keys(buckets).filter((t) => !TYPE_ORDER.includes(t)).sort();
+  return [...knownOrder, ...otherTypes].map((t) => ({
+    type: t,
+    label: TYPE_LABEL[t] ?? t,
+    items: buckets[t].sort((a, b) => a.label.localeCompare(b.label, 'ko')),
+  }));
+}
+
+const prereqGroups = groupByType(fm.prerequisites);
+const enablesGroups = groupByType(fm.enables);
+
+// "이 개념의 기출 문제" — predev로 빌드된 problems-by-concept 인덱스에서 로드.
+import problemIndex from '../../data/problems-by-concept.json';
+type ProblemBrief = {
+  slug: string; year: number | null; exam_type: string | null; session: string | null;
+  grade: string | null; subject: string | null; number: number | null; score: number | null;
+  killer_tier: string | null; format: string | null; has_image: boolean;
+};
+const linkedProblems: ProblemBrief[] = (problemIndex as any).byConcept?.[slug] ?? [];
+
+const TIER_LABEL: Record<string, { text: string; cls: string }> = {
+  killer: { text: '킬러', cls: 'bg-rose-500/20 text-rose-300 border-rose-500/40' },
+  high:   { text: 'high', cls: 'bg-amber-500/20 text-amber-300 border-amber-500/40' },
+  mid:    { text: 'mid',  cls: 'bg-sky-500/20 text-sky-300 border-sky-500/40' },
+  early:  { text: 'early', cls: 'bg-zinc-600/30 text-zinc-300 border-zinc-600' },
+};
+function tierBadge(t: string | null) {
+  return TIER_LABEL[t ?? ''] ?? { text: '기타', cls: 'bg-zinc-700/30 text-zinc-400 border-zinc-700' };
+}
+function problemLabel(p: ProblemBrief): string {
+  const yearShort = p.year ? String(p.year).slice(2) : '';
+  const subj = p.subject && p.subject !== '단일' && p.subject !== '공통' ? ` ${p.subject}` : '';
+  const session = p.session ? ` ${p.session}` : '';
+  const exam = p.exam_type ?? '';
+  const grade = p.grade && p.exam_type !== '수능' ? ` ${p.grade}` : '';
+  return `${yearShort}${grade}${session} ${exam}${subj} ${p.number ?? '?'}번`.trim();
+}
+const PREVIEW_COUNT = 8;
 ---
 <BaseLayout title={entry.id}>
   <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
@@ -41,40 +123,91 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
         </dl>
       </section>
 
-      {fm.prerequisites.length > 0 && (
+      {prereqGroups.length > 0 && (
         <section class="card">
           <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">선수 (prerequisites)</h3>
-          <ul class="space-y-1.5 text-sm">
-            {fm.prerequisites.map((p) => {
-              const slug = fmtPath(p);
-              return (
-                <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(slug)}`}>← {slug}</a></li>
-              );
-            })}
-          </ul>
+          <div class="space-y-3 text-sm">
+            {prereqGroups.map((g) => (
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-[color:var(--color-muted)] mb-1">{g.label}</div>
+                <ul class="space-y-1 pl-1">
+                  {g.items.map((it) => (
+                    <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(it.slug)}`}>← {it.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </section>
       )}
 
-      {fm.enables.length > 0 && (
+      {enablesGroups.length > 0 && (
         <section class="card">
           <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">enables</h3>
+          <div class="space-y-3 text-sm">
+            {enablesGroups.map((g) => (
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-[color:var(--color-muted)] mb-1">{g.label}</div>
+                <ul class="space-y-1 pl-1">
+                  {g.items.map((it) => (
+                    <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(it.slug)}`}>{it.label} →</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {linkedProblems.length > 0 && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">
+            {fm.concept_type === 'unit' ? `이 단원의 기출 (${linkedProblems.length})` : `이 개념의 기출 (${linkedProblems.length})`}
+          </h3>
           <ul class="space-y-1.5 text-sm">
-            {fm.enables.map((p) => {
-              const slug = fmtPath(p);
+            {linkedProblems.slice(0, PREVIEW_COUNT).map((p) => {
+              const t = tierBadge(p.killer_tier);
               return (
-                <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(slug)}`}>{slug} →</a></li>
+                <li class="flex items-center gap-2">
+                  <span class={`text-[10px] px-1.5 py-0.5 rounded border ${t.cls} shrink-0`}>{t.text}</span>
+                  <a class="text-[color:var(--color-accent)] hover:underline truncate flex-1" href={`/problems/${encodeURIComponent(p.slug)}`}>
+                    {problemLabel(p)}
+                  </a>
+                  {p.score && <span class="text-[10px] text-zinc-500 tabular-nums">{p.score}점</span>}
+                </li>
               );
             })}
           </ul>
+          {linkedProblems.length > PREVIEW_COUNT && (
+            <details class="mt-2">
+              <summary class="text-xs text-[color:var(--color-muted)] cursor-pointer hover:text-zinc-300">+ {linkedProblems.length - PREVIEW_COUNT}개 더 보기</summary>
+              <ul class="mt-2 space-y-1.5 text-sm">
+                {linkedProblems.slice(PREVIEW_COUNT).map((p) => {
+                  const t = tierBadge(p.killer_tier);
+                  return (
+                    <li class="flex items-center gap-2">
+                      <span class={`text-[10px] px-1.5 py-0.5 rounded border ${t.cls} shrink-0`}>{t.text}</span>
+                      <a class="text-[color:var(--color-accent)] hover:underline truncate flex-1" href={`/problems/${encodeURIComponent(p.slug)}`}>
+                        {problemLabel(p)}
+                      </a>
+                      {p.score && <span class="text-[10px] text-zinc-500 tabular-nums">{p.score}점</span>}
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          )}
         </section>
       )}
 
       <section class="card">
-        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Graph</h3>
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">개념 지도</h3>
         <a href={`/graph?node=${encodeURIComponent(entry.id)}`} class="block text-center px-3 py-2 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium transition">
-          그래프에서 보기 →
+          개념 지도에서 보기 →
         </a>
       </section>
+
+      <NotesPanel client:load slug={entry.id} collection="concepts" />
 
       {fm.concept_type !== 'unit' && (
         <section class="card">

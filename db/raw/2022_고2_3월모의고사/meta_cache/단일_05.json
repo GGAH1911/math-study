@@ -1,0 +1,17 @@
+{
+  "text_sha": "0c2032a49eef",
+  "meta": {
+    "searchable_text": "점 $(2, 3)$을 지나고 직선 $3x + 2y + 5 = 0$과 평행한 직선의 $y$절편은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "평행선의_기울기",
+      "절편"
+    ],
+    "exam_intent": "평행선의 기울기 관계와 직선의 절편을 구하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

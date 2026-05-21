@@ -1,0 +1,17 @@
+{
+  "text_sha": "2a9fe687c4dc",
+  "meta": {
+    "searchable_text": "집합 $A = \\{2, 3, 5, 7, 11\\}$과 함수 $f: A \\to A$, $g: A \\to A$에 대하여 함수 $f$의 치역을 $R$, 합성함수 $g \\circ f$의 치역을 $S$라 할 때, 다음 조건을 만족시키는 함수의 개수를 구하시오.\\n(가) $|R| \\geq 2$\\n(나) 집합 $S$의 모든 원소의 곱은 집합 $R$의 모든 원소의 곱의 2배이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수",
+      "치역",
+      "합성함수"
+    ],
+    "exam_intent": "치역과 원소의 곱 조건을 이용한 함수의 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

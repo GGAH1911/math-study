@@ -1,0 +1,17 @@
+{
+  "text_sha": "0ba866b87e45",
+  "meta": {
+    "searchable_text": "직선과 원 $x^2+y^2=9$가 한 점에서 만날 때, 자연수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "접선",
+      "원의_방정식",
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "원과 직선의 접선 조건을 이용하여 매개변수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "2f0389814053",
+  "meta": {
+    "searchable_text": "주어진 범위에서 $\\sin \\theta = 3\\cos \\theta$일 때, $\\cos \\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "기본삼각항등식"
+    ],
+    "exam_intent": "삼각방정식을 풀어 코사인 값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

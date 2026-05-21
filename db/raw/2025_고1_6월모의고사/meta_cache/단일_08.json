@@ -1,0 +1,15 @@
+{
+  "text_sha": "f4ce149553a2",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 - 3x + 5 = 0$의 두 근을 $\\alpha$, $\\beta$라 할 때, $\\alpha^2 + \\beta^2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수의 관계를 이용하여 근들의 제곱의 합을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "46c1207948d7",
+  "meta": {
+    "searchable_text": "주사위 2개와 동전 4개를 동시에 던질 때, 나오는 주사위의 눈의 수의 곱과 앞면이 나오는 동전의 개수가 같을 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "독립사건",
+      "경우의_수"
+    ],
+    "exam_intent": "독립시행의 복합상황에서 정확한 경우의 수 계산과 확률 도출",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

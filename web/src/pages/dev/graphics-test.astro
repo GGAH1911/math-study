@@ -1,0 +1,19 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GraphicsTest from '../../components/GraphicsTest.tsx';
+---
+<BaseLayout title="Graphics Test">
+  <div class="max-w-5xl mx-auto px-6 py-8">
+    <header class="mb-6">
+      <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-subtle)]">DEV — graphics regression test</p>
+      <h1 class="mt-2 text-2xl font-semibold">그래픽 컴포넌트 검증 페이지</h1>
+      <p class="mt-2 text-sm text-[color:var(--color-muted)] max-w-2xl">
+        LLM 튜터가 emit하는 5개 fenced 블록 타입(<code>plot</code>, <code>svg</code>, <code>geometry</code>, <code>numberline</code>, <code>chart</code>)을 하드코딩된 spec으로 렌더해 회귀를 한 화면에서 검증.
+        각 섹션 옆 체크 박스로 <strong>인라인 / 클릭→모달 / 우측 sticky 미러링</strong>이 의도대로 되는지 확인합니다.
+      </p>
+    </header>
+
+    <GraphicsTest client:load />
+  </div>
+</BaseLayout>

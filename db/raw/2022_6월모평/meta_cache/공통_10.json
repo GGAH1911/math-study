@@ -1,0 +1,17 @@
+{
+  "text_sha": "ffcfe3890809",
+  "meta": {
+    "searchable_text": "자연수 $n \\geq 2$에 대하여 두 곡선 $y = \\log_n x$, $y = \\log_x (3n-1)$이 만나는 점의 $y$좌표가 1보다 크고 2보다 작도록 하는 모든 $n$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_성질",
+      "두_곡선의_교점_조건",
+      "로그_부등식"
+    ],
+    "exam_intent": "로그함수의 교점을 분석하여 범위 조건을 만족하는 매개변수를 찾기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

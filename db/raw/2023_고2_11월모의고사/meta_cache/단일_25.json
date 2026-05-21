@@ -1,0 +1,17 @@
+{
+  "text_sha": "3560f44b2f3a",
+  "meta": {
+    "searchable_text": "방정식 $\\log_2(3x) = \\log_x(16)$을 만족시키는 모든 실수 $x$의 값의 곱을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_방정식",
+      "밑변환_공식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "로그 방정식을 밑변환으로 정리하고 근과 계수 관계로 근의 곱 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

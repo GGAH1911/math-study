@@ -1,0 +1,17 @@
+{
+  "text_sha": "a546bef68b2b",
+  "meta": {
+    "searchable_text": "한 변의 길이가 1인 정육각형 ABCDEF에서 점 P가 A에서 F까지 변을 따라 움직일 때, 거리 $t$ $(0 \\le t \\le 5)$에 따른 삼각형 PFA의 넓이 $S(t)$를 분석하고 $S(t) = \\frac{32}{9}$를 만족하는 모든 $t$의 곱을 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "정육각형의_성질",
+      "거리함수",
+      "함수의_최댓값"
+    ],
+    "exam_intent": "정육각형의 기하학적 성질을 이용하여 거리-넓이 함수를 분석하고 방정식의 근의 곱을 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

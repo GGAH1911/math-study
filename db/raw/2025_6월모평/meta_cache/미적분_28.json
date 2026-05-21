@@ -1,0 +1,18 @@
+{
+  "text_sha": "9238ecc22efd",
+  "meta": {
+    "searchable_text": "함수 f가 주어진 조건을 만족할 때, 실수 a에 대하여 조건을 만족시키는 x의 최솟값을 m(a)라 하자. 함수 g가 a=12에서만 불연속일 때, $g'(6)$과 $g'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "불연속점",
+      "절댓값함수",
+      "도함수",
+      "최솟값함수"
+    ],
+    "exam_intent": "최솟값 함수의 불연속점 조건을 활용한 함수 구성 및 도함수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

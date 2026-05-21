@@ -1,0 +1,16 @@
+{
+  "text_sha": "36fa27c2a20b",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 음이 아닌 정수 네 개의 모든 순서쌍의 개수를 구하시오. (가) 네 정수의 합이 12이다. (나) 어떤 정수는 2도 아니고 10도 아니다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "포함배제원리"
+    ],
+    "exam_intent": "포함배제 원리를 이용한 제약 조건 중복조합 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

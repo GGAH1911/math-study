@@ -1,0 +1,234 @@
+---
+// 인제스트된 기출 회차 전체 인벤토리. SSR로 매 요청마다 docs/problems/
+// 스캔. 답안 status (정상/누락/범위밖) + 주관 기관 + 시행 정보 한눈에.
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve, join } from 'node:path';
+import matter from 'gray-matter';
+import verifiedData from '../../data/verified-rounds.json';
+
+const PROBLEMS_DIR = resolve(process.cwd(), '..', 'docs', 'problems');
+
+type VerifiedEntry = { key: string; verified_at: string; source: string; corrected?: string[]; notes?: string };
+const verifiedList: VerifiedEntry[] = (verifiedData as { rounds: VerifiedEntry[] }).rounds ?? [];
+const verifiedMap = new Map(verifiedList.map((v) => [v.key, v]));
+
+type RoundKey = string;        // e.g. "2025_고3_9월모의고사" or "2025_수능"
+type RoundStats = {
+  key: RoundKey;
+  year: string;
+  agency: string;              // 평가원 / 교육청
+  exam_type: string;           // 모의평가 / 모의고사 / 수능
+  grade: string;               // 고1/고2/고3/-(수능)
+  session: string;             // 6월/9월/11월 etc
+  subjects: Set<string>;       // 공통/기하/미적분/확률과통계/단일
+  total: number;
+  with_answer: number;
+  empty_answer: number;
+  out_of_range: number;        // 객관식인데 답이 1-5 밖
+  out_of_range_nums: string[]; // 문제 번호 목록
+  empty_nums: string[];
+};
+
+const rounds: Record<RoundKey, RoundStats> = {};
+
+const files = readdirSync(PROBLEMS_DIR).filter((f) => f.endsWith('.md'));
+for (const fname of files) {
+  if (fname.includes('검정고시')) continue;     // 별도 인제스트 라인
+  const text = readFileSync(join(PROBLEMS_DIR, fname), 'utf-8');
+  const { data: fm } = matter(text);
+  const src = (fm.source ?? {}) as Record<string, unknown>;
+  const year = String(src.year ?? '?');
+  const agency = String(src.agency ?? '?');
+  const exam_type = String(src.exam_type ?? '?');
+  const grade = String((src as { grade?: string }).grade ?? '');
+  const session = String(src.session ?? '?');
+  const subject = String(src.subject ?? '?');
+  const num = String(src.number ?? '?').padStart(2, '0');
+  const format = String(fm.format ?? '');
+  const answer = String(fm.answer ?? '').trim();
+
+  // round key — 파일명에서 마지막 _NN 만 떼낸 prefix
+  const key = fname.replace(/_\d+\.md$/, '').replace(/\.md$/, '');
+
+  if (!rounds[key]) {
+    rounds[key] = {
+      key, year, agency, exam_type,
+      grade: grade || (exam_type === '수능' ? '-' : '?'),
+      session,
+      subjects: new Set(),
+      total: 0, with_answer: 0, empty_answer: 0, out_of_range: 0,
+      out_of_range_nums: [], empty_nums: [],
+    };
+  }
+  const r = rounds[key];
+  r.subjects.add(subject);
+  r.total += 1;
+  if (!answer || answer === 'null') {
+    r.empty_answer += 1;
+    r.empty_nums.push(num);
+  } else {
+    r.with_answer += 1;
+    // 객관식인데 답이 1-5 밖이면 OCR 오류 의심
+    if (format === 'choice' && !['1','2','3','4','5'].includes(answer)) {
+      r.out_of_range += 1;
+      r.out_of_range_nums.push(`${num}→"${answer}"`);
+    }
+  }
+}
+
+// 정렬: 연도 desc → 주관(평가원/수능 우선) → 학년 → 시행월
+const monthOrder = ['3월','4월','5월','6월','7월','9월','10월','11월'];
+const list = Object.values(rounds).sort((a, b) => {
+  if (a.year !== b.year) return b.year.localeCompare(a.year);
+  // 수능 우선, 평가원 다음, 교육청 마지막
+  const agencyRank = (x: RoundStats) =>
+    x.exam_type === '수능' ? 0 : x.agency === '평가원' ? 1 : 2;
+  if (agencyRank(a) !== agencyRank(b)) return agencyRank(a) - agencyRank(b);
+  // 학년 (고1/고2/고3)
+  const gr = (x: string) => x === '고1' ? 1 : x === '고2' ? 2 : x === '고3' ? 3 : 0;
+  if (gr(a.grade) !== gr(b.grade)) return gr(a.grade) - gr(b.grade);
+  return monthOrder.indexOf(a.session) - monthOrder.indexOf(b.session);
+});
+
+// 전체 합계
+const grand = {
+  total: list.reduce((s, r) => s + r.total, 0),
+  with_answer: list.reduce((s, r) => s + r.with_answer, 0),
+  empty_answer: list.reduce((s, r) => s + r.empty_answer, 0),
+  out_of_range: list.reduce((s, r) => s + r.out_of_range, 0),
+  rounds_total: list.length,
+  rounds_verified: list.filter((r) => verifiedMap.has(r.key)).length,
+};
+
+const yearGroups = new Map<string, RoundStats[]>();
+for (const r of list) {
+  if (!yearGroups.has(r.year)) yearGroups.set(r.year, []);
+  yearGroups.get(r.year)!.push(r);
+}
+---
+<BaseLayout title="기출 회차 인벤토리">
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <header class="mb-6">
+      <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-subtle)]">DEV — exam rounds inventory</p>
+      <h1 class="mt-2 text-2xl font-semibold">기출 회차 인벤토리</h1>
+      <p class="mt-2 text-sm text-[color:var(--color-muted)] max-w-2xl">
+        <code>docs/problems/</code> 전체 스캔. 검정고시 제외. 답안 상태별 (정상/누락/OCR오류) 회차 단위 인벤토리.
+      </p>
+    </header>
+
+    <section class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+      <div class="card">
+        <div class="text-[10px] uppercase tracking-wider text-zinc-500">전체 문제</div>
+        <div class="text-2xl font-semibold tabular-nums">{grand.total.toLocaleString()}</div>
+      </div>
+      <div class="card">
+        <div class="text-[10px] uppercase tracking-wider text-zinc-500">답안 있음</div>
+        <div class="text-2xl font-semibold tabular-nums text-emerald-400">
+          {grand.with_answer.toLocaleString()} <span class="text-xs text-zinc-500">({(grand.with_answer*100/grand.total).toFixed(1)}%)</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="text-[10px] uppercase tracking-wider text-zinc-500">답안 누락</div>
+        <div class="text-2xl font-semibold tabular-nums text-amber-400">
+          {grand.empty_answer.toLocaleString()}
+        </div>
+      </div>
+      <div class="card">
+        <div class="text-[10px] uppercase tracking-wider text-zinc-500">답 OCR 오류 의심</div>
+        <div class="text-2xl font-semibold tabular-nums text-rose-400">
+          {grand.out_of_range.toLocaleString()}
+        </div>
+      </div>
+      <div class="card">
+        <div class="text-[10px] uppercase tracking-wider text-zinc-500">✓ 정답확인 완료 회차</div>
+        <div class="text-2xl font-semibold tabular-nums text-indigo-300">
+          {grand.rounds_verified}<span class="text-xs text-zinc-500"> / {grand.rounds_total}</span>
+        </div>
+      </div>
+    </section>
+
+    {[...yearGroups.entries()].map(([year, rs]) => (
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold mb-3 text-zinc-100">{year}</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="text-[11px] uppercase tracking-wider text-zinc-500 border-b border-zinc-800">
+                <th class="text-left py-1.5 pr-2">상태</th>
+                <th class="text-left py-1.5 pr-2">회차 (key)</th>
+                <th class="text-left py-1.5 pr-2">학년</th>
+                <th class="text-left py-1.5 pr-2">시행월</th>
+                <th class="text-left py-1.5 pr-2">주관</th>
+                <th class="text-left py-1.5 pr-2">종류</th>
+                <th class="text-left py-1.5 pr-2">과목</th>
+                <th class="text-right py-1.5 pr-2">총</th>
+                <th class="text-right py-1.5 pr-2">정답</th>
+                <th class="text-right py-1.5 pr-2">누락</th>
+                <th class="text-right py-1.5 pr-2">오류</th>
+                <th class="text-left py-1.5 pr-2">상세</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rs.map((r) => {
+                const verified = verifiedMap.get(r.key);
+                const cls = verified
+                  ? 'bg-indigo-500/10'
+                  : r.empty_answer > 0
+                    ? 'bg-amber-500/5'
+                    : r.out_of_range > 0
+                      ? 'bg-rose-500/5'
+                      : '';
+                return (
+                  <tr class={`border-b border-zinc-900 ${cls}`}>
+                    <td class="py-1.5 pr-2">
+                      {verified ? (
+                        <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 whitespace-nowrap"
+                              title={`검증: ${verified.verified_at} · 출처: ${verified.source}` + (verified.corrected ? '\n수정 내역: ' + verified.corrected.join(', ') : '')}>
+                          ✓ 확인완료
+                        </span>
+                      ) : (
+                        <span class="text-[10px] text-zinc-600">—</span>
+                      )}
+                    </td>
+                    <td class="py-1.5 pr-2 font-mono text-xs text-zinc-300">{r.key}</td>
+                    <td class="py-1.5 pr-2 text-zinc-300">{r.grade}</td>
+                    <td class="py-1.5 pr-2 text-zinc-300">{r.session}</td>
+                    <td class="py-1.5 pr-2 text-zinc-300">{r.agency}</td>
+                    <td class="py-1.5 pr-2 text-zinc-300">{r.exam_type}</td>
+                    <td class="py-1.5 pr-2 text-[11px] text-zinc-400">{[...r.subjects].join(',')}</td>
+                    <td class="py-1.5 pr-2 text-right tabular-nums">{r.total}</td>
+                    <td class="py-1.5 pr-2 text-right tabular-nums text-emerald-400">{r.with_answer}</td>
+                    <td class="py-1.5 pr-2 text-right tabular-nums text-amber-400">{r.empty_answer || ''}</td>
+                    <td class="py-1.5 pr-2 text-right tabular-nums text-rose-400">{r.out_of_range || ''}</td>
+                    <td class="py-1.5 pr-2 text-[10px] text-zinc-500">
+                      {verified && verified.corrected && (
+                        <div class="text-indigo-300">수정: {verified.corrected.join(', ')}</div>
+                      )}
+                      {r.empty_nums.length > 0 && (
+                        <div title="답안 누락 문제 번호">결측: {r.empty_nums.join(',')}</div>
+                      )}
+                      {r.out_of_range_nums.length > 0 && (
+                        <div title="객관식이지만 답이 1-5 밖" class="text-rose-300">
+                          오류: {r.out_of_range_nums.join(', ')}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+
+    <div class="text-xs text-zinc-600 mt-8 space-y-1">
+      <p><strong>오류</strong>: 객관식인데 답이 1-5 외 값 — OCR 매핑 버그 가능성.</p>
+      <p><strong>누락</strong>: 답안 필드가 비어있음 — 단답형 추정.</p>
+      <p><strong>✓ 확인완료 (보라색 배경)</strong>: EBSi 정답표와 우리 데이터를 비교해 모든 문제의 답을 확정. 회차별 검증 내역은 <code>web/src/data/verified-rounds.json</code> 참고. 셀에 마우스를 올리면 검증 일시·출처·수정 내역 툴팁.</p>
+    </div>
+  </div>
+</BaseLayout>

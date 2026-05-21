@@ -1,0 +1,16 @@
+{
+  "text_sha": "7fdfd646cbdb",
+  "meta": {
+    "searchable_text": "닫힌구간 [-2, 2]에서 정의된 함수 $f$의 그래프가 그림과 같다. $\\dfrac{\\lim_{x \\to 0} f(x)}{\\lim_{x \\to 1} f(x)}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_정의",
+      "그래프_해석"
+    ],
+    "exam_intent": "함수의 극한값을 그래프에서 읽고 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

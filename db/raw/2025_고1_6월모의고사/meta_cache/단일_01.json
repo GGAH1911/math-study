@@ -1,0 +1,16 @@
+{
+  "text_sha": "690279d75e92",
+  "meta": {
+    "searchable_text": "⋄1⋄2⋄5⋄의 값은? (단, ⋄⋄1)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "무리수",
+      "근호"
+    ],
+    "exam_intent": "기본 실수 계산 능력 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

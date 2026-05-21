@@ -39,3 +39,7 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
   - **hub 자동 재생성**: hubs/concepts.md = 390 노드를 학년별·타입별로 정리. hubs/problems.md = 49 단원별로 그루핑.
   - **JIT audit 통과**: ✅ 0-Isolation (490 spokes 모두 hub 또는 concept 페이지에서 inbound), ✅ DAG 양방향 매칭 (417 edges), ✅ Acyclic.
   - 결과 **390 concept nodes + 99 problem nodes + 1 mistake**. Mastery 모두 unknown(미분계수 learning만 예외). D14 gap detection의 토양이 한국 수능 전 범위로 깔림.
+
+## [2026-05-20] promote | chat → synthesis: "그럼 방금 주사위 3가지 조건은 간단하니까 해보자 
+3+2+1-1-0-0+0=5 
+이게 맞아?" from 확률_중2

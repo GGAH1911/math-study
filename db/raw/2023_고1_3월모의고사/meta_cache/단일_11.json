@@ -1,0 +1,16 @@
+{
+  "text_sha": "a64abe727a39",
+  "meta": {
+    "searchable_text": "어느 학생이 집에서 출발하여 갈 때는 시속 $3 \\mathrm{km}$로, 집으로 돌아올 때는 같은 경로를 시속 $4 \\mathrm{km}$로 이동하려고 한다. 이동한 전체 시간이 $2$시간 이하가 되도록 할 때, 이 학생이 집에서 출발하여 집으로 돌아올 때까지 이동한 거리의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차함수",
+    "concepts": [
+      "일차부등식",
+      "함수의_최댓값"
+    ],
+    "exam_intent": "시간·거리·속도 관계식에서 제약 조건 하의 최댓값 도출",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

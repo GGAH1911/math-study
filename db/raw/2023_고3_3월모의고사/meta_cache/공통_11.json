@@ -1,0 +1,17 @@
+{
+  "text_sha": "b9d74544a4cc",
+  "meta": {
+    "searchable_text": "그림과 같이 $\\angle BAC = 60°$, $AB = 2\\sqrt{2}$, $BC = 2\\sqrt{3}$인 삼각형 $ABC$가 있다. 삼각형 $ABC$의 내부의 점 $P$에 대하여 $\\angle PBC = 30°$, $\\angle PCB = 15°$일 때, 삼각형 $APC$의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각형의_넓이",
+      "코사인_법칙",
+      "정현법칙"
+    ],
+    "exam_intent": "주어진 각과 변으로부터 특정 삼각형 부분의 넓이를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

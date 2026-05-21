@@ -1,0 +1,16 @@
+{
+  "text_sha": "1d16422bc0ed",
+  "meta": {
+    "searchable_text": "다음 극한값을 구하시오. $$\\lim_{n \\to \\infty} \\left( \\sqrt{n^2 + 2n + 1} - n \\right)$$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "제곱근_형태의_극한",
+      "극한의_유리화"
+    ],
+    "exam_intent": "무리식 포함 수열의 극한을 유리화로 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

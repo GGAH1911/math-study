@@ -1,0 +1,16 @@
+{
+  "text_sha": "17a7a44a1bfc",
+  "meta": {
+    "searchable_text": "직사각형 모양의 도로망에서 A 지점에서 출발하여 P 지점을 거쳐 B 지점까지 최단 거리로 가는 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "곱의_법칙",
+      "조합"
+    ],
+    "exam_intent": "최단경로 조건에서 중간 지점을 거치는 경로의 개수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

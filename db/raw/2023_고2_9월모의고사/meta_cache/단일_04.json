@@ -1,0 +1,16 @@
+{
+  "text_sha": "ed0c704bd721",
+  "meta": {
+    "searchable_text": "네 수 $a$, 4, $b$, 10이 이 순서대로 등차수열을 이룰 때, $a + 2b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차"
+    ],
+    "exam_intent": "등차수열의 정의로 미지수를 구하고 식의 값을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

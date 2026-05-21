@@ -1,0 +1,16 @@
+{
+  "text_sha": "4ee5bb4b4ded",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 선분 AB 위의 점 D는 $AD:DB = 3:2$를 만족한다. 점 A를 중심으로 하고 점 D를 지나는 원이 선분 AC와 만나는 점을 E라 하자. $\\sin \\angle ABC : \\sin \\angle ACB = 8:5$이고, 삼각형 ADE와 삼각형 ABC의 넓이의 비가 $9:35$이다. 삼각형 ABC의 외접원의 반지름의 길이가 7일 때, 원 위의 점 P에 대하여 삼각형 PBC의 넓이의 최댓값은? (단, $AB \\neq AC$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙과_코사인_법칙",
+      "외접원과_내접원"
+    ],
+    "exam_intent": "외접원, 정현법칙, 넓이비를 종합하여 삼각형 결정 후 최댓값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

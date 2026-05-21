@@ -1,0 +1,17 @@
+{
+  "text_sha": "32b8efb52824",
+  "meta": {
+    "searchable_text": "실수 $a$ ($a>0$)에 대하여 곡선 $y^2 = ax^3$와 직선 $y = ax$가 만나는 점 중 원점 O가 아닌 점을 P라 하고, 점 P에서 x축에 내린 수선의 발을 H라 하자. $\\lim_{a \\to 0^+} \\frac{OP - OH}{a^3}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한",
+      "교점",
+      "거리"
+    ],
+    "exam_intent": "곡선과 직선의 교점에서 거리 비율의 극한값을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

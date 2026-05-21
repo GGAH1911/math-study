@@ -1,0 +1,17 @@
+{
+  "text_sha": "2e449588985b",
+  "meta": {
+    "searchable_text": "두 상수 $a$, $b$ ($b \\neq 0$)에 대하여 구간별로 정의된 함수 $f$가 있다. 다음 조건을 만족하는 실수 $k$의 최댓값이 $\\frac{4b}{8}$일 때, $a$의 값은? (단, ...) 모든 실수 $x$에 대하여 함수 $f(x)$의 그래프와 직선 $y = kx$의 교점의 개수는 1이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "교점_개수_분석",
+      "도함수",
+      "함수의_그래프"
+    ],
+    "exam_intent": "함수와 직선의 교점이 항상 1개가 되는 조건으로부터 상수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "dd02298c3615",
+  "meta": {
+    "searchable_text": "기울기가 2이고 점 $(1, 5)$를 지나는 직선의 $y$절편을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "일차함수",
+    "concepts": [
+      "직선의_방정식",
+      "절편"
+    ],
+    "exam_intent": "주어진 기울기와 한 점으로부터 직선의 절편을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

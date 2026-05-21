@@ -1,0 +1,17 @@
+{
+  "text_sha": "cee8a9045f4a",
+  "meta": {
+    "searchable_text": "실수 $a$에 대하여 직선 $y=a$가 함수의 그래프와 만나는 점의 개수를 $f(a)$라 하자. 함수 $f(a)$가 불연속인 모든 $a$의 값을 작은 수부터 크기순으로 나열한 것을 $a_1, a_2, \\cdots, a_n$ (단, $n$은 자연수)이라 할 때, $n \\times (a_1 + a_2 + \\cdots + a_n)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_불연속성",
+      "함수의_그래프",
+      "교점의_개수_분석"
+    ],
+    "exam_intent": "함수의 불연속점을 파악하는 고도의 분석능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

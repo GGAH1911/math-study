@@ -1,0 +1,16 @@
+{
+  "text_sha": "0f38ff8070b8",
+  "meta": {
+    "searchable_text": "카드 8장: $A, A, A, B, B, B, C, C$ (같은 문자끼리는 구별 안 함). 양 끝 모두에 B를 놓고 일렬로 나열하는 경우의 수를 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "같은_것이_있는_순열",
+      "조건을_만족하는_경우의_수"
+    ],
+    "exam_intent": "조건 하에서 같은 것을 포함한 순열의 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

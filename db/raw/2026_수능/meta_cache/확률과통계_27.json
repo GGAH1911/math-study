@@ -1,0 +1,17 @@
+{
+  "text_sha": "7169520057b0",
+  "meta": {
+    "searchable_text": "이산확률변수 $X$의 값이 0부터 4까지의 정수이고, $k=0,1,2,3$일 때 $P(X=k) = c \\cdot \\frac{12}{2^{k+1}}$, $P(X=4)$는 나머지확률이다. ($c$는 0이 아닌 상수) 이때 $V(X+1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이산확률변수",
+      "확률분포",
+      "분산"
+    ],
+    "exam_intent": "이산확률변수의 확률분포로부터 분산을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

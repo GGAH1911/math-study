@@ -1,0 +1,17 @@
+{
+  "text_sha": "9f3e64f95cde",
+  "meta": {
+    "searchable_text": "좌표평면 위의 세 점 $A$, $B$, $C$를 꼭짓점으로 하는 삼각형 $ABC$의 무게중심이 원점이고, 선분 $BC$의 중점의 좌표가 $(1, 2)$이다. 점 $A$의 좌표를 $(a, b)$라 할 때, $a \\times b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "무게중심",
+      "중점",
+      "좌표"
+    ],
+    "exam_intent": "무게중심 성질과 중점 좌표로부터 삼각형 꼭짓점 좌표 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "7e0c67e838ad",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $x^2 + ax + b = 0$이 서로 다른 두 근 $\\alpha, \\beta$를 갖는다. $3(\\alpha + \\beta) = 10$일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수의 관계로 이차방정식 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

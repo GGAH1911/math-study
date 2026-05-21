@@ -1,0 +1,15 @@
+{
+  "text_sha": "1961e7636655",
+  "meta": {
+    "searchable_text": "자연수 $n$ ($n \\geq 2$)에 대하여 $\\sqrt{n-2}$, $\\sqrt{n-16}$, $\\sqrt{n-48}$ 중 실수인 것의 개수를 $f(n)$이라 할 때, $\\sum_{n=2}^{10} f(n)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "함수의_합"
+    ],
+    "exam_intent": "조건부 함수값을 누적합하는 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

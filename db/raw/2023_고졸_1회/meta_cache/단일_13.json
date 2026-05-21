@@ -1,0 +1,16 @@
+{
+  "text_sha": "9fd4964e4b2e",
+  "meta": {
+    "searchable_text": "중심의 좌표가 $(2, 1)$이고 축에 접하는 원의 방정식은?\n① $(x-2)^2 + (y-1)^2 = 1$\n② $(x-2)^2 + (y-1)^2 = 4$\n③ $(x-1)^2 + (y-2)^2 = 1$\n④ $(x-1)^2 + (y-2)^2 = 4$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "원의_중심과_반지름"
+    ],
+    "exam_intent": "좌표 축에 접하는 원의 반지름을 구하고 원의 방정식 세우기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

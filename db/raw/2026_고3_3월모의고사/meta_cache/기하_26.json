@@ -1,0 +1,17 @@
+{
+  "text_sha": "47f6d1a1b7b0",
+  "meta": {
+    "searchable_text": "포물선 $y^2 = 4px$의 초점을 지나고 기울기가 $\\frac{3}{4}$인 직선이 이 포물선과 만나는 점 중 제1사분면에 있는 점을 $P$라 하자. 점 $P$와 이 포물선의 준선 사이의 거리가 20일 때, $p$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선",
+      "초점과_준선",
+      "직선과의_교점"
+    ],
+    "exam_intent": "포물선의 초점·준선 성질과 교점 계산으로 매개변수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

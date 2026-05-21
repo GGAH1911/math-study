@@ -1,0 +1,17 @@
+{
+  "text_sha": "2c0ccd87a88e",
+  "meta": {
+    "searchable_text": "곡선 $y = a\\sin(bx)$ ($0 \\leq x \\leq 5$)가 직선과 만나는 서로 다른 세 점을 $x$축에서 가까운 순서대로 $A$, $B$, $C$라 하자. 세 점 $A$, $B$, $C$의 $y$좌표의 합이 $\\frac{4}{25}$일 때, 선분 $AB$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "교점_조건",
+      "거리_계산"
+    ],
+    "exam_intent": "삼각함수 곡선과 직선의 교점 좌표 조건으로부터 곡선 매개변수를 결정하고 두 교점 간 거리를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

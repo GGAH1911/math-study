@@ -1,0 +1,15 @@
+{
+  "text_sha": "d68f8102cbbd",
+  "meta": {
+    "searchable_text": "두 수 2, 4를 근으로 하고 $x^2$의 계수가 1인 이차방정식이 $x^2 - 6x + c = 0$일 때, 상수 $c$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차방정식의 근과 계수의 관계를 이용하여 상수항을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

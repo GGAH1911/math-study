@@ -1,0 +1,15 @@
+{
+  "text_sha": "50f0e76f197a",
+  "meta": {
+    "searchable_text": "5개의 직업 체험 프로그램 중에서 서로 다른 2개의 프로그램을 택하여 순서대로 체험하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순서를 고려한 순열의 기본 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

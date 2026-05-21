@@ -1,0 +1,17 @@
+{
+  "text_sha": "dba3c5d6bacb",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 $a_1 \\leq 1$을 만족하고, 모든 자연수 $n$에 대하여 주어진 점화식을 만족한다. 특정 조건을 만족하는 모든 $a_1$의 값의 합을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열의합",
+      "경우분석"
+    ],
+    "exam_intent": "조건을 만족하는 수열의 초기값을 찾고 그 합을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

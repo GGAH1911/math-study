@@ -1,0 +1,16 @@
+{
+  "text_sha": "f2b122d8d167",
+  "meta": {
+    "searchable_text": "실수 $x$에 대한 조건 '$x > 1$'의 부정은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제의_부정",
+      "부등식의_부정"
+    ],
+    "exam_intent": "부등식 명제의 부정 개념 이해도 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

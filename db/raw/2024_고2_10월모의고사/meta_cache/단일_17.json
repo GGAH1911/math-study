@@ -1,0 +1,13 @@
+{
+  "text_sha": "33ae1f166b02",
+  "meta": {
+    "searchable_text": "a인 실수 a에 대하여 함수 $f(x) = a\\cos 2x + \\sin x - 1$이 구간 $[0, \\pi]$에서 최솟값을 갖도록 하는 a의 최솟값을 $a_0$라 하자. 구간 $[0, \\pi]$에서 함수 $f(x)$의 최댓값을 $M$이라 할 때, $a_0 \\times M$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [],
+    "exam_intent": "매개변수 조건에서 삼각함수의 극값과 함수값을 계산하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

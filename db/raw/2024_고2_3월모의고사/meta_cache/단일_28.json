@@ -1,0 +1,18 @@
+{
+  "text_sha": "97ac1f41360a",
+  "meta": {
+    "searchable_text": "1보다 큰 자연수 $n$에 대하여 전체집합 $U = \\{1, 2, \\ldots, n\\}$의 두 부분집합 $A, B$가 있다. $E$는 $n$ 이하의 짝수 집합, $D$는 $n$의 약수 집합일 때 어떤 조건을 만족한다. 집합 $A \\cup B$의 모든 원소의 곱을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "부분집합",
+      "합집합",
+      "여집합",
+      "약수"
+    ],
+    "exam_intent": "집합의 여러 연산과 약수 조건을 활용해 n을 결정하고 원소의 곱을 계산하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

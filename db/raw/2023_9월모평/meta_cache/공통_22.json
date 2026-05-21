@@ -1,0 +1,18 @@
+{
+  "text_sha": "427c1a71c0ca",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1이고 $x=3$에서 극댓값 8을 갖는 삼차함수 $f(x)$가 있다. 실수 $a$에 대하여 함수 $g(x) = |f(x)| - a$라 할 때, 방정식 $g(x) = 0$의 서로 다른 실근의 개수를 $n(a)$라 하자. 함수 $h(a) = n(a)$가 $a$에서 불연속인 $a$의 값이 두 개일 때, $h(8)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "절댓값함수",
+      "극값",
+      "실근의개수",
+      "함수의불연속성"
+    ],
+    "exam_intent": "절댓값이 포함된 함수의 극값과 실근 개수의 불연속점을 종합 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

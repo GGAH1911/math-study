@@ -1,0 +1,16 @@
+{
+  "text_sha": "1783cee927c4",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 $f'(x) = 3x^2 - 6x$이고 $f(1) = 1$일 때, 함수 $f(x)$의 극솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "함수의_증감"
+    ],
+    "exam_intent": "도함수 조건으로부터 극솟값을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

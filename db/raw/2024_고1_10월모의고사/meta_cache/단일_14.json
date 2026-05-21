@@ -1,0 +1,18 @@
+{
+  "text_sha": "ce838de92957",
+  "meta": {
+    "searchable_text": "매개변수 $a$를 포함한 $x$에 대한 연립부등식이 주어진다. 이 연립부등식을 만족시키는 실수 $x$가 정확히 하나만 존재하도록 하는 모든 실수 $a$의 값의 합을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "연립부등식",
+      "해의_개수_조건",
+      "매개변수"
+    ],
+    "exam_intent": "연립부등식이 유일해를 가질 조건을 찾고 매개변수의 합을 구함",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

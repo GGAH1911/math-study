@@ -1,0 +1,15 @@
+{
+  "text_sha": "35cd266face2",
+  "meta": {
+    "searchable_text": "다항식 $x^3 + 3x^2 + 3x + 7$을 $x + 1$로 나누었을 때, 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지_정리"
+    ],
+    "exam_intent": "나머지 정리를 이용한 다항식 나머지 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

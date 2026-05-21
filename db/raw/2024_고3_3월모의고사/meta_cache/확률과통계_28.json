@@ -1,0 +1,15 @@
+{
+  "text_sha": "343ac5baafc6",
+  "meta": {
+    "searchable_text": "다음 조건을 만족하는 자연수 $a, b$의 모든 순서쌍 $(a, b)$의 개수는? (가) 2와 720에 관한 부등식 조건 (나) $a$와 $b$는 서로소가 아니다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "최대공약수"
+    ],
+    "exam_intent": "부등식과 최대공약수 조건을 모두 만족하는 자연수 순서쌍의 개수",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

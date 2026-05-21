@@ -1,0 +1,17 @@
+{
+  "text_sha": "f55729ea60de",
+  "meta": {
+    "searchable_text": "시각 $t = 0$일 때 동시에 원점을 출발하여 수직선 위를 움직이는 두 점 $P$, $Q$의 시각 $t \\geq 0$에서의 속도가 각각 주어졌을 때, 시각 $t$ ($t > 0$)에서 두 점 $P$, $Q$의 위치가 같을 때, 시각 0에서 $t$까지 점 $P$가 움직인 거리를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "속도함수",
+      "거리계산"
+    ],
+    "exam_intent": "속도 함수로부터 정적분을 이용하여 이동 거리를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

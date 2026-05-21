@@ -1,0 +1,16 @@
+{
+  "text_sha": "053467bc670c",
+  "meta": {
+    "searchable_text": "집합 $U = \\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\\}$이 있다. 다음 조건을 만족시키는 집합 $U$의 두 부분집합 $A$, $B$에 대하여 집합 $A$의 모든 원소의 합의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_포함관계",
+      "조건_분석"
+    ],
+    "exam_intent": "조건부 명제를 만족하는 집합의 원소 합 최댓값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

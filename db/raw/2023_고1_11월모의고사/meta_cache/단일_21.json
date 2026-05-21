@@ -1,0 +1,17 @@
+{
+  "text_sha": "a5bcf8aa1260",
+  "meta": {
+    "searchable_text": "원소 5개인 전체집합 U의 세 부분집합 A, B, C에 대하여 교집합 조건이 주어질 때, (ㄱ) $A \\cap B \\cap C \\neq \\emptyset$인지 (ㄴ) 특정 조건에서 $|A|=4$인지 (ㄷ) $|A| \\times |B| \\times |C|$의 최댓값과 최솟값의 합이 42인지 판단하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "부분집합",
+      "교집합",
+      "집합의_크기"
+    ],
+    "exam_intent": "세 집합의 교집합 조건 하에서 논리적 명제 판정 및 최댓값·최솟값 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

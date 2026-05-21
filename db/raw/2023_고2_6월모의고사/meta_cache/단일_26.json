@@ -1,0 +1,16 @@
+{
+  "text_sha": "a17e68d12b8a",
+  "meta": {
+    "searchable_text": "등식 $\\square^3 \\cdot \\square^3 \\cdot \\square = 2 \\cdot \\square^2 \\cdot \\square^3 \\cdot \\square^3 \\cdot \\square^8$ 을 만족시키는 실수 $\\square$ 에 대하여 $27\\square \\cdot 27\\square$ 의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_방정식",
+      "지수의_성질"
+    ],
+    "exam_intent": "복합 지수 방정식을 정리하여 미지수를 구하고 식의 값 계산하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

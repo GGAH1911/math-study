@@ -1,0 +1,17 @@
+{
+  "text_sha": "6df126203656",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차함수 $f(x)$에서 $f(x)$의 값이 0에서 6까지 변할 때의 평균변화율이 0일 때, $f'(4)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_성질",
+      "평균변화율",
+      "도함수"
+    ],
+    "exam_intent": "이차함수의 평균변화율 조건으로 계수를 결정하고 도함수값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

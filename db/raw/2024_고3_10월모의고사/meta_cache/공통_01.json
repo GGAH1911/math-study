@@ -1,0 +1,15 @@
+{
+  "text_sha": "99fcbaaddff3",
+  "meta": {
+    "searchable_text": "다음 연분수 또는 분수식의 값은? 3, 2, 4, 5, 6을 포함한 기본 사칙연산 또는 분수 계산",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "분수의_계산"
+    ],
+    "exam_intent": "기본 산술 연산 및 분수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

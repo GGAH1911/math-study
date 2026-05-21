@@ -1,0 +1,13 @@
+{
+  "text_sha": "cbc541b4a003",
+  "meta": {
+    "searchable_text": "수식 기호가 포함된 계산 문제. 인식된 수치: 0, 2, 6, 2, 2, 1의 어떤 식의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [],
+    "exam_intent": "기본 식의 계산 능력 검증",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

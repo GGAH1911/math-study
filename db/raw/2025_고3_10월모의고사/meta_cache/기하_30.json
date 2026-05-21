@@ -1,0 +1,18 @@
+{
+  "text_sha": "2443bb690295",
+  "meta": {
+    "searchable_text": "좌표평면에 한 변의 길이가 8인 정사각형 ABCD가 있고, 점 E는 $\\vec{AE} = \\frac{1}{2}\\vec{AD} + \\vec{AB}$를 만족한다. 선분 BC를 지름으로 하는 원 위의 점 P에 대하여, 점 Q는 다음 조건을 만족한다. $\\vec{AE} \\cdot \\vec{AP} \\geq 0$이면 $|BQ| + |CQ| = 4|PQ|$이고, $\\vec{AE} \\cdot \\vec{AP} < 0$이면 $|BQ| + |CQ| = 6|PQ|$이다. $\\vec{AE} \\cdot \\vec{AQ}$의 최댓값을 $M$, 최솟값을 $m$이라 할 때, $M^2 - m^2$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "원의_성질",
+      "타원의_정의",
+      "벡터의_최댓값과_최솟값"
+    ],
+    "exam_intent": "벡터 내적 조건에 따른 타원의 성질을 활용하여 벡터의 최댓값과 최솟값을 구하는 종합 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

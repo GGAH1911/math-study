@@ -1,0 +1,16 @@
+{
+  "text_sha": "148718cf8057",
+  "meta": {
+    "searchable_text": "등식이 변수에 대한 항등식일 때, 두 상수에 대하여 한 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "계수비교"
+    ],
+    "exam_intent": "항등식의 정의를 이용해 미지 상수값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

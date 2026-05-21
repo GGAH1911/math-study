@@ -1,0 +1,17 @@
+{
+  "text_sha": "3067910c82c4",
+  "meta": {
+    "searchable_text": "이산확률변수 $X$는 0, 1, 2, 3, 4의 값을 가지며, 각 $k = 0, 1, 2$에 대해 특정 확률 관계식을 만족한다. $E(X^2) = \\frac{6}{35}$일 때, $P(X=0)$을 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이산확률변수",
+      "확률분포",
+      "기댓값"
+    ],
+    "exam_intent": "확률 조건과 기댓값으로부터 확률분포를 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

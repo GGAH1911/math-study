@@ -1,0 +1,16 @@
+{
+  "text_sha": "9151386d4c7c",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $x^2 - ax + 12 = 0$의 두 근이 모두 양수가 되도록 하는 자연수 $a$의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "근과계수의관계"
+    ],
+    "exam_intent": "이차방정식의 근의 조건과 판별식을 이용한 매개변수 범위 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

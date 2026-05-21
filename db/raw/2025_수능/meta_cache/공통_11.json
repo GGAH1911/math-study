@@ -1,0 +1,16 @@
+{
+  "text_sha": "05a240fa4c2d",
+  "meta": {
+    "searchable_text": "시각 $t=0$일 때 출발하여 수직선 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 위치를 $x = t^3 - 3t^2$이라 하자. 출발한 후 점 P의 운동 방향이 바뀌는 시각에서의 점 P의 가속도는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "속도와_가속도",
+      "운동_방향_변화"
+    ],
+    "exam_intent": "위치함수의 미분을 이용해 운동방향 변화점에서의 가속도를 구한다",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

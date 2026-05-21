@@ -1,0 +1,16 @@
+{
+  "text_sha": "796ce6237094",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$의 한 부정적분을 $F(x)$라 하고, 함수 $2f(x)-1$의 한 부정적분을 $G(x)$라 하자. $F(3) - G(2) = F(3)$일 때, $G(5) - G(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "부정적분",
+      "정적분의_기본정리"
+    ],
+    "exam_intent": "부정적분의 성질과 적분상수를 이용한 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

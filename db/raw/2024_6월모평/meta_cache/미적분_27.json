@@ -1,0 +1,17 @@
+{
+  "text_sha": "ce6365d682df",
+  "meta": {
+    "searchable_text": "실수 θ(0 < θ < π/2)에 대하여 곡선 y = sin x 위의 점 P(θ, sin θ)에서의 접선과 점 P를 지나고 기울기가 -1인 직선이 이루는 예각의 크기를 α라 할 때, $\\lim_{\\theta \\to 0^+} \\frac{\\theta^2}{\\tan \\alpha}$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선",
+      "삼각함수",
+      "극한"
+    ],
+    "exam_intent": "접선의 기울기와 두 직선 사이 각도의 관계를 이용한 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

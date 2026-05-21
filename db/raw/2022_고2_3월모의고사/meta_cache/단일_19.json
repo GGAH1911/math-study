@@ -1,0 +1,17 @@
+{
+  "text_sha": "44f66cddb0a9",
+  "meta": {
+    "searchable_text": "두 자연수 $m$, $n$ ($m \\geq n$)에 대하여 전체집합 $U$는 $n$ 이하의 자연수의 집합이다. 두 부분집합 $A$는 $m$의 약수, $B$가 다음 조건을 만족시킨다. (가) $4 \\in A$, $7 \\in B$, $A \\cup B = U$ (나) 집합 $A$의 모든 원소의 합과 집합 $B$의 모든 원소의 합은 서로 같다. 집합 $A \\cap B$의 모든 원소의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "약수",
+      "합집합과_교집합",
+      "집합의_연산"
+    ],
+    "exam_intent": "주어진 조건으로부터 집합을 파악하고 교집합의 합 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

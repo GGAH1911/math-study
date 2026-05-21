@@ -1,0 +1,17 @@
+{
+  "text_sha": "a2930c529ea2",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 다음 조건을 만족시키는 0이 아닌 모든 정수의 값의 합을 구하시오. (가) $\\log_2(2x^2 + x) \\le \\log_2 8$ (나) 부등식 $\\log_2(x^2 + x + 1) \\le \\log_2(4x)$를 만족시키는 자연수의 개수는 6이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그_부등식",
+      "정의역_분석",
+      "조건_분석"
+    ],
+    "exam_intent": "로그 부등식의 해와 조건을 동시에 만족하는 정수해 찾기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

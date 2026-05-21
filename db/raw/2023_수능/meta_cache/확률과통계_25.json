@@ -1,0 +1,17 @@
+{
+  "text_sha": "bba5a904a61e",
+  "meta": {
+    "searchable_text": "흰색 마스크 5개, 검은색 마스크 9개가 들어있는 상자에서 3개의 마스크를 동시에 꺼낼 때, 꺼낸 3개 마스크 중 적어도 한 개가 흰색 마스크일 확률을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조합",
+      "여사건의_확률",
+      "비복원_추출"
+    ],
+    "exam_intent": "조합과 여사건을 이용한 확률 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

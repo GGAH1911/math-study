@@ -1,0 +1,17 @@
+{
+  "text_sha": "df906976981f",
+  "meta": {
+    "searchable_text": "연립부등식의 영역을 좌표평면 위에 알맞게 색칠한 것은? (단, 경계선은 포함한다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "부등식의_영역",
+      "원의_방정식",
+      "좌표평면"
+    ],
+    "exam_intent": "연립부등식이 나타내는 영역을 좌표평면에서 정확히 파악",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

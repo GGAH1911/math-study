@@ -1,0 +1,18 @@
+{
+  "text_sha": "8da16aa08c67",
+  "meta": {
+    "searchable_text": "닫힌구간 $[0, 2\\pi]$에서 정의된 함수 $f(x) = \\begin{cases} \\sin x & 0 \\leq x \\leq \\pi \\\\ 2\\sin x - 1 & \\pi \\leq x \\leq 2\\pi \\end{cases}$가 있다. $0 \\leq a \\leq 2\\pi$인 실수 $a$에 대하여 $f(x) = a$에 대한 방정식의 서로 다른 실근의 개수가 3이 되도록 하는 모든 $a$의 값의 합은 $\\frac{p}{q}$이다. $p$의 값을 구하시오. (단, $p$와 $q$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "방정식의_실근의_개수",
+      "함수의_극값",
+      "구간별_함수"
+    ],
+    "exam_intent": "구간별 함수의 그래프 분석으로 수평선과의 교점 개수 조건 파악",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

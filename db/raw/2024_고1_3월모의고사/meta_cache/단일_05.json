@@ -1,0 +1,16 @@
+{
+  "text_sha": "8ae3656062e6",
+  "meta": {
+    "searchable_text": "어느 동호회 회원 15명의 나이를 줄기와 잎 그림으로 나타낸 것이다. 이 자료의 최빈값은?\n\n줄기 | 잎\n1 | 7 8 9 9\n2 | 0 5 5 8 8\n3 | 4 4 4 5\n4 | 1 6\n\n(1·7은 17세)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "대푯값과_산포도",
+    "concepts": [
+      "최빈값",
+      "줄기와잎그림"
+    ],
+    "exam_intent": "줄기와 잎 그림에서 최빈값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

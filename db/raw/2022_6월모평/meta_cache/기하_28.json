@@ -1,0 +1,17 @@
+{
+  "text_sha": "7e9332e2bed0",
+  "meta": {
+    "searchable_text": "두 초점이 $F$, $F'$이고 장축의 길이가 $2a$인 타원이 있다. 이 타원의 한 꼭짓점을 중심으로 하고 반지름의 길이가 1인 원이 이 타원의 서로 다른 두 꼭짓점과 한 초점을 지날 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_성질",
+      "원의_방정식",
+      "거리_조건"
+    ],
+    "exam_intent": "타원의 기하적 성질과 거리 조건을 종합하여 매개변수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

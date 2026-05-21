@@ -1,0 +1,16 @@
+{
+  "text_sha": "1e87fdf63f0e",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 $(3, 4)$를 $x$축의 방향으로 1만큼, $y$축의 방향으로 3만큼 평행이동한 점의 좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "평행이동",
+      "좌표"
+    ],
+    "exam_intent": "평행이동을 통한 점의 좌표 변환 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

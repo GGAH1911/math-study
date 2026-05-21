@@ -1,0 +1,17 @@
+{
+  "text_sha": "7023cf5aa30d",
+  "meta": {
+    "searchable_text": "좌표공간의 점 $A$를 어떤 평면에 대하여 대칭이동한 점을 $B$, 점 $A$를 원점에 대하여 대칭이동한 점을 $C$라 할 때, 선분 $BC$의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "좌표공간",
+      "대칭이동",
+      "거리"
+    ],
+    "exam_intent": "좌표공간에서 대칭이동과 거리 계산 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

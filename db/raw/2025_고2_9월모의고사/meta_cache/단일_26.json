@@ -1,0 +1,16 @@
+{
+  "text_sha": "bb8dc2699ca7",
+  "meta": {
+    "searchable_text": "첫째항이 양수인 등비수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. 주어진 조건들 일 때, $S_5$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비수열의_합"
+    ],
+    "exam_intent": "등비수열의 합 공식을 이용하여 구체적인 항의 합을 계산하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "360eff65a9a4",
+  "meta": {
+    "searchable_text": "좌표평면 위에 세 점 $A(2, 3)$, $B(7, 1)$, $C(4, 5)$가 있다. 직선 AB 위의 점 D에 대하여 점 D를 지나고 직선 BC와 평행한 직선이 직선 AC와 만나는 점을 E라 하자. 삼각형 ABC와 삼각형 ADE의 넓이의 비가 4:1이 되도록 하는 모든 점 D의 y좌표의 곱은? (단, 점 D는 점 A도 아니고 점 B도 아니다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [],
+    "exam_intent": "평행 조건과 닮음을 이용한 좌표 기하 종합 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

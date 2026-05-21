@@ -1,0 +1,17 @@
+{
+  "text_sha": "df48b678cbb6",
+  "meta": {
+    "searchable_text": "확률변수 $X$가 이항분포 $B(45, p)$를 따르고 $E(X)=15$일 때, $p$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이항분포",
+      "기댓값",
+      "이항분포의_성질"
+    ],
+    "exam_intent": "이항분포의 기댓값 공식을 이용하여 확률값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

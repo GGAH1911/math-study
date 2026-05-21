@@ -1,0 +1,16 @@
+{
+  "text_sha": "0776282777b2",
+  "meta": {
+    "searchable_text": "$_{4}C_{2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "조합의_계산"
+    ],
+    "exam_intent": "기본 조합 공식을 이용한 간단한 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

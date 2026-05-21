@@ -1,0 +1,13 @@
+{
+  "text_sha": "416fe0278aca",
+  "meta": {
+    "searchable_text": "이상 기체의 상태 방정식 $PV = nRT$를 이용하여 두 강철 용기의 부피 비 계산. 용기 A의 몰수는 용기 B의 $\\frac{1}{4}$배이고, 압력은 용기 B의 $\\frac{3}{2}$배이며, 온도는 같을 때, $\\frac{V_A}{V_B}$의 값을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": ["docs/concepts/다항식.md"],
+    "exam_intent": "기체 상태 방정식과 물리량 비례 관계 이해 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

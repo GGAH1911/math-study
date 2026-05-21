@@ -1,0 +1,17 @@
+{
+  "text_sha": "62c65756f530",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\ln(x-2)^2$와 실수 전체의 집합에서 미분가능한 함수 $g$가 있다. 실수 전체의 집합에서 정의된 합성함수 $h$를 $f \\circ g$라 하자. $\\lim_{x \\to 2} \\frac{h(x)^2}{(x-2)^4} = 12$일 때, $h'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "합성함수의_미분",
+    "concepts": [
+      "합성함수의_미분",
+      "함수의_극한",
+      "로그함수의_미분"
+    ],
+    "exam_intent": "극한 조건으로부터 함수 정보를 파악하고 합성함수 미분법 적용",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

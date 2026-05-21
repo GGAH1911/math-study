@@ -1,0 +1,16 @@
+{
+  "text_sha": "181e6f0666ae",
+  "meta": {
+    "searchable_text": "$3^{1/5} \\times 3^{1/5}$의 값은? (또는 $\\sqrt[5]{3} \\times \\sqrt[5]{3}$)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_법칙",
+      "거듭제곱근의_곱셈"
+    ],
+    "exam_intent": "거듭제곱근의 곱셈 및 지수 법칙 이해도 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

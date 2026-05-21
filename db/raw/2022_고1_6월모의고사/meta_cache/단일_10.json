@@ -1,0 +1,16 @@
+{
+  "text_sha": "e83f13ffbb9c",
+  "meta": {
+    "searchable_text": "이차함수 $f(x) = x^2 + ax + b$의 그래프가 $x$축과 만나지 않도록 하는 모든 정수 $a$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "판별식",
+      "그래프의_x축_교점"
+    ],
+    "exam_intent": "판별식을 이용해 이차함수가 x축과 만나지 않는 조건 파악 및 정수해의 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

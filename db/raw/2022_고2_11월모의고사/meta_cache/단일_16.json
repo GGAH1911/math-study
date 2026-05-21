@@ -1,0 +1,16 @@
+{
+  "text_sha": "031af9e933e8",
+  "meta": {
+    "searchable_text": "조건: $3\\sin^2\\theta + 2\\sin\\theta = 8\\sin\\theta - 6$일 때, $\\cos\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_방정식",
+      "삼각함수_값_계산"
+    ],
+    "exam_intent": "삼각함수 방정식을 정리하여 특정 각의 삼각함수값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

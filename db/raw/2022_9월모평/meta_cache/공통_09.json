@@ -1,0 +1,17 @@
+{
+  "text_sha": "6a555e5a94ac",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 t(t≥0)에서의 속도 $v(t)$가 t의 다항함수로 주어진다. 어떤 시각에서 점 P의 가속도가 12일 때, 시각 3에서 4까지 점 P가 움직인 거리를 구하라. (단, 상수가 있다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "가속도",
+      "속도와_거리",
+      "적분"
+    ],
+    "exam_intent": "가속도 조건으로부터 상수를 구하고 정적분으로 이동거리를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

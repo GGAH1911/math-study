@@ -1,0 +1,18 @@
+{
+  "text_sha": "8f7dbb518222",
+  "meta": {
+    "searchable_text": "두 양수 $a$, $b$에 대하여 곡선 $y = a\\sin bx$ ($0 \\le x \\le 3\\pi$)이 직선 $y = cx$와 만나는 서로 다른 두 점을 A, B라 하자. 삼각형 OAB의 넓이가 5이고 직선 OA의 기울기와 직선 OB의 기울기의 곱이 $-\\frac{4}{5}$일 때, 구하는 값은? (단, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "직선과_곡선의_교점",
+      "기울기의_곱",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "삼각함수 곡선과 직선의 교점을 조건으로 하는 매개변수 결정 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

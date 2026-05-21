@@ -1,0 +1,16 @@
+{
+  "text_sha": "e788b5c86795",
+  "meta": {
+    "searchable_text": "복소수의 실수부분과 허수부분의 합이 3일 때, 실수 값 구하기 (단, 조건 있음)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수",
+      "실수부분과_허수부분"
+    ],
+    "exam_intent": "복소수 실수부분과 허수부분의 합 조건으로 미지수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

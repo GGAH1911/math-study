@@ -1,0 +1,18 @@
+{
+  "text_sha": "055978ca7c77",
+  "meta": {
+    "searchable_text": "자연수 $k$에 대하여 직선 $y = x + k$가 이차함수 $y = -x^2 + 4x + 4$의 그래프와 만나는 두 점의 $x$좌표를 각각 $\\alpha_1, \\alpha_2$라 하자. $|\\alpha_1 - \\alpha_2|$의 값이 자연수가 되도록 하는 100 이하의 자연수 $k$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수_그래프",
+      "교점과_판별식",
+      "비에타_공식",
+      "정수_조건"
+    ],
+    "exam_intent": "이차함수와 직선의 교점에서 좌표 차이가 자연수 조건을 만족하는 매개변수 개수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

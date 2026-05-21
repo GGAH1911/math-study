@@ -1,0 +1,18 @@
+{
+  "text_sha": "deb31246f8e2",
+  "meta": {
+    "searchable_text": "이차함수 $f(x) = ax^2 + bx + c$가 있다. 양수 $a$에 대하여 함수 $g(x)$가 $x \\leq 3$에서 $f(x)$, $x > 3$에서 다른 형태로 정의되어 다음 조건을 만족시킨다. (가) $\\lim_{x \\to 3} g(x)$가 존재한다. (나) 함수 $g$의 그래프는 $x$축과 오직 한 점에서만 만난다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "함수의_연속성",
+      "극한",
+      "구간별_함수",
+      "근과_판별식"
+    ],
+    "exam_intent": "극한 존재 조건과 근의 개수 조건으로부터 미지수 관계식 도출 및 명제 판정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

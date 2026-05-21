@@ -1,0 +1,17 @@
+{
+  "text_sha": "df67ee928f74",
+  "meta": {
+    "searchable_text": "실수 $x$에 대한 조건 '$x$는 음이 아닌 실수이다.'의 진리집합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "진리집합",
+      "명제",
+      "조건"
+    ],
+    "exam_intent": "음이 아닌 실수와 진리집합의 기본 개념 이해",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

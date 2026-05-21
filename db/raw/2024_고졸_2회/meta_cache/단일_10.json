@@ -1,0 +1,16 @@
+{
+  "text_sha": "0b6ae75a0418",
+  "meta": {
+    "searchable_text": "원점과 직선 사이의 거리",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "점-직선_거리"
+    ],
+    "exam_intent": "원점에서 주어진 직선까지의 거리를 공식으로 계산한다",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

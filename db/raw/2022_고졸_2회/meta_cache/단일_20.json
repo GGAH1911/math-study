@@ -1,0 +1,15 @@
+{
+  "text_sha": "f79dd881738d",
+  "meta": {
+    "searchable_text": "5개의 방과 후 프로그램(기타, 댄스, 드럼, 바둑, 태권도)이 있다. 이 중에서 서로 다른 3개의 프로그램을 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합"
+    ],
+    "exam_intent": "조합을 이용하여 경우의 수를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

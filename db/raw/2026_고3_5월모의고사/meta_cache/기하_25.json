@@ -1,0 +1,17 @@
+{
+  "text_sha": "ae76eebe67ec",
+  "meta": {
+    "searchable_text": "초점이 $F(\\sqrt{3}, 0)$, $F'(-\\sqrt{3}, 0)$인 타원 위의 제1사분면 점 $P$와 제2사분면 점 $Q$에서 선분 $PF'$과 $QF$의 교점을 $R$이라 할 때, 삼각형 $PRF$의 둘레와 삼각형 $QF'R$의 둘레의 합이 12일 때 타원의 단축의 길이를 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_정의",
+      "초점의_성질",
+      "기하학적_둘레_계산"
+    ],
+    "exam_intent": "타원의 초점 정의를 이용한 둘레 조건 분석으로 단축 길이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

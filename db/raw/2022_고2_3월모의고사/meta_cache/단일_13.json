@@ -1,0 +1,16 @@
+{
+  "text_sha": "e628024bdbc0",
+  "meta": {
+    "searchable_text": "전체집합 $U$는 50 이하의 자연수. $A$는 6의 배수, $B$는 4의 배수일 때, $B \\subseteq C \\subseteq A \\cup B$를 만족하는 집합 $C$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_포함관계",
+      "부분집합의_개수"
+    ],
+    "exam_intent": "포함 관계 조건을 만족하는 집합의 개수를 구하는 경우의 수",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

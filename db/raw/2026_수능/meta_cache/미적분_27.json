@@ -1,0 +1,17 @@
+{
+  "text_sha": "07061ee6e286",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 곡선 $x = 4 + \\sin 2t$, $y = 4 + 3\\cos 2t$를 $C$라 하자. 곡선 $C$가 직선 $3x + 5y = k$와 만나는 점을 $P$라 할 때, 곡선 $C$ 위의 점 $P$에서의 접선의 기울기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_곡선",
+      "접선의_기울기",
+      "매개변수_미분"
+    ],
+    "exam_intent": "매개변수 곡선의 교점에서 접선의 기울기를 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

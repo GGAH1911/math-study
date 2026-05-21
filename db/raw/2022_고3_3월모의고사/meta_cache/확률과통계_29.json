@@ -1,0 +1,17 @@
+{
+  "text_sha": "b90cbb5be019",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1, 2, 3, 4, 5\\}$, $B = \\{0, 1, 2, 3\\}$에 대하여 다음 조건을 만족시키는 함수 $f: A \\to B$의 개수를 구하시오. (가) $f(1) \\le f(2) \\le f(3) \\le f(4) \\le f(5)$ (나) $f(a) = f(b) = 0$을 만족시키는 집합 $A$의 서로 다른 두 원소 $a, b$가 존재한다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "여사건",
+      "비감소수열"
+    ],
+    "exam_intent": "비감소 함수 조건과 함수값 중복 조건을 만족하는 함수의 개수를 중복조합으로 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

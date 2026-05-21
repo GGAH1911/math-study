@@ -1,0 +1,17 @@
+{
+  "text_sha": "855a158b4ea6",
+  "meta": {
+    "searchable_text": "초점이 $F(2, 0)$이고 $x$축을 축으로 하는 포물선이 원점을 지나는 직선과 제1사분면 위의 두 점 $A, B$에서 만난다. 점 $A$에서 $x$축에 내린 수선의 발을 $H$라 하자. $\\frac{AF}{AH}, \\frac{AF}{BF} = \\frac{1}{4}$일 때, 선분 $AF$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_정의",
+      "초점과_준선",
+      "거리_계산"
+    ],
+    "exam_intent": "포물선의 정의와 주어진 비율 조건을 이용한 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "8870f639ff21",
+  "meta": {
+    "searchable_text": "삼각형 AB₁C₁이 주어졌을 때, 반복적인 과정을 통해 각 단계에서 선분 위의 점들과 내부의 점 D를 설정하여 두 개의 삼각형을 색칠한다. 조건: BₙDₙ = Bₙ₊₁Dₙ = CₙDₙ = Cₙ₊₁Dₙ, ∠BₙDₙBₙ₊₁ = ∠CₙDₙCₙ₊₁ = π/2. n번째 단계에서 색칠된 부분의 넓이를 Sₙ이라 할 때, $\\lim_{n\\to\\infty} S_n$의 값을 구하라.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "기하급수",
+      "무한급수의_수렴",
+      "닮음과_축소_비율"
+    ],
+    "exam_intent": "반복적 기하 구조의 누적 넓이가 무한급수로 수렴함을 이해하고 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

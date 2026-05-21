@@ -1,0 +1,17 @@
+{
+  "text_sha": "f5b1fbc0a3ff",
+  "meta": {
+    "searchable_text": "3차 함수의 극댓값이 9일 때, 극솟값을 구하는 문제. 도함수를 이용하여 극값을 구하고 주어진 조건으로부터 상수를 결정한 후 극솟값을 계산한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "도함수",
+      "3차함수"
+    ],
+    "exam_intent": "3차 함수의 극값 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

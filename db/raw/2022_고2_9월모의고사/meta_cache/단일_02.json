@@ -1,0 +1,15 @@
+{
+  "text_sha": "171227f10619",
+  "meta": {
+    "searchable_text": "$\\log_3 18 - \\log_3 2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질"
+    ],
+    "exam_intent": "로그의 차 공식 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

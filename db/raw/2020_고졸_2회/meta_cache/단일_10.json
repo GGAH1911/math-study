@@ -1,0 +1,17 @@
+{
+  "text_sha": "823bb1413a2a",
+  "meta": {
+    "searchable_text": "중심이 원점이고 점 $(3, 4)$를 지나는 원의 방정식은? ① $x^2 + y^2 = 1$ ② $x^2 + y^2 = 25$ ③ $(x-3)^2 + (y-4)^2 = 1$ ④ $(x-3)^2 + (y-4)^2 = 25$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "중심과_반지름",
+      "거리_공식"
+    ],
+    "exam_intent": "원의 중심과 반지름으로부터 원의 방정식을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

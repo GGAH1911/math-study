@@ -1,0 +1,17 @@
+{
+  "text_sha": "52f075a1046b",
+  "meta": {
+    "searchable_text": "꼭짓점이 원점 O이고 초점이 F(0, p)인 포물선이 있다. 포물선 위의 점 P, x축 위의 점 Q, 직선 위의 점 R에 대하여 삼각형 PQR은 정삼각형이고 직선 PR은 x축과 평행하다. 직선 PQ가 점 S(a, 21)을 지날 때, |QF| = 6/7이다. a의 값을 구하시오. (단, a와 p는 정수이고, 점 P는 제1사분면 위의 점이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선",
+      "정삼각형",
+      "좌표기하"
+    ],
+    "exam_intent": "포물선의 초점 조건과 정삼각형을 이용한 좌표 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

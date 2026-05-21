@@ -1,0 +1,16 @@
+{
+  "text_sha": "1b586256acb8",
+  "meta": {
+    "searchable_text": "0 < x < 5π에서 함수 $y = \\tan x$의 그래프와 직선 $y = 2$가 만나는 점의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의그래프",
+      "주기성"
+    ],
+    "exam_intent": "탄젠트 함수의 주기성을 이용한 그래프와 직선의 교점 개수 판정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

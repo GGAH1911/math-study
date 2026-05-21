@@ -1,0 +1,17 @@
+{
+  "text_sha": "44aa1955547f",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 위치가 주어진 3차 함수이다. 점 P의 운동 방향이 바뀌는 순간 점 P의 가속도를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "속도",
+      "가속도",
+      "극값"
+    ],
+    "exam_intent": "속도가 0인 순간의 가속도값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

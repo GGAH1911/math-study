@@ -1,0 +1,16 @@
+{
+  "text_sha": "72bbfd821abd",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 미분가능하고 다음 조건을 만족시키는 모든 함수 $f(x)$에 대하여 $f(5)$의 최솟값은? (3점) (가) $f(1) = 3$ (나) $1 \\le x \\le 5$인 모든 실수 $x$에 대하여 $f'(x) \\ge 5$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수의_부호와_함수의_증감",
+      "함수의_최댓값과_최솟값"
+    ],
+    "exam_intent": "도함수 조건으로부터 함수값의 최솟값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "9e449f95af4a",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$가 $\\lim_{x \\to 2} \\frac{f(x) - 4}{x - 2} = 3$을 만족시킬 때, $f'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "극한의_정의",
+      "미분계수"
+    ],
+    "exam_intent": "극한의 정의를 이용한 미분계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

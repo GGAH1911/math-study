@@ -1,0 +1,16 @@
+{
+  "text_sha": "d337d5802c24",
+  "meta": {
+    "searchable_text": "$\\sqrt[3]{3} \\times \\sqrt[3]{9}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "근호의_계산",
+      "지수법칙"
+    ],
+    "exam_intent": "세제곱근의 곱셈을 이용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

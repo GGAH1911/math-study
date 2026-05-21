@@ -1,0 +1,17 @@
+{
+  "text_sha": "8c96e06f258c",
+  "meta": {
+    "searchable_text": "π/2 < θ < π인 θ에 대하여 tan θ = 5/12일 때, sin θ - cos θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_기본_항등식",
+      "각의_범위와_부호",
+      "탄젠트를_이용한_사인,_코사인_구하기"
+    ],
+    "exam_intent": "각의 범위에 따른 삼각함수 부호와 기본 항등식을 이용하여 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

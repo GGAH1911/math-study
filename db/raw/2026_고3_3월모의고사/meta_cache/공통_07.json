@@ -1,0 +1,16 @@
+{
+  "text_sha": "986851d300ee",
+  "meta": {
+    "searchable_text": "곡선과 축 및 두 직선으로 둘러싸인 부분의 넓이는? 선택지: ① 11/3, ② 4, ③ 13/3, ④ 14/3, ⑤ 5",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "함수의_그래프와_넓이"
+    ],
+    "exam_intent": "곡선과 직선으로 둘러싸인 영역의 넓이를 정적분으로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

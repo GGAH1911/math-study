@@ -1,0 +1,17 @@
+{
+  "text_sha": "34e6f1f37c5d",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 수직선 위를 움직이는 점 P가 있다. 시각 $t \\geq 0$에서의 속도 $v(t)$가 주어져 있으며, 시각 $t=0$에서 점 P의 위치는 16이고, 시각 $t=2$에서 점 P의 위치는 0이다. 0부터 5까지 점 P가 움직인 거리를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "거리_계산",
+      "초기조건"
+    ],
+    "exam_intent": "정적분을 이용한 거리 계산과 초기조건 활용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

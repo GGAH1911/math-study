@@ -1,0 +1,16 @@
+{
+  "text_sha": "17cfc118623b",
+  "meta": {
+    "searchable_text": "남학생 5명, 여학생 2명이 일정한 간격을 두고 원 모양의 탁자에 모두 둘러앉을 때, 여학생끼리 이웃하여 앉는 경우의 수는? (단, 회전하여 일치하는 것은 같은 것으로 본다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "원탁배열",
+      "조건부경우의수"
+    ],
+    "exam_intent": "원탁배열에서 인접 조건을 만족하는 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

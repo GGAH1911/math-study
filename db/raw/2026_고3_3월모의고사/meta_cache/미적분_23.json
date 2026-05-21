@@ -1,0 +1,16 @@
+{
+  "text_sha": "5bf1e9355d87",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{4n^2 + 3n + 1}{n^2 - 12n + 1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "극한값"
+    ],
+    "exam_intent": "다항식 비의 극한을 계산할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

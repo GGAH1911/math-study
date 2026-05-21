@@ -1,0 +1,17 @@
+{
+  "text_sha": "40e1fad74622",
+  "meta": {
+    "searchable_text": "반지름의 길이가 6이고 호의 길이가 $4\\pi$인 부채꼴의 중심각의 크기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "호의_길이_공식",
+      "중심각",
+      "라디안"
+    ],
+    "exam_intent": "호의 길이 공식을 이용하여 중심각을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "1407b94ca944",
+  "meta": {
+    "searchable_text": "사면체 ABCD에서 AD = 3, DB = 2, DC = 2√3이고, D에서의 세 각 ∠ADB, ∠ADC, ∠BDC가 모두 90°이다. 선분 BC 위를 움직이는 점 P에 대하여 AP² + DP²의 최솟값을 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간좌표계",
+      "거리공식",
+      "함수최적화"
+    ],
+    "exam_intent": "공간좌표를 이용하여 두 거리 함수의 합의 최솟값을 구하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

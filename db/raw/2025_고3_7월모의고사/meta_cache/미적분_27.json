@@ -1,0 +1,18 @@
+{
+  "text_sha": "ada1f932c452",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차함수 $f$가 실수 $a \\neq 0$에 대하여 어떤 조건을 만족시킨다. 함수가 $x=3$에서 극대이고 $f(3)$일 때, $f(a)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "이차함수",
+      "극값",
+      "함수의_극대극소",
+      "미분"
+    ],
+    "exam_intent": "이차함수와 합성함수의 극값 조건을 이용한 함숫값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

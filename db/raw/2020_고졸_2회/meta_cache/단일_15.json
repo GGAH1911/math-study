@@ -1,0 +1,16 @@
+{
+  "text_sha": "eb1ef5e8b20c",
+  "meta": {
+    "searchable_text": "유리함수의 그래프가 주어졌을 때 상수의 값 구하기",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "유리함수",
+      "함수의_그래프"
+    ],
+    "exam_intent": "유리함수의 그래프로부터 식의 상수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

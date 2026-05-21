@@ -1,0 +1,17 @@
+{
+  "text_sha": "5c8dbeb902bf",
+  "meta": {
+    "searchable_text": "곡선 $y = x^3 - 5x^2 + 6x$ 위의 점 $(3, 0)$에서의 접선이 점 $(5, k)$를 지날 때, $k$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_방정식",
+      "도함수",
+      "기울기"
+    ],
+    "exam_intent": "도함수로 접선의 기울기를 구하고 조건을 만족하는 상수값 찾기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

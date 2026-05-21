@@ -1,0 +1,18 @@
+{
+  "text_sha": "5bb3e6a589ed",
+  "meta": {
+    "searchable_text": "직사각형 A₁B₁C₁D₁에서 A₁B₁ = 2, B₁C₁ = 2√3. 선분 A₁D₁을 1:2로 내분하는 점 E₁, 선분 B₁C₁을 지름으로 하는 반원의 호가 선분 B₁E₁, B₁D₁과 만나는 점을 F₁, G₁이라 할 때, 세 선분 F₁E₁, E₁D₁, D₁G₁과 호 F₁G₁로 둘러싸인 도형에 색칠하여 얻은 그림을 그림 1이라 하자. 이 방법을 반복하여 n번째 도형을 그릴 때, 색칠된 부분의 넓이를 Sₙ이라 할 때, $\\lim_{n \\to \\infty} S_n$을 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한급수",
+      "기하급수",
+      "도형의_넓이",
+      "축척"
+    ],
+    "exam_intent": "자기유사 도형의 무한 색칠 넓이 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "32f113c19aad",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 10 이하의 자연수 $a, b, c, d$의 모든 순서쌍 $(a, b, c, d)$의 개수는? (가) $a \\times b \\times c \\times d = 108$ (나) $a, b, c, d$ 중 서로 같은 수가 있다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "약수",
+      "중복순열"
+    ],
+    "exam_intent": "108을 네 약수로 분해하고 같은 수 포함된 순열 개수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

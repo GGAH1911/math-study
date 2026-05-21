@@ -1,0 +1,16 @@
+{
+  "text_sha": "a6282364ee4d",
+  "meta": {
+    "searchable_text": "중심이 $(2, 1)$이고 원점을 지나는 원의 방정식은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_표준형",
+      "원의_방정식"
+    ],
+    "exam_intent": "중심과 원 위의 점으로부터 원의 방정식을 세울 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

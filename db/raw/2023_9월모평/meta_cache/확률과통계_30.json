@@ -1,0 +1,18 @@
+{
+  "text_sha": "9ceb1a5cffb4",
+  "meta": {
+    "searchable_text": "집합 $A = \\{1,2,3,4,5\\}$와 함수 $f: A \\to A$에 대하여 함수 $f$의 치역을 $R$, 합성함수 $f \\circ f$의 치역을 $S$라 할 때, 다음 조건을 만족시키는 함수 $f$의 개수를 구하시오. (가) $|R| \\leq 3$ (나) $S = R$ (다) 집합 $R$의 모든 원소 $y$에 대하여 $f(y) \\neq y$이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수의_치역",
+      "합성함수",
+      "조건부_함수_개수",
+      "고정점_없는_함수"
+    ],
+    "exam_intent": "합성함수의 성질과 고정점 조건으로부터 함수의 개수를 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

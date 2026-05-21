@@ -1,0 +1,17 @@
+{
+  "text_sha": "4c789bd80f4c",
+  "meta": {
+    "searchable_text": "등차수열 $\\{a_n\\}$에 대하여 $a_3 = 6$, $2a_5 = 4 + a_{15}$일 때, $a_{11}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "일반항",
+      "연립방정식"
+    ],
+    "exam_intent": "등차수열의 조건으로부터 첫째항과 공차를 구하고 항의 값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

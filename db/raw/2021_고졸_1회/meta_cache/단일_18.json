@@ -1,0 +1,16 @@
+{
+  "text_sha": "79165944a083",
+  "meta": {
+    "searchable_text": "무리함수의 그래프가 그림과 같을 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "무리함수",
+      "함수의_그래프"
+    ],
+    "exam_intent": "그래프 정보를 이용해 무리함수의 상수를 구한다",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

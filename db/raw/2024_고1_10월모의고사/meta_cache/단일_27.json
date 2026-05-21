@@ -1,0 +1,16 @@
+{
+  "text_sha": "57eedaecf23b",
+  "meta": {
+    "searchable_text": "두 자연수 $a, b$ ($a \\leq 20$)에 대하여 전체집합 $U$는 20 이하의 자연수. $A, B$는 $U$의 두 부분집합. $A$는 $b$의 배수인 원소들, $B$는 $a$와 관련된 원소들. 다음 조건을 만족시킨다. (가) 어떤 집합 $\\subset A \\cap B$ (나) [조건 불명확]. 집합 $A$의 모든 원소의 합의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_교집합",
+      "배수와_약수"
+    ],
+    "exam_intent": "배수 조건으로 집합의 합의 최솟값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

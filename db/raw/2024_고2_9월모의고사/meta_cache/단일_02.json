@@ -1,0 +1,17 @@
+{
+  "text_sha": "47160eeab641",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{n^2 + 4n + 5}{n^2 + n + 2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_계산",
+      "다항식의_극한",
+      "차수_비교"
+    ],
+    "exam_intent": "같은 차수의 다항식 극한에서 최고차 계수 비 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

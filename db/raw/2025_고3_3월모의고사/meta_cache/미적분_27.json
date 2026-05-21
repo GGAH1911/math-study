@@ -1,0 +1,18 @@
+{
+  "text_sha": "0c08a7fddfe4",
+  "meta": {
+    "searchable_text": "모든 항이 양수인 수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 다음 조건을 만족시킨다. $0 < a_1 < 3$일 때, $x$에 대한 방정식 $\\sin\\frac{x}{a_n} = \\frac{a_n-1}{x}$의 서로 다른 실근의 개수는 $2n$이다. $\\lim_{n \\to \\infty} a_n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_수렴",
+      "실근의_개수_조건",
+      "삼각함수_방정식",
+      "극한값_결정"
+    ],
+    "exam_intent": "실근 개수 조건으로부터 수열의 점화식을 유도하고 극한값을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

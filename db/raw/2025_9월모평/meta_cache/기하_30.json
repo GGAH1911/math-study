@@ -1,0 +1,17 @@
+{
+  "text_sha": "a4289d3a6e1a",
+  "meta": {
+    "searchable_text": "좌표평면 위에 다섯 점 $A(0, 8)$, $B(8, 0)$, $C(7, 1)$, $D(7, 0)$, $E(4, 2)$가 있다. 삼각형 $AOB$의 변 위를 움직이는 점 $P$와 삼각형 $CDB$의 변 위를 움직이는 점 $Q$에 대하여 거리 함수의 최댓값을 $M$, 최솟값을 $m$이라 할 때, $M+m$의 값을 구하시오. (단, $O$는 원점이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_크기",
+      "거리와_최적화",
+      "매개변수_표현"
+    ],
+    "exam_intent": "벡터의 크기와 거리 개념을 활용한 함수 최적화",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

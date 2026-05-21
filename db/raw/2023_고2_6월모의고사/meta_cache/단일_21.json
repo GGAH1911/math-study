@@ -1,0 +1,17 @@
+{
+  "text_sha": "c26e5dfb175f",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 $\\frac{6\\pi}{n+1} \\leq x \\leq \\frac{6\\pi}{n}$에서 함수 $f(x) = \\sin 2x$의 최댓값을 $M_n$이라 하자. 40 이하의 자연수 $n$에 대하여 $M_n$이 무리수가 되도록 하는 모든 $n$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값",
+      "주기성과_대칭",
+      "무리수_판별"
+    ],
+    "exam_intent": "범위 조건에서 삼각함수 최댓값을 분석하고 무리수 판별 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

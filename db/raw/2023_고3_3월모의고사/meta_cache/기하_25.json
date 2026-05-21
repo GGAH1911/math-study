@@ -1,0 +1,16 @@
+{
+  "text_sha": "e55af9c2c28a",
+  "meta": {
+    "searchable_text": "한 초점이 $F(3, 0)$이고 주축의 길이가 4인 쌍곡선 $\\frac{x^2}{4} - \\frac{y^2}{5} = 1$의 점근선 중 기울기가 양수인 것을 $\\ell$이라 하자. 점 $F$와 직선 $\\ell$ 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_초점과_점근선",
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "쌍곡선의 초점과 매개변수로부터 점근선을 구하고 거리 공식을 적용하는 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

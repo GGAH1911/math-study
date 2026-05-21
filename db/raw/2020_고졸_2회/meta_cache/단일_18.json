@@ -1,0 +1,16 @@
+{
+  "text_sha": "9a0110585125",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 $a_1 = 1$, $a_{n+1} = a_n + (1 + 2 + 3 + \\cdots + n)$을 만족할 때, $a_4$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "부분합"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 항을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

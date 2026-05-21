@@ -1,0 +1,16 @@
+{
+  "text_sha": "09424e5af877",
+  "meta": {
+    "searchable_text": "부등식 $\\log_{?}(?) \\cdot \\log_{?}(?) \\leq 1$을 만족시키는 모든 자연수의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그부등식",
+      "로그의_성질"
+    ],
+    "exam_intent": "로그 부등식을 만족하는 자연수 해를 구하고 그 합을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

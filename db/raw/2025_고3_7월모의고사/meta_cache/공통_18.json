@@ -1,0 +1,17 @@
+{
+  "text_sha": "cc24c06ac85e",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_n\\}$, $\\{b_n\\}$에 대하여 $\\sum_{k=1}^{19} a_k b_k = 150$, $\\sum_{k=1}^{19} a_k = 330$이다. $a_n = 3$일 때, $\\sum_{k=1}^{20} a_k b_k$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "급수의_합",
+      "수열의_합_공식",
+      "조건부_계산"
+    ],
+    "exam_intent": "두 수열의 합 조건을 이용한 급수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

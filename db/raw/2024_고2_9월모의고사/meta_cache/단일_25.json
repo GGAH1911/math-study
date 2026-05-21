@@ -1,0 +1,17 @@
+{
+  "text_sha": "363c14a4d1e0",
+  "meta": {
+    "searchable_text": "$0 \\leq \\theta \\leq 10$일 때, 부등식 $\\frac{\\cos 5\\theta}{\\sin 5\\theta} \\leq \\frac{1}{\\sqrt{3}}$를 만족시키는 모든 자연수 $\\theta$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_부등식",
+      "주기성",
+      "삼각함수의_합성"
+    ],
+    "exam_intent": "삼각함수 부등식을 정리하여 주어진 범위에서 정수 해를 찾고 그 합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

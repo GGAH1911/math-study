@@ -1,0 +1,17 @@
+{
+  "text_sha": "c47d1c581603",
+  "meta": {
+    "searchable_text": "함수 $a \\log_2 \\frac{1}{x}$가 닫힌구간 $[2, 5]$에서 최댓값 3, 최솟값 1을 갖는다. $a$의 값은? (단, $a, b$는 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "함수의_최댓값과_최솟값",
+      "함수의_성질"
+    ],
+    "exam_intent": "로그함수의 최댓값·최솟값 조건에서 계수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

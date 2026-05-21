@@ -1,0 +1,16 @@
+{
+  "text_sha": "b62657573e7f",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 음이 아닌 정수 $x_1, x_2, x_3, x_4, x_5$의 모든 순서쌍의 개수는? [4점] (가) $x_1 + x_2 + x_3 + x_4 + x_5 = 10$ (나) 각 $x_i \\leq 2$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "포함배제원리"
+    ],
+    "exam_intent": "제약이 있는 중복조합을 포함배제 원리로 해결",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

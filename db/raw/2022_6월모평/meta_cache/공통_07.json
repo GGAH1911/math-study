@@ -1,0 +1,16 @@
+{
+  "text_sha": "74b256888e88",
+  "meta": {
+    "searchable_text": "첫째항이 2인 등차수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. [조건식: 수식 글리프로 인해 정확한 식 불명확함] 일 때, $S_{10}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의합"
+    ],
+    "exam_intent": "등차수열의 합 공식으로부터 공차를 구하고 일반항의 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

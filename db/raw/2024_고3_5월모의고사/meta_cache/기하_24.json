@@ -1,0 +1,17 @@
+{
+  "text_sha": "3a33d4753fbd",
+  "meta": {
+    "searchable_text": "방향이 같은 두 벡터 $\\vec{a}$, $\\vec{b}$에 대하여 $|\\vec{a}| = 3$, $|\\vec{a} + 2\\vec{b}| = 6$일 때, 벡터 $\\vec{b}$의 크기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_크기",
+      "평행_벡터",
+      "벡터_연산"
+    ],
+    "exam_intent": "평행 벡터의 성질을 이용한 벡터 크기 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

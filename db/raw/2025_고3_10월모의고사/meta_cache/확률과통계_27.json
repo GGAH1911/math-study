@@ -1,0 +1,17 @@
+{
+  "text_sha": "14fcb437d9e4",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 자연수 $a, b, c$의 모든 순서쌍 $(a, b, c)$의 개수는? (가) $a \\times b \\times c = 144$ (나) $a$는 짝수이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "소인수분해",
+      "약수의_개수",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "144의 약수 조건을 이용한 순서쌍 개수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

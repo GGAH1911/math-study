@@ -1,0 +1,16 @@
+{
+  "text_sha": "2b1f81bfa065",
+  "meta": {
+    "searchable_text": "두 함수에 대하여 극한값이 0이 되는 조건에서 두 상수의 곱을 구하는 문제. 함수 중 하나는 $2\\log x$ 형태이고, 두 상수는 1보다 큼.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "로그함수의_극한",
+      "함수의_극한"
+    ],
+    "exam_intent": "극한 조건으로부터 함수의 매개변수를 결정하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

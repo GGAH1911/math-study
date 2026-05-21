@@ -1,0 +1,16 @@
+{
+  "text_sha": "49256a59b47c",
+  "meta": {
+    "searchable_text": "부등식을 만족시키는 모든 정수의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "부등식의_해",
+      "정수의_개수"
+    ],
+    "exam_intent": "부등식의 해의 범위를 구하고 포함된 정수 개수를 세는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

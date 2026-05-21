@@ -1,0 +1,16 @@
+{
+  "text_sha": "39fe4395667f",
+  "meta": {
+    "searchable_text": "세 변의 길이가 각각 $x$, $x\\sqrt{2}$, $x\\sqrt{3}$인 삼각형이 직각삼각형일 때, $x$의 값은? (단, $x > 0$)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "피타고라스_정리",
+      "직각삼각형의_성질"
+    ],
+    "exam_intent": "직각삼각형 조건으로부터 피타고라스 정리를 적용하여 미지수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

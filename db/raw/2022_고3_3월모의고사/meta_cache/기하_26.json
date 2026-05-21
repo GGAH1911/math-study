@@ -1,0 +1,17 @@
+{
+  "text_sha": "7ecdea2dcc33",
+  "meta": {
+    "searchable_text": "그림과 같이 두 초점이 F, F'인 타원 $\\frac{x^2}{9} + \\frac{y^2}{25} = 1$ 위의 점 중 제1사분면에 있는 점 P에 대하여 세 선분 PF, PF', FF'의 길이가 이 순서대로 등차수열을 이룰 때, 점 P의 y좌표는? (단, 점 F의 y좌표는 양수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_정의",
+      "초점과_거리",
+      "등차수열"
+    ],
+    "exam_intent": "타원의 초점 성질과 등차수열 조건을 결합하여 타원 위 점의 좌표를 구한다.",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

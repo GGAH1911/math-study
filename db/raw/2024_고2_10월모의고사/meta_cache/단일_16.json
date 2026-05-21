@@ -1,0 +1,17 @@
+{
+  "text_sha": "253f37ad3640",
+  "meta": {
+    "searchable_text": "1보다 크고 100보다 작은 두 자연수 $a$, $b$가 $\\frac{\\log_a 4b}{\\log_a 2} = \\frac{4}{b \\log_2 8}$을 만족시킬 때, $a+b$의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그_방정식",
+      "밑변환_공식",
+      "로그_함수의_성질"
+    ],
+    "exam_intent": "로그 방정식과 밑변환 공식을 이용해 조건을 만족하는 두 수의 합의 최댓값을 구할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

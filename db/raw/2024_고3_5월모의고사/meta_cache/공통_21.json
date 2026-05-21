@@ -1,0 +1,18 @@
+{
+  "text_sha": "383d0bff755b",
+  "meta": {
+    "searchable_text": "중심이 O, 반지름이 6이고 중심각이 π/2인 부채꼴 OAB가 있다. 호 AB 위에 점 C를 호의 길이 AC = 4√2가 되도록 잡는다. 호 AC 위의 한 점 D에 대하여 점 D를 지나고 선분 OA에 평행한 직선과 점 C를 지나고 선분 AC에 수직인 직선이 만나는 점을 E라 하자. 삼각형 CED의 외접원의 반지름이 3√2일 때, 호 AD = 7을 만족시키는 두 유리수 p, q에 대하여 9pq의 값을 구하시오. (단, 점 D는 점 A도 아니고 점 C도 아니다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "호의_길이",
+      "중심각",
+      "외접원의_반지름",
+      "좌표기하학"
+    ],
+    "exam_intent": "호의 길이와 외접원 조건을 활용한 좌표기하 문제 해결",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

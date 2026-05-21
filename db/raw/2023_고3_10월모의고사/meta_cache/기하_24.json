@@ -1,0 +1,16 @@
+{
+  "text_sha": "3294f460534a",
+  "meta": {
+    "searchable_text": "쌍곡선 $\\frac{x^2}{a^2} - \\frac{y^2}{27} = 1$의 한 점근선의 방정식이 $y = \\sqrt{3}x$일 때, 이 쌍곡선의 주축의 길이는? (단, $a$는 양수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선"
+    ],
+    "exam_intent": "쌍곡선의 점근선 조건으로 매개변수를 결정하고 주축 길이를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

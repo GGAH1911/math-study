@@ -1,0 +1,16 @@
+{
+  "text_sha": "df462b7b5223",
+  "meta": {
+    "searchable_text": "$x$에 대한 다항식 $ax^3 + bx^2 + cx + 12$를 $x^2 + 2$로 나눈 나머지가 $2x + 8$일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나눗셈",
+      "나머지정리"
+    ],
+    "exam_intent": "다항식 나눗셈을 이용하여 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "c840ed8c212a",
+  "meta": {
+    "searchable_text": "첫째항이 자연수인 수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 주어진 점화식을 만족시킬 때, $a_6 = 2$가 되도록 하는 모든 $a_1$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "역추적",
+      "조건_분석"
+    ],
+    "exam_intent": "점화식 역방향 추적으로 조건을 만족하는 초항 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

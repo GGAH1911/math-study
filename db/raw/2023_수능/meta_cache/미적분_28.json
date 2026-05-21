@@ -1,0 +1,17 @@
+{
+  "text_sha": "0d07705eae03",
+  "meta": {
+    "searchable_text": "중심이 O, 지름 AB(길이 2)인 반원 위의 점 C(∠AOC = π/2). 호 BC 위의 점 P, 호 CA 위의 점 Q. 선분 AP 위의 점 R(∠CQR = π/2). S는 AP와 CO의 교점. ∠PAB = θ일 때, 삼각형 POB의 넓이를 S₁, 사각형 CQRS의 넓이를 S₂라 하자. 극한값을 구하시오. (0 < θ < π/4)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한값_계산",
+      "원의_성질",
+      "도형의_넓이"
+    ],
+    "exam_intent": "각도 변화에 따른 넓이 함수의 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

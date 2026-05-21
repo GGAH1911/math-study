@@ -1,0 +1,16 @@
+{
+  "text_sha": "f43d6982758f",
+  "meta": {
+    "searchable_text": "AB = 3, BC = 6인 삼각형 ABC가 있다. ∠ABC를 $\\theta$라 할 때, $\\sin\\theta = \\frac{3}{\\sqrt{14}}$일 때, 선분 AC의 길이는? (단, $0 < \\theta < \\pi$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "코사인법칙",
+      "삼각함수값"
+    ],
+    "exam_intent": "삼각함수 값으로부터 코사인값을 구해 코사인 법칙으로 변의 길이를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

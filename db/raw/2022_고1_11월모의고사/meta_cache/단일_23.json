@@ -1,0 +1,16 @@
+{
+  "text_sha": "796fb893aaa8",
+  "meta": {
+    "searchable_text": "이차함수 $y = x^2 - 4x + a$의 그래프와 직선 $y = 2x + 1$이 서로 다른 두 점에서 만나도록 하는 자연수 $a$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수와_직선의_교점",
+      "판별식"
+    ],
+    "exam_intent": "이차함수와 일차함수의 교점 조건을 판별식으로 분석하여 매개변수의 최댓값을 구한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

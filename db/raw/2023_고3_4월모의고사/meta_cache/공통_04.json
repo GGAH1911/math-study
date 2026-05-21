@@ -1,0 +1,17 @@
+{
+  "text_sha": "5539ce5f48be",
+  "meta": {
+    "searchable_text": "함수의 극솟값이 2일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "도함수",
+      "도함수의_부호_변화"
+    ],
+    "exam_intent": "극솟값 조건으로 함수의 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

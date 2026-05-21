@@ -1,0 +1,16 @@
+{
+  "text_sha": "77cc33e85ccc",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 주어진 점화식을 만족할 때, $\\lim_{n \\to \\infty}$의 극한값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_극한",
+      "점화식"
+    ],
+    "exam_intent": "수열의 극한과 점화식으로부터 극한값을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e6306ebc82f0",
+  "meta": {
+    "searchable_text": "그림과 같이 양수 $a$에 대하여 $AB = 4$, $a \\cdot BC$, $a \\cdot CA = 8$인 삼각형 $ABC$가 있다. $\\angle BAC$의 이등분선이 선분 $BC$와 만나는 점을 $P$라 하자. $\\sin A \\cdot \\sin B = \\frac{\\sqrt{6}}{3}$일 때, 선분 $AP$의 길이는? (단, $\\angle BAC \\neq 90°$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "각의_이등분선",
+      "사인_법칙",
+      "삼각형의_성질"
+    ],
+    "exam_intent": "각의 이등분선과 삼각비 조건을 이용한 길이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "10d82cbf954c",
+  "meta": {
+    "searchable_text": "반지름의 길이가 $3\\sqrt{2}$인 원 $O$의 외부에 있는 점 $A$에서 원 $O$에 그은 두 접선을 각각 $l$, $m$이라 하고, 두 직선 $l$, $m$이 원 $O$와 만나는 점을 각각 $B$, $C$라 하자. 점 $B$를 지나고 직선 $l$에 수직인 직선이 원 $O$와 만나는 두 점 중에서 $B$가 아닌 점을 $P$, 직선 $AP$가 원 $O$와 만나는 두 점 중에서 $P$가 아닌 점을 $Q$라 하면, $AB = 12$일 때, $\\sin \\angle BPQ + \\sin \\angle QPC = \\sqrt{3}$이다. 삼각형 $BQC$의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원의_접선",
+      "현과_원주각",
+      "삼각비"
+    ],
+    "exam_intent": "접선의 성질과 삼각비를 종합하여 도형의 넓이를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

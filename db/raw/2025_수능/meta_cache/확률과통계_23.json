@@ -1,0 +1,16 @@
+{
+  "text_sha": "73e9ceb1ba8a",
+  "meta": {
+    "searchable_text": "다항식 $(x^3 + 2y)^5$의 전개식에서 $x^6$의 계수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "이항계수"
+    ],
+    "exam_intent": "이항정리를 이용한 다항식 전개에서 특정 항의 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

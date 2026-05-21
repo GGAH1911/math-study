@@ -1,0 +1,18 @@
+{
+  "text_sha": "1958d4311ee3",
+  "meta": {
+    "searchable_text": "길이가 14인 선분 AB를 지름으로 하는 반원의 호 AB 위에 점 C를 잡아 BC=6이 되도록 한다. 점 D가 호 AC 위의 점일 때(점 D는 점 A와 점 C가 아닌 점), 다음을 검토한다. ㄱ. $\\sin \\angle CBA = \\frac{7}{2\\sqrt{10}}$ ㄴ. $CD=7$일 때, $AD=\\frac{3\\sqrt{2}}{\\sqrt{30}}$ ㄷ. 사각형 ABCD의 넓이의 최댓값은 $20\\sqrt{10}$이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "반원의_원주각",
+      "호와_현",
+      "정현법칙",
+      "사각형의_넓이"
+    ],
+    "exam_intent": "반원에 내접하는 도형에서 원의 성질과 삼각비를 활용하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

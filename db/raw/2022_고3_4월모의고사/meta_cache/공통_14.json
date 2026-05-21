@@ -1,0 +1,17 @@
+{
+  "text_sha": "fd4fd2df11ba",
+  "meta": {
+    "searchable_text": "정수 a와 함수 f에 대하여 함수 g를 정의할 때, ㄱ. a=3일 때 lim(x→0) f(x)/x = 0이다. ㄴ. 함수 f가 x=0에서 연속이 되도록 하는 정수 a가 존재한다. ㄷ. 함수 f가 x=0에서 미분가능하도록 하는 모든 정수 a의 값의 합은 5이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "함수의_극한",
+      "연속성",
+      "미분가능성"
+    ],
+    "exam_intent": "매개변수를 포함한 함수의 극한, 연속성, 미분가능성 조건 판정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

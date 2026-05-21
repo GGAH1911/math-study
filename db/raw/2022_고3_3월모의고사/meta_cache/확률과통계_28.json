@@ -1,0 +1,17 @@
+{
+  "text_sha": "df4b903cb651",
+  "meta": {
+    "searchable_text": "세 명의 학생 A, B, C에게 서로 다른 종류의 사탕 5개를 남김없이 나누어 주는 경우의 수. (가) 학생 A는 적어도 하나의 사탕을 받는다. (나) 학생 B가 받는 사탕의 개수는 2 이하이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "포함배제원리",
+      "조건부경우의수",
+      "분배"
+    ],
+    "exam_intent": "제약 조건이 있는 경우의 수를 체계적으로 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

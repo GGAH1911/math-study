@@ -1,0 +1,17 @@
+{
+  "text_sha": "c28632fb568c",
+  "meta": {
+    "searchable_text": "길이 4인 선분 AB를 지름으로 하는 반원이 있고, AB의 중점 O, 호 위의 점 C에 대해 A를 지나고 OC와 평행한 직선이 호와 만나는 점 P, OC와 BP의 교점 Q, Q를 지나고 PO와 평행한 직선이 OB와 만나는 점 D를 정의한다. $\\angle CAB = \\theta$일 때 삼각형 QDB의 넓이와 삼각형 PQC의 넓이의 관계식을 구하는 문제이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원주각과_중심각",
+      "닮음",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "원의 성질과 닮음을 이용한 복합 기하 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

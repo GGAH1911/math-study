@@ -1,0 +1,16 @@
+{
+  "text_sha": "12db5be0ac89",
+  "meta": {
+    "searchable_text": "이차방정식이 서로 다른 두 실근을 가질 때, 자연수의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "근의_존재_조건"
+    ],
+    "exam_intent": "판별식 > 0 조건에서 자연수의 최솟값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "881b8580c7ba",
+  "meta": {
+    "searchable_text": "3장의 글자 카드가 있다. 이 중에서 서로 다른 2장의 카드를 택하여 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열의 개념을 적용한 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

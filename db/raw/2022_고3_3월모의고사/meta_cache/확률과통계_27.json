@@ -1,0 +1,17 @@
+{
+  "text_sha": "daea6130ad19",
+  "meta": {
+    "searchable_text": "같은 종류의 책 8권을 3개의 칸에 남김없이 나누어 꽂는다. 각 칸의 최대 용량은 5권, 5권, 8권이다. 비어 있는 칸이 있을 수 있을 때 경우의 수를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "제약조건",
+      "포함배제원리"
+    ],
+    "exam_intent": "제약조건이 있는 음이 아닌 정수해 개수를 포함배제 원리로 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

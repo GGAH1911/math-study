@@ -1,0 +1,16 @@
+{
+  "text_sha": "b84cad29df43",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 사차다항식 $f(x)$가 다음 조건을 만족할 때, $f(4)$의 값은? (가) $f(x)$를 $x-1$로 나눈 나머지와 $f(x)$를 $(x-2)(x-3)$으로 나눈 나머지는 서로 같다. (나) $f(1)+5$는 $f(2)$로 나누어떨어진다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "인수정리"
+    ],
+    "exam_intent": "나머지 정리와 조건식을 이용해 사차다항식을 결정하고 함숫값을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

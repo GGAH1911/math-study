@@ -1,0 +1,16 @@
+{
+  "text_sha": "e22a9eb3b71a",
+  "meta": {
+    "searchable_text": "첫째항이 양수인 등차수열의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. [조건식: 글리프 손상으로 정확한 복원 불가능, $S_3, S_6, S_{11}$ 관련 조건으로 추정] 을 만족시키는 모든 수열의 첫째항의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "조건을 만족하는 등차수열의 모든 첫째항을 찾아 합산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

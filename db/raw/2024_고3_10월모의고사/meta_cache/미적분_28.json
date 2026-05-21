@@ -1,0 +1,17 @@
+{
+  "text_sha": "d59b048d9a6a",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 그래프와 함수 $g(x) = x\\cos x$의 그래프가 만나는 점의 $x$좌표 중 양수인 것을 작은 수부터 크기순으로 모두 나열할 때, $n$번째 수를 $x_n$이라 하자. $\\lim_{n \\to \\infty} \\frac{1}{x_n} \\times \\cos 2x_n$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "함수의_교점",
+      "수열의_극한"
+    ],
+    "exam_intent": "초월방정식의 해로 정의된 수열의 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "372eb52ab827",
+  "meta": {
+    "searchable_text": "두 실수에 관한 로그 계산 문제. 2log₁₀(?) 및 log₂(20) 또는 유사 형태의 로그식이 포함되며, 두 실수의 곱을 구하는 문제. [PDF 글리프 손상으로 정확한 재구성 불가]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의",
+      "로그의_성질"
+    ],
+    "exam_intent": "로그의 기본 성질과 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "e3af1f4a26bd",
+  "meta": {
+    "searchable_text": "특정 3차 다항식을 인수분해한 식이 완전세제곱식 형태가 될 때, 다항식의 계수를 구한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "완전세제곱식",
+      "다항식_인수분해"
+    ],
+    "exam_intent": "완전세제곱식 인수분해의 계수 관계를 파악할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

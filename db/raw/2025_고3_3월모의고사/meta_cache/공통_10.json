@@ -1,0 +1,16 @@
+{
+  "text_sha": "6779619697eb",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대해 다음을 만족한다: $n$이 3의 배수가 아닐 때 $a_{n+1} = a_n + 10$, $n$이 3의 배수일 때 $a_{n+1} = a_n + 19$. $a_1 = 1$일 때, $a_1 + a_2 + \\cdots + a_{3n}$을 만족시키는 자연수 $n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열의_합"
+    ],
+    "exam_intent": "조건부 점화식으로 정의된 수열의 누적합 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

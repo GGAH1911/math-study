@@ -1,0 +1,17 @@
+{
+  "text_sha": "1e55549d06fd",
+  "meta": {
+    "searchable_text": "초점이 $F$인 포물선 $y^2 = 20x$ 위의 점 $P$에 대하여 $PF = 15$일 때, 점 $P$의 $x$좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선",
+      "포물선의_정의",
+      "초점과_준선"
+    ],
+    "exam_intent": "포물선의 정의를 이용하여 점의 x좌표를 구하는 기본 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

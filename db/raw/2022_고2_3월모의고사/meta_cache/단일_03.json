@@ -1,0 +1,16 @@
+{
+  "text_sha": "faa2afa032b1",
+  "meta": {
+    "searchable_text": "5C3 × 3!의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "팩토리얼"
+    ],
+    "exam_intent": "조합과 팩토리얼의 기본 계산을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

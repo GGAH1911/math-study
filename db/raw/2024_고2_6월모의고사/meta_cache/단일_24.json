@@ -1,0 +1,17 @@
+{
+  "text_sha": "efa49790a2d4",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 6에서 함수 $f(x) = x \\log_3(1 + 3x + 30)$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "극값",
+      "미분"
+    ],
+    "exam_intent": "로그함수의 극값을 미분으로 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

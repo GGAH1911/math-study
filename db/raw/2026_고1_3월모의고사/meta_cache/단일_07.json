@@ -1,0 +1,17 @@
+{
+  "text_sha": "2e4502ec577c",
+  "meta": {
+    "searchable_text": "그림과 같이 ∠C = ∠D = 90°인 사각형 ABCD가 있다. BC:AD = 2:3, CD = 4이고 사각형 ABCD의 넓이가 17일 때, 선분 AD의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "사각형의_성질",
+      "넓이_계산",
+      "직각_조건"
+    ],
+    "exam_intent": "각도 조건과 비율 관계를 통해 사각형의 변의 길이를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

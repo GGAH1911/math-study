@@ -1,0 +1,16 @@
+{
+  "text_sha": "71ab164f453b",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 (2, 1)을 원점에 대하여 대칭이동한 점의 좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "원점대칭",
+      "좌표변환"
+    ],
+    "exam_intent": "원점 대칭을 이용한 좌표 변환 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

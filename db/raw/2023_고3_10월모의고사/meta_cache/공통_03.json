@@ -1,0 +1,17 @@
+{
+  "text_sha": "aaf7dbacb310",
+  "meta": {
+    "searchable_text": "공차가 3인 등차수열 $\\{a_n\\}$과 공비가 2인 등비수열 $\\{b_n\\}$이 $a_2 = b_2$, $a_4 = b_4$를 만족시킬 때, $a_1 + b_1$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등비수열",
+      "연립방정식"
+    ],
+    "exam_intent": "등차·등비수열의 일반항을 이용한 조건 해석 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

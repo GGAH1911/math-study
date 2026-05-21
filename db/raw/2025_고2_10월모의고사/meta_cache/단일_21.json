@@ -1,0 +1,17 @@
+{
+  "text_sha": "159b1a3c3b3c",
+  "meta": {
+    "searchable_text": "함수 $f(x)$가 주어져 있고, 실수 매개변수에 대한 방정식의 서로 다른 실근의 개수를 분석하는 문제. 4 이하의 양수 범위에서 실근 개수가 3이 되는 조건을 만족하는 모든 정수의 값의 합을 구함.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_그래프",
+      "방정식의_실근",
+      "매개변수_조건_분석"
+    ],
+    "exam_intent": "함수의 그래프를 통해 방정식 실근 개수 조건을 판별하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "739b9f591eef",
+  "meta": {
+    "searchable_text": "집합 $\\{x | x \\geq a\\}$에서 집합 $\\{y | y \\geq b\\}$로의 함수 $f(x) = 2x^2 + 4x + 3$이 일대일대응이 되도록 하는 두 실수 $a, b$에 대하여 어떤 값의 최댓값이 $\\frac{p}{q}$이다. $p + q$의 값을 구하시오. (단, $p$와 $q$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "일대일대응",
+      "함수의_정의역과_치역",
+      "이차함수의_최솟값"
+    ],
+    "exam_intent": "정의역·치역 제한에서 함수의 일대일대응 조건을 분석하고 매개변수 관계의 최댓값을 구한다.",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

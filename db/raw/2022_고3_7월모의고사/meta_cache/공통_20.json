@@ -1,0 +1,17 @@
+{
+  "text_sha": "c033f9c05a34",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 3인 이차함수 $f(x)$에 대하여 함수 $g(x) = \\int_0^x f(t) dt$가 다음 조건을 만족시킨다. (가) 함수 $g(x)$는 극값을 갖지 않는다. (나) 방정식 $f(x) = 0$의 모든 실근은 0, 3이다. $\\int_0^3 f(x) dx$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수의_극값",
+      "정적분",
+      "함수의_극값_조건"
+    ],
+    "exam_intent": "적분으로 정의된 함수의 극값 조건을 이용한 원함수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

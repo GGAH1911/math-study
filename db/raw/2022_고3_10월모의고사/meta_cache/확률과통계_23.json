@@ -1,0 +1,17 @@
+{
+  "text_sha": "38785bf200ba",
+  "meta": {
+    "searchable_text": "표준편차가 12인 정규분포를 따르는 모집단에서 크기가 36인 표본을 임의추출하여 구한 표본평균을 $\\bar{X}$라 할 때, $\\sigma_{\\bar{X}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [
+      "표본평균",
+      "표준오차",
+      "정규분포"
+    ],
+    "exam_intent": "표본평균의 표준오차 공식 $\\sigma/\\sqrt{n}$ 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "c3a409503cac",
+  "meta": {
+    "searchable_text": "실수 $x$에 대한 두 조건이 있다. $P: ax^2 - 2x - 1 \\geq 0$, $Q: bx^2 - 2x - 9 \\leq 0$. 다음 두 문장이 모두 참인 명제가 되도록 하는 정수 $a, b$의 순서쌍 $(a, b)$의 개수는? (1) 모든 실수 $x$에 대하여 $P \\Rightarrow Q$이다. (2) $P$는 $\\neg Q$이기 위한 충분조건이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제와_논리",
+      "충분조건과_필요조건",
+      "진리집합과_포함관계"
+    ],
+    "exam_intent": "이차부등식의 해집합과 명제의 논리적 포함관계를 이용하여 정수 매개변수 쌍을 찾는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

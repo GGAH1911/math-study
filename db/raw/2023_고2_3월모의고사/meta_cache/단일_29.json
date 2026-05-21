@@ -1,0 +1,17 @@
+{
+  "text_sha": "bc60242be003",
+  "meta": {
+    "searchable_text": "원 위의 두 점 P, Q에 대해 P를 직선에 대해 대칭이동한 점을 P', Q를 축 방향으로 평행이동한 점을 Q'이라 할 때, 주어진 식의 최솟값이 0, 최댓값이 $\\frac{3}{4}$를 만족하는 미지수를 구하는 문제이다.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "대칭이동",
+      "평행이동"
+    ],
+    "exam_intent": "기하 변환을 통한 최적화 문제 해결",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

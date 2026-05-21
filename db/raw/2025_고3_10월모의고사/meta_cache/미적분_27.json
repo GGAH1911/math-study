@@ -1,0 +1,18 @@
+{
+  "text_sha": "59da20cf9ac2",
+  "meta": {
+    "searchable_text": "세 실수 $a$, $b$, $c$에 대하여 두 점 $A(a, f(a))$, $B(b, f(b))$가 곡선 $y = x^2 - 2x + c$ 위에 있다. 곡선 위의 점 A에서의 접선과 곡선 위의 점 B에서의 접선이 이루는 예각의 크기를 $\\theta$라 하자. $|AB|^2 = 2$, $\\tan\\theta = \\frac{3}{4}$일 때, $c$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "접선의_기울기",
+      "두_직선이_이루는_각도",
+      "거리_조건"
+    ],
+    "exam_intent": "도함수를 이용한 접선 기울기와 각도, 거리 조건으로부터 곡선 계수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

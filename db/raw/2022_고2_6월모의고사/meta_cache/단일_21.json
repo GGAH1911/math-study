@@ -1,0 +1,16 @@
+{
+  "text_sha": "cf92be294458",
+  "meta": {
+    "searchable_text": "자연수 $a$($1 \\le a \\le 12$)에 대하여 $0 \\le x \\le 12$에서 정의된 함수 $f(x)$를 다음과 같이 정의하자. 구간 $[0, \\frac{3}{2}]$에서 $f(x) = \\frac{1}{2}\\sin(\\pi x)$이고, 구간 $[\\frac{3}{2}, 12]$에서는 $a$에 관련된 식으로 정의된다. 실수 $a_0$($0 \\le a_0 \\le \\frac{1}{2}$)에 대하여 방정식 $f(x) = a_0$의 모든 실근의 합이 46일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "삼각함수의_방정식"
+    ],
+    "exam_intent": "근의 합 조건으로부터 매개변수를 결정하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

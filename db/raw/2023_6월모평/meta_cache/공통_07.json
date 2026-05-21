@@ -1,0 +1,16 @@
+{
+  "text_sha": "828e000b12bb",
+  "meta": {
+    "searchable_text": "닫힌구간 [0, π]에서 정의된 함수 $y = \\sin(2x)$가 어떤 점에서 최댓값을 갖고 어떤 점에서 최솟값을 갖는다. 곡선 위의 두 점을 지나는 직선의 기울기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값과_최솟값",
+      "직선의_기울기"
+    ],
+    "exam_intent": "삼각함수 최댓값·최솟값 구하고 두 점을 연결한 직선의 기울기 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "01785fbde6da",
+  "meta": {
+    "searchable_text": "직선에 수직이고 점을 지나는 직선의 방정식을 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "수직_직선"
+    ],
+    "exam_intent": "수직 직선의 기울기 관계를 이용하여 점을 지나는 직선의 방정식을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

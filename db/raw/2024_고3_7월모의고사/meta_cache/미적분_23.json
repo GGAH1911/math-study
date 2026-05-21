@@ -1,0 +1,17 @@
+{
+  "text_sha": "180a361fc872",
+  "meta": {
+    "searchable_text": "$\\lim_{x \\to 0} \\frac{e^{3x} - 1}{5^{2x} - 1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "지수함수의_극한",
+      "로그의_성질",
+      "극한값_계산"
+    ],
+    "exam_intent": "지수함수의 극한과 로그를 이용한 극한값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "4c99e823c554",
+  "meta": {
+    "searchable_text": "두 실수 $a, b$와 두 함수 $f(x) = x^2 + ax + b$, $g(x) = -x^2 + ax + b$에 대하여 함수 $h$를 조건부로 정의할 때, $h$가 실수 전체에서 실수 전체로의 일대일대응이 되도록 하는 $(a, b)$의 순서쌍 집합을 $S$라 함",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "일대일대응",
+      "조건부함수",
+      "함수의_치역",
+      "이차함수"
+    ],
+    "exam_intent": "조건부 함수의 일대일대응 조건을 분석하고 모수의 제약을 도출",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

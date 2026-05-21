@@ -1,0 +1,16 @@
+{
+  "text_sha": "3284f941cbf6",
+  "meta": {
+    "searchable_text": "호의 길이가 2이고 넓이가 6인 부채꼴의 반지름의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "호의_길이",
+      "부채꼴의_넓이"
+    ],
+    "exam_intent": "부채꼴의 호의 길이와 넓이 공식을 이용하여 반지름 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

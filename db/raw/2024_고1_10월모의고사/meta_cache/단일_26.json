@@ -1,0 +1,17 @@
+{
+  "text_sha": "2b0552931e3e",
+  "meta": {
+    "searchable_text": "좌표평면에서 두 직선에 모두 접하고 특정 점을 지나는 서로 다른 두 원의 중심을 각각 $O_1$, $O_2$라 할 때, 선분 $O_1O_2$의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "직선과_원의_접선",
+      "점과_원의_관계"
+    ],
+    "exam_intent": "두 직선에 접하고 점을 지나는 원의 중심의 위치 관계 파악",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

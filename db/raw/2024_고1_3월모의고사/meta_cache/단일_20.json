@@ -1,0 +1,18 @@
+{
+  "text_sha": "09a63c457784",
+  "meta": {
+    "searchable_text": "그림과 같이 한 변의 길이가 12인 정삼각형 ABC의 변 BC 위에 $DC = 4$인 점 D가 있다. 선분 AD를 한 변으로 하는 정삼각형 ADE에 대하여 선분 AC와 선분 DE가 만나는 점을 F라 하자. 다음은 선분 CF의 길이를 구하는 과정이다. 두 정삼각형 ABC, ADE에서 $AB = AC$, $AD = AE$이고, $\\angle BAD = 60° - \\angle DAC = \\angle CAE$이므로 삼각형 ABD와 삼각형 ACE는 서로 합동이다. 그러므로 $\\angle ECA = 60°$, $CE = (가)$이다. 한편 각 AFD와 각 CFE는 서로 맞꼭지각이고, $\\angle FDA = \\angle ECF$이므로 $\\angle DAF = \\angle FEC$이다. 또한 $\\angle ACD = \\angle ECF$이므로 삼각형 ACD와 삼각형 ECF는 서로 닮은 도형이고, 삼각형 ACD와 삼각형 ECF의 닮음비는 $(나):2$이다. 따라서 $CF = (다)$이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "도형의_합동",
+      "도형의_닮음",
+      "정삼각형의_성질",
+      "삼각형의_닮음조건"
+    ],
+    "exam_intent": "도형의 합동과 닮음을 종합적으로 활용하여 미지의 길이를 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

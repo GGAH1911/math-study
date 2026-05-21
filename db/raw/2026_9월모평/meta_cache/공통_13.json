@@ -1,0 +1,16 @@
+{
+  "text_sha": "214519ec536f",
+  "meta": {
+    "searchable_text": "함수에 대하여 다음 조건을 만족시키는 모든 정수의 개수는? 조건: 모든 실수 $x$에 대하여 $\\lim_{x \\to a} \\frac{f(x)}{2x^2 - 2ax - a^2}$의 값이 존재한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한의_존재_조건",
+      "인수분해"
+    ],
+    "exam_intent": "극한 존재 조건으로부터 매개변수의 정수 범위를 결정하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

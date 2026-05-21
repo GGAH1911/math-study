@@ -1,0 +1,18 @@
+{
+  "text_sha": "ae7230dbb9ef",
+  "meta": {
+    "searchable_text": "수직선 위의 점 $A(6)$과 시각 $t=0$일 때 원점을 출발하여 이 수직선 위를 움직이는 점 $P$가 있다. 시각 $t(t \\geq 0)$에서의 점 $P$의 속도 $v(t)$가 상수 $a$를 포함하는 함수로 주어진다. 시각 $t=2$에서 점 $P$와 점 $A$ 사이의 거리가 10일 때, 상수 $a$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "속도",
+      "적분",
+      "위치",
+      "거리_조건"
+    ],
+    "exam_intent": "속도 함수를 적분하여 위치를 구하고 거리 조건으로 상수 결정하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

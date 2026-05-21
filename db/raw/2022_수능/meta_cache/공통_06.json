@@ -1,0 +1,17 @@
+{
+  "text_sha": "644254fc985c",
+  "meta": {
+    "searchable_text": "방정식 $2x^3 + (a-3)x^2 + (a-3)x + 2a + 12 = 0$이 서로 다른 세 실근을 갖도록 하는 정수 $a$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "3차함수의_극값",
+      "판별식",
+      "함수의_실근"
+    ],
+    "exam_intent": "매개변수 포함 3차 방정식이 세 실근을 가질 조건 도출",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

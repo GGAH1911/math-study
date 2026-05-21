@@ -1,0 +1,16 @@
+{
+  "text_sha": "fbe67daaa61a",
+  "meta": {
+    "searchable_text": "0 < a < 3인 실수 a에 대하여 함수 $f(x) = ax^2 - 2x + 3$의 그래프와 직선이 만나는 두 점 사이의 거리를 d라 할 때, $\\lim_{a \\to 0^+} \\frac{d}{a}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "극한값_계산"
+    ],
+    "exam_intent": "곡선의 극한 행동과 교점 거리의 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

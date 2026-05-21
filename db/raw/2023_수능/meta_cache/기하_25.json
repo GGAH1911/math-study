@@ -1,0 +1,17 @@
+{
+  "text_sha": "c716e6be9cf9",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{a^2} + \\frac{y^2}{b^2} = 1$ 위의 점에서의 접선의 기울기가 주어질 때, 이 타원의 두 초점 사이의 거리를 구하시오. (단, $a, b$는 양수)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "접선",
+      "초점"
+    ],
+    "exam_intent": "접선 기울기 조건으로부터 타원 매개변수를 결정하고 초점 거리를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

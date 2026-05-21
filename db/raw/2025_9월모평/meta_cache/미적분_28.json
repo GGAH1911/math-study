@@ -1,0 +1,17 @@
+{
+  "text_sha": "f4996494a8f6",
+  "meta": {
+    "searchable_text": "함수 $f$는 실수 전체의 집합에서 연속인 이계도함수를 가지고, 실수 전체의 집합에서 정의된 함수 $g$를 $g(x) = f'(x) + 2f(x)\\sin x$라 하자. 함수 $f$는 역함수 $f^{-1}$를 가지고, $\\int_0^1 f^{-1}(x)\\,dx + \\int_0^1 [f'(x) + 2f(x)\\sin x]\\,dx = 4$를 만족시킬 때, $\\int_0^2 f(x)\\cos\\frac{x}{2}\\,dx$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지적분법",
+    "concepts": [
+      "역함수의_적분",
+      "부분적분",
+      "정적분의_성질"
+    ],
+    "exam_intent": "역함수 적분과 부분적분을 종합적으로 활용하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

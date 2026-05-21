@@ -1,0 +1,16 @@
+{
+  "text_sha": "c5c4b14393ca",
+  "meta": {
+    "searchable_text": "4개의 서로 다른 문자 중에서 중복을 허락하여 4개를 택해 일렬로 나열한 모든 문자열 중에서 임의로 하나를 선택할 때, 첫 번째 문자가 정확히 한 개만 포함되거나 두 번째 문자가 정확히 한 개만 포함될 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "포함배제원리",
+      "확률의정의"
+    ],
+    "exam_intent": "포함-배제 원리를 이용한 복합 확률 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

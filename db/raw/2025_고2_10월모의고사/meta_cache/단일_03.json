@@ -1,0 +1,16 @@
+{
+  "text_sha": "77d881f7a140",
+  "meta": {
+    "searchable_text": "세 수 $a$, 4, $b$가 이 순서대로 등비수열을 이룰 때, $a \\times b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비중항"
+    ],
+    "exam_intent": "등비수열에서 중항의 성질을 이용해 미지수의 곱을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

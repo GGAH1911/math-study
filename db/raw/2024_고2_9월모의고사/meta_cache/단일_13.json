@@ -1,0 +1,16 @@
+{
+  "text_sha": "76b1b2816c2c",
+  "meta": {
+    "searchable_text": "첫째항이 음수인 등비수열 $\\{a_n\\}$에 대하여 조건 1, 조건 2 일 때, $a_2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비수열의_항"
+    ],
+    "exam_intent": "등비수열의 조건으로부터 공비와 첫째항을 구하고 특정 항의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

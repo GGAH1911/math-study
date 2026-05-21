@@ -1,0 +1,16 @@
+{
+  "text_sha": "f6a6d4b09e37",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 양수인 두 다항식 $P(x)$, $Q(x)$가 다음 조건을 만족시킨다. (가) $P(x)$를 $Q(x)^2 - 2Q(x)$로 나눈 몫은 $Q(x)^2$이고 나머지는 $Q(x)^2 - 2Q(x)$이다. (나) $Q(x)$는 $x$로 나누어떨어진다. $P(0) \\ne 0$일 때, $P(2) - Q(2)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지_정리"
+    ],
+    "exam_intent": "다항식 나눗셈 조건으로부터 다항식 결정 및 함숫값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "4ae79344ec74",
+  "meta": {
+    "searchable_text": "함수 $f$의 그래프가 그림과 같다. [그림에서 $x=1$과 $x=3$ 근처에서의 함수의 좌극한과 우극한을 나타냄] $\\lim_{x\\to 1^-} f(x) - \\lim_{x\\to 3^+} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "좌극한과_우극한",
+      "그래프_해석",
+      "함수의_불연속",
+      "극한값_계산"
+    ],
+    "exam_intent": "그래프에서 특정 점에서의 좌극한·우극한을 읽고 그 차를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

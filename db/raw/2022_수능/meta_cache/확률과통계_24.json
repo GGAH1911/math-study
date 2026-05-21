@@ -1,0 +1,17 @@
+{
+  "text_sha": "9967179eb7ae",
+  "meta": {
+    "searchable_text": "확률변수 $X$가 이항분포 $B(n, p)$를 따르며, 주어진 기댓값과 분산 조건 하에서 $n$의 값을 구하는 문제. 이항분포의 성질 $E(X) = np$, $V(X) = np(1-p)$를 이용하여 모수를 결정한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이항분포",
+      "기댓값",
+      "분산"
+    ],
+    "exam_intent": "이항분포 모수 계산 (기댓값과 분산 활용)",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

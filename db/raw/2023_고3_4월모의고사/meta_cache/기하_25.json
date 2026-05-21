@@ -1,0 +1,17 @@
+{
+  "text_sha": "2ae0de014602",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{40} + \\frac{y^2}{15} = 1$의 두 초점 중 x좌표가 양수인 점을 F라 하고, 타원 위의 점 중 제1사분면에 있는 점 P에서의 접선이 x축과 만나는 점을 Q라 하자. $|OF| = |FQ|$일 때, 삼각형 POQ의 넓이는? (단, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_초점",
+      "접선의_방정식",
+      "거리_조건"
+    ],
+    "exam_intent": "타원의 접선과 초점의 거리 관계를 활용한 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

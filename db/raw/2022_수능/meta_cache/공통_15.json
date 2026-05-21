@@ -1,0 +1,17 @@
+{
+  "text_sha": "cce9effbd6e2",
+  "meta": {
+    "searchable_text": "두 점 $O_1, O_2$를 각각 중심으로 하고 반지름의 길이가 같은 두 원 $\\odot_1, \\odot_2$가 있다. 원 $\\odot_1$ 위의 서로 다른 세 점 $A, B, C$와 원 $\\odot_2$ 위의 점 $D$가 주어져 있고, 세 점 $A, O_1, O_2$와 세 점 $C, O_2, D$가 각각 한 직선 위에 있다. $\\angle BO_1A = \\alpha_1$, $\\angle O_2O_1C = \\alpha_2$, $\\angle O_1O_2D = \\alpha_3$일 때, $AB = O_1D$이고 $\\alpha_3 = \\alpha_1 - \\alpha_2$일 때 선분 AB와 선분 CD의 길이의 비를 구하는 과정이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원의_중심각과_현",
+      "삼각형의_합동",
+      "코사인_법칙"
+    ],
+    "exam_intent": "원의 성질과 삼각형 합동, 코사인 법칙을 종합 활용하여 도형의 길이 비를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "4b1f507a6f9c",
+  "meta": {
+    "searchable_text": "좌표평면에 $|AB| = 6$, $|AD| = 4$, $\\cos \\angle ABC = \\frac{1}{4}$인 평행사변형 $ABCD$가 있다. $|PA| \\cdot |PB| \\cdot |PC| \\cdot |PD| = \\frac{1}{2}|BD|$를 만족시키는 점 $P$에 대하여, $|AQ| = |AC| - |AP|$를 만족시키는 점을 $Q$라 하자. $|PB| \\cdot |DQ|$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적과_크기",
+      "평행사변형의_성질",
+      "점의_자취",
+      "최적화_문제"
+    ],
+    "exam_intent": "평면벡터와 좌표를 이용하여 조건을 만족하는 점의 자취를 파악하고 최댓값을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

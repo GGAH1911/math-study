@@ -1,0 +1,13 @@
+{
+  "text_sha": "41bc343d7bd9",
+  "meta": {
+    "searchable_text": "포물선 $y^2 = 8x$ 위의 점 P와 점 A(0, 2)에 대하여 $|OP| + |PA|$의 값이 최소가 되도록 하는 점 P를 P₀이라 하자. $|OQ| + |QA| = |OP_0| + |P_0A|$를 만족시키는 점 Q에 대하여 점 Q의 y좌표의 최댓값과 최솟값을 각각 M, m이라 할 때, $M^2 + m^2$의 값은? (단, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [],
+    "exam_intent": "포물선 위의 거리 최소점과 타원의 정의를 이용한 좌표 범위 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

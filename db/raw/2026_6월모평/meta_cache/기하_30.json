@@ -1,0 +1,17 @@
+{
+  "text_sha": "a6bb8b0adaab",
+  "meta": {
+    "searchable_text": "좌표평면에 $|AB|=6$, $|AD|=8$인 직사각형 ABCD와 $2\\vec{BE}=3\\vec{BC}+\\vec{BA}$를 만족시키는 점 E가 있다. 선분 BC 위를 움직이는 점 P에 대하여 점 Q가 $\\vec{PQ} \\cdot \\vec{AB}=0$을 만족시킬 때, $\\vec{AE} \\cdot \\vec{AQ}$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터_방정식과_조건",
+      "최적화"
+    ],
+    "exam_intent": "벡터 조건을 만족하는 점들의 위치를 파악하고 벡터의 내적 최솟값을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

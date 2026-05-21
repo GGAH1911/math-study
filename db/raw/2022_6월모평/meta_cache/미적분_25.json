@@ -1,0 +1,17 @@
+{
+  "text_sha": "703dfafbfc90",
+  "meta": {
+    "searchable_text": "원점에서 곡선에 그은 두 접선이 이루는 예각의 크기를 $\\theta$라 할 때, $\\tan\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_방정식",
+      "도함수와_기울기",
+      "두_직선이_이루는_각"
+    ],
+    "exam_intent": "원점을 지나는 곡선의 접선을 찾고 기울기로부터 이루는 각을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "c0de751b52c6",
+  "meta": {
+    "searchable_text": "다항식 $ax^3 + 2x^2 + ax + b$가 $(x-1)$로 나누어떨어질 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "인수정리",
+      "나누어떨어짐"
+    ],
+    "exam_intent": "인수정리를 이용한 다항식의 나누어떨어짐 조건에서 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

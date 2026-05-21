@@ -1,0 +1,16 @@
+{
+  "text_sha": "97f80c687ce4",
+  "meta": {
+    "searchable_text": "중첩된 무리수와 분수로 이루어진 복잡한 식의 값을 계산하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "무리수_계산",
+      "분수식"
+    ],
+    "exam_intent": "중첩 구조의 무리수 식을 단계적으로 정리해 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

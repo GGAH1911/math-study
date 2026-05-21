@@ -1,0 +1,17 @@
+{
+  "text_sha": "bedde9896197",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax + b$의 역함수의 그래프가 점 $(5, 2)$를 지날 때, $3a$의 값은? (단, $a$, $b$는 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "일차함수",
+      "함수의_그래프"
+    ],
+    "exam_intent": "역함수의 성질과 그래프 위의 점 조건을 이용하여 계수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

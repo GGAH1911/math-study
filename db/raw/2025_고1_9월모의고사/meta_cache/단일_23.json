@@ -1,0 +1,16 @@
+{
+  "text_sha": "b3b93501df51",
+  "meta": {
+    "searchable_text": "연립부등식을 만족하는 모든 정수의 값의 합을 구하는 문제. 부등식 내용: $3\\text{⋄}≤\\text{⋄}16$, $\\text{⋄}8≤4\\text{⋄}10$ (글리프 불명확)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "연립부등식",
+      "정수해"
+    ],
+    "exam_intent": "연립부등식을 풀고 정수해의 합을 구하는 기본 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

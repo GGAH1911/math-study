@@ -1,0 +1,13 @@
+{
+  "text_sha": "7e4352fe43c6",
+  "meta": {
+    "searchable_text": "시각 $t=0$일 때 동시에 원점을 출발하여 수직선 위를 움직이는 두 점 $P$, $Q$의 시각 $t$ $(t \\geq 0)$에서의 속도가 각각 주어진다. 시각 $t$에서의 두 점 $P$, $Q$ 사이의 거리를 $d(t)$라 할 때, 함수 $d(t)$는 구간에서 증가, 감소, 증가의 패턴을 보인다. 특정 시각 구간에서 점 $Q$가 움직인 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [],
+    "exam_intent": "속도 함수로부터 거리 함수의 증감을 분석하고 적분으로 이동거리를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

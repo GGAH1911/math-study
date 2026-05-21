@@ -1,0 +1,17 @@
+{
+  "text_sha": "789772f2a763",
+  "meta": {
+    "searchable_text": "수열에 대하여 주어진 극한값 조건으로부터 다른 극한값을 구하는 문제. 분자와 분모가 다항식으로 표현된 수열의 극한.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_극한",
+      "유리함수의_극한",
+      "수렴"
+    ],
+    "exam_intent": "극한값 조건으로부터 수열의 차수를 파악하고 극한값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

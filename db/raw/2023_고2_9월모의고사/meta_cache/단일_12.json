@@ -1,0 +1,16 @@
+{
+  "text_sha": "2d0c104d784b",
+  "meta": {
+    "searchable_text": "세 양수 $a$, $b$, $c$에 대하여 함수 $f(x) = a\\tan(bx) + c$의 그래프가 그림과 같을 때, $a \\times b \\times c$의 값은? (단, $0 < b < \\pi$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "탄젠트_함수_그래프",
+      "함수의_평행이동"
+    ],
+    "exam_intent": "탄젠트 함수 그래프의 성질로부터 매개변수를 구하고 곱을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

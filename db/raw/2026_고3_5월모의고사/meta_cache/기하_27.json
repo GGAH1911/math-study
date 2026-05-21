@@ -1,0 +1,13 @@
+{
+  "text_sha": "a15124229efe",
+  "meta": {
+    "searchable_text": "두 초점이 $F(-c, 0)$, $F'(c, 0)$ ($c > 0$)인 쌍곡선 $C$가 있다. 쌍곡선 $C$의 점근선 중 기울기가 양수인 점근선을 $l$, 기울기가 음수인 점근선을 $m$이라 하자. 점 $F$를 지나고 직선 $l$에 평행한 직선이 직선 $m$과 만나는 점을 $P$, 쌍곡선 $C$와 만나는 점을 $Q$라 할 때, $\\angle F'PF = 90°$, $PQ : QF = 2 : 1$이다. $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [],
+    "exam_intent": "쌍곡선의 점근선과 기하학적 조건을 활용하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

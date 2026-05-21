@@ -1,0 +1,17 @@
+{
+  "text_sha": "3f6d39d0c19b",
+  "meta": {
+    "searchable_text": "2 이상의 자연수 $n$과 상수 $a$에 대하여 $n^2 + 17n + 19a^2$의 제곱근 중 실수인 것의 개수를 $f(n)$이라 하자. $f(n) \\leq 19$를 만족시키는 자연수 $n$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "제곱근",
+      "함수의정의",
+      "부등식해석"
+    ],
+    "exam_intent": "제곱근 실수 조건을 활용한 함수 범위 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

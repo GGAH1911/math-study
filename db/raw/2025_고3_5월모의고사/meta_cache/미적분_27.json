@@ -1,0 +1,18 @@
+{
+  "text_sha": "03720435c7a4",
+  "meta": {
+    "searchable_text": "실수 전체에서 미분가능한 함수 $f$가 역함수 $g$를 가지고, 모든 실수 $x$에 대하여 $f(x)^2 + g(x)^2 = 2x + 3$을 만족할 때, $f(a) = 0$인 점 $a$에서 $f'(a)$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "역함수",
+      "역함수의_미분",
+      "함수_방정식",
+      "양변_미분"
+    ],
+    "exam_intent": "역함수의 미분 성질과 조건식의 양변 미분을 연결하는 고차 사고",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

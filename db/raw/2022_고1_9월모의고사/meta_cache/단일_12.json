@@ -1,0 +1,17 @@
+{
+  "text_sha": "4683df5add26",
+  "meta": {
+    "searchable_text": "두 상수 $a$, $b$에 대하여 이차함수 $y = ax^2 + bx$의 그래프가 점 $(-1, 0)$에서 $x$축과 접할 때, 이차함수 $y = ax^2 + bx$의 그래프가 $x$축과 만나는 두 점 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_근",
+      "근과_계수의_관계",
+      "이차함수의_계수_결정"
+    ],
+    "exam_intent": "조건에서 계수를 결정하고 두 근 사이 거리를 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

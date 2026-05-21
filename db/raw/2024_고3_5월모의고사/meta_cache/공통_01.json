@@ -1,0 +1,16 @@
+{
+  "text_sha": "f8cccef7fbcd",
+  "meta": {
+    "searchable_text": "$\\sqrt[3]{4} \\times \\sqrt[3]{2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "근호",
+      "지수_법칙"
+    ],
+    "exam_intent": "근호 형태 지수의 곱셈 연산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

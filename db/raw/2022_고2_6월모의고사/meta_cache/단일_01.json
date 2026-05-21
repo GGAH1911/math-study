@@ -1,0 +1,16 @@
+{
+  "text_sha": "d62a23e93f4c",
+  "meta": {
+    "searchable_text": "$\\sqrt[4]{3} \\times \\sqrt[4]{27}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "n제곱근",
+      "근호의_성질"
+    ],
+    "exam_intent": "n제곱근의 곱셈 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

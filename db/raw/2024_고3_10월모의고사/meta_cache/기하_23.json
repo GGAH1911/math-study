@@ -1,0 +1,16 @@
+{
+  "text_sha": "98972178899b",
+  "meta": {
+    "searchable_text": "쌍곡선 $\\frac{x^2}{2} - \\frac{y^2}{2} = 1$의 두 초점 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_표준형",
+      "초점과_거리"
+    ],
+    "exam_intent": "쌍곡선 표준형에서 초점 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

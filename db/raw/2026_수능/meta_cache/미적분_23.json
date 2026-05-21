@@ -1,0 +1,16 @@
+{
+  "text_sha": "5ca380e3f893",
+  "meta": {
+    "searchable_text": "$\\lim_{\\theta \\to 0} \\frac{\\tan 6\\theta}{2\\theta}$ 의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "극한의_표준_공식"
+    ],
+    "exam_intent": "삼각함수 극한의 기본 공식 $\\lim_{x \\to 0} \\frac{\\tan x}{x} = 1$ 직접 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

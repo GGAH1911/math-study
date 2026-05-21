@@ -1,0 +1,17 @@
+{
+  "text_sha": "a6b9f0bcdd08",
+  "meta": {
+    "searchable_text": "연립부등식 $x^2 - x - 6 \\geq 0$, $x^2 - 25 < 0$을 만족시키는 모든 정수 $x$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "연립부등식",
+      "정수해"
+    ],
+    "exam_intent": "이차부등식 연립계의 해를 구하고 정수해의 합을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

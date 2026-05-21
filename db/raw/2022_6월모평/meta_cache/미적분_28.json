@@ -1,0 +1,18 @@
+{
+  "text_sha": "482f2d004b9a",
+  "meta": {
+    "searchable_text": "길이가 2인 선분 AB를 지름으로 하는 반원의 호 AB 위에 점 P가 있다. 선분 AB의 중점을 O라 할 때, 점 B를 지나고 선분 AB에 수직인 직선이 직선 OP와 만나는 점을 Q라 하고, $\\angle OQB$의 이등분선이 직선 AP와 만나는 점을 R라 하자. $\\angle OAP = \\theta$일 때, 삼각형 OAP의 넓이를 $S_1$, 삼각형 PQR의 넓이를 $S_2$라 하자. $\\lim_{\\theta \\to 0} \\frac{S_2}{\\theta^4 \\times S_1}$의 값은? (단, $0 < \\theta < \\frac{\\pi}{4}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_계산",
+      "삼각함수",
+      "각의_이등분선",
+      "기하학적_성질"
+    ],
+    "exam_intent": "기하학적 도형에서 동적 변수의 극한을 통해 미분과 기하의 통합 사고력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "24d5a240216a",
+  "meta": {
+    "searchable_text": "연립방정식의 해가 두 순서쌍으로 주어졌을 때, 방정식의 두 상수를 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "연립방정식의_해",
+      "상수_결정"
+    ],
+    "exam_intent": "주어진 해로부터 연립방정식의 미지 상수를 결정하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

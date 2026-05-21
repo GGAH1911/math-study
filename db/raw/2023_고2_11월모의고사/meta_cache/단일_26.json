@@ -1,0 +1,17 @@
+{
+  "text_sha": "005c5972bf64",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 두 점 P, Q의 시각 $t$ ($t \\geq 0$)에서의 위치가 각각 주어졌을 때, 두 점 P, Q의 운동 방향이 시각 $t$에서 동시에 바뀔 때, $t$의 값을 구하시오. (단, 위치 함수의 계수는 상수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "속도의_부호_변화",
+      "도함수"
+    ],
+    "exam_intent": "도함수의 부호 변화로 운동 방향 전환점을 찾는 응용력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

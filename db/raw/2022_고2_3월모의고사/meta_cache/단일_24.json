@@ -1,0 +1,16 @@
+{
+  "text_sha": "ae5a143d4deb",
+  "meta": {
+    "searchable_text": "등식이 주어진 변수에 대한 항등식일 때, 상수들의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "계수_비교"
+    ],
+    "exam_intent": "항등식의 조건으로부터 미지의 계수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

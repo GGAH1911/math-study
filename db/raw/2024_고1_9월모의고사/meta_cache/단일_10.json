@@ -1,0 +1,17 @@
+{
+  "text_sha": "f31947a1d4b2",
+  "meta": {
+    "searchable_text": "점 $(a, 1)$을 지나고 직선 $2x+3y+1=0$에 수직인 직선의 $y$절편이 $\\frac{a+2}{5}$일 때, 상수 $a$의 값은? [3점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_수직_조건",
+      "기울기",
+      "절편"
+    ],
+    "exam_intent": "두 직선의 수직 조건과 절편을 이용하여 미지수를 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

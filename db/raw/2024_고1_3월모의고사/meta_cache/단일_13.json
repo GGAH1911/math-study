@@ -1,0 +1,17 @@
+{
+  "text_sha": "cda4e7cff014",
+  "meta": {
+    "searchable_text": "한 모서리의 길이가 4인 정육면체에서 한 꼭짓점 A에서 만나는 세 모서리의 중점을 각각 B, C, D라 할 때, 네 점 A, B, C, D를 꼭짓점으로 하는 사면체를 잘라 낸 입체도형의 부피",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "입체도형",
+    "concepts": [
+      "정육면체의_부피",
+      "사면체의_부피",
+      "입체도형_절단"
+    ],
+    "exam_intent": "정육면체에서 부분 사면체를 제거한 입체의 부피를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

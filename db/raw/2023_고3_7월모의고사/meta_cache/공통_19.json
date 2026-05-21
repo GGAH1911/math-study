@@ -1,0 +1,16 @@
+{
+  "text_sha": "26f86876987f",
+  "meta": {
+    "searchable_text": "곡선 위의 점 P에서의 접선과 곡선 위의 점 Q에서의 접선이 일치할 때, 양수 $a$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_방정식",
+      "도함수"
+    ],
+    "exam_intent": "두 곡선의 서로 다른 점에서 그은 접선이 일치하는 조건으로부터 미지수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "7db2ab55bea6",
+  "meta": {
+    "searchable_text": "네 수 $2, a, b, 14$가 이 순서대로 등차수열을 이룰 때, 빈 칸의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차"
+    ],
+    "exam_intent": "등차수열의 성질을 이용해 공차를 구하고 항의 값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

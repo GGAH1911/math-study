@@ -1,0 +1,17 @@
+{
+  "text_sha": "3122bbd42807",
+  "meta": {
+    "searchable_text": "집합 $S = \\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}$에 대하여 함수 $f: S \\to S$는 $f(n) = n^3$의 일의 자리의 수이다. 다음 조건을 만족시키는 집합 $A$에 대하여 $A$의 모든 원소의 합의 최댓값을 구하시오.\n\n(가) $A \\subset S$, $|A| \\geq 2$\n\n(나) 집합 $A$의 임의의 원소 $n$에 대하여 $f(n) \\in A$이고, $f(n) \\neq 7$이다.\n\n(다) 집합 $A$의 임의의 두 원소 $m, n$에 대하여 $m < n$이면 $f(m) \\leq f(n)$이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_닫힘성",
+      "함수의_단조성",
+      "고정점"
+    ],
+    "exam_intent": "함수의 닫힘성과 단조성을 동시에 만족하는 집합 구조를 파악하고 합의 최댓값을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

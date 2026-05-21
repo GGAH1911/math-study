@@ -1,0 +1,16 @@
+{
+  "text_sha": "75acca895567",
+  "meta": {
+    "searchable_text": "두 다항식 $x^3 + 2x^2 + 2$와 $x^2 + 3x + 1$에 대하여 계산을 간단히 하면?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_덧셈뺄셈",
+      "식의_정리"
+    ],
+    "exam_intent": "다항식의 사칙연산 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

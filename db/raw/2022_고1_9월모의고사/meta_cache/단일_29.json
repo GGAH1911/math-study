@@ -1,0 +1,18 @@
+{
+  "text_sha": "409d2b794374",
+  "meta": {
+    "searchable_text": "두 실수 $p, q$에 대하여 이차방정식 $x^2 - px + q = 0$의 서로 다른 두 근은 $\\alpha, \\beta$이고, 이차방정식 $x^2 - px + 3q - 3 = 0$의 서로 다른 두 근은 $\\alpha^2, \\beta^2$이다. 다음 조건을 만족시키는 자연수 $n$의 최솟값을 구하시오. (가) $\\alpha > 0$ (나) $|\\alpha - 1| + |\\beta - 1| \\leq 1$",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계",
+      "근의_존재_조건",
+      "절댓값_부등식",
+      "매개변수_범위"
+    ],
+    "exam_intent": "근과 계수의 관계 및 절댓값 조건을 활용하여 매개변수 범위를 결정하고 자연수 최솟값을 구하는 통합 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

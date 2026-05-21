@@ -1,0 +1,18 @@
+{
+  "text_sha": "e631124df031",
+  "meta": {
+    "searchable_text": "한 초점이 $F(2, 0)$인 타원 $\\frac{x^2}{9} + \\frac{y^2}{5} = 1$과 중심의 좌표가 $(2, 3)$이고 반지름의 길이가 $r$인 원이 있다. 타원 위의 점 $P$와 원 위의 점 $Q$에 대하여 $|PQ| - |PF|$의 최솟값이 6일 때, $r$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "원",
+      "초점",
+      "거리의_최솟값"
+    ],
+    "exam_intent": "타원의 초점-반지름 성질과 원의 거리 조건을 결합한 최적화 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

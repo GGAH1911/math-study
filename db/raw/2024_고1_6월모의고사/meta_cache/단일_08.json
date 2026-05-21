@@ -1,0 +1,16 @@
+{
+  "text_sha": "628536abde19",
+  "meta": {
+    "searchable_text": "2024^4 + 2024^2 + 1을 2022로 나눈 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정수와_유리수",
+    "concepts": [
+      "합동식",
+      "나머지"
+    ],
+    "exam_intent": "합동식 성질로 큰 수의 나머지를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

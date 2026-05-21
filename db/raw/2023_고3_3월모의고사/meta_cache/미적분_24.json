@@ -1,0 +1,16 @@
+{
+  "text_sha": "97d508f8f7b4",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 재귀 관계식을 만족시킬 때, 주어진 극한값을 구하는 문제. 선택지: $\\frac{1}{6}, \\frac{1}{3}, \\frac{1}{2}, \\frac{2}{3}, \\frac{5}{6}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "점화식",
+      "극한"
+    ],
+    "exam_intent": "수열의 점화식을 통한 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

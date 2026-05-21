@@ -1,0 +1,16 @@
+{
+  "text_sha": "58c53175c9ec",
+  "meta": {
+    "searchable_text": "$x$에 대한 삼차방정식이 서로 다른 세 실근 $\\alpha, \\beta, \\gamma$를 가질 때, 주어진 조건을 만족하는 상수의 값을 근과 계수의 관계로부터 구한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "삼차방정식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "비에타의 정리를 이용한 삼차방정식 상수값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

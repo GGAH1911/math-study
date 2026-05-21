@@ -1,0 +1,17 @@
+{
+  "text_sha": "0aae907030e7",
+  "meta": {
+    "searchable_text": "최고차항의 계수의 절댓값이 같은 두 이차함수 $f(x)$, $g(x)$의 그래프가 서로 다른 두 점 $A$, $B$에서 만나고, 직선 $AB$의 기울기는 1이다. 두 함수 $f$, $g$가 주어진 조건을 만족시킬 때 구하는 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_교점",
+      "기울기",
+      "함수의_조건"
+    ],
+    "exam_intent": "두 이차함수의 교점과 기울기 조건을 이용한 함수값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

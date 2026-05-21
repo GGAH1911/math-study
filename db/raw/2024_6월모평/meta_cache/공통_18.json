@@ -1,0 +1,17 @@
+{
+  "text_sha": "0792563a5e00",
+  "meta": {
+    "searchable_text": "두 상수 $a, b$에 대하여 삼차함수 $f(x) = ax^3 + bx$는 $x=1$에서 극소이다. 함수 $f$의 극솟값이 $-2$일 때, 함수 $f$의 극댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "도함수",
+      "삼차함수"
+    ],
+    "exam_intent": "극값 조건으로부터 삼차함수의 계수를 결정하고 극댓값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "543a3ca2207c",
+  "meta": {
+    "searchable_text": "직선에 수직이고 점을 지나는 직선의 방정식",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_수직_조건",
+      "직선의_방정식",
+      "기울기"
+    ],
+    "exam_intent": "두 직선의 수직 조건과 직선의 방정식 유도를 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "025ae7b6db34",
+  "meta": {
+    "searchable_text": "반지름의 길이가 $2\\sqrt{7}$인 원에 내접하고 $\\angle A = 60°$인 삼각형 $ABC$가 있다. 점 $A$를 포함하지 않는 호 $BC$ 위의 점 $D$에 대하여 $\\sin(\\angle BCD) = \\frac{7}{2\\sqrt{7}}$일 때, $BD \\times CD$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원에_내접하는_다각형",
+      "원주각",
+      "사인법칙"
+    ],
+    "exam_intent": "원에 내접하는 도형에서 원주각과 사인법칙을 활용하여 변의 곱 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

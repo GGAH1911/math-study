@@ -1,0 +1,16 @@
+{
+  "text_sha": "8d1574ec9b8a",
+  "meta": {
+    "searchable_text": "두 실수 $a$ ($a \\neq 0$), $b$에 대하여 이차함수 $f(x) = ax^2 + bx$라 하자. 폐구간 $[a^2, 3a^2]$에서 함수 $f(x)$의 최댓값이 $3a^4 + 12a^2$일 때, $a^2 + b^2$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최댓값과_최솟값",
+      "폐구간에서의_극값"
+    ],
+    "exam_intent": "폐구간에서 이차함수의 최댓값 조건으로부터 미지수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

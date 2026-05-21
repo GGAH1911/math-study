@@ -1,0 +1,15 @@
+{
+  "text_sha": "092473c2d302",
+  "meta": {
+    "searchable_text": "원점과 직선 $3x + 4y + 25 = 0$ 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "점과 직선 사이의 거리 공식 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

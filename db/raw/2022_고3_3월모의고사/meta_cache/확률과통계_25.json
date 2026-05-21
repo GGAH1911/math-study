@@ -1,0 +1,17 @@
+{
+  "text_sha": "ebade6eb559d",
+  "meta": {
+    "searchable_text": "원탁에 둘러앉기: A 학교 학생 5명, B 학교 학생 2명. B 학교 학생끼리 이웃하지 않도록 배치. 회전하여 일치하는 것은 같은 것으로 봄.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "원탁_순열",
+      "제약_조건_있는_배치",
+      "조합"
+    ],
+    "exam_intent": "원탁 순열에서 조건을 만족하는 배치의 수를 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

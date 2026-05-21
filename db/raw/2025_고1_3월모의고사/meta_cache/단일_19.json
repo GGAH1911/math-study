@@ -1,0 +1,18 @@
+{
+  "text_sha": "27c77f8dccc3",
+  "meta": {
+    "searchable_text": "반비례 관계 $y = \\frac{k}{x}$ ($k > 0$)의 그래프 위에 $AB = 4$를 만족시키는 두 점 $A$, $B$가 있다. 점 $A$에서 $x$축에 내린 수선의 발을 $C$라 할 때, $BC = 3$, $\\angle ABC = 90°$이다. 상수 $k$의 값은? (단, 두 점 $A$, $B$는 제1사분면 위의 점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "반비례함수",
+      "좌표평면",
+      "거리공식",
+      "수직조건"
+    ],
+    "exam_intent": "반비례함수 위 두 점의 거리·각도 조건으로부터 상수값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

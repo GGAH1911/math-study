@@ -1,0 +1,17 @@
+{
+  "text_sha": "9525111e501e",
+  "meta": {
+    "searchable_text": "두 일차방정식 $ax + 4y = 12$, $2x + ay = 5$의 그래프의 교점이 $y$축 위에 있을 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차함수",
+    "concepts": [
+      "일차함수의_그래프",
+      "연립방정식의_해",
+      "교점의_조건"
+    ],
+    "exam_intent": "일차함수의 교점이 축 위에 있는 조건으로부터 상수를 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

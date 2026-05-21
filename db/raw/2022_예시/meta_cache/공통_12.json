@@ -1,0 +1,16 @@
+{
+  "text_sha": "924b6e96cba2",
+  "meta": {
+    "searchable_text": "0 < a인 모든 실수 a, b에 대하여 어떤 부등식이 성립하도록 하는 상수의 최솟값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "부등식",
+      "최솟값"
+    ],
+    "exam_intent": "제약 조건하에서 부등식이 항상 성립하도록 하는 상수의 최솟값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

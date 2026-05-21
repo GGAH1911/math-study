@@ -1,0 +1,17 @@
+{
+  "text_sha": "1ba5abbeb322",
+  "meta": {
+    "searchable_text": "25명 학생의 키를 조사한 도수분포표. 150cm 이상 160cm 미만: ⋄명, 160cm 이상 170cm 미만: 8명, 170cm 이상 180cm 미만: ⋄명, 180cm 이상 190cm 미만: 6명, 합계: 25명. 키가 170cm 미만인 학생 수가 조사한 학생 수의 40%일 때, 키가 170cm 이상 180cm 미만인 학생 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "통계",
+    "concepts": [
+      "도수분포표",
+      "백분율_계산",
+      "도수의_합"
+    ],
+    "exam_intent": "도수분포표에서 백분율 조건을 이용하여 미지 도수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

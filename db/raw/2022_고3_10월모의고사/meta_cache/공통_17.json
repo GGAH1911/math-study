@@ -1,0 +1,18 @@
+{
+  "text_sha": "d4545cb5b536",
+  "meta": {
+    "searchable_text": "함수의 도함수가 주어진 형태일 때, x = 3에서 극소를 가지는 조건으로부터 상수를 결정하고, 원함수의 극댓값을 구하시오. (단, 상수이다.) [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "극값",
+      "극소",
+      "극댓값"
+    ],
+    "exam_intent": "도함수의 부호 변화로부터 함수의 극값을 구하는 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

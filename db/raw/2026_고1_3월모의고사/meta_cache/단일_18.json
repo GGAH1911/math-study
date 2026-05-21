@@ -1,0 +1,18 @@
+{
+  "text_sha": "a49aa09f3604",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 7$인 삼각형 $ABC$의 내심을 $I$라 할 때, 점 $I$에서 선분 $AC$에 내린 수선의 발을 $D$라 하자. $AD = 2$, $\\angle AIB = 120°$일 때, 삼각형 $ABC$의 둘레의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "내심의_성질",
+      "내접원과_내반지름",
+      "각의_이등분선",
+      "삼각형_각도_관계"
+    ],
+    "exam_intent": "내심의 성질과 각도 관계를 이용해 삼각형의 변의 길이를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

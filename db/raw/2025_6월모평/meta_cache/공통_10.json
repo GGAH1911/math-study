@@ -1,0 +1,17 @@
+{
+  "text_sha": "c3ddc12148b7",
+  "meta": {
+    "searchable_text": "삼각형 ABC의 외접원의 넓이가 $9\\pi$일 때, 다음 조건을 만족하는 삼각형 ABC의 넓이는? (4점) (가) $3\\sin A = 2\\sin B$ (나) $\\cos A = \\cos B$ (선택지: ①$\\frac{9\\pi}{32}\\sqrt{2}$, ②$\\frac{9\\pi}{40}\\sqrt{2}$, ③$\\frac{3\\pi}{16}\\sqrt{2}$, ④$\\frac{9\\pi}{56}\\sqrt{2}$, ⑤$\\frac{9\\pi}{64}\\sqrt{2}$)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "외접원",
+      "정현법칙",
+      "삼각형_넓이"
+    ],
+    "exam_intent": "외접원과 각도 조건으로부터 삼각형 넓이를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

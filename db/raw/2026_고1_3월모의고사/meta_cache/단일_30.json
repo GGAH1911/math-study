@@ -1,0 +1,17 @@
+{
+  "text_sha": "19728739e22e",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB=16$, $BC=15$, $\\angle B=90°$인 평행사변형 $ABCD$의 변 $CD$ 위에 $CE=6$인 점 $E$가 있다. 직선 $BC$와 직선 $AE$의 교점을 $F$라 할 때, $EF=9$이다. 삼각형 $ABF$의 내심을 $I$, 선분 $DF$의 수직이등분선과 직선 $CD$의 교점을 $J$라 할 때, 선분 $AE$ 위의 점 $K$는 $IJ=KJ$를 만족시킨다. $\\tan \\angle FKD = \\frac{a}{b}$일 때, $a$의 값을 구하시오. (단, $a$와 $b$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "평행사변형",
+      "내심",
+      "수직이등분선"
+    ],
+    "exam_intent": "좌표계와 기하 성질을 통한 각도 및 비율 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

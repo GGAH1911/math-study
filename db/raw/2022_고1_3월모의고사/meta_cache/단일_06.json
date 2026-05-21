@@ -1,0 +1,17 @@
+{
+  "text_sha": "c3365bad1c2e",
+  "meta": {
+    "searchable_text": "삼각형 ABC의 외심을 O라 하자. ∠OBC = 17°, ∠OCA = 52°일 때, 각 OAB의 크기는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외심",
+      "이등변삼각형",
+      "중심각"
+    ],
+    "exam_intent": "외심의 성질을 이용한 각도 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

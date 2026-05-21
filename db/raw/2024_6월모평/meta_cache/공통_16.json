@@ -1,0 +1,16 @@
+{
+  "text_sha": "e1a0969f7164",
+  "meta": {
+    "searchable_text": "부등식 $2^x \\leq x^4$를 만족시키는 모든 자연수 $x$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_부등식",
+      "부등식의_해"
+    ],
+    "exam_intent": "지수 부등식의 해 범위를 파악하고 자연수 해의 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

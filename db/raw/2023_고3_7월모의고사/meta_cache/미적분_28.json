@@ -1,0 +1,16 @@
+{
+  "text_sha": "05d1bcef5d85",
+  "meta": {
+    "searchable_text": "중심이 O이고 길이가 2인 선분 AB를 지름으로 하는 원이 있다. 원 위에 점 P를 ∠PAB = θ가 되도록 잡고, 점 P를 포함하지 않는 호 AB 위에 점 Q를 ∠QAB = 2θ가 되도록 잡는다. 직선 OQ가 원과 만나는 점 중 Q가 아닌 점을 R, 두 선분 PA와 QR이 만나는 점을 S라 하자. 삼각형 BOQ의 넓이를 $S_1$, 삼각형 PRS의 넓이를 $S_2$라 할 때, $\\lim_{\\theta \\to 0} \\frac{S_2}{S_1}$의 값은? (단, $0 < \\theta < \\frac{\\pi}{6}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "부정형_극한"
+    ],
+    "exam_intent": "극한을 이용하여 기하학적 상황에서 넓이 비의 극한값을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

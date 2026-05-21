@@ -1,0 +1,16 @@
+{
+  "text_sha": "fae9bb2d5dd3",
+  "meta": {
+    "searchable_text": "$2 \\times \\frac{\\sqrt{16}}{\\sqrt{2}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "무리수",
+      "근호의_성질"
+    ],
+    "exam_intent": "근호를 포함한 사칙연산 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

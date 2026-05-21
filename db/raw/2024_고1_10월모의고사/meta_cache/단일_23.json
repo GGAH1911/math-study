@@ -1,0 +1,16 @@
+{
+  "text_sha": "f7ec27a0adc8",
+  "meta": {
+    "searchable_text": "a에 대한 방정식이 허근을 갖도록 하는 자연수 a의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "허근",
+      "판별식"
+    ],
+    "exam_intent": "방정식이 허근을 가지는 조건을 판별식으로 파악하고, 조건을 만족하는 자연수의 개수를 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

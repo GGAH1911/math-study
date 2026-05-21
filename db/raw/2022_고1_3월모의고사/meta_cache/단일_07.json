@@ -1,0 +1,16 @@
+{
+  "text_sha": "725c9d9dfe1e",
+  "meta": {
+    "searchable_text": "일차부등식의 해가 $x \\geq 4$일 때, 실수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "일차부등식의_해",
+      "부등호_방향_변경"
+    ],
+    "exam_intent": "음수 계수로 나눌 때 부등호 방향 변경을 이해하는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

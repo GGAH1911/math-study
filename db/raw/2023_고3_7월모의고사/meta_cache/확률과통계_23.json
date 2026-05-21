@@ -1,0 +1,15 @@
+{
+  "text_sha": "b34b71dc51cf",
+  "meta": {
+    "searchable_text": "다항식의 전개식에서 특정 항의 계수 구하는 문제 (원본의 일부 표현식이 글리프로 인코딩되어 있음. 본문 패턴: 다항식 [...] 2 [...] 2 [...] 6의 전개식에서 [...] 8의 계수)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "이항정리"
+    ],
+    "exam_intent": "이항정리를 이용한 다항식 전개식의 특정 항 계수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

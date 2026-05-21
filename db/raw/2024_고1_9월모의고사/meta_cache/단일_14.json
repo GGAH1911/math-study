@@ -1,0 +1,16 @@
+{
+  "text_sha": "420d79846a4f",
+  "meta": {
+    "searchable_text": "어떤 변수에 대한 이차방정식이 실수 매개변수의 값에 관계없이 항상 중근을 가질 때, 두 상수를 이용하여 특정값을 구하시오",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "중근"
+    ],
+    "exam_intent": "판별식 조건으로 매개변수를 포함한 이차방정식의 상수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

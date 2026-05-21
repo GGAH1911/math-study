@@ -1,0 +1,17 @@
+{
+  "text_sha": "7004a1b5950b",
+  "meta": {
+    "searchable_text": "복소수 $z$에 대하여 주어진 등식이 성립할 때, $z$의 값을 구하시오. (단, $\\bar{z}$는 $z$의 켤레복소수이고, $|z| \\neq 1$이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "복소수",
+      "켤레복소수",
+      "절댓값"
+    ],
+    "exam_intent": "복소수의 켤레와 절댓값 조건을 이용한 방정식의 해 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

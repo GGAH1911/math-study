@@ -1,0 +1,17 @@
+{
+  "text_sha": "5d6b7f688b6a",
+  "meta": {
+    "searchable_text": "함수는 $x=1$에서 극대이고 다른 점에서 극소를 가진다. 주어진 조건을 만족하는 함수의 상수값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "극대극소",
+      "도함수"
+    ],
+    "exam_intent": "극값 조건으로 함수의 계수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

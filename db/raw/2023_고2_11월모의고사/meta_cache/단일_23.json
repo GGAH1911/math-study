@@ -1,0 +1,17 @@
+{
+  "text_sha": "9e93a0e08051",
+  "meta": {
+    "searchable_text": "중심각의 크기가 $\\frac{5\\pi}{4}$이고 호의 길이가 $12\\pi$인 부채꼴의 반지름의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "호의_길이",
+      "중심각",
+      "반지름"
+    ],
+    "exam_intent": "호의 길이 공식을 이용해 부채꼴의 반지름 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "6c67c154c0d4",
+  "meta": {
+    "searchable_text": "극한값을 구하는 문제입니다. $n$이 무한대로 갈 때 $2^n$과 $3^n$을 포함한 식의 극한값을 계산하는 문제입니다. 추정 형태: $\\lim_{n \\to \\infty} \\sqrt[n]{2^n + 3^n}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한의_수렴",
+      "지수함수의_극한"
+    ],
+    "exam_intent": "거듭제곱을 포함한 극한식의 극한값 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

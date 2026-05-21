@@ -1,0 +1,17 @@
+{
+  "text_sha": "03f2e02bf70a",
+  "meta": {
+    "searchable_text": "길이가 2인 선분 AB를 지름으로 하는 반원의 호 위에 점 P가 있고, 선분 AB 위에 점 Q가 있다. $\\angle PAB = \\theta$이고 $\\angle APQ = 3\\theta$일 때, 삼각형 PAQ의 넓이를 $S$, 선분 PB의 길이를 $b$라 하자. $\\lim_{\\theta \\to 0} \\frac{S}{b}$의 값은? (단, $0 < \\theta < \\frac{\\pi}{4}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한값_계산",
+      "삼각형_넓이",
+      "반원의_성질"
+    ],
+    "exam_intent": "기하학적 극한상황에서 극한값 계산 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

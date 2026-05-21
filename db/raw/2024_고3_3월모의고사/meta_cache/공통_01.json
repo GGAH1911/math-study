@@ -1,0 +1,16 @@
+{
+  "text_sha": "50f191d84f23",
+  "meta": {
+    "searchable_text": "$\\frac{54 \\div 2 + 3}{5}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "사칙연산",
+      "계산_순서"
+    ],
+    "exam_intent": "사칙연산과 계산 순서에 대한 기본 이해 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

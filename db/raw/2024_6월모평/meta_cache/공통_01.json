@@ -1,0 +1,16 @@
+{
+  "text_sha": "48e406f6e973",
+  "meta": {
+    "searchable_text": "근호와 지수가 포함된 식의 계산 문제 (글리프 손상으로 정확한 원문 복원 불가)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "근호의_계산",
+      "지수법칙"
+    ],
+    "exam_intent": "근호가 포함된 기본 식의 값을 정확히 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

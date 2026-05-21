@@ -1,0 +1,17 @@
+{
+  "text_sha": "1602ee7c30d6",
+  "meta": {
+    "searchable_text": "포물선의 초점을 중심으로 하고 반지름의 길이가 2인 원이 포물선과 만나는 두 점에 대한 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_초점",
+      "원과_곡선의_교점",
+      "거리_공식"
+    ],
+    "exam_intent": "포물선의 초점을 중심으로 하는 원과의 교점을 이용한 포물선의 매개변수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

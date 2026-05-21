@@ -1,0 +1,17 @@
+{
+  "text_sha": "a109cadde8cf",
+  "meta": {
+    "searchable_text": "전체집합이 $U = \\{\\text{9 이하의 자연수}\\}$일 때, 다음 조건의 진리집합은? 조건: $x$는 3의 배수이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "진리집합",
+      "집합의_원소",
+      "조건"
+    ],
+    "exam_intent": "주어진 조건을 만족하는 진리집합을 파악하는 기본 개념 확인",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

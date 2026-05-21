@@ -1,0 +1,17 @@
+{
+  "text_sha": "d86cf014b02c",
+  "meta": {
+    "searchable_text": "집합 $-\\frac{\\pi}{4} \\le x \\le 4\\pi$에서 정의된 함수 $f(x) = x + 2\\sin\\frac{x}{4}$가 있다. 그림과 같이 함수의 그래프가 직선 $y = 2$와 만나는 서로 다른 두 점을 A, B라 하고, 두 점 B, O를 지나는 직선이 함수의 그래프와 만나는 점 중 B와 O가 아닌 점을 C라 하자. $\\angle BAC = \\theta$라 할 때, $\\sin \\theta$의 값은? (단, 점 B의 x좌표는 점 A의 x좌표보다 크고, O는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "합성함수",
+      "좌표평면"
+    ],
+    "exam_intent": "삼각함수 그래프 교점의 각도 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

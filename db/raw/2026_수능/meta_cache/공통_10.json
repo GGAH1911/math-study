@@ -1,0 +1,17 @@
+{
+  "text_sha": "6c80e696d4b4",
+  "meta": {
+    "searchable_text": "상수 $a$ ($a > 1$)에 대하여 곡선 위의 제1사분면 점 $A$를 지나고 $x$축에 평행한 직선이 $y$축과 만나는 점을 $B$, 곡선의 점근선과 만나는 점을 $C$라 하자. $|AB| = |BC|$이고 삼각형 $AOC$의 넓이가 $8$일 때, $a \\times |OB|$의 값은? (단, $O$는 원점)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선",
+      "거리_조건"
+    ],
+    "exam_intent": "쌍곡선의 점근선과 기하 조건을 이용한 상수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

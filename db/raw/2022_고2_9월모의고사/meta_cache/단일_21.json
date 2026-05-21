@@ -1,0 +1,17 @@
+{
+  "text_sha": "d3be9f56cdd1",
+  "meta": {
+    "searchable_text": "양수 $a$와 0이 아닌 실수 $d$에 대하여 첫째항이 모두 $a$이고, 공차가 각각 $d$, $2d$인 두 등차수열 $\\{a_n\\}$, $\\{b_n\\}$이 다음 조건을 만족시킨다. (가) [조건 손상] (나) $S_n = \\sum_{i=1}^{n}|a_i - b_i|$라 할 때, 모든 자연수 $n$에 대하여 $S_n \\leq 108$이고, $S_M = 108$인 자연수 $M$이 존재한다. $b_n \\geq 0$을 만족시키는 자연수 $n$의 최댓값을 $M$이라 할 때, $M$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합",
+      "수열의_조건"
+    ],
+    "exam_intent": "조건을 만족하는 등차수열의 최댓값을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

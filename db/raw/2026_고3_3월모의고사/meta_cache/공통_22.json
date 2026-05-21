@@ -1,0 +1,17 @@
+{
+  "text_sha": "0c18e9b6ac39",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 두 함수가 주어진다. 실수 변수에 대하여 직선이 두 곡선과 만나는 점을 각각 A, B라 하자. 두 점 A, B 사이의 거리가 $\\sqrt{5}$이 되도록 하는 실수 변수의 개수가 2이고 이 두 실수의 합을 구할 때, 특정 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "이차함수",
+      "직선과_곡선의_교점",
+      "거리"
+    ],
+    "exam_intent": "교점 거리 조건을 이용한 매개변수의 성질 파악",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

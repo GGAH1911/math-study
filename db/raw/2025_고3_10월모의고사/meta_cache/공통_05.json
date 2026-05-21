@@ -1,0 +1,15 @@
+{
+  "text_sha": "6e912591dd19",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 $f'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수"
+    ],
+    "exam_intent": "다항식의 도함수를 구하고 특정 점에서의 함숫값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "061f7b8bd90a",
+  "meta": {
+    "searchable_text": "함수 $f(x)$가 주어지고 양수 $a$에 대하여 함수 $g(x)$를 정의한다. 함수 $(f \\circ g)(x)$가 오직 하나의 극값을 갖도록 하는 $a$의 최댓값을 $k$라 할 때, 주어진 조건 아래에서 $3k$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "합성함수",
+      "도함수의_부호_변화"
+    ],
+    "exam_intent": "합성함수의 극값 조건으로부터 모수의 최댓값을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

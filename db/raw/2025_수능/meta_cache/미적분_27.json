@@ -1,0 +1,17 @@
+{
+  "text_sha": "7e04013bf515",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$에 대하여 함수 $g(x)$를 정의한다. 곡선 $y=g(x)$ 위의 점 $(a, g(a))$에서의 접선이 $x$축이고, 함수 $f$가 역함수 $f^{-1}$를 가질 때, $f'(f^{-1}(8))$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "역함수의_미분",
+      "접선의_방정식",
+      "삼차함수의_극값"
+    ],
+    "exam_intent": "접선 조건과 역함수 미분을 통합하여 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

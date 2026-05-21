@@ -1,0 +1,16 @@
+{
+  "text_sha": "402cf47d73ca",
+  "meta": {
+    "searchable_text": "길이가 2인 선분 AB를 지름으로 하는 반원이 있다. 호 AB 위에 점 P를 $\\angle BAP = \\theta$ $(0 < \\theta < \\pi/3)$가 되도록 잡고, 호 AP 위에 점 Q를 $|PQ| = 1$이 되도록 잡는다. 선분 AP의 중점을 M이라 할 때, 삼각형 PQM의 넓이를 $S(\\theta)$라 하자. $|AP| = \\frac{5}{6}$이 되도록 하는 $\\theta$의 값을 $\\theta_0$라 할 때, $S'(\\theta_0) = 3$이다. $100 \\times S'(\\theta_0)$의 값을 구하시오. (단, S와 $\\theta$는 유리수)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "삼각함수",
+      "원의_성질"
+    ],
+    "exam_intent": "기하학적 조건에서 넓이 함수의 도함수를 구하고 활용",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

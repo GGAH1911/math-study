@@ -1,0 +1,16 @@
+{
+  "text_sha": "5e4d860eb460",
+  "meta": {
+    "searchable_text": "AB = 6, BC = 7인 삼각형 ABC가 있다. 삼각형 ABC의 넓이가 15일 때, $\\cos \\angle ABC$의 값은? (단, $0 < \\angle ABC < \\pi$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각형의_넓이_공식",
+      "삼각함수_항등식"
+    ],
+    "exam_intent": "삼각형 넓이 공식과 삼각함수 항등식으로 cos 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

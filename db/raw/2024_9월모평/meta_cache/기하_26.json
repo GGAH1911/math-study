@@ -1,0 +1,17 @@
+{
+  "text_sha": "1cedd4a3919b",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 3$, $AD = 3$, $AE = 6$인 직육면체 $ABCD-EFGH$가 있다. 삼각형 $BEG$의 무게중심을 $P$라 할 때, 선분 $DP$의 길이를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "직육면체_좌표설정",
+      "무게중심",
+      "공간거리_계산"
+    ],
+    "exam_intent": "직육면체의 무게중심을 이용한 공간거리 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "3eefaac07aef",
+  "meta": {
+    "searchable_text": "$0 \\le \\theta \\le 2\\pi$일 때, 곡선 $y = 4\\sin(3\\theta)$와 직선 $y = 2$가 만나는 서로 다른 점의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "삼각방정식"
+    ],
+    "exam_intent": "삼각함수 그래프와 직선의 교점 개수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

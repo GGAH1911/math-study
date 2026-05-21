@@ -1,0 +1,16 @@
+{
+  "text_sha": "b94bcd38ea69",
+  "meta": {
+    "searchable_text": "수열 $\\lim_{n \\to \\infty} \\frac{n^2}{n^2 + 4n}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한의_계산",
+      "분수꼴_극한"
+    ],
+    "exam_intent": "분수꼴 수열의 극한을 최고차항으로 나누어 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

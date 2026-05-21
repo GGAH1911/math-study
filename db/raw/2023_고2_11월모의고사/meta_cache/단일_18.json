@@ -1,0 +1,18 @@
+{
+  "text_sha": "7cfb4aaed683",
+  "meta": {
+    "searchable_text": "그림과 같이 $BC=2$, $AB=AC$인 삼각형 $ABC$에 대하여 선분 $AB$의 중점을 $M$, 선분 $AC$를 $3:5$로 내분하는 점을 $N$이라 하자. $MN \\perp AB$이고, 삼각형 $AMN$의 외접원의 넓이가 $16\\pi$일 때, 삼각형 $ABC$의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외접원",
+      "중점",
+      "내분점",
+      "수직"
+    ],
+    "exam_intent": "외접원 넓이 조건과 기하 관계식으로부터 삼각형 넓이를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

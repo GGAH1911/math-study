@@ -1,0 +1,16 @@
+{
+  "text_sha": "37144ef29671",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 함수 $y = ax^2$의 그래프 위의 두 점 $A$, $B$에서 $x$축에 내린 수선의 발을 각각 $C$, $D$라 하자. 사각형 $ACDB$의 넓이가 $18$일 때, 선분 $AB$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_그래프",
+      "좌표평면과_거리"
+    ],
+    "exam_intent": "이차함수 위의 두 점으로 만든 사다리꼴의 넓이 조건으로부터 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "a5f9393f8f15",
+  "meta": {
+    "searchable_text": "함수 $f(x) = 3x^2 + 9$에 대하여 $\\lim_{h \\to 0} \\frac{f(2+h) - f(2)}{h}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수의_정의",
+      "미분계수",
+      "극한"
+    ],
+    "exam_intent": "도함수의 정의를 이용한 미분계수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

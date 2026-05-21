@@ -1,0 +1,17 @@
+{
+  "text_sha": "b6a1324e9782",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$에 대하여 $\\lim_{h \\to 0} \\frac{f(1+h) - f(1)}{h}$ 형태의 극한식이 주어진 후, 특정 함수값 조건 하에서 $f(1) \\cdot f'(1)$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "극한",
+      "도함수의_정의",
+      "다항함수"
+    ],
+    "exam_intent": "도함수의 정의(극한)를 이용하여 함수값 조건 활용",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

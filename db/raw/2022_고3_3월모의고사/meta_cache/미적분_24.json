@@ -1,0 +1,17 @@
+{
+  "text_sha": "bb83df2dd644",
+  "meta": {
+    "searchable_text": "수열 {aₙ}이 극한 조건 $\\lim_{n \\to \\infty} a_n = \\frac{3}{2}$를 만족할 때, $\\lim_{n \\to \\infty} \\frac{4a_n + 2}{2a_n + 1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_극한",
+      "극한값의_성질",
+      "극한값_계산"
+    ],
+    "exam_intent": "수열의 극한값으로부터 함수 형태의 극한값을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "c88658b900e6",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 자연수 $a, b, c$의 모든 순서쌍의 개수를 구하시오. (가) $a \\leq b \\leq c \\leq 8$ (나) [조건 불명확 — 텍스트 글리프 손상]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "중복조합"
+    ],
+    "exam_intent": "부등식 조건을 만족하는 자연수 조합의 개수를 체계적으로 세는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

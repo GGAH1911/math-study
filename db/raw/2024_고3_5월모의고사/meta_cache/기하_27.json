@@ -1,0 +1,17 @@
+{
+  "text_sha": "72f9e2bf68c9",
+  "meta": {
+    "searchable_text": "점 F를 초점으로 하는 포물선 $y^2 = 4px$가 있다. 다음 조건을 만족시키는 포물선 위의 서로 다른 세 점 P, Q, R에 대하여 PF + QF + RF의 값은? 점 P와 준선 사이의 거리를 $d$라 할 때, 이 준선으로부터의 거리가 $d$가 되도록 하는 포물선 위의 점 중 P가 아닌 점은 Q, R뿐이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_정의",
+      "초점과_준선",
+      "거리_조건"
+    ],
+    "exam_intent": "포물선의 초점-준선 정의를 이용하여 조건을 만족하는 세 점까지 거리의 합 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

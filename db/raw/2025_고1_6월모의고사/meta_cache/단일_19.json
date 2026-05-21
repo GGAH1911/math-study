@@ -1,0 +1,16 @@
+{
+  "text_sha": "5310d0e90bf2",
+  "meta": {
+    "searchable_text": "이차다항식 f(x)에 대하여 어떤 식의 값이 실수일 때, 모든 계수의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "복소수",
+      "근의_성질"
+    ],
+    "exam_intent": "복소수 조건을 만족하는 이차다항식의 계수 합을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

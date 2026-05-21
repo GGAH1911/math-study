@@ -1,0 +1,18 @@
+{
+  "text_sha": "457459240533",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 사차함수 $f(x)$가 다음 조건을 만족시킨다. 극한 조건 $\\lim_{x \\to a} \\frac{f'(x)}{(x-a)^2} = L_1$과 $\\lim_{x \\to b} \\frac{f'(x)}{x-b} = L_2$를 만족시키는 실수는 특정 값들뿐이다. 함수 $f(x)$의 최솟값이 17일 때, 특정 함숫값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극한",
+      "도함수",
+      "최솟값",
+      "사차함수"
+    ],
+    "exam_intent": "극한 조건으로 도함수 형태를 파악하고 최솟값으로 상수를 결정하는 미분 통합 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

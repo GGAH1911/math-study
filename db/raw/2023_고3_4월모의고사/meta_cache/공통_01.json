@@ -1,0 +1,16 @@
+{
+  "text_sha": "f1657add40c0",
+  "meta": {
+    "searchable_text": "$\\frac{\\log_2 64}{\\log_2 36} \\cdot 2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그의_밑_변환"
+    ],
+    "exam_intent": "로그의 성질을 이용하여 주어진 식을 간단히 하고 값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

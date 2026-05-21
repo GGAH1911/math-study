@@ -1,0 +1,16 @@
+{
+  "text_sha": "8a69db3b7af6",
+  "meta": {
+    "searchable_text": "$\\int_0^{\\pi} \\cos^2 x \\, dx$의 값은? [3점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "정적분",
+      "삼각함수의_적분"
+    ],
+    "exam_intent": "정적분으로 삼각함수의 제곱 형태를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

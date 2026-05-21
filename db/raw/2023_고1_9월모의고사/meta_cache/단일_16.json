@@ -1,0 +1,16 @@
+{
+  "text_sha": "a3e7d786972f",
+  "meta": {
+    "searchable_text": "좌표평면 위에 두 원과 직선이 있다. 점 $A$는 원 위에, 점 $B$는 다른 원 위에 있다. 점 $P$는 $x$축 위, 점 $Q$는 직선 위에 있을 때, $AP + PQ + QB$의 최솟값을 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "직선의_방정식"
+    ],
+    "exam_intent": "반사 원리를 활용한 두 원 위의 점들 사이 최단 경로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

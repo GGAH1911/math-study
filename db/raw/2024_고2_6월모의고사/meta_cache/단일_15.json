@@ -1,0 +1,16 @@
+{
+  "text_sha": "11df7a6929f3",
+  "meta": {
+    "searchable_text": "좌표평면에서 원과 직선이 만나는 두 점 중 $x$좌표가 양수인 점을 $A$, $y$좌표가 음수인 점을 $B$라 하고, 두 동경 $OA$, $OB$가 나타내는 각의 크기를 각각 $\\alpha$, $\\beta$라 하자. $2\\cos\\alpha = 3\\sin\\beta$일 때, $\\sin\\alpha\\cos\\beta$의 값은? (단, $O$는 원점이고, $x$축의 양의 방향을 시초선으로 한다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_정의",
+      "삼각함수의_응용"
+    ],
+    "exam_intent": "원과 직선의 교점으로부터 각도 조건을 활용한 삼각함수 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

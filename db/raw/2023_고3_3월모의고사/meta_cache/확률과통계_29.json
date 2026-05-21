@@ -1,0 +1,13 @@
+{
+  "text_sha": "fe03ca118ae3",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3 중에서 중복을 허락하여 6개를 선택한 후, 선택한 숫자 6개를 모두 일렬로 나열하는 경우의 수를 구하시오. (가) 숫자 1, 2, 3을 각각 한 개 이상씩 선택한다. (나) 선택한 6개의 수의 합이 4의 배수이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "조건부 경우의 수와 순열을 통합한 계산 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

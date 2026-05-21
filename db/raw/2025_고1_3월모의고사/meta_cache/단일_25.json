@@ -1,0 +1,16 @@
+{
+  "text_sha": "e4173580c4e7",
+  "meta": {
+    "searchable_text": "세 자연수 $a, b, c$에 대하여 가로의 길이가 $a$, 세로의 길이가 $b$, 높이가 $c$인 직육면체가 있다. 부피가 33이고 높이 $c$가 7의 배수일 때, 겉넓이를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "입체도형",
+    "concepts": [
+      "직육면체의_부피",
+      "직육면체의_겉넓이"
+    ],
+    "exam_intent": "부피와 배수 조건으로 변수를 결정하고 겉넓이를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

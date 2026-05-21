@@ -1,0 +1,17 @@
+{
+  "text_sha": "adc9a8a081d7",
+  "meta": {
+    "searchable_text": "$AB = 2$, $BC = 4$인 삼각형 $ABC$가 있다. 선분 $AC$ 위의 점 $D$에 대하여 세 점 $A$, $B$, $D$를 지나는 원을 $\\omega$라 하고, 원 $\\omega$가 선분 $BC$와 만나는 점 중 $B$가 아닌 점을 $E$라 하자. 점 $B$를 포함하지 않는 두 호 $AD$, $DE$의 길이가 같고 $BD = 6$일 때, 원 $\\omega$의 넓이는? (단, $AC = BC$이고, 점 $D$는 점 $A$도 아니고 점 $C$도 아니다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "호와_중심각의_관계",
+      "원에_내접하는_사각형",
+      "좌표_기하학"
+    ],
+    "exam_intent": "원에 내접하는 도형에서 호의 길이 조건으로부터 반지름을 구하는 종합 기하 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

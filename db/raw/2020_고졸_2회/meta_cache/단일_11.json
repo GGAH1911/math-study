@@ -1,0 +1,16 @@
+{
+  "text_sha": "f3025bd4415a",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 $(1, 2)$를 $x$축의 방향으로 3만큼, $y$축의 방향으로 $-2$만큼 평행이동한 점의 좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "좌표",
+      "평행이동"
+    ],
+    "exam_intent": "점의 평행이동 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

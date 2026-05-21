@@ -1,0 +1,17 @@
+{
+  "text_sha": "359b6da5c5e4",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차다항식 $f(x)$에 대하여 $[f(x)]^2$을 $x^2+4x+5$로 나눈 몫은 $Q(x)$이고 나머지는 36이다. $f(0) \\neq f(4)$일 때, 모든 $f(1)$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이차다항식",
+      "나머지_정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "복소근 다항식 조건에서 이차식의 나머지를 이용해 다항식 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

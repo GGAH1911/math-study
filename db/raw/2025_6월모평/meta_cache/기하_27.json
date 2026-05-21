@@ -1,0 +1,17 @@
+{
+  "text_sha": "6f327f85119c",
+  "meta": {
+    "searchable_text": "직사각형 ABCD의 네 변의 중점 P, Q, R, S를 꼭짓점으로 하는 타원의 두 초점을 F, F'이라 하자. 점 F를 초점, 직선 AB를 준선으로 하는 포물선이 세 점 F', Q, S를 지난다. 직사각형 ABCD의 넓이가 $32\\sqrt{2}$일 때, 선분 FF'의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "포물선",
+      "초점과_준선"
+    ],
+    "exam_intent": "타원과 포물선의 초점·준선 성질 활용",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

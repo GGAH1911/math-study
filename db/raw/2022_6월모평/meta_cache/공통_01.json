@@ -1,0 +1,15 @@
+{
+  "text_sha": "2496944bd7b8",
+  "meta": {
+    "searchable_text": "$2^{1/3} \\times 2^{2/3}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수법칙"
+    ],
+    "exam_intent": "지수법칙으로 거듭제곱 곱셈 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

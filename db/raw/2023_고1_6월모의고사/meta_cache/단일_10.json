@@ -1,0 +1,15 @@
+{
+  "text_sha": "8064b1923ba1",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $2x^2 + ax + b = 0$의 한 근이 $2$일 때, $a$의 값은? (단, $a, b$는 실수이고, $a \\neq 1$이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차방정식의 근을 이용한 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

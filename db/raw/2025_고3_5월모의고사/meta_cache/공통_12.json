@@ -1,0 +1,17 @@
+{
+  "text_sha": "99a346ec0ae0",
+  "meta": {
+    "searchable_text": "그림과 같이 세 상수 $a$ ($0 < a < 1$), $b$, $c$에 대하여 두 곡선 $y = a\\log x$, $y = b^2\\log x$가 만나는 점을 A라 하고, 직선이 두 곡선과 만나는 점을 각각 B, C라 하자. 직선 AB가 원점 O를 지나고 두 삼각형 OCA, ACB의 넓이가 같을 때, $a \\times b \\times c$의 값은? (단, $c > 0$이고, $c$는 점 A의 $x$좌표보다 크다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그함수",
+      "교점",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "로그함수의 성질과 기하학적 조건을 종합하여 상수값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

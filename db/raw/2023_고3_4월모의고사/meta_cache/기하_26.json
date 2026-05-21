@@ -1,0 +1,18 @@
+{
+  "text_sha": "f2f5e8ad27b8",
+  "meta": {
+    "searchable_text": "두 초점이 $F(3, 0)$과 $F'(-3, 0)$인 쌍곡선 위의 제1사분면에 있는 점 $P$에 대하여, 직선 $PF'$이 $x$축과 만나는 점을 $Q$라 하자. 삼각형 $PQF$가 정삼각형일 때, 이 쌍곡선의 주축의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "초점",
+      "정삼각형",
+      "주축"
+    ],
+    "exam_intent": "쌍곡선의 정의와 기하적 조건을 통한 주축의 길이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "fe9407b2e6e4",
+  "meta": {
+    "searchable_text": "두 함수가 다음 조건을 만족시키도록 하는 두 자연수의 순서쌍에 대하여 어떤 값의 최댓값을 $M$, 최솟값을 $m$이라 할 때, $M \\times m$의 값을 구하시오. (가) 함수의 그래프는 직선 $x=3$에 대하여 대칭이다. (나) $0 \\leq x \\leq 6$일 때, 함수의 그래프가 직선과 만나는 점의 개수는 3이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "대칭성",
+      "교점_개수_조건"
+    ],
+    "exam_intent": "함수의 대칭성과 교점 조건으로 매개변수를 결정하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

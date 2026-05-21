@@ -1,0 +1,16 @@
+{
+  "text_sha": "6a7abd5d9674",
+  "meta": {
+    "searchable_text": "두 실수 a, b에 대하여 $\\lim_{x \\to \\infty} \\frac{ax^4 + bx^3}{cx^4 + dx^2} = 6$일 때 구하는 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "무한대로의_극한",
+      "다항식의_극한"
+    ],
+    "exam_intent": "다항식 분수 함수의 무한대 극한에서 계수 비율 파악",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "583085f3359c",
+  "meta": {
+    "searchable_text": "$12\\cos(\\pi/3)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "특수각",
+      "삼각함수값"
+    ],
+    "exam_intent": "기본 삼각함수 특수각의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

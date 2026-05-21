@@ -1,0 +1,18 @@
+{
+  "text_sha": "7608f0b7a231",
+  "meta": {
+    "searchable_text": "극한값 계산: $\\lim_{n \\to \\infty}$ 형태. 분자에 $\\sqrt{n^2+3n}$ 형태, 분모에 $\\sqrt{2n+1}$ 형태의 제곱근 포함 극한식",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "제곱근",
+      "무한급",
+      "수렴"
+    ],
+    "exam_intent": "무리식 극한의 수렴값 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "ec1d856d4eea",
+  "meta": {
+    "searchable_text": "부등식을 만족시키는 정수의 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "부등식_풀이",
+      "정수_해"
+    ],
+    "exam_intent": "부등식의 정수 해 개수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

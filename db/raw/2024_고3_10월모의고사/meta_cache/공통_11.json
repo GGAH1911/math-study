@@ -1,0 +1,16 @@
+{
+  "text_sha": "bbbc85dd912f",
+  "meta": {
+    "searchable_text": "모든 항이 자연수인 두 등차수열 $\\{a_n\\}$, $\\{b_n\\}$에 대하여 주어진 조건들이 있다. $a_7 + b_7 = 27$이고 $a_7 ≤ 24$일 때, $a_1 + b_1$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "자연수조건"
+    ],
+    "exam_intent": "등차수열의 일반항 성질과 자연수 제약으로부터 첫항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

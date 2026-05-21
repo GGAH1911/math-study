@@ -1,0 +1,17 @@
+{
+  "text_sha": "5d0dba8d698c",
+  "meta": {
+    "searchable_text": "자연수 $n \\geq 2$에 대하여 집합 $A$를 $A = \\{\\log_n m \\mid m\\text{은 }100\\text{ 이하의 자연수}\\}$라 하고, 집합 $B$를 $B = \\{2^k \\mid k\\text{는 }10\\text{ 이하의 자연수}\\}$라 하자. 집합 $A$의 원소 $a$에 대하여 $a^4 \\in B$가 되도록 하는 모든 $n$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그함수",
+      "지수함수",
+      "집합의교집합"
+    ],
+    "exam_intent": "로그와 지수 함수의 관계를 이용한 집합 원소 조건 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

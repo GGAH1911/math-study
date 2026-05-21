@@ -1,0 +1,17 @@
+{
+  "text_sha": "b21d1c7cd4e1",
+  "meta": {
+    "searchable_text": "길이가 $2r$인 선분 $AB$를 지름으로 하는 반원이 있다. 호 $AB$ 위의 두 점 $C$, $D$가 $AC = 1$, $CD = 1$, $BD = 8$을 만족시킬 때, (구하려는 식)의 값은? (단, $r = 4$인 상수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "호와_현의_성질",
+      "반원의_성질",
+      "좌표계를_이용한_기하"
+    ],
+    "exam_intent": "원에 내접하는 점들의 조건을 이용한 거리 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "c0003914ad21",
+  "meta": {
+    "searchable_text": "함수 f와 실수 a(0 < a < 6)에 대하여 함수 g는 주어진 조건에 의해 정의된다. 함수 g의 그래프와 x축으로 둘러싸인 영역의 넓이의 최댓값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "최댓값",
+      "미분"
+    ],
+    "exam_intent": "매개변수가 있는 함수의 적분 넓이 최댓값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

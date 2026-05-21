@@ -1,0 +1,16 @@
+{
+  "text_sha": "62abb25fb4c3",
+  "meta": {
+    "searchable_text": "그림과 같이 4개의 채소 모종이 있다. 이 중에서 서로 다른 2개의 채소 모종을 택하여 화분1과 화분2에 각각 심는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "곱의_법칙"
+    ],
+    "exam_intent": "순서를 고려하여 4개 중 2개를 선택하는 경우의 수",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

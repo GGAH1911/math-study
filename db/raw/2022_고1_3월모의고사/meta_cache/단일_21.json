@@ -1,0 +1,18 @@
+{
+  "text_sha": "065809268de5",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 $ABC$에서 선분 $AB$ 위의 점 $D$에 대하여 $BD = 2AD$이다. 점 $A$에서 선분 $CD$에 내린 수선의 발 $E$에 대하여 $AE = 4$, $BE = CE = 10$일 때, 삼각형 $ABC$의 넓이는? (단, $\\angle CAB = 90°$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "직각삼각형",
+      "내분점",
+      "수선",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "직각삼각형에서 내분점과 수선의 관계를 이용한 넓이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

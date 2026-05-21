@@ -1,0 +1,18 @@
+{
+  "text_sha": "cb823048d0aa",
+  "meta": {
+    "searchable_text": "매개변수를 포함하는 복합 부등식 (절댓값, 지수함수 또는 이차함수 포함)이 모든 실수에서 성립하도록 하는 매개변수의 범위를 구하고, 그 최댓값과 최솟값의 합을 구하는 문제. 원본 부등식: $2\\square + 1 \\leq 2\\square \\leq \\square^2 + 2\\square + 24$ (글리프 \\square 는 해석 불가)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "부등식",
+      "매개변수_조건",
+      "절댓값",
+      "최댓값과_최솟값"
+    ],
+    "exam_intent": "모든 실수에서 성립하는 부등식 조건으로부터 매개변수 범위를 결정하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

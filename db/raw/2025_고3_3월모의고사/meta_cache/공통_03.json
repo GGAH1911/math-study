@@ -1,0 +1,17 @@
+{
+  "text_sha": "27cb8fc6fd37",
+  "meta": {
+    "searchable_text": "모든 항이 양수인 등비수열 $\\{a_n\\}$이 $a_4 + a_2 = a_3 + a_3 + a_2$를 만족시킬 때, 수열 $\\{a_n\\}$의 공비는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "공비",
+      "등비수열의_기본_성질"
+    ],
+    "exam_intent": "등비수열의 정의를 이용하여 공비를 구하는 기본 능력을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

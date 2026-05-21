@@ -1,0 +1,17 @@
+{
+  "text_sha": "dba5f6db9856",
+  "meta": {
+    "searchable_text": "그림과 같이 $BC = CD = 3$이고 $\\angle BCD = 90°$인 사면체 $ABCD$가 있다. 점 $A$에서 평면 $BCD$에 내린 수선의 발을 $H$라 할 때, 점 $H$는 선분 $BD$를 $1:2$로 내분하는 점이다. 삼각형 $ABC$의 넓이가 6일 때, 삼각형 $AHC$의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간좌표",
+      "수직_관계",
+      "넓이_계산"
+    ],
+    "exam_intent": "공간 수직 조건을 통한 좌표 설정과 도형 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

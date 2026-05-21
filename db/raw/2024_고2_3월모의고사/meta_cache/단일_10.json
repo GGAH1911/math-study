@@ -1,0 +1,18 @@
+{
+  "text_sha": "81e243eaa65b",
+  "meta": {
+    "searchable_text": "삼차방정식 $x^3 + ax^2 + bx + c = 0$의 한 허근을 $\\alpha$라 할 때, 어떤 식의 값은? (단, $a, b, c$는 실수이고, 어떤 조건이 성립한다.) [3점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "삼차방정식",
+      "허근",
+      "근과_계수의_관계",
+      "복소수"
+    ],
+    "exam_intent": "삼차방정식의 허근 성질과 계수 관계를 이용한 식의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "8b5fb47bb78f",
+  "meta": {
+    "searchable_text": "극한: lim_{n→∞} [분자: n²/(1+n) + 1/n³ - n 형태] / [분모: n + n²·n³ 형태]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한값",
+      "부정형",
+      "최고차_항"
+    ],
+    "exam_intent": "분수식의 극한값 계산을 위한 최고차 항 정리 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

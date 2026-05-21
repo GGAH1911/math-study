@@ -1,0 +1,13 @@
+{
+  "text_sha": "457a87a37c8b",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 집합 $\\{x \\mid 0 \\le x < \\pi, x \\ne \\frac{\\pi}{3}, x \\ne \\frac{2\\pi}{a}\\}$에서 정의된 함수 $f(x) = \\tan x$가 있다. 점 $P(0, a)$를 지나며 $x$축에 평행한 직선이 함수 $f$의 그래프와 만나는 두 점을 $A, B$ ($PA < PB$)라 하고, 직선이 함수 $f$의 그래프와 만나는 점을 $C$라 하자. $AB = 3PA$이고 삼각형 $OCB$의 넓이가 $\\frac{3}{5}a$일 때, $a$의 값은? (단, $O$는 원점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [],
+    "exam_intent": "탄젠트 함수 그래프의 기하학적 조건으로 매개변수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "90ec3cd3b55a",
+  "meta": {
+    "searchable_text": "구간 $[-3, 0]$에서 이차함수 $f(x) = x^2 + 2x + 4$의 최댓값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최값",
+      "정의역_제한"
+    ],
+    "exam_intent": "정의역이 제한된 이차함수의 최댓값 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

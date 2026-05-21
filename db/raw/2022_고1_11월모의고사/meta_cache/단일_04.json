@@ -1,0 +1,15 @@
+{
+  "text_sha": "e69701bdee44",
+  "meta": {
+    "searchable_text": "부등식 $x^2 \\leq 3$을 만족시키는 정수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식"
+    ],
+    "exam_intent": "이차 부등식의 정수 해의 개수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

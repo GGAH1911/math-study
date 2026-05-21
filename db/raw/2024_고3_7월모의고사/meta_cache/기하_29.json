@@ -1,0 +1,17 @@
+{
+  "text_sha": "d71c29517b51",
+  "meta": {
+    "searchable_text": "좌표평면 위의 세 점 $A(2, 0)$, $B(6, 0)$, $C(0, 1)$에 대하여 두 점 $P$, $Q$가 다음 조건을 만족한다. (가) $\\vec{AP} \\cdot \\vec{BP} \\leq 0$, $\\vec{OP} \\cdot \\vec{OC} \\geq 0$ (나) $|QB| = 4|QP|$, $|QA| = 2$ 이때 $\\vec{AP} \\cdot \\vec{AQ} = k$라 하면, $20k$의 값을 구하시오. (단, $O$는 원점)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "원의_방정식",
+      "아폴로니우스_원"
+    ],
+    "exam_intent": "벡터 조건과 거리 제약으로 점의 위치를 파악하고 내적값을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

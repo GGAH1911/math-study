@@ -1,0 +1,15 @@
+{
+  "text_sha": "fa76de20f796",
+  "meta": {
+    "searchable_text": "$3^{2/2} \\times 9^{1/2}$의 값은? ① $\\frac{1}{9}$ ② $\\frac{1}{3}$ ③ 1 ④ 3 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수법칙"
+    ],
+    "exam_intent": "기본 지수법칙을 이용한 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

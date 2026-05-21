@@ -1,0 +1,16 @@
+{
+  "text_sha": "ac72c5715d3d",
+  "meta": {
+    "searchable_text": "$\\sqrt{8} \\times 4\\sqrt{4}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "제곱근",
+      "근호의_성질"
+    ],
+    "exam_intent": "제곱근의 기본 계산 및 성질 이해",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

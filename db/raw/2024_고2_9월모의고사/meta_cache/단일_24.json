@@ -1,0 +1,17 @@
+{
+  "text_sha": "e7f163c76977",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 $n$이 홀수인 경우와 $n$이 짝수인 경우에 각각 주어진 조건을 만족할 때, $\\sum_{k=1}^{10} a_k$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "홀짝_분류",
+      "부분합"
+    ],
+    "exam_intent": "홀수/짝수 케이스 구분에 따른 수열 계산과 부분합 산출",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

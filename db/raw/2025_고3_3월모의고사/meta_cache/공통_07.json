@@ -1,0 +1,17 @@
+{
+  "text_sha": "ec616d8e1f06",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$에 대하여 $f'(x)$가 주어진 조건과 $f(0)=1$일 때, $f(2)$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "부정적분",
+      "초기조건"
+    ],
+    "exam_intent": "도함수와 초기조건으로부터 함수값을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

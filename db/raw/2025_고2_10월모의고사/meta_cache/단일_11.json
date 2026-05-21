@@ -1,0 +1,16 @@
+{
+  "text_sha": "e985a1f62118",
+  "meta": {
+    "searchable_text": "부등식 $\\log_2 x \\leq 2x - 1 \\leq \\log_2(2x + 1)$을 만족시키는 모든 $x$의 값의 범위가 $[a, b]$일 때, $a + b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그부등식",
+      "로그함수"
+    ],
+    "exam_intent": "로그 부등식의 해의 범위 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

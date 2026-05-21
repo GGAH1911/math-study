@@ -1,0 +1,16 @@
+{
+  "text_sha": "5c06edd2303a",
+  "meta": {
+    "searchable_text": "어느 학생이 7일 동안 매일 달리기 연습을 하였다. 첫째 날에는 $x$ m 만큼 달렸고, 둘째 날에는 첫째 날보다 300 m 만큼 더 달렸다. 셋째 날에는 둘째 날보다 300 m 만큼 더 달렸고, 넷째 날부터는 매일 그 전날과 같은 거리만큼 달렸다. 이 학생이 7일 동안 총 8900 m 만큼 달렸을 때, $x$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "부분 등차수열의 합 조건에서 미지수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

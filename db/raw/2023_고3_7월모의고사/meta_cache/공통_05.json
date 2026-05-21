@@ -1,0 +1,17 @@
+{
+  "text_sha": "6f102c4ad37e",
+  "meta": {
+    "searchable_text": "함수 $f(x)$가 $x=1$에서 미분가능할 때 상수 $a$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "미분가능성",
+      "연속성",
+      "조건부상수결정"
+    ],
+    "exam_intent": "구간별 함수의 미분가능 조건으로부터 미지수를 결정한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "baec2d7acdfa",
+  "meta": {
+    "searchable_text": "세 문자 $P, Q, R$ 중에서 중복을 허락하여 8개를 택해 일렬로 나열하려고 한다. 나열된 8개의 문자 중에서 세 문자 $P, Q, R$의 개수를 각각 $a, b, c$라 할 때 $1 \\leq a, b, c$를 만족하도록 나열하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "다항계수",
+      "조건부경우의수"
+    ],
+    "exam_intent": "조건을 만족하는 경우의 수를 다항계수로 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

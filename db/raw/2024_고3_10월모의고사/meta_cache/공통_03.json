@@ -1,0 +1,17 @@
+{
+  "text_sha": "5e385fe2140b",
+  "meta": {
+    "searchable_text": "$\\frac{\\pi}{2} < \\theta < \\pi$인 $\\theta$에 대하여 $\\sin 2\\theta = -\\frac{3}{5}$일 때, $\\frac{\\cos \\theta}{\\tan \\theta}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "배각공식",
+      "삼각함수의_항등식",
+      "각의_범위"
+    ],
+    "exam_intent": "배각공식과 삼각함수 기본 성질을 이용한 삼각함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "fc0877a8b02e",
+  "meta": {
+    "searchable_text": "원 $x^2 + y^2 = 25$ 위에 세 점 $A(5,0)$, $B(0,5)$, $C(4,3)$이 있다. 점 B를 포함하지 않는 호 AC 위에 점 P가 있을 때, ㄱ. 점 B와 직선 AC 사이의 거리는 $2\\sqrt{10}$이다. ㄴ. 사각형 PABC의 넓이가 최대일 때, 직선 PB와 직선 AC는 서로 수직이다. ㄷ. 사각형 PABC의 넓이의 최댓값은 $\\frac{15+3\\sqrt{10}}{2}$이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "점과_직선_사이의_거리",
+      "도형의_넓이_극값"
+    ],
+    "exam_intent": "원 위의 점으로 이루어진 도형의 기하학적 성질과 넓이의 최댓값을 판단하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

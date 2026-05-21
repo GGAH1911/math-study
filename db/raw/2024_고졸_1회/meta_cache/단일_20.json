@@ -1,0 +1,15 @@
+{
+  "text_sha": "6c107c585f98",
+  "meta": {
+    "searchable_text": "4종류의 수학 수행 과제가 있다. 이 중에서 서로 다른 3종류의 수학 수행 과제를 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합"
+    ],
+    "exam_intent": "n개 중 r개를 선택하는 조합 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

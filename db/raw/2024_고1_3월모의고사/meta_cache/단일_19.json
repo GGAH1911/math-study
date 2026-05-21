@@ -1,0 +1,16 @@
+{
+  "text_sha": "a5ae3820de14",
+  "meta": {
+    "searchable_text": "한 변의 길이를 $a$라고 하는 정사각형 ABCD가 있다. 선분 CD 위의 점 E는 $CE = 2$를 만족하고, 선분 AD 위의 점 F는 $FD = 2$를 만족한다. 선분 BC의 연장선 위의 점 G는 $CG = 2$를 만족한다. 삼각형 EGF의 넓이가 7일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "좌표계",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "좌표계와 넓이 공식을 활용한 도형 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

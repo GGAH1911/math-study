@@ -1,0 +1,17 @@
+{
+  "text_sha": "2c425029a2b7",
+  "meta": {
+    "searchable_text": "세 학생 $A$, $B$, $C$를 포함한 7명의 학생이 원 모양의 탁자에 일정한 간격을 두고 임의로 모두 둘러앉을 때, $A$가 $B$ 또는 $C$와 이웃하게 될 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "원탁_배치",
+      "조건부_확률",
+      "포함-배제_원리"
+    ],
+    "exam_intent": "원탁에서의 경우의 수와 조건부 확률 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

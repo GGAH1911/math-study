@@ -1,0 +1,18 @@
+{
+  "text_sha": "9a3f628bcd1d",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 3$, $BC = 4$이고 $\\angle B = 90°$인 직각삼각형 $ABC$가 있다. 선분 $AB$를 $2:1$로 내분하는 점을 $D$, 점 $A$를 중심으로 하고 반지름의 길이가 $AD$인 원이 선분 $AC$와 만나는 점을 $E$, 직선 $AB$가 이 원과 만나는 점 중 $D$가 아닌 점을 $F$라 하고, 호 $EF$ 위의 점 $G$를 $CG = 2\\sqrt{6}$이 되도록 잡는다. 세 점 $C, E, G$를 지나는 원 위의 점 $H$가 $\\angle HCG = \\angle BAC$를 만족시킬 때, 선분 $GH$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원의_성질",
+      "직각삼각형",
+      "원주각",
+      "내분"
+    ],
+    "exam_intent": "복합 기하 조건에서 원과 선분의 길이 관계를 파악하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

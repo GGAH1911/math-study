@@ -1,0 +1,17 @@
+{
+  "text_sha": "0750e36458da",
+  "meta": {
+    "searchable_text": "$\\sin^2\\theta + \\cos^2\\theta = 1$일 때, 방정식 $\\sqrt{3}\\tan\\theta = 1$의 해는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "탄젠트함수",
+      "주기성"
+    ],
+    "exam_intent": "기본 삼각방정식의 풀이",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

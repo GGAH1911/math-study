@@ -1,0 +1,17 @@
+{
+  "text_sha": "435af0bcce2d",
+  "meta": {
+    "searchable_text": "그림과 같이 AB = 13, BC = 11, ∠CBA = 90°인 평행사변형 ABCD의 두 대각선이 만나는 점을 E라 하자. 삼각형 BCE의 넓이가 33일 때, 선분 BD의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "평행사변형의_성질",
+      "대각선의_성질",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "평행사변형의 대각선 이등분 성질과 삼각형 넓이를 이용해 대각선 길이를 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

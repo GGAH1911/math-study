@@ -1,0 +1,15 @@
+{
+  "text_sha": "6d71fcedbbb4",
+  "meta": {
+    "searchable_text": "다항식을 인수분해한 식이 주어졌을 때, 미지의 상수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "다항식_인수분해"
+    ],
+    "exam_intent": "인수분해 과정을 통한 미지 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

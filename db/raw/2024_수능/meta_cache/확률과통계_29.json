@@ -1,0 +1,16 @@
+{
+  "text_sha": "ccaca573d13a",
+  "meta": {
+    "searchable_text": "6 이하의 자연수 $a, b, c, d$의 모든 순서쌍 $(a,b,c,d)$의 개수를 구하시오. $a \\leq b \\leq c$이고 $a \\leq d \\leq c$이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "부등식_조건부_경우의_수",
+      "중복조합"
+    ],
+    "exam_intent": "제약 조건을 만족하는 4-tuple의 개수를 정확히 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

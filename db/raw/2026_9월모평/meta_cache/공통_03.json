@@ -1,0 +1,16 @@
+{
+  "text_sha": "7fc1d1077f48",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 $a_1 = 6$이고 점화식 형태의 조건이 주어졌을 때, 특정 항의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 항을 계산할 수 있는지 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

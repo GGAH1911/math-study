@@ -1,0 +1,16 @@
+{
+  "text_sha": "f06f7943273e",
+  "meta": {
+    "searchable_text": "곡선 위의 점에서의 접선의 절편을 구하는 문제. 주어진 곡선 위의 특정 점에서 도함수를 이용하여 접선의 기울기를 구하고, 접선 방정식의 y절편을 계산한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수와_접선",
+      "일차함수의_성질"
+    ],
+    "exam_intent": "도함수로 접선의 기울기를 구하고 접선의 절편을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

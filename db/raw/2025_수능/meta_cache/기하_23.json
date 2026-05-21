@@ -1,0 +1,16 @@
+{
+  "text_sha": "b336758b8096",
+  "meta": {
+    "searchable_text": "두 벡터에 대한 내적 또는 관계식 조건에서 미지수 값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_성분"
+    ],
+    "exam_intent": "벡터의 내적 또는 관계식을 이용한 미지수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

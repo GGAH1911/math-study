@@ -1,0 +1,17 @@
+{
+  "text_sha": "2ad007c715a9",
+  "meta": {
+    "searchable_text": "실수 $a$에 대한 두 조건: (1) $a \\geq k$, (2) $(a-5)(a-9) \\leq 0$이 있다. 조건 (1)이 조건 (2)의 부정이기 위한 충분조건이 되도록 하는 자연수 $k$의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "충분조건",
+      "부등식의_해",
+      "해집합의_포함관계"
+    ],
+    "exam_intent": "부등식의 해집합과 충분조건의 포함관계를 통합하여 이해할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

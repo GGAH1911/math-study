@@ -1,0 +1,15 @@
+{
+  "text_sha": "5341d712be85",
+  "meta": {
+    "searchable_text": "log_4 16의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그"
+    ],
+    "exam_intent": "로그의 정의와 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

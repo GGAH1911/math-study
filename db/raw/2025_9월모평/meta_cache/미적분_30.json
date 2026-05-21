@@ -1,0 +1,17 @@
+{
+  "text_sha": "3a468fde3aca",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 함수 $f(x)$를 정의할 때, 실수 전체에서 미분가능하고 조건을 만족하는 모든 함수 $g$에 대하여 $g(0)$의 최솟값을 $m$이라 하자. 모든 실수 $x$에 대하여 $g'(x) = f(x)$이고 $g(x) \\geq f(x)$이다. $a = 4$, $1 \\leq b \\leq 2$, $3 \\leq c$일 때, $100m$의 값을 구하시오. (단, $\\lim_{x \\to \\infty} [조건] = 0$이고, $b$와 $c$는 유리수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "부정적분",
+      "미분가능성",
+      "제약조건"
+    ],
+    "exam_intent": "부정적분과 부등식 제약을 만족하는 함수의 최솟값 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

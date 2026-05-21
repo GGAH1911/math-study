@@ -1,0 +1,17 @@
+{
+  "text_sha": "94789427dd91",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 + 6x + 11 = 0$의 서로 다른 두 허근을 $\\alpha$, $\\beta$라 할 때, 주어진 식의 값을 구하시오. (단, $\\bar{\\alpha}$, $\\bar{\\beta}$는 각각 $\\alpha$, $\\beta$의 켤레복소수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "허근",
+      "켤레복소수",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차방정식의 복소근과 켤레복소수 성질을 이용한 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

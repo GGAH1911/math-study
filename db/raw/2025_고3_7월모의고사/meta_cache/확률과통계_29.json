@@ -1,0 +1,18 @@
+{
+  "text_sha": "e838ac3ed5b1",
+  "meta": {
+    "searchable_text": "정규분포 $N(80, 5^2)$을 따르는 확률변수 $X$와 정규분포를 따르는 확률변수 $Y$가 $E(Y) = 2E(X)$를 만족시킨다. $P(70 \\leq X \\leq 75) = 0.1359$, $P(160 \\leq Y \\leq \\mu + 1.5\\sigma) = 0.4332$일 때, 오른쪽 표준정규분포표를 이용하여 $Y$의 표준편차를 구하시오. (단, $\\mu, \\sigma$는 상수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "정규분포",
+      "표준정규분포",
+      "표준화",
+      "확률계산"
+    ],
+    "exam_intent": "정규분포 성질과 표준정규분포표를 활용하여 모수를 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

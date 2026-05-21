@@ -1,0 +1,15 @@
+{
+  "text_sha": "b015d2e120b0",
+  "meta": {
+    "searchable_text": "실수 $\\theta$ ($0 < \\theta < \\frac{\\pi}{2}$)에 대하여 곡선 $y = \\sin 2\\theta$ 위의 점 $P(\\theta, \\sin 2\\theta)$를 지나고 직선 $OP$에 수직인 직선이 $x$축과 만나는 점을 $Q$라 할 때, $\\lim_{\\theta \\to 0^+} \\frac{OQ}{\\theta}$의 값은? (단, $O$는 원점)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한"
+    ],
+    "exam_intent": "삼각함수의 극한과 기하학적 상황의 연결을 통한 극한값 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

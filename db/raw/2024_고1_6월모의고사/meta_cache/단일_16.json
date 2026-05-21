@@ -1,0 +1,17 @@
+{
+  "text_sha": "b40eca45350a",
+  "meta": {
+    "searchable_text": "x에 대한 다항식을 x-1로 나누었을 때 몫과 나머지(3)가 주어지고, 다항식의 처음 세 계수로 이루어진 식이 x-2로 나누어떨어질 조건에서 특정 계수의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지_정리",
+      "인수분해",
+      "다항식_나눗셈"
+    ],
+    "exam_intent": "나머지 정리와 인수분해 조건을 동시에 활용하여 다항식 계수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

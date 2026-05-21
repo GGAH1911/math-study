@@ -1,0 +1,16 @@
+{
+  "text_sha": "057bcef2a985",
+  "meta": {
+    "searchable_text": "모든 항이 양수인 등비수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. 주어진 조건에서 첫째항과 공비를 구하여 특정 항까지의 합 $S_n$의 값을 계산하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "수열의_합"
+    ],
+    "exam_intent": "등비수열의 합 공식을 이용한 첫째항과 공비 결정 및 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

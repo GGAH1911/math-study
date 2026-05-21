@@ -1,0 +1,16 @@
+{
+  "text_sha": "a35c56c5564a",
+  "meta": {
+    "searchable_text": "다항식을 1차식으로 나누었을 때 나머지를 구하는 문제. 나머지 정리를 이용하여 계산한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식의나눗셈"
+    ],
+    "exam_intent": "나머지 정리를 이용한 다항식 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

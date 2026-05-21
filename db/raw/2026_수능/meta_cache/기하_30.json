@@ -1,0 +1,17 @@
+{
+  "text_sha": "59edf36c1ec2",
+  "meta": {
+    "searchable_text": "좌표평면에서 길이가 $10\\sqrt{2}$인 선분 AB를 지름으로 하는 원 위의 두 점 P, Q가 $|PA| \\cdot |PB| = |PQ| \\cdot |PB|^2 = |PQ|^2$을 만족시킨다. $|PB| = 14$일 때, $|PA| \\cdot |QB| = \\frac{a}{b}$이다. (단, $|QB| > 0$이고, $a$와 $b$는 서로소인 자연수이다.) $a + b$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "지름각의_성질",
+      "거리_공식",
+      "좌표계산"
+    ],
+    "exam_intent": "원의 지름각 성질과 거리 조건을 활용한 기하 통합 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

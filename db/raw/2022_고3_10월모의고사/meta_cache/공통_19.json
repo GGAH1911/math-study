@@ -1,0 +1,17 @@
+{
+  "text_sha": "ef32ddf30cd5",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t \\geq 0$에서의 속도가 계수 4, 3, 48을 포함하는 다항식이다. 시각 $t=0$에서 점 P의 가속도가 0이라는 조건으로부터 상수를 결정한 후, 시각 0에서 특정 시간까지 점 P가 움직인 거리를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "가속도",
+      "거리",
+      "적분"
+    ],
+    "exam_intent": "미분과 적분을 이용한 점의 운동 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

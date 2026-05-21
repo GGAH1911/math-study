@@ -1,0 +1,17 @@
+{
+  "text_sha": "e857c622389e",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{9} + \\frac{y^2}{4} = 1$의 단축의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_표준형",
+      "단축의_길이",
+      "타원의_기본_성질"
+    ],
+    "exam_intent": "타원의 표준형에서 단축의 길이를 계산하는 기본 개념 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "c83e788d9c78",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 $a_1 = a$인 수열 $\\{a_n\\}$이 다음 조건을 만족시킨다. (가) $a_2 \\times a_3 = \\cdots$ (나) 모든 자연수 $n$에 대하여 $\\frac{a_{n+1} + 3a_n}{2a_{n+1} + a_n} = \\cdots$이다. $a_5 = 0$ 등 특정 조건을 만족하는 서로 다른 모든 양수 $a$에 대하여 $a_2$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열의_초기값_조건",
+      "수열의_일반항"
+    ],
+    "exam_intent": "복합 조건의 점화식 분석으로 초기값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

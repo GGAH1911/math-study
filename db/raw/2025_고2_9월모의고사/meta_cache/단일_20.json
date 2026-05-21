@@ -1,0 +1,17 @@
+{
+  "text_sha": "9c1594de0ded",
+  "meta": {
+    "searchable_text": "모든 항이 자연수인 수열 $\\{a_n\\}$이 다음 조건을 만족시킨다.\n(가) 모든 자연수 $n$에 대하여 $a_{n+1} = \\begin{cases} \\frac{1}{2}a_n & (a_n\\text{이 홀수}) \\\\ \\frac{2}{3}a_n & (a_n\\text{이 짝수}) \\end{cases}$\n(나) 모든 자연수 $n$에 대하여 $a_n \\leq a_3$이다.\n$a_4 \\cdot a_5 \\leq 24$가 되도록 하는 모든 $a_1$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "자연수",
+      "부등식"
+    ],
+    "exam_intent": "조건부 점화식과 부등식 조건을 만족하는 초항을 체계적으로 탐색하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

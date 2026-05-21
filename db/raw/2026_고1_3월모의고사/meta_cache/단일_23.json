@@ -1,0 +1,16 @@
+{
+  "text_sha": "c3ce4dde9c7c",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대해 $_nP_3 = 12n$을 만족시키는 $n$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "자연수해"
+    ],
+    "exam_intent": "순열 조건식의 자연수 해를 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

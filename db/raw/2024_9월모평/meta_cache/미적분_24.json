@@ -1,0 +1,16 @@
+{
+  "text_sha": "22b39a92a88f",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 곡선 $x = \\cos 2t$, $y = \\sin 2t$에서 $t = \\frac{\\pi}{4}$일 때, $\\frac{dy}{dx}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_방정식의_미분",
+      "접선의_기울기"
+    ],
+    "exam_intent": "매개변수 곡선에서 접선의 기울기를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

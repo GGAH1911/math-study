@@ -1,0 +1,16 @@
+{
+  "text_sha": "5a1afe9906a1",
+  "meta": {
+    "searchable_text": "등차수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때, $S_7 = 140, S_6 = 30$이다. $a_2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "합공식"
+    ],
+    "exam_intent": "등차수열의 합 공식을 통한 일반항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

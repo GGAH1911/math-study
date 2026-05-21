@@ -1,0 +1,15 @@
+{
+  "text_sha": "46274453a99b",
+  "meta": {
+    "searchable_text": "첫째항이 2인 수열 {a_n}이 모든 자연수 n에 대하여 점화식을 만족시킨다. 수열 {a_n}의 첫째항부터 제n항까지의 합을 S_n이라 할 때, S_n > 11을 만족시키는 자연수 n의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "부분합"
+    ],
+    "exam_intent": "부분합 조건을 만족하는 항의 개수를 판단하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

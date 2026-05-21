@@ -1,0 +1,17 @@
+{
+  "text_sha": "b7bdd159ab17",
+  "meta": {
+    "searchable_text": "이산확률변수 $X$가 가지는 값이 1부터 4까지의 자연수이고, 주어진 확률 조건을 만족한다. $E(X) = \\frac{8}{21}$일 때, $P(X=1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이산확률변수",
+      "확률분포",
+      "기댓값"
+    ],
+    "exam_intent": "확률의 성질과 기댓값을 이용한 이산확률변수의 확률 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

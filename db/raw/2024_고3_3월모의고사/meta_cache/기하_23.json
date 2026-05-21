@@ -1,0 +1,17 @@
+{
+  "text_sha": "ced1ab4d6237",
+  "meta": {
+    "searchable_text": "타원 $\\frac{x^2}{17} + \\frac{y^2}{8} = 1$의 두 초점 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_표준형",
+      "초점",
+      "초점_거리_계산"
+    ],
+    "exam_intent": "타원 방정식에서 두 초점 사이 거리를 구하는 기본 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

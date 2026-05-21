@@ -1,0 +1,16 @@
+{
+  "text_sha": "c6f593a2a275",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 2일 때, 주어진 이차함수의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "최댓값_최솟값",
+      "이차함수의_성질"
+    ],
+    "exam_intent": "구간 내 이차함수의 최댓값 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

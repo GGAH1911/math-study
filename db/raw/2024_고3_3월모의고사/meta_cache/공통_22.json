@@ -1,0 +1,17 @@
+{
+  "text_sha": "09f54cc8293e",
+  "meta": {
+    "searchable_text": "절댓값을 포함한 함수 $f(x)$와 실수 $a$에 대하여 닫힌구간 $[a, b]$에서의 함수의 최댓값을 $M$이라 하자. 함수 $f$는 서로 다른 두 실수 $p, q$에서만 미분가능하지 않다. $M=6$일 때, 어떤 값을 구하시오. (단, $a, b$는 정수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "미분가능성",
+      "절댓값함수",
+      "최댓값"
+    ],
+    "exam_intent": "절댓값함수의 미분가능 조건과 폐구간 최댓값 관계 이해도 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

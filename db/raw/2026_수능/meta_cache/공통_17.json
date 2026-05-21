@@ -1,0 +1,16 @@
+{
+  "text_sha": "1247b5db4403",
+  "meta": {
+    "searchable_text": "함수 $f(x) = 4x^3 + 3x^2 + 2x$의 한 부정적분 $F(x)$에 대하여 $F(0) = 4$일 때, $F(2)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "부정적분",
+      "초기조건"
+    ],
+    "exam_intent": "부정적분의 정의와 초기조건을 이용한 값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

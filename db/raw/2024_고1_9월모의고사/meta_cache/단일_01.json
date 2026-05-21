@@ -1,0 +1,16 @@
+{
+  "text_sha": "3d1631783f7e",
+  "meta": {
+    "searchable_text": "두 다항식 $a^2b^3c^2d^2$, $a^2b^2c^3d^2$에 대하여 최대공약다항식을 구하면?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "최대공약다항식",
+      "인수분해"
+    ],
+    "exam_intent": "다항식의 최대공약수를 구하는 기본 계산 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

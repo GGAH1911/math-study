@@ -1,0 +1,17 @@
+{
+  "text_sha": "d80844501de3",
+  "meta": {
+    "searchable_text": "실수 $x$에 대한 두 조건 $p$: $|x| \\leq 2$, $q$: $(x-1)(x-2)(x-4)(x-5) \\leq 0$이 있다. 명제 $p \\to q$와 명제 $p \\to \\neg q$가 모두 거짓이 되도록 하는 모든 정수 $x$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제",
+      "조건부명제",
+      "진리집합"
+    ],
+    "exam_intent": "조건부 명제의 참/거짓과 정수 해를 조합하여 논리적 사고력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

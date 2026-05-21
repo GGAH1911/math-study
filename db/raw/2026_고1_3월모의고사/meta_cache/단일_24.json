@@ -1,0 +1,17 @@
+{
+  "text_sha": "7bc40256f927",
+  "meta": {
+    "searchable_text": "두 자연수 $m, n$에 대하여 $2^m \\times 4^n \\times 3^m = 272 \\times 336$을 만족시키는 자연수의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수",
+      "소인수분해",
+      "최댓값"
+    ],
+    "exam_intent": "지수 조건을 만족하는 자연수의 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

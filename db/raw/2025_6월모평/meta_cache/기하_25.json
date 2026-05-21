@@ -1,0 +1,17 @@
+{
+  "text_sha": "4899edb96f56",
+  "meta": {
+    "searchable_text": "좌표평면에서 두 벡터에 대한 조건식을 만족하는 벡터의 크기의 최솟값을 구하는 문제. 벡터 내적 관계식 이용.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_크기",
+      "최솟값"
+    ],
+    "exam_intent": "벡터 조건식으로부터 벡터의 크기 최솟값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

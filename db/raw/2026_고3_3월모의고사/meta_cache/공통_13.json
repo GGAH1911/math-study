@@ -1,0 +1,18 @@
+{
+  "text_sha": "d731549fb152",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 곡선 $y=f(x)$ 위의 점 $P(1, 5)$에서의 접선이 곡선과 만나는 점 중 P가 아닌 점을 Q라 하자. 곡선 위의 점 Q에서의 접선과 x축, y축으로 둘러싸인 도형의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "접선의_방정식",
+      "곡선과_직선의_교점",
+      "정적분"
+    ],
+    "exam_intent": "접선의 교점을 구하고 정적분으로 둘러싸인 도형의 넓이를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

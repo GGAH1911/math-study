@@ -1,0 +1,17 @@
+{
+  "text_sha": "692955612e13",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 자연수 $a, b, c, d, e$의 모든 순서쌍 $(a, b, c, d, e)$의 개수는? [3점] (가) $a + b + c + d + e = 12$ (나) $1 \\leq a \\leq 2, 1 \\leq b \\leq 2, 1 \\leq c \\leq 2, e \\geq 5$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순서쌍_경우의_수",
+      "조건부_자연수_해",
+      "중복조합"
+    ],
+    "exam_intent": "제약 조건을 만족하는 자연수 조합의 개수를 정확히 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

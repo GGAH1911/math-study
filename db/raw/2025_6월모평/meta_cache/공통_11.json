@@ -1,0 +1,18 @@
+{
+  "text_sha": "ab939ebf69e9",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1이고 $f(0)=0$인 삼차함수 $f$가 $\\lim_{x \\to a} \\frac{f(x)}{(x-b)^3} = c$ (상수)를 만족시킨다. 곡선 $y=f(x)$ 위의 점에서의 접선의 절편이 4일 때, $|f(1)|$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "삼차함수",
+      "극한과_도함수",
+      "접선의_방정식",
+      "함수의_결정"
+    ],
+    "exam_intent": "극한 조건과 접선의 절편 조건으로부터 삼차함수를 결정하고 함수값을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

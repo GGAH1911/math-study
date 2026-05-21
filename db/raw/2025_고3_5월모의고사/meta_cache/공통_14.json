@@ -1,0 +1,17 @@
+{
+  "text_sha": "037b9f0e31a1",
+  "meta": {
+    "searchable_text": "반지름 r₁, r₂인 두 원 O₁, O₂가 두 점 A, B에서 만난다. 원 O₁ 위의 점 C와 원 O₂ 위의 점 D, E에 대해 세 점 C, A, D와 세 점 C, B, E가 각각 일직선이다. AC = 3, AD = 5, DE = 4일 때 선분 CE의 길이를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "방멱",
+      "교점",
+      "할선"
+    ],
+    "exam_intent": "두 원의 교점을 지나는 할선의 방멱 관계식으로 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

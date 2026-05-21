@@ -1,0 +1,16 @@
+{
+  "text_sha": "d555e0dacf9e",
+  "meta": {
+    "searchable_text": "$_5C_2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "이항계수"
+    ],
+    "exam_intent": "조합의 정의를 이용한 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

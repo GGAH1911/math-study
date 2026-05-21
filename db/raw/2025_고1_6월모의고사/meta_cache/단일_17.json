@@ -1,0 +1,16 @@
+{
+  "text_sha": "11fa35350b31",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차다항식 $P(x)$를 $x^2 - 1$로 나눈 몫과 나머지는 서로 같다. 나머지가 $x - 1$로 나누어떨어질 때, $P(4)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식_나눗셈",
+      "나머지_정리"
+    ],
+    "exam_intent": "다항식 나눗셈 조건으로부터 미지의 다항식을 결정하고 함숫값을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "bb922f3ccd0f",
+  "meta": {
+    "searchable_text": "거듭제곱근을 포함한 이항식의 전개식에서 특정 차수 항의 계수를 구하는 문제 (지수: 5, 1, 6)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "지수의_계산"
+    ],
+    "exam_intent": "이항정리를 활용하여 전개식의 특정 항 계수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,122 @@
+2√2 이므로 
+
+
+\[ \frac{\sqrt{2}}{6}(a^3 + b^3) = 2\sqrt{2}, a^3 + b^3 = 12 \]
+
+
+점 F에서 선분 AB에 내린 수선의 발을 I라 하면 
+
+
+삼각형 BFI는 ∠FBI = 60°인 직각삼각형이므로 
+
+
+\[ \overline{FI} = \frac{\sqrt{3}}{2} \overline{FB} = \frac{\sqrt{3}}{2} (a - b), \]
+
+
+\[ \overline{BI} = \frac{1}{2} \overline{FB} = \frac{1}{2} (a - b) \text{에서} \]
+
+
+\[ \overline{AI} = a - \frac{1}{2}(a - b) = \frac{1}{2}(a + b) \]
+
+
+삼각형 FAI는 직각삼각형이므로 
+
+
+\[ \overline{AF}^2 = \overline{FI}^2 + \overline{AI}^2 \]
+
+
+\[ = \left( \frac{\sqrt{3}}{2}(a - b) \right)^2 + \left( \frac{1}{2}(a + b) \right)^2 \]
+
+
+\[ = \frac{3}{4}(a^2 - 2ab + b^2) + \frac{1}{4}(a^2 + 2ab + b^2) \]
+
+
+\[ = a^2 - ab + b^2 = 4 \]
+
+
+\[ a^3 + b^3 = (a + b)(a^2 - ab + b^2) = (a + b) \times 4 = 12 \text{이므로} \]
+
+
+\[ a + b = 3 \]
+
+
+\[ a^2 - ab + b^2 = (a + b)^2 - 3ab = 3^2 - 3ab = 4 \text{이므로} \]
+
+
+\[ ab = \frac{5}{3} \]
+
+
+\[ (a - b)^2 = (a + b)^2 - 4ab = 3^2 - 4 \times \frac{5}{3} = \frac{7}{3} \text{이므로} \]
+
+
+\[ a - b = \frac{\sqrt{21}}{3} \]
+
+
+사각형 ABFE의 넓이는 정삼각형 OAB의 넓이에서
+정삼각형 OEF의 넓이를 뺀 것과 같으므로 
+
+
+\[ S = \frac{\sqrt{3}}{4}a^2 - \frac{\sqrt{3}}{4}b^2 \]
+
+
+\[ = \frac{\sqrt{3}}{4}(a^2 - b^2) \]
+
+
+\[ = \frac{\sqrt{3}}{4}(a + b)(a - b) \]
+
+
+\[ = \frac{\sqrt{3}}{4} \times 3 \times \frac{\sqrt{21}}{3} = \frac{3}{4} \sqrt{7} \]
+
+
+따라서 32 × S² = 32 × \(\frac{63}{16}\) = 126 
+
+
+30. [출제의도] 직선의 방정식을 활용하여 문제해결하기 
+
+
+곡선 y = ax²과 직선 y = mx + 4a가 만나는 
+
+
+두 점 A, B의 x좌표를 각각 α, β라 하면 
+
+
+\[ A(\alpha, \alpha \beta), B(\beta, \alpha \beta) \]
+
+
+이차방정식 ax² - mx - 4a = 0의 두 실근이 α, β 
+
+
+이므로 이차방정식의 근과 계수의 관계에 의하여 
+
+
+\[ \alpha + \beta = \frac{m}{a}, \alpha \beta = -4 \]
+
+
+선분 AB가 원 C의 지름이므로 ∠BOA = 90° 
+
+
+직선 OA의 기울기와 직선 OB의 기울기의 곱이 
+
+
+-1이므로 
+
+
+\[ \frac{\alpha \alpha^2 - 0}{\alpha - 0} \times \frac{\alpha \beta^2 - 0}{\beta - 0} = \alpha \alpha \times \alpha \beta \]
+
+
+\[ = \alpha^2 \times \alpha \beta \]
+
+
+\[ = -4\alpha^2 = -1 \]
+
+
+에서 양수 a의 값은 \(\frac{1}{2}\) 
+
+
+점 P(k, \(\frac{k^2}{2}\))은 원 C의 원이므로 ∠APB = 90° 
+
+
+직선 PA의 기울기와 직선 PB의 기울기의 곱이 
+
+
+\[ -1 \text{이므로} \]

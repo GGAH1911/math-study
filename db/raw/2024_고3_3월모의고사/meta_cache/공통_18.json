@@ -1,0 +1,16 @@
+{
+  "text_sha": "69847863d978",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 $\\frac{a_1}{10} + \\frac{a_2}{9} = 137$, $\\frac{a_3}{10} + \\frac{a_4}{9} = 101$일 때, $a_{10}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "등차수열의 공차와 첫항을 구하기 위한 연립식 풀이 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

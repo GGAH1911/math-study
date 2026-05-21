@@ -1,0 +1,17 @@
+{
+  "text_sha": "709951de1555",
+  "meta": {
+    "searchable_text": "함수가 주어진 극한 조건을 만족하도록 하는 두 정수에 대하여 최댓값을 구하시오. [4점] 모든 실수에 대하여 유리함수의 극한값이 존재한다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한값의_존재_조건",
+      "유리함수의_극한",
+      "다항식_인수분해"
+    ],
+    "exam_intent": "극한 존재 조건으로부터 다항식 형태를 결정하고 최댓값 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

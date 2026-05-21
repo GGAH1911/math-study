@@ -1,0 +1,17 @@
+{
+  "text_sha": "a925c1159852",
+  "meta": {
+    "searchable_text": "쌍곡선 $\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1$의 한 초점 $F(c, 0)$을 지나고 $y$축에 평행한 직선이 쌍곡선과 제1사분면에서 만나는 점을 $P$라 하자. $|PF| = 5$일 때, $b^2$의 값은? (단, $c$는 양수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "초점",
+      "초점을_지나는_현"
+    ],
+    "exam_intent": "쌍곡선의 초점 성질과 거리 조건으로부터 매개변수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

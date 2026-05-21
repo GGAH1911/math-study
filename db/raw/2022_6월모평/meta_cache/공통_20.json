@@ -1,0 +1,17 @@
+{
+  "text_sha": "17e32a740e7b",
+  "meta": {
+    "searchable_text": "실수 $a$와 함수 $f(x) = \\ldots$에 대하여, 함수 $g(x) = \\ldots$가 오직 하나의 극값을 갖도록 하는 모든 $a$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "도함수의_부호",
+      "극값의_개수"
+    ],
+    "exam_intent": "매개변수 조건에서 극값 개수가 1개인 경우를 찾고 그 합을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

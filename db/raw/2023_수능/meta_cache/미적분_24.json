@@ -1,0 +1,16 @@
+{
+  "text_sha": "48ed6bf6c6d1",
+  "meta": {
+    "searchable_text": "극한 $\\lim$ 값을 구하는 문제. 분자와 분모가 다항식 형태.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한_계산",
+      "분자_분모_최고차항_비교"
+    ],
+    "exam_intent": "다항식 분수의 극한값을 최고차항으로 나누어 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

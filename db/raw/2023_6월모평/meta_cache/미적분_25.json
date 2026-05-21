@@ -1,0 +1,17 @@
+{
+  "text_sha": "2e79fb7a7976",
+  "meta": {
+    "searchable_text": "함수의 역함수를 $g$라 할 때, $g'(a)$의 값을 구하는 문제. 역함수 미분 공식 적용. 선택지: $1, \\frac{1}{2}, \\frac{1}{3}, \\frac{1}{4}, \\frac{1}{5}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "역함수의_미분",
+      "역함수_미분_공식",
+      "도함수"
+    ],
+    "exam_intent": "역함수 미분 공식 $g'(y) = 1/f'(x)$를 적용하여 도함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

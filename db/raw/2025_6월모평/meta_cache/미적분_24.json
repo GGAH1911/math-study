@@ -1,0 +1,16 @@
+{
+  "text_sha": "1e202f232d84",
+  "meta": {
+    "searchable_text": "곡선 위의 점에서 삼각함수 접선의 기울기를 구하시오. 도함수를 이용하여 계산한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_기울기",
+      "삼각함수의_미분"
+    ],
+    "exam_intent": "삼각함수의 도함수를 이용해 접선의 기울기를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

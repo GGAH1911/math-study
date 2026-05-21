@@ -1,0 +1,16 @@
+{
+  "text_sha": "5fe3a6b5b55f",
+  "meta": {
+    "searchable_text": "연립부등식 $x^2 - 3x - 18 \\leq 0$, $x^2 - 8x + 15 \\geq 0$을 만족시키는 모든 정수 $x$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "연립부등식"
+    ],
+    "exam_intent": "이차부등식 연립의 정수해 합을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "391dfc1fff50",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 $n$이 5의 배수가 아닌 경우 $a_{n+1} = a_n + 4$, $n$이 5의 배수인 경우 $a_{n+1} = a_n + 10$일 때, $20 \\le a_n \\le 30$을 만족하는 모든 자연수 $n$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식"
+    ],
+    "exam_intent": "조건부 점화식을 분석하여 범위 내 항의 인덱스 합 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

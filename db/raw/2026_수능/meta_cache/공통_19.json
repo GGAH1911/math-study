@@ -1,0 +1,16 @@
+{
+  "text_sha": "9c15fc38022e",
+  "meta": {
+    "searchable_text": "$-2 \\leq x \\leq 2$인 모든 실수 $x$에 대하여 부등식\n$$k \\leq 2x^3 - 3x^2 - 12x + 8 \\leq M$$\n가 성립하도록 하는 양수 $k$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "함수의_극값",
+      "부등식"
+    ],
+    "exam_intent": "주어진 범위에서 함수의 극값을 미분으로 구하여 부등식 조건 해결",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

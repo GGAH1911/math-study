@@ -1,0 +1,17 @@
+{
+  "text_sha": "969595c70456",
+  "meta": {
+    "searchable_text": "실수 $a$ ($a > 1$)에 대하여 곡선 $y = a\\log_3 x$과 곡선 $y = \\log_a x$이 만나는 점을 A, 한 곡선이 $x$축과 만나는 점을 B, 다른 점을 C라 할 때, 삼각형 ABC가 정삼각형이 되는 $a$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "교점",
+      "정삼각형_조건"
+    ],
+    "exam_intent": "로그함수들의 교점과 축과의 만남으로 정삼각형을 이루는 매개변수 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

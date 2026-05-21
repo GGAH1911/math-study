@@ -1,0 +1,16 @@
+{
+  "text_sha": "182bff1c63d8",
+  "meta": {
+    "searchable_text": "함수에 대하여 $\\lim_{x \\to 0}$ 의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_정의",
+      "극한값_계산"
+    ],
+    "exam_intent": "기본적인 극한값 계산 능력을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

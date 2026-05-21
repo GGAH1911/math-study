@@ -1,0 +1,13 @@
+{
+  "text_sha": "dfb5c526f349",
+  "meta": {
+    "searchable_text": "1⋄2⋄1⋄ 의 값은? (단, ⋄⋄1 이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [],
+    "exam_intent": "기호 손상으로 문제 의도 파악 불가능",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

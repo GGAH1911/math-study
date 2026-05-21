@@ -1,0 +1,17 @@
+{
+  "text_sha": "4ee1e8957284",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1,2,3,4\\}$, $B = \\{1,2,3,4,5,6\\}$에 대하여 다음 조건을 만족시키는 함수 $f: A \\to B$의 개수를 구하시오. (가) 집합 $A$의 임의의 두 원소 $a_1, a_2$에 대하여 $a_1 < a_2$이면 $f(a_1) \\leq f(a_2)$이다. (나) $f(1) \\leq 3$ (다) $f(3) \\leq f(1) + 4$",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수의개수",
+      "비감소함수",
+      "조건부경우의수"
+    ],
+    "exam_intent": "비감소함수의 조건부 경우의 수를 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

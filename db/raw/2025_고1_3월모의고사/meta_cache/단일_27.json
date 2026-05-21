@@ -1,0 +1,18 @@
+{
+  "text_sha": "d35358f44c45",
+  "meta": {
+    "searchable_text": "그림과 같이 $AC = BC$인 예각삼각형 $ABC$의 외심을 $O$라 할 때, $\\angle BAO = 28°$이다. 선분 $BC$의 연장선 위에 $\\angle ADC = 40°$가 되도록 점 $D$를 잡는다. 삼각형 $ACD$의 내심을 $I$라 할 때, $\\angle OAI = \\square$이다. $\\square$의 값을 구하시오. (단, $BD = CD$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "외심의_성질",
+      "내심의_성질",
+      "이등변삼각형",
+      "각의_이등분선"
+    ],
+    "exam_intent": "외심과 내심의 성질을 이용한 각도 계산 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

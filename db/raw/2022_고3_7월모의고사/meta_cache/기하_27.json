@@ -1,0 +1,18 @@
+{
+  "text_sha": "07c95ff05597",
+  "meta": {
+    "searchable_text": "공간에서 수직으로 만나는 두 평면 $\\alpha$, $\\beta$의 교선 위에 두 점 A, B가 있다. 평면 $\\alpha$ 위에 $AC = 2\\sqrt{29}$, $BC = 6$인 점 C와 평면 $\\beta$ 위에 $AD = BD = 6$인 점 D가 있다. $\\angle ABC = 90°$일 때, 직선 CD와 평면 $\\beta$가 이루는 예각의 크기를 $\\theta$라 하자. $\\cos\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "수직_평면",
+      "직선과_평면의_각",
+      "공간좌표",
+      "거리_계산"
+    ],
+    "exam_intent": "수직 평면의 좌표 설정과 거리 조건으로 직선과 평면의 각 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

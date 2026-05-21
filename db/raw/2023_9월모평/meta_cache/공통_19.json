@@ -1,0 +1,17 @@
+{
+  "text_sha": "fe65d62341c0",
+  "meta": {
+    "searchable_text": "방정식 $3x^4 - 4x^3 + 4x^2 - 3x + 12 - 2a = 0$이 서로 다른 4개의 실근을 갖도록 하는 자연수 $a$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "4차_방정식",
+      "실근의_개수",
+      "매개변수_조건"
+    ],
+    "exam_intent": "매개변수가 포함된 4차 방정식이 4개의 서로 다른 실근을 가지는 조건 찾기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

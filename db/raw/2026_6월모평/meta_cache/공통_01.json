@@ -1,0 +1,16 @@
+{
+  "text_sha": "844b7cf0f634",
+  "meta": {
+    "searchable_text": "$\\sqrt[4]{4} \\times \\sqrt{2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수의_정의",
+      "근호의_계산"
+    ],
+    "exam_intent": "4제곱근과 제곱근의 곱 계산으로 기본 지수 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

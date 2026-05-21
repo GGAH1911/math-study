@@ -1,0 +1,15 @@
+{
+  "text_sha": "97908321e9f4",
+  "meta": {
+    "searchable_text": "AB=3, AC=6이고 $\\cos A = \\frac{5}{9}$인 삼각형 ABC에서 선분 BC의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "코사인_법칙"
+    ],
+    "exam_intent": "코사인 법칙을 이용하여 삼각형의 변의 길이를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

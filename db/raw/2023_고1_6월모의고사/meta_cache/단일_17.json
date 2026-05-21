@@ -1,0 +1,18 @@
+{
+  "text_sha": "4946c73271e3",
+  "meta": {
+    "searchable_text": "이차함수 $y = a(x-p)^2 + q$ (단, $a > 0$)의 그래프와 직선 $y = mx + n$이 만나는 두 점 A, B의 $x$좌표를 각각 $\\alpha$, $\\beta$라 하자. 점 B에서 $x$축에 내린 수선의 발을 H, 점 A에서 선분 BH에 내린 수선의 발을 C라 하자. $BC = 2\\sqrt{7}$일 때, $a^2 + m^2$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수와_직선의_교점",
+      "근과_계수의_관계",
+      "거리_공식",
+      "좌표_기하"
+    ],
+    "exam_intent": "이차함수와 직선의 교점에서 기하학적 거리 조건을 활용하여 계수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

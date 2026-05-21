@@ -1,0 +1,16 @@
+{
+  "text_sha": "7149504eec78",
+  "meta": {
+    "searchable_text": "$2^{-2} \\times 2^{-1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "음의_지수",
+      "지수법칙"
+    ],
+    "exam_intent": "음의 지수를 포함한 지수법칙의 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

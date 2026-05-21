@@ -1,0 +1,17 @@
+{
+  "text_sha": "d0d4f57903f0",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{\\sqrt{2\\sqrt{n}+1}}{\\sin(\\sqrt{3\\sqrt{n}})}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "삼각함수의_극한",
+      "지배항_분석"
+    ],
+    "exam_intent": "복합 극한에서 지배항 분석 및 삼각함수 극한 성질 활용",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

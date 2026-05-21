@@ -1,0 +1,16 @@
+{
+  "text_sha": "1fcefdea97fc",
+  "meta": {
+    "searchable_text": "한 변의 길이가 3인 정사각형 ABCD에서 주어진 조건을 만족하는 거리 또는 길이값을 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "정사각형",
+      "거리"
+    ],
+    "exam_intent": "정사각형의 기본 성질을 이용한 거리 계산 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

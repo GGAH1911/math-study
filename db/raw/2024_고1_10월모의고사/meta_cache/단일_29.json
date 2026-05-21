@@ -1,0 +1,17 @@
+{
+  "text_sha": "78f04dab553b",
+  "meta": {
+    "searchable_text": "그림과 같이 중심이 $O_1$인 원 $\\omega_1$ 위에 두 점 $A$, $B$를 $\\angle BO_1A = 90°$가 되도록 잡는다. 선분 $O_1A$ 위의 점 $C$에 대하여 선분 $AC$를 지름으로 하는 원을 $\\omega_2$, 선분 $O_1B$ 위의 점 $D$에 대하여 선분 $BD$를 지름으로 하는 원을 $\\omega_3$이라 하고, 두 원 $\\omega_2$, $\\omega_3$의 중심을 각각 $O_2$, $O_3$이라 하자. 사각형 $AO_2O_3B$의 넓이가 34이고 $|O_1C| + |O_1D| = 6\\sqrt{2}$일 때, 세 원 $\\omega_1$, $\\omega_2$, $\\omega_3$의 넓이의 합을 구하시오. (단, 점 $C$는 점 $A$도 아니고 점 $O_1$도 아니며, 점 $D$는 점 $B$도 아니고 점 $O_1$도 아니다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원주각과_중심각",
+      "원의_넓이",
+      "좌표_계산"
+    ],
+    "exam_intent": "원의 성질 이해와 넓이 계산의 복합 응용",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

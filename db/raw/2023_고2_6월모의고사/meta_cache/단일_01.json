@@ -1,0 +1,16 @@
+{
+  "text_sha": "225ff36185f9",
+  "meta": {
+    "searchable_text": "지수 표현: (3^2)^(2-2) 또는 3^(2+2) × 2^(2-2)의 값은? [2점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_법칙",
+      "지수_계산"
+    ],
+    "exam_intent": "지수 법칙을 이용한 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

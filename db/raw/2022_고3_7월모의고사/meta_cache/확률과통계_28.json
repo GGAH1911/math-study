@@ -1,0 +1,17 @@
+{
+  "text_sha": "ce3d3885dc41",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1, 2, 3, 4, 5, 6\\}$, $B = \\{1, 2, 3, 4, 5\\}$에 대하여 다음 조건을 만족시키는 $A$에서 $B$로의 함수 $f$의 개수는? (가) $f(1) \\times f(2) \\times f(3)$의 값은 자연수이다. (나) 집합 $A$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 < x_2$이면 $f(x_1) \\leq f(x_2)$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수",
+      "비감소함수",
+      "중복조합"
+    ],
+    "exam_intent": "비감소 함수의 개수를 조건 제약 하에서 계산하는 조합론 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

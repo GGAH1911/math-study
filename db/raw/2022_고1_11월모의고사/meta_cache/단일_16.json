@@ -1,0 +1,16 @@
+{
+  "text_sha": "39f642330d1f",
+  "meta": {
+    "searchable_text": "$x$에 대한 다항식이 $(x^2 + 2)$로 인수분해될 조건을 이용하여 정수 계수들의 합 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "다항식_인수분해",
+      "나머지정리"
+    ],
+    "exam_intent": "다항식 인수분해 조건에서 계수 관계식 도출 및 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

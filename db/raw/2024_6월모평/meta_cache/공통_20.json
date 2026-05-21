@@ -1,0 +1,16 @@
+{
+  "text_sha": "1714856d5cad",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차함수 $f(x)$에 대하여 함수 $g(x)$가 다음 조건을 만족시킬 때, $g(9)$의 값을 구하시오. [4점] $x \\geq 1$인 모든 실수 $x$에 대하여 $g(x) \\geq f(4)$이고 $g(x) \\geq f(3)$이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최댓값",
+      "부등식_조건"
+    ],
+    "exam_intent": "이차함수 조건에서 함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

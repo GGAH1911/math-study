@@ -1,0 +1,16 @@
+{
+  "text_sha": "f13ab104c7bb",
+  "meta": {
+    "searchable_text": "부등식 $\\log_2 x \\leq 4 + \\log_2(6-x)$을 만족시키는 모든 정수 $x$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그부등식",
+      "로그의_성질"
+    ],
+    "exam_intent": "로그부등식 풀이 및 정수 해의 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

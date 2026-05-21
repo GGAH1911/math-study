@@ -1,0 +1,17 @@
+{
+  "text_sha": "0017a6edabb4",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 사차함수 $f(x)$에 대하여 어떤 함수는 실수 전체의 집합에서 미분가능하고, 곡선 $y = f(x)$ 위의 점 $(0, f(0))$에서의 접선의 방정식이 $y = 2x + 1$이다. $f'(x) = 2$인 서로 다른 모든 실수 $x$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "접선의_방정식",
+      "미분가능성"
+    ],
+    "exam_intent": "조건으로부터 사차함수 도함수의 근을 모두 찾아 해의 합을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

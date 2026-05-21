@@ -1,0 +1,17 @@
+{
+  "text_sha": "eae60078465f",
+  "meta": {
+    "searchable_text": "함수 $f$가 $x \\geq 1$인 모든 실수 $x$에 대하여 특정 함수 방정식을 만족할 때, $\\lim_{x \\to \\infty} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "함수의_극한",
+      "극한의_성질",
+      "함수_방정식"
+    ],
+    "exam_intent": "함수 방정식을 통한 함수의 극한값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "968bdf8f5506",
+  "meta": {
+    "searchable_text": "상수 $a(a>1)$에 대하여 곡선 $y = a^x$와 곡선 $y = \\log_a x$가 서로 다른 두 점에서 만난다. 이 두 점 중 하나를 P라 하고, 점 P에서 $x$축에 내린 수선의 발을 H라 하자. 삼각형 OHP의 넓이가 2일 때, $a$의 값은? (단, O는 원점)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "함수의_교점",
+      "도형의_넓이"
+    ],
+    "exam_intent": "지수함수와 로그함수의 교점 관계와 삼각형 넓이 조건으로부터 상수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

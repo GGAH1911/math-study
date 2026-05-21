@@ -1,0 +1,16 @@
+{
+  "text_sha": "3f014e7ab256",
+  "meta": {
+    "searchable_text": "정수 a에 대하여 수열 $\\{a_n\\}$의 일반항이 주어질 때, 수열이 수렴하도록 하는 모든 정수 a의 개수를 구한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수렴성_판정",
+      "정수_조건"
+    ],
+    "exam_intent": "정수 매개변수에 따른 수열의 수렴 조건 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "a72a524d3bb4",
+  "meta": {
+    "searchable_text": "직선 ⋄과 원 ⋄2⋄2⋄9가 만나지 않을 때, ⋄5인 자연수 ⋄의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선과_원의_위치_관계",
+      "거리_조건"
+    ],
+    "exam_intent": "직선과 원이 만나지 않을 조건을 만족하는 자연수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

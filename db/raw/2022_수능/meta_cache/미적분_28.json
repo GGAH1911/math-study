@@ -1,0 +1,17 @@
+{
+  "text_sha": "98d2223b37dc",
+  "meta": {
+    "searchable_text": "함수 $f(x) = x^6 - x^{1/2}$에 대하여 함수 $g(x) = 3x^4\\cos(x)$라 하자. $0 < x < 2\\pi$에서 함수 $g$가 극소가 되는 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "도함수",
+      "극값",
+      "삼각함수"
+    ],
+    "exam_intent": "도함수를 이용하여 극소점의 개수를 정확히 판단하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

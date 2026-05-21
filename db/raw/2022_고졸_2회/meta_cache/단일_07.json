@@ -1,0 +1,16 @@
+{
+  "text_sha": "51665c775953",
+  "meta": {
+    "searchable_text": "정의역이 제한된 이차함수의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "최댓값과_최솟값",
+      "정의역_제한"
+    ],
+    "exam_intent": "정의역 제한 조건 하에서 이차함수의 최댓값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

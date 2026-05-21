@@ -1,0 +1,16 @@
+{
+  "text_sha": "cd8970516af9",
+  "meta": {
+    "searchable_text": "함수 f(x) = ⋄2⋄2⋄2⋄2⋄에 대하여 f'(1)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "다항함수의_미분"
+    ],
+    "exam_intent": "도함수의 기본 계산 능력을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

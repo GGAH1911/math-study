@@ -1,0 +1,16 @@
+{
+  "text_sha": "29f32f59758e",
+  "meta": {
+    "searchable_text": "실수 $k$에 대하여 조건 $|x-5| \\leq k$가 조건 $x^2 - 8x + 12 \\leq 0$이기 위한 필요조건이 되도록 하는 실수 $k$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "필요조건과_충분조건",
+      "이차부등식"
+    ],
+    "exam_intent": "두 조건의 필요조건 관계에서 집합의 포함관계를 이용하여 매개변수의 최솟값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

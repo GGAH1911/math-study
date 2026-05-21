@@ -1,0 +1,17 @@
+{
+  "text_sha": "a5def52ecaa5",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 $\\lim_{x \\to 0} \\frac{f(x) - 1}{x}$의 값은? ①$\\frac{2}{5}$ ②$3$ ③$\\frac{2}{7}$ ④$4$ ⑤$\\frac{2}{9}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "함수의_극한",
+      "극한값_계산",
+      "미분의_정의"
+    ],
+    "exam_intent": "함수 극한의 정의를 이용한 극한값 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

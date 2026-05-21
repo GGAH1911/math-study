@@ -1,0 +1,17 @@
+{
+  "text_sha": "6124a4bd790a",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 역함수를 $g(x)$라 하자. 매개변수 $t$로 나타내어진 곡선에서 $t=3$일 때, 특정 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "역함수",
+      "매개변수방정식",
+      "미분"
+    ],
+    "exam_intent": "역함수와 매개변수 곡선의 미분을 통합하여 적용할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

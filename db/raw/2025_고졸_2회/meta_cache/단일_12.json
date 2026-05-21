@@ -1,0 +1,16 @@
+{
+  "text_sha": "1ac76ab3b234",
+  "meta": {
+    "searchable_text": "중심의 좌표가 $(3, 3)$이고 $x$축과 $y$축에 동시에 접하는 원의 방정식은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "접선의_조건"
+    ],
+    "exam_intent": "원의 중심과 좌표축에 대한 접선 조건으로부터 원의 방정식을 구한다",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

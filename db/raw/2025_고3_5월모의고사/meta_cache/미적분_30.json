@@ -1,0 +1,17 @@
+{
+  "text_sha": "79f2ff8b259c",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 모든 항이 양수인 등비수열이고, 수열 $\\{b_n\\}$을 모든 자연수 $n$에 대하여 정의할 때, 수열 $\\{b_n\\}$이 다음 조건을 만족시킨다. (가) 급수 $\\sum_{n=1}^{\\infty} \\frac{a_{3n-3}a_{2n-2}}{a_{3n-1}a_{2n-2}}$는 수렴한다. (나) $\\frac{b_5 \\cdot a_2 \\cdot b_4 \\cdot b_6 \\cdot b_4}{9} = 90$, $a_3$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등비수열",
+      "급수의_수렴",
+      "등비급수"
+    ],
+    "exam_intent": "등비수열의 성질과 급수 수렴 조건을 종합적으로 활용하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

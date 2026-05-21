@@ -1,0 +1,15 @@
+{
+  "text_sha": "89ed9a3bb5fd",
+  "meta": {
+    "searchable_text": "$\\sin 60° \\times \\cos 30°$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "특수각의_삼각비"
+    ],
+    "exam_intent": "특수각(30°, 60°) 삼각비 값 이용 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

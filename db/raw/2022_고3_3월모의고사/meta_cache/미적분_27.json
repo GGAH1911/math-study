@@ -1,0 +1,16 @@
+{
+  "text_sha": "49048674898d",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 점화식을 만족할 때, $\\lim_{n \\to \\infty} \\frac{2n+4}{3n}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "점화식",
+      "극한"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 극한값을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

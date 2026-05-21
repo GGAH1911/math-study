@@ -1,0 +1,13 @@
+{
+  "text_sha": "285ec999cec8",
+  "meta": {
+    "searchable_text": "그림과 같이 3곳을 모두 여행하는 계획을 세우려고 한다. 여행 순서를 정하는 경우의 수는? (단, 한 번 여행한 곳은 다시 여행하지 않는다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "순열 개념을 이용한 기본 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

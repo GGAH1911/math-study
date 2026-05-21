@@ -1,0 +1,16 @@
+{
+  "text_sha": "50e9245dd0c8",
+  "meta": {
+    "searchable_text": "네 개의 숫자 $1, 1, 2, 3$을 모두 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "같은_원소"
+    ],
+    "exam_intent": "같은 원소를 포함한 순열의 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

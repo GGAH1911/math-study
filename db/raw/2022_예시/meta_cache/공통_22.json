@@ -1,0 +1,18 @@
+{
+  "text_sha": "a0d402edf6d5",
+  "meta": {
+    "searchable_text": "두 자연수 매개변수를 가진 함수가 극값 개수 5개 조건과 구간별 최댓값 동일 조건을 만족하는 모든 순서쌍의 개수를 구하는 문제 (4점)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "극대극소",
+      "최댓값",
+      "매개변수"
+    ],
+    "exam_intent": "극값 개수와 최댓값 조건을 동시에 만족하는 매개변수의 개수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

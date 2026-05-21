@@ -1,0 +1,16 @@
+{
+  "text_sha": "ead249bec0f8",
+  "meta": {
+    "searchable_text": "두 벡터에 대하여 특정 벡터의 모든 성분의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "벡터의_성분",
+      "벡터_연산"
+    ],
+    "exam_intent": "벡터 성분의 합 계산 능력을 평가하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

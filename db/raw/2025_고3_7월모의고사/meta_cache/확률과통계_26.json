@@ -1,0 +1,17 @@
+{
+  "text_sha": "361e07ccd9fa",
+  "meta": {
+    "searchable_text": "다항식 $(x+y)^n$의 전개식에서 $x^3$ 항의 계수와 $x^4$ 항의 계수의 합이 290일 때, 양수 $n$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "이항계수",
+      "계수계산"
+    ],
+    "exam_intent": "이항정리의 계수 조건식으로부터 지수값을 결정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

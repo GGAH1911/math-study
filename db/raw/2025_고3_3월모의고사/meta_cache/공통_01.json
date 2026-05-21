@@ -1,0 +1,16 @@
+{
+  "text_sha": "5973201e60cd",
+  "meta": {
+    "searchable_text": "$\\frac{\\sqrt[4]{3} \\times \\sqrt[3]{2}}{1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "유리지수",
+      "근호_계산"
+    ],
+    "exam_intent": "지수와 근호를 포함한 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

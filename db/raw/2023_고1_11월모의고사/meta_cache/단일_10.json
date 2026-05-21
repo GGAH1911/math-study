@@ -1,0 +1,16 @@
+{
+  "text_sha": "dc036d0cd8a3",
+  "meta": {
+    "searchable_text": "다항식이 특정 형태의 이차식으로 인수분해될 때, 관련된 미정계수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "미정계수법",
+      "다항식의_인수분해"
+    ],
+    "exam_intent": "다항식의 인수분해 조건으로 미정계수 결정하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

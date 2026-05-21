@@ -1,0 +1,16 @@
+{
+  "text_sha": "f04a528ed4cf",
+  "meta": {
+    "searchable_text": "등식 $2x^2 + 2x + 3 = a(x + b)^2$이 $x$에 대한 항등식일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "다항식의_항등성"
+    ],
+    "exam_intent": "다항식 항등식의 계수 비교를 통해 미지수를 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

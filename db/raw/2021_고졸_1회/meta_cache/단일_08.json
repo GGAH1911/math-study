@@ -1,0 +1,15 @@
+{
+  "text_sha": "5138ec705d66",
+  "meta": {
+    "searchable_text": "삼차방정식 $x^3 + ax^2 + 2x - 4 = 0$의 한 근이 2일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "인수정리"
+    ],
+    "exam_intent": "삼차방정식의 근 조건을 이용한 미지수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

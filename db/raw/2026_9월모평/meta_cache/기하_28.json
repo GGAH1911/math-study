@@ -1,0 +1,18 @@
+{
+  "text_sha": "d249c9808b5b",
+  "meta": {
+    "searchable_text": "좌표공간의 구 $x^2 + y^2 + z^2 = 36$ 위의 점 A에 대하여 구 위의 점 B가 다음 조건을 만족시킨다. (가) 선분 OA 위의 점 C에 대하여 $|\\overrightarrow{OC}| = 4$인 점 C에 대하여 직선 BC와 $xy$-평면이 서로 평행하다. (나) 두 직선 OA, AB와 $xy$-평면이 이루는 예각의 크기를 각각 $\\alpha$, $\\beta$라 하면 $\\sin\\alpha = 3\\sin\\beta$이다. 삼각형 OAB의 $xy$-평면 위로의 정사영이 직각삼각형일 때, 평면 OAB와 $xy$-평면이 이루는 예각의 크기를 $\\theta$라 하자. $\\cos\\theta$의 값은? (단, O는 원점이고, 점 A의 z좌표는 6이 아닌 양수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "구의_방정식",
+      "정사영",
+      "선과_평면의_각",
+      "공간벡터"
+    ],
+    "exam_intent": "공간도형에서 정사영과 각도 조건을 활용하여 두 평면이 이루는 각을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

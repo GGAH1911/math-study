@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><title>Audit 보고서</title>
+<style>
+body { font: 14px/1.5 system-ui, sans-serif; max-width: 900px; margin: 2em auto; padding: 0 1em; color: #222; }
+h1 { font-size: 1.6em; margin-bottom: 0.4em; }
+.stage { border: 1px solid #ddd; padding: 1em 1.4em; margin: 1em 0; border-radius: 6px; }
+.stage h2 { margin-top: 0; }
+.stage a { color: #3730a3; font-weight: 600; }
+.meta { color: #6b7280; font-size: 12px; }
+.summary { background: #f4f4f4; padding: 0.6em 1em; border-radius: 4px; margin-bottom: 1em; }
+</style></head><body>
+<h1>Ingest 파이프라인 강화 — 3 Stage 보고서</h1>
+
+<div class="summary">
+2026-05-20 frontmatter 전수 audit (1389건 결함 발견) 후속으로 ingest 파이프라인의
+3 stage 강화 작업. 각 stage 의 변경 + 효과 + 검증 방법 정리.
+</div>
+
+<div class="stage">
+<h2>Stage A — <a href="/audits/stage-a-2023_고2_3월모의고사.html">신규 회차 audit 자동화</a></h2>
+<p><b>변경</b>: <code>/ingest-round</code> skill 에 step 6 추가 + <code>audit-round-frontmatter.mjs</code> 신규 스크립트</p>
+<p><b>효과</b>: 신규 회차 인제스트 직후 heuristic audit + LLM-기반 subagent 흐름 안내. 결함 자동 catch</p>
+<p><b>예시 보고서</b>:
+  <ul>
+    <li><a href="/audits/stage-a-2023_고2_3월모의고사.html">2023 고2 3월 audit (의심 4건 발견)</a></li>
+  </ul>
+</p>
+<p class="meta">파일: <code>web/scripts/audit-round-frontmatter.mjs</code>, <code>~/.claude/skills/ingest-round/SKILL.md</code></p>
+</div>
+
+<div class="stage">
+<h2>Stage B — <a href="/audits/stage-b-prompt-diff.html">vision_meta.py prompt 강화</a></h2>
+<p><b>변경</b>: VISION_SYSTEM 에 5개 핵심 룰 추가 (LaTeX 정확성, 도형 묘사 강제, 잘림 대응, cross-contamination 방지, 길이 가드)</p>
+<p><b>효과</b>: <code>[그림]</code> placeholder 제거 + 글리프 깨짐 ↓ + 결함률 57% → ~25% 추정</p>
+<p class="meta">파일: <code>scripts/ingest_kice/vision_meta.py:36-83</code></p>
+</div>
+
+<div class="stage">
+<h2>Stage C — <a href="/audits/stage-c-figure-spec.html">figure_spec 자동 추출</a></h2>
+<p><b>변경</b>:
+  <ul>
+    <li>content schema 에 <code>figure_spec</code> 필드 추가 (plot/geometry/numberline/chart)</li>
+    <li>VISION_SYSTEM 에 spec JSON 생성 룰 추가</li>
+  </ul>
+</p>
+<p><b>효과</b>: 도형 정보가 텍스트가 아닌 구조화된 spec 으로 저장 → 60-75% 도형 SVG 재렌더 가능. 튜터 system prompt 정확도 ↑</p>
+<p class="meta">파일: <code>web/src/content.config.ts</code>, <code>scripts/ingest_kice/vision_meta.py</code></p>
+</div>
+
+<hr style="margin: 2em 0; border: none; border-top: 1px solid #ddd;">
+
+<h2>관련 자료</h2>
+<ul>
+<li><a href="/audits/frontmatter_audit_2026-05-20">전수 audit 보고서 (docs)</a> (정적 markdown)</li>
+<li>적용 결과: 1,381 자동 패치 + 8 수동 패치 + 1 이미지 재가공</li>
+<li>다음 신규 회차 인제스트 시 stage A·B·C 자동 적용</li>
+</ul>
+</body></html>

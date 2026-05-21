@@ -1,0 +1,175 @@
+\(PC = \frac{1}{3} DB = \sqrt{3}\) 
+
+
+그리므로 \(AP = AC - PC = 2\sqrt{3}\) ... ① 
+
+
+ 
+
+
+선분 BD 의 중점을 M 이라 하면 
+
+
+조건 (나)에 의하여 \(QB \cdot QD = 3\) 
+
+
+\(QB \cdot QD\)
+
+
+\[= (QM + MB) \cdot (QM + MD)\]
+
+
+\[= |QM|^2 + QM \cdot (MB + MD) + MB \cdot MD\]
+
+
+\[= |QM|^2 + QM \cdot \overline{0} - |MB|^2\]
+
+
+\[= |QM|^2 - \left(\frac{3\sqrt{3}}{2}\right)^2\]
+
+
+\[= |QM|^2 - \frac{27}{4}\]
+
+
+이므로 \(|QM|^2 = \frac{39}{4}\) 
+
+
+선분 AC 의 중점을 N 이라 하면 
+
+
+\[MN = BC = 3\]
+
+
+\[|QM|^2 = |QN|^2 + |MN|^2\]
+
+
+\[= |QN|^2 + 9\]
+
+
+\[|QN|^2 = |QM|^2 - 9 = \frac{3}{4}\]
+
+
+\[|QN| = \frac{\sqrt{3}}{2}\]
+
+
+\[AQ = AC - QC 이므로\]
+
+
+\[|AQ| = \sqrt{3} 또는 |AQ| = 2\sqrt{3}\]
+
+
+\[|AQ| = 2\sqrt{3} 이면 ①에 의하여\]
+
+
+점 P 는 점 Q 와 같으므로 주어진 조건을 만족시키지 않는다. 
+
+
+그리므로 \(|AQ| = \sqrt{3}\)
+
+
+\[AQ \cdot DP = |AQ| \times |DP| \times \cos(\angle DPA)\]
+
+
+\[= |AQ| \times |AP|\]
+
+
+\[= \sqrt{3} \times 2\sqrt{3} = 6\]
+
+
+따라서 \(k \times (AQ \cdot DP) = \frac{5}{2} \times 6 = 15\) 
+
+
+30. [출제의도] 정사영을 활용하여 문제 해결하기 
+
+
+ 
+
+
+조건 (가)에 의하여 
+
+
+\(OC \perp OD\), \(DH \perp\) (평면 COH) 이므로 
+
+
+삼수선의 정리에 의하여 \(OH \perp OC\) 
+
+
+\(DH \perp\) (평면 ABC) 이므로 \(DH \perp OH\) 
+
+
+조건 (나)에 의하여 
+
+
+\(AD \perp OH\), \(OH \perp DH\) 이므로 
+
+
+\(OH \perp\) (평면 DAH) 
+
+
+그리므로 \(OH \perp AH\) 
+
+
+ 
+
+
+직선 OC 와 구가 만나는 점 중 점 C 가 아닌 
+
+
+점을 E 라 하면 \(AE = BC = 2\sqrt{2}\) 
+
+
+∠AOE = θ, 이라 하면 ∠OAH = ∠AOE = θ₁
+삼각형 OAE 에서 
+
+
+\[\cos\theta_1 = \frac{4^2 + 4^2 - (2\sqrt{2})^2}{2 \times 4 \times 4} = \frac{3}{4}\]
+
+
+그리므로 \(AH = \overline{OA}\cos\theta_1 = 4 \times \frac{3}{4} = 3\) 
+
+
+\[\overline{OH} = \sqrt{\overline{OA}^2 - \overline{AH}^2} = \sqrt{16 - 9} = \sqrt{7}\]
+
+
+삼각형 DHO 에서 
+
+
+\[\overline{DH} = \sqrt{\overline{OD}^2 - \overline{OH}^2} = \sqrt{16 - 7} = 3\]
+
+
+삼각형 DAH 의 넓이는 
+
+
+\[\frac{1}{2} \times AH \times DH = \frac{1}{2} \times 3 \times 3 = \frac{9}{2}\]
+
+
+ 
+
+
+점 O 를 지나고 평면 ABC 에 수직인 직선과
+구가 만나는 점 중 점 D 에 가까운 점을 I 라
+하자. 
+
+
+\(DH \parallel \overline{OH}\) 이므로 \(DH \parallel\) (평면 IEC) 
+
+
+\(AH \parallel\) EC 이므로 \(AH \parallel\) (평면 IEC) 
+
+
+그리므로 두 직선 DH, AH 를 포함하는 
+
+
+평면 DAH 는 평면 IEC 와 평행하다. 
+
+
+직선 CE 는 두 평면 IEC, DOC 의 교선이고 
+
+
+\(CE \perp \overline{OI}\), \(CE \perp \overline{OD}\) 이므로 
+
+
+두 평면 IEC, DOC 가 어무는 예각의 크기를 
+
+
+θ 라 하면 ∠DOI = θ

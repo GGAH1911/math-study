@@ -1,0 +1,18 @@
+{
+  "text_sha": "379a66f30658",
+  "meta": {
+    "searchable_text": "그림과 같이 두 초점이 $F(-c, 0)$, $F'(c, 0)$인 타원이 있다. 타원 위의 점 중 제2사분면에 있는 점 $P$에서의 접선이 $x$축, $y$축과 만나는 점을 각각 $Q$, $R$이라 하자. 삼각형 $RF'F$가 정삼각형이고 점 $F'$은 선분 $QF$의 중점일 때, $b^2$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원_접선",
+      "초점",
+      "정삼각형",
+      "중점"
+    ],
+    "exam_intent": "타원의 접선과 초점의 기하학적 조건을 종합적으로 활용",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

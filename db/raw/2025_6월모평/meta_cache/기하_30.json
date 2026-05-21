@@ -1,0 +1,16 @@
+{
+  "text_sha": "4e744111ab54",
+  "meta": {
+    "searchable_text": "두 초점이 $F(-5, 0)$, $F'(5, 0)$이고, 주축의 길이가 6인 쌍곡선이 있다. 쌍곡선 위의 $|PF| \\neq |PF'|$인 점 $P$에 대하여 점 $Q$가 $|FP| = 1 + |F'Q|$, $|F'Q| = 5 + |QP|$를 만족시킨다. 점 $A(9, 3)$에 대하여 $|AQ|$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "거리_조건"
+    ],
+    "exam_intent": "쌍곡선의 성질을 이용한 거리 조건 해석과 최댓값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

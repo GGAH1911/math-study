@@ -1,0 +1,15 @@
+{
+  "text_sha": "d425ba433472",
+  "meta": {
+    "searchable_text": "sin 30° × tan 60°의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "특수각의_삼각비"
+    ],
+    "exam_intent": "특수각 30°, 60°의 삼각비 값을 정확히 알고 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

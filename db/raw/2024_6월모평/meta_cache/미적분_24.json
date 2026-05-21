@@ -1,0 +1,16 @@
+{
+  "text_sha": "a04c090a5d2b",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 곡선에서 $t=2$일 때, $\\frac{dy}{dx}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수함수의미분",
+      "접선의기울기"
+    ],
+    "exam_intent": "매개변수 곡선에서 주어진 점의 접선 기울기 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

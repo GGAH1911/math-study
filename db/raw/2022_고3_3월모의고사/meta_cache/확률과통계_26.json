@@ -1,0 +1,17 @@
+{
+  "text_sha": "c87e0f1617b7",
+  "meta": {
+    "searchable_text": "직사각형 모양으로 연결된 도로망을 따라 $A$ 지점에서 출발하여 $P$ 지점을 지나 $B$ 지점까지 최단 거리로 가는 경우의 수 (한 번 지난 도로를 다시 지날 수 있음)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "격자경로",
+      "조합",
+      "곱의법칙"
+    ],
+    "exam_intent": "특정 점을 경유하는 격자 경로의 개수를 조합과 곱의법칙으로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "6e4a8a5a8f36",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 ABC의 내심 I를 지나고 선분 BC에 평행한 직선이 두 선분 AB, AC와 만나는 점을 각각 D, E라 하자. $AI = 3$이고, 삼각형 ABC의 내접원의 반지름의 길이가 1이다. 삼각형 ABC의 넓이가 $5\\sqrt{2}$일 때, <보기>에서 옳은 것만을 있는 대로 고른 것은?\n\nㄱ. $\\angle BID = \\angle IBD$\nㄴ. 삼각형 ADE의 둘레의 길이는 $7\\sqrt{2}$이다.\nㄷ. $DE = 2\\sqrt{2}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "내심",
+      "내접원",
+      "닮음",
+      "평행선의_성질"
+    ],
+    "exam_intent": "내심과 평행선 조건에서 닮음을 이용한 삼각형의 기하학적 성질 판단",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "92a6fac60639",
+  "meta": {
+    "searchable_text": "삼차방정식 $x^3 + ax^2 + bx + c = 0$의 한 근이 $2$일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "삼차방정식",
+      "근의_대입"
+    ],
+    "exam_intent": "근을 이용하여 삼차방정식의 상수 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

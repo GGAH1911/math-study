@@ -1,0 +1,16 @@
+{
+  "text_sha": "8b9fc5eb2180",
+  "meta": {
+    "searchable_text": "그림과 같이 4종류의 꽃이 있다. 이 중에서 서로 다른 3종류의 꽃을 선택하는 경우의 수는? (백합, 장미, 튤립, 프리지어)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수_고1",
+    "concepts": [
+      "조합",
+      "선택"
+    ],
+    "exam_intent": "4가지 중 3가지를 선택하는 기본 조합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

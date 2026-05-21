@@ -1,0 +1,18 @@
+{
+  "text_sha": "7099cb20e77c",
+  "meta": {
+    "searchable_text": "실수 $a$에 대하여 함수 $f(x)$가 $f(x) = \\begin{cases} a \\ln x + \\cdots & x < 0 \\\\ x^2 + 2x & x \\geq 0 \\end{cases}$이다. 실수 $a$ ($0 \\leq a \\leq 2$)에 대하여 $f'(x) = a$를 만족시키는 음수 $x$의 값을 $\\alpha$라 하고, 함수 $g(x) = f(x) - ax$가 다음 조건을 만족시키도록 하는 $a$의 값을 $a_1$이라 하자. 조건: $x \\geq \\alpha$인 모든 실수 $x$에 대하여 함수 $g(x)$의 그래프와 직선 $y=0$이 만나는 서로 다른 점의 개수는 2이다. $a_1 f'(a_1) + 1$의 값은? (단, $\\lim_{x \\to \\infty} (f(x) - a_1 x) = 0$)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "함수의_그래프",
+      "교점의_개수",
+      "극한의_조건"
+    ],
+    "exam_intent": "다양한 조건을 종합적으로 활용하여 매개변수 결정 후 함수값 계산하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

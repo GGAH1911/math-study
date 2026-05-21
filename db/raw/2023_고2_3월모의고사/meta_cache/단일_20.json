@@ -1,0 +1,17 @@
+{
+  "text_sha": "3a9c742ed401",
+  "meta": {
+    "searchable_text": "함수 $f(x)$와 서로 다른 세 실수 $a, b, c$가 다음 조건을 만족시킨다. (가) 방정식 $f(x)=0$을 만족시키는 실수 $x$의 값은 $a, b, c$뿐이다. (나) 주어진 조건식 = 15일 때, $c$의 값은? (단, 상수들은 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "근의개수",
+      "극값",
+      "근과계수의관계"
+    ],
+    "exam_intent": "삼차함수의 세 근 조건과 함수값 관계식을 이용한 미지수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

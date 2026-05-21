@@ -1,0 +1,16 @@
+{
+  "text_sha": "9fb6111bc47f",
+  "meta": {
+    "searchable_text": "양수 $\\alpha$가 이차방정식 $\\alpha^2-2\\alpha-2=0$의 한 근일 때, 이차방정식 $3x^2-6x-1=0$의 두 근 중 양수인 근은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근의_공식",
+      "이차방정식_풀이"
+    ],
+    "exam_intent": "주어진 조건을 이용하여 이차방정식의 근을 정확히 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "61c1b9ef7d70",
+  "meta": {
+    "searchable_text": "6P2의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열의 기본 정의를 이용한 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "9d0e05d8f3d9",
+  "meta": {
+    "searchable_text": "0 < θ < π/2인 θ에 대하여 cos θ · tan² θ = 1일 때, cos θ · tan θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_기본_항등식",
+      "tan과_sin_cos의_관계"
+    ],
+    "exam_intent": "삼각함수 관계식 활용 및 조건식으로부터 표현값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

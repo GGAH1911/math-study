@@ -1,0 +1,16 @@
+{
+  "text_sha": "3bcbe28f2acd",
+  "meta": {
+    "searchable_text": "18. 다항식 $f(x)$와 최고차항의 계수가 1인 삼차다항식 $g(x)$가 다음 조건을 만족시킨다. $f(x)$를 $g(x)$로 나누었을 때의 나머지와 $f(x)$를 $g(x)^2$로 나누었을 때의 나머지가 같다. $f(1)=7$일 때, $f(3)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지_정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "나머지 정리를 이용한 조건 분석으로 다항식 결정 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

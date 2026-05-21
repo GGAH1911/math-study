@@ -1,0 +1,15 @@
+{
+  "text_sha": "37178032d4ce",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 - 4x - 5 = 0$의 두 근을 $\\alpha$, $\\beta$라고 할 때, $\\alpha + \\beta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차방정식의 두 근의 합을 근과 계수의 관계로 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

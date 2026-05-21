@@ -1,0 +1,17 @@
+{
+  "text_sha": "05f8b45df640",
+  "meta": {
+    "searchable_text": "0 < a < 1인 실수 $a$에 대하여 그림과 같이 직선 $x = 5$가 세 곡선 $y = 2^x$, $y = \\log_a x$, $y = \\log_a \\frac{1}{x}$과 만나는 점을 각각 A, B, C라 하자. $|AB| : |BC| = 2 : 1$일 때, $4a^3$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수의_그래프",
+      "로그함수의_그래프",
+      "함수값의_대소비교"
+    ],
+    "exam_intent": "지수·로그함수의 성질과 교점의 거리 조건으로부터 기저를 구하는 종합 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "86f2d3d4a6cb",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 곡선 $x = e^{4t}$, $y = e^t$에서 $t = \\ln 2$일 때 $\\frac{dy}{dx}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "매개변수곡선",
+      "도함수",
+      "연쇄법칙"
+    ],
+    "exam_intent": "매개변수 곡선에서 특정 점의 도함수값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

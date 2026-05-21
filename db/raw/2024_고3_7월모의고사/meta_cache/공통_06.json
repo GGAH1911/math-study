@@ -1,0 +1,17 @@
+{
+  "text_sha": "76851f2931b3",
+  "meta": {
+    "searchable_text": "모든 항이 양수인 등비수열 $\\{a_n\\}$에 대하여 $a_1 \\times a_2 \\times a_3 \\times a_4 = 4$, $a_2 \\times a_4 \\times a_6 = ?$ 일 때, $a_6 \\times a_7$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비중항",
+      "항의_곱"
+    ],
+    "exam_intent": "등비수열의 곱셈 성질을 이용한 미지항 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

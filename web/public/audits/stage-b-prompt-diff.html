@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><title>Stage B — vision_meta.py prompt 강화</title>
+<style>
+body { font: 14px/1.5 system-ui, sans-serif; max-width: 1200px; margin: 2em auto; padding: 0 1em; color: #222; }
+h1 { font-size: 1.4em; }
+h2 { font-size: 1.1em; margin-top: 1.5em; }
+.box { border: 1px solid #ddd; padding: 0.6em 1em; margin: 0.6em 0; border-radius: 4px; background: #fafafa; }
+.added { background: #ecfdf5; border-left: 4px solid #10b981; }
+.removed { background: #fef2f2; border-left: 4px solid #ef4444; }
+pre { white-space: pre-wrap; font: 12px/1.5 ui-monospace, monospace; }
+.metric { display: inline-block; padding: 0.3em 0.6em; margin: 0.2em; background: #e0e7ff; border-radius: 4px; color: #3730a3; }
+</style></head><body>
+<h1>Stage B — vision_meta.py VISION_SYSTEM prompt 강화</h1>
+
+<h2>주요 추가 룰 (5개)</h2>
+
+<div class="box added">
+<b>1. LaTeX 정확성 강제</b>
+<pre>모든 수식을 LaTeX $...$ 로 정확히 옮긴다.
+⋄, □, ?, 'placeholder' 같은 기호 절대 금지.
+글리프 안 보이면 인접 문맥으로 추정해 작성.
+\dfrac, x^{n+1}, \int_a^b, \sum_{k=1}^n 등 KaTeX 호환.</pre>
+</div>
+
+<div class="box added">
+<b>2. 도형 묘사 강제 — [그림] placeholder 금지</b>
+<pre>has_figure=true 면 [그림: ...] 형식으로 텍스트 묘사:
+- 좌표 (A(2,3), 원점 O, 점 P가 곡선 위에)
+- 각도/길이 (∠OAB=θ, AB=5)
+- 도형 종류 (삼각형/원/부채꼴/포물선/접선/보조선)
+- 보조선·교점·음영
+- 그래프 함수식 + 교점·점근선
+- 좌표축 라벨, 단위
+이 텍스트만으로 도형을 재구성 가능해야 함.</pre>
+</div>
+
+<div class="box added">
+<b>3. 잘림/흐림 대응</b>
+<pre>이미지 일부 잘리거나 흐려도 보이는 범위 옮기고,
+불확실한 부분은 명시 ([하단 일부 잘림: 선택지 ⑤ 식 불확실])</pre>
+</div>
+
+<div class="box added">
+<b>4. 인접 문제 cross-contamination 방지</b>
+<pre>현재 문제 번호 "N."로 시작하는 본문 + 그 보기까지만.
+다음 문제 본문이 같은 영역에 들어와도 무시.</pre>
+</div>
+
+<div class="box added">
+<b>5. 본문 길이 가드</b>
+<pre>50-1200자 정도.
+너무 짧으면 OCR 누락 의심.
+너무 길면 cross-contamination 의심.</pre>
+</div>
+
+<h2>제거된 패턴</h2>
+
+<div class="box removed">
+<pre>그림은 [그림] 표시  ← 이게 도형 정보 0인 placeholder 의 원인</pre>
+</div>
+
+<h2>예상 효과</h2>
+
+<div class="box">
+<span class="metric">결함률 ~57% → ~25% (추정)</span>
+<span class="metric">도형 묘사 0% → 70%+</span>
+<span class="metric">글리프 placeholder 제거</span>
+<p>이번 audit 결과 기반 patterns:
+<ul>
+<li>1번 OCR 깨짐 → LaTeX 강제로 완화</li>
+<li>킬러 25-30 부호/연산자 flip → 정확성 룰</li>
+<li>도형 placeholder → 좌표·각도·라벨 묘사</li>
+<li>cross-contamination → 번호 가드</li>
+</ul>
+</p>
+</div>
+
+<h2>검증 방법 (신규 회차 인제스트 시)</h2>
+
+<div class="box">
+<pre>cd /home/insung/Projects/math-study
+.venv/bin/python scripts/ingest_kice/ingest_v2.py --year YYYY --exam-type ...
+# 기존 prompt vs 새 prompt 결과를 비교하려면:
+# 1) 신규 회차 인제스트 직후 meta_cache 살펴봄
+# 2) /audits/audit-&lt;slug&gt;.html 로 heuristic audit 결과 확인</pre>
+</div>
+
+<p style="color: #6b7280; font-size: 12px; margin-top: 2em;">
+파일: <code>scripts/ingest_kice/vision_meta.py:36-83</code> (VISION_SYSTEM 상수)
+</p>
+</body></html>

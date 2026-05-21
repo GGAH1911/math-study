@@ -1,0 +1,18 @@
+{
+  "text_sha": "e89fb0947ae6",
+  "meta": {
+    "searchable_text": "세 실수 $a, b, c$ ($c > 0$)에 대하여 함수 $f$가 $f(x) = \\begin{cases} 2^x & x \\leq -2 \\text{ 또는 } x \\geq 4 \\\\ \\log_2 x & \\text{(기타)} \\end{cases}$로 정의된다. 함수 $f$가 실수 전체 집합에서 실수 전체 집합으로의 일대일대응일 때, $a + 2b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "일대일대응",
+      "함수의_연속성"
+    ],
+    "exam_intent": "구간별 함수의 일대일대응 조건을 이용한 매개변수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

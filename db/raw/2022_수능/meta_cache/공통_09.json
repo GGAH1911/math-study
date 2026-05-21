@@ -1,0 +1,16 @@
+{
+  "text_sha": "a642a490c5d4",
+  "meta": {
+    "searchable_text": "직선이 두 함수의 그래프와 만나는 점을 각각 P, Q라 하자. |PQ| = 5일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_교점",
+      "거리"
+    ],
+    "exam_intent": "거리 조건으로 직선의 상수 결정하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

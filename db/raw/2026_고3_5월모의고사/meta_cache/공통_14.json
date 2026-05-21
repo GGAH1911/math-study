@@ -1,0 +1,16 @@
+{
+  "text_sha": "c02df394d26b",
+  "meta": {
+    "searchable_text": "그림과 같이 곡선 $y = a\\sin x$ ($0 \\le x \\le 2\\pi$)가 직선과 만나는 두 점을 A, B라 하고, 다른 직선과 만나는 두 점을 C, D라 하자. $\\frac{|CD|}{|AB|} = \\frac{9}{2}$일 때, 선분 AB의 길이는? (단, $a$는 $0 < a < 1$인 상수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "직선과의_교점"
+    ],
+    "exam_intent": "삼각함수 곡선과 직선들의 교점 조건에서 선분의 길이 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

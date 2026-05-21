@@ -1,0 +1,16 @@
+{
+  "text_sha": "bb8ae9faccb4",
+  "meta": {
+    "searchable_text": "명제 '$x^2 \\neq 1$이면 $x \\neq 1$이다'의 대우는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "대우",
+      "명제"
+    ],
+    "exam_intent": "명제의 대우 개념 이해도 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

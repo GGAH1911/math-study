@@ -1,0 +1,16 @@
+{
+  "text_sha": "d52734dcf10b",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 $f'(1)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "도함수의_계산"
+    ],
+    "exam_intent": "도함수의 정의를 이용하여 특정점에서의 미분값을 구하는 기초 계산능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

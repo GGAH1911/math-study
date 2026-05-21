@@ -1,0 +1,16 @@
+{
+  "text_sha": "6faac5592b76",
+  "meta": {
+    "searchable_text": "연립부등식 $x^2 - 4x - 12 \\leq 0$, $x^2 - 4x + 4 \\geq 0$을 만족시키는 모든 정수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "이차부등식"
+    ],
+    "exam_intent": "연립부등식 해결 및 조건을 만족하는 정수 개수 파악",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

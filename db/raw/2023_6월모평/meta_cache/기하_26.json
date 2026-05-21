@@ -1,0 +1,18 @@
+{
+  "text_sha": "774e776cebd7",
+  "meta": {
+    "searchable_text": "좌표평면에서 타원과 직선이 만나는 두 점을 $A$, $C$라 하자. 선분 $AC$가 사각형 $ABCD$의 대각선이 되도록 타원 위에 두 점 $B$, $D$를 잡을 때, 사각형 $ABCD$의 넓이의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "교점",
+      "사각형",
+      "최댓값"
+    ],
+    "exam_intent": "타원 위 점들로 만든 사각형의 넓이를 최대화하는 최적화 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

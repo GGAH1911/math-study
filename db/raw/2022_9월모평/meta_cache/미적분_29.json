@@ -1,0 +1,18 @@
+{
+  "text_sha": "c1b2d0e05369",
+  "meta": {
+    "searchable_text": "이차함수 $f(x)$에 대하여 함수 $g(x) = |f(x)| - 2f(x)$이 다음 조건을 만족시킨다. (가) $a > 6$인 $a$에 대하여 $g(x)$는 $x = a$에서 최댓값을 갖는다. (나) $g(x)$는 $x = b, x = c + 6$에서 최솟값을 갖는다. 방정식 $g(x) = 0$의 서로 다른 두 실근을 $\\alpha, \\beta$라 할 때, $(\\alpha + \\beta)^2$의 값을 구하시오. (단, $a, b, c$는 실수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "절댓값_함수",
+      "최댓값과_최솟값",
+      "이차함수의_성질",
+      "방정식의_근"
+    ],
+    "exam_intent": "절댓값을 포함한 함수의 최댓값·최솟값 조건에서 이차함수를 결정하고 근을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

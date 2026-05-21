@@ -1,0 +1,16 @@
+{
+  "text_sha": "d9e7d7f9bf8b",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_n\\}$, $\\{b_n\\}$이 $\\lim_{n \\to \\infty} a_n = 1$, $\\lim_{n \\to \\infty} \\frac{b_n}{a_n} = 3$을 만족시킬 때, 두 수열의 선형결합으로 이루어진 식의 극한값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_극한",
+      "극한값_계산"
+    ],
+    "exam_intent": "두 수열의 극한 조건으로부터 새로운 식의 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

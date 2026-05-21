@@ -1,0 +1,17 @@
+{
+  "text_sha": "5d49e0221f58",
+  "meta": {
+    "searchable_text": "각이 모두 예각인 삼각형 ABC가 다음 조건을 만족할 때, 삼각형 ABC의 외접원의 반지름의 길이는? [4점]\n\n(가) $AB = 4$, $AC = 15$\n(나) 삼각형 ABC의 넓이는 24",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "삼각형의_넓이_공식",
+      "코사인_법칙"
+    ],
+    "exam_intent": "정현법칙과 코사인 법칙을 활용한 외접원 반지름 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

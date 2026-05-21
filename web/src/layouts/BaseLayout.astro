@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import Header from '../components/Header.astro';
+import { StickyGraphPanel } from '../components/Graph.tsx';
 
 interface Props {
   title?: string;
@@ -31,6 +32,13 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
         <slot />
       </main>
     </div>
+
+    <!-- Floating most-recent-graph panel (desktop only, hidden on mobile).
+         client:load (not client:idle) because ChatPanel is also client:load and
+         its graph components broadcast on mount — if this panel hydrates later
+         it misses the first broadcast and the sticky panel never appears. -->
+    <StickyGraphPanel client:load />
+
 
     <!-- Auto-enhance any ```python code block with a Run button (sympy via /api/sympy) -->
     <script is:inline>

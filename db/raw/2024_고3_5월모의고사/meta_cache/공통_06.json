@@ -1,0 +1,17 @@
+{
+  "text_sha": "df0d43f0bd2d",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^3 + bx^2 + cx + d$가 $x=2$에서 극대일 때, 함수의 극솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "극값",
+      "도함수의_부호",
+      "임계점"
+    ],
+    "exam_intent": "도함수를 이용하여 극대 조건을 분석하고 극솟값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

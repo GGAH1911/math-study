@@ -1,0 +1,17 @@
+{
+  "text_sha": "f01fa7a5cd51",
+  "meta": {
+    "searchable_text": "직선 $2x + 3y = c$에 평행하고, 점 $(0, 6)$을 지나는 직선의 방정식을 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "평행선의_기울기",
+      "직선의_방정식",
+      "점을_지나는_조건"
+    ],
+    "exam_intent": "평행선의 기울기와 한 점의 좌표를 이용한 직선의 방정식 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

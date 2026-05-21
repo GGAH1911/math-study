@@ -1,0 +1,18 @@
+{
+  "text_sha": "0dc2ed200569",
+  "meta": {
+    "searchable_text": "좌표공간에 두 점 $A(0, 0, c)$, $B(0, 10\\sqrt{2}, 0)$과 구 $x^2 + y^2 + z^2 = 100$이 있다. $\\angle APO = \\frac{\\pi}{2}$인 구 위의 모든 점 $P$가 나타내는 도형을 $\\Omega_1$, $\\angle BQO = \\frac{\\pi}{2}$인 구 위의 모든 점 $Q$가 나타내는 도형을 $\\Omega_2$라 하자. $\\Omega_1$과 $\\Omega_2$가 서로 다른 두 점 $N_1, N_2$에서 만나고 $\\cos(\\angle N_1ON_2) = \\frac{3}{5}$일 때, $c$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "구의_방정식",
+      "벡터의_내적",
+      "공간의_자취",
+      "두_원의_교선"
+    ],
+    "exam_intent": "벡터의 내적을 이용한 구 위의 자취 원과 두 자취의 교각 관계 파악",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

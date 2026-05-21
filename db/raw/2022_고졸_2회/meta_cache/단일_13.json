@@ -1,0 +1,17 @@
+{
+  "text_sha": "261db2a466f0",
+  "meta": {
+    "searchable_text": "중심이 (3, 1)이고 원점을 지나는 원의 방정식은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "거리_공식",
+      "중심과_반지름"
+    ],
+    "exam_intent": "중심과 원점으로부터 원의 방정식을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

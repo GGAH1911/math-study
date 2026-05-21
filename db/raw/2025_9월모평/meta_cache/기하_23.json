@@ -1,0 +1,16 @@
+{
+  "text_sha": "7f31c89dbb4f",
+  "meta": {
+    "searchable_text": "두 벡터 $\\vec{a} = (4, 0)$, $\\vec{b} = (1, 3)$에 대하여 $2\\vec{a} \\cdot \\vec{b} = 9$일 때, 미지수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_성분"
+    ],
+    "exam_intent": "벡터의 내적을 이용한 미지수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

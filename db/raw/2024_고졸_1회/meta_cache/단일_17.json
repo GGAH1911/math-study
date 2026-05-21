@@ -1,0 +1,16 @@
+{
+  "text_sha": "440755e64f83",
+  "meta": {
+    "searchable_text": "두 함수 $f$, $g$가 그림과 같을 때, $(f \\circ g^2)(f)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수값_계산"
+    ],
+    "exam_intent": "합성함수 계산을 통한 함수 개념 이해 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

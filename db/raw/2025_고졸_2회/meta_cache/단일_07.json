@@ -1,0 +1,16 @@
+{
+  "text_sha": "1572460147f8",
+  "meta": {
+    "searchable_text": "1 ≤ x ≤ 3일 때, 이차함수 f(x) = x² - 6x + 3의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최솟값",
+      "구간제한"
+    ],
+    "exam_intent": "구간에서 이차함수의 최솟값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

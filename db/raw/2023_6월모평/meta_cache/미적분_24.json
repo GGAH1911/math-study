@@ -1,0 +1,17 @@
+{
+  "text_sha": "816dec086fa8",
+  "meta": {
+    "searchable_text": "곡선 $y = x^2 \\ln x$ 위의 점 $x = 2$에서의 접선의 기울기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "도함수",
+      "접선의_기울기",
+      "로그함수의_미분"
+    ],
+    "exam_intent": "로그함수와 다항식의 곱의 도함수를 구하고 주어진 점에서의 접선 기울기 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

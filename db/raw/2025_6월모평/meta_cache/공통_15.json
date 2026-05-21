@@ -1,0 +1,17 @@
+{
+  "text_sha": "ecfd427b41ca",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$와 상수 $a$ ($a \\geq 0$)에 대한 함수 $g(x)$가 주어진다. (가) 함수 $g$는 실수 전체에서 증가하고 미분가능하다. (나) 모든 실수 $x$에 대해 부등식 조건들을 만족한다. $g(1)$의 최솟값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "미분가능성",
+      "구간별함수",
+      "최적화"
+    ],
+    "exam_intent": "미분가능 조건 하에서 매개변수를 통한 함수값의 최솟값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

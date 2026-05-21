@@ -1,0 +1,18 @@
+{
+  "text_sha": "f58b2216dee9",
+  "meta": {
+    "searchable_text": "직사각형 ABCD에서 $AD = 8$. 점 E는 선분 AD 위, 점 F는 선분 BC 위의 점이고 $\\angle CFE = 60°$를 만족하며 움직인다. 선분 EF를 1:2로 내분하는 점을 G라 할 때, $|GA| \\cdot |GC|$의 최댓값을 $M$, 최솟값을 $m$이라 하면 $\\frac{M}{m} = 13$이다. $|GA| \\cdot |GC|$가 최대일 때의 점 G를 $G_1$, 최소일 때의 점 G를 $G_2$라 할 때, 삼각형 $BG_1G_2$의 넓이를 $S$라 하면, $2S$의 값을 구하시오. (단, $AB \\leq 18$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원주각",
+      "점의_궤적",
+      "내분점",
+      "거리의_극값"
+    ],
+    "exam_intent": "원주각 조건을 이용해 점의 궤적을 파악하고 거리의 곱의 극값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

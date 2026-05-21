@@ -1,0 +1,18 @@
+{
+  "text_sha": "070323d3e6ed",
+  "meta": {
+    "searchable_text": "한 모서리의 길이가 2인 정육면체 $ABCD-EFGH$에서 모서리 $DH$의 중점을 $M$, 모서리 $GH$의 중점을 $N$이라 하자. 선분 $FM$ 위의 점 $P$에 대하여 선분 $NP$의 길이가 최소일 때, 선분 $NP$의 평면 $FHM$ 위로의 정사영의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "벡터의_내적",
+      "정사영",
+      "거리_최소화",
+      "공간_좌표"
+    ],
+    "exam_intent": "공간의 점·직선·평면의 위치 관계와 정사영 계산을 통합 적용하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

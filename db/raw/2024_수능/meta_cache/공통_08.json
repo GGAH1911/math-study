@@ -1,0 +1,16 @@
+{
+  "text_sha": "6ff54439f203",
+  "meta": {
+    "searchable_text": "삼차함수 $f(x)$가 모든 실수 $x$에 대하여 $f'(x) = 3x^2 + 4x + 3$을 만족시킬 때, $f(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "삼차함수",
+      "도함수"
+    ],
+    "exam_intent": "주어진 도함수 조건에서 삼차함수의 함수값을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

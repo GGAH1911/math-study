@@ -1,0 +1,18 @@
+{
+  "text_sha": "928184be52e0",
+  "meta": {
+    "searchable_text": "곡선 $y = \\log_2 x$ 위의 한 점 $A(a, \\log_2 a)$를 지나고 기울기가 1인 직선이 곡선 $y = 2^x$와 만나는 점을 $B(b, 2^b)$라 하고, 두 점 $B$, $O$를 지나는 직선 $\\ell$이 곡선 $y = \\left(\\frac{1}{2}\\right)^x$과 만나는 점을 $C(c, \\left(\\frac{1}{2}\\right)^c)$라 하자. 삼각형 $OAB$의 넓이가 삼각형 $OAC$의 넓이의 2배일 때, 보기에서 옳은 것을 모두 고른 것은? (단, $a > 1$이고, $O$는 원점)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "직선의_방정식",
+      "도형의_넓이"
+    ],
+    "exam_intent": "지수·로그함수 그래프의 교점과 삼각형 넓이 관계를 종합 분석하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "e9b6f753b4b5",
+  "meta": {
+    "searchable_text": "함수 $f(x) = 6\\sin\\left(\\frac{\\pi x}{12}\\right)$, $0 \\le x \\le 12$의 그래프와 직선 $y = 3$이 만나는 두 점을 각각 A, B라 할 때, 선분 AB의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "그래프",
+      "방정식"
+    ],
+    "exam_intent": "삼각함수 그래프와 직선의 교점 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

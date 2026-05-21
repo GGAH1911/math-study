@@ -1,0 +1,17 @@
+{
+  "text_sha": "9f4aa68f3cf7",
+  "meta": {
+    "searchable_text": "두 초점이 $F(c, 0)$, $F'(-c, 0)$ (단, $c > 0$)인 쌍곡선 $C$와 $x$축 위의 점 $A$가 있다. 쌍곡선 $C$가 선분 $AF$와 만나는 점을 $P$, 선분 $AF'$과 만나는 점을 $P'$이라 하자. 직선 $AF$는 쌍곡선 $C$의 한 점근선과 평행하고, $|AP| : |PP'| = 5 : 6$, $|PF| = 1$일 때, 쌍곡선 $C$의 주축의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "쌍곡선의_점근선",
+      "초점까지의_거리"
+    ],
+    "exam_intent": "쌍곡선의 점근선 조건과 초점의 거리 성질을 이용한 매개변수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

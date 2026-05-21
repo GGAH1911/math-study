@@ -1,0 +1,17 @@
+{
+  "text_sha": "c5b249ff1d8c",
+  "meta": {
+    "searchable_text": "$0 \\leq \\theta \\leq 2\\pi$일 때, 정수 $a$에 대한 삼각함수 방정식의 서로 다른 해의 개수가 2가 되도록 하는 모든 정수 $a$의 값의 곱을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_방정식",
+      "해의_개수_판정",
+      "매개변수에_따른_해의_변화"
+    ],
+    "exam_intent": "매개변수를 포함한 삼각방정식에서 해의 개수를 판정하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

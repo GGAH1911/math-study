@@ -1,0 +1,340 @@
+\(-1 < \log \frac{10}{a} < 0 \dots \text{①}\) 
+
+
+\(\log_{a}10a = \log_{a}10 + \log_{a}a = \log_{a}10 + 1\) 이므로 
+
+
+\(\frac{3}{2} < \log_{a}10a < 2 \dots \text{②}\) 
+
+
+\(\log_{a} \frac{a}{10} = \log_{a}a - \log_{a}10 = 1 - \log_{a}10\) 이므로 
+
+
+\(0 < \log_{a} \frac{a}{10} < \frac{1}{2} \dots \text{③}\) 
+
+
+③ ~ ④ 에 의하여 
+
+
+\(\log_{a} \frac{10}{a} < \log_{a} \frac{a}{10} < \log_{a}10a < \log_{a}10a\) 이므로 
+
+
+\(p = \log_{a} \frac{10}{a}, q = \log_{a} \frac{a}{10}, r = \log_{a}10a,\) 
+
+
+\(s = \log_{a}10a\) 
+
+
+\[\overline{\text{PS}} = s - p = \log_{a}10a - \log_{a} \frac{10}{a}\]
+
+
+\[= (1 + \log_{a}a) - (1 - \log_{a}a) = 2\log_{a}a\]
+
+
+\[= \frac{10}{3}\]
+
+
+\[\log_{a}a = \frac{5}{3}\]
+
+
+\[\overline{\text{QR}} = r - q = \log_{a}10a - \log_{a} \frac{a}{10}\]
+
+
+\[= (\log_{a}10 + 1) - (1 - \log_{a}10)\]
+
+
+\[= 2\log_{a}10 = \frac{2}{5} = \frac{6}{5}\]
+
+
+따라서 \(30 \times \overline{\text{QR}} = 30 \times \frac{6}{5} = 36\) 
+
+
+27. [출제의도] 사인법칙과 교사인법칙을 
+
+
+활용하여 문제 해결하기 
+
+
+\[\angle \text{ABC} = \theta \left(0 < \theta < \frac{\pi}{2}\right) \text{라 하면}\]
+
+
+\[\cos \theta = \frac{1}{4} \text{이므로} \sin \theta = \frac{\sqrt{15}}{4}\]
+
+
+삼각형 ABC 의 외접원의 넓이가 \(\frac{32}{3}\pi\) 이므로
+이 외접원의 반지름의 길이를 \(R_1\) 이라 하면 
+
+
+\[R_1 = \frac{4\sqrt{6}}{3}\]
+
+
+삼각형 ABC 에서 사인법칙에 의하여 
+
+
+\[\frac{\overline{\text{AC}}}{\sin\theta} = 2R_1 \text{에서} \overline{\text{AC}} = 2\sqrt{10}\]
+
+
+평행사변형 ABC 의 둘레의 길이가 20 이므로
+\(\overline{\text{AB}} = a (0 < a < 5)\) 라 하면 
+
+
+\[\overline{\text{AD}} = \overline{\text{BC}} = 10 - a\]
+
+
+삼각형 ABC 에서 교사인법칙에 의하여 
+
+
+\[40 = a^2 + (10 - a)^2 - 2a(10 - a)\cos\theta\]
+
+
+\[= a^2 + (10 - a)^2 - 2a(10 - a) \times \frac{1}{4}\]
+
+
+\[a^2 - 10a + 24 = 0, (a - 4)(a - 6) = 0\]
+
+
+\[a = 4 \text{ 또는 } a = 6 \text{에서 } 0 < a < 5 \text{이므로}\]
+
+
+\[\overline{\text{AB}} = 4, \overline{\text{AD}} = 6\]
+
+
+\[\angle \text{BAD} = \pi - \theta \text{이므로}\]
+
+
+\[\cos (\pi - \theta) = -\cos \theta = -\frac{1}{4}\]
+
+
+삼각형 ABD 에서 교사인법칙에 의하여 
+
+
+\[\overline{\text{BD}}^2 = 6^2 + 4^2 - 2 \times 6 \times 4 \times \cos (\pi - \theta)\]
+
+
+\[= 6^2 + 4^2 - 2 \times 6 \times 4 \times \left(-\frac{1}{4}\right) = 64\]
+
+
+\(\overline{\text{BD}} = 8\) 
+
+
+삼각형 ABD 의 외접원의 반지름의 길이를 \(R_2\) 라 
+
+
+하면 삼각형 ABD 에서 사인법칙에 의하여 
+
+
+\[\frac{\overline{\text{BD}}}{\sin(\pi - \theta)} = 2R_2 \text{에서} R_2 = \frac{16\sqrt{15}}{15}\]
+
+
+삼각형 ABD 의 외접원의 넓이는 \(\frac{256}{15}\pi\) 
+
+
+\[p = 15, q = 256\]
+
+
+따라서 \(p + q = 15 + 256 = 271\) 
+
+
+28. [출제의도] 함수의 구한에 대한 성질을 
+
+
+활용하여 문제 해결하기 
+
+
+조건 (가)에서 
+
+
+\[\lim_{x \to 0} \frac{\sqrt{x^2 - f(x)}}{x + f(x)} = \lim_{x \to 0} \frac{-(x + f(x))}{x + f(x)} = -1\]
+
+
+이므로 
+
+
+\[\lim_{x \to 0} \frac{\sqrt{x^2 - f(x)}}{x + f(x)} = \lim_{x \to 0} \frac{x - f(x)}{x + f(x)} = 2\]
+
+
+세 상수 \(p, q, r\) 에 대하여 
+
+
+\[f(x) = px^2 + qx + r \quad (p > 0) \text{이라 하면}\]
+
+
+\[\lim_{x \to 0} \frac{-px^2 - (q - 1)x - r}{px^2 + (q + 1)x + r} = 2 \text{이므로}\]
+
+
+\[r = 0, q \neq -1\]
+
+
+\[\frac{-(q - 1)}{q + 1} = 2, q = -\frac{1}{3}\]
+
+
+\[f(x) = px^2 - \frac{1}{3}x = x\left(px - \frac{1}{3}\right)\]
+
+
+조건 (나)에서 
+
+
+\[\lim_{x \to a} \left(\sqrt{x^2 - 3}\right) \neq 0 \text{이면}\]
+
+
+\[\lim_{x \to a} \frac{f(x - 4)f(x + 1)}{\sqrt{x^2 - 3}} \text{의 값이 존재하므로}\]
+
+
+\[\lim_{x \to a} \left(\sqrt{x^2 - 3}\right) = \sqrt{a^2 - 3} = 0, |a| = 3\]
+
+
+\(a = -3\) 또는 \(a = 3\) 
+
+
+(i) \(\lim_{x \to a} \frac{f(x - 4)f(x + 1)}{\sqrt{x^2 - 3}}\) 의 값이 존재하지 
+
+
+않는 실수 \(a\) 의 값이 \(-3\) 인 경우 
+
+
+\(x = 3\) 에서 극한값이 존재하고 
+
+
+\[\lim_{x \to 3} \left(\sqrt{x^2 - 3}\right) = 0 \text{이므로}\]
+
+
+\[\lim_{x \to 3} \frac{f(x - 4)f(x + 1)}{x - 3} = f(-1) \times f(4) = 0\]
+
+
+\[-\left(-p - \frac{1}{3}\right) \times 4\left(4p - \frac{1}{3}\right) = 0\]
+
+
+\[\left(p + \frac{1}{3}\right)\left(4p - \frac{1}{3}\right) = 0\]
+
+
+\[p = -\frac{1}{3} \text{ 또는 } p = \frac{1}{12}\]
+
+
+(ii) \(\lim_{x \to a} \frac{f(x - 4)f(x + 1)}{x^2 - 3}\) 의 값이 존재하지 
+
+
+않는 실수 \(a\) 의 값이 3인 경우 
+
+
+\(x = -3\) 에서 극한값이 존재하고 
+
+
+\[\lim_{x \to -3} \left(\sqrt{x^2 - 3}\right) = 0 \text{이므로}\]
+
+
+\[\lim_{x \to -3} \frac{f(x - 4)f(x + 1)}{x^2 - 3} = f(-7) \times f(-2)\]
+
+
+\[= 0\]
+
+
+\[-7\left(-7p - \frac{1}{3}\right) \times \left(-2\right)\left(-2p - \frac{1}{3}\right) = 0\]
+
+
+\[\left(7p + \frac{1}{3}\right)\left(2p + \frac{1}{3}\right) = 0\]
+
+
+\[p = -\frac{1}{21} \text{ 또는 } p = -\frac{1}{6}\]
+
+
+\[p > 0 \text{이므로} (i), (ii) \text{에 의하여 } p = \frac{1}{12}\]
+
+
+\[f(x) = \frac{1}{12}x^2 - \frac{1}{3}x = \frac{1}{12}x(x - 4)\]
+
+
+\[\text{따라서 } f(24) = \frac{1}{12} \times 24 \times 20 = 40\]
+
+
+29. [출제의도] 삼각함수를 활용하여 문제
+해결하기 
+
+
+(i) \(q = 0\) 인 경우 
+
+
+ 
+
+
+함수 \(f(x)\) 의 주기는 \(\pi\) 
+
+
+\(a_1 = \pi, a_4 = 4\pi, a_7 = 7\pi\) 이므로 
+
+
+세 항 \(a_1, a_4, a_7\) 은 이 순서대로 등차수열을 이룬다. 
+
+
+0 ≤ \(f(x) = |p \sin x| \leq p\) 
+
+
+함수 \(f(x)\) 의 최댓값이 15 이므로 
+
+
+\(p = 15\) 
+
+
+순서상 \((p, q)\) 는 \((15, 0)\) 
+
+
+(ii) \(q > 0\) 인 경우 
+
+
+① \(q > p - q \left(q > \frac{p}{2}\right)\) 인 경우 
+
+
+ 
+
+
+\([q \geq p \text{인 경우}]\) 
+
+
+ 
+
+
+\(\left[\frac{p}{2} < q < p \text{인 경우}\right]\) 
+
+
+함수 \(f(x)\) 의 주기는 \(2\pi\) 
+
+
+\(a_1 = \pi, a_4 = 4\pi, a_7 = 7\pi\) 이므로 
+
+
+세 항 \(a_1, a_4, a_7\) 은 이 순서대로 등차수열을 이룬다. 
+
+
+0 ≤ \(f(x)\) = \(|\sin x - q| \leq p + q\) 
+
+
+함수 \(f(x)\) 의 최댓값이 15 이므로 
+
+
+\(p + q = 15\) 
+
+
+순서상 \((p, q)\) 는 
+
+
+(1, 14), (2, 13), (3, 12), (4, 11), 
+
+
+(5, 10), (6, 9), (7, 8), (8, 7), (9, 6) 
+
+
+② \(q = p - q \left(q = \frac{p}{2}\right)\) 인 경우 
+
+
+ 
+
+
+함수 \(f(x)\) 의 주기는 \(2\pi\) 
+
+
+\(a_1 = \frac{\pi}{2}, a_4 = \frac{5}{2} \pi, a_7 = \frac{9}{2} \pi\) 이므로 
+
+
+세 항 \(a_1, a_4, a_7\) 은 이 순서대로 등차수열을 이룬다. 
+
+
+0 ≤ \(f(x)\) = \(|\sin x - q| \leq p + q\)

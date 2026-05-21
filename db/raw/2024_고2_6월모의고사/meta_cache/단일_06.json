@@ -1,0 +1,15 @@
+{
+  "text_sha": "c10d50481764",
+  "meta": {
+    "searchable_text": "반지름의 길이가 6인 원에 내접하는 삼각형 ABC에서 $\\sin A = \\frac{1}{4}$일 때, BC의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "정현법칙"
+    ],
+    "exam_intent": "원에 내접하는 삼각형에서 정현법칙으로 변의 길이를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

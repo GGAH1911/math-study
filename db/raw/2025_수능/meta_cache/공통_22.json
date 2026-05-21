@@ -1,0 +1,17 @@
+{
+  "text_sha": "dba54dc85e47",
+  "meta": {
+    "searchable_text": "모든 항이 정수이고 다음 조건을 만족시키는 모든 수열 $\\{a_n\\}$에 대하여 $a_1$의 값의 합을 구하시오. [4점]\n(가) 모든 자연수 $n$에 대하여 $n$이 홀수인 경우와 $n$이 짝수인 경우에 따른 점화식 또는 점화 조건\n(나) $a_n \\geq 2$인 자연수 $n$의 최솟값은 3이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "조건_분석",
+      "경우의_수"
+    ],
+    "exam_intent": "조건을 만족하는 모든 수열을 찾아 첫 항의 합을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

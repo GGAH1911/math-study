@@ -1,0 +1,18 @@
+{
+  "text_sha": "c747e2aaac63",
+  "meta": {
+    "searchable_text": "원 위의 두 점 $A, B$에서 $|AP| = |BP|$, $|AQ| = |BQ|$를 만족하는 원 위의 서로 다른 두 점 $P, Q$에 대하여 사각형 $APBQ$의 넓이가 $2\\sqrt{2}$일 때 특정 값의 곱을 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "등거리_조건",
+      "수직이등분선",
+      "원_위의_점",
+      "사각형의_넓이"
+    ],
+    "exam_intent": "원 위의 점과 등거리 조건을 이용한 기하 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

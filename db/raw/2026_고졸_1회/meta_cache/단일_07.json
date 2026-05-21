@@ -1,0 +1,15 @@
+{
+  "text_sha": "818cd07c61c1",
+  "meta": {
+    "searchable_text": "두 수 2, 3을 근으로 하고 $x^2$의 계수가 1인 이차방정식이 $x^2 - 5x + a = 0$일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수의 관계로 주어진 근으로부터 상수항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

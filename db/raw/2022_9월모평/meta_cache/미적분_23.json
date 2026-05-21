@@ -1,0 +1,16 @@
+{
+  "text_sha": "6f00a570f267",
+  "meta": {
+    "searchable_text": "극한값 $\\lim_{n \\to \\infty} \\frac{3^{2n+1}}{2 \\times 3^{n+1} + 5}$를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한값_계산",
+      "지수함수의_극한"
+    ],
+    "exam_intent": "지수항이 주도하는 수열의 극한값을 계산할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

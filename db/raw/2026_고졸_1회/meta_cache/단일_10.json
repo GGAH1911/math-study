@@ -1,0 +1,16 @@
+{
+  "text_sha": "8a30e6371d51",
+  "meta": {
+    "searchable_text": "연립부등식의 해가 특정 범위일 때, 상수값을 결정하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "부등식의_해"
+    ],
+    "exam_intent": "연립부등식의 해의 범위 조건으로부터 상수값을 역산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

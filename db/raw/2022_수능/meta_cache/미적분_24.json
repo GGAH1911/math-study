@@ -1,0 +1,16 @@
+{
+  "text_sha": "1584b3d60742",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 미분가능한 함수 $f$가 모든 실수 $x$에 대하여 주어진 조건을 만족시킬 때, $f'(2)$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "미분"
+    ],
+    "exam_intent": "함수 조건식으로부터 도함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

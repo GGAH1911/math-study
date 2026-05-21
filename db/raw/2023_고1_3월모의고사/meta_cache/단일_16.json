@@ -1,0 +1,18 @@
+{
+  "text_sha": "fab19638c1ba",
+  "meta": {
+    "searchable_text": "그림과 같이 마름모 $ABCD$와 이 마름모의 외부의 한 점 $E$에 대하여 $\\angle ADE = 72°$이고 직선 $CD$가 선분 $BE$를 수직이등분할 때, 각 $\\angle CEB$의 크기는? (단, $0° < \\angle ADC < 72°$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "마름모",
+      "수직이등분선",
+      "이등변삼각형",
+      "각도"
+    ],
+    "exam_intent": "마름모의 성질과 수직이등분선의 기하학적 성질을 활용한 각도 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

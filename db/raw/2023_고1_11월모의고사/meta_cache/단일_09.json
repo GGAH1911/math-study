@@ -1,0 +1,16 @@
+{
+  "text_sha": "1c0c8aa9a75b",
+  "meta": {
+    "searchable_text": "좌표평면 위에 두 점 $A(2, 4)$, $B(5, 1)$이 있다. 직선 위의 점 $P$에 대하여 $AP = BP$일 때, 선분 $OP$의 길이는? (단, $O$는 원점이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "수직이등분선",
+      "거리"
+    ],
+    "exam_intent": "두 점의 수직이등분선과 주어진 직선의 교점의 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

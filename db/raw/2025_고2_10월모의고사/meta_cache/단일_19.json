@@ -1,0 +1,18 @@
+{
+  "text_sha": "650f843a58ea",
+  "meta": {
+    "searchable_text": "기울기가 1인 직선 $\\ell$이 곡선 $y = 2^x$와 서로 다른 두 점 A, B에서 만나고, 곡선 $y = 2^x - 1$과 서로 다른 두 점 C, D에서 만난다. 점 B가 선분 AD를 3:1로 내분할 때, 점 B의 $y$좌표는? (단, 점 B의 $y$좌표는 점 A의 $y$좌표보다 크고, 점 D의 $y$좌표는 점 C의 $y$좌표보다 크다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "교점",
+      "내분점"
+    ],
+    "exam_intent": "지수함수 교점의 내분점 조건으로부터 로그값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

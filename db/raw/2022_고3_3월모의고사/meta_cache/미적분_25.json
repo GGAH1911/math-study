@@ -1,0 +1,17 @@
+{
+  "text_sha": "9f1fe61210b5",
+  "meta": {
+    "searchable_text": "극한값이 5가 되도록 하는 양수 매개변수의 합",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한값",
+      "조건부_극한",
+      "매개변수"
+    ],
+    "exam_intent": "극한값 조건을 만족하는 매개변수의 합을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

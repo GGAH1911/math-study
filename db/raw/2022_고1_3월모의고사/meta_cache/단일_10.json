@@ -1,0 +1,17 @@
+{
+  "text_sha": "0a3fdf296c36",
+  "meta": {
+    "searchable_text": "2⋄6보다 크고 5⋄15보다 작은 정수의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호의_계산",
+      "실수의_대소관계",
+      "정수_범위"
+    ],
+    "exam_intent": "주어진 범위 내 정수의 개수 파악",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

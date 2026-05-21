@@ -1,0 +1,17 @@
+{
+  "text_sha": "2ad03315e37c",
+  "meta": {
+    "searchable_text": "등비수열 $\\{a_n\\}$에 대하여 $\\sum_{n=1}^{\\infty} a_n = 5$와 $\\sum_{n=1}^{\\infty} a_n \\cdot (-1)^{n-1} \\cdot 2 \\cdot \\sin\\left(\\frac{n\\pi}{2}\\right) = 2$일 때, $\\sum_{n=1}^{\\infty} 100a_n \\cdot 3^n$의 값이 자연수가 되도록 하는 자연수 $\\theta$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등비급수",
+      "무한급수_수렴",
+      "삼각함수"
+    ],
+    "exam_intent": "등비급수 수렴조건과 매개변수를 결합하여 최댓값을 구하는 종합적 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "b75089cc269b",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 $A(3, 0)$에 대하여 $|\\vec{OP} - \\vec{OA}| \\cdot \\frac{|\\vec{OP}|}{|\\vec{OA}|} = 5$를 만족시키는 점 $P$가 나타내는 도형과 직선 $bx - 2y + 1 = 0$이 오직 한 점에서 만날 때, 양수 $b$의 값은? (단, $O$는 원점이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "벡터의_자취",
+      "이차곡선",
+      "직선과_곡선의_접촉_조건"
+    ],
+    "exam_intent": "벡터 조건으로 정의된 곡선과 직선의 접촉 조건에서 매개변수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

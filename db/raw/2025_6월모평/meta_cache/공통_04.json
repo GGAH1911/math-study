@@ -1,0 +1,16 @@
+{
+  "text_sha": "2655a8cd736e",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 그래프가 그림과 같다. $\\lim_{x \\to 0} f(x)$와 $\\lim_{x \\to 1} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_정의",
+      "그래프_해석"
+    ],
+    "exam_intent": "주어진 그래프에서 특정 점에서의 극한값을 정확히 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

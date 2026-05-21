@@ -1,0 +1,18 @@
+{
+  "text_sha": "6eabe7a910fa",
+  "meta": {
+    "searchable_text": "1부터 12까지의 자연수가 하나씩 적힌 12개의 공이 들어 있는 주머니가 있다. 이 주머니에서 임의로 2개의 공을 동시에 꺼낼 때, 꺼낸 2개의 공에 적힌 수 중 적어도 하나가 8의 약수일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조합",
+      "여사건",
+      "약수",
+      "확률"
+    ],
+    "exam_intent": "여사건을 이용한 확률 계산 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

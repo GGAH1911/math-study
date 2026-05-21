@@ -1,0 +1,16 @@
+{
+  "text_sha": "2fded62e4524",
+  "meta": {
+    "searchable_text": "다항함수 $f$가 모든 실수 $x$에 대하여 주어진 도함수 조건을 만족할 때, 함숫값을 구하시오",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "부정적분"
+    ],
+    "exam_intent": "도함수 조건으로부터 다항함수 결정 및 함숫값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

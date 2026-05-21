@@ -1,0 +1,17 @@
+{
+  "text_sha": "a738b8c71e26",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^2 + bx + c$에서 $x$의 값이 어떤 값에서 1까지 변할 때의 평균변화율이 7이다. $\\lim_{x \\to 0} \\frac{f(x) - f(0)}{x}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "평균변화율",
+      "극한의_정의",
+      "도함수"
+    ],
+    "exam_intent": "평균변화율 조건을 이용해 도함수의 극한값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

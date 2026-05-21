@@ -1,0 +1,16 @@
+{
+  "text_sha": "79f346de19cb",
+  "meta": {
+    "searchable_text": "공차가 정수인 두 등차수열 $\\{a_n\\}$, $\\{b_n\\}$과 자연수 $m$ ($m \\geq 3$)이 다음 조건을 만족시킨다. (가) $a_1 = b_1 = 5$ (나) $a_m, b_{m+1}$과 관련된 조건 ... = 19일 때, 구하는 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차"
+    ],
+    "exam_intent": "등차수열의 조건을 활용한 공차 및 항의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

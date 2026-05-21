@@ -1,0 +1,17 @@
+{
+  "text_sha": "66a23b9086b1",
+  "meta": {
+    "searchable_text": "이차함수의 그래프와 직선이 만나지 않도록 하는 자연수의 개수를 구하는 문제입니다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "판별식",
+      "교점",
+      "부등식"
+    ],
+    "exam_intent": "이차함수와 직선의 교점 존재 조건을 판별식으로 분석하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

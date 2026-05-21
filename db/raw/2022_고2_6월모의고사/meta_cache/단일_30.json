@@ -1,0 +1,17 @@
+{
+  "text_sha": "8feaca1f5cf7",
+  "meta": {
+    "searchable_text": "두 실수 $a$, $b$와 두 함수 $a\\sin\\theta$, $b\\cos\\theta$에 대하여 $0 \\leq \\theta \\leq 2\\pi$에서 정의된 함수가 다음 조건을 만족한다. (가) 함수의 최솟값은 $-2\\sqrt{3}$이다. (나) 어떤 점에서 미분값이 0이다. 상수에 대한 방정식이 서로 다른 세 실근을 가질 때, $a^2 + b^2$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "함수의_그래프",
+      "방정식의_실근"
+    ],
+    "exam_intent": "극값과 함수 그래프를 이용한 방정식 실근 조건 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

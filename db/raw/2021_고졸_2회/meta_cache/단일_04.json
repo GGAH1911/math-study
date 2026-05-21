@@ -1,0 +1,16 @@
+{
+  "text_sha": "2d343a361cae",
+  "meta": {
+    "searchable_text": "다항식 ⋄³⋄33을 인수분해한 식이 ⋄³⋄²⋄3⋄일 때, 상수 ⋄의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "다항식의_인수분해",
+      "계수_결정"
+    ],
+    "exam_intent": "다항식 인수분해 후 계수 관계로 상수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

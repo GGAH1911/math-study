@@ -1,0 +1,16 @@
+{
+  "text_sha": "bb643412dfb7",
+  "meta": {
+    "searchable_text": "$\\sqrt{20\\sqrt{5}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "제곱근",
+      "근호의_계산"
+    ],
+    "exam_intent": "중첩 제곱근을 단순화하고 정리하는 능력을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

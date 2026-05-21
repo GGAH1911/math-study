@@ -1,0 +1,17 @@
+{
+  "text_sha": "7dc35d842f92",
+  "meta": {
+    "searchable_text": "두 자연수 $p$, $q$에 대하여 실수 $x$에 대한 두 조건 $x^2 - px - q \\leq 0$, $|x - p| \\leq q$ 의 진리집합을 각각 $P$, $Q$라 하자. $P \\neq \\emptyset$, $P \\subset Q$ 가 되도록 하는 $p$, $q$의 모든 순서쌍의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "진리집합",
+      "부등식의_해",
+      "집합의_포함"
+    ],
+    "exam_intent": "조건의 진리집합 포함 관계를 만족하는 자연수 순서쌍 개수 산출",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

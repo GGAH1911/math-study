@@ -1,0 +1,18 @@
+{
+  "text_sha": "1c2f29973897",
+  "meta": {
+    "searchable_text": "직육면체 ABCD-EFGH에서 AB=10, AD=5, AE=1일 때, 점 A와 직선 FH 사이의 거리를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "직육면체",
+      "점과직선사이의거리",
+      "공간벡터",
+      "외적"
+    ],
+    "exam_intent": "좌표계를 설정하고 벡터의 외적을 이용하여 점과 직선 사이의 거리를 계산할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

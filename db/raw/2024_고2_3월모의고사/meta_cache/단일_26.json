@@ -1,0 +1,17 @@
+{
+  "text_sha": "b8e3b4ce483e",
+  "meta": {
+    "searchable_text": "실수 $x$에 대한 두 조건 $p: x^2 - px > 0$, $q: x^2 - 9x < 0$이 있다. 명제 $p \\rightarrow \\sim q$와 명제 $\\sim p \\rightarrow q$가 모두 참이 되도록 하는 두 양수 $p$, $q$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제의_참거짓",
+      "조건과_명제의_동치",
+      "필요충분조건"
+    ],
+    "exam_intent": "두 조건의 명제 관계를 파악하고 변수값을 논리적으로 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

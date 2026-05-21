@@ -1,0 +1,18 @@
+{
+  "text_sha": "eb2d08b2a179",
+  "meta": {
+    "searchable_text": "그림과 같이 $a > 1$인 실수 $a$에 대하여 두 곡선이 있다. 곡선과 직선이 서로 다른 두 점 O, A에서 만난다. 점 A를 지나고 직선 OA에 수직인 직선이 곡선과 제1사분면에서 만나는 점을 B라 하자. 벡터 조건이 19를 만족할 때, 선분 AB의 길이를 구하시오. (단, O는 원점)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "곡선의_교점",
+      "수직_조건",
+      "벡터_내적",
+      "거리_계산"
+    ],
+    "exam_intent": "곡선의 교점과 수직 기하 조건, 벡터를 활용한 거리 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

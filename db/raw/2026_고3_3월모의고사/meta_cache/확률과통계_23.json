@@ -1,0 +1,16 @@
+{
+  "text_sha": "350f6cc69e6e",
+  "meta": {
+    "searchable_text": "$_3H_5$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "조합"
+    ],
+    "exam_intent": "중복조합의 정의와 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "2396c791ffd8",
+  "meta": {
+    "searchable_text": "곡선과 직선이 만나는 점의 좌표를 $a$라 하자. 실수 전체에서 정의된 함수 $f(x)$가 다음 조건을 만족한다. 모든 실수 $x$에 대하여 $f(x) \\ge$ 곡선식이고, $f'(a)$는 곡선의 기울기와 같다. $\\int_0^3 f(x)dx$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "적분",
+    "concepts": [
+      "정적분",
+      "미분가능성",
+      "함수의_최솟값"
+    ],
+    "exam_intent": "곡선과 함수의 접촉 조건으로부터 함수를 결정하고 정적분값을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

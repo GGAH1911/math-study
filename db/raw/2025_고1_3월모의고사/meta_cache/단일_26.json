@@ -1,0 +1,15 @@
+{
+  "text_sha": "5d918d71948a",
+  "meta": {
+    "searchable_text": "세 수 $\\frac{\\sqrt{2}}{3}, \\sqrt{2}, \\frac{\\sqrt{3}}{4}$가 하나씩 적혀 있는 세 장의 카드가 있다. 세 장의 카드 중에서 카드를 한 장씩 세 번 뽑을 때, 뽑힌 카드에 적힌 수를 차례로 $a, b, c$라 하자. $12 \\times a \\div b \\div c$의 값으로 가능한 가장 큰 값을 구하시오. (단, 뽑은 카드는 다시 뽑지 않는다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열의 개념을 적용하여 무리수 식의 최댓값을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

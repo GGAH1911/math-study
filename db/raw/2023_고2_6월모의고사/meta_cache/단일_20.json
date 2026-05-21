@@ -1,0 +1,17 @@
+{
+  "text_sha": "7f01d5483201",
+  "meta": {
+    "searchable_text": "1이 아닌 두 자연수 $m, n$이 다음 조건을 만족시킨다. (가) $m < n$ (나) $\\log_m n$은 유리수이다. (다) $\\log_m n^2 \\leq 3$일 때, $m$의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의와_성질",
+      "유리수_로그_조건",
+      "지수_관계식"
+    ],
+    "exam_intent": "유리수 로그 조건과 부등식 제약에서 밑의 최댓값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

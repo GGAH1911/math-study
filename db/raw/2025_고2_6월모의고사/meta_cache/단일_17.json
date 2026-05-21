@@ -1,0 +1,17 @@
+{
+  "text_sha": "6269db008fd2",
+  "meta": {
+    "searchable_text": "0≤θ≤24에서 부등식 √sin²(θ/12) - 1 + √cos²(θ/12) - 1 ≥ 0을 만족시키는 모든 정수 θ의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_성질",
+      "부등식의_해",
+      "절댓값"
+    ],
+    "exam_intent": "삼각함수 부등식의 정수해 개수를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

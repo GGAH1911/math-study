@@ -1,0 +1,17 @@
+{
+  "text_sha": "4892bddb361b",
+  "meta": {
+    "searchable_text": "선분 AB를 빗변으로 하는 직각삼각형 ABC가 있다. 점 C에서 선분 AB에 내린 수선의 발을 H라 할 때, CH = 1이고 삼각형 ABC의 넓이는 $\\frac{\\sqrt{3}}{4}$이다. AH = $a$, BH = $b$라 할 때, 주어진 식의 값은? (단, $a \\geq 1$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "직각삼각형의_높이",
+      "도형의_닮음",
+      "기하학적_관계식"
+    ],
+    "exam_intent": "직각삼각형 높이와 넓이 조건에서 변의 길이 관계를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

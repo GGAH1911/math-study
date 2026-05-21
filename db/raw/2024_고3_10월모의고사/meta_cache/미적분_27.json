@@ -1,0 +1,16 @@
+{
+  "text_sha": "2fc5b3bd13ea",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^3 + b$ (단, $a, b$는 상수)와 상수 $c$에 대하여 정의된 분할함수가 실수 전체의 집합에서 연속이고 역함수를 가질 때, 상수의 곱의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "역함수_존재_조건",
+      "연속성"
+    ],
+    "exam_intent": "분할함수의 연속성과 역함수 조건을 종합적으로 적용",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

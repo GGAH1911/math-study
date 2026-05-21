@@ -1,0 +1,16 @@
+{
+  "text_sha": "73a22ffdc816",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타내어진 함수에서 $t=1$일 때 $\\frac{dy}{dx}$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_함수의_미분",
+      "연쇄법칙"
+    ],
+    "exam_intent": "매개변수 함수의 특정 점에서 미분계수 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

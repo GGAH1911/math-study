@@ -1,0 +1,17 @@
+{
+  "text_sha": "00fbf0bfa5cd",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 2, 3, 3, 3이 적혀 있는 6장의 카드를 모두 한 번씩 사용하여 일렬로 나열할 때, 이웃한 2장의 카드에 적혀 있는 수의 합이 모두 4 이상이 되도록 나열하는 경우의 수 (동일한 숫자 카드는 구별하지 않음)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "제약조건을_고려한_배열",
+      "동형원소의_배열"
+    ],
+    "exam_intent": "제약조건과 동형원소를 고려한 배열의 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

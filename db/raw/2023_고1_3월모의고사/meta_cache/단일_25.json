@@ -1,0 +1,18 @@
+{
+  "text_sha": "0d04311145a7",
+  "meta": {
+    "searchable_text": "한 개의 주사위를 두 번 던져서 나오는 눈의 수를 차례로 $a, b$라 할 때, $ab$가 14의 약수가 되도록 하는 모든 순서쌍 $(a, b)$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수_고1",
+    "concepts": [
+      "순서쌍의_개수",
+      "조건_만족_경우의_수",
+      "약수_판정",
+      "기본_계산"
+    ],
+    "exam_intent": "조건을 만족하는 경우의 수를 정확하게 세는 능력을 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "ae5c7b3af62f",
+  "meta": {
+    "searchable_text": "직선 $y = \\frac{3}{2}x - 5$가 $x$축과 만나는 점을 A, $y$축과 만나는 점을 B라 하자. 원점 O와 제3사분면에 있는 점 C에 대하여 사각형 OCAB가 사다리꼴이고 넓이가 $\\frac{25}{2}$가 되도록 하는 모든 점 C의 $x$좌표의 곱은? (단, 점 C의 $x$좌표는 -5보다 크다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "일차함수",
+      "직선의_방정식",
+      "좌표",
+      "사다리꼴_넓이"
+    ],
+    "exam_intent": "일차함수와 사다리꼴 조건으로부터 좌표를 구하고 곱 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

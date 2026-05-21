@@ -1,0 +1,17 @@
+{
+  "text_sha": "af78b2dd8ff0",
+  "meta": {
+    "searchable_text": "다항식 [글리프]2[글리프]1[글리프]3[글리프]의 전개식에서 [글리프]의 계수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "전개식",
+      "계수"
+    ],
+    "exam_intent": "다항식 전개에서 특정 항의 계수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

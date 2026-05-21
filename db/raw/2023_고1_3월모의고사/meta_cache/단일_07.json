@@ -1,0 +1,16 @@
+{
+  "text_sha": "47abb6b593ef",
+  "meta": {
+    "searchable_text": "한 변의 길이가 2인 정사각형을 밑면으로 하는 직육면체의 부피가 12일 때, 이 직육면체의 겉넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "입체도형",
+    "concepts": [
+      "직육면체의_부피",
+      "직육면체의_겉넓이"
+    ],
+    "exam_intent": "부피로부터 높이를 구하고 겉넓이를 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

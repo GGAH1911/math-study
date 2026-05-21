@@ -1,0 +1,15 @@
+{
+  "text_sha": "37c0c7075af9",
+  "meta": {
+    "searchable_text": "$3 \\leq x \\leq 5$에서 함수 $f(x)$의 최댓값이 5, 최솟값이 4일 때, 두 상수 $a$, $b$에 대하여 $a+b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "최댓값과_최솟값"
+    ],
+    "exam_intent": "함수의 최댓값/최솟값 조건으로 매개변수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

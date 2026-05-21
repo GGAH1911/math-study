@@ -1,0 +1,17 @@
+{
+  "text_sha": "2366f07abb9b",
+  "meta": {
+    "searchable_text": "좌표평면에서 $|\\vec{OA}|=2$, $|\\vec{OB}|=2\\sqrt{2}$이고 $\\cos\\angle AOB = \\frac{1}{4}$인 평행사변형 OACB에 대하여 점 P가 다음 조건을 만족시킨다. (가) $\\vec{OP}=\\alpha\\vec{OA}+\\beta\\vec{OB}$ (0≤α≤1, 0≤β≤1) (나) $\\vec{OP}\\cdot\\vec{OB}=\\vec{BP}\\cdot\\vec{BC}=2$ 점 O를 중심으로 하고 점 A를 지나는 원 위를 움직이는 점 X에 대하여 $|3\\vec{OP}-\\vec{OX}|$의 최댓값과 최솟값을 각각 M, m이라 하자. $M\\times m=60$일 때, $\\alpha^2+\\beta^2$의 값을 구하시오. (단, α와 β는 유리수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_크기",
+      "벡터의_응용"
+    ],
+    "exam_intent": "벡터 조건과 거리 최대최소 최적화의 통합 응용 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

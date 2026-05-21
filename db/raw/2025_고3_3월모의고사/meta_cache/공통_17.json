@@ -1,0 +1,17 @@
+{
+  "text_sha": "3929d9862448",
+  "meta": {
+    "searchable_text": "매개변수 $a$를 포함한 3차 방정식 $x^3 - 3x^2 + ax - a = 0$이 서로 다른 3개의 실근을 가지도록 하는 자연수 $a$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "중근과_판별식",
+      "실근의_개수_판정"
+    ],
+    "exam_intent": "3차 함수의 극값 조건을 이용하여 실근 개수를 판정하고 매개변수 범위를 결정하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

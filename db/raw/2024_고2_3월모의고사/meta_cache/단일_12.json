@@ -1,0 +1,17 @@
+{
+  "text_sha": "37d1d2628fe5",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 정의된 함수 $f(x) = \\begin{cases} \\cdots \\end{cases}$ 의 역함수가 존재하도록 하는 모든 정수의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "단조성",
+      "연속성"
+    ],
+    "exam_intent": "구간별 함수가 역함수를 가지기 위한 매개변수 조건 파악",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

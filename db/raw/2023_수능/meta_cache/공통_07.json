@@ -1,0 +1,17 @@
+{
+  "text_sha": "fb3e1606328e",
+  "meta": {
+    "searchable_text": "모든 항이 양수이고 첫째항과 공차가 같은 등차수열 $\\{a_n\\}$이 주어진 조건을 만족시킬 때, $a_4$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "일반항",
+      "첫째항과_공차"
+    ],
+    "exam_intent": "등차수열의 성질과 조건을 이용하여 특정 항의 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

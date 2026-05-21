@@ -1,0 +1,18 @@
+{
+  "text_sha": "86d60cae73c5",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$에 대하여 다음 조건을 만족시킬 때, $f(5)$의 최댓값을 구하시오. (가) $\\lim_{x \\to 0} \\frac{f(x)}{x-1}$의 값이 존재한다. (나) 모든 실수 $x$에 대하여 $f(x) \\geq x^4 - 2x^2$이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "삼차함수",
+      "극한",
+      "부등식",
+      "최댓값"
+    ],
+    "exam_intent": "여러 조건을 만족하는 삼차함수의 최댓값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

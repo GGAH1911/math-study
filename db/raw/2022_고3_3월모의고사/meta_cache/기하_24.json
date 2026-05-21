@@ -1,0 +1,17 @@
+{
+  "text_sha": "e528d6ae4e4f",
+  "meta": {
+    "searchable_text": "두 초점의 좌표가 $(0, -3)$, $(0, 3)$인 타원이 $y$축과 점 $(0, 7)$에서 만날 때, 이 타원의 단축의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "초점",
+      "단축"
+    ],
+    "exam_intent": "초점과 지나는 점 조건으로 타원의 단축 길이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "2c959653be2b",
+  "meta": {
+    "searchable_text": "좌표평면에서 두 직선이 이루는 예각의 크기를 $\\theta$라 할 때, $\\cos\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "두_직선의_각",
+      "삼각함수"
+    ],
+    "exam_intent": "두 직선이 이루는 예각의 코사인 값을 계산할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

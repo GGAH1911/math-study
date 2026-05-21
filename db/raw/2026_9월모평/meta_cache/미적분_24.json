@@ -1,0 +1,16 @@
+{
+  "text_sha": "af47893f5a72",
+  "meta": {
+    "searchable_text": "\\(\\int_0^{\\pi/4} \\cos x \\sin x \\, dx\\)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "정적분",
+      "삼각함수"
+    ],
+    "exam_intent": "삼각함수 곱의 정적분을 계산할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "fc3720e5d28a",
+  "meta": {
+    "searchable_text": "함수 $f(n)$에 대하여 $\\lim_{n \\to \\infty} \\frac{f(n)+1}{n} = \\frac{1}{2}$일 때, $\\lim_{n \\to \\infty} \\frac{3n+1}{2f(n)+1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_성질",
+      "함수의_점근적_행동"
+    ],
+    "exam_intent": "극한 조건으로부터 함수의 점근 형태를 파악해 다른 극한값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

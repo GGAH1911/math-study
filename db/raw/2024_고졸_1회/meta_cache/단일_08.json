@@ -1,0 +1,16 @@
+{
+  "text_sha": "a819e07dc569",
+  "meta": {
+    "searchable_text": "사차방정식 $ax^4 + ax^2 + a = 0$의 한 근이 1일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_근",
+      "방정식의_해"
+    ],
+    "exam_intent": "주어진 근 조건을 이용하여 방정식의 계수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

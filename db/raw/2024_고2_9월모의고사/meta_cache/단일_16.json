@@ -1,0 +1,16 @@
+{
+  "text_sha": "558182b0170d",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 두 자연수 $x, y$의 모든 순서쌍 $(x,y)$의 개수를 구하시오. (가) $0 < \\log_y(\\log_x(y)) < 1$ (나) $2 \\le \\log_x(y) \\le 9$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_부등식",
+      "로그함수"
+    ],
+    "exam_intent": "복합 로그 부등식 조건을 분석하여 자연수 순서쌍 개수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

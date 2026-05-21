@@ -1,0 +1,17 @@
+{
+  "text_sha": "304ee562fc70",
+  "meta": {
+    "searchable_text": "좌표평면 위의 두 점 $A(3, 2)$, $B(2, 6)$이 있다. $PQ = 1$인 $x$축 위의 두 점 $P$, $Q$에 대하여 $AP + QB$의 최솟값을 구하라. (단, 점 $P$의 $x$좌표는 점 $Q$의 $x$좌표보다 작다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "거리_공식",
+      "최솟값",
+      "함수의_극값"
+    ],
+    "exam_intent": "제약 조건 하에서 거리의 합을 최소화하는 최적화 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

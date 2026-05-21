@@ -1,0 +1,17 @@
+{
+  "text_sha": "5f4a871a11c6",
+  "meta": {
+    "searchable_text": "좌표공간의 두 점 $A(a, 0, 1)$, $B(2, 3, 0)$에 대하여 선분 AB를 3:2로 외분하는 점이 yz평면 위에 있을 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "외분점",
+      "공간좌표",
+      "평면"
+    ],
+    "exam_intent": "공간에서 외분점 공식을 적용한 좌표 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

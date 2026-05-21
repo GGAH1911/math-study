@@ -1,0 +1,16 @@
+{
+  "text_sha": "4f81358cbe3f",
+  "meta": {
+    "searchable_text": "주어진 조건에서 $\\sin(\\square)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "삼각함수",
+      "도함수"
+    ],
+    "exam_intent": "삼각함수의 미분과 값 계산을 종합적으로 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

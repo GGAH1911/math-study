@@ -1,0 +1,15 @@
+{
+  "text_sha": "3bbadfcadc0d",
+  "meta": {
+    "searchable_text": "다항식 $x^2 + 2x + 6$을 $x - 1$로 나눈 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리"
+    ],
+    "exam_intent": "나머지정리를 이용한 다항식의 나머지 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

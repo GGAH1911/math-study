@@ -1,0 +1,13 @@
+{
+  "text_sha": "f7286b1f843e",
+  "meta": {
+    "searchable_text": "좌표평면 위의 두 점 $P$, $Q$에서 동경 $OP$, $OQ$가 나타내는 각을 $\\theta_1$, $\\theta_2$라 할 때, $\\tan \\theta_1 + \\tan \\theta_2 = 0$ 조건에서 $\\sin \\theta_1$을 구하시오. (원점 $O$, $x$축 양의 방향 시초선)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [],
+    "exam_intent": "탄젠트 합 조건에서 사인 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

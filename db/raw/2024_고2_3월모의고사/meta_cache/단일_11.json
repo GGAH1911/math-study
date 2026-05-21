@@ -1,0 +1,17 @@
+{
+  "text_sha": "e8fdd0f948c0",
+  "meta": {
+    "searchable_text": "전체집합 $U = \\{1, 2, 4, 8, 16, 32\\}$의 두 부분집합 $A, B$가 다음 조건을 만족시킨다. (가) $A \\cap B = \\{2, 8\\}$ (나) $A \\cup B = \\{1, 2, 8, 16\\}$ 집합 $A$의 모든 원소의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "교집합",
+      "합집합",
+      "부분집합"
+    ],
+    "exam_intent": "집합의 교·합집합 조건으로부터 원소 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

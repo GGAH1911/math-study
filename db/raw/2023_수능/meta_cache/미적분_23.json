@@ -1,0 +1,17 @@
+{
+  "text_sha": "1f18924c45b3",
+  "meta": {
+    "searchable_text": "23번. 다음 극한값을 구하시오. $\\lim_{x \\to 0} \\dfrac{x}{x + x^2 \\ln(1+x)}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한",
+      "로그함수",
+      "테일러_전개"
+    ],
+    "exam_intent": "로그를 포함한 극한을 테일러 전개 또는 L'Hospital로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "47734563da56",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $x^2 + (a-4)x + 3 = 0$이 서로 다른 두 실근을 갖도록 하는 자연수 $a$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "이차방정식의_실근_조건"
+    ],
+    "exam_intent": "판별식 조건으로 모수의 범위를 결정하여 개수 세기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

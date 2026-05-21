@@ -1,0 +1,16 @@
+{
+  "text_sha": "836a39e284cf",
+  "meta": {
+    "searchable_text": "모든 항이 자연수인 등차수열 $\\{a_n\\}$의 첫째항부터 제$n$항까지의 합을 $S_n$이라 하자. $S_7$이 13의 배수이고 $\\frac{S_{21}}{S_7}=644$일 때, $a_2$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "등차수열의 합 공식과 배수·비율 조건을 통한 항 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

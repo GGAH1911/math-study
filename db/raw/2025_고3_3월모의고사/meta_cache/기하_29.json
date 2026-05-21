@@ -1,0 +1,17 @@
+{
+  "text_sha": "9c57e9aa94d6",
+  "meta": {
+    "searchable_text": "두 초점이 $F$, $F'$인 쌍곡선 위의 점 $P$ (제1사분면), $P'$ (제4사분면)을 지나는 직선을 고려한다. 선분 $F'P$ 위의 점 $Q$가 $|PP'| = |QP'|$를 만족할 때, 두 점 $P$, $P'$을 초점으로 하고 점 $Q$를 지나는 타원의 장축 길이를 구하는 문제.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "타원",
+      "초점"
+    ],
+    "exam_intent": "쌍곡선과 타원의 정의를 종합적으로 활용하여 기하학적 조건을 분석하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

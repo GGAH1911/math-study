@@ -1,0 +1,16 @@
+{
+  "text_sha": "da5a2ad2222e",
+  "meta": {
+    "searchable_text": "$x$에 대한 다항식 $ax^3 + bx^2 + cx + d$가 $x - 3$으로 나누어떨어질 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "인수정리",
+      "나머지정리"
+    ],
+    "exam_intent": "인수정리를 이용하여 다항식의 계수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "20d6d06f446b",
+  "meta": {
+    "searchable_text": "두 초점이 $F, F'$인 쌍곡선 위의 점 중 제1사분면에 있는 점 $P$에 대하여 각 $\\angle FPF'$의 이등분선이 특정 점을 지날 때, $|FP| - |F'P|$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "초점",
+      "각의_이등분선"
+    ],
+    "exam_intent": "쌍곡선의 정의와 각의 이등분선 성질의 응용",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

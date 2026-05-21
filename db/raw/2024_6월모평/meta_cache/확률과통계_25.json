@@ -1,0 +1,16 @@
+{
+  "text_sha": "78f6a39cb0e0",
+  "meta": {
+    "searchable_text": "흰색 손수건 4장, 검은색 손수건 5장이 들어 있는 상자에서 4장을 동시에 꺼낼 때, 꺼낸 4장의 손수건 중에서 흰색 손수건이 $2$장 이상일 확률",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "경우의_수",
+      "확률의_정의"
+    ],
+    "exam_intent": "경우의 분류와 조합을 이용하여 확률을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

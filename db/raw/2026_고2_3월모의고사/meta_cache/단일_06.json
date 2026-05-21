@@ -1,0 +1,16 @@
+{
+  "text_sha": "a817d63986b6",
+  "meta": {
+    "searchable_text": "이차정사각행렬 $A$의 성분이 $(a, 1, 2, b)$ 형태로 주어졌을 때, 행렬 $A$의 모든 성분의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "행렬",
+      "행렬의_성분"
+    ],
+    "exam_intent": "2×2 행렬의 성분 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

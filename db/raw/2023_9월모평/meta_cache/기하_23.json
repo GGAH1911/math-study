@@ -1,0 +1,16 @@
+{
+  "text_sha": "96a283517941",
+  "meta": {
+    "searchable_text": "좌표공간의 두 점 $A(a, 1, 1)$, $B(5, 3, c)$에 대하여 선분 $AB$의 중점의 좌표가 주어진 조건으로부터 미지수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "3차원좌표계",
+      "선분의중점공식"
+    ],
+    "exam_intent": "3차원 좌표에서 중점 공식을 이용한 미지수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "8f04b686e579",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 조건이 주어졌을 때, $a_{15}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "등차수열"
+    ],
+    "exam_intent": "주어진 점화식 조건에서 수열의 특정 항을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

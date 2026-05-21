@@ -1,0 +1,17 @@
+{
+  "text_sha": "e923a8ee05a1",
+  "meta": {
+    "searchable_text": "숫자 0, 1, 2 중에서 중복을 허락하여 4개를 택해 일렬로 나열하여 만들 수 있는 네 자리의 자연수 중 각 자리의 수의 합이 7 이하인 자연수의 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "조건부경우의수",
+      "케이스분류"
+    ],
+    "exam_intent": "조건을 동시에 만족하는 경우의 수를 체계적으로 분류하고 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

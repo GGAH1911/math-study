@@ -1,0 +1,16 @@
+{
+  "text_sha": "090e45878ef2",
+  "meta": {
+    "searchable_text": "-1 ≤ x ≤ 1일 때, 이차함수 $x^2 - 4x + 1$의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최솟값",
+      "정의역_제약"
+    ],
+    "exam_intent": "정의역이 제한된 이차함수의 최솟값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

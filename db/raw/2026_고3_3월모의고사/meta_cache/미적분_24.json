@@ -1,0 +1,16 @@
+{
+  "text_sha": "e983fc91042f",
+  "meta": {
+    "searchable_text": "두 수열에 대하여 극한값 조건이 주어질 때 특정 수열의 극한값을 구하는 문제. 극한 조건 중 3, 2, 6 등의 값이 포함됨.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한의_정의",
+      "수열의_극한"
+    ],
+    "exam_intent": "주어진 극한 조건으로부터 특정 극한값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

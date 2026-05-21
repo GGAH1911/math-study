@@ -1,0 +1,17 @@
+{
+  "text_sha": "2259fff18660",
+  "meta": {
+    "searchable_text": "$a$에 대한 방정식 $a^3 + 3a^2 + 2a + 9 = 0$의 서로 다른 실근의 개수가 2가 되도록 하는 모든 실수 $a$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "근의_개수",
+      "극값",
+      "매개변수"
+    ],
+    "exam_intent": "3차 함수의 극값 조건으로부터 중근 존재 시 매개변수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e2e12f30e1c9",
+  "meta": {
+    "searchable_text": "0 < a < 1인 상수 a에 대하여 곡선 $y = a^x \\log a$ 위에 두 점 $A(2, a^2 \\log a^2)$, $B(4, a^4 \\log a^4)$가 있다. 직선 AB의 기울기가 $\\frac{1}{4}$일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그의_성질",
+      "기울기_공식",
+      "지수_방정식"
+    ],
+    "exam_intent": "로그 성질을 이용한 기울기 계산 및 지수 방정식 풀이 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

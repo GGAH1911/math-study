@@ -1,0 +1,16 @@
+{
+  "text_sha": "1dee033fd1ff",
+  "meta": {
+    "searchable_text": "수학 진로 선택 과목이 있다. 이 중에서 서로 다른 2과목을 선택하는 경우의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "경우의_수"
+    ],
+    "exam_intent": "주어진 과목 중 2개를 선택하는 조합 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

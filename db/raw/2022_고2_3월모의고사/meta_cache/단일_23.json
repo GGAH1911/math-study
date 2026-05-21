@@ -1,0 +1,17 @@
+{
+  "text_sha": "5a9188fe6c64",
+  "meta": {
+    "searchable_text": "점 $(a, 5)$를 직선 $y = 4$에 대하여 대칭이동한 후, $x$축의 방향으로 1만큼 평행이동한 점의 좌표는 $(2, 3)$이다. $a$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "대칭이동",
+      "평행이동",
+      "좌표변환"
+    ],
+    "exam_intent": "점의 대칭이동과 평행이동 변환을 역계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

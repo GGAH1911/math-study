@@ -1,0 +1,16 @@
+{
+  "text_sha": "833c304d02bf",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 BC=12이고, 무게중심을 G라 하자. G를 지나고 BC와 평행한 직선이 AC와 만나는 점을 D라 할 때, 선분 GD의 길이를 구하는 문제",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "무게중심",
+      "평행선의_성질"
+    ],
+    "exam_intent": "무게중심과 평행선의 성질을 이용한 선분 길이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

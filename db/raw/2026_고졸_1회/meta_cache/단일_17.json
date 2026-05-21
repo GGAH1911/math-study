@@ -1,0 +1,16 @@
+{
+  "text_sha": "216c97ab0147",
+  "meta": {
+    "searchable_text": "함수 $f$가 그림과 같을 때, $f^{-1}(f(6))$의 값은? (단, $f^{-1}$는 $f$의 역함수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "함수의_성질"
+    ],
+    "exam_intent": "그래프를 통해 역함수의 정의와 성질을 파악하고 함수값을 계산한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

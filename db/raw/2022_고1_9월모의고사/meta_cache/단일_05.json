@@ -1,0 +1,16 @@
+{
+  "text_sha": "f54a65b8f94a",
+  "meta": {
+    "searchable_text": "좌표평면 위의 두 점 $A(4, 0)$, $B(5, 3)$에 대하여 선분 $AB$를 $2:1$로 내분하는 점의 좌표가 $(a, b)$일 때, $b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "내분점",
+      "위치벡터"
+    ],
+    "exam_intent": "선분의 내분점 좌표를 벡터를 이용하여 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

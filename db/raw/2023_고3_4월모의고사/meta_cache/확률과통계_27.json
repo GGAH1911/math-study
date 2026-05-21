@@ -1,0 +1,17 @@
+{
+  "text_sha": "f9946b531ca5",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 $(ax + 1)^7$의 전개식에서 각 항의 계수의 총합이 1일 때, $a^1$의 계수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "계수",
+      "다항식_전개"
+    ],
+    "exam_intent": "이항정리를 이용한 전개식의 조건 해석과 특정 항의 계수 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

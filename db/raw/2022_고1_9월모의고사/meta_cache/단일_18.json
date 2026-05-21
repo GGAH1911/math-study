@@ -1,0 +1,17 @@
+{
+  "text_sha": "d8db2b81042c",
+  "meta": {
+    "searchable_text": "두 함수의 그래프가 x축과 만나는 점의 개수가 서로 같도록 하는 모든 정수 파라미터의 개수를 구하는 문제 (4점)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_영점",
+      "교점의_개수",
+      "함수의_근"
+    ],
+    "exam_intent": "파라미터에 따른 두 함수의 x축 교점 개수를 비교 분석하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

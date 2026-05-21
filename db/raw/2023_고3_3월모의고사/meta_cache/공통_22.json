@@ -1,0 +1,13 @@
+{
+  "text_sha": "48635cbaa029",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 사차함수 $f(x)$가 있다. 실수 $a$에 대하여 함수 $g(x) = f(x) - a$라 할 때, $\\lim_{x \\to \\alpha} \\frac{g(x)}{|g(x)|}$의 값이 존재하는 서로 다른 실수 $\\alpha$의 개수를 $n(a)$라 하자. 함수 $g(x)$는 다음 조건을 만족시킨다. (가) (나) 함수 $g(x)$는 특정 두 점에서만 불연속이다. $f(2) = -4$이고 $f'(2) = 0$일 때, $n(4) + n(-4)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [],
+    "exam_intent": "사차함수 극값과 극한 존재 조건, 근의 개수 변화 판단",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

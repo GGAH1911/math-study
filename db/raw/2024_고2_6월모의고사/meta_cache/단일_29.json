@@ -1,0 +1,17 @@
+{
+  "text_sha": "2bdcf2a2733c",
+  "meta": {
+    "searchable_text": "그림과 같이 $AC = 2\\sqrt{7}$인 삼각형 ABC에 대하여 선분 AC 위의 점 D가 $CD = 2\\sqrt{7}$, $\\cos\\angle BDA = \\frac{4}{7}$을 만족시킨다. 삼각형 ABC와 삼각형 ABD의 외접원의 반지름의 길이를 각각 $R_1$, $R_2$라 하자. $\\frac{R_1}{R_2} = \\frac{4}{3}$일 때, $\\frac{BC}{BD}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "외접원",
+      "코사인법칙"
+    ],
+    "exam_intent": "정현법칙으로 외접원 반지름 비를 연결하고 변의 길이 비 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

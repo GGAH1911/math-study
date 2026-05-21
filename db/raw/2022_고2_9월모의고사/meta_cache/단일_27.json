@@ -1,0 +1,17 @@
+{
+  "text_sha": "32729545f24f",
+  "meta": {
+    "searchable_text": "두 함수 $f(x) = \\frac{1}{2}x^2 + a$, $g(x) = -x + 3 + b$에 대하여 합성함수 $h(x) = f(g(x))$를 정의한다. 함수 $h(x)$가 $0 \\leq x \\leq 5$ 구간에서 최솟값 $\\frac{1}{4}$, 최댓값을 갖는다. 최댓값을 구하시오. (단, $a$는 상수)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "합성함수",
+      "극값",
+      "최댓값_최솟값"
+    ],
+    "exam_intent": "합성함수의 극값 조건으로부터 상수를 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

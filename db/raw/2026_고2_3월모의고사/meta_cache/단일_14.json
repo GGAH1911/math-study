@@ -1,0 +1,17 @@
+{
+  "text_sha": "bc41d1306975",
+  "meta": {
+    "searchable_text": "좌표평면에 원과 점 $A(2, 0)$이 주어진다. 원 위의 점 $P$와 직선 위의 점 $Q$에 대해 $|AQ| + |QP|$의 최솟값을 구하는 문제.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "직선의_방정식",
+      "거리"
+    ],
+    "exam_intent": "원과 직선에서 거리 합의 최솟값을 기하학적으로 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "0699bda010b5",
+  "meta": {
+    "searchable_text": "원점과 직선 $3x + 4y + 12 = 0$ 사이의 거리는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "점과직선사이의거리"
+    ],
+    "exam_intent": "좌표평면에서 점과 직선 사이의 거리 공식 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

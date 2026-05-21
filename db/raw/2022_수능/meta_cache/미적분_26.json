@@ -1,0 +1,17 @@
+{
+  "text_sha": "9f1c1685c485",
+  "meta": {
+    "searchable_text": "극한값을 구하는 문제: 로그함수를 포함한 급수의 극한 형태",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "로그함수",
+      "급수"
+    ],
+    "exam_intent": "리만합 형태 극한을 적분으로 수렴시켜 로그값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

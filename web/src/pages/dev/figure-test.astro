@@ -1,0 +1,85 @@
+---
+export const prerender = false;
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Graph from '../../components/Graph.tsx';
+import Geometry from '../../components/Geometry.tsx';
+
+const data = JSON.parse(readFileSync('/tmp/figure_spec_test.json', 'utf-8'));
+
+// /home/insung/Projects/math-study/db/raw/.../images/X.png → /image-test/X.png (web public path)
+// 그냥 file:// 절대 경로 안 됨 — symlink 또는 별도 endpoint 필요.
+// 단순화: db/raw 경로를 그대로 보여주는 endpoint 또는 직접 base64 inline.
+// 가장 빠른 방법: PNG를 base64로 inline.
+function imageAsDataUrl(absPath: string): string {
+  try {
+    const buf = readFileSync(absPath);
+    return `data:image/png;base64,${buf.toString('base64')}`;
+  } catch { return ''; }
+}
+---
+<BaseLayout title="figure_spec 추출 테스트">
+  <div class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">figure_spec 자동 추출 테스트</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        vision LLM이 6개 문제 이미지에서 figure_spec JSON 추출 후, 우리 Geometry/Graph 컴포넌트로 렌더링한 결과.
+        왼쪽 = 원본 PNG, 오른쪽 = 컴포넌트 렌더링.
+      </p>
+    </header>
+
+    {data.map((item: any, i: number) => {
+      const fname = item.file.split('/').pop();
+      const conf = item.figure_spec?.confidence;
+      const kind = item.figure_spec?.kind;
+      const spec = item.figure_spec?.spec;
+      const dataUrl = imageAsDataUrl(item.file);
+      return (
+        <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+          <header class="flex items-baseline gap-3">
+            <h2 class="text-sm font-semibold">{i + 1}. {fname}</h2>
+            {kind && (
+              <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 border border-indigo-500/40 text-indigo-300">
+                {kind} · conf {conf?.toFixed(2)}
+              </span>
+            )}
+            {!kind && (
+              <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-700/50 text-zinc-400">
+                도형 없음 (PNG only)
+              </span>
+            )}
+          </header>
+          <p class="text-xs text-[color:var(--color-muted)] leading-relaxed">{item.notes}</p>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
+            <div class="bg-zinc-950 rounded p-2">
+              <div class="text-[10px] text-zinc-500 mb-1">원본 PNG</div>
+              {dataUrl ? <img src={dataUrl} alt={fname} class="max-w-full max-h-[400px] mx-auto bg-white rounded" /> : <p class="text-rose-400 text-xs">이미지 로드 실패</p>}
+            </div>
+            <div class="bg-zinc-950 rounded p-2">
+              <div class="text-[10px] text-zinc-500 mb-1">컴포넌트 렌더링</div>
+              {kind === 'plot' && spec && (
+                <Graph client:load kind="plot" spec={spec} width={400} height={280} hideCaption />
+              )}
+              {kind === 'geom' && spec && (
+                <Geometry client:load spec={spec} />
+              )}
+              {kind === 'geometry' && spec && (
+                <Geometry client:load spec={spec} />
+              )}
+              {!kind && (
+                <div class="p-4 text-xs text-zinc-500 text-center">spec 없음 — 컴포넌트 렌더링 안 함</div>
+              )}
+            </div>
+          </div>
+          {spec && (
+            <details class="mt-2">
+              <summary class="text-xs text-zinc-500 cursor-pointer">JSON spec 보기</summary>
+              <pre class="text-[10px] text-zinc-400 bg-zinc-950 p-2 rounded mt-1 overflow-x-auto">{JSON.stringify(spec, null, 2)}</pre>
+            </details>
+          )}
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>

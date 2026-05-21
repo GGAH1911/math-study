@@ -1,0 +1,18 @@
+{
+  "text_sha": "1641c0c49ec2",
+  "meta": {
+    "searchable_text": "두 점 $F(c, 0)$, $F'(-c, 0)$ ($c > 0$)을 초점으로 하는 쌍곡선이 있다. 이 쌍곡선 위의 제1사분면에 있는 점 $P$와 제4사분면에 있는 점 $Q$에 대하여 직선 $PQ$가 점 $F$를 지나고 $\\overrightarrow{OF} \\perp \\overrightarrow{OP}$이다. 세 점 $P$, $F'$, $Q$를 지나는 원의 넓이가 $25\\pi$이고 $|F'Q| - |FQ| = 5\\sqrt{3}$일 때, $2 \\times |PF|$의 값을 구하시오. (단, $O$는 원점이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "원의_성질",
+      "거리_관계",
+      "좌표_기하"
+    ],
+    "exam_intent": "쌍곡선과 원의 성질을 종합적으로 활용한 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e4a9b47a47ac",
+  "meta": {
+    "searchable_text": "삼차함수 $f(x)$에 대하여 곡선 위의 점 $(0, 0)$에서의 접선과 곡선 위의 점 $(1, 2)$에서의 접선이 일치할 때, $f'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_기울기",
+      "도함수의_기하학적_의미",
+      "삼차함수"
+    ],
+    "exam_intent": "도함수와 접선 조건으로부터 함수 계수를 결정하고 도함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

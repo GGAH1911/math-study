@@ -1,0 +1,17 @@
+{
+  "text_sha": "60e350ee45dc",
+  "meta": {
+    "searchable_text": "매개변수로 나타낸 곡선 위의 점에서의 접선이 특정 좌표를 지나갈 조건에서 곡선의 매개변수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "매개변수_방정식",
+      "접선",
+      "곡선의_미분"
+    ],
+    "exam_intent": "매개변수 곡선의 접선 조건으로부터 매개변수값을 도출하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

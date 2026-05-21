@@ -1,0 +1,17 @@
+{
+  "text_sha": "cb0e3709a1a4",
+  "meta": {
+    "searchable_text": "두 초점이 $F(5, 0)$, $F'(-5, 0)$인 쌍곡선 $\\frac{x^2}{9} - \\frac{y^2}{16} = 1$이 있다. 쌍곡선 위의 점 중 제1사분면에 있는 점 $P$에 대하여 $|FP| = |FF'|$일 때, 삼각형 $PF'F$의 둘레의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "초점",
+      "정의"
+    ],
+    "exam_intent": "쌍곡선 정의를 이용한 거리와 둘레 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

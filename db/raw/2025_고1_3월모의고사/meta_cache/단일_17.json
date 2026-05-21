@@ -1,0 +1,17 @@
+{
+  "text_sha": "b1e9eb5309c6",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 ABC와 이 삼각형의 외접원이 있다. 각 BAC의 이등분선과 이 원이 만나는 점 중 A가 아닌 점을 D라 하고, 직선 AD가 선분 BC와 만나는 점을 E라 하자. $AB = 3$, $AC = 5$, $AD = 6$일 때, 선분 DE의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "각의_이등분선_정리",
+      "외접원의_성질",
+      "Stewart_정리"
+    ],
+    "exam_intent": "각의 이등분선과 외접원의 성질을 결합하여 선분 길이 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

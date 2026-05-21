@@ -1,0 +1,18 @@
+{
+  "text_sha": "f203335bfb1e",
+  "meta": {
+    "searchable_text": "곡선 $y = ax^2$과 직선 $y = \\frac{1}{3}x$가 서로 다른 두 점 A, B에서 만날 때, 점 B를 지나며 직선에 수직인 직선이 x축과 만나는 점을 C라 하자. 직선 CA가 x축과 만나는 점을 D라 하면 점 D는 선분 CA를 5:3으로 외분하는 점이다. 삼각형 ABC의 넓이가 20일 때, a의 값을 구하시오. (단, 점 A의 x좌표는 점 B의 x좌표보다 작다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "이차함수",
+      "외분점",
+      "좌표기하",
+      "넓이"
+    ],
+    "exam_intent": "이차함수와 직선의 교점, 외분점 조건을 이용한 매개변수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

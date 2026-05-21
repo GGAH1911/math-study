@@ -1,0 +1,17 @@
+{
+  "text_sha": "a5c29799f2c0",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 두 곡선 $y=\\frac{1}{x}$, $y=\\frac{n}{x^2}$와 직선 $l$이 있다. 자연수 $m$에 대하여 직선 $l$이 두 곡선과 만나는 점을 각각 A, B라 할 때, 선분 AB가 직선과 만나도록 하는 $m$의 최댓값과 최솟값의 합을 $S(n)$이라 하자. $S(n) \\leq 15$를 만족시키는 $n$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "곡선과_직선의_교점",
+      "기하학적_조건",
+      "최댓값과_최솟값"
+    ],
+    "exam_intent": "곡선과 직선의 교점 조건을 이용한 기하학적 최대/최소 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

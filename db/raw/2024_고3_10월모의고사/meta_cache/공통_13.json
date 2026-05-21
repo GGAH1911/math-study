@@ -1,0 +1,16 @@
+{
+  "text_sha": "671aab01ef89",
+  "meta": {
+    "searchable_text": "한 원에 내접하는 사각형 ABCD에서 AB = 4, BC = 2√30, CD = 8이고, ∠BAC = α, ∠ACD = β이다. 주어진 삼각함수 조건 하에서 두 대각선 AC와 BD의 교점을 E라 할 때, AE의 길이를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원에_내접하는_사각형",
+      "대각선의_교점"
+    ],
+    "exam_intent": "원에 내접하는 사각형에서 대각선의 교점을 이용한 선분의 길이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

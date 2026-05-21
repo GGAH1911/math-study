@@ -1,0 +1,16 @@
+{
+  "text_sha": "60b4ebd7e1ce",
+  "meta": {
+    "searchable_text": "두 집합 $\\{1, 2, 3, 4\\}$, $\\{3, 4, 6\\}$에 대하여 두 집합의 교집합 원소 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_교집합",
+      "원소_개수"
+    ],
+    "exam_intent": "두 집합의 교집합 원소 개수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

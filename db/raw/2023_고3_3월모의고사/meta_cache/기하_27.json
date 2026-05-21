@@ -1,0 +1,17 @@
+{
+  "text_sha": "048ebe36458b",
+  "meta": {
+    "searchable_text": "그림과 같이 두 초점이 $F$, $F'$인 쌍곡선이 있다. 쌍곡선 위의 제1사분면에 있는 점 $P$와 쌍곡선 위의 제3사분면에 있는 점 $Q$가 $|PF'| - |QF'| = 5$, $|PF| = \\frac{3}{2}|QF|$를 만족시킬 때, $|PF| - |QF|$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "초점",
+      "거리"
+    ],
+    "exam_intent": "쌍곡선의 정의와 거리 조건을 활용한 기하 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

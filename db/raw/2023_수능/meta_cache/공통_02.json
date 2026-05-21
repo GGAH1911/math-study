@@ -1,0 +1,16 @@
+{
+  "text_sha": "fffe727c9548",
+  "meta": {
+    "searchable_text": "$\\lim_{n\\to\\infty} \\frac{2n^2 + 2n + 3}{n^2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "차수_비교",
+      "계수_비율"
+    ],
+    "exam_intent": "다항식 분수의 무한 극한에서 최고차항 비 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

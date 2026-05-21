@@ -1,0 +1,17 @@
+{
+  "text_sha": "73886c4fd588",
+  "meta": {
+    "searchable_text": "좌표평면에서 타원 $\\frac{x^2}{19} + \\frac{y^2}{3} = 1$ 과 직선이 제1사분면 위의 한 점에서 접하고, 원점과 직선 사이의 거리는 $\\frac{\\sqrt{5}}{\\sqrt{19}}$ 이다. 직선의 기울기를 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "접선",
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "타원의 접선 조건과 원점에서의 거리 조건을 만족하는 직선의 기울기 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

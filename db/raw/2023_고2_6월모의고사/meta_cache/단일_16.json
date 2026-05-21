@@ -1,0 +1,18 @@
+{
+  "text_sha": "4cc3b6bfc3ca",
+  "meta": {
+    "searchable_text": "0이 아닌 실수 $a$에 대하여 두 곡선 $y = a\\log_2 x$, $y = a\\log_4 x$와 직선이 만나는 점을 각각 P, Q라 하자. 삼각형 OPQ의 넓이를 S(a)라 할 때, 다음 보기에서 옳은 것만을 있는 대로 고른 것은? (단, O는 원점)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_성질",
+      "함수의_교점",
+      "도형의_넓이",
+      "미분과_증감"
+    ],
+    "exam_intent": "로그함수의 교점 이용한 넓이 계산 및 함수의 증감성 판정 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "86a42affd7c2",
+  "meta": {
+    "searchable_text": "좌표평면 위의 원점 $O$와 두 점 $A$, $B$를 꼭짓점으로 하는 삼각형 $OAB$가 있다. 선분 $OA$를 $2:1$로 외분하는 점을 $P$, 선분 $OB$를 $2:1$로 외분하는 점을 $Q$라 하자. 선분 $PQ$의 중점의 좌표가 주어졌을 때, 삼각형 $OAB$의 무게중심의 좌표를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "외분점",
+      "중점",
+      "무게중심"
+    ],
+    "exam_intent": "외분점과 무게중심의 벡터적 관계를 이용한 좌표 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

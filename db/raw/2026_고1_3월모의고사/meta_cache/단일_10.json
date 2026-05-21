@@ -1,0 +1,18 @@
+{
+  "text_sha": "8d84ca7f5c53",
+  "meta": {
+    "searchable_text": "다음은 어느 학급 학생 15명의 지난주 컴퓨터 사용 시간과 운동 시간에 대한 산점도이다. 위의 산점도에 대하여 운동 시간의 최빈값은 $\\square$시간이고, 컴퓨터 사용 시간이 15시간 이상인 학생들의 운동 시간의 평균은 $\\square$시간이다. $\\square$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "통계",
+    "concepts": [
+      "산점도",
+      "최빈값",
+      "평균",
+      "조건부평균"
+    ],
+    "exam_intent": "산점도에서 최빈값과 조건부 평균을 구하는 통계 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

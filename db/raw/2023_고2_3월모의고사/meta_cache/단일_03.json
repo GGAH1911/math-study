@@ -1,0 +1,15 @@
+{
+  "text_sha": "713642399038",
+  "meta": {
+    "searchable_text": "$_5P_3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열"
+    ],
+    "exam_intent": "순열의 정의와 기본 계산을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

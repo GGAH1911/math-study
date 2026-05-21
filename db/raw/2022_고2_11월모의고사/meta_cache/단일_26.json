@@ -1,0 +1,16 @@
+{
+  "text_sha": "bcffacad0078",
+  "meta": {
+    "searchable_text": "수열 {aₙ}의 첫째항부터 제n항까지의 합을 Sₙ이라 하자. 모든 자연수 n에 대하여 주어진 조건을 만족할 때, 특정 항의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "일반항과_부분합의_관계",
+      "점화식"
+    ],
+    "exam_intent": "합 공식으로부터 일반항을 도출하고 조건을 만족하는 항의 값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

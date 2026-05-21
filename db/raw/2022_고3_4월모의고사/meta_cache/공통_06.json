@@ -1,0 +1,17 @@
+{
+  "text_sha": "86872836627a",
+  "meta": {
+    "searchable_text": "sin θ + cos θ = 1/2일 때, (2sin θ cos θ) / (sin² θ - 2cos² θ)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "삼각함수의_합과_곱_관계",
+      "대수적_변형"
+    ],
+    "exam_intent": "삼각함수 항등식을 이용한 식의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

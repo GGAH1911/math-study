@@ -1,0 +1,15 @@
+{
+  "text_sha": "3b7520e99b15",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1, 2, 3, 4\\}$, $B = \\{3, 4\\}$에 대하여 $A \\cap B$는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "교집합"
+    ],
+    "exam_intent": "두 집합의 교집합을 올바르게 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

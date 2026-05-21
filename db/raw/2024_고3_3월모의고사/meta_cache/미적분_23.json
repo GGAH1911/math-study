@@ -1,0 +1,16 @@
+{
+  "text_sha": "fd6a18422212",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{\\sqrt{2n+3}}{\\sqrt{(2n+1)(3n+1)}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한수열의_극한",
+      "극한의_계산"
+    ],
+    "exam_intent": "루트 식의 극한에서 차수를 비교하여 극한값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

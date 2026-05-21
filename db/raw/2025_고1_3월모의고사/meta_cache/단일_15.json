@@ -1,0 +1,17 @@
+{
+  "text_sha": "ae4e0f28e76f",
+  "meta": {
+    "searchable_text": "세 자연수 $a, b, c$에 대하여 $x$에 대한 두 이차식 $x^2 + ax + 27$, $x^2 + bx + 18$의 공통인수가 $x + c$일 때, 미지수의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "공통인수",
+      "이차식의_인수분해",
+      "다항식"
+    ],
+    "exam_intent": "두 이차식의 공통인수 조건으로부터 미지수를 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

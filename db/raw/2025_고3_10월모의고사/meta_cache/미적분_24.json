@@ -1,0 +1,17 @@
+{
+  "text_sha": "e4e509b483a7",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{1}{n} \\sum_{k=1}^{2n} \\frac{1}{n+k}$ 의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "리만_합",
+      "정적분의_정의",
+      "급수와_적분의_관계"
+    ],
+    "exam_intent": "리만 합 형태의 수열 극한을 정적분으로 변환하여 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

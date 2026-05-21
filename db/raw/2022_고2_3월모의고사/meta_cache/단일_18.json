@@ -1,0 +1,17 @@
+{
+  "text_sha": "08781c78d633",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^2 + bx + c$ (단, $a \\neq 0$)이 다음 조건을 만족시킨다. (가) 곡선 $y = f(x)$는 직선과 한 점에서만 만난다. (나) [조건] $f(8)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수",
+      "접선_조건",
+      "함수의_교점"
+    ],
+    "exam_intent": "주어진 조건에서 함수의 계수를 결정하고 함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

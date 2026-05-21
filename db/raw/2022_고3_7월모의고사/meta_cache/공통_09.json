@@ -1,0 +1,17 @@
+{
+  "text_sha": "d05a338a1d65",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$가 주어진 조건을 만족할 때, $f'(1)$의 값은? [4점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "삼차함수",
+      "극값"
+    ],
+    "exam_intent": "삼차함수의 조건으로부터 도함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

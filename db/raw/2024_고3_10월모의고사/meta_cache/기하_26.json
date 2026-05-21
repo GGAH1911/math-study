@@ -1,0 +1,17 @@
+{
+  "text_sha": "d65521d1cce4",
+  "meta": {
+    "searchable_text": "포물선 $y^2 = 12x$의 초점 F를 지나고 기울기가 양수인 직선이 포물선과 만나는 두 점을 각각 A, B라 하자. $\\frac{|AF|}{|BF|} = 3$일 때, 이 포물선 위의 점 A에서의 접선의 y절편은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선의_초점과_준선",
+      "포물선의_성질",
+      "미분과_접선"
+    ],
+    "exam_intent": "포물선의 초점을 지나는 현의 성질과 접선의 방정식을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "1a41c890cddf",
+  "meta": {
+    "searchable_text": "미분가능한 함수 $f$가 $f(1)=2$, $f'(1)=4$를 만족시킬 때, 함수 $f(f(x))$의 $x=1$에서의 미분계수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "합성함수의_미분",
+    "concepts": [
+      "합성함수",
+      "연쇄법칙",
+      "미분계수"
+    ],
+    "exam_intent": "합성함수의 연쇄미분법 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

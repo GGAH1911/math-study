@@ -1,0 +1,15 @@
+{
+  "text_sha": "2ee08ee25e6a",
+  "meta": {
+    "searchable_text": "다항식 $2x^2 + 4x + 3$을 $x - 1$로 나누었을 때, 나머지는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지_정리"
+    ],
+    "exam_intent": "다항식을 일차식으로 나눈 나머지를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

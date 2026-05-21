@@ -1,0 +1,17 @@
+{
+  "text_sha": "728014da9957",
+  "meta": {
+    "searchable_text": "자연수 $a, b, c, d, e$의 모든 순서쌍 중 다음을 만족하는 것의 개수를 구하시오.\n(가) $a + b + c + d + e \\leq 11$\n(나) $c$는 짝수이다.\n(다) $a, b, c, d, e$ 중에서 짝수의 개수는 2 이상이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합과_자연수_조건",
+      "여사건을_이용한_포함배제",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "자연수 조건과 짝수 개수 조건을 동시에 만족하는 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

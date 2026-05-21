@@ -1,0 +1,16 @@
+{
+  "text_sha": "8565a83f1c0f",
+  "meta": {
+    "searchable_text": "좌표평면에서 점 $A(5, 5)$와 원 $(x-2)^2 + (y-2)^2 = 8$ 위의 점 $P$에 대하여 선분 $AP$의 길이의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "거리의_최솟값"
+    ],
+    "exam_intent": "원의 중심과 외부의 점으로부터 거리의 최솟값을 구하는 기본 계산력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "6d05a9572fa8",
+  "meta": {
+    "searchable_text": "다항식 $P(x)$를 $x^2+x+3$으로 나눈 몫이 $3x+1$, 나머지가 $x+5$일 때, $P(x)$를 $x-1$로 나눈 나머지를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지_정리"
+    ],
+    "exam_intent": "나머지 정리를 이용한 다항식 나눗셈 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

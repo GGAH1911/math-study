@@ -1,0 +1,16 @@
+{
+  "text_sha": "381abbaf0033",
+  "meta": {
+    "searchable_text": "중심이 O이고 중심각의 크기가 120°인 부채꼴 OAB가 있다. ∠AOC = ∠DOB = 30°인 호 AB 위의 두 점 C, D에 대하여 선분 OC와 선분 AD가 만나는 점을 E라 하자. 선분 OD의 수직이등분선과 선분 OB가 만나는 점 F에 대하여 BF = (3/2)√3일 때, 삼각형 ODE의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "부채꼴과_중심각",
+      "수직이등분선의_성질"
+    ],
+    "exam_intent": "부채꼴의 기하학적 성질과 삼각비를 이용해 도형을 분석하고 넓이를 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

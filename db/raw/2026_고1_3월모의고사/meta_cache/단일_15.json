@@ -1,0 +1,16 @@
+{
+  "text_sha": "e827fb875beb",
+  "meta": {
+    "searchable_text": "둘레 400m인 원형 산책로에서 두 학생 A, B가 일정한 속력으로 뛴다. 반대 방향으로 뛸 때 1분 30초 후 처음 만나고, 같은 방향으로 뛸 때 12분 후 처음 만난다. A의 속력이 B보다 클 때, A가 한 바퀴 도는 시간을 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "상대속력",
+      "연립일차방정식"
+    ],
+    "exam_intent": "상대속력 개념과 연립방정식으로 두 물체의 속력을 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

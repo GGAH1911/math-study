@@ -1,0 +1,17 @@
+{
+  "text_sha": "9ffcab5246db",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 13$, $BC = 14$인 예각삼각형 $ABC$에 대하여 점 $A$에서 변 $BC$에 내린 수선의 발을 $H$라 하자. $AH = 12$일 때, 선분 $AC$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "피타고라스_정리",
+      "삼각형의_높이",
+      "직각삼각형"
+    ],
+    "exam_intent": "직각삼각형에서 피타고라스 정리를 반복 적용하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

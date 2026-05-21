@@ -1,0 +1,17 @@
+{
+  "text_sha": "995c6120cb48",
+  "meta": {
+    "searchable_text": "상수 $a$에 대하여 함수 $f(x) = ax^3 + 3x^2 - 9x + 2$의 극댓값이 20일 때, 함수 $f(x)$의 극솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "3차함수",
+      "도함수"
+    ],
+    "exam_intent": "3차 함수의 극댓값으로 상수 결정, 극솟값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

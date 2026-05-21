@@ -1,0 +1,17 @@
+{
+  "text_sha": "88446f4cefe0",
+  "meta": {
+    "searchable_text": "각도 범위 조건에서 $\\tan θ$의 합과 곱이 주어졌을 때, $\\sin θ \\cos θ$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "탄젠트",
+      "정현_코사인의_곱",
+      "삼각함수_항등식"
+    ],
+    "exam_intent": "탄젠트 조건으로부터 정현 코사인의 곱을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

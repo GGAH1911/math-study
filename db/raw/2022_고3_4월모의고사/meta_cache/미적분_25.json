@@ -1,0 +1,17 @@
+{
+  "text_sha": "2466f606c5d1",
+  "meta": {
+    "searchable_text": "$\\lim_{x \\to 0^+} \\frac{x \\ln(x^2 + 2x^3)}{\\ln(3x)}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_계산",
+      "로그함수의_극한",
+      "부정형_극한"
+    ],
+    "exam_intent": "로그와 지수 함수가 결합된 부정형 극한을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

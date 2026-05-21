@@ -1,0 +1,17 @@
+{
+  "text_sha": "a717942dfdab",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^3 + bx^2 + cx + d$의 극솟값이 $m$일 때, 함수 $f$의 극댓값은? (단, $a$는 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극댓값",
+      "극솟값",
+      "도함수"
+    ],
+    "exam_intent": "3차 함수의 극값 조건을 이용한 계수 결정 및 극댓값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "abc3f44faa62",
+  "meta": {
+    "searchable_text": "중심각의 크기가 $\\frac{4\\pi}{3}$이고 호의 길이가 $\\frac{3\\pi}{2}$인 부채꼴의 반지름의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "호의_길이",
+      "중심각",
+      "부채꼴"
+    ],
+    "exam_intent": "부채꼴에서 호의 길이 공식을 이용한 반지름 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "230658d6019b",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{a, 6, 8\\}$, $B = \\{a, 2\\}$에 대하여 $A \\cup B = \\{2, 6, 8, 10\\}$일 때, 실수 $a$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_합집합",
+      "원소_조건"
+    ],
+    "exam_intent": "집합의 합집합 개념으로부터 공통원소 조건을 파악하여 미지수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "816444a09a5d",
+  "meta": {
+    "searchable_text": "0 < θ < π인 θ에 대하여 (1 + cosθ)/(1 - cosθ) = 3일 때, sinθ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_항등식",
+      "삼각방정식"
+    ],
+    "exam_intent": "삼각함수 항등식을 이용한 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

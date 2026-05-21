@@ -1,0 +1,16 @@
+{
+  "text_sha": "f4628e4b9325",
+  "meta": {
+    "searchable_text": "세 모서리의 길이가 $a, a, 2a$인 직육면체의 겉넓이는? (단, $a > 0$)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "입체도형",
+    "concepts": [
+      "직육면체",
+      "겉넓이"
+    ],
+    "exam_intent": "직육면체 겉넓이 공식을 이용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

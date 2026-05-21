@@ -1,0 +1,18 @@
+{
+  "text_sha": "47c267c8f330",
+  "meta": {
+    "searchable_text": "어느 학급 학생들의 키를 조사하여 나타낸 도수분포다각형이 그림과 같다. 이 학생들 중 키가 160cm 이상인 학생의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "통계",
+    "concepts": [
+      "도수분포다각형",
+      "누적도수",
+      "도수",
+      "분포"
+    ],
+    "exam_intent": "도수분포다각형에서 누적도수를 구하여 조건을 만족하는 데이터 개수를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

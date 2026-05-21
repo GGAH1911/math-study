@@ -1,0 +1,16 @@
+{
+  "text_sha": "8381d6ece33c",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = BC = 1$이고 $\\angle ABC = 90°$인 삼각형 $ABC$가 있다. 선분 $AB$ 위의 점 $D$와 선분 $BC$ 위의 점 $E$가 주어진 조건을 만족할 때, 두 선분 $AE$, $CD$가 만나는 점을 $F$라 하자. $\\tan \\angle CFE = \\frac{15}{16}$일 때, $\\tan \\angle CDB$의 값은? (단, $\\frac{\\pi}{4} < \\angle CDB < \\frac{\\pi}{2}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각비",
+      "도형의_성질"
+    ],
+    "exam_intent": "교점 각도 조건에서 다른 각의 탄젠트값을 구하는 기하 응용",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

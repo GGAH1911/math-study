@@ -1,0 +1,17 @@
+{
+  "text_sha": "eaeac9618d08",
+  "meta": {
+    "searchable_text": "∠B = 30°, ∠C = 90°인 직각삼각형 ABC가 있다. 선분 BC 위의 점 D와 선분 AC 위의 점 E에 대하여 $BD = 12\\sqrt{3}$, $CE = 15$, $\\angle CDE = 60°$일 때, 선분 AE의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "직각삼각형",
+      "특수각의_삼각비",
+      "삼각형의_변과_각의_관계"
+    ],
+    "exam_intent": "직각삼각형 내 각도 관계를 삼각비로 연결하여 변의 길이를 단계적으로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

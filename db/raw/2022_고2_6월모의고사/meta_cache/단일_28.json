@@ -1,0 +1,17 @@
+{
+  "text_sha": "efa030c495a3",
+  "meta": {
+    "searchable_text": "∠ABC = 각도, BC = 6인 삼각형 ABC가 있다. 선분 BC 위에 점 B와 점 C가 아닌 점 D를 잡고, 삼각형 ABD의 외접원의 반지름의 길이를 $R_1$, 삼각형 ACD의 외접원의 반지름의 길이를 $R_2$라 하자. 주어진 조건식 = 13일 때, 선분 AB의 길이는 $\\frac{p}{q}$이다. $p + q$의 값을 구하시오. (단, $p$와 $q$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "외접원",
+      "삼각형의_성질"
+    ],
+    "exam_intent": "정현법칙과 외접원 반지름의 비를 이용한 선분 길이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

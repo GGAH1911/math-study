@@ -1,0 +1,15 @@
+{
+  "text_sha": "30bfb828d277",
+  "meta": {
+    "searchable_text": "다항식 $x^3 + 6x^2 + 12x + 8$을 인수분해한 식이 $(x+a)^3$일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "완전세제곱식"
+    ],
+    "exam_intent": "완전세제곱식의 구조를 인식하고 미지수를 계산할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "3d31627ab5e9",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 5\\sqrt{5}$, $BC = 12$, $\\angle CBA = 90°$이고 넓이가 120인 평행사변형 ABCD가 있다. 선분 AD 위에 $AE : ED = 3 : 1$인 점 E를 잡고, 선분 CB의 연장선 위에 $BF = ED$인 점 F를 잡는다. 점 E를 지나고 직선 AB와 평행한 직선이 선분 DF와 만나는 점을 G라 할 때, $\\sin(\\angle AGF) = \\frac{a}{85}$이다. $a$의 값을 구하시오. (단, $a$와 85는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각비",
+      "평행사변형",
+      "좌표기하",
+      "벡터"
+    ],
+    "exam_intent": "평행사변형의 성질과 좌표를 이용한 복합 삼각비 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

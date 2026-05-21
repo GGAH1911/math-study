@@ -1,0 +1,16 @@
+{
+  "text_sha": "4aa86f2dd67d",
+  "meta": {
+    "searchable_text": "$\\sqrt{8} \\div \\sqrt{2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호의_성질",
+      "지수법칙"
+    ],
+    "exam_intent": "근호를 포함한 나눗셈 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

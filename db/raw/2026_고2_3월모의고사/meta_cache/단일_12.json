@@ -1,0 +1,17 @@
+{
+  "text_sha": "826cff0dc766",
+  "meta": {
+    "searchable_text": "그림과 같이 함수 $y = \\sqrt{x}$의 그래프와 함수 $y = \\frac{1}{4}x^2$ ($x \\geq 0$)의 그래프가 만나는 두 점 중 원점 O가 아닌 점을 A라 하고, 선분 OA를 1:3으로 내분하는 점을 P라 하자. 점 P를 지나고 $x$축에 평행한 직선이 두 곡선과 만나는 점을 각각 B, C라 할 때, 삼각형 ABC의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_교점",
+      "내분점",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "무리함수와 이차함수의 교점을 구하고 내분점을 이용한 기하적 넓이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

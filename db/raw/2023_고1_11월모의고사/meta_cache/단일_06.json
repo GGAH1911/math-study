@@ -1,0 +1,16 @@
+{
+  "text_sha": "0cceea194c34",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 정의된 두 함수 $f(x)=2x+1$, $g(x)$가 있다. 모든 실수 $x$에 대하여 $(g\\circ f)(x)=3x+1$일 때, $(f\\circ g\\circ f)(x)=x$를 만족시키는 실수 $x$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수방정식"
+    ],
+    "exam_intent": "합성함수의 정의를 이용하여 미지함수를 구하고 함수방정식을 풀이",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

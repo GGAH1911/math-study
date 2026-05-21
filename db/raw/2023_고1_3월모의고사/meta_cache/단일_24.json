@@ -1,0 +1,17 @@
+{
+  "text_sha": "dc9e05f2068f",
+  "meta": {
+    "searchable_text": "∠B = 72°, ∠C = 48°인 삼각형 ABC가 있다. 점 C를 지나고 직선 AB에 평행한 직선 위의 점 D와 선분 AB 위의 점 E에 대하여 ∠CDE = 52°이다. 선분 DE와 선분 AC의 교점을 F라 할 때, ∠EFC = ?°이다. (단, ∠BCD = 90°이고, 점 E는 점 A가 아니다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "평행선과_각",
+      "삼각형의_각도",
+      "엇각과_동위각"
+    ],
+    "exam_intent": "평행선의 성질과 삼각형의 각도 관계를 이용하여 교점에서의 각도를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "추론"
+  }
+}

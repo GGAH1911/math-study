@@ -1,0 +1,18 @@
+{
+  "text_sha": "76094846610d",
+  "meta": {
+    "searchable_text": "그림과 같이 한 평면 위에 있는 두 삼각형 $ABC$, $ACD$의 외심을 각각 $O$, $O'$이라 하고 $\\angle ABC = \\alpha$, $\\angle ADC = \\beta$라 할 때, $\\frac{\\sin \\alpha}{\\sin \\beta} = \\frac{2}{3}$, $\\cos \\beta = \\frac{1}{3}$, $|OO'| = 1$이 성립한다. 삼각형 $ABC$의 외접원의 넓이가 주어질 때, 구하는 값을 구하시오. (단, 구하는 값은 서로소인 자연수들의 합이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외심",
+      "외접원",
+      "정현법칙",
+      "삼각함수"
+    ],
+    "exam_intent": "두 삼각형의 외접원 반지름과 외심의 거리 관계를 삼각함수로 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

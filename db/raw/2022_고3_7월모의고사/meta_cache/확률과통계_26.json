@@ -1,0 +1,17 @@
+{
+  "text_sha": "1d084b55de14",
+  "meta": {
+    "searchable_text": "세 문자 $A$, $B$, $C$ 중에서 모든 문자가 한 개 이상씩 포함되도록 중복을 허락하여 5개를 택해 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "포함-배제_원리",
+      "중복조합과_배열",
+      "제약_조건이_있는_경우의_수"
+    ],
+    "exam_intent": "포함-배제 원리를 적용하여 모든 원소가 최소 1회 이상 포함되는 경우를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

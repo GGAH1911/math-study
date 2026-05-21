@@ -1,0 +1,18 @@
+{
+  "text_sha": "e6b8a15e79ab",
+  "meta": {
+    "searchable_text": "반지름의 길이가 1이고 중심각의 크기가 $2\\theta$인 부채꼴 OAB가 있다. 호 AB 위의 점 P에 대하여 $PA = PC = PD$가 되도록 호 PB 위에 점 C와 선분 OA 위에 점 D를 잡는다. 점 D를 지나고 선분 OP와 평행한 직선이 선분 PA와 만나는 점을 E라 하자. $\\angle POA = \\theta$일 때, 삼각형 CDP의 넓이를 S, 삼각형 EDA의 넓이를 T라 하자. $$\\lim_{\\theta \\to 0} \\frac{\\theta^2 \\times S}{T}$$의 값은? (단, $0 < \\theta < \\frac{\\pi}{4}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한",
+      "기하학",
+      "넓이",
+      "로피탈의_정리"
+    ],
+    "exam_intent": "극한 조건에서 기하학적 도형들의 넓이 비 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

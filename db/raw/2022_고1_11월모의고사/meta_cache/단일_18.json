@@ -1,0 +1,16 @@
+{
+  "text_sha": "57b8d7d64377",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차다항식 $P(x)$가 다음 조건을 만족할 때, $P(0)$의 값은? (가) $P(x)^3$은 $(x-1)(x-2)$로 나누어떨어진다. (나) 다항식 $P(x)$를 $x-2$로 나눈 나머지는 3이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "인수분해",
+      "나머지정리"
+    ],
+    "exam_intent": "나머지정리와 인수분해를 이용하여 조건을 만족하는 삼차다항식의 상수항을 구한다",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

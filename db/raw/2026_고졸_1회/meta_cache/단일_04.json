@@ -1,0 +1,16 @@
+{
+  "text_sha": "78ab58ebece8",
+  "meta": {
+    "searchable_text": "다항식을 특정 인수분해 형태로 나타낼 때, 미지 상수의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "다항식의_인수분해",
+      "계수_비교"
+    ],
+    "exam_intent": "인수분해 형태 전개와 계수 비교로 미지 상수를 구하는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

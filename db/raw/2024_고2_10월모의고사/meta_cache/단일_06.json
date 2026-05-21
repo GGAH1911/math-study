@@ -1,0 +1,17 @@
+{
+  "text_sha": "c275345699fc",
+  "meta": {
+    "searchable_text": "첫째항이 양수이고 공차가 3인 등차수열 $\\{a_n\\}$에 대하여 $a_2 \\times a_4 = 72$일 때, $a_3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의_일반항",
+      "연립방정식"
+    ],
+    "exam_intent": "등차수열의 공차와 조건으로부터 첫째항을 구하고 특정 항의 값을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

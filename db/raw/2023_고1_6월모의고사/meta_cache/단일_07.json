@@ -1,0 +1,16 @@
+{
+  "text_sha": "a234202d0396",
+  "meta": {
+    "searchable_text": "$$\\frac{2024(2023-1)}{2022(2024-2023)}$$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "약분",
+      "분수의_계산"
+    ],
+    "exam_intent": "분자분모 약분을 통한 분수 식의 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "fed951d3e5a3",
+  "meta": {
+    "searchable_text": "중심각의 크기가 $\\frac{\\pi}{4}$이고 넓이가 $18\\pi$인 부채꼴의 호의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "부채꼴",
+      "호의_길이",
+      "넓이_공식"
+    ],
+    "exam_intent": "부채꼴 넓이 공식으로 반지름을 구하고 호의 길이를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

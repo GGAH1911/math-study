@@ -1,0 +1,17 @@
+{
+  "text_sha": "92e52c699781",
+  "meta": {
+    "searchable_text": "어떤 연산 또는 함수 관계에서 특정 조건들(∘2, ∘3, ∘10 등과 관련된)을 만족할 때, 미지수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수",
+      "조건식",
+      "미지수"
+    ],
+    "exam_intent": "주어진 함수 조건으로부터 미지수를 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "c876bcd39274",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 곡선 $y = 2x^5 - 3x$와 직선 $y = n$이 만나는 점을 $P_n$이라 하고, 점 $P_n$을 지나고 기울기가 $-1$인 직선이 $x$축과 만나는 점을 $Q_n$, $y$축과 만나는 점을 $R_n$이라 하자. $\\sum_{n=1}^{\\infty} \\frac{P_n Q_n}{P_n R_n \\cdot (1/3)^2}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한급수",
+      "극한",
+      "곡선과_직선의_교점",
+      "거리"
+    ],
+    "exam_intent": "곡선과 직선의 기하적 관계에서 도출된 무한급수의 수렴값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

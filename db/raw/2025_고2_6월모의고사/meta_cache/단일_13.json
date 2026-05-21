@@ -1,0 +1,17 @@
+{
+  "text_sha": "fc6360595775",
+  "meta": {
+    "searchable_text": "0 < θ < π/2인 실수 θ에 대하여 이차방정식 $5x^2 + bx + a = 0$ (a는 상수)이 두 실근 $\\sin θ, \\cos θ$를 가질 때, $a \\times \\tan θ$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "근과_계수의_관계",
+      "기본_삼각항등식",
+      "삼각함수"
+    ],
+    "exam_intent": "이차방정식의 근과 계수의 관계와 삼각항등식을 활용한 문제 해결",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

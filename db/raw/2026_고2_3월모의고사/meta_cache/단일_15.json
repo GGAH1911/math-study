@@ -1,0 +1,16 @@
+{
+  "text_sha": "3c55f2373775",
+  "meta": {
+    "searchable_text": "연립부등식을 만족시키는 정수 해의 개수가 6이 되도록 하는 모든 정수 매개변수의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "정수해의_개수"
+    ],
+    "exam_intent": "정수해 개수 조건으로부터 매개변수값을 결정하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

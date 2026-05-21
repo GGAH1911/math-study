@@ -1,0 +1,17 @@
+{
+  "text_sha": "66cc0fe9b1d5",
+  "meta": {
+    "searchable_text": "a > 2인 실수 a에 대하여 로그를 포함하는 함수 f(x)가 어떤 점에서 극대일 때, 실수 a의 값을 b라 하면 g는 미분가능한 함수이다. a ≥ 2인 실수 a에 대하여 $f(a) \\times g'(a) = 2a$를 만족할 때, $\\frac{p}{q}$의 값을 구하시오. (단, p와 q는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "로그함수",
+      "함수의_미분"
+    ],
+    "exam_intent": "극값 조건과 미분 관계식을 활용한 함수값 산출의 종합 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

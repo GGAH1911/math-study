@@ -1,0 +1,16 @@
+{
+  "text_sha": "bdb6d78c8119",
+  "meta": {
+    "searchable_text": "함수 $f: X \\to Y$가 그림과 같을 때, $f^{-1}(f(4))$의 값은? (단, $f^{-1}$은 $f$의 역함수이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "합성함수"
+    ],
+    "exam_intent": "역함수와 원함수 합성의 항등함수 성질 이해",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

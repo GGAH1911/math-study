@@ -1,0 +1,16 @@
+{
+  "text_sha": "1fbd1d5f338b",
+  "meta": {
+    "searchable_text": "함수에 대하여 곡선 위의 점에서의 접선을 $\\ell$이라 하고, 함수에 대하여 곡선 위의 점에서의 접선을 $m$이라 하자. 두 직선 $\\ell$, $m$과 $x$축으로 둘러싸인 도형의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "접선의_방정식",
+      "정적분을_이용한_넓이"
+    ],
+    "exam_intent": "접선과 적분을 결합한 넓이 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

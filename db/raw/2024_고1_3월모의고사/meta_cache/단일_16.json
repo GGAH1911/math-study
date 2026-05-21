@@ -1,0 +1,18 @@
+{
+  "text_sha": "9722d5444797",
+  "meta": {
+    "searchable_text": "양수 $k$에 대하여 두 반비례 관계 $y = \\frac{k}{x}$, $y = \\frac{2k}{x}$의 그래프가 직선 $y = 6$과 만나는 점을 각각 A, B라 하고, 두 선분 OA, OB가 직선 $y = 3$과 만나는 점을 각각 C, D라 하자. 사각형 ABDC의 넓이가 27일 때, $k$의 값은? (O는 원점)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "반비례함수",
+      "쌍곡선",
+      "직선의_교점",
+      "좌표기하"
+    ],
+    "exam_intent": "반비례 함수의 교점과 좌표를 이용한 도형의 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

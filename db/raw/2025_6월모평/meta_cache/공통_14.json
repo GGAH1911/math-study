@@ -1,0 +1,17 @@
+{
+  "text_sha": "9c5c62f30fbd",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 모든 자연수 $x$의 값의 합은? $\\log_2 x$와 $\\log_4(x-75)$를 포함하는 식의 값이 양수가 되도록 하는 자연수 $x$의 개수가 12이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "부등식",
+      "로그함수",
+      "자연수"
+    ],
+    "exam_intent": "로그 부등식을 풀고 조건을 만족하는 자연수의 합을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "831a8047d37b",
+  "meta": {
+    "searchable_text": "두 집합 $A = \\{1, 2, 3, 4, 5\\}$, $B = \\{1, 2, 3, 4\\}$에 대하여 함수 $f: A \\to B$의 개수. (가) $f(1), f(2), f(4)$에 관한 조건 [텍스트 글리프 불명확으로 정확한 조건 불확실] (나) 1은 함수 $f$의 치역의 원소이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수",
+      "치역",
+      "포함배제원리"
+    ],
+    "exam_intent": "조건을 만족하는 함수의 개수를 경우의 수로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

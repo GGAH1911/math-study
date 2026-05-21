@@ -1,0 +1,17 @@
+{
+  "text_sha": "c79c23421b68",
+  "meta": {
+    "searchable_text": "주사위를 두 번 던져서 나오는 눈의 수를 $a$, $b$라 하자. $a^2 \\times 3^b \\times 5$가 $2^2 \\times 3^5$의 배수일 확률을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "소인수분해",
+      "배수의_성질",
+      "경우의_수"
+    ],
+    "exam_intent": "배수 조건을 소인수분해로 분석해 확률을 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

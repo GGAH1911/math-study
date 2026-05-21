@@ -1,0 +1,17 @@
+{
+  "text_sha": "02ecc154c8c9",
+  "meta": {
+    "searchable_text": "닫힌 구간 $[0, 12\\pi]$에서 정의된 두 함수 $f(x) = \\cos\\left(\\frac{x}{6}\\right)$, $g(x) = 3\\cos\\left(\\frac{x}{6}\\right) - 1$이 있다. 곡선 $y=f(x)$와 직선 $y=a$가 만나는 두 점의 x좌표를 $x_1, x_2$라 할 때, $x_1 + x_2 = 8\\pi$이다. 곡선 $y=g(x)$와 직선 $y=a$가 만나는 두 점의 x좌표를 $x_3, x_4$라 할 때, $x_3 + x_4$의 값은? (단, $a$는 $-1 \\leq a \\leq 1$인 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_대칭성",
+      "직선과_곡선의_교점",
+      "함수의_수직_이동"
+    ],
+    "exam_intent": "삼각함수의 대칭성과 함수 변환을 이용하여 교점의 x좌표 합을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

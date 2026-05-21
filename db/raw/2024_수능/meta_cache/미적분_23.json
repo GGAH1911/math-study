@@ -1,0 +1,16 @@
+{
+  "text_sha": "ec4ef7f3fa39",
+  "meta": {
+    "searchable_text": "$\\lim_{h \\to 0} \\frac{\\ln(1+5h)}{\\ln(1+3h)}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "로그함수의_극한",
+      "로피탈_정리"
+    ],
+    "exam_intent": "로그함수의 극한을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

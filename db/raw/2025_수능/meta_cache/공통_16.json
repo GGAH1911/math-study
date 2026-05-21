@@ -1,0 +1,17 @@
+{
+  "text_sha": "0125bcdd3c9c",
+  "meta": {
+    "searchable_text": "방정식 $\\log_2 x \\cdot \\log_4 x = \\frac{3}{5}$를 만족시키는 실수 $x$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그방정식",
+      "밑_변환_공식",
+      "로그의_성질"
+    ],
+    "exam_intent": "밑 변환과 로그 성질을 이용한 로그 방정식 풀이",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "fd45718f5bab",
+  "meta": {
+    "searchable_text": "두 상수 $a$, $b$ (단, $0 < a < 1 < b$)에 대하여 좌표평면 위의 두 점 $(a, \\log_2 a)$, $(b, \\log_2 b)$를 지나는 직선의 $y$절편과 두 점 $(a, \\log_4 a)$, $(b, \\log_4 b)$를 지나는 직선의 $y$절편이 같다. 함수 $f$에 대하여 $\\int_1^b f(x)\\,dx = 40$일 때, $\\int_1^{2b} f(x)\\,dx$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "로그함수",
+      "직선의_방정식",
+      "정적분"
+    ],
+    "exam_intent": "로그함수 성질과 적분의 선형성을 이용한 정적분 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

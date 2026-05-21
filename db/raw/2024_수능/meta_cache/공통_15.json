@@ -1,0 +1,16 @@
+{
+  "text_sha": "3dee78ebf0a6",
+  "meta": {
+    "searchable_text": "첫째항이 자연수인 수열이 모든 자연수 $n$에 대하여 $n$의 홀짝성에 따른 점화식을 만족시킬 때, 주어진 항들의 조건을 만족하는 모든 첫째항의 값의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "초항"
+    ],
+    "exam_intent": "홀짝성 조건 점화식의 초항 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

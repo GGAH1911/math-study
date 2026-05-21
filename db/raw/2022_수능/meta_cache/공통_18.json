@@ -1,0 +1,17 @@
+{
+  "text_sha": "44d0a7f26895",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 주어진 조건식들로부터 $a_8$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "일반항",
+      "합공식",
+      "점화식"
+    ],
+    "exam_intent": "주어진 조건으로부터 수열의 특정 항을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

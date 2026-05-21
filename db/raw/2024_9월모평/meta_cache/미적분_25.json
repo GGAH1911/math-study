@@ -1,0 +1,16 @@
+{
+  "text_sha": "3866f74a5ef9",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\ln x$에 대하여 주어진 조건에서의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지적분법",
+    "concepts": [
+      "로그함수",
+      "정적분"
+    ],
+    "exam_intent": "로그함수의 정적분 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

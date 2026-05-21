@@ -1,0 +1,17 @@
+{
+  "text_sha": "5945a7925513",
+  "meta": {
+    "searchable_text": "두 이차함수의 그래프의 꼭짓점을 각각 $A$, $B$라 하자. 한 이차함수의 그래프가 $x$축과 만나는 점을 $C$라 할 때, 사각형 $OACB$의 넓이가 7이고 양수 $a$의 값을 구하라.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "꼭짓점",
+      "그래프",
+      "넓이"
+    ],
+    "exam_intent": "이차함수의 꼭짓점과 좌표를 이용하여 넓이 조건에서 함수의 계수를 결정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

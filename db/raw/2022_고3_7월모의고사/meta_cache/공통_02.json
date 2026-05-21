@@ -1,0 +1,17 @@
+{
+  "text_sha": "0956c9a4eb2f",
+  "meta": {
+    "searchable_text": "등비수열 $\\{a_n\\}$에 대하여 [항의 조건: 텍스트 손상으로 정확한 수식 해석 불가] 일 때, $a_5$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "공비",
+      "등비수열의_일반항"
+    ],
+    "exam_intent": "등비수열의 성질을 이용하여 미지 항의 값을 계산하는 기초 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

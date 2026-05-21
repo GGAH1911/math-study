@@ -1,0 +1,18 @@
+{
+  "text_sha": "73ee10dfd727",
+  "meta": {
+    "searchable_text": "두 상수 $a$ ($a > 0$), $b$에 대하여 두 함수 $f$, $g$를 $f(x) = a\\sin x \\cos x$, $g(x) = x^2 + bx + 1$이라 하자. 두 함수 $f$, $g$가 다음 조건을 만족시킬 때, $\\tan \\alpha$의 값은? (가) $f(x) = g(x)$를 만족시키는 실수 $x$가 열린구간 $\\left(-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right)$에 존재한다. (나) 열린구간 $\\left(-\\frac{\\pi}{2}, \\frac{\\pi}{2}\\right)$에서 방정식 $f'(x) = 2a$의 모든 해의 합은 $\\frac{\\pi}{4}$이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "삼각함수의_미분",
+      "함수의_교점_분석",
+      "도함수_방정식의_해",
+      "구간에서의_근의_합"
+    ],
+    "exam_intent": "삼각함수의 미분과 함수의 교점, 도함수 조건을 종합하여 미지수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

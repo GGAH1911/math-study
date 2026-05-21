@@ -1,0 +1,16 @@
+{
+  "text_sha": "13ca86fa8b4b",
+  "meta": {
+    "searchable_text": "세 개의 서로 다른 문자 중에서 중복을 허락하여 4개를 택해 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복순열",
+      "곱의_법칙"
+    ],
+    "exam_intent": "중복을 허락하는 순열에서 경우의 수를 계산할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

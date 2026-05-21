@@ -1,0 +1,17 @@
+{
+  "text_sha": "96ea6c65c3d9",
+  "meta": {
+    "searchable_text": "직선 $3x + y = 2$에 수직이고 점 $(0, 1)$을 지나는 직선의 방정식은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "수직인_두_직선",
+      "기울기"
+    ],
+    "exam_intent": "수직인 두 직선의 기울기 관계와 일점을 지나는 직선의 방정식",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

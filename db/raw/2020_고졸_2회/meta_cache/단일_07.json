@@ -1,0 +1,16 @@
+{
+  "text_sha": "171cd7407f91",
+  "meta": {
+    "searchable_text": "삼차방정식의 한 근이 1일 때, 계수값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "삼차방정식",
+      "근의_활용"
+    ],
+    "exam_intent": "주어진 근을 대입하여 미지의 계수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

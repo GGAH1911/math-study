@@ -1,0 +1,18 @@
+{
+  "text_sha": "0ff90f829d78",
+  "meta": {
+    "searchable_text": "전체집합 $U$는 15 이하의 자연수, $A$는 15 이하의 소수의 부분집합. 다음 조건을 만족시키는 $B$의 부분집합의 개수를 구하시오. (가) $(A - B) \\cup A^{\\mathsf{c}} = \\{11\\}$ (나) 집합 $B$의 모든 원소의 곱이 $N$일 때, $N$의 양의 약수의 개수는 16",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "부분집합",
+      "집합연산",
+      "약수의_개수",
+      "소인수분해"
+    ],
+    "exam_intent": "집합론과 정수론을 통합한 조건 분석 및 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "117149e55c03",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5 중에서 중복을 허락하여 4개를 택해 일렬로 나열하여 만들 수 있는 모든 네 자리 자연수 중에서 임의로 하나의 수를 선택할 때, 선택한 수가 3500보다 클 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [],
+    "exam_intent": "경우의 수를 이용하여 조건을 만족하는 확률을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

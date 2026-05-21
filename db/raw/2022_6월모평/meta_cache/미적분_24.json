@@ -1,0 +1,16 @@
+{
+  "text_sha": "679a319d725c",
+  "meta": {
+    "searchable_text": "매개변수 $t$로 나타낸 곡선에서 $x = f(t) \\cos t$, $y = g(t) \\sin t$ 형태일 때, $t = 0$에서 $\\frac{dy}{dx}$의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수미분",
+      "연쇄법칙"
+    ],
+    "exam_intent": "매개변수곡선의 도함수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

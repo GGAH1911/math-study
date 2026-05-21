@@ -1,0 +1,17 @@
+{
+  "text_sha": "9396f0cb249a",
+  "meta": {
+    "searchable_text": "삼차함수 $f$가 모든 실수 $x$에 대하여 특정 함수값들의 관계식을 만족시킬 때, $f(\\frac{1}{2})$와 관련된 도함수값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "삼차함수",
+      "도함수",
+      "함수의_조건"
+    ],
+    "exam_intent": "삼차함수의 조건으로부터 도함수값을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

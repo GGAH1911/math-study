@@ -1,0 +1,16 @@
+{
+  "text_sha": "78306ed19671",
+  "meta": {
+    "searchable_text": "$3P_2 + 2H_3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "중복조합"
+    ],
+    "exam_intent": "순열과 중복조합의 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

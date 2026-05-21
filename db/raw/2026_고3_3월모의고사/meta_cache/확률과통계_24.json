@@ -1,0 +1,16 @@
+{
+  "text_sha": "695963266d80",
+  "meta": {
+    "searchable_text": "서로 다른 종류의 연필 4자루를 세 명의 학생 A, B, C에게 남김없이 나누어주는 경우의 수 (연필을 받지 못하는 학생이 있을 수 있음)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "곱의_법칙",
+      "중복순열"
+    ],
+    "exam_intent": "구별되는 연필을 학생에게 자유롭게 분배하는 경우의 수",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

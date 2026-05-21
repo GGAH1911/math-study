@@ -1,0 +1,17 @@
+{
+  "text_sha": "09c3eef9a17a",
+  "meta": {
+    "searchable_text": "각 면에 숫자 1, 2, 2, 3이 하나씩 적혀 있는 정사면체 모양의 서로 다른 상자 2개가 있다. 이 두 상자를 동시에 던져서 바닥에 닿은 면에 적혀 있는 두 수의 차를 확률변수 $X$라 할 때, $V(X)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "확률",
+    "concepts": [
+      "확률변수",
+      "분산",
+      "기댓값"
+    ],
+    "exam_intent": "정사면체 주사위의 확률분포에서 분산을 계산할 수 있는가",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

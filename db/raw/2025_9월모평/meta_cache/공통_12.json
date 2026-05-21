@@ -1,0 +1,17 @@
+{
+  "text_sha": "4f42c0307663",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 등차수열이고, 수열 $\\{b_n\\}$은 모든 자연수 $n$에 대하여 특정 점화식을 만족한다. 초기조건이 주어졌을 때, 수열의 첫째항부터 제9항까지의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "점화식",
+      "수열의_합"
+    ],
+    "exam_intent": "등차수열과 점화식으로 정의된 수열의 합을 구할 수 있는가?",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

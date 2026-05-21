@@ -1,0 +1,17 @@
+{
+  "text_sha": "efd5daaeb863",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 급수 $\\sum_{n=1}^{\\infty} (a_n - 3a_{n+1})$이 수렴할 때, $\\lim_{n \\to \\infty} \\frac{a_{n+1}}{a_n}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "급수의_수렴",
+      "망원급수",
+      "수열의_극한값"
+    ],
+    "exam_intent": "망원급수의 수렴 조건으로부터 수열의 극한 비율 도출",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

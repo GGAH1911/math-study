@@ -1,0 +1,17 @@
+{
+  "text_sha": "3e9d61b60d27",
+  "meta": {
+    "searchable_text": "어느 봉사 동아리 학생들의 한 달 동안의 봉사 시간을 조사하여 나타낸 히스토그램이다. 한 달 동안의 봉사 시간이 $6$ 시간 이상 $12$ 시간 미만인 학생의 수는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "통계",
+    "concepts": [
+      "히스토그램",
+      "도수분포도",
+      "도수"
+    ],
+    "exam_intent": "히스토그램에서 특정 구간의 도수를 정확히 읽는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "f6ef31ee4d50",
+  "meta": {
+    "searchable_text": "삼차방정식의 서로 다른 두 허근을 $\\alpha$, $\\beta$라 할 때, $\\alpha^3 + \\beta^3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "비에타의_정리",
+      "복소수"
+    ],
+    "exam_intent": "삼차방정식의 허근에 대한 대칭식 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

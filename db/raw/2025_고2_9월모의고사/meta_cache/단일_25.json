@@ -1,0 +1,16 @@
+{
+  "text_sha": "9dc3e92f40aa",
+  "meta": {
+    "searchable_text": "AB = 8, BC = 12이고 ∠B는 특정 각도인 삼각형 ABC가 있다. 삼각형 ABC의 넓이가 $12\\sqrt{15}$일 때, 선분 AC의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "코사인_법칙",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "두 변의 길이와 넓이로부터 끼인각을 구하고 코사인 법칙으로 제3의 변을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

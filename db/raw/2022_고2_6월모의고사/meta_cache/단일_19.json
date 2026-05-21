@@ -1,0 +1,18 @@
+{
+  "text_sha": "c099309639bb",
+  "meta": {
+    "searchable_text": "중심이 O, 반지름의 길이가 1이고 중심각의 크기가 θ인 부채꼴 OAB가 있다. 호 AB의 삼등분점 중 점 A에 가까운 점을 C라 하고, 직선 OA와 직선 BC가 만나는 점을 D라 하자. 두 선분 AD, CD와 호 AC로 둘러싸인 부분의 넓이 S를 구하는 과정이다. (단, $0 < \\theta < \\frac{3\\pi}{4}$) 점 C가 호 AB의 삼등분점 중 점 A에 가까운 점이므로 $\\angle BOC = \\frac{\\theta}{3}$이다. 삼각형 BOC에서 $\\angle OBC = \\angle OCB = \\frac{\\pi}{2} - \\frac{\\theta}{6}$이다. 삼각형 BOD에서 사인법칙에 의하여 $OD = \\frac{1}{\\cos(\\theta/3)}$이다. S는 삼각형 COD의 넓이에서 부채꼴 OAC의 넓이를 뺀 값이므로 $S = \\frac{1}{2} \\times \\frac{1}{\\cos(\\theta/3)} \\times \\sin(\\theta/3) - \\frac{\\theta}{6}$이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "부채꼴",
+      "중심각",
+      "사인법칙",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "부채꼴과 삼각비를 이용하여 복합 도형의 넓이를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

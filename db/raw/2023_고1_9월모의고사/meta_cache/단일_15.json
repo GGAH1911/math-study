@@ -1,0 +1,18 @@
+{
+  "text_sha": "de25f3aca900",
+  "meta": {
+    "searchable_text": "이차함수 $f(x) = x^2$의 그래프를 $x$축에 대하여 대칭이동한 후, $x$축의 방향으로 4만큼, $y$축의 방향으로 $p$만큼 평행이동한 그래프가 직선 $y = 2x + 3$에 접할 때, 상수 $p$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "함수의_변환",
+      "대칭이동",
+      "평행이동",
+      "접선의_조건"
+    ],
+    "exam_intent": "함수 변환(대칭·평행이동)과 접선 조건을 종합하여 상수값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "통합"
+  }
+}

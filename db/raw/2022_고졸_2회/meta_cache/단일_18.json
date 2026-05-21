@@ -1,0 +1,17 @@
+{
+  "text_sha": "402971be83d3",
+  "meta": {
+    "searchable_text": "유리함수 $y = \\frac{1}{x-a}$의 그래프는 유리함수 $y = \\frac{1}{x}$의 그래프를 x축의 방향으로 $a$만큼 평행이동한 것이다. 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "유리함수",
+      "평행이동",
+      "함수의_변환"
+    ],
+    "exam_intent": "유리함수의 평행이동 관계를 이해하고 함수 변환의 매개변수를 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

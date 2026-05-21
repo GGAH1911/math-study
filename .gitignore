@@ -20,3 +20,6 @@ web/public/assets/
 
 # Editor
 .vscode/
+
+# Secrets
+.env

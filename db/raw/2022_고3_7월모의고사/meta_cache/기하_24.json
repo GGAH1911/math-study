@@ -1,0 +1,18 @@
+{
+  "text_sha": "c12f26a91f05",
+  "meta": {
+    "searchable_text": "포물선 $y^2 = 4px$ 위의 점 $(9, 6)$에서의 접선과 포물선의 준선이 만나는 점이 $P$일 때, $P$의 좌표",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선",
+      "접선",
+      "준선",
+      "교점"
+    ],
+    "exam_intent": "포물선의 접선과 준선의 교점 좌표를 포물선의 성질으로 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

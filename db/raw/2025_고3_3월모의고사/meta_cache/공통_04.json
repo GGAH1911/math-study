@@ -1,0 +1,17 @@
+{
+  "text_sha": "f28b985b4dd4",
+  "meta": {
+    "searchable_text": "닫힌구간 $[-2, 2]$에서 정의된 함수 $f$의 그래프가 그림과 같다. $\\lim_{x \\to 0^-} f(x) \\cdot \\lim_{x \\to 1^-} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "좌극한",
+      "함수의_그래프_읽기",
+      "극한값의_곱"
+    ],
+    "exam_intent": "그래프에서 좌극한값을 정확히 읽고 두 극한값의 곱을 계산할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

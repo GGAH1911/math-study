@@ -1,0 +1,16 @@
+{
+  "text_sha": "991940382f10",
+  "meta": {
+    "searchable_text": "카드 A 3장, B 2장, C 1장, D 1장과 1부터 7까지 번호가 적힌 7개 상자가 있다. 각 상자에 카드를 한 장씩 넣을 때, A 카드가 들어간 3개 상자 번호의 합이 홀수가 되는 경우의 수를 구하라.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "조건부경우의_수"
+    ],
+    "exam_intent": "조건을 만족하는 경우의 수를 단계적으로 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

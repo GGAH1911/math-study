@@ -1,0 +1,17 @@
+{
+  "text_sha": "065a7e887992",
+  "meta": {
+    "searchable_text": "두 사건 $A$, $B$에 대하여 $P(A \\cap B) = \\frac{1}{9}$, $P(A^c) = \\frac{7}{18}$일 때, $P(A \\cup B)$의 값은? (단, $A^c$은 $A$의 여사건이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "여사건",
+      "합사건",
+      "교집합과_합사건의_확률"
+    ],
+    "exam_intent": "여사건 개념과 합사건 공식을 이용한 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

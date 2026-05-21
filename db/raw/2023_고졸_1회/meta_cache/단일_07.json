@@ -1,0 +1,17 @@
+{
+  "text_sha": "019d9b7333ed",
+  "meta": {
+    "searchable_text": "$-3 \\le x \\le 0$일 때, 이차함수 $f(x) = x^2 - 2x + 1$의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "최솟값",
+      "정의역_제약",
+      "이차함수의_꼭짓점"
+    ],
+    "exam_intent": "주어진 범위에서 이차함수의 최솟값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

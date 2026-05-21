@@ -1,0 +1,16 @@
+{
+  "text_sha": "de3f263047aa",
+  "meta": {
+    "searchable_text": "등식이 주어진 변수에 대한 항등식이 될 조건에서 상수들의 곱을 구하는 항등식 판정 및 계수 비교 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "항등식",
+      "계수_비교"
+    ],
+    "exam_intent": "항등식의 정의를 이해하고 양변의 계수를 비교하여 미지수를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

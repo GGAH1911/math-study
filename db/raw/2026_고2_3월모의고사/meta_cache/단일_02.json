@@ -1,0 +1,16 @@
+{
+  "text_sha": "72a94b89f5ff",
+  "meta": {
+    "searchable_text": "⋄2⋄2⋄의 값은? (단, ⋄⋄1)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호",
+      "중첩식"
+    ],
+    "exam_intent": "중첩된 근호 또는 지수 식의 극한값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

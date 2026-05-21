@@ -1,0 +1,18 @@
+{
+  "text_sha": "72731af041b1",
+  "meta": {
+    "searchable_text": "함수 $y = a\\log_2(x) + b$의 그래프를 $x$축의 방향으로 $p$만큼 평행이동한 후 직선 $y = x$에 대하여 대칭이동하였더니 함수 $y = c \\cdot 2^x + d$의 그래프와 일치하였다. 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "함수의_평행이동",
+      "대칭이동"
+    ],
+    "exam_intent": "지수·로그 함수의 역함수 관계와 그래프 변환을 통해 상수값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

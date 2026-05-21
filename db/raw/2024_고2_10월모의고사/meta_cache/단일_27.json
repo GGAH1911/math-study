@@ -1,0 +1,17 @@
+{
+  "text_sha": "0c80477351bc",
+  "meta": {
+    "searchable_text": "실수 $a$ ($a \\geq 1$)에 대하여 곡선 $y = x^2$과 직선 $y = ax + 3$이 만나는 두 점을 A, B라 하자. $\\lim_{a \\to 1^+} \\frac{|OB|}{|OA|}$이라 할 때, $30a^2$의 값을 구하시오. (단, O는 원점이고, 점 B의 $x$좌표는 점 A의 $x$좌표보다 크다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속성",
+    "concepts": [
+      "극한",
+      "곡선과_직선의_교점",
+      "거리"
+    ],
+    "exam_intent": "매개변수에 따른 곡선과 직선의 교점 거리 비율의 극한값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

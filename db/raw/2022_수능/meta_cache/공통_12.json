@@ -1,0 +1,17 @@
+{
+  "text_sha": "6ced8efae737",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 연속인 함수 $f$가 모든 실수 $x$에 대하여 어떤 조건을 만족시킨다. 함수 $f$의 최댓값이 1이고 최솟값이 0일 때, 정적분값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "연속함수",
+      "극값",
+      "정적분"
+    ],
+    "exam_intent": "극값 조건 하에서 정적분값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

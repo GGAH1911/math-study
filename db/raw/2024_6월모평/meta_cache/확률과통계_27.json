@@ -1,0 +1,16 @@
+{
+  "text_sha": "138923a45310",
+  "meta": {
+    "searchable_text": "한 개의 주사위를 두 번 던질 때 나오는 눈의 수를 차례로 $a$, $b$라 하자. $a \\times b$가 4의 배수일 때, $a + b \\leq 7$일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부확률",
+      "경우의수"
+    ],
+    "exam_intent": "조건부확률: 곱이 4의 배수 조건 하에서 합이 7 이하일 확률",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

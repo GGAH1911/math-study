@@ -1,0 +1,17 @@
+{
+  "text_sha": "a28651e4f566",
+  "meta": {
+    "searchable_text": "함수 $f(x) = ax^3 + bx^2$는 $x = 1$에서 극소이다. 함수 $f$의 극댓값이 4일 때, 상수의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용",
+    "concepts": [
+      "극값",
+      "도함수",
+      "임계점"
+    ],
+    "exam_intent": "극값 조건으로 함수 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

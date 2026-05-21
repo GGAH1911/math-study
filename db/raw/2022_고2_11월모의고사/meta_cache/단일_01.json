@@ -1,0 +1,16 @@
+{
+  "text_sha": "4521fa0ddf5e",
+  "meta": {
+    "searchable_text": "$\\sqrt[3]{2^7} \\times \\sqrt[3]{16^2}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "거듭제곱근",
+      "지수법칙"
+    ],
+    "exam_intent": "거듭제곱근의 성질과 지수법칙을 적용하여 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

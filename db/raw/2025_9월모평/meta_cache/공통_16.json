@@ -1,0 +1,17 @@
+{
+  "text_sha": "b9e9ffcbe6dd",
+  "meta": {
+    "searchable_text": "방정식 $\\log_3(2x) \\cdot \\log_x\\left(\\frac{1}{4}\\right) = 3$을 만족시키는 실수 $x$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_방정식",
+      "밑_변환공식",
+      "로그의_성질"
+    ],
+    "exam_intent": "밑 변환과 치환을 이용한 로그 방정식의 풀이 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

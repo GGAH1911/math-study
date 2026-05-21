@@ -1,0 +1,17 @@
+{
+  "text_sha": "1fd2e4320d45",
+  "meta": {
+    "searchable_text": "첫째항이 자연수인 수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 주어진 조건부 점화식을 만족할 때, $a_7$이 되도록 하는 모든 $a_1$의 값의 합",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "조건부_정의",
+      "역추적"
+    ],
+    "exam_intent": "조건부 점화식을 역방향으로 추적하여 초기값들을 찾고 그 합을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

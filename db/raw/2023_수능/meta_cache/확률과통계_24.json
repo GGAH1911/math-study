@@ -1,0 +1,16 @@
+{
+  "text_sha": "d3c7ca84373c",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5 중에서 중복을 허락하여 4개를 택해 일렬로 나열하여 만들 수 있는 네 자리의 자연수 중 4000 이상인 홀수의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "곱의_법칙",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "여러 조건을 동시에 만족하는 경우의 수를 곱의 법칙으로 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

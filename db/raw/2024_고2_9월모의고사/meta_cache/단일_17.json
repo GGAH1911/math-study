@@ -1,0 +1,15 @@
+{
+  "text_sha": "29dd82711d02",
+  "meta": {
+    "searchable_text": "수열 {aₙ}이 다음 조건을 만족한다. (가) a₁=12, a₂=10, a₃=5 (나) 모든 자연수 n에 대하여 점화식 성립. a₉=16일 때, a₁₁의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식"
+    ],
+    "exam_intent": "점화식으로 정의된 수열에서 특정 항 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

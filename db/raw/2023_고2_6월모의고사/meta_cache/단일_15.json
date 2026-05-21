@@ -1,0 +1,17 @@
+{
+  "text_sha": "3cf8e205d513",
+  "meta": {
+    "searchable_text": "$-\\frac{2\\pi}{3} \\le x \\le \\frac{2\\pi}{3}$에서 정의된 함수 $f(x) = a\\cos\\left(\\frac{3x}{2}\\right)$ (단, $a > 0$)이 있다. 함수 $f$의 그래프가 $x$축과 만나는 점을 $A$, 직선 $y = \\frac{2x}{a}$와 만나는 두 점을 각각 $B$, $C$라 하자. 삼각형 $ABC$가 정삼각형일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "교점의_성질",
+      "정삼각형의_조건"
+    ],
+    "exam_intent": "삼각함수 그래프와 직선의 교점에서 기하학적 성질을 이용한 매개변수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

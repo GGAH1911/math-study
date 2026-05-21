@@ -1,0 +1,16 @@
+{
+  "text_sha": "782561d6d095",
+  "meta": {
+    "searchable_text": "$0 \\leq x \\leq 3\\pi$일 때, 방정식 $2\\cos(2x) - 1 = 0$의 모든 해의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "해의_합"
+    ],
+    "exam_intent": "주어진 범위에서 삼각함수 방정식의 모든 해를 구하고 그 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

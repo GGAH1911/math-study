@@ -1,0 +1,17 @@
+{
+  "text_sha": "b12e75dadf48",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 $ABC$에서 $AC = 2$, $\\angle CAB = 90°$이고 무게중심을 $D$라 하자. 삼각형 $DEF$에서 $DE = DF = 2\\sqrt{2}$, $\\angle FDE = 90°$이고 $BC = EF$를 만족한다. 두 삼각형 $ABC$와 $DEF$로 만들어지는 도형의 둘레의 길이를 구하시오. (단, 점 $A$는 삼각형 $DEF$의 외부에 있다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "무게중심",
+      "직각삼각형",
+      "도형의_합성"
+    ],
+    "exam_intent": "무게중심의 성질과 직각삼각형의 조건을 이용한 합성도형의 둘레 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

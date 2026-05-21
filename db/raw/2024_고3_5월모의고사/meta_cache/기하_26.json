@@ -1,0 +1,17 @@
+{
+  "text_sha": "514a25f63f4e",
+  "meta": {
+    "searchable_text": "두 초점이 $F(-c, 0)$, $F'(c, 0)$ (단, $c > 0$)인 쌍곡선 위의 점 중 제1사분면에 있는 점을 $P$라 하고, 이 쌍곡선과 직선 $PF'$이 만나는 점 중 $P$가 아닌 점을 $Q$라 하자. $|PF| = |QF|$이고 $|PQ| = 8$일 때, 선분 $FF'$의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "초점과의_거리_관계",
+      "현의_성질"
+    ],
+    "exam_intent": "쌍곡선의 정의와 거리 조건을 이용한 초점 간 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

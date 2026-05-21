@@ -1,0 +1,17 @@
+{
+  "text_sha": "486ea2a1ae29",
+  "meta": {
+    "searchable_text": "그림과 같이 두 곡선 $y = \\log_2 x$, $y = a\\log_2(x-b)$가 점 $(4, 2a)$에서 만난다. 두 곡선이 $x$축과 만나는 점을 각각 A, B라 하고, 직선 $y=3$과 만나는 점을 각각 C, D라 하자. $\\frac{|CD|}{|BA|} = \\frac{4}{3}$일 때, $a$의 값은? (단, $0 < a < 4$, $b > 0$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "함수의_교점",
+      "거리_비"
+    ],
+    "exam_intent": "로그함수의 성질과 두 곡선 간의 관계를 이용하여 매개변수를 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

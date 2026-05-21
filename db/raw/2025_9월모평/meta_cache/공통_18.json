@@ -1,0 +1,16 @@
+{
+  "text_sha": "5c770fb47113",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 $\\sum_{k=1}^{10} a_k = 36$, $\\sum_{k=1}^{9} a_k = 17$일 때, $a_{10}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "부분합",
+      "수열의_항"
+    ],
+    "exam_intent": "부분합 공식으로 수열의 특정 항을 구하는 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

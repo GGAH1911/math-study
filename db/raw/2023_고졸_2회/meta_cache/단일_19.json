@@ -1,0 +1,16 @@
+{
+  "text_sha": "8872f0523571",
+  "meta": {
+    "searchable_text": "등산로의 입구에서 쉼터까지 가는 길은 4가지, 쉼터에서 전망대까지 가는 길은 2가지가 있다. 입구에서 쉼터를 거쳐 전망대까지 길을 따라 가는 경우의 수는? (단, 같은 지점은 두 번 이상 지나지 않는다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "곱셈_원리",
+      "경로의_수"
+    ],
+    "exam_intent": "경로 선택의 경우의 수를 곱셈 원리로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

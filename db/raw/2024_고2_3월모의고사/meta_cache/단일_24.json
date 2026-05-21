@@ -1,0 +1,17 @@
+{
+  "text_sha": "bbe3a9dcb45a",
+  "meta": {
+    "searchable_text": "직선 $y = mx$가 이차함수 $y = x^2 + 2x + 6$의 그래프와 만나도록 하는 자연수 $m$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "직선과_이차함수의_교점",
+      "판별식",
+      "이차방정식의_실근_조건"
+    ],
+    "exam_intent": "직선과 이차함수의 교점 존재 조건을 판별식으로 분석하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

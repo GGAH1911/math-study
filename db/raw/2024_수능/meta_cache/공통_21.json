@@ -1,0 +1,17 @@
+{
+  "text_sha": "f531d50ead45",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 $a \\geq 1$에서 정의된 함수 $f(x) = \\begin{cases} x^2 - 6x & 1 \\leq x \\leq 6 \\\\ \\log_4(x-5) & x \\geq 6 \\end{cases}$이다. $t \\geq 0$인 실수 $t$에 대하여 폐구간 $[t, t+1]$에서의 $f$의 최댓값을 $g(t)$라 하자. 구간 $[0, \\infty)$에서 함수 $g$의 최솟값이 5가 되도록 하는 양수 $a$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "조각함수",
+      "최댓값",
+      "함수의_성질"
+    ],
+    "exam_intent": "이동하는 구간에서의 함수 최댓값으로 정의된 함수의 조건 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

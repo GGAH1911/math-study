@@ -1,0 +1,17 @@
+{
+  "text_sha": "d5a203b881a2",
+  "meta": {
+    "searchable_text": "$x \\geq 0$에서 정의된 함수 $f(x)$가 $\\lim_{x \\to \\infty} \\frac{[수식]}{[수식]} = 1$을 만족할 때, 특정 조건을 만족하는 모든 양수의 값의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한",
+      "함수_결정",
+      "방정식의_해"
+    ],
+    "exam_intent": "극한 조건으로부터 함수의 형태를 파악하고 방정식의 양수 해의 합을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

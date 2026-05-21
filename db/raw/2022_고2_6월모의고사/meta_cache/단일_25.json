@@ -1,0 +1,16 @@
+{
+  "text_sha": "4d763dc6472d",
+  "meta": {
+    "searchable_text": "함수 $y = a \\sin 3x$의 그래프가 점 $(\\frac{\\pi}{6}, \\frac{\\sqrt{3}}{2})$를 지날 때, 상수 $a$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "함수의_함숫값"
+    ],
+    "exam_intent": "삼각함수의 특정 점을 지나는 조건에서 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}
