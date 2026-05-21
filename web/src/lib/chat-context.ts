@@ -280,18 +280,22 @@ const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
    색·assert/verify 룰은 2D 와 동일. 어두운 톤 (#333, #000) 금지.
    회전·zoom 은 사용자가 마우스로 자유롭게.
 
-   **그릴 도형 선정 — 문제 정의 기반 (use-case 분리)**:
-   - **문제 정의에 명시적으로 등장하는 도형만** 그릴 것:
-     · "정육면체 ABCD-EFGH" → polyhedron ✓
-     · "구 S: x²+y²+z²=r²" / "반지름 r 의 구" → \`sphere\` ✓
-     · "xy-평면", "평면 α" 등 정사영면 → \`plane\` ✓ (size 명시, opacity 0.12 default)
+   **그릴 도형 선정 — 학생 시각화 우선**:
+   - **문제 정의에 명시된 도형은 모두 그림**:
+     · 정육면체 ABCD-EFGH → polyhedron ✓
+     · 구 S (\`x²+y²+z²=r²\`, 반지름 r 의 구) → \`sphere\` ✓
+     · xy-평면, 평면 α 등 정사영면 → \`plane\` ✓
      · 점·선분·중점·교점 → point3d / segment3d
-   - **보조용·참고용 도형은 절대 추가 금지**:
-     · 외접구·내접구 (문제 정의에 없음 — 절대 X)
-     · 좌표축 박스·"참고용 곡면"·spec.cameraTarget 박스
-     · 정사영 보조용 plane 도 *문제에 그 면이 정의 안 됐으면* X
-   - **\`parametricSurface\` 는 여전히 금지** (구는 \`sphere\` 로, 회전체는 별도 케이스).
-   - 의심되면 그리지 말 것 — 학생이 핵심 도형 못 보는 게 더 큰 손실.
+   - **학생 이해 돕는 보조 도형도 적극 그림**:
+     · 회전체·회전축의 시각화 → \`parametricSurface\` 또는 \`sphere\` ✓
+     · 단면·정사영을 보조 평면 (\`plane\`) 으로 표시 ✓
+     · 등고선·매개변수 곡면 ✓
+     · vertex 사이 보조선 (단면 추적용) ✓
+   - **단 over-emit 만 금지**:
+     · 정육면체 부피의 *5배 이상 거대 외접구* (핵심 도형 가림) — X
+     · 모든 vertex 쌍 사이 대각선 잔뜩 — X
+     · 무관한 좌표축 박스 등 — X
+   - 의심되면 **그리고 보세요** — 시각화가 학습에 도움.
 
    **segment3d 사용 규칙 (반드시 따를 것)**:
    - 문제에서 언급된 보조선(예: 선분 FM, 선분 NP, 정사영 선분)은 **모두
@@ -508,6 +512,57 @@ export function buildNotePrompt(pageSlug: string, collection: 'concepts' | 'prob
  * problem text + mapped concepts. Otherwise (default 'concepts') uses the
  * concept-tutor prompt with prereq chain.
  */
+// 작은 모델 (gemma4 e4b/e2b, 7b 이하) 용 압축 prompt — 1-2KB.
+// 우리 full prompt (8KB+) 의 가이드를 작은 모델이 다 못 따르니 핵심 룰 + few-shot 만.
+// 직접 요청 ("그려봐", "보여줘") 시 sympy 단계 건너뛰고 즉시 graphic block emit 강조.
+export function buildCompactTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[] } {
+  const full = buildTutorPrompt(pageSlug, collection);
+  if (full.pageTitle === pageSlug) return full; // 페이지 못 찾음 — fallback
+
+  // 페이지 컨텍스트 추출 (간략)
+  const fullText = full.systemPrompt;
+  const pageContext = fullText.match(/=== 현재 페이지[\s\S]*?(?=\n##|\n---|\n\*\*|$)/)?.[0]?.slice(0, 1500) ?? '';
+  // 이미지가 있는 problem 은 본문 text 일부러 안 넣음 — 학생 메시지에 첨부된 이미지로만 풀어야 함.
+  // 이미지 없는 problem (또는 concept/dashboard) 만 문제 본문 인용.
+  const hasImage = /문제 이미지 \(유일한 원본 소스\)/.test(fullText);
+  const problemText = hasImage
+    ? ''
+    : fullText.match(/문제 본문:\s*\n([\s\S]+?)(?=\n---|$)/)?.[1]?.slice(0, 800) ?? '';
+
+  const compact = `당신은 한국 고등학교 수학 튜터입니다. 학생이 "${full.pageTitle}" 페이지에 있습니다.
+
+${pageContext ? `## 페이지 컨텍스트\n${pageContext}\n` : ''}
+${problemText ? `## 문제\n${problemText}\n` : ''}
+${hasImage ? `## 문제 이미지 (유일한 원본)
+이 문제의 본문·식·도형은 첨부된 이미지로만 확인. OCR 텍스트는 부정확해 의도적으로 제외했음.
+첫 응답 전에 이미지를 먼저 본 뒤 풀이 시작. 못 보거나 vision 미지원이면 거부 후 큰 모델 권유.
+` : ''}
+
+## 응답 규칙 (반드시 준수)
+
+1. **간결하게** — 한국어 존댓말, 짧은 문장. 불필요한 친절·반복·서론 금지.
+
+2. **모든 수식은 KaTeX**: 인라인 \`$x^2$\`, 디스플레이 \`$$\\frac{x^2}{a^2}+\\frac{y^2}{b^2}=1$$\`. ASCII \`x^2/a^2\` 절대 금지.
+
+3. **소크라테스 방식** — 정답은 학생이 직접 찾도록. 답 자체를 알려주지 말고 한 단계 힌트만.
+
+4. **그래픽·도형 emit 금지** — 이 모델은 도형/그래프 생성을 지원하지 않습니다.
+   학생이 "그려봐", "도형 보여줘", "그래프 보여줘" 같이 요청하면 한 줄로 답:
+   > "이 모델은 도형 생성을 지원하지 않아요. 우측 상단 ⚙ BYOK 설정에서 \`anthropic/claude-haiku-4.5\` 같은 큰 모델로 바꾸시면 도형을 그릴 수 있어요."
+   그리고 도형 *대신* 좌표·관계를 텍스트로 설명. \`\`\`geometry\`\`\`, \`\`\`geometry3d\`\`\`, \`\`\`plot\`\`\`,
+   \`\`\`interactive\`\`\`, \`\`\`svg\`\`\` 같은 fenced block 절대 emit 금지.
+
+## 금기
+
+- 답 자체 노출 (1번부터 5번 보기 중 골라주기 등) 금지
+- "sympy/python/코드 실행/백엔드" 같은 기술 용어 학생에게 노출 금지
+- 학습 무관 주제 (정치·연예 등) — 한 줄로 거부 + 학습으로 복귀
+- 그래픽 fenced block (\`\`\`geometry\`\`\`, \`\`\`geometry3d\`\`\`, \`\`\`plot\`\`\` 등) 사용 금지
+`;
+
+  return { systemPrompt: compact, pageTitle: full.pageTitle, allowedDirs: full.allowedDirs };
+}
+
 export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[] } {
   if (collection === 'dashboard') {
     return buildDashboardPrompt();
@@ -693,14 +748,21 @@ ${title} (${src.score ?? '?'}점)
 난이도: ${fm.killer_tier || '?'} · cognitive: ${fm.cognitive_type || '?'} · 예상 ${fm.expected_time_sec ?? '?'}초
 매핑된 단원: ${fm.unit || '?'}
 
-문제 본문:
-${(fm.searchable_text || prob.body).trim().slice(0, 3500)}
-${imageAbs ? `
---- 문제 이미지 (반드시 확인) ---
+${imageAbs ? `--- 문제 이미지 (유일한 원본 소스) ---
 경로: ${imageAbs}
-${fm.has_figure ? '이 문제에는 **도형/그래프/표가 포함**되어 있다. searchable_text 만으로는 도형의 좌표·각도·교점·보조선 정보가 누락되므로 정확한 풀이가 불가능하다.' : '이미지를 한 번 보면 OCR로 깨졌을 수 있는 식·기호를 정확히 확인할 수 있다.'}
-**첫 응답 전에 Read 도구로 이 이미지 경로를 한 번 직접 열어 도형·식을 눈으로 확인한 뒤 답하라.** 같은 이미지를 매 turn 다시 열 필요는 없다 — 첫 turn 에 한 번이면 충분.
-` : ''}
+
+⚠ **이 문제의 문항·식·도형은 오직 이 이미지로만 확인할 것.** OCR 텍스트 (searchable_text) 는 부정확해서
+시스템 프롬프트에 의도적으로 포함하지 않았다.
+
+**첫 응답 전에 반드시 이미지를 먼저 보고**, 그 후에 풀이를 시작하라:
+- Claude CLI 환경: Read 도구로 위 경로의 이미지 한 번 열어 본 뒤 답변 시작.
+- OpenAI 호환 API (OpenRouter / Ollama 등): user 메시지에 image_url 로 이미지가 이미 첨부돼 있다 — 바로 보고 시작.
+
+이미지를 안 본 채로 추측 풀이 절대 금지. 못 봤거나 vision 미지원 모델이면 한 줄로 거부:
+> "이 문제는 도형/이미지가 핵심이라 vision 지원 모델 (예: claude-haiku-4.5, gemini-2.5-flash) 이 필요합니다. BYOK 설정에서 모델을 바꿔주세요."
+` : `문제 본문:
+${(fm.searchable_text || prob.body).trim().slice(0, 3500)}
+`}
 --- 매핑된 개념 (학생이 이미 wiki에서 학습 중) ---
 ${conceptInfo || '(없음)'}
 

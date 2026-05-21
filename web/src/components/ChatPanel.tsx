@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { Component, type ReactNode, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import MathField from './MathField.tsx';
 import Graph, { GraphModal, type PlotSpec } from './Graph.tsx';
 import Geometry, { type GeomSpec } from './Geometry.tsx';
@@ -132,10 +132,11 @@ export function parseGraphSegments(text: string): Segment[] {
     // Surface JSON parse failures with a visible error segment instead of
     // silently falling back to raw markdown — otherwise the user just sees
     // a code block dump with no hint that the LLM emitted broken JSON.
-    // LLM 이 string literal 안에 raw newline·tab 박는 케이스 (특히 interactive 의 scope) 자동 escape.
-    // " ... " 사이의 \n\r\t 를 \\n\\r\\t 로. backslash 는 이미 escape 된 거 보존.
-    const sanitizeJSON = (s: string): string =>
-      s.replace(/"((?:[^"\\]|\\.)*)"/g, (m, inner: string) => {
+    // LLM 이 박는 JSON 의 흔한 invalid 패턴 자동 sanitize.
+    const sanitizeJSON = (s: string): string => {
+      let out = s;
+      // (1) string literal 안 raw newline/tab → \n / \t 로 escape
+      out = out.replace(/"((?:[^"\\]|\\.)*)"/g, (_m, inner: string) => {
         const fixed = inner
           .replace(/\r\n/g, '\\n')
           .replace(/\n/g, '\\n')
@@ -143,6 +144,37 @@ export function parseGraphSegments(text: string): Segment[] {
           .replace(/\t/g, '\\t');
         return `"${fixed}"`;
       });
+      // (2) string 안 LaTeX backslash (\frac, \alpha, \sqrt 등) — JSON 표준 외 escape → \\
+      // JSON 표준 escape: \" \\ \/ \b \f \n \r \t \uXXXX. 그 외 \X 는 invalid.
+      out = out.replace(/"((?:[^"\\]|\\.)*)"/g, (_m, inner: string) => {
+        const fixed = inner.replace(/\\([^"\\/bfnrtu])/g, '\\\\$1');
+        return `"${fixed}"`;
+      });
+      // (3) JSON value 자리의 raw 수식 (예: 2*1.732, 3*sqrt(2)) → 평가 결과
+      // pattern: : <number/expr>[,}\]]  안전한 평가만 (sqrt, *, /, +, -, 괄호, 숫자).
+      out = out.replace(/:\s*([0-9][0-9eE.+\-*/\s()]*(?:sqrt|sin|cos|tan|pi)[a-zA-Z0-9_.+\-*/\s()]*)\s*([,}\]])/g,
+        (_m, expr: string, tail: string) => {
+          try {
+            // mathjs 없이 간단 safe-eval — Function 생성. 매우 제한된 패턴만.
+            const safe = expr.replace(/sqrt/g, 'Math.sqrt')
+              .replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos')
+              .replace(/tan/g, 'Math.tan').replace(/pi/g, 'Math.PI');
+            const v = Function(`"use strict"; return (${safe});`)();
+            if (typeof v === 'number' && Number.isFinite(v)) return `: ${v}${tail}`;
+          } catch { /* 평가 실패 — 그대로 (parse 실패 유도) */ }
+          return _m;
+        });
+      // (4) 단순 number * number 같은 raw expression (sqrt 등 함수 없음)
+      out = out.replace(/:\s*(-?\d+(?:\.\d+)?\s*[*/]\s*-?\d+(?:\.\d+)?(?:\s*[*/]\s*-?\d+(?:\.\d+)?)*)\s*([,}\]])/g,
+        (_m, expr: string, tail: string) => {
+          try {
+            const v = Function(`"use strict"; return (${expr});`)();
+            if (typeof v === 'number' && Number.isFinite(v)) return `: ${v}${tail}`;
+          } catch { /* */ }
+          return _m;
+        });
+      return out;
+    };
     const tryParseJSON = <T,>(make: (spec: T) => Segment): void => {
       try { out.push(make(JSON.parse(body) as T)); return; }
       catch { /* 1차 실패 — sanitize 후 재시도 */ }
@@ -296,6 +328,24 @@ export function ErrorSegment({ kind, message, body }: { kind: string; message: s
   );
 }
 
+// LLM 이 invalid spec 박아 graphic 컴포넌트 crash 해도 채팅창 전체 죽지 않게.
+class GraphicErrorBoundary extends Component<{ children: ReactNode; kind: string }, { error: Error | null }> {
+  constructor(props: { children: ReactNode; kind: string }) { super(props); this.state = { error: null }; }
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  componentDidCatch(error: Error) { console.warn(`[ChatPanel] ${this.props.kind} crashed:`, error.message); }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="my-2 rounded-lg border border-rose-500/40 bg-rose-500/10 p-2.5 text-xs text-rose-300">
+          <span>⚠ {this.props.kind} 렌더 실패: </span>
+          <span className="font-mono">{this.state.error.message}</span>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function MdSegment({ content }: { content: string }) {
   // 동기 markdown 처리 (escape + inline + 표). 이걸 첫 paint 시점에 바로 표시해서
   // KaTeX 모듈 import 완료 전에 raw content가 DOM에 들어가는 사고를 막는다.
@@ -378,27 +428,37 @@ function Message({ msg, onPromote, busy, slug, collection, isStreaming }: {
             return <ErrorSegment key={i} kind={s.kind} message={s.message} body={s.body} />;
           }
           if (s.type === 'geom') {
-            return <Geometry key={i} spec={s.spec}
-                             onOpen={() => setModal({ kind: 'geom', geomSpec: s.spec })} />;
+            return <GraphicErrorBoundary key={i} kind="geometry">
+              <Geometry spec={s.spec}
+                        onOpen={() => setModal({ kind: 'geom', geomSpec: s.spec })} />
+            </GraphicErrorBoundary>;
           }
           if (s.type === 'geom3d') {
-            return <Geometry3D key={i} spec={s.spec}
-                               onOpen={() => {
-                                 setModal({ kind: 'geom3d', geom3dSpec: s.spec });
-                                 window.dispatchEvent(new CustomEvent('math-study:geom3d-modal', { detail: { open: true } }));
-                               }} />;
+            return <GraphicErrorBoundary key={i} kind="geometry3d">
+              <Geometry3D spec={s.spec}
+                          onOpen={() => {
+                            setModal({ kind: 'geom3d', geom3dSpec: s.spec });
+                            window.dispatchEvent(new CustomEvent('math-study:geom3d-modal', { detail: { open: true } }));
+                          }} />
+            </GraphicErrorBoundary>;
           }
           if (s.type === 'numberline') {
-            return <Numberline key={i} spec={s.spec}
-                               onOpen={() => setModal({ kind: 'numberline', numberlineSpec: s.spec })} />;
+            return <GraphicErrorBoundary key={i} kind="numberline">
+              <Numberline spec={s.spec}
+                          onOpen={() => setModal({ kind: 'numberline', numberlineSpec: s.spec })} />
+            </GraphicErrorBoundary>;
           }
           if (s.type === 'chart') {
-            return <StatsChart key={i} spec={s.spec}
-                               onOpen={() => setModal({ kind: 'chart', chartSpec: s.spec })} />;
+            return <GraphicErrorBoundary key={i} kind="chart">
+              <StatsChart spec={s.spec}
+                          onOpen={() => setModal({ kind: 'chart', chartSpec: s.spec })} />
+            </GraphicErrorBoundary>;
           }
           if (s.type === 'interactive') {
-            return <Interactive key={i} spec={s.spec}
-                                onOpen={() => setModal({ kind: 'interactive', interactiveSpec: s.spec })} />;
+            return <GraphicErrorBoundary key={i} kind="interactive">
+              <Interactive spec={s.spec}
+                           onOpen={() => setModal({ kind: 'interactive', interactiveSpec: s.spec })} />
+            </GraphicErrorBoundary>;
           }
           if (s.type === 'promote') {
             // mastery 승급 카드는 concept 페이지에서만 의미 있음. 다른 collection에선
@@ -475,6 +535,37 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
   const [mathLatex, setMathLatex] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // BYOK 설정 — 학생 본인 LLM (OpenRouter / Ollama local / 기타). localStorage 영구 보관.
+  // baseURL 있으면 BYOK 사용, 없으면 dev fallback (claude CLI)
+  const [byokOpen, setByokOpen] = useState(false);
+  const [byokApiKey, setByokApiKey] = useState<string>('');
+  const [byokModel, setByokModel] = useState<string>('openrouter/auto');
+  const [byokBaseURL, setByokBaseURL] = useState<string>('https://openrouter.ai/api/v1');
+  useEffect(() => {
+    try {
+      const k = localStorage.getItem('math-study:byok:apikey');
+      const m = localStorage.getItem('math-study:byok:model');
+      const b = localStorage.getItem('math-study:byok:baseurl');
+      if (k) setByokApiKey(k);
+      if (m) setByokModel(m);
+      if (b) setByokBaseURL(b);
+    } catch { /* localStorage 비활성 */ }
+  }, []);
+  // BYOK 활성 조건 — OpenRouter 면 apiKey 필수, Ollama (localhost/tailnet) 면 apiKey 없어도 OK
+  const isOllamaLike = /\/\/(localhost|127\.0\.0\.1|100\.|0\.0\.0\.0|192\.168\.|10\.)/.test(byokBaseURL);
+  const byokActive = byokApiKey.length > 0 || (isOllamaLike && byokBaseURL.length > 0);
+  const saveByok = useCallback((apiKey: string, modelId: string, baseURL: string) => {
+    setByokApiKey(apiKey);
+    setByokModel(modelId);
+    setByokBaseURL(baseURL);
+    try {
+      if (apiKey) localStorage.setItem('math-study:byok:apikey', apiKey);
+      else localStorage.removeItem('math-study:byok:apikey');
+      localStorage.setItem('math-study:byok:model', modelId);
+      localStorage.setItem('math-study:byok:baseurl', baseURL);
+    } catch { /* ignore */ }
+  }, []);
 
   // Insert "$...$" at the current cursor position in the textarea
   const insertMath = useCallback((latex: string) => {
@@ -572,12 +663,24 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
     let displayMessages: ChatMessage[] = [...messages, newUserMsg, placeholder];
 
     // 한 turn LLM 호출 + 마지막 placeholder 자리에 streaming 갱신. raw 텍스트 반환.
+    // BYOK 모드 (apiKey 있음): /api/openrouter 로 학생 key 와 함께 relay.
+    // dev fallback: /api/chat 의 claude CLI subprocess.
     const callLLM = async (history: ChatMessage[]): Promise<string> => {
       let assistantText = '';
       try {
-        const res = await fetch('/api/chat', {
+        const endpoint = byokActive ? '/api/openrouter' : '/api/chat';
+        const body = byokActive
+          ? {
+              slug, collection,
+              messages: history.slice(-MAX_HISTORY_TURNS),
+              model: byokModel,
+              apiKey: byokApiKey || 'ollama', // ollama 등 인증 없는 endpoint 용 dummy
+              baseURL: byokBaseURL,
+            }
+          : { slug, collection, messages: history.slice(-MAX_HISTORY_TURNS), model };
+        const res = await fetch(endpoint, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug, collection, messages: history.slice(-MAX_HISTORY_TURNS), model }),
+          body: JSON.stringify(body),
         });
         if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
         const reader = res.body.getReader();
@@ -698,10 +801,10 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
           '   인지 — 위/아래 면 거꾸로 박혔는지 반드시 확인.**',
           '2. 곡선 *종류*가 틀림 (이미지가 타원인데 spec 은 원, 쌍곡선인데 포물선)',
           ...(is3d ? [
-            '3. **3D 한정: 문제에 없는 보조 segment 가 잔뜩 추가**',
-            '   (예: 정육면체의 모든 vertex 쌍 사이 대각선). 문제에서 명시된 핵심',
-            '   선분(FM, NP, 정사영 등)만 남기고 나머지 segment3d 는 제거.',
-            '4. **3D 한정: parametricSurface / plane 이 spec 에 들어가 있음** → 완전 제거.',
+            '3. **3D 한정: 문제에 없는 보조 segment 가 잔뜩 추가** (예: 정육면체의 모든 vertex 쌍 사이 대각선)',
+            '   → 핵심 선분만 남기고 *불필요한 외곽선*만 제거. **단 학생 이해 돕는 보조 (정사영선, 회전축, 단면선) 는 통과.**',
+            '4. **3D 한정: 명백한 over-emit** (정육면체 부피의 5배 이상의 거대 외접구 같이 핵심 도형을 가리는 경우) → 제거.',
+            '   **그 외 (정사영면 plane, 회전체 parametricSurface, 보조 구체 sphere) 는 학습 시각화 도구로 통과.**',
           ] : []),
           '',
           '**무시할 차이 — 무조건 통과**:',
@@ -744,7 +847,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
     } finally {
       setStreaming(false);
     }
-  }, [input, streaming, messages, slug, model, collection]);
+  }, [input, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
 
   const promote = useCallback(
     async (idx: number) => {
@@ -794,14 +897,31 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs">
-          <select
-            value={model}
-            onChange={(e) => setModel(e.target.value as 'haiku' | 'sonnet')}
-            className="bg-[color:var(--color-surface)] border border-[color:var(--color-border)] rounded px-2 py-1 text-xs text-zinc-300 focus:outline-none focus:border-indigo-400"
+          {/* BYOK 활성 시 학생 모델 표시, dev fallback 모드면 claude select */}
+          {byokActive ? (
+            <span className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded px-2 py-1 text-[10px] font-mono"
+                  title={byokBaseURL}>
+              {isOllamaLike ? '🖥 ' : ''}{byokModel}
+            </span>
+          ) : (
+            <select
+              value={model}
+              onChange={(e) => setModel(e.target.value as 'haiku' | 'sonnet')}
+              className="bg-[color:var(--color-surface)] border border-[color:var(--color-border)] rounded px-2 py-1 text-xs text-zinc-300 focus:outline-none focus:border-indigo-400"
+            >
+              <option value="haiku">claude-haiku</option>
+              <option value="sonnet">claude-sonnet</option>
+            </select>
+          )}
+          <button
+            onClick={() => setByokOpen((v) => !v)}
+            title="API key 설정 (BYOK)"
+            className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded transition ${
+              byokOpen ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-500 hover:text-zinc-200'
+            }`}
           >
-            <option value="haiku">claude-haiku</option>
-            <option value="sonnet">claude-sonnet</option>
-          </select>
+            ⚙ {byokActive ? 'BYOK' : '설정'}
+          </button>
           {messages.length > 0 && (
             <button
               onClick={clearChat}
@@ -812,6 +932,119 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
           )}
         </div>
       </header>
+
+      {byokOpen && (
+        <div className="mb-3 rounded-lg border border-indigo-500/30 bg-indigo-500/5 p-3 space-y-2 text-xs">
+          <div className="flex items-baseline justify-between">
+            <p className="font-semibold text-zinc-200">🔑 BYOK — LLM provider 설정</p>
+            <span className="text-[10px] text-zinc-500">localStorage 에만 저장</span>
+          </div>
+
+          {/* Provider preset 칩 */}
+          <div className="flex flex-wrap gap-1">
+            <button
+              onClick={() => {
+                setByokBaseURL('https://openrouter.ai/api/v1');
+                setByokModel('anthropic/claude-haiku-4.5');
+              }}
+              className="text-[10px] px-2 py-1 rounded bg-zinc-800 text-zinc-300 hover:bg-indigo-500/20 hover:text-indigo-300"
+            >☁ OpenRouter</button>
+            <button
+              onClick={() => {
+                setByokBaseURL('http://localhost:11434/v1');
+                setByokModel('gemma4:e4b-it-q4_K_M');
+                setByokApiKey('ollama');
+              }}
+              className="text-[10px] px-2 py-1 rounded bg-zinc-800 text-zinc-300 hover:bg-emerald-500/20 hover:text-emerald-300"
+            >🖥 Ollama (localhost)</button>
+            <button
+              onClick={() => {
+                const cur = prompt('Tailscale 의 본인 맥북/PC IP 를 입력하세요 (예: 100.79.230.49)', '100.');
+                if (cur && /^100\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/.test(cur.trim())) {
+                  setByokBaseURL(`http://${cur.trim()}:11434/v1`);
+                  setByokModel('gemma4:e4b-it-q4_K_M');
+                  setByokApiKey('ollama');
+                }
+              }}
+              className="text-[10px] px-2 py-1 rounded bg-zinc-800 text-zinc-300 hover:bg-emerald-500/20 hover:text-emerald-300"
+              title="Tailscale IP 입력 후 자동 설정"
+            >🖥 Ollama (Tailscale)</button>
+          </div>
+
+          {/* base URL */}
+          <div className="flex gap-2 items-center">
+            <label className="text-[11px] text-zinc-400 shrink-0 w-14">URL</label>
+            <input
+              type="text"
+              value={byokBaseURL}
+              onChange={(e) => setByokBaseURL(e.target.value)}
+              placeholder="https://openrouter.ai/api/v1"
+              className="flex-1 bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded px-2 py-1.5 text-xs font-mono text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400"
+            />
+          </div>
+
+          {/* API key */}
+          <div className="flex gap-2 items-center">
+            <label className="text-[11px] text-zinc-400 shrink-0 w-14">API key</label>
+            <input
+              type="password"
+              value={byokApiKey}
+              onChange={(e) => setByokApiKey(e.target.value)}
+              placeholder={isOllamaLike ? '(Ollama 는 불필요)' : 'sk-or-v1-...'}
+              className="flex-1 bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded px-2 py-1.5 text-xs font-mono text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400"
+            />
+          </div>
+
+          {/* model */}
+          <div className="flex gap-2 items-center">
+            <label className="text-[11px] text-zinc-400 shrink-0 w-14">모델</label>
+            <input
+              type="text"
+              value={byokModel}
+              onChange={(e) => setByokModel(e.target.value)}
+              placeholder="anthropic/claude-haiku-4.5"
+              className="flex-1 bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded px-2 py-1.5 text-xs font-mono text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400"
+            />
+          </div>
+          <div className="flex flex-wrap gap-1 pt-1">
+            <span className="text-[10px] text-zinc-500 self-center mr-1">모델 빠른 선택:</span>
+            {(isOllamaLike
+              ? ['gemma4:e4b-it-q4_K_M', 'gemma4:e2b', 'gemma4:26b', 'gemma3:4b', 'llama3.2-vision:11b', 'qwen2.5-vl:7b']
+              : ['anthropic/claude-haiku-4.5', 'google/gemini-2.5-flash', 'openai/gpt-5-mini', 'openrouter/auto']
+            ).map((id) => (
+              <button key={id} onClick={() => setByokModel(id)}
+                      className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200">
+                {id}
+              </button>
+            ))}
+          </div>
+
+          {!isOllamaLike && (
+            <p className="text-[10px] text-zinc-500 leading-relaxed pt-1">
+              💡 OpenRouter key 는 <a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer"
+                                       className="text-indigo-400 hover:text-indigo-300 underline">openrouter.ai/keys</a> 에서 발급
+            </p>
+          )}
+          {isOllamaLike && (
+            <p className="text-[10px] text-zinc-500 leading-relaxed pt-1">
+              💡 Ollama 사용: 맥북·PC 에 <code className="text-zinc-300">ollama serve</code> 띄우고 모델 pull (예: <code className="text-zinc-300">ollama pull gemma4:e4b-it-q4_K_M</code>).
+              Tailscale 로 원격 접속 시 <code className="text-zinc-300">OLLAMA_HOST=0.0.0.0 ollama serve</code> 후 본인 tailnet IP 입력.
+            </p>
+          )}
+
+          <div className="flex justify-end gap-2 pt-1">
+            <button
+              onClick={() => { saveByok('', byokModel, 'https://openrouter.ai/api/v1'); setByokOpen(false); }}
+              className="text-[11px] text-zinc-500 hover:text-rose-400 px-2"
+            >리셋 (dev fallback)</button>
+            <button
+              onClick={() => { saveByok(byokApiKey, byokModel, byokBaseURL); setByokOpen(false); }}
+              disabled={!byokBaseURL.trim() || (!isOllamaLike && !byokApiKey.trim())}
+              className="text-[11px] px-3 py-1 rounded bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-500/30 disabled:opacity-40"
+            >저장</button>
+          </div>
+        </div>
+      )}
 
       <div
         ref={scrollRef}

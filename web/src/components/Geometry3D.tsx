@@ -212,9 +212,10 @@ function ParametricSurfaceShape({ s, defaultColor }: { s: Extract<Geom3DShape, {
       <meshStandardMaterial
         color={color}
         transparent
-        opacity={s.opacity ?? 0.22}
+        opacity={s.opacity ?? 0.15}
         side={THREE.DoubleSide}
         wireframe={s.wireframe ?? false}
+        depthWrite={false}
       />
     </mesh>
   );
@@ -380,10 +381,7 @@ function ShapeRouter({ s, idx, palette, polyhedronVertexKeys }: {
       }
       return <PolyhedronShape s={s} defaultColor={dc} />;
     case 'parametricSurface':
-      // 정육면체·다면체 시각화를 가리는 surface 는 안전망으로 렌더 단계에서 무시.
-      // LLM 이 system prompt 의 "surface 금지" 룰을 위반해도 화면엔 안 그림.
-      if (typeof window !== 'undefined') console.warn('[Geometry3D] parametricSurface ignored (system rule)');
-      return null;
+      return <ParametricSurfaceShape s={s} defaultColor={dc} />;
     case 'parametricCurve3d':
       return <ParametricCurveShape s={s} defaultColor={dc} />;
     case 'sphere': {

@@ -125,10 +125,14 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
         xs.push(s.center[0] - s.radius, s.center[0] + s.radius);
         ys.push(s.center[1] - s.radius, s.center[1] + s.radius);
         break;
-      case 'ellipse':
-        xs.push(s.center[0] - s.rx, s.center[0] + s.rx);
-        ys.push(s.center[1] - s.ry, s.center[1] + s.ry);
+      case 'ellipse': {
+        const rx = (s.rx ?? (s as unknown as { a?: number }).a) as number;
+        const ry = (s.ry ?? (s as unknown as { b?: number }).b) as number;
+        if (typeof rx !== 'number' || typeof ry !== 'number') break;
+        xs.push(s.center[0] - rx, s.center[0] + rx);
+        ys.push(s.center[1] - ry, s.center[1] + ry);
         break;
+      }
       case 'hyperbola': {
         // 점근선 비율에 따라 적당히 시각 범위
         const span = Math.max(s.a, s.b) * 3;
@@ -271,7 +275,9 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   // 같은 문자가 두 번 그려지는 사고를 막는다.
   const claimedLabels = new Set<string>();
   for (const s of spec.shapes) {
-    if (s.type === 'point' && s.label) {
+    if (s.type === 'point' && s.label
+        && Array.isArray(s.at) && typeof s.at[0] === 'number' && typeof s.at[1] === 'number'
+        && Number.isFinite(s.at[0]) && Number.isFinite(s.at[1])) {
       claimedLabels.add(`${s.at[0].toFixed(2)},${s.at[1].toFixed(2)}|${s.label}`);
     }
   }
@@ -323,6 +329,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         if (s.labels) {
           s.labels.forEach((lab, vi) => {
             const v = s.vertices[vi]; if (!v) return;
+            if (typeof v[0] !== 'number' || typeof v[1] !== 'number') return;
             // 같은 (좌표, 라벨) 의 point shape 이 이미 라벨 그렸으면 skip — 중복 방지
             const key = `${v[0].toFixed(2)},${v[1].toFixed(2)}|${lab}`;
             if (claimedLabels.has(key)) return;
@@ -366,8 +373,12 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
       }
       case 'ellipse': {
         // SVG ellipse — rx*scale, ry*scale (y축 scale 같다고 가정). rotation은 deg.
+        // LLM 이 a/b 키로 박는 케이스 대비 — fallback alias.
+        const rxRaw = (s.rx ?? (s as unknown as { a?: number }).a) as number;
+        const ryRaw = (s.ry ?? (s as unknown as { b?: number }).b) as number;
+        if (typeof rxRaw !== 'number' || typeof ryRaw !== 'number') break;
         const cx = xPx(s.center[0]), cy = yPx(s.center[1]);
-        const rxPx = s.rx * scale, ryPx = s.ry * scale;
+        const rxPx = rxRaw * scale, ryPx = ryRaw * scale;
         const transform = s.rotation ? `rotate(${-s.rotation} ${cx} ${cy})` : undefined;
         els.push(<ellipse key={`el${i}`} cx={cx} cy={cy} rx={rxPx} ry={ryPx}
                           fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
@@ -375,7 +386,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
                           transform={transform} />);
         if (s.label) labels.push(
           <div key={`ell${i}`} className="geom-label"
-               style={{ left: xPx(s.center[0]) + 4, top: yPx(s.center[1] + s.ry) + 4 }}>
+               style={{ left: xPx(s.center[0]) + 4, top: yPx(s.center[1] + ryRaw) + 4 }}>
             <GeomLabel text={s.label} />
           </div>
         );
