@@ -207,10 +207,11 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
 const ConceptNode = memo(ConceptNodeImpl);
 const nodeTypes = { conceptNode: ConceptNode };
 const FIT_VIEW_OPTIONS = { padding: 0.2 };
-// `bezier` (default) curves around other nodes more gracefully than
-// `smoothstep`, which liked to right-angle straight through unrelated
-// nodes and made it look like A was connected to B when it wasn't.
-const DEFAULT_EDGE_OPTIONS = { type: 'bezier' as const };
+// React Flow's `default` edge type IS bezier — it curves around nodes
+// more gracefully than `smoothstep`, which liked to right-angle straight
+// through unrelated nodes and made it look like A was connected to B
+// when it wasn't.
+const DEFAULT_EDGE_OPTIONS = { type: 'default' as const };
 
 // Re-layout the visible subset of the graph with dagre so collapsed-only
 // (unit-only) view doesn't leave nodes scattered at their original (full-
@@ -322,6 +323,29 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     return c;
   }, [data.nodes, homeUnitOf]);
 
+  // Group spokes by their home unit once. Position calc and per-unit
+  // queries can read from this Map instead of re-filtering data.nodes
+  // every time a filter changes.
+  const spokesByUnit = useMemo(() => {
+    const m = new Map<string, GraphNode[]>();
+    for (const n of data.nodes) {
+      if (n.concept_type === 'unit') continue;
+      const u = homeUnitOf.get(n.id);
+      if (!u) continue;
+      let arr = m.get(u);
+      if (!arr) { arr = []; m.set(u, arr); }
+      arr.push(n);
+    }
+    return m;
+  }, [data.nodes, homeUnitOf]);
+
+  // id → node lookup. Used by edges/positions/goto; avoids repeated
+  // O(n) data.nodes.find() calls.
+  const nodeById = useMemo(
+    () => new Map(data.nodes.map((n) => [n.id, n])),
+    [data.nodes],
+  );
+
   const allUnitIds = useMemo(() =>
     data.nodes.filter((n) => n.concept_type === 'unit').map((n) => n.id),
     [data.nodes]);
@@ -357,8 +381,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           if (!collapseMode) return true;
           if (n.concept_type === 'unit') return true;
           const u = homeUnitOf.get(n.id);
-          // Orphan spokes (no home unit) always show — usually rare top-level nodes.
-          if (!u) return true;
+          if (!u) return false;
           return effectiveExpanded.has(u);
         })
         .map((n) => n.id),
@@ -389,33 +412,24 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   //      each column wraps after MAX_ROWS rows into another sub-column.
   //      Layout is deterministic and dense, so even units with 165 spokes
   //      fit in roughly 4 cols × 40 rows of compact tiles.
-  const positions = useMemo(() => {
-    if (!collapseMode) {
-      const m = new Map<string, { x: number; y: number }>();
-      for (const n of data.nodes) m.set(n.id, { x: n.x, y: n.y });
-      return m;
-    }
+  // Grid metrics shared between unit box sizing and spoke placement.
+  const COL_W = 240;
+  const ROW_H = 130;
+  const MAX_ROWS = 9;
+  const UNIT_W = 200;
+  const UNIT_MARGIN = 100;
 
-    // (1) dagre on units only (always visible in collapse mode)
+  // Unit-level dagre layout. Independent of filters — only re-runs when
+  // the graph data, the set of expanded units, or search-driven expansion
+  // changes. Filter toggles (mastery/grade/domain) leave this cache alone.
+  const unitLayout = useMemo(() => {
     const unitNodes = data.nodes.filter((n) => n.concept_type === 'unit');
     const uSet = new Set(unitNodes.map((n) => n.id));
-    // Pre-size each unit's dagre box by how much horizontal real estate
-    // it'll need for its spoke grid — keeps adjacent units from overlapping.
-    // Generous vertical spacing so edges have room to weave under the
-    // nodes without crowding the labels.
-    const COL_W = 240;
-    const ROW_H = 130;
-    const MAX_ROWS = 9;
     const expandedSet = new Set([...expandedUnits, ...searchAutoExpanded]);
-    // Pre-compute spoke grid metrics per expanded unit. We reserve a
-    // box that wraps BOTH the unit card and the entire spoke grid so
-    // dagre won't overlap us with a neighbouring unit.
-    const UNIT_W = 200;
-    const UNIT_MARGIN = 100;             // gap between unit and spoke grid
+
     const sizedUnits = unitNodes.map((u) => {
       if (!expandedSet.has(u.id)) return u;
-      const spokes = data.nodes.filter((n) =>
-        n.concept_type !== 'unit' && homeUnitOf.get(n.id) === u.id);
+      const spokes = spokesByUnit.get(u.id) ?? [];
       const byType: Record<string, number> = {};
       for (const s of spokes) byType[s.concept_type] = (byType[s.concept_type] ?? 0) + 1;
       let totalCols = 0;
@@ -425,7 +439,6 @@ function Inner({ data, variant = 'full', highlight }: Props) {
       }
       const cols = Math.max(1, totalCols);
       const tallestCol = Math.min(MAX_ROWS, Math.max(1, ...Object.values(byType)));
-      // Full bounding box: unit + margin + spoke grid + right margin
       const w = UNIT_W + UNIT_MARGIN + cols * COL_W + 40;
       const h = Math.max(80, tallestCol * ROW_H + 60);
       return { ...u, _width: w, _height: h, _cols: cols } as GraphNode & {
@@ -433,40 +446,50 @@ function Inner({ data, variant = 'full', highlight }: Props) {
       };
     });
 
-    // dagre only sees the unit↔unit prereq subgraph
     const unitEdges = data.edges.filter((e) => uSet.has(e.source) && uSet.has(e.target));
-    const unitPositions = dagreLayout(
+    const dagrePositions = dagreLayout(
       sizedUnits as unknown as GraphNode[],
       unitEdges,
     );
-
-    const out = new Map<string, { x: number; y: number }>();
     const sizedById = new Map(sizedUnits.map((u) => [u.id, u]));
 
+    return { unitNodes, expandedSet, dagrePositions, sizedById };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.nodes, data.edges, expandedUnits, searchAutoExpanded, spokesByUnit]);
+
+  const positions = useMemo(() => {
+    if (!collapseMode) {
+      const m = new Map<string, { x: number; y: number }>();
+      for (const n of data.nodes) m.set(n.id, { x: n.x, y: n.y });
+      return m;
+    }
+
+    const { unitNodes, expandedSet, dagrePositions, sizedById } = unitLayout;
+    const out = new Map<string, { x: number; y: number }>();
+
     for (const u of unitNodes) {
-      const dagreCenter = unitPositions.get(u.id);
+      const dagreCenter = dagrePositions.get(u.id);
       if (!dagreCenter) continue;
       const meta = sizedById.get(u.id) as GraphNode & { _width?: number; _cols?: number };
       const w = meta._width ?? UNIT_W;
-      // dagre placed the *bounding box center* at dagreCenter; shift the
-      // unit card itself to the box's left side so the spoke grid fits
-      // entirely to its right (and inside the reserved box).
       const boxLeft = dagreCenter.x - w / 2;
-      const unitX = boxLeft + UNIT_W / 2;            // unit card centered at box left + 100
+      const unitX = boxLeft + UNIT_W / 2;
       out.set(u.id, { x: unitX, y: dagreCenter.y });
     }
 
-    // (2) place spokes in typed grids inside each expanded unit's box
+    // Place spokes in typed grids inside each expanded unit's box.
+    // Position every spoke (not just filtered ones) so filter toggles
+    // don't re-trigger dagre; React Flow hides filtered-out nodes via
+    // their `hidden` prop.
     for (const unit of unitNodes) {
       if (!expandedSet.has(unit.id)) continue;
-      const dagreCenter = unitPositions.get(unit.id);
+      const dagreCenter = dagrePositions.get(unit.id);
       if (!dagreCenter) continue;
       const meta = sizedById.get(unit.id) as GraphNode & { _width?: number; _cols?: number };
       const w = meta._width ?? UNIT_W;
       const boxLeft = dagreCenter.x - w / 2;
 
-      const spokes = data.nodes.filter((n) =>
-        n.concept_type !== 'unit' && homeUnitOf.get(n.id) === unit.id && filteredIds.has(n.id));
+      const spokes = spokesByUnit.get(unit.id) ?? [];
       const groups: Record<string, GraphNode[]> = {};
       for (const s of spokes) (groups[s.concept_type] ??= []).push(s);
       const orderedTypes = [
@@ -474,7 +497,6 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         ...Object.keys(groups).filter((t) => !TYPE_COL_ORDER.includes(t)),
       ];
 
-      // Spoke grid starts to the right of the unit card with a clear gap.
       let xCursor = boxLeft + UNIT_W + UNIT_MARGIN;
       for (const t of orderedTypes) {
         const list = groups[t];
@@ -491,8 +513,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
       }
     }
     return out;
-  }, [collapseMode, filteredIds, data.nodes, data.edges,
-      expandedUnits, searchAutoExpanded, homeUnitOf]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [collapseMode, data.nodes, unitLayout, spokesByUnit]);
 
   const nodes: Node[] = useMemo(
     () =>
@@ -535,7 +557,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         // Pick the "other end" node so we can color by its type.
         const otherId = e.source === selected ? e.target : e.source;
         const otherType = touchesSel
-          ? data.nodes.find((n) => n.id === otherId)?.concept_type
+          ? nodeById.get(otherId)?.concept_type
           : null;
         const hiColor: string | null = touchesSel
           ? (otherType ? (TYPE_EDGE_COLOR[otherType] ?? '#a1a1aa') : '#a1a1aa')
@@ -563,12 +585,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           markerEnd: { type: MarkerType.ArrowClosed, color: hiColor ?? '#3f3f46' },
         };
       }),
-    [data.edges, filteredIds, selected, collapseMode],
-  );
-
-  const nodeById = useMemo(
-    () => new Map(data.nodes.map((n) => [n.id, n])),
-    [data.nodes],
+    [data.edges, filteredIds, selected, collapseMode, nodeById],
   );
 
   // Keep latest positions accessible from callbacks without invalidating
@@ -758,6 +775,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         fitView
         fitViewOptions={FIT_VIEW_OPTIONS}
         defaultEdgeOptions={DEFAULT_EDGE_OPTIONS}
+        onlyRenderVisibleElements
         minZoom={0.15}
         maxZoom={2.5}
         zoomOnScroll={true}
