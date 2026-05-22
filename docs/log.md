@@ -43,3 +43,5 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 ## [2026-05-20] promote | chat → synthesis: "그럼 방금 주사위 3가지 조건은 간단하니까 해보자 
 3+2+1-1-0-0+0=5 
 이게 맞아?" from 확률_중2
+
+## [2026-05-22] restructure | LWIP shutdown — concepts → docs/concepts/<domain>/ (2786 files, 7 domains: functions/geometry/probability-stats/algebra/equations/logic/uncategorized), problems → docs/problems/<year>/<round>/ (2844 files, 81 rounds, 7 years). Sub-hub auto-gen (build-concept-hubs + build-problem-hubs). URL path-aware (`/concepts/algebra/근의_공식`, `/problems/2025/수능/2025_수능_미적분_30`). audit-lwip emits entropy=0 (isolated 5265→0, missing fm 4→0, flat hard 0, congested hard 0). Dashboard HealthCards shows entropy live.

@@ -1,11 +1,23 @@
 ---
 import { readHealth } from '../lib/health.ts';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 const h = readHealth();
+
+// LWIP entropy audit — sub-dir 리스트럭처링 직후 산출.
+const AUDIT_PATH = resolve(process.cwd(), 'src/data/lwip-audit.json');
+let audit: any = null;
+if (existsSync(AUDIT_PATH)) {
+  try { audit = JSON.parse(readFileSync(AUDIT_PATH, 'utf-8')); } catch { /* ignore */ }
+}
+const entropy = audit?.entropy ?? null;
+const isolated = audit?.isolatedConceptCount ?? null;
+const missingFm = audit?.missingFmCount ?? null;
 
 const cards = [
   { label: 'Pages',       value: h.pages,       hint: 'docs/ 내 총 spoke 페이지' },
-  { label: 'Orphans',     value: h.orphans,     hint: 'hub 미등록 노드',
-    danger: h.orphans > 0 },
+  { label: 'LWIP entropy', value: entropy ?? '?', hint: audit ? `isolated ${isolated} · missing fm ${missingFm}` : 'audit 미실행',
+    danger: entropy != null && entropy > 0 },
   { label: 'Conflicts',   value: h.conflicts,   hint: '동기화 충돌',
     danger: h.conflicts > 0 },
   { label: 'DAG',         value: h.dagIntegrity, hint: 'prerequisite ↔ enables 정합',

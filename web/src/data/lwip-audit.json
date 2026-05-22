@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-05-22T01:16:42.490Z",
+  "entropy": 0,
+  "thresholds": {
+    "flatWarn": 50,
+    "flatHard": 1500,
+    "congestedWarn": 100,
+    "congestedHard": 2000
+  },
+  "flatDirs": [
+    {
+      "rel": "docs/concepts/algebra",
+      "count": 253
+    },
+    {
+      "rel": "docs/concepts/equations",
+      "count": 166
+    },
+    {
+      "rel": "docs/concepts/functions",
+      "count": 1137
+    },
+    {
+      "rel": "docs/concepts/geometry",
+      "count": 737
+    },
+    {
+      "rel": "docs/concepts/logic",
+      "count": 60
+    },
+    {
+      "rel": "docs/concepts/probability-stats",
+      "count": 318
+    },
+    {
+      "rel": "docs/concepts/uncategorized",
+      "count": 118
+    }
+  ],
+  "flatHardCount": 0,
+  "congestedHubs": [
+    {
+      "path": "hubs/concepts/algebra.md",
+      "links": 254
+    },
+    {
+      "path": "hubs/concepts/equations.md",
+      "links": 167
+    },
+    {
+      "path": "hubs/concepts/functions.md",
+      "links": 1138
+    },
+    {
+      "path": "hubs/concepts/geometry.md",
+      "links": 738
+    },
+    {
+      "path": "hubs/concepts/probability-stats.md",
+      "links": 319
+    },
+    {
+      "path": "hubs/concepts/uncategorized.md",
+      "links": 119
+    }
+  ],
+  "congestedHardCount": 0,
+  "isolatedConceptCount": 0,
+  "isolatedConcepts": [],
+  "missingFmCount": 0,
+  "missingFm": []
+}
