@@ -19,7 +19,7 @@ type ChatRequest = {
 // prompt-inject the model into reading /etc/passwd, dumping ~/.ssh, running
 // arbitrary shell, etc. Hard limits on input + zero tool access on the CLI
 // side keep the blast radius to "just text in, just text out".
-const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_-]+$|^__nav__$/;
+const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$|^__nav__$/;
 const ALLOWED_COLLECTIONS: ReadonlySet<'concepts' | 'problems' | 'dashboard'> =
   new Set(['concepts', 'problems', 'dashboard']);
 const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus'> =

@@ -1072,7 +1072,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                 </div>
               )}
               <a
-                href={`/concepts/${encodeURIComponent(selectedNode.slug)}`}
+                href={`/concepts/${selectedNode.slug}`}
                 className="block text-center mt-2 px-3 py-2 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-sm font-medium transition"
               >
                 상세 페이지 →

@@ -42,10 +42,14 @@ function listField(text: string, key: string): string[] {
 
 export const POST: APIRoute = async ({ request }) => {
   const { slug, model = 'haiku' } = (await request.json()) as RegenerateRequest;
-  if (!slug || !/^[\w가-힣]+$/.test(slug)) {
+  // sub-dir slug 허용. `..` 와 backslash 차단.
+  if (!slug || /\\|\.\./.test(slug) || !/^[\w가-힣/-]+$/.test(slug)) {
     return new Response(JSON.stringify({ error: 'invalid slug' }), { status: 400 });
   }
   const file = resolve(DOCS, `${slug}.md`);
+  if (!file.startsWith(resolve(DOCS) + '/')) {
+    return new Response(JSON.stringify({ error: 'path escape' }), { status: 400 });
+  }
   let text: string;
   try {
     text = readFileSync(file, 'utf-8');

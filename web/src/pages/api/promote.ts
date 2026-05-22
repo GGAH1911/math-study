@@ -31,10 +31,15 @@ export const POST: APIRoute = async ({ request }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   }
+  if (body.slug.includes('..') || /\\/.test(body.slug)) {
+    return new Response(JSON.stringify({ error: 'invalid slug' }), { status: 400 });
+  }
 
   const date = todayISO();
   const titleStub = sanitizeFilename(body.title ?? body.question.slice(0, 40));
-  const filename = `${date}_${body.slug}_${titleStub}.md`;
+  // synthesis 파일명에는 sub-dir `/` 가 들어가면 안 되므로 마지막 segment 만 사용.
+  const slugLeaf = body.slug.split('/').pop() ?? body.slug;
+  const filename = `${date}_${slugLeaf}_${titleStub}.md`;
   mkdirSync(SYNTHESES_DIR, { recursive: true });
   const filepath = join(SYNTHESES_DIR, filename);
   if (existsSync(filepath)) {

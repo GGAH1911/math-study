@@ -78,7 +78,7 @@ const orderedDomains = [
             {byDomain[d].map((c) => (
               <li>
                 <ConceptCard
-                  href={`/concepts/${encodeURIComponent(c.id)}`}
+                  href={`/concepts/${c.id}`}
                   title={c.id.replace(/_/g, ' ')}
                   chips={[
                     { label: c.data.mastery, class: `chip-mastery-${c.data.mastery}` },

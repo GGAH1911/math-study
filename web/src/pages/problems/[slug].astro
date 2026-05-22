@@ -14,7 +14,9 @@ if (!entry) {
 }
 const { Content } = await render(entry);
 const fm = entry.data;
-const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+// 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
+const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
+const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
 ---
 <BaseLayout title={entry.id}>
   <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
@@ -79,7 +81,7 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
           <ul class="space-y-1.5 text-sm">
             {fm.concepts.map((p) => {
               const slug = fmtPath(p);
-              return <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${encodeURIComponent(slug)}`}>{slug}</a></li>;
+              return <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${slug}`}>{labelOf(slug)}</a></li>;
             })}
           </ul>
         </section>

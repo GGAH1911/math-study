@@ -14,7 +14,7 @@
  */
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, basename } from 'node:path';
+import { dirname, join, basename, relative } from 'node:path';
 import matter from 'gray-matter';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,8 +25,20 @@ const CONCEPTS_DIR = join(REPO_ROOT, 'docs', 'concepts');
 const OUT_DIR = join(WEB_ROOT, 'src', 'data');
 const OUT_FILE = join(OUT_DIR, 'problems-by-concept.json');
 
+function walkMd(dir) {
+  const out = [];
+  if (!existsSync(dir)) return out;
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) out.push(...walkMd(p));
+    else if (e.name.endsWith('.md')) out.push(p);
+  }
+  return out;
+}
+
+// sub-dir 호환: 'algebra/근의_공식' 형태의 슬러그 집합
 const conceptSlugs = new Set(
-  readdirSync(CONCEPTS_DIR).filter((f) => f.endsWith('.md')).map((f) => basename(f, '.md')),
+  walkMd(CONCEPTS_DIR).map((p) => relative(CONCEPTS_DIR, p).replace(/\.md$/, '').split(/[\\/]/).join('/')),
 );
 
 // Spoke (definition/theorem/lemma/example) → parent unit 매핑.
@@ -46,7 +58,10 @@ if (existsSync(GRAPH_FILE)) {
   }
 }
 
-function pathToSlug(p) { return basename(String(p), '.md'); }
+// frontmatter ref ('docs/concepts/algebra/근의_공식.md') → 'algebra/근의_공식'
+function pathToSlug(p) {
+  return String(p).replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
+}
 
 const byConcept = {}; // slug → [problem brief, ...]
 const missing = new Set(); // concept slug 가 concept-graph 에 없는 경우

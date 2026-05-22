@@ -23,7 +23,7 @@ type ChatRequest = {
   baseURL?: string;
 };
 
-const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_-]+$|^__nav__$/;
+const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$|^__nav__$/;
 const ALLOWED_COLLECTIONS: ReadonlySet<'concepts' | 'problems' | 'dashboard'> =
   new Set(['concepts', 'problems', 'dashboard']);
 const MAX_USER_MESSAGE_CHARS = 4000;

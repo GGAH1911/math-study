@@ -31,7 +31,25 @@ function loadChat(storageKey: string): ChatMessage[] {
 
 function loadNoteLS(storageKey: string): string {
   if (typeof window === 'undefined') return '';
-  try { return window.localStorage.getItem(NOTE_PREFIX + storageKey) ?? ''; }
+  try {
+    const newKey = NOTE_PREFIX + storageKey;
+    const direct = window.localStorage.getItem(newKey);
+    if (direct) return direct;
+    // sub-dir 진입 후 lazy migration — 'concepts:algebra/근의_공식' 가 비면
+    // 기존 'concepts:근의_공식' 의 노트를 복사 후 삭제.
+    if (storageKey.includes('/')) {
+      const leaf = storageKey.split('/').pop() ?? storageKey;
+      const colon = storageKey.indexOf(':');
+      const legacyKey = NOTE_PREFIX + (colon >= 0 ? storageKey.slice(0, colon + 1) + leaf : leaf);
+      const legacy = window.localStorage.getItem(legacyKey);
+      if (legacy) {
+        window.localStorage.setItem(newKey, legacy);
+        window.localStorage.removeItem(legacyKey);
+        return legacy;
+      }
+    }
+    return '';
+  }
   catch { return ''; }
 }
 

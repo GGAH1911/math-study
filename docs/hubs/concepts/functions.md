@@ -1,0 +1,1163 @@
+---
+sources: []
+created: 2026-05-22
+updated: 2026-05-22
+hub_type: concepts-sub
+domain: functions
+counts:
+  total: 1137
+---
+
+# 함수 (functions)
+
+이 도메인의 모든 concept 노드 (1137개). 상위: [concepts hub](../concepts.md).
+
+## 단원 (19)
+
+- [도함수의 활용](../../concepts/functions/도함수의_활용.md) — 수학2 · 도함수의 활용 `unknown`
+- [도함수의 활용 심화](../../concepts/functions/도함수의_활용_심화.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [미분](../../concepts/functions/미분.md) — 수학2 · 미분 `unknown`
+- [삼각함수](../../concepts/functions/삼각함수.md) — 수학1 · 삼각함수 `unknown`
+- [수열](../../concepts/functions/수열.md) — 수학1 · 수열 `unknown`
+- [수열의 극한](../../concepts/functions/수열의_극한.md) — 미적분 · 수열의 극한 `unknown`
+- [여러가지 적분법](../../concepts/functions/여러가지_적분법.md) — 미적분 · 여러가지 적분법 `unknown`
+- [여러가지함수의 극한](../../concepts/functions/여러가지함수의_극한.md) — 미적분 · 여러가지 함수의 극한과 연속 `unknown`
+- [여러가지함수의 미분](../../concepts/functions/여러가지함수의_미분.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [이차함수](../../concepts/functions/이차함수.md) — 중3 · 이차함수 `unknown`
+- [일차함수](../../concepts/functions/일차함수.md) — 중2 · 일차함수 `unknown`
+- [적분](../../concepts/functions/적분.md) — 수학2 · 적분 `unknown`
+- [정적분의 활용](../../concepts/functions/정적분의_활용.md) — 미적분 · 정적분의 활용 `unknown`
+- [좌표평면과 그래프](../../concepts/functions/좌표평면과_그래프.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [지수함수와 로그함수](../../concepts/functions/지수함수와_로그함수.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [함수와 그래프](../../concepts/functions/함수와_그래프.md) — 고1 · 함수와 그래프 `unknown`
+- [함수의 극한과 연속](../../concepts/functions/함수의_극한과_연속.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [함수의 극한과 연속성](../../concepts/functions/함수의_극한과_연속성.md) — 수학2 · 함수의 극한과 연속성 `unknown`
+- [합성함수의 미분](../../concepts/functions/합성함수의_미분.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+
+## 정의 (1033)
+
+- [2배각 공식](../../concepts/functions/2배각_공식.md) — 수학1 `unknown`
+- [2차 도함수](../../concepts/functions/2차_도함수.md) — 미적분 `unknown`
+- [3차 함수의 미분](../../concepts/functions/3차_함수의_미분.md) — 미적분 `unknown`
+- [3차함수](../../concepts/functions/3차함수.md) — 미적분 `unknown`
+- [가속도](../../concepts/functions/가속도.md) — 수학2 `unknown`
+- [가속도 적분](../../concepts/functions/가속도_적분.md) — 미적분 `unknown`
+- [가속도와 이계도함수](../../concepts/functions/가속도와_이계도함수.md) — 미적분 `unknown`
+- [각도 범위와 부호](../../concepts/functions/각도_범위와_부호.md) — 수학1 `unknown`
+- [각의 범위](../../concepts/functions/각의_범위.md) — 수학1 `unknown`
+- [각의 범위와 부호](../../concepts/functions/각의_범위와_부호.md) — 수학1 `unknown`
+- [각의 사분면 판정](../../concepts/functions/각의_사분면_판정.md) — 수학1 `unknown`
+- [각의 차 공식](../../concepts/functions/각의_차_공식.md) — 수학1 `unknown`
+- [각의 크기 결정](../../concepts/functions/각의_크기_결정.md) — 수학1 `unknown`
+- [거리 계산](../../concepts/functions/거리_계산.md) — 고1 `unknown`
+- [거리 비](../../concepts/functions/거리_비.md) — 수학1 `unknown`
+- [거리 조건](../../concepts/functions/거리_조건.md) — 수학1 `unknown`
+- [거리 함수](../../concepts/functions/거리_함수.md) — 미적분 `unknown`
+- [거리비 최적화](../../concepts/functions/거리비_최적화.md) — 미적분 `unknown`
+- [거리와 넓이](../../concepts/functions/거리와_넓이.md) — 수학1 `unknown`
+- [거리와 도형의 넓이](../../concepts/functions/거리와_도형의_넓이.md) — 수학1 `unknown`
+- [거리와 변위](../../concepts/functions/거리와_변위.md) — 미적분 `unknown`
+- [거리와 비율](../../concepts/functions/거리와_비율.md) — 고1 `unknown`
+- [거리와 적분](../../concepts/functions/거리와_적분.md) — 미적분 `unknown`
+- [거리의 계산](../../concepts/functions/거리의_계산.md) — 미적분 `unknown`
+- [격자점](../../concepts/functions/격자점.md) — 중3 `unknown`
+- [경계값 계산](../../concepts/functions/경계값_계산.md) — 수학1 `unknown`
+- [경계점에서의 극한](../../concepts/functions/경계점에서의_극한.md) — 수학2 `unknown`
+- [경계점조건](../../concepts/functions/경계점조건.md) — 수학2 `unknown`
+- [경우분석](../../concepts/functions/경우분석.md) — 수학1 `unknown`
+- [계수 비율](../../concepts/functions/계수_비율.md) — 미적분 `unknown`
+- [계수의 관계](../../concepts/functions/계수의_관계.md) — 중3 `unknown`
+- [고정점](../../concepts/functions/고정점.md) — 고1 `unknown`
+- [곡선 사이의 거리](../../concepts/functions/곡선_사이의_거리.md) — 미적분 `unknown`
+- [곡선 사이의 넓이](../../concepts/functions/곡선_사이의_넓이.md) — 미적분 `unknown`
+- [곡선 아래 영역의 넓이](../../concepts/functions/곡선_아래_영역의_넓이.md) — 미적분 `unknown`
+- [곡선과 교점](../../concepts/functions/곡선과_교점.md) — 수학2 `unknown`
+- [곡선과 원의 교점](../../concepts/functions/곡선과_원의_교점.md) — 미적분 `unknown`
+- [곡선과 직선 사이의 넓이](../../concepts/functions/곡선과_직선_사이의_넓이.md) — 미적분 `unknown`
+- [곡선과 직선으로 둘러싸인 넓이](../../concepts/functions/곡선과_직선으로_둘러싸인_넓이.md) — 미적분 `unknown`
+- [곡선과 직선으로 둘러싸인 도형의 넓이](../../concepts/functions/곡선과_직선으로_둘러싸인_도형의_넓이.md) — 미적분 `unknown`
+- [곡선과 직선의 교점](../../concepts/functions/곡선과_직선의_교점.md) — 미적분 `unknown`
+- [곡선으로 둘러싸인 넓이](../../concepts/functions/곡선으로_둘러싸인_넓이.md) — 미적분 `unknown`
+- [곡선의 기울기](../../concepts/functions/곡선의_기울기.md) — 미적분 `unknown`
+- [곡선의 길이](../../concepts/functions/곡선의_길이.md) — 미적분 · 정적분의 활용 `unknown`
+- [곡선의 넓이](../../concepts/functions/곡선의_넓이.md) — 미적분 `unknown`
+- [곡선의 미분](../../concepts/functions/곡선의_미분.md) — 미적분 `unknown`
+- [곡선의 접촉 조건](../../concepts/functions/곡선의_접촉_조건.md) — 미적분 `unknown`
+- [곡선이 둘러싼 영역](../../concepts/functions/곡선이_둘러싼_영역.md) — 미적분 `unknown`
+- [곱셈 공식](../../concepts/functions/곱셈_공식.md) — 수학1 `unknown`
+- [곱셈 규칙](../../concepts/functions/곱셈_규칙.md) — 미적분 `unknown`
+- [곱의 미분 법칙](../../concepts/functions/곱의_미분_법칙.md) — 미적분 `unknown`
+- [곱의 미분법](../../concepts/functions/곱의_미분법.md) — 미적분 `unknown`
+- [곱의 조건](../../concepts/functions/곱의_조건.md) — 수학1 `unknown`
+- [곱의미분법](../../concepts/functions/곱의미분법.md) — 수학2 `unknown`
+- [공비](../../concepts/functions/공비.md) — 수학1 `unknown`
+- [공비 결정](../../concepts/functions/공비_결정.md) — 수학1 `unknown`
+- [공차](../../concepts/functions/공차.md) — 수학1 `unknown`
+- [교점](../../concepts/functions/교점.md) — 고1 `unknown`
+- [교점 개수 조건](../../concepts/functions/교점_개수_조건.md) — 수학1 `unknown`
+- [교점 개수 판정](../../concepts/functions/교점_개수_판정.md) — 미적분 `unknown`
+- [교점 개수 함수](../../concepts/functions/교점_개수_함수.md) — 수학2 `unknown`
+- [교점 조건](../../concepts/functions/교점_조건.md) — 고1 `unknown`
+- [교점과 극값](../../concepts/functions/교점과_극값.md) — 미적분 `unknown`
+- [교점과 기울기](../../concepts/functions/교점과_기울기.md) — 수학1 `unknown`
+- [교점과 수열](../../concepts/functions/교점과_수열.md) — 미적분 `unknown`
+- [교점과 적분 범위](../../concepts/functions/교점과_적분_범위.md) — 미적분 `unknown`
+- [교점과 판별식](../../concepts/functions/교점과_판별식.md) — 중3 `unknown`
+- [교점의 개수](../../concepts/functions/교점의_개수.md) — 수학2 `unknown`
+- [교점의 개수 분석](../../concepts/functions/교점의_개수_분석.md) — 수학2 `unknown`
+- [교점의 성질](../../concepts/functions/교점의_성질.md) — 수학1 `unknown`
+- [교점의 조건](../../concepts/functions/교점의_조건.md) — 중2 `unknown`
+- [교점의 좌표](../../concepts/functions/교점의_좌표.md) — 수학1 `unknown`
+- [교점의 합](../../concepts/functions/교점의_합.md) — 수학1 `unknown`
+- [교점의 활용](../../concepts/functions/교점의_활용.md) — 미적분 `unknown`
+- [구간별 적분](../../concepts/functions/구간별_적분.md) — 미적분 `unknown`
+- [구간별 정의 함수](../../concepts/functions/구간별_정의_함수.md) — 수학1 `unknown`
+- [구간별 최댓값과 최솟값](../../concepts/functions/구간별_최댓값과_최솟값.md) — 중3 `unknown`
+- [구간별 함수](../../concepts/functions/구간별_함수.md) — 수학1 `unknown`
+- [구간별 함수 정의](../../concepts/functions/구간별_함수_정의.md) — 고1 `unknown`
+- [구간별 함수의 성질](../../concepts/functions/구간별_함수의_성질.md) — 미적분 `unknown`
+- [구간별 함수정의](../../concepts/functions/구간별_함수정의.md) — 중3 `unknown`
+- [구간별함수의연속성](../../concepts/functions/구간별함수의연속성.md) — 수학2 `unknown`
+- [구간에 따른 함수값 변화](../../concepts/functions/구간에_따른_함수값_변화.md) — 중3 `unknown`
+- [구간에서의 근의 합](../../concepts/functions/구간에서의_근의_합.md) — 미적분 `unknown`
+- [구간에서의 최댓값과 최솟값](../../concepts/functions/구간에서의_최댓값과_최솟값.md) — 중3 `unknown`
+- [구간에서의 함수 분석](../../concepts/functions/구간에서의_함수_분석.md) — 수학1 `unknown`
+- [구분함수](../../concepts/functions/구분함수.md) — 미적분 `unknown`
+- [귀납적 정의](../../concepts/functions/귀납적_정의.md) — 수학1 `unknown`
+- [그래프](../../concepts/functions/그래프.md) — 중3 `unknown`
+- [그래프 분석](../../concepts/functions/그래프_분석.md) — 수학2 `unknown`
+- [그래프 해석](../../concepts/functions/그래프_해석.md) — 수학2 `unknown`
+- [그래프에서 극한값 읽기](../../concepts/functions/그래프에서_극한값_읽기.md) — 수학2 `unknown`
+- [그래프와 직선의 교점 개수](../../concepts/functions/그래프와_직선의_교점_개수.md) — 고1 `unknown`
+- [그래프의 교점](../../concepts/functions/그래프의_교점.md) — 고1 `unknown`
+- [그래프의 교점 개수](../../concepts/functions/그래프의_교점_개수.md) — 미적분 `unknown`
+- [그래프의 성질](../../concepts/functions/그래프의_성질.md) — 중3 `unknown`
+- [그래프의 x축 교점](../../concepts/functions/그래프의_x축_교점.md) — 중3 `unknown`
+- [극값](../../concepts/functions/극값.md) — 미적분 `unknown`
+- [극값 구하기](../../concepts/functions/극값_구하기.md) — 미적분 `unknown`
+- [극값 조건](../../concepts/functions/극값_조건.md) — 미적분 `unknown`
+- [극값 판정과 활용](../../concepts/functions/극값_판정과_활용.md) — 미적분 `unknown`
+- [극값과 실근의 개수](../../concepts/functions/극값과_실근의_개수.md) — 미적분 `unknown`
+- [극값과 최댓값·최솟값](../../concepts/functions/극값과_최댓값·최솟값.md) — 미적분 `unknown`
+- [극값의 개수](../../concepts/functions/극값의_개수.md) — 미적분 `unknown`
+- [극값의 조건](../../concepts/functions/극값의_조건.md) — 미적분 `unknown`
+- [극값의 판정](../../concepts/functions/극값의_판정.md) — 미적분 `unknown`
+- [극값의 판정과 존재 조건](../../concepts/functions/극값의_판정과_존재_조건.md) — 미적분 `unknown`
+- [극값의 합 조건](../../concepts/functions/극값의_합_조건.md) — 미적분 `unknown`
+- [극곡선의 미분](../../concepts/functions/극곡선의_미분.md) — 미적분 `unknown`
+- [극대극소](../../concepts/functions/극대극소.md) — 미적분 `unknown`
+- [극댓값](../../concepts/functions/극댓값.md) — 미적분 `unknown`
+- [극댓값과 극솟값](../../concepts/functions/극댓값과_극솟값.md) — 미적분 `unknown`
+- [극소](../../concepts/functions/극소.md) — 미적분 `unknown`
+- [극소 판정](../../concepts/functions/극소_판정.md) — 미적분 `unknown`
+- [극소값](../../concepts/functions/극소값.md) — 미적분 `unknown`
+- [극소값과 극댓값](../../concepts/functions/극소값과_극댓값.md) — 미적분 `unknown`
+- [극소점](../../concepts/functions/극소점.md) — 미적분 `unknown`
+- [극솟값](../../concepts/functions/극솟값.md) — 미적분 `unknown`
+- [극한](../../concepts/functions/극한.md) — 수학2 · 함수의_극한과_연속 `unknown`
+- [극한 계산](../../concepts/functions/극한_계산.md) — 수학2 `unknown`
+- [극한 조건을 이용한 매개변수 결정](../../concepts/functions/극한_조건을_이용한_매개변수_결정.md) — 미적분 `unknown`
+- [극한 존재 조건](../../concepts/functions/극한_존재_조건.md) — 수학2 `unknown`
+- [극한값](../../concepts/functions/극한값.md) — 미적분 `unknown`
+- [극한값 결정](../../concepts/functions/극한값_결정.md) — 미적분 `unknown`
+- [극한값 계산](../../concepts/functions/극한값_계산.md) — 미적분 `unknown`
+- [극한값 조건](../../concepts/functions/극한값_조건.md) — 수학2 `unknown`
+- [극한값 판정](../../concepts/functions/극한값_판정.md) — 미적분 `unknown`
+- [극한값계산](../../concepts/functions/극한값계산.md) — 수학2 `unknown`
+- [극한값의 계산](../../concepts/functions/극한값의_계산.md) — 미적분 `unknown`
+- [극한값의 곱](../../concepts/functions/극한값의_곱.md) — 수학2 `unknown`
+- [극한값의 동치성](../../concepts/functions/극한값의_동치성.md) — 수학2 `unknown`
+- [극한값의 성질](../../concepts/functions/극한값의_성질.md) — 미적분 `unknown`
+- [극한값의 존재 조건](../../concepts/functions/극한값의_존재_조건.md) — 수학2 `unknown`
+- [극한과 도함수](../../concepts/functions/극한과_도함수.md) — 미적분 `unknown`
+- [극한과 연속성](../../concepts/functions/극한과_연속성.md) — 미적분 `unknown`
+- [극한의 계산](../../concepts/functions/극한의_계산.md) — 미적분 `unknown`
+- [극한의 기본 공식](../../concepts/functions/극한의_기본_공식.md) — 미적분 `unknown`
+- [극한의 성질](../../concepts/functions/극한의_성질.md) — 미적분 `unknown`
+- [극한의 수렴](../../concepts/functions/극한의_수렴.md) — 미적분 `unknown`
+- [극한의 수렴 조건](../../concepts/functions/극한의_수렴_조건.md) — 미적분 `unknown`
+- [극한의 연산](../../concepts/functions/극한의_연산.md) — 수학2 `unknown`
+- [극한의 유리화](../../concepts/functions/극한의_유리화.md) — 미적분 `unknown`
+- [극한의 정의](../../concepts/functions/극한의_정의.md) — 미적분 `unknown`
+- [극한의 조건](../../concepts/functions/극한의_조건.md) — 미적분 `unknown`
+- [극한의 존재 조건](../../concepts/functions/극한의_존재_조건.md) — 수학2 `unknown`
+- [극한의 존재성](../../concepts/functions/극한의_존재성.md) — 수학2 `unknown`
+- [극한의 표준 공식](../../concepts/functions/극한의_표준_공식.md) — 미적분 `unknown`
+- [극한의성질](../../concepts/functions/극한의성질.md) — 수학2 `unknown`
+- [극한의정의](../../concepts/functions/극한의정의.md) — 미적분 `unknown`
+- [극한존재조건](../../concepts/functions/극한존재조건.md) — 미적분 `unknown`
+- [근](../../concepts/functions/근.md) — 중3 `unknown`
+- [근과 계수](../../concepts/functions/근과_계수.md) — 중3 `unknown`
+- [근과 절편](../../concepts/functions/근과_절편.md) — 중3 `unknown`
+- [근사와 전개](../../concepts/functions/근사와_전개.md) — 미적분 `unknown`
+- [근의 개수](../../concepts/functions/근의_개수.md) — 중3 `unknown`
+- [근의 개수 분석](../../concepts/functions/근의_개수_분석.md) — 미적분 `unknown`
+- [근의 범위 조건](../../concepts/functions/근의_범위_조건.md) — 중3 `unknown`
+- [근의 최댓값과 최솟값](../../concepts/functions/근의_최댓값과_최솟값.md) — 수학1 `unknown`
+- [근의 합](../../concepts/functions/근의_합.md) — 수학1 `unknown`
+- [급수](../../concepts/functions/급수.md) — 미적분 · 수열의 극한 `unknown`
+- [급수수렴](../../concepts/functions/급수수렴.md) — 미적분 `unknown`
+- [급수와 적분의 관계](../../concepts/functions/급수와_적분의_관계.md) — 미적분 `unknown`
+- [급수의 선형성](../../concepts/functions/급수의_선형성.md) — 미적분 `unknown`
+- [급수의 수렴](../../concepts/functions/급수의_수렴.md) — 미적분 `unknown`
+- [급수의 수렴성](../../concepts/functions/급수의_수렴성.md) — 미적분 `unknown`
+- [급수의 수렴조건](../../concepts/functions/급수의_수렴조건.md) — 미적분 `unknown`
+- [급수의 합](../../concepts/functions/급수의_합.md) — 미적분 `unknown`
+- [급수의수렴](../../concepts/functions/급수의수렴.md) — 미적분 `unknown`
+- [기본 극한](../../concepts/functions/기본_극한.md) — 수학2 `unknown`
+- [기본 삼각함수 항등식](../../concepts/functions/기본_삼각함수_항등식.md) — 수학1 `unknown`
+- [기본 삼각함수값](../../concepts/functions/기본_삼각함수값.md) — 수학1 `unknown`
+- [기본 삼각항등식](../../concepts/functions/기본_삼각항등식.md) — 수학1 `unknown`
+- [기본 항등식](../../concepts/functions/기본_항등식.md) — 수학1 `unknown`
+- [기본삼각항등식](../../concepts/functions/기본삼각항등식.md) — 수학1 `unknown`
+- [기본정리](../../concepts/functions/기본정리.md) — 수학2 `unknown`
+- [기울기](../../concepts/functions/기울기.md) — 중2 · 일차함수 `unknown`
+- [기울기 공식](../../concepts/functions/기울기_공식.md) — 수학1 `unknown`
+- [기울기와 각도](../../concepts/functions/기울기와_각도.md) — 미적분 `unknown`
+- [기울기와 교점](../../concepts/functions/기울기와_교점.md) — 미적분 `unknown`
+- [기울기의 곱](../../concepts/functions/기울기의_곱.md) — 수학1 `unknown`
+- [기울기의 범위](../../concepts/functions/기울기의_범위.md) — 미적분 `unknown`
+- [기하](../../concepts/functions/기하.md) — 미적분 `unknown`
+- [기하 조건의 함수화](../../concepts/functions/기하_조건의_함수화.md) — 미적분 `unknown`
+- [기하급수](../../concepts/functions/기하급수.md) — 미적분 `unknown`
+- [기하와 미분의 응용](../../concepts/functions/기하와_미분의_응용.md) — 미적분 `unknown`
+- [기하와 함수](../../concepts/functions/기하와_함수.md) — 수학1 `unknown`
+- [기하학적 구조](../../concepts/functions/기하학적_구조.md) — 미적분 `unknown`
+- [기하학적 극한](../../concepts/functions/기하학적_극한.md) — 미적분 `unknown`
+- [기하학적 조건](../../concepts/functions/기하학적_조건.md) — 중3 `unknown`
+- [기하학적 조건과 넓이](../../concepts/functions/기하학적_조건과_넓이.md) — 수학1 `unknown`
+- [기하학적 최적화](../../concepts/functions/기하학적_최적화.md) — 미적분 `unknown`
+- [꼭짓점](../../concepts/functions/꼭짓점.md) — 중3 `unknown`
+- [꼭짓점 좌표](../../concepts/functions/꼭짓점_좌표.md) — 중3 `unknown`
+- [꼭짓점 축](../../concepts/functions/꼭짓점_축.md) — 중3 · 이차함수 `unknown`
+- [꼭짓점 형태 이차함수](../../concepts/functions/꼭짓점_형태_이차함수.md) — 중3 `unknown`
+- [꼭짓점 형태의 이차함수](../../concepts/functions/꼭짓점_형태의_이차함수.md) — 중3 `unknown`
+- [꼭짓점과 대칭축](../../concepts/functions/꼭짓점과_대칭축.md) — 중3 `unknown`
+- [꼭짓점의 좌표](../../concepts/functions/꼭짓점의_좌표.md) — 중3 `unknown`
+- [나머지 판정](../../concepts/functions/나머지_판정.md) — 수학1 `unknown`
+- [내분공식](../../concepts/functions/내분공식.md) — 중1 `unknown`
+- [내분과 외분](../../concepts/functions/내분과_외분.md) — 중1 `unknown`
+- [내분점](../../concepts/functions/내분점.md) — 고1 `unknown`
+- [내분점 공식](../../concepts/functions/내분점_공식.md) — 중1 `unknown`
+- [넓이 계산](../../concepts/functions/넓이_계산.md) — 중1 `unknown`
+- [넓이 비율 조건](../../concepts/functions/넓이_비율_조건.md) — 미적분 `unknown`
+- [넓이 조건](../../concepts/functions/넓이_조건.md) — 중3 `unknown`
+- [넓이 함수](../../concepts/functions/넓이_함수.md) — 미적분 `unknown`
+- [넓이의 비](../../concepts/functions/넓이의_비.md) — 미적분 `unknown`
+- [넓이의 이등분](../../concepts/functions/넓이의_이등분.md) — 미적분 `unknown`
+- [넓이의 이등분 조건](../../concepts/functions/넓이의_이등분_조건.md) — 미적분 `unknown`
+- [넓이함수](../../concepts/functions/넓이함수.md) — 미적분 `unknown`
+- [다각형의 넓이](../../concepts/functions/다각형의_넓이.md) — 중3 `unknown`
+- [다항식 계산](../../concepts/functions/다항식_계산.md) — 중3 `unknown`
+- [다항식 극한](../../concepts/functions/다항식_극한.md) — 수학2 `unknown`
+- [다항식의 극한](../../concepts/functions/다항식의_극한.md) — 미적분 `unknown`
+- [다항식의 미분](../../concepts/functions/다항식의_미분.md) — 수학2 `unknown`
+- [다항식의 적분](../../concepts/functions/다항식의_적분.md) — 수학2 `unknown`
+- [다항함수](../../concepts/functions/다항함수.md) — 수학2 `unknown`
+- [다항함수의 극한](../../concepts/functions/다항함수의_극한.md) — 수학2 `unknown`
+- [다항함수의 도함수](../../concepts/functions/다항함수의_도함수.md) — 수학2 `unknown`
+- [다항함수의 미분](../../concepts/functions/다항함수의_미분.md) — 수학2 `unknown`
+- [다항함수의 적분](../../concepts/functions/다항함수의_적분.md) — 수학2 `unknown`
+- [다항함수의 차수 관계](../../concepts/functions/다항함수의_차수_관계.md) — 수학2 `unknown`
+- [단면](../../concepts/functions/단면.md) — 미적분 `unknown`
+- [단면의 넓이](../../concepts/functions/단면의_넓이.md) — 미적분 `unknown`
+- [단면적](../../concepts/functions/단면적.md) — 미적분 `unknown`
+- [단면적분](../../concepts/functions/단면적분.md) — 미적분 `unknown`
+- [단면적을 이용한 부피](../../concepts/functions/단면적을_이용한_부피.md) — 미적분 `unknown`
+- [단사함수](../../concepts/functions/단사함수.md) — 수학1 `unknown`
+- [단위원 삼각함수](../../concepts/functions/단위원_삼각함수.md) — 수학1 · 삼각함수 `unknown`
+- [단조성](../../concepts/functions/단조성.md) — 고1 `unknown`
+- [단조증가](../../concepts/functions/단조증가.md) — 수학2 `unknown`
+- [닮음과 축소 비율](../../concepts/functions/닮음과_축소_비율.md) — 미적분 `unknown`
+- [대수적 변형](../../concepts/functions/대수적_변형.md) — 수학1 `unknown`
+- [대칭 미분](../../concepts/functions/대칭_미분.md) — 수학2 `unknown`
+- [대칭성](../../concepts/functions/대칭성.md) — 수학1 `unknown`
+- [대칭이동](../../concepts/functions/대칭이동.md) — 수학1 `unknown`
+- [대칭축](../../concepts/functions/대칭축.md) — 중3 `unknown`
+- [도함수](../../concepts/functions/도함수.md) — 수학2 · 미분 `unknown`
+- [도함수 값의 계산](../../concepts/functions/도함수_값의_계산.md) — 수학2 `unknown`
+- [도함수 계산](../../concepts/functions/도함수_계산.md) — 미적분 `unknown`
+- [도함수 관계식](../../concepts/functions/도함수_관계식.md) — 미적분 `unknown`
+- [도함수 방정식](../../concepts/functions/도함수_방정식.md) — 미적분 `unknown`
+- [도함수 방정식의 해](../../concepts/functions/도함수_방정식의_해.md) — 미적분 `unknown`
+- [도함수 분석](../../concepts/functions/도함수_분석.md) — 미적분 `unknown`
+- [도함수 조건](../../concepts/functions/도함수_조건.md) — 미적분 `unknown`
+- [도함수 조건의 활용](../../concepts/functions/도함수_조건의_활용.md) — 미적분 `unknown`
+- [도함수를 이용한 교점 개수 분석](../../concepts/functions/도함수를_이용한_교점_개수_분석.md) — 미적분 `unknown`
+- [도함수를 이용한 극값 판정](../../concepts/functions/도함수를_이용한_극값_판정.md) — 미적분 `unknown`
+- [도함수와 극값](../../concepts/functions/도함수와_극값.md) — 미적분 `unknown`
+- [도함수와 기울기](../../concepts/functions/도함수와_기울기.md) — 미적분 `unknown`
+- [도함수와 부등식](../../concepts/functions/도함수와_부등식.md) — 미적분 `unknown`
+- [도함수와 속도](../../concepts/functions/도함수와_속도.md) — 수학2 `unknown`
+- [도함수와 실근](../../concepts/functions/도함수와_실근.md) — 미적분 `unknown`
+- [도함수와 접선](../../concepts/functions/도함수와_접선.md) — 수학2 `unknown`
+- [도함수와 함수의 단조성](../../concepts/functions/도함수와_함수의_단조성.md) — 미적분 `unknown`
+- [도함수의 계산](../../concepts/functions/도함수의_계산.md) — 미적분 `unknown`
+- [도함수의 근](../../concepts/functions/도함수의_근.md) — 미적분 `unknown`
+- [도함수의 물리적 의미](../../concepts/functions/도함수의_물리적_의미.md) — 미적분 `unknown`
+- [도함수의 부등식](../../concepts/functions/도함수의_부등식.md) — 미적분 `unknown`
+- [도함수의 부호](../../concepts/functions/도함수의_부호.md) — 수학2 `unknown`
+- [도함수의 부호 변화](../../concepts/functions/도함수의_부호_변화.md) — 미적분 `unknown`
+- [도함수의 부호 변화와 극값](../../concepts/functions/도함수의_부호_변화와_극값.md) — 미적분 `unknown`
+- [도함수의 부호 판정](../../concepts/functions/도함수의_부호_판정.md) — 미적분 `unknown`
+- [도함수의 부호와 증감](../../concepts/functions/도함수의_부호와_증감.md) — 미적분 `unknown`
+- [도함수의 부호와 함수의 증감](../../concepts/functions/도함수의_부호와_함수의_증감.md) — 미적분 `unknown`
+- [도함수의 성질](../../concepts/functions/도함수의_성질.md) — 미적분 `unknown`
+- [도함수의 연속성](../../concepts/functions/도함수의_연속성.md) — 미적분 `unknown`
+- [도함수의 영점](../../concepts/functions/도함수의_영점.md) — 미적분 `unknown`
+- [도함수의 정의](../../concepts/functions/도함수의_정의.md) — 수학2 `unknown`
+- [도함수의 조건](../../concepts/functions/도함수의_조건.md) — 미적분 `unknown`
+- [도함수의정의](../../concepts/functions/도함수의정의.md) — 수학2 `unknown`
+- [도형의 넓이](../../concepts/functions/도형의_넓이.md) — 중3 `unknown`
+- [도형의 넓이 비교](../../concepts/functions/도형의_넓이_비교.md) — 미적분 `unknown`
+- [도형의넓이](../../concepts/functions/도형의넓이.md) — 고1 `unknown`
+- [동경과 각](../../concepts/functions/동경과_각.md) — 수학1 `unknown`
+- [동경과 각도](../../concepts/functions/동경과_각도.md) — 수학1 `unknown`
+- [동경의 일치 조건](../../concepts/functions/동경의_일치_조건.md) — 수학1 `unknown`
+- [두 곡선 사이의 넓이](../../concepts/functions/두_곡선_사이의_넓이.md) — 미적분 `unknown`
+- [두 곡선의 교점](../../concepts/functions/두_곡선의_교점.md) — 미적분 `unknown`
+- [두 곡선의 교점 조건](../../concepts/functions/두_곡선의_교점_조건.md) — 수학1 `unknown`
+- [두 점 사이의 거리](../../concepts/functions/두_점_사이의_거리.md) — 중1 `unknown`
+- [두 점의 만남 조건](../../concepts/functions/두_점의_만남_조건.md) — 미적분 `unknown`
+- [두 직선이 이루는 각도](../../concepts/functions/두_직선이_이루는_각도.md) — 미적분 `unknown`
+- [등비급수](../../concepts/functions/등비급수.md) — 미적분 `unknown`
+- [등비수열](../../concepts/functions/등비수열.md) — 수학1 · 수열 `unknown`
+- [등비수열의 기본 성질](../../concepts/functions/등비수열의_기본_성질.md) — 수학1 `unknown`
+- [등비수열의 성질](../../concepts/functions/등비수열의_성질.md) — 수학1 `unknown`
+- [등비수열의 수렴](../../concepts/functions/등비수열의_수렴.md) — 미적분 `unknown`
+- [등비수열의 일반항](../../concepts/functions/등비수열의_일반항.md) — 수학1 `unknown`
+- [등비수열의 정의](../../concepts/functions/등비수열의_정의.md) — 수학1 `unknown`
+- [등비수열의 항](../../concepts/functions/등비수열의_항.md) — 수학1 `unknown`
+- [등비수열의 항 관계](../../concepts/functions/등비수열의_항_관계.md) — 수학1 `unknown`
+- [등비중항](../../concepts/functions/등비중항.md) — 수학1 `unknown`
+- [등차수열](../../concepts/functions/등차수열.md) — 수학1 · 수열 `unknown`
+- [등차수열 일반항](../../concepts/functions/등차수열_일반항.md) — 수학1 `unknown`
+- [등차수열 합](../../concepts/functions/등차수열_합.md) — 수학1 `unknown`
+- [등차수열의 일반항](../../concepts/functions/등차수열의_일반항.md) — 수학1 `unknown`
+- [등차수열의 정의와 성질](../../concepts/functions/등차수열의_정의와_성질.md) — 수학1 `unknown`
+- [등차수열의합](../../concepts/functions/등차수열의합.md) — 수학1 `unknown`
+- [라디안](../../concepts/functions/라디안.md) — 수학1 `unknown`
+- [로그 조건](../../concepts/functions/로그_조건.md) — 수학1 `unknown`
+- [로그 함수](../../concepts/functions/로그_함수.md) — 미적분 `unknown`
+- [로그 함수의 성질](../../concepts/functions/로그_함수의_성질.md) — 수학1 `unknown`
+- [로그함수](../../concepts/functions/로그함수.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [로그함수 미분](../../concepts/functions/로그함수_미분.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [로그함수의 그래프](../../concepts/functions/로그함수의_그래프.md) — 수학1 `unknown`
+- [로그함수의 극한](../../concepts/functions/로그함수의_극한.md) — 미적분 `unknown`
+- [로그함수의 단조성](../../concepts/functions/로그함수의_단조성.md) — 수학1 `unknown`
+- [로그함수의 미분](../../concepts/functions/로그함수의_미분.md) — 미적분 `unknown`
+- [로그함수의 밑 조건](../../concepts/functions/로그함수의_밑_조건.md) — 수학1 `unknown`
+- [로그함수의 성질](../../concepts/functions/로그함수의_성질.md) — 수학1 `unknown`
+- [로그함수의 영점](../../concepts/functions/로그함수의_영점.md) — 수학1 `unknown`
+- [로그함수의 적분](../../concepts/functions/로그함수의_적분.md) — 미적분 `unknown`
+- [로그함수의 점근선](../../concepts/functions/로그함수의_점근선.md) — 수학1 `unknown`
+- [로그함수의 평행이동](../../concepts/functions/로그함수의_평행이동.md) — 수학1 `unknown`
+- [로피탈 정리](../../concepts/functions/로피탈_정리.md) — 수학2 `unknown`
+- [로피탈의 정리](../../concepts/functions/로피탈의_정리.md) — 미적분 `unknown`
+- [리만 합](../../concepts/functions/리만_합.md) — 미적분 `unknown`
+- [리만합](../../concepts/functions/리만합.md) — 미적분 `unknown`
+- [만남 조건](../../concepts/functions/만남_조건.md) — 수학2 `unknown`
+- [망원급수](../../concepts/functions/망원급수.md) — 미적분 `unknown`
+- [매개변수](../../concepts/functions/매개변수.md) — 수학1 `unknown`
+- [매개변수 결정](../../concepts/functions/매개변수_결정.md) — 수학1 `unknown`
+- [매개변수 곡선](../../concepts/functions/매개변수_곡선.md) — 미적분 `unknown`
+- [매개변수 곡선의 미분](../../concepts/functions/매개변수_곡선의_미분.md) — 미적분 `unknown`
+- [매개변수 곡선의 접선](../../concepts/functions/매개변수_곡선의_접선.md) — 미적분 `unknown`
+- [매개변수 극한](../../concepts/functions/매개변수_극한.md) — 미적분 `unknown`
+- [매개변수 미분](../../concepts/functions/매개변수_미분.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [매개변수 방정식의 미분](../../concepts/functions/매개변수_방정식의_미분.md) — 미적분 `unknown`
+- [매개변수 분석](../../concepts/functions/매개변수_분석.md) — 수학1 `unknown`
+- [매개변수 조건](../../concepts/functions/매개변수_조건.md) — 고1 `unknown`
+- [매개변수 조건 분석](../../concepts/functions/매개변수_조건_분석.md) — 고1 `unknown`
+- [매개변수 최적화](../../concepts/functions/매개변수_최적화.md) — 수학1 `unknown`
+- [매개변수 함수의 미분](../../concepts/functions/매개변수_함수의_미분.md) — 미적분 `unknown`
+- [매개변수곡선](../../concepts/functions/매개변수곡선.md) — 미적분 `unknown`
+- [매개변수미분](../../concepts/functions/매개변수미분.md) — 미적분 `unknown`
+- [매개변수방정식](../../concepts/functions/매개변수방정식.md) — 미적분 `unknown`
+- [매개변수에 따른 근의 변화](../../concepts/functions/매개변수에_따른_근의_변화.md) — 수학1 `unknown`
+- [매개변수에 따른 최대최소값](../../concepts/functions/매개변수에_따른_최대최소값.md) — 중3 `unknown`
+- [매개변수에 따른 해의 변화](../../concepts/functions/매개변수에_따른_해의_변화.md) — 수학1 `unknown`
+- [매개변수의 범위](../../concepts/functions/매개변수의_범위.md) — 중3 `unknown`
+- [매개변수의 역할](../../concepts/functions/매개변수의_역할.md) — 수학1 `unknown`
+- [매개변수함수의미분](../../concepts/functions/매개변수함수의미분.md) — 미적분 `unknown`
+- [몫의 미분법](../../concepts/functions/몫의_미분법.md) — 미적분 `unknown`
+- [무게중심](../../concepts/functions/무게중심.md) — 중1 `unknown`
+- [무리수 판별](../../concepts/functions/무리수_판별.md) — 수학1 `unknown`
+- [무리식](../../concepts/functions/무리식.md) — 미적분 `unknown`
+- [무리함수](../../concepts/functions/무리함수.md) — 고1 `unknown`
+- [무한극한](../../concepts/functions/무한극한.md) — 미적분 `unknown`
+- [무한급](../../concepts/functions/무한급.md) — 미적분 `unknown`
+- [무한급수](../../concepts/functions/무한급수.md) — 미적분 `unknown`
+- [무한급수 수렴](../../concepts/functions/무한급수_수렴.md) — 미적분 `unknown`
+- [무한급수의 수렴](../../concepts/functions/무한급수의_수렴.md) — 미적분 `unknown`
+- [무한대 극한](../../concepts/functions/무한대_극한.md) — 미적분 `unknown`
+- [무한대로의 극한](../../concepts/functions/무한대로의_극한.md) — 미적분 `unknown`
+- [무한대에서의 극한](../../concepts/functions/무한대에서의_극한.md) — 수학2 `unknown`
+- [무한수열의 극한](../../concepts/functions/무한수열의_극한.md) — 미적분 `unknown`
+- [미분 계산](../../concepts/functions/미분_계산.md) — 수학2 `unknown`
+- [미분 공식](../../concepts/functions/미분_공식.md) — 수학2 `unknown`
+- [미분가능](../../concepts/functions/미분가능.md) — 수학2 `unknown`
+- [미분가능 조건](../../concepts/functions/미분가능_조건.md) — 미적분 `unknown`
+- [미분가능성](../../concepts/functions/미분가능성.md) — 수학2 `unknown`
+- [미분가능성 조건](../../concepts/functions/미분가능성_조건.md) — 미적분 `unknown`
+- [미분계수](../../concepts/functions/미분계수.md) — 수학2 · 미분 `learning`
+- [미분계수 정의](../../concepts/functions/미분계수_정의.md) — 수학2 · 미분 `unknown`
+- [미분계수의 정의](../../concepts/functions/미분계수의_정의.md) — 수학2 `unknown`
+- [미분과 적분](../../concepts/functions/미분과_적분.md) — 수학2 `unknown`
+- [미분과 적분의 관계](../../concepts/functions/미분과_적분의_관계.md) — 수학2 `unknown`
+- [미분과 적분의 기본정리](../../concepts/functions/미분과_적분의_기본정리.md) — 수학2 `unknown`
+- [미분과 증감](../../concepts/functions/미분과_증감.md) — 미적분 `unknown`
+- [미분방정식](../../concepts/functions/미분방정식.md) — 미적분 `unknown`
+- [미분법](../../concepts/functions/미분법.md) — 수학2 `unknown`
+- [미분불가능점](../../concepts/functions/미분불가능점.md) — 미적분 `unknown`
+- [미분의 계산](../../concepts/functions/미분의_계산.md) — 미적분 `unknown`
+- [미분의 정의](../../concepts/functions/미분의_정의.md) — 수학2 `unknown`
+- [미분의 활용](../../concepts/functions/미분의_활용.md) — 수학2 `unknown`
+- [미적분학의 기본정리](../../concepts/functions/미적분학의_기본정리.md) — 수학2 `unknown`
+- [반각공식](../../concepts/functions/반각공식.md) — 수학1 `unknown`
+- [반복 구조의 극한](../../concepts/functions/반복_구조의_극한.md) — 미적분 `unknown`
+- [반복 기하 구성](../../concepts/functions/반복_기하_구성.md) — 수학1 `unknown`
+- [반복도형](../../concepts/functions/반복도형.md) — 미적분 `unknown`
+- [반복적 함수 적용](../../concepts/functions/반복적_함수_적용.md) — 수학1 `unknown`
+- [반비례](../../concepts/functions/반비례.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [반비례함수](../../concepts/functions/반비례함수.md) — 고1 `unknown`
+- [반원](../../concepts/functions/반원.md) — 미적분 `unknown`
+- [방정식의 근](../../concepts/functions/방정식의_근.md) — 중3 `unknown`
+- [방정식의 근과 수평선의 교점](../../concepts/functions/방정식의_근과_수평선의_교점.md) — 고1 `unknown`
+- [방정식의 근과 합](../../concepts/functions/방정식의_근과_합.md) — 수학1 `unknown`
+- [방정식의 실근](../../concepts/functions/방정식의_실근.md) — 중3 `unknown`
+- [방정식의 실근 개수](../../concepts/functions/방정식의_실근_개수.md) — 중3 `unknown`
+- [방정식의 실근 개수 조건](../../concepts/functions/방정식의_실근_개수_조건.md) — 고1 `unknown`
+- [방정식의 실근의 개수](../../concepts/functions/방정식의_실근의_개수.md) — 고1 `unknown`
+- [방정식의 해](../../concepts/functions/방정식의_해.md) — 미적분 `unknown`
+- [방정식의 해의 개수](../../concepts/functions/방정식의_해의_개수.md) — 수학1 `unknown`
+- [방정식의 해의 개수 조건](../../concepts/functions/방정식의_해의_개수_조건.md) — 미적분 `unknown`
+- [방정식의 해의 존재 조건](../../concepts/functions/방정식의_해의_존재_조건.md) — 미적분 `unknown`
+- [방정식의 해의 합](../../concepts/functions/방정식의_해의_합.md) — 수학1 `unknown`
+- [방정식의근](../../concepts/functions/방정식의근.md) — 수학2 `unknown`
+- [방정식풀이](../../concepts/functions/방정식풀이.md) — 수학2 `unknown`
+- [배각공식](../../concepts/functions/배각공식.md) — 수학1 `unknown`
+- [배수 조건](../../concepts/functions/배수_조건.md) — 수학1 `unknown`
+- [범위](../../concepts/functions/범위.md) — 중3 `unknown`
+- [범위 구하기](../../concepts/functions/범위_구하기.md) — 수학1 `unknown`
+- [벡터의 수직조건](../../concepts/functions/벡터의_수직조건.md) — 수학2 `unknown`
+- [변곡점](../../concepts/functions/변곡점.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [변곡점 분석](../../concepts/functions/변곡점_분석.md) — 미적분 `unknown`
+- [변곡점과 부호변화](../../concepts/functions/변곡점과_부호변화.md) — 미적분 `unknown`
+- [부등식과 함수](../../concepts/functions/부등식과_함수.md) — 수학2 `unknown`
+- [부등식의 조건](../../concepts/functions/부등식의_조건.md) — 중3 `unknown`
+- [부분분수 분해](../../concepts/functions/부분분수_분해.md) — 미적분 `unknown`
+- [부분분수분해](../../concepts/functions/부분분수분해.md) — 미적분 `unknown`
+- [부분적분](../../concepts/functions/부분적분.md) — 미적분 · 여러가지 적분법 `unknown`
+- [부분합](../../concepts/functions/부분합.md) — 수학1 `unknown`
+- [부분합 공식](../../concepts/functions/부분합_공식.md) — 수학1 `unknown`
+- [부분합과 일반항의 관계](../../concepts/functions/부분합과_일반항의_관계.md) — 미적분 `unknown`
+- [부정적분](../../concepts/functions/부정적분.md) — 수학2 · 적분 `unknown`
+- [부정적분과 원시함수](../../concepts/functions/부정적분과_원시함수.md) — 수학2 `unknown`
+- [부정형](../../concepts/functions/부정형.md) — 미적분 `unknown`
+- [부정형 계산](../../concepts/functions/부정형_계산.md) — 수학2 `unknown`
+- [부정형 극한](../../concepts/functions/부정형_극한.md) — 미적분 `unknown`
+- [부채꼴의 기하학](../../concepts/functions/부채꼴의_기하학.md) — 미적분 `unknown`
+- [부피](../../concepts/functions/부피.md) — 미적분 `unknown`
+- [부피 계산](../../concepts/functions/부피_계산.md) — 미적분 `unknown`
+- [부피와 단면](../../concepts/functions/부피와_단면.md) — 미적분 `unknown`
+- [부호 변화](../../concepts/functions/부호_변화.md) — 미적분 `unknown`
+- [부호 변화를 이용한 운동 방향](../../concepts/functions/부호_변화를_이용한_운동_방향.md) — 미적분 `unknown`
+- [부호 분석](../../concepts/functions/부호_분석.md) — 미적분 `unknown`
+- [부호판정](../../concepts/functions/부호판정.md) — 미적분 `unknown`
+- [분간함수](../../concepts/functions/분간함수.md) — 수학2 `unknown`
+- [분모의 최고차항으로 분자분모 나누기](../../concepts/functions/분모의_최고차항으로_분자분모_나누기.md) — 미적분 `unknown`
+- [분수꼴 극한](../../concepts/functions/분수꼴_극한.md) — 미적분 `unknown`
+- [분자 분모 최고차항 비교](../../concepts/functions/분자_분모_최고차항_비교.md) — 미적분 `unknown`
+- [분자분모 최고차항 비교](../../concepts/functions/분자분모_최고차항_비교.md) — 미적분 `unknown`
+- [분할 정의 함수](../../concepts/functions/분할_정의_함수.md) — 수학2 `unknown`
+- [분할점](../../concepts/functions/분할점.md) — 중1 `unknown`
+- [분할정의 함수](../../concepts/functions/분할정의_함수.md) — 수학2 `unknown`
+- [분할함수](../../concepts/functions/분할함수.md) — 수학2 `unknown`
+- [분할함수의 미분가능성](../../concepts/functions/분할함수의_미분가능성.md) — 수학2 `unknown`
+- [분할함수의 연속성](../../concepts/functions/분할함수의_연속성.md) — 수학2 `unknown`
+- [불연속점](../../concepts/functions/불연속점.md) — 수학2 `unknown`
+- [불연속점 분석](../../concepts/functions/불연속점_분석.md) — 미적분 `unknown`
+- [불연속함수](../../concepts/functions/불연속함수.md) — 미적분 `unknown`
+- [사다리꼴](../../concepts/functions/사다리꼴.md) — 중1 `unknown`
+- [사다리꼴 넓이](../../concepts/functions/사다리꼴_넓이.md) — 중1 `unknown`
+- [사다리꼴의 성질](../../concepts/functions/사다리꼴의_성질.md) — 중2 `unknown`
+- [사인법칙](../../concepts/functions/사인법칙.md) — 수학1 `unknown`
+- [사차함수](../../concepts/functions/사차함수.md) — 미적분 `unknown`
+- [사차함수의 그래프 개형](../../concepts/functions/사차함수의_그래프_개형.md) — 미적분 `unknown`
+- [사차함수의 극값](../../concepts/functions/사차함수의_극값.md) — 미적분 `unknown`
+- [사차함수의 미분](../../concepts/functions/사차함수의_미분.md) — 미적분 `unknown`
+- [삼각방정식](../../concepts/functions/삼각방정식.md) — 수학1 `unknown`
+- [삼각방정식과 부등식](../../concepts/functions/삼각방정식과_부등식.md) — 수학1 `unknown`
+- [삼각방정식의 풀이](../../concepts/functions/삼각방정식의_풀이.md) — 수학1 `unknown`
+- [삼각부등식](../../concepts/functions/삼각부등식.md) — 수학1 `unknown`
+- [삼각함수 값](../../concepts/functions/삼각함수_값.md) — 수학1 `unknown`
+- [삼각함수 값 계산](../../concepts/functions/삼각함수_값_계산.md) — 수학1 `unknown`
+- [삼각함수 값의 부호와 범위](../../concepts/functions/삼각함수_값의_부호와_범위.md) — 수학1 `unknown`
+- [삼각함수 관계식](../../concepts/functions/삼각함수_관계식.md) — 수학1 `unknown`
+- [삼각함수 그래프](../../concepts/functions/삼각함수_그래프.md) — 수학1 `unknown`
+- [삼각함수 극한](../../concepts/functions/삼각함수_극한.md) — 미적분 `unknown`
+- [삼각함수 기본 항등식](../../concepts/functions/삼각함수_기본_항등식.md) — 수학1 `unknown`
+- [삼각함수 기본값](../../concepts/functions/삼각함수_기본값.md) — 수학1 `unknown`
+- [삼각함수 기본항등식](../../concepts/functions/삼각함수_기본항등식.md) — 수학1 `unknown`
+- [삼각함수 기하](../../concepts/functions/삼각함수_기하.md) — 미적분 `unknown`
+- [삼각함수 미분](../../concepts/functions/삼각함수_미분.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [삼각함수 방정식](../../concepts/functions/삼각함수_방정식.md) — 미적분 `unknown`
+- [삼각함수 적분](../../concepts/functions/삼각함수_적분.md) — 미적분 `unknown`
+- [삼각함수 정의](../../concepts/functions/삼각함수_정의.md) — 수학1 `unknown`
+- [삼각함수 최댓값·최솟값](../../concepts/functions/삼각함수_최댓값·최솟값.md) — 수학1 `unknown`
+- [삼각함수 항등식](../../concepts/functions/삼각함수_항등식.md) — 수학1 `unknown`
+- [삼각함수값](../../concepts/functions/삼각함수값.md) — 수학1 `unknown`
+- [삼각함수값의 부호](../../concepts/functions/삼각함수값의_부호.md) — 수학1 `unknown`
+- [삼각함수의 곱](../../concepts/functions/삼각함수의_곱.md) — 수학1 `unknown`
+- [삼각함수의 관계](../../concepts/functions/삼각함수의_관계.md) — 수학1 `unknown`
+- [삼각함수의 관계식](../../concepts/functions/삼각함수의_관계식.md) — 수학1 `unknown`
+- [삼각함수의 그래프](../../concepts/functions/삼각함수의_그래프.md) — 수학1 `unknown`
+- [삼각함수의 극값](../../concepts/functions/삼각함수의_극값.md) — 수학1 `unknown`
+- [삼각함수의 극한](../../concepts/functions/삼각함수의_극한.md) — 미적분 `unknown`
+- [삼각함수의 기본 관계식](../../concepts/functions/삼각함수의_기본_관계식.md) — 수학1 `unknown`
+- [삼각함수의 기본 성질](../../concepts/functions/삼각함수의_기본_성질.md) — 수학1 `unknown`
+- [삼각함수의 기본 정의](../../concepts/functions/삼각함수의_기본_정의.md) — 수학1 `unknown`
+- [삼각함수의 기본값](../../concepts/functions/삼각함수의_기본값.md) — 수학1 `unknown`
+- [삼각함수의 기본항등식](../../concepts/functions/삼각함수의_기본항등식.md) — 수학1 `unknown`
+- [삼각함수의 기본형태](../../concepts/functions/삼각함수의_기본형태.md) — 수학1 `unknown`
+- [삼각함수의 대칭성](../../concepts/functions/삼각함수의_대칭성.md) — 수학1 `unknown`
+- [삼각함수의 덧셈](../../concepts/functions/삼각함수의_덧셈.md) — 수학1 `unknown`
+- [삼각함수의 도함수](../../concepts/functions/삼각함수의_도함수.md) — 미적분 `unknown`
+- [삼각함수의 미분](../../concepts/functions/삼각함수의_미분.md) — 미적분 `unknown`
+- [삼각함수의 방정식](../../concepts/functions/삼각함수의_방정식.md) — 수학1 `unknown`
+- [삼각함수의 배각공식](../../concepts/functions/삼각함수의_배각공식.md) — 수학1 `unknown`
+- [삼각함수의 부등식](../../concepts/functions/삼각함수의_부등식.md) — 수학1 `unknown`
+- [삼각함수의 부호](../../concepts/functions/삼각함수의_부호.md) — 수학1 `unknown`
+- [삼각함수의 부호 결정](../../concepts/functions/삼각함수의_부호_결정.md) — 수학1 `unknown`
+- [삼각함수의 성질](../../concepts/functions/삼각함수의_성질.md) — 수학1 `unknown`
+- [삼각함수의 응용](../../concepts/functions/삼각함수의_응용.md) — 수학1 `unknown`
+- [삼각함수의 적분](../../concepts/functions/삼각함수의_적분.md) — 수학2 `unknown`
+- [삼각함수의 주기](../../concepts/functions/삼각함수의_주기.md) — 수학1 `unknown`
+- [삼각함수의 주기성](../../concepts/functions/삼각함수의_주기성.md) — 미적분 `unknown`
+- [삼각함수의 진폭](../../concepts/functions/삼각함수의_진폭.md) — 수학1 `unknown`
+- [삼각함수의 최댓값](../../concepts/functions/삼각함수의_최댓값.md) — 수학1 `unknown`
+- [삼각함수의 최댓값과 최솟값](../../concepts/functions/삼각함수의_최댓값과_최솟값.md) — 수학1 `unknown`
+- [삼각함수의 합과 곱 관계](../../concepts/functions/삼각함수의_합과_곱_관계.md) — 수학1 `unknown`
+- [삼각함수의 합성](../../concepts/functions/삼각함수의_합성.md) — 수학1 `unknown`
+- [삼각함수의 항등식](../../concepts/functions/삼각함수의_항등식.md) — 수학1 `unknown`
+- [삼각함수의곱](../../concepts/functions/삼각함수의곱.md) — 미적분 `unknown`
+- [삼각함수의그래프](../../concepts/functions/삼각함수의그래프.md) — 수학1 `unknown`
+- [삼각함수적분](../../concepts/functions/삼각함수적분.md) — 미적분 `unknown`
+- [삼각항등식](../../concepts/functions/삼각항등식.md) — 수학1 `unknown`
+- [삼각형 넓이](../../concepts/functions/삼각형_넓이.md) — 중3 `unknown`
+- [삼각형 넓이 최대화](../../concepts/functions/삼각형_넓이_최대화.md) — 미적분 `unknown`
+- [삼각형 항등식](../../concepts/functions/삼각형_항등식.md) — 수학1 `unknown`
+- [삼각형넓이](../../concepts/functions/삼각형넓이.md) — 중3 `unknown`
+- [삼각형의 넓이](../../concepts/functions/삼각형의_넓이.md) — 중3 `unknown`
+- [삼차함수](../../concepts/functions/삼차함수.md) — 미적분 `unknown`
+- [삼차함수 결정](../../concepts/functions/삼차함수_결정.md) — 미적분 `unknown`
+- [삼차함수의 계수 결정](../../concepts/functions/삼차함수의_계수_결정.md) — 수학2 `unknown`
+- [삼차함수의 극값](../../concepts/functions/삼차함수의_극값.md) — 미적분 `unknown`
+- [삼차함수의 성질](../../concepts/functions/삼차함수의_성질.md) — 수학2 `unknown`
+- [상수 결정](../../concepts/functions/상수_결정.md) — 수학2 `unknown`
+- [상수함수](../../concepts/functions/상수함수.md) — 고1 `unknown`
+- [상수항 결정](../../concepts/functions/상수항_결정.md) — 미적분 `unknown`
+- [샌드위치 정리](../../concepts/functions/샌드위치_정리.md) — 수학2 `unknown`
+- [선분의 내분점 외분점](../../concepts/functions/선분의_내분점_외분점.md) — 중1 `unknown`
+- [선형관계](../../concepts/functions/선형관계.md) — 수학1 `unknown`
+- [선형성](../../concepts/functions/선형성.md) — 수학1 `unknown`
+- [세 점의 일직선 조건](../../concepts/functions/세_점의_일직선_조건.md) — 중1 `unknown`
+- [속도](../../concepts/functions/속도.md) — 미적분 `unknown`
+- [속도 적분](../../concepts/functions/속도_적분.md) — 수학2 `unknown`
+- [속도 함수](../../concepts/functions/속도_함수.md) — 미적분 `unknown`
+- [속도와 가속도](../../concepts/functions/속도와_가속도.md) — 수학2 `unknown`
+- [속도와 가속도 분석](../../concepts/functions/속도와_가속도_분석.md) — 미적분 `unknown`
+- [속도와 거리](../../concepts/functions/속도와_거리.md) — 미적분 `unknown`
+- [속도와 거리의 관계](../../concepts/functions/속도와_거리의_관계.md) — 미적분 `unknown`
+- [속도와 위치](../../concepts/functions/속도와_위치.md) — 미적분 `unknown`
+- [속도와 위치의 관계](../../concepts/functions/속도와_위치의_관계.md) — 미적분 `unknown`
+- [속도와 위치의 적분 관계](../../concepts/functions/속도와_위치의_적분_관계.md) — 미적분 `unknown`
+- [속도의 부호 변화](../../concepts/functions/속도의_부호_변화.md) — 미적분 `unknown`
+- [속도함수](../../concepts/functions/속도함수.md) — 미적분 `unknown`
+- [속도함수 분석](../../concepts/functions/속도함수_분석.md) — 미적분 `unknown`
+- [속도함수의 부호](../../concepts/functions/속도함수의_부호.md) — 미적분 `unknown`
+- [속도함수의 부호변화](../../concepts/functions/속도함수의_부호변화.md) — 미적분 `unknown`
+- [수렴](../../concepts/functions/수렴.md) — 미적분 `unknown`
+- [수렴 조건](../../concepts/functions/수렴_조건.md) — 미적분 `unknown`
+- [수렴과 발산](../../concepts/functions/수렴과_발산.md) — 미적분 `unknown`
+- [수렴성](../../concepts/functions/수렴성.md) — 미적분 `unknown`
+- [수렴성 판정](../../concepts/functions/수렴성_판정.md) — 미적분 `unknown`
+- [수렴조건](../../concepts/functions/수렴조건.md) — 미적분 `unknown`
+- [수열 관계식](../../concepts/functions/수열_관계식.md) — 수학1 `unknown`
+- [수열의 계산](../../concepts/functions/수열의_계산.md) — 수학1 `unknown`
+- [수열의 곱](../../concepts/functions/수열의_곱.md) — 수학1 `unknown`
+- [수열의 관계식](../../concepts/functions/수열의_관계식.md) — 미적분 `unknown`
+- [수열의 귀납적 정의](../../concepts/functions/수열의_귀납적_정의.md) — 수학1 `unknown`
+- [수열의 극한값](../../concepts/functions/수열의_극한값.md) — 미적분 `unknown`
+- [수열의 대칭성](../../concepts/functions/수열의_대칭성.md) — 수학1 `unknown`
+- [수열의 범위](../../concepts/functions/수열의_범위.md) — 수학1 `unknown`
+- [수열의 변형](../../concepts/functions/수열의_변형.md) — 수학1 `unknown`
+- [수열의 부호 변화 조건](../../concepts/functions/수열의_부호_변화_조건.md) — 수학1 `unknown`
+- [수열의 성질](../../concepts/functions/수열의_성질.md) — 수학1 `unknown`
+- [수열의 수렴](../../concepts/functions/수열의_수렴.md) — 미적분 `unknown`
+- [수열의 수렴 발산](../../concepts/functions/수열의_수렴_발산.md) — 미적분 · 수열의 극한 `unknown`
+- [수열의 수렴성](../../concepts/functions/수열의_수렴성.md) — 미적분 `unknown`
+- [수열의 일반항과 합](../../concepts/functions/수열의_일반항과_합.md) — 수학1 `unknown`
+- [수열의 점화식](../../concepts/functions/수열의_점화식.md) — 미적분 `unknown`
+- [수열의 조건](../../concepts/functions/수열의_조건.md) — 수학1 `unknown`
+- [수열의 초기값 조건](../../concepts/functions/수열의_초기값_조건.md) — 수학1 `unknown`
+- [수열의 최대최소](../../concepts/functions/수열의_최대최소.md) — 수학1 `unknown`
+- [수열의 최댓값](../../concepts/functions/수열의_최댓값.md) — 수학1 `unknown`
+- [수열의 합](../../concepts/functions/수열의_합.md) — 수학1 `unknown`
+- [수열의 합 공식](../../concepts/functions/수열의_합_공식.md) — 수학1 `unknown`
+- [수열의 합과 일반항](../../concepts/functions/수열의_합과_일반항.md) — 수학1 `unknown`
+- [수열의 항](../../concepts/functions/수열의_항.md) — 수학1 `unknown`
+- [수열의 항 계산](../../concepts/functions/수열의_항_계산.md) — 수학1 `unknown`
+- [수열의 항의 성질](../../concepts/functions/수열의_항의_성질.md) — 수학1 `unknown`
+- [수열의극한](../../concepts/functions/수열의극한.md) — 미적분 `unknown`
+- [수열의합](../../concepts/functions/수열의합.md) — 수학1 `unknown`
+- [수직조건](../../concepts/functions/수직조건.md) — 고1 `unknown`
+- [순증가함수](../../concepts/functions/순증가함수.md) — 수학2 `unknown`
+- [시간에 따른 위치와 속도](../../concepts/functions/시간에_따른_위치와_속도.md) — 미적분 `unknown`
+- [시그마 기호](../../concepts/functions/시그마_기호.md) — 수학1 `unknown`
+- [시그마 기호의 선형성](../../concepts/functions/시그마_기호의_선형성.md) — 수학1 `unknown`
+- [시그마 표기](../../concepts/functions/시그마_표기.md) — 수학1 `unknown`
+- [시그마 표기법](../../concepts/functions/시그마_표기법.md) — 수학1 `unknown`
+- [시그마 합기호](../../concepts/functions/시그마_합기호.md) — 수학1 · 수열 `unknown`
+- [실근의 개수](../../concepts/functions/실근의_개수.md) — 중3 `unknown`
+- [실근의 개수 분석](../../concepts/functions/실근의_개수_분석.md) — 수학1 `unknown`
+- [실근의 개수 조건](../../concepts/functions/실근의_개수_조건.md) — 미적분 `unknown`
+- [실근의 개수 판정](../../concepts/functions/실근의_개수_판정.md) — 미적분 `unknown`
+- [실수의 n제곱근 존재 조건](../../concepts/functions/실수의_n제곱근_존재_조건.md) — 수학1 `unknown`
+- [약수 조건](../../concepts/functions/약수_조건.md) — 수학1 `unknown`
+- [양변 미분](../../concepts/functions/양변_미분.md) — 미적분 `unknown`
+- [역삼각함수](../../concepts/functions/역삼각함수.md) — 수학1 `unknown`
+- [역추적](../../concepts/functions/역추적.md) — 수학1 `unknown`
+- [역함수](../../concepts/functions/역함수.md) — 고1 · 함수와 그래프 `unknown`
+- [역함수 관계](../../concepts/functions/역함수_관계.md) — 수학1 `unknown`
+- [역함수 미분 공식](../../concepts/functions/역함수_미분_공식.md) — 미적분 `unknown`
+- [역함수 존재 조건](../../concepts/functions/역함수_존재_조건.md) — 미적분 `unknown`
+- [역함수와 y=x 대칭](../../concepts/functions/역함수와_y=x_대칭.md) — 수학1 `unknown`
+- [역함수의 미분](../../concepts/functions/역함수의_미분.md) — 미적분 `unknown`
+- [역함수의 적분](../../concepts/functions/역함수의_적분.md) — 미적분 `unknown`
+- [역함수의 존재 조건](../../concepts/functions/역함수의_존재_조건.md) — 고1 `unknown`
+- [연립 조건으로부터 공비와 첫째항 결정](../../concepts/functions/연립_조건으로부터_공비와_첫째항_결정.md) — 수학1 `unknown`
+- [연속 조건](../../concepts/functions/연속_조건.md) — 수학2 `unknown`
+- [연속 함수의 조건](../../concepts/functions/연속_함수의_조건.md) — 수학2 `unknown`
+- [연속성](../../concepts/functions/연속성.md) — 수학2 `unknown`
+- [연속성 조건](../../concepts/functions/연속성_조건.md) — 수학2 `unknown`
+- [연속성과 미분가능성](../../concepts/functions/연속성과_미분가능성.md) — 미적분 `unknown`
+- [연속성의 정의](../../concepts/functions/연속성의_정의.md) — 수학2 `unknown`
+- [연속성의 조건](../../concepts/functions/연속성의_조건.md) — 수학2 `unknown`
+- [연속성정의](../../concepts/functions/연속성정의.md) — 수학2 `unknown`
+- [연속의 정의](../../concepts/functions/연속의_정의.md) — 수학2 `unknown`
+- [연속조건](../../concepts/functions/연속조건.md) — 수학2 `unknown`
+- [연속함수](../../concepts/functions/연속함수.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [연속함수의 정의](../../concepts/functions/연속함수의_정의.md) — 수학2 `unknown`
+- [연속함수의 조건](../../concepts/functions/연속함수의_조건.md) — 수학2 `unknown`
+- [연쇄미분법](../../concepts/functions/연쇄미분법.md) — 미적분 `unknown`
+- [연쇄법칙](../../concepts/functions/연쇄법칙.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [영역](../../concepts/functions/영역.md) — 중3 `unknown`
+- [영역의 넓이 비율](../../concepts/functions/영역의_넓이_비율.md) — 미적분 `unknown`
+- [외접원의 반지름](../../concepts/functions/외접원의_반지름.md) — 수학1 `unknown`
+- [우극한](../../concepts/functions/우극한.md) — 수학2 `unknown`
+- [우함수 판정법](../../concepts/functions/우함수_판정법.md) — 미적분 `unknown`
+- [운동 거리](../../concepts/functions/운동_거리.md) — 미적분 `unknown`
+- [운동 방향 변화](../../concepts/functions/운동_방향_변화.md) — 미적분 `unknown`
+- [운동 분석](../../concepts/functions/운동_분석.md) — 수학2 `unknown`
+- [운동거리](../../concepts/functions/운동거리.md) — 미적분 `unknown`
+- [운동과 거리](../../concepts/functions/운동과_거리.md) — 미적분 `unknown`
+- [원과 직선의 거리](../../concepts/functions/원과_직선의_거리.md) — 미적분 `unknown`
+- [원과 직선의 관계](../../concepts/functions/원과_직선의_관계.md) — 미적분 `unknown`
+- [원뿔대](../../concepts/functions/원뿔대.md) — 미적분 `unknown`
+- [원의 외접원](../../concepts/functions/원의_외접원.md) — 고1 `unknown`
+- [원의 접촉 조건](../../concepts/functions/원의_접촉_조건.md) — 미적분 `unknown`
+- [원점 대칭](../../concepts/functions/원점_대칭.md) — 중1 `unknown`
+- [원판법](../../concepts/functions/원판법.md) — 미적분 `unknown`
+- [원함수 복원](../../concepts/functions/원함수_복원.md) — 수학2 `unknown`
+- [위상이동](../../concepts/functions/위상이동.md) — 수학1 `unknown`
+- [위치](../../concepts/functions/위치.md) — 미적분 `unknown`
+- [위치 적분](../../concepts/functions/위치_적분.md) — 미적분 `unknown`
+- [위치 함수](../../concepts/functions/위치_함수.md) — 미적분 `unknown`
+- [유리식의 극한](../../concepts/functions/유리식의_극한.md) — 미적분 `unknown`
+- [유리함수](../../concepts/functions/유리함수.md) — 고1 `unknown`
+- [유리함수의 극한](../../concepts/functions/유리함수의_극한.md) — 미적분 `unknown`
+- [유리함수의 미분](../../concepts/functions/유리함수의_미분.md) — 미적분 `unknown`
+- [유리함수의 점근선](../../concepts/functions/유리함수의_점근선.md) — 미적분 `unknown`
+- [음함수 미분](../../concepts/functions/음함수_미분.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [음함수의 미분](../../concepts/functions/음함수의_미분.md) — 미적분 `unknown`
+- [이계도함수](../../concepts/functions/이계도함수.md) — 수학2 `unknown`
+- [이동거리](../../concepts/functions/이동거리.md) — 미적분 `unknown`
+- [이동거리의 적분 계산](../../concepts/functions/이동거리의_적분_계산.md) — 미적분 `unknown`
+- [이등변직각삼각형](../../concepts/functions/이등변직각삼각형.md) — 중3 `unknown`
+- [이등분 조건](../../concepts/functions/이등분_조건.md) — 미적분 `unknown`
+- [이중각 공식](../../concepts/functions/이중각_공식.md) — 수학1 `unknown`
+- [이차방정식의 근과 계수의 관계](../../concepts/functions/이차방정식의_근과_계수의_관계.md) — 수학1 `unknown`
+- [이차방정식의 판별식](../../concepts/functions/이차방정식의_판별식.md) — 중3 `unknown`
+- [이차함수 결정](../../concepts/functions/이차함수_결정.md) — 수학2 `unknown`
+- [이차함수 표준형](../../concepts/functions/이차함수_표준형.md) — 중3 `unknown`
+- [이차함수와 직선의 교점](../../concepts/functions/이차함수와_직선의_교점.md) — 중3 `unknown`
+- [이차함수와 축의 교점](../../concepts/functions/이차함수와_축의_교점.md) — 중3 `unknown`
+- [이차함수의 결정](../../concepts/functions/이차함수의_결정.md) — 중3 `unknown`
+- [이차함수의 계수 결정](../../concepts/functions/이차함수의_계수_결정.md) — 중3 `unknown`
+- [이차함수의 교점](../../concepts/functions/이차함수의_교점.md) — 중3 `unknown`
+- [이차함수의 그래프](../../concepts/functions/이차함수의_그래프.md) — 중3 `unknown`
+- [이차함수의 그래프 특성](../../concepts/functions/이차함수의_그래프_특성.md) — 중3 `unknown`
+- [이차함수의 근](../../concepts/functions/이차함수의_근.md) — 중3 `unknown`
+- [이차함수의 꼭짓점](../../concepts/functions/이차함수의_꼭짓점.md) — 중3 `unknown`
+- [이차함수의 대칭성](../../concepts/functions/이차함수의_대칭성.md) — 중3 `unknown`
+- [이차함수의 성질](../../concepts/functions/이차함수의_성질.md) — 중3 `unknown`
+- [이차함수의 영점](../../concepts/functions/이차함수의_영점.md) — 미적분 `unknown`
+- [이차함수의 오목성](../../concepts/functions/이차함수의_오목성.md) — 중3 `unknown`
+- [이차함수의 정점](../../concepts/functions/이차함수의_정점.md) — 중3 `unknown`
+- [이차함수의 최댓값](../../concepts/functions/이차함수의_최댓값.md) — 중3 `unknown`
+- [이차함수의 최댓값과 최솟값](../../concepts/functions/이차함수의_최댓값과_최솟값.md) — 중3 `unknown`
+- [이차함수의 최솟값](../../concepts/functions/이차함수의_최솟값.md) — 중3 `unknown`
+- [이차함수의 치역](../../concepts/functions/이차함수의_치역.md) — 중3 `unknown`
+- [인수분해와 약분](../../concepts/functions/인수분해와_약분.md) — 미적분 `unknown`
+- [일대일 대응](../../concepts/functions/일대일_대응.md) — 고1 `unknown`
+- [일대일대응](../../concepts/functions/일대일대응.md) — 고1 · 함수와 그래프 `unknown`
+- [일대일함수](../../concepts/functions/일대일함수.md) — 미적분 `unknown`
+- [일반항](../../concepts/functions/일반항.md) — 수학1 `unknown`
+- [일반항 공식](../../concepts/functions/일반항_공식.md) — 수학1 `unknown`
+- [일반항과 부분합의 관계](../../concepts/functions/일반항과_부분합의_관계.md) — 수학1 `unknown`
+- [일반해의 합](../../concepts/functions/일반해의_합.md) — 수학1 `unknown`
+- [일방향 극한](../../concepts/functions/일방향_극한.md) — 수학2 `unknown`
+- [일의 자리 주기성](../../concepts/functions/일의_자리_주기성.md) — 고1 `unknown`
+- [일차함수와의 교점](../../concepts/functions/일차함수와의_교점.md) — 중3 `unknown`
+- [일차함수의 그래프](../../concepts/functions/일차함수의_그래프.md) — 중2 `unknown`
+- [일차함수의 성질](../../concepts/functions/일차함수의_성질.md) — 수학2 `unknown`
+- [일차함수의 정의](../../concepts/functions/일차함수의_정의.md) — 중2 `unknown`
+- [일차함수의 평행이동](../../concepts/functions/일차함수의_평행이동.md) — 중2 `unknown`
+- [임계점](../../concepts/functions/임계점.md) — 수학2 `unknown`
+- [입체도형의 부피](../../concepts/functions/입체도형의_부피.md) — 미적분 `unknown`
+- [자기유사성](../../concepts/functions/자기유사성.md) — 미적분 `unknown`
+- [자연로그](../../concepts/functions/자연로그.md) — 미적분 `unknown`
+- [자연상수 e](../../concepts/functions/자연상수_e.md) — 미적분 · 여러가지 함수의 극한과 연속 `unknown`
+- [자연수](../../concepts/functions/자연수.md) — 수학1 `unknown`
+- [자연수 조건](../../concepts/functions/자연수_조건.md) — 수학1 `unknown`
+- [자연수 합](../../concepts/functions/자연수_합.md) — 고1 `unknown`
+- [재귀관계식](../../concepts/functions/재귀관계식.md) — 수학1 `unknown`
+- [재귀수열](../../concepts/functions/재귀수열.md) — 수학1 `unknown`
+- [적분 계산](../../concepts/functions/적분_계산.md) — 미적분 `unknown`
+- [적분값 최적화](../../concepts/functions/적분값_최적화.md) — 미적분 `unknown`
+- [적분과 거리 계산](../../concepts/functions/적분과_거리_계산.md) — 미적분 `unknown`
+- [적분과 넓이의 관계](../../concepts/functions/적분과_넓이의_관계.md) — 미적분 `unknown`
+- [적분상수](../../concepts/functions/적분상수.md) — 수학2 `unknown`
+- [적분을 이용한 넓이 계산](../../concepts/functions/적분을_이용한_넓이_계산.md) — 미적분 `unknown`
+- [적분을 이용한 부피](../../concepts/functions/적분을_이용한_부피.md) — 미적분 `unknown`
+- [적분의 기본정리](../../concepts/functions/적분의_기본정리.md) — 수학2 `unknown`
+- [절댓값 적분](../../concepts/functions/절댓값_적분.md) — 미적분 `unknown`
+- [절댓값 함수](../../concepts/functions/절댓값_함수.md) — 고1 `unknown`
+- [절댓값 함수의 극값](../../concepts/functions/절댓값_함수의_극값.md) — 미적분 `unknown`
+- [절댓값 함수의 적분](../../concepts/functions/절댓값_함수의_적분.md) — 미적분 `unknown`
+- [절댓값과 거리 계산](../../concepts/functions/절댓값과_거리_계산.md) — 미적분 `unknown`
+- [절댓값함수](../../concepts/functions/절댓값함수.md) — 미적분 `unknown`
+- [절댓값함수의 극값](../../concepts/functions/절댓값함수의_극값.md) — 미적분 `unknown`
+- [절댓값함수의 미분](../../concepts/functions/절댓값함수의_미분.md) — 미적분 `unknown`
+- [절댓값함수의 미분가능성](../../concepts/functions/절댓값함수의_미분가능성.md) — 미적분 `unknown`
+- [절편](../../concepts/functions/절편.md) — 중2 · 일차함수 `unknown`
+- [점의 좌표](../../concepts/functions/점의_좌표.md) — 중1 `unknown`
+- [점의 평행이동](../../concepts/functions/점의_평행이동.md) — 수학1 `unknown`
+- [점화식](../../concepts/functions/점화식.md) — 수학1 `unknown`
+- [접선 및 교점](../../concepts/functions/접선_및_교점.md) — 미적분 `unknown`
+- [접선과 기울기](../../concepts/functions/접선과_기울기.md) — 미적분 `unknown`
+- [접선과 도함수](../../concepts/functions/접선과_도함수.md) — 미적분 `unknown`
+- [접선과 법선](../../concepts/functions/접선과_법선.md) — 미적분 `unknown`
+- [접선의 기울기](../../concepts/functions/접선의_기울기.md) — 수학2 · 미분 `unknown`
+- [접선의기울기](../../concepts/functions/접선의기울기.md) — 미적분 `unknown`
+- [정비례](../../concepts/functions/정비례.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [정비례함수](../../concepts/functions/정비례함수.md) — 고1 `unknown`
+- [정사각형의 성질](../../concepts/functions/정사각형의_성질.md) — 중3 `unknown`
+- [정삼각형](../../concepts/functions/정삼각형.md) — 수학1 `unknown`
+- [정삼각형 조건](../../concepts/functions/정삼각형_조건.md) — 수학1 `unknown`
+- [정삼각형의 조건](../../concepts/functions/정삼각형의_조건.md) — 수학1 `unknown`
+- [정수 개수 조건](../../concepts/functions/정수_개수_조건.md) — 고1 `unknown`
+- [정수 제약 조건](../../concepts/functions/정수_제약_조건.md) — 미적분 `unknown`
+- [정수값 조건](../../concepts/functions/정수값_조건.md) — 수학1 `unknown`
+- [정수점](../../concepts/functions/정수점.md) — 중3 `unknown`
+- [정수점 개수](../../concepts/functions/정수점_개수.md) — 수학1 `unknown`
+- [정수항 판정](../../concepts/functions/정수항_판정.md) — 미적분 `unknown`
+- [정의역](../../concepts/functions/정의역.md) — 수학1 `unknown`
+- [정의역 분석](../../concepts/functions/정의역_분석.md) — 수학1 `unknown`
+- [정의역 제약에서의 극값](../../concepts/functions/정의역_제약에서의_극값.md) — 중3 `unknown`
+- [정의역 제약조건](../../concepts/functions/정의역_제약조건.md) — 중3 `unknown`
+- [정의역 제한](../../concepts/functions/정의역_제한.md) — 중3 `unknown`
+- [정적분](../../concepts/functions/정적분.md) — 수학2 · 적분 `unknown`
+- [정적분 계산](../../concepts/functions/정적분_계산.md) — 미적분 `unknown`
+- [정적분과 거리](../../concepts/functions/정적분과_거리.md) — 수학2 `unknown`
+- [정적분과 넓이](../../concepts/functions/정적분과_넓이.md) — 미적분 `unknown`
+- [정적분과 도함수의 관계](../../concepts/functions/정적분과_도함수의_관계.md) — 미적분 `unknown`
+- [정적분과 도형의 넓이](../../concepts/functions/정적분과_도형의_넓이.md) — 미적분 `unknown`
+- [정적분과 변위](../../concepts/functions/정적분과_변위.md) — 미적분 `unknown`
+- [정적분으로 거리 계산](../../concepts/functions/정적분으로_거리_계산.md) — 미적분 `unknown`
+- [정적분으로 넓이 계산](../../concepts/functions/정적분으로_넓이_계산.md) — 미적분 `unknown`
+- [정적분을 이용한 거리 계산](../../concepts/functions/정적분을_이용한_거리_계산.md) — 미적분 `unknown`
+- [정적분을 이용한 넓이](../../concepts/functions/정적분을_이용한_넓이.md) — 미적분 `unknown`
+- [정적분을 이용한 부피](../../concepts/functions/정적분을_이용한_부피.md) — 미적분 `unknown`
+- [정적분을 이용한 입체의 부피](../../concepts/functions/정적분을_이용한_입체의_부피.md) — 미적분 `unknown`
+- [정적분의 계산](../../concepts/functions/정적분의_계산.md) — 미적분 `unknown`
+- [정적분의 극값](../../concepts/functions/정적분의_극값.md) — 미적분 `unknown`
+- [정적분의 기본정리](../../concepts/functions/정적분의_기본정리.md) — 수학2 `unknown`
+- [정적분의 기하학적 의미](../../concepts/functions/정적분의_기하학적_의미.md) — 미적분 `unknown`
+- [정적분의 넓이 공식](../../concepts/functions/정적분의_넓이_공식.md) — 미적분 `unknown`
+- [정적분의 성질](../../concepts/functions/정적분의_성질.md) — 미적분 `unknown`
+- [정적분의 정의](../../concepts/functions/정적분의_정의.md) — 미적분 `unknown`
+- [정현 코사인의 곱](../../concepts/functions/정현_코사인의_곱.md) — 수학1 `unknown`
+- [제곱근 형태의 극한](../../concepts/functions/제곱근_형태의_극한.md) — 미적분 `unknown`
+- [제곱근식의 극한](../../concepts/functions/제곱근식의_극한.md) — 미적분 `unknown`
+- [제곱의 차](../../concepts/functions/제곱의_차.md) — 수학1 `unknown`
+- [제약 조건 하의 최적화](../../concepts/functions/제약_조건_하의_최적화.md) — 미적분 `unknown`
+- [조각별정의함수](../../concepts/functions/조각별정의함수.md) — 수학2 `unknown`
+- [조각함수](../../concepts/functions/조각함수.md) — 수학2 `unknown`
+- [조건 해석](../../concepts/functions/조건_해석.md) — 고1 `unknown`
+- [조건방정식](../../concepts/functions/조건방정식.md) — 수학1 `unknown`
+- [조건부 개수 세기](../../concepts/functions/조건부_개수_세기.md) — 수학1 `unknown`
+- [조건부 계산](../../concepts/functions/조건부_계산.md) — 수학1 `unknown`
+- [조건부 극한](../../concepts/functions/조건부_극한.md) — 수학2 `unknown`
+- [조건부 문제](../../concepts/functions/조건부_문제.md) — 미적분 `unknown`
+- [조건부 미지수 결정](../../concepts/functions/조건부_미지수_결정.md) — 미적분 `unknown`
+- [조건부 상수 결정](../../concepts/functions/조건부_상수_결정.md) — 고1 `unknown`
+- [조건부 수열](../../concepts/functions/조건부_수열.md) — 수학1 `unknown`
+- [조건부 점화식](../../concepts/functions/조건부_점화식.md) — 수학1 `unknown`
+- [조건부 정의](../../concepts/functions/조건부_정의.md) — 수학1 `unknown`
+- [조건부 최댓값](../../concepts/functions/조건부_최댓값.md) — 수학1 `unknown`
+- [조건부 최댓값·최솟값](../../concepts/functions/조건부_최댓값·최솟값.md) — 수학1 `unknown`
+- [조건부 최적화](../../concepts/functions/조건부_최적화.md) — 고1 `unknown`
+- [조건부 함수](../../concepts/functions/조건부_함수.md) — 고1 `unknown`
+- [조건부 함수의 연속성](../../concepts/functions/조건부_함수의_연속성.md) — 미적분 `unknown`
+- [조건부상수결정](../../concepts/functions/조건부상수결정.md) — 수학2 `unknown`
+- [조건부수열](../../concepts/functions/조건부수열.md) — 수학1 `unknown`
+- [조건부정의](../../concepts/functions/조건부정의.md) — 수학1 `unknown`
+- [조건부함수](../../concepts/functions/조건부함수.md) — 수학2 `unknown`
+- [조건부함수의 극한](../../concepts/functions/조건부함수의_극한.md) — 수학2 `unknown`
+- [조건분석](../../concepts/functions/조건분석.md) — 미적분 `unknown`
+- [조건식](../../concepts/functions/조건식.md) — 수학1 `unknown`
+- [조건식 정리](../../concepts/functions/조건식_정리.md) — 수학1 `unknown`
+- [조건식 활용](../../concepts/functions/조건식_활용.md) — 수학1 `unknown`
+- [조건을 만족하는 수열 결정](../../concepts/functions/조건을_만족하는_수열_결정.md) — 수학1 `unknown`
+- [좌극한](../../concepts/functions/좌극한.md) — 수학2 `unknown`
+- [좌극한 우극한](../../concepts/functions/좌극한_우극한.md) — 수학2 `unknown`
+- [좌극한과 우극한](../../concepts/functions/좌극한과_우극한.md) — 수학2 `unknown`
+- [좌극한과우극한](../../concepts/functions/좌극한과우극한.md) — 수학2 `unknown`
+- [좌표 읽기](../../concepts/functions/좌표_읽기.md) — 중1 `unknown`
+- [좌표기하학](../../concepts/functions/좌표기하학.md) — 수학1 `unknown`
+- [좌표를 이용한 넓이](../../concepts/functions/좌표를_이용한_넓이.md) — 고1 `unknown`
+- [좌표와 거리 계산](../../concepts/functions/좌표와_거리_계산.md) — 고1 `unknown`
+- [좌표와 넓이](../../concepts/functions/좌표와_넓이.md) — 중3 `unknown`
+- [좌표와 도형의 넓이](../../concepts/functions/좌표와_도형의_넓이.md) — 고1 `unknown`
+- [좌표의 거리](../../concepts/functions/좌표의_거리.md) — 수학1 `unknown`
+- [좌표의 계산](../../concepts/functions/좌표의_계산.md) — 중1 `unknown`
+- [좌표축과의 교점](../../concepts/functions/좌표축과의_교점.md) — 중2 `unknown`
+- [좌표평면](../../concepts/functions/좌표평면.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [좌표평면 기하](../../concepts/functions/좌표평면_기하.md) — 중3 `unknown`
+- [좌표평면 도형](../../concepts/functions/좌표평면_도형.md) — 중3 `unknown`
+- [좌표평면 위의 도형의 넓이](../../concepts/functions/좌표평면_위의_도형의_넓이.md) — 중3 `unknown`
+- [좌표평면과 거리](../../concepts/functions/좌표평면과_거리.md) — 중3 `unknown`
+- [주기](../../concepts/functions/주기.md) — 수학1 `unknown`
+- [주기 진폭 위상](../../concepts/functions/주기_진폭_위상.md) — 수학1 · 삼각함수 `unknown`
+- [주기성과 대칭](../../concepts/functions/주기성과_대칭.md) — 수학1 `unknown`
+- [주기함수](../../concepts/functions/주기함수.md) — 고1 `unknown`
+- [주어진 점 조건을 이용한 상수 결정](../../concepts/functions/주어진_점_조건을_이용한_상수_결정.md) — 수학1 `unknown`
+- [중간값정리](../../concepts/functions/중간값정리.md) — 미적분 `unknown`
+- [중근 조건](../../concepts/functions/중근_조건.md) — 중3 `unknown`
+- [중근과 판별식](../../concepts/functions/중근과_판별식.md) — 미적분 `unknown`
+- [중근조건](../../concepts/functions/중근조건.md) — 중3 `unknown`
+- [중점공식](../../concepts/functions/중점공식.md) — 고1 `unknown`
+- [중점의 좌표](../../concepts/functions/중점의_좌표.md) — 중1 `unknown`
+- [증가함수](../../concepts/functions/증가함수.md) — 미적분 `unknown`
+- [지배항 분석](../../concepts/functions/지배항_분석.md) — 수학2 `unknown`
+- [지수부등식](../../concepts/functions/지수부등식.md) — 수학1 `unknown`
+- [지수수열](../../concepts/functions/지수수열.md) — 미적분 `unknown`
+- [지수수열의 극한](../../concepts/functions/지수수열의_극한.md) — 미적분 `unknown`
+- [지수함수](../../concepts/functions/지수함수.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [지수함수 미분](../../concepts/functions/지수함수_미분.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [지수함수와 로그함수의 교점](../../concepts/functions/지수함수와_로그함수의_교점.md) — 수학1 `unknown`
+- [지수함수의 그래프](../../concepts/functions/지수함수의_그래프.md) — 수학1 `unknown`
+- [지수함수의 극한](../../concepts/functions/지수함수의_극한.md) — 미적분 `unknown`
+- [지수함수의 미분](../../concepts/functions/지수함수의_미분.md) — 미적분 `unknown`
+- [지수함수의 성질](../../concepts/functions/지수함수의_성질.md) — 수학1 `unknown`
+- [지수함수의 평행이동](../../concepts/functions/지수함수의_평행이동.md) — 수학1 `unknown`
+- [지수항의 극한](../../concepts/functions/지수항의_극한.md) — 미적분 `unknown`
+- [직교좌표계](../../concepts/functions/직교좌표계.md) — 중1 `unknown`
+- [직선](../../concepts/functions/직선.md) — 중1 `unknown`
+- [직선과 곡선의 위치 관계](../../concepts/functions/직선과_곡선의_위치_관계.md) — 미적분 `unknown`
+- [직선과 도형](../../concepts/functions/직선과_도형.md) — 중1 `unknown`
+- [직선과 이차함수의 교점](../../concepts/functions/직선과_이차함수의_교점.md) — 중3 `unknown`
+- [직선과의 접선 조건](../../concepts/functions/직선과의_접선_조건.md) — 중3 `unknown`
+- [직선의 교점](../../concepts/functions/직선의_교점.md) — 중3 `unknown`
+- [진폭](../../concepts/functions/진폭.md) — 수학1 `unknown`
+- [진폭과 주기](../../concepts/functions/진폭과_주기.md) — 수학1 `unknown`
+- [집합과 방정식](../../concepts/functions/집합과_방정식.md) — 수학1 `unknown`
+- [집합의 연산](../../concepts/functions/집합의_연산.md) — 중3 `unknown`
+- [집합의 합집합](../../concepts/functions/집합의_합집합.md) — 수학1 `unknown`
+- [차수 분석](../../concepts/functions/차수_분석.md) — 미적분 `unknown`
+- [차수 비교](../../concepts/functions/차수_비교.md) — 미적분 `unknown`
+- [첫째항](../../concepts/functions/첫째항.md) — 수학1 `unknown`
+- [첫째항과 공비](../../concepts/functions/첫째항과_공비.md) — 수학1 `unknown`
+- [첫째항과 공차](../../concepts/functions/첫째항과_공차.md) — 수학1 `unknown`
+- [초기값 결정](../../concepts/functions/초기값_결정.md) — 수학1 `unknown`
+- [초기값 조건](../../concepts/functions/초기값_조건.md) — 고1 `unknown`
+- [초기조건](../../concepts/functions/초기조건.md) — 수학2 `unknown`
+- [초기조건 분석](../../concepts/functions/초기조건_분석.md) — 수학1 `unknown`
+- [초월방정식](../../concepts/functions/초월방정식.md) — 수학1 `unknown`
+- [초월방정식의 해석](../../concepts/functions/초월방정식의_해석.md) — 미적분 `unknown`
+- [초항](../../concepts/functions/초항.md) — 수학1 `unknown`
+- [초항과 공차](../../concepts/functions/초항과_공차.md) — 수학1 `unknown`
+- [최고차 항](../../concepts/functions/최고차_항.md) — 미적분 `unknown`
+- [최고차계수와 포물선의 방향](../../concepts/functions/최고차계수와_포물선의_방향.md) — 중3 `unknown`
+- [최고차항 비교](../../concepts/functions/최고차항_비교.md) — 미적분 `unknown`
+- [최댓값 최솟값](../../concepts/functions/최댓값_최솟값.md) — 미적분 `unknown`
+- [최댓값·최솟값 판정](../../concepts/functions/최댓값·최솟값_판정.md) — 미적분 `unknown`
+- [최댓값과 최솟값](../../concepts/functions/최댓값과_최솟값.md) — 고1 `unknown`
+- [최솟값 조건](../../concepts/functions/최솟값_조건.md) — 미적분 `unknown`
+- [최솟값함수](../../concepts/functions/최솟값함수.md) — 수학2 `unknown`
+- [최적화](../../concepts/functions/최적화.md) — 고1 `unknown`
+- [축과의 교점](../../concepts/functions/축과의_교점.md) — 미적분 `unknown`
+- [축척](../../concepts/functions/축척.md) — 미적분 `unknown`
+- [치환을 이용한 함수 분석](../../concepts/functions/치환을_이용한_함수_분석.md) — 수학1 `unknown`
+- [치환적분](../../concepts/functions/치환적분.md) — 미적분 · 여러가지 적분법 `unknown`
+- [코사인 함수](../../concepts/functions/코사인_함수.md) — 수학1 `unknown`
+- [코사인함수](../../concepts/functions/코사인함수.md) — 수학1 `unknown`
+- [탄젠트](../../concepts/functions/탄젠트.md) — 수학1 `unknown`
+- [탄젠트 계산](../../concepts/functions/탄젠트_계산.md) — 수학1 `unknown`
+- [탄젠트 비율](../../concepts/functions/탄젠트_비율.md) — 수학1 `unknown`
+- [탄젠트 함수](../../concepts/functions/탄젠트_함수.md) — 수학1 `unknown`
+- [탄젠트 함수 그래프](../../concepts/functions/탄젠트_함수_그래프.md) — 수학1 `unknown`
+- [탄젠트 함수의 그래프](../../concepts/functions/탄젠트_함수의_그래프.md) — 수학1 `unknown`
+- [탄젠트를 이용한 사인, 코사인 구하기](../../concepts/functions/탄젠트를_이용한_사인,_코사인_구하기.md) — 수학1 `unknown`
+- [탄젠트와 사인, 코사인의 관계](../../concepts/functions/탄젠트와_사인,_코사인의_관계.md) — 수학1 `unknown`
+- [탄젠트의 덧셈공식](../../concepts/functions/탄젠트의_덧셈공식.md) — 수학1 `unknown`
+- [탄젠트의 정의](../../concepts/functions/탄젠트의_정의.md) — 수학1 `unknown`
+- [탄젠트함수](../../concepts/functions/탄젠트함수.md) — 수학1 `unknown`
+- [테일러 급수](../../concepts/functions/테일러_급수.md) — 미적분 `unknown`
+- [테일러 전개](../../concepts/functions/테일러_전개.md) — 미적분 `unknown`
+- [텔레스코핑](../../concepts/functions/텔레스코핑.md) — 수학1 `unknown`
+- [특수각의 삼각함수값](../../concepts/functions/특수각의_삼각함수값.md) — 수학1 `unknown`
+- [특정점에서의 도함수값](../../concepts/functions/특정점에서의_도함수값.md) — 수학2 `unknown`
+- [평균변화율](../../concepts/functions/평균변화율.md) — 수학2 `unknown`
+- [평면좌표](../../concepts/functions/평면좌표.md) — 미적분 `unknown`
+- [평행조건](../../concepts/functions/평행조건.md) — 중3 `unknown`
+- [폐구간에서의 극값](../../concepts/functions/폐구간에서의_극값.md) — 중3 `unknown`
+- [폐구간에서의 최댓값과 최솟값](../../concepts/functions/폐구간에서의_최댓값과_최솟값.md) — 미적분 `unknown`
+- [포물선의 개형](../../concepts/functions/포물선의_개형.md) — 중3 `unknown`
+- [포물선의 꼭짓점](../../concepts/functions/포물선의_꼭짓점.md) — 중3 `unknown`
+- [표준 극한 공식](../../concepts/functions/표준_극한_공식.md) — 미적분 `unknown`
+- [표준형 꼭짓점](../../concepts/functions/표준형_꼭짓점.md) — 중3 `unknown`
+- [표준형 일반형](../../concepts/functions/표준형_일반형.md) — 중3 · 이차함수 `unknown`
+- [함수 결정](../../concepts/functions/함수_결정.md) — 미적분 `unknown`
+- [함수 결정 문제](../../concepts/functions/함수_결정_문제.md) — 미적분 `unknown`
+- [함수 결정 조건](../../concepts/functions/함수_결정_조건.md) — 수학2 `unknown`
+- [함수 그래프와 직선의 교점](../../concepts/functions/함수_그래프와_직선의_교점.md) — 수학2 `unknown`
+- [함수 그래프의 교점](../../concepts/functions/함수_그래프의_교점.md) — 수학1 `unknown`
+- [함수 방정식](../../concepts/functions/함수_방정식.md) — 중3 `unknown`
+- [함수 부등식의 응용](../../concepts/functions/함수_부등식의_응용.md) — 미적분 `unknown`
+- [함수 위의 점](../../concepts/functions/함수_위의_점.md) — 수학1 `unknown`
+- [함수 조건 분석](../../concepts/functions/함수_조건_분석.md) — 중3 `unknown`
+- [함수값](../../concepts/functions/함수값.md) — 고1 `unknown`
+- [함수값 계산](../../concepts/functions/함수값_계산.md) — 고1 `unknown`
+- [함수값 부등식](../../concepts/functions/함수값_부등식.md) — 중3 `unknown`
+- [함수값 읽기](../../concepts/functions/함수값_읽기.md) — 중2 `unknown`
+- [함수값과 극한값](../../concepts/functions/함수값과_극한값.md) — 수학2 `unknown`
+- [함수값의 대소비교](../../concepts/functions/함수값의_대소비교.md) — 수학1 `unknown`
+- [함수값의 비교](../../concepts/functions/함수값의_비교.md) — 고1 `unknown`
+- [함수값의 조건 분석](../../concepts/functions/함수값의_조건_분석.md) — 수학1 `unknown`
+- [함수방정식](../../concepts/functions/함수방정식.md) — 수학2 `unknown`
+- [함수방정식 풀이](../../concepts/functions/함수방정식_풀이.md) — 미적분 `unknown`
+- [함수의 값](../../concepts/functions/함수의_값.md) — 고1 `unknown`
+- [함수의 값 계산](../../concepts/functions/함수의_값_계산.md) — 고1 `unknown`
+- [함수의 개형](../../concepts/functions/함수의_개형.md) — 수학2 `unknown`
+- [함수의 개형 분석](../../concepts/functions/함수의_개형_분석.md) — 미적분 `unknown`
+- [함수의 결정](../../concepts/functions/함수의_결정.md) — 미적분 `unknown`
+- [함수의 교점](../../concepts/functions/함수의_교점.md) — 고1 `unknown`
+- [함수의 교점 분석](../../concepts/functions/함수의_교점_분석.md) — 미적분 `unknown`
+- [함수의 교점 조건](../../concepts/functions/함수의_교점_조건.md) — 수학1 `unknown`
+- [함수의 그래프 분석](../../concepts/functions/함수의_그래프_분석.md) — 고1 `unknown`
+- [함수의 그래프 읽기](../../concepts/functions/함수의_그래프_읽기.md) — 수학2 `unknown`
+- [함수의 그래프 해석](../../concepts/functions/함수의_그래프_해석.md) — 수학2 `unknown`
+- [함수의 그래프와 넓이](../../concepts/functions/함수의_그래프와_넓이.md) — 미적분 `unknown`
+- [함수의 극값](../../concepts/functions/함수의_극값.md) — 미적분 `unknown`
+- [함수의 극대극소](../../concepts/functions/함수의_극대극소.md) — 미적분 `unknown`
+- [함수의 극한](../../concepts/functions/함수의_극한.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [함수의 극한값](../../concepts/functions/함수의_극한값.md) — 수학2 `unknown`
+- [함수의 근](../../concepts/functions/함수의_근.md) — 고1 `unknown`
+- [함수의 근과 영점](../../concepts/functions/함수의_근과_영점.md) — 미적분 `unknown`
+- [함수의 기본조건](../../concepts/functions/함수의_기본조건.md) — 수학1 `unknown`
+- [함수의 단조성](../../concepts/functions/함수의_단조성.md) — 고1 `unknown`
+- [함수의 닫힘성](../../concepts/functions/함수의_닫힘성.md) — 고1 `unknown`
+- [함수의 대소관계](../../concepts/functions/함수의_대소관계.md) — 중3 `unknown`
+- [함수의 대칭성](../../concepts/functions/함수의_대칭성.md) — 수학1 `unknown`
+- [함수의 미분](../../concepts/functions/함수의_미분.md) — 수학2 `unknown`
+- [함수의 미분가능성](../../concepts/functions/함수의_미분가능성.md) — 미적분 `unknown`
+- [함수의 방정식](../../concepts/functions/함수의_방정식.md) — 미적분 `unknown`
+- [함수의 범위](../../concepts/functions/함수의_범위.md) — 수학1 `unknown`
+- [함수의 범위 조건](../../concepts/functions/함수의_범위_조건.md) — 중3 `unknown`
+- [함수의 변환](../../concepts/functions/함수의_변환.md) — 수학1 `unknown`
+- [함수의 볼록 오목](../../concepts/functions/함수의_볼록_오목.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [함수의 부호 변화](../../concepts/functions/함수의_부호_변화.md) — 미적분 `unknown`
+- [함수의 부호 분석](../../concepts/functions/함수의_부호_분석.md) — 미적분 `unknown`
+- [함수의 부호 판정](../../concepts/functions/함수의_부호_판정.md) — 미적분 `unknown`
+- [함수의 불변성](../../concepts/functions/함수의_불변성.md) — 고1 `unknown`
+- [함수의 불연속](../../concepts/functions/함수의_불연속.md) — 수학2 `unknown`
+- [함수의 불연속성](../../concepts/functions/함수의_불연속성.md) — 수학2 `unknown`
+- [함수의 성질](../../concepts/functions/함수의_성질.md) — 고1 `unknown`
+- [함수의 수직 이동](../../concepts/functions/함수의_수직_이동.md) — 수학1 `unknown`
+- [함수의 실근](../../concepts/functions/함수의_실근.md) — 미적분 `unknown`
+- [함수의 연속미분가능성](../../concepts/functions/함수의_연속미분가능성.md) — 미적분 `unknown`
+- [함수의 연속성](../../concepts/functions/함수의_연속성.md) — 수학2 `unknown`
+- [함수의 연속성과 불연속점](../../concepts/functions/함수의_연속성과_불연속점.md) — 수학2 `unknown`
+- [함수의 영점](../../concepts/functions/함수의_영점.md) — 수학1 `unknown`
+- [함수의 인수분해](../../concepts/functions/함수의_인수분해.md) — 수학2 `unknown`
+- [함수의 점근적 행동](../../concepts/functions/함수의_점근적_행동.md) — 수학2 `unknown`
+- [함수의 접촉](../../concepts/functions/함수의_접촉.md) — 미적분 `unknown`
+- [함수의 정의](../../concepts/functions/함수의_정의.md) — 고1 · 함수와 그래프 `unknown`
+- [함수의 정의역](../../concepts/functions/함수의_정의역.md) — 수학1 `unknown`
+- [함수의 정의역과 치역](../../concepts/functions/함수의_정의역과_치역.md) — 고1 `unknown`
+- [함수의 정의와 조건](../../concepts/functions/함수의_정의와_조건.md) — 중3 `unknown`
+- [함수의 조건](../../concepts/functions/함수의_조건.md) — 고1 `unknown`
+- [함수의 조건 분석](../../concepts/functions/함수의_조건_분석.md) — 수학2 `unknown`
+- [함수의 주기성](../../concepts/functions/함수의_주기성.md) — 수학1 `unknown`
+- [함수의 증감](../../concepts/functions/함수의_증감.md) — 미적분 `unknown`
+- [함수의 증감성](../../concepts/functions/함수의_증감성.md) — 미적분 `unknown`
+- [함수의 최댓값](../../concepts/functions/함수의_최댓값.md) — 고1 `unknown`
+- [함수의 최댓값과 최솟값](../../concepts/functions/함수의_최댓값과_최솟값.md) — 수학1 `unknown`
+- [함수의 최솟값](../../concepts/functions/함수의_최솟값.md) — 미적분 `unknown`
+- [함수의 최적값](../../concepts/functions/함수의_최적값.md) — 수학1 `unknown`
+- [함수의 치역](../../concepts/functions/함수의_치역.md) — 수학1 `unknown`
+- [함수의 치역과 자연수 조건](../../concepts/functions/함수의_치역과_자연수_조건.md) — 수학1 `unknown`
+- [함수의 평행이동](../../concepts/functions/함수의_평행이동.md) — 고1 `unknown`
+- [함수의 표현](../../concepts/functions/함수의_표현.md) — 고1 `unknown`
+- [함수의 함숫값](../../concepts/functions/함수의_함숫값.md) — 고1 `unknown`
+- [함수의 합](../../concepts/functions/함수의_합.md) — 수학1 `unknown`
+- [함수의 합성](../../concepts/functions/함수의_합성.md) — 고1 `unknown`
+- [함수의 확장](../../concepts/functions/함수의_확장.md) — 수학2 `unknown`
+- [함수의극값](../../concepts/functions/함수의극값.md) — 수학2 `unknown`
+- [함수의극한](../../concepts/functions/함수의극한.md) — 미적분 `unknown`
+- [함수의불연속성](../../concepts/functions/함수의불연속성.md) — 미적분 `unknown`
+- [함수의연속성](../../concepts/functions/함수의연속성.md) — 수학2 `unknown`
+- [합](../../concepts/functions/합.md) — 수학1 `unknown`
+- [합 공식](../../concepts/functions/합_공식.md) — 수학1 `unknown`
+- [합공식](../../concepts/functions/합공식.md) — 수학1 `unknown`
+- [합산](../../concepts/functions/합산.md) — 수학1 `unknown`
+- [합성함수](../../concepts/functions/합성함수.md) — 고1 · 함수와 그래프 `unknown`
+- [합성함수 미분](../../concepts/functions/합성함수_미분.md) — 미적분 `unknown`
+- [합성함수의 미분법](../../concepts/functions/합성함수의_미분법.md) — 미적분 `unknown`
+- [합성함수의 영점](../../concepts/functions/합성함수의_영점.md) — 미적분 `unknown`
+- [합의 선형성](../../concepts/functions/합의_선형성.md) — 수학1 `unknown`
+- [합의 성질](../../concepts/functions/합의_성질.md) — 수학1 `unknown`
+- [합의공식](../../concepts/functions/합의공식.md) — 수학1 `unknown`
+- [항 사이의 관계](../../concepts/functions/항_사이의_관계.md) — 수학1 `unknown`
+- [항등함수](../../concepts/functions/항등함수.md) — 고1 `unknown`
+- [항의 값 계산](../../concepts/functions/항의_값_계산.md) — 수학1 `unknown`
+- [항의 계산](../../concepts/functions/항의_계산.md) — 수학1 `unknown`
+- [항의 곱](../../concepts/functions/항의_곱.md) — 수학1 `unknown`
+- [항의 관계식](../../concepts/functions/항의_관계식.md) — 수학1 `unknown`
+- [해의 개수 판정](../../concepts/functions/해의_개수_판정.md) — 수학1 `unknown`
+- [해의 합](../../concepts/functions/해의_합.md) — 수학1 `unknown`
+- [호도법](../../concepts/functions/호도법.md) — 수학1 · 삼각함수 `unknown`
+- [호의 길이 공식](../../concepts/functions/호의_길이_공식.md) — 수학1 `unknown`
+- [호의 넓이](../../concepts/functions/호의_넓이.md) — 미적분 `unknown`
+- [홀짝 분류](../../concepts/functions/홀짝_분류.md) — 수학1 `unknown`
+- [홀짝 조건](../../concepts/functions/홀짝_조건.md) — 수학1 `unknown`
+- [회전체 부피](../../concepts/functions/회전체_부피.md) — 미적분 · 정적분의 활용 `unknown`
+- [회전체의 부피](../../concepts/functions/회전체의_부피.md) — 미적분 `unknown`
+- [횡단면 분석](../../concepts/functions/횡단면_분석.md) — 미적분 `unknown`
+- [횡단면의 성질](../../concepts/functions/횡단면의_성질.md) — 미적분 `unknown`
+- [횡단면의 적분](../../concepts/functions/횡단면의_적분.md) — 미적분 `unknown`
+- [sin과 cos의 부호](../../concepts/functions/sin과_cos의_부호.md) — 수학1 `unknown`
+- [sinθ에 대한 이차방정식](../../concepts/functions/sinθ에_대한_이차방정식.md) — 수학1 `unknown`
+- [sinθ와 cosθ의 관계](../../concepts/functions/sinθ와_cosθ의_관계.md) — 수학1 `unknown`
+- [tan값](../../concepts/functions/tan값.md) — 수학1 `unknown`
+- [tan과 sin cos의 관계](../../concepts/functions/tan과_sin_cos의_관계.md) — 수학1 `unknown`
+- [tan의 계산](../../concepts/functions/tan의_계산.md) — 수학1 `unknown`
+- [x축 교점](../../concepts/functions/x축_교점.md) — 중3 `unknown`
+- [x축과의 교점](../../concepts/functions/x축과의_교점.md) — 중3 `unknown`
+- [y=x에 대한 대칭](../../concepts/functions/y=x에_대한_대칭.md) — 고1 `unknown`
+
+## 정리 (38)
+
+- [곱의 미분](../../concepts/functions/곱의_미분.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [극값 판정](../../concepts/functions/극값_판정.md) — 수학2 · 미분 `unknown`
+- [극한의 사칙연산](../../concepts/functions/극한의_사칙연산.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [급수 수렴판정](../../concepts/functions/급수_수렴판정.md) — 미적분 · 수열의 극한 `unknown`
+- [다항함수 미분공식](../../concepts/functions/다항함수_미분공식.md) — 수학2 · 미분 `unknown`
+- [두 직선 관계](../../concepts/functions/두_직선_관계.md) — 중2 · 일차함수 `unknown`
+- [등비급수 수렴조건](../../concepts/functions/등비급수_수렴조건.md) — 미적분 · 수열의 극한 `unknown`
+- [등비수열의 합](../../concepts/functions/등비수열의_합.md) — 수학1 · 수열 `unknown`
+- [등차수열의 합](../../concepts/functions/등차수열의_합.md) — 수학1 · 수열 `unknown`
+- [롤의 정리](../../concepts/functions/롤의_정리.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [몫의 미분](../../concepts/functions/몫의_미분.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [미분의 사칙연산](../../concepts/functions/미분의_사칙연산.md) — 수학2 · 미분 `unknown`
+- [미적분의 기본정리](../../concepts/functions/미적분의_기본정리.md) — 수학2 · 적분 `unknown`
+- [반비례 그래프](../../concepts/functions/반비례_그래프.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [부분적분 LIATE](../../concepts/functions/부분적분_LIATE.md) — 미적분 · 여러가지 적분법 `unknown`
+- [부정형 처리](../../concepts/functions/부정형_처리.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [사인 코사인 법칙](../../concepts/functions/사인_코사인_법칙.md) — 수학1 · 삼각함수 `unknown`
+- [수학적 귀납법](../../concepts/functions/수학적_귀납법.md) — 수학1 · 수열 `unknown`
+- [역함수 그래프](../../concepts/functions/역함수_그래프.md) — 고1 · 함수와 그래프 `unknown`
+- [역함수 미분법](../../concepts/functions/역함수_미분법.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [연속함수의 성질](../../concepts/functions/연속함수의_성질.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [이계도함수 활용](../../concepts/functions/이계도함수_활용.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [이차함수 그래프](../../concepts/functions/이차함수_그래프.md) — 중3 · 이차함수 `unknown`
+- [이차함수 최댓값 최솟값](../../concepts/functions/이차함수_최댓값_최솟값.md) — 중3 · 이차함수 `unknown`
+- [이차함수 x축 교점](../../concepts/functions/이차함수_x축_교점.md) — 중3 · 이차함수 `unknown`
+- [적분 공식 다항함수](../../concepts/functions/적분_공식_다항함수.md) — 수학2 · 적분 `unknown`
+- [정비례 그래프](../../concepts/functions/정비례_그래프.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [정적분 성질](../../concepts/functions/정적분_성질.md) — 수학2 · 적분 `unknown`
+- [주기성](../../concepts/functions/주기성.md) — 수학1 · 삼각함수 `unknown`
+- [지수 로그 역함수 관계](../../concepts/functions/지수_로그_역함수_관계.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [지수로그 극한](../../concepts/functions/지수로그_극한.md) — 미적분 · 여러가지 함수의 극한과 연속 `unknown`
+- [지수함수 단조성](../../concepts/functions/지수함수_단조성.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [치환적분 규칙](../../concepts/functions/치환적분_규칙.md) — 미적분 · 여러가지 적분법 `unknown`
+- [평균값 정리](../../concepts/functions/평균값_정리.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [피타고라스 삼각공식](../../concepts/functions/피타고라스_삼각공식.md) — 수학1 · 삼각함수 `unknown`
+- [합성함수의 결합법칙](../../concepts/functions/합성함수의_결합법칙.md) — 고1 · 함수와 그래프 `unknown`
+- [회전체 부피 공식](../../concepts/functions/회전체_부피_공식.md) — 미적분 · 정적분의 활용 `unknown`
+- [sinx over x 극한](../../concepts/functions/sinx_over_x_극한.md) — 미적분 · 여러가지 함수의 극한과 연속 `unknown`
+
+## 예제 (47)
+
+- [곱몫미분 혼합](../../concepts/functions/곱몫미분_혼합.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [귀납법 증명 예제](../../concepts/functions/귀납법_증명_예제.md) — 수학1 · 수열 `unknown`
+- [그래프 개형](../../concepts/functions/그래프_개형.md) — 수학2 · 미분 `unknown`
+- [그래프 개형 심화](../../concepts/functions/그래프_개형_심화.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [극댓값 극솟값](../../concepts/functions/극댓값_극솟값.md) — 수학2 · 미분 `unknown`
+- [꼭짓점 좌표 구하기](../../concepts/functions/꼭짓점_좌표_구하기.md) — 중3 · 이차함수 `unknown`
+- [넓이 구하기](../../concepts/functions/넓이_구하기.md) — 수학2 · 적분 `unknown`
+- [두 곡선 넓이 예제](../../concepts/functions/두_곡선_넓이_예제.md) — 미적분 · 정적분의 활용 `unknown`
+- [두 곡선 사이 넓이](../../concepts/functions/두_곡선_사이_넓이.md) — 수학2 · 적분 `unknown`
+- [두 점에서 식 구하기](../../concepts/functions/두_점에서_식_구하기.md) — 중2 · 일차함수 `unknown`
+- [두 직선 교점](../../concepts/functions/두_직선_교점.md) — 중2 · 일차함수 `unknown`
+- [등비급수 합 계산](../../concepts/functions/등비급수_합_계산.md) — 미적분 · 수열의 극한 `unknown`
+- [로그 적분](../../concepts/functions/로그_적분.md) — 미적분 · 여러가지 적분법 `unknown`
+- [로그부등식 풀이](../../concepts/functions/로그부등식_풀이.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [매개변수 접선](../../concepts/functions/매개변수_접선.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [무리함수 그래프](../../concepts/functions/무리함수_그래프.md) — 고1 · 함수와 그래프 `unknown`
+- [반비례 그래프 그리기](../../concepts/functions/반비례_그래프_그리기.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [부분적분 예제](../../concepts/functions/부분적분_예제.md) — 미적분 · 여러가지 적분법 `unknown`
+- [사인 코사인 법칙 적용](../../concepts/functions/사인_코사인_법칙_적용.md) — 수학1 · 삼각함수 `unknown`
+- [삼각방정식 풀이](../../concepts/functions/삼각방정식_풀이.md) — 수학1 · 삼각함수 `unknown`
+- [삼각함수 그래프 그리기](../../concepts/functions/삼각함수_그래프_그리기.md) — 수학1 · 삼각함수 `unknown`
+- [삼각함수 극한 예제](../../concepts/functions/삼각함수_극한_예제.md) — 미적분 · 여러가지 함수의 극한과 연속 `unknown`
+- [삼각함수 미분 예제](../../concepts/functions/삼각함수_미분_예제.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [속도 거리 심화](../../concepts/functions/속도_거리_심화.md) — 미적분 · 정적분의 활용 `unknown`
+- [속도 거리 적분](../../concepts/functions/속도_거리_적분.md) — 수학2 · 적분 `unknown`
+- [수열의 일반항](../../concepts/functions/수열의_일반항.md) — 수학1 · 수열 `unknown`
+- [순환소수 분수표현](../../concepts/functions/순환소수_분수표현.md) — 미적분 · 수열의 극한 `unknown`
+- [시그마 계산](../../concepts/functions/시그마_계산.md) — 수학1 · 수열 `unknown`
+- [실생활 지수응용](../../concepts/functions/실생활_지수응용.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [역함수 구하기](../../concepts/functions/역함수_구하기.md) — 고1 · 함수와 그래프 `unknown`
+- [연속 판별](../../concepts/functions/연속_판별.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [운동 변화율 응용](../../concepts/functions/운동_변화율_응용.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [유리함수 그래프](../../concepts/functions/유리함수_그래프.md) — 고1 · 함수와 그래프 `unknown`
+- [유리화 부정형](../../concepts/functions/유리화_부정형.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [음함수 미분 예제](../../concepts/functions/음함수_미분_예제.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [이차함수 그래프 그리기](../../concepts/functions/이차함수_그래프_그리기.md) — 중3 · 이차함수 `unknown`
+- [인수분해 부정형](../../concepts/functions/인수분해_부정형.md) — 수학2 · 함수의 극한과 연속 `unknown`
+- [일반형 표준형 변환](../../concepts/functions/일반형_표준형_변환.md) — 중3 · 이차함수 `unknown`
+- [정비례 식 구하기](../../concepts/functions/정비례_식_구하기.md) — 중1 · 좌표평면과 그래프 `unknown`
+- [증감 구간](../../concepts/functions/증감_구간.md) — 수학2 · 미분 `unknown`
+- [지수 부정형](../../concepts/functions/지수_부정형.md) — 미적분 · 여러가지 함수의 극한과 연속 `unknown`
+- [지수로그 미분 예제](../../concepts/functions/지수로그_미분_예제.md) — 미적분 · 여러가지 함수의 미분 `unknown`
+- [지수방정식 풀이](../../concepts/functions/지수방정식_풀이.md) — 수학1 · 지수함수와 로그함수 `unknown`
+- [최적화 문제](../../concepts/functions/최적화_문제.md) — 미적분 · 도함수의 활용 (심화) `unknown`
+- [치환적분 예제](../../concepts/functions/치환적분_예제.md) — 미적분 · 여러가지 적분법 `unknown`
+- [합성함수 미분 예제](../../concepts/functions/합성함수_미분_예제.md) — 미적분 · 합성함수의 미분 (연쇄법칙) `unknown`
+- [회전체 부피 예제](../../concepts/functions/회전체_부피_예제.md) — 미적분 · 정적분의 활용 `unknown`
+

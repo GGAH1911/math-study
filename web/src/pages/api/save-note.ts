@@ -11,7 +11,8 @@ export const prerender = false;
 
 const WEB_ROOT = process.cwd();
 const NOTES_DIR = resolve(WEB_ROOT, '..', 'docs', 'notes');
-const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_-]+$/;
+// sub-dir slug 허용 ('algebra/근의_공식'). `/` 는 sanitizeFilename 이 `_` 로 변환.
+const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$/;
 const MAX_CONTENT_CHARS = 200_000;  // ~5% of localStorage quota
 
 type SaveNoteRequest = {

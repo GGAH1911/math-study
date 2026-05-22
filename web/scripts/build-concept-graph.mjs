@@ -4,9 +4,9 @@
  * src/data/concept-graph.json with nodes (mastery, type, dagre coords)
  * and edges (prerequisite arrows).
  */
-import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, basename } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import matter from 'gray-matter';
 import dagre from 'dagre';
 
@@ -16,33 +16,46 @@ const DOCS_DIR = join(WEB_ROOT, '..', 'docs', 'concepts');
 const OUT_DIR = join(WEB_ROOT, 'src', 'data');
 const OUT_FILE = join(OUT_DIR, 'concept-graph.json');
 
-function slugFromPath(p) {
-  return basename(p, '.md');
+// sub-dir 호환: 'algebra/근의_공식' (DOCS_DIR 기준 relative path, .md 제거)
+function slugFromFile(absPath) {
+  return relative(DOCS_DIR, absPath).replace(/\.md$/, '').split(/[\\/]/).join('/');
+}
+// frontmatter cross-ref ('docs/concepts/algebra/근의_공식.md' 또는 슬러그 only) → slug
+function slugFromRef(p) {
+  return p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
+}
+
+function walkMd(dir) {
+  const out = [];
+  if (!existsSync(dir)) return out;
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) out.push(...walkMd(p));
+    else if (e.name.endsWith('.md')) out.push(p);
+  }
+  return out;
 }
 
 function readConcepts() {
-  if (!existsSync(DOCS_DIR)) return [];
-  return readdirSync(DOCS_DIR)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => {
-      const filePath = join(DOCS_DIR, f);
-      const fm = matter(readFileSync(filePath, 'utf-8')).data;
-      return {
-        id: slugFromPath(f),
-        slug: slugFromPath(f),
-        label: slugFromPath(f).replace(/_/g, ' '),
-        concept_type: fm.concept_type ?? 'definition',
-        grade: fm.grade ?? null,
-        domain: fm.domain ?? null,
-        unit: fm.unit ?? null,
-        subunit: fm.subunit ?? null,
-        mastery: fm.mastery ?? 'unknown',
-        prerequisites: (fm.prerequisites ?? []).map(slugFromPath),
-        enables: (fm.enables ?? []).map(slugFromPath),
-        review_state: fm.review_state ?? null,
-        next_review: fm.next_review ?? null,
-      };
-    });
+  return walkMd(DOCS_DIR).map((filePath) => {
+    const fm = matter(readFileSync(filePath, 'utf-8')).data;
+    const id = slugFromFile(filePath);
+    return {
+      id,
+      slug: id,
+      label: (id.split('/').pop() ?? id).replace(/_/g, ' '),
+      concept_type: fm.concept_type ?? 'definition',
+      grade: fm.grade ?? null,
+      domain: fm.domain ?? null,
+      unit: fm.unit ?? null,
+      subunit: fm.subunit ?? null,
+      mastery: fm.mastery ?? 'unknown',
+      prerequisites: (fm.prerequisites ?? []).map(slugFromRef),
+      enables: (fm.enables ?? []).map(slugFromRef),
+      review_state: fm.review_state ?? null,
+      next_review: fm.next_review ?? null,
+    };
+  });
 }
 
 function buildEdges(concepts) {

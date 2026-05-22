@@ -35,11 +35,25 @@ type Props = {
 const STORAGE_PREFIX = 'math-study:chat:';
 const MAX_HISTORY_TURNS = 12; // include up to last N messages in API request
 
+// sub-dir 진입 후 호환: 'algebra/근의_공식' 같은 새 slug 로 로딩 시,
+// 기존 flat slug 'math-study:chat:근의_공식' 도 fallback 으로 확인하고 lazy 이전.
 function loadHistory(slug: string): ChatMessage[] {
   if (typeof window === 'undefined') return [];
   try {
-    const raw = window.localStorage.getItem(STORAGE_PREFIX + slug);
-    return raw ? (JSON.parse(raw) as ChatMessage[]) : [];
+    const newKey = STORAGE_PREFIX + slug;
+    const raw = window.localStorage.getItem(newKey);
+    if (raw) return JSON.parse(raw) as ChatMessage[];
+    if (slug.includes('/')) {
+      const leaf = slug.split('/').pop() ?? slug;
+      const legacyKey = STORAGE_PREFIX + leaf;
+      const legacy = window.localStorage.getItem(legacyKey);
+      if (legacy) {
+        window.localStorage.setItem(newKey, legacy);
+        window.localStorage.removeItem(legacyKey);
+        return JSON.parse(legacy) as ChatMessage[];
+      }
+    }
+    return [];
   } catch {
     return [];
   }

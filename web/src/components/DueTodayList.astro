@@ -12,8 +12,8 @@ const concepts = await getCollection('concepts');
 for (const c of concepts) {
   if (c.data.next_review && new Date(c.data.next_review) <= today) {
     rows.push({
-      href: `/concepts/${encodeURIComponent(c.id)}`,
-      title: c.id,
+      href: `/concepts/${c.id}`,
+      title: c.id.split('/').pop() ?? c.id,
       collection: 'concept',
       chip: c.data.mastery,
       chipClass: `chip-mastery-${c.data.mastery}`,

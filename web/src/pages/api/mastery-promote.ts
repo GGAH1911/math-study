@@ -125,11 +125,15 @@ export const POST: APIRoute = async ({ request }) => {
   if (!MASTERY_LEVELS.includes(body.to)) {
     return new Response(JSON.stringify({ error: `to must be one of ${MASTERY_LEVELS.join(', ')}` }), { status: 400 });
   }
-  if (/[/\\]/.test(body.slug) || body.slug.includes('..')) {
+  // sub-dir slug ('algebra/근의_공식') 허용. `..` 와 backslash 만 차단.
+  if (/\\/.test(body.slug) || body.slug.includes('..') || !/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$/.test(body.slug)) {
     return new Response(JSON.stringify({ error: 'invalid slug' }), { status: 400 });
   }
 
   const filepath = resolve(CONCEPTS_DIR, `${body.slug}.md`);
+  if (!filepath.startsWith(resolve(CONCEPTS_DIR) + '/')) {
+    return new Response(JSON.stringify({ error: 'path escape' }), { status: 400 });
+  }
   if (!existsSync(filepath)) {
     return new Response(JSON.stringify({ error: 'concept not found', path: filepath }), { status: 404 });
   }

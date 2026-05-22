@@ -8,7 +8,7 @@ const gradeEnum = z.enum(['중1', '중2', '중3', '고1', '수학1', '수학2', 
 const domainEnum = z.enum(['수와식', '방정식', '함수', '도형', '확률통계', '논리']);
 
 const concepts = defineCollection({
-  loader: glob({ pattern: '*.md', base: '../docs/concepts' }),
+  loader: glob({ pattern: '**/*.md', base: '../docs/concepts' }),
   schema: z.object({
     sources: z.array(z.string()).optional().default([]),
     created: z.coerce.date().optional(),

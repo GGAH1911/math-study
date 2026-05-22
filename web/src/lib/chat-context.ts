@@ -412,20 +412,21 @@ const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
 - 답변에 학생의 현재 값을 가정할 때는 그 가정을 명시 ("θ가 30°라고 가정하면…").
 `;
 
+// concept slug 는 sub-dir 포함 ('algebra/근의_공식'). problems 도 sub-dir 진입 예정.
+// 'docs/concepts/algebra/근의_공식.md' 또는 'algebra/근의_공식.md' 등 다양한 형식 수용.
 function slugOf(p: string) {
-  return p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+  return String(p)
+    .replace(/^docs\/(concepts|problems)\//, '')
+    .replace(/\.md$/, '');
 }
 
-// Slug whitelist — Korean letters, ASCII letters/digits, underscore, dash.
-// This is the same shape ingest_v2 emits. Anything else is treated as a
-// path-traversal attempt and rejected.
-const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_-]+$/;
+// Slug whitelist — Korean letters, ASCII letters/digits, underscore, dash, slash (sub-dir).
+// `..` 같은 path-traversal 은 safeJoin 의 prefix check 가 차단.
+const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$/;
 
 function safeJoin(baseDir: string, slug: string): string | null {
-  if (!SLUG_RE.test(slug)) return null;
+  if (!SLUG_RE.test(slug) || slug.includes('..')) return null;
   const target = resolve(baseDir, `${slug}.md`);
-  // Defence-in-depth: even though the regex blocks "..", verify the
-  // resolved path is still inside baseDir.
   if (!target.startsWith(resolve(baseDir) + '/')) return null;
   return target;
 }
@@ -448,11 +449,23 @@ function readConcept(slug: string): ConceptFM | null {
   };
 }
 
+function walkMdSync(dir: string): string[] {
+  if (!existsSync(dir)) return [];
+  const out: string[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = resolve(dir, e.name);
+    if (e.isDirectory()) out.push(...walkMdSync(p));
+    else if (e.name.endsWith('.md')) out.push(p);
+  }
+  return out;
+}
+
 function listAllConcepts(): ConceptFM[] {
-  if (!existsSync(CONCEPTS_DIR)) return [];
-  return readdirSync(CONCEPTS_DIR)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => readConcept(f.replace(/\.md$/, '')))
+  return walkMdSync(CONCEPTS_DIR)
+    .map((abs) => {
+      const rel = abs.slice(resolve(CONCEPTS_DIR).length + 1).replace(/\.md$/, '').split(/[\\/]/).join('/');
+      return readConcept(rel);
+    })
     .filter((c): c is ConceptFM => c !== null);
 }
 
@@ -491,7 +504,7 @@ export function buildNotePrompt(pageSlug: string, collection: 'concepts' | 'prob
 - (1~2 bullets) 다음에 복습할 때 짚어봐야 할 핵심 — 단순 사실 외울 거리보다 패턴/원리 위주.
 
 ## ➡️ 다음 학습 권장
-- (1~2 bullets) 위 페이지 컨텍스트의 prerequisites/enables를 활용해서 **다음 학습 단계** 한두 개 제안. 마크다운 링크 형식 \`[근의_공식](/concepts/근의_공식)\` 으로 wiki 링크를 걸어주세요.
+- (1~2 bullets) 위 페이지 컨텍스트의 prerequisites/enables를 활용해서 **다음 학습 단계** 한두 개 제안. 마크다운 링크 형식 \`[근의 공식](/concepts/algebra/근의_공식)\` 처럼 위에 나열된 slug(예: \`algebra/근의_공식\`)를 그대로 path 에 넣어주세요.
 
 **제약**:
 - 정답 자체를 통째로 노출하지 말 것 — 풀이의 핵심 통찰과 패턴 위주로 (Socratic 원칙 유지).
@@ -721,7 +734,7 @@ function buildProblemPrompt(slug: string): { systemPrompt: string; pageTitle: st
   );
   const imageAbs = imageAbsPaths[0] ?? null;
   const imageDir = imageAbs ? imageAbs.replace(/\/[^/]+$/, '') : null;
-  const conceptSlugs: string[] = (fm.concepts ?? []).map((c: string) => c.split('/').pop()?.replace(/\.md$/, '') ?? '').filter(Boolean);
+  const conceptSlugs: string[] = (fm.concepts ?? []).map((c: string) => slugOf(c)).filter(Boolean);
   const conceptInfo = conceptSlugs.slice(0, 6).map((s) => {
     const c = readConcept(s);
     return c ? `  - ${c.slug} (${c.concept_type}, mastery=${c.mastery})` : `  - ${s}`;
@@ -864,7 +877,7 @@ ${catalog.slice(0, 12000)}
 ${masterySummary}
 
 --- 튜터 길잡이 원칙 ---
-1. **항상 wiki 링크로 답변**. 단원/spoke를 추천할 땐 \`[근의 공식](/concepts/근의_공식)\` 형식의 markdown 링크 사용. 문제는 \`[2025 수능 미적분 30번](/problems/2025_수능_미적분_30)\` 형식.
+1. **항상 wiki 링크로 답변**. 단원/spoke 를 추천할 땐 위 \"전체 노드 카탈로그\" 의 slug 를 그대로 path 에 박아 \`[근의 공식](/concepts/algebra/근의_공식)\` 형식의 markdown 링크 사용. 문제는 \`[2025 수능 미적분 30번](/problems/2025_수능_미적분_30)\` 형식 (problems 는 추후 sub-dir 진입 예정 — 그때까지는 단일 slug 유지).
 2. 학생이 "삼각함수 잘 모르겠어" 같이 막연히 물으면:
    (a) 그 단원의 prereq 체인을 거꾸로 따라가서 가장 기초적인 미숙 노드 식별
    (b) 학습 순서를 위상정렬로 제시 (3-5단계, 각 단계마다 단원 링크)
