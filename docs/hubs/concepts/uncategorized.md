@@ -10,7 +10,7 @@ counts:
 
 # 미분류 (uncategorized)
 
-이 도메인의 모든 concept 노드 (118개). 상위: [concepts hub](../concepts.md).
+총 118개 concept 노드. 상위: [concepts hub](../concepts.md).
 
 ## 정의 (118)
 

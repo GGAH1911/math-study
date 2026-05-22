@@ -49,9 +49,9 @@ graph TD
 **판정**: 가장 깊은 미숙 노드 = **극한** (depth=1, mastery=unknown).
 
 **자동 보고**:
-> 이 문제 오답의 근본 원인 후보: **[극한](../concepts/functions/극한.md)** (mastery=unknown).
+> 이 문제 오답의 근본 원인 후보: **[극한](../concepts/functions/math-2/극한.md)** (mastery=unknown).
 > 선행 사슬: `극한 → 미분계수 → 문제`.
-> 우선 학습 권장: [극한 정의](../concepts/functions/극한.md) → 부정형 $\tfrac{0}{0}$ 처리법(인수분해·약분) 확인 후 미분계수의 정의식으로 복귀.
+> 우선 학습 권장: [극한 정의](../concepts/functions/math-2/극한.md) → 부정형 $\tfrac{0}{0}$ 처리법(인수분해·약분) 확인 후 미분계수의 정의식으로 복귀.
 
 ## 후속 조치
 
@@ -70,4 +70,4 @@ graph TD
 ## 메타
 
 - 매핑 문제: [tangent_secant_smoke](../problems/tangent_secant_smoke.md)
-- 매핑 root 구멍: [극한](../concepts/functions/극한.md)
+- 매핑 root 구멍: [극한](../concepts/functions/math-2/극한.md)

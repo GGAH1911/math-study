@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T01:16:42.490Z",
+  "generatedAt": "2026-05-22T03:51:04.165Z",
   "entropy": 0,
   "thresholds": {
     "flatWarn": 50,
@@ -9,28 +9,68 @@
   },
   "flatDirs": [
     {
-      "rel": "docs/concepts/algebra",
-      "count": 253
+      "rel": "docs/concepts/algebra/high-1",
+      "count": 52
     },
     {
-      "rel": "docs/concepts/equations",
-      "count": 166
+      "rel": "docs/concepts/algebra/math-1",
+      "count": 84
     },
     {
-      "rel": "docs/concepts/functions",
-      "count": 1137
+      "rel": "docs/concepts/equations/high-1",
+      "count": 63
     },
     {
-      "rel": "docs/concepts/geometry",
-      "count": 737
+      "rel": "docs/concepts/equations/middle-2",
+      "count": 51
     },
     {
-      "rel": "docs/concepts/logic",
-      "count": 60
+      "rel": "docs/concepts/functions/calculus",
+      "count": 444
     },
     {
-      "rel": "docs/concepts/probability-stats",
-      "count": 318
+      "rel": "docs/concepts/functions/high-1",
+      "count": 72
+    },
+    {
+      "rel": "docs/concepts/functions/math-1",
+      "count": 315
+    },
+    {
+      "rel": "docs/concepts/functions/math-2",
+      "count": 167
+    },
+    {
+      "rel": "docs/concepts/functions/middle-3",
+      "count": 99
+    },
+    {
+      "rel": "docs/concepts/geometry/geometry-elective",
+      "count": 348
+    },
+    {
+      "rel": "docs/concepts/geometry/high-1",
+      "count": 81
+    },
+    {
+      "rel": "docs/concepts/geometry/middle-1",
+      "count": 76
+    },
+    {
+      "rel": "docs/concepts/geometry/middle-2",
+      "count": 68
+    },
+    {
+      "rel": "docs/concepts/geometry/middle-3",
+      "count": 152
+    },
+    {
+      "rel": "docs/concepts/logic/high-1",
+      "count": 59
+    },
+    {
+      "rel": "docs/concepts/probability-stats/prob-stats-elective",
+      "count": 280
     },
     {
       "rel": "docs/concepts/uncategorized",
@@ -40,24 +80,32 @@
   "flatHardCount": 0,
   "congestedHubs": [
     {
-      "path": "hubs/concepts/algebra.md",
-      "links": 254
+      "path": "hubs/concepts/functions/calculus.md",
+      "links": 446
     },
     {
-      "path": "hubs/concepts/equations.md",
-      "links": 167
+      "path": "hubs/concepts/functions/math-1.md",
+      "links": 317
     },
     {
-      "path": "hubs/concepts/functions.md",
-      "links": 1138
+      "path": "hubs/concepts/functions/math-2.md",
+      "links": 169
     },
     {
-      "path": "hubs/concepts/geometry.md",
-      "links": 738
+      "path": "hubs/concepts/functions/middle-3.md",
+      "links": 101
     },
     {
-      "path": "hubs/concepts/probability-stats.md",
-      "links": 319
+      "path": "hubs/concepts/geometry/geometry-elective.md",
+      "links": 350
+    },
+    {
+      "path": "hubs/concepts/geometry/middle-3.md",
+      "links": 154
+    },
+    {
+      "path": "hubs/concepts/probability-stats/prob-stats-elective.md",
+      "links": 282
     },
     {
       "path": "hubs/concepts/uncategorized.md",
