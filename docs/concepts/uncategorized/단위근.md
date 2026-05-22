@@ -3,6 +3,7 @@ sources: []
 created: 2026-05-17
 updated: 2026-05-17
 concept_type: definition
+domain: 수와식
 prerequisites: [docs/concepts/algebra/math-1/지수와_로그.md]
 enables: []
 mastery: unknown

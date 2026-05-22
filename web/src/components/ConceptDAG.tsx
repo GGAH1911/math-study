@@ -218,7 +218,16 @@ function dagreLayout(
 }
 
 function Inner({ data, variant = 'full', highlight }: Props) {
-  const [selected, setSelected] = useState<string | null>(highlight ?? null);
+  // graph.astro uses prerender=true, which means Astro.url.searchParams
+  // isn't read per-request — so the `highlight` prop from the server is
+  // always undefined. Fall back to reading the URL on the client.
+  const effectiveHighlight = useMemo(() => {
+    if (highlight) return highlight;
+    if (typeof window === 'undefined') return undefined;
+    const p = new URLSearchParams(window.location.search);
+    return p.get('highlight') ?? p.get('node') ?? undefined;
+  }, [highlight]);
+  const [selected, setSelected] = useState<string | null>(effectiveHighlight ?? null);
   const [masteryFilter, setMasteryFilter] = useState<Set<string>>(
     new Set(['unknown', 'learning', 'proficient', 'mastered']),
   );
@@ -605,9 +614,9 @@ function Inner({ data, variant = 'full', highlight }: Props) {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      if (highlight) {
+      if (effectiveHighlight) {
         // Only the explicit ?highlight=... param flies the camera.
-        goto(highlight);
+        goto(effectiveHighlight);
       } else {
         rf.fitView({ padding: 0.2, duration: 400 });
       }
@@ -616,7 +625,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     // goto intentionally excluded — we don't want this to re-fire on
     // every render of goto's closure deps.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rf, highlight]);
+  }, [rf, effectiveHighlight]);
 
   // (No automatic camera fit on expand/collapse — the user explicitly
   // doesn't want the view to fly around. Press `f` to manually fit.)
