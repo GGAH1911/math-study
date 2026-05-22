@@ -172,7 +172,7 @@ const PREVIEW_COUNT = 8;
               return (
                 <li class="flex items-center gap-2">
                   <span class={`text-[10px] px-1.5 py-0.5 rounded border ${t.cls} shrink-0`}>{t.text}</span>
-                  <a class="text-[color:var(--color-accent)] hover:underline truncate flex-1" href={`/problems/${encodeURIComponent(p.slug)}`}>
+                  <a class="text-[color:var(--color-accent)] hover:underline truncate flex-1" href={`/problems/${p.slug}`}>
                     {problemLabel(p)}
                   </a>
                   {p.score && <span class="text-[10px] text-zinc-500 tabular-nums">{p.score}점</span>}
@@ -189,7 +189,7 @@ const PREVIEW_COUNT = 8;
                   return (
                     <li class="flex items-center gap-2">
                       <span class={`text-[10px] px-1.5 py-0.5 rounded border ${t.cls} shrink-0`}>{t.text}</span>
-                      <a class="text-[color:var(--color-accent)] hover:underline truncate flex-1" href={`/problems/${encodeURIComponent(p.slug)}`}>
+                      <a class="text-[color:var(--color-accent)] hover:underline truncate flex-1" href={`/problems/${p.slug}`}>
                         {problemLabel(p)}
                       </a>
                       {p.score && <span class="text-[10px] text-zinc-500 tabular-nums">{p.score}점</span>}

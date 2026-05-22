@@ -80,15 +80,16 @@ function addMapping(conceptSlug, brief, via) {
   return true;
 }
 
-const problemFiles = readdirSync(PROBLEMS_DIR).filter((f) => f.endsWith('.md'));
-for (const fname of problemFiles) {
+const problemFiles = walkMd(PROBLEMS_DIR);
+for (const file of problemFiles) {
   totalProblems++;
-  const file = join(PROBLEMS_DIR, fname);
   const raw = readFileSync(file, 'utf-8');
   const { data: fm } = matter(raw);
   const src = fm.source || {};
+  // sub-dir 진입 후의 slug — '2025/수능/2025_수능_미적분_30' 형식.
+  const relSlug = relative(PROBLEMS_DIR, file).replace(/\.md$/, '').split(/[\\/]/).join('/');
   const brief = {
-    slug: basename(fname, '.md'),
+    slug: relSlug,
     year: src.year ?? null,
     exam_type: src.exam_type ?? null,
     session: src.session ?? null,

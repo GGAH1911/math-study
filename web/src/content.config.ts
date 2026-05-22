@@ -30,7 +30,7 @@ const concepts = defineCollection({
 });
 
 const problems = defineCollection({
-  loader: glob({ pattern: '*.md', base: '../docs/problems' }),
+  loader: glob({ pattern: '**/*.md', base: '../docs/problems' }),
   schema: z.object({
     sources: z.array(z.string()).optional().default([]),
     created: z.coerce.date().optional(),

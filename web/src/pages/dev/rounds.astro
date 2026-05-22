@@ -34,10 +34,19 @@ type RoundStats = {
 
 const rounds: Record<RoundKey, RoundStats> = {};
 
-const files = readdirSync(PROBLEMS_DIR).filter((f) => f.endsWith('.md'));
-for (const fname of files) {
+function walkMdRec(dir: string, out: string[] = []): string[] {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) walkMdRec(p, out);
+    else if (e.name.endsWith('.md')) out.push(p);
+  }
+  return out;
+}
+const files = walkMdRec(PROBLEMS_DIR);
+for (const fullPath of files) {
+  const fname = fullPath.split('/').pop() ?? fullPath;
   if (fname.includes('검정고시')) continue;     // 별도 인제스트 라인
-  const text = readFileSync(join(PROBLEMS_DIR, fname), 'utf-8');
+  const text = readFileSync(fullPath, 'utf-8');
   const { data: fm } = matter(text);
   const src = (fm.source ?? {}) as Record<string, unknown>;
   const year = String(src.year ?? '?');

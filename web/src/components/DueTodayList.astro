@@ -24,8 +24,8 @@ const problems = await getCollection('problems');
 for (const p of problems) {
   if (p.data.next_review && new Date(p.data.next_review) <= today) {
     rows.push({
-      href: `/problems/${encodeURIComponent(p.id)}`,
-      title: p.id,
+      href: `/problems/${p.id}`,
+      title: p.id.split('/').pop() ?? p.id,
       collection: 'problem',
       chip: p.data.status,
       chipClass: `chip-status-${p.data.status}`,

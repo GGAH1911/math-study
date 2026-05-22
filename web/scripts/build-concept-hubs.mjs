@@ -6,10 +6,12 @@
 // 모든 concept 가 자기 sub-hub 에서 link 되므로 isolated 해소.
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import matter from 'gray-matter';
 
-const ROOT = path.resolve('docs');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..', '..', 'docs');
 const CONCEPTS_DIR = path.join(ROOT, 'concepts');
 const HUBS_DIR = path.join(ROOT, 'hubs');
 const HUBS_CONCEPTS_DIR = path.join(HUBS_DIR, 'concepts');

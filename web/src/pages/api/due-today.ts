@@ -64,11 +64,20 @@ export const GET: APIRoute = async ({ url }) => {
   }), { status: 200, headers: { 'Content-Type': 'application/json' } });
 };
 
+// slug regex 로 'YYYY_round_subject_N' → sub-dir path 'YYYY/round/YYYY_round_subject_N'
+// 합성 (DB 는 flat path 유지 — Phase B 의 sub-dir migration 후 client URL 만 path-aware).
+const SUBJECT_RE = /^(\d{4})_(.+)_(?:공통|기하|미적분|확률과통계|단일)_\d+$/;
+function pathAwareSlug(flatSlug: string): string {
+  const m = flatSlug.match(SUBJECT_RE);
+  return m ? `${m[1]}/${m[2]}/${flatSlug}` : flatSlug;
+}
+
 function toCard(r: Row) {
-  const slug = r.frontmatter_path.replace(/^docs\/problems\//, '').replace(/\.md$/, '');
+  const flat = r.frontmatter_path.replace(/^docs\/problems\//, '').replace(/\.md$/, '');
+  const slug = pathAwareSlug(flat);
   return {
     slug,
-    href: `/problems/${encodeURIComponent(slug)}`,
+    href: `/problems/${slug}`,
     subject: r.subject,
     number: r.number,
     unit: r.unit_slug,

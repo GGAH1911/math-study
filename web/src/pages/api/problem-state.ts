@@ -8,11 +8,19 @@ import sql, { SINGLE_USER_ID } from '../../lib/db.ts';
 
 export const prerender = false;
 
-const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_-]+$/;
+// sub-dir slug ('2025/수능/2025_수능_미적분_30') 허용. `..` / `\` 차단.
+const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$/;
+
+// DB 의 frontmatter_path 는 여전히 `docs/problems/<basename>.md` (flat) 이므로
+// sub-dir slug 가 들어오면 basename 만 추출해서 lookup.
+function basenameOf(slug: string): string {
+  return slug.split('/').pop() ?? slug;
+}
 
 async function findProblemId(slug: string): Promise<string | null> {
+  const base = basenameOf(slug);
   const rows = await sql<{ id: string }[]>`
-    SELECT id FROM problems WHERE frontmatter_path = ${`docs/problems/${slug}.md`} LIMIT 1
+    SELECT id FROM problems WHERE frontmatter_path = ${`docs/problems/${base}.md`} LIMIT 1
   `;
   return rows[0]?.id ?? null;
 }

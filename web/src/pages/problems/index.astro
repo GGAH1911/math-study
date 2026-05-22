@@ -23,8 +23,8 @@ problems.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
           return (
             <li>
               <ConceptCard
-                href={`/problems/${encodeURIComponent(p.id)}`}
-                title={p.id}
+                href={`/problems/${p.id}`}
+                title={p.id.split('/').pop() ?? p.id}
                 chips={[
                   { label: p.data.status, class: `chip-status-${p.data.status}` },
                   ...(p.data.difficulty ? [{ label: p.data.difficulty, class: '' }] : []),

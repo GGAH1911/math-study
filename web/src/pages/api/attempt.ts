@@ -12,7 +12,9 @@ import { answersMatch, nextSrsState } from '../../lib/srs.ts';
 
 export const prerender = false;
 
-const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_-]+$/;
+// sub-dir slug ('2025/수능/2025_수능_미적분_30') 허용. DB lookup 은 basename 만.
+const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$/;
+function basenameOf(s: string): string { return s.split('/').pop() ?? s; }
 
 type AttemptBody = {
   slug: string;
@@ -37,12 +39,13 @@ export const POST: APIRoute = async ({ request }) => {
       (typeof timeTakenSec !== 'number' || timeTakenSec < 0 || timeTakenSec > 36000))
     return json({ error: 'invalid timeTakenSec' }, 400);
 
-  // The problems.frontmatter_path stores `docs/problems/{slug}.md`.
-  // We use that to find the row — slug uniquely identifies it.
+  // problems.frontmatter_path stores `docs/problems/{basename}.md` (flat — pre sub-dir migration).
+  // slug 가 sub-dir 포함이면 basename 만 추출해 DB lookup.
+  const base = basenameOf(slug);
   const rows = await sql<{ id: string; answer: string | null }[]>`
     SELECT id, answer
       FROM problems
-     WHERE frontmatter_path = ${`docs/problems/${slug}.md`}
+     WHERE frontmatter_path = ${`docs/problems/${base}.md`}
      LIMIT 1
   `;
   if (rows.length === 0) return json({ error: 'problem not found' }, 404);
