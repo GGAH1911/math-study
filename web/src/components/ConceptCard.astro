@@ -2,30 +2,65 @@
 interface Props {
   href: string;
   title: string;
+  subtitle?: string;
+  graphHref?: string;
   chips?: Array<{ label: string; class: string }>;
   meta?: Array<{ key: string; value: string }>;
   description?: string;
+  emphasized?: boolean;
 }
-const { href, title, chips = [], meta = [], description } = Astro.props;
+const { href, title, subtitle, graphHref, chips = [], meta = [], description, emphasized = false } = Astro.props;
 ---
-<a href={href} class="card card-link block">
-  <div class="flex items-start justify-between gap-3">
-    <h3 class="text-base font-semibold leading-snug">{title}</h3>
-    <div class="flex flex-wrap gap-1 justify-end">
-      {chips.map((c) => <span class={`chip ${c.class}`}>{c.label}</span>)}
+<article class:list={["concept-card card relative", emphasized && "concept-card-unit"]}>
+  <a href={href} class="block">
+    <div class="flex items-start justify-between gap-3">
+      <div class="min-w-0 flex-1">
+        <h3 class={`font-semibold leading-snug ${emphasized ? 'text-lg' : 'text-base'}`}>{title}</h3>
+        {subtitle && (
+          <p class="text-[10px] font-mono text-[color:var(--color-subtle)] mt-0.5 truncate">{subtitle}</p>
+        )}
+      </div>
+      <div class="flex flex-wrap gap-1 justify-end shrink-0">
+        {chips.map((c) => <span class={`chip ${c.class}`}>{c.label}</span>)}
+      </div>
     </div>
-  </div>
-  {description && (
-    <p class="text-sm text-[color:var(--color-muted)] mt-2 line-clamp-2">{description}</p>
+    {description && (
+      <p class="text-sm text-[color:var(--color-muted)] mt-2 line-clamp-2">{description}</p>
+    )}
+    {meta.length > 0 && (
+      <dl class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-[color:var(--color-subtle)]">
+        {meta.map((m) => (
+          <div class="flex justify-between gap-2">
+            <dt class="uppercase tracking-wider">{m.key}</dt>
+            <dd class="text-[color:var(--color-muted)] truncate text-right">{m.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
+  </a>
+  {graphHref && (
+    <a
+      href={graphHref}
+      class="absolute top-2 right-2 size-6 rounded-md grid place-items-center text-[color:var(--color-subtle)] hover:text-[color:var(--color-fg)] hover:bg-[color:var(--color-surface)] transition"
+      title="그래프에서 보기"
+      aria-label="그래프에서 보기"
+    >
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="4" cy="4" r="2"/><circle cx="12" cy="8" r="2"/><circle cx="4" cy="12" r="2"/>
+        <path d="M6 5l4 2M6 11l4-2"/>
+      </svg>
+    </a>
   )}
-  {meta.length > 0 && (
-    <dl class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-[color:var(--color-subtle)]">
-      {meta.map((m) => (
-        <div class="flex justify-between gap-2">
-          <dt class="uppercase tracking-wider">{m.key}</dt>
-          <dd class="text-[color:var(--color-muted)] truncate text-right">{m.value}</dd>
-        </div>
-      ))}
-    </dl>
-  )}
-</a>
+</article>
+
+<style>
+.concept-card {
+  --hover-border: color-mix(in oklab, var(--color-primary, #3b82f6) 50%, transparent);
+}
+.concept-card:hover {
+  border-color: var(--hover-border);
+}
+.concept-card-unit {
+  border-left-width: 3px;
+}
+</style>

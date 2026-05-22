@@ -2,99 +2,219 @@
 export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ConceptCard from '../../components/ConceptCard.astro';
+import ConceptFilters from '../../components/ConceptFilters.tsx';
 import { getCollection } from 'astro:content';
 
-const DOMAIN_ORDER = ['수와식', '방정식', '함수', '도형', '확률통계', '논리'];
-const DOMAIN_COLOR: Record<string, string> = {
-  '수와식':   '#f59e0b',
-  '방정식':   '#ef4444',
-  '함수':     '#3b82f6',
-  '도형':     '#22d3ee',
-  '확률통계': '#ec4899',
-  '논리':     '#a78bfa',
-};
-const GRADE_COLOR: Record<string, string> = {
-  '중1': '#94a3b8', '중2': '#64748b', '중3': '#475569',
-  '고1': '#a78bfa', '수학1': '#8b5cf6', '수학2': '#7c3aed',
-  '미적분': '#6d28d9', '기하': '#22d3ee', '확률과통계': '#ec4899',
-};
+import {
+  DOMAIN_ORDER,
+  DOMAIN_COLOR,
+  TYPE_LABEL_KO,
+  TYPE_ICON,
+  GRADE_ORDER,
+  MASTERY_ORDER,
+  MASTERY_LABEL_KO,
+} from '../../lib/concept-meta';
+import summariesJson from '../../data/concept-summaries.json';
+import graphJson from '../../data/concept-graph.json';
+
+const summaries: Record<string, string> = (summariesJson as any).summaries ?? {};
+const homeUnitById = new Map<string, string | null>();
+for (const n of (graphJson as any).nodes) {
+  homeUnitById.set(n.id, n.home_unit ?? null);
+}
 
 const concepts = await getCollection('concepts');
-
-// Group by domain (학습 본질) — grade is shown as secondary chip
-const byDomain: Record<string, typeof concepts> = {};
-for (const c of concepts) {
-  const d = c.data.domain ?? 'misc';
-  (byDomain[d] ??= []).push(c);
-}
-for (const d of Object.keys(byDomain)) {
-  byDomain[d].sort((a, b) => {
-    // units first, then alphabetical
-    const au = a.data.concept_type === 'unit' ? 0 : 1;
-    const bu = b.data.concept_type === 'unit' ? 0 : 1;
-    if (au !== bu) return au - bu;
-    return a.id.localeCompare(b.id, 'ko-KR');
-  });
-}
 
 const byMastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 } as Record<string, number>;
 for (const c of concepts) byMastery[c.data.mastery]++;
 const byType = { unit: 0, definition: 0, theorem: 0, lemma: 0, example: 0 } as Record<string, number>;
 for (const c of concepts) byType[c.data.concept_type]++;
+const byGrade: Record<string, number> = {};
+for (const c of concepts) if (c.data.grade) byGrade[c.data.grade] = (byGrade[c.data.grade] ?? 0) + 1;
+const byDomain: Record<string, number> = {};
+for (const c of concepts) {
+  const d = c.data.domain ?? 'misc';
+  byDomain[d] = (byDomain[d] ?? 0) + 1;
+}
 
+// Group: domain → unit → [unit card, then spokes belonging to that unit].
+// Spokes without a resolvable home unit fall into a per-domain "기타" bucket
+// shown after all units.
+type C = (typeof concepts)[number];
+const byDomainNodes: Record<string, C[]> = {};
+for (const c of concepts) {
+  const d = c.data.domain ?? 'misc';
+  (byDomainNodes[d] ??= []).push(c);
+}
 const orderedDomains = [
-  ...DOMAIN_ORDER.filter((d) => byDomain[d]),
-  ...Object.keys(byDomain).filter((d) => !DOMAIN_ORDER.includes(d)),
+  ...DOMAIN_ORDER.filter((d) => byDomainNodes[d]),
+  ...Object.keys(byDomainNodes).filter((d) => !DOMAIN_ORDER.includes(d as any)),
 ];
+
+type Group = { unitId: string | null; unit: C | null; spokes: C[] };
+function groupByUnit(items: C[]): Group[] {
+  const unitsHere = items.filter((c) => c.data.concept_type === 'unit');
+  unitsHere.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
+  const groups: Group[] = unitsHere.map((u) => ({ unitId: u.id, unit: u, spokes: [] }));
+  const idxByUnit = new Map(groups.map((g, i) => [g.unitId!, i]));
+  const orphans: C[] = [];
+  for (const c of items) {
+    if (c.data.concept_type === 'unit') continue;
+    const home = homeUnitById.get(c.id);
+    if (home && idxByUnit.has(home)) {
+      groups[idxByUnit.get(home)!].spokes.push(c);
+    } else {
+      orphans.push(c);
+    }
+  }
+  for (const g of groups) {
+    g.spokes.sort((a, b) => {
+      // definitions first (학습 시작점), then theorems, lemmas, examples
+      const order = { definition: 0, theorem: 1, lemma: 2, example: 3 } as Record<string, number>;
+      const ta = order[a.data.concept_type] ?? 9;
+      const tb = order[b.data.concept_type] ?? 9;
+      if (ta !== tb) return ta - tb;
+      return a.id.localeCompare(b.id, 'ko-KR');
+    });
+  }
+  if (orphans.length) {
+    orphans.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
+    groups.push({ unitId: null, unit: null, spokes: orphans });
+  }
+  return groups;
+}
+
+const groupedByDomain: Record<string, Group[]> = {};
+for (const d of orderedDomains) groupedByDomain[d] = groupByUnit(byDomainNodes[d]);
+
+function cardProps(c: C, options: { emphasized?: boolean } = {}) {
+  const path = c.id.includes('/') ? c.id.slice(0, c.id.lastIndexOf('/')) : '';
+  const label = (c.id.split('/').pop() ?? c.id).replace(/_/g, ' ');
+  const typeKo = TYPE_LABEL_KO[c.data.concept_type] ?? c.data.concept_type;
+  const masteryKo = MASTERY_LABEL_KO[c.data.mastery] ?? c.data.mastery;
+  return {
+    href: `/concepts/${c.id}`,
+    graphHref: `/graph?highlight=${encodeURIComponent(c.id)}`,
+    title: label,
+    subtitle: path,
+    emphasized: options.emphasized,
+    description: summaries[c.id],
+    chips: [
+      { label: masteryKo, class: `chip-mastery-${c.data.mastery}` },
+      { label: typeKo, class: '' },
+      ...(c.data.grade ? [{ label: c.data.grade, class: '' }] : []),
+    ],
+  };
+}
+
+function dataAttrs(c: C) {
+  const label = (c.id.split('/').pop() ?? c.id).replace(/_/g, ' ');
+  return {
+    'data-mastery': c.data.mastery,
+    'data-domain': c.data.domain ?? 'misc',
+    'data-grade': c.data.grade ?? '',
+    'data-type': c.data.concept_type,
+    'data-label': label.toLowerCase(),
+    'data-id': c.id.toLowerCase(),
+    'data-unit': (c.data.unit ?? '').toLowerCase(),
+  };
+}
+
+// Used by the filter island to populate option chips. Keeps order
+// consistent with the rest of the UI.
+const filterOptions = {
+  masteries: MASTERY_ORDER.map((m) => ({
+    key: m,
+    label: MASTERY_LABEL_KO[m] ?? m,
+    count: byMastery[m] ?? 0,
+  })),
+  domains: orderedDomains.map((d) => ({
+    key: d,
+    label: d === 'misc' ? '기타' : d,
+    color: DOMAIN_COLOR[d] ?? '#71717a',
+    count: byDomain[d] ?? 0,
+  })),
+  grades: GRADE_ORDER.filter((g) => byGrade[g]).map((g) => ({
+    key: g,
+    label: g,
+    count: byGrade[g],
+  })),
+};
 ---
 <BaseLayout title="Concepts">
-  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+  <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
     <header class="space-y-3">
-      <h1 class="text-2xl font-semibold tracking-tight">Concepts <span class="text-xs text-[color:var(--color-muted)] font-normal">— 도메인별</span></h1>
+      <h1 class="text-2xl font-semibold tracking-tight">
+        Concepts
+        <span class="text-xs text-[color:var(--color-muted)] font-normal">— 도메인 → 단원 → spoke</span>
+      </h1>
       <p class="text-sm text-[color:var(--color-muted)]">
-        {concepts.length}개 노드 · unit {byType.unit} / definition {byType.definition} / theorem {byType.theorem} / example {byType.example}
+        {concepts.length}개 노드 · 단원 {byType.unit} / 정의 {byType.definition} / 정리 {byType.theorem} / 예제 {byType.example}
       </p>
-      <div class="flex items-center gap-2 text-xs flex-wrap">
-        <span class="chip chip-mastery-unknown">unknown {byMastery.unknown}</span>
-        <span class="chip chip-mastery-learning">learning {byMastery.learning}</span>
-        <span class="chip chip-mastery-proficient">proficient {byMastery.proficient}</span>
-        <span class="chip chip-mastery-mastered">mastered {byMastery.mastered}</span>
-      </div>
     </header>
+
+    <ConceptFilters client:load options={filterOptions} totalConcepts={concepts.length} />
 
     {concepts.length === 0 ? (
       <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 개념이 없습니다.</p>
     ) : (
       orderedDomains.map((d) => (
-        <section class="space-y-3">
+        <section class="concept-domain-section space-y-3" data-domain-section={d}>
           <header class="flex items-baseline gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">
             <h2 class="text-base font-semibold flex items-center gap-2">
               <span class="size-2.5 rounded-full inline-block" style={`background:${DOMAIN_COLOR[d] ?? '#71717a'}`}></span>
-              {d}
+              {d === 'misc' ? '기타' : d}
             </h2>
-            <span class="text-xs text-[color:var(--color-muted)]">{byDomain[d].length}개 노드 ({byDomain[d].filter(c => c.data.concept_type === 'unit').length} units)</span>
+            <span class="text-xs text-[color:var(--color-muted)]">
+              {byDomainNodes[d].length}개 노드
+              ({groupedByDomain[d].filter((g) => g.unit).length} 단원)
+            </span>
           </header>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {byDomain[d].map((c) => (
-              <li>
-                <ConceptCard
-                  href={`/concepts/${c.id}`}
-                  title={c.id.replace(/_/g, ' ')}
-                  chips={[
-                    { label: c.data.mastery, class: `chip-mastery-${c.data.mastery}` },
-                    { label: c.data.concept_type, class: '' },
-                    ...(c.data.grade ? [{ label: c.data.grade, class: '' }] : []),
+
+          {groupedByDomain[d].map((g) => (
+            <div class="concept-unit-group space-y-2">
+              {g.unit && (
+                <div class="concept-card-wrap" {...dataAttrs(g.unit)}>
+                  <ConceptCard {...cardProps(g.unit, { emphasized: true })} />
+                </div>
+              )}
+              {g.spokes.length > 0 && (
+                <ul
+                  class:list={[
+                    "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3",
+                    g.unit && "ml-0 md:ml-6 border-l-2 border-[color:var(--color-border)]/40 pl-3 md:pl-4",
                   ]}
-                  meta={[
-                    { key: '선수', value: c.data.prerequisites.length > 0 ? c.data.prerequisites.map((p) => p.split('/').pop()?.replace(/\.md$/, '').replace(/_/g, ' ')).join(', ') : '—' },
-                    { key: '다음', value: c.data.enables.length > 0 ? c.data.enables.map((p) => p.split('/').pop()?.replace(/\.md$/, '').replace(/_/g, ' ')).join(', ') : '—' },
-                  ]}
-                />
-              </li>
-            ))}
-          </ul>
+                  data-unit-spokes={g.unitId ?? 'orphan'}
+                >
+                  {g.spokes.map((c) => (
+                    <li class="concept-card-wrap" {...dataAttrs(c)}>
+                      <ConceptCard {...cardProps(c)} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {!g.unit && g.spokes.length > 0 && (
+                <p class="text-[11px] text-[color:var(--color-subtle)] -mt-1">기타 (단원 미연결)</p>
+              )}
+            </div>
+          ))}
         </section>
       ))
     )}
   </div>
 </BaseLayout>
+
+<style>
+  /* Browser skips layout/paint for off-screen sections. Each section is
+     2789 cards-worth of work otherwise, so this keeps initial paint fast. */
+  .concept-domain-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 800px 4000px;
+  }
+  /* Filter-driven hide: keeps the DOM but takes the card out of flow. */
+  :global(.concept-card-wrap.filtered-out),
+  :global(.concept-domain-section.filtered-out),
+  :global(.concept-unit-group.filtered-out) {
+    display: none !important;
+  }
+</style>

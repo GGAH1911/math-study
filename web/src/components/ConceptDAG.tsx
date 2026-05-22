@@ -14,6 +14,15 @@ import {
   useReactFlow,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import {
+  MASTERY_COLOR,
+  TYPE_LABEL_KO,
+  TYPE_ICON,
+  GRADE_ORDER,
+  GRADE_COLOR,
+  DOMAIN_ORDER,
+  DOMAIN_COLOR,
+} from '../lib/concept-meta';
 
 type GraphNode = {
   id: string;
@@ -53,24 +62,10 @@ type Props = {
   highlight?: string;
 };
 
-const MASTERY_COLOR: Record<string, string> = {
-  unknown: '#f43f5e',
-  learning: '#f59e0b',
-  proficient: '#10b981',
-  mastered: '#0ea5e9',
-};
-
-const TYPE_LABEL_KO: Record<string, string> = {
-  definition: '정의',
-  theorem: '정리',
-  lemma: '보조정리',
-  example: '예제',
-  unit: '단원',
-};
 // Edge color is keyed off the *other* node's concept_type — i.e. when
 // the user selects a unit, every line leading to a 정의 is blue, to a
 // 정리 is purple, to a 예제 is pink, etc. Makes it visible at a glance
-// what kind of spoke is downstream.
+// what kind of spoke is downstream. Graph-only, so it lives here.
 const TYPE_EDGE_COLOR: Record<string, string> = {
   definition: '#60a5fa', // blue-400
   theorem:    '#c084fc', // purple-400
@@ -81,36 +76,6 @@ const TYPE_EDGE_COLOR: Record<string, string> = {
 // Column order when laying out a unit's expanded spokes: definitions
 // first (학습 흐름의 시작), then theorems, lemmas, examples last.
 const TYPE_COL_ORDER: string[] = ['definition', 'theorem', 'lemma', 'example'];
-const TYPE_ICON: Record<string, string> = {
-  unit: '◆',
-  definition: '○',
-  theorem: '◇',
-  lemma: '△',
-  example: '□',
-};
-
-const GRADE_ORDER = ['중1', '중2', '중3', '고1', '수학1', '수학2', '미적분', '기하', '확률과통계'];
-const GRADE_COLOR: Record<string, string> = {
-  '중1': '#94a3b8',
-  '중2': '#64748b',
-  '중3': '#475569',
-  '고1': '#a78bfa',
-  '수학1': '#8b5cf6',
-  '수학2': '#7c3aed',
-  '미적분': '#6d28d9',
-  '기하': '#22d3ee',
-  '확률과통계': '#ec4899',
-};
-
-const DOMAIN_ORDER = ['수와식', '방정식', '함수', '도형', '확률통계', '논리'];
-const DOMAIN_COLOR: Record<string, string> = {
-  '수와식':   '#f59e0b',  // amber
-  '방정식':   '#ef4444',  // red
-  '함수':     '#3b82f6',  // blue (가장 큰 도메인, 메인)
-  '도형':     '#22d3ee',  // cyan
-  '확률통계': '#ec4899',  // pink
-  '논리':     '#a78bfa',  // violet
-};
 
 type ColorMode = 'domain' | 'mastery' | 'grade';
 

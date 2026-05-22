@@ -39,12 +39,8 @@ const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$
 // 표시용 라벨은 마지막 segment 만
 const prettySlug = (s: string) => (s.split('/').pop() ?? s).replace(/_/g, ' ');
 
-// 타입별 그루핑 — 노드 맵의 라벨/순서와 동일 (ConceptDAG.tsx).
-const TYPE_LABEL: Record<string, string> = {
-  unit: '단원', definition: '정의', theorem: '정리',
-  lemma: '보조정리', example: '예제',
-};
-const TYPE_ORDER: string[] = ['unit', 'definition', 'theorem', 'lemma', 'example'];
+// 타입별 그루핑 — 노드 맵의 라벨/순서와 동일.
+import { TYPE_LABEL_KO as TYPE_LABEL, TYPE_ORDER } from '../../lib/concept-meta';
 
 // 모든 concept frontmatter를 한 번에 로드해 link slug → concept_type 매핑.
 const all = await getCollection('concepts');
