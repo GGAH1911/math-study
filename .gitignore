@@ -17,10 +17,14 @@ web/dist/
 web/.astro/
 web/src/data/concept-graph.json
 web/src/data/concept-summaries.json
+web/src/data/syntheses-by-concept.json
 web/public/assets/
 
 # Editor
 .vscode/
+
+# Claude Code worktrees
+.claude/worktrees/
 
 # Secrets
 .env

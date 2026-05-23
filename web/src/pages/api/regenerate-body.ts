@@ -1,13 +1,37 @@
 import type { APIRoute } from 'astro';
 import { spawn } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { resolve, join } from 'node:path';
 import matter from 'gray-matter';
 
 export const prerender = false;
 
 const WEB_ROOT = process.cwd();
 const DOCS = resolve(WEB_ROOT, '..', 'docs', 'concepts');
+const SYNTHESES_DIR = resolve(WEB_ROOT, '..', 'docs', 'syntheses');
+
+// Pull every synthesis whose frontmatter `origin_concept` points at this
+// concept slug. Used when `useNotes: true` so the regenerated body can
+// reflect what the student actually struggled with / found intuitive
+// during their chat-promote history.
+function loadSynthesesFor(slug: string): { title: string; body: string }[] {
+  if (!existsSync(SYNTHESES_DIR)) return [];
+  const target = `docs/concepts/${slug}.md`;
+  const out: { title: string; body: string }[] = [];
+  for (const f of readdirSync(SYNTHESES_DIR)) {
+    if (!f.endsWith('.md')) continue;
+    const raw = readFileSync(join(SYNTHESES_DIR, f), 'utf-8');
+    const parsed = matter(raw);
+    if (parsed.data?.origin_concept !== target) continue;
+    const titleMatch = parsed.content.match(/^#\s+(.+?)\s*$/m);
+    out.push({
+      title: (titleMatch?.[1] ?? f.replace(/\.md$/, '')).trim(),
+      // 본문 전체를 그대로 — 노트 자체가 짧고(~수백자) LLM 컨텍스트 한도 안.
+      body: parsed.content.trim(),
+    });
+  }
+  return out;
+}
 
 const TUTOR_SYSTEM = `당신은 한국 수능을 준비하는 학생용 수학 wiki의 콘텐츠 라이터입니다.
 한 번에 spoke 페이지(정의/정리/예제) 하나의 '본문' 섹션을 작성합니다.
@@ -27,6 +51,10 @@ const TUTOR_SYSTEM = `당신은 한국 수능을 준비하는 학생용 수학 w
 type RegenerateRequest = {
   slug: string;
   model?: 'haiku' | 'sonnet';
+  // When true, append the user's promoted syntheses for this concept to
+  // the user prompt as personalization hints. Defaults to false to keep
+  // the existing `haiku/sonnet` buttons identical to today's behavior.
+  useNotes?: boolean;
 };
 
 function fmField(text: string, key: string): string {
@@ -41,7 +69,7 @@ function listField(text: string, key: string): string[] {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const { slug, model = 'haiku' } = (await request.json()) as RegenerateRequest;
+  const { slug, model = 'haiku', useNotes = false } = (await request.json()) as RegenerateRequest;
   // sub-dir slug 허용. `..` 와 backslash 차단.
   if (!slug || /\\|\.\./.test(slug) || !/^[\w가-힣/-]+$/.test(slug)) {
     return new Response(JSON.stringify({ error: 'invalid slug' }), { status: 400 });
@@ -70,7 +98,7 @@ export const POST: APIRoute = async ({ request }) => {
   const brief = briefMatch ? briefMatch[1].trim() : '';
   const preLabels = prereqs.map((p) => p.split('/').pop()?.replace(/\.md$/, '').replace(/_/g, ' ')).join(', ') || '없음';
 
-  const userPrompt = `다음 spoke 페이지의 본문을 작성하세요.
+  let userPrompt = `다음 spoke 페이지의 본문을 작성하세요.
 
 페이지 slug: ${slug}
 타입: ${ctype}
@@ -80,6 +108,32 @@ export const POST: APIRoute = async ({ request }) => {
 페이지 요약(1줄): ${brief}
 
 이 spoke를 처음 보는 학생에게 친절하면서도 정확하게 설명해 주세요. h3(###) 이하 헤더만. 출력은 markdown 본문만.`;
+
+  // 학생의 promote된 노트를 컨텍스트로 끼워 넣어 "맞춤형 본문" 생성.
+  // 노트가 0개면 일반 모드와 동일하게 진행.
+  if (useNotes) {
+    const notes = loadSynthesesFor(slug);
+    if (notes.length > 0) {
+      const noteBlock = notes
+        .map((n, i) => `### [노트 ${i + 1}] ${n.title}\n${n.body}`)
+        .join('\n\n---\n\n');
+      userPrompt += `
+
+---
+
+추가 컨텍스트: 이 페이지에서 학생이 LLM 튜터와 대화한 뒤 promote한 학습 노트 ${notes.length}개입니다.
+노트는 학생이 헷갈렸던 부분·와닿은 직관·복습 포인트를 압축한 결과물이라 본문 개인화에 활용 가능합니다.
+
+활용 지침:
+- 표준 본문 구조(### 정확한 진술 / ### 직관 / ### 한 줄 예 등)는 유지.
+- 학생이 노트에서 헷갈렸다고 표시한 지점은 본문에서 추가 설명·예시로 보강.
+- 학생에게 와닿은 직관·비유가 있다면 본문에 자연스럽게 녹임.
+- 노트를 통째로 복붙하지 말 것 — 본문은 wiki 노드, 노트는 학습 기록.
+- 노트와 본문 표준 내용이 충돌하면 표준 내용(정의·정리·교과 표기)이 우선.
+
+${noteBlock}`;
+    }
+  }
 
   return new Promise<Response>((resolveResp) => {
     const child = spawn('claude', [

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-22T03:51:04.165Z",
-  "entropy": 0,
+  "generatedAt": "2026-05-23T06:35:19.734Z",
+  "entropy": 6,
   "thresholds": {
     "flatWarn": 50,
     "flatHard": 1500,
@@ -9,112 +9,99 @@
   },
   "flatDirs": [
     {
-      "rel": "docs/concepts/algebra/high-1",
-      "count": 52
+      "rel": "docs/concepts/algebra/high-1/다항식",
+      "count": 58
     },
     {
-      "rel": "docs/concepts/algebra/math-1",
-      "count": 84
+      "rel": "docs/concepts/algebra/math-1/지수와_로그",
+      "count": 88
     },
     {
-      "rel": "docs/concepts/equations/high-1",
-      "count": 63
-    },
-    {
-      "rel": "docs/concepts/equations/middle-2",
-      "count": 51
-    },
-    {
-      "rel": "docs/concepts/functions/calculus",
-      "count": 444
-    },
-    {
-      "rel": "docs/concepts/functions/high-1",
-      "count": 72
-    },
-    {
-      "rel": "docs/concepts/functions/math-1",
-      "count": 315
-    },
-    {
-      "rel": "docs/concepts/functions/math-2",
-      "count": 167
-    },
-    {
-      "rel": "docs/concepts/functions/middle-3",
-      "count": 99
-    },
-    {
-      "rel": "docs/concepts/geometry/geometry-elective",
-      "count": 348
-    },
-    {
-      "rel": "docs/concepts/geometry/high-1",
-      "count": 81
-    },
-    {
-      "rel": "docs/concepts/geometry/middle-1",
-      "count": 76
-    },
-    {
-      "rel": "docs/concepts/geometry/middle-2",
+      "rel": "docs/concepts/equations/high-1/방정식과_부등식",
       "count": 68
     },
     {
-      "rel": "docs/concepts/geometry/middle-3",
-      "count": 152
+      "rel": "docs/concepts/functions/calculus/도함수의_활용_심화",
+      "count": 175
     },
     {
-      "rel": "docs/concepts/logic/high-1",
-      "count": 59
+      "rel": "docs/concepts/functions/calculus/수열의_극한",
+      "count": 86
     },
     {
-      "rel": "docs/concepts/probability-stats/prob-stats-elective",
-      "count": 280
+      "rel": "docs/concepts/functions/calculus/정적분의_활용",
+      "count": 107
     },
     {
-      "rel": "docs/concepts/uncategorized",
-      "count": 118
+      "rel": "docs/concepts/functions/high-1/함수와_그래프",
+      "count": 74
+    },
+    {
+      "rel": "docs/concepts/functions/math-1/삼각함수",
+      "count": 159
+    },
+    {
+      "rel": "docs/concepts/functions/math-1/수열",
+      "count": 112
+    },
+    {
+      "rel": "docs/concepts/functions/math-2/함수의_극한과_연속",
+      "count": 105
+    },
+    {
+      "rel": "docs/concepts/functions/middle-3/이차함수",
+      "count": 113
+    },
+    {
+      "rel": "docs/concepts/geometry/geometry-elective/공간도형과_공간벡터",
+      "count": 129
+    },
+    {
+      "rel": "docs/concepts/geometry/geometry-elective/이차곡선",
+      "count": 143
+    },
+    {
+      "rel": "docs/concepts/geometry/geometry-elective/평면벡터",
+      "count": 88
+    },
+    {
+      "rel": "docs/concepts/geometry/high-1/도형의_방정식",
+      "count": 92
+    },
+    {
+      "rel": "docs/concepts/geometry/middle-3/원의_성질",
+      "count": 104
+    },
+    {
+      "rel": "docs/concepts/logic/high-1/집합과_명제",
+      "count": 72
+    },
+    {
+      "rel": "docs/concepts/probability-stats/prob-stats-elective/경우의_수",
+      "count": 146
+    },
+    {
+      "rel": "docs/concepts/probability-stats/prob-stats-elective/확률",
+      "count": 95
     }
   ],
   "flatHardCount": 0,
   "congestedHubs": [
-    {
-      "path": "hubs/concepts/functions/calculus.md",
-      "links": 446
-    },
-    {
-      "path": "hubs/concepts/functions/math-1.md",
-      "links": 317
-    },
-    {
-      "path": "hubs/concepts/functions/math-2.md",
-      "links": 169
-    },
-    {
-      "path": "hubs/concepts/functions/middle-3.md",
-      "links": 101
-    },
-    {
-      "path": "hubs/concepts/geometry/geometry-elective.md",
-      "links": 350
-    },
-    {
-      "path": "hubs/concepts/geometry/middle-3.md",
-      "links": 154
-    },
-    {
-      "path": "hubs/concepts/probability-stats/prob-stats-elective.md",
-      "links": 282
-    },
     {
       "path": "hubs/concepts/uncategorized.md",
       "links": 119
     }
   ],
   "congestedHardCount": 0,
-  "isolatedConceptCount": 0,
-  "isolatedConcepts": [],
+  "isolatedConceptCount": 6,
+  "isolatedConcepts": [
+    "functions/calculus/여러가지함수의_극한/0_꼴_극한",
+    "functions/math-1/수열/합과_항의_관계",
+    "functions/math-2/미분/부호_판정",
+    "functions/math-2/적분/도함수와_원함수",
+    "functions/middle-3/이차함수/함수_간의_대소관계",
+    "geometry/middle-3/삼각비/주어진_삼각함수로부터_다른_삼각함수_계산"
+  ],
   "missingFmCount": 0,
   "missingFm": []
 }

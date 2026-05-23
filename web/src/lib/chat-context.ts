@@ -477,49 +477,6 @@ function readProblem(slug: string): { slug: string; fm: Record<string, any>; bod
 }
 
 /**
- * Build a note-writer system prompt — used by /api/generate-note.
- * Reuses the same page context as the tutor prompt (so the note writer
- * knows what page/problem the chat happened on, what mastery state the
- * student is in, etc.) but with a different role: organize the chat into
- * a compact study note rather than continue tutoring.
- */
-export function buildNotePrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string } {
-  // Lean on the existing context-aware prompt for the page body / prereq /
-  // mastery info — then SWAP the tutor role with a note-writer role.
-  const base = buildTutorPrompt(pageSlug, collection);
-  const noteInstruction = `
-
---- 역할 전환: 학습 노트 작성자 ---
-지금부터 당신은 **튜터**가 아니라 **학생의 학습 노트를 정리하는 작성자** 입니다. 위에 주어진 페이지 컨텍스트(현재 단원/문제, 학생 mastery, 선수/enables)와 곧 뒤따라 올 **이번 대화 기록**을 바탕으로, 학생이 나중에 다시 펼쳐볼 수 있는 정돈된 markdown 노트를 작성하세요.
-
-**출력 형식 (반드시 이 4섹션 markdown — 6~12줄):**
-
-## ✅ 이번 대화 핵심
-- (2~4 bullets) 학생이 익힌 핵심 개념·정의·공식. 수식은 KaTeX \`$...$\` 사용.
-
-## 🤔 학생이 막혔던 지점
-- (선택, 1~2 bullets) 학생이 헷갈렸거나 잘못 갔던 step과 어떻게 다시 갔는지. 대화에 그런 흔적이 없으면 이 섹션 생략.
-
-## 🔁 다시 봐야 할 부분
-- (1~2 bullets) 다음에 복습할 때 짚어봐야 할 핵심 — 단순 사실 외울 거리보다 패턴/원리 위주.
-
-## ➡️ 다음 학습 권장
-- (1~2 bullets) 위 페이지 컨텍스트의 prerequisites/enables를 활용해서 **다음 학습 단계** 한두 개 제안. 마크다운 링크 형식 \`[근의 공식](/concepts/algebra/근의_공식)\` 처럼 위에 나열된 slug(예: \`algebra/근의_공식\`)를 그대로 path 에 넣어주세요.
-
-**제약**:
-- 정답 자체를 통째로 노출하지 말 것 — 풀이의 핵심 통찰과 패턴 위주로 (Socratic 원칙 유지).
-- 길이는 6~12줄. 길어지면 학생이 안 읽음.
-- 한국어 + KaTeX. 친근한 어조.
-- 곧 따라올 메시지 형식: \`--- 이번 대화 기록 ---\` 헤더 다음에 \`[학생]:\` / \`[튜터]:\` 교대로 등장. 이 위에서 노트를 작성.
-- 노트만 출력 (인사·서두 없이 바로 ## ✅ 부터 시작).
-`;
-  return {
-    systemPrompt: base.systemPrompt + noteInstruction,
-    pageTitle: base.pageTitle,
-  };
-}
-
-/**
  * Build the math-tutor system prompt for a given page slug.
  * If `collection === 'problems'`, builds a problem-tutor prompt with the
  * problem text + mapped concepts. Otherwise (default 'concepts') uses the

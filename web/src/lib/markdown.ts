@@ -1,4 +1,4 @@
-// 공유 markdown helper — ChatPanel과 NotesPanel이 함께 사용.
+// 공유 markdown helper — ChatPanel 및 학습 노트 흐름이 사용.
 // 핵심 기능: 표(table) 파싱. inline·escape는 호출자가 자체 보유한 것 사용.
 //
 // 표를 별도 라이브러리 없이 처리하는 이유:

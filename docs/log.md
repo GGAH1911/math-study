@@ -45,3 +45,11 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 이게 맞아?" from 확률_중2
 
 ## [2026-05-22] restructure | LWIP shutdown — concepts → docs/concepts/<domain>/ (2786 files, 7 domains: functions/geometry/probability-stats/algebra/equations/logic/uncategorized), problems → docs/problems/<year>/<round>/ (2844 files, 81 rounds, 7 years). Sub-hub auto-gen (build-concept-hubs + build-problem-hubs). URL path-aware (`/concepts/algebra/근의_공식`, `/problems/2025/수능/2025_수능_미적분_30`). audit-lwip emits entropy=0 (isolated 5265→0, missing fm 4→0, flat hard 0, congested hard 0). Dashboard HealthCards shows entropy live.
+
+## [2026-05-22] promote | chat → synthesis: "정리 및 평가문제" from logic/high-1/집합과_명제/논리
+
+## [2026-05-22] promote | chat → synthesis: "지금 까지 학습한거 총정리 해줘. 나한테 특화해서" from logic/high-1/집합과_명제/논리
+
+## [2026-05-22] promote | chat → synthesis: "[학습 노트 요청] 위 노트를 절반 길이로 다시 정리해줘. 같은 4섹션 구조는 유지." from algebra/math-1/지수와_로그/n제곱근의_정의
+
+## [2026-05-23] promote | chat → synthesis: "[학습 노트 요청] "logic/high-1/집합과_명제/논리" 페이지에서 지금까지 한 대화를 정리해 학습 " from logic/high-1/집합과_명제/논리

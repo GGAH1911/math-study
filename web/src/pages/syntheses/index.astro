@@ -1,0 +1,67 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConceptCard from '../../components/ConceptCard.astro';
+import { getCollection } from 'astro:content';
+import synthesesIndex from '../../data/syntheses-by-concept.json';
+
+const all = await getCollection('syntheses');
+// 최신순 정렬 (frontmatter `created` 우선, 없으면 filename 앞 YYYY-MM-DD)
+const dateOf = (s: typeof all[number]): string => {
+  const d = s.data.created;
+  if (d instanceof Date) return d.toISOString().slice(0, 10);
+  return s.id.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] ?? '';
+};
+all.sort((a, b) => dateOf(b).localeCompare(dateOf(a)));
+
+// build-syntheses-index.mjs가 미리 추출한 excerpt + title.
+type IndexEntry = { slug: string; title?: string; created?: string; excerpt?: string; origin_concept?: string };
+const indexBySlug = new Map<string, IndexEntry>(
+  ((synthesesIndex as any).recent ?? []).map((r: IndexEntry) => [r.slug, r]),
+);
+
+const leafOf = (p?: string): string => p ? (p.split('/').pop() ?? p).replace(/_/g, ' ') : '';
+---
+<BaseLayout title="학습 노트">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-5">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">
+        🗒 학습 노트
+        <span class="text-xs text-[color:var(--color-muted)] font-normal">— LLM 대화에서 promote한 영구 노트</span>
+      </h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        총 {all.length}개. 채팅에서 [💾 저장] 누른 노트가 모입니다.
+      </p>
+    </header>
+
+    {all.length === 0 ? (
+      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">
+        아직 저장한 학습 노트가 없습니다.<br />
+        컨셉 페이지에서 LLM과 대화한 뒤 "📝 학습 노트 작성 요청" → "💾 저장" 으로 만들 수 있어요.
+      </p>
+    ) : (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {all.map((s) => {
+          const idx = indexBySlug.get(s.id);
+          const title = idx?.title ?? s.id;
+          const originLeaf = leafOf(idx?.origin_concept ?? s.data.origin_concept ?? '');
+          const created = dateOf(s);
+          return (
+            <li>
+              <ConceptCard
+                href={`/syntheses/${encodeURIComponent(s.id)}`}
+                title={title}
+                subtitle={originLeaf ? `from ${originLeaf}` : undefined}
+                description={idx?.excerpt ?? ''}
+                chips={[
+                  ...(s.data.review_state ? [{ label: s.data.review_state, class: '' }] : []),
+                  ...(created ? [{ label: created, class: '' }] : []),
+                ]}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </div>
+</BaseLayout>

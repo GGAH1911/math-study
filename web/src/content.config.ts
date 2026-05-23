@@ -109,4 +109,19 @@ const tools = defineCollection({
   }),
 });
 
-export const collections = { concepts, problems, mistakes, tools };
+const syntheses = defineCollection({
+  loader: glob({ pattern: '*.md', base: '../docs/syntheses' }),
+  schema: z.object({
+    sources: z.array(z.string()).optional().default([]),
+    created: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
+    // 출처 concept (promote 시점의 원본 페이지). 보통 `docs/concepts/<slug>.md` 형식.
+    origin_concept: z.string().optional(),
+    // 어디서 끌어왔는지 — 현재는 채팅 promote 만 (`chat`).
+    promoted_from: z.string().optional(),
+    review_state: reviewStateEnum.optional(),
+    next_review: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { concepts, problems, mistakes, tools, syntheses };

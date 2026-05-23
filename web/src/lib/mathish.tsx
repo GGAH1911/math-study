@@ -12,8 +12,39 @@ import { useEffect, useState } from 'react';
 // Cached KaTeX singleton — once one component loads it, all share the same
 // instance via `window.katex`. function-plot also pulls KaTeX in, so most
 // of the time it's already loaded by the time we ask.
-type Katex = { renderToString: (tex: string, opts?: { displayMode?: boolean; throwOnError?: boolean }) => string };
+type KatexStrictReturn = 'ignore' | 'warn' | 'error';
+type KatexOpts = {
+  displayMode?: boolean;
+  throwOnError?: boolean;
+  errorColor?: string;
+  strict?: KatexStrictReturn | ((code: string) => KatexStrictReturn);
+};
+type Katex = { renderToString: (tex: string, opts?: KatexOpts) => string };
 let _katex: Katex | null = null;
+
+// Korean prose routinely puts Hangul tokens inside `$...$` (e.g. set
+// elements like `{가, 나, 다}`). KaTeX's default strict mode logs a
+// warning per character which floods the console; muting the
+// `unicodeTextInMathMode` code keeps real LaTeX errors visible.
+export const KATEX_STRICT: KatexOpts['strict'] = (code) =>
+  code === 'unicodeTextInMathMode' ? 'ignore' : 'warn';
+
+// LLM-generated math frequently uses `\begin{align}` (standard LaTeX,
+// unsupported by KaTeX). Normalize to `aligned` before rendering so the
+// output isn't a sea of red parse-error text.
+export function normalizeKatex(tex: string): string {
+  return tex
+    .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
+    .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
+    .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
+    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
+}
+
+// Muted error color for cases that DO fall through (unknown commands,
+// brace mismatches the LLM still produces). Bright red `#cc0000` is too
+// alarming for a body that's otherwise readable; amber keeps it visible
+// without making the whole note feel broken.
+export const KATEX_ERROR_COLOR = '#a16207';
 
 export async function ensureKatex(): Promise<Katex | null> {
   if (_katex) return _katex;
@@ -63,18 +94,18 @@ export function MathishText({ text, auto = false, display = false, className }: 
         let out: string;
         if (display && text.includes('$$')) {
           out = escapeHtml(text).replace(/\$\$([^$]+?)\$\$/g, (_, tex) =>
-            k.renderToString(decodeHtml(tex), { displayMode: true, throwOnError: false }));
+            k.renderToString(normalizeKatex(decodeHtml(tex)), { displayMode: true, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR }));
           // Then inline pass on remaining `$...$`
           out = out.replace(/\$([^\n$]+?)\$/g, (_, tex) =>
-            k.renderToString(decodeHtml(tex), { displayMode: false, throwOnError: false }));
+            k.renderToString(normalizeKatex(decodeHtml(tex)), { displayMode: false, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR }));
         } else if (text.includes('$')) {
           out = escapeHtml(text).replace(/\$([^\n$]+?)\$/g, (_, tex) =>
-            k.renderToString(decodeHtml(tex), { displayMode: false, throwOnError: false }));
+            k.renderToString(normalizeKatex(decodeHtml(tex)), { displayMode: false, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR }));
         } else if (auto) {
           // 한글/CJK 문자가 섞이면 그 토큰을 \text{...} 로 감싸 KaTeX 의
           // unicodeTextInMathMode warning 회피. 영문/수식 토큰은 math 모드 유지.
           const wrapped = text.replace(/([ㄱ-힝]+|[一-鿿]+|[가-힣]+)/g, '\\text{$1}');
-          out = k.renderToString(wrapped, { displayMode: false, throwOnError: false });
+          out = k.renderToString(normalizeKatex(wrapped), { displayMode: false, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
         } else {
           out = escapeHtml(text);
         }

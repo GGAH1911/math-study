@@ -4,7 +4,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ConceptDAG from '../components/ConceptDAG.tsx';
 import { readConceptGraph } from '../lib/health.ts';
 
+import synthesesIndex from '../data/syntheses-by-concept.json';
+
 const graph = readConceptGraph();
+// 노트 카운트 (concept slug → 개수)를 노드에 주입해서 그래프가 `🗒N` 배지를 그릴 수 있게.
+const notesByConcept: Record<string, unknown[]> = (synthesesIndex as any).byConcept ?? {};
+const annotatedGraph = {
+  ...graph,
+  nodes: graph.nodes.map((n: any) => ({
+    ...n,
+    note_count: notesByConcept[n.id]?.length ?? 0,
+  })),
+};
 // /concepts 카드는 ?highlight=를, 기존 북마크는 ?node=를 쓸 수 있어 둘 다 받음.
 const highlight =
   Astro.url.searchParams.get('highlight') ??
@@ -14,7 +25,7 @@ const highlight =
 <BaseLayout title="개념 지도" containerClass="h-[calc(100vh-3.5rem)]">
   <div class="h-full">
     {graph.stats.nodes > 0 ? (
-      <ConceptDAG client:load data={graph} variant="full" highlight={highlight} />
+      <ConceptDAG client:load data={annotatedGraph} variant="full" highlight={highlight} />
     ) : (
       <div class="flex items-center justify-center h-full text-[color:var(--color-muted)]">
         <div class="text-center">

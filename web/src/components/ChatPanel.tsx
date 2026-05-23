@@ -1,4 +1,4 @@
-import { Component, type ReactNode, useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { Component, memo, type ReactNode, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import MathField from './MathField.tsx';
 import Graph, { GraphModal, type PlotSpec } from './Graph.tsx';
 import Geometry, { type GeomSpec } from './Geometry.tsx';
@@ -8,9 +8,10 @@ import StatsChart, { type ChartSpec } from './StatsChart.tsx';
 import Interactive from './Interactive.tsx';
 import PromotionCard from './PromotionCard.tsx';
 import type { InteractiveSpec } from '../data/interactive-samples';
-import { ensureKatex } from '../lib/mathish';
+import { ensureKatex, KATEX_STRICT, KATEX_ERROR_COLOR, normalizeKatex } from '../lib/mathish';
 import { tryParseTable } from '../lib/markdown';
 import { runSympyLocal, prewarmPyodide } from '../lib/pyodide-client';
+import { buildNoteUserPrompt, NOTE_FOLLOWUPS, isNoteRequest, type NoteFollowup } from '../lib/note-prompts';
 
 type ChatModalState =
   | { kind: 'plot' | 'svg'; spec?: PlotSpec; svg?: string }
@@ -275,7 +276,7 @@ function recoverBareMath(html: string, katex: KatexImpl): string {
   html = html.replace(INEQUALITY_RUN, (full) => {
     if (/[<>]/.test(full)) return full; // 실제 raw 태그 끼이면 건드리지 않음
     const tex = decodeEntities(full);
-    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true }); }
+    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); }
     catch { return full; }
   });
   // ② raw `\command` 토큰 — 부등호 없이도 KaTeX로 시도. `\command` 가 KaTeX에
@@ -286,7 +287,7 @@ function recoverBareMath(html: string, katex: KatexImpl): string {
     if (/[<>]/.test(full)) return full;
     const tex = decodeEntities(full).trim();
     if (tex.length < 2) return full;
-    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true }); }
+    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); }
     catch { return full; }
   });
   // ENTITY_TO_LATEX는 future-proof로 유지 (현재는 decodeEntities로 통합).
@@ -304,14 +305,14 @@ function applyKatex(html: string, katex: KatexImpl): string {
   // decode 후 KaTeX 호출.
   html = html.replace(/\$\$([^$]+?)\$\$/g, (_, tex) => {
     try {
-      return katex.renderToString(decodeEntities(tex), { displayMode: true, throwOnError: true });
+      return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: true, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
       return _;
     }
   });
   html = html.replace(/\$([^\n$]+?)\$/g, (_, tex) => {
     try {
-      return katex.renderToString(decodeEntities(tex), { displayMode: false, throwOnError: true });
+      return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: false, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
       return _;
     }
@@ -380,13 +381,30 @@ function MdSegment({ content }: { content: string }) {
   return <div className="prose-chat" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-function Message({ msg, onPromote, busy, slug, collection, isStreaming }: {
-  msg: ChatMessage; onPromote?: () => void; busy?: boolean;
+// Memoized so the message list doesn't re-render on every keystroke in the
+// chat input. `onPromote` now receives the message index — passing a stable
+// callback from the parent keeps prop identity steady, which lets `memo`
+// actually skip rerenders.
+const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, busy, slug, collection, isStreaming, isNoteResponse }: {
+  msg: ChatMessage; index: number;
+  onPromote?: (idx: number) => void;
+  onNoteFollowup?: (kind: NoteFollowup) => void;
+  busy?: boolean;
   slug: string; collection: 'concepts' | 'problems' | 'dashboard';
   isStreaming?: boolean;
+  // True when the directly-preceding user message was a `[학습 노트 요청]`.
+  // Shows an action row (저장 / 더 짧게 / 더 자세히 / 핵심만) under this reply.
+  isNoteResponse?: boolean;
 }) {
-  // 자동 계산 결과 inject 된 user message 는 내부 protocol — 사용자에겐 chip 만 표시.
+  // Hooks MUST run unconditionally so React's order-tracking holds even
+  // when the message content shifts into one of the special-prefix branches
+  // below (rare in practice, but easy to keep correct).
   const isUser = msg.role === 'user';
+  const segments = useMemo(() => parseGraphSegments(msg.content), [msg.content]);
+  const [modal, setModal] = useState<ChatModalState | null>(null);
+  const canPromote = !!onPromote && !isUser && msg.content.trim().length > 0 && !busy;
+
+  // 자동 계산 결과 inject 된 user message 는 내부 protocol — 사용자에겐 chip 만 표시.
   if (isUser && msg.content.startsWith('[자동 계산 결과 — 검증 실패]')) {
     return (
       <div className="flex flex-col items-end">
@@ -423,8 +441,6 @@ function Message({ msg, onPromote, busy, slug, collection, isStreaming }: {
       </div>
     );
   }
-  const segments = parseGraphSegments(msg.content);
-  const [modal, setModal] = useState<ChatModalState | null>(null);
   return (
     <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
       <div
@@ -497,9 +513,44 @@ function Message({ msg, onPromote, busy, slug, collection, isStreaming }: {
           );
         })}
       </div>
-      {!isUser && onPromote && (
+      {isNoteResponse && !isStreaming && msg.content.trim().length > 0 && !busy ? (
+        // Action row under a 학습 노트 reply — save (= promote) plus three
+        // followup rewrites. Clicking a followup re-fires the LLM call with
+        // a `[학습 노트 요청]`-marked instruction, so the next reply also
+        // gets this same row → 사용자가 마음에 들 때까지 iterate.
+        <div className="mt-1.5 flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            onClick={() => onPromote?.(index)}
+            disabled={!!msg.promoted}
+            className={`text-[11px] px-2.5 py-1 rounded border transition ${
+              msg.promoted
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300 cursor-default'
+                : 'bg-indigo-500/15 border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/25 cursor-pointer'
+            }`}
+            title={msg.promoted ? `저장됨: ${msg.promoted.path}` : '이 노트를 docs/syntheses/ 에 영구 저장'}
+          >
+            {msg.promoted ? '✓ 저장됨' : '💾 저장'}
+          </button>
+          <button
+            type="button"
+            onClick={() => onNoteFollowup?.('shorter')}
+            className="text-[11px] px-2.5 py-1 rounded border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 transition"
+          >📏 더 짧게</button>
+          <button
+            type="button"
+            onClick={() => onNoteFollowup?.('longer')}
+            className="text-[11px] px-2.5 py-1 rounded border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 transition"
+          >📖 더 자세히</button>
+          <button
+            type="button"
+            onClick={() => onNoteFollowup?.('coreOnly')}
+            className="text-[11px] px-2.5 py-1 rounded border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 transition"
+          >🎯 핵심만</button>
+        </div>
+      ) : canPromote && (
         <button
-          onClick={onPromote}
+          onClick={() => onPromote?.(index)}
           disabled={busy || !!msg.promoted}
           className={`mt-1 text-[10px] uppercase tracking-wider transition ${
             msg.promoted
@@ -529,7 +580,7 @@ function Message({ msg, onPromote, busy, slug, collection, isStreaming }: {
       )}
     </div>
   );
-}
+});
 
 export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: Props) {
   const placeholderHint =
@@ -632,6 +683,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
     return () => window.removeEventListener('math-study:chat-insert', onInsert as EventListener);
   }, []);
 
+
   // Load history on mount
   useEffect(() => {
     setMessages(loadHistory(storageKey));
@@ -651,11 +703,15 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
     }
   }, [messages]);
 
-  const send = useCallback(async () => {
-    const text = input.trim();
+  // `override`: when called from the 학습 노트 buttons (right-side card or
+  // action row), we pass the prompt directly instead of routing through the
+  // input field. The textarea is left untouched so the user can keep typing
+  // their own follow-up while the note request flies off.
+  const send = useCallback(async (override?: string) => {
+    const text = (override ?? input).trim();
     if (!text || streaming) return;
     setError(null);
-    setInput('');
+    if (override === undefined) setInput('');
 
     const newUserMsg: ChatMessage = { role: 'user', content: text };
     const placeholder: ChatMessage = { role: 'assistant', content: '' };
@@ -863,6 +919,28 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
     }
   }, [input, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
 
+  // send() identity changes whenever messages/input/streaming change. The
+  // window event handler below would otherwise capture a stale send.
+  const sendRef = useRef(send);
+  useEffect(() => { sendRef.current = send; }, [send]);
+
+  // LearningNoteButton (우측 카드) → 학습 노트 작성 요청. 입력창을 거치지 않고
+  // 곧장 send() 로 user message 전송 (override 인자 — input 비우지 않음).
+  useEffect(() => {
+    const onNoteRequest = (e: Event) => {
+      const detail = (e as CustomEvent<{ unitTitle?: string }>).detail;
+      const title = detail?.unitTitle ?? unitTitle;
+      void sendRef.current(buildNoteUserPrompt(title));
+    };
+    window.addEventListener('math-study:chat-note-request', onNoteRequest as EventListener);
+    return () => window.removeEventListener('math-study:chat-note-request', onNoteRequest as EventListener);
+  }, [unitTitle]);
+
+  // Followup buttons (📏 더 짧게 등) under a 학습 노트 reply.
+  const handleNoteFollowup = useCallback((kind: NoteFollowup) => {
+    void sendRef.current(NOTE_FOLLOWUPS[kind]);
+  }, []);
+
   const promote = useCallback(
     async (idx: number) => {
       const assistant = messages[idx];
@@ -875,11 +953,16 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
           break;
         }
       }
+      // 학습 노트 요청에서 비롯된 promote 면 파일명에 들어갈 title 을
+      // 단원 이름 기반으로 깔끔하게 (`[학습 노트 요청] ...` 본문이
+      // 그대로 들어가지 않게).
+      const isNote = isNoteRequest(question);
+      const titleOverride = isNote ? `학습 노트 - ${unitTitle}` : undefined;
       try {
         const res = await fetch('/api/promote', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug, question, answer: assistant.content }),
+          body: JSON.stringify({ slug, question, answer: assistant.content, title: titleOverride }),
         });
         const json = await res.json();
         if (!res.ok) throw new Error(json.error ?? `HTTP ${res.status}`);
@@ -888,11 +971,17 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
           next[idx] = { ...assistant, promoted: { path: json.path } };
           return next;
         });
+        // 우측 LearningNoteButton 카드에 "최근 저장: …" 표시용.
+        try {
+          const recentKey = `math-study:note-last-saved:${collection}:${slug}`;
+          const filename = String(json.path).split('/').pop() ?? '';
+          window.localStorage.setItem(recentKey, filename);
+        } catch { /* ignore */ }
       } catch (e) {
         setError(`Promote 실패: ${(e as Error).message}`);
       }
     },
-    [messages, slug],
+    [messages, slug, unitTitle, collection],
   );
 
   const clearChat = () => {
@@ -1077,11 +1166,19 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
             <Message
               key={i}
               msg={m}
+              index={i}
               busy={streaming}
               isStreaming={streaming && i === messages.length - 1}
+              isNoteResponse={
+                m.role === 'assistant'
+                && i > 0
+                && messages[i - 1].role === 'user'
+                && isNoteRequest(messages[i - 1].content)
+              }
               slug={slug}
               collection={collection}
-              onPromote={m.role === 'assistant' && m.content.trim().length > 0 && !streaming ? () => promote(i) : undefined}
+              onPromote={promote}
+              onNoteFollowup={handleNoteFollowup}
             />
           ))
         )}

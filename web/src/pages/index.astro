@@ -9,11 +9,16 @@ import MasteryDonut from '../components/MasteryDonut.tsx';
 import ConceptDAG from '../components/ConceptDAG.tsx';
 import ChatPanel from '../components/ChatPanel.tsx';
 import { readHealth, readConceptGraph } from '../lib/health.ts';
+import synthesesIndex from '../data/syntheses-by-concept.json';
 
 const health = readHealth();
 const graph = readConceptGraph();
 const m = health.mastery;
 const total = m.unknown + m.learning + m.proficient + m.mastered;
+type SynthesisRecent = { slug: string; title: string; created: string | null; origin_concept: string | null; excerpt: string | null };
+const recentSyntheses: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []).slice(0, 5);
+const totalSyntheses: number = (synthesesIndex as any).total ?? 0;
+const leafOf = (p: string | null) => p ? (p.split('/').pop() ?? p).replace(/_/g, ' ') : '';
 ---
 <BaseLayout title="Dashboard">
   <div class="glow-hero">
@@ -85,6 +90,39 @@ const total = m.unknown + m.learning + m.proficient + m.mastered;
       <DueTodayListDb client:load />
       <ActivityFeed />
     </div>
+
+    <section class="card">
+      <header class="mb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-sm font-semibold">🗒 최근 학습 노트</h2>
+          <p class="text-xs text-[color:var(--color-muted)]">{totalSyntheses}개 · 채팅에서 promote한 영구 노트</p>
+        </div>
+        <a href="/syntheses" class="text-xs text-[color:var(--color-accent)] hover:underline">전체 보기 →</a>
+      </header>
+      {recentSyntheses.length === 0 ? (
+        <p class="text-sm text-[color:var(--color-muted)] py-3">
+          아직 저장한 노트가 없어요. 컨셉 페이지에서 LLM과 대화한 뒤
+          <span class="text-[color:var(--color-fg)]"> "📝 학습 노트 작성 요청" → "💾 저장"</span> 으로 만들 수 있습니다.
+        </p>
+      ) : (
+        <ul class="divide-y divide-[color:var(--color-border)]/40">
+          {recentSyntheses.map((s) => (
+            <li class="py-2 first:pt-0 last:pb-0">
+              <div class="flex items-baseline gap-2">
+                <a class="text-sm font-medium text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] truncate" href={`/syntheses/${encodeURIComponent(s.slug)}`}>{s.title}</a>
+                {s.created && <span class="text-[10px] text-[color:var(--color-subtle)] tabular-nums whitespace-nowrap">{s.created}</span>}
+              </div>
+              {s.origin_concept && (
+                <a class="text-[11px] text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] truncate block" href={`/concepts/${s.origin_concept}`} title={s.origin_concept}>
+                  ← {leafOf(s.origin_concept)}
+                </a>
+              )}
+              {s.excerpt && <p class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-1">{s.excerpt}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
 
     <ChatPanel client:load slug="__nav__" unitTitle="학습 길잡이" collection="dashboard" />
   </div>

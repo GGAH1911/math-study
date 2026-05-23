@@ -8,6 +8,36 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { visit } from 'unist-util-visit';
 
+// KaTeX strict 모드: 한국어 콘텐츠라 `$...의 ...$` 같은 raw 한글이
+// 자주 등장. `unicodeTextInMathMode` 만 ignore하고 나머지 (브래킷 불일치
+// 등 실제 LaTeX 오류) 는 그대로 경고로 둔다. 파싱 실패시 표시되는
+// errorColor 도 기본 빨강(#cc0000) 대신 amber 로 — 본문 한가운데 시뻘건
+// 텍스트가 튀어나오는 사고를 막음. (LLM 이 만든 식이 종종 깨짐.)
+const katexOptions = {
+  strict: (code) => (code === 'unicodeTextInMathMode' ? 'ignore' : 'warn'),
+  errorColor: '#a16207',
+};
+
+/**
+ * Remark plugin: rewrite LaTeX environments that KaTeX doesn't support
+ * (`align`, `align*`, `eqnarray`) to the closest supported equivalent
+ * (`aligned`). LLM-generated notes routinely emit `\begin{align}` since
+ * it's standard LaTeX, even though KaTeX rejects it. Rather than make
+ * every author memorize the difference, normalize here.
+ */
+function remarkKatexCompat() {
+  const rewrite = (src) => src
+    .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
+    .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
+    .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
+    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
+  return (tree) => {
+    visit(tree, ['math', 'inlineMath'], (node) => {
+      if (typeof node.value === 'string') node.value = rewrite(node.value);
+    });
+  };
+}
+
 /**
  * Remark plugin: rewrite asset paths and inter-doc links in markdown.
  *  - `(../)+assets/...` (image)               -> `/assets/...`
@@ -56,8 +86,8 @@ export default defineConfig({
   integrations: [
     react(),
     mdx({
-      remarkPlugins: [remarkMath, remarkRewritePaths],
-      rehypePlugins: [rehypeKatex],
+      remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths],
+      rehypePlugins: [[rehypeKatex, katexOptions]],
     }),
   ],
   vite: {
@@ -72,7 +102,7 @@ export default defineConfig({
     },
   },
   markdown: {
-    remarkPlugins: [remarkMath, remarkRewritePaths],
-    rehypePlugins: [rehypeKatex],
+    remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths],
+    rehypePlugins: [[rehypeKatex, katexOptions]],
   },
 });

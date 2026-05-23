@@ -1,0 +1,73 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import SynthesisDeleteButton from '../../components/SynthesisDeleteButton.tsx';
+
+export async function getStaticPaths() {
+  const items = await getCollection('syntheses');
+  return items.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fm = entry.data;
+
+const originSlug = (fm.origin_concept ?? '')
+  .replace(/^docs\/concepts\//, '')
+  .replace(/\.md$/, '');
+const originLabel = originSlug.split('/').pop()?.replace(/_/g, ' ') ?? '';
+
+const fmt = (d: Date | undefined) => d ? d.toISOString().slice(0, 10) : null;
+const created = fmt(fm.created) ?? entry.id.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] ?? null;
+const updated = fmt(fm.updated);
+const nextReview = fmt(fm.next_review);
+---
+<BaseLayout title={entry.id}>
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+    <article class="prose prose-invert max-w-none">
+      <Content />
+    </article>
+
+    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Meta</h3>
+        <dl class="text-sm space-y-1.5">
+          {created && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">created</dt><dd>{created}</dd></div>}
+          {updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">updated</dt><dd>{updated}</dd></div>}
+          {fm.review_state && (
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">review</dt><dd><span class="chip">{fm.review_state}</span></dd></div>
+          )}
+          {nextReview && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next_review</dt><dd>{nextReview}</dd></div>}
+          {fm.promoted_from && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">source</dt><dd>{fm.promoted_from}</dd></div>}
+        </dl>
+      </section>
+
+      {originSlug && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">출처</h3>
+          <a class="text-sm text-[color:var(--color-accent)] hover:underline block" href={`/concepts/${originSlug}`}>
+            ← {originLabel}
+          </a>
+          <p class="text-[10px] font-mono text-[color:var(--color-subtle)] mt-1 truncate" title={originSlug}>
+            {originSlug}
+          </p>
+          <a
+            href={`/graph?highlight=${encodeURIComponent(originSlug)}`}
+            class="mt-3 block text-center px-3 py-1.5 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-medium transition"
+          >개념 지도에서 보기 →</a>
+        </section>
+      )}
+
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">목록</h3>
+        <a class="text-sm text-[color:var(--color-accent)] hover:underline" href="/syntheses">← 학습 노트 전체</a>
+      </section>
+
+      <section class="card">
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">관리</h3>
+        <SynthesisDeleteButton client:load slug={entry.id} />
+      </section>
+    </aside>
+  </div>
+</BaseLayout>

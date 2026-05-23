@@ -10,7 +10,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import RegenerateBodyButton from '../../components/RegenerateBodyButton.tsx';
-import NotesPanel from '../../components/NotesPanel.tsx';
+import LearningNoteButton from '../../components/LearningNoteButton.tsx';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('concepts', slug);
@@ -76,6 +76,11 @@ type ProblemBrief = {
   killer_tier: string | null; format: string | null; has_image: boolean;
 };
 const linkedProblems: ProblemBrief[] = (problemIndex as any).byConcept?.[slug] ?? [];
+
+// 이 페이지에서 promote 된 학습 노트 목록 (build-syntheses-index.mjs 산출물).
+import synthesesIndex from '../../data/syntheses-by-concept.json';
+type SynthesisBrief = { slug: string; title: string; created: string | null; review_state: string | null; excerpt: string | null };
+const linkedSyntheses: SynthesisBrief[] = (synthesesIndex as any).byConcept?.[slug] ?? [];
 
 const TIER_LABEL: Record<string, { text: string; cls: string }> = {
   killer: { text: '킬러', cls: 'bg-rose-500/20 text-rose-300 border-rose-500/40' },
@@ -205,12 +210,40 @@ const PREVIEW_COUNT = 8;
         </a>
       </section>
 
-      <NotesPanel client:load slug={entry.id} collection="concepts" />
+      <LearningNoteButton client:load slug={entry.id} unitTitle={fm.unit ?? entry.id} collection="concepts" />
+
+      {linkedSyntheses.length > 0 && (
+        <section class="card">
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2 flex items-center gap-1.5">
+            <span aria-hidden>🗒</span>
+            <span>저장된 노트</span>
+            <span class="ml-auto text-[10px] font-mono text-[color:var(--color-subtle)]">{linkedSyntheses.length}</span>
+          </h3>
+          <ul class="space-y-2 text-sm">
+            {linkedSyntheses.slice(0, 8).map((s) => (
+              <li>
+                <a class="text-[color:var(--color-accent)] hover:underline block leading-tight" href={`/syntheses/${encodeURIComponent(s.slug)}`}>
+                  {s.title}
+                </a>
+                <div class="flex items-center gap-2 mt-0.5 text-[10px] text-[color:var(--color-subtle)]">
+                  {s.created && <span>{s.created}</span>}
+                  {s.review_state && <span class="chip">{s.review_state}</span>}
+                </div>
+              </li>
+            ))}
+            {linkedSyntheses.length > 8 && (
+              <li class="text-[10px] text-[color:var(--color-subtle)] pt-1 border-t border-[color:var(--color-border)]/40">
+                +{linkedSyntheses.length - 8}개 더 — <a class="text-[color:var(--color-accent)] hover:underline" href="/syntheses">전체 보기</a>
+              </li>
+            )}
+          </ul>
+        </section>
+      )}
 
       {fm.concept_type !== 'unit' && (
         <section class="card">
           <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">본문 갱신</h3>
-          <RegenerateBodyButton client:load slug={entry.id} />
+          <RegenerateBodyButton client:load slug={entry.id} noteCount={linkedSyntheses.length} />
         </section>
       )}
     </aside>

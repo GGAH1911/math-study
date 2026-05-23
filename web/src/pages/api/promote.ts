@@ -19,6 +19,29 @@ function sanitizeFilename(s: string): string {
   return s.replace(/[^\w가-힣ㄱ-ㅎㅏ-ㅣ_-]/g, '_').slice(0, 60);
 }
 
+// LLM-generated math frequently:
+//   1) uses `\begin{align}` (standard LaTeX, unsupported by KaTeX —
+//      rewrite to `aligned`).
+//   2) puts `$$` on the same line as content, which trips remark-math
+//      into parsing it as inline math and swallowing the next paragraph.
+//      Move display `$$` onto its own line so remark-math sees a clean
+//      display-math block.
+// Both fixes happen at write time so the persisted markdown is correct
+// regardless of which downstream renderer reads it (Astro MDX, in-chat
+// applyKatex, raw `cat` of the file).
+function normalizeChatMarkdown(s: string): string {
+  let out = s
+    .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
+    .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
+    .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
+    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
+  // `$$content` (no newline after) → `$$\ncontent`
+  out = out.replace(/(\$\$)(?=\S)/g, '$$\n');
+  // `content$$` (no newline before) → `content\n$$`
+  out = out.replace(/(\S)(\$\$)/g, '$1\n$$');
+  return out;
+}
+
 function todayISO(): string {
   return new Date().toISOString().slice(0, 10);
 }
@@ -65,11 +88,11 @@ next_review: ${date}
 
 ## 질문
 
-${body.question}
+${normalizeChatMarkdown(body.question)}
 
 ## 답변
 
-${body.answer}
+${normalizeChatMarkdown(body.answer)}
 
 ---
 *Promoted ${date}. 사용자가 wiki에 영구화한 답변.*

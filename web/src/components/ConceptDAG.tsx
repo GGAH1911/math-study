@@ -40,6 +40,8 @@ type GraphNode = {
   next_review: string | null;
   x: number;
   y: number;
+  // graph.astro 에서 syntheses-by-concept 인덱스로 주입. 0이면 배지 미노출.
+  note_count?: number;
 };
 
 type GraphEdge = { id: string; source: string; target: string };
@@ -134,6 +136,17 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
               >
                 {data.expanded ? '−' : '+'} {data.childCount}
               </button>
+            )}
+            {data.note_count != null && data.note_count > 0 && (
+              // 학습 노트(syntheses) 카운트 — 클릭하면 컨셉 페이지로 점프해
+              // 우측 사이드바의 "저장된 노트" 섹션에서 목록 확인 가능.
+              <a
+                href={`/concepts/${data.id}`}
+                onClick={(e) => e.stopPropagation()}
+                onDoubleClick={(e) => e.stopPropagation()}
+                title={`${data.note_count}개 저장된 노트 → 컨셉 페이지로`}
+                className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 hover:bg-amber-500/30 transition leading-none cursor-pointer"
+              >🗒{data.note_count}</a>
             )}
             <span
               className="inline-block size-2 rounded-full"
@@ -241,6 +254,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   );
   const [gradeFilter, setGradeFilter] = useState<Set<string>>(new Set(gradesInData));
   const [domainFilter, setDomainFilter] = useState<Set<string>>(new Set(domainsInData));
+  // "노트 있음" 토글 — true면 note_count>0 인 노드만 visible로 인정.
+  const [notesOnly, setNotesOnly] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedTerm, setDebouncedTerm] = useState('');
   const [colorBy, setColorBy] = useState<ColorMode>('domain');
@@ -351,6 +366,9 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         .filter((n) => !n.grade || gradeFilter.has(n.grade))
         .filter((n) => !n.domain || domainFilter.has(n.domain))
         .filter((n) => !debouncedTerm || n.label.includes(debouncedTerm))
+        // "노트 있음" 토글: 노트 카운트가 있는 노드만 통과. 단원도 동일
+        // 기준으로 dim — 노트 없는 단원도 어차피 흥미 없으니 일관 처리.
+        .filter((n) => !notesOnly || (n.note_count ?? 0) > 0)
         .filter((n) => {
           if (!collapseMode) return true;
           if (n.concept_type === 'unit') return true;
@@ -361,7 +379,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         .map((n) => n.id),
     );
   }, [data.nodes, masteryFilter, gradeFilter, domainFilter, debouncedTerm,
-      collapseMode, expandedUnits, searchAutoExpanded, homeUnitOf]);
+      collapseMode, expandedUnits, searchAutoExpanded, homeUnitOf, notesOnly]);
 
   // When a node is selected, compute the set of nodes that are *related*
   // (the selected node + every direct prereq / enables target). Other
@@ -867,6 +885,20 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                     </button>
                   );
                 })}
+                {/* 학습 노트(syntheses) 토글 — graph.astro에서 주입한 note_count 사용. */}
+                <button
+                  onClick={() => setNotesOnly((v) => !v)}
+                  className="px-2 py-1 rounded-md text-xs font-medium transition border flex items-center gap-1.5"
+                  style={{
+                    background: notesOnly ? 'rgba(245, 158, 11, 0.30)' : 'transparent',
+                    borderColor: notesOnly ? '#f59e0b' : '#27272a',
+                    color: notesOnly ? '#fbbf24' : '#52525b',
+                  }}
+                  title={notesOnly ? '필터 해제' : '저장된 노트가 있는 컨셉만 표시'}
+                >
+                  <span aria-hidden>🗒</span>
+                  <span>노트 있음</span>
+                </button>
               </div>
             </div>
 
