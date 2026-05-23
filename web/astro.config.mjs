@@ -100,6 +100,15 @@ export default defineConfig({
         '.tailf47aa4.ts.net', // this tailnet specifically
       ],
     },
+    // mathlive 는 ChatPanel 의 '∑ 수식' 버튼을 처음 누를 때 동적 import
+    // 된다. dev 서버 startup 시 vite가 정적 import 만 스캔하므로 mathlive
+    // 가 deps 캐시에 안 들어가고, 첫 동적 import 시 vite가 재최적화 →
+    // 그동안 페이지가 들고있던 stale browser-hash URL이 504 로 깨짐.
+    // 명시적으로 pre-bundle 시키면 startup 직후부터 deps 캐시에 존재해
+    // 재최적화 사이클을 회피.
+    optimizeDeps: {
+      include: ['mathlive'],
+    },
   },
   markdown: {
     remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths],
