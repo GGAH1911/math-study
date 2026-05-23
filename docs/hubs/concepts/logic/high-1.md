@@ -1,86 +1,19 @@
 ---
 sources: []
-created: 2026-05-22
-updated: 2026-05-22
+created: 2026-05-23
+updated: 2026-05-23
 hub_type: concepts-grade
 domain: logic
 grade: high-1
 counts:
-  total: 59
+  total: 1
 ---
 
 # 논리 · 고1 (high-1)
 
-총 59개 concept 노드. 상위: [논리 hub](../logic.md) · [concepts hub](../../concepts.md).
+총 1개 concept 노드. 상위: [논리 hub](../logic.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [집합과 명제](../../../concepts/logic/high-1/집합과_명제.md) · 집합과 명제 `unknown`
-
-## 정의 (53)
-
-- [교집합](../../../concepts/logic/high-1/교집합.md) `unknown`
-- [명제](../../../concepts/logic/high-1/명제.md) `unknown`
-- [명제와 논리](../../../concepts/logic/high-1/명제와_논리.md) `unknown`
-- [명제와 조건](../../../concepts/logic/high-1/명제와_조건.md) · 집합과 명제 `unknown`
-- [명제의 논리](../../../concepts/logic/high-1/명제의_논리.md) `unknown`
-- [명제의 부정](../../../concepts/logic/high-1/명제의_부정.md) `unknown`
-- [명제의 참거짓](../../../concepts/logic/high-1/명제의_참거짓.md) `unknown`
-- [배수와 약수](../../../concepts/logic/high-1/배수와_약수.md) `unknown`
-- [부등식의 부정](../../../concepts/logic/high-1/부등식의_부정.md) `unknown`
-- [부등식의 해](../../../concepts/logic/high-1/부등식의_해.md) `unknown`
-- [부등식의 해집합](../../../concepts/logic/high-1/부등식의_해집합.md) `unknown`
-- [부분집합](../../../concepts/logic/high-1/부분집합.md) `unknown`
-- [부분집합의 개수](../../../concepts/logic/high-1/부분집합의_개수.md) `unknown`
-- [실수근](../../../concepts/logic/high-1/실수근.md) `unknown`
-- [약수](../../../concepts/logic/high-1/약수.md) `unknown`
-- [약수의 개수](../../../concepts/logic/high-1/약수의_개수.md) `unknown`
-- [여집합](../../../concepts/logic/high-1/여집합.md) `unknown`
-- [원소 개수](../../../concepts/logic/high-1/원소_개수.md) `unknown`
-- [원소 조건](../../../concepts/logic/high-1/원소_조건.md) `unknown`
-- [원소의 명확한 판정](../../../concepts/logic/high-1/원소의_명확한_판정.md) `unknown`
-- [원소의 합](../../../concepts/logic/high-1/원소의_합.md) `unknown`
-- [전칭명제](../../../concepts/logic/high-1/전칭명제.md) `unknown`
-- [절댓값부등식](../../../concepts/logic/high-1/절댓값부등식.md) `unknown`
-- [조건](../../../concepts/logic/high-1/조건.md) `unknown`
-- [조건 분석](../../../concepts/logic/high-1/조건_분석.md) `unknown`
-- [조건과 명제의 동치](../../../concepts/logic/high-1/조건과_명제의_동치.md) `unknown`
-- [조건부 명제](../../../concepts/logic/high-1/조건부_명제.md) `unknown`
-- [조건부명제](../../../concepts/logic/high-1/조건부명제.md) `unknown`
-- [존재명제](../../../concepts/logic/high-1/존재명제.md) `unknown`
-- [주관적 판정 기준 배제](../../../concepts/logic/high-1/주관적_판정_기준_배제.md) `unknown`
-- [진리집합](../../../concepts/logic/high-1/진리집합.md) `unknown`
-- [진리집합과 포함관계](../../../concepts/logic/high-1/진리집합과_포함관계.md) `unknown`
-- [집합](../../../concepts/logic/high-1/집합.md) `unknown`
-- [집합과 원소](../../../concepts/logic/high-1/집합과_원소.md) · 집합과 명제 `unknown`
-- [집합연산](../../../concepts/logic/high-1/집합연산.md) `unknown`
-- [집합의 원소 조건](../../../concepts/logic/high-1/집합의_원소_조건.md) `unknown`
-- [집합의 정의](../../../concepts/logic/high-1/집합의_정의.md) `unknown`
-- [집합의 정의와 부분집합](../../../concepts/logic/high-1/집합의_정의와_부분집합.md) `unknown`
-- [집합의 크기](../../../concepts/logic/high-1/집합의_크기.md) `unknown`
-- [집합의 포함](../../../concepts/logic/high-1/집합의_포함.md) `unknown`
-- [집합의 포함관계](../../../concepts/logic/high-1/집합의_포함관계.md) `unknown`
-- [충분조건](../../../concepts/logic/high-1/충분조건.md) `unknown`
-- [충분조건과 필요조건](../../../concepts/logic/high-1/충분조건과_필요조건.md) `unknown`
-- [폐성](../../../concepts/logic/high-1/폐성.md) `unknown`
-- [포함배제 원리](../../../concepts/logic/high-1/포함배제_원리.md) `unknown`
-- [필요 충분조건](../../../concepts/logic/high-1/필요_충분조건.md) · 집합과 명제 `unknown`
-- [필요조건](../../../concepts/logic/high-1/필요조건.md) `unknown`
-- [필요조건과 충분조건](../../../concepts/logic/high-1/필요조건과_충분조건.md) `unknown`
-- [필요충분조건](../../../concepts/logic/high-1/필요충분조건.md) `unknown`
-- [합의 조건](../../../concepts/logic/high-1/합의_조건.md) `unknown`
-- [합집합](../../../concepts/logic/high-1/합집합.md) `unknown`
-- [합집합과 교집합](../../../concepts/logic/high-1/합집합과_교집합.md) `unknown`
-- [해집합의 포함관계](../../../concepts/logic/high-1/해집합의_포함관계.md) `unknown`
-
-## 정리 (2)
-
-- [드모르간 법칙](../../../concepts/logic/high-1/드모르간_법칙.md) · 집합과 명제 `unknown`
-- [명제의 대우](../../../concepts/logic/high-1/명제의_대우.md) · 집합과 명제 `unknown`
-
-## 예제 (3)
-
-- [귀류법 증명](../../../concepts/logic/high-1/귀류법_증명.md) · 집합과 명제 `unknown`
-- [집합 원소 개수](../../../concepts/logic/high-1/집합_원소_개수.md) · 집합과 명제 `unknown`
-- [필요 충분조건 판정](../../../concepts/logic/high-1/필요_충분조건_판정.md) · 집합과 명제 `unknown`
 
