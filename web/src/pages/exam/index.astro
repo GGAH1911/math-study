@@ -1,0 +1,51 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { groupByRound } from '../../lib/problem-card';
+import { roundTitle } from '../../lib/problem-meta';
+
+const problems = await getCollection('problems');
+const byYear = groupByRound(problems);
+---
+<BaseLayout title="모의시험">
+  <div class="max-w-4xl mx-auto px-6 py-6 space-y-6">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">모의시험 모드</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        실제 기출 회차를 시험지처럼 — 타이머·답안 입력·자동 채점. 정답은 제출 후 공개됩니다.
+      </p>
+    </header>
+
+    <section class="card flex items-center justify-between gap-3">
+      <div>
+        <h2 class="font-semibold">🎲 랜덤 모의시험</h2>
+        <p class="text-xs text-[color:var(--color-muted)] mt-0.5">
+          코퍼스 전체에서 공통 22 + 선택 8을 난이도 분포 맞춰 무작위 조합
+        </p>
+      </div>
+      <a href="/exam/random" class="chip hover:border-[color:var(--color-accent)] whitespace-nowrap">▶ 시작</a>
+    </section>
+
+    <div class="space-y-5">
+      {[...byYear.entries()].map(([year, rounds]) => (
+        <section class="space-y-2">
+          <h2 class="text-base font-semibold sticky top-0 bg-[color:var(--color-bg)]/90 backdrop-blur py-1.5 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">{year}</h2>
+          <ul class="grid sm:grid-cols-2 gap-2">
+            {rounds.map((r) => (
+              <li>
+                <a
+                  href={`/exam/round/${year}/${r.round}`}
+                  class="card flex items-center justify-between gap-2 hover:border-[color:var(--color-accent)] transition"
+                >
+                  <span class="text-sm font-medium truncate">{roundTitle(r.meta)}</span>
+                  <span class="text-xs text-[color:var(--color-subtle)] whitespace-nowrap">{r.problems.length}문항 ▶</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

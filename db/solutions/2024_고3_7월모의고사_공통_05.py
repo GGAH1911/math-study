@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); expr = x**3 + 4*x**2 - 5*x; result = expr.subs(x, 2) - expr.subs(x, 1); print('VERIFY_PASS' if result == 14 else 'VERIFY_FAIL')

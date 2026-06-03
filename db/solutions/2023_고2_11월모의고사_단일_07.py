@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); f = x**3 - 3*x**2 + 3; f_prime = sp.diff(f, x); critical_points = sp.solve(f_prime, x); f_double_prime = sp.diff(f_prime, x); min_point = [pt for pt in critical_points if f_double_prime.subs(x, pt) > 0][0]; min_value = f.subs(x, min_point); print('VERIFY_PASS' if min_value == -1 else 'VERIFY_FAIL')

@@ -1,0 +1,59 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProblemCard from '../../components/ProblemCard.astro';
+import ProblemFilters from '../../components/ProblemFilters.tsx';
+import { getCollection } from 'astro:content';
+import { groupByUnit, buildFilterAxes, cardProps, dataAttrs } from '../../lib/problem-card';
+
+const problems = await getCollection('problems');
+const unitGroups = groupByUnit(problems);
+const axes = buildFilterAxes(problems);
+---
+<BaseLayout title="문제 — 단원별">
+  <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
+    <header class="space-y-3">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <h1 class="text-2xl font-semibold tracking-tight">
+          문제 <span class="text-xs text-[color:var(--color-muted)] font-normal">— 단원별</span>
+        </h1>
+        <a href="/exam" class="chip hover:border-[color:var(--color-accent)]">📝 모의시험 모드</a>
+      </div>
+      <nav class="flex gap-1.5 text-sm">
+        <a href="/problems" class="chip opacity-50 hover:opacity-100">회차별</a>
+        <a href="/problems/units" class="chip border-[color:var(--color-text)]/40">단원별</a>
+      </nav>
+    </header>
+
+    <ProblemFilters client:load axes={axes} total={problems.length} />
+
+    {unitGroups.length === 0 ? (
+      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 문제가 없습니다.</p>
+    ) : (
+      unitGroups.map((g) => (
+        <section class="problem-lens-section space-y-2" data-unit={g.unit}>
+          <header class="flex items-baseline gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">
+            <h2 class="text-base font-semibold">{g.unit}</h2>
+            <span class="text-xs text-[color:var(--color-muted)]">{g.problems.length}문항</span>
+          </header>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            {g.problems.map((p) => (
+              <li class="problem-card-wrap" {...dataAttrs(p)}>
+                <ProblemCard {...cardProps(p)} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  /* 썸네일 고정 박스 + loading="lazy" 로 뷰포트 근처만 로드. content-visibility 는
+     native lazy 와 충돌해 사용하지 않음 (problems/index.astro 와 동일 방침). */
+  :global(.problem-card-wrap.filtered-out),
+  :global(.problem-lens-section.filtered-out) {
+    display: none !important;
+  }
+</style>

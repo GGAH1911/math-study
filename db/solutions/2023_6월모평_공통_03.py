@@ -1,0 +1,1 @@
+import math; cos_theta = -2/3; cos_sq = cos_theta**2; sin_sq = 1 - cos_sq; result = sin_sq + cos_theta; expected = -1/9; print('VERIFY_PASS' if abs(result - expected) < 1e-10 else 'VERIFY_FAIL')

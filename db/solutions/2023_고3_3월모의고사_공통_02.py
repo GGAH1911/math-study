@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); f = 2*x**3 - x**2 + 6; f_prime = sp.diff(f, x); result = f_prime.subs(x, 1); print('VERIFY_PASS' if result == 4 else 'VERIFY_FAIL')

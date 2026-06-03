@@ -277,18 +277,31 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
 
   // Responsive — clamp to parent's actual width so the SVG never overflows
   // the message bubble or sticky panel. Re-measure on resize.
+  //
+  // Hardened against ResizeObserver feedback loops: (1) round to an integer
+  // and only setState on a ≥1px change, so subpixel oscillation can't keep
+  // re-triggering the expensive function-plot rebuild (the render effect below
+  // depends on effWidth); (2) rAF-throttle the RO callback so a burst of
+  // notifications — e.g. while an image-heavy page churns layout — coalesces
+  // into one measure and is deferred OUT of the RO delivery cycle. Without
+  // this the RO→setState→rebuild→RO cycle pegs the main thread (hard freeze)
+  // when the panel is open over a churning page like /problems.
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const update = () => {
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
       const pw = el.parentElement?.clientWidth ?? width;
-      const target = Math.min(width, Math.max(220, pw - 16));
-      setEffWidth(target);
+      const target = Math.round(Math.min(width, Math.max(220, pw - 16)));
+      setEffWidth((prev) => (Math.abs(prev - target) < 1 ? prev : target));
     };
-    update();
-    const ro = new ResizeObserver(update);
+    measure();
+    const ro = new ResizeObserver(() => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    });
     if (el.parentElement) ro.observe(el.parentElement);
-    return () => ro.disconnect();
+    return () => { if (raf) cancelAnimationFrame(raf); ro.disconnect(); };
   }, [width]);
 
   // Resolve fn list + assigned colors once so legend + chart stay in sync.

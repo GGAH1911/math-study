@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
+import SolutionPanel from '../../components/SolutionPanel.tsx';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('problems', slug);
@@ -17,75 +18,168 @@ const fm = entry.data;
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
+const unitTitle = fm.source?.subject
+  ? `${fm.source.year} ${fm.source.exam_type} ${fm.source.subject} ${fm.source.number}번`
+  : entry.id;
 ---
 <BaseLayout title={entry.id}>
-  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
-    <article class="max-w-none">
-      <div class="prose prose-invert max-w-none">
-        <Content />
-      </div>
-      <div class="my-6">
-        <ProblemAttemptPanel client:load slug={entry.id} />
-      </div>
-      <ChatPanel client:load slug={entry.id} unitTitle={fm.source?.subject ? `${fm.source.year} ${fm.source.exam_type} ${fm.source.subject} ${fm.source.number}번` : entry.id} collection="problems" />
-    </article>
+  {/* 하이브리드 레이아웃:
+       · 넓은 화면(lg+) — [문제·풀이·메타 (스크롤)] | [튜터 채팅 (우측 고정 full-height)]
+       · 좁은 화면      — 문제 단일 컬럼 + 채팅 하단 dock 고정
+     문제와 대화를 동시에 보면서 풀 수 있게. */}
+  <div id="prob-grid" style="--chat-w: 400px"
+       class="max-w-[1500px] mx-auto px-4 sm:px-6 py-8
+              lg:grid lg:grid-cols-[minmax(0,1fr)_16px_var(--chat-w,400px)] lg:gap-3 lg:items-start
+              max-lg:pb-[46vh]">
 
-    <aside class="lg:sticky lg:top-20 self-start space-y-4">
-      <section class="card">
-        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">상태</h3>
-        <dl class="text-sm space-y-1.5">
-          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">status</dt><dd><span class={`chip chip-status-${fm.status}`}>{fm.status}</span></dd></div>
-          {fm.format && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">format</dt><dd>{fm.format}</dd></div>}
-          {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">tier</dt><dd><span class="chip">{fm.killer_tier}</span></dd></div>}
-          {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">cognitive</dt><dd>{fm.cognitive_type}</dd></div>}
-          {fm.answer && (
-            <div class="flex justify-between items-center"><dt class="text-[color:var(--color-muted)]">정답</dt>
-              <dd>
-                <button
-                  type="button"
-                  class="answer-blur font-mono text-sm px-2 py-0.5 rounded border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] hover:border-[color:var(--color-accent)] transition cursor-pointer"
-                  data-answer={fm.answer}
-                  aria-label="정답 보기"
-                  onclick="this.classList.toggle('revealed')"
-                >{fm.answer}</button>
-              </dd>
-            </div>
-          )}
-          {fm.official_pass_rate && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답률</dt><dd>{fm.official_pass_rate}%</dd></div>}
-          {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">difficulty</dt><dd>{fm.difficulty}</dd></div>}
-          {fm.last_attempted && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">attempted</dt><dd>{fm.last_attempted.toISOString().slice(0,10)}</dd></div>}
-          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
-        </dl>
-        {fm.exam_intent && (
-          <p class="mt-3 pt-3 border-t border-[color:var(--color-border)] text-xs text-[color:var(--color-muted)] leading-relaxed">
-            🎯 {fm.exam_intent}
-          </p>
-        )}
-      </section>
+    {/* ── 왼쪽: 문제 + 풀이 + 메타 (문서와 함께 스크롤) ── */}
+    <div class="min-w-0">
+      <article class="max-w-none">
+        <div class="prose prose-invert max-w-none">
+          <Content />
+        </div>
+        <div class="my-6">
+          <ProblemAttemptPanel client:load slug={entry.id} />
+        </div>
+        <SolutionPanel client:load solution={fm.solution} />
+      </article>
 
-      {fm.source && (
+      {/* 메타데이터: 우측 rail 을 채팅에 내주고 문제 아래 가로 카드로 재배치 */}
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <section class="card">
-          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">출처</h3>
-          <dl class="text-sm space-y-1">
-            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">시행</dt><dd>{fm.source.agency} · {fm.source.exam_type}</dd></div>
-            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">년도</dt><dd>{fm.source.year}{fm.source.session ? ` · ${fm.source.session}` : ''}</dd></div>
-            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">과목</dt><dd>{fm.source.subject}</dd></div>
-            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">번호</dt><dd>{fm.source.number}번 · {fm.source.score ?? '?'}점</dd></div>
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">상태</h3>
+          <dl class="text-sm space-y-1.5">
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">status</dt><dd><span class={`chip chip-status-${fm.status}`}>{fm.status}</span></dd></div>
+            {fm.format && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">format</dt><dd>{fm.format}</dd></div>}
+            {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">tier</dt><dd><span class="chip">{fm.killer_tier}</span></dd></div>}
+            {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">cognitive</dt><dd>{fm.cognitive_type}</dd></div>}
+            {fm.answer && (
+              <div class="flex justify-between items-center"><dt class="text-[color:var(--color-muted)]">정답</dt>
+                <dd>
+                  <button
+                    type="button"
+                    class="answer-blur font-mono text-sm px-2 py-0.5 rounded border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] hover:border-[color:var(--color-accent)] transition cursor-pointer"
+                    data-answer={fm.answer}
+                    aria-label="정답 보기"
+                    onclick="this.classList.toggle('revealed')"
+                  >{fm.answer}</button>
+                </dd>
+              </div>
+            )}
+            {fm.official_pass_rate && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답률</dt><dd>{fm.official_pass_rate}%</dd></div>}
+            {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">difficulty</dt><dd>{fm.difficulty}</dd></div>}
+            {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
           </dl>
+          {fm.exam_intent && (
+            <p class="mt-3 pt-3 border-t border-[color:var(--color-border)] text-xs text-[color:var(--color-muted)] leading-relaxed">
+              🎯 {fm.exam_intent}
+            </p>
+          )}
         </section>
-      )}
 
-      {fm.concepts.length > 0 && (
-        <section class="card">
-          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">매핑된 개념</h3>
-          <ul class="space-y-1.5 text-sm">
-            {fm.concepts.map((p) => {
-              const slug = fmtPath(p);
-              return <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${slug}`}>{labelOf(slug)}</a></li>;
-            })}
-          </ul>
-        </section>
-      )}
-    </aside>
+        {fm.source && (
+          <section class="card">
+            <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">출처</h3>
+            <dl class="text-sm space-y-1">
+              <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">시행</dt><dd>{fm.source.agency} · {fm.source.exam_type}</dd></div>
+              <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">년도</dt><dd>{fm.source.year}{fm.source.session ? ` · ${fm.source.session}` : ''}</dd></div>
+              <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">과목</dt><dd>{fm.source.subject}</dd></div>
+              <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">번호</dt><dd>{fm.source.number}번 · {fm.source.score ?? '?'}점</dd></div>
+            </dl>
+          </section>
+        )}
+
+        {fm.concepts.length > 0 && (
+          <section class="card">
+            <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">매핑된 개념</h3>
+            <ul class="space-y-1.5 text-sm">
+              {fm.concepts.map((p) => {
+                const cslug = fmtPath(p);
+                return <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${cslug}`}>{labelOf(cslug)}</a></li>;
+              })}
+            </ul>
+          </section>
+        )}
+      </div>
+    </div>
+
+    {/* 드래그 핸들 — 채팅 폭 조절 (lg 전용; 좁으면 grid collapse + hidden) */}
+    <div id="chat-resize" title="드래그해서 채팅 폭 조절" aria-hidden="true"
+         class="hidden lg:flex lg:sticky lg:top-16 lg:h-[calc(100vh-5rem)] items-center justify-center cursor-col-resize group touch-none select-none">
+      <div class="h-16 w-1 group-hover:w-1.5 rounded-full bg-[color:var(--color-border)] group-hover:bg-[color:var(--color-accent)] transition-all"></div>
+    </div>
+
+    {/* ── 오른쪽: 튜터 채팅 ──
+         넓은 화면: 우측 고정 full-height 컬럼 (문제 스크롤해도 항상 보임)
+         좁은 화면: 화면 하단 dock (접기/펴기 토글) */}
+    <div id="chat-dock"
+         class="lg:sticky lg:top-16 lg:h-[calc(100vh-5rem)] lg:self-start
+                max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:z-40 max-lg:h-[44vh]
+                max-lg:flex max-lg:flex-col
+                max-lg:border-t max-lg:border-[color:var(--color-border)] max-lg:bg-zinc-950
+                max-lg:shadow-[0_-8px_24px_rgba(0,0,0,0.45)] chat-dock--collapsed">
+      {/* 좁은 화면 전용 접기/펴기 바 */}
+      <button type="button" id="dock-toggle" aria-label="튜터 대화 펴기/접기"
+              class="hidden max-lg:flex shrink-0 w-full items-center justify-center gap-2 h-11
+                     text-xs font-medium text-zinc-200 border-b border-[color:var(--color-border)] active:bg-zinc-900">
+        <span>🤖 튜터 대화</span>
+        <span id="dock-toggle-icon" class="text-[color:var(--color-accent)]">▴</span>
+      </button>
+      <div id="dock-body" class="min-h-0 lg:h-full max-lg:flex-1 max-lg:px-3 max-lg:pb-2 max-lg:pt-2">
+        <ChatPanel client:load fill slug={entry.id} unitTitle={unitTitle} collection="problems" />
+      </div>
+    </div>
   </div>
+
+  {/* 채팅 폭 드래그 조절 — 폭은 localStorage 기억 */}
+  <script is:inline>
+    (function () {
+      const grid = document.getElementById('prob-grid');
+      const handle = document.getElementById('chat-resize');
+      if (!grid || !handle) return;
+      const KEY = 'math-study:chat-width', MIN = 320, MAX = 760;
+      const saved = parseInt(localStorage.getItem(KEY) || '', 10);
+      if (saved >= MIN && saved <= MAX) grid.style.setProperty('--chat-w', saved + 'px');
+      let dragging = false;
+      handle.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        try { handle.setPointerCapture(e.pointerId); } catch (_) {}
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'col-resize';
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        const right = grid.getBoundingClientRect().right - 24; // px-6 보정
+        let w = Math.max(MIN, Math.min(MAX, right - e.clientX));
+        grid.style.setProperty('--chat-w', w + 'px');
+      });
+      window.addEventListener('pointerup', function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+        const w = parseInt(grid.style.getPropertyValue('--chat-w'), 10);
+        if (w) localStorage.setItem(KEY, String(w));
+      });
+
+      // 좁은 화면 dock 접기/펴기
+      const dock = document.getElementById('chat-dock');
+      const dockToggle = document.getElementById('dock-toggle');
+      const dockIcon = document.getElementById('dock-toggle-icon');
+      if (dock && dockToggle) {
+        dockToggle.addEventListener('click', function () {
+          const collapsed = dock.classList.toggle('chat-dock--collapsed');
+          if (dockIcon) dockIcon.textContent = collapsed ? '▴' : '▾';
+        });
+      }
+    })();
+  </script>
+
+  <style is:global>
+    @media (max-width: 1023px) {
+      #chat-dock.chat-dock--collapsed { height: auto; }
+      #chat-dock.chat-dock--collapsed #dock-body { display: none; }
+      #prob-grid:has(#chat-dock.chat-dock--collapsed) { padding-bottom: 3.5rem; }
+    }
+  </style>
 </BaseLayout>

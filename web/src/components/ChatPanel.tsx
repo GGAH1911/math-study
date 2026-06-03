@@ -31,6 +31,10 @@ type Props = {
   slug: string;
   unitTitle: string;
   collection?: 'concepts' | 'problems' | 'dashboard';
+  // fill=true → 부모 컨테이너 높이를 꽉 채우는 flex 레이아웃 (메시지 flex-1 스크롤,
+  // 입력은 하단 고정). problem 페이지의 고정 채팅 컬럼/하단 dock 용. 기본(false)은
+  // 기존 inline 카드 (concepts/dashboard 페이지).
+  fill?: boolean;
 };
 
 const STORAGE_PREFIX = 'math-study:chat:';
@@ -303,14 +307,21 @@ function applyKatex(html: string, katex: KatexImpl): string {
   //
   // tex 안에 `&lt;`/`&gt;` 같은 escape된 entity가 들어오면 KaTeX는 이해 못함.
   // decode 후 KaTeX 호출.
-  html = html.replace(/\$\$([^$]+?)\$\$/g, (_, tex) => {
+  html = html.replace(/\$\$([^$<>]+?)\$\$/g, (_, tex) => {  // `<>` 가드: 아래 인라인 처리의 주석 참고
     try {
       return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: true, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
       return _;
     }
   });
-  html = html.replace(/\$([^\n$]+?)\$/g, (_, tex) => {
+  // `[^\n$<>]` 의 `<>` 가드가 핵심: 이 시점엔 renderMarkdown 이 문단 내 개행을
+  // 전부 <br/> 로 바꾸고 문단을 구분자 없이 이어붙여(`\n` 가 하나도 안 남음) 정규식의
+  // `\n` 폭주 방지턱이 무력화돼 있다. 그런데 실제 수학의 부등호는 이미 `&lt;`/`&gt;`
+  // 엔티티 상태고, 남은 raw `<`/`>` 는 전부 HTML 태그(<code>·<br/>·</p>…)뿐이다.
+  // 따라서 `<`/`>` 를 매칭에서 제외하면 — 짝 안 맞는 stray `$` 하나가 태그들을 가로질러
+  // 메시지 전체를 삼키는 폭주를 막는다(태그를 만나면 매칭이 끊겨 그 `$` 는 그냥 literal).
+  // 짝 맞는 `$...$` 는 태그를 안 건너므로 영향 없이 정상 렌더된다.
+  html = html.replace(/\$([^\n$<>]+?)\$/g, (_, tex) => {
     try {
       return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: false, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
@@ -582,7 +593,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
   );
 });
 
-export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: Props) {
+export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fill = false }: Props) {
   const placeholderHint =
     collection === 'dashboard' ? '예: 삼각함수가 헷갈리는데 어디부터 봐야 해?' :
     collection === 'problems'  ? '예: 이 문제 어떻게 풀어?' :
@@ -991,8 +1002,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
   };
 
   return (
-    <section className="card mt-6">
-      <header className="flex items-center justify-between mb-3">
+    <section className={fill ? 'card h-full flex flex-col min-h-0' : 'card mt-6'}>
+      <header className="flex items-center justify-between mb-3 shrink-0">
         <div>
           <h3 className="text-sm font-semibold">{collection === 'dashboard' ? '🧭 학습 길잡이' : '🤖 튜터 대화'}</h3>
           <p className="text-xs text-[color:var(--color-muted)]">
@@ -1151,7 +1162,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
 
       <div
         ref={scrollRef}
-        className="space-y-3 max-h-[420px] overflow-y-auto py-2 px-1 -mx-1 mb-3 scroll-smooth"
+        className={`${fill ? 'flex-1 min-h-0' : 'max-h-[420px]'} space-y-3 overflow-y-auto py-2 px-1 -mx-1 mb-3 scroll-smooth`}
       >
         {messages.length === 0 ? (
           <p className="text-sm text-[color:var(--color-subtle)] py-8 text-center">
@@ -1194,7 +1205,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
         <p className="text-xs text-rose-400 mb-2">⚠ {error}</p>
       )}
 
-      <div className="flex gap-2 items-end">
+      <div className="flex gap-2 items-end shrink-0">
         <textarea
           ref={textareaRef}
           value={input}
@@ -1280,7 +1291,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts' }: 
         }
         .prose-chat pre code { background: none; padding: 0; }
         .prose-chat .katex { color: inherit; }
-        .prose-chat .katex-display { margin: 0.5rem 0; }
+        /* 좁은 채팅 폭에서 긴 display 수식이 깨지지 않고 가로 스크롤 */
+        .prose-chat .katex-display { margin: 0.5rem 0; overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 2px; }
         .prose-chat table {
           border-collapse: collapse;
           margin: 0.6em 0;

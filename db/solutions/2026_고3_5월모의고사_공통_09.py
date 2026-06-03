@@ -1,0 +1,1 @@
+import sympy as sp; x, h = sp.symbols('x h'); f1, fp1 = 2, sp.Rational(3,2); g = lambda t: (t**2 + t) * (f1 + fp1*(t-1)); lim = sp.limit((g(1+h)-4)/h, h, 0); assert lim == 9, f'극한값={lim}'; result = f1 * fp1; print('VERIFY_PASS' if result == 3 else 'VERIFY_FAIL')

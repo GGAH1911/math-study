@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); expr = sp.ln(x+1) / (sp.sqrt(x+4) - 2); result = sp.limit(expr, x, 0); print('VERIFY_PASS' if result == 4 else 'VERIFY_FAIL')

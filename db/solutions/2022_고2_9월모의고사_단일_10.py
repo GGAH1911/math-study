@@ -1,0 +1,1 @@
+from sympy import *; k = symbols('k'); a_k = 3*k - 2; a_k1 = 3*k + 1; total = sum(Rational(1)/(a_k.subs(k, i) * a_k1.subs(k, i)) for i in range(1, 11)); result = Rational(10, 31); print('VERIFY_PASS' if total == result else 'VERIFY_FAIL')

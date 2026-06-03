@@ -56,35 +56,44 @@ def _exam_meta_from_slug(slug: str) -> tuple[str, str | None]:
     return '모의고사', None
 
 
-def _render_pages_if_missing(pdf: Path, pages_dir: Path) -> int:
-    """Render p*.png at 200dpi if any are missing or look truncated.
+def _render_pages_if_missing(pdf: Path, pages_dir: Path, dpi: int = 200) -> int:
+    """Render p*.png at `dpi` if any are missing, truncated, or rendered at
+    a different DPI than requested.
 
     A 0-byte (or <1KB) PNG from a failed earlier run is treated as
     missing — PIL would crash with 'cannot identify image file' on it.
     To stay simple we wipe and re-render the whole pages_dir whenever
-    we detect any bad/missing file.
+    we detect any bad/missing file, or a DPI change (page width mismatch).
     """
     pages_dir.mkdir(parents=True, exist_ok=True)
     d = fitz.open(pdf)
     expected = d.page_count
     existing = sorted(pages_dir.glob('p*.png'))
     healthy = [p for p in existing if p.stat().st_size > 1024]
-    if len(healthy) == expected:
+    # DPI 일치 확인: 기존 페이지 폭이 현재 dpi 기대폭과 다르면 재렌더(bbox와 DPI 일치 필수).
+    dpi_match = True
+    if healthy:
+        exp_w = round(d[0].rect.width * dpi / 72.0)
+        try:
+            dpi_match = abs(Image.open(healthy[0]).size[0] - exp_w) <= 3
+        except Exception:
+            dpi_match = False
+    if len(healthy) == expected and dpi_match:
         d.close()
         return 0
-    # Wipe and re-render — partial set or corrupt files present.
+    # Wipe and re-render — partial set, corrupt files, or DPI changed.
     for f in existing:
         try: f.unlink()
         except Exception: pass
     n = 0
     for i, p in enumerate(d):
-        p.get_pixmap(dpi=200).save(pages_dir / f'p{i+1:02d}.png')
+        p.get_pixmap(dpi=dpi).save(pages_dir / f'p{i+1:02d}.png')
         n += 1
     d.close()
     return n
 
 
-def recrop_round(slug: str, workers: int = 4, wipe: bool = False) -> dict:
+def recrop_round(slug: str, workers: int = 4, wipe: bool = False, dpi: int = 200) -> dict:
     raw = ROOT / 'db' / 'raw' / slug
     pdf = raw / '문제.pdf'
     pages_dir = raw / 'pages'
@@ -109,8 +118,8 @@ def recrop_round(slug: str, workers: int = 4, wipe: bool = False) -> dict:
 
     exam_type, grade = _exam_meta_from_slug(slug)
 
-    rendered = _render_pages_if_missing(pdf, pages_dir)
-    entries = extract_problem_bboxes(pdf, exam_type=exam_type, grade=grade)
+    rendered = _render_pages_if_missing(pdf, pages_dir, dpi=dpi)
+    entries = extract_problem_bboxes(pdf, exam_type=exam_type, grade=grade, dpi=dpi)
     if not entries:
         return {'slug': slug, 'skipped': 'no bboxes'}
 
@@ -196,6 +205,9 @@ def main():
     ap.add_argument('--limit', type=int, default=0, help='Cap to first N rounds')
     ap.add_argument('--wipe', action='store_true',
                     help='Delete images/*.png and matching web symlinks before re-cropping each round')
+    ap.add_argument('--dpi', type=int, default=200,
+                    help='Render/bbox DPI (must match between page render and bbox). '
+                         'Bump to 300 for dense killer problems with small subscripts/figures. Default 200.')
     args = ap.parse_args()
 
     if args.manifest:
@@ -216,7 +228,7 @@ def main():
     for i, slug in enumerate(rounds, 1):
         print(f'\n══════ [{i}/{len(rounds)}] {slug} ══════', flush=True)
         try:
-            r = recrop_round(slug, workers=args.workers, wipe=args.wipe)
+            r = recrop_round(slug, workers=args.workers, wipe=args.wipe, dpi=args.dpi)
         except Exception as e:
             r = {'slug': slug, 'error': str(e)[:200]}
         summary.append(r)

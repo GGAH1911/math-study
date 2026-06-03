@@ -1,0 +1,1 @@
+import math; result = (3 ** (2 * math.sqrt(2))) * (9 ** (1 - math.sqrt(2))); expected = 9; print('VERIFY_PASS' if abs(result - expected) < 1e-10 else 'VERIFY_FAIL')

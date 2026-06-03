@@ -1,0 +1,1 @@
+import sympy as sp; result = (27 * 8**0.5)**(2/3); print('VERIFY_PASS' if abs(result - 18) < 1e-9 else 'VERIFY_FAIL')

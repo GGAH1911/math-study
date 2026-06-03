@@ -1,0 +1,54 @@
+---
+export const prerender = false; // 회차 동적 — SSR per request (68개 enumerate 회피)
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ExamRunner from '../../../components/ExamRunner.tsx';
+import { getCollection } from 'astro:content';
+import { SUBJECT_ORDER, roundTitle } from '../../../lib/problem-meta';
+
+const key = String(Astro.params.key ?? ''); // 예: "2026/수능"
+const all = await getCollection('problems');
+const probs = all.filter((p) => p.id.startsWith(key + '/'));
+if (probs.length === 0) return Astro.redirect('/problems');
+
+const subjIdx = (s: string) => {
+  const i = (SUBJECT_ORDER as readonly string[]).indexOf(s);
+  return i < 0 ? 99 : i;
+};
+probs.sort((a, b) => {
+  const sa = subjIdx(String(a.data.source?.subject ?? ''));
+  const sb = subjIdx(String(b.data.source?.subject ?? ''));
+  if (sa !== sb) return sa - sb;
+  return Number(a.data.source?.number ?? 0) - Number(b.data.source?.number ?? 0);
+});
+
+const s0 = probs[0].data.source ?? {};
+const year = key.split('/')[0];
+const title = roundTitle({
+  year,
+  agency: String(s0.agency ?? ''),
+  exam_type: String(s0.exam_type ?? ''),
+  grade: String(s0.grade ?? ''),
+  session: String(s0.session ?? ''),
+});
+
+const examProblems = probs.map((p) => {
+  const s = p.data.source ?? {};
+  return {
+    slug: p.id,
+    number: Number(s.number ?? 0),
+    subject: String(s.subject ?? ''),
+    format: p.data.format ?? 'choice',
+    image: p.data.problem_image ?? `/problem-images/${p.id.split('/').pop()}.png`,
+    score: Number(s.score ?? 0),
+  };
+});
+
+// 응시 문항 수 추정(공통/단일 + 선택 8) × 200초/문항, 최소 30분.
+const ELECTIVES = ['미적분', '확률과통계', '기하'];
+const commonCount = examProblems.filter((p) => !ELECTIVES.includes(p.subject)).length;
+const hasElective = examProblems.some((p) => ELECTIVES.includes(p.subject));
+const durationSec = Math.max(1800, (commonCount + (hasElective ? 8 : 0)) * 200);
+---
+<BaseLayout title={`모의시험 — ${title}`}>
+  <ExamRunner client:load title={title} problems={examProblems} durationSec={durationSec} />
+</BaseLayout>

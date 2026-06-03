@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-05-23
-updated: 2026-05-23
+created: 2026-05-30
+updated: 2026-05-30
 hub_type: concepts-sub
 domain: probability-stats
 counts:
@@ -17,6 +17,5 @@ counts:
 - [중2](../../concepts/probability-stats/middle-2/) — 1개 (sub-hub: [./probability-stats/middle-2.md](./probability-stats/middle-2.md))
 - [중3](../../concepts/probability-stats/middle-3/) — 1개 (sub-hub: [./probability-stats/middle-3.md](./probability-stats/middle-3.md))
 - [고1](../../concepts/probability-stats/high-1/) — 1개 (sub-hub: [./probability-stats/high-1.md](./probability-stats/high-1.md))
-- [미적분](../../concepts/probability-stats/calculus/) — 0개 (sub-hub: [./probability-stats/calculus.md](./probability-stats/calculus.md))
 - [확률과통계](../../concepts/probability-stats/prob-stats-elective/) — 3개 (sub-hub: [./probability-stats/prob-stats-elective.md](./probability-stats/prob-stats-elective.md))
 

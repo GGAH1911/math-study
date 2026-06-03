@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-05-23
-updated: 2026-05-23
+created: 2026-05-30
+updated: 2026-05-30
 hub_type: concepts-grade
 domain: probability-stats
 grade: middle-2

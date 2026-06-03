@@ -53,3 +53,7 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 ## [2026-05-22] promote | chat → synthesis: "[학습 노트 요청] 위 노트를 절반 길이로 다시 정리해줘. 같은 4섹션 구조는 유지." from algebra/math-1/지수와_로그/n제곱근의_정의
 
 ## [2026-05-23] promote | chat → synthesis: "[학습 노트 요청] "logic/high-1/집합과_명제/논리" 페이지에서 지금까지 한 대화를 정리해 학습 " from logic/high-1/집합과_명제/논리
+
+## [2026-06-02] prune | 검정고시(고졸) 전체 제거 — 260문제 / 13회차(2020~2026 고졸 1·2회). 삭제: docs/problems/*/고졸_*회/ (260 md), web/public/problem-images/*고졸* (260), db/solutions/*고졸* (243 검증기), verified-rounds.json 고졸 13건. 보존: db/raw/*고졸* 원본 PDF 13회차 (향후 별도 검정고시 인제스트용). 이유: 메인 수능 학습과 분리 + 정답키 오류 다수(예: 2020_2회 회차 통째 오답키, 01번=①인데 gold=4). 아카이브(복구 가능): archive/검정고시_고졸_20260602-085715.tar.gz. 결과: 문제 2844→2584, 회차 81→68.
+
+## [2026-06-03] promote | chat → synthesis: "다음단계" from 2023/6월모평/2023_6월모평_미적분_30

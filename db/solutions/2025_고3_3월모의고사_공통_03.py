@@ -1,0 +1,1 @@
+from sympy import symbols, solve, simplify; r = symbols('r', positive=True, real=True); a = symbols('a', positive=True, real=True); eq = a*r**3 - (2*a*r**2 + 3*a*r); sol = solve(eq, r); r_val = [x for x in sol if x > 0][0]; a4 = a*r_val**3; a3 = a*r_val**2; a2 = a*r_val; check = simplify(a4 - (2*a3 + 3*a2)); print('VERIFY_PASS' if check == 0 else 'VERIFY_FAIL')

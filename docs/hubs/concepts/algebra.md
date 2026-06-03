@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-05-23
-updated: 2026-05-23
+created: 2026-05-30
+updated: 2026-05-30
 hub_type: concepts-sub
 domain: algebra
 counts:
@@ -19,5 +19,4 @@ counts:
 - [중3](../../concepts/algebra/middle-3/) — 2개 (sub-hub: [./algebra/middle-3.md](./algebra/middle-3.md))
 - [고1](../../concepts/algebra/high-1/) — 1개 (sub-hub: [./algebra/high-1.md](./algebra/high-1.md))
 - [수학1](../../concepts/algebra/math-1/) — 1개 (sub-hub: [./algebra/math-1.md](./algebra/math-1.md))
-- [미적분](../../concepts/algebra/calculus/) — 0개 (sub-hub: [./algebra/calculus.md](./algebra/calculus.md))
 

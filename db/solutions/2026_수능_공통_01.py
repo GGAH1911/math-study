@@ -1,0 +1,1 @@
+import math; result = (9**(1/4)) * (3**(-1/2)); expected = 1; diff = abs(result - expected); print('VERIFY_PASS' if diff < 1e-10 else 'VERIFY_FAIL')

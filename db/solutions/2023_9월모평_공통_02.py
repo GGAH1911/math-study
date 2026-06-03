@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); f = 2*x**2 + 5; f_2 = f.subs(x, 2); limit_val = sp.limit((f - f_2)/(x - 2), x, 2); print('VERIFY_PASS' if limit_val == 8 else 'VERIFY_FAIL')

@@ -337,14 +337,19 @@ export default function StatsChart({ spec, width = 420, height = 280, hideCaptio
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const update = () => {
+    // rAF-throttle + ≥1px change guard — prevents ResizeObserver feedback
+    // loops from pegging the main thread (see Graph.tsx PlotGraph for detail).
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
       const pw = el.parentElement?.clientWidth ?? width;
-      setEffWidth(Math.min(width, Math.max(280, pw - 16)));
+      const target = Math.round(Math.min(width, Math.max(280, pw - 16)));
+      setEffWidth((prev) => (Math.abs(prev - target) < 1 ? prev : target));
     };
-    update();
-    const ro = new ResizeObserver(update);
+    measure();
+    const ro = new ResizeObserver(() => { if (!raf) raf = requestAnimationFrame(measure); });
     if (el.parentElement) ro.observe(el.parentElement);
-    return () => ro.disconnect();
+    return () => { if (raf) cancelAnimationFrame(raf); ro.disconnect(); };
   }, [width]);
 
   // Mirror to the sticky side panel.

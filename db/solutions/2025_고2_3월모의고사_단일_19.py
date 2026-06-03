@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); g = x**3 - 6*x**2 + 10*x - 5; result = g.subs(x, 3); print('VERIFY_PASS' if result == -2 else f'VERIFY_FAIL: {result}')

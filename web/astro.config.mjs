@@ -78,15 +78,40 @@ function remarkRewritePaths() {
   };
 }
 
+/**
+ * Remark plugin: strip the legacy `## 풀이 (학습 시 채워짐)` placeholder section
+ * from problem bodies. 이 섹션은 SolutionPanel(검증된 풀이 캐시)로 대체돼 중복.
+ * 해당 heading + 다음 heading 전까지(placeholder 문단) 제거. 파일을 건드리지
+ * 않고 렌더 시점에만 제거 → 백그라운드 빌드(frontmatter write)와 충돌 없음.
+ * "학습 시 채워짐" 텍스트로 스코프되므로 실제 풀이가 적힌 경우엔 매칭 안 됨.
+ */
+function remarkStripSolutionPlaceholder() {
+  return (tree) => {
+    const kids = tree.children;
+    if (!Array.isArray(kids)) return;
+    for (let i = 0; i < kids.length; i++) {
+      const node = kids[i];
+      if (node.type !== 'heading' || node.depth !== 2) continue;
+      const text = (node.children || []).map((c) => c.value || '').join('');
+      if (!(text.includes('풀이') && text.includes('학습 시 채워짐'))) continue;
+      let j = i + 1;
+      while (j < kids.length && kids[j].type !== 'heading') j++;
+      kids.splice(i, j - i);
+      i--;
+    }
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'http://localhost:4321',
   output: 'server',
+  devToolbar: { enabled: false },  // 하단 Astro dev 툴바 숨김
   adapter: node({ mode: 'standalone' }),
   integrations: [
     react(),
     mdx({
-      remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths],
+      remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths, remarkStripSolutionPlaceholder],
       rehypePlugins: [[rehypeKatex, katexOptions]],
     }),
   ],
@@ -111,7 +136,7 @@ export default defineConfig({
     },
   },
   markdown: {
-    remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths],
+    remarkPlugins: [remarkMath, remarkKatexCompat, remarkRewritePaths, remarkStripSolutionPlaceholder],
     rehypePlugins: [[rehypeKatex, katexOptions]],
   },
 });

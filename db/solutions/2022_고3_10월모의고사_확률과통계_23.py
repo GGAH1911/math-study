@@ -1,0 +1,1 @@
+import math; sigma = 12; n = 36; sigma_x_bar = sigma / math.sqrt(n); answer = 2; print('VERIFY_PASS' if abs(sigma_x_bar - answer) < 1e-10 else 'VERIFY_FAIL')

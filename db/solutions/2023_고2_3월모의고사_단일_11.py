@@ -1,0 +1,1 @@
+U = set(range(1, 51)); A = {i for i in U if 30 % i == 0}; B = {i for i in U if i % 3 == 0}; A_complement = U - A; result = A_complement | B; print('VERIFY_PASS' if len(result) == 46 else 'VERIFY_FAIL')

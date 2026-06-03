@@ -1,0 +1,41 @@
+---
+export const prerender = false; // 매 요청 새 무작위 시험
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExamRunner from '../../components/ExamRunner.tsx';
+import { getCollection } from 'astro:content';
+import { buildRandomExam, ELECTIVES } from '../../lib/exam-build';
+
+const raw = String(Astro.url.searchParams.get('elective') ?? '');
+const elective = ELECTIVES.includes(raw) ? raw : '미적분';
+const all = await getCollection('problems');
+const picks = buildRandomExam(all, elective);
+
+const examProblems = picks.map((p, i) => {
+  const s = p.data.source ?? {};
+  return {
+    slug: p.id,
+    number: i + 1,
+    subject: String(s.subject ?? ''),
+    format: p.data.format ?? 'choice',
+    image: p.data.problem_image ?? `/problem-images/${p.id.split('/').pop()}.png`,
+    score: Number(s.score ?? 0),
+  };
+});
+const durationSec = 100 * 60;
+---
+<BaseLayout title="랜덤 모의시험">
+  <div class="max-w-3xl mx-auto px-4 pt-4">
+    <div class="flex items-center gap-2 text-xs flex-wrap">
+      <span class="text-[color:var(--color-subtle)]">선택과목</span>
+      {ELECTIVES.map((e) => (
+        <a href={`/exam/random?elective=${e}`} class={`chip ${e === elective ? 'border-[color:var(--color-accent)] text-[color:var(--color-text)]' : 'opacity-50'}`}>{e}</a>
+      ))}
+      <a href="/exam/random" class="chip opacity-70 ml-2">🎲 새 시험</a>
+    </div>
+  </div>
+  {examProblems.length === 0 ? (
+    <div class="max-w-3xl mx-auto px-6 py-12 text-center text-[color:var(--color-muted)]">시험을 구성하지 못했습니다.</div>
+  ) : (
+    <ExamRunner client:load title={`랜덤 모의시험 · ${elective}`} problems={examProblems} durationSec={durationSec} />
+  )}
+</BaseLayout>

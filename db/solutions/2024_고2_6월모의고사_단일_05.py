@@ -1,0 +1,1 @@
+import math; result = math.log10(43.5); expected = 1.6385; tolerance = 0.0001; print('VERIFY_PASS' if abs(result - expected) < tolerance else f'VERIFY_FAIL: {result} vs {expected}')

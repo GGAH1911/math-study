@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); result = sp.integrate(3*sp.ln(x)/x, (x, 1, sp.E)); print('VERIFY_PASS' if abs(float(result) - 1.5) < 1e-10 else 'VERIFY_FAIL')

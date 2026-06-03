@@ -79,6 +79,14 @@ const problems = defineCollection({
       spec: z.record(z.unknown()),
       confidence: z.number().min(0).max(1).optional(),
     }).optional(),
+    // 검증된 풀이 캐시 (scripts/build_solution_cache.py 생성). 튜터 레퍼런스 + 페이지 "풀이 보기".
+    solution: z.object({
+      answer_value: z.string().optional(),
+      verified: z.boolean().optional(),
+      generated_by: z.string().optional(),
+      verifier: z.string().optional(),
+      steps: z.array(z.string()).optional().default([]),
+    }).optional(),
   }),
 });
 

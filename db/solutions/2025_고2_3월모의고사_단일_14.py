@@ -1,0 +1,1 @@
+import sympy as sp; x, k = sp.symbols('x k', real=True); f = (4*x - k)/(x - 4); k_val = 10; f_eval = f.subs(k, k_val); vals = [f_eval.subs(x, i).evalf() for i in [1, 1.5, 2, 2.5, 3]]; max_val = max(vals); print('VERIFY_PASS' if abs(max_val - 2.0) < 1e-9 else 'VERIFY_FAIL')

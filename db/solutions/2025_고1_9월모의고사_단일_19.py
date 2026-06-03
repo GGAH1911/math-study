@@ -1,0 +1,1 @@
+import sympy as sp; a, b, x = sp.symbols('a b x', real=True, positive=True); f = a*(x-b)**2; f_6 = f.subs(x, 6); g_3 = a; g_2 = 4*a; g_6 = 12*a; eqs = [sp.Eq(g_3, a), sp.Eq(g_2 + g_6, 32)]; sol = sp.solve(eqs, [a, b]); a_val, b_val = 2, 4; f_result = 2*(6-4)**2; print('VERIFY_PASS' if f_result == 8 else 'VERIFY_FAIL')

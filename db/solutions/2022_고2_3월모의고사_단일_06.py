@@ -1,0 +1,1 @@
+import sympy as sp; a = 4; z = (a + 3*sp.I) / (2 - sp.I); real_part = sp.re(z); imag_part = sp.im(z); result_sum = real_part + imag_part; print('VERIFY_PASS' if abs(result_sum - 3) < 1e-9 else 'VERIFY_FAIL')

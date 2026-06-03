@@ -1,0 +1,1 @@
+import sympy as sp; x, k = sp.symbols('x k', real=True); alpha, beta = sp.symbols('alpha beta', real=True); eqn = x**2 + 2*x + k; roots = sp.solve(eqn, x); alpha_val, beta_val = roots[0], roots[1]; sum_of_squares = sp.simplify(alpha_val**2 + beta_val**2); result = sum_of_squares.subs(k, -2); print('VERIFY_PASS' if sp.simplify(result - 8) == 0 else 'VERIFY_FAIL')
