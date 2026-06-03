@@ -19,26 +19,36 @@ export type Health = {
 };
 
 export function readHealth(): Health {
+  // 정량 필드(개념수·mastery·due·dag)는 *라이브* 소스인 concept-graph.json 에서 실측한다.
+  // (그래프 빌드 스크립트 + mastery-promote API 가 노드를 갱신하므로 항상 최신.)
+  // docs/index.md frontmatter 의 mastery_*/due_today/pages 는 2026-05-16 박제 스냅샷
+  // (개념 490 시절)이라 더 이상 읽지 않는다 — 텍스트(suggested_action/last_updated)만 가져온다.
+  const graph = readConceptGraph();
+  const mastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 };
+  for (const n of graph.nodes) {
+    const k = n.mastery as keyof typeof mastery;
+    if (k in mastery) mastery[k]++;
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  const dueToday = graph.nodes.reduce(
+    (acc, n) => acc + (n.next_review && n.next_review <= today ? 1 : 0),
+    0,
+  );
+
   const p = resolve(DOCS, 'index.md');
   const fm = existsSync(p)
     ? (matter(readFileSync(p, 'utf-8')).data as Record<string, unknown>)
     : {};
-  const num = (k: string) => Number(fm[k] ?? 0);
-  const str = (k: string) => String(fm[k] ?? '');
+
   return {
-    pages: num('pages'),
-    orphans: num('orphans'),
-    conflicts: num('conflicts'),
-    dueToday: num('due_today'),
-    mastery: {
-      unknown: num('mastery_unknown'),
-      learning: num('mastery_learning'),
-      proficient: num('mastery_proficient'),
-      mastered: num('mastery_mastered'),
-    },
-    dagIntegrity: str('dag_integrity') || 'ok',
-    suggestedAction: str('suggested_action'),
-    lastUpdated: str('last_updated'),
+    pages: graph.nodes.length,
+    orphans: Number(fm.orphans ?? 0),
+    conflicts: Number(fm.conflicts ?? 0),
+    dueToday,
+    mastery,
+    dagIntegrity: (graph.stats?.cycles ?? 0) === 0 ? 'ok' : `${graph.stats.cycles} cycles`,
+    suggestedAction: String(fm.suggested_action ?? ''),
+    lastUpdated: String(fm.last_updated ?? ''),
   };
 }
 
