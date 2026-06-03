@@ -1,7 +1,8 @@
 ---
-import { readHealth } from '../lib/health.ts';
+import { readHealth, unitSummary } from '../lib/health.ts';
 const health = readHealth();
-const m = health.mastery;
+const u = unitSummary();
+const s = u.byStatus;
 ---
 
 <header class="sticky top-0 z-30 flex items-center gap-4 px-6 py-3 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/85 backdrop-blur">
@@ -11,15 +12,17 @@ const m = health.mastery;
   </div>
 
   <div class="ml-auto flex items-center gap-3 text-xs">
-    <span class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[color:var(--color-surface)] border border-[color:var(--color-border)] font-mono">
+    <span class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[color:var(--color-surface)] border border-[color:var(--color-border)] font-mono"
+          title={`단원 진행 ${u.started}/${u.total} 착수 — 미착수·학습중·능숙·숙달`}>
+      <span class="font-sans text-[10px] text-[color:var(--color-subtle)] mr-0.5">단원</span>
       <span class="inline-block size-1.5 rounded-full bg-[color:var(--color-mastery-unknown)]"></span>
-      <span class="stat-num">{m.unknown}</span>
+      <span class="stat-num">{s.unknown}</span>
       <span class="inline-block size-1.5 rounded-full bg-[color:var(--color-mastery-learning)]"></span>
-      <span class="stat-num">{m.learning}</span>
+      <span class="stat-num">{s.learning}</span>
       <span class="inline-block size-1.5 rounded-full bg-[color:var(--color-mastery-proficient)]"></span>
-      <span class="stat-num">{m.proficient}</span>
+      <span class="stat-num">{s.proficient}</span>
       <span class="inline-block size-1.5 rounded-full bg-[color:var(--color-mastery-mastered)]"></span>
-      <span class="stat-num">{m.mastered}</span>
+      <span class="stat-num">{s.mastered}</span>
     </span>
 
     <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">

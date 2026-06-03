@@ -74,13 +74,17 @@ function truncate(s) {
   return (lastSpace > SUMMARY_MAX * 0.6 ? cut.slice(0, lastSpace) : cut).trim() + '…';
 }
 
-// sub-dir 호환: 'algebra/근의_공식' (DOCS_DIR 기준 relative path, .md 제거)
+// sub-dir 호환: 'algebra/근의_공식' (DOCS_DIR 기준 relative path, .md 제거).
+// NFC 정규화: 일부 한글 파일명이 디스크에 NFD(자모 분리)로 저장돼 있는데
+// Node readdir 은 그대로 보존하는 반면 Astro content collection 은 NFC 로
+// 정규화한다. 정규화를 안 맞추면 /concepts 가 graph 의 home_unit 과
+// collection 항목을 join 하지 못해 스포크가 "기타" 로 떨어진다.
 function slugFromFile(absPath) {
-  return relative(DOCS_DIR, absPath).replace(/\.md$/, '').split(/[\\/]/).join('/');
+  return relative(DOCS_DIR, absPath).replace(/\.md$/, '').split(/[\\/]/).join('/').normalize('NFC');
 }
 // frontmatter cross-ref ('docs/concepts/algebra/근의_공식.md' 또는 슬러그 only) → slug
 function slugFromRef(p) {
-  return p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
+  return p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '').normalize('NFC');
 }
 
 function walkMd(dir) {
@@ -122,10 +126,13 @@ function readConcepts() {
   return { concepts, summaries };
 }
 
-// For each spoke, find the first `unit` reachable via the prerequisite
-// chain. Mirrors the runtime `homeUnitOf` logic in ConceptDAG.tsx so
-// the /concepts grouping and the graph view agree on which unit owns
-// which spoke.
+// Assign each spoke to its owning unit. The file path is authoritative:
+// docs/concepts/<domain>/<grade>/<unit>/<spoke>.md means <unit> owns the
+// spoke, so the path parent is the home unit. The prerequisite chain is a
+// *learning* dependency and may point at a different unit (or break), which
+// is exactly what scattered spokes into the wrong domain's "기타" bucket —
+// so we only walk it as a fallback for legacy/flat nodes whose path parent
+// isn't a unit.
 function annotateHomeUnit(concepts) {
   const byId = new Map(concepts.map((c) => [c.id, c]));
   const cache = new Map();
@@ -144,7 +151,13 @@ function annotateHomeUnit(concepts) {
     return null;
   }
   for (const c of concepts) {
-    c.home_unit = c.concept_type === 'unit' ? c.id : resolve(c.id);
+    if (c.concept_type === 'unit') { c.home_unit = c.id; continue; }
+    // 1순위: 파일 경로 부모가 unit 노드면 그것.
+    const parentId = c.id.includes('/') ? c.id.slice(0, c.id.lastIndexOf('/')) : null;
+    const parent = parentId ? byId.get(parentId) : null;
+    if (parent && parent.concept_type === 'unit') { c.home_unit = parentId; continue; }
+    // 2순위(폴백): 경로 부모가 단원이 아닌 레거시 노드는 prereq 체인으로.
+    c.home_unit = resolve(c.id);
   }
 }
 

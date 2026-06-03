@@ -8,6 +8,7 @@ type Props = {
     domains: ChipOption[];
     grades: ChipOption[];
   };
+  tracks?: { key: string; grades: string[] }[];
   totalConcepts: number;
 };
 
@@ -32,7 +33,7 @@ function writeQuerySet(name: string, set: Set<string>, allKeys: string[]) {
   window.history.replaceState(null, '', url.toString());
 }
 
-export default function ConceptFilters({ options, totalConcepts }: Props) {
+export default function ConceptFilters({ options, tracks = [], totalConcepts }: Props) {
   const masteryKeys = useMemo(() => options.masteries.map((o) => o.key), [options.masteries]);
   const domainKeys = useMemo(() => options.domains.map((o) => o.key), [options.domains]);
   const gradeKeys = useMemo(() => options.grades.map((o) => o.key), [options.grades]);
@@ -47,6 +48,8 @@ export default function ConceptFilters({ options, totalConcepts }: Props) {
   const [debounced, setDebounced] = useState('');
   const [hydrated, setHydrated] = useState(false);
   const [visibleCount, setVisibleCount] = useState<number>(totalConcepts);
+  const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
+  const [allUnitIds, setAllUnitIds] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   // After hydration, replay any URL state. `hydrated` guards the
@@ -186,6 +189,45 @@ export default function ConceptFilters({ options, totalConcepts }: Props) {
     setSearch('');
   };
 
+  // --- 단원 접기/펼치기 --------------------------------------------------
+  // 토글 버튼에 listener 부착 + 전체 단원 id 수집 (문서 완성 후, 카드가 다 파싱된 뒤).
+  useEffect(() => {
+    if (!hydrated) return;
+    const btns = Array.from(document.querySelectorAll<HTMLElement>('.unit-toggle'));
+    setAllUnitIds(btns.map((b) => b.dataset.unit ?? '').filter(Boolean));
+    const onClick = (e: Event) => {
+      const id = (e.currentTarget as HTMLElement).dataset.unit;
+      if (!id) return;
+      setExpandedUnits((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id); else next.add(id);
+        return next;
+      });
+    };
+    btns.forEach((b) => b.addEventListener('click', onClick));
+    return () => btns.forEach((b) => b.removeEventListener('click', onClick));
+  }, [hydrated]);
+
+  // 접힘 반영: 필터 active 면 전부 펼침(필터가 가시성 결정), 아니면 expandedUnits 외 접힘.
+  useEffect(() => {
+    if (!hydrated) return;
+    const force = anyFilter;
+    for (const ul of document.querySelectorAll<HTMLElement>('.concept-spokes')) {
+      const id = ul.dataset.unitSpokes ?? '';
+      if (id === 'orphan') continue;
+      ul.classList.toggle('collapsed', !(force || expandedUnits.has(id)));
+    }
+    for (const btn of document.querySelectorAll<HTMLElement>('.unit-toggle')) {
+      const id = btn.dataset.unit ?? '';
+      const open = force || expandedUnits.has(id);
+      btn.textContent = open ? '▾' : '▸';
+      btn.setAttribute('aria-expanded', String(open));
+    }
+  }, [hydrated, expandedUnits, anyFilter]);
+
+  const allExpanded = allUnitIds.length > 0 && allUnitIds.every((id) => expandedUnits.has(id));
+  const applyTrack = (grades: string[]) => setGrade(new Set(grades.filter((g) => gradeKeys.includes(g))));
+
   return (
     <div className="sticky top-0 z-20 -mx-6 px-6 py-3 bg-[color:var(--color-bg)]/95 backdrop-blur border-b border-[color:var(--color-border)] space-y-2">
       <div className="flex items-center gap-3 flex-wrap">
@@ -217,6 +259,17 @@ export default function ConceptFilters({ options, totalConcepts }: Props) {
             >모두 해제</button>
           )}
         </span>
+        {allUnitIds.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setExpandedUnits(allExpanded ? new Set() : new Set(allUnitIds))}
+            disabled={anyFilter}
+            className="ml-auto chip opacity-70 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
+            title={anyFilter ? '필터 중에는 매칭 스포크가 모두 보입니다' : allExpanded ? '모든 단원 접기' : '모든 단원 펼치기'}
+          >
+            {allExpanded ? '◢ 모두 접기' : '◣ 모두 펼치기'}
+          </button>
+        )}
       </div>
 
       <FilterRow
@@ -245,6 +298,28 @@ export default function ConceptFilters({ options, totalConcepts }: Props) {
         onAll={() => setAll(setGrade, gradeKeys)}
         allActive={gradeAll}
       />
+      {tracks.length > 0 && (
+        <div className="flex items-center gap-2 text-xs flex-wrap">
+          <span className="text-[10px] uppercase tracking-[0.15em] text-[color:var(--color-subtle)] min-w-[3.5rem]">
+            트랙
+          </span>
+          {tracks.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              onClick={() => applyTrack(t.grades)}
+              className="chip opacity-70 hover:opacity-100"
+              title={`${t.grades.join(' · ')} 단원만 보기`}
+            >{t.key}</button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setAll(setGrade, gradeKeys)}
+            className="chip opacity-50 hover:opacity-100"
+            title="모든 학년"
+          >전체</button>
+        </div>
+      )}
     </div>
   );
 }

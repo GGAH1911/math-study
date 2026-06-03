@@ -8,8 +8,10 @@ interface Props {
   meta?: Array<{ key: string; value: string }>;
   description?: string;
   emphasized?: boolean;
+  progress?: { percent: number; status: string };
+  practice?: { count: number; href: string };
 }
-const { href, title, subtitle, graphHref, chips = [], meta = [], description, emphasized = false } = Astro.props;
+const { href, title, subtitle, graphHref, chips = [], meta = [], description, emphasized = false, progress, practice } = Astro.props;
 ---
 <article class:list={["concept-card card relative", emphasized && "concept-card-unit"]}>
   <a href={href} class="block">
@@ -24,6 +26,14 @@ const { href, title, subtitle, graphHref, chips = [], meta = [], description, em
         {chips.map((c) => <span class={`chip ${c.class}`}>{c.label}</span>)}
       </div>
     </div>
+    {progress && (
+      <div class="mt-2 flex items-center gap-2">
+        <div class="flex-1 h-1.5 rounded-full bg-[color:var(--color-surface-2)] overflow-hidden">
+          <div class="h-full rounded-full" style={`width:${Math.max(2, progress.percent)}%;background:var(--color-mastery-${progress.status})`}></div>
+        </div>
+        <span class="text-[10px] tabular-nums text-[color:var(--color-subtle)] shrink-0">{progress.percent}%</span>
+      </div>
+    )}
     {description && (
       <p class="text-sm text-[color:var(--color-muted)] mt-2 line-clamp-2">{description}</p>
     )}
@@ -38,6 +48,13 @@ const { href, title, subtitle, graphHref, chips = [], meta = [], description, em
       </dl>
     )}
   </a>
+  {practice && (
+    <a href={practice.href}
+       class="mt-2 flex items-center gap-1 text-[11px] text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] transition w-fit"
+       title="이 단원 기출 풀기">
+      📝 {practice.count} 기출 풀기 →
+    </a>
+  )}
   {graphHref && (
     <a
       href={graphHref}

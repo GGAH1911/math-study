@@ -14,16 +14,36 @@ import {
   MASTERY_ORDER,
   MASTERY_LABEL_KO,
 } from '../../lib/concept-meta';
+import { computeUnitProgress, recommendUnits } from '../../lib/health.ts';
 import summariesJson from '../../data/concept-summaries.json';
-import graphJson from '../../data/concept-graph.json';
+import problemsByConcept from '../../data/problems-by-concept.json';
 
 const summaries: Record<string, string> = (summariesJson as any).summaries ?? {};
-const homeUnitById = new Map<string, string | null>();
-for (const n of (graphJson as any).nodes) {
-  homeUnitById.set(n.id, n.home_unit ?? null);
-}
 
 const concepts = await getCollection('concepts');
+// 단원 카드에 표시할 롤업 진행도 (unitId → UnitProgress).
+const unitProgress = new Map(computeUnitProgress().map((u) => [u.unitId, u] as const));
+
+// 상단 진행도 추천 행 (이어서학습·다음추천·복습) — 빈 행은 숨김.
+const rec = recommendUnits();
+const recRows = [
+  { icon: '▶', label: '이어서 학습', units: rec.continuing },
+  { icon: '✦', label: '다음 추천', units: rec.ready },
+  { icon: '↻', label: '복습', units: rec.review },
+].filter((r) => r.units.length > 0);
+
+// 단원별 기출 수 (problems-by-concept: direct+propagated).
+const byConcept: Record<string, any[]> = (problemsByConcept as any).byConcept ?? {};
+const problemCountOf = (unitId: string) => (byConcept[unitId]?.length ?? 0);
+
+// 트랙 프리셋 (grade 필터 set 설정용).
+const tracks = [
+  { key: '미적분', grades: ['수학1', '수학2', '미적분'] },
+  { key: '확통', grades: ['수학1', '수학2', '확률과통계'] },
+  { key: '기하', grades: ['수학1', '수학2', '기하'] },
+  { key: '고1', grades: ['고1'] },
+  { key: '중등', grades: ['중1', '중2', '중3'] },
+];
 
 const byMastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 } as Record<string, number>;
 for (const c of concepts) byMastery[c.data.mastery]++;
@@ -56,11 +76,17 @@ function groupByUnit(items: C[]): Group[] {
   const unitsHere = items.filter((c) => c.data.concept_type === 'unit');
   unitsHere.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
   const groups: Group[] = unitsHere.map((u) => ({ unitId: u.id, unit: u, spokes: [] }));
-  const idxByUnit = new Map(groups.map((g, i) => [g.unitId!, i]));
+  // 단원↔스포크 매칭은 content-collection c.id 의 경로 부모로만 한다.
+  // graph 의 home_unit 에 기대면 build-script(Node readdir)와 Astro 가 한글
+  // 파일명을 서로 다른 유니코드 정규화로 디코딩해 일부 스포크가 매칭에 실패하고
+  // "기타(단원 미연결)" 로 떨어진다. 양쪽 다 NFC 로 통일해 같은 파일을 가리키는
+  // id 가 항상 일치하게 한다. (파일 레이아웃 <domain>/<grade>/<unit>/<spoke>
+  // 이 권위 있는 소속이므로 경로 부모 = 소속 단원.)
+  const idxByUnit = new Map(groups.map((g, i) => [g.unitId!.normalize('NFC'), i]));
   const orphans: C[] = [];
   for (const c of items) {
     if (c.data.concept_type === 'unit') continue;
-    const home = homeUnitById.get(c.id);
+    const home = c.id.includes('/') ? c.id.slice(0, c.id.lastIndexOf('/')).normalize('NFC') : null;
     if (home && idxByUnit.has(home)) {
       groups[idxByUnit.get(home)!].spokes.push(c);
     } else {
@@ -92,6 +118,8 @@ function cardProps(c: C, options: { emphasized?: boolean } = {}) {
   const label = (c.id.split('/').pop() ?? c.id).replace(/_/g, ' ');
   const typeKo = TYPE_LABEL_KO[c.data.concept_type] ?? c.data.concept_type;
   const masteryKo = MASTERY_LABEL_KO[c.data.mastery] ?? c.data.mastery;
+  const up = c.data.concept_type === 'unit' ? unitProgress.get(c.id) : undefined;
+  const pc = c.data.concept_type === 'unit' ? problemCountOf(c.id) : 0;
   return {
     href: `/concepts/${c.id}`,
     graphHref: `/graph?highlight=${encodeURIComponent(c.id)}`,
@@ -99,6 +127,8 @@ function cardProps(c: C, options: { emphasized?: boolean } = {}) {
     subtitle: path,
     emphasized: options.emphasized,
     description: summaries[c.id],
+    progress: up ? { percent: up.progressPercent, status: up.status } : undefined,
+    practice: pc > 0 ? { count: pc, href: `/problems?q=${encodeURIComponent(c.data.unit ?? label)}` } : undefined,
     chips: [
       { label: masteryKo, class: `chip-mastery-${c.data.mastery}` },
       { label: typeKo, class: '' },
@@ -153,7 +183,30 @@ const filterOptions = {
       </p>
     </header>
 
-    <ConceptFilters client:load options={filterOptions} totalConcepts={concepts.length} />
+    <ConceptFilters client:load options={filterOptions} tracks={tracks} totalConcepts={concepts.length} />
+
+    {recRows.length > 0 && (
+      <div class="space-y-3">
+        {recRows.map((row) => (
+          <section class="space-y-1.5">
+            <h3 class="text-xs font-semibold text-[color:var(--color-muted)]">
+              {row.icon} {row.label} <span class="text-[color:var(--color-subtle)] tabular-nums">{row.units.length}</span>
+            </h3>
+            <div class="flex gap-2 overflow-x-auto pb-1">
+              {row.units.slice(0, 12).map((u) => (
+                <a href={`/concepts/${u.unitId}`} class="shrink-0 w-44 card p-2.5 hover:border-[color:var(--color-accent)] transition">
+                  <div class="text-sm font-medium truncate">{u.label}</div>
+                  <div class="text-[10px] text-[color:var(--color-subtle)] truncate">{u.grade ?? ''} · {u.domain ?? ''}</div>
+                  <div class="mt-1.5 h-1.5 rounded-full bg-[color:var(--color-surface-2)] overflow-hidden">
+                    <div class="h-full rounded-full" style={`width:${Math.max(2, u.progressPercent)}%;background:var(--color-mastery-${u.status})`}></div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    )}
 
     {concepts.length === 0 ? (
       <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 개념이 없습니다.</p>
@@ -172,17 +225,29 @@ const filterOptions = {
           </header>
 
           {groupedByDomain[d].map((g) => (
-            <div class="concept-unit-group space-y-2">
+            <div class="concept-unit-group space-y-2" data-unit-group={g.unitId ?? 'orphan'}>
               {g.unit && (
-                <div class="concept-card-wrap" {...dataAttrs(g.unit)}>
-                  <ConceptCard {...cardProps(g.unit, { emphasized: true })} />
+                <div class="flex items-stretch gap-2">
+                  {g.spokes.length > 0 && (
+                    <button
+                      type="button"
+                      class="unit-toggle shrink-0 w-7 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-subtle)] hover:text-[color:var(--color-text)] hover:border-[color:var(--color-border-strong)] grid place-items-center text-xs select-none"
+                      data-unit={g.unitId}
+                      aria-expanded="false"
+                      aria-label={`${g.spokes.length}개 하위 개념 펼치기`}
+                      title={`${g.spokes.length}개 하위 개념`}
+                    >▸</button>
+                  )}
+                  <div class="concept-card-wrap flex-1 min-w-0" {...dataAttrs(g.unit)}>
+                    <ConceptCard {...cardProps(g.unit, { emphasized: true })} />
+                  </div>
                 </div>
               )}
               {g.spokes.length > 0 && (
                 <ul
                   class:list={[
-                    "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3",
-                    g.unit && "ml-0 md:ml-6 border-l-2 border-[color:var(--color-border)]/40 pl-3 md:pl-4",
+                    "concept-spokes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3",
+                    g.unit && "collapsed ml-0 md:ml-9 border-l-2 border-[color:var(--color-border)]/40 pl-3 md:pl-4",
                   ]}
                   data-unit-spokes={g.unitId ?? 'orphan'}
                 >
@@ -215,6 +280,10 @@ const filterOptions = {
   :global(.concept-card-wrap.filtered-out),
   :global(.concept-domain-section.filtered-out),
   :global(.concept-unit-group.filtered-out) {
+    display: none !important;
+  }
+  /* 단원 접기: 스포크 그리드 숨김 (ConceptFilters 가 .collapsed 토글). */
+  :global(.concept-spokes.collapsed) {
     display: none !important;
   }
 </style>
