@@ -1,0 +1,36 @@
+---
+// '기출' 회차별 — 한 회차를 접이식(<details>)으로. summary=회차헤더+시험모드 진입,
+// 내용=문제 카드 그리드. 기본 접힘(닫힌 details는 내용 미렌더 → 2584장도 가벼움).
+// ProblemFilters 가 .problem-group(=이 details)을 필터 시 자동 펼친다.
+import ProblemCard from './ProblemCard.astro';
+import { roundTitle } from '../lib/problem-meta';
+import { cardProps, dataAttrs, subjectBreakdown, type RoundGroup } from '../lib/problem-card';
+
+type Props = { round: RoundGroup };
+const { round: r } = Astro.props;
+---
+<details class="problem-group rounded-lg border border-[color:var(--color-border)]">
+  <summary class="flex items-center justify-between gap-3 px-3 py-2 cursor-pointer list-none rounded-lg hover:bg-[color:var(--color-surface-2)]/40">
+    <span class="flex items-center gap-2 min-w-0">
+      <span class="round-marker text-[color:var(--color-subtle)] text-xs select-none transition-transform">▸</span>
+      <span class="font-medium text-sm truncate">{roundTitle(r.meta)}</span>
+      <span class="text-[11px] text-[color:var(--color-subtle)] whitespace-nowrap">{subjectBreakdown(r.problems)}</span>
+    </span>
+    <a
+      href={`/exam/round/${r.year}/${r.round}`}
+      onclick="event.stopPropagation()"
+      class="chip text-[11px] hover:border-[color:var(--color-accent)] shrink-0"
+    >▶ 시험 모드</a>
+  </summary>
+  <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3 pb-3 pt-1">
+    {r.problems.map((p) => (
+      <li class="problem-card-wrap" {...dataAttrs(p)}>
+        <ProblemCard {...cardProps(p)} />
+      </li>
+    ))}
+  </ul>
+</details>
+
+<style>
+  details[open] > summary .round-marker { transform: rotate(90deg); }
+</style>

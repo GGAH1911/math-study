@@ -10,15 +10,12 @@ const problems = await getCollection('problems');
 const unitGroups = groupByUnit(problems);
 const axes = buildFilterAxes(problems);
 ---
-<BaseLayout title="문제 — 단원별">
+<BaseLayout title="기출 — 단원별">
   <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
     <header class="space-y-3">
-      <div class="flex items-center justify-between gap-3 flex-wrap">
-        <h1 class="text-2xl font-semibold tracking-tight">
-          문제 <span class="text-xs text-[color:var(--color-muted)] font-normal">— 단원별</span>
-        </h1>
-        <a href="/exam" class="chip hover:border-[color:var(--color-accent)]">📝 모의시험 모드</a>
-      </div>
+      <h1 class="text-2xl font-semibold tracking-tight">
+        기출 <span class="text-xs text-[color:var(--color-muted)] font-normal">— 단원별</span>
+      </h1>
       <nav class="flex gap-1.5 text-sm">
         <a href="/problems" class="chip opacity-50 hover:opacity-100">회차별</a>
         <a href="/problems/units" class="chip border-[color:var(--color-text)]/40">단원별</a>

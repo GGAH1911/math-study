@@ -16,6 +16,22 @@ export function examItemCount(problems: P[]): number {
   return base + (problems.some(isElective) ? 8 : 0);
 }
 
+// 회차 구성 표기. 공통+선택은 "공통 22 · 미적분 8 · 확률과통계 8 · 기하 8",
+// 단일(고1·고2·통합형)은 "30문항".
+export function subjectBreakdown(problems: P[]): string {
+  const counts: Record<string, number> = {};
+  for (const p of problems) {
+    const s = String(p.data.source?.subject ?? '').trim() || '단일';
+    counts[s] = (counts[s] ?? 0) + 1;
+  }
+  const keys = Object.keys(counts);
+  if (keys.length === 1) return `${counts[keys[0]]}문항`;
+  return (['공통', '미적분', '확률과통계', '기하', '단일'] as const)
+    .filter((s) => counts[s])
+    .map((s) => `${s} ${counts[s]}`)
+    .join(' · ');
+}
+
 // astro:content 엔트리의 느슨한 구조 타입 (스키마는 content.config.ts).
 export type P = { id: string; data: any };
 
@@ -172,7 +188,9 @@ export function buildFilterAxes(problems: P[]): Axis[] {
   return [
     { name: 'examtype', label: '시험', attr: 'examtype', items: pick(EXAMTYPE_ORDER, exam, (k) => k) },
     { name: 'grade', label: '학년', attr: 'grade', items: pick(GRADE_ORDER, grade, (k) => k) },
-    { name: 'subject', label: '과목', attr: 'subject', items: pick(SUBJECT_ORDER, subject, (k) => k) },
+    // '단일'(선택과목 없는 회차: 고1·고2 모의고사 + 2028 통합형 예비) chip 라벨 명확히.
+    // 값(key)은 '단일' 유지 → 필터 동작 불변.
+    { name: 'subject', label: '과목', attr: 'subject', items: pick(SUBJECT_ORDER, subject, (k) => (k === '단일' ? '고1·2·통합형' : k)) },
     { name: 'tier', label: '난이도', attr: 'tier', items: pick(TIER_ORDER, tier, (k) => TIER_BADGE[k]?.text ?? k) },
     { name: 'format', label: '유형', attr: 'format', items: pick(FORMAT_ORDER, format, (k) => FORMAT_LABEL[k] ?? k) },
   ];

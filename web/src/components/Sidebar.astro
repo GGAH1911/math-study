@@ -1,21 +1,20 @@
 ---
 const { pathname } = Astro.url;
-function active(prefix: string) {
-  if (prefix === '/') return pathname === '/' ? 'active' : '';
-  return pathname.startsWith(prefix) ? 'active' : '';
-}
-const links: Array<{ href: string; label: string; icon: string }> = [
+const links: Array<{ href: string; label: string; icon: string; match?: string[] }> = [
   { href: '/',          label: 'Dashboard',  icon: '◉' },
   { href: '/graph',     label: '개념 지도', icon: '◈' },
   { href: '/concepts',  label: 'Concepts',   icon: '⊕' },
-  { href: '/problems',  label: 'Problems',   icon: '∎' },
-  { href: '/exam',      label: '모의시험',   icon: '📝' },
+  { href: '/problems',  label: '기출',       icon: '∎', match: ['/problems', '/exam'] },
   { href: '/mistakes',  label: 'Mistakes',   icon: '✕' },
   { href: '/tools',     label: 'Tools',      icon: '⚒' },
   { href: '/paths',     label: 'Paths',      icon: '↝' },
   { href: '/syntheses', label: '학습 노트', icon: '🗒' },
   { href: '/log',       label: 'Log',        icon: '☴' },
 ];
+function active(l: { href: string; match?: string[] }): string {
+  if (l.href === '/') return pathname === '/' ? 'active' : '';
+  return (l.match ?? [l.href]).some((p) => pathname.startsWith(p)) ? 'active' : '';
+}
 ---
 
 <aside class="sticky top-0 h-screen w-60 shrink-0 border-r border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-4 py-5 hidden lg:flex flex-col gap-1">
@@ -28,10 +27,10 @@ const links: Array<{ href: string; label: string; icon: string }> = [
   </a>
 
   <nav class="flex flex-col gap-0.5">
-    {links.map(({ href, label, icon }) => (
-      <a href={href} class={`nav-link ${active(href)}`}>
-        <span class="inline-block w-4 text-center text-[color:var(--color-subtle)] text-xs">{icon}</span>
-        <span>{label}</span>
+    {links.map((link) => (
+      <a href={link.href} class={`nav-link ${active(link)}`}>
+        <span class="inline-block w-4 text-center text-[color:var(--color-subtle)] text-xs">{link.icon}</span>
+        <span>{link.label}</span>
       </a>
     ))}
   </nav>

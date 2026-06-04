@@ -1,78 +1,93 @@
 ---
 export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProblemCard from '../../components/ProblemCard.astro';
 import ProblemFilters from '../../components/ProblemFilters.tsx';
+import RoundDetails from '../../components/RoundDetails.astro';
 import { getCollection } from 'astro:content';
-import { roundTitle } from '../../lib/problem-meta';
-import { groupByRound, buildFilterAxes, cardProps, dataAttrs } from '../../lib/problem-card';
+import { groupByRound, buildFilterAxes } from '../../lib/problem-card';
 
 const problems = await getCollection('problems');
 const byYear = groupByRound(problems);
 const axes = buildFilterAxes(problems);
+
+// 시험종류 대분류 (= /exam 과 동일 로직). 연도 desc 평탄화 후 종류별 버킷.
+const allRounds = [...byYear.values()].flat();
+const ofType = (t: string) => allRounds.filter((r) => r.meta.exam_type === t);
+const isYeshi = (r: { meta: { session: string } }) => /예시/.test(r.meta.session ?? '');
+const suneung = ofType('수능').filter((r) => !isYeshi(r));
+const yeshi = ofType('수능').filter(isYeshi);
+const mopyeong = ofType('모의평가');
+const mock = ofType('모의고사');
+const mockByGrade = ['고3', '고2', '고1']
+  .map((grade) => ({ grade, rounds: mock.filter((r) => r.meta.grade === grade) }))
+  .filter((x) => x.rounds.length > 0);
+
+const h2cls = 'text-lg font-semibold border-b border-[color:var(--color-border)] pb-1.5';
+const hint = 'text-xs font-normal text-[color:var(--color-subtle)] ml-1.5';
 ---
-<BaseLayout title="문제 — 회차별">
+<BaseLayout title="기출">
   <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
     <header class="space-y-3">
-      <div class="flex items-center justify-between gap-3 flex-wrap">
-        <h1 class="text-2xl font-semibold tracking-tight">
-          문제 <span class="text-xs text-[color:var(--color-muted)] font-normal">— 회차별</span>
-        </h1>
-        <a href="/exam" class="chip hover:border-[color:var(--color-accent)]">📝 모의시험 모드</a>
-      </div>
+      <h1 class="text-2xl font-semibold tracking-tight">
+        기출 <span class="text-xs text-[color:var(--color-muted)] font-normal">— 회차별</span>
+      </h1>
       <nav class="flex gap-1.5 text-sm">
         <a href="/problems" class="chip border-[color:var(--color-text)]/40">회차별</a>
         <a href="/problems/units" class="chip opacity-50 hover:opacity-100">단원별</a>
       </nav>
     </header>
 
+    <section class="card flex items-center justify-between gap-3">
+      <div>
+        <h2 class="font-semibold">🎲 랜덤 모의시험</h2>
+        <p class="text-xs text-[color:var(--color-muted)] mt-0.5">
+          코퍼스 전체에서 공통 22 + 선택 8을 난이도 분포 맞춰 무작위 조합
+        </p>
+      </div>
+      <a href="/exam/random" class="chip hover:border-[color:var(--color-accent)] whitespace-nowrap">▶ 시작</a>
+    </section>
+
     <ProblemFilters client:load axes={axes} total={problems.length} groupSelector=".problem-group" />
 
     {problems.length === 0 ? (
       <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 문제가 없습니다.</p>
     ) : (
-      [...byYear.entries()].map(([year, rounds]) => (
-        <section class="problem-lens-section space-y-3" data-year={year}>
-          <header class="flex items-baseline gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">
-            <h2 class="text-base font-semibold">{year}</h2>
-            <span class="text-xs text-[color:var(--color-muted)]">
-              {rounds.length}회차 · {rounds.reduce((s, r) => s + r.problems.length, 0)}문항
-            </span>
-          </header>
-
-          {rounds.map((r) => (
-            <div class="problem-group space-y-2">
-              <div class="flex items-center justify-between gap-3 flex-wrap">
-                <div class="min-w-0">
-                  <h3 class="font-semibold text-sm">{roundTitle(r.meta)}</h3>
-                  <p class="text-[11px] text-[color:var(--color-subtle)]">
-                    {r.meta.agency} · {r.problems.length}문항
-                  </p>
-                </div>
-                <a
-                  href={`/exam/round/${year}/${r.round}`}
-                  class="chip text-[11px] hover:border-[color:var(--color-accent)] shrink-0"
-                >▶ 시험 모드로 풀기</a>
+      <div class="space-y-6">
+        {suneung.length > 0 && (
+          <section class="problem-lens-section space-y-2">
+            <h2 class={h2cls}>수능<span class={hint}>대학수학능력시험</span></h2>
+            {suneung.map((r) => <RoundDetails round={r} />)}
+          </section>
+        )}
+        {yeshi.length > 0 && (
+          <section class="problem-lens-section space-y-2">
+            <h2 class={h2cls}>예시문항<span class={hint}>평가원 통합형 수능 예시 · 실제 시행 아님</span></h2>
+            {yeshi.map((r) => <RoundDetails round={r} />)}
+          </section>
+        )}
+        {mopyeong.length > 0 && (
+          <section class="problem-lens-section space-y-2">
+            <h2 class={h2cls}>모의평가<span class={hint}>모평 · 평가원 6·9월</span></h2>
+            {mopyeong.map((r) => <RoundDetails round={r} />)}
+          </section>
+        )}
+        {mock.length > 0 && (
+          <section class="problem-lens-section space-y-3">
+            <h2 class={h2cls}>모의고사<span class={hint}>교육청 학력평가 · 시행연도</span></h2>
+            {mockByGrade.map((g) => (
+              <div class="problem-lens-section space-y-2">
+                <h3 class="text-sm font-medium text-[color:var(--color-muted)]">{g.grade}</h3>
+                {g.rounds.map((r) => <RoundDetails round={r} />)}
               </div>
-              <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-                {r.problems.map((p) => (
-                  <li class="problem-card-wrap" {...dataAttrs(p)}>
-                    <ProblemCard {...cardProps(p)} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
-      ))
+            ))}
+          </section>
+        )}
+      </div>
     )}
   </div>
 </BaseLayout>
 
 <style>
-  /* 썸네일은 고정 150px 박스라 로드돼도 레이아웃이 안 흔들림(CLS 0). 2584장은
-     loading="lazy" 만으로 뷰포트 근처만 로드 → 충분. (content-visibility:auto 는
-     native lazy 와 충돌해 가시 카드까지 안 뜨는 문제가 있어 사용하지 않음.) */
   :global(.problem-card-wrap.filtered-out),
   :global(.problem-group.filtered-out),
   :global(.problem-lens-section.filtered-out) {

@@ -19,8 +19,10 @@ const fm = entry.data;
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
+// '단일'(고1·고2·통합형)은 과목 표기 생략 — "2025년 모의고사 9번"처럼.
+const subjLabel = fm.source?.subject && fm.source.subject !== '단일' ? `${fm.source.subject} ` : '';
 const unitTitle = fm.source?.subject
-  ? `${yearLabel(fm.source.year, fm.source.exam_type)} ${fm.source.exam_type} ${fm.source.subject} ${fm.source.number}번`
+  ? `${yearLabel(fm.source.year, fm.source.exam_type)} ${fm.source.exam_type} ${subjLabel}${fm.source.number}번`
   : entry.id;
 ---
 <BaseLayout title={entry.id}>

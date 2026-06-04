@@ -105,8 +105,12 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
       if (pass) visible++;
     }
     if (groupSelector) {
+      const filtering = !!debounced || axes.some((a) => sets[a.name].size > 0);
       for (const grp of document.querySelectorAll<HTMLElement>(groupSelector)) {
-        grp.classList.toggle('filtered-out', !grp.querySelector('.problem-card-wrap:not(.filtered-out)'));
+        const hasVisible = !!grp.querySelector('.problem-card-wrap:not(.filtered-out)');
+        grp.classList.toggle('filtered-out', !hasVisible);
+        // 회차(<details>)는 평상시 접힘, 필터 중엔 매칭 회차만 자동 펼침.
+        if (grp instanceof HTMLDetailsElement) grp.open = filtering && hasVisible;
       }
     }
     for (const s of document.querySelectorAll<HTMLElement>('.problem-lens-section')) {
