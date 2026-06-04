@@ -508,10 +508,11 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
             : 'bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] text-zinc-100'}`}
       >
         {isUser && msg.images && msg.images.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-1">
-            {msg.images.map((src, i) => (
-              <img key={i} src={src} alt="첨부 이미지" className="max-h-40 rounded border border-indigo-500/30" />
-            ))}
+          <div className="flex items-end gap-1.5 mb-1">
+            <img src={msg.images[0]} alt="첨부 이미지" className="max-h-40 rounded border border-indigo-500/30" />
+            {msg.images.length > 1 && (
+              <span className="text-[10px] text-zinc-400 mb-1">+{msg.images.length - 1}조각</span>
+            )}
           </div>
         )}
         {segments.map((s, i) => {
@@ -666,7 +667,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   // 이미지 첨부 state
-  const [pending, setPending] = useState<string | null>(null);   // 전송 대기 이미지 (1568 PNG dataURL)
+  const [pending, setPending] = useState<string[]>([]);          // 전송 대기 타일들 (원해상도 PNG dataURL N장 — 보통 1장)
   const [cropSrc, setCropSrc] = useState<string | null>(null);   // 크롭 모달 대상 (원본 dataURL)
   const [imgError, setImgError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -780,15 +781,15 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   // their own follow-up while the note request flies off.
   const send = useCallback(async (override?: string) => {
     const text = (override ?? input).trim();
-    const attachedImg = override === undefined ? pending : null;   // 합성/노트 호출엔 첨부 없음 (첫 user 메시지에만)
-    if ((!text && !attachedImg) || streaming) return;              // 이미지만 있어도 전송 허용
+    const attachedImgs = override === undefined ? pending : [];    // 합성/노트 호출엔 첨부 없음 (첫 user 메시지에만)
+    if ((!text && !attachedImgs.length) || streaming) return;      // 이미지만 있어도 전송 허용
     setError(null);
-    if (override === undefined) { setInput(''); setPending(null); setImgError(null); }
+    if (override === undefined) { setInput(''); setPending([]); setImgError(null); }
 
     const newUserMsg: ChatMessage = {
       role: 'user',
       content: text || '(첨부한 이미지를 봐주세요)',
-      ...(attachedImg ? { images: [attachedImg] } : {}),
+      ...(attachedImgs.length ? { images: attachedImgs } : {}),
     };
     const placeholder: ChatMessage = { role: 'assistant', content: '' };
     setMessages([...messages, newUserMsg, placeholder]);
@@ -1002,12 +1003,12 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       setImgError('현재 BYOK 모델은 이미지를 못 읽어요 — vision 모델(claude/gemini 등)로 바꾸거나 기본 모드를 쓰세요.');
       return;
     }
-    if (pending) { setImgError('이미지는 1장만 첨부할 수 있어요.'); return; }
-    if (files.length > 1) setImgError('이미지는 1장만 첨부돼요 (첫 장만 사용).');
+    if (pending.length) { setImgError('이미지는 한 번에 하나만 첨부할 수 있어요.'); return; }
+    if (files.length > 1) setImgError('이미지는 한 장만 첨부돼요 (첫 장만 사용).');
     try {
       const p = await prepareImage(files[0]);
       if (p.kind === 'needsCrop') { setCropSrc(p.rawDataUrl); setImgError(null); }
-      else { setPending(p.dataUrl); setImgError(null); }
+      else { setPending(p.dataUrls); setImgError(null); }   // 큰 이미지는 자동 타일 N장
     } catch (e) {
       setImgError(e instanceof Error ? e.message : '이미지 처리에 실패했어요.');
     }
@@ -1288,14 +1289,17 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         <p className="text-xs text-rose-400 mb-2">⚠ {error}</p>
       )}
 
-      {(pending || imgError) && (
+      {(pending.length > 0 || imgError) && (
         <div className="flex items-center gap-2 mb-2 shrink-0">
-          {pending && (
+          {pending.length > 0 && (
             <div className="relative">
-              <img src={pending} alt="첨부 이미지" className="h-14 w-14 object-cover rounded border border-[color:var(--color-border)]" />
+              <img src={pending[0]} alt="첨부 이미지" className="h-14 w-14 object-cover rounded border border-[color:var(--color-border)]" />
+              {pending.length > 1 && (
+                <span className="absolute bottom-0 left-0 px-1 text-[10px] bg-zinc-900/80 text-zinc-200 rounded-tr">{pending.length}조각</span>
+              )}
               <button
                 type="button"
-                onClick={() => { setPending(null); setImgError(null); }}
+                onClick={() => { setPending([]); setImgError(null); }}
                 className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-zinc-900 border border-zinc-600 text-zinc-300 text-xs grid place-items-center hover:text-white"
                 aria-label="첨부 제거"
               >×</button>
@@ -1359,7 +1363,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           <button
             type="button"
             onClick={() => send()}
-            disabled={streaming || (!input.trim() && !pending)}
+            disabled={streaming || (!input.trim() && !pending.length)}
             className="px-4 py-2 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {streaming ? '전송 중…' : '전송'}
@@ -1370,7 +1374,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       {cropSrc && (
         <ImageCropper
           src={cropSrc}
-          onCrop={(dataUrl) => { setPending(dataUrl); setCropSrc(null); setImgError(null); }}
+          onCrop={(dataUrl) => { setPending([dataUrl]); setCropSrc(null); setImgError(null); }}
           onCancel={() => setCropSrc(null)}
         />
       )}

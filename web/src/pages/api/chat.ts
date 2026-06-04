@@ -144,7 +144,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
   // 첨부 이미지 검증 — data:image/* base64, 1장, ~5MB.
   if (lastUser.images !== undefined) {
-    if (!Array.isArray(lastUser.images) || lastUser.images.length > 1) {
+    if (!Array.isArray(lastUser.images) || lastUser.images.length > 6) {   // 자동 타일 최대 6장
       return new Response(JSON.stringify({ error: 'invalid images' }), {
         status: 400, headers: { 'Content-Type': 'application/json' },
       });
@@ -163,22 +163,31 @@ export const POST: APIRoute = async ({ request }) => {
 
   // 사용자가 첨부한 이미지를 임시 PNG 로 저장 → claude CLI 가 Read 도구로 직접 본다
   // (문제 PNG 와 동일 메커니즘). 응답 종료 시 삭제(cleanup).
-  let tmpImagePath: string | null = null;
+  const tmpImagePaths: string[] = [];
   const allowedDirs = [...(baseDirs ?? [])];
   if (lastUser.images && lastUser.images.length > 0) {
-    const m = lastUser.images[0].match(/^data:image\/(png|jpe?g|webp);base64,(.+)$/);
-    if (m) {
-      try {
-        mkdirSync(TMP_IMG_DIR, { recursive: true });
+    try {
+      mkdirSync(TMP_IMG_DIR, { recursive: true });
+      for (const dataUrl of lastUser.images) {
+        const m = dataUrl.match(/^data:image\/(png|jpe?g|webp);base64,(.+)$/);
+        if (!m) continue;
         const ext = m[1] === 'jpeg' ? 'jpg' : m[1];
-        tmpImagePath = join(TMP_IMG_DIR, `${randomUUID()}.${ext}`);
-        writeFileSync(tmpImagePath, Buffer.from(m[2], 'base64'));
-        if (!allowedDirs.includes(TMP_IMG_DIR)) allowedDirs.push(TMP_IMG_DIR);
-        userPrompt = `[학생이 이미지를 첨부했습니다. 먼저 Read 도구로 이 파일을 보고 반영해 답하세요: ${tmpImagePath}]\n\n${userPrompt}`;
-      } catch (e) {
-        console.error('[chat] temp image write failed:', e);
-        tmpImagePath = null;
+        const p = join(TMP_IMG_DIR, `${randomUUID()}.${ext}`);
+        writeFileSync(p, Buffer.from(m[2], 'base64'));
+        tmpImagePaths.push(p);
       }
+      if (tmpImagePaths.length) {
+        if (!allowedDirs.includes(TMP_IMG_DIR)) allowedDirs.push(TMP_IMG_DIR);
+        // 큰 이미지는 클라가 원해상도 타일 N장으로 쪼개 보냄 → 모두 Read 시킴.
+        const note = tmpImagePaths.length === 1
+          ? `먼저 Read 도구로 이 파일을 보고 반영해 답하세요: ${tmpImagePaths[0]}`
+          : `이미지가 커서 ${tmpImagePaths.length}장으로 나뉘었습니다(위→아래·행→열 순, 경계 약간 겹침). `
+            + `${tmpImagePaths.length}장을 **모두** Read 로 열어 하나로 이어 붙여 보고 반영하세요:\n`
+            + tmpImagePaths.map((p, i) => `  ${i + 1}. ${p}`).join('\n');
+        userPrompt = `[학생이 이미지를 첨부했습니다. ${note}]\n\n${userPrompt}`;
+      }
+    } catch (e) {
+      console.error('[chat] temp image write failed:', e);
     }
   }
 
@@ -192,7 +201,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Read 도구 활성화면 LLM 이 turn 을 더 쓸 수 있어야 안전:
     //   1) Read 호출 → 2) 결과 process → 3) python 코드 emit → 4) 답변
     // 부족하면 LLM 이 mid-response 에서 exit code 1 로 빠진다.
-    '--max-turns', enableRead ? '15' : '2',
+    '--max-turns', enableRead ? String(Math.min(40, 15 + tmpImagePaths.length * 2)) : '2',
     '--output-format', 'stream-json',
     '--include-partial-messages',
     '--verbose',
@@ -219,7 +228,7 @@ export const POST: APIRoute = async ({ request }) => {
   );
 
   const state = { closed: false, child: null as ReturnType<typeof spawn> | null };
-  const cleanup = () => { if (tmpImagePath) { try { unlinkSync(tmpImagePath); } catch { /* */ } tmpImagePath = null; } };
+  const cleanup = () => { while (tmpImagePaths.length) { const p = tmpImagePaths.pop()!; try { unlinkSync(p); } catch { /* */ } } };
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const child = spawn('claude', args, {

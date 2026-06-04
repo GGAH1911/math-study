@@ -485,7 +485,7 @@ function readProblem(slug: string): { slug: string; fm: Record<string, any>; bod
 // 작은 모델 (gemma4 e4b/e2b, 7b 이하) 용 압축 prompt — 1-2KB.
 // 우리 full prompt (8KB+) 의 가이드를 작은 모델이 다 못 따르니 핵심 룰 + few-shot 만.
 // 직접 요청 ("그려봐", "보여줘") 시 sympy 단계 건너뛰고 즉시 graphic block emit 강조.
-export function buildCompactTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[] } {
+export function buildCompactTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
   const full = buildTutorPrompt(pageSlug, collection);
   if (full.pageTitle === pageSlug) return full; // 페이지 못 찾음 — fallback
 
@@ -530,10 +530,10 @@ ${hasImage ? `## 문제 이미지 (유일한 원본)
 - 그래픽 fenced block (\`\`\`geometry\`\`\`, \`\`\`geometry3d\`\`\`, \`\`\`plot\`\`\` 등) 사용 금지
 `;
 
-  return { systemPrompt: compact, pageTitle: full.pageTitle, allowedDirs: full.allowedDirs };
+  return { systemPrompt: compact, pageTitle: full.pageTitle, allowedDirs: full.allowedDirs, imagePaths: full.imagePaths };
 }
 
-export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[] } {
+export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
   if (collection === 'dashboard') {
     return buildDashboardPrompt();
   }
@@ -706,7 +706,7 @@ const FOLLOWUP_VERIFICATION_RULE = `--- 꼬리질문 처리 원칙 (응답 전 �
 핵심: 한 번에 건너뛰지 말고 단계마다 sympy·캐시 구조로 받쳐가며 풀어라. 지식은
 충분하다 — 천천히, 정확히.`;
 
-function buildProblemPrompt(slug: string): { systemPrompt: string; pageTitle: string; allowedDirs?: string[] } {
+function buildProblemPrompt(slug: string): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
   const prob = readProblem(slug);
   if (!prob) {
     return {
@@ -723,6 +723,52 @@ function buildProblemPrompt(slug: string): { systemPrompt: string; pageTitle: st
   );
   const imageAbs = imageAbsPaths[0] ?? null;
   const imageDir = imageAbs ? imageAbs.replace(/\/[^/]+$/, '') : null;
+
+  // 세로 긴 문제는 인제스트/백필이 db/raw/<round>/images/tiles/ 에 원해상도 타일을 깔아둔다.
+  // 있으면 단일(다운스케일 블러) 대신 N타일을 LLM 에 넘긴다. allowedDirs=[imageDir] 가 tiles/ 도 덮음.
+  let imageTiles: string[] = [];
+  if (imageAbs && imageDir) {
+    const stem = imageAbs.split('/').pop()!.replace(/\.png$/, '');
+    const tilesDir = join(imageDir, 'tiles');
+    if (existsSync(tilesDir)) {
+      imageTiles = readdirSync(tilesDir)
+        .filter((n) => n.startsWith(`${stem}_t`) && n.endsWith('.png'))
+        .sort()
+        .map((n) => join(tilesDir, n));
+    }
+  }
+
+  let imageBlock: string;
+  if (!imageAbs) {
+    imageBlock = `문제 본문:\n${(fm.searchable_text || prob.body).trim().slice(0, 3500)}\n`;
+  } else if (imageTiles.length > 1) {
+    imageBlock = `--- 문제 이미지 (유일한 원본 소스 · 세로로 길어 ${imageTiles.length}장으로 분할) ---
+${imageTiles.map((t, i) => `${i + 1}. ${t}`).join('\n')}
+
+⚠ **문항·식·도형은 오직 위 이미지들로만 확인할 것.** 세로로 길어 위→아래 ${imageTiles.length}장으로 나눴고 경계가 약간 겹친다(다운스케일 블러를 피해 원해상도 유지). OCR 텍스트(searchable_text)는 부정확해 일부러 안 넣었다.
+
+**첫 응답 전에 반드시 ${imageTiles.length}장을 모두 보고**, 하나의 문제로 이어 붙여 본 뒤 풀이를 시작하라:
+- Claude CLI 환경: Read 도구로 위 ${imageTiles.length}개 경로를 **모두** 열어 본 뒤 답변 시작.
+- OpenAI 호환 API: user 메시지에 image_url 로 첨부돼 있다 — 모두 보고 시작.
+
+이미지를 안 본 채 추측 풀이 절대 금지. 못 봤거나 vision 미지원 모델이면 한 줄로 거부:
+> "이 문제는 도형/이미지가 핵심이라 vision 지원 모델 (예: claude-haiku-4.5, gemini-2.5-flash) 이 필요합니다. BYOK 설정에서 모델을 바꿔주세요."
+`;
+  } else {
+    imageBlock = `--- 문제 이미지 (유일한 원본 소스) ---
+경로: ${imageAbs}
+
+⚠ **이 문제의 문항·식·도형은 오직 이 이미지로만 확인할 것.** OCR 텍스트 (searchable_text) 는 부정확해서
+시스템 프롬프트에 의도적으로 포함하지 않았다.
+
+**첫 응답 전에 반드시 이미지를 먼저 보고**, 그 후에 풀이를 시작하라:
+- Claude CLI 환경: Read 도구로 위 경로의 이미지 한 번 열어 본 뒤 답변 시작.
+- OpenAI 호환 API (OpenRouter / Ollama 등): user 메시지에 image_url 로 이미지가 이미 첨부돼 있다 — 바로 보고 시작.
+
+이미지를 안 본 채로 추측 풀이 절대 금지. 못 봤거나 vision 미지원 모델이면 한 줄로 거부:
+> "이 문제는 도형/이미지가 핵심이라 vision 지원 모델 (예: claude-haiku-4.5, gemini-2.5-flash) 이 필요합니다. BYOK 설정에서 모델을 바꿔주세요."
+`;
+  }
   const conceptSlugs: string[] = (fm.concepts ?? []).map((c: string) => slugOf(c)).filter(Boolean);
   const conceptInfo = conceptSlugs.slice(0, 6).map((s) => {
     const c = readConcept(s);
@@ -764,21 +810,7 @@ ${title} (${src.score ?? '?'}점)
 난이도: ${fm.killer_tier || '?'} · cognitive: ${fm.cognitive_type || '?'} · 예상 ${fm.expected_time_sec ?? '?'}초
 매핑된 단원: ${fm.unit || '?'}
 
-${imageAbs ? `--- 문제 이미지 (유일한 원본 소스) ---
-경로: ${imageAbs}
-
-⚠ **이 문제의 문항·식·도형은 오직 이 이미지로만 확인할 것.** OCR 텍스트 (searchable_text) 는 부정확해서
-시스템 프롬프트에 의도적으로 포함하지 않았다.
-
-**첫 응답 전에 반드시 이미지를 먼저 보고**, 그 후에 풀이를 시작하라:
-- Claude CLI 환경: Read 도구로 위 경로의 이미지 한 번 열어 본 뒤 답변 시작.
-- OpenAI 호환 API (OpenRouter / Ollama 등): user 메시지에 image_url 로 이미지가 이미 첨부돼 있다 — 바로 보고 시작.
-
-이미지를 안 본 채로 추측 풀이 절대 금지. 못 봤거나 vision 미지원 모델이면 한 줄로 거부:
-> "이 문제는 도형/이미지가 핵심이라 vision 지원 모델 (예: claude-haiku-4.5, gemini-2.5-flash) 이 필요합니다. BYOK 설정에서 모델을 바꿔주세요."
-` : `문제 본문:
-${(fm.searchable_text || prob.body).trim().slice(0, 3500)}
-`}
+${imageBlock}
 --- 매핑된 개념 (학생이 이미 wiki에서 학습 중) ---
 ${conceptInfo || '(없음)'}
 
@@ -828,7 +860,9 @@ ${FOLLOWUP_VERIFICATION_RULE}
 --- 대화 범위 ---
 허용: 본 문제의 풀이·해석·관련 개념·유사 문제 비교·시험 전략. 거부: 다른 잡담은 한 줄로 거부 후 본 문제로 복귀.`;
 
-  return { systemPrompt, pageTitle: title || slug, allowedDirs: imageDir ? [imageDir] : undefined };
+  // LLM에 넘길 비전 이미지 경로 — 타일이 있으면 N장, 없으면 단일(또는 없음).
+  const visionImgPaths = imageTiles.length > 1 ? imageTiles : (imageAbs ? [imageAbs] : []);
+  return { systemPrompt, pageTitle: title || slug, allowedDirs: imageDir ? [imageDir] : undefined, imagePaths: visionImgPaths };
 }
 
 function buildDashboardPrompt(): { systemPrompt: string; pageTitle: string } {

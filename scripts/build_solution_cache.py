@@ -30,6 +30,9 @@ IMGDIR = ROOT / 'web' / 'public' / 'problem-images'
 VENV_PY = Path('/home/insung/Projects/math-study/.venv/bin/python')
 VERIFIER_DIR = ROOT / 'db' / 'solutions'
 MODEL = 'sonnet'
+
+sys.path.insert(0, str(ROOT / 'scripts'))
+from tiling import tile_for_vision  # noqa: E402  세로 긴 문제 → 원해상도 타일
 MAX_RETRIES = 3
 # 모델 호출 타임아웃(초). FLAG 회복 시 SOLVE_TIMEOUT=1200 등으로 늘려 재시도.
 TIMEOUT_S = int(os.environ.get('SOLVE_TIMEOUT', '480'))
@@ -47,7 +50,7 @@ FORBIDDEN = re.compile(r'\b(os|subprocess|socket|shutil|requests|httpx|urllib|op
 SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가입니다. 첨부된 문제 이미지를 Read 도구로 먼저 본 뒤 풀이하세요. 도형·조건·보기 값은 모두 이미지에서 확인합니다. 추측 금지."""
 
 
-def build_prompt(img_abs: str, fmt: str, meta: str) -> str:
+def build_prompt(img_paths: list[str], fmt: str, meta: str) -> str:
     lines = ['  "answer": <네가 푼 보기 번호 1-5 정수>,' if fmt == 'choice'
              else '  "answer": <네가 푼 단답형 정답 정수(0-999)>,']
     lines.append('  "answer_value": "<최종 답의 값만, 설명·중간식 없이. 예: -7/64 또는 163>",')
@@ -58,10 +61,16 @@ def build_prompt(img_abs: str, fmt: str, meta: str) -> str:
     else:
         lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."]')
     body = '\n'.join(lines)
-    return f"""문제 이미지: {img_abs}
-{meta}
-
-위 이미지를 Read 로 연 뒤 문제를 **스스로 끝까지 풀어라. 정답은 주어지지 않는다.** **마지막 메시지에 오직 하나의 ```json 블록**만 출력 (설명 산문 금지):
+    if len(img_paths) == 1:
+        img_intro = f"문제 이미지: {img_paths[0]}\n{meta}\n\n위 이미지를 Read 로 연 뒤"
+    else:
+        listing = '\n'.join(f'    {i + 1}. {p}' for i, p in enumerate(img_paths))
+        img_intro = (
+            f"문제 이미지 — 세로로 길어 위→아래 {len(img_paths)}장으로 나눴고 경계가 약간 겹칩니다:\n"
+            f"{listing}\n{meta}\n\n"
+            f"위 {len(img_paths)}장을 **모두** Read 로 열어 **하나의 문제로 이어 붙여** 본 뒤"
+        )
+    return f"""{img_intro} 문제를 **스스로 끝까지 풀어라. 정답은 주어지지 않는다.** **마지막 메시지에 오직 하나의 ```json 블록**만 출력 (설명 산문 금지):
 
 ```json
 {{
@@ -70,10 +79,11 @@ def build_prompt(img_abs: str, fmt: str, meta: str) -> str:
 ```"""
 
 
-def call_model(img_abs: str, fmt: str, meta: str, model: str, effort: str) -> dict | None:
-    prompt = build_prompt(img_abs, fmt, meta)
+def call_model(img_paths: list[str], fmt: str, meta: str, model: str, effort: str,
+               add_dir: str) -> dict | None:
+    prompt = build_prompt(img_paths, fmt, meta)
     args = ['claude', '-p', '--model', model, '--effort', effort,
-            '--allowedTools', 'Read', '--add-dir', str(IMGDIR),
+            '--allowedTools', 'Read', '--add-dir', add_dir,
             '--disallowedTools', 'Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '14', '--system-prompt', SYSTEM, '--', prompt]
     try:
@@ -163,9 +173,12 @@ def build_one(p: Path) -> str:
     tier = (re.search(r'^killer_tier:\s*(\w+)', t, re.M) or [None, None])[1]
     ladder = LADDER_KILLER if tier == 'killer' else LADDER_DEFAULT   # 킬러는 Haiku 스킵
     meta = f"문항 형식: {'객관식 5지선다' if fmt == 'choice' else '단답형(정수 정답)'}"
+    real_img = img.resolve()                        # 심링크 → 실제 db/raw 원본
+    tiles = [str(t) for t in tile_for_vision(real_img)]  # 세로 길면 원해상도 N타일(tiles/ 하위)
+    img_dir = str(real_img.parent)                  # 단일 이미지·tiles/ 둘 다 이 dir 아래
     last = ''
     for model, effort in ladder:                  # 모델별 1회 (blind)
-        sol = call_model(str(img), fmt, meta, model, effort)
+        sol = call_model(tiles, fmt, meta, model, effort, img_dir)
         if not sol:
             last = f'{model}:gen-fail'; continue
         ans = str(sol.get('answer')).strip().strip('\'"')

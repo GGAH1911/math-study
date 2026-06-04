@@ -105,7 +105,7 @@ export const POST: APIRoute = async ({ request }) => {
   // 첨부 이미지 검증 — data:image/* base64만 허용(http URL 거부 = SSRF/저작권), 1장, ~5MB.
   for (const m of messages) {
     if (m.images === undefined) continue;
-    if (!Array.isArray(m.images) || m.images.length > 1) {
+    if (!Array.isArray(m.images) || m.images.length > 6) {   // 자동 타일 최대 6장
       return new Response(JSON.stringify({ error: 'invalid images' }), { status: 400 });
     }
     for (const u of m.images) {
@@ -119,7 +119,7 @@ export const POST: APIRoute = async ({ request }) => {
   // 큰 모델 (haiku/gemini/gpt/qwen-vl-72b 등) 은 full prompt 그대로.
   const isSmallModel = /e[24]b|:1b|:3b|:4b|:7b|gemma[234](?!.*(?:26b|31b|27b))/i.test(model)
     || (/qwen2?\.5/i.test(model) && !/72b|32b/i.test(model));
-  const { systemPrompt, allowedDirs } = isSmallModel
+  const { systemPrompt, allowedDirs, imagePaths } = isSmallModel
     ? buildCompactTutorPrompt(slug, collection)
     : buildTutorPrompt(slug, collection);
   console.log(`[openrouter] model=${model} compact=${isSmallModel} sysprompt=${systemPrompt.length}chars`);
@@ -137,10 +137,13 @@ export const POST: APIRoute = async ({ request }) => {
   for (let i = 0; i < messages.length; i++) {
     const m = messages[i];
     const blocks: ContentBlock[] = [];
-    // (1) 서버 문제 이미지 — problems 첫 user (기존 동작)
-    if (!visionDisabled && m.role === 'user' && !imageAttached && collection === 'problems' && allowedDirs && allowedDirs.length > 0) {
-      const dataUrl = await readImageAsDataURL(path.join(allowedDirs[0], `${slug}.png`));
-      if (dataUrl) { blocks.push({ type: 'image_url', image_url: { url: dataUrl } }); imageAttached = true; }
+    // (1) 서버 문제 이미지 — problems 첫 user. 타일이 있으면 N장 모두 첨부(세로 긴 문제 원해상도).
+    if (!visionDisabled && m.role === 'user' && !imageAttached && collection === 'problems' && imagePaths && imagePaths.length > 0) {
+      for (const p of imagePaths) {
+        const dataUrl = await readImageAsDataURL(p);
+        if (dataUrl) blocks.push({ type: 'image_url', image_url: { url: dataUrl } });
+      }
+      imageAttached = true;
     }
     // (2) 학생이 첨부한 이미지 (해당 user 메시지에 실린 것)
     if (!visionDisabled && m.role === 'user' && Array.isArray(m.images)) {
