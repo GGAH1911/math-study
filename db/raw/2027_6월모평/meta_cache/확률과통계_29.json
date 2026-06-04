@@ -1,0 +1,16 @@
+{
+  "text_sha": "f73d78ebcad6",
+  "meta": {
+    "searchable_text": "서로 다른 다섯 개의 주사위를 동시에 던져 나온 다섯 개의 눈의 수의 곱이 홀수일 때, 이 다섯 개의 눈의 수의 합이 15일 확률을 구하시오. (단, 분자와 분모는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부확률",
+      "경우의수"
+    ],
+    "exam_intent": "조건부확률과 제약조건 하의 경우의 수 계산 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

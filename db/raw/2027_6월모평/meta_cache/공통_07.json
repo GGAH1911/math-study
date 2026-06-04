@@ -1,0 +1,17 @@
+{
+  "text_sha": "7cfd7640bf40",
+  "meta": {
+    "searchable_text": "함수 $f(x)$는 $x=1$에서 극대이다. 함수 $f(x)$의 극솟값은? (단, 상수가 있다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극댓값과_극솟값",
+      "도함수",
+      "함수의_개형"
+    ],
+    "exam_intent": "주어진 극댓값 조건으로부터 함수의 극솟값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

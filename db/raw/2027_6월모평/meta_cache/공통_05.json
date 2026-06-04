@@ -1,0 +1,16 @@
+{
+  "text_sha": "278740cf3dbf",
+  "meta": {
+    "searchable_text": "함수 $f$에 대하여 $f'(2)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "다항식_미분"
+    ],
+    "exam_intent": "다항식 함수의 도함수 값을 특정 점에서 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

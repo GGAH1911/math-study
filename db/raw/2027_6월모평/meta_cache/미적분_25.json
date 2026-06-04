@@ -1,0 +1,17 @@
+{
+  "text_sha": "df7b90643406",
+  "meta": {
+    "searchable_text": "공차가 3인 두 등차수열 $a_n$, $b_n$의 첫째항이 각각 4, 7일 때, $\\sum_{n=1}^{\\infty} \\frac{1}{a_n \\cdot b_n}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등차수열",
+      "무한급수",
+      "부분분수분해"
+    ],
+    "exam_intent": "등차수열로 이루어진 무한급수의 수렴값을 부분분수분해로 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

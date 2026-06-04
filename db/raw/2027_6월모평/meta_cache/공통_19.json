@@ -1,0 +1,16 @@
+{
+  "text_sha": "050cc82a6409",
+  "meta": {
+    "searchable_text": "곡선 위의 점에서의 접선의 절편을 구하는 문제. 주어진 곡선 위의 한 점에서 그은 접선의 방정식을 도함수를 이용하여 구하고, 그 접선이 좌표축과 만나는 절편을 계산합니다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "접선",
+      "도함수"
+    ],
+    "exam_intent": "접선의 방정식을 구하고 절편을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

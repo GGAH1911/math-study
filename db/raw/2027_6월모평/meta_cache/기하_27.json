@@ -1,0 +1,16 @@
+{
+  "text_sha": "ecb93c695173",
+  "meta": {
+    "searchable_text": "마름모 OABC에 대하여 벡터 $\\vec{OA}$, $\\vec{OB}$, $\\vec{OC}$라 하자. $|\\vec{OA}| \\cdot |\\vec{OB}| = 6$, $\\vec{OA} \\cdot \\vec{OB} = 4$이고 두 벡터가 서로 수직일 때, 실수의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "벡터의_수직_조건"
+    ],
+    "exam_intent": "벡터의 수직 조건과 내적을 이용한 매개변수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

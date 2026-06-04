@@ -1,0 +1,15 @@
+{
+  "text_sha": "cd4a04b7a761",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 $AB=4$, $BC=8$, $\\cos A = \\frac{1}{4}$일 때, 선분 AC의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "코사인_법칙"
+    ],
+    "exam_intent": "코사인 법칙을 이용하여 삼각형의 변의 길이를 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

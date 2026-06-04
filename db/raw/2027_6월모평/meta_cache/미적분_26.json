@@ -1,0 +1,17 @@
+{
+  "text_sha": "5e121f361d53",
+  "meta": {
+    "searchable_text": "곡선 $y = \\sin x$ ($0 \\leq x \\leq \\pi$)와 직선 $y = \\frac{2}{3}x$가 만나는 서로 다른 두 점을 A, B라 하자. 곡선 $y = \\sin x$ 위의 점 A에서의 접선과 곡선 $y = \\sin x$ 위의 점 B에서의 접선이 이루는 예각의 크기를 $\\theta$라 할 때, $\\tan\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "삼각함수의_미분",
+      "접선의_기울기",
+      "두_직선이_이루는_각"
+    ],
+    "exam_intent": "접선의 기울기를 이용하여 두 직선이 이루는 각을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

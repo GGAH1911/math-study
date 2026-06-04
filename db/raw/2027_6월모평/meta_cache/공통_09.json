@@ -1,0 +1,17 @@
+{
+  "text_sha": "159c9642ed3b",
+  "meta": {
+    "searchable_text": "시각 $t=0$일 때 동시에 원점을 출발하여 수직선 위를 움직이는 두 점 $P$, $Q$가 있다. 시각 $t$ ($t \\geq 0$)일 때 두 점 $P$, $Q$의 속도가 각각 $2t^2 - 2t$, $2t$이다. 출발한 후 시각 $t$에서 두 점 $P$, $Q$의 위치가 같아질 때, 양수 $t$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "부정적분",
+      "정적분의_활용",
+      "속도와_위치의_관계"
+    ],
+    "exam_intent": "속도 함수를 적분하여 위치를 구하고 두 점이 만나는 시각 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

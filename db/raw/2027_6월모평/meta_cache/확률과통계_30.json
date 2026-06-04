@@ -1,0 +1,17 @@
+{
+  "text_sha": "bdbf830bf54c",
+  "meta": {
+    "searchable_text": "12개의 공(노란색·보라색·검은색 각 4개)을 일렬로 배열할 때, 노란색 공이 보라색 공과 이웃하지 않는 경우의 수를 구하는 문제. 같은 색 공끼리는 구별하지 않음.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "같은_것이_있는_순열",
+      "조건부_배열",
+      "포함-배제_원리"
+    ],
+    "exam_intent": "제약 조건이 있는 같은 것이 있는 순열의 경우의 수를 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

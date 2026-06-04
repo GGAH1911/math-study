@@ -1,0 +1,16 @@
+{
+  "text_sha": "3742f0def4bd",
+  "meta": {
+    "searchable_text": "$\\frac{\\pi}{2} < \\theta < \\pi$인 $\\theta$에 대하여 $\\cos^2\\theta = \\frac{1}{10}$일 때, $\\tan\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_기본_항등식",
+      "사분면과_부호"
+    ],
+    "exam_intent": "각의 범위와 코사인 값으로부터 탄젠트를 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

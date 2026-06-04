@@ -1,0 +1,16 @@
+{
+  "text_sha": "583543f35c61",
+  "meta": {
+    "searchable_text": "좌표평면에 방향벡터가 $(1, 5)$인 직선 $l_1$과 직선 $l_2$가 있다. 두 직선 $l_1$, $l_2$가 이루는 예각의 크기를 $\\theta$라 할 때, $\\cos\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "방향벡터",
+      "두_직선이_이루는_각"
+    ],
+    "exam_intent": "두 직선의 방향벡터로부터 이루는 각의 코사인값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

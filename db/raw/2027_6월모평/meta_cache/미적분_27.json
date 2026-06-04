@@ -1,0 +1,17 @@
+{
+  "text_sha": "c47e97108978",
+  "meta": {
+    "searchable_text": "좌표평면 위를 움직이는 점 $P$가 있다. 시각이 $t = \\frac{2\\pi}{3}$일 때 점 $P$의 위치 $(x, y)$가 $(a\\tan\\theta, \\frac{1}{\\sec\\theta})$이다. 점 $P$의 시각 $t = \\frac{4\\pi}{3}$에서의 속력이 $t = \\frac{2\\pi}{3}$에서의 속력과 같을 때, 실수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수방정식",
+      "속력",
+      "삼각함수의미분"
+    ],
+    "exam_intent": "매개변수곡선의 속력 조건으로 상수값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

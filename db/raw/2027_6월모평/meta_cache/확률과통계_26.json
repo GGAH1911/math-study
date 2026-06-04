@@ -1,0 +1,17 @@
+{
+  "text_sha": "dfe90a6f1c10",
+  "meta": {
+    "searchable_text": "주머니에 1부터 10까지의 자연수가 하나씩 적혀 있는 10개의 공이 들어 있다. 이 주머니에서 임의로 4개의 공을 동시에 꺼낼 때, 꺼낸 공에 적혀 있는 네 자연수의 곱이 5의 배수일 확률을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조합",
+      "여사건의_확률",
+      "배수_판정"
+    ],
+    "exam_intent": "여사건을 이용한 소인수(5) 포함 판정 확률 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

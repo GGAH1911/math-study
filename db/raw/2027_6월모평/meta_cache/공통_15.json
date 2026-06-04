@@ -1,0 +1,18 @@
+{
+  "text_sha": "04e9e055d01b",
+  "meta": {
+    "searchable_text": "상수항이 0인 삼차함수 f(x)가 다음 조건을 만족시킨다. (가) f(x) ≠ f'(x)가 되도록 하는 모든 실수 x의 값의 범위는 0 ≤ x ≤ 3이다. (나) ∫₀³ [f(x) − f'(x)]dx ≠ ∫₀¹ [f(x) − f'(x)]dx가 되도록 하는 모든 실수 x의 값의 범위는 0 ≤ x ≤ 1이다. f(6)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "삼차함수",
+      "도함수",
+      "부등식",
+      "함수의_조건"
+    ],
+    "exam_intent": "조건을 만족하는 삼차함수의 계수를 결정하고 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

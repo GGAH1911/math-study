@@ -1,0 +1,16 @@
+{
+  "text_sha": "dbced36fb15e",
+  "meta": {
+    "searchable_text": "두 다항함수의 적분 관계식과 곡선-직선 경계의 넓이 함수 $S(a)$를 이용하여, 주어진 미분 조건 $S'(a)=2a^2-2a$로부터 함수 관계를 결정하고 세 명제의 참 거짓을 판정하는 문제.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "곡선으로둘러싸인넓이",
+      "넓이함수의미분"
+    ],
+    "exam_intent": "곡선과 직선으로 둘러싸인 넓이 함수의 도함수 조건으로부터 함수 결정 및 성질 검증",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

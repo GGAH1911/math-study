@@ -1,0 +1,16 @@
+{
+  "text_sha": "0ee89cbb5b9d",
+  "meta": {
+    "searchable_text": "$\\sqrt{9} \\times \\sqrt[3]{3} \\div \\sqrt[5]{3}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호와_지수",
+      "지수법칙"
+    ],
+    "exam_intent": "근호를 포함한 식의 지수법칙 적용 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

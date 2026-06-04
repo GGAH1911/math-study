@@ -1,0 +1,16 @@
+{
+  "text_sha": "605f5af0a074",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{5 \\cdot 2^n}{4 \\times 5 \\cdot 2^{n+1}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_성질",
+      "지수함수_극한"
+    ],
+    "exam_intent": "지수함수 극한에서 식을 정리하여 수렴값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "b24faa2a8d15",
+  "meta": {
+    "searchable_text": "공비가 양수인 등비수열 {a_n}이 조건식(2a_1, a_3, 5a_2 등 포함, 결과값 20)을 만족할 때, a_1 × a_6의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열"
+    ],
+    "exam_intent": "등비수열의 조건으로부터 첫 항과 공비를 결정하고 항의 곱을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

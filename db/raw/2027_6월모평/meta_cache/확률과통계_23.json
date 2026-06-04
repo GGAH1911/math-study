@@ -1,0 +1,16 @@
+{
+  "text_sha": "176811b551c4",
+  "meta": {
+    "searchable_text": "4개의 문자를 모두 일렬로 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "중복원소"
+    ],
+    "exam_intent": "중복된 원소를 포함한 순열의 개수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "801edddeed1e",
+  "meta": {
+    "searchable_text": "함수 f(x)에 대하여 lim(x→1) [f(x)의 식] / [분모]의 극한값을 구하는 문제 (상세 수식은 글리프로 불명확하나, 계수 3, 2, 1과 극한 x→1 포함)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한값_계산",
+      "함수의_극한"
+    ],
+    "exam_intent": "x→1에서 함수의 극한값을 구하는 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "fe03c4ae9009",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 그래프가 그림과 같다. $\\lim_{x \\to a^-} f(x) + \\lim_{x \\to a^+} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "좌극한과_우극한",
+      "그래프에서_극한값_읽기",
+      "함수의_불연속점"
+    ],
+    "exam_intent": "그래프에서 특정 점에서의 좌극한과 우극한을 구분하여 읽고 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

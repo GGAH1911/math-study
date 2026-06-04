@@ -1,0 +1,16 @@
+{
+  "text_sha": "23bc8e561bd8",
+  "meta": {
+    "searchable_text": "양수 a와 자연수 b에 대하여 0≤x≤2일 때 x에 대한 방정식 a·cos(bx) = (우변)의 서로 다른 실근의 개수는 15이다. a의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "삼각방정식"
+    ],
+    "exam_intent": "매개변수에 따른 삼각함수 방정식의 근의 개수 분석 및 조건에 맞는 값 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}
