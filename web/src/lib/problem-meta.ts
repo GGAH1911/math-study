@@ -3,6 +3,7 @@
 
 export const EXAMTYPE_ORDER = ['수능', '모의평가', '모의고사'] as const;
 export const SUBJECT_ORDER = ['공통', '미적분', '확률과통계', '기하', '단일'] as const;
+export const ELECTIVES = ['미적분', '확률과통계', '기하'] as const; // 선택과목 (회차당 택1, 8문항)
 export const GRADE_ORDER = ['고1', '고2', '고3'] as const;
 export const TIER_ORDER = ['early', 'mid', 'killer'] as const; // 코퍼스엔 high 미사용
 export const FORMAT_ORDER = ['choice', 'numeric'] as const;

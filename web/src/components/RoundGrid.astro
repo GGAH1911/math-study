@@ -1,0 +1,26 @@
+---
+// 회차 카드 그리드 — /exam 의 수능·모평·모의고사 구역이 공유.
+// 섹션 헤더가 시험종류·학년을 말해주므로 카드 라벨은 연도(+시행월)만.
+import { examItemCount, type RoundGroup } from '../lib/problem-card';
+
+type Props = { rounds: RoundGroup[] };
+const { rounds } = Astro.props;
+
+const label = (r: RoundGroup): string =>
+  [r.meta.year, r.meta.session && r.meta.session !== '?' ? r.meta.session : '']
+    .filter(Boolean)
+    .join(' ');
+---
+<ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
+  {rounds.map((r) => (
+    <li>
+      <a
+        href={`/exam/round/${r.year}/${r.round}`}
+        class="card flex items-center justify-between gap-2 hover:border-[color:var(--color-accent)] transition"
+      >
+        <span class="text-sm font-medium truncate">{label(r)}</span>
+        <span class="text-xs text-[color:var(--color-subtle)] whitespace-nowrap">{examItemCount(r.problems)}문항 ▶</span>
+      </a>
+    </li>
+  ))}
+</ul>

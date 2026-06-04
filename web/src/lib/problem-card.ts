@@ -2,8 +2,19 @@
 // problems/index.astro 와 problems/units.astro 가 공유.
 import {
   SUBJECT_ORDER, EXAMTYPE_ORDER, GRADE_ORDER, TIER_ORDER, FORMAT_ORDER,
-  FORMAT_LABEL, TIER_BADGE, roundRank, type RoundMeta,
+  FORMAT_LABEL, TIER_BADGE, ELECTIVES, roundRank, type RoundMeta,
 } from './problem-meta';
+
+const isElective = (p: P): boolean =>
+  (ELECTIVES as readonly string[]).includes(String(p.data.source?.subject ?? ''));
+
+// 실제 응시 문항수. 고3 회차 폴더엔 선택 3과목(미적분·확통·기하)이 모두 들어 있어
+// 파일 수(raw)는 공통22+24=46으로 부풀려진다 → 응시는 공통/단일 + 선택 1과목(8).
+// 고1·고2(단일)은 선택과목이 없으므로 그대로(30).
+export function examItemCount(problems: P[]): number {
+  const base = problems.filter((p) => !isElective(p)).length;
+  return base + (problems.some(isElective) ? 8 : 0);
+}
 
 // astro:content 엔트리의 느슨한 구조 타입 (스키마는 content.config.ts).
 export type P = { id: string; data: any };

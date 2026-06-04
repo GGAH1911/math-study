@@ -3,17 +3,36 @@ export const prerender = true;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { groupByRound } from '../../lib/problem-card';
-import { roundTitle } from '../../lib/problem-meta';
+import RoundGrid from '../../components/RoundGrid.astro';
 
 const problems = await getCollection('problems');
 const byYear = groupByRound(problems);
+// 연도 desc로 평탄화 (각 연도 내부는 roundRank: 수능>평가원>교육청 → 학년 → 월 정렬됨)
+const allRounds = [...byYear.values()].flat();
+
+const ofType = (t: string) => allRounds.filter((r) => r.meta.exam_type === t);
+// 2022 예시문항은 exam_type이 '수능'이나 실제 시행이 아닌 평가원 통합형 예시 → 분리.
+const isYeshi = (r: { meta: { session: string } }) => /예시/.test(r.meta.session ?? '');
+const suneung = ofType('수능').filter((r) => !isYeshi(r)); // 실제 시행 본수능
+const yeshi = ofType('수능').filter(isYeshi);             // 평가원 예시문항 (시행 아님)
+const mopyeong = ofType('모의평가'); // 평가원 6·9월 (고3)
+const mock = ofType('모의고사');     // 교육청 학력평가 (고1·고2·고3)
+
+// 모의고사는 학년 소분류 (고3 먼저 — 수능 대비 우선)
+const MOCK_GRADES = ['고3', '고2', '고1'];
+const mockByGrade = MOCK_GRADES
+  .map((grade) => ({ grade, rounds: mock.filter((r) => r.meta.grade === grade) }))
+  .filter((x) => x.rounds.length > 0);
+
+const sectionH2 = 'text-lg font-semibold border-b border-[color:var(--color-border)] pb-1.5';
+const hint = 'text-xs font-normal text-[color:var(--color-subtle)] ml-1.5';
 ---
 <BaseLayout title="모의시험">
-  <div class="max-w-4xl mx-auto px-6 py-6 space-y-6">
+  <div class="max-w-4xl mx-auto px-6 py-6 space-y-8">
     <header class="space-y-1">
       <h1 class="text-2xl font-semibold tracking-tight">모의시험 모드</h1>
       <p class="text-sm text-[color:var(--color-muted)]">
-        실제 기출 회차를 시험지처럼 — 타이머·답안 입력·자동 채점. 정답은 제출 후 공개됩니다.
+        실제 기출 회차를 시험지처럼 — 타이머·답안 입력·자동 채점. 고3 회차는 공통 22 + 선택 1과목 8 = 30문항으로 응시합니다(선택과목은 시험 안에서 전환).
       </p>
     </header>
 
@@ -27,25 +46,37 @@ const byYear = groupByRound(problems);
       <a href="/exam/random" class="chip hover:border-[color:var(--color-accent)] whitespace-nowrap">▶ 시작</a>
     </section>
 
-    <div class="space-y-5">
-      {[...byYear.entries()].map(([year, rounds]) => (
-        <section class="space-y-2">
-          <h2 class="text-base font-semibold sticky top-0 bg-[color:var(--color-bg)]/90 backdrop-blur py-1.5 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">{year}</h2>
-          <ul class="grid sm:grid-cols-2 gap-2">
-            {rounds.map((r) => (
-              <li>
-                <a
-                  href={`/exam/round/${year}/${r.round}`}
-                  class="card flex items-center justify-between gap-2 hover:border-[color:var(--color-accent)] transition"
-                >
-                  <span class="text-sm font-medium truncate">{roundTitle(r.meta)}</span>
-                  <span class="text-xs text-[color:var(--color-subtle)] whitespace-nowrap">{r.problems.length}문항 ▶</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
+    {suneung.length > 0 && (
+      <section class="space-y-2">
+        <h2 class={sectionH2}>수능<span class={hint}>대학수학능력시험</span></h2>
+        <RoundGrid rounds={suneung} />
+      </section>
+    )}
+
+    {yeshi.length > 0 && (
+      <section class="space-y-2">
+        <h2 class={sectionH2}>예시문항<span class={hint}>평가원 통합형 수능 예시 · 실제 시행 아님</span></h2>
+        <RoundGrid rounds={yeshi} />
+      </section>
+    )}
+
+    {mopyeong.length > 0 && (
+      <section class="space-y-2">
+        <h2 class={sectionH2}>모의평가<span class={hint}>모평 · 평가원 6·9월</span></h2>
+        <RoundGrid rounds={mopyeong} />
+      </section>
+    )}
+
+    {mock.length > 0 && (
+      <section class="space-y-3">
+        <h2 class={sectionH2}>모의고사<span class={hint}>교육청 학력평가</span></h2>
+        {mockByGrade.map((g) => (
+          <div class="space-y-2">
+            <h3 class="text-sm font-medium text-[color:var(--color-muted)]">{g.grade}</h3>
+            <RoundGrid rounds={g.rounds} />
+          </div>
+        ))}
+      </section>
+    )}
   </div>
 </BaseLayout>
