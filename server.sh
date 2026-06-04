@@ -101,8 +101,30 @@ watchdog() {
   cd "$WEB_DIR" || exit 1
   while true; do
     echo "[$(date '+%F %T')] astro dev 시작 (host=$HOST port=$PORT)"
-    node_modules/.bin/astro dev --host "$HOST" --port "$PORT"
+    node_modules/.bin/astro dev --host "$HOST" --port "$PORT" &
+    local astro_pid=$!
+    # 헬스 모니터: astro 가 *살아는 있는데 HTTP 무응답*(=행, Vite program-reload
+    # 행 등)이면 kill-0 으론 못 잡는다 → 실제 응답을 N연속 못 받으면 astro 를
+    # 강제종료해 아래 while 루프가 재시작하게 만든다. (크래시는 기존대로 자동복구.)
+    ( sleep 90                                          # 콜드 기동(content sync) 유예
+      fails=0
+      while kill -0 "$astro_pid" 2>/dev/null; do
+        if curl -s -o /dev/null --max-time 10 "http://127.0.0.1:${PORT}/" 2>/dev/null; then
+          fails=0
+        else
+          fails=$((fails + 1))
+          if [ "$fails" -ge 3 ]; then                   # ≈36초 연속 무응답 = 행
+            echo "[$(date '+%F %T')] ⚠ HTTP ${fails}연속 무응답 — astro(행) 강제종료 → 재시작 유도"
+            kill -KILL "$astro_pid" 2>/dev/null
+            break
+          fi
+        fi
+        sleep 12
+      done ) &
+    local mon_pid=$!
+    wait "$astro_pid" 2>/dev/null
     local code=$?
+    kill "$mon_pid" 2>/dev/null    # 헬스 모니터 정리
     echo "[$(date '+%F %T')] astro 종료(exit $code) — 3초 뒤 재시작"
     sleep 3
   done
