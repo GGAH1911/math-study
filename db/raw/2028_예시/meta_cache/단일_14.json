@@ -1,0 +1,17 @@
+{
+  "text_sha": "c74e1cb99869",
+  "meta": {
+    "searchable_text": "14. 실수 $a$에 대하여 다음 조건을 만족시키는 수열 $\\{a_n\\}$이 있다. 초기값 $a_1 = 4, a_2 = 2$이고, 모든 자연수 $n$에 대하여 부등식 조건 $a_{n+1} \\leq 3a_n$, $a_{n+1} \\geq 4a_n$ 등을 만족한다. 특정 조건(합 또는 항 = 7)이 되도록 하는 모든 $a$에 대하여 $a_1 \\times a_2$의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "부등식_조건",
+      "조건부_최댓값"
+    ],
+    "exam_intent": "부등식 조건을 만족하는 수열에서 초항의 곱의 최댓값을 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

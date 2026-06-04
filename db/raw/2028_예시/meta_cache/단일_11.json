@@ -1,0 +1,16 @@
+{
+  "text_sha": "c0b87d4d3fd3",
+  "meta": {
+    "searchable_text": "점 (a, 1)에서 곡선 y = 3x² + 2x + 17에 그은 접선이 점 (1, 1)을 지날 때, a의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "접선의_방정식",
+      "도함수"
+    ],
+    "exam_intent": "곡선의 접선이 특정 점을 지나는 조건으로부터 미지수를 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

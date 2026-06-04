@@ -1,0 +1,16 @@
+{
+  "text_sha": "7ac3f285b5ef",
+  "meta": {
+    "searchable_text": "첫째항이 1이고 공차가 양수인 등차수열 $\\{a_n\\}$과 자연수 $n$에 대하여, 직선 $y = a_n x$가 곡선 $y = x \\log_2 x$와 만나는 점을 $P_n$이라 하자. 점 $P_n$을 지나고 $x$축에 수직인 직선이 $x$축 및 곡선 $y = x^2$과 만나는 점을 각각 $A_n$, $B_n$이라 하고, 삼각형 $A_n B_n P_{n+1}$의 넓이를 $S_n$이라 하자. 모든 자연수 $n$에 대하여 $\\frac{OA_n}{OA_{n+1}} = \\frac{1}{4}$일 때 $\\sum_{k=1}^{5} S_k$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "수열",
+    "concepts": [
+      "지수함수와_로그함수",
+      "정적분의_활용"
+    ],
+    "exam_intent": "등차수열과 초월함수의 교점에서 기하학적 넓이 합을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

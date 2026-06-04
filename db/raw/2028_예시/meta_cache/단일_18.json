@@ -1,0 +1,17 @@
+{
+  "text_sha": "aac43bc82417",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차함수 $f(x)$와 최고차항의 계수가 1인 이차함수 $g(x)$가 다음 조건을 만족시킬 때, $f(3) + g(8)$의 값은? [4점] (가) 두 곡선 $f(x)$와 $g(x)$는 모두 직선 위의 서로 다른 두 점 A, B를 지난다. (나) $\\lim_{x \\to 0} \\frac{f(x)}{x^3}$의 값과 $\\lim_{x \\to 0} \\frac{g(x)}{x^3}$의 값이 존재한다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "함수의_연속성",
+      "함수의_결정"
+    ],
+    "exam_intent": "극한 조건과 곡선의 교점을 이용하여 함수를 결정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

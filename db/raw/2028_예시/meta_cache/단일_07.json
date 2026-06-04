@@ -1,0 +1,16 @@
+{
+  "text_sha": "da45a02d2602",
+  "meta": {
+    "searchable_text": "반지름의 길이가 8이고 중심각의 크기가 $\\frac{3\\pi}{4}$인 부채꼴의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "부채꼴의_넓이",
+      "호의_길이"
+    ],
+    "exam_intent": "부채꼴의 넓이 공식을 라디안으로 적용하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

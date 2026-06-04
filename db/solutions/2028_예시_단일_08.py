@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); f = x**3 + 3*x**2 + 2; lhs = x*f + 6; rhs = (x**3 + 2)*(x + 3); eq_check = sp.expand(lhs - rhs); integral = sp.integrate(f, (x, 0, 2)); print('VERIFY_PASS' if eq_check == 0 and integral == 16 else 'VERIFY_FAIL')

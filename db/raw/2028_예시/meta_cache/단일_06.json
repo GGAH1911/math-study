@@ -1,0 +1,16 @@
+{
+  "text_sha": "fffc04680a49",
+  "meta": {
+    "searchable_text": "모비율이 $p=0.1$인 모집단에서 임의추출한 크기가 $n$인 표본의 표본비율 $\\hat{p}$의 표준편차가 $0.03$일 때, $n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [
+      "표본비율의_분포",
+      "표본표준편차_계산"
+    ],
+    "exam_intent": "표본비율의 표준편차 공식으로부터 표본크기를 역산하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

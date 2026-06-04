@@ -1,0 +1,17 @@
+{
+  "text_sha": "29ee9cc7bb36",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 두 점 P, Q의 시각 $t$ $(t \\geq 0)$에서의 위치가 각각 $P(t) \\approx t^3 + 3t - 5$, $Q(t) \\approx 2t^2 - 6t + 1$이다. (글리프 ⋄로 인해 정확한 함수형 확인 필요) 점 P의 속도가 점 Q의 속도의 5배가 되는 시각에서의 점 P의 가속도는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "속도와_가속도",
+      "미분_조건_문제"
+    ],
+    "exam_intent": "도함수를 이용한 속도 비율 조건으로부터 특정 시각을 구하고 가속도를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

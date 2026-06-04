@@ -1,0 +1,17 @@
+{
+  "text_sha": "383ff4e3eb52",
+  "meta": {
+    "searchable_text": "확률변수 $X$가 정규분포를 따르고 다음 조건을 만족할 때, 그 모수를 구하는 문제입니다. (가) $P(X\\geq 1) = \\frac{1}{10} P(X\\geq 7)$ (나) $P(X\\leq 5) = 3 \\cdot P(Z\\leq 0) \\cdot P(Z\\leq 1)$ (단, $Z$는 표준정규분포를 따르는 확률변수)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "정규분포",
+      "표준정규분포",
+      "표준화"
+    ],
+    "exam_intent": "정규분포의 성질과 표준화를 이용해 분포의 모수를 결정하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "추론"
+  }
+}

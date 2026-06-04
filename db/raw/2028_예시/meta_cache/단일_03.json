@@ -1,0 +1,13 @@
+{
+  "text_sha": "292c45b200b4",
+  "meta": {
+    "searchable_text": "1, 2, 3, 4, 5 중에서 중복을 허락하여 4개를 택해 일렬로 나열한 네 자리 자연수 중 짝수의 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수_고1",
+    "concepts": [],
+    "exam_intent": "제약 조건이 있는 경우의 수를 곱의 법칙으로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

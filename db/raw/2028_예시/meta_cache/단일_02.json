@@ -1,0 +1,16 @@
+{
+  "text_sha": "157ff96650eb",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 연속인 함수 $f$가 $\\lim_{x \\to 1} \\frac{f(x) - 5x + 2x - 1}{x - 1}$을 만족시킬 때, $f(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "연속함수의_정의",
+      "극한의_성질"
+    ],
+    "exam_intent": "연속함수의 극한 조건으로부터 함수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

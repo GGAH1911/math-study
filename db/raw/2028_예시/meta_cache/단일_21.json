@@ -1,0 +1,13 @@
+{
+  "text_sha": "98bbd37879e5",
+  "meta": {
+    "searchable_text": "숫자 0이 적혀 있는 카드 2장, 숫자 1이 적혀 있는 카드 5장, 숫자 2가 적혀 있는 카드 3장을 10개 자리에 한 장씩 놓는다. i번째 자리의 수를 $a_i$라 할 때, $a_i < a_{i+1} > a_{i+2}$를 만족하는 자연수 $i$ $(1 \\leq i \\leq 9)$의 개수가 정확히 3인 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "같은 숫자 카드의 peak 개수 조건을 만족하는 배치의 경우의 수",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "2adf34231db1",
+  "meta": {
+    "searchable_text": "자연수 $a$에 대하여 $\\log_{a-7}(2a-3)$이 정의되도록 하는 모든 자연수 $a$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의",
+      "로그의_밑_조건",
+      "로그의_진수_조건"
+    ],
+    "exam_intent": "로그 정의 조건(밑>0, 밑≠1, 진수>0)으로부터 자연수 범위를 결정하고 해의 합을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "49bc577d3c83",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 양수이고 $f'(0) = 0$인 삼차함수 $f(x)$에 대하여 실수 전체의 집합에서 정의된 두 함수 $g(x) = \\max\\{f(x), 0\\}$, $h(x) = \\max\\{g(x) - g(x-2), 0\\}$이 있다. 함수의 극댓값 조건과 주어진 함숫값 조건을 만족할 때 특정 실수값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "절댓값함수",
+      "합성함수"
+    ],
+    "exam_intent": "절댓값 합성함수의 극값 조건으로부터 특정값 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

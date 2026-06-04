@@ -1,0 +1,17 @@
+{
+  "text_sha": "eabc7a657fd2",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 삼각함수 조건이 주어질 때, 점 A를 중심으로 하고 점 B를 지나는 원이 두 선분 AC, BC와 만나는 점을 각각 P, Q라 하자. 선분 PB의 길이가 $3\\sqrt{3}$일 때, 선분 PQ의 길이를 구하시오. (단, 점 Q는 점 B가 아니다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "원의_성질",
+      "코사인_법칙"
+    ],
+    "exam_intent": "삼각형의 각도 조건과 원의 성질을 이용한 기하 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}
