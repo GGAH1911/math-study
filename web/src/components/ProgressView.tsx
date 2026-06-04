@@ -6,10 +6,18 @@ type Crop = {
   url: string; name: string; slug: string; subject: string; number: number;
   mtime: number; valid: 'ok' | 'invalid' | 'failed' | 'unknown'; reason?: string;
 };
+type Solcache = {
+  total: number; done: number; parallel: number;
+  cached: number; flagged: number; skipped: number; errored: number;
+  models: Record<string, number>;
+  last: { stem: string; result: string } | null;
+  passPct: number | null; finished: boolean;
+};
 type Data = {
   now: number;
-  log: { mtime: number; size: number; lines: string[] };
+  log: { mtime: number; size: number; lines: string[]; path?: string | null };
   procs: Proc[];
+  solcache?: Solcache | null;
   summary: {
     stage: 'extract' | 'spoke' | 'auto' | 'auto_summary' | 'done' | 'unknown';
     startedAt: string | null;
@@ -35,6 +43,7 @@ const STATUS_ICON: Record<Round['status'], string> = {
   fail: '✗',
   pending: '◔',
 };
+const MODEL_LABEL: Record<string, string> = { h: 'Haiku', s: 'Sonnet', o: 'Opus' };
 
 export default function ProgressView() {
   const [data, setData] = useState<Data | null>(null);
@@ -104,7 +113,7 @@ export default function ProgressView() {
       {/* Log */}
       <section className="card p-0 overflow-hidden">
         <header className="flex items-center justify-between px-4 py-2 border-b border-zinc-800 bg-zinc-900/50">
-          <h2 className="text-sm font-semibold text-zinc-200">/tmp/post_manifest.log</h2>
+          <h2 className="text-sm font-semibold text-zinc-200 font-mono">{data.log.path ? data.log.path.split('/').pop() : '로그 없음'}</h2>
           <div className="flex items-center gap-3 text-xs text-zinc-500">
             <span>{log.lines.length} lines · {(log.size/1024).toFixed(1)} KB</span>
             <label className="inline-flex items-center gap-1 cursor-pointer">
@@ -147,12 +156,53 @@ export default function ProgressView() {
 
       {/* Sidebar */}
       <aside className="space-y-4">
-        <section className="card">
-          <h3 className="text-xs uppercase tracking-[0.15em] text-zinc-500 mb-2">단계</h3>
-          <div className="text-base font-semibold">{stageLabel}</div>
-          {summary.startedAt && <div className="text-xs text-zinc-500 mt-1">시작: {summary.startedAt}</div>}
-          {summary.finishedAt && <div className="text-xs text-emerald-400 mt-1">완료: {summary.finishedAt}</div>}
-        </section>
+        {data.solcache && (
+          <section className="card">
+            <h3 className="text-xs uppercase tracking-[0.15em] text-zinc-500 mb-2">
+              풀이 캐시 {data.solcache.finished ? '· 완료' : `· 병렬 ${data.solcache.parallel}`}
+            </h3>
+            <div className="text-2xl font-semibold tabular-nums">
+              {data.solcache.done}<span className="text-base text-zinc-500"> / {data.solcache.total}</span>
+              {data.solcache.passPct !== null && (
+                <span className="text-sm text-emerald-400 ml-2">통과율 {data.solcache.passPct}%</span>
+              )}
+            </div>
+            <div className="mt-2 h-2 rounded bg-zinc-800 overflow-hidden">
+              <div
+                className="h-full bg-emerald-500 transition-[width]"
+                style={{ width: `${Math.round((data.solcache.done / Math.max(1, data.solcache.total)) * 100)}%` }}
+              />
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] mt-2">
+              <span className="text-emerald-400">✓ 캐시 {data.solcache.cached}</span>
+              {data.solcache.flagged > 0 && <span className="text-rose-400">⚑ 실패 {data.solcache.flagged}</span>}
+              {data.solcache.skipped > 0 && <span className="text-zinc-500">skip {data.solcache.skipped}</span>}
+              {data.solcache.errored > 0 && <span className="text-amber-400">err {data.solcache.errored}</span>}
+            </div>
+            {Object.keys(data.solcache.models).length > 0 && (
+              <div className="text-[11px] text-zinc-500 mt-1">
+                {['h', 's', 'o']
+                  .filter((k) => data.solcache!.models[k])
+                  .map((k) => `${MODEL_LABEL[k]} ${data.solcache!.models[k]}`)
+                  .join(' · ')}
+              </div>
+            )}
+            {data.solcache.last && (
+              <div className="text-[11px] text-zinc-500 mt-2 truncate" title={`${data.solcache.last.stem} → ${data.solcache.last.result}`}>
+                최근: {data.solcache.last.stem.replace(/^.*_/, '#')} → {data.solcache.last.result}
+              </div>
+            )}
+          </section>
+        )}
+
+        {!data.solcache && (
+          <section className="card">
+            <h3 className="text-xs uppercase tracking-[0.15em] text-zinc-500 mb-2">단계</h3>
+            <div className="text-base font-semibold">{stageLabel}</div>
+            {summary.startedAt && <div className="text-xs text-zinc-500 mt-1">시작: {summary.startedAt}</div>}
+            {summary.finishedAt && <div className="text-xs text-emerald-400 mt-1">완료: {summary.finishedAt}</div>}
+          </section>
+        )}
 
         {totalRounds > 0 && (
           <section className="card">

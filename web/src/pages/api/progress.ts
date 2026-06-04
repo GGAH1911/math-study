@@ -44,7 +44,7 @@ function readTail(): { lines: string[]; mtime: number; size: number; path: strin
 function aliveProcs(): { pid: number; etime: string; cmd: string }[] {
   try {
     const out = execSync(
-      `pgrep -af "extract_all_answers|fill_spoke_bodies|post_manifest|auto_complete_rounds|ingest_round" 2>/dev/null || true`,
+      `pgrep -af "extract_all_answers|fill_spoke_bodies|post_manifest|auto_complete_rounds|ingest_round|ingest_v2|build_solution_cache" 2>/dev/null || true`,
       { encoding: 'utf-8' },
     );
     const procs: { pid: number; etime: string; cmd: string }[] = [];
@@ -166,12 +166,13 @@ function recentCrops(limit = 24): Array<{
   url: string; name: string; slug: string; subject: string; number: number;
   mtime: number; valid: 'ok' | 'invalid' | 'failed' | 'unknown'; reason?: string;
 }> {
-  const imagesDir = '/home/insung/Projects/math-study/web/public/problem-images';
+  // cwd = 실행 중인 dev 서버의 web 디렉토리 → 메인 리포든 git worktree든 자동 대응.
+  const imagesDir = join(process.cwd(), 'public', 'problem-images');
   if (!existsSync(imagesDir)) return [];
   const validationCache: Record<string, { invalid: Set<string>; failed: Set<string>; reasons: Map<string, string> }> = {};
   const loadVal = (slug: string) => {
     if (validationCache[slug]) return validationCache[slug];
-    const p = `/home/insung/Projects/math-study/db/raw/${slug}/missing.json`;
+    const p = join(process.cwd(), '..', 'db', 'raw', slug, 'missing.json');
     const v = { invalid: new Set<string>(), failed: new Set<string>(), reasons: new Map<string, string>() };
     if (existsSync(p)) {
       try {
@@ -232,10 +233,48 @@ function recentCrops(limit = 24): Array<{
   });
 }
 
+// build_solution_cache.py 진행 파싱. 로그 포맷:
+//   대상 30문제 · 병렬 4 · 난이도순
+//   [3/30] 2028_예시_단일_07  →  CACHED@h        (또는 FLAG(...)/skip-cached/ERROR:..)
+//   통과율: 23/30 = 76%   (요약 단계)
+// 인제스트 로그면 '대상 N문제'가 없어 null 반환 → 패널 숨김.
+function parseSolcache(lines: string[]) {
+  let total = 0, done = 0, parallel = 0;
+  let cached = 0, flagged = 0, skipped = 0, errored = 0;
+  const models: Record<string, number> = {};
+  let last: { stem: string; result: string } | null = null;
+  let passPct: number | null = null;
+  let finished = false;
+  for (const raw of lines) {
+    const line = raw.trim();
+    const head = line.match(/대상\s*(\d+)\s*문제\s*·\s*병렬\s*(\d+)/);
+    if (head) { total = parseInt(head[1], 10); parallel = parseInt(head[2], 10); }
+    const prog = line.match(/^\[(\d+)\/(\d+)\]\s+(\S+)\s+→\s+(.+)$/);
+    if (prog) {
+      done = parseInt(prog[1], 10);
+      total = parseInt(prog[2], 10);
+      const result = prog[4].trim();
+      last = { stem: prog[3], result };
+      if (result.startsWith('CACHED')) {
+        cached++;
+        const m = result.match(/^CACHED@(\w)/);
+        if (m) models[m[1]] = (models[m[1]] ?? 0) + 1;
+      } else if (result.startsWith('skip')) skipped++;
+      else if (result.startsWith('ERROR')) errored++;
+      else flagged++;
+    }
+    const pr = line.match(/통과율:\s*\d+\/\d+\s*=\s*(\d+)%/);
+    if (pr) { passPct = parseInt(pr[1], 10); finished = true; }
+  }
+  if (total === 0) return null;
+  return { total, done, parallel, cached, flagged, skipped, errored, models, last, passPct, finished };
+}
+
 export const GET: APIRoute = () => {
   const { lines, mtime, size, path } = readTail();
   const procs = aliveProcs();
   const summary = parseSummary(lines);
+  const solcache = parseSolcache(lines);
   const crops = recentCrops(24);
   return new Response(
     JSON.stringify({
@@ -243,6 +282,7 @@ export const GET: APIRoute = () => {
       log: { mtime, size, lines, path },
       procs,
       summary,
+      solcache,
       crops,
     }),
     { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
