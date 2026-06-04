@@ -47,14 +47,7 @@ LADDER_KILLER  = [('sonnet', 'max'), ('opus', 'max')]                       # ki
 # verifier 안전: 파일/네트워크/시스템 접근 금지 — 순수 수학만 허용
 FORBIDDEN = re.compile(r'\b(os|subprocess|socket|shutil|requests|httpx|urllib|open|eval|exec|__import__|pathlib|Path)\b')
 
-SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가입니다. 첨부된 문제 이미지를 Read 도구로 먼저 본 뒤 풀이하세요. 도형·조건·보기 값은 모두 이미지에서 확인합니다. 추측 금지.
-
-**단계를 건너뛰지 마라 — 오답은 능력 부족이 아니라 건너뛰기에서 나온다.**
-그래프·도형이 있으면 계산을 시작하기 전에 먼저:
-- 그래프의 **빈 동그라미(○)와 채운 점(●)을 좌표와 함께 하나도 빠짐없이** 나열하라.
-- **빈 동그라미 ○ = 그 점에서의 한쪽 극한값(함수값이 아님)**, **채운 점 ● = 함수값 f(a)** 임을 반드시 구분하라. 이 둘을 절대 뭉뚱그리지 마라.
-- 좌극한·우극한·함수값(f(a))을 각각 **따로** 읽어 적은 뒤에야 계산하라.
-한눈에 어림짐작하지 말고, 한 점씩 확인하며 단계적으로 풀어라."""
+SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가입니다. 첨부된 문제 이미지를 Read 도구로 먼저 본 뒤 풀이하세요. 도형·조건·보기 값은 모두 이미지에서 확인합니다. 추측 금지."""
 
 
 def build_prompt(img_paths: list[str], fmt: str, meta: str) -> str:
@@ -177,7 +170,6 @@ def build_one(p: Path) -> str:
         return 'skip-no-gold-or-img'
     fm = re.search(r'^format:\s*(\w+)', t, re.M)
     fmt = fm.group(1) if fm else 'choice'
-    has_fig = bool(re.search(r'^has_figure:\s*true', t, re.M))
     tier = (re.search(r'^killer_tier:\s*(\w+)', t, re.M) or [None, None])[1]
     ladder = LADDER_KILLER if tier == 'killer' else LADDER_DEFAULT   # 킬러는 Haiku 스킵
     meta = f"문항 형식: {'객관식 5지선다' if fmt == 'choice' else '단답형(정수 정답)'}"
@@ -193,18 +185,13 @@ def build_one(p: Path) -> str:
         if ans != gold:                           # blind 답이 공식 gold 와 불일치 → escalate
             last = f'{model}:ans{ans}≠{gold}'; continue
         # 단답형: gold 정수 일치로 충분. 5지선다: 원본식 역대입 검증기까지.
-        if fmt == 'choice' and not has_fig:
+        if fmt == 'choice':
             ok, log = run_verifier(sol.get('verifier_python', ''))
             if not ok:
                 last = f'{model}:verify-fail:{log[:30]}'; continue
             VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
             (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
             vref = f'db/solutions/{p.stem}.py'
-        elif fmt == 'choice':                      # has_figure 5지선다
-            # 그래프·도형 문제는 '원본식'이 없어 역대입 검증기를 만들 수 없다(모델이
-            # forbidden-import 코드를 쓰게 됨). blind(정답 미제공)로 도형을 단계적으로
-            # 읽어 공식 gold 와 일치한 것 자체가 검증 — 역대입 검증기 면제.
-            vref = 'figure-blind-match'
         else:
             vref = 'gold-match'                    # 단답형 — 검증기 없음
         write_solution(p, sol, vref, model)
