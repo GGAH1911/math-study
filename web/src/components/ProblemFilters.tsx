@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type ChipOption = { key: string; label: string; count: number };
 type Axis = { name: string; label: string; attr: string; items: ChipOption[] };
@@ -19,23 +19,20 @@ function readQuerySet(name: string): Set<string> | null {
   return new Set(p.split(',').map((s) => s.trim()).filter(Boolean));
 }
 
-function writeQuerySet(name: string, set: Set<string>, allKeys: string[]) {
+function writeQuerySet(name: string, set: Set<string>) {
   if (typeof window === 'undefined') return;
   const url = new URL(window.location.href);
-  const allActive = allKeys.every((k) => set.has(k));
-  if (allActive || set.size === 0) url.searchParams.delete(name);
+  // opt-in: 빈 Set = 전체(필터 없음) → param 삭제. 선택된 게 있으면 그것만 기록.
+  if (set.size === 0) url.searchParams.delete(name);
   else url.searchParams.set(name, [...set].join(','));
   window.history.replaceState(null, '', url.toString());
 }
 
 export default function ProblemFilters({ axes, total, groupSelector }: Props) {
-  const allKeys = useMemo(
-    () => Object.fromEntries(axes.map((a) => [a.name, a.items.map((i) => i.key)])) as Record<string, string[]>,
-    [axes],
-  );
-  // 모든 필터를 "전체 선택"으로 시작 → SSR/CSR 첫 렌더 일치 (hydration mismatch 방지).
+  // opt-in: 빈 Set = 그 축 전체(필터 없음). 클릭으로 좁힌다.
+  // (SSR/CSR 첫 렌더 모두 빈 Set → hydration mismatch 없음.)
   const [sets, setSets] = useState<Record<string, Set<string>>>(
-    () => Object.fromEntries(axes.map((a) => [a.name, new Set(a.items.map((i) => i.key))])),
+    () => Object.fromEntries(axes.map((a) => [a.name, new Set<string>()])),
   );
   const [search, setSearch] = useState('');
   const [debounced, setDebounced] = useState('');
@@ -94,9 +91,11 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
     for (const el of wraps) {
       let pass = true;
       for (const a of axes) {
+        const sel = sets[a.name];
+        if (sel.size === 0) continue; // 빈 Set = 그 축 전체 통과 (opt-in)
         const v = el.dataset[a.attr] ?? '';
         // 빈 값은 그 축을 통과 (수능엔 grade, 일부엔 tier 없음).
-        if (v && !sets[a.name].has(v)) { pass = false; break; }
+        if (v && !sel.has(v)) { pass = false; break; }
       }
       if (pass && debounced) {
         const label = el.dataset.label ?? '';
@@ -119,8 +118,8 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
   // URL 동기화 (새로고침/북마크 복원). hydrated 가드로 마운트 replay 가 방금 읽은 param 을 즉시 지우지 않게.
   useEffect(() => {
     if (!hydrated) return;
-    for (const a of axes) writeQuerySet(a.name, sets[a.name], allKeys[a.name]);
-  }, [hydrated, sets, axes, allKeys]);
+    for (const a of axes) writeQuerySet(a.name, sets[a.name]);
+  }, [hydrated, sets, axes]);
   useEffect(() => {
     if (!hydrated) return;
     const url = new URL(window.location.href);
@@ -136,12 +135,13 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
       else next.add(key);
       return { ...prev, [name]: next };
     });
+  // opt-in: "전체" = 빈 Set(필터 해제), anyFilter = 선택된 칩이 하나라도 있음.
   const setAxisAll = (name: string) =>
-    setSets((prev) => ({ ...prev, [name]: new Set(allKeys[name]) }));
-  const isAll = (name: string) => sets[name].size === allKeys[name].length;
-  const anyFilter = axes.some((a) => !isAll(a.name)) || !!debounced;
+    setSets((prev) => ({ ...prev, [name]: new Set<string>() }));
+  const isAll = (name: string) => sets[name].size === 0;
+  const anyFilter = axes.some((a) => sets[a.name].size > 0) || !!debounced;
   const resetAll = () => {
-    setSets(Object.fromEntries(axes.map((a) => [a.name, new Set(allKeys[a.name])])));
+    setSets(Object.fromEntries(axes.map((a) => [a.name, new Set<string>()])));
     setSearch('');
   };
 

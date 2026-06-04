@@ -24,8 +24,8 @@ function writeQuerySet(name: string, set: Set<string>, allKeys: string[]) {
   if (typeof window === 'undefined') return;
   const url = new URL(window.location.href);
   // Treat "all selected" as "no filter" → drop the query param to keep URLs clean.
-  const allActive = allKeys.every((k) => set.has(k));
-  if (allActive || set.size === 0) {
+  // opt-in: 빈 Set = 전체(필터 없음) → param 삭제.
+  if (set.size === 0) {
     url.searchParams.delete(name);
   } else {
     url.searchParams.set(name, [...set].join(','));
@@ -41,9 +41,10 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
   // Start every filter as "all selected" so the SSR and the client's first
   // render agree (no hydration mismatch). The URL is read in a mount effect
   // below — for `?mastery=learning` the state then narrows to that subset.
-  const [mastery, setMastery] = useState<Set<string>>(() => new Set(masteryKeys));
-  const [domain, setDomain] = useState<Set<string>>(() => new Set(domainKeys));
-  const [grade, setGrade] = useState<Set<string>>(() => new Set(gradeKeys));
+  // opt-in: 빈 Set = 전체(필터 없음). 클릭으로 좁힌다. (SSR/CSR 모두 빈 Set)
+  const [mastery, setMastery] = useState<Set<string>>(() => new Set());
+  const [domain, setDomain] = useState<Set<string>>(() => new Set());
+  const [grade, setGrade] = useState<Set<string>>(() => new Set());
   const [search, setSearch] = useState<string>('');
   const [debounced, setDebounced] = useState('');
   const [hydrated, setHydrated] = useState(false);
@@ -121,9 +122,9 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
       const label = el.dataset.label ?? '';
       const id = el.dataset.id ?? '';
       const unit = el.dataset.unit ?? '';
-      const passMastery = mastery.has(m);
-      const passDomain = domain.has(d);
-      const passGrade = !g || grade.has(g);
+      const passMastery = mastery.size === 0 || mastery.has(m);
+      const passDomain = domain.size === 0 || domain.has(d);
+      const passGrade = grade.size === 0 || !g || grade.has(g);
       const passSearch =
         !debounced ||
         label.includes(debounced) ||
@@ -175,17 +176,18 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
     else next.add(key);
     setter(next);
   };
-  const setAll = (setter: (s: Set<string>) => void, all: string[]) => setter(new Set(all));
+  // opt-in: "전체" = 빈 Set(필터 해제).
+  const setAll = (setter: (s: Set<string>) => void, _all: string[]) => setter(new Set());
 
-  const masteryAll = mastery.size === masteryKeys.length;
-  const domainAll = domain.size === domainKeys.length;
-  const gradeAll = grade.size === gradeKeys.length;
+  const masteryAll = mastery.size === 0;
+  const domainAll = domain.size === 0;
+  const gradeAll = grade.size === 0;
   const anyFilter = !masteryAll || !domainAll || !gradeAll || !!debounced;
 
   const resetAll = () => {
-    setMastery(new Set(masteryKeys));
-    setDomain(new Set(domainKeys));
-    setGrade(new Set(gradeKeys));
+    setMastery(new Set());
+    setDomain(new Set());
+    setGrade(new Set());
     setSearch('');
   };
 

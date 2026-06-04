@@ -241,9 +241,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     return p.get('highlight') ?? p.get('node') ?? undefined;
   }, [highlight]);
   const [selected, setSelected] = useState<string | null>(effectiveHighlight ?? null);
-  const [masteryFilter, setMasteryFilter] = useState<Set<string>>(
-    new Set(['unknown', 'learning', 'proficient', 'mastered']),
-  );
+  // opt-in: 빈 Set = 전체(필터 없음). 클릭으로 좁힌다.
+  const [masteryFilter, setMasteryFilter] = useState<Set<string>>(new Set());
   const gradesInData = useMemo(
     () => GRADE_ORDER.filter((g) => data.nodes.some((n) => n.grade === g)),
     [data.nodes],
@@ -252,8 +251,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     () => DOMAIN_ORDER.filter((d) => data.nodes.some((n) => n.domain === d)),
     [data.nodes],
   );
-  const [gradeFilter, setGradeFilter] = useState<Set<string>>(new Set(gradesInData));
-  const [domainFilter, setDomainFilter] = useState<Set<string>>(new Set(domainsInData));
+  const [gradeFilter, setGradeFilter] = useState<Set<string>>(new Set());
+  const [domainFilter, setDomainFilter] = useState<Set<string>>(new Set());
   // "노트 있음" 토글 — true면 note_count>0 인 노드만 visible로 인정.
   const [notesOnly, setNotesOnly] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -362,9 +361,9 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     const effectiveExpanded = new Set([...expandedUnits, ...searchAutoExpanded]);
     return new Set(
       data.nodes
-        .filter((n) => masteryFilter.has(n.mastery))
-        .filter((n) => !n.grade || gradeFilter.has(n.grade))
-        .filter((n) => !n.domain || domainFilter.has(n.domain))
+        .filter((n) => masteryFilter.size === 0 || masteryFilter.has(n.mastery))
+        .filter((n) => gradeFilter.size === 0 || !n.grade || gradeFilter.has(n.grade))
+        .filter((n) => domainFilter.size === 0 || !n.domain || domainFilter.has(n.domain))
         .filter((n) => !debouncedTerm || n.label.includes(debouncedTerm))
         // "노트 있음" 토글: 노트 카운트가 있는 노드만 통과. 단원도 동일
         // 기준으로 dim — 노트 없는 단원도 어차피 흥미 없으니 일관 처리.
@@ -731,25 +730,24 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   //   if user deselects last one → snap back to all (avoid showing nothing)
   //   "전체로" 버튼 = explicit reset to all
   const ALL_MASTERY = ['unknown', 'learning', 'proficient', 'mastered'] as const;
-  const toggleInSet = <T extends string>(prev: Set<string>, item: T, all: readonly T[]): Set<string> => {
+  const toggleInSet = <T extends string>(prev: Set<string>, item: T, _all: readonly T[]): Set<string> => {
     const next = new Set(prev);
     if (next.has(item)) next.delete(item);
     else next.add(item);
-    if (next.size === 0) return new Set(all);
-    return next;
+    return next; // opt-in: 빈 Set = 전체이므로 "마지막 끄면 전체 복귀" 로직 불필요
   };
   const toggleMastery = (m: string) => setMasteryFilter((p) => toggleInSet(p, m, ALL_MASTERY));
-  const resetMastery = () => setMasteryFilter(new Set(ALL_MASTERY));
+  const resetMastery = () => setMasteryFilter(new Set());
 
   const toggleGrade = (g: string) => setGradeFilter((p) => toggleInSet(p, g, gradesInData));
-  const resetGrade = () => setGradeFilter(new Set(gradesInData));
+  const resetGrade = () => setGradeFilter(new Set());
 
   const toggleDomain = (d: string) => setDomainFilter((p) => toggleInSet(p, d, domainsInData));
-  const resetDomain = () => setDomainFilter(new Set(domainsInData));
+  const resetDomain = () => setDomainFilter(new Set());
 
-  const masteryAllActive = masteryFilter.size === ALL_MASTERY.length;
-  const gradeAllActive = gradeFilter.size === gradesInData.length;
-  const domainAllActive = domainFilter.size === domainsInData.length;
+  const masteryAllActive = masteryFilter.size === 0;
+  const gradeAllActive = gradeFilter.size === 0;
+  const domainAllActive = domainFilter.size === 0;
 
   return (
     <div className={`relative w-full ${variant === 'mini' ? 'h-[320px]' : 'h-full'}`}>
