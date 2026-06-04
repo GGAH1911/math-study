@@ -13,11 +13,23 @@ type Solcache = {
   last: { stem: string; result: string } | null;
   passPct: number | null; finished: boolean;
 };
+type Ingest = {
+  round: string;
+  pages: number; located: number; cropped: number;
+  meta: { done: number; total: number };
+  answers: number | null; dbUpserted: number | null;
+  stage: string;
+};
+const INGEST_STAGE_LABEL: Record<string, string> = {
+  render: '페이지 렌더링', bbox: '문항 탐지', crop: '크롭',
+  meta: '메타데이터', answers: '정답 추출', done: '완료',
+};
 type Data = {
   now: number;
   log: { mtime: number; size: number; lines: string[]; path?: string | null };
   procs: Proc[];
   solcache?: Solcache | null;
+  ingest?: Ingest | null;
   summary: {
     stage: 'extract' | 'spoke' | 'auto' | 'auto_summary' | 'done' | 'unknown';
     startedAt: string | null;
@@ -156,6 +168,37 @@ export default function ProgressView() {
 
       {/* Sidebar */}
       <aside className="space-y-4">
+        {data.ingest && (
+          <section className="card">
+            <h3 className="text-xs uppercase tracking-[0.15em] text-zinc-500 mb-2">
+              인제스트 · {data.ingest.round}
+            </h3>
+            <div className="text-2xl font-semibold tabular-nums">
+              {data.ingest.meta.total > 0 ? (
+                <>메타 {data.ingest.meta.done}<span className="text-base text-zinc-500"> / {data.ingest.meta.total}</span></>
+              ) : (
+                <span className="text-base text-zinc-300">{INGEST_STAGE_LABEL[data.ingest.stage] ?? data.ingest.stage}</span>
+              )}
+            </div>
+            {data.ingest.meta.total > 0 && (
+              <div className="mt-2 h-2 rounded bg-zinc-800 overflow-hidden">
+                <div
+                  className="h-full bg-indigo-500 transition-[width]"
+                  style={{ width: `${Math.round((data.ingest.meta.done / Math.max(1, data.ingest.meta.total)) * 100)}%` }}
+                />
+              </div>
+            )}
+            {/* 파이프라인 단계 칩 — 정답 추출 단계가 명시적으로 보인다 */}
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] mt-2">
+              <span className={data.ingest.pages ? 'text-emerald-400' : 'text-zinc-600'}>📄 {data.ingest.pages || '—'}p</span>
+              <span className={data.ingest.located ? 'text-emerald-400' : 'text-zinc-600'}>📍 {data.ingest.located || '—'}문항</span>
+              <span className={data.ingest.cropped ? 'text-emerald-400' : 'text-zinc-600'}>✂ {data.ingest.cropped || '—'}크롭</span>
+              <span className={data.ingest.answers != null ? 'text-emerald-400' : 'text-zinc-600'}>✅ 정답 {data.ingest.answers ?? '—'}</span>
+              <span className={data.ingest.dbUpserted != null ? 'text-emerald-400' : 'text-zinc-600'}>🗄 DB {data.ingest.dbUpserted ?? '—'}</span>
+            </div>
+          </section>
+        )}
+
         {data.solcache && (
           <section className="card">
             <h3 className="text-xs uppercase tracking-[0.15em] text-zinc-500 mb-2">

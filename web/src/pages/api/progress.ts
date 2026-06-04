@@ -270,11 +270,44 @@ function parseSolcache(lines: string[]) {
   return { total, done, parallel, cached, flagged, skipped, errored, models, last, passPct, finished };
 }
 
+// ingest_v2.py 진행 파싱. 로그 포맷:
+//   ══════ 2027_6월모평 (모의평가, 6월) ══════
+//     ✓ 20 pages rendered
+//     ✓ 46 problems located via PDF text-layer
+//     ✓ 46 problem PNGs cropped (7s)
+//     [meta  N/46] ✓ # N ...
+//     ✓ answers: textlayer 좌표파싱 (46 entries)   ← 정답 추출 단계
+//     ✓ DB upsert 46 problems
+// 라운드 마커(slug + (type, session))가 없으면 인제스트 로그가 아님 → null(패널 숨김).
+function parseIngest(lines: string[]) {
+  let round: string | null = null;
+  let pages = 0, located = 0, cropped = 0, metaDone = 0, metaTotal = 0;
+  let answers: number | null = null, dbUpserted: number | null = null;
+  let stage = 'render';
+  for (const raw of lines) {
+    const line = raw.trim();
+    let m: RegExpMatchArray | null;
+    if ((m = line.match(/^═+\s*(\S+)\s*\(.+\)\s*═+$/))) {
+      round = m[1]; stage = 'render';
+      pages = located = cropped = metaDone = metaTotal = 0; answers = dbUpserted = null;
+    }
+    if ((m = line.match(/(\d+)\s*pages rendered/))) { pages = parseInt(m[1], 10); stage = 'bbox'; }
+    if ((m = line.match(/(\d+)\s*problems located/))) { located = parseInt(m[1], 10); stage = 'crop'; }
+    if ((m = line.match(/(\d+)\s*problem PNGs cropped/))) { cropped = parseInt(m[1], 10); stage = 'meta'; }
+    if ((m = line.match(/^\[meta\s+(\d+)\/(\d+)\]/))) { metaDone = parseInt(m[1], 10); metaTotal = parseInt(m[2], 10); stage = 'meta'; }
+    if ((m = line.match(/✓\s*answers:.*?(\d+)\s*entries/))) { answers = parseInt(m[1], 10); stage = 'answers'; }
+    if ((m = line.match(/✓\s*DB upsert\s+(\d+)\s*problems/))) { dbUpserted = parseInt(m[1], 10); stage = 'done'; }
+  }
+  if (!round) return null;
+  return { round, pages, located, cropped, meta: { done: metaDone, total: metaTotal }, answers, dbUpserted, stage };
+}
+
 export const GET: APIRoute = () => {
   const { lines, mtime, size, path } = readTail();
   const procs = aliveProcs();
   const summary = parseSummary(lines);
   const solcache = parseSolcache(lines);
+  const ingest = parseIngest(lines);
   const crops = recentCrops(24);
   return new Response(
     JSON.stringify({
@@ -283,6 +316,7 @@ export const GET: APIRoute = () => {
       procs,
       summary,
       solcache,
+      ingest,
       crops,
     }),
     { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
