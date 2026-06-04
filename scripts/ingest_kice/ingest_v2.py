@@ -35,6 +35,7 @@ from ingest_round import (  # noqa: E402
     load_concept_index, classify_subject, download,
     ROOT, DOCS_PROBLEMS, TODAY,
 )
+from answer_textlayer import parse_answer_table, has_text_layer  # noqa: E402  (정답표 텍스트레이어 우선)
 import fitz  # noqa: E402
 from PIL import Image  # noqa: E402
 
@@ -112,7 +113,9 @@ def _ensure_web_symlink(image_path: Path) -> None:
     if link.is_symlink() or link.exists():
         return
     try:
-        link.symlink_to(image_path.absolute())
+        # 상대경로 심링크 — worktree 절대경로가 박히면 main 머지 시 깨진다.
+        import os
+        link.symlink_to(os.path.relpath(image_path.resolve(), WEB_PUBLIC_IMAGES.resolve()))
     except Exception as e:
         # Fallback to copy on filesystems without symlink support
         import shutil
@@ -170,7 +173,11 @@ def write_markdown_v2(prob: dict, meta: dict | None, answer: str | None,
     rather than replaces (adds problem_image, searchable_text, has_figure)."""
     subject = prob['subject']
     slug = f'{round_slug}_{subject}_{prob["number"]:02d}'
-    out = DOCS_PROBLEMS / f'{slug}.md'
+    # nested: docs/problems/<year>/<round_dir>/<slug>.md — 회차별 그룹핑(content collection **/*.md).
+    # round_dir = round_slug 에서 연도 prefix 제거 (예: 2027_6월모평 → 6월모평, 2024_고3_3월모의고사 → 고3_3월모의고사)
+    round_dir = round_slug.split('_', 1)[1] if '_' in round_slug else round_slug
+    out = DOCS_PROBLEMS / str(year) / round_dir / f'{slug}.md'
+    out.parent.mkdir(parents=True, exist_ok=True)
 
     meta = meta or {}
     pid = str(uuid.uuid4())
@@ -475,8 +482,24 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         # 통합형 단일 30문항 — 3열 정답표 전용 파서로 전부 '단일' 버킷에.
         answers = extract_single_answers(ans_pdf)
     else:
-        answers = extract_answers(ans_pdf, work, default_subject=default_ans_subj,
-                                  expected_count=len(entries))
+        answers = None
+        # 공통+선택(평가원 수능/모평·교육청 고3) 정답표는 텍스트레이어 좌표파싱이
+        # 비전보다 정확하다 — 비전은 다중컬럼에서 선택 3과목에 같은 답을 복사하는
+        # 오류가 잦다(2027_6월모평 실측: vision 10/46 → textlayer 46/46).
+        if default_ans_subj == '공통' and ans_pdf.exists() and has_text_layer(ans_pdf):
+            try:
+                flat = parse_answer_table(ans_pdf)  # {(subject, number): answer}
+                if flat and any(s != '공통' for s, _n in flat):  # 선택과목까지 잡혔는지
+                    answers = {}
+                    for (s, n), a in flat.items():
+                        answers.setdefault(s, {})[str(n)] = a
+                    print(f'  ✓ answers: textlayer 좌표파싱 ({len(flat)} entries)', flush=True)
+            except Exception as e:
+                print(f'  ⚠ textlayer 파싱 실패: {e} → vision 폴백', flush=True)
+                answers = None
+        if answers is None:
+            answers = extract_answers(ans_pdf, work, default_subject=default_ans_subj,
+                                      expected_count=len(entries))
     print(f'  ✓ answers: {sum(len(v) for v in answers.values())} entries', flush=True)
 
     # Step 6: write markdown + DB upsert
@@ -538,7 +561,28 @@ if __name__ == '__main__':
     ap.add_argument('--agency', default='평가원')
     ap.add_argument('--single', action='store_true',
                     help='통합형(선택과목 없는 30문항) → 전 문항 subject=단일')
+    ap.add_argument('--with-cache', action='store_true',
+                    help='인제스트 후 concept 역인덱스 재빌드 + 풀이 캐시까지 자동 체이닝')
     args = ap.parse_args()
     result = ingest_round_v2(args.year, args.exam_type, args.session,
                               grade=args.grade, agency=args.agency, single=args.single)
     print(json.dumps(result, ensure_ascii=False, indent=2))
+
+    # ── 자동 체이닝 (--with-cache) ──────────────────────────────────────
+    # 인제스트(콘텐츠) 성공 시: concept 역인덱스 재빌드 → 풀이 캐시(blind-solve 검증).
+    # 같은 프로세스/로그라 /progress 가 인제스트 패널 + 풀이캐시 패널 둘 다 표시.
+    if args.with_cache and result.get('ok'):
+        import subprocess, sys
+        round_slug = result['round']
+        round_dir = round_slug.split('_', 1)[1] if '_' in round_slug else round_slug
+        md_dir = DOCS_PROBLEMS / str(args.year) / round_dir
+        slugs = sorted(p.stem for p in md_dir.glob('*.md'))
+        print('\n══════ 체이닝 1/2: concept 역인덱스 재빌드 ══════', flush=True)
+        try:
+            subprocess.run(['node', 'scripts/build-problem-index.mjs'], cwd=str(ROOT / 'web'), check=False)
+        except FileNotFoundError:
+            print('  ⚠ node 없음 — concept index 는 dev predev 에서 재빌드됨', flush=True)
+        print(f'\n══════ 체이닝 2/2: 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
+        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
+                        '--list', ','.join(slugs), '--parallel', '3'])
+        print('\n✓ 체이닝 완료 — 인제스트 + concept index + 풀이 캐시', flush=True)

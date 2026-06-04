@@ -35,8 +35,12 @@ PADDING_RATIO = 0.015          # top/bottom visual padding = 1.5% of candidate h
 MIN_PADDING_PX = 28            # but at least ~10pt @200dpi so short single-line
                                # 단답형 problems don't end up cramped
 DETACHED_GAP_RATIO = 0.10      # ink cluster separated by >10% of candidate
-                               # height from the previous cluster = footer
-                               # / instruction box / page-number, drop it
+                               # height from the previous cluster = "detached"
+FOOTER_MAX_RATIO = 0.08        # a *trailing* detached block shorter than 8% of
+                               # candidate height = footer/page-number/instruction
+                               # → drop. BIGGER detached blocks (a graph/table
+                               # followed by its 질문+보기) are real content and
+                               # MUST be kept — dropping them cut the question.
 LEFT_TRIM_THRESHOLD = 12       # diff>12 (gray) = ink for left-margin trim
 
 
@@ -65,39 +69,49 @@ def _find_problem_end(row_ink: list[float], h: int, gap_ratio: float = DETACHED_
     elements (page-number boxes that the per-page footer detector
     missed, KICE 수능 page-end "* 확인 사항" instruction boxes, etc).
 
-    Strategy: group ink rows into clusters separated by blank rows.
-    Accept clusters as long as each new one starts within
-    `gap_ratio * h` of the previous cluster's end. The first
-    cluster separated by a bigger gap is treated as a detached
-    footer/instruction and ignored together with everything after it.
+    Strategy: group ink rows into clusters separated by blank rows, then
+    peel off TRAILING clusters that are BOTH (a) detached by a gap larger
+    than `gap_ratio * h` AND (b) small (< FOOTER_MAX_RATIO * h). Those are
+    footer/page-number/thin-instruction blocks at the bottom.
+
+    The old version broke at the *first* big gap and dropped everything
+    below it — which destroyed problems where a graph/table is followed by
+    its question + answer choices (the graph→question gap is big, but the
+    question+choices below it is the real content). Peeling only *small*
+    trailing blocks keeps that content while still dropping the footer.
 
     gap_ratio override: 검정고시는 candidate가 컴팩트해서 한 문제 안의
     빈 줄도 0.10 임계값을 넘을 수 있음 → 호출자가 더 큰 비율 전달.
     """
     big_gap = max(1, int(gap_ratio * h))
-    # Build clusters in a single pass.
-    accepted_end = -1
-    cluster_start: int | None = None
-    last_ink_y = -1
+    footer_max = max(1, int(FOOTER_MAX_RATIO * h))
+    # Build ink clusters [(start, end_exclusive), ...] in one pass.
+    clusters: list[tuple[int, int]] = []
+    cs = ce = -1
     for y in range(h):
-        is_ink = row_ink[y] >= BLANK_ROW_INK_RATIO
-        if is_ink:
-            if cluster_start is None:
-                # Starting a new cluster — check the gap from the last
-                # accepted cluster's end.
-                if accepted_end >= 0 and (y - accepted_end) > big_gap:
-                    break  # detached footer/instruction; drop
-                cluster_start = y
-            last_ink_y = y
+        if row_ink[y] >= BLANK_ROW_INK_RATIO:
+            if cs < 0:
+                cs = y
+            ce = y
+        elif cs >= 0:
+            clusters.append((cs, ce + 1))
+            cs = -1
+    if cs >= 0:
+        clusters.append((cs, ce + 1))
+    if not clusters:
+        return h
+    # Peel trailing *small detached* clusters (footer / page-number / instruction).
+    # Stop at the first trailing block that is attached (small gap) or substantial
+    # (a real graph→question+보기 block) — never drop real content.
+    end_idx = len(clusters) - 1
+    while end_idx > 0:
+        gap = clusters[end_idx][0] - clusters[end_idx - 1][1]
+        height = clusters[end_idx][1] - clusters[end_idx][0]
+        if gap > big_gap and height < footer_max:
+            end_idx -= 1
         else:
-            if cluster_start is not None:
-                # End of an ink cluster — close it and accept.
-                accepted_end = last_ink_y + 1
-                cluster_start = None
-    if cluster_start is not None:
-        # File ends mid-cluster — accept the whole thing.
-        accepted_end = last_ink_y + 1
-    return accepted_end if accepted_end > 0 else h
+            break
+    return clusters[end_idx][1]
 
 
 def _find_problem_start(row_ink: list[float], h: int) -> int:
