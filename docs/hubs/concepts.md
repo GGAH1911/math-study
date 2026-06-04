@@ -1,28 +1,28 @@
 ---
 sources: []
-created: 2026-05-30
-updated: 2026-05-30
+created: 2026-06-04
+updated: 2026-06-04
 hub_type: concepts
 counts:
-  total: 0
+  total: 2787
   by_subdir:
-    functions: 0
-    geometry: 0
-    probability-stats: 0
-    algebra: 0
-    equations: 0
-    logic: 0
+    functions: 1201
+    geometry: 759
+    probability-stats: 324
+    algebra: 268
+    equations: 162
+    logic: 73
 ---
 
 # Concepts hub
 
-총 0개 concept 노드, 6개 도메인.
+총 2787개 concept 노드, 6개 도메인.
 
-- [함수 (functions)](./concepts/functions.md) — 0개
-- [도형 (geometry)](./concepts/geometry.md) — 0개
-- [확률통계 (probability-stats)](./concepts/probability-stats.md) — 0개
-- [수와식 (algebra)](./concepts/algebra.md) — 0개
-- [방정식 (equations)](./concepts/equations.md) — 0개
-- [논리 (logic)](./concepts/logic.md) — 0개
+- [함수 (functions)](./concepts/functions.md) — 1201개
+- [도형 (geometry)](./concepts/geometry.md) — 759개
+- [확률통계 (probability-stats)](./concepts/probability-stats.md) — 324개
+- [수와식 (algebra)](./concepts/algebra.md) — 268개
+- [방정식 (equations)](./concepts/equations.md) — 162개
+- [논리 (logic)](./concepts/logic.md) — 73개
 
 전체 graph 시각화: [/graph](../../web/) (dev server 의 graph 페이지).

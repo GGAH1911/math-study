@@ -38,6 +38,21 @@ function listMd(dir) {
   return readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => path.join(dir, f));
 }
 
+// 재귀: dir 이하 모든 .md 를 {abs, rel} 로. rel 은 base 기준 POSIX 경로(슬러그용).
+// grade 디렉토리는 <unit>/<concept>.md 로 한 단계 더 중첩되므로 비재귀 listMd 로는
+// 리프 개념을 놓쳐 hub 링크가 누락된다 → audit 의 0-Isolation 위반(고립 개념).
+function walkMdRel(dir, base = dir) {
+  if (!existsSync(dir)) return [];
+  const out = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const abs = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...walkMdRel(abs, base));
+    else if (e.name.endsWith('.md')) out.push({ abs, rel: path.relative(base, abs).split(path.sep).join('/') });
+  }
+  return out;
+}
+const countMdRec = (dir) => walkMdRel(dir).length;
+
 const TYPE_ORDER = ['unit', 'definition', 'theorem', 'lemma', 'example'];
 const TYPE_LABEL = { unit: '단원', definition: '정의', theorem: '정리', lemma: '보조정리', example: '예제' };
 
@@ -57,10 +72,14 @@ function listSubSubdirs(dir) {
     .map((e) => e.name);
 }
 
-function readConceptMd(absPath, fileNameOnly) {
+function readConceptMd(absPath, relOrName) {
   const fm = matter(readFileSync(absPath, 'utf8')).data;
+  // relOrName: grade dir 기준 상대경로(중첩 포함) 또는 단순 파일명. 둘 다 수용.
+  const relSlug = relOrName.replace(/\.md$/, '').split(path.sep).join('/');
   return {
-    slug: fileNameOnly.replace(/\.md$/, ''),
+    slug: relSlug.split('/').pop(),                          // basename — 표시/정렬용
+    relSlug,                                                 // 전체 중첩 경로 — link 용 (audit slug 매칭 = 고립 방지)
+    unitDir: relSlug.includes('/') ? relSlug.slice(0, relSlug.lastIndexOf('/')) : null,
     concept_type: fm.concept_type ?? 'definition',
     grade: fm.grade ?? '—',
     mastery: fm.mastery ?? 'unknown',
@@ -74,7 +93,7 @@ function buildSubHub(subdir) {
   const flatFiles = listMd(domainDir); // direct child (uncategorized 케이스)
   const gradeDirs = listSubSubdirs(domainDir);
 
-  const total = flatFiles.length + gradeDirs.reduce((s, g) => s + listMd(path.join(domainDir, g)).length, 0);
+  const total = flatFiles.length + gradeDirs.reduce((s, g) => s + countMdRec(path.join(domainDir, g)), 0);
   const label = DOMAIN_LABEL[subdir] ?? subdir;
   const today = new Date().toISOString().slice(0, 10);
 
@@ -102,7 +121,7 @@ counts:
       ...gradeDirs.filter((g) => !GRADE_ORDER.includes(g)).sort(),
     ];
     for (const g of ordered) {
-      const c = listMd(path.join(domainDir, g)).length;
+      const c = countMdRec(path.join(domainDir, g));
       body += `- [${GRADE_LABEL[g] ?? g}](../../concepts/${subdir}/${g}/) — ${c}개 (sub-hub: [./${subdir}/${g}.md](./${subdir}/${g}.md))\n`;
     }
     body += '\n';
@@ -134,8 +153,8 @@ counts:
 // grade level hub (예: hubs/concepts/functions/calculus.md) — concept 직접 link.
 function buildGradeHub(subdir, gradeDir) {
   const dir = path.join(CONCEPTS_DIR, subdir, gradeDir);
-  const files = listMd(dir);
-  const items = files.map((p) => readConceptMd(p, path.basename(p)));
+  const files = walkMdRel(dir); // 재귀 — <unit>/ 하위 리프 개념까지 모두 포함
+  const items = files.map((f) => readConceptMd(f.abs, f.rel));
 
   const buckets = {};
   for (const it of items) (buckets[it.concept_type] ??= []).push(it);
@@ -170,7 +189,8 @@ counts:
     body += `## ${TYPE_LABEL[t] ?? t} (${buckets[t].length})\n\n`;
     for (const it of buckets[t]) {
       const link = it.slug.replace(/_/g, ' ');
-      body += `- [${link}](../../../concepts/${subdir}/${gradeDir}/${it.slug}.md)${it.unit ? ` · ${it.unit}` : ''} \`${it.mastery}\`\n`;
+      const ctx = it.unitDir ? ` · ${it.unitDir.replace(/_/g, ' ')}` : (it.unit ? ` · ${it.unit}` : '');
+      body += `- [${link}](../../../concepts/${subdir}/${gradeDir}/${it.relSlug}.md)${ctx} \`${it.mastery}\`\n`;
     }
     body += '\n';
   }
@@ -183,7 +203,7 @@ function buildRootHub(subdirs) {
   const stats = {};
   let total = 0;
   for (const sd of subdirs) {
-    const c = listMd(path.join(CONCEPTS_DIR, sd)).length;
+    const c = countMdRec(path.join(CONCEPTS_DIR, sd));
     stats[sd] = c;
     total += c;
   }
