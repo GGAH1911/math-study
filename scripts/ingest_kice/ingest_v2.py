@@ -31,7 +31,7 @@ from bbox import extract_problem_bboxes, crop_problem_image, _collect_text_lines
 from crop_with_llm import crop_by_gap  # noqa: E402  (v3.1: pure-PIL, no LLM)
 from text_meta import extract_metadata  # noqa: E402  (PDF text + Haiku, NOT vision)
 from ingest_round import (  # noqa: E402
-    render_pdf_pages, extract_answers, db_upsert, slugify_round,
+    render_pdf_pages, extract_answers, extract_single_answers, db_upsert, slugify_round,
     load_concept_index, classify_subject, download,
     ROOT, DOCS_PROBLEMS, TODAY,
 )
@@ -131,9 +131,13 @@ def _ensure_concept_exists(slug: str, parent_unit: str | None,
     tutor fill it in later."""
     if not slug:
         return False
-    path = ROOT / 'docs' / 'concepts' / f'{slug}.md'
-    if path.exists():
+    concepts_root = ROOT / 'docs' / 'concepts'
+    # 개념트리는 중첩(docs/concepts/<도메인>/<학년>/<단원>.md). flat 경로만 보면
+    # 이미 존재하는 표준 단원·스포크를 못 찾아 flat 중복 stub을 양산한다 →
+    # 재귀(rglob)로 트리 어디든 있으면 새로 만들지 않는다.
+    if next(concepts_root.rglob(f'{slug}.md'), None) is not None:
         return False
+    path = concepts_root / f'{slug}.md'
     prereq_line = f'prerequisites: [docs/concepts/{parent_unit}.md]' if parent_unit else 'prerequisites: []'
     fm = (
         '---\n'
@@ -278,7 +282,8 @@ def _guess_score(number: int, exam_type: str, grade: str | None) -> int:
 
 def ingest_round_v2(year: int, exam_type: str, session: str,
                     pdf_url: str | None = None, ans_url: str | None = None,
-                    grade: str | None = None, agency: str = '평가원') -> dict:
+                    grade: str | None = None, agency: str = '평가원',
+                    single: bool = False) -> dict:
     round_slug = slugify_round(year, exam_type, session, grade)
     raw = ROOT / 'db' / 'raw' / round_slug
     label = f'{exam_type}, {session}' + (f', {grade}' if grade else '')
@@ -306,6 +311,13 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
     if not entries:
         return {'round': round_slug, 'ok': False, 'reason': 'no problem bboxes detected'}
     print(f'  ✓ {len(entries)} problems located via PDF text-layer', flush=True)
+
+    # 통합형(선택과목 폐지, 30문항 단일) 회차 — 예: 2028 수능 예시문항.
+    # bbox는 영역 헤더가 없으면 전 문항을 '공통'으로 찍으나, 이 경우 '단일'이 맞다.
+    if single:
+        for e in entries:
+            e['subject'] = '단일'
+        print('  · --single: 전 문항 subject=단일 (통합형)', flush=True)
 
     # Step 3: crop each problem PNG
     images_dir = raw / 'images'
@@ -447,7 +459,9 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
     print(f'  → metadata done ({time.time()-t_meta:.0f}s, fails {len(meta_failures)})', flush=True)
 
     # Step 5: extract answers (reuse existing pipeline — works reliably)
-    if exam_type in ('모의고사', '학력평가') and grade == '고3':
+    if single:
+        default_ans_subj = '단일'
+    elif exam_type in ('모의고사', '학력평가') and grade == '고3':
         default_ans_subj = '공통'
     elif exam_type in ('모의고사', '학력평가', '검정고시'):
         default_ans_subj = '단일'
@@ -455,8 +469,14 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         default_ans_subj = '공통'
     work = raw / 'work'
     work.mkdir(exist_ok=True)
-    answers = extract_answers(ans_pdf, work, default_subject=default_ans_subj,
-                              expected_count=len(entries)) if ans_pdf.exists() else {}
+    if not ans_pdf.exists():
+        answers = {}
+    elif single:
+        # 통합형 단일 30문항 — 3열 정답표 전용 파서로 전부 '단일' 버킷에.
+        answers = extract_single_answers(ans_pdf)
+    else:
+        answers = extract_answers(ans_pdf, work, default_subject=default_ans_subj,
+                                  expected_count=len(entries))
     print(f'  ✓ answers: {sum(len(v) for v in answers.values())} entries', flush=True)
 
     # Step 6: write markdown + DB upsert
@@ -516,7 +536,9 @@ if __name__ == '__main__':
     ap.add_argument('--session', default=None)
     ap.add_argument('--grade', default=None)
     ap.add_argument('--agency', default='평가원')
+    ap.add_argument('--single', action='store_true',
+                    help='통합형(선택과목 없는 30문항) → 전 문항 subject=단일')
     args = ap.parse_args()
     result = ingest_round_v2(args.year, args.exam_type, args.session,
-                              grade=args.grade, agency=args.agency)
+                              grade=args.grade, agency=args.agency, single=args.single)
     print(json.dumps(result, ensure_ascii=False, indent=2))

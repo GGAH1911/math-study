@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures as cf
 import json
+import os
 import re
 import subprocess
 import sys
@@ -43,7 +44,8 @@ except Exception:
 VISION_WORKERS = 4   # parallel claude -p calls (per cta-law pattern)
 MAP_WORKERS = 4
 
-ROOT = Path('/home/insung/Projects/math-study')
+# ROOT는 MATHSTUDY_ROOT 환경변수로 오버라이드 가능 (git worktree에 적재할 때).
+ROOT = Path(os.environ.get('MATHSTUDY_ROOT', '/home/insung/Projects/math-study'))
 DOCS_PROBLEMS = ROOT / 'docs' / 'problems'
 DB = 'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy'
 TODAY = '2026-05-17'
@@ -552,12 +554,12 @@ def split_problems(all_md: str) -> list[dict]:
 def load_concept_index() -> dict[str, list[str]]:
     concepts_dir = ROOT / 'docs' / 'concepts'
     units = {}
-    for p in concepts_dir.glob('*.md'):
+    for p in concepts_dir.rglob('*.md'):
         text = p.read_text(encoding='utf-8')
         ctype = (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1]
         if ctype == 'unit':
             units[p.stem] = []
-    for p in concepts_dir.glob('*.md'):
+    for p in concepts_dir.rglob('*.md'):
         text = p.read_text(encoding='utf-8')
         ctype = (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1]
         if ctype == 'unit':
@@ -784,6 +786,45 @@ def _parse_kice_column_major(full: str) -> dict[str, dict[str, str]]:
             out[subj][str(n)] = ans
         i += 3
     return {k: v for k, v in out.items() if v}
+
+
+def extract_single_answers(ans_pdf) -> dict[str, dict[str, str]]:
+    """통합형(선택과목 없는 단일 30문항) 정답표 파서 — 예: 2028 수능 예시문항.
+    정답표가 3열 그리드여도 PDF 텍스트는 (번호, 정답, 배점) 트리플의 열-major
+    나열이라, 1..30 트리플을 순서대로 읽어 전부 '단일' 버킷에 넣는다. 헤더의
+    연도(2028) 같은 잡토큰은 번호 범위(1-30) 가드로 스킵해 재동기화한다.
+    (기존 _parse_kice_column_major 는 공통+선택 5열 가정이라 단일형에 안 맞음.)"""
+    try:
+        d = fitz.open(ans_pdf)
+        text = '\n'.join(pg.get_text('text') for pg in d)
+        d.close()
+    except Exception:
+        return {}
+    tokens = re.findall(r'[①②③④⑤]|\d+', text)
+    out: dict[str, str] = {}
+    i = 0
+    while i < len(tokens) - 2:
+        n = _ascii_int(tokens[i])
+        if n is None or not (1 <= n <= 30):
+            i += 1
+            continue
+        ans_tok = tokens[i + 1]
+        ans = CIRCLE_TO_DIGIT.get(ans_tok)
+        if ans is None:
+            a_int = _ascii_int(ans_tok)
+            if a_int is not None and 1 <= len(ans_tok) <= 4:
+                ans = ans_tok
+        if ans is None:
+            i += 1
+            continue
+        score = _ascii_int(tokens[i + 2])
+        if score is None or not (1 <= score <= 5):
+            i += 1
+            continue
+        if str(n) not in out:
+            out[str(n)] = ans
+        i += 3
+    return {'단일': out} if out else {}
 
 
 def _parse_answer_sequence(region: str, start_num: int) -> dict[str, str]:
