@@ -8,10 +8,13 @@ type Props = { rounds: RoundGroup[] };
 const { rounds } = Astro.props;
 
 // 수능·모평은 "2026학년도", 모의고사는 "2026년"(시행연도)로 명시.
-const label = (r: RoundGroup): string =>
-  [yearLabel(r.meta.year, r.meta.exam_type), r.meta.session && r.meta.session !== '?' ? r.meta.session : '']
-    .filter(Boolean)
-    .join(' ');
+// 수능 본수능은 정식 명칭 "대학수학능력시험"으로(예시문항은 session 그대로).
+const label = (r: RoundGroup): string => {
+  const yl = yearLabel(r.meta.year, r.meta.exam_type);
+  if (r.meta.exam_type === '수능' && !/예시/.test(r.meta.session)) return `${yl} 대학수학능력시험`;
+  const sess = r.meta.session && r.meta.session !== '?' ? r.meta.session : '';
+  return [yl, sess].filter(Boolean).join(' ');
+};
 ---
 <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
   {rounds.map((r) => (

@@ -47,9 +47,12 @@ export function yearLabel(year: string | number, examType: string): string {
   return examType === '모의고사' ? `${year}년` : `${year}학년도`;
 }
 
-// 표시 제목: "2026학년도 고3 9월 모의평가", "2026학년도 수능", "2026년 고1 3월 모의고사".
+// 표시 제목: "2026학년도 대학수학능력시험", "2026학년도 고3 9월 모의평가", "2026년 고1 3월 모의고사".
 export function roundTitle(m: RoundMeta): string {
-  const parts = [yearLabel(m.year, m.exam_type)];
+  const yl = yearLabel(m.year, m.exam_type);
+  // 수능 본수능은 정식 명칭으로(예시문항은 별도 — 아래 일반 포맷 사용).
+  if (m.exam_type === '수능' && !/예시/.test(m.session)) return `${yl} 대학수학능력시험`;
+  const parts = [yl];
   if (m.grade) parts.push(m.grade);
   if (m.session && m.session !== '?') parts.push(m.session);
   parts.push(m.exam_type);
