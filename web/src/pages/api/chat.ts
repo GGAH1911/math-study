@@ -1,10 +1,14 @@
 import type { APIRoute } from 'astro';
 import { spawn } from 'node:child_process';
+import { writeFileSync, mkdirSync, unlinkSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { buildTutorPrompt } from '../../lib/chat-context.ts';
 
 export const prerender = false;
 
-type ChatMessage = { role: 'user' | 'assistant'; content: string };
+type ChatMessage = { role: 'user' | 'assistant'; content: string; images?: string[] };
 
 type ChatRequest = {
   slug: string;            // <collection>/<slug> the chat is anchored to ('__nav__' for dashboard)
@@ -42,6 +46,18 @@ function safeChildEnv(): NodeJS.ProcessEnv {
   }
   return out;
 }
+
+const TMP_IMG_DIR = join(tmpdir(), 'mathstudy-chat');
+// 모듈 로드 시 1시간 지난 임시 첨부 이미지 청소 (leak 방지).
+try {
+  if (existsSync(TMP_IMG_DIR)) {
+    const now = Date.now();
+    for (const f of readdirSync(TMP_IMG_DIR)) {
+      const p = join(TMP_IMG_DIR, f);
+      try { if (now - statSync(p).mtimeMs > 3_600_000) unlinkSync(p); } catch { /* */ }
+    }
+  }
+} catch { /* */ }
 
 function formatHistory(messages: ChatMessage[]): string {
   // Take all but the last (which is the new user message)
@@ -126,14 +142,49 @@ export const POST: APIRoute = async ({ request }) => {
       status: 400, headers: { 'Content-Type': 'application/json' },
     });
   }
+  // 첨부 이미지 검증 — data:image/* base64, 1장, ~5MB.
+  if (lastUser.images !== undefined) {
+    if (!Array.isArray(lastUser.images) || lastUser.images.length > 1) {
+      return new Response(JSON.stringify({ error: 'invalid images' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    for (const u of lastUser.images) {
+      if (typeof u !== 'string' || !/^data:image\/(png|jpe?g|webp);base64,/.test(u) || u.length > 7_000_000) {
+        return new Response(JSON.stringify({ error: 'invalid image dataURL' }), {
+          status: 400, headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+  }
 
-  const { systemPrompt, allowedDirs } = buildTutorPrompt(slug, collection);
-  const userPrompt = (formatHistory(messages) + '\n' + lastUser.content).trim();
+  const { systemPrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection);
+  let userPrompt = (formatHistory(messages) + '\n' + lastUser.content).trim();
 
-  // problem 페이지 + 이미지 dir 있으면 Read 도구로 그 이미지 만 접근 허용.
-  // searchable_text 가 도형을 표현 못 하므로 LLM이 직접 PNG를 봐야 정확.
-  // 보안: --add-dir 로 해당 회차 images/ 디렉토리 한정 → 다른 파일은 못 봄.
-  const enableRead = collection === 'problems' && allowedDirs && allowedDirs.length > 0;
+  // 사용자가 첨부한 이미지를 임시 PNG 로 저장 → claude CLI 가 Read 도구로 직접 본다
+  // (문제 PNG 와 동일 메커니즘). 응답 종료 시 삭제(cleanup).
+  let tmpImagePath: string | null = null;
+  const allowedDirs = [...(baseDirs ?? [])];
+  if (lastUser.images && lastUser.images.length > 0) {
+    const m = lastUser.images[0].match(/^data:image\/(png|jpe?g|webp);base64,(.+)$/);
+    if (m) {
+      try {
+        mkdirSync(TMP_IMG_DIR, { recursive: true });
+        const ext = m[1] === 'jpeg' ? 'jpg' : m[1];
+        tmpImagePath = join(TMP_IMG_DIR, `${randomUUID()}.${ext}`);
+        writeFileSync(tmpImagePath, Buffer.from(m[2], 'base64'));
+        if (!allowedDirs.includes(TMP_IMG_DIR)) allowedDirs.push(TMP_IMG_DIR);
+        userPrompt = `[학생이 이미지를 첨부했습니다. 먼저 Read 도구로 이 파일을 보고 반영해 답하세요: ${tmpImagePath}]\n\n${userPrompt}`;
+      } catch (e) {
+        console.error('[chat] temp image write failed:', e);
+        tmpImagePath = null;
+      }
+    }
+  }
+
+  // problem 페이지 이미지 dir 또는 사용자 첨부 이미지가 있으면 Read 도구 활성.
+  // 보안: --add-dir 로 해당 디렉토리만 한정 → 다른 파일은 못 봄.
+  const enableRead = allowedDirs.length > 0;
 
   const args: string[] = [
     '-p',
@@ -168,6 +219,7 @@ export const POST: APIRoute = async ({ request }) => {
   );
 
   const state = { closed: false, child: null as ReturnType<typeof spawn> | null };
+  const cleanup = () => { if (tmpImagePath) { try { unlinkSync(tmpImagePath); } catch { /* */ } tmpImagePath = null; } };
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const child = spawn('claude', args, {
@@ -234,18 +286,21 @@ export const POST: APIRoute = async ({ request }) => {
         }
         sendEvent('end', {});
         if (!state.closed) { state.closed = true; try { controller.close(); } catch { /* already closed */ } }
+        cleanup();
       });
 
       child.on('error', (err) => {
         console.error('[chat] spawn error:', err);
         sendEvent('error', { message: 'tutor backend unavailable' });
         if (!state.closed) { state.closed = true; try { controller.close(); } catch { /* already closed */ } }
+        cleanup();
       });
     },
     cancel() {
       // client disconnect — mark closed + kill child so stdout events stop arriving.
       state.closed = true;
       try { state.child?.kill('SIGTERM'); } catch { /* already exited */ }
+      cleanup();
     },
   });
 

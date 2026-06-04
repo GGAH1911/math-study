@@ -12,6 +12,9 @@ import { ensureKatex, KATEX_STRICT, KATEX_ERROR_COLOR, normalizeKatex } from '..
 import { tryParseTable } from '../lib/markdown';
 import { runSympyLocal, prewarmPyodide } from '../lib/pyodide-client';
 import { buildNoteUserPrompt, NOTE_FOLLOWUPS, isNoteRequest, type NoteFollowup } from '../lib/note-prompts';
+import { prepareImage, imagesFromDataTransfer } from '../lib/image-utils';
+import ImageCropper from './ImageCropper.tsx';
+import { isVisionDisabled } from '../lib/vision';
 
 type ChatModalState =
   | { kind: 'plot' | 'svg'; spec?: PlotSpec; svg?: string }
@@ -25,6 +28,7 @@ type ChatMessage = {
   role: 'user' | 'assistant';
   content: string;
   promoted?: { path: string };
+  images?: string[];   // dataURL (user 메시지에만, max 1)
 };
 
 type Props = {
@@ -66,7 +70,9 @@ function loadHistory(slug: string): ChatMessage[] {
 
 function saveHistory(slug: string, msgs: ChatMessage[]): void {
   try {
-    window.localStorage.setItem(STORAGE_PREFIX + slug, JSON.stringify(msgs));
+    // 이미지 dataURL 은 용량이 커 localStorage quota 를 빠르게 소진 → 저장 시 제외.
+    const slim = msgs.map((m) => (m.images?.length ? { ...m, images: undefined } : m));
+    window.localStorage.setItem(STORAGE_PREFIX + slug, JSON.stringify(slim));
   } catch {
     /* quota or disabled — ignore */
   }
@@ -139,6 +145,17 @@ type Segment =
   | { type: 'promote'; spec: PromoteSpec; raw: string }
   | { type: 'error'; kind: string; message: string; body: string };
 
+// LLM 이 그린 SVG 의 활성 콘텐츠 제거(injection 방어). LLM=본인 모델이라 실위험은
+// 낮지만, script/foreignObject/iframe·이벤트 핸들러(on*=)·javascript: URL 을 떼어내
+// dangerouslySetInnerHTML 경로로 들어가도 안전하게 한다.
+function sanitizeSvg(svg: string): string {
+  return svg
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<\/?(?:script|foreignObject|iframe|object|embed)\b[^>]*>/gi, '')
+    .replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/(?:href|xlink:href)\s*=\s*("\s*javascript:[^"]*"|'\s*javascript:[^']*')/gi, '');
+}
+
 export function parseGraphSegments(text: string): Segment[] {
   const out: Segment[] = [];
   const re = /```(plot|svg|geometry3d|geometry|numberline|chart|interactive|promote)\n?([\s\S]*?)```/g;
@@ -192,6 +209,29 @@ export function parseGraphSegments(text: string): Segment[] {
           } catch { /* */ }
           return _m;
         });
+      // (5) 배열/값 자리 분수 `a/b` → 소수. (4)는 `:` 직후만 잡아
+      //     `"points":[[4/3,5/3]]` 같은 배열 요소 분수(콜론 직후가 아님)를 놓친다.
+      //     콜론·`[`·`,` 뒤의 숫자 분수만 평가 → 문자열 안 `$1/2$`(선행 `=` 등)은 무관.
+      out = out.replace(/([:\[,]\s*)(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)/g,
+        (_m, pre: string, a: string, b: string) => {
+          const v = Number(a) / Number(b);
+          return Number.isFinite(v) ? `${pre}${v}` : _m;
+        });
+      // (6) 구조적 invalid 보정. 문자열 리터럴을 먼저 placeholder 로 마스킹해
+      //     문자열 안 내용(label 의 `,}` / `//` / `key:` 등)은 절대 안 건드리고
+      //     구조만 손본다: trailing comma · 주석 · NaN/Infinity · 따옴표 없는 key.
+      {
+        const strs: string[] = [];
+        let masked = out.replace(/"(?:[^"\\]|\\.)*"/g, (mm) => `\x00${strs.push(mm) - 1}\x00`);
+        masked = masked
+          .replace(/,(\s*[}\]])/g, '$1')                              // trailing comma
+          .replace(/\/\/[^\n]*/g, '')                                 // // 주석
+          .replace(/\/\*[\s\S]*?\*\//g, '')                           // /* */ 주석
+          .replace(/\bNaN\b/g, 'null')                                // NaN
+          .replace(/-?\bInfinity\b/g, 'null')                         // ±Infinity
+          .replace(/([{,]\s*)([A-Za-z_$][\w$]*)(\s*:)/g, '$1"$2"$3');  // unquoted key
+        out = masked.replace(/\x00(\d+)\x00/g, (_mm, i: string) => strs[Number(i)]);
+      }
       return out;
     };
     const tryParseJSON = <T,>(make: (spec: T) => Segment): void => {
@@ -221,7 +261,7 @@ export function parseGraphSegments(text: string): Segment[] {
     } else if (kind === 'promote') {
       tryParseJSON<PromoteSpec>((spec) => ({ type: 'promote', spec, raw: m![0] }));
     } else {
-      out.push({ type: 'graph', kind: 'svg', svg: body, raw: m[0] });
+      out.push({ type: 'graph', kind: 'svg', svg: sanitizeSvg(body), raw: m[0] });
     }
     last = m.index + m[0].length;
   }
@@ -307,7 +347,11 @@ function applyKatex(html: string, katex: KatexImpl): string {
   //
   // tex 안에 `&lt;`/`&gt;` 같은 escape된 entity가 들어오면 KaTeX는 이해 못함.
   // decode 후 KaTeX 호출.
-  html = html.replace(/\$\$([^$<>]+?)\$\$/g, (_, tex) => {  // `<>` 가드: 아래 인라인 처리의 주석 참고
+  // `[^<>]` (← 옛 `[^$<>]`): 내부 `$` 를 허용해 `\text{$y$ 표기}` 처럼 \text{} 안에
+  // 중첩된 `$` 가 들어간 display 수식도 통째로 잡는다(KaTeX 는 \text{} 안 `$...$` 를
+  // 정상 처리). 짝 안 맞는 `$$` 의 폭주는 `<>` 가드(태그를 못 건넘) + KaTeX
+  // throwOnError(유효 TeX 가 아니면 catch→원본 raw) 로 여전히 막힌다.
+  html = html.replace(/\$\$([^<>]+?)\$\$/g, (_, tex) => {
     try {
       return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: true, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
@@ -321,7 +365,10 @@ function applyKatex(html: string, katex: KatexImpl): string {
   // 따라서 `<`/`>` 를 매칭에서 제외하면 — 짝 안 맞는 stray `$` 하나가 태그들을 가로질러
   // 메시지 전체를 삼키는 폭주를 막는다(태그를 만나면 매칭이 끊겨 그 `$` 는 그냥 literal).
   // 짝 맞는 `$...$` 는 태그를 안 건너므로 영향 없이 정상 렌더된다.
-  html = html.replace(/\$([^\n$<>]+?)\$/g, (_, tex) => {
+  // `\\text\{[^{}]*\}` 대안 추가: inline `$...$` 안에 `\text{$y$}` 처럼 중첩 `$` 가
+  // 들어가도 \text{} 블록을 통째로 허용해 매칭한다(그 외 위치의 `$` 는 여전히 거부해
+  // delimiter 짝을 유지).
+  html = html.replace(/\$((?:\\text\{[^{}]*\}|[^\n$<>])+?)\$/g, (_, tex) => {
     try {
       return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: false, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
@@ -460,6 +507,13 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
             ? 'bg-indigo-500/10 border border-indigo-500/30 text-zinc-100'
             : 'bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] text-zinc-100'}`}
       >
+        {isUser && msg.images && msg.images.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-1">
+            {msg.images.map((src, i) => (
+              <img key={i} src={src} alt="첨부 이미지" className="max-h-40 rounded border border-indigo-500/30" />
+            ))}
+          </div>
+        )}
         {segments.map((s, i) => {
           if (s.type === 'md') return <MdSegment key={i} content={s.content} />;
           // Streaming 중 partial JSON parse 실패는 silent — 완성되면 정상 segment 로 바뀜.
@@ -611,6 +665,12 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const [mathLatex, setMathLatex] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  // 이미지 첨부 state
+  const [pending, setPending] = useState<string | null>(null);   // 전송 대기 이미지 (1568 PNG dataURL)
+  const [cropSrc, setCropSrc] = useState<string | null>(null);   // 크롭 모달 대상 (원본 dataURL)
+  const [imgError, setImgError] = useState<string | null>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // BYOK 설정 — 학생 본인 LLM (OpenRouter / Ollama local / 기타). localStorage 영구 보관.
   // baseURL 있으면 BYOK 사용, 없으면 dev fallback (claude CLI)
@@ -720,11 +780,16 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   // their own follow-up while the note request flies off.
   const send = useCallback(async (override?: string) => {
     const text = (override ?? input).trim();
-    if (!text || streaming) return;
+    const attachedImg = override === undefined ? pending : null;   // 합성/노트 호출엔 첨부 없음 (첫 user 메시지에만)
+    if ((!text && !attachedImg) || streaming) return;              // 이미지만 있어도 전송 허용
     setError(null);
-    if (override === undefined) setInput('');
+    if (override === undefined) { setInput(''); setPending(null); setImgError(null); }
 
-    const newUserMsg: ChatMessage = { role: 'user', content: text };
+    const newUserMsg: ChatMessage = {
+      role: 'user',
+      content: text || '(첨부한 이미지를 봐주세요)',
+      ...(attachedImg ? { images: [attachedImg] } : {}),
+    };
     const placeholder: ChatMessage = { role: 'assistant', content: '' };
     setMessages([...messages, newUserMsg, placeholder]);
     setStreaming(true);
@@ -928,7 +993,25 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     } finally {
       setStreaming(false);
     }
-  }, [input, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
+  }, [input, pending, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
+
+  // 이미지 첨부 — prepareImage 후 needsCrop 이면 크롭 모달, 아니면 바로 pending.
+  const addFile = useCallback(async (files: File[]) => {
+    if (!files.length) return;
+    if (byokActive && isVisionDisabled(byokModel)) {
+      setImgError('현재 BYOK 모델은 이미지를 못 읽어요 — vision 모델(claude/gemini 등)로 바꾸거나 기본 모드를 쓰세요.');
+      return;
+    }
+    if (pending) { setImgError('이미지는 1장만 첨부할 수 있어요.'); return; }
+    if (files.length > 1) setImgError('이미지는 1장만 첨부돼요 (첫 장만 사용).');
+    try {
+      const p = await prepareImage(files[0]);
+      if (p.kind === 'needsCrop') { setCropSrc(p.rawDataUrl); setImgError(null); }
+      else { setPending(p.dataUrl); setImgError(null); }
+    } catch (e) {
+      setImgError(e instanceof Error ? e.message : '이미지 처리에 실패했어요.');
+    }
+  }, [byokActive, byokModel, pending]);
 
   // send() identity changes whenever messages/input/streaming change. The
   // window event handler below would otherwise capture a stale send.
@@ -1205,24 +1288,65 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         <p className="text-xs text-rose-400 mb-2">⚠ {error}</p>
       )}
 
-      <div className="flex gap-2 items-end shrink-0">
+      {(pending || imgError) && (
+        <div className="flex items-center gap-2 mb-2 shrink-0">
+          {pending && (
+            <div className="relative">
+              <img src={pending} alt="첨부 이미지" className="h-14 w-14 object-cover rounded border border-[color:var(--color-border)]" />
+              <button
+                type="button"
+                onClick={() => { setPending(null); setImgError(null); }}
+                className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-zinc-900 border border-zinc-600 text-zinc-300 text-xs grid place-items-center hover:text-white"
+                aria-label="첨부 제거"
+              >×</button>
+            </div>
+          )}
+          {imgError && <p className="text-xs text-rose-400">⚠ {imgError}</p>}
+        </div>
+      )}
+
+      <div
+        className={`flex gap-2 items-end shrink-0 rounded-lg transition ${dragOver ? 'ring-2 ring-indigo-400/60' : ''}`}
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => { e.preventDefault(); setDragOver(false); void addFile(imagesFromDataTransfer(e.dataTransfer)); }}
+      >
         <textarea
           ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onPaste={(e) => {
+            const imgs = imagesFromDataTransfer(e.clipboardData);
+            if (imgs.length) { e.preventDefault(); void addFile(imgs); }
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
               e.preventDefault();
               send();
             }
           }}
-          placeholder="질문을 입력하세요. (⌘/Ctrl+Enter로 전송)"
+          placeholder="질문을 입력하세요. (⌘/Ctrl+Enter로 전송 · 이미지 붙여넣기/드래그)"
           rows={2}
           disabled={streaming}
           className="flex-1 bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded-lg px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400 resize-none"
         />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/heic,image/heif"
+          className="hidden"
+          onChange={(e) => { void addFile(Array.from(e.target.files ?? [])); e.target.value = ''; }}
+        />
         <div className="flex flex-col gap-1.5">
           <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={streaming}
+            title="이미지 첨부 (그래프·수식 캡처)"
+            className="px-2.5 py-1.5 rounded border text-xs transition bg-[color:var(--color-surface-2)] border-[color:var(--color-border)] text-zinc-400 hover:text-zinc-100"
+          >🖼 이미지</button>
+          <button
+            type="button"
             onClick={() => setMathOpen((v) => !v)}
             disabled={streaming}
             title="수식 입력 (LaTeX)"
@@ -1233,14 +1357,23 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
             }`}
           >∑ 수식</button>
           <button
-            onClick={send}
-            disabled={streaming || !input.trim()}
+            type="button"
+            onClick={() => send()}
+            disabled={streaming || (!input.trim() && !pending)}
             className="px-4 py-2 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {streaming ? '전송 중…' : '전송'}
           </button>
         </div>
       </div>
+
+      {cropSrc && (
+        <ImageCropper
+          src={cropSrc}
+          onCrop={(dataUrl) => { setPending(dataUrl); setCropSrc(null); setImgError(null); }}
+          onCancel={() => setCropSrc(null)}
+        />
+      )}
 
       {mathOpen && (
         <div className="mt-2 rounded-lg border border-indigo-500/30 bg-indigo-500/5 p-2 space-y-2">

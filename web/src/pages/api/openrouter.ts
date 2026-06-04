@@ -6,12 +6,13 @@
 
 import type { APIRoute } from 'astro';
 import { buildTutorPrompt, buildCompactTutorPrompt } from '../../lib/chat-context.ts';
+import { isVisionDisabled } from '../../lib/vision.ts';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 export const prerender = false;
 
-type ChatMessage = { role: 'user' | 'assistant'; content: string };
+type ChatMessage = { role: 'user' | 'assistant'; content: string; images?: string[] };
 
 type ChatRequest = {
   slug: string;
@@ -101,6 +102,18 @@ export const POST: APIRoute = async ({ request }) => {
   if (messages[messages.length - 1].role !== 'user') {
     return new Response(JSON.stringify({ error: 'last message must be user' }), { status: 400 });
   }
+  // 첨부 이미지 검증 — data:image/* base64만 허용(http URL 거부 = SSRF/저작권), 1장, ~5MB.
+  for (const m of messages) {
+    if (m.images === undefined) continue;
+    if (!Array.isArray(m.images) || m.images.length > 1) {
+      return new Response(JSON.stringify({ error: 'invalid images' }), { status: 400 });
+    }
+    for (const u of m.images) {
+      if (typeof u !== 'string' || !/^data:image\/(png|jpe?g|webp);base64,/.test(u) || u.length > 7_000_000) {
+        return new Response(JSON.stringify({ error: 'invalid image dataURL' }), { status: 400 });
+      }
+    }
+  }
 
   // 작은 모델 (e4b / e2b / 7b 이하 / gemma 2/3) 는 압축 prompt + few-shot.
   // 큰 모델 (haiku/gemini/gpt/qwen-vl-72b 등) 은 full prompt 그대로.
@@ -114,33 +127,31 @@ export const POST: APIRoute = async ({ request }) => {
   // OpenAI 호환 messages 조립. 첫 user 메시지에 문제 이미지 base64 첨부 (vision).
   // vision 미지원 패턴: free 모델 다수, 일부 텍스트 전용 모델, 명시적 텍스트 only 모델.
   // 단 gemma3+/4+ / llama3.2-vision / claude / gemini 등은 vision OK.
-  const visionDisabled = (
-    /:free($|\b)|nemotron|deepseek-v[0-9]+-flash|deepseek-chat/i.test(model)
-    || (/gemma/i.test(model) && !/gemma[34]/i.test(model))  // gemma2 까진 text only, gemma3/4 vision OK
-    || /qwen2\.5(?!-vl)/i.test(model)  // qwen2.5 default text only, -vl 만 vision
-  );
-  const oaiMessages: OpenAIMessage[] = [{ role: 'system', content: systemPrompt }];
+  const visionDisabled = isVisionDisabled(model);
+  const hasUserImage = messages.some((m) => Array.isArray(m.images) && m.images.length > 0);
+  const sysPrompt = (hasUserImage && !visionDisabled)
+    ? systemPrompt + '\n\n[이미지] 학생이 첨부한 이미지가 user 메시지에 image_url 로 함께 전달됐다 — 먼저 그 이미지를 읽고 반영해 답하라.'
+    : systemPrompt;
+  const oaiMessages: OpenAIMessage[] = [{ role: 'system', content: sysPrompt }];
   let imageAttached = false;
   for (let i = 0; i < messages.length; i++) {
     const m = messages[i];
-    const isFirstUser = !visionDisabled && m.role === 'user' && !imageAttached && collection === 'problems' && allowedDirs && allowedDirs.length > 0;
-    if (isFirstUser) {
-      // 첫 user 메시지에 문제 이미지 첨부 (다단 흐름의 첫 turn)
-      const imgPath = path.join(allowedDirs[0], `${slug}.png`);
-      const dataUrl = await readImageAsDataURL(imgPath);
-      if (dataUrl) {
-        oaiMessages.push({
-          role: 'user',
-          content: [
-            { type: 'image_url', image_url: { url: dataUrl } },
-            { type: 'text', text: m.content },
-          ],
-        });
-        imageAttached = true;
-        continue;
-      }
+    const blocks: ContentBlock[] = [];
+    // (1) 서버 문제 이미지 — problems 첫 user (기존 동작)
+    if (!visionDisabled && m.role === 'user' && !imageAttached && collection === 'problems' && allowedDirs && allowedDirs.length > 0) {
+      const dataUrl = await readImageAsDataURL(path.join(allowedDirs[0], `${slug}.png`));
+      if (dataUrl) { blocks.push({ type: 'image_url', image_url: { url: dataUrl } }); imageAttached = true; }
     }
-    oaiMessages.push({ role: m.role, content: m.content });
+    // (2) 학생이 첨부한 이미지 (해당 user 메시지에 실린 것)
+    if (!visionDisabled && m.role === 'user' && Array.isArray(m.images)) {
+      for (const u of m.images) blocks.push({ type: 'image_url', image_url: { url: u } });
+    }
+    if (blocks.length) {
+      blocks.push({ type: 'text', text: m.content });
+      oaiMessages.push({ role: 'user', content: blocks });
+    } else {
+      oaiMessages.push({ role: m.role, content: m.content });
+    }
   }
 
   // OpenRouter chat completions (OpenAI 호환). stream:true 로 SSE.
