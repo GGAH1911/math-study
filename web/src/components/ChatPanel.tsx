@@ -1310,7 +1310,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       )}
 
       <div
-        className={`flex gap-2 items-end shrink-0 rounded-lg transition ${dragOver ? 'ring-2 ring-indigo-400/60' : ''}`}
+        className={`flex gap-2 items-stretch shrink-0 rounded-lg transition ${dragOver ? 'ring-2 ring-indigo-400/60' : ''}`}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={(e) => { e.preventDefault(); setDragOver(false); void addFile(imagesFromDataTransfer(e.dataTransfer)); }}
@@ -1332,7 +1332,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           placeholder="질문을 입력하세요. (⌘/Ctrl+Enter로 전송 · 이미지 붙여넣기/드래그)"
           rows={2}
           disabled={streaming}
-          className="flex-1 bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded-lg px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400 resize-none"
+          className="flex-1 min-h-[3.5rem] bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] rounded-lg px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-400 resize-y"
         />
         <input
           ref={fileInputRef}
@@ -1341,7 +1341,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           className="hidden"
           onChange={(e) => { void addFile(Array.from(e.target.files ?? [])); e.target.value = ''; }}
         />
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5 self-start">
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}

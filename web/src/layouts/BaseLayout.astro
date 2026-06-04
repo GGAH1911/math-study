@@ -33,11 +33,14 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
       </main>
     </div>
 
-    <!-- Floating most-recent-graph panel (desktop only, hidden on mobile).
-         client:load (not client:idle) because ChatPanel is also client:load and
-         its graph components broadcast on mount — if this panel hydrates later
-         it misses the first broadcast and the sticky panel never appears. -->
-    <StickyGraphPanel client:load />
+    {/* Floating most-recent-graph panel (desktop only, hidden on mobile).
+         client:only="react" — SSR로 렌더하면 안 된다: 트리에 Geometry3D
+         (@react-three/fiber, WebGL) + localStorage 의존이 있어 서버 렌더 시
+         "Invalid hook call"로 깨졌다(매 페이지 SSR 에러의 원인). client:only 은
+         SSR을 건너뛰고 load 시점에 클라이언트에서만 마운트 — 여전히 일찍 떠서
+         ChatPanel graph 컴포넌트의 첫 broadcast 를 잡는다(client:idle 처럼 늦지
+         않음). 초기 패널은 비어 있으므로 SSR HTML 부재로 인한 시각적 손실 없음. */}
+    <StickyGraphPanel client:only="react" />
 
 
     <!-- Auto-enhance any ```python code block with a Run button (sympy via /api/sympy) -->
