@@ -1267,7 +1267,7 @@ def write_markdown(prob: dict, mapping: dict, answer: str | None, round_slug: st
     concept_links = '\n'.join(f'- [{c.replace("_"," ")}](../concepts/{c}.md)' for c in ([unit] + concepts) if c)
     body = (
         f'\n# [{year} {exam_type} {subject} {prob["number"]}번] {prob["score"]}점\n\n'
-        f'> 출처: 평가원 {year}학년도 {exam_type} {session} 수학영역 · 단원: {unit or "(매핑 필요)"}\n'
+        f'> 출처: 평가원 {year}{"년" if exam_type == "모의고사" else "학년도"} {exam_type} {session} 수학영역 · 단원: {unit or "(매핑 필요)"}\n'
         f'> Tier: {killer or "?"} · cognitive: {cog or "?"} · 예상 시간 {et}초\n'
         f'> **{intent or "(intent missing)"}**\n\n'
         f'## 문제\n\n{prob["body"]}\n\n'

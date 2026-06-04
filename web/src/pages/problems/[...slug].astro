@@ -7,6 +7,7 @@ import { getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 import SolutionPanel from '../../components/SolutionPanel.tsx';
+import { yearLabel } from '../../lib/problem-meta';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('problems', slug);
@@ -19,7 +20,7 @@ const fm = entry.data;
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
 const unitTitle = fm.source?.subject
-  ? `${fm.source.year} ${fm.source.exam_type} ${fm.source.subject} ${fm.source.number}번`
+  ? `${yearLabel(fm.source.year, fm.source.exam_type)} ${fm.source.exam_type} ${fm.source.subject} ${fm.source.number}번`
   : entry.id;
 ---
 <BaseLayout title={entry.id}>
@@ -82,7 +83,7 @@ const unitTitle = fm.source?.subject
             <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">출처</h3>
             <dl class="text-sm space-y-1">
               <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">시행</dt><dd>{fm.source.agency} · {fm.source.exam_type}</dd></div>
-              <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">년도</dt><dd>{fm.source.year}{fm.source.session ? ` · ${fm.source.session}` : ''}</dd></div>
+              <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">회차</dt><dd>{yearLabel(fm.source.year, fm.source.exam_type)}{fm.source.session ? ` · ${fm.source.session}` : ''}</dd></div>
               <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">과목</dt><dd>{fm.source.subject}</dd></div>
               <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">번호</dt><dd>{fm.source.number}번 · {fm.source.score ?? '?'}점</dd></div>
             </dl>

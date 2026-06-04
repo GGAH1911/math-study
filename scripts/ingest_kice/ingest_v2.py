@@ -247,7 +247,7 @@ def write_markdown_v2(prob: dict, meta: dict | None, answer: str | None,
     )
     body = (
         f'\n# [{year} {exam_type} {subject} {prob["number"]}번] {prob["score"]}점\n\n'
-        f'> 출처: {agency} {year}학년도 {exam_type} {session or ""} 수학영역 · 단원: {unit or "(매핑 필요)"}\n'
+        f'> 출처: {agency} {year}{"년" if exam_type == "모의고사" else "학년도"} {exam_type} {session or ""} 수학영역 · 단원: {unit or "(매핑 필요)"}\n'
         f'> Tier: {killer or "?"} · cognitive: {cog or "?"}\n'
         f'> **{intent or "(intent missing)"}**\n\n'
         f'## 문제\n\n'

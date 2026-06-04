@@ -2,12 +2,14 @@
 // 회차 카드 그리드 — /exam 의 수능·모평·모의고사 구역이 공유.
 // 섹션 헤더가 시험종류·학년을 말해주므로 카드 라벨은 연도(+시행월)만.
 import { examItemCount, type RoundGroup } from '../lib/problem-card';
+import { yearLabel } from '../lib/problem-meta';
 
 type Props = { rounds: RoundGroup[] };
 const { rounds } = Astro.props;
 
+// 수능·모평은 "2026학년도", 모의고사는 "2026년"(시행연도)로 명시.
 const label = (r: RoundGroup): string =>
-  [r.meta.year, r.meta.session && r.meta.session !== '?' ? r.meta.session : '']
+  [yearLabel(r.meta.year, r.meta.exam_type), r.meta.session && r.meta.session !== '?' ? r.meta.session : '']
     .filter(Boolean)
     .join(' ');
 ---

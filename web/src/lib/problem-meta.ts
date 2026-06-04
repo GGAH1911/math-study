@@ -40,9 +40,16 @@ export function roundRank(m: RoundMeta): { agency: number; grade: number; month:
   return { agency, grade, month: month < 0 ? 99 : month };
 }
 
-// 표시 제목: "2025 고3 9월 모의평가", "2025 수능", "2025 고1 3월 모의고사".
+// 연도 표기를 명시적으로: 수능·모평은 학년도(대학입학 기준), 모의고사(교육청 학평)는
+// 시행연도. 같은 'year' 숫자라도 종류에 따라 가리키는 게 다르므로 라벨에 확실히 박는다.
+//   수능/모평 → "2026학년도"   ·   모의고사 → "2026년"
+export function yearLabel(year: string | number, examType: string): string {
+  return examType === '모의고사' ? `${year}년` : `${year}학년도`;
+}
+
+// 표시 제목: "2026학년도 고3 9월 모의평가", "2026학년도 수능", "2026년 고1 3월 모의고사".
 export function roundTitle(m: RoundMeta): string {
-  const parts = [m.year];
+  const parts = [yearLabel(m.year, m.exam_type)];
   if (m.grade) parts.push(m.grade);
   if (m.session && m.session !== '?') parts.push(m.session);
   parts.push(m.exam_type);
