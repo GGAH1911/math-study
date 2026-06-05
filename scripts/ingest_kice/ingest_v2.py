@@ -603,5 +603,5 @@ if __name__ == '__main__':
             print('  ⚠ node 없음 — concept index 는 dev predev 에서 재빌드됨', flush=True)
         print(f'\n══════ 체이닝 2/2: 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
         subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
-                        '--list', ','.join(slugs), '--parallel', '3'])
+                        '--list', ','.join(slugs), '--parallel', '10'])   # 킬러-먼저는 build_solution_cache가 정렬
         print('\n✓ 체이닝 완료 — 인제스트 + concept index + 풀이 캐시', flush=True)

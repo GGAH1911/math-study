@@ -46,11 +46,14 @@ LADDER_DEFAULT = [('haiku', 'high'), ('sonnet', 'max'), ('opus', 'max')]   # ear
 LADDER_KILLER  = [('sonnet', 'max'), ('opus', 'max')]                       # killer: Haiku 스킵
 # verifier 안전: 파일/네트워크/시스템 접근 금지 — 순수 수학만 허용
 FORBIDDEN = re.compile(r'\b(os|subprocess|socket|shutil|requests|httpx|urllib|open|eval|exec|__import__|pathlib|Path)\b')
+# 검증기-코딩 누명 회복: ans==gold인데 검증기만 실패하면 같은 모델에 '에러 힌트' 주고 재시도.
+# 검증기 작성은 확률적이라(금지import·크래시·로직버그) 재롤하면 깨끗이 나옴 → 불필요한 escalation/FLAG 흡수.
+VERIFY_RETRIES = int(os.environ.get('VERIFY_RETRIES', '2'))
 
 SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가입니다. 첨부된 문제 이미지를 Read 도구로 먼저 본 뒤 풀이하세요. 도형·조건·보기 값은 모두 이미지에서 확인합니다. 추측 금지."""
 
 
-def build_prompt(img_paths: list[str], fmt: str, meta: str) -> str:
+def build_prompt(img_paths: list[str], fmt: str, meta: str, hint: str = '') -> str:
     lines = ['  "answer": <네가 푼 보기 번호 1-5 정수>,' if fmt == 'choice'
              else '  "answer": <네가 푼 단답형 정답 정수(0-999)>,']
     lines.append('  "answer_value": "<최종 답의 값만, 설명·중간식 없이. 예: -7/64 또는 163>",')
@@ -76,7 +79,7 @@ def build_prompt(img_paths: list[str], fmt: str, meta: str) -> str:
 {{
 {body}
 }}
-```"""
+```{(chr(10) + chr(10) + hint) if hint else ''}"""
 
 
 def _anonymize(img_paths: list[str]) -> tuple[list[str], str]:
@@ -92,10 +95,10 @@ def _anonymize(img_paths: list[str]) -> tuple[list[str], str]:
 
 
 def call_model(img_paths: list[str], fmt: str, meta: str, model: str, effort: str,
-               add_dir: str) -> dict | None:
+               add_dir: str, hint: str = '') -> dict | None:
     import shutil
     anon_paths, anon_dir = _anonymize(img_paths)   # ← 파일명 정체 누출 차단
-    prompt = build_prompt(anon_paths, fmt, meta)
+    prompt = build_prompt(anon_paths, fmt, meta, hint)
     args = ['claude', '-p', '--model', model, '--effort', effort,
             '--allowedTools', 'Read', '--add-dir', anon_dir,
             '--disallowedTools', 'Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
@@ -163,6 +166,21 @@ def call_model_text(problem_text: str, fmt: str, meta: str, model: str, effort: 
         except Exception:
             continue
     return None
+
+
+def verify_hint(log: str) -> str:
+    """검증기 실패 사유별 맞춤 힌트 — 재시도 프롬프트에 덧붙여 같은 실수 반복 방지."""
+    if 'forbidden-import' in log:
+        return ('⚠ 직전 검증기가 금지어(os·open·Path·pathlib·subprocess·shutil 등)를 사용해 거부됐다. '
+                '아무것도 파일/시스템 접근하지 말고 sympy·numpy·math·fractions 만 써서 verifier_python 을 다시 작성하라.')
+    if 'timeout' in log:
+        return ('⚠ 직전 검증기가 시간초과로 죽었다. 무한루프·과도한 기호연산을 피하고 '
+                '가능하면 수치(numpy)로 가볍게 역대입 검사하도록 verifier_python 을 다시 작성하라.')
+    if 'Traceback' in log or 'Error' in log:
+        return (f'⚠ 직전 검증기가 실행 중 에러로 죽었다: {log[:140]} ... '
+                '문법·변수명·인덱스·심볼정의를 점검하고 sympy·numpy 로 안전하게 verifier_python 을 다시 작성하라.')
+    return ('⚠ 직전 검증기가 VERIFY_FAIL 을 냈다. 네 답 자체는 정답(gold)과 일치하니 *검증기 코드의 버그*다. '
+            '원래 문제의 식·조건에 네 답을 역대입하는 로직을 처음부터 재검토해 verifier_python 을 다시 작성하라.')
 
 
 def run_verifier(code: str) -> tuple[bool, str]:
@@ -284,16 +302,24 @@ def build_one(p: Path) -> str:
         if solved_by is None:                     # 답 맞힌 첫 모델 — 이게 '난이도'다
             solved_by = model
         # 단답형: gold 정수 일치로 충분. 5지선다: 원본식 역대입 검증기까지.
+        vtry = 0
         if fmt == 'choice':
             ok, log = run_verifier(sol.get('verifier_python', ''))
-            if not ok:                            # 답은 맞아도 검증기 실패 → escalate (난이도와 무관)
-                last = f'{model}:verify-fail:{log[:30]}'; trace.append((model, 'verify-fail')); continue
+            while not ok and vtry < VERIFY_RETRIES:   # 검증기-코딩은 확률적 → 같은 모델에 에러힌트 주고 재시도
+                vtry += 1                              # (escalation/FLAG의 상당수가 이 '검증기 누명' → 같은 티어서 흡수)
+                sol2 = call_model(tiles, fmt, meta, model, effort, img_dir, verify_hint(log))
+                if sol2 and str(sol2.get('answer')).strip().strip('\'"') == gold:
+                    ok2, log2 = run_verifier(sol2.get('verifier_python', ''))
+                    if ok2:
+                        sol, ok, log = sol2, True, log2   # 새(깨끗한) 검증기 통과 → 채택
+            if not ok:                            # 재시도까지 실패 → escalate (난이도와 무관)
+                last = f'{model}:verify-fail:{log[:30]}'; trace.append((model, f'verify-fail×{1 + vtry}')); continue
             VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
             (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
             vref = f'db/solutions/{p.stem}.py'
         else:
             vref = 'gold-match'                    # 단답형 — 검증기 없음
-        trace.append((model, 'pass'))
+        trace.append((model, f'pass(retry×{vtry})' if vtry else 'pass'))
         write_solution(p, sol, vref, model, solved_by, trace)
         fix_score(p, str(sol.get('score', '')))   # 같은 이미지 읽기로 배점도 교정
         return f'CACHED@{model[0]}'
@@ -354,6 +380,7 @@ if __name__ == '__main__':
     else:
         targets = all_by_difficulty()[:1]
 
+    targets = sorted(targets, key=difficulty_key)   # 킬러-먼저: 느린 문제 먼저 출발 → straggler/makespan 최소화 (--list 인제스트 경로 포함)
     if easy_first: targets = targets[::-1]
     print(f'대상 {len(targets)}문제 · 병렬 {parallel} · {"쉬운순" if easy_first else "난이도순"}\n', flush=True)
     res = Counter(); flags = []; t0 = time.time(); done = 0
