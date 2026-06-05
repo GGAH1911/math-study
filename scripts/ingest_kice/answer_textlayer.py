@@ -352,6 +352,31 @@ def parse_haesol_answers(haesol_pdfs):
     return out
 
 
+def assert_selectives_distinct(answers):
+    """안전장치: 선택 3과목(미적분/기하/확률과통계) 정답이 서로 동일하면 AssertionError.
+    통합 부클릿 파싱이 한 과목 답을 다른 과목에 복사하는 버그(2021 고3 4·7·10월 실제 발생)를
+    인제스트 *전에* 차단한다. answers: {subject: {number_str: answer_str}}.
+    - 전체(23-30) 완전 동일 → 버그
+    - 단답(객관식 1-5 아닌 답)이 2개 이상 동일 → 버그 (우연 1개 일치는 허용)
+    """
+    SUBJ = ['미적분', '기하', '확률과통계']
+    present = [s for s in SUBJ if answers.get(s)]
+    dandab = {s: {n: v for n, v in answers[s].items() if v not in ('1', '2', '3', '4', '5')}
+              for s in present}
+    full = {s: tuple(answers[s].get(str(n)) for n in range(23, 31)) for s in present}
+    for i in range(len(present)):
+        for j in range(i + 1, len(present)):
+            a, b = present[i], present[j]
+            if full[a] == full[b] and any(full[a]):
+                raise AssertionError(
+                    f"🔴 선택 정답 전체 동일: {a} == {b} = {full[a]} — 파싱 버그. 중단·수정 필요.")
+            same = [n for n in (set(dandab[a]) & set(dandab[b])) if dandab[a][n] == dandab[b][n]]
+            if len(same) >= 2:
+                raise AssertionError(
+                    f"🔴 선택 단답 동일: {a} & {b} 단답 {sorted(same)} 모두 일치 "
+                    f"({[(n, dandab[a][n]) for n in sorted(same)]}) — 파싱 버그. 중단·수정 필요.")
+
+
 def is_choice(answer_str):
     """정답이 객관식(①~⑤ 환산 '1'~'5')인지 단답형(그 외 숫자)인지."""
     return answer_str in ('1', '2', '3', '4', '5')

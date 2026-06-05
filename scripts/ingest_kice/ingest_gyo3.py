@@ -94,6 +94,8 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
     for (s, n), a in flat.items():
         answers.setdefault(s, {})[str(n)] = a
     print(f'  ✓ 정답 {sum(len(v) for v in answers.values())}개 (해설 정답표)', flush=True)
+    A.assert_selectives_distinct(answers)   # 🔴 안전장치: 선택 3과목 답 동일하면 중단
+    print('  ✓ 안전장치 통과 (선택 3과목 distinct)', flush=True)
 
     # 5) markdown + DB
     written = []
