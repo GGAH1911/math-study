@@ -1,0 +1,16 @@
+{
+  "text_sha": "8b229866f37e",
+  "meta": {
+    "searchable_text": "부등식 $\\frac{21}{3x} \\cdot \\frac{2}{x} \\geq 8$을 만족시키는 자연수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "부등식",
+      "자연수_해"
+    ],
+    "exam_intent": "부등식을 정리하고 자연수 해의 개수를 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

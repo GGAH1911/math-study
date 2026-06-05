@@ -1,0 +1,16 @@
+{
+  "text_sha": "d6aff22af2b4",
+  "meta": {
+    "searchable_text": "다항식 $P(x)$가 다음 조건을 만족시킨다. (가) $P(x)$를 $x^2$으로 나눈 나머지와 $x^3$으로 나눈 나머지의 합은 7이다. (나) $P(x)$를 $x^2 - 5x - 6$으로 나눈 나머지를 $Q(x)$라 할 때, $Q(1) - Q(2) = 5$이다. $P(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "나머지정리를 이용한 다항식 조건 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

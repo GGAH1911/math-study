@@ -1,0 +1,16 @@
+{
+  "text_sha": "05f9ee238a11",
+  "meta": {
+    "searchable_text": "삼차다항식 $P(x)$와 이차다항식 $Q(x)$는 최고차항의 계수가 모두 1이고 다음 조건을 만족시킨다. (가) $P(x)$는 $Q(x)^2 + Q(x) + 1$로 나누어떨어진다. (나) $P(x)^2$을 $Q(x)^2 + 3Q(x) + 2$로 나눈 몫은 $Q(x)$이고 나머지는 $16Q(x) + 16$이다. (다) $P(x)$는 $Q(x)$로 나누어떨어진다. 이때 $P(3) + Q(3)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지정리"
+    ],
+    "exam_intent": "다항식 나눗셈 조건들로부터 함수값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

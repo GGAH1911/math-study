@@ -1,0 +1,16 @@
+{
+  "text_sha": "f827cf1f9687",
+  "meta": {
+    "searchable_text": "sin θ = 1/3일 때, $\\frac{1-\\cos\\theta}{\\sin\\theta} + \\frac{1+\\cos\\theta}{\\sin\\theta}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "기본관계식"
+    ],
+    "exam_intent": "주어진 삼각함수 값에서 항등식을 이용한 식 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

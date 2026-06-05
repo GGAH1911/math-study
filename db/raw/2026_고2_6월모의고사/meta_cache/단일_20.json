@@ -1,0 +1,17 @@
+{
+  "text_sha": "c6e3c9c53563",
+  "meta": {
+    "searchable_text": "정의역 $0 \\le x \\le 4, x \\ne 2$인 함수 $f(x)$의 그래프와 점 $P(4, 0)$이 있다. 함수 위의 점 $A(a, f(a))$와 $y$축 위의 점 $B(0, b)$를 지나고 기울기가 음수인 직선이 함수의 그래프와 만나는 점 중 $A$가 아닌 점을 $C$라 하자. 조건: (가) 점 $A, C$의 $x$좌표의 합은 $4$ (나) $\\triangle AOB$와 $\\triangle BCP$의 넓이의 비는 $7:3$ (단, $O$는 원점, $0 < a < 2, 0 < b < 4$). 조건을 만족하는 $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "직선과_곡선의_교점",
+      "좌표와_도형의_넓이"
+    ],
+    "exam_intent": "삼각함수 그래프의 대칭성과 기하 조건을 종합 적용",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

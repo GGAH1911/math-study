@@ -1,0 +1,20 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VariantsDemo from '../../components/VariantsDemo.tsx';
+---
+<BaseLayout title="유사문제 생성 PoC">
+  <div class="max-w-3xl mx-auto px-6 py-8">
+    <header class="mb-6">
+      <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-subtle)]">DEV — variant generation PoC</p>
+      <h1 class="mt-2 text-2xl font-semibold">유사문제 생성 맛보기</h1>
+      <p class="mt-2 text-sm text-[color:var(--color-muted)] max-w-2xl">
+        검증기 자산으로 만든 변형 문제 3종(비도형 · 일반도형 · 복잡도형)을 도형 복잡도별로 렌더합니다.
+        도형은 <code>Graph</code>/<code>Geometry</code> spec(sympy 계산 좌표)으로 그리고, 각 변형의 정답은
+        새 검증기로 자동 검증(VERIFY_PASS)된 것입니다.
+      </p>
+    </header>
+
+    <VariantsDemo client:only="react" />
+  </div>
+</BaseLayout>

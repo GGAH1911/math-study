@@ -1,0 +1,16 @@
+{
+  "text_sha": "de3143356961",
+  "meta": {
+    "searchable_text": "다항식이 어떤 인수로 인수분해될 때 주어진 상수들의 값을 구하는 문제. 3차 다항식으로 추정되며 일부 계수에 2가 포함되어 있고, 인수는 1차 형태로 추정됨.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "인수분해",
+    "concepts": [
+      "인수분해",
+      "다항식"
+    ],
+    "exam_intent": "다항식의 인수분해에서 계수 관계식을 세우고 풀 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

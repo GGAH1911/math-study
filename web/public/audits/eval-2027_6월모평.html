@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><title>평가 2027_6월모평</title><style>
+body{font:14px/1.55 system-ui,sans-serif;max-width:1180px;margin:1.5em auto;padding:0 1em;color:#1f2937}
+h1{font-size:1.5em;margin:.2em 0}h2{font-size:1.05em;margin:1.4em 0 .5em;border-bottom:2px solid #eef2ff;padding-bottom:.2em}
+.cards{display:flex;gap:.8em;flex-wrap:wrap;margin:.8em 0}
+.card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:.7em 1em;min-width:140px}
+.card b{font-size:1.6em;display:block}.card small{color:#6b7280}
+.bar{display:flex;height:26px;border-radius:5px;overflow:hidden;margin:.4em 0;font:12px/26px sans-serif;color:#fff;text-align:center}
+.bar span{min-width:18px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:.4em 0}
+th,td{border:1px solid #e5e7eb;padding:3px 7px;text-align:left}th{background:#f1f5f9}
+tr.k{background:#fef2f2}.d-haiku{color:#059669;font-weight:600}.d-sonnet{color:#b45309;font-weight:600}.d-opus{color:#dc2626;font-weight:700}.d-x{color:#94a3b8}
+.i{color:#6b7280;max-width:340px;font-size:12px}.note{color:#6b7280;font-size:12px;background:#f8fafc;padding:.5em .8em;border-left:3px solid #cbd5e1;border-radius:4px}
+.chip{display:inline-block;background:#eef2ff;border-radius:4px;padding:1px 7px;margin:1px;font-size:12px}
+</style></head><body>
+<h1>📊 2027_6월모평 평가 <small style="font-weight:400;color:#6b7280">46문항</small></h1>
+<div class="cards">
+  <div class="card"><b>152</b><small>총 배점</small></div>
+  <div class="card"><b>0</b><small>진짜 킬러(opus)</small></div>
+  <div class="card"><b>25</b><small>쉬움(haiku)</small></div>
+  <div class="card"><b>19</b><small>출제 단원</small></div>
+  <div class="card"><b>0</b><small>검증기 escalate</small></div>
+</div>
+<h2>난이도 (solved_by — 깨끗한 신호)</h2>
+<div class="bar"><span style="flex:25;background:#34d399" title="쉬움 25">25</span><span style="flex:9;background:#fbbf24" title="중상 9">9</span><span style="flex:12;background:#cbd5e1" title="미정 12">12</span></div>
+<p class="note">난이도는 <b>최초로 답을 맞힌 모델</b>(solved_by) 기준. generated_by(검증기까지 통과한 최종 모델)는 객관식 검증기-코딩 누명으로 부풀려져 난이도로 안 씀. <b>미정 12건</b>은 백필 진행 중.</p>
+<h2>구성</h2>
+<div class="cards">
+  <div class="card"><small>과목</small><br>공통 22 · 기하 8 · 미적분 8 · 확률과통계 8</div>
+  <div class="card"><small>배점</small><br>2 5 · 3 22 · 4 19</div>
+  <div class="card"><small>형식</small><br>choice 33 · numeric 13</div>
+  <div class="card"><small>객관식 답 ①~⑤</small><br>①7 ②5 ③10 ④6 ⑤5 <span style="color:#dc2626">⚠편중</span></div>
+</div>
+
+
+<h2>커버리지</h2>
+<p>출제 단원 <b>19</b>개 · 개념 <b>113</b>개</p>
+<span class="chip">미분 5</span> <span class="chip">수열 4</span> <span class="chip">도함수의_활용_심화 4</span> <span class="chip">평면벡터 4</span> <span class="chip">이차곡선 4</span> <span class="chip">확률 4</span> <span class="chip">경우의_수 3</span> <span class="chip">함수의_극한과_연속 2</span> <span class="chip">삼각함수 2</span> <span class="chip">여러가지함수의_극한 2</span> <span class="chip">지수함수와_로그함수 2</span> <span class="chip">수열의_극한 2</span> <span class="chip">여러가지함수의_미분 2</span> <span class="chip">실수와_그_계산 1</span> <span class="chip">삼각비 1</span> <span class="chip">적분 1</span> <span class="chip">지수와_로그 1</span> <span class="chip">정적분의_활용 1</span> <span class="chip">다항식 1</span>
+
+
+<h2>문항별</h2>
+<table><tr><th>문항</th><th>배점</th><th>형식</th><th>난이도</th><th>tier라벨</th><th>단원</th><th>출제의도</th></tr>
+<tr class=""><td>공통 1</td><td>2점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>실수와_그_계산</td><td class="i">근호를 포함한 식의 지수법칙 적용 및 계산</td></tr>
+<tr class=""><td>공통 2</td><td>2점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>함수의_극한과_연속</td><td class="i">x→1에서 함수의 극한값을 구하는 기본 계산 능력 평가</td></tr>
+<tr class=""><td>공통 3</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>수열</td><td class="i">수열의 합 조건을 이용한 계산</td></tr>
+<tr class=""><td>공통 4</td><td>3점</td><td>객관·도형</td><td class="d-x">미정</td><td>early</td><td>함수의_극한과_연속</td><td class="i">그래프에서 특정 점에서의 좌극한과 우극한을 구분하여 읽고 계산할 수 있는지 평가</td></tr>
+<tr class=""><td>공통 5</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>미분</td><td class="i">다항식 함수의 도함수 값을 특정 점에서 계산</td></tr>
+<tr class=""><td>공통 6</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>삼각함수</td><td class="i">각의 범위와 코사인 값으로부터 탄젠트를 구하는 문제</td></tr>
+<tr class=""><td>공통 7</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>도함수의_활용_심화</td><td class="i">주어진 극댓값 조건으로부터 함수의 극솟값을 구할 수 있는지 평가</td></tr>
+<tr class=""><td>공통 8</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>삼각비</td><td class="i">코사인 법칙을 이용하여 삼각형의 변의 길이를 구한다.</td></tr>
+<tr class=""><td>공통 9</td><td>4점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>적분</td><td class="i">속도 함수를 적분하여 위치를 구하고 두 점이 만나는 시각 결정</td></tr>
+<tr class=""><td>공통 10</td><td>4점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>지수와_로그</td><td class="i">로그의 밑 변환과 성질을 이용하여 미지수를 구하는 능력 평가</td></tr>
+<tr class=""><td>공통 11</td><td>4점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>여러가지함수의_극한</td><td class="i">일차함수에서 극한의 존재 조건으로부터 함수를 결정하고 함수값 계산</td></tr>
+<tr class=""><td>공통 12</td><td>4점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>수열</td><td class="i">등비수열의 조건으로부터 첫 항과 공비를 결정하고 항의 곱을 계산</td></tr>
+<tr class=""><td>공통 13</td><td>4점</td><td>객관·도형</td><td class="d-haiku">쉬움</td><td>mid</td><td>정적분의_활용</td><td class="i">곡선과 직선으로 둘러싸인 넓이 함수의 도함수 조건으로부터 함수 결정 및 성질 검증</td></tr>
+<tr class=""><td>공통 14</td><td>4점</td><td>객관</td><td class="d-x">미정</td><td>mid</td><td>삼각함수</td><td class="i">매개변수에 따른 삼각함수 방정식의 근의 개수 분석 및 조건에 맞는 값 결정</td></tr>
+<tr class=""><td>공통 15</td><td>4점</td><td>객관</td><td class="d-x">미정</td><td>early</td><td>미분</td><td class="i">조건을 만족하는 삼차함수의 계수를 결정하고 함수값 계산</td></tr>
+<tr class=""><td>공통 16</td><td>3점</td><td>단답</td><td class="d-haiku">쉬움</td><td>early</td><td>지수함수와_로그함수</td><td class="i">기본 지수방정식 풀이</td></tr>
+<tr class=""><td>공통 17</td><td>3점</td><td>단답</td><td class="d-haiku">쉬움</td><td>early</td><td>미분</td><td class="i">도함수로부터 초기조건을 이용하여 원함수의 함숫값을 구할 수 있는가</td></tr>
+<tr class=""><td>공통 18</td><td>3점</td><td>단답</td><td class="d-sonnet">중상</td><td>mid</td><td>수열</td><td class="i">등차수열의 일반항 공식으로 첫째항 구하기</td></tr>
+<tr class=""><td>공통 19</td><td>3점</td><td>단답</td><td class="d-haiku">쉬움</td><td>mid</td><td>미분</td><td class="i">접선의 방정식을 구하고 절편을 계산하는 능력</td></tr>
+<tr class=""><td>공통 20</td><td>4점</td><td>단답·도형</td><td class="d-haiku">쉬움</td><td>mid</td><td>지수함수와_로그함수</td><td class="i">지수함수와 로그함수의 교점을 이용한 기울기 관계식을 대수적으로 유도하는 능력 평가</td></tr>
+<tr class=""><td>공통 21</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>mid</td><td>도함수의_활용_심화</td><td class="i">도함수 부등식 조건과 함수의 불연속점을 이용하여 함수값을 구하는 통합 능력</td></tr>
+<tr class=""><td>공통 22</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>killer</td><td>수열</td><td class="i">주어진 점화식으로 정의된 수열에서 특정 조건을 만족하는 항의 개수를 구할 수 있는가</td></tr>
+<tr class=""><td>기하 23</td><td>2점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>평면벡터</td><td class="i">벡터의 성분 계산과 벡터 연산 후 성분의 합을 구하는 능력 평가</td></tr>
+<tr class=""><td>기하 24</td><td>3점</td><td>객관</td><td class="d-x">미정</td><td>mid</td><td>이차곡선</td><td class="i">포물선의 초점 정의를 이용하여 매개변수 값을 구하는 기본 개념 평가</td></tr>
+<tr class=""><td>기하 25</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>평면벡터</td><td class="i">두 직선의 방향벡터로부터 이루는 각의 코사인값을 계산</td></tr>
+<tr class=""><td>기하 26</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>이차곡선</td><td class="i">타원 접선의 절편을 계산하는 능력 평가</td></tr>
+<tr class=""><td>기하 27</td><td>3점</td><td>객관·도형</td><td class="d-x">미정</td><td>killer</td><td>평면벡터</td><td class="i">벡터의 수직 조건과 내적을 이용한 매개변수 계산</td></tr>
+<tr class=""><td>기하 28</td><td>4점</td><td>객관</td><td class="d-x">미정</td><td>killer</td><td>이차곡선</td><td class="i">타원의 정의와 초점 성질을 이용한 매개변수 결정</td></tr>
+<tr class=""><td>기하 29</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>killer</td><td>이차곡선</td><td class="i">쌍곡선과 포물선의 성질을 종합적으로 활용하여 교점 조건식을 세우고 미지수를 구하는 능력</td></tr>
+<tr class=""><td>기하 30</td><td>4점</td><td>단답·도형</td><td class="d-sonnet">중상</td><td>killer</td><td>평면벡터</td><td class="i">원 위의 움직이는 점에서 벡터 내적의 최댓값·최솟값을 구하는 종합 문제</td></tr>
+<tr class=""><td>미적분 23</td><td>2점</td><td>객관</td><td class="d-haiku">쉬움</td><td>early</td><td>여러가지함수의_극한</td><td class="i">지수함수 극한에서 식을 정리하여 수렴값을 구하는 능력 평가</td></tr>
+<tr class=""><td>미적분 24</td><td>3점</td><td>객관</td><td class="d-x">미정</td><td>mid</td><td>미분</td><td class="i">곡선 위의 특정 점에서 도함수로 접선의 기울기를 구하는 능력을 평가</td></tr>
+<tr class=""><td>미적분 25</td><td>3점</td><td>객관</td><td class="d-x">미정</td><td>mid</td><td>수열의_극한</td><td class="i">등차수열로 이루어진 무한급수의 수렴값을 부분분수분해로 구할 수 있는지 평가</td></tr>
+<tr class=""><td>미적분 26</td><td>3점</td><td>객관</td><td class="d-x">미정</td><td>mid</td><td>도함수의_활용_심화</td><td class="i">접선의 기울기를 이용하여 두 직선이 이루는 각을 구하는 능력</td></tr>
+<tr class=""><td>미적분 27</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>여러가지함수의_미분</td><td class="i">매개변수곡선의 속력 조건으로 상수값 결정</td></tr>
+<tr class=""><td>미적분 28</td><td>4점</td><td>객관</td><td class="d-x">미정</td><td>killer</td><td>여러가지함수의_미분</td><td class="i">곡선 교점으로 정의된 함수의 극한값을 도함수로 구하는 능력</td></tr>
+<tr class=""><td>미적분 29</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>killer</td><td>수열의_극한</td><td class="i">등차수열과 등비수열 조건으로 수열 결정 후 급수 수렴 조건으로 최솟값 계산</td></tr>
+<tr class=""><td>미적분 30</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>killer</td><td>도함수의_활용_심화</td><td class="i">절댓값 함수의 미분가능 조건과 극값 조건으로부터 함수식을 결정하는 능력 평가</td></tr>
+<tr class=""><td>확률과통계 23</td><td>2점</td><td>객관</td><td class="d-x">미정</td><td>early</td><td>경우의_수</td><td class="i">중복된 원소를 포함한 순열의 개수 계산</td></tr>
+<tr class=""><td>확률과통계 24</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>확률</td><td class="i">여사건과 덧셈 공식을 이용한 사건 확률 계산</td></tr>
+<tr class=""><td>확률과통계 25</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>다항식</td><td class="i">다항식 전개에서 원하는 차수 항의 계수를 구하는 계산 능력 측정</td></tr>
+<tr class=""><td>확률과통계 26</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>확률</td><td class="i">여사건을 이용한 소인수(5) 포함 판정 확률 계산</td></tr>
+<tr class=""><td>확률과통계 27</td><td>3점</td><td>객관</td><td class="d-haiku">쉬움</td><td>mid</td><td>경우의_수</td><td class="i">여사건을 이용한 함수 개수 계산</td></tr>
+<tr class=""><td>확률과통계 28</td><td>4점</td><td>객관</td><td class="d-x">미정</td><td>killer</td><td>확률</td><td class="i">조건부 카드 뒤집기를 4번 반복 후 목표 상태 도달 확률</td></tr>
+<tr class=""><td>확률과통계 29</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>killer</td><td>확률</td><td class="i">조건부확률과 제약조건 하의 경우의 수 계산 능력</td></tr>
+<tr class=""><td>확률과통계 30</td><td>4점</td><td>단답</td><td class="d-sonnet">중상</td><td>killer</td><td>경우의_수</td><td class="i">제약 조건이 있는 같은 것이 있는 순열의 경우의 수를 계산</td></tr></table>
+<p class="note">생성: evaluate-round.mjs · 난이도=solved_by · JSON: eval-2027_6월모평.json (LLM 총평 입력)</p>
+</body></html>

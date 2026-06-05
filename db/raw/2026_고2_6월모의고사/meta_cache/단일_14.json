@@ -1,0 +1,16 @@
+{
+  "text_sha": "9616ff507394",
+  "meta": {
+    "searchable_text": "두 정수 $a$, $b$에 대하여 $\\frac{3^a}{4^a \\times 6^b} \\times$ (추가 항)의 값이 10 이상 20 이하의 자연수일 때, 지수의 값은? [4점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수법칙",
+      "지수방정식"
+    ],
+    "exam_intent": "주어진 조건에서 지수법칙을 이용하여 미지 지수값을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

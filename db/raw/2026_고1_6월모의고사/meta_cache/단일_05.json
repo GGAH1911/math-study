@@ -1,0 +1,17 @@
+{
+  "text_sha": "bd4e849a0d07",
+  "meta": {
+    "searchable_text": "연립부등식 $x^2 - 3x - 5 \\leq x - 5 \\leq 8$을 만족시키는 모든 정수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "연립부등식",
+      "정수해"
+    ],
+    "exam_intent": "연립부등식을 풀어 정수해의 개수를 구하는 계산 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

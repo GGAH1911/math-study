@@ -1,0 +1,17 @@
+{
+  "text_sha": "cdb4dfccdc1d",
+  "meta": {
+    "searchable_text": "양수 $a$에 대하여 $a$에 대한 이차방정식 $x^2 - 2\\log_2 a \\cdot x - 10 = 0$이 서로 다른 두 실근 $\\log_2 \\alpha$, $\\log_2 \\beta$를 가질 때, $\\log_\\alpha 2 + \\log_\\beta 2 = 3$이 되도록 하는 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "이차방정식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "이차방정식과 로그의 성질을 종합하여 미지수를 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

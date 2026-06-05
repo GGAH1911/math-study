@@ -1,0 +1,15 @@
+{
+  "text_sha": "2b3fc36bb8a2",
+  "meta": {
+    "searchable_text": "반지름의 길이가 4이고 중심각의 크기가 $\\frac{2\\pi}{3}$인 부채꼴의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "부채꼴의_넓이"
+    ],
+    "exam_intent": "부채꼴 넓이 공식(라디안)을 이용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "338895330465",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 2\\sqrt{5}$, $BC = 5$인 삼각형 $ABC$에 대하여 선분 $BC$를 지름으로 하는 반원이 선분 $AC$와 만나는 점 중 $C$가 아닌 점을 $D$라 하자. 호 $CD$ 위에 점 $E$를 삼각형 $DCE$의 넓이가 $\\frac{\\sqrt{5}}{3}$이 되도록 잡는다. 선분 $CE$의 길이를 $x$라 할 때, $60x^2$의 값을 구하시오. (단, $CE < DE$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "탈레스_정리",
+      "반원의_성질",
+      "호와_현"
+    ],
+    "exam_intent": "반원의 성질과 삼각형 넓이 조건을 이용한 현의 길이 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

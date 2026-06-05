@@ -1,0 +1,16 @@
+{
+  "text_sha": "7c7a4d2e20d1",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차다항식으로 여러 다항식을 나눈 나머지 조건을 이용하여 나머지 다항식의 특정값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_나눗셈",
+      "나머지_정리"
+    ],
+    "exam_intent": "나머지 정리를 활용하여 다항식의 계수를 결정할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

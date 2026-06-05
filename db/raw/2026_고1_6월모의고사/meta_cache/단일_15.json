@@ -1,0 +1,16 @@
+{
+  "text_sha": "5fbe929bfdd1",
+  "meta": {
+    "searchable_text": "어떤 변수에 대한 연립부등식을 만족하는 정수의 개수가 2일 때, 모든 정수의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "정수해"
+    ],
+    "exam_intent": "연립부등식의 정수해 조건으로부터 해의 합을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -795,6 +795,16 @@ ${imageTiles.map((t, i) => `${i + 1}. ${t}`).join('\n')}
 ${sol.steps.map((s: string, i: number) => `${i + 1}. ${s}`).join('\n')}
 ` : '';
 
+  // 게이트: source==='text'(빌드 text-first) 또는 text_ok(재라벨 백필) = 텍스트만으로 정답 검증됨 → 그 문제 한정 전사 신뢰.
+  // (그 외 문제는 OCR 부정확 가능 → imageBlock의 '이미지만' 원칙 유지.)
+  const textTrusted = sol?.source === 'text' || sol?.text_ok === true;
+  const verifiedTextRef = (textTrusted && fm.searchable_text) ? `
+--- ✅ 검증된 전사 텍스트 (이 문제 한정 · 예외) ---
+위에서 일반적으로 'searchable_text는 부정확'이라 했지만 **이 문제는 예외**다 — 오프라인 빌드가 아래 텍스트만으로 풀어 공식 정답과 일치함을 검증했다. 따라서 이 전사는 신뢰 가능:
+${String(fm.searchable_text).trim().slice(0, 3500)}
+이미지가 원본이지만, 식·수치 판독이 모호하면 위 검증된 텍스트로 정확히 읽어라.
+` : '';
+
   const systemPrompt = `당신은 한국 수능을 준비하는 학생의 수학 튜터입니다. 학생이 지금 보고 있는 문제 한 개에 대해 풀이를 돕습니다.
 
 학생 정보:
@@ -810,7 +820,7 @@ ${title} (${src.score ?? '?'}점)
 난이도: ${fm.killer_tier || '?'} · cognitive: ${fm.cognitive_type || '?'} · 예상 ${fm.expected_time_sec ?? '?'}초
 매핑된 단원: ${fm.unit || '?'}
 
-${imageBlock}
+${imageBlock}${verifiedTextRef}
 --- 매핑된 개념 (학생이 이미 wiki에서 학습 중) ---
 ${conceptInfo || '(없음)'}
 

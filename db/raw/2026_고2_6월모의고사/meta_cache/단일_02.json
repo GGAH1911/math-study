@@ -1,0 +1,16 @@
+{
+  "text_sha": "b5dcc3ad6ba7",
+  "meta": {
+    "searchable_text": "log₃ 2와 3^(log₃ 6)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의",
+      "지수와_로그의_역함수_관계"
+    ],
+    "exam_intent": "로그와 지수의 성질을 이용한 식의 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

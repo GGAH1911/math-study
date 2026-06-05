@@ -1,0 +1,17 @@
+{
+  "text_sha": "fcb2b4b2a2ea",
+  "meta": {
+    "searchable_text": "다항식 $ax^3 + 2x^2 + 5x + 3$이 $(x-1)$로 나누어떨어질 때, 상수 $a$의 값은? (정확한 다항식 형태는 텍스트 레이어 손상으로 부분 복원됨)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "인수정리",
+      "나머지정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "인수정리를 이용한 다항식 계수 결정 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

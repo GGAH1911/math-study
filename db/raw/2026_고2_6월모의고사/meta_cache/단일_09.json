@@ -1,0 +1,17 @@
+{
+  "text_sha": "fd8e1d93bb34",
+  "meta": {
+    "searchable_text": "곡선 $y = \\frac{a}{x}$ 위의 점과 곡선의 점근선 사이의 거리가 7일 때, $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_방정식",
+      "점근선",
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "쌍곡선 점근선과의 거리 공식을 적용하여 매개변수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

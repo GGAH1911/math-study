@@ -103,12 +103,27 @@ def _find_problem_end(row_ink: list[float], h: int, gap_ratio: float = DETACHED_
     # Peel trailing *small detached* clusters (footer / page-number / instruction).
     # Stop at the first trailing block that is attached (small gap) or substantial
     # (a real graph→question+보기 block) — never drop real content.
+    # 맨 아래에서부터 "큰 여백으로 떨어진 그룹" 단위로 푸터를 peel.
+    # 푸터가 여러 줄(여러 클러스터)로 쪼개져 있어도 — 그 줄들 사이 여백은 작으니 —
+    # 위로 큰 여백을 만날 때까지 한 그룹으로 묶은 뒤 그룹째 판정한다.
+    # (기존엔 클러스터 1개씩 보다가 푸터 줄 사이 작은 여백에서 멈춰, 답안여백+'확인 사항'
+    #  푸터를 통째 남겼다 — 단답 킬러가 세로로 길어진 원인.)
     end_idx = len(clusters) - 1
     while end_idx > 0:
-        gap = clusters[end_idx][0] - clusters[end_idx - 1][1]
-        height = clusters[end_idx][1] - clusters[end_idx][0]
-        if gap > big_gap and height < footer_max:
-            end_idx -= 1
+        grp_start = end_idx
+        while grp_start > 0 and (clusters[grp_start][0] - clusters[grp_start - 1][1]) <= big_gap:
+            grp_start -= 1
+        if grp_start == 0:
+            break  # 위에 큰 여백 없음 = 본문 → 보존
+        gap = clusters[grp_start][0] - clusters[grp_start - 1][1]
+        content_h = clusters[grp_start - 1][1] - clusters[0][0]   # 이 여백 위쪽 본문 전체 높이
+        ink = sum(clusters[j][1] - clusters[j][0] for j in range(grp_start, end_idx + 1))
+        # 푸터 그룹째 제거 조건 (둘 다):
+        #  (a) 앞 여백 > 그 위 본문 전체 높이 → 답안여백이 본문을 압도(단답 킬러 크롭실패).
+        #  (b) 그룹 잉크 < footer_max → 페이지번호·'확인 사항' 류.
+        # 디스플레이 수식 뒤 짧은 질문줄("…구하시오 [4점]")은 여백이 본문보다 작아 보존된다.
+        if gap > content_h and ink < footer_max:
+            end_idx = grp_start - 1
         else:
             break
     return clusters[end_idx][1]

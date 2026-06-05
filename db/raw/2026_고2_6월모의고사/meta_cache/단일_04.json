@@ -1,0 +1,16 @@
+{
+  "text_sha": "55a6b3a104e0",
+  "meta": {
+    "searchable_text": "π/2 ≤ θ ≤ 3π/2일 때, 방정식 2sin θ + √3 = 0을 만족시키는 θ의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_기본값",
+      "삼각방정식"
+    ],
+    "exam_intent": "주어진 범위에서 삼각방정식의 해를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

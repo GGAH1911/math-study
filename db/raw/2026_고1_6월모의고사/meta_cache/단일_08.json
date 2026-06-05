@@ -1,0 +1,16 @@
+{
+  "text_sha": "2c82dfe8132e",
+  "meta": {
+    "searchable_text": "$a \\le x \\le a+3$에서 이차함수 $f(x) = x^2 - 6x + 10$의 최솟값이 5가 되도록 하는 모든 실수 $a$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최솟값",
+      "구간의_변동"
+    ],
+    "exam_intent": "이동하는 구간에서 이차함수의 최솟값 조건을 만족하는 매개변수값 찾기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -83,7 +83,13 @@ const problems = defineCollection({
     solution: z.object({
       answer_value: z.string().optional(),
       verified: z.boolean().optional(),
-      generated_by: z.string().optional(),
+      generated_by: z.string().optional(),         // 검증기까지 통과한 최종 모델(캐시된 풀이)
+      solved_by: z.string().optional(),            // 최초로 답 맞힌 모델 = 난이도 신호(검증기 통과와 무관)
+      source: z.string().optional(),               // 'text'=searchable_text만으로 검증 통과 → 튜터가 텍스트 신뢰 가능
+      text_ok: z.boolean().optional(),             // 재라벨: text-Haiku가 텍스트만으로 정답 재현(기존 풀이는 보존, 텍스트 신뢰+난이도=haiku)
+      escalation: z.array(z.object({               // 그 전 모델 탈락 사유(verify-fail=검증기 탓 / ans-wrong=오답)
+        model: z.string(), reason: z.string(),
+      })).optional(),
       verifier: z.string().optional(),
       steps: z.array(z.string()).optional().default([]),
     }).optional(),

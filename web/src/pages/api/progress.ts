@@ -31,8 +31,45 @@ function findActiveLog(): string | null {
   return candidates[0].path;
 }
 
-function readTail(): { lines: string[]; mtime: number; size: number; path: string | null } {
-  const path = findActiveLog();
+// 모든 진행 로그 나열 (선택 UI용). live = 최근 90초 내 갱신.
+function listLogs(): { name: string; mtime: number; size: number; live: boolean }[] {
+  const now = Date.now();
+  const seen = new Set<string>();
+  const out: { name: string; mtime: number; size: number; live: boolean }[] = [];
+  const add = (p: string) => {
+    if (seen.has(p)) return;
+    seen.add(p);
+    try {
+      const st = statSync(p);
+      out.push({ name: p.split('/').pop() as string, mtime: st.mtimeMs, size: st.size, live: now - st.mtimeMs < 90_000 });
+    } catch { /* noop */ }
+  };
+  if (existsSync(LEGACY_LOG_PATH)) add(LEGACY_LOG_PATH);
+  if (existsSync(INGEST_LOG_DIR)) {
+    try {
+      for (const name of readdirSync(INGEST_LOG_DIR)) {
+        if (name.endsWith('.log')) add(join(INGEST_LOG_DIR, name));
+      }
+    } catch { /* noop */ }
+  }
+  out.sort((a, b) => b.mtime - a.mtime);
+  return out;
+}
+
+// 선택한 로그(name, basename만 허용 — 경로 traversal 차단). 없으면 최신 활성 로그.
+function resolveLogPath(selected?: string | null): string | null {
+  if (selected) {
+    const safe = selected.split('/').pop();
+    if (safe && safe.endsWith('.log')) {
+      const p = safe === LEGACY_LOG_PATH.split('/').pop() ? LEGACY_LOG_PATH : join(INGEST_LOG_DIR, safe);
+      if (existsSync(p)) return p;
+    }
+  }
+  return findActiveLog();
+}
+
+function readTail(selected?: string | null): { lines: string[]; mtime: number; size: number; path: string | null } {
+  const path = resolveLogPath(selected);
   if (!path) return { lines: ['(no log yet)'], mtime: 0, size: 0, path: null };
   const st = statSync(path);
   const text = readFileSync(path, 'utf-8');
@@ -43,8 +80,10 @@ function readTail(): { lines: string[]; mtime: number; size: number; path: strin
 
 function aliveProcs(): { pid: number; etime: string; cmd: string }[] {
   try {
+    // 제네릭: scripts/<name>.py 를 실행하는 모든 파이썬 잡 자동 감지(retry_timeout_killers·regenerate·
+    // refine_opus·ab_path_leak 등 새 스크립트도 하드코딩 없이 잡힘) + 레거시 비-scripts 잡.
     const out = execSync(
-      `pgrep -af "extract_all_answers|fill_spoke_bodies|post_manifest|auto_complete_rounds|ingest_round|ingest_v2|build_solution_cache" 2>/dev/null || true`,
+      `pgrep -af "scripts/[a-z0-9_]+\\.py|auto_complete_rounds|fill_spoke_bodies|extract_all_answers|post_manifest" 2>/dev/null || true`,
       { encoding: 'utf-8' },
     );
     const procs: { pid: number; etime: string; cmd: string }[] = [];
@@ -302,17 +341,20 @@ function parseIngest(lines: string[]) {
   return { round, pages, located, cropped, meta: { done: metaDone, total: metaTotal }, answers, dbUpserted, stage };
 }
 
-export const GET: APIRoute = () => {
-  const { lines, mtime, size, path } = readTail();
+export const GET: APIRoute = ({ url }) => {
+  const selected = url.searchParams.get('log');
+  const { lines, mtime, size, path } = readTail(selected);
   const procs = aliveProcs();
   const summary = parseSummary(lines);
   const solcache = parseSolcache(lines);
   const ingest = parseIngest(lines);
   const crops = recentCrops(24);
+  const logs = listLogs();
   return new Response(
     JSON.stringify({
       now: Date.now(),
       log: { mtime, size, lines, path },
+      logs,
       procs,
       summary,
       solcache,

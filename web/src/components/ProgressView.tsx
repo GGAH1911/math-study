@@ -27,6 +27,7 @@ const INGEST_STAGE_LABEL: Record<string, string> = {
 type Data = {
   now: number;
   log: { mtime: number; size: number; lines: string[]; path?: string | null };
+  logs?: { name: string; mtime: number; size: number; live: boolean }[];
   procs: Proc[];
   solcache?: Solcache | null;
   ingest?: Ingest | null;
@@ -62,6 +63,7 @@ export default function ProgressView() {
   const [err, setErr] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [auto, setAuto] = useState(true);
+  const [selectedLog, setSelectedLog] = useState<string | null>(null);
   const logRef = useRef<HTMLPreElement>(null);
   const lastSizeRef = useRef(0);
 
@@ -70,7 +72,8 @@ export default function ProgressView() {
     let timer: number | null = null;
     const fetchOnce = async () => {
       try {
-        const r = await fetch('/api/progress', { cache: 'no-store' });
+        const u = selectedLog ? `/api/progress?log=${encodeURIComponent(selectedLog)}` : '/api/progress';
+        const r = await fetch(u, { cache: 'no-store' });
         const j = (await r.json()) as Data;
         if (!cancelled) {
           setData(j);
@@ -86,7 +89,7 @@ export default function ProgressView() {
       cancelled = true;
       if (timer) window.clearTimeout(timer);
     };
-  }, [paused]);
+  }, [paused, selectedLog]);
 
   useEffect(() => {
     if (!data || !auto || !logRef.current) return;
@@ -125,7 +128,24 @@ export default function ProgressView() {
       {/* Log */}
       <section className="card p-0 overflow-hidden">
         <header className="flex items-center justify-between px-4 py-2 border-b border-zinc-800 bg-zinc-900/50">
-          <h2 className="text-sm font-semibold text-zinc-200 font-mono">{data.log.path ? data.log.path.split('/').pop() : '로그 없음'}</h2>
+          <div className="flex items-center gap-2 min-w-0">
+            <select
+              value={selectedLog ?? ''}
+              onChange={(e) => setSelectedLog(e.target.value || null)}
+              className="bg-zinc-900 border border-zinc-700 rounded text-xs font-mono text-zinc-200 px-2 py-1 max-w-[260px]"
+              title="진행 로그 선택"
+            >
+              <option value="">🔄 자동 (최신 로그)</option>
+              {(data.logs ?? []).map((l) => (
+                <option key={l.name} value={l.name}>
+                  {l.live ? '🟢' : '⚪'} {l.name} ({(l.size / 1024).toFixed(0)}KB)
+                </option>
+              ))}
+            </select>
+            {!selectedLog && data.log.path && (
+              <span className="text-[11px] text-zinc-500 font-mono truncate">→ {data.log.path.split('/').pop()}</span>
+            )}
+          </div>
           <div className="flex items-center gap-3 text-xs text-zinc-500">
             <span>{log.lines.length} lines · {(log.size/1024).toFixed(1)} KB</span>
             <label className="inline-flex items-center gap-1 cursor-pointer">

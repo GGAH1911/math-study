@@ -1,0 +1,13 @@
+{
+  "text_sha": "5eb1b5951e81",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 삼차다항식 $f(x)$가 다음 조건을 만족시킨다. (가) $f(x)$를 $x^2 - 2x + 2$로 나눈 몫을 $Q(x)$라 할 때, 나머지는 $2x$이다. (나) $f(x)$는 $x - 1$로 나누어떨어진다. $f(3) - f(1)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [],
+    "exam_intent": "다항식 나눗셈과 인수정리로 조건을 만족하는 삼차다항식을 결정하고 함숫값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

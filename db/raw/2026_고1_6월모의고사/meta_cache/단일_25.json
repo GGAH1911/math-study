@@ -1,0 +1,17 @@
+{
+  "text_sha": "e0c1139e186c",
+  "meta": {
+    "searchable_text": "복소수 $z$에 대하여 특정 조건을 만족시키는 10 이하의 모든 자연수 $n$의 값의 합을 구하시오. (단, $z \\neq 0$이고, $\\bar{z}$는 $z$의 켤레복소수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수",
+      "켤레복소수",
+      "절댓값"
+    ],
+    "exam_intent": "복소수의 성질과 조건을 활용하여 만족하는 자연수를 찾는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "3de4a8ac53de",
+  "meta": {
+    "searchable_text": "다항식 $P(x)$가 모든 실수 $x$에 대하여 조건식을 만족시킨다. $P(0)$과 $P(1)$의 값이 주어질 때, $P(2)$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_함수값",
+      "조건식_활용"
+    ],
+    "exam_intent": "주어진 다항식 관계식을 이용해 함수값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

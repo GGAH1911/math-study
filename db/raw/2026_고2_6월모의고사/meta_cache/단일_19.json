@@ -1,0 +1,17 @@
+{
+  "text_sha": "be323dfae972",
+  "meta": {
+    "searchable_text": "자연수 $n \\geq 2$에 대하여 $401$의 $n$제곱근 중 실수인 것의 개수를 $a(n)$이라 할 때, $\\frac{\\log_2 a(n)}{a(n) \\times 3^{a(n)}} \\times 15$의 값이 정수가 되도록 하는 50 이하의 모든 $n$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "지수방정식",
+      "정수조건"
+    ],
+    "exam_intent": "양수의 n제곱근 개수와 로그식의 정수성 조건을 동시에 만족하는 자연수를 판정",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

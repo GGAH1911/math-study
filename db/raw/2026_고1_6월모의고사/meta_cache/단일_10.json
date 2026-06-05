@@ -1,0 +1,16 @@
+{
+  "text_sha": "cc41d844da66",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차부등식을 만족시키는 모든 정수 $x$의 개수가 5가 되도록 하는 실수 매개변수의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "정수해_개수"
+    ],
+    "exam_intent": "정수해 개수 조건에서 이차부등식 매개변수의 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "d19fcbb92ed8",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 삼각형 ABC의 외접원의 넓이는?\n(가) BC = 3\n(나) cos A · cos B = 1/2",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "정현법칙",
+      "코사인_법칙",
+      "외접원"
+    ],
+    "exam_intent": "정현법칙으로 외접원 반지름을 구하고 넓이를 계산하는 기본 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "cea1e6ddef47",
+  "meta": {
+    "searchable_text": "실수 $a$ ($a \\neq 0$)과 양수 $b$에 대하여 함수 $f(x) = a \\cos(bx)$의 최댓값이 18이고 주기가 $3\\pi$일 때, 어떤 식의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값",
+      "주기"
+    ],
+    "exam_intent": "삼각함수의 최댓값과 주기 조건으로부터 계수를 결정하고 식의 값을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

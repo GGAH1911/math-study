@@ -35,7 +35,8 @@ from ingest_round import (  # noqa: E402
     load_concept_index, classify_subject, download,
     ROOT, DOCS_PROBLEMS, TODAY,
 )
-from answer_textlayer import parse_answer_table, has_text_layer  # noqa: E402  (정답표 텍스트레이어 우선)
+from answer_textlayer import (parse_answer_table, parse_single_answer_table,  # noqa: E402
+                              has_text_layer)  # 정답표 텍스트레이어 우선
 import fitz  # noqa: E402
 from PIL import Image  # noqa: E402
 
@@ -319,12 +320,16 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         return {'round': round_slug, 'ok': False, 'reason': 'no problem bboxes detected'}
     print(f'  ✓ {len(entries)} problems located via PDF text-layer', flush=True)
 
-    # 통합형(선택과목 폐지, 30문항 단일) 회차 — 예: 2028 수능 예시문항.
-    # bbox는 영역 헤더가 없으면 전 문항을 '공통'으로 찍으나, 이 경우 '단일'이 맞다.
-    if single:
+    # 단일과목 회차 — 통합형(--single, 예: 2028 예시) + 교육청 고1/고2 학평 +
+    # 검정고시. bbox는 영역 헤더가 없으면 전 문항을 '공통'으로 찍으나 '단일'이 맞다.
+    # (모의고사/학력평가 고3은 공통+선택이라 제외.)
+    is_single_subject = single or (
+        exam_type in ('모의고사', '학력평가', '검정고시') and grade != '고3')
+    if is_single_subject:
         for e in entries:
             e['subject'] = '단일'
-        print('  · --single: 전 문항 subject=단일 (통합형)', flush=True)
+        _tag = '통합형(--single)' if single else f'{exam_type} {grade or ""}'.strip()
+        print(f'  · 전 문항 subject=단일 ({_tag})', flush=True)
 
     # Step 3: crop each problem PNG
     images_dir = raw / 'images'
@@ -496,6 +501,20 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
                     print(f'  ✓ answers: textlayer 좌표파싱 ({len(flat)} entries)', flush=True)
             except Exception as e:
                 print(f'  ⚠ textlayer 파싱 실패: {e} → vision 폴백', flush=True)
+                answers = None
+        elif default_ans_subj == '단일' and ans_pdf.exists() and has_text_layer(ans_pdf):
+            # 단일과목(교육청 고1/고2 학평 등): 단답형이 HyhwpEQ 수식폰트 PUA 글리프라
+            # 비전이 자주 틀린다 → 좌표/PUA 디코딩이 정확(고1·고2 2026-6월 60/60 실측).
+            try:
+                flat = parse_single_answer_table(ans_pdf)  # {'단일': {num: ans}}
+                got = flat.get('단일', {})
+                if len(got) >= max(20, int(0.7 * len(entries))):
+                    answers = flat
+                    print(f'  ✓ answers: textlayer PUA 디코딩 ({len(got)} entries)', flush=True)
+                else:
+                    print(f'  ⚠ 단일 textlayer 부족({len(got)}) → vision 폴백', flush=True)
+            except Exception as e:
+                print(f'  ⚠ 단일 textlayer 실패: {e} → vision 폴백', flush=True)
                 answers = None
         if answers is None:
             answers = extract_answers(ans_pdf, work, default_subject=default_ans_subj,

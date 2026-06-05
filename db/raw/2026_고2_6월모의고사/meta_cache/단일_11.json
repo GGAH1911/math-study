@@ -1,0 +1,16 @@
+{
+  "text_sha": "4396d059d63d",
+  "meta": {
+    "searchable_text": "직선 $x = a$가 두 곡선 $y = x^2\\log_2 x$, $y = -x\\log_2 x$와 만나는 점을 각각 A, B라 하자. $3 \\le |AB| \\le 6$이 되도록 하는 모든 자연수 $a$의 값의 합은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_그래프",
+      "직선과_곡선의_교점"
+    ],
+    "exam_intent": "로그함수의 성질을 이용하여 교점 간 거리 조건을 만족하는 매개변수 찾기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

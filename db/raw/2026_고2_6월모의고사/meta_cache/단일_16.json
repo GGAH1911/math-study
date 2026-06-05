@@ -1,0 +1,17 @@
+{
+  "text_sha": "97a85c2ee7d4",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 8에서 정의된 함수 $f(x) = 2x - 3\\sin\\frac{\\pi x}{4}$가 있다. 곡선 $y = f(x)$가 직선과 만나는 두 점을 x축에서 가까운 순서대로 A, B라 하고, 곡선이 다른 직선과 만나는 두 점을 x축에서 가까운 순서대로 C, D라 하자. 직선 AC의 기울기가 $\\frac{2}{3}$일 때, 사각형 ACDB의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "교점과_기울기_조건",
+      "도형의_넓이"
+    ],
+    "exam_intent": "삼각함수 그래프의 교점과 기울기 조건을 이용한 도형의 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

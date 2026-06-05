@@ -1,0 +1,15 @@
+{
+  "text_sha": "75b739805e58",
+  "meta": {
+    "searchable_text": "√4, √1, √2를 포함하는 식의 값은? (단, 조건 적용)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "제곱근"
+    ],
+    "exam_intent": "제곱근의 기본 성질과 계산 능력을 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

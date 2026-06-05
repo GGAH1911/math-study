@@ -1,0 +1,17 @@
+{
+  "text_sha": "8e827c4ebef8",
+  "meta": {
+    "searchable_text": "\\angle B = 90^\\circ 인 직각삼각형 ABC가 있다. 점 B에서 선분 AC에 내린 수선의 발을 H라 하고, 선분 AB, 선분 BC의 중점을 각각 M, N이라 하자. 삼각형 ABC의 넓이가 10이고 AC = 2\\sqrt{14}일 때, MH^3 + NH^3의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "직각삼각형",
+      "수선의_발",
+      "중점"
+    ],
+    "exam_intent": "직각삼각형의 수선의 발과 중점을 이용한 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

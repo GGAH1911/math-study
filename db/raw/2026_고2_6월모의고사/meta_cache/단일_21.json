@@ -1,0 +1,16 @@
+{
+  "text_sha": "f7b213baaa50",
+  "meta": {
+    "searchable_text": "함수 f(x)가 조건에 따라 정의되고(지수함수와 로그함수 포함), 주어진 조건을 만족하는 모든 양수 x의 값 범위가 주어질 때, 함수의 그래프가 두 직선 y=k, y=2x와 만나는 점의 개수가 각각 3개, 2개가 되도록 하는 양수 a가 존재한다. 상수값을 구하는 문제.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "교점의_개수"
+    ],
+    "exam_intent": "분할함수의 그래프와 직선의 교점 조건을 분석하여 상수값을 결정할 수 있는가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

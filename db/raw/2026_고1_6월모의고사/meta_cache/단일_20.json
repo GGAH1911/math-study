@@ -1,0 +1,17 @@
+{
+  "text_sha": "81f106fd793d",
+  "meta": {
+    "searchable_text": "1 ≤ m ≤ 5, 1 ≤ n ≤ 10인 두 정수 m, n에 대하여 x에 대한 연립부등식 x² - mx + n ≥ 0, x² - mx - n < 0을 만족시키는 정수 x의 개수가 1이 되도록 하는 m, n의 모든 순서쌍 (m, n)의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "이차부등식",
+      "정수해"
+    ],
+    "exam_intent": "연립부등식의 정수해 개수 조건으로 모수 범위를 제약하는 경우의 수",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

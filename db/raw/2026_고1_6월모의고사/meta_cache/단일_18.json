@@ -1,0 +1,18 @@
+{
+  "text_sha": "8ee6204f99a8",
+  "meta": {
+    "searchable_text": "한 변의 길이가 2인 정사각형 ABCD에서 선분 BC의 연장선 위에 $BF = CG$가 되도록 두 점 F, G를 잡는다. 선분 FG를 한 변으로 하고 점 E를 꼭짓점으로 갖는 정삼각형 EFG가 선분 AD와 두 점에서 만난다. 선분 EF가 선분 AD, 선분 AB와 만나는 점을 각각 H, I라 하고, 선분 EG가 선분 AD, 선분 CD와 만나는 점을 각각 J, K라 하자. 삼각형 EHJ의 넓이와 삼각형 AIH의 넓이의 합의 최솟값은? (단, $\\frac{3}{2} < BF < 3$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "기본_도형",
+    "concepts": [
+      "정삼각형",
+      "좌표",
+      "넓이",
+      "최적화"
+    ],
+    "exam_intent": "좌표를 이용한 정삼각형의 기하적 성질 이해 및 넓이 최적화 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}
