@@ -1,0 +1,25 @@
+{
+  "description": "현재 모델이 신뢰성 있게 풀지 못하는 '천장(ceiling)' 문제 목록. 정답·이미지는 정상이고 풀이는 수동 검증·주입돼 있으나, 파이프라인의 blind 추론(코드 없이)으로는 답을 내지 못한다. 모델이 업데이트되면 `python scripts/recheck_ceiling.py` 로 재점검해, 이제 풀리면 정식 캐시로 승격하고 목록에서 제거한다.",
+  "problems": [
+    {
+      "slug": "2021_고3_4월모의고사_확률과통계_28",
+      "answer": "5",
+      "unit": "경우의_수",
+      "killer_tier": "killer",
+      "reason": "도로망 최단경로(한 번 지난 도로 재사용 금지) 킬러. blind 추론이 수렴하지 않음 — 순진한 곱 7×16=112가 보기에 없어(① 78 … ⑤ 94) 끝없이 재검토하며 확신·종료를 못 하고 답 미출력(timeout). 핵심 통찰은 'P 바로 아래 도로를 왕복하는 중복 18을 빼서 94'. 사람은 종이로 2~3분에 푸는 문제지만 모델은 못 냄.",
+      "human_solvable": true,
+      "conditions_tested": [
+        "Read-only · effort=max · 15분 timeout → 답 0",
+        "Read-only · effort=high · 5분 → 답 0",
+        "Bash 허용 · 5분 → 코드 0 · 답 0",
+        "Bash + '코드로 계산하라' 명시 · 4분 → 코드 0 · 답 0"
+      ],
+      "resolution": "정답 ⑤=94 수동 검증(graph-enumeration)·주입, frontmatter verified:true, generated_by:manual",
+      "first_flagged": "2026-06-06",
+      "model_when_flagged": "claude-opus (2026-06 기준 opus 4.x)",
+      "status": "ceiling",
+      "last_checked": null,
+      "last_result": null
+    }
+  ]
+}
