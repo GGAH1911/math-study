@@ -1,0 +1,15 @@
+{
+  "text_sha": "f6d70ddcb0d3",
+  "meta": {
+    "searchable_text": "$\\log_3 x = 3$일 때, $x$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의"
+    ],
+    "exam_intent": "로그의 정의를 이용한 기본 지수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "4517ca222c49",
+  "meta": {
+    "searchable_text": "다항식 (텍스트레이어 글리프 ⋄2⋄1⋄7 미분석)의 전개식에서 (텍스트레이어 글리프 ⋄2 미분석)의 계수를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "다항정리"
+    ],
+    "exam_intent": "다항정리를 이용한 전개식에서 특정 항의 계수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

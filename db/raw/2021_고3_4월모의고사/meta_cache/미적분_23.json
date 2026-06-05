@@ -1,0 +1,16 @@
+{
+  "text_sha": "8c069724ac10",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{\\sqrt{3n+1}}{2\\sqrt{n} + 3\\sqrt{n} + 1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무리식_극한",
+      "최고차항_비교"
+    ],
+    "exam_intent": "무리식을 포함한 수열의 극한값 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

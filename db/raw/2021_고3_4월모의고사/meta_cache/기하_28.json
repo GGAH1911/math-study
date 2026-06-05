@@ -1,0 +1,19 @@
+{
+  "text_sha": "0479e61d1ffa",
+  "meta": {
+    "searchable_text": "좌표평면에서 두 점 $F$, $F'$을 초점으로 하는 타원과 포물선 $y^2 = 9x$가 제1사분면에서 만나는 점을 $P$라 하자. 포물선 $y^2 = 9x$ 위의 점 $P$에서의 접선이 점 $F'$을 지날 때, 타원의 단축의 길이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원",
+      "포물선",
+      "초점",
+      "접선",
+      "이심률"
+    ],
+    "exam_intent": "타원과 포물선의 교점에서 접선의 기하학적 성질을 이용해 타원의 매개변수를 구하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

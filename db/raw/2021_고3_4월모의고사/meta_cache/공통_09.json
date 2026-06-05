@@ -1,0 +1,17 @@
+{
+  "text_sha": "ea5a3f10e541",
+  "meta": {
+    "searchable_text": "두 함수 $f(x)$, $g(x)$가 $$\\lim_{x \\to \\infty} (f(x) + 2g(x)) = 3, \\quad \\lim_{x \\to \\infty} (f(x) - g(x)) = \\infty$$를 만족할 때, $$\\lim_{x \\to \\infty} \\frac{f(x) + 3g(x)}{4g(x)}$$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_성질",
+      "부정형",
+      "함수의_극한"
+    ],
+    "exam_intent": "함수의 극한 조건으로부터 다른 극한값을 연역적으로 도출",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

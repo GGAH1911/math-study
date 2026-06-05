@@ -1,0 +1,18 @@
+{
+  "text_sha": "f598711ff99d",
+  "meta": {
+    "searchable_text": "양수 $p$에 대하여 기울기가 $\\frac{\\sqrt{2}}{2}$인 직선이 타원 $\\frac{x^2}{36} + \\frac{y^2}{16} = 1$과 포물선 $y^2 = 2px$에 동시에 접할 때, 포물선 $y^2 = 2px$의 초점의 $x$좌표는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_방정식",
+      "포물선의_방정식",
+      "공통_접선_조건",
+      "곡선의_초점"
+    ],
+    "exam_intent": "타원과 포물선의 공통 접선 조건으로부터 매개변수를 결정하고 포물선의 초점 좌표를 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

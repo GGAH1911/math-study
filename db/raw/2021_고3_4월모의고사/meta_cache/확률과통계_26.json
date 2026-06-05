@@ -1,0 +1,15 @@
+{
+  "text_sha": "e62bc7faf886",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4, 5 중에서 중복을 허락하여 5개를 택해 일렬로 나열하여 만든 다섯 자리의 자연수 중에서 다음 조건을 만족시키는 수의 개수는? (가) 수는 홀수이다. (나) $10000 \\leq \\text{수} < 30000$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복순열"
+    ],
+    "exam_intent": "범위와 홀수 조건을 만족하는 중복순열의 경우의 수를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

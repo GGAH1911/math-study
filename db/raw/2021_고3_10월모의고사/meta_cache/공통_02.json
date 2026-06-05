@@ -1,0 +1,16 @@
+{
+  "text_sha": "dd488c92792e",
+  "meta": {
+    "searchable_text": "수식 기호 손상으로 인해 정확히 파악되지 않으나, 조합(또는 순열)과 관련된 값을 구하는 기본 계산 문제로 보임. 0부터 3까지 또는 1부터 2까지의 인수가 포함된 수식.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합",
+      "경우의_수"
+    ],
+    "exam_intent": "조합 공식 및 기본 경우의 수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "293435964011",
+  "meta": {
+    "searchable_text": "평면 α 위의 두 점 A, B와 평면 α 위에 있지 않은 네 점 C, D, E, F가 있다. 사각형 ABCD는 한 변의 길이가 6인 정사각형이고, 사각형 ABEF는 $AF = 12$인 직사각형이다. 정사각형 ABCD의 평면 α 위로의 정사영의 넓이는 18이고, 점 F의 평면 α 위로의 정사영을 H라 하면 $FH = 6$이다. 정사각형 ABCD의 평면 ABEF 위로의 정사영의 넓이는? (단, $0 < \\angle DAF < \\frac{\\pi}{2}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "정사영의_넓이",
+      "이면각",
+      "공간벡터"
+    ],
+    "exam_intent": "두 평면 사이의 각도를 이용하여 정사영의 넓이를 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

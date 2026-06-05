@@ -1,0 +1,16 @@
+{
+  "text_sha": "147f4571e1f2",
+  "meta": {
+    "searchable_text": "쌍곡선 위의 점 P에서의 접선의 기울기가 2일 때, 매개변수의 값은? (단, 점 P는 제1사분면 위의 점이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "접선"
+    ],
+    "exam_intent": "주어진 기울기를 가진 쌍곡선의 접선으로부터 곡선의 매개변수 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

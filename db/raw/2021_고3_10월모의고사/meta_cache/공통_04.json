@@ -1,0 +1,16 @@
+{
+  "text_sha": "617d1b4b16ac",
+  "meta": {
+    "searchable_text": "공차가 2인 등차수열 $\\{a_n\\}$의 첫째항부터 제10항까지의 합이 325일 때, $a_1$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의_합"
+    ],
+    "exam_intent": "등차수열의 합 조건으로부터 첫째항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

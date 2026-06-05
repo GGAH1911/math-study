@@ -1,0 +1,17 @@
+{
+  "text_sha": "01b1f1a935f0",
+  "meta": {
+    "searchable_text": "함수 f(x) = a sin(bx) (a ≠ 0)에 대하여 다음 조건을 만족시키는 모든 실수 a의 값의 합을 구하시오. (가) ∫₀^(π/|a|) f(x) dx ≥ 1/2 (나) 0 ≤ x ≤ 1인 모든 실수 x에 대하여 f'(3x) ≥ f(3x)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분의_계산",
+      "삼각함수의_미분",
+      "조건을_만족하는_값"
+    ],
+    "exam_intent": "삼각함수의 적분과 미분 조건을 만족하는 모든 매개변수값의 합 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

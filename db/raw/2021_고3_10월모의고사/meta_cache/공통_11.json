@@ -1,0 +1,17 @@
+{
+  "text_sha": "b6d462c8013e",
+  "meta": {
+    "searchable_text": "닫힌구간 $[0, 2\\pi]$에서 정의된 함수 $f(x)$는\n$$f(x) = \\begin{cases}\n\\sin x, & 0 \\le x \\le \\frac{\\pi}{6} \\\\\n2\\sin\\left(x - \\frac{\\pi}{6}\\right), & \\frac{\\pi}{6} < x \\le 2\\pi\n\\end{cases}$$\n곡선 $y = f(x)$와 직선 $y = \\sin\\left(x - \\frac{\\pi}{6}\\right)$의 교점의 개수를 $k$라 할 때, 조건에 따른 교점 개수의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_그래프",
+      "교점_개수",
+      "구간별_함수"
+    ],
+    "exam_intent": "삼각함수와 직선의 교점 개수를 조건별로 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

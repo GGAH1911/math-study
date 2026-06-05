@@ -1,0 +1,16 @@
+{
+  "text_sha": "0f67ba630c0c",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 t(t≥0)에서의 속도 v(t)가 t²-4t일 때, 시각 t=0에서 t=4까지 점 P가 움직인 거리를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "거리와_변위"
+    ],
+    "exam_intent": "속도 함수의 정적분으로 움직인 거리를 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

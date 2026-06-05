@@ -1,0 +1,16 @@
+{
+  "text_sha": "6af43477c790",
+  "meta": {
+    "searchable_text": "수열에 대하여 급수 조건이 주어졌을 때, $\\lim_{n \\to \\infty}$로 주어진 극한값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "급수의_합",
+      "수열의_극한"
+    ],
+    "exam_intent": "급수 조건에서 수열의 극한값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

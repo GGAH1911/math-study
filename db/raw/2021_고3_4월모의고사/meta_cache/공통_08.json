@@ -1,0 +1,16 @@
+{
+  "text_sha": "17a04a51c17e",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\begin{cases} \\text{식}_1 & (x < 2) \\\\ \\text{식}_2 & (x \\geq 2) \\end{cases}$가 $x = 2$에서 연속일 때, 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_연속성",
+      "극한값"
+    ],
+    "exam_intent": "구간별 정의 함수의 연속성 조건으로 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

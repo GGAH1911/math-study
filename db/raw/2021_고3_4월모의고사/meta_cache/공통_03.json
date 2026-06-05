@@ -1,0 +1,16 @@
+{
+  "text_sha": "9969a1d8f57b",
+  "meta": {
+    "searchable_text": "닫힌구간 [0, 4]에서 함수의 최댓값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_최댓값",
+      "폐구간"
+    ],
+    "exam_intent": "폐구간에서 함수의 최댓값을 구하는 기초 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

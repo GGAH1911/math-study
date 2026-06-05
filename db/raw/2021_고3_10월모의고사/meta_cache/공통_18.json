@@ -1,0 +1,17 @@
+{
+  "text_sha": "be5f6c9b3c00",
+  "meta": {
+    "searchable_text": "3 이상의 자연수 $n$에 대하여 두 곡선이 직선 $y=1$과 만나는 점을 각각 A, B라 하고, 두 곡선이 직선 $y=2$와 만나는 점을 각각 C, D라 하자. 사다리꼴 ABDC의 넓이가 18 이하가 되도록 하는 모든 자연수 $n$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "교점의_좌표",
+      "사다리꼴의_넓이",
+      "부등식_조건"
+    ],
+    "exam_intent": "곡선-직선 교점과 사다리꼴 넓이를 통해 매개변수 범위를 구하고 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

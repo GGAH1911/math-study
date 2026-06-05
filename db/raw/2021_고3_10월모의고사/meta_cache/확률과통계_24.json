@@ -1,0 +1,17 @@
+{
+  "text_sha": "cad38c8ce01c",
+  "meta": {
+    "searchable_text": "두 사건 $A$와 $B$는 서로 배반사건이고 $P(A) = \\frac{1}{3}$, 여사건 $A^c$와 사건 $B$에 대한 조건이 주어질 때, $P(A \\cup B)$의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "배반사건",
+      "확률의_덧셈_정리",
+      "여사건의_확률"
+    ],
+    "exam_intent": "배반사건의 성질과 확률 덧셈 정리의 실행 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

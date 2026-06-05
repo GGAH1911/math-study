@@ -1,0 +1,16 @@
+{
+  "text_sha": "d9c3c6096d42",
+  "meta": {
+    "searchable_text": "$AB=6$, $AC=8$인 예각삼각형 $ABC$에서 $\\angle A$의 이등분선과 삼각형 $ABC$의 외접원이 만나는 점을 $D$, 점 $D$에서 선분 $AC$에 내린 수선의 발을 $E$라 하자. 선분 $AE$의 길이를 $\\ell$이라 할 때, $12\\ell$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "각의_이등분선",
+      "외접원"
+    ],
+    "exam_intent": "각의 이등분선 성질과 외접원을 이용한 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "cc52f9ca9101",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$는 극한 조건을 만족시키고, 함수 $g(x)$는 분수형태이며 $x \\neq 3$이다. 두 함수 $f$, $g$에 대하여 함수 $g$가 실수 전체의 집합에서 연속일 때, 함수값을 구하는 문제이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "함수의_연속성",
+      "불연속점_제거"
+    ],
+    "exam_intent": "극한 조건과 연속성 조건을 동시에 이용하여 다항함수 결정하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

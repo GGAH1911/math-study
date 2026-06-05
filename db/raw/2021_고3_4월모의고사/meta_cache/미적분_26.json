@@ -1,0 +1,17 @@
+{
+  "text_sha": "6bd8f4b9953f",
+  "meta": {
+    "searchable_text": "좌표평면에서 양의 실수 $a$에 대하여 직선이 두 곡선 $y = x^2$, $y = x^3$과 만나는 점을 각각 P, Q라 할 때, 조건을 만족시키는 $a$의 값을 $f(a)$라 하자. 함수 $f$에 대하여 $\\lim_{a \\to 0} \\frac{f(a)}{a}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "함수의극한",
+      "곡선과직선",
+      "거리함수"
+    ],
+    "exam_intent": "곡선과 직선의 교점으로부터 정의된 거리 함수의 극한을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

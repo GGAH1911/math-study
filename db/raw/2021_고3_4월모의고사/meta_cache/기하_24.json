@@ -1,0 +1,17 @@
+{
+  "text_sha": "e6d1e6e6af58",
+  "meta": {
+    "searchable_text": "쌍곡선 $\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1$ 위의 점에서의 접선의 y절편은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "접선",
+      "절편"
+    ],
+    "exam_intent": "쌍곡선 위의 점에서 접선 방정식을 세우고 y절편을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

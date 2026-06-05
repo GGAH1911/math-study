@@ -1,0 +1,16 @@
+{
+  "text_sha": "d8a370878d6d",
+  "meta": {
+    "searchable_text": "그림과 같이 AB = 1, BC = 2인 삼각형 ABC에 대하여 선분 AC의 중점을 M이라 하고, 점 M을 지나고 선분 AB에 평행한 직선이 선분 BC와 만나는 점을 D라 하자. ∠BAC의 이등분선이 두 직선 BC, DM과 만나는 점을 각각 E, F라 하자. ∠CBA = θ일 때, 삼각형 ABE의 넓이를 $S_1$, 삼각형 DFC의 넓이를 $S_2$라 하자. $\\lim_{\\theta \\to 0^+} \\frac{S_2}{S_1}$의 값은? (단, $0 < \\theta < \\frac{\\pi}{2}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "각의_이등분선"
+    ],
+    "exam_intent": "각도 변수에 따른 기하학적 도형의 넓이 극한을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

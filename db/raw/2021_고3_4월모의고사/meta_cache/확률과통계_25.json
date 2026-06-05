@@ -1,0 +1,16 @@
+{
+  "text_sha": "ed5417b99973",
+  "meta": {
+    "searchable_text": "빨간색 볼펜 5자루와 파란색 볼펜 2자루를 4명의 학생에게 남김없이 나누어 주는 경우의 수. 같은 색 볼펜끼리는 서로 구별하지 않고, 볼펜을 1자루도 받지 못하는 학생이 있을 수 있다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "분배"
+    ],
+    "exam_intent": "중복조합을 이용한 색상별 분배 문제 해결",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,1 @@
+import sympy as sp; t = sp.Symbol('t', positive=True); x = t * sp.ln(t); y = 4*t / sp.ln(t); dx_dt = sp.diff(x, t); dy_dt = sp.diff(y, t); t_val = sp.exp(2); dx_val = dx_dt.subs(t, t_val); dy_val = dy_dt.subs(t, t_val); v = sp.sqrt(dx_val**2 + dy_val**2); print('VERIFY_PASS' if sp.simplify(v - sp.sqrt(10)) == 0 else f'VERIFY_FAIL: {v}')

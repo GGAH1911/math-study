@@ -1,0 +1,17 @@
+{
+  "text_sha": "a9e805073b5c",
+  "meta": {
+    "searchable_text": "공차가 2인 등차수열 $\\{a_n\\}$에 대하여 $a_5 - a_2$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차",
+      "일반항"
+    ],
+    "exam_intent": "등차수열에서 공차를 이용해 두 항의 차를 구하는 기초 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "6ee37a7241d6",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB = 4$, $CD = 8$, $BC = BD = 4\\sqrt{5}$인 사면체 $ABCD$에 대하여 직선 $AB$와 평면 $ACD$는 서로 수직이다. 두 선분 $CD$, $DB$의 중점을 각각 $M$, $N$이라 할 때, 선분 $AM$ 위의 점 $P$에 대하여 선분 $DB$와 선분 $PN$은 서로 수직이다. 두 평면 $PDB$와 $CDB$가 이루는 예각의 크기를 $\\theta$라 할 때, $40\\cos^2\\theta$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "직선과_평면의_수직",
+      "공간벡터",
+      "두_평면이_이루는_각",
+      "중점과_선분의_위치_관계"
+    ],
+    "exam_intent": "직선과 평면의 수직 관계, 공간벡터를 활용한 점의 위치 결정 및 두 평면이 이루는 각 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

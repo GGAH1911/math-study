@@ -1,0 +1,18 @@
+{
+  "text_sha": "5893f66d6cc5",
+  "meta": {
+    "searchable_text": "그림과 같이 변 AD가 변 BC와 평행하고 ∠CBA = ∠DCB인 사다리꼴 ABCD가 있다. AD = 2, BC = 4, AB = AC = 2√5일 때, BD의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "사다리꼴",
+      "이등변삼각형",
+      "각도조건",
+      "코사인_법칙"
+    ],
+    "exam_intent": "사다리꼴 각도 조건에서 코사인 법칙으로 대각선 길이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

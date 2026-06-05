@@ -1,0 +1,17 @@
+{
+  "text_sha": "05377325ab0b",
+  "meta": {
+    "searchable_text": "$n \\geq 4$인 자연수에 대하여 $n$ 이하의 네 자연수 $a, b, c, d$가 있다. 좌표평면 위의 두 점 $A(a, b)$, $B(c, d)$와 원점 $O$에 대하여 삼각형 $OAB$는 점 $A$에서 직각이고 $|OA| = |AB|$인 직각이등변삼각형이다. 조건 $\\vec{OA} \\perp \\vec{AB}$와 $|\\vec{OA}| = |\\vec{AB}|$를 동시에 만족하는 순서쌍 $(a, b, c, d)$의 개수 $S_n$을 구하는 과정을 제시한다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "조건_만족_경우의_수",
+      "벡터의_수직_조건",
+      "거리_조건"
+    ],
+    "exam_intent": "벡터의 수직·거리 조건으로 정의된 기하 상황에서 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

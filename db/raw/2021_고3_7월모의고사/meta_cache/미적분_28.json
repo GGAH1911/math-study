@@ -1,0 +1,16 @@
+{
+  "text_sha": "4be4294238c5",
+  "meta": {
+    "searchable_text": "반지름이 5인 원에 내접하고, AB = AC인 삼각형 ABC가 있다. ∠BAC = θ라 하고, 점 B를 지나고 직선 AB에 수직인 직선이 원과 만나는 점 중 B가 아닌 점을 D, 직선 BD와 직선 AC가 만나는 점을 E라 하자. 삼각형 ABC의 넓이를 $S_1$, 삼각형 CDE의 넓이를 $S_2$라 할 때, $\\lim_{\\theta \\to 0^+} \\frac{S_1^2 \\times S_2}{\\theta^3}$의 값은? (단, $0 < \\theta < \\frac{\\pi}{2}$)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_성질",
+      "기하학적_극한값_계산"
+    ],
+    "exam_intent": "기하학적 조건에서 두 영역의 넓이 극한값을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

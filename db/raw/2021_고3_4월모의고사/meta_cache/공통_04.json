@@ -1,0 +1,16 @@
+{
+  "text_sha": "4e6f8ae90c44",
+  "meta": {
+    "searchable_text": "함수 $f$의 그래프가 그림과 같다. $\\lim_{x \\to 1} f(x) + \\lim_{x \\to 2} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한값",
+      "그래프_해석"
+    ],
+    "exam_intent": "그래프에서 함수의 극한값을 읽고 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); result = sp.integrate(6/x**2, (x, 2, 4)); answer = sp.Rational(3, 2); print('VERIFY_PASS' if result == answer else 'VERIFY_FAIL')

@@ -1,0 +1,16 @@
+{
+  "text_sha": "8d133c5c1aa3",
+  "meta": {
+    "searchable_text": "두 양수 $a$, $b$에 대하여 함수 $f(x) = ax^2 + b$라 하자. $\\int_0^2 f(x)\\,dx = \\frac{6}{11}$, $\\int_0^3 f(x)\\,dx = 8$일 때, 곡선 $y = f(x)$와 $x$축으로 둘러싸인 부분의 넓이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분과_넓이",
+      "함수의_정적분"
+    ],
+    "exam_intent": "적분 조건으로부터 함수의 계수를 결정하고 곡선과 축 사이의 넓이를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

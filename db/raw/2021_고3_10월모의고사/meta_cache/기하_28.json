@@ -1,0 +1,18 @@
+{
+  "text_sha": "5a65a1762d1e",
+  "meta": {
+    "searchable_text": "삼각형 ABC의 내부의 점 P가 다음 조건을 만족시킨다. (가) $\\vec{PA} \\cdot \\vec{PC} = 0$, $\\frac{|\\vec{PC}|}{|\\vec{PA}|} = 3$ (나) [벡터 내적 조건] 직선 AP와 선분 BC의 교점을 D라 할 때, $\\frac{|AD|}{|PD|}$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "수직_조건",
+      "좌표계_설정",
+      "길이_비와_내분"
+    ],
+    "exam_intent": "벡터 내적 조건으로부터 점의 위치를 결정하고 직선 교점의 분할 비를 구하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

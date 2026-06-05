@@ -1,0 +1,18 @@
+{
+  "text_sha": "6cbff2dd8d96",
+  "meta": {
+    "searchable_text": "한 변의 길이가 4인 정삼각형 $ABC$를 한 면으로 하는 사면체 $ABCD$의 꼭짓점 $A$에서 평면 $BCD$에 내린 수선의 발을 $H$라 할 때, 점 $H$는 삼각형 $BCD$의 내부에 놓여 있다. 직선 $DH$가 선분 $BC$와 만나는 점을 $E$라 할 때, 점 $E$가 다음 조건을 만족시킨다. (가) $\\angle AEH = \\angle DAH$ (나) 점 $E$는 선분 $CD$를 지름으로 하는 원 위의 점이고 $DE = 4$이다. 삼각형 $AHD$의 평면 $ABD$ 위로의 정사영의 넓이는 $\\frac{a}{b}$이다. 분자와 분모의 합을 구하시오. (단, $a$와 $b$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "사면체의_성질",
+      "수선과_정사영",
+      "각의_크기_관계",
+      "원의_성질"
+    ],
+    "exam_intent": "공간도형의 조건 해석과 정사영 넓이 계산 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

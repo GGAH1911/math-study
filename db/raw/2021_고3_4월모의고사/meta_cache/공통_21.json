@@ -1,0 +1,17 @@
+{
+  "text_sha": "cfa4201f4279",
+  "meta": {
+    "searchable_text": "첫째항이 자연수인 수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 특정 부등식 점화식을 만족시킨다. $a_{15}=0$이 되도록 하는 $a_1$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "부등식",
+      "최솟값"
+    ],
+    "exam_intent": "부등식 점화식 조건을 분석하여 첫째항의 최솟값을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

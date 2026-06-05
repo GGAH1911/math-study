@@ -1,0 +1,15 @@
+{
+  "text_sha": "5cf278a032b6",
+  "meta": {
+    "searchable_text": "같은 종류의 공책 10권을 4명의 학생 $A, B, C, D$에게 남김없이 나누어 줄 때, $A$와 $B$가 각각 2권 이상의 공책을 받도록 나누어 주는 경우의 수. (단, 공책을 받지 못하는 학생이 있을 수 있다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합"
+    ],
+    "exam_intent": "제약조건부 중복조합의 변수 치환과 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

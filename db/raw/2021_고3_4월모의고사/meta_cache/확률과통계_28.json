@@ -1,0 +1,17 @@
+{
+  "text_sha": "9b406a00916f",
+  "meta": {
+    "searchable_text": "직사각형 모양으로 연결된 도로망을 따라 A지점에서 출발하여 P지점을 지나 B지점으로 갈 때, 한 번 지난 도로는 다시 지나지 않으면서 최단거리로 가는 경우의 수",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "경우의_수",
+    "concepts": [
+      "경로의_경우의_수",
+      "최단경로",
+      "격자_경로"
+    ],
+    "exam_intent": "직사각형 도로망에서 중복 없이 최단경로로 가는 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

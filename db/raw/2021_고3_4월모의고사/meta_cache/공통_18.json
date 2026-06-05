@@ -1,0 +1,16 @@
+{
+  "text_sha": "f2bd51d9cc57",
+  "meta": {
+    "searchable_text": "다항함수 f(x)에 대하여 함수 g(x)를 g(x)=[f(x)]²+x²+c로 정의하자. 함수 g(x)가 x=3에서 극솟값 2를 가질 때, f'(3)의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "극값과_도함수",
+      "합성함수의_미분"
+    ],
+    "exam_intent": "극솟값 조건에서 도함수 값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "dc6a173230b8",
+  "meta": {
+    "searchable_text": "한 개의 주사위를 두 번 던져서 나오는 눈의 수를 차례로 $a$, $b$라 할 때, 두 수 $a$, $b$의 최대공약수가 홀수일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "기본_확률",
+      "최대공약수의_성질"
+    ],
+    "exam_intent": "최대공약수가 홀수인 조건(짝짝 제외)을 파악하고 확률을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

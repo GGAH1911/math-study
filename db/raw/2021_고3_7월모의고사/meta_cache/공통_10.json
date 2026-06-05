@@ -1,0 +1,16 @@
+{
+  "text_sha": "05c7554aaf52",
+  "meta": {
+    "searchable_text": "0 ≤ θ ≤ 2π일 때, 방정식 $3\\cos 2\\theta - 5\\sin \\theta - 1 = 0$의 모든 해의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_방정식",
+      "배각공식"
+    ],
+    "exam_intent": "배각공식으로 이차화한 삼각함수 방정식의 해의 합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

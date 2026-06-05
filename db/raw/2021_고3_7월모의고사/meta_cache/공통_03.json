@@ -1,0 +1,16 @@
+{
+  "text_sha": "3531fa878691",
+  "meta": {
+    "searchable_text": "함수 $f(x)$에 대하여 $f'(1) = 10$일 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "거듭제곱의_미분"
+    ],
+    "exam_intent": "다항함수의 기본 도함수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

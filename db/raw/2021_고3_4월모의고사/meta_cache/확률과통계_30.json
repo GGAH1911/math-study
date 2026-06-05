@@ -1,0 +1,17 @@
+{
+  "text_sha": "ed58c659c74b",
+  "meta": {
+    "searchable_text": "다음 조건을 만족하는 14 이하의 네 자연수 $a_1, a_2, a_3, a_4$의 모든 순서쌍의 개수를 구하시오.\n(가) $a_1 + a_2 + a_3 + a_4 \\leq 34$\n(나) $a_1, a_3$는 홀수이고 $a_2, a_4$는 짝수이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "변수_치환",
+      "포함배제_원리",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "변수 치환을 통한 제약 조건의 경우의 수",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "0cd82e480a71",
+  "meta": {
+    "searchable_text": "AB : BC : CA = 1 : 2 : 2인 삼각형 ABC가 있다. 삼각형 ABC의 외접원의 넓이가 $28\\pi$일 때, 선분 CA의 길이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "정현법칙",
+      "외접원"
+    ],
+    "exam_intent": "외접원의 넓이 조건을 이용해 삼각형의 변의 길이 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

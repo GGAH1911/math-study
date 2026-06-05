@@ -1,0 +1,16 @@
+{
+  "text_sha": "3251f5a4b1c9",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\log_3(6x)$에 대하여 $f'(9)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "로그함수_미분",
+      "연쇄법칙"
+    ],
+    "exam_intent": "로그함수의 미분 공식과 연쇄법칙 적용 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

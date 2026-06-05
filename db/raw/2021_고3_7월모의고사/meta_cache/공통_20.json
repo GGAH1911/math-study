@@ -1,0 +1,18 @@
+{
+  "text_sha": "c10b0de0e960",
+  "meta": {
+    "searchable_text": "선분 $AB$를 지름으로 하는 원 위의 점 $C$에 대하여 $BC=12\\sqrt{2}$, $\\cos\\angle CAB=\\frac{1}{3}$이다. 선분 $AB$를 $5:4$로 내분하는 점을 $D$라 할 때, 삼각형 $CAD$의 외접원의 넓이는 $\\square\\pi$이다. $\\square$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "지름에_대한_원주각(탈레스)",
+      "삼각비와_직각삼각형",
+      "외접원의_반지름_공식",
+      "내분점"
+    ],
+    "exam_intent": "원의 성질, 삼각비, 외접원 반지름을 종합 적용하는 기하 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

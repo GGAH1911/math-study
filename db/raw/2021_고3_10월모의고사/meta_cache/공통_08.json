@@ -1,0 +1,17 @@
+{
+  "text_sha": "b3ff636d04d7",
+  "meta": {
+    "searchable_text": "2보다 큰 상수 $a$에 대하여 두 곡선 $y = a\\log_2 x$와 $y = \\frac{\\log_2 x}{a}$가 만나는 세 점 P, Q, R의 x좌표를 각각 $x_1, x_2, x_3$이라 하자. 주어진 부등식 조건을 만족할 때, $x_1 + x_3$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "곡선의_교점",
+      "연립방정식"
+    ],
+    "exam_intent": "로그함수의 교점 계산과 부등식 조건 활용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

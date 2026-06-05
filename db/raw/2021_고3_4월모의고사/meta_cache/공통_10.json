@@ -1,0 +1,17 @@
+{
+  "text_sha": "8467e5a4f98a",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 속도가 $v(t) = t^4 - 4t - 10$이다. 점 P의 시각 $a$에서의 위치와 점 P의 시각 $b$ ($b > a$)에서의 위치가 서로 같을 때, 상수 $k$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "속도와_위치_관계",
+      "변위_조건"
+    ],
+    "exam_intent": "속도 함수에서 위치 변화 조건을 이용하여 상수값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "d788d0a55bb0",
+  "meta": {
+    "searchable_text": "1보다 큰 실수 $a$에 대하여 두 곡선 $y = \\log_2(ax)$와 $y = \\log_2\\left(\\frac{4a}{x}\\right)$가 만나는 서로 다른 두 점을 $A$, $B$라 하고, 점 $B$를 지나는 곡선 $y = \\log_2(x)$의 평행이동이 곡선 $y = \\log_2\\left(\\frac{4a}{x}\\right)$와 만나는 점 중 $B$가 아닌 점을 $C$라 하자. 세 점 $A$, $B$, $C$의 $x$좌표를 각각 $x_1$, $x_2$, $x_3$이라 할 때 ($x_1 < x_2$), 다음 중 옳은 것만을 있는 대로 고르시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "함수의_교점",
+      "기울기의_성질"
+    ],
+    "exam_intent": "로그함수의 교점 조건과 기울기 관계식을 분석하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

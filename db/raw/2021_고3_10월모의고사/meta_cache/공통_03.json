@@ -1,0 +1,15 @@
+{
+  "text_sha": "b56f84befcf8",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\tan(2x)$의 주기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_주기"
+    ],
+    "exam_intent": "삼각함수 탄젠트의 주기 개념 확인",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

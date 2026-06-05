@@ -1,0 +1,17 @@
+{
+  "text_sha": "d10c473fae64",
+  "meta": {
+    "searchable_text": "삼차함수 $f(x) = x^3 + ax^2 + bx + c$에 대하여 $x \\geq 0$에서 정의된 함수 $g(x)$는 다음과 같다. $0 \\leq x \\leq 3$일 때 $g(x) = f(x)$, $3 < x \\leq 6$일 때 $g(x) = f(6-x)$, $6 < x$일 때 $g(x) = g(x-6) + f(6)$ (단, $a$는 모든 자연수). 자연수 $n$에 대하여 직선 $y=n$과 함수 $g$의 그래프가 만나는 점의 개수를 $h(n)$이라 할 때, $\\sum_{n=1}^{12} h(n)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "삼차함수",
+      "함수의_그래프",
+      "교점_개수_계산"
+    ],
+    "exam_intent": "주기성과 대칭성을 가진 함수의 교점 개수를 체계적으로 분석하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

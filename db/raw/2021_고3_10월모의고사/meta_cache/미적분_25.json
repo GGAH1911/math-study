@@ -1,0 +1,17 @@
+{
+  "text_sha": "2cbed19bca1d",
+  "meta": {
+    "searchable_text": "좌표평면 위를 움직이는 점 P의 시각 $t$에서의 위치가 $(t\\ln t, \\cdots)$ 형태의 매개변수 방정식으로 주어질 때, $t=2$에서 점 P의 속력을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_방정식",
+      "속력",
+      "합성함수의_미분"
+    ],
+    "exam_intent": "로그함수 포함 매개변수 곡선의 속력을 미분으로 계산할 수 있는가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

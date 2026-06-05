@@ -1,0 +1,17 @@
+{
+  "text_sha": "354237bf8839",
+  "meta": {
+    "searchable_text": "점 $A(2, 6)$과 직선 $2x + y - 5 = 0$ 위의 한 점 $P$에 대하여 벡터 $\\vec{AP}$와 직선의 방향벡터가 서로 수직일 때, $|\\vec{OP}|$의 값은? (단, $O$는 원점이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "벡터의_수직_조건",
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "벡터 수직 조건으로 수선의 발을 구하고 원점으로부터의 거리를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

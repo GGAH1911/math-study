@@ -1,0 +1,17 @@
+{
+  "text_sha": "1fcbc6ddb792",
+  "meta": {
+    "searchable_text": "좌표공간에서 |OA| = 7인 점 A가 있다. 점 A를 중심으로 하고 반지름의 길이가 8인 구 S와 xy평면이 만나서 생기는 원의 넓이가 25π이다. 구 S와 z축이 만나는 두 점을 각각 B, C라 할 때, 선분 BC의 길이는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "구와_평면의_교선",
+      "피타고라스_정리",
+      "공간에서의_거리"
+    ],
+    "exam_intent": "구와 평면의 교선 원의 성질을 이용하여 구의 중심 좌표를 결정하고 축과의 교점 거리를 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

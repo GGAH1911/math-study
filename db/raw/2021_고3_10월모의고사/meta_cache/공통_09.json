@@ -1,0 +1,16 @@
+{
+  "text_sha": "aa1db9244c92",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 점화식을 만족시킬 때, $a_1 + a_{22}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열의_합"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 항들의 합을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

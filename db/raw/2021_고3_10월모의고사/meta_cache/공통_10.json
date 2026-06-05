@@ -1,0 +1,17 @@
+{
+  "text_sha": "5b27c9c2475a",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 1인 이차함수 $f(x)$와 3보다 작은 실수 $a$에 대하여 함수 $g(x) = |f(x) - a|$가 $x=3$에서만 미분가능하지 않다. 함수의 극댓값이 32일 때, $f(4)+a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "미분가능성",
+      "절댓값_함수",
+      "극값"
+    ],
+    "exam_intent": "절댓값 함수 미분불가능 조건과 극값 정보로 함수 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

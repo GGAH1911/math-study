@@ -1,0 +1,16 @@
+{
+  "text_sha": "2c574dd419a2",
+  "meta": {
+    "searchable_text": "영벡터가 아닌 두 벡터가 서로 평행하지 않을 때, 특정 벡터 조건식을 만족하는 두 상수의 합을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "벡터의_선형결합",
+      "일차독립"
+    ],
+    "exam_intent": "일차독립인 벡터들의 선형결합에서 계수를 비교해 미지수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

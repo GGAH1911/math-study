@@ -1,0 +1,18 @@
+{
+  "text_sha": "cf4e3c3df78c",
+  "meta": {
+    "searchable_text": "좌표평면 위에 두 초점이 F, F′인 타원 $\\frac{x^2}{36} + \\frac{y^2}{12} = 1$이 있다. 타원 위의 두 점 P, Q에 대하여 직선 PQ가 원점 O를 지나고 삼각형 PF′Q의 둘레의 길이가 20일 때, 선분 OP의 길이는? (단, 점 P는 제1사분면 위의 점이다.)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_정의",
+      "초점의_성질",
+      "대칭성",
+      "타원_위의_거리"
+    ],
+    "exam_intent": "타원의 성질과 원점 대칭을 이용한 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}
