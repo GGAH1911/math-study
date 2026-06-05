@@ -27,6 +27,12 @@ EXAM_TYPE = '모의고사'
 AGENCY = '교육청'
 
 
+def _fmt_by_num(n):
+    """format은 시험 구조상 고정 — 문제를 보고 판단하지 않는다.
+    공통+선택(46): 1-15 객관식, 16-22 단답 / 23-28 객관식, 29-30 단답."""
+    return 'choice' if (1 <= n <= 15 or 23 <= n <= 28) else 'numeric'
+
+
 def ingest(year: int, session: str, grade: str = '고3', limit: int | None = None) -> dict:
     slug = IV.slugify_round(year, EXAM_TYPE, session, grade)
     raw = ROOT / 'db' / 'raw' / slug
@@ -76,10 +82,17 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
     units = IV.load_concept_index(); meta_cache = raw / 'meta_cache'
 
     def meta_one(e):
-        return e, IV.extract_metadata(
+        m = IV.extract_metadata(
             pdf_path=e['_pdf'], page_num=e['page_num'], bbox_pdf=e['bbox_pdf'],
             number=e['number'], subject=e['subject'], units_index=units,
             cache_dir=meta_cache, cache_key=f'{e["subject"]}_{e["number"]:02d}', timeout=60)
+        # PUA 특수기호(벡터 화살표 등)로 텍스트 메타가 searchable_text를 비우면 → 이미지 vision 폴백
+        if not (isinstance(m, dict) and len((m.get('searchable_text') or '').strip()) >= 10):
+            import vision_meta
+            m2 = vision_meta.extract_metadata(e['image_path'], units, cache_dir=meta_cache, timeout=90)
+            if m2 and (m2.get('searchable_text') or '').strip():
+                m = m2
+        return e, m
     nfail = 0
     with cf.ThreadPoolExecutor(max_workers=int(os.environ.get('META_WORKERS', '20'))) as ex:
         for e, m in ex.map(meta_one, entries):
@@ -105,7 +118,7 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
         meta = e.get('meta') or {}
         prob = {'subject': subj, 'number': num,
                 'score': IV._guess_score(num, EXAM_TYPE, grade),
-                'format': meta.get('format', 'numeric'), 'body': '',
+                'format': _fmt_by_num(num), 'body': '',   # 시험구조상 고정(Haiku 분류 무시)
                 'image_paths': [e['image_fs']],
                 'searchable_text': meta.get('searchable_text', '')}
         us = meta.get('unit') if isinstance(meta, dict) else None
