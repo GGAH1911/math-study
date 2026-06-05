@@ -49,16 +49,24 @@ FORBIDDEN = re.compile(r'\b(os|subprocess|socket|shutil|requests|httpx|urllib|op
 # 검증기-코딩 누명 회복: ans==gold인데 검증기만 실패하면 같은 모델에 '에러 힌트' 주고 재시도.
 # 검증기 작성은 확률적이라(금지import·크래시·로직버그) 재롤하면 깨끗이 나옴 → 불필요한 escalation/FLAG 흡수.
 VERIFY_RETRIES = int(os.environ.get('VERIFY_RETRIES', '2'))
+# 풀이/검증기 분리 — 구제(salvage): 사다리가 다 떨어져도(검증기 *코딩*이 병목인 킬러) 검증기 없이
+# '답만' 받아 gold 일치 시 solved(verified:false)로 캐시. SALVAGE_ONLY=1 → 사다리 건너뛰고 바로 구제(알려진 FLAG 재시도용).
+SALVAGE_ONLY = os.environ.get('SALVAGE_ONLY') == '1'
+# 관측성: 단일 모델콜은 capture_output로 끝까지 묵음(헤드리스 claude -p는 transcript도 안 남김).
+# parallel==1(단일/디버깅) 실행에서 HEARTBEAT_S 마다 '작업중' 하트비트를 로그에 찍어 진행을 보이게 한다.
+HEARTBEAT = False
+HEARTBEAT_S = int(os.environ.get('HEARTBEAT_S', '60'))
 
 SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가입니다. 첨부된 문제 이미지를 Read 도구로 먼저 본 뒤 풀이하세요. 도형·조건·보기 값은 모두 이미지에서 확인합니다. 추측 금지."""
 
 
-def build_prompt(img_paths: list[str], fmt: str, meta: str, hint: str = '') -> str:
+def build_prompt(img_paths: list[str], fmt: str, meta: str, hint: str = '', with_verifier: bool = True) -> str:
+    use_verifier = (fmt == 'choice' and with_verifier)   # 단답형은 원래 검증기 없음; choice라도 구제 모드면 생략
     lines = ['  "answer": <네가 푼 보기 번호 1-5 정수>,' if fmt == 'choice'
              else '  "answer": <네가 푼 단답형 정답 정수(0-999)>,']
     lines.append('  "answer_value": "<최종 답의 값만, 설명·중간식 없이. 예: -7/64 또는 163>",')
     lines.append('  "score": <2|3|4 정수, 이미지 상단의 "[N점]" 배점 그대로>,')
-    if fmt == 'choice':
+    if use_verifier:
         lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."],')
         lines.append('  "verifier_python": "<자기완결 파이썬. **이미지에 주어진 원래 함수·방정식·조건**에 네 답을 역대입해 검사. 네가 유도한 *근사식·중간식을 쓰지 말고* 반드시 원래 문제의 식을 코드로 표현(필요하면 수치 root-find)해 답이 만족하는지 sympy/numpy 로 확인. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
     else:
@@ -95,19 +103,29 @@ def _anonymize(img_paths: list[str]) -> tuple[list[str], str]:
 
 
 def call_model(img_paths: list[str], fmt: str, meta: str, model: str, effort: str,
-               add_dir: str, hint: str = '') -> dict | None:
+               add_dir: str, hint: str = '', with_verifier: bool = True) -> dict | None:
     import shutil
     anon_paths, anon_dir = _anonymize(img_paths)   # ← 파일명 정체 누출 차단
-    prompt = build_prompt(anon_paths, fmt, meta, hint)
+    prompt = build_prompt(anon_paths, fmt, meta, hint, with_verifier)
     args = ['claude', '-p', '--model', model, '--effort', effort,
             '--allowedTools', 'Read', '--add-dir', anon_dir,
             '--disallowedTools', 'Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '14', '--system-prompt', SYSTEM, '--', prompt]
+    import threading                              # 하트비트: 단일콜이 capture_output로 묵음 → 살아있음 주기 로그
+    stop = threading.Event()
+    def _hb():
+        s = 0
+        while not stop.wait(HEARTBEAT_S):
+            s += HEARTBEAT_S
+            print(f'      · {model} 작업중 {s}s… (타임아웃 {TIMEOUT_S}s)', flush=True)
+    if HEARTBEAT:
+        threading.Thread(target=_hb, daemon=True).start()
     try:
         r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S)
     except subprocess.TimeoutExpired:
         return None
     finally:
+        stop.set()
         shutil.rmtree(anon_dir, ignore_errors=True)
     out = r.stdout
     blocks = re.findall(r'```json\s*(.*?)```', out, re.DOTALL)
@@ -211,7 +229,7 @@ def already_cached(md_text: str) -> bool:
 
 def write_solution(p: Path, sol: dict, verifier_rel: str, model: str = MODEL,
                    solved_by: str | None = None, trace: list | None = None,
-                   source: str | None = None):
+                   source: str | None = None, verified: bool = True):
     t = p.read_text(encoding='utf-8')
     if re.search(r'^solution:', t, re.M):
         return  # 동시 실행 레이스 방어 — 이미 solution 블록 있으면 중복 삽입 안 함
@@ -229,7 +247,7 @@ def write_solution(p: Path, sol: dict, verifier_rel: str, model: str = MODEL,
             f"    - {{model: {m}, reason: {r}}}\n" for m, r in fails)
     block = (f"solution:\n"
              f"  answer_value: {json.dumps(str(sol.get('answer_value','')), ensure_ascii=False)}\n"
-             f"  verified: true\n"
+             f"  verified: {'true' if verified else 'false'}\n"
              f"  generated_by: {model}\n"
              f"{extra}"
              f"  verifier: {verifier_rel}\n"
@@ -254,6 +272,22 @@ def fix_score(p: Path, new: str):
         p.write_text(t2, encoding='utf-8')
 
 
+def _salvage(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
+    """검증기 분리·구제 — 검증기 없이 '답만' 받아 gold 일치 시 캐시(verified:false).
+    킬러는 검증기 *코딩*이 병목 → 답·풀이는 살리고 python 역대입 검증만 보류(미검증 표시)."""
+    sal_model, _ = LADDER_KILLER[-1]                 # 가장 강한 모델(opus/max)
+    sol = call_model(tiles, fmt, meta, sal_model, 'max', img_dir, with_verifier=False)
+    if not sol:
+        trace.append((sal_model, 'salvage-gen-fail')); return None
+    ans = str(sol.get('answer')).strip().strip('\'"')
+    if ans != gold:
+        trace.append((sal_model, 'salvage-ans≠gold')); return None
+    trace.append((sal_model, 'salvage-pass(미검증)'))
+    write_solution(p, sol, 'unverified', sal_model, solved_by or sal_model, trace, verified=False)
+    fix_score(p, str(sol.get('score', '')))
+    return f'CACHED@{sal_model[0]}~'                  # '~' = 미검증 구제(답만, python 역대입 보류)
+
+
 def build_one(p: Path) -> str:
     t = p.read_text(encoding='utf-8')
     if already_cached(t):
@@ -273,6 +307,9 @@ def build_one(p: Path) -> str:
     last = ''
     trace = []           # 모델별 결과 (escalation 사유 기록)
     solved_by = None     # 최초로 답(ans==gold)을 맞힌 모델 = 난이도 신호 (검증기 통과와 무관)
+
+    if SALVAGE_ONLY:     # 사다리 건너뛰고 바로 구제(알려진 FLAG 재시도) — 검증기 없이 답만
+        return _salvage(p, tiles, fmt, meta, img_dir, gold, solved_by, trace) or 'FLAG(salvage-fail)'
 
     # ── 0) 식-텍스트 우회: searchable_text로 Haiku 먼저 (vision 누명 제거 · 검증 게이트가 안전망) ──
     # 텍스트로 ans==gold + (객관식이면 검증기까지) 통과 → 싼 Haiku로 끝. 실패 시 이미지 사다리로 폴백.
@@ -323,7 +360,8 @@ def build_one(p: Path) -> str:
         write_solution(p, sol, vref, model, solved_by, trace)
         fix_score(p, str(sol.get('score', '')))   # 같은 이미지 읽기로 배점도 교정
         return f'CACHED@{model[0]}'
-    return f'FLAG({last})'
+    # 사다리 전멸 → 풀이 구제(검증기 분리): 답만 맞히면 verified:false 로 캐시 (FLAG보다 학습가치 보존)
+    return _salvage(p, tiles, fmt, meta, img_dir, gold, solved_by, trace) or f'FLAG({last})'
 
 
 def find(slug: str) -> Path | None:
@@ -383,6 +421,8 @@ if __name__ == '__main__':
     targets = sorted(targets, key=difficulty_key)   # 킬러-먼저: 느린 문제 먼저 출발 → straggler/makespan 최소화 (--list 인제스트 경로 포함)
     if easy_first: targets = targets[::-1]
     print(f'대상 {len(targets)}문제 · 병렬 {parallel} · {"쉬운순" if easy_first else "난이도순"}\n', flush=True)
+    if parallel == 1:
+        globals()['HEARTBEAT'] = True       # 단일/디버깅 실행 → HEARTBEAT_S 마다 진행 하트비트(묵음 해소)
     res = Counter(); flags = []; t0 = time.time(); done = 0
     # circuit-breaker: 연속 N개 실패면 API 한도/장애로 보고 중단 (죽은 API에 헛 FLAG 방지).
     # CACHED 가 나오면 리셋, skip(이미 캐시)은 무시.
