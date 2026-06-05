@@ -1,0 +1,17 @@
+{
+  "text_sha": "a862a6b46b9e",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 3, 4, 4, 4가 하나씩 적힌 7장의 카드를 모두 한 번씩 사용하여 일렬로 나열할 때, 1이 적힌 카드와 2가 적힌 카드 사이에 두 장 이상의 카드가 있도록 나열하는 경우의 수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "중복순열",
+      "조건부_경우의_수"
+    ],
+    "exam_intent": "중복 원소 순열에서 조건을 만족하는 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

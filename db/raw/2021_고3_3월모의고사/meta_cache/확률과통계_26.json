@@ -1,0 +1,16 @@
+{
+  "text_sha": "cd6fcccc51a6",
+  "meta": {
+    "searchable_text": "같은 종류의 연필 6자루와 같은 종류의 지우개 5개를 세 명의 학생에게 남김없이 나누어 주려고 한다. 각 학생이 적어도 한 자루의 연필을 받도록 나누어 주는 경우의 수는? (단, 지우개를 받지 못하는 학생이 있을 수 있다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "조건부_배분"
+    ],
+    "exam_intent": "조건부 중복조합을 이용한 두 종류 물건의 배분 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

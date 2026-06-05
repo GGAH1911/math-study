@@ -1,0 +1,17 @@
+{
+  "text_sha": "1274b7deb504",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 직각삼각형 $ABC$에서 $\\angle A = 90°$, $AB = 2$, $CA = n$일 때, $\\angle A$의 이등분선이 선분 $BC$와 만나는 점을 $D$라 하자. 선분 $CD$의 길이를 $n$의 함수로 나타낼 때 극한값을 구하는 문제.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "각의이등분선",
+      "극한계산",
+      "직각삼각형"
+    ],
+    "exam_intent": "각의 이등분선과 수열 극한을 결합한 기하 응용 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

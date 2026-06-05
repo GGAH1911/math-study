@@ -1,0 +1,17 @@
+{
+  "text_sha": "8d42ce8c85d3",
+  "meta": {
+    "searchable_text": "극한값 계산 문제. $\\lim_{n\\to\\infty} \\frac{\\text{(분자 다항식)}}{10n^3 + 1}$ 형태 (글리프 손상으로 정확한 분자 복원 필요)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_기본성질",
+      "다항함수의_극한",
+      "최고차항_비교"
+    ],
+    "exam_intent": "다항함수의 극한값을 분자 분모의 차수로 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

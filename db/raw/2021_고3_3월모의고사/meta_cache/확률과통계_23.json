@@ -1,0 +1,15 @@
+{
+  "text_sha": "02c238faa6f4",
+  "meta": {
+    "searchable_text": "3H6의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합"
+    ],
+    "exam_intent": "중복조합 계산 공식 적용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

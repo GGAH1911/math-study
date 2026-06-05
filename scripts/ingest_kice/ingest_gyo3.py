@@ -1,0 +1,132 @@
+#!/usr/bin/env python3
+"""교육청 고3 (2022포맷 공통+선택) — 멀티 선택PDF 인제스트 어댑터.
+
+기존 회차는 단일 `문제.pdf`+`정답.pdf`지만, 2021 고3 교육청 세트는
+  · 문제: 과목별 PDF 3개 (미적분/기하/확률과통계), 각 = 공통(1-22)+선택(23-30)
+  · 정답: 해설 PDF 안 정답표 (정답.pdf 없음)
+구조다. → 공통은 미적분PDF 한 곳에서, 각 선택은 자기 PDF에서 크롭하고,
+정답은 answer_textlayer.parse_haesol_answers(결정론·비전0)로 주입.
+
+기존 ingest_round_v2 는 *건드리지 않고* 그 헬퍼함수들만 재사용(회귀0).
+스테이징: db/raw/<slug>/{미적분,기하,확률과통계}_{문제,해설}.pdf
+사용: python ingest_gyo3.py --year 2021 --session 3월 [--grade 고3] [--limit N]
+"""
+from __future__ import annotations
+import sys, os, json, argparse
+from pathlib import Path
+import concurrent.futures as cf
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import ingest_v2 as IV          # noqa: E402  (모든 헬퍼: render/bbox/crop/meta/md/db)
+import answer_textlayer as A    # noqa: E402  (parse_haesol_answers)
+from PIL import Image           # noqa: E402
+
+ROOT = IV.ROOT
+SELECTIVES = ['미적분', '기하', '확률과통계']
+EXAM_TYPE = '모의고사'
+AGENCY = '교육청'
+
+
+def ingest(year: int, session: str, grade: str = '고3', limit: int | None = None) -> dict:
+    slug = IV.slugify_round(year, EXAM_TYPE, session, grade)
+    raw = ROOT / 'db' / 'raw' / slug
+    images_dir = raw / 'images'; images_dir.mkdir(parents=True, exist_ok=True)
+    print(f'══════ {slug} (교육청 고3 멀티선택 어댑터) ══════', flush=True)
+
+    # 1) 과목별 PDF: 페이지 렌더 + bbox. 공통은 미적분PDF만, 선택은 각 PDF.
+    entries = []
+    for subj in SELECTIVES:
+        pdf = raw / f'{subj}_문제.pdf'
+        if not pdf.exists():
+            print(f'  ⚠ 없음: {pdf.name}', flush=True); continue
+        pages = IV.render_pdf_pages(pdf, raw / f'pages_{subj}')
+        page_by_num = {int(p.stem[1:]): p for p in pages}
+        for e in IV.extract_problem_bboxes(pdf, exam_type=EXAM_TYPE, grade=grade):
+            if e['number'] <= 22:
+                if subj != '미적분':
+                    continue                 # 공통(1-22)은 미적분PDF 한 곳에서만
+                e['subject'] = '공통'
+            else:
+                e['subject'] = subj          # 선택(23-30)은 파일 과목으로 확정
+            e['_pdf'] = pdf
+            e['_page_png'] = page_by_num.get(e['page_num'])
+            entries.append(e)
+    entries.sort(key=lambda e: (e['subject'] != '공통', e['subject'], e['number']))
+    if limit:
+        entries = entries[:limit]
+    print(f'  ✓ {len(entries)} 문제 (공통 + 미적분/기하/확률과통계 23-30)', flush=True)
+
+    # 2) 크롭 (ingest_v2 와 동일: bbox_px 후보 → crop_by_gap)
+    for e in entries:
+        name = f'{slug}_{e["subject"]}_{e["number"]:02d}.png'
+        img_path = images_dir / name
+        e['image_fs'] = f'db/raw/{slug}/images/{name}'
+        e['image_url'] = f'/problem-images/{name}'
+        cand = Image.open(e['_page_png']).crop(e['bbox_px'])
+        tmp = images_dir / f'.cand_{e["subject"]}_{e["number"]:02d}.png'; cand.save(tmp)
+        try:
+            if not IV.crop_by_gap(tmp, img_path, exam_type=EXAM_TYPE):
+                cand.save(img_path)
+        finally:
+            tmp.unlink(missing_ok=True)
+        IV._ensure_web_symlink(img_path)
+    print(f'  ✓ 크롭 {len(entries)}장', flush=True)
+
+    # 3) 메타데이터 (PDF텍스트 + Haiku, 병렬)
+    units = IV.load_concept_index(); meta_cache = raw / 'meta_cache'
+
+    def meta_one(e):
+        return e, IV.extract_metadata(
+            pdf_path=e['_pdf'], page_num=e['page_num'], bbox_pdf=e['bbox_pdf'],
+            number=e['number'], subject=e['subject'], units_index=units,
+            cache_dir=meta_cache, cache_key=f'{e["subject"]}_{e["number"]:02d}', timeout=60)
+    nfail = 0
+    with cf.ThreadPoolExecutor(max_workers=int(os.environ.get('META_WORKERS', '20'))) as ex:
+        for e, m in ex.map(meta_one, entries):
+            e['meta'] = m
+            if not (isinstance(m, dict) and m.get('unit')):
+                nfail += 1
+    print(f'  ✓ 메타데이터 (unit실패 {nfail})', flush=True)
+
+    # 4) 정답 — 해설 정답표 (결정론, 비전0)
+    flat = A.parse_haesol_answers({s: raw / f'{s}_해설.pdf' for s in SELECTIVES})
+    answers: dict = {}
+    for (s, n), a in flat.items():
+        answers.setdefault(s, {})[str(n)] = a
+    print(f'  ✓ 정답 {sum(len(v) for v in answers.values())}개 (해설 정답표)', flush=True)
+
+    # 5) markdown + DB
+    written = []
+    for e in entries:
+        subj, num = e['subject'], e['number']
+        ans = answers.get(subj, {}).get(str(num))
+        meta = e.get('meta') or {}
+        prob = {'subject': subj, 'number': num,
+                'score': IV._guess_score(num, EXAM_TYPE, grade),
+                'format': meta.get('format', 'numeric'), 'body': '',
+                'image_paths': [e['image_fs']],
+                'searchable_text': meta.get('searchable_text', '')}
+        us = meta.get('unit') if isinstance(meta, dict) else None
+        if us:
+            IV._ensure_concept_exists(us, parent_unit=None, concept_type='unit')
+        for sp in (meta.get('concepts') or []) if isinstance(meta, dict) else []:
+            IV._ensure_concept_exists(sp, parent_unit=us, concept_type='definition')
+        IV.write_markdown_v2(prob, meta, ans, e['image_url'], e['image_fs'],
+                             slug, year, EXAM_TYPE, session, grade=grade, agency=AGENCY)
+        written.append({'prob': prob, 'mapping': meta, 'answer': ans})
+        print(f'  [{num:>2}] {subj:>10} ans={ans!s:>4} unit={meta.get("unit","?")}', flush=True)
+
+    IV.db_upsert(written, year, EXAM_TYPE, session,
+                 f'db/raw/{slug}/미적분_문제.pdf', grade=grade, agency=AGENCY)
+    print(f'  ✓ DB upsert {len(written)}문제', flush=True)
+    return {'round': slug, 'ok': True, 'count': len(written)}
+
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--year', type=int, required=True)
+    ap.add_argument('--session', required=True)
+    ap.add_argument('--grade', default='고3')
+    ap.add_argument('--limit', type=int, default=None)
+    a = ap.parse_args()
+    print(json.dumps(ingest(a.year, a.session, a.grade, a.limit), ensure_ascii=False))

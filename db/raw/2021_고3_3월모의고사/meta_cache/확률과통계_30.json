@@ -1,0 +1,17 @@
+{
+  "text_sha": "34ab0e71f1ac",
+  "meta": {
+    "searchable_text": "숫자 1, 2, 3, 4 중에서 중복을 허락하여 네 개를 선택한 후 일렬로 나열할 때, 다음 조건을 만족시키도록 나열하는 경우의 수를 구하시오. (가) 숫자 1은 한 번 이상 나온다. (나) 이웃한 두 수의 차는 모두 2 이하이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복순열",
+      "포함배제원리",
+      "순열"
+    ],
+    "exam_intent": "이웃 조건과 포함-배제를 결합한 중복순열의 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

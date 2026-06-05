@@ -1,0 +1,16 @@
+{
+  "text_sha": "4a290d1a7d1f",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 삼차함수 $f(x)$가 극대가 되는 $x$를 $a_n$이라 하자. 어떤 방정식의 근 중에서 $a_n$이 아닌 근을 $b_n$이라 할 때, $\\lim_{n \\to \\infty} \\frac{a_n^3}{b_n}$이 정해진다. 서로소인 자연수의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "극한"
+    ],
+    "exam_intent": "극값과 극한을 활용하여 매개변수 관계를 파악하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

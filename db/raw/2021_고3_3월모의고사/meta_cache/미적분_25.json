@@ -1,0 +1,18 @@
+{
+  "text_sha": "3eb5ae8b0ef6",
+  "meta": {
+    "searchable_text": "모든 항이 양수인 수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 특정 점화식을 만족할 때, $\\lim_{n\\to\\infty} \\frac{2a_{n+1}}{3a_n - 3a_{n+1}} = 12$의 조건에서 $a_1$의 값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "점화식",
+      "극한",
+      "수렴",
+      "수열"
+    ],
+    "exam_intent": "극한 조건으로부터 수열의 점화식 성질과 초항을 추론",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

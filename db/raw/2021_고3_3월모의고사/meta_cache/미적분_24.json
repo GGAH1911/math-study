@@ -1,0 +1,17 @@
+{
+  "text_sha": "937ba748efb0",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$의 일반항이 $a_n = \\frac{r^n}{2^n + 4^n}$일 때, 수열 $\\{a_n\\}$이 수렴하도록 하는 모든 정수 $r$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등비수열의_수렴성",
+      "극한의_정의",
+      "매개변수_범위"
+    ],
+    "exam_intent": "매개변수 포함 분수수열의 수렴 조건을 판정하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

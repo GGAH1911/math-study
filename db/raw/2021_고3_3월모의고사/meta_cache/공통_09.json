@@ -1,0 +1,16 @@
+{
+  "text_sha": "5e6990ad2a50",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 3인 삼차함수의 그래프 위의 한 점에서의 접선이 곡선과 원점에서 만난다. 곡선과 접선으로 둘러싸인 도형의 넓이를 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "곡선_사이의_넓이",
+      "도함수"
+    ],
+    "exam_intent": "접선의 조건으로부터 함수를 결정하고 정적분으로 넓이를 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

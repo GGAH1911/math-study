@@ -1,0 +1,16 @@
+{
+  "text_sha": "d6f591762aee",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. $S_1 = 1$, $S_2 = 4$이고 2 이상의 모든 자연수 $n$에 대하여 $a_{n+1} = 2S_n + 1$이 성립할 때, $a_5$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "등비수열"
+    ],
+    "exam_intent": "점화식 조건으로부터 수열의 항들을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

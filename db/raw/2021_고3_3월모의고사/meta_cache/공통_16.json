@@ -1,0 +1,16 @@
+{
+  "text_sha": "bad3a79b3ce4",
+  "meta": {
+    "searchable_text": "두 함수 $f(x) = 2x^2 - 5x + 3$, $g(x) = 3x - 2$에 대하여 함수 $h(x) = f(g(x))$의 $x = 0$에서의 미분계수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "합성함수의_미분",
+    "concepts": [
+      "합성함수",
+      "미분계수"
+    ],
+    "exam_intent": "합성함수의 미분법을 이용한 미분계수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

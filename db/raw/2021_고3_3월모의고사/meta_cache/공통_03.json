@@ -1,0 +1,17 @@
+{
+  "text_sha": "a8dc85d3c2d4",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 2π일 때, 방정식 $\\sin 4x = \\frac{\\sqrt{2}}{2}$의 서로 다른 실근의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "함수의_근",
+      "주기성"
+    ],
+    "exam_intent": "삼각함수 방정식의 해의 개수를 기본 공식과 주기로 파악",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

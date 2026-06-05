@@ -1,0 +1,16 @@
+{
+  "text_sha": "6e9e2ffdc45d",
+  "meta": {
+    "searchable_text": "공차가 3인 등차수열 {aₙ}에 대하여 a₄ = 100일 때, a₁의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의_일반항"
+    ],
+    "exam_intent": "등차수열의 일반항 공식으로 첫째항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

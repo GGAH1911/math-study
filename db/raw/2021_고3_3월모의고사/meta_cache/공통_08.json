@@ -1,0 +1,17 @@
+{
+  "text_sha": "3190fd56b007",
+  "meta": {
+    "searchable_text": "곡선 $y = x^3 - 3x^2 + 2x + 9$와 직선 $y = k$가 서로 다른 세 점에서 만나도록 하는 정수 $k$의 최댓값을 $M$, 최솟값을 $m$이라 할 때, $M - m$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "교점",
+      "정수_조건",
+      "극값"
+    ],
+    "exam_intent": "3차 함수와 수평선의 교점 조건으로부터 정수 범위 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

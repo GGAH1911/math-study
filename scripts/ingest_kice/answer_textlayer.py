@@ -152,6 +152,147 @@ def parse_single_answer_table(pdf_path):
     return {'단일': out} if out else {}
 
 
+# ── 교육청 고3 (공통+선택) 해설 PDF 정답표 — 내용기반 표탐지 + PUA/평문 ─────────
+# 월(교육청)마다 포맷이 다르다: 공통헤더('수학 정답'|'정답'|'2교시 수학 영역'),
+# 단답 인코딩(PUA HyhwpEQ ↔ 평문 ASCII), 선택과목 파일구성(통합 부클릿 ↔ 과목별).
+# → 과목라벨로 표를 '찾지' 않고, (번호+정답마커) 셀이 있는 행을 *내용*으로 찾는다.
+#   공통(1-22)은 PUA좌표+평문시퀀스 둘 다 시도해 병합, 각 선택(23-30)은 자기 파일에서.
+# (2021 고3 3·4·7·10월 4회차 × 46문항 = 184답 실측 100% 검증.)
+
+def _ht_chars(page):
+    o = []
+    for blk in page.get_text("rawdict")['blocks']:
+        for ln in blk.get('lines', []):
+            for sp in ln.get('spans', []):
+                for c in sp.get('chars', []):
+                    ch = c.get('c') or ''
+                    if ch and ord(ch) > 32:
+                        ox, oy = c['origin']
+                        o.append((round(oy, 1), round(ox, 1), ch))
+    return o
+
+
+def _ht_rows(chs):
+    chs = sorted(chs); rs = []
+    for y, x, ch in chs:
+        if not rs or abs(rs[-1][0] - y) > 3.5:
+            rs.append([y, []])
+        rs[-1][1].append((x, ch))
+    return [(y, sorted(cs)) for y, cs in rs]
+
+
+def _ht_cells(items, lo, hi):
+    """행에서 (번호, 정답) 셀. 정답마커=①~⑤ 또는 PUA단답글리프. 정답글리프는
+    번호 바로 뒤 *연속*(x간격<12)만 취해 다른 칸/풀이 오염을 차단."""
+    out = []; i = 0; n = len(items)
+    while i < n:
+        x, ch = items[i]
+        if ch.isascii() and ch.isdigit():
+            num = ch; nx = x; i += 1
+            while i < n and items[i][1].isascii() and items[i][1].isdigit() and items[i][0] - nx < 12:
+                num += items[i][1]; nx = items[i][0]; i += 1
+            a = ''
+            if i < n and items[i][0] - nx < 24:
+                g = items[i][1]
+                if g in CIRCLED:
+                    a = CIRCLED[g]; i += 1
+                elif _PUA_LO <= ord(g) <= _PUA_HI:
+                    a = str((ord(g) - 0xe033) % 10); nx = items[i][0]; i += 1
+                    while i < n and _PUA_LO <= ord(items[i][1]) <= _PUA_HI and items[i][0] - nx < 12:
+                        a += str((ord(items[i][1]) - 0xe033) % 10); nx = items[i][0]; i += 1
+            if a and lo <= int(num) <= hi:
+                out.append((int(num), a, x))
+        else:
+            i += 1
+    return out
+
+
+def _ht_regions(doc):
+    """내용서치: (번호+정답마커) 셀을 페이지·컬럼·y연속으로 묶어 '표 영역'들로 분할.
+    반환 ([(pno, col, [(y,num,a,x),...]), ...], page_width). col 0=좌단 1=우단."""
+    pw = doc[0].rect.width
+    groups = {}
+    for pno in range(doc.page_count):
+        for y, items in _ht_rows(_ht_chars(doc[pno])):
+            for num, a, x in _ht_cells(items, 1, 30):
+                groups.setdefault((pno, 0 if x < pw / 2 else 1), []).append((y, num, a, x))
+    regs = []
+    for (pno, col), cs in groups.items():
+        cs.sort(); cur = []
+        for r in cs:
+            if cur and r[0] - cur[-1][0] > 25:   # y간격 크면 다른 표
+                regs.append((pno, col, cur)); cur = []
+            cur.append(r)
+        if cur:
+            regs.append((pno, col, cur))
+    return regs, pw
+
+
+def _classify_title(t):
+    """표 위 제목 텍스트 → 선택과목명. (공통은 번호범위로 판정하므로 여기선 선택만.)"""
+    return ('미적분' if '미적분' in t else '기하' if '기하' in t
+            else '확률과통계' if ('확률' in t or '통계' in t) else None)
+
+
+def _ht_plain(doc, lo, hi):
+    """평문 경로: 번호 lo..hi 가 답과 번갈아 나오는 선형 시퀀스(헤더 무관)."""
+    for pno in range(doc.page_count):
+        t = doc[pno].get_text()
+        for ch, dig in CIRCLED.items():
+            t = t.replace(ch, f' {dig} ')
+        toks = t.split()
+        for i in range(len(toks) - 1):
+            if toks[i] == str(lo) and toks[i + 1].isdigit():
+                got = {}; j = i; e = lo
+                while j < len(toks) and e <= hi:
+                    if toks[j] == str(e) and j + 1 < len(toks) and toks[j + 1].isdigit():
+                        got[e] = toks[j + 1]; e += 1; j += 2
+                    else:
+                        j += 1
+                if len(got) >= min(6, hi - lo + 1):
+                    return got
+    return {}
+
+
+def _ht_parse_doc(doc, file_subject, out):
+    """해설 PDF 하나 → out{(subj,num):ans} 누적. (사용자 알고리즘)
+    내용서치 → 표 영역 → 표 위 제목 읽기 → 파싱.
+    공통=번호범위(≤22), 선택=번호≥23이고 표 위 제목으로 과목판정(없으면 파일과목명)."""
+    regs, pw = _ht_regions(doc)
+    for pno, col, cs in regs:
+        nums = set(n for _y, n, _a, _x in cs)
+        ytop = min(y for y, _n, _a, _x in cs)
+        if max(nums) <= 22:
+            subj = '공통'
+        elif min(nums) >= 23:                       # 선택 → 표 '바로 위' 제목 읽기
+            x0, x1 = (0, pw / 2) if col == 0 else (pw / 2, pw)
+            title = doc[pno].get_text("text", clip=fitz.Rect(x0, max(0, ytop - 55), x1, ytop - 1))
+            subj = _classify_title(title) or file_subject
+        else:
+            continue
+        for y, num, a, x in sorted(cs):             # 같은 번호는 최상단(표) 채택
+            out.setdefault((subj, num), a)
+    # 평문(ASCII 단답) 병합 — 공통 1-22 / 선택 23-30(파일 과목명)
+    for n, v in _ht_plain(doc, 1, 22).items():
+        out.setdefault(('공통', n), v)
+    for n, v in _ht_plain(doc, 23, 30).items():
+        out.setdefault((file_subject, n), v)
+
+
+def parse_haesol_answers(haesol_pdfs):
+    """교육청 고3 해설 PDF들 → {(subject, number): answer_str}.
+
+    haesol_pdfs: {subject: pdf_path} (예: {'미적분':..., '기하':..., '확률과통계':...}).
+    각 파일을 '내용서치 → 표 → 표 위 제목' 순으로 파싱·누적. 통합 부클릿(한 파일에
+    공통+3선택)도 과목별 분리본(공통+1선택)도 동일 처리. PUA 좌표 + 평문 병합. 비전 불필요.
+    (2021 고3 3·4·7·10월 × 46 = 184답 실측 100%.)
+    """
+    out = {}
+    for subj, pdf in haesol_pdfs.items():
+        _ht_parse_doc(fitz.open(pdf), subj, out)
+    return out
+
+
 def is_choice(answer_str):
     """정답이 객관식(①~⑤ 환산 '1'~'5')인지 단답형(그 외 숫자)인지."""
     return answer_str in ('1', '2', '3', '4', '5')
