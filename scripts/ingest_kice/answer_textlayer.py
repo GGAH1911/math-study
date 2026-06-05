@@ -254,29 +254,88 @@ def _ht_plain(doc, lo, hi):
     return {}
 
 
+def _ht_dec(ch):
+    if ch in CIRCLED:
+        return CIRCLED[ch]
+    if _PUA_LO <= ord(ch) <= _PUA_HI:
+        return str((ord(ch) - 0xe033) % 10)
+    return ch if (ch.isascii() and ch.isdigit()) else ''
+
+
+def _ht_plain_seq(text, lo, hi):
+    """텍스트에서 번호 lo..hi 순서로 (번호,답) 페어링. get_text가 토큰을 분리해 흡수 없음."""
+    for ch, dig in CIRCLED.items():
+        text = text.replace(ch, f' {dig} ')
+    toks = text.split()
+    for i in range(len(toks)):
+        if toks[i] == str(lo):
+            got = {}; j = i; e = lo
+            while j < len(toks) and e <= hi:
+                if toks[j] == str(e) and j + 1 < len(toks) and toks[j + 1].isdigit():
+                    got[e] = toks[j + 1]; e += 1; j += 2
+                else:
+                    j += 1
+            if len(got) >= min(4, hi - lo + 1):
+                return got
+    return {}
+
+
+def _ht_coord_dandab(chs, col, pw, cell_ys, lo, hi):
+    """좌표 폴백: 표 행(cell_y) 전체폭, 번호=[lo,hi]범위, 답=다음 번호 시작 x까지.
+    전체폭이라 컬럼경계 가로지르는 표(26·27 우측, 답 spillover)도 잡음. 선택은 페이지당 1표라 안전."""
+    x0, x1 = (0, pw / 2 + 55) if col == 0 else (pw / 2 - 55, pw)   # 컬럼 + spillover만
+    out = {}
+    for ty in cell_ys:
+        row = sorted((x, ch) for y, x, ch in chs if abs(y - ty) <= 3.5 and x0 <= x < x1)
+        nums = []; i = 0; nn = len(row)
+        while i < nn:
+            x, ch = row[i]
+            if ch.isascii() and ch.isdigit():
+                v = ch; xe = x; i += 1
+                while i < nn and row[i][1].isascii() and row[i][1].isdigit() and row[i][0] - xe < 6 and len(v) < 2:
+                    v += row[i][1]; xe = row[i][0]; i += 1
+                if lo <= int(v) <= hi:
+                    nums.append((xe, int(v)))
+            else:
+                i += 1
+        for k, (xe, num) in enumerate(nums):
+            nxt = nums[k + 1][0] - 4 if k + 1 < len(nums) else xe + 45
+            a = ''.join(_ht_dec(ch) for x, ch in row if xe < x < nxt)
+            if a:
+                out.setdefault(num, a)
+    return out
+
+
 def _ht_parse_doc(doc, file_subject, out):
-    """해설 PDF 하나 → out{(subj,num):ans} 누적. (사용자 알고리즘)
-    내용서치 → 표 영역 → 표 위 제목 읽기 → 파싱.
-    공통=번호범위(≤22), 선택=번호≥23이고 표 위 제목으로 과목판정(없으면 파일과목명)."""
+    """해설 PDF 하나 → out{(subj,num):ans} 누적.
+    내용서치 → 표 영역 → 표 위 제목 → 파싱. 공통=번호범위(≤22), 선택=제목(없으면 파일과목).
+    선택 평문 단답은 표 행만 좁게 get_text(인터리브 풀이 제외) + 좌표 폴백(우측컬럼·인터리브)."""
     regs, pw = _ht_regions(doc)
+    chc = {}
     for pno, col, cs in regs:
         nums = set(n for _y, n, _a, _x in cs)
-        ytop = min(y for y, _n, _a, _x in cs)
+        cell_ys = sorted(set(y for y, _n, _a, _x in cs))
         if max(nums) <= 22:
             subj = '공통'
         elif min(nums) >= 23:                       # 선택 → 표 '바로 위' 제목 읽기
             x0, x1 = (0, pw / 2) if col == 0 else (pw / 2, pw)
-            title = doc[pno].get_text("text", clip=fitz.Rect(x0, max(0, ytop - 55), x1, ytop - 1))
+            title = doc[pno].get_text("text", clip=fitz.Rect(x0, max(0, min(cell_ys) - 55), x1, min(cell_ys) - 1))
             subj = _classify_title(title) or file_subject
         else:
             continue
-        for y, num, a, x in sorted(cs):             # 같은 번호는 최상단(표) 채택
+        for y, num, a, x in sorted(cs):             # circled/PUA 셀 (최상단)
             out.setdefault((subj, num), a)
-    # 평문(ASCII 단답) 병합 — 공통 1-22 / 선택 23-30(파일 과목명)
-    for n, v in _ht_plain(doc, 1, 22).items():
+        if subj != '공통':                           # 선택 평문 단답
+            x0, x1 = (0, pw / 2) if col == 0 else (pw / 2, pw)
+            text = ' '.join(doc[pno].get_text("text", clip=fitz.Rect(x0, ty - 3, x1, ty + 4)) for ty in cell_ys)
+            for n, v in _ht_plain_seq(text, 23, 30).items():
+                out.setdefault((subj, n), v)
+            if pno not in chc:
+                chc[pno] = _ht_chars(doc[pno])
+            for n, v in _ht_coord_dandab(chc[pno], col, pw, cell_ys, 23, 30).items():
+                out.setdefault((subj, n), v)
+    for n, v in _ht_plain(doc, 1, 22).items():       # 공통 단답 (단일표, 전역)
         out.setdefault(('공통', n), v)
-    for n, v in _ht_plain(doc, 23, 30).items():
-        out.setdefault((file_subject, n), v)
 
 
 def parse_haesol_answers(haesol_pdfs):
