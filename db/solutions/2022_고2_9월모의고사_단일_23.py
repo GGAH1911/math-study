@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x', real=True); expr = 4**x - 15 * 2**(x+1) - 64; result = expr.subs(x, 5); print('VERIFY_PASS' if abs(result) < 1e-10 else 'VERIFY_FAIL')

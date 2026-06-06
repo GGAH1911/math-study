@@ -1,0 +1,17 @@
+{
+  "text_sha": "d61fa13a6b83",
+  "meta": {
+    "searchable_text": "전체집합 U는 10 이하의 자연수이고, A = {1,2,3,4,5}, B = {3,4,5,6,7}이다. 집합 U의 부분집합 X가 세 조건을 만족할 때, X의 모든 원소의 합의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "부분집합",
+      "교집합",
+      "합집합"
+    ],
+    "exam_intent": "집합의 포함관계와 조건을 이용해 부분집합의 원소 합 최솟값을 구한다",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

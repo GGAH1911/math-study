@@ -86,16 +86,31 @@ def parse_answer_table(pdf_path):
 #   매핑: U+E034=1, U+E035=2, … U+E03C=9, U+E03D=0  →  digit = (cp-0xE033)%10
 # (2026 6월 고1·고2 학평 60문항 실측 100% 검증.)
 _PUA_LO, _PUA_HI = 0xe034, 0xe03d
+# 일부 회차(2021 11월 학평 등)는 HyhwpEQ 대신 다른 한글 폰트 서브셋을 써서 객관식 ①~⑤가
+# 유니코드 동그라미가 아니라 CJK 영역 글리프 U+6ABE~U+6AC2(檾檿櫀櫁櫂)로 들어온다.
+# 순차 매핑 ①=U+6ABE … ⑤=U+6AC2 (정답표 렌더 대조로 확정). 이 폰트의 단답은 평문 ASCII.
+_CJK_LO, _CJK_HI = 0x6abe, 0x6ac2
+
+
+def _circled(ch):
+    """객관식 동그라미 글리프 → '1'..'5' (해당 없으면 None). 폰트별 코드포인트(유니코드 ①~⑤,
+    CJK 서브셋 U+6ABE~)를 한 곳에서 흡수."""
+    if ch in CIRCLED:
+        return CIRCLED[ch]
+    if _CJK_LO <= ord(ch) <= _CJK_HI:
+        return str(ord(ch) - _CJK_LO + 1)
+    return None
 
 
 def _is_ans_glyph(ch):
-    return ch in CIRCLED or _PUA_LO <= ord(ch) <= _PUA_HI
+    return _circled(ch) is not None or _PUA_LO <= ord(ch) <= _PUA_HI
 
 
 def _decode_single_ans(s):
     out = []
     for ch in s:
-        out.append(CIRCLED[ch] if ch in CIRCLED else str((ord(ch) - 0xe033) % 10))
+        c = _circled(ch)
+        out.append(c if c is not None else str((ord(ch) - 0xe033) % 10))
     return ''.join(out)
 
 
@@ -194,8 +209,9 @@ def _ht_cells(items, lo, hi):
             a = ''
             if i < n and items[i][0] - nx < 24:
                 g = items[i][1]
-                if g in CIRCLED:
-                    a = CIRCLED[g]; i += 1
+                cg = _circled(g)
+                if cg is not None:
+                    a = cg; i += 1
                 elif _PUA_LO <= ord(g) <= _PUA_HI:
                     a = str((ord(g) - 0xe033) % 10); nx = items[i][0]; i += 1
                     while i < n and _PUA_LO <= ord(items[i][1]) <= _PUA_HI and items[i][0] - nx < 12:
@@ -255,8 +271,9 @@ def _ht_plain(doc, lo, hi):
 
 
 def _ht_dec(ch):
-    if ch in CIRCLED:
-        return CIRCLED[ch]
+    c = _circled(ch)
+    if c is not None:
+        return c
     if _PUA_LO <= ord(ch) <= _PUA_HI:
         return str((ord(ch) - 0xe033) % 10)
     return ch if (ch.isascii() and ch.isdigit()) else ''
@@ -350,6 +367,64 @@ def parse_haesol_answers(haesol_pdfs):
     for subj, pdf in haesol_pdfs.items():
         _ht_parse_doc(fitz.open(pdf), subj, out)
     return out
+
+
+def _table_single(doc):
+    """단일과목 정답표 → {num: ans_str}. PyMuPDF find_tables(테두리 격자)로 셀을 추출한다.
+
+    회차마다 텍스트레이어 레이아웃이 제각각(번호·정답 한 행 인터리브 / 번호행·정답행 분리 /
+    2열 packed)이지만 **격자선**이 그걸 무시하고 셀 단위로 끊어주므로 좌표 휴리스틱이 불필요하다.
+    셀 = 번호(ascii) | 정답(글리프 ①~⑤·PUA·CJK 또는 평문 ASCII 단답). 번호셀(1..30) 바로 뒤
+    셀을 정답으로 페어링 — 글리프면 디코드(_decode_single_ans), 평문이면 그대로. 같은 번호는
+    최상단 표 우선(setdefault). (객관식 ①~⑤·CJK 글리프, 단답 PUA·ascii 모두 흡수.)"""
+    out = {}
+    for pno in range(doc.page_count):
+        try:
+            tbls = doc[pno].find_tables(strategy="lines").tables
+        except Exception:
+            continue
+        for tb in tbls:
+            for row in tb.extract():
+                cells = [(c or '').strip() for c in row]
+                j = 0
+                while j < len(cells) - 1:                  # 번호셀 + 다음 셀(정답) 페어링
+                    nc = cells[j]
+                    if nc.isdigit() and 1 <= int(nc) <= 30:
+                        ac = cells[j + 1]
+                        ans = (_decode_single_ans(ac) if ac and all(_is_ans_glyph(ch) for ch in ac)
+                               else ac)
+                        if ans:
+                            out.setdefault(int(nc), ans)
+                        j += 2
+                    else:
+                        j += 1
+    return out
+
+
+def parse_haesol_single(haesol_pdf):
+    """단일과목(고1/고2 학평·통합형) 해설 PDF → {('단일', number): answer_str}.
+
+    고3(공통1-22 / 선택23-30)과 달리 단일 30문항(객관식 1-21, 단답 **22**-30). 회차마다
+    폰트·레이아웃이 제각각(HyhwpEQ PUA ↔ CJK 글리프 U+6ABE~, 인터리브 ↔ 번호행/정답행 분리,
+    PUA 단답 ↔ 평문 ascii)이라 정답표 **격자 테두리**로 셀을 끊는 `_table_single` 로 일괄
+    디코드한다. 테두리 없는 표(미검출)는 구 좌표/PUA 경로로 빈 번호만 보강.
+    (고1·고2 3·6·9·11월 + 2026 6월 = 30/30 실측.)"""
+    doc = fitz.open(str(haesol_pdf))
+    g = _table_single(doc)
+    if sum(1 for n in g if 1 <= n <= 30) < 30:             # 격자 미검출 → 좌표 폴백으로 빈칸만 채움
+        regs, pw = _ht_regions(doc)
+        chc = {}
+        for pno, col, cs in regs:
+            for _y, num, a, _x in sorted(cs):
+                g.setdefault(num, a)
+            cell_ys = sorted(set(y for y, _n, _a, _x in cs))
+            if not cell_ys:
+                continue
+            if pno not in chc:
+                chc[pno] = _ht_chars(doc[pno])
+            for n, v in _ht_coord_dandab(chc[pno], col, pw, cell_ys, 22, 30).items():
+                g.setdefault(n, v)
+    return {('단일', n): a for n, a in g.items()}
 
 
 def assert_selectives_distinct(answers):

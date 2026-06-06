@@ -1,0 +1,17 @@
+{
+  "text_sha": "f786b33c7284",
+  "meta": {
+    "searchable_text": "그림과 같이 ∠A = 90°, AB = AC = 3인 직각삼각형 ABC가 있다. 변 AB 위의 두 점 D, E와 변 BC 위의 점 F에 대하여 삼각형 DEF는 높이가 1인 정삼각형이다. ∠DCA = θ일 때, $\\tan \\theta$의 값은? (단, AD < AE)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "직각삼각형의_삼각비",
+      "정삼각형의_성질",
+      "좌표와_도형"
+    ],
+    "exam_intent": "직각삼각형과 정삼각형 조건을 조합하여 특정 각의 탄젠트값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

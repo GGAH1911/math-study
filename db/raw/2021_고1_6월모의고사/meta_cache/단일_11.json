@@ -1,0 +1,17 @@
+{
+  "text_sha": "56edcda1c2d8",
+  "meta": {
+    "searchable_text": "x에 대한 이차방정식이 실수 매개변수 a의 값에 관계없이 항상 중근을 가질 때 조건을 만족하는 상수 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "중근_조건",
+      "항등식"
+    ],
+    "exam_intent": "매개변수를 포함한 이차방정식의 항상 중근 조건 파악 및 미지수 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

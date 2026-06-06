@@ -1,0 +1,18 @@
+{
+  "text_sha": "fd7e40bd0f78",
+  "meta": {
+    "searchable_text": "세 양수 $a, b, c$에 대하여 함수 $y = a\\tan(bx - c)$의 그래프가 그림과 같을 때, $a \\times b \\times c$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "tan_함수",
+      "주기",
+      "위상_이동",
+      "진폭"
+    ],
+    "exam_intent": "tan 함수의 그래프 분석으로 진폭, 주기, 위상을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

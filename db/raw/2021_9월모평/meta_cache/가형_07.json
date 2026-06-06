@@ -1,0 +1,17 @@
+{
+  "text_sha": "12475feb8207",
+  "meta": {
+    "searchable_text": "매개변수 $t$ $(0 < t)$로 나타내어진 함수 $x = \\ln t$, $y = t^3 - 3t$에 대하여 $\\frac{dy}{dx}$가 최댓값을 가질 때, $t$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "매개변수_곡선",
+      "도함수",
+      "극값"
+    ],
+    "exam_intent": "매개변수 곡선의 도함수 최댓값을 구하는 미분 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "1a81291013f0",
+  "meta": {
+    "searchable_text": "함수 [수식 손상]에 대하여 [수식 손상]'[수식 손상]의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "다항함수의_미분"
+    ],
+    "exam_intent": "도함수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

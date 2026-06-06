@@ -1,0 +1,15 @@
+{
+  "text_sha": "7b2a0142d1d5",
+  "meta": {
+    "searchable_text": "$x$에 대한 이차방정식 $x^2 - 4x + m = 0$의 두 근을 $\\alpha$, $\\beta$라 하자. (근과 계수 관련 조건들)일 때, 양수 $m$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수의 관계를 활용하여 매개변수 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "491f0774141c",
+  "meta": {
+    "searchable_text": "두 자연수 $a$, $b$에 대하여 좌표평면 위에 두 점 $A(\\log_4 a, y_A)$, $B(1 + \\log_8 b, y_B)$이 있다. 선분 AB를 2:1로 외분하는 점이 곡선 $y = \\log_4 x + 3$ 위에 있고, 집합 $\\{(x,y) \\mid x^2 + y^2 \\leq 32, x \\text{는 정수}\\}$의 모든 원소의 합은 25이다. $b$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "외분점",
+      "좌표기하"
+    ],
+    "exam_intent": "로그함수와 좌표기하, 격자점 조건의 통합 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

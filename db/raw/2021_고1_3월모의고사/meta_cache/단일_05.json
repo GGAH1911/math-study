@@ -1,0 +1,15 @@
+{
+  "text_sha": "980de3edfe9a",
+  "meta": {
+    "searchable_text": "밑면의 지름의 길이가 4인 원기둥의 겉넓이가 $38\\pi$일 때, 이 원기둥의 높이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "입체도형",
+    "concepts": [
+      "원기둥의_겉넓이"
+    ],
+    "exam_intent": "원기둥의 겉넓이 공식을 이용하여 높이를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

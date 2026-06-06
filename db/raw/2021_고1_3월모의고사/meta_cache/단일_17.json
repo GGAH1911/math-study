@@ -1,0 +1,17 @@
+{
+  "text_sha": "b8a7f1fdd36e",
+  "meta": {
+    "searchable_text": "다음 그림은 어느 수학 전시관의 입장권을 나타낸 것이다. 이 입장권은 고객용과 회수용의 두 부분으로 나누어져 있고 고객용 부분의 넓이가 입장권의 넓이의 $\\frac{5}{15}$이다. 회수용 부분의 넓이가 4일 때, 입장권의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "넓이_계산",
+      "도형의_분할",
+      "비율과_방정식"
+    ],
+    "exam_intent": "도형을 일정 비율로 분할했을 때 전체 넓이를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

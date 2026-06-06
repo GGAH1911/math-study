@@ -1,0 +1,17 @@
+{
+  "text_sha": "03db162fb9a4",
+  "meta": {
+    "searchable_text": "두 직선과 $x$축으로 둘러싸인 부분에 직사각형이 있다. 이 직사각형의 한 변은 $x$축 위에 있고 두 꼭짓점은 각각 두 직선 위에 있을 때, 직사각형의 넓이의 최댓값",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "좌표평면",
+      "최적화"
+    ],
+    "exam_intent": "직선으로 둘러싸인 영역 내 직사각형의 최대 넓이를 좌표를 이용해 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

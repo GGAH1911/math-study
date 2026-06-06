@@ -1,0 +1,18 @@
+{
+  "text_sha": "e2d2fc67b9b1",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 $\\frac{a_{n+1}}{a_n} = \\frac{n+1}{n(n+2)}$를 만족시킬 때, $a_n$을 구하는 과정. $a_1 = \\frac{\\text{(가)}}{\\text{(나)}}$라 하자. (ⅰ) $a_1 = 1$이므로 $a_1 = \\frac{\\text{(가)}}{1}$. (ⅱ) $n \\geq 2$일 때, $a_n = a_1 \\times \\frac{a_2}{a_1} \\times \\cdots \\times \\frac{a_n}{a_{n-1}} = \\text{(가)} \\times \\frac{\\text{(나)}}{1} \\times \\frac{\\text{(다)}}{1}$. 따라서 $a_n = \\frac{\\text{(가)}}{\\text{(다)}}$. (가)에 알맞은 수를 $a$, (나), (다)에 알맞은 식을 각각 $b$, $c$일 때, $a^2 \\times b \\times c^3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "일반항",
+      "수학적_귀납법",
+      "부분곱"
+    ],
+    "exam_intent": "점화식으로부터 일반항을 귀납적으로 유도하고 식을 정리하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

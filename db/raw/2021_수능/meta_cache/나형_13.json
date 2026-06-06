@@ -1,0 +1,16 @@
+{
+  "text_sha": "379420c859bf",
+  "meta": {
+    "searchable_text": "집합 $\\{1, 2, 3, 4\\}$에 대하여 다음 조건을 만족시키는 함수 $f: A \\to A$의 개수는? [조건] $f(2) \\leq f(3) \\leq f(4)$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수의_개수",
+      "중복조합"
+    ],
+    "exam_intent": "조건부 함수 개수를 경우의 수로 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

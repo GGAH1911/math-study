@@ -26,7 +26,7 @@ export function subjectBreakdown(problems: P[]): string {
   }
   const keys = Object.keys(counts);
   if (keys.length === 1) return `${counts[keys[0]]}문항`;
-  return (['공통', '미적분', '확률과통계', '기하', '단일'] as const)
+  return (['공통', '미적분', '확률과통계', '기하', '가형', '나형', '단일'] as const)
     .filter((s) => counts[s])
     .map((s) => `${s} ${counts[s]}`)
     .join(' · ');

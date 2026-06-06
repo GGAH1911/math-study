@@ -1,0 +1,17 @@
+{
+  "text_sha": "24a9ff0c2d26",
+  "meta": {
+    "searchable_text": "직선 $ax + 2y + 5a = 0$이 원 $(x-1)^2 + (y-2)^2 = 2$에 접할 때, 양수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "점과_직선_사이의_거리",
+      "접선_조건"
+    ],
+    "exam_intent": "점과 직선의 거리 공식으로 접선 조건의 매개변수를 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "e2803b70d123",
+  "meta": {
+    "searchable_text": "$\\frac{\\pi}{2} \\leq \\theta \\leq \\pi$일 때, 방정식 $\\cos\\theta = -\\frac{1}{2}$의 해는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식"
+    ],
+    "exam_intent": "주어진 범위에서 기본 삼각값을 갖는 각을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

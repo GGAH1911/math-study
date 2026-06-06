@@ -1,0 +1,17 @@
+{
+  "text_sha": "8586f948436a",
+  "meta": {
+    "searchable_text": "수열 {aₙ}은 a₁=9, a₂=3이고, 모든 자연수 n에 대하여 점화식을 만족시킨다. aₙ ≤ 3을 만족시키는 100 이하의 자연수 n의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "일반항",
+      "등비수열"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 일반항을 구하고 조건을 만족하는 항의 개수를 세는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

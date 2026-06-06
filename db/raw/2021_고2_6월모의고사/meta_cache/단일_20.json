@@ -1,0 +1,17 @@
+{
+  "text_sha": "c12aea90e5cc",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 직선과 곡선이 만나는 두 점 $A$, $B$ 사이의 거리를 구한다. $\\log_2$ 함수 관련 조건들을 포함하며, 주어진 명제들의 참거짓을 판정하고 만족하는 자연수의 개수를 찾는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "함수의_교점",
+      "거리"
+    ],
+    "exam_intent": "지수·로그함수의 교점 거리 조건을 분석하고 명제의 참거짓을 판정한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

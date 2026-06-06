@@ -1,0 +1,17 @@
+{
+  "text_sha": "17247480b5d5",
+  "meta": {
+    "searchable_text": "좌표평면에서 주어진 곡선이 $x$축, $y$축과 만나는 점을 각각 A, B라 하고, 이 곡선의 두 점근선의 교점을 C라 하자. 세 점 A, B, C가 한 직선 위에 있도록 하는 상수의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "점근선",
+      "교점",
+      "공선조건"
+    ],
+    "exam_intent": "곡선의 점근선과 축의 교점이 공선이 되는 조건",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

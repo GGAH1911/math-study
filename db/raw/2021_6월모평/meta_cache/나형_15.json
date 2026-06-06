@@ -1,0 +1,16 @@
+{
+  "text_sha": "b2850991a15a",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t$ ($t \\geq 0$)에서의 속도 $v$가 $v = -4t + 5$이다. 시각 $t = 3$에서 점 P의 위치가 11일 때, 시각 $t = 0$에서 점 P의 위치는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "부정적분",
+      "운동"
+    ],
+    "exam_intent": "속도 함수를 적분하여 초기 위치 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

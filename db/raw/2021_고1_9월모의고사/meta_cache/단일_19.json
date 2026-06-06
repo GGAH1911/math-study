@@ -1,0 +1,18 @@
+{
+  "text_sha": "efd52048cdfc",
+  "meta": {
+    "searchable_text": "두 실수 $\\alpha, \\beta$에 대하여 직선 $y=2$ 위에 세 점 $P(\\alpha, 1), Q(3\\beta, 2), R(2, \\beta)$가 있다. 선분 PQ를 지름으로 하는 원을 $C_1$, 선분 QR을 지름으로 하는 원을 $C_2$라 하자. 삼각형 OPR과 두 원 $C_1, C_2$가 다음 조건을 만족시킬 때, $\\beta$의 값은? (O는 원점) (가) 삼각형 OPR의 넓이는 $3\\sqrt{2}$ (나) 원 $C_1$과 원 $C_2$의 넓이의 비는 $1:4$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "원의_성질",
+    "concepts": [
+      "지름과_원",
+      "좌표기하",
+      "삼각형_넓이",
+      "원의_넓이"
+    ],
+    "exam_intent": "원의 성질과 좌표계에서의 기하 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

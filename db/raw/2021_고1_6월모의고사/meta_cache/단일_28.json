@@ -1,0 +1,16 @@
+{
+  "text_sha": "f9b1e55e1d36",
+  "meta": {
+    "searchable_text": "x에 대한 이차방정식 $x^2 + ax + b = 0$의 두 근을 $\\alpha, \\beta$라 할 때, 주어진 조건을 만족시키는 두 자연수 $a, b$의 모든 순서쌍의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계",
+      "비에타_정리"
+    ],
+    "exam_intent": "근과 계수의 관계를 이용한 조건 분석과 경우의 수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

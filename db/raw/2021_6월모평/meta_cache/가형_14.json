@@ -1,0 +1,17 @@
+{
+  "text_sha": "dadebcb2966f",
+  "meta": {
+    "searchable_text": "0 ≤ θ ≤ 2π일 때, sin θ를 변수로 하는 이차방정식이 실근을 가지도록 하는 θ의 최솟값과 최댓값을 각각 α, β라 하자. 4α + 2β의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "이차방정식의_실근_조건",
+      "판별식"
+    ],
+    "exam_intent": "삼각함수와 이차방정식을 결합한 조건 분석으로 범위 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

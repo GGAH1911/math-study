@@ -1,0 +1,16 @@
+{
+  "text_sha": "dc59c33f42e7",
+  "meta": {
+    "searchable_text": "연립방정식을 풀어 주어진 조건을 만족하는 매개변수값을 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "연립일차방정식의_해",
+      "매개변수"
+    ],
+    "exam_intent": "연립방정식의 해를 이용하여 조건을 만족하는 매개변수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

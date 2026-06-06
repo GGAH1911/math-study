@@ -1,0 +1,16 @@
+{
+  "text_sha": "fbb69e7ba4b1",
+  "meta": {
+    "searchable_text": "5 이상의 자연수 n에 대하여 다항식이 특정 조건으로 나누어떨어지도록 하는 모든 자연수 n의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "인수분해",
+      "나머지정리"
+    ],
+    "exam_intent": "다항식 나누어떨어짐 조건을 만족하는 매개변수 값 찾기",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

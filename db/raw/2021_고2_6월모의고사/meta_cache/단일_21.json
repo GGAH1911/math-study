@@ -1,0 +1,17 @@
+{
+  "text_sha": "b507e123ca15",
+  "meta": {
+    "searchable_text": "상수 $a$에 대하여 정의역과 공역이 각각 실수 전체의 집합인 함수 $f$가 일대일대응이다. 함수 $g$를 정의할 때, 주어진 조건을 만족하는 정수 변수들의 모든 순서쌍의 개수를 구하는 문제 (단, $2 \\leq a \\leq 2$) [4점]",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "일대일대응",
+      "로그함수",
+      "지수함수"
+    ],
+    "exam_intent": "일대일대응 조건에서 함수의 성질을 파악하고 정수 순서쌍의 개수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

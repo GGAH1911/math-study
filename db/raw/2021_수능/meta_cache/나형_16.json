@@ -1,0 +1,15 @@
+{
+  "text_sha": "4edaf1ec2046",
+  "meta": {
+    "searchable_text": "0 ≤ θ ≤ 4π일 때, 방정식 4sin(2θ) - 4cosθ - 2 = 0의 모든 해의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_방정식"
+    ],
+    "exam_intent": "주어진 범위에서 삼각방정식의 모든 해의 합 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

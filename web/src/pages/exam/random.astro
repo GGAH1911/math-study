@@ -3,13 +3,29 @@ export const prerender = false; // 매 요청 새 무작위 시험
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ExamRunner from '../../components/ExamRunner.tsx';
 import { getCollection } from 'astro:content';
-import { buildRandomExam, ELECTIVES } from '../../lib/exam-build';
+import { buildRandomExam, ELECTIVES, FORMATS, type ExamFormat } from '../../lib/exam-build';
 
-const raw = String(Astro.url.searchParams.get('elective') ?? '');
-const elective = ELECTIVES.includes(raw) ? raw : '미적분';
+const q = Astro.url.searchParams;
+const fmtRaw = String(q.get('format') ?? '2028');
+const format = (FORMATS.some((f) => f.key === fmtRaw) ? fmtRaw : '2028') as ExamFormat;
+const diff = Math.max(0, Math.min(100, Math.round(Number(q.get('diff') ?? 50)) || 0));
+
+// 양식별 옵션(선택과목/계열)
+let option: string | undefined;
+let optionChips: string[] = [];
+let optionLabel = '';
+if (format === 'gongseon') {
+  const o = String(q.get('option') ?? '');
+  option = ELECTIVES.includes(o) ? o : '미적분';
+  optionChips = ELECTIVES; optionLabel = '선택과목';
+} else if (format === 'ganah') {
+  const o = String(q.get('option') ?? '');
+  option = ['가형', '나형'].includes(o) ? o : '가형';
+  optionChips = ['가형', '나형']; optionLabel = '계열';
+}
+
 const all = await getCollection('problems');
-const picks = buildRandomExam(all, elective);
-
+const picks = buildRandomExam(all, { format, option, difficulty: diff / 100 });
 const examProblems = picks.map((p, i) => {
   const s = p.data.source ?? {};
   return {
@@ -22,20 +38,74 @@ const examProblems = picks.map((p, i) => {
   };
 });
 const durationSec = 100 * 60;
+
+const fmt = FORMATS.find((f) => f.key === format);
+// URL 빌더 (빈 값 생략). 양식 전환 시 option=''로 초기화.
+const url = (patch: Record<string, string>) => {
+  const merged: Record<string, string> = { format, diff: String(diff), ...(option ? { option } : {}), ...patch };
+  const u = new URLSearchParams();
+  for (const [k, v] of Object.entries(merged)) if (v) u.set(k, v);
+  return `/exam/random?${u.toString()}`;
+};
+// 슬라이더 베이스(diff 제외) — 클라 스크립트가 값 붙여 이동.
+const sliderBase = (() => {
+  const u = new URLSearchParams({ format, ...(option ? { option } : {}) });
+  return `/exam/random?${u.toString()}&diff=`;
+})();
+const diffLabel = diff <= 20 ? '기초' : diff <= 45 ? '쉬움' : diff <= 65 ? '보통' : diff <= 85 ? '어려움' : '킬러';
 ---
 <BaseLayout title="랜덤 모의시험">
-  <div class="max-w-3xl mx-auto px-4 pt-4">
+  <div class="max-w-3xl mx-auto px-4 pt-4 space-y-2">
+    {/* 양식 (교육과정) */}
     <div class="flex items-center gap-2 text-xs flex-wrap">
-      <span class="text-[color:var(--color-subtle)]">선택과목</span>
-      {ELECTIVES.map((e) => (
-        <a href={`/exam/random?elective=${e}`} class={`chip ${e === elective ? 'border-[color:var(--color-accent)] text-[color:var(--color-text)]' : 'opacity-50'}`}>{e}</a>
+      <span class="text-[color:var(--color-subtle)] min-w-[3rem]">양식</span>
+      {FORMATS.map((f) => (
+        <a href={url({ format: f.key, option: '' })} class={`chip ${f.key === format ? 'border-[color:var(--color-accent)] text-[color:var(--color-text)]' : 'opacity-50'}`}>{f.label}</a>
       ))}
-      <a href="/exam/random" class="chip opacity-70 ml-2">🎲 새 시험</a>
+      <span class="text-[10px] text-[color:var(--color-subtle)]">{fmt?.note}</span>
+    </div>
+
+    {/* 옵션: 선택과목(공통+선택) / 계열(가·나형) */}
+    {optionChips.length > 0 && (
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <span class="text-[color:var(--color-subtle)] min-w-[3rem]">{optionLabel}</span>
+        {optionChips.map((o) => (
+          <a href={url({ option: o })} class={`chip ${o === option ? 'border-[color:var(--color-accent)] text-[color:var(--color-text)]' : 'opacity-50'}`}>{o}</a>
+        ))}
+      </div>
+    )}
+
+    {/* 난이도 슬라이더 — 기초(고1 혼합) ↔ 킬러 */}
+    <div class="flex items-center gap-2.5 text-xs">
+      <span class="text-[color:var(--color-subtle)] min-w-[3rem]">난이도</span>
+      <span class="text-[10px] text-[color:var(--color-subtle)]">기초</span>
+      <input
+        id="diff-slider"
+        type="range" min="0" max="100" step="5" value={diff}
+        data-base={sliderBase}
+        class="flex-1 max-w-[16rem] accent-[color:var(--color-accent-strong)] cursor-pointer"
+      />
+      <span class="text-[10px] text-[color:var(--color-subtle)]">킬러</span>
+      <span class="chip text-[10px]">{diffLabel} {diff}</span>
+      <a href={url({})} class="chip opacity-70 ml-1">🎲 새 시험</a>
     </div>
   </div>
+
   {examProblems.length === 0 ? (
     <div class="max-w-3xl mx-auto px-6 py-12 text-center text-[color:var(--color-muted)]">시험을 구성하지 못했습니다.</div>
   ) : (
-    <ExamRunner client:load title={`랜덤 모의시험 · ${elective}`} problems={examProblems} durationSec={durationSec} />
+    <ExamRunner
+      client:load
+      composed={true}
+      title={`랜덤 · ${fmt?.label}${option ? ' ' + option : ''} · ${diffLabel}`}
+      problems={examProblems}
+      durationSec={durationSec}
+    />
   )}
 </BaseLayout>
+
+<script>
+  // 난이도 슬라이더: 값 변경 시 diff 쿼리로 새 시험 로드 (SSR per request).
+  const s = document.getElementById('diff-slider') as HTMLInputElement | null;
+  s?.addEventListener('change', () => { location.href = (s.dataset.base ?? '/exam/random?diff=') + s.value; });
+</script>

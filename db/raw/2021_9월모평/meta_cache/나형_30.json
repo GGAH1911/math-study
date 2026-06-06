@@ -1,0 +1,17 @@
+{
+  "text_sha": "bcf3e74f6429",
+  "meta": {
+    "searchable_text": "삼차함수 f(x)가 다음 조건을 만족시킨다.\n(가) f(1)=3, f'(0)=0\n(나) 집합 {x | x≥1이고 f'(x)=0}의 원소의 개수는 1이다.\n상수 a에 대하여 함수 g(x)가 실수 전체의 집합에서 미분가능할 때, f(0)×∫₀⁴ f(x)dx의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "극값",
+      "정적분"
+    ],
+    "exam_intent": "도함수 조건으로부터 삼차함수 결정 후 정적분값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "d8ac266363d3",
+  "meta": {
+    "searchable_text": "부등식 |2x-1| ≤ 5를 만족시키는 모든 정수 x의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "절댓값_부등식",
+      "정수_해"
+    ],
+    "exam_intent": "절댓값 부등식의 기본 풀이 및 정수해 개수 세기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

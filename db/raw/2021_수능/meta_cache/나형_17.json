@@ -1,0 +1,17 @@
+{
+  "text_sha": "fb0d6016e07b",
+  "meta": {
+    "searchable_text": "두 다항함수 $f(x)$, $g(x)$가 $\\lim_{x \\to 0} \\frac{f(x)}{x^3} = 3$, $\\lim_{x \\to 0} \\frac{g(x)}{x^3 - 2x^2} = $ (상수)를 만족시킨다. 함수의 도함수값을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "극한",
+      "도함수",
+      "다항함수"
+    ],
+    "exam_intent": "극한조건으로 다항함수를 결정하고 도함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

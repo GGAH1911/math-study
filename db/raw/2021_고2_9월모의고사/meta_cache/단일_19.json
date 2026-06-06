@@ -1,0 +1,13 @@
+{
+  "text_sha": "4f84273b072d",
+  "meta": {
+    "searchable_text": "중심이 $O$이고 길이가 10인 선분 $AB$를 지름으로 하는 반원의 호 위에 점 $P$가 있다. 그림과 같이 선분 $PB$의 연장선 위에 $PA = PC$인 점 $C$를 잡고, 선분 $PO$의 연장선 위에 $PA = PD$인 점 $D$를 잡는다. $\\angle PAB = \\theta$에 대하여 $4\\sin\\theta = 3\\cos\\theta$일 때, 삼각형 $ADC$의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [],
+    "exam_intent": "삼각비 조건과 원의 기하를 통한 좌표 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

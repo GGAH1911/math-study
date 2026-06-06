@@ -1,0 +1,17 @@
+{
+  "text_sha": "643deeb34bc5",
+  "meta": {
+    "searchable_text": "0 < θ < π/4인 임의의 실수 θ에 대하여 그림과 같이 AB = 3, ∠ABC = θ, ∠CAB = 3θ인 삼각형 ABC가 있다. 선분 BC 위에 점 D를 ∠DAC = θ가 되도록 잡고, 선분 AC 위에 점 E를 ∠EDC = θ가 되도록 잡는다. 삼각형 ADE의 넓이 S를 구하는 과정에서 ∠ABC = θ, ∠DAB = 2θ이므로 ∠BDA = 3θ이다. 삼각형 ABD에서 사인법칙에 의하여 AD/sin θ = AB/sin 3θ이므로 AD = 3(가)/sin 3θ이다. 또한 ∠ADE = 2θ이므로 DE = (나) × AD/2이다. 따라서 삼각형 ADE의 넓이 S는 9 × (가) × sin 3θ/sin θ × (다)이다. (가), (다)에 맞은 식을 각각 α, γ라 하고, (나)에 맞은 수를 β라 할 때, α × β/(6 × β) ÷ γ × γ/12의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "사인법칙",
+      "삼각형의_넓이",
+      "각도_관계"
+    ],
+    "exam_intent": "사인법칙과 삼각형 넓이 공식을 이용한 다단계 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

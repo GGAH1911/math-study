@@ -1,0 +1,16 @@
+{
+  "text_sha": "6f33e5cef99a",
+  "meta": {
+    "searchable_text": "복소수 z가 주어진 조건을 만족할 때 다음 명제의 참거짓을 판단하는 문제. ㄱ. |z - 3| = 1, ㄴ. |z + 4| + |z - 5| = 1, ㄷ. 특정 조건을 만족하는 100 이하의 모든 자연수 n의 개수는 66이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "복소수의_절댓값",
+      "기하학적_해석"
+    ],
+    "exam_intent": "복소수의 기하학적·대수적 조건을 종합적으로 판단하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

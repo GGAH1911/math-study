@@ -1,0 +1,17 @@
+{
+  "text_sha": "986d0238c3a8",
+  "meta": {
+    "searchable_text": "30 이하의 자연수 중에서 99와 서로소인 자연수의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정수와_유리수",
+    "concepts": [
+      "서로소",
+      "최대공약수",
+      "소인수분해"
+    ],
+    "exam_intent": "서로소 개념과 포함-배제 원리를 이용한 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

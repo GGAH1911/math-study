@@ -1,0 +1,17 @@
+{
+  "text_sha": "5fbc849a4f2b",
+  "meta": {
+    "searchable_text": "함수가 실수 전체의 집합에서 미분가능할 조건을 이용하여 두 상수의 곱을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "미분가능성",
+      "연속성",
+      "미분계수"
+    ],
+    "exam_intent": "절댓값을 포함한 함수의 미분가능 조건으로 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

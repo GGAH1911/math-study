@@ -1,0 +1,16 @@
+{
+  "text_sha": "9c44a411362a",
+  "meta": {
+    "searchable_text": "$\\lim_{n\\to\\infty} \\frac{2n+5}{\\text{분모}}$의 극한값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "부정형"
+    ],
+    "exam_intent": "최고차항의 계수 비로 수열의 극한값을 구하는 기본 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

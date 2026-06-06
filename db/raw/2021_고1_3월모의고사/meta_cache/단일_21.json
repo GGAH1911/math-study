@@ -1,0 +1,17 @@
+{
+  "text_sha": "36469e573f3c",
+  "meta": {
+    "searchable_text": "그림과 같이 AB=6, BC=8인 삼각형 ABC가 있다. 변 BC의 중점을 M, 변 AC의 중점을 N이라 할 때, 두 선분 AM, BN이 점 P에서 서로 수직으로 만난다. <보기>에서 옳은 것만을 있는 대로 고른 것은? ㄱ. $3AP = 2AM$ ㄴ. $BN = \\sqrt{21}$ ㄷ. 삼각형 ABC의 넓이는 $4\\sqrt{35}$이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_수직_조건",
+      "중점의_성질",
+      "매개변수_표현"
+    ],
+    "exam_intent": "벡터의 수직성과 중점의 성질을 이용한 삼각형 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

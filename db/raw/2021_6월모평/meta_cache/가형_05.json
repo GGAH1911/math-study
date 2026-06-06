@@ -1,0 +1,17 @@
+{
+  "text_sha": "f1106c065f31",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$에 대하여 급수의 합이 10일 때, $\\lim_{n \\to \\infty} \\frac{2a_n^2 + \\cdots}{2a_n^3 + \\cdots}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "급수의_수렴",
+      "수열의_극한",
+      "무한급수"
+    ],
+    "exam_intent": "급수 수렴 조건으로부터 수열의 극한값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

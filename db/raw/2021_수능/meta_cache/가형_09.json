@@ -1,0 +1,16 @@
+{
+  "text_sha": "573f50de02c3",
+  "meta": {
+    "searchable_text": "5장의 카드(A, B, C, D, E)와 4장의 카드(1, 2, 3, 4)를 모두 한 번씩 사용하여 일렬로 나열할 때, 문자 A의 바로 양옆에 각각 숫자가 놓일 확률",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "순열",
+      "경우의_수"
+    ],
+    "exam_intent": "제약 조건을 만족하는 순열의 확률을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

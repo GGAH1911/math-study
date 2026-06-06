@@ -1,0 +1,15 @@
+{
+  "text_sha": "aed007a7409a",
+  "meta": {
+    "searchable_text": "함수 $f(x) = 5\\sin x + 1$의 최댓값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값"
+    ],
+    "exam_intent": "삼각함수의 최댓값을 구할 수 있는가를 평가한다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

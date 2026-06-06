@@ -1,0 +1,17 @@
+{
+  "text_sha": "c98264fb2e13",
+  "meta": {
+    "searchable_text": "전체집합 $U$는 100 이하의 자연수이고, 두 부분집합 $A$는 홀수, $B$는 7의 배수일 때, $|A \\cup B|$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_합집합",
+      "포함배제_원리",
+      "카디널리티"
+    ],
+    "exam_intent": "포함-배제 원리를 이용하여 두 집합의 합집합 원소 개수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

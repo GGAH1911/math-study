@@ -1,0 +1,16 @@
+{
+  "text_sha": "84dd8ad9dc63",
+  "meta": {
+    "searchable_text": "다음 조건을 만족시키는 음이 아닌 정수 $x, y, z, w$의 모든 순서쌍 $(x, y, z, w)$의 개수를 구하시오. [4점]\n(가) 수식 글리프 손실 — 추정: $x+y+z+w \\leq 6$\n(나) $x, y, z, w$ 중 적어도 하나는 0이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "포함-배제"
+    ],
+    "exam_intent": "조건부 음이 아닌 정수해의 개수를 중복조합과 포함-배제로 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

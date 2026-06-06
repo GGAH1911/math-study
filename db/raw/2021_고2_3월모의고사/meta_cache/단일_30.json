@@ -1,0 +1,17 @@
+{
+  "text_sha": "e2f69be5661c",
+  "meta": {
+    "searchable_text": "주어진 함수의 정의 조건과 특성을 이용하여, 함수의 그래프와 직선의 교점의 개수가 매개변수에 따라 변할 때, 교점 개수 함수의 조건을 만족하는 상수들의 곱을 구하는 문제",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_그래프",
+      "교점의_개수",
+      "매개변수_범위"
+    ],
+    "exam_intent": "함수의 그래프와 직선의 교점 개수 조건으로부터 상수를 결정하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

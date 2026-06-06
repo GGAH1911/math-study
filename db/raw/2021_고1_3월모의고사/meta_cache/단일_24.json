@@ -1,0 +1,16 @@
+{
+  "text_sha": "ca429cf38b9c",
+  "meta": {
+    "searchable_text": "편의점에서 30일 동안 판매한 마스크의 일일 판매량을 히스토그램으로 나타낼 때, 일일 판매량이 30개 이상인 일수는 전체의 몇 %인지 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "통계",
+    "concepts": [
+      "도수분포",
+      "상대도수"
+    ],
+    "exam_intent": "히스토그램에서 도수를 읽고 상대도수 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

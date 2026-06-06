@@ -1,0 +1,15 @@
+{
+  "text_sha": "77549c9928fe",
+  "meta": {
+    "searchable_text": "정규분포 N(20, 5²)을 따르는 모집단에서 크기가 16인 표본을 임의추출하여 구한 표본평균을 $\\bar{X}$라 할 때, $E[\\bar{X}]$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [
+      "표본평균의_분포"
+    ],
+    "exam_intent": "표본평균의 기댓값이 모평균과 같음을 이해하는가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

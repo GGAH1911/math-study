@@ -1,0 +1,16 @@
+{
+  "text_sha": "7aa5a880d9e7",
+  "meta": {
+    "searchable_text": "두 사건 A와 B는 서로 독립이고, P(A∩B) = 1/9일 때, P(A)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "독립인_사건",
+      "확률의_곱셈_정리"
+    ],
+    "exam_intent": "독립인 두 사건의 교집합 확률로부터 미지의 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

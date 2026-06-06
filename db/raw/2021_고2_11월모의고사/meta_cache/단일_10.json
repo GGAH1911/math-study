@@ -1,0 +1,16 @@
+{
+  "text_sha": "4cf8b3de5ca3",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점 $P(4,3)$에 대하여 동경 $OP$가 나타내는 각의 크기를 $\\theta$라 할 때, $\\sin\\theta - 2\\cos\\theta$의 값은? (단, $O$는 원점이고, $x$축의 양의 방향을 시초선으로 한다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "좌표평면과_삼각비",
+      "동경"
+    ],
+    "exam_intent": "좌표평면에서 동경의 각에 대한 삼각비 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

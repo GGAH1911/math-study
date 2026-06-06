@@ -1,0 +1,17 @@
+{
+  "text_sha": "1732f4c299e7",
+  "meta": {
+    "searchable_text": "등비수열 $\\{a_n\\}$에 대하여 $\\lim_{n \\to \\infty} \\frac{a_{2n}}{3a_n + a_6} = \\frac{1}{6}$일 때, $\\sum_{n=1}^{\\infty} a_n$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "등비수열",
+      "극한",
+      "무한급수"
+    ],
+    "exam_intent": "극한 조건으로부터 등비수열의 공비를 결정하고 무한급수의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

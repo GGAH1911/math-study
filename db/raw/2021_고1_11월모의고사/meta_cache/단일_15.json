@@ -1,0 +1,17 @@
+{
+  "text_sha": "d1501e2a89a2",
+  "meta": {
+    "searchable_text": "어떤 변수에 대한 연립부등식을 만족하는 정수 개수가 5개가 되도록 하는 모든 정수 값의 곱",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립부등식",
+      "부등식의_해",
+      "정수_조건"
+    ],
+    "exam_intent": "연립부등식의 정수 해가 5개인 조건에서 매개변수의 곱 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

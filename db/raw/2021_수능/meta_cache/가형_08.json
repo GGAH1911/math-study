@@ -1,0 +1,16 @@
+{
+  "text_sha": "0ffab14a8fe6",
+  "meta": {
+    "searchable_text": "곡선 $y = e^{2x}$와 $x$축 및 두 직선 $x = \\frac{\\ln 2}{2}$, $x = \\ln 2$로 둘러싸인 부분의 넓이",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "정적분",
+      "지수함수의_적분"
+    ],
+    "exam_intent": "지수함수와 x축으로 둘러싸인 영역의 정적분을 이용한 넓이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

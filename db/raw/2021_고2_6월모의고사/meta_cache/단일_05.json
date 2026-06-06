@@ -1,0 +1,17 @@
+{
+  "text_sha": "44fa5a3f0e3e",
+  "meta": {
+    "searchable_text": "상용로그표가 주어졌을 때, $\\log_{10}(3.14 \\times 10^2)$의 값을 상용로그표를 이용하여 구하는 문제이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수와_로그",
+    "concepts": [
+      "상용로그",
+      "로그표",
+      "로그의성질"
+    ],
+    "exam_intent": "상용로그표를 이용하여 로그값을 계산할 수 있는가 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

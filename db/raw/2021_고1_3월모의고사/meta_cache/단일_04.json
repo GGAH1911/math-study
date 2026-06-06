@@ -1,0 +1,16 @@
+{
+  "text_sha": "f7afdf68d6a0",
+  "meta": {
+    "searchable_text": "9a^2 + 2ab + \\square b^2가 완전제곱식이 되기 위한 상수 \\square의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "완전제곱식",
+      "인수분해"
+    ],
+    "exam_intent": "완전제곱식 조건에서 미지 계수를 대수적으로 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

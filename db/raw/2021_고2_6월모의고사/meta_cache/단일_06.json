@@ -1,0 +1,17 @@
+{
+  "text_sha": "f5aaf6ae222c",
+  "meta": {
+    "searchable_text": "$0 < \\theta < \\pi$인 $\\theta$에 대하여 $\\cos\\theta = -\\frac{\\sqrt{3}}{2}$일 때, $\\sin\\theta$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "호도법",
+      "피타고라스_항등식",
+      "삼각함수_부호"
+    ],
+    "exam_intent": "주어진 범위에서 코사인 값으로 사인 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

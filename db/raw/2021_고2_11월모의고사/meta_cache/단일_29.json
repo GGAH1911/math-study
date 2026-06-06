@@ -1,0 +1,17 @@
+{
+  "text_sha": "6c800c876229",
+  "meta": {
+    "searchable_text": "삼각형 ABC가 다음 조건을 만족시킨다. (가) $\\cos A = \\frac{1}{4}$ (나) $\\sin B \\sin C = \\frac{8}{9}$ 삼각형 ABC의 넓이가 $\\frac{\\sqrt{15}}{2}$일 때, 삼각형 ABC의 외접원의 넓이는 $\\frac{n\\pi}{m}$이다. $m$의 값을 구하시오. (단, $n$과 $m$은 서로소인 자연수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "사인_법칙",
+      "코사인_법칙",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "삼각형의 각도와 넓이 조건으로부터 외접원의 넓이를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "1400591269a4",
+  "meta": {
+    "searchable_text": "극한값을 구하시오. $$\\lim_{n \\to \\infty} \\frac{3n^2 + 2n + 5}{9n^2 + 2n + 1}$$",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "분수꼴극한",
+      "다항식극한"
+    ],
+    "exam_intent": "분수 형태의 다항식 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

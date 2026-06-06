@@ -1,0 +1,18 @@
+{
+  "text_sha": "6e1703075031",
+  "meta": {
+    "searchable_text": "$AB = 1$, $BC = 2$인 두 선분 $AB$, $BC$에 대하여 선분 $BC$의 중점을 $M$, 점 $M$에서 선분 $AB$에 내린 수선의 발을 $H$라 하자. 중심이 $M$이고 반지름의 길이가 $MH$인 원이 선분 $AM$과 만나는 점을 $D$, 선분 $HC$가 선분 $DM$과 만나는 점을 $E$라 하자. $\\angle ABC = \\theta$라 할 때, 삼각형 $CDE$의 넓이를 $S$, 삼각형 $MEH$의 넓이를 $T$라 하자. $$\\lim_{\\theta \\to 0} \\frac{S}{T^3} = c$$ 일 때, $80c$의 값을 구하시오. (단, $0 < \\theta < \\frac{\\pi}{2}$)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "삼각함수",
+      "도형의_성질",
+      "좌표와_거리"
+    ],
+    "exam_intent": "θ→0에서 두 삼각형 넓이비의 극한값을 구하는 기하 극한 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

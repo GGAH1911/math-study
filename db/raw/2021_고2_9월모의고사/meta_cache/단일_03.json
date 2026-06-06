@@ -1,0 +1,15 @@
+{
+  "text_sha": "507e51c3b568",
+  "meta": {
+    "searchable_text": "함수 $f(x) = \\cos\\left(\\frac{x}{3}\\right)$의 주기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_주기"
+    ],
+    "exam_intent": "변형된 삼각함수의 주기 공식 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

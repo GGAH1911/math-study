@@ -1,0 +1,16 @@
+{
+  "text_sha": "5a786e068de6",
+  "meta": {
+    "searchable_text": "7개의 문자 $c, h, e, e, r, u, p$를 모두 일렬로 나열할 때, 2개의 문자 $e$가 서로 이웃하게 되는 경우의 수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "조건"
+    ],
+    "exam_intent": "조건을 만족하는 순열 경우의 수 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

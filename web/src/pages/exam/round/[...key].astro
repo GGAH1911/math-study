@@ -43,11 +43,17 @@ const examProblems = probs.map((p) => {
   };
 });
 
-// 응시 문항 수 추정(공통/단일 + 선택 8) × 200초/문항, 최소 30분.
+// 응시 문항 수 추정 × 200초/문항, 최소 30분.
+// 가/나형=한 계열(30) · 공통+선택=공통+선택8 · 단일=그대로.
 const ELECTIVES = ['미적분', '확률과통계', '기하'];
+const TRACKS = ['가형', '나형'];
+const tracksPresent = TRACKS.filter((t) => examProblems.some((p) => p.subject === t));
 const commonCount = examProblems.filter((p) => !ELECTIVES.includes(p.subject)).length;
 const hasElective = examProblems.some((p) => ELECTIVES.includes(p.subject));
-const durationSec = Math.max(1800, (commonCount + (hasElective ? 8 : 0)) * 200);
+const examCount = tracksPresent.length > 1
+  ? examProblems.filter((p) => p.subject === tracksPresent[0]).length
+  : commonCount + (hasElective ? 8 : 0);
+const durationSec = Math.max(1800, examCount * 200);
 ---
 <BaseLayout title={`모의시험 — ${title}`}>
   <ExamRunner client:load title={title} problems={examProblems} durationSec={durationSec} />

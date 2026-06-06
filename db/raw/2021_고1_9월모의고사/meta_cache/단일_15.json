@@ -1,0 +1,17 @@
+{
+  "text_sha": "7f776870db01",
+  "meta": {
+    "searchable_text": "그림과 같이 최고차항의 계수의 절댓값이 같은 세 이차함수의 그래프가 있다. 방정식의 모든 근의 합을 구하시오.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_그래프",
+      "근과_계수의_관계",
+      "방정식의_근의_합"
+    ],
+    "exam_intent": "그래프에서 이차함수의 특성을 파악하여 방정식의 근의 합을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "97bc5819a440",
+  "meta": {
+    "searchable_text": "그림과 같이 삼각형 $ABC$에서 $AB = 15$, $AC = 25$, $BC = 30$이다. 점 $A$에서 변 $BC$에 내린 수선의 발을 $D$라 하고, 점 $B$에서 변 $AC$에 내린 수선의 발을 $E$라 하자. 선분 $DE$를 지름으로 하는 원이 변 $BC$와 만나는 점 중 $D$가 아닌 점을 $F$, 변 $AC$와 만나는 점 중 $E$가 아닌 점을 $G$라 하자. 삼각형 $GFC$의 둘레의 길이가 $\\frac{a}{b}$일 때, $a$의 값을 구하시오. (단, $a$와 $b$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [],
+    "exam_intent": "지름에 내접하는 각과 수선의 발을 이용한 도형의 둘레 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

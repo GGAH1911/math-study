@@ -1,0 +1,16 @@
+{
+  "text_sha": "0350e3377a4b",
+  "meta": {
+    "searchable_text": "첫째항이 $a$(자연수)이고 공차가 $4$인 등차수열 $\\{a_n\\}$이 있다. 모든 자연수 $n$에 대하여 [조건]을 만족시키는 모든 $a$의 값을 작은 수부터 크기순으로 나열할 때, $n$번째 수를 $b_n$이라 하자. $\\sum_{i=1}^{10} b_i$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "조건을 만족하는 등차수열 첫째항을 찾고 부분합을 계산하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

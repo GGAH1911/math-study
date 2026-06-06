@@ -1,0 +1,16 @@
+{
+  "text_sha": "1bcfaeb649f7",
+  "meta": {
+    "searchable_text": "5명 중 3명을 선택하여 월·수·금의 당번을 각각 1명씩 서로 다르게 정한다. A는 당번을 하고 B와 C 중 적어도 1명은 당번을 한다. (가) B와 C가 모두 당번하는 경우 (나) B만 당번하는 경우 (다) C만 당번하는 경우, 세 경우의 수의 합을 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열",
+      "조합"
+    ],
+    "exam_intent": "조건을 만족하는 경우를 분류하여 경우의 수를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "5ce9bd11ee88",
+  "meta": {
+    "searchable_text": "함수 $\\lim_{n \\to \\infty} \\frac{4n^2 + 2n + 3}{2n \\times 4n^2 + 2n + 1}$에 대하여 특정 부등식 조건을 만족시키는 정수의 개수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한값",
+      "함수의극한"
+    ],
+    "exam_intent": "극한값 계산과 부등식 조건을 만족하는 정수 개수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

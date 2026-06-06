@@ -1,0 +1,17 @@
+{
+  "text_sha": "7b6a4fbef41e",
+  "meta": {
+    "searchable_text": "상수 $a$에 대하여 직선 $y = ax$가 두 함수 $y = \\log_2 x$, $y = \\log_a(2x)$의 그래프와 만나는 점을 각각 A, B라 하고, 점 B를 지나고 x축에 평행한 직선이 함수 $y = \\log_2 x$의 그래프와 만나는 점을 C라 하자. 함수 $y = \\log_2 x$의 그래프가 x축과 만나는 점을 D라 할 때, 삼각형 ACB와 삼각형 BCD의 넓이의 비는 3:2이다. 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_그래프",
+      "함수의_교점",
+      "도형의_넓이_계산"
+    ],
+    "exam_intent": "로그함수의 교점과 넓이 비 조건으로부터 상수값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

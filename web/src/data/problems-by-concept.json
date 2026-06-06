@@ -1,10 +1,2416 @@
 {
-  "generatedAt": "2026-06-06T02:15:41.860Z",
-  "totalProblems": 2964,
-  "conceptsWithProblems": 2151,
-  "totalMappings": 9201,
+  "generatedAt": "2026-06-06T06:07:20.312Z",
+  "totalProblems": 3324,
+  "conceptsWithProblems": 2294,
+  "totalMappings": 9349,
   "propagatedMappings": 4366,
   "byConcept": {
+    "근호의_곱셈": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_01",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 1,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "무한대로의_수렴": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_02",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 2,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "좌표평면과_직선의_기울기": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_06",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 6,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "블록묶음": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_08",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건부배열": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_08",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "복소수의_거듭제곱근": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_12",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "n제곱근의_개수와_성질": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_12",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "실근_조건": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_12",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "곡선의교점": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_가형_16",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "가형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등차중항": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_03",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 3,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "0/0_꼴": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_04",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 4,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원에_내접하는_삼각형": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_05",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건부배치": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_12",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "운동": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_15",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등비수열의_공비": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_25",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "포함-배제": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_27",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "확률_기본정의": [
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_29",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원탁_앉히기": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_09",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "현의길이": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_13",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "수직과_수선의_성질": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_16",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "좌표평면의_거리": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_16",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "반복_관계식": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_16",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "포함관계": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_19",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "결합확률분포": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_가형_26",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "가형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "합의법칙": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_05",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "교집합과_합집합": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_05",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각형의_각과_변": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_09",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "속도와_변위의_관계": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_13",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "절댓값이_포함된_적분": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_13",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "재귀_관계식": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_16",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "닮음과_비": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_16",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "구간의_겹침_조건": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_19",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수_조건": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_20",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "항의계수": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_22",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 22,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건의_활용": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_23",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 23,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "스튜어트_정리": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_25",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "단조성_증가조건": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_28",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "도함수_판정": [
+      {
+        "slug": "2021/9월모평/2021_9월모평_나형_28",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "복소수의_제곱": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_06",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 6,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직선과_곡선의_접촉": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "필요조건_충분조건": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_11",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 11,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "해의_포함관계": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_11",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 11,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원의_평행이동": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_08",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "좌표축에의_접선": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원의_거리_조건": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "AM-GM_부등식": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_14",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 14,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "밑변환공식": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_16",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원의방정식": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_17",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각형의넓이": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_17",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직선과원의교점": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_17",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "폐구간에서의_함수값": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "정의역과_치역": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_27",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원의_외접": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등변사다리꼴": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "거리와_좌표": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차함수의_최적화": [
+      {
+        "slug": "2021/고1_11월모의고사/2021_고1_11월모의고사_단일_30",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "무리수의_연산": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_03",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 3,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "일차함수의_기울기": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_06",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 6,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "범위부등식": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "자연수해의개수": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직사각형의_둘레": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_11",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 11,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "산점도_해석": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_12",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건부_데이터_분류": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_12",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "연립일차방정식의_응용": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "외심과_외접원": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_16",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "도형의_분할": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_17",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "비율과_방정식": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_17",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "정사각형의_변과_대각선": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "타일_개수_조건": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "일차방정식의_해": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_22",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 22,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "선분의_비": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "좌표를_이용한_문제_풀이": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각비_정의": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_28",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "중점_좌표": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_28",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "각도와_거리": [
+      {
+        "slug": "2021/고1_3월모의고사/2021_고1_3월모의고사_단일_28",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "다항식의_곱셈": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_02",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 2,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "정오각형": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "황금비": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "비례관계": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차함수의_관계식": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_21",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 21,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "계수_추출": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_22",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 22,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "계수_조건": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_25",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차함수의_최댓값·최솟값": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "구간별_함수의_극값": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직선과_포물선의_교점_조건": [
+      {
+        "slug": "2021/고1_6월모의고사/2021_고1_6월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "다항식의_사칙연산": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_01",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 1,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "복소수의켤레": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_12",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차방정식의근": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_12",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "방정식의_근의_합": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_15",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "지름과_원": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "기하학적_해석": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차함수의_그래프와_직선의_교점": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_21",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 21,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이등변삼각형의_성질": [
+      {
+        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_미적분_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_21",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 21,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원과_직선의_접선_조건": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원과_좌표축의_교점": [
+      {
+        "slug": "2021/고1_9월모의고사/2021_고1_9월모의고사_단일_28",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고1",
+        "subject": "단일",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "특정각의_삼각함수값": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_01",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 1,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "유리식_부등식": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_05",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "도함수의_활용": [
+      {
+        "slug": "2021/고3_7월모의고사/2021_고3_7월모의고사_미적분_27",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_09",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "최솟값과_최댓값": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_09",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "좌표평면과_삼각비": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "동경": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "거듭제곱_항등식": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_16",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "부분곱": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "기울기의_성질": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_15",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "초항_결정": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_21",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 21,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "분수꼴극한": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_22",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 22,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "다항식극한": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_22",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 22,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수_부등식": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "매개변수의_존재_조건": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수의_최댓값·최솟값": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건부_연속": [
+      {
+        "slug": "2021/고2_11월모의고사/2021_고2_11월모의고사_단일_30",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "11월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "1차방정식": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_02",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 2,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원의_일반형": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_08",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "카디널리티": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_11",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 11,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "점의_대칭_이동": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_15",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 15,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "공선조건": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_16",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "부등식의_해의_표현": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_17",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건부_선택": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_18",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "곱셈·덧셈_원리": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_18",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "양화사와_명제": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "매개변수_부등식": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "집합의_교집합과_합집합": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_28",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "논리_조건": [
+      {
+        "slug": "2021/고2_3월모의고사/2021_고2_3월모의고사_단일_28",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수_부호": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_06",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 6,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "로그와_지수의_역관계": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_07",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 7,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "로그함수의_변형": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_09",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "tan_함수": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "위상_이동": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수의_범위": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "헤론의_공식": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_18",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "부등식의_자연수해": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "순서쌍_개수_세기": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_19",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수의_특수각": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_24",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 24,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직선_y=x_대칭": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수_합성": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_26",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "대각선_교점": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수_그래프의_교점": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_30",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "방정식의_근의_개수_조건": [
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_30",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "일반각과_동경": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차식": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_15",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "거듭제곱_함수": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "거리와_기울기": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_20",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수의_값": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_22",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 22,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "로그_정의역": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_27",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "수심": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_29",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극한의_존재": [
+      {
+        "slug": "2021/고2_9월모의고사/2021_고2_9월모의고사_단일_30",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "9월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
     "함수의_연속성_정의": [
       {
         "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_공통_05",
@@ -705,22 +3111,6 @@
         "via": "direct"
       }
     ],
-    "기울기의_성질": [
-      {
-        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_15",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "4월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": "mid",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
     "극값과_도함수": [
       {
         "slug": "2027/6월모평/2027_6월모평_미적분_30",
@@ -935,22 +3325,6 @@
         "score": 3,
         "killer_tier": "mid",
         "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "이등변삼각형의_성질": [
-      {
-        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_미적분_29",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "4월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 29,
-        "score": 4,
-        "killer_tier": "killer",
-        "format": "numeric",
         "has_image": true,
         "via": "direct"
       }
@@ -1318,22 +3692,6 @@
         "number": 26,
         "score": 3,
         "killer_tier": "mid",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "도함수의_활용": [
-      {
-        "slug": "2021/고3_7월모의고사/2021_고3_7월모의고사_미적분_27",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 27,
-        "score": 3,
-        "killer_tier": "killer",
         "format": "choice",
         "has_image": true,
         "via": "direct"

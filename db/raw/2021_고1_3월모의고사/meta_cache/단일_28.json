@@ -1,0 +1,18 @@
+{
+  "text_sha": "690105d1b2b3",
+  "meta": {
+    "searchable_text": "그림과 같이 $\\angle BCA = 90°$, $BC = 30$, $AC = 16$인 직각삼각형 $ABC$가 있다. 변 $AB$의 중점 $M$과 변 $BC$의 중점 $N$에 대하여 선분 $MN$의 연장선 위에 $ND = 9$가 되도록 점 $D$를 잡는다. $\\angle ADC = \\theta$일 때, $\\sin\\theta = \\frac{a}{b}$이다. $a + b$의 값을 구하시오. (단, $MD > ND$이고 $a$와 $b$는 서로소인 자연수이다.) [4점]",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각비_정의",
+      "벡터의_내적",
+      "중점_좌표",
+      "각도와_거리"
+    ],
+    "exam_intent": "좌표계에서 중점·거리·삼각함수를 종합 활용하여 각의 삼각비 값을 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

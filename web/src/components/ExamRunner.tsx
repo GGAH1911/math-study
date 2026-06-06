@@ -9,29 +9,41 @@ export type ExamProblem = {
   image: string;
   score: number;
 };
-type Props = { title: string; problems: ExamProblem[]; durationSec: number };
+// composed=true: 이미 조립된 시험(랜덤 등) — 선택과목/계열 필터·picker 끔.
+type Props = { title: string; problems: ExamProblem[]; durationSec: number; composed?: boolean };
 
 type Result = { correct: boolean | null; expected: string | null };
 
 const ELECTIVES = ['미적분', '확률과통계', '기하'];
+const TRACKS = ['가형', '나형'];   // 2021학년도 이전 수능/모평 — 공통 없는 배타적 계열(택1, 각 30문항)
 const CIRCLED = ['①', '②', '③', '④', '⑤'];
 
-export default function ExamRunner({ title, problems, durationSec }: Props) {
+export default function ExamRunner({ title, problems, durationSec, composed }: Props) {
   const electivesPresent = useMemo(
     () => ELECTIVES.filter((e) => problems.some((p) => p.subject === e)),
     [problems],
   );
+  const tracksPresent = useMemo(
+    () => TRACKS.filter((t) => problems.some((p) => p.subject === t)),
+    [problems],
+  );
+  const isTrackExam = tracksPresent.length > 1;   // 가/나형 회차
   const [elective, setElective] = useState<string>(electivesPresent[0] ?? '');
+  const [track, setTrack] = useState<string>(tracksPresent[0] ?? '');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState<Record<string, Result>>({});
   const startRef = useRef<number>(Date.now());
 
-  // 공통/단일 + 선택한 선택과목만 노출 (실제 시험 구성).
+  // composed=조립된 시험(랜덤): 전부 노출. 아니면 가/나형=선택 트랙만, 공통+선택=공통+선택과목만.
   const visible = useMemo(
-    () => problems.filter((p) => !ELECTIVES.includes(p.subject) || p.subject === elective),
-    [problems, elective],
+    () => composed
+      ? problems
+      : isTrackExam
+        ? problems.filter((p) => p.subject === track)
+        : problems.filter((p) => !ELECTIVES.includes(p.subject) || p.subject === elective),
+    [problems, elective, track, isTrackExam, composed],
   );
 
   const answeredCount = visible.filter((p) => (answers[p.slug] ?? '').trim()).length;
@@ -93,16 +105,16 @@ export default function ExamRunner({ title, problems, durationSec }: Props) {
         </div>
       </div>
 
-      {/* 선택과목 picker */}
-      {!submitted && electivesPresent.length > 1 && (
+      {/* 계열(가/나형) · 선택과목 picker (조립시험엔 없음) */}
+      {!composed && !submitted && (isTrackExam ? tracksPresent : electivesPresent).length > 1 && (
         <div className="flex items-center gap-2 text-xs flex-wrap">
-          <span className="text-[color:var(--color-subtle)]">선택과목</span>
-          {electivesPresent.map((e) => (
+          <span className="text-[color:var(--color-subtle)]">{isTrackExam ? '계열' : '선택과목'}</span>
+          {(isTrackExam ? tracksPresent : electivesPresent).map((e) => (
             <button
               key={e}
               type="button"
-              onClick={() => setElective(e)}
-              className={`chip ${elective === e ? 'border-[color:var(--color-accent)] text-[color:var(--color-text)]' : 'opacity-50'}`}
+              onClick={() => (isTrackExam ? setTrack(e) : setElective(e))}
+              className={`chip ${(isTrackExam ? track : elective) === e ? 'border-[color:var(--color-accent)] text-[color:var(--color-text)]' : 'opacity-50'}`}
             >{e}</button>
           ))}
         </div>
@@ -128,7 +140,7 @@ export default function ExamRunner({ title, problems, durationSec }: Props) {
           >
             <div className="flex items-center justify-between gap-2 text-sm">
               <span className="font-semibold">
-                {!ELECTIVES.includes(p.subject) && p.subject !== '단일' ? `${p.subject} ` : ''}{p.number}번
+                {!ELECTIVES.includes(p.subject) && !TRACKS.includes(p.subject) && p.subject !== '단일' ? `${p.subject} ` : ''}{p.number}번
                 <span className="text-[color:var(--color-subtle)] font-normal text-xs"> · {p.score}점</span>
               </span>
               {mark === 'ok' && <span className="text-emerald-400 text-xs">✓ 정답</span>}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "4091044eaf16",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 그래프가 그림과 같다. $\\lim_{x \\to -1^-} f(x) + \\lim_{x \\to 1^+} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한값",
+      "좌극한",
+      "우극한"
+    ],
+    "exam_intent": "그래프에서 극한값을 읽어 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

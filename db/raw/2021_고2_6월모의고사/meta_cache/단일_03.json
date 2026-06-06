@@ -1,0 +1,16 @@
+{
+  "text_sha": "fe89fd8b6288",
+  "meta": {
+    "searchable_text": "반지름의 길이가 6이고 넓이가 $15\\pi$인 부채꼴의 중심각의 크기는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면도형",
+    "concepts": [
+      "부채꼴의_넓이",
+      "중심각"
+    ],
+    "exam_intent": "부채꼴의 넓이 공식으로부터 중심각을 구하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

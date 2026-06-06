@@ -1,0 +1,16 @@
+{
+  "text_sha": "28d7a4756674",
+  "meta": {
+    "searchable_text": "모든 자연수 $n$에 대하여 다음 조건을 만족하는 $x$축 위의 점 $P_n$과 곡선 $y = 3x^2$ 위의 점 $Q_n$이 있다. 선분 $OP_n$과 선분 $P_n Q_n$이 서로 수직이다. 선분 $OQ_n$과 선분 $Q_n P_{n+1}$이 서로 수직이다. 점 $P_1$의 좌표가 $(1, 0)$일 때, 삼각형 $OP_{n+1}Q_n$의 넓이를 구하는 과정이다. ($O$는 원점) 모든 자연수 $n$에 대하여 점 $P_n$의 좌표를 $(a_n, 0)$이라 하자. 닮음 조건으로부터 $\\frac{OP_n}{P_n Q_n} = \\frac{P_n Q_n}{P_n P_{n+1}}$이다. 삼각형 $OP_n Q_n$과 삼각형 $Q_n P_n P_{n+1}$이 닮음이므로 점 $Q_n$의 좌표는 $(a_n, 3a_n^2)$이고 $P_n P_{n+1} = (가)$이다. 따라서 삼각형 $OP_{n+1}Q_n$의 넓이 $S_n$은 $S_n = \\frac{1}{2} \\times a_{n+1} \\times 3a_n^2 = (나)$이다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열",
+    "concepts": [
+      "재귀_관계식",
+      "닮음과_비"
+    ],
+    "exam_intent": "기하학적 수직 조건으로부터 수열의 재귀식을 도출하고 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

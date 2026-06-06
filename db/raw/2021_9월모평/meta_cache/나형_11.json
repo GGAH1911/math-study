@@ -1,0 +1,16 @@
+{
+  "text_sha": "eb8000fece81",
+  "meta": {
+    "searchable_text": "n이 자연수일 때, n에 대한 이차방정식의 두 근의 합을 S(n)이라 하자. $\\sum_{n=1}^{10} S(n)$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "이차방정식의_근과_계수의_관계",
+      "수열의_합"
+    ],
+    "exam_intent": "매개변수가 포함된 이차방정식의 근의 합을 수열로 보고 그 합을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

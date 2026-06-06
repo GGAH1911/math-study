@@ -1,0 +1,17 @@
+{
+  "text_sha": "1a103c1542ae",
+  "meta": {
+    "searchable_text": "∠C = 90°인 직각삼각형 ABC에서 넓이가 16일 때, AB²의 최솟값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "닮음과_피타고라스",
+    "concepts": [
+      "피타고라스_정리",
+      "직각삼각형의_넓이",
+      "AM-GM_부등식"
+    ],
+    "exam_intent": "면적이 고정된 직각삼각형에서 빗변 제곱의 최솟값을 구하는 최적화",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "22dc113b9a0c",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 + 2x + 3 = 0$의 서로 다른 두 근을 $\\alpha$, $\\beta$라 할 때, $\\dfrac{\\alpha^2 + 3\\alpha + 3}{\\alpha + 1} + \\dfrac{\\beta^2 + 3\\beta + 3}{\\beta + 1}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "근과 계수의 관계를 이용한 대칭식 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

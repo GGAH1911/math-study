@@ -1,0 +1,16 @@
+{
+  "text_sha": "aaa4ba6155c9",
+  "meta": {
+    "searchable_text": "이차함수 f(x)가 다음 조건을 만족시킬 때, f(2)의 값은? (가) 함수 f(x)는 x=1에서 최댓값 9를 갖는다. (나) 곡선 y=f(x)에 접하고 직선 2x-y-10=0과 평행한 직선의 y절편은 9이다.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최댓값과_최솟값",
+      "접선의_조건"
+    ],
+    "exam_intent": "이차함수의 최댓값과 접선 조건으로 함수를 결정하고 함숫값을 구함",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "438381e11992",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 2에서 정의된 이차함수 $f(x) = ax^2 + bx + c$의 최솟값이 10일 때, 함수 $f$의 최댓값을 구하시오. (단, $a$는 양수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_최댓값과_최솟값",
+      "폐구간에서의_함수값"
+    ],
+    "exam_intent": "폐구간에서 이차함수의 최솟값 조건을 이용하여 최댓값을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

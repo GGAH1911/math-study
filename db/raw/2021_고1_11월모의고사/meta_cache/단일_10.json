@@ -1,0 +1,16 @@
+{
+  "text_sha": "20c15ba9c53f",
+  "meta": {
+    "searchable_text": "좌표평면에서 직선이 이차함수의 그래프에 접하도록 하는 양수 매개변수의 값",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "직선과_곡선의_접촉",
+      "판별식"
+    ],
+    "exam_intent": "이차함수와 직선의 접촉 조건을 판별식 = 0으로 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

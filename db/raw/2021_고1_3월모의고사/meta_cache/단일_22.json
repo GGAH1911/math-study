@@ -1,0 +1,15 @@
+{
+  "text_sha": "895b3bf9690c",
+  "meta": {
+    "searchable_text": "일차방정식 $ax + 2 = 5x + 8$의 해가 특정 값일 때, $a$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "일차방정식",
+    "concepts": [
+      "일차방정식의_해"
+    ],
+    "exam_intent": "주어진 해를 이용하여 일차방정식의 미지수를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

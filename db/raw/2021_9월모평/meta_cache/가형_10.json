@@ -1,0 +1,16 @@
+{
+  "text_sha": "de3496461ad7",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 $a_1 = 12$이고, 모든 자연수 $n$에 대하여 $a_{n+1} = a_n \\times r$을 만족한다. 특정 조건을 만족하는 자연수 $n$의 최솟값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "점화식"
+    ],
+    "exam_intent": "등비수열의 공비를 이용한 항의 성질 판정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

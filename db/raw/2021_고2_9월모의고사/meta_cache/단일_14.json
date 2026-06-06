@@ -1,0 +1,16 @@
+{
+  "text_sha": "766add7f5fc8",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 5에서 정의된 로그함수의 최댓값과 최솟값의 합이 $2\\log_3 4$가 되도록 하는 상수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "극값"
+    ],
+    "exam_intent": "로그함수의 극값을 구하고 조건을 만족하는 상수를 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

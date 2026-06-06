@@ -1,0 +1,17 @@
+{
+  "text_sha": "99da4ae9e715",
+  "meta": {
+    "searchable_text": "두 양수 a, b에 대하여 좌표평면 위의 두 점 (2a, a log₄ b), (3b, b log₂ a)를 지나는 직선이 원점을 지날 때, log₄ b의 값은? (단, a ≠ 1)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그의_밑_변환",
+      "좌표평면과_직선의_기울기"
+    ],
+    "exam_intent": "로그 함수 성질과 직선의 기울기 조건을 이용한 로그값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

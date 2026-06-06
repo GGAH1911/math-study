@@ -1,0 +1,16 @@
+{
+  "text_sha": "1542a548e622",
+  "meta": {
+    "searchable_text": "좌표평면 위의 점을 직선에 대하여 대칭이동한 점을 $A$라 하자. 점 $A$를 축에 대하여 대칭이동한 점의 좌표가 주어졌을 때, 미지수의 값을 구하시오.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "대칭이동",
+      "좌표변환"
+    ],
+    "exam_intent": "점의 대칭이동 개념과 좌표 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

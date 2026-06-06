@@ -1,9 +1,8 @@
 ---
 // '기출' 회차별 — 한 회차를 접이식(<details>)으로. summary=회차헤더+시험모드 진입,
-// 내용=문제 카드 그리드. 기본 접힘(닫힌 details는 내용 미렌더 → 2584장도 가벼움).
-// ProblemFilters 가 .problem-group(=이 details)을 필터 시 자동 펼친다.
-import ProblemCard from './ProblemCard.astro';
-import { roundTitle } from '../lib/problem-meta';
+// 내용=문제 **리스트**(번호·단원·난이도, 썸네일 X). 기본 접힘.
+// ProblemFilters 가 .problem-card-wrap 을 필터(.filtered-out 토글)하되 자동 펼침은 안 함.
+import { roundTitle, TIER_BADGE } from '../lib/problem-meta';
 import { cardProps, dataAttrs, subjectBreakdown, type RoundGroup } from '../lib/problem-card';
 
 type Props = { round: RoundGroup };
@@ -22,12 +21,28 @@ const { round: r } = Astro.props;
       class="chip text-[11px] hover:border-[color:var(--color-accent)] shrink-0"
     >▶ 시험 모드</a>
   </summary>
-  <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 px-3 pb-3 pt-1">
-    {r.problems.map((p) => (
-      <li class="problem-card-wrap" {...dataAttrs(p)}>
-        <ProblemCard {...cardProps(p)} />
-      </li>
-    ))}
+  <ul class="px-2 pb-2 pt-1 divide-y divide-[color:var(--color-border)]/30">
+    {r.problems.map((p) => {
+      const cp = cardProps(p);
+      const unit = String(p.data.unit ?? '').trim().replace(/_/g, ' ');
+      const badge = cp.tier ? TIER_BADGE[cp.tier] : null;
+      return (
+        <li class="problem-card-wrap" {...dataAttrs(p)}>
+          <a
+            href={cp.href}
+            class="flex items-center gap-3 py-1.5 px-2 text-sm rounded hover:bg-[color:var(--color-surface-2)]/50"
+          >
+            <span class="w-20 shrink-0 font-medium tabular-nums">{cp.title}</span>
+            <span class="flex-1 min-w-0 truncate text-[color:var(--color-subtle)]">{unit || '—'}</span>
+            {badge && <span class={`chip text-[10px] shrink-0 ${badge.cls}`}>{badge.text}</span>}
+            {cp.score != null && cp.score !== '' && (
+              <span class="text-[11px] text-[color:var(--color-subtle)] tabular-nums shrink-0">{cp.score}점</span>
+            )}
+            {cp.solved && <span class="text-emerald-400 text-xs shrink-0" title="해결">✓</span>}
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </details>
 

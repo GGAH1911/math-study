@@ -1,0 +1,17 @@
+{
+  "text_sha": "0fdfc8547d34",
+  "meta": {
+    "searchable_text": "좌표평면에서 두 양수 $a$, $b$에 대하여 원 $x^2 + y^2 = a^2 + b^2$을 $x$축의 방향으로 3만큼, $y$축의 방향으로 $-8$만큼 평행이동한 원을 $C$라 하자. 원 $C$가 $x$축과 $y$축에 동시에 접할 때, $a+b$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_평행이동",
+      "좌표축에의_접선",
+      "원의_거리_조건"
+    ],
+    "exam_intent": "평행이동된 원이 좌표축에 동시에 접하는 조건에서 모수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

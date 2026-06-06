@@ -1,0 +1,17 @@
+{
+  "text_sha": "744a7d233435",
+  "meta": {
+    "searchable_text": "그림과 같이 겉넓이가 148이고, 모든 모서리의 길이의 합이 60인 직육면체 $ABCD$-$EFGH$가 있다. $BG^2 + GD^2 + DB^2$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "직육면체",
+      "공간거리",
+      "조건식"
+    ],
+    "exam_intent": "직육면체 조건으로부터 공간거리 제곱합 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

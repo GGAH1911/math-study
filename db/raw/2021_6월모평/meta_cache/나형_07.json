@@ -1,0 +1,17 @@
+{
+  "text_sha": "c13fa9773245",
+  "meta": {
+    "searchable_text": "열린구간 (0, 4)에서 정의된 함수 f의 그래프가 그림과 같다. $\\lim_{x \\to 1} f(x) \\cdot \\lim_{x \\to 3} f(x)$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "극한값",
+      "좌극한과우극한"
+    ],
+    "exam_intent": "그래프에서 여러 점의 극한값을 읽어 곱하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

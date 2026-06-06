@@ -1,0 +1,17 @@
+{
+  "text_sha": "722ade9e84f8",
+  "meta": {
+    "searchable_text": "부등식 $\\log_x(1+\\log_x 2) \\leq 1$을 만족시키는 모든 정수 $x$의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_부등식",
+      "로그_정의역",
+      "정수_해"
+    ],
+    "exam_intent": "로그 부등식에서 정의역을 만족하는 정수 해를 구해 합을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

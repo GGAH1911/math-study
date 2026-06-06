@@ -1,0 +1,17 @@
+{
+  "text_sha": "f5dc1b162b4a",
+  "meta": {
+    "searchable_text": "원 $x^2 + y^2 + 4x - 2y + a = 0$을 x축의 방향으로 -4만큼, y축의 방향으로 2만큼 평행이동하였더니 원 $x^2 + y^2 - 2x - 2y + 0 = 0$과 일치하였다. $a$의 값은? (단, 원의 계수들은 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_평행이동",
+      "원의_일반형",
+      "원의_중심과_반지름"
+    ],
+    "exam_intent": "원의 평행이동 시 방정식 변화를 이해하고 계수를 비교하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

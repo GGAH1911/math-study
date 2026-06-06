@@ -1,0 +1,17 @@
+{
+  "text_sha": "05f16aeeb908",
+  "meta": {
+    "searchable_text": "1 ≤ x ≤ 2에서 함수 f(x) = a × 2^(2x)의 최댓값이 5, 최솟값이 c₀일 때, a + b의 값은? (단, a > 0이고, a와 b는 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "최댓값과_최솟값",
+      "상수_결정"
+    ],
+    "exam_intent": "구간에서 지수함수의 최댓값과 최솟값 조건으로부터 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

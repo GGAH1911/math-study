@@ -1,0 +1,18 @@
+{
+  "text_sha": "27b36471156b",
+  "meta": {
+    "searchable_text": "25. 세 양수 $a, b, c$에 대하여 좌표평면 위에 서로 다른 네 점 $O, A, B, C$가 있다. 사각형 $OABC$가 선분 $OB$를 대각선으로 하는 마름모일 때, 미지수의 값을 구하시오. (단, 네 점 $O, A, B, C$ 중 어느 세 점도 한 직선 위에 있지 않다.)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "마름모",
+      "대각선",
+      "좌표_기하",
+      "벡터"
+    ],
+    "exam_intent": "마름모의 대각선 성질과 좌표 조건을 이용해 미지수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

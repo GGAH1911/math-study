@@ -1,0 +1,16 @@
+{
+  "text_sha": "731579f7a30f",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 $AB = 6$, $AC = 10$이다. 선분 AC 위에 점 D를 $AB = AD$가 되도록 잡는다. $BD^2 = 15$일 때, 선분 BC의 길이를 $a$라 하자. $a^2$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "코사인_법칙",
+      "스튜어트_정리"
+    ],
+    "exam_intent": "코사인 법칙과 조건을 활용하여 삼각형의 변 길이를 구한다.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

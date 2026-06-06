@@ -1,0 +1,16 @@
+{
+  "text_sha": "aa498c1736b0",
+  "meta": {
+    "searchable_text": "극한값 $\\lim_{n\\to\\infty} \\frac{n}{\\sqrt{9n} + \\sqrt{2n} + \\sqrt{12n} + \\sqrt{3n}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한의_계산",
+      "무한대로의_수렴"
+    ],
+    "exam_intent": "극한 기본 계산: 무리식을 포함한 극한값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "13acf14eaf4d",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 점화식을 만족시킨다. $a_5 \\times a_7 \\times a_9 = K$일 때, $p+q$의 값을 구하시오. (단, $p$와 $q$는 서로소인 자연수이다.)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "일반항"
+    ],
+    "exam_intent": "점화식 패턴으로부터 특정 항의 곱을 구하는 추론 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

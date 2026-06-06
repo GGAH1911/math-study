@@ -1,0 +1,16 @@
+{
+  "text_sha": "05b16cb25a31",
+  "meta": {
+    "searchable_text": "일차부등식 $2a \\leq x \\leq 3a + 2$가 참이 되는 자연수 $x$의 개수가 4일 때, 정수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "범위부등식",
+      "자연수해의개수"
+    ],
+    "exam_intent": "범위 부등식의 자연수해 개수 조건으로부터 매개변수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

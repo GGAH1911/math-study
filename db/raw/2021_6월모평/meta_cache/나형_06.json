@@ -1,0 +1,16 @@
+{
+  "text_sha": "07c12fd1f02e",
+  "meta": {
+    "searchable_text": "두 사건 A, B에 대하여 $P(A\\cup B)=\\frac{1}{2}$, $P(B)=\\frac{1}{3}$, $P(A\\cap B)=\\frac{1}{6}$일 때, $P(A)$의 값은? (단, $\\bar{A}$는 A의 여사건이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률의_덧셈법칙",
+      "여사건"
+    ],
+    "exam_intent": "확률의 덧셈 법칙을 이용한 사건의 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

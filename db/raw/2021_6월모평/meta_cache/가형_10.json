@@ -1,0 +1,17 @@
+{
+  "text_sha": "0550c1c514b7",
+  "meta": {
+    "searchable_text": "실수 전체의 집합에서 연속인 함수 $f$가 모든 실수 $x$에 대하여 $f(x) = 2f(1-x) + 2 - 4\\cos(\\pi x)$를 만족시킬 때, $f(0) + f(1)$의 값은? (단, $a$는 상수이다.)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "연속함수",
+      "함수방정식",
+      "대칭성"
+    ],
+    "exam_intent": "함수방정식의 대칭성으로부터 연속함수의 함숫값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

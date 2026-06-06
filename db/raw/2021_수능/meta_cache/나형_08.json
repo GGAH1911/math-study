@@ -1,0 +1,16 @@
+{
+  "text_sha": "2de32b71b489",
+  "meta": {
+    "searchable_text": "한 개의 주사위를 세 번 던져서 나오는 눈의 수를 차례로 $a$, $b$, $c$라 할 때, $a \\times b \\times c = 4$일 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "경우의_수",
+      "확률"
+    ],
+    "exam_intent": "주사위 3번 던져 곱이 4일 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "4eefba07e7bb",
+  "meta": {
+    "searchable_text": "좌표평면 위의 세 점 $A(a, 3)$, $B(b, 2)$, $C(5, c)$를 꼭짓점으로 하는 삼각형 ABC의 무게중심의 좌표가 $(1, 2)$일 때, $c$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "무게중심",
+      "좌표"
+    ],
+    "exam_intent": "무게중심의 좌표 공식을 이용해 미지수를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

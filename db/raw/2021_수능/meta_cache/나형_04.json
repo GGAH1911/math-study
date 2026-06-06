@@ -1,0 +1,15 @@
+{
+  "text_sha": "81fe21daa769",
+  "meta": {
+    "searchable_text": "함수의 최댓값을 구하는 문제. 삼각함수 $y = a + 4\\cos(3x)$ 형태로 추정 (PDF 글리프 손실로 정확한 함수식 불완전)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_최댓값"
+    ],
+    "exam_intent": "기본 삼각함수의 최댓값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

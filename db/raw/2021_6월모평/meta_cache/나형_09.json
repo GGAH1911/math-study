@@ -1,0 +1,16 @@
+{
+  "text_sha": "8e2ae5562eda",
+  "meta": {
+    "searchable_text": "닫힌구간에서 함수의 최댓값과 최솟값의 합",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "극값",
+      "최댓값과_최솟값"
+    ],
+    "exam_intent": "폐구간에서 함수의 최댓값과 최솟값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

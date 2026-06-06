@@ -1,0 +1,18 @@
+{
+  "text_sha": "ccf62e8e27a6",
+  "meta": {
+    "searchable_text": "그림과 같이 이차함수의 그래프가 x축과 만나는 서로 다른 두 점을 각각 A, B라 하고, y축과 만나는 점을 C라 하자. 삼각형 ABC의 넓이의 최댓값은? (단, 0 < a < 2)",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수의_그래프",
+      "축과의_교점",
+      "삼각형의_넓이",
+      "극값"
+    ],
+    "exam_intent": "이차함수의 축과 교점으로 만든 삼각형 넓이의 최댓값",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

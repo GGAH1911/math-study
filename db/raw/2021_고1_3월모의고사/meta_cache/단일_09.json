@@ -1,0 +1,17 @@
+{
+  "text_sha": "84f623e8dc58",
+  "meta": {
+    "searchable_text": "한 개의 주사위를 두 번 던질 때, 첫 번째 던져서 나온 눈의 수가 두 번째 던져서 나온 눈의 수보다 작을 확률은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "경우의_수",
+      "확률의_정의",
+      "조건부_사건"
+    ],
+    "exam_intent": "주사위 두 번 시행에서 조건을 만족하는 경우의 수로 확률을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "5065c17f937b",
+  "meta": {
+    "searchable_text": "등식을 만족시키는 두 실수에 대하여 특정 값을 구하는 문제 (조건: 제약 있음)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "연립방정식",
+      "미지수"
+    ],
+    "exam_intent": "주어진 등식과 조건을 만족하는 미지수의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

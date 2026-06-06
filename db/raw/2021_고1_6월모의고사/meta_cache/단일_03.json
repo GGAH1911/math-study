@@ -1,0 +1,16 @@
+{
+  "text_sha": "f2560dfa7a4f",
+  "meta": {
+    "searchable_text": "이차함수 $f(x) = x^2 - 2ax + 4a$의 그래프가 $x$축과 접할 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "판별식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "판별식=0 조건으로 이차함수가 x축과 접할 때 매개변수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

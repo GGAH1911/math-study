@@ -1,0 +1,17 @@
+{
+  "text_sha": "7c1a16c920f8",
+  "meta": {
+    "searchable_text": "$\\sum_{n=1}^{\\infty}$ (급수식)의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한급수",
+      "급수의_수렴",
+      "부분분수_분해"
+    ],
+    "exam_intent": "무한급수의 수렴값을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

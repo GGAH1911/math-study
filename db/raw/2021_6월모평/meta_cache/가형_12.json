@@ -1,0 +1,17 @@
+{
+  "text_sha": "7a61aea5c1b0",
+  "meta": {
+    "searchable_text": "자연수 $n$이 $2 \\leq n \\leq 11$일 때, $2^n \\cdot 9^n \\cdot 18$의 $n$제곱근 중에서 음의 실수가 존재하도록 하는 모든 $n$의 값의 합은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "복소수의_거듭제곱근",
+      "n제곱근의_개수와_성질",
+      "실근_조건"
+    ],
+    "exam_intent": "n제곱근 중 음의 실수 존재 조건을 판단",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "a4bee6348ba5",
+  "meta": {
+    "searchable_text": "202210을 505로 나누었을 때의 나머지를 구하는 과정. 다항식을 일차식으로 나누었을 때의 몫과 나머지 등식을 이용하여, 이 식에 특정 수를 대입함으로써 나머지 정리를 적용해 큰 수의 나머지를 계산하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "다항식 나머지 정리를 이용한 대수식 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

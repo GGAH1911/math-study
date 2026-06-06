@@ -1,0 +1,17 @@
+{
+  "text_sha": "f7ce1dadc23a",
+  "meta": {
+    "searchable_text": "그림과 같이 ∠A = 52°인 예각삼각형 ABC의 외심을 O라 하고, 선분 BO의 연장선과 변 AC가 만나는 점을 D라 하자. BD = BC일 때, ∠OCD의 크기는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "외심과_외접원",
+      "이등변삼각형",
+      "중심각과_원주각"
+    ],
+    "exam_intent": "외심의 성질과 각도 관계를 종합하여 미지의 각을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

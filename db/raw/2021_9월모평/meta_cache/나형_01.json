@@ -1,0 +1,16 @@
+{
+  "text_sha": "9e8f059b06ee",
+  "meta": {
+    "searchable_text": "$\\log_3 2 \\times \\log_2 3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "밑_변환_공식"
+    ],
+    "exam_intent": "로그의 밑 변환 공식을 이용하여 상호 관계식 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

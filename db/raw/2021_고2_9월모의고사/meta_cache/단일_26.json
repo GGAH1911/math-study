@@ -1,0 +1,17 @@
+{
+  "text_sha": "28d8ed2fac2d",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$가 $\\lim_{x\\to\\infty}\\frac{f(x)}{x^2}=2$, $\\lim_{x\\to1}\\frac{f(x)-1}{\\text{분모}}=c$를 만족할 때, $f(4)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "다항함수",
+      "연속성"
+    ],
+    "exam_intent": "극한 조건으로부터 다항함수의 계수 결정 및 함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

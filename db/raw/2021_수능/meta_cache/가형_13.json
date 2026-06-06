@@ -1,0 +1,18 @@
+{
+  "text_sha": "eb30ee8445d9",
+  "meta": {
+    "searchable_text": "0 < a < 4, a ≠ 1인 실수 a에 대하여 직선 y = x + 1이 두 곡선 y = log_a x, y = log_{4a} x와 만나는 점을 각각 A, B라 하고, 직선 y = bx + 1이 두 곡선과 만나는 점을 각각 C, D라 하자. [보기] ㄱ. 선분 AB를 1:4로 외분하는 점의 좌표는 (0, 1)이다. ㄴ. 사각형 ABCD가 직사각형이면 a = 2이다. ㄷ. |AB| = |CD|이면 a는 특정 값을 갖는다.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "직선과의_교점",
+      "외분점",
+      "직사각형_조건"
+    ],
+    "exam_intent": "로그함수와 직선의 교점, 외분점, 직사각형을 종합한 기하 문제",
+    "killer_tier": "early",
+    "cognitive_type": "통합"
+  }
+}

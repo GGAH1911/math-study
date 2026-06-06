@@ -1,0 +1,16 @@
+{
+  "text_sha": "f5d142e90bae",
+  "meta": {
+    "searchable_text": "$a$에 대한 이차방정식이 서로 다른 두 실근을 갖도록 하는 모든 자연수 $a$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "이차방정식의_실근_조건"
+    ],
+    "exam_intent": "이차방정식의 판별식을 이용한 실근 조건 분석 및 자연수 매개변수 범위 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

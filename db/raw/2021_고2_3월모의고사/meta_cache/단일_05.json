@@ -1,0 +1,16 @@
+{
+  "text_sha": "8d93761e3341",
+  "meta": {
+    "searchable_text": "이차방정식 $x^2 + mx + 16 = 0$이 허근을 갖도록 하는 자연수 $m$의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "허근의_조건"
+    ],
+    "exam_intent": "판별식 조건을 이용하여 허근의 범위를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

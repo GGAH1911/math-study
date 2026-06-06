@@ -1,0 +1,17 @@
+{
+  "text_sha": "522752f6116d",
+  "meta": {
+    "searchable_text": "AB + AC = 2인 삼각형 ABC에서 ∠BAC = θ라 할 때, 삼각형 ABC의 넓이가 1보다 크도록 하는 모든 θ의 값의 범위에서 정의된 각도값을 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각형의_넓이",
+      "삼각함수",
+      "범위"
+    ],
+    "exam_intent": "변의 합과 넓이 조건으로부터 삼각함수 범위를 결정하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

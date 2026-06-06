@@ -1,0 +1,17 @@
+{
+  "text_sha": "c66275975113",
+  "meta": {
+    "searchable_text": "정규분포 N(20, 5²)을 따르는 모집단에서 크기가 16인 표본을 임의추출하여 구한 표본평균의 기댓값을 계산",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [
+      "표본분포",
+      "표본평균",
+      "정규분포"
+    ],
+    "exam_intent": "표본평균의 확률분포와 기댓값을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

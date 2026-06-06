@@ -1,0 +1,17 @@
+{
+  "text_sha": "c86f8abdd2f6",
+  "meta": {
+    "searchable_text": "$\\sqrt{2^{1+\\log_2 3}}$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수법칙",
+      "로그의_성질",
+      "로그와_지수의_역관계"
+    ],
+    "exam_intent": "로그와 지수의 성질을 결합하여 식을 단순화하는 계산력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "5e098da60303",
+  "meta": {
+    "searchable_text": "$\\sqrt{3} \\times \\sqrt{9} \\div 3$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "제곱근의_성질",
+      "근호의_계산"
+    ],
+    "exam_intent": "제곱근의 기본 계산 능력 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

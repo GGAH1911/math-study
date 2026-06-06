@@ -1,0 +1,17 @@
+{
+  "text_sha": "897dcf710709",
+  "meta": {
+    "searchable_text": "다항식 표현식을 간단히 하였을 때, $x^2$의 계수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_전개",
+      "이항정리",
+      "계수"
+    ],
+    "exam_intent": "다항식 전개 후 특정 차수 항의 계수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

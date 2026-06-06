@@ -1,0 +1,16 @@
+{
+  "text_sha": "cf9bba174cf7",
+  "meta": {
+    "searchable_text": "어느 반 학생 20명의 작년에 읽은 책의 수와 올해 읽은 책의 수에 대한 산점도. 작년보다 올해 책을 더 많이 읽은 학생의 수를 $a$, 작년과 올해 매년 5권 이상의 책을 읽은 학생의 수를 $b$라 할 때, $a+b$의 값은?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "통계",
+    "concepts": [
+      "산점도_해석",
+      "조건부_데이터_분류"
+    ],
+    "exam_intent": "산점도에서 두 조건을 만족하는 데이터 개수를 정확히 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

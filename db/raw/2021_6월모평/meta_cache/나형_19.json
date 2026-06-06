@@ -1,0 +1,16 @@
+{
+  "text_sha": "f7eea15f0e4b",
+  "meta": {
+    "searchable_text": "방정식이 $-2 \\leq x \\leq 2$ 범위에서 서로 다른 두 실근을 갖도록 하는 정수의 개수를 구하는 문제",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "실근의_개수",
+      "판별식"
+    ],
+    "exam_intent": "주어진 범위에서 방정식의 실근 개수 조건을 만족하는 정수의 개수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

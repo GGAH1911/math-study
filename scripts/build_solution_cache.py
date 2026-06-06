@@ -65,7 +65,7 @@ SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가�
 
 
 def build_prompt(img_paths: list[str], fmt: str, meta: str, hint: str = '', with_verifier: bool = True) -> str:
-    use_verifier = (fmt == 'choice' and with_verifier)   # 단답형은 원래 검증기 없음; choice라도 구제 모드면 생략
+    use_verifier = with_verifier   # 솔버는 객관식·단답 모두 필수(유사문제 재생성+정답표 독립검증). 구제모드만 생략
     lines = ['  "answer": <네가 푼 보기 번호 1-5 정수>,' if fmt == 'choice'
              else '  "answer": <네가 푼 단답형 정답 정수(0-999)>,']
     lines.append('  "answer_value": "<최종 답의 값만, 설명·중간식 없이. 예: -7/64 또는 163>",')

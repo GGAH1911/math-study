@@ -2,7 +2,8 @@
 // 흩어져 있던 tier 배지(concepts/[...slug].astro)·회차 정렬(dev/rounds.astro)을 한 곳으로.
 
 export const EXAMTYPE_ORDER = ['수능', '모의평가', '모의고사'] as const;
-export const SUBJECT_ORDER = ['공통', '미적분', '확률과통계', '기하', '단일'] as const;
+// 가형·나형 = 2021학년도 이전 수능/모평의 계열별 단일트랙 (선택과목 체제 이전).
+export const SUBJECT_ORDER = ['공통', '미적분', '확률과통계', '기하', '가형', '나형', '단일'] as const;
 export const ELECTIVES = ['미적분', '확률과통계', '기하'] as const; // 선택과목 (회차당 택1, 8문항)
 export const GRADE_ORDER = ['고1', '고2', '고3'] as const;
 export const TIER_ORDER = ['early', 'mid', 'killer'] as const; // 코퍼스엔 high 미사용

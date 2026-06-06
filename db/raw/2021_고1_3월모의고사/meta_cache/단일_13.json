@@ -1,0 +1,16 @@
+{
+  "text_sha": "c6aafa6b5cc7",
+  "meta": {
+    "searchable_text": "제과점에서 두 종류의 선물 세트 A, B를 각각 1상자씩 만드는데 필요한 사탕과 쿠키의 개수는 다음과 같다. 세트 A는 사탕 20개, 쿠키 15개; 세트 B는 사탕 5개, 쿠키 25개. A를 $x$상자, B를 $y$상자 만드는데 필요한 사탕과 쿠키의 개수가 각각 360, 440일 때, $x+y$의 값을 구하라.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "연립일차방정식",
+    "concepts": [
+      "연립일차방정식의_응용",
+      "소거법"
+    ],
+    "exam_intent": "실생활 상황을 연립일차방정식으로 모델링하여 미지수를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

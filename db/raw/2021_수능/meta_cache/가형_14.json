@@ -1,0 +1,18 @@
+{
+  "text_sha": "7af9b12cd3e0",
+  "meta": {
+    "searchable_text": "직사각형 AB₁C₁D₁에서 AB₁ = 12, AD₁ = 14. 선분 AD₁을 3:1로 내분하는 점 E₁. 직사각형 내부의 점 F₁이 F₁E₁ ⊥ F₁C₁, ∠E₁F₁C₁ = 90°를 만족. 삼각형 E₁F₁C₁을 그리고 사각형 E₁F₁C₁D₁을 색칠한 그림 P₁. 같은 방법으로 직사각형 AB₂C₂D₂ (B₂는 AB₁ 위, C₂는 E₁F₁ 위, D₂는 AE₁ 위)에서 삼각형 E₂F₂C₂을 그리고 사각형 E₂F₂C₂D₂를 색칠한 그림 P₂. 이 과정을 계속할 때, n번째 그림 P_n에 색칠된 부분의 넓이 S_n에 대해 $\\lim_{n \\to \\infty} S_n$의 값.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "재귀적_도형_구성",
+      "무한급수와_수렴",
+      "기하학적_닮음",
+      "직각_조건"
+    ],
+    "exam_intent": "재귀적 도형 구성에서 자기유사성을 이용한 무한급수의 수렴값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

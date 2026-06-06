@@ -1,0 +1,17 @@
+{
+  "text_sha": "a05a394f6c1c",
+  "meta": {
+    "searchable_text": "삼각형 ABC의 변 AB 위의 두 점 D, E와 변 AC 위의 두 점 F, G에 대하여 $AD = DE$, $AE = EB$, $AF = FG$, $AG = GC$이다. 사각형 DEGF의 넓이가 24일 때, 삼각형 ABC의 넓이를 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "평면도형",
+    "concepts": [
+      "선분의_비",
+      "넓이_계산",
+      "좌표를_이용한_문제_풀이"
+    ],
+    "exam_intent": "선분의 비 조건으로부터 도형의 넓이를 계산하는 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

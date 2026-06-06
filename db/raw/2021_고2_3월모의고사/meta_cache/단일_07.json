@@ -1,0 +1,16 @@
+{
+  "text_sha": "243255323279",
+  "meta": {
+    "searchable_text": "그림은 두 함수를 나타낸 것이다. 두 함수의 합성함수값을 계산하여 구하라.",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수값"
+    ],
+    "exam_intent": "그래프에서 함수값을 읽고 합성함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

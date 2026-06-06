@@ -1,0 +1,17 @@
+{
+  "text_sha": "f3b426b9c6f7",
+  "meta": {
+    "searchable_text": "0 ≤ θ < 2π에서 θ에 대한 부등식 $a \\sin^2 \\theta + 6a \\cos \\theta + \\sin 2\\theta + 12a \\geq 0$의 해가 존재하도록 하는 자연수 $a$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_부등식",
+      "매개변수의_존재_조건",
+      "함수의_최댓값·최솟값"
+    ],
+    "exam_intent": "삼각함수 부등식 해의 존재 조건으로부터 매개변수의 최솟값 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

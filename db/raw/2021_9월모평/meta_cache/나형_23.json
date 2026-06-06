@@ -1,0 +1,17 @@
+{
+  "text_sha": "2cec7fe87ae9",
+  "meta": {
+    "searchable_text": "함수 $f$가 $f'(x) = ax^3 + bx^3, f(2) = 10$을 만족시킬 때, $f(0)$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "함수의_결정",
+      "조건의_활용"
+    ],
+    "exam_intent": "도함수 조건과 함수값 조건으로 미지 상수를 결정하고 함수값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

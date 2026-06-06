@@ -80,10 +80,11 @@ function readTail(selected?: string | null): { lines: string[]; mtime: number; s
 
 function aliveProcs(): { pid: number; etime: string; cmd: string }[] {
   try {
-    // 제네릭: scripts/<name>.py 를 실행하는 모든 파이썬 잡 자동 감지(retry_timeout_killers·regenerate·
-    // refine_opus·ab_path_leak 등 새 스크립트도 하드코딩 없이 잡힘) + 레거시 비-scripts 잡.
+    // 제네릭: scripts/<...>/<name>.py 를 실행하는 모든 파이썬 잡 자동 감지(retry_timeout_killers·
+    // regenerate·refine_opus 등 + ingest_kice/ 하위폴더 어댑터 ingest_v2·ingest_ganah·ingest_gyo12)
+    // — 경로에 / 포함(하위폴더)도 잡도록 char class에 / 추가. + 레거시 비-scripts 잡.
     const out = execSync(
-      `pgrep -af "scripts/[a-z0-9_]+\\.py|auto_complete_rounds|fill_spoke_bodies|extract_all_answers|post_manifest" 2>/dev/null || true`,
+      `pgrep -af "scripts/[a-z0-9_/]+\\.py|auto_complete_rounds|fill_spoke_bodies|extract_all_answers|post_manifest" 2>/dev/null || true`,
       { encoding: 'utf-8' },
     );
     const procs: { pid: number; etime: string; cmd: string }[] = [];

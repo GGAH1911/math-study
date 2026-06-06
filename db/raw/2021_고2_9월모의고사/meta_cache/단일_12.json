@@ -1,0 +1,16 @@
+{
+  "text_sha": "0825fa4f929d",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 $a_{n+1} = \\begin{cases} \\log_2 a_n & (n\\text{이 홀수}) \\\\ 2a_{n-1} & (n\\text{이 짝수}) \\end{cases}$를 만족시킨다. $a_8 = 5$일 때, $a_6 + a_7$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "로그함수"
+    ],
+    "exam_intent": "점화식으로 정의된 수열에서 역추적을 통해 항의 합 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "9bb73cfad762",
+  "meta": {
+    "searchable_text": "그림과 같이 $AB=3$, $AC=1$이고 $\\angle BAC=\\frac{\\pi}{3}$인 삼각형 ABC가 있다. $\\angle BAC$의 이등분선이 선분 BC와 만나는 점을 P라 할 때, 삼각형 APC의 외접원의 넓이는?",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "사인법칙",
+      "각의이등분선"
+    ],
+    "exam_intent": "각의 이등분선과 사인법칙으로 외접원 반지름을 구하고 넓이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

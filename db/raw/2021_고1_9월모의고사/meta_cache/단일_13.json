@@ -1,0 +1,16 @@
+{
+  "text_sha": "49e9b194eb1a",
+  "meta": {
+    "searchable_text": "직선 $y = x + a$가 이차함수 $y = x^2 + 2x + 4$의 그래프와 만나고, 이차함수 $y = x^2 + 5x + 15$의 그래프와 만나지 않도록 하는 모든 정수 $a$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "이차함수와_직선의_교점",
+      "판별식"
+    ],
+    "exam_intent": "직선과 이차함수의 교점 조건을 판별식으로 판정하고 정수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,1 @@
+import sympy as sp; n = sp.Symbol('n', positive=True, integer=True); f_n_squared = n * (n + 1); result = sum(sp.Rational(1, f_n_squared.subs(n, i)) for i in range(1, 11)); print('VERIFY_PASS' if result == sp.Rational(10, 11) else 'VERIFY_FAIL')

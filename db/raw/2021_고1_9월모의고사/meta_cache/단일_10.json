@@ -1,0 +1,17 @@
+{
+  "text_sha": "f00eeb2d100c",
+  "meta": {
+    "searchable_text": "원 $x^2 + y^2 = 10$ 위의 점 $(3, 1)$에서의 접선의 절편은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_방정식",
+      "접선",
+      "절편"
+    ],
+    "exam_intent": "원 위의 점에서의 접선 방정식을 구하고 절편을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

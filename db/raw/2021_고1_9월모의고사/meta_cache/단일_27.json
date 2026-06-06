@@ -1,0 +1,18 @@
+{
+  "text_sha": "f7c19b6f3a32",
+  "meta": {
+    "searchable_text": "x에 대한 연립이차부등식 $x^2 + ax + 10a - 21 \\leq 0$, $x^2 - 2ax + 1 - 2a^2 \\geq 0$을 만족시키는 정수 x의 개수가 4가 되도록 하는 모든 자연수 a의 값의 합을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "이차부등식",
+      "연립부등식",
+      "정수해_개수",
+      "매개변수"
+    ],
+    "exam_intent": "연립이차부등식의 정수해 개수 조건으로부터 매개변수 값을 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

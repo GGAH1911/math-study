@@ -1,13 +1,13 @@
-def verify_sequence(a1):
-    a = [a1]
-    for n in range(14):
-        if a[-1] >= 0:
-            a.append(a[-1] - 2)
+def verify_a15(a1):
+    a = a1
+    for i in range(14):  # a1부터 a15까지 14번의 전이
+        if a >= 0:
+            a = a - 2
         else:
-            a.append(a[-1] + 5)
-    return a[14]
+            a = a + 5
+    return a
 
-result = verify_sequence(5)
+result = verify_a15(5)
 if result < 0:
     print('VERIFY_PASS')
 else:

@@ -1,0 +1,16 @@
+{
+  "text_sha": "3ce9d5a8419d",
+  "meta": {
+    "searchable_text": "좌표평면에서 직선 $3x + 2y + a = 0$을 원점에 대하여 대칭이동한 직선이 점 $(3, -2)$를 지날 때, 상수 $a$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "직선의_방정식",
+      "대칭이동"
+    ],
+    "exam_intent": "원점 대칭이동 후 점을 지나는 직선의 상수항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

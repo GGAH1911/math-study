@@ -1,0 +1,17 @@
+{
+  "text_sha": "0e35fcbe0738",
+  "meta": {
+    "searchable_text": "함수 $f(x) = x^2 - 4x + a$에 대하여 함수 $g(x) = \\int_0^x f(t)dt$가 닫힌구간 $[0, 1]$에서 증가하도록 하는 실수 $a$의 최솟값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "단조성_증가조건",
+      "도함수_판정",
+      "매개변수_최적화"
+    ],
+    "exam_intent": "매개변수 조건에서 함수의 단조증가 구간 판정과 최솟값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

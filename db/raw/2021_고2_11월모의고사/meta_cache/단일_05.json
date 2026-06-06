@@ -1,0 +1,16 @@
+{
+  "text_sha": "08f40420ecc9",
+  "meta": {
+    "searchable_text": "부등식 $\\frac{3x+1}{x+7} \\geq 9$를 만족시키는 모든 자연수 $x$의 개수는?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "유리식_부등식",
+      "자연수_조건"
+    ],
+    "exam_intent": "유리식 부등식을 정리하여 정수해의 개수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

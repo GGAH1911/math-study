@@ -1,0 +1,16 @@
+{
+  "text_sha": "141becbb2ce6",
+  "meta": {
+    "searchable_text": "무리수 형태의 분수식 계산. 근호를 포함한 복합 분수의 정리 및 값 구하기",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "무리수의_연산",
+      "분모의_유리화"
+    ],
+    "exam_intent": "무리수 계산과 식 정리 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

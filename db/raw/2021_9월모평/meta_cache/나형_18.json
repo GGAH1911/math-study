@@ -1,0 +1,18 @@
+{
+  "text_sha": "f7ae9e29b977",
+  "meta": {
+    "searchable_text": "최고차항의 계수가 $a$인 이차함수 $f(x)$가 모든 실수 $x$에 대하여 $|f'(x)| \\leq 4x^2 + 5$를 만족시킨다. 함수 $f(x)$의 그래프의 대칭축이 직선 $x = 1$일 때, 실수 $a$의 최댓값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "부등식",
+      "최댓값",
+      "이차함수"
+    ],
+    "exam_intent": "미분 조건을 만족하는 이차함수 최고차항 계수의 최댓값",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

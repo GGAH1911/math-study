@@ -1,0 +1,16 @@
+{
+  "text_sha": "3a7fd17d065e",
+  "meta": {
+    "searchable_text": "부등식을 만족시키는 자연수 순서쌍의 모든 개수",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "부등식의_자연수해",
+      "순서쌍_개수_세기"
+    ],
+    "exam_intent": "부등식 조건을 분석하여 자연수 순서쌍의 개수를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

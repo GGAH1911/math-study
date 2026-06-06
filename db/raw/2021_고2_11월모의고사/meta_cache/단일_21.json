@@ -1,0 +1,17 @@
+{
+  "text_sha": "a1df1eac08ca",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 다음 조건을 만족시킨다. (가) $a_1$은 1이 아닌 양수이다. (나) 모든 자연수 $n$에 대하여 부등식과 곱셈 조건을 만족한다. 특정 조건을 만족하는 모든 $a_1$의 값의 합을 구하는 문제.",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "수열의_성질",
+      "조건_분석",
+      "초항_결정"
+    ],
+    "exam_intent": "주어진 점화식 조건을 만족하는 초항의 모든 가능값을 찾아 합하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

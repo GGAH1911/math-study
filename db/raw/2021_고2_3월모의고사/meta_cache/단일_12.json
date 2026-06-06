@@ -1,0 +1,17 @@
+{
+  "text_sha": "8ace4c651d7e",
+  "meta": {
+    "searchable_text": "좌표평면에 세 점 $A(2, 0)$, $B(0, 4)$, $C$를 꼭짓점으로 하는 삼각형 $ABC$가 있다. $AC = BC$이고 삼각형 $ABC$의 무게중심이 $y$축 위에 있을 때, $C$의 값은?",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "무게중심",
+      "거리_공식",
+      "좌표"
+    ],
+    "exam_intent": "좌표평면에서 거리와 무게중심 조건으로 삼각형 꼭짓점 찾기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

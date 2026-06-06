@@ -1,0 +1,18 @@
+{
+  "text_sha": "ecd295845b4f",
+  "meta": {
+    "searchable_text": "반지름 1인 원에 내접하는 사각형 ABCD에서 DA와 AB의 비율 및 $\\angle DAB$가 주어져 있고, 대각선 AC와 BD의 교점을 E라 할 때 점 E는 선분 BD를 3:4로 내분한다. 사각형 ABCD의 넓이가 $\\frac{m\\sqrt{3}}{n}$ 형태일 때 구하는 값을 구하시오. (단, m과 n은 서로소인 자연수)",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원에_내접하는_사각형",
+      "대각선_교점",
+      "비율",
+      "넓이"
+    ],
+    "exam_intent": "원에 내접하는 사각형의 성질과 대각선 교점 조건을 이용한 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}
