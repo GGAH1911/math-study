@@ -21,34 +21,19 @@ BLANK = CW.BLANK_ROW_INK_RATIO
 _bbox_cache: dict = {}
 
 
-def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, gen=110, big_gap=30):
-    """완전성 우선 재크롭. 첫 줄에서 위로 스캔(희박한 위첨자 포함)해 top 확정,
-    바닥/좌측만 CW 로직 사용. crop_by_gap 의 _find_problem_start(희박행=빈줄 취급)에
-    내 top 이 덮어쓰이지 않게 *직접* 크롭한다."""
+def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, headroom=18):
+    """단순 보정: 원래 crop_by_gap 경계 그대로 + 위로 headroom 픽셀만 추가.
+    스캔 없음 → 멀리 있는 페이지 헤더는 안 딸려옴. 위첨자 클립(보통 ~10-15px)만 복구."""
     x0, y0, x1, y1 = bbox_px
-    top = max(0, y0 - gen)
-    cand = page_img.crop((x0, top, x1, y1))
+    cand = page_img.crop((x0, y0, x1, y1))            # bbox candidate (원래대로)
     ri = CW._row_ink_ratios(cand.convert('L'))
-    anchor = y0 - top
-    n = len(ri)
-    # 첫 본문줄: anchor 부근의 첫 (충분히 진한) 행 — 희박 위첨자는 건너뛰고 본줄을 앵커로
-    sl = next((y for y in range(max(0, anchor - 3), n) if ri[y] >= BLANK), anchor)
-    SUP = BLANK / 3                                   # 위첨자는 희박 → 더 낮은 임계로 잡음
-    ty, bl, y = sl, 0, sl - 1
-    while y >= 0:
-        if ri[y] >= SUP:                              # 희박한 위첨자도 잉크로 인정
-            ty = y; bl = 0
-        else:
-            bl += 1
-            if bl >= big_gap:
-                break                                # 큰 갭 → 정지(문제 사이)
-        y -= 1
-    clean = cand.crop((0, max(0, ty - 12), cand.width, cand.height))  # 내 top(위첨자 위 12px 여유)
-    ri2 = CW._row_ink_ratios(clean.convert('L'))
-    h2 = clean.height
+    h = cand.height
     gr = 0.25 if exam_type == '검정고시' else CW.DETACHED_GAP_RATIO
-    end_y = min(h2, CW._find_problem_end(ri2, h2, gap_ratio=gr) + max(CW.MIN_PADDING_PX, int(CW.PADDING_RATIO * h2)))
-    cropped = clean.crop((0, 0, clean.width, end_y))  # top 고정(재트림 금지), 바닥만 트림
+    pad = max(CW.MIN_PADDING_PX, int(CW.PADDING_RATIO * h))
+    orig_top = max(0, CW._find_problem_start(ri, h) - pad)     # 원래 crop top
+    orig_bot = min(h, CW._find_problem_end(ri, h, gap_ratio=gr) + pad)
+    page_top = max(0, y0 + orig_top - headroom)       # 원래 top 에서 위로 headroom 만
+    cropped = page_img.crop((x0, page_top, x1, y0 + orig_bot))
     xt = CW._left_trim_x(cropped)
     if xt > 0:
         cropped = cropped.crop((xt, 0, cropped.width, cropped.height))
