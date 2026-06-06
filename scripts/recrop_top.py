@@ -58,7 +58,7 @@ def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, gen=110
 
 def _round_entries(round_slug, exam_type, session, subject):
     """회차 bbox 캐시. PDF: 문제.pdf 또는 <subject>_문제.pdf(ganah 가/나형)."""
-    key = round_slug
+    key = round_slug + ('|' + subject if subject in ('가형', '나형') else '')  # 가/나형 PDF별 캐시
     if key in _bbox_cache:
         return _bbox_cache[key]
     raw = ROOT / 'db' / 'raw' / round_slug
@@ -92,8 +92,11 @@ def recrop_slug(slug, md_text, dry=False):
     if not got:
         return 'no-pdf'
     ents, page_by_num = got
-    cands = [e for e in ents if e['number'] == number and
-             (subject not in ('가형', '나형') or e.get('subject') == subject)]
+    cands = [e for e in ents if e['number'] == number]      # ganah PDF는 트랙별이라 번호로 충분
+    if len(cands) > 1:                                       # v2 다과목: 번호 중복 시 subject로 좁힘
+        sub = [e for e in cands if e.get('subject') == subject]
+        if sub:
+            cands = sub
     if not cands:
         return 'no-bbox'
     e = cands[0]
