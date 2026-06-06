@@ -1,5 +1,9 @@
-def solve():
-    return 4
+"""
+2022_고2_11월모의고사_단일_30
+"""
 
-if __name__=="__main__":
+def solve():
+    return 4'
+
+if __name__ == '__main__':
     print(f"답: {solve()}")

@@ -1,5 +1,9 @@
-def solve():
-    return 11
+"""
+2022_6월모평_미적분_30
+"""
 
-if __name__=="__main__":
+def solve():
+    return 11'
+
+if __name__ == '__main__':
     print(f"답: {solve()}")
