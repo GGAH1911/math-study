@@ -61,7 +61,11 @@ def recrop_slug(slug, md_text, dry=False):
     def f(k, d=None):
         m = re.search(rf'^\s*{k}:\s*(.+)$', md_text, re.M)
         return m.group(1).strip().strip('"\'') if m else d
-    img_rel = (re.search(r'image_paths:\s*\[([^\]\n]+)', md_text) or [None, None])[1]
+    # image_paths 는 인라인(`[a, b]`) 또는 블록(`image_paths:\n  - a`) 두 형식 다 존재.
+    # 둘 다 파싱(블록만 보던 게 84문제를 'no-img-path'로 잘못 스킵하던 버그).
+    m = (re.search(r'image_paths:\s*\[([^\]\n]+)', md_text)
+         or re.search(r'image_paths:\s*\n\s*-\s*(\S+)', md_text))
+    img_rel = m[1] if m else None
     if not img_rel:
         return 'no-img-path'
     img_fs = ROOT / img_rel.split(',')[0].strip()
