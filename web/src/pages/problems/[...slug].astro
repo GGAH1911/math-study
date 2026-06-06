@@ -7,6 +7,7 @@ import { getEntry, getCollection, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 import SolutionPanel from '../../components/SolutionPanel.tsx';
+import RoundNav from '../../components/RoundNav.astro';
 import { yearLabel } from '../../lib/problem-meta';
 
 const slug = Astro.params.slug as string;
@@ -25,23 +26,46 @@ const unitTitle = fm.source?.subject
   ? `${yearLabel(fm.source.year, fm.source.exam_type)} ${fm.source.exam_type} ${subjLabel}${fm.source.number}번`
   : entry.id;
 
-// 같은 회차(연도·시험·세션·학년·기관) + 같은 과목 내 번호순 이전/다음 네비게이션.
+// 회차 내 이전/다음 네비게이션. 같은 회차(연도·시험·세션·학년·기관) 전체를 모아
+// 공통(1-22)↔선택(23-30) 경계에서 분기: 공통 마지막 → 선택과목 선택, 선택 첫 → 공통 복귀.
+// 가/나형·단일(검정고시·고1·2)은 공통이 없어 같은 과목 내 선형 이동.
 const src = fm.source;
-const sib = src
+type ProbEntry = Awaited<ReturnType<typeof getCollection<'problems'>>>[number];
+const byNum = (a: ProbEntry, b: ProbEntry) => (a.data.source?.number ?? 0) - (b.data.source?.number ?? 0);
+const roundAll: ProbEntry[] = src
   ? (await getCollection('problems', (e) => {
       const s = e.data.source;
       return !!s && s.year === src.year && s.exam_type === src.exam_type
         && (s.session ?? '') === (src.session ?? '')
         && (s.grade ?? '') === (src.grade ?? '')
-        && (s.agency ?? '') === (src.agency ?? '')
-        && s.subject === src.subject;
-    })).sort((a, b) => (a.data.source?.number ?? 0) - (b.data.source?.number ?? 0))
+        && (s.agency ?? '') === (src.agency ?? '');
+    })).sort(byNum)
   : [];
-const navIdx = sib.findIndex((e) => e.id === entry.id);
-const prevEntry = navIdx > 0 ? sib[navIdx - 1] : null;
-const nextEntry = navIdx >= 0 && navIdx < sib.length - 1 ? sib[navIdx + 1] : null;
-const navBtn = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] hover:border-[color:var(--color-accent)] transition';
-const navOff = 'px-3 py-1.5 text-sm text-[color:var(--color-subtle)] opacity-40 select-none';
+const ELECTIVE_ORDER = ['확률과통계', '미적분', '기하'];
+const gongtong = roundAll.filter((e) => e.data.source?.subject === '공통');
+const electiveSubjects = [...new Set(roundAll
+  .map((e) => e.data.source?.subject).filter((s): s is string => !!s && s !== '공통'))]
+  .sort((a, b) => ((ELECTIVE_ORDER.indexOf(a) + 1) || 99) - ((ELECTIVE_ORDER.indexOf(b) + 1) || 99));
+const hasGongtong = gongtong.length > 0;
+
+let prevEntry: ProbEntry | null = null;
+let nextEntries: ProbEntry[] = [];
+if (src) {
+  const isGongtong = src.subject === '공통';
+  const subjList = roundAll.filter((e) => e.data.source?.subject === src.subject);
+  const i = subjList.findIndex((e) => e.id === entry.id);
+  // 이전: 과목 내 앞 문제. 선택 첫 문제(23)면 공통 마지막(22)으로 복귀.
+  if (i > 0) prevEntry = subjList[i - 1];
+  else if (hasGongtong && !isGongtong && i === 0) prevEntry = gongtong[gongtong.length - 1] ?? null;
+  // 다음: 공통 마지막이면 선택과목 분기(각 과목 첫 문제), 아니면 과목 내 다음.
+  if (hasGongtong && isGongtong && i === subjList.length - 1) {
+    nextEntries = electiveSubjects
+      .map((s) => roundAll.filter((e) => e.data.source?.subject === s).sort(byNum)[0])
+      .filter((e): e is ProbEntry => !!e);
+  } else if (i >= 0 && i < subjList.length - 1) {
+    nextEntries = [subjList[i + 1]];
+  }
+}
 ---
 <BaseLayout title={entry.id}>
   {/* 하이브리드 레이아웃:
@@ -55,17 +79,8 @@ const navOff = 'px-3 py-1.5 text-sm text-[color:var(--color-subtle)] opacity-40 
 
     {/* ── 왼쪽: 문제 + 풀이 + 메타 (문서와 함께 스크롤) ── */}
     <div class="min-w-0">
-      {/* 회차 내 이전/다음 네비게이션 (같은 과목 번호순) */}
-      {src && (prevEntry || nextEntry) && (
-        <nav class="mb-4 flex items-center justify-between gap-2" aria-label="회차 내 문제 이동">
-          {prevEntry
-            ? <a href={`/problems/${prevEntry.id}`} class={navBtn} rel="prev"><span aria-hidden="true">←</span> {prevEntry.data.source?.number}번</a>
-            : <span class={navOff}><span aria-hidden="true">←</span> 이전</span>}
-          <span class="text-xs text-[color:var(--color-muted)] truncate px-1">{subjLabel}{src.number}번</span>
-          {nextEntry
-            ? <a href={`/problems/${nextEntry.id}`} class={navBtn} rel="next">{nextEntry.data.source?.number}번 <span aria-hidden="true">→</span></a>
-            : <span class={navOff}>다음 <span aria-hidden="true">→</span></span>}
-        </nav>
+      {src && (prevEntry || nextEntries.length > 0) && (
+        <div class="mb-4"><RoundNav prev={prevEntry} nexts={nextEntries} curSubject={src.subject} currentLabel={`${subjLabel}${src.number}번`} /></div>
       )}
       <article class="max-w-none">
         <div class="prose prose-invert max-w-none">
@@ -135,17 +150,8 @@ const navOff = 'px-3 py-1.5 text-sm text-[color:var(--color-subtle)] opacity-40 
         )}
       </div>
 
-      {/* 회차 내 이전/다음 네비게이션 (하단 반복) */}
-      {src && (prevEntry || nextEntry) && (
-        <nav class="mt-8 flex items-center justify-between gap-2" aria-label="회차 내 문제 이동">
-          {prevEntry
-            ? <a href={`/problems/${prevEntry.id}`} class={navBtn} rel="prev"><span aria-hidden="true">←</span> {prevEntry.data.source?.number}번</a>
-            : <span class={navOff}><span aria-hidden="true">←</span> 이전</span>}
-          <span class="text-xs text-[color:var(--color-muted)] truncate px-1">{subjLabel}{src.number}번</span>
-          {nextEntry
-            ? <a href={`/problems/${nextEntry.id}`} class={navBtn} rel="next">{nextEntry.data.source?.number}번 <span aria-hidden="true">→</span></a>
-            : <span class={navOff}>다음 <span aria-hidden="true">→</span></span>}
-        </nav>
+      {src && (prevEntry || nextEntries.length > 0) && (
+        <div class="mt-8"><RoundNav prev={prevEntry} nexts={nextEntries} curSubject={src.subject} currentLabel={`${subjLabel}${src.number}번`} /></div>
       )}
     </div>
 

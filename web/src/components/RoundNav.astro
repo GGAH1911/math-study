@@ -1,0 +1,33 @@
+---
+// 회차 내 이전/다음 네비게이션 바. 공통↔선택 경계에서 다음이 여러 과목으로 분기할 수
+// 있어 nexts 는 배열(보통 1개, 공통 마지막에서만 선택과목 수만큼).
+type Entry = { id: string; data: { source?: { subject?: string; number?: number } } };
+interface Props {
+  prev: Entry | null;
+  nexts: Entry[];
+  curSubject?: string;
+  currentLabel: string;
+}
+const { prev, nexts, curSubject, currentLabel } = Astro.props;
+const btn = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] hover:border-[color:var(--color-accent)] transition whitespace-nowrap';
+const off = 'px-3 py-1.5 text-sm text-[color:var(--color-subtle)] opacity-40 select-none whitespace-nowrap';
+const sub = (e: Entry) => e.data.source?.subject;
+const num = (e: Entry) => e.data.source?.number;
+// 과목 경계를 넘을 때(예: 선택 첫문제→공통)만 과목명 접두.
+const pfx = (e: Entry) => (sub(e) && sub(e) !== curSubject ? `${sub(e)} ` : '');
+---
+{(prev || nexts.length > 0) && (
+  <nav class="flex items-center justify-between gap-2 flex-wrap" aria-label="회차 내 문제 이동">
+    {prev
+      ? <a href={`/problems/${prev.id}`} class={btn} rel="prev"><span aria-hidden="true">←</span> {pfx(prev)}{num(prev)}번</a>
+      : <span class={off}><span aria-hidden="true">←</span> 이전</span>}
+    <span class="text-xs text-[color:var(--color-muted)] truncate px-1">{currentLabel}</span>
+    {nexts.length === 0
+      ? <span class={off}>다음 <span aria-hidden="true">→</span></span>
+      : nexts.length === 1
+        ? <a href={`/problems/${nexts[0].id}`} class={btn} rel="next">{pfx(nexts[0])}{num(nexts[0])}번 <span aria-hidden="true">→</span></a>
+        : <span class="flex flex-wrap gap-1.5 justify-end">
+            {nexts.map((n) => <a href={`/problems/${n.id}`} class={btn}>{sub(n)} {num(n)}번 <span aria-hidden="true">→</span></a>)}
+          </span>}
+  </nav>
+)}
