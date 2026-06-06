@@ -207,6 +207,8 @@ def crop_problem(page_img, bbox_px, out_path, exam_type=None, headroom=18):
     orig_top = max(0, _find_problem_start(ri, h) - pad)
     orig_bot = min(h, _find_problem_end(ri, h, gap_ratio=gr) + pad)
     page_top = max(0, y0 + orig_top - headroom)             # 원래 top 에서 위로 headroom
+    # (키 큰 분수·지수가 bbox 위로 솟어 잘리는 문제는 bbox.py 의 extract_problem_bboxes 가
+    #  span 클러스터로 y0 를 이미 올바르게 잡으므로 여기선 추가 스캔 불필요.)
     cropped = page_img.crop((x0, page_top, x1, y0 + orig_bot))
     xt = _left_trim_x(cropped)
     if xt > 0:

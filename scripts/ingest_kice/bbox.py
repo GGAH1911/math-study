@@ -44,6 +44,14 @@ BBOX_PAD_PT = 6.0
 PAGE_TOP_MARGIN_PT = 50.0
 PAGE_BOTTOM_MARGIN_PT = 50.0
 
+# 번호 앵커 위로 솟은 같은 문제 수식(키 큰 분수·지수)을 포함하도록 top 을 끌어올릴 때 쓰는 파라미터.
+# 앵커 라인과 *수직 연속*(gap < CONTENT_GAP_PT)인 텍스트 라인까지만 올라가고, 섹션 라벨
+# (5지선다형/단답형)·이전 앵커·MAX_UP 에서 멈춘다. 섹션 라벨은 분수와 갭이 8~23pt 로 들쭉날쭉
+# 해 단일 갭으론 못 거르므로 라벨 자체를 천장으로 쓴다.
+CONTENT_GAP_PT = 10.0
+CONTENT_MAX_UP_PT = 80.0
+SECTION_LABEL_RE = re.compile(r'지\s*선\s*다\s*형|단\s*답\s*형')
+
 
 def _detect_layout(pdf_path: Path) -> dict[str, float]:
     """Sample the PDF's text-layer to detect actual column boundaries
@@ -223,6 +231,38 @@ def _collect_text_lines(page: fitz.Page) -> list[tuple[float, float, float, floa
     return out
 
 
+def _section_label_bottoms(page: fitz.Page) -> list[float]:
+    """섹션 라벨('5지선다형'·'단답형') 라인의 bottom y 목록. content-top 확장의 천장으로 쓴다.
+    이 라벨들은 KICE 모든 시험의 섹션 시작 표지라 안정적이고, 선택과목 첫 문제(23·29 등) 의
+    키 큰 분수 바로 위에 붙어 있어 갭만으론 못 거른다."""
+    out: list[float] = []
+    for block in page.get_text('dict').get('blocks', []):
+        if block.get('type', 0) != 0:
+            continue
+        for line in block.get('lines', []):
+            txt = ''.join(s.get('text', '') for s in line.get('spans', []))
+            if SECTION_LABEL_RE.search(txt) and line.get('bbox'):
+                out.append(line['bbox'][3])
+    return out
+
+
+def _content_top(col_lines: list[tuple[float, float, float, float]],
+                 anchor_y: float, floor_y: float,
+                 gap_pt: float = CONTENT_GAP_PT) -> float:
+    """번호 앵커(anchor_y) 위로 *수직 연속*인 텍스트 라인(분수 분자·지수 등)까지 top 을 끌어올린다.
+    floor_y(이전 앵커·섹션 라벨·MAX_UP 중 가장 낮은 천장) 위로는 안 올라가고, gap_pt 보다 큰
+    공백을 만나면 멈춘다. col_lines 는 이미 같은 컬럼으로 필터된 (x0,y0,x1,y1) 리스트."""
+    cur = anchor_y
+    changed = True
+    while changed:
+        changed = False
+        for _x0, y0, _x1, y1 in col_lines:
+            if y0 < cur - 0.5 and y1 >= cur - gap_pt and y0 >= floor_y:
+                cur = y0
+                changed = True
+    return cur
+
+
 def _column_of(x: float, mid: float = 297.5) -> int:
     """0 = left column, 1 = right column. Pass the layout's detected
     `mid` (from _detect_layout) for accurate split on non-standard PDFs."""
@@ -273,11 +313,13 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
             'footer_top': footer_top,
         })
 
-    # Cache page → text lines (avoid re-parsing each anchor)
+    # Cache page → text lines + 섹션 라벨 bottom (avoid re-parsing each anchor)
     page_lines_cache: dict[int, list[tuple[float, float, float, float]]] = {}
+    page_label_cache: dict[int, list[float]] = {}
     d2 = fitz.open(pdf_path)
     for i in range(d2.page_count):
         page_lines_cache[i + 1] = _collect_text_lines(d2[i])
+        page_label_cache[i + 1] = _section_label_bottoms(d2[i])
     d2.close()
 
     # Detect column layout for this PDF (mid / overlap / left_min / right_max)
@@ -304,6 +346,10 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
                 continue
             col_anchors.sort(key=lambda t: t[2])
             col_x0, col_x1 = _column_bounds(layout, col_idx)
+            # 이 컬럼의 텍스트 라인(중심 x 로 분류) — content-top 확장에 사용.
+            col_lines = [ln for ln in page_lines_cache[page_num]
+                         if _column_of((ln[0] + ln[2]) / 2.0, classify_mid) == col_idx]
+            labels = page_label_cache[page_num]
             for idx, (n, x, y) in enumerate(col_anchors):
                 # Generous hard upper bound: next anchor in same column or
                 # column bottom. The actual end (so the cropped PNG doesn't
@@ -323,7 +369,16 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
                 # Never let hard_end go past the footer even when next
                 # anchor is further down (rare but defensive).
                 hard_end = min(hard_end, footer_top)
-                y_start = max(PAGE_TOP_MARGIN_PT, y - BBOX_PAD_PT)
+                # 번호 앵커 위로 솟은 같은 문제 수식(키 큰 분수·지수)까지 top 확장.
+                # 천장(floor_y): 이전 앵커 / 섹션 라벨(5지선다형·단답형) / MAX_UP 중 가장 낮은(=가장 큰 y).
+                floor_y = max(PAGE_TOP_MARGIN_PT, y - CONTENT_MAX_UP_PT)
+                if idx > 0:
+                    floor_y = max(floor_y, col_anchors[idx - 1][2])
+                labels_above = [lb for lb in labels if y - CONTENT_MAX_UP_PT < lb < y]
+                if labels_above:
+                    floor_y = max(floor_y, max(labels_above) + 1.0)
+                content_top = _content_top(col_lines, y, floor_y)
+                y_start = max(PAGE_TOP_MARGIN_PT, min(y, content_top) - BBOX_PAD_PT)
                 y_end = hard_end
                 bbox_pdf = (col_x0, y_start, col_x1, y_end)
                 subject = _classify_subject(canonical_area, exam_type, grade, n)
