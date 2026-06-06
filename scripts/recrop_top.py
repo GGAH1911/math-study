@@ -37,17 +37,35 @@ def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, headroo
 
 
 def _round_entries(round_slug, exam_type, session, subject):
-    """회차 bbox 캐시. PDF: 문제.pdf 또는 <subject>_문제.pdf(ganah 가/나형)."""
-    key = round_slug + ('|' + subject if subject in ('가형', '나형') else '')  # 가/나형 PDF별 캐시
+    """회차 bbox 캐시. PDF 형식 3종:
+      - 단일 `문제.pdf` (v2 평가원/수능·gyo12 고1/2)
+      - 가/나형: `<가형|나형>_문제.pdf` + `pages_<subject>`
+      - 교육청 고3(gyo3) 과목별: 선택은 `<미적분|기하|확률과통계>_문제.pdf`, 공통은
+        미적분 PDF 안에. pages 는 `pages_<pdf과목>`.
+    """
+    raw = ROOT / 'db' / 'raw' / round_slug
+    pdf_subject = None
+    if (raw / '문제.pdf').exists():
+        pdf = raw / '문제.pdf'; pages_dir = raw / 'pages'
+    else:
+        # 과목별 PDF 라운드. 공통은 선택 PDF(미적분 우선) 안에서 크롭.
+        if subject in ('가형', '나형', '미적분', '기하', '확률과통계'):
+            pdf_subject = subject
+        elif subject == '공통':
+            for cand in ('미적분', '기하', '확률과통계'):
+                if (raw / f'{cand}_문제.pdf').exists():
+                    pdf_subject = cand; break
+        if not pdf_subject or not (raw / f'{pdf_subject}_문제.pdf').exists():
+            _bbox_cache[round_slug + '|' + str(subject)] = None
+            return None
+        pdf = raw / f'{pdf_subject}_문제.pdf'
+        pages_dir = raw / f'pages_{pdf_subject}'
+        if not pages_dir.exists():
+            pages_dir = raw / 'pages'
+    key = round_slug + ('|' + pdf_subject if pdf_subject else '')   # PDF별 캐시
     if key in _bbox_cache:
         return _bbox_cache[key]
-    raw = ROOT / 'db' / 'raw' / round_slug
-    pdf = raw / '문제.pdf'
-    if not pdf.exists() and subject in ('가형', '나형'):
-        pdf = raw / f'{subject}_문제.pdf'
-    if not pdf.exists():
-        _bbox_cache[key] = None; return None
-    pages_dir = raw / 'pages'
+    pages_dir.mkdir(parents=True, exist_ok=True)
     if not list(pages_dir.glob('*.png')):
         IV.render_pdf_pages(pdf, pages_dir)
     page_by_num = {int(p.stem[1:]): p for p in pages_dir.glob('*.png')}
