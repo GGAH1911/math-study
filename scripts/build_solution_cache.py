@@ -56,6 +56,10 @@ SALVAGE_ONLY = os.environ.get('SALVAGE_ONLY') == '1'
 # parallel==1(단일/디버깅) 실행에서 HEARTBEAT_S 마다 '작업중' 하트비트를 로그에 찍어 진행을 보이게 한다.
 HEARTBEAT = False
 HEARTBEAT_S = int(os.environ.get('HEARTBEAT_S', '60'))
+# 최종 티어: 자동 사다리·구제가 verified:true 를 못 만든 hard 문제(도형·이산 런어웨이, 검증기 병목)를
+# 전체 도구(Read·Bash·Write) 에이전트가 '직접 풀이' — 코드로 계산하고 검증기까지 작성. 비용 커서 마지막에만.
+AGENT_TIER = os.environ.get('AGENT_TIER', '1') == '1'        # 끄려면 AGENT_TIER=0 (빠른 모드: 인플레이스 구제)
+AGENT_TIMEOUT = int(os.environ.get('AGENT_TIMEOUT', '900'))
 
 SYSTEM = """당신은 한국 수능 수학 문제를 정확히 푸는 전문가입니다. 첨부된 문제 이미지를 Read 도구로 먼저 본 뒤 풀이하세요. 도형·조건·보기 값은 모두 이미지에서 확인합니다. 추측 금지."""
 
@@ -272,6 +276,82 @@ def fix_score(p: Path, new: str):
         p.write_text(t2, encoding='utf-8')
 
 
+def _agent_prompt(img_paths: list[str], fmt: str, meta: str) -> str:
+    listing = '\n'.join(f'    {i + 1}. {pp}' for i, pp in enumerate(img_paths))
+    intro = (f"문제 이미지 — 세로로 길어 위→아래 {len(img_paths)}장 타일(경계 약간 겹침):\n{listing}"
+             if len(img_paths) > 1 else f"문제 이미지: {img_paths[0]}")
+    lines = ['  "answer": <보기 번호 1-5 정수>,' if fmt == 'choice' else '  "answer": <단답형 정답 정수(0-999)>,',
+             '  "answer_value": "<최종 값만, 설명 없이>",', '  "score": <2|3|4 정수, 이미지 상단 [N점]>,']
+    if fmt == 'choice':
+        lines.append('  "solution_steps": ["<핵심 단계, 한국어 KaTeX $...$ 허용>", "..."],')
+        lines.append('  "verifier_python": "<자기완결 파이썬. **원래 문제의 조건/식에 네 답을 역대입·재계산**해 검사. sympy/numpy/math/fractions 만, 파일·os·네트워크 금지. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print.>"')
+    else:
+        lines.append('  "solution_steps": ["<핵심 단계, 한국어 KaTeX $...$ 허용>", "..."]')
+    body = '\n'.join(lines)
+    return f"""{intro}
+{meta}
+
+위 문제를 **도구(Read·Bash·Write)를 적극 활용해** 끝까지 풀어라. 정답은 주어지지 않는다.
+1. 이미지를 Read 로 정밀히 읽어 조건을 파악하라(도형이면 좌표로 옮겨라).
+2. **경우의 수·도형 넓이·무한급수·방정식 등 이산/수치 계산은 암산하지 말고, Python 을 작성해 Bash(`python3 -c …` 또는 Write 로 파일 저장 후 실행)로 돌려** 정확히 구하라.
+3. 답을 확정한 뒤 검증기를 작성하라(객관식이면 필수).
+
+작업이 끝나면 **마지막 메시지에 오직 하나의 ```json 블록**만 출력(설명 산문 금지):
+```json
+{{
+{body}
+}}
+```"""
+
+
+def _agent_solve(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
+    """최종 티어 — 전체 도구(Read·Bash·Write) 에이전트가 '직접 풀이'(코드로 계산·검증기 작성).
+    자동 사다리가 verified:true 를 못 만든 hard 문제(도형·이산 런어웨이, 검증기 병목)용.
+    → verified:true(CACHED@A) 목표, 답만 맞으면 verified:false(CACHED@A~)."""
+    import shutil, threading
+    anon_paths, anon_dir = _anonymize(tiles)
+    args = ['claude', '-p', '--model', 'opus', '--effort', 'high',
+            '--allowedTools', 'Read,Bash,Write', '--add-dir', anon_dir,
+            '--disallowedTools', 'WebFetch,WebSearch,Edit', '--max-turns', '30',
+            '--system-prompt', SYSTEM, '--', _agent_prompt(anon_paths, fmt, meta)]
+    stop = threading.Event()
+    if HEARTBEAT:
+        def _hb():
+            s = 0
+            while not stop.wait(HEARTBEAT_S):
+                s += HEARTBEAT_S; print(f'      · agent 직접풀이 {s}s… (타임아웃 {AGENT_TIMEOUT}s)', flush=True)
+        threading.Thread(target=_hb, daemon=True).start()
+    try:
+        r = subprocess.run(args, capture_output=True, text=True, timeout=AGENT_TIMEOUT)
+    except subprocess.TimeoutExpired:
+        trace.append(('agent', 'timeout')); return None
+    finally:
+        stop.set(); shutil.rmtree(anon_dir, ignore_errors=True)
+    sol = None
+    for b in reversed(re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)):
+        try: sol = json.loads(b.strip()); break
+        except Exception: continue
+    if not sol:
+        trace.append(('agent', 'gen-fail')); return None
+    if str(sol.get('answer')).strip().strip('\'"') != gold:
+        trace.append(('agent', 'ans-wrong')); return None
+    by = solved_by or 'agent'
+    if fmt == 'choice':
+        ok, vlog = run_verifier(sol.get('verifier_python', ''))
+        if ok:
+            VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
+            (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
+            trace.append(('agent', 'verified'))
+            write_solution(p, sol, f'db/solutions/{p.stem}.py', 'agent', by, trace)
+            fix_score(p, str(sol.get('score', ''))); return 'CACHED@A'
+        trace.append(('agent', f'verify-fail:{vlog[:20]}'))
+        write_solution(p, sol, 'unverified', 'agent', by, trace, verified=False)
+        fix_score(p, str(sol.get('score', ''))); return 'CACHED@A~'    # 답 맞음·검증기만 실패
+    trace.append(('agent', 'pass'))
+    write_solution(p, sol, 'gold-match', 'agent', by, trace)
+    fix_score(p, str(sol.get('score', ''))); return 'CACHED@A'
+
+
 def _salvage(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
     """검증기 분리·구제 — 검증기 없이 '답만' 받아 gold 일치 시 캐시(verified:false).
     킬러는 검증기 *코딩*이 병목 → 답·풀이는 살리고 python 역대입 검증만 보류(미검증 표시)."""
@@ -349,10 +429,11 @@ def build_one(p: Path) -> str:
                     ok2, log2 = run_verifier(sol2.get('verifier_python', ''))
                     if ok2:
                         sol, ok, log = sol2, True, log2   # 새(깨끗한) 검증기 통과 → 채택
-            if not ok:                            # 재시도까지 실패
+            if not ok:                            # 재시도까지 실패 (답은 gold 일치, 검증기만 못 짬)
                 last = f'{model}:verify-fail:{log[:30]}'; trace.append((model, f'verify-fail×{1 + vtry}'))
-                # 비킬러인데 답은 이미 gold 일치(쉬운 문제, 검증기만 못 짬) → opus까지 escalation은 낭비.
-                # haiku 다음 sonnet에서도 막히면 그 답·풀이를 즉시 verified:false 로 인플레이스 구제(추가 콜 0).
+                if AGENT_TIER:
+                    break                          # 답 맞음 → 사다리 그라인딩 멈추고 에이전트가 verified:true 마무리
+                # (빠른 모드) 비킬러면 즉시 verified:false 인플레이스 구제(추가 콜 0); 킬러/haiku는 escalate
                 if tier != 'killer' and model != 'haiku':
                     trace.append((model, 'salvage-inplace(미검증)'))
                     write_solution(p, sol, 'unverified', model, solved_by, trace, verified=False)
@@ -368,7 +449,12 @@ def build_one(p: Path) -> str:
         write_solution(p, sol, vref, model, solved_by, trace)
         fix_score(p, str(sol.get('score', '')))   # 같은 이미지 읽기로 배점도 교정
         return f'CACHED@{model[0]}'
-    # 사다리 전멸 → 풀이 구제(검증기 분리): 답만 맞히면 verified:false 로 캐시 (FLAG보다 학습가치 보존)
+    # 사다리 전멸(또는 verify-fail에서 break) →
+    if AGENT_TIER:        # ① 전체도구 에이전트 직접 풀이(코드+검증기) — verified:true 목표
+        r = _agent_solve(p, tiles, fmt, meta, img_dir, gold, solved_by, trace)
+        if r:
+            return r
+    # ② 답만이라도 구제(verified:false) → 그것도 안 되면 FLAG
     return _salvage(p, tiles, fmt, meta, img_dir, gold, solved_by, trace) or f'FLAG({last})'
 
 
