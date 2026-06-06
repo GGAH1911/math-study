@@ -47,7 +47,7 @@ for session, fterm in MONTHS:
     slug = stage(session, fterm)
     print(f"  staged: {slug}", flush=True)
     rc = run([VENV, str(SCRIPTS / 'ingest_kice' / 'ingest_gyo3.py'),
-              '--year', '2021', '--session', session], {'META_WORKERS': '20'})
+              '--year', '2021', '--session', session, '--no-sync'], {'META_WORKERS': '20'})
     if rc != 0:   # 안전장치(선택 답 동일 등) 발동 → 캐시 건너뛰고 전체 중단
         print(f"  🔴 {session} 인제스트 실패(안전장치 발동 가능성) — 캐시 건너뜀, 일괄 중단", flush=True)
         raise SystemExit(f"{session} ingest failed (rc={rc})")
@@ -60,4 +60,7 @@ for session, fterm in MONTHS:
             {'SOLVE_TIMEOUT': '600', 'VERIFY_RETRIES': '2'})
     print(f"  ✓ {session} 완료 (인제스트 + 풀이캐시)", flush=True)
 
+# 일괄 후처리 동기화 1회 (회차별 --no-sync 였으므로): 무결성 가드 + 개념 역인덱스·그래프 + dev 리프레시
+print("\n후처리 동기화 (개념 역인덱스·그래프 재생성 + dev 콘텐츠 리프레시)", flush=True)
+run([VENV, str(SCRIPTS / 'post_ingest_sync.py')])
 print(f"\n{'=' * 60}\n4·7·10월 일괄 완료\n{'=' * 60}", flush=True)

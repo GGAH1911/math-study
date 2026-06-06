@@ -581,27 +581,30 @@ if __name__ == '__main__':
     ap.add_argument('--single', action='store_true',
                     help='통합형(선택과목 없는 30문항) → 전 문항 subject=단일')
     ap.add_argument('--with-cache', action='store_true',
-                    help='인제스트 후 concept 역인덱스 재빌드 + 풀이 캐시까지 자동 체이닝')
+                    help='인제스트 후 풀이 캐시(blind-solve 검증)까지 자동 체이닝')
+    ap.add_argument('--no-sync', action='store_true',
+                    help='후처리 동기화(post_ingest_sync) 생략 — orchestrate가 일괄 처리할 때')
     args = ap.parse_args()
     result = ingest_round_v2(args.year, args.exam_type, args.session,
                               grade=args.grade, agency=args.agency, single=args.single)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
-    # ── 자동 체이닝 (--with-cache) ──────────────────────────────────────
-    # 인제스트(콘텐츠) 성공 시: concept 역인덱스 재빌드 → 풀이 캐시(blind-solve 검증).
-    # 같은 프로세스/로그라 /progress 가 인제스트 패널 + 풀이캐시 패널 둘 다 표시.
-    if args.with_cache and result.get('ok'):
-        import subprocess, sys
-        round_slug = result['round']
-        round_dir = round_slug.split('_', 1)[1] if '_' in round_slug else round_slug
-        md_dir = DOCS_PROBLEMS / str(args.year) / round_dir
-        slugs = sorted(p.stem for p in md_dir.glob('*.md'))
-        print('\n══════ 체이닝 1/2: concept 역인덱스 재빌드 ══════', flush=True)
-        try:
-            subprocess.run(['node', 'scripts/build-problem-index.mjs'], cwd=str(ROOT / 'web'), check=False)
-        except FileNotFoundError:
-            print('  ⚠ node 없음 — concept index 는 dev predev 에서 재빌드됨', flush=True)
-        print(f'\n══════ 체이닝 2/2: 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
-        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
-                        '--list', ','.join(slugs), '--parallel', '10'])   # 킬러-먼저는 build_solution_cache가 정렬
-        print('\n✓ 체이닝 완료 — 인제스트 + concept index + 풀이 캐시', flush=True)
+    # ── 자동 체이닝 ──────────────────────────────────────────────────────
+    # 인제스트 성공 시: (옵션)풀이 캐시 먼저(md에 solution 추가) → 후처리 동기화(개념 역인덱스·그래프·허브
+    # 재생성 + dev 콘텐츠 리프레시). 같은 프로세스/로그라 /progress 가 각 패널 표시.
+    if result.get('ok'):
+        import subprocess, sys, os
+        if args.with_cache:
+            round_slug = result['round']
+            round_dir = round_slug.split('_', 1)[1] if '_' in round_slug else round_slug
+            md_dir = DOCS_PROBLEMS / str(args.year) / round_dir
+            slugs = sorted(p.stem for p in md_dir.glob('*.md'))
+            print(f'\n══════ 체이닝 1/2: 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
+                            '--list', ','.join(slugs), '--parallel', '10'])   # 킬러-먼저는 build_solution_cache가 정렬
+        # 동기화는 항상(--no-sync 아니면): 새 문제가 /problems·/concepts 에 안 보이는 것 방지
+        if not args.no_sync:
+            print('\n══════ 체이닝 2/2: 후처리 동기화 (개념 역인덱스·그래프 + dev 리프레시) ══════', flush=True)
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'post_ingest_sync.py')],
+                           env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
+        print('\n✓ 체이닝 완료', flush=True)

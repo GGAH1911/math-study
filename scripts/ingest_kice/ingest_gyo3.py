@@ -12,7 +12,7 @@
 사용: python ingest_gyo3.py --year 2021 --session 3월 [--grade 고3] [--limit N]
 """
 from __future__ import annotations
-import sys, os, json, argparse
+import sys, os, json, argparse, subprocess
 from pathlib import Path
 import concurrent.futures as cf
 
@@ -143,5 +143,11 @@ if __name__ == '__main__':
     ap.add_argument('--session', required=True)
     ap.add_argument('--grade', default='고3')
     ap.add_argument('--limit', type=int, default=None)
+    ap.add_argument('--no-sync', action='store_true',
+                    help='후처리 동기화(post_ingest_sync) 생략 — orchestrate가 일괄 처리할 때 사용')
     a = ap.parse_args()
     print(json.dumps(ingest(a.year, a.session, a.grade, a.limit), ensure_ascii=False))
+    # 파이프라인: markdown 작성 후 개념 역인덱스·그래프 재생성 + dev 콘텐츠 리프레시 (안 하면 stale)
+    if not a.no_sync:
+        subprocess.run([sys.executable, str(Path(__file__).resolve().parent.parent / 'post_ingest_sync.py')],
+                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
