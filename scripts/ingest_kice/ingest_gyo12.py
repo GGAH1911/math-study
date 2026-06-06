@@ -66,13 +66,9 @@ def ingest_round(year: int, grade: str, session: str, limit=None) -> dict:
         e['image_fs'] = f'db/raw/{slug}/images/{name}'
         e['image_url'] = f'/problem-images/{name}'
         e['image_path'] = str(img_path.resolve())    # vision 폴백용
-        cand = Image.open(e['_page_png']).crop(e['bbox_px'])
-        tmp = images_dir / f'.cand_{e["number"]:02d}.png'; cand.save(tmp)
-        try:
-            if not IV.crop_by_gap(tmp, img_path, exam_type=EXAM_TYPE):
-                cand.save(img_path)
-        finally:
-            tmp.unlink(missing_ok=True)
+        page_im = Image.open(e['_page_png'])
+        if not IV.crop_problem(page_im, e['bbox_px'], img_path, exam_type=EXAM_TYPE):
+            page_im.crop(e['bbox_px']).save(img_path)     # degenerate 폴백
         IV._ensure_web_symlink(img_path)
     print(f'  ✓ 크롭 {len(entries)}장', flush=True)
 

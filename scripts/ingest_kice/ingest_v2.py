@@ -28,7 +28,7 @@ sys.path.insert(0, str(_HERE))
 sys.path.insert(0, str(_HERE.parent))
 
 from bbox import extract_problem_bboxes, crop_problem_image, _collect_text_lines, _column_of  # noqa: E402
-from crop_with_llm import crop_by_gap  # noqa: E402  (v3.1: pure-PIL, no LLM)
+from crop_with_llm import crop_by_gap, crop_problem  # noqa: E402  (v3.1: pure-PIL, no LLM)
 from text_meta import extract_metadata  # noqa: E402  (PDF text + Haiku, NOT vision)
 from ingest_round import (  # noqa: E402
     render_pdf_pages, extract_answers, extract_single_answers, db_upsert, slugify_round,
@@ -373,8 +373,8 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
             tmp = images_dir / f'.cand_{e["subject"]}_{e["number"]:02d}.png'
             candidate.save(tmp)
             try:
-                # v3.1: pure-PIL gap-based crop. Deterministic, ~50ms/problem.
-                ok = crop_by_gap(tmp, img_path, exam_type=exam_type)
+                # v3.2: gap-based 경계 + 위로 18px(위첨자 클립 방지). 페이지+bbox 직접 사용.
+                ok = crop_problem(img, e['bbox_px'], img_path, exam_type=exam_type)
                 if not ok:
                     # Degenerate (mostly blank candidate) — keep raw so
                     # something is at least visible.

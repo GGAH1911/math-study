@@ -188,6 +188,34 @@ def crop_by_gap(candidate_png: Path, output_path: Path, exam_type: str | None = 
     return True
 
 
+def crop_problem(page_img, bbox_px, out_path, exam_type=None, headroom=18):
+    """문제 크롭 (인제스트·재크롭 공용). crop_by_gap 의 top/bottom 경계 + **위로 headroom 픽셀**.
+
+    crop_by_gap 은 후보(=bbox crop) 안만 봐서 bbox 가 위첨자를 자르면 못 살린다. 여기선 페이지+bbox 를
+    받아 *원래 경계에서 위로 headroom* 만큼 페이지에서 다시 잘라 위첨자 클립을 복구한다(스캔 없음 →
+    멀리 있는 헤더는 안 딸려옴). 안 잘린 문제엔 상단 여백만 더해진다."""
+    from pathlib import Path as _P
+    out_path = _P(out_path)
+    x0, y0, x1, y1 = [int(v) for v in bbox_px]
+    cand = page_img.crop((x0, y0, x1, y1))
+    if cand.width < 4 or cand.height < 4:
+        return False
+    ri = _row_ink_ratios(cand.convert('L'))
+    h = cand.height
+    gr = 0.25 if exam_type == '검정고시' else DETACHED_GAP_RATIO
+    pad = max(MIN_PADDING_PX, int(PADDING_RATIO * h))
+    orig_top = max(0, _find_problem_start(ri, h) - pad)
+    orig_bot = min(h, _find_problem_end(ri, h, gap_ratio=gr) + pad)
+    page_top = max(0, y0 + orig_top - headroom)             # 원래 top 에서 위로 headroom
+    cropped = page_img.crop((x0, page_top, x1, y0 + orig_bot))
+    xt = _left_trim_x(cropped)
+    if xt > 0:
+        cropped = cropped.crop((xt, 0, cropped.width, cropped.height))
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    cropped.save(out_path, 'PNG', optimize=True)
+    return True
+
+
 # ---------- legacy: LLM-guided crop (unused as of v3.1) -------------------
 
 

@@ -32,23 +32,8 @@ _bbox_cache: dict = {}
 
 
 def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, headroom=18):
-    """단순 보정: 원래 crop_by_gap 경계 그대로 + 위로 headroom 픽셀만 추가.
-    스캔 없음 → 멀리 있는 페이지 헤더는 안 딸려옴. 위첨자 클립(보통 ~10-15px)만 복구."""
-    x0, y0, x1, y1 = bbox_px
-    cand = page_img.crop((x0, y0, x1, y1))            # bbox candidate (원래대로)
-    ri = CW._row_ink_ratios(cand.convert('L'))
-    h = cand.height
-    gr = 0.25 if exam_type == '검정고시' else CW.DETACHED_GAP_RATIO
-    pad = max(CW.MIN_PADDING_PX, int(CW.PADDING_RATIO * h))
-    orig_top = max(0, CW._find_problem_start(ri, h) - pad)     # 원래 crop top
-    orig_bot = min(h, CW._find_problem_end(ri, h, gap_ratio=gr) + pad)
-    page_top = max(0, y0 + orig_top - headroom)       # 원래 top 에서 위로 headroom 만
-    cropped = page_img.crop((x0, page_top, x1, y0 + orig_bot))
-    xt = CW._left_trim_x(cropped)
-    if xt > 0:
-        cropped = cropped.crop((xt, 0, cropped.width, cropped.height))
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    cropped.save(out_path, 'PNG', optimize=True)
+    """인제스트 공용 crop_with_llm.crop_problem 위임 (단일 소스). 원래 경계 + 위로 headroom."""
+    CW.crop_problem(page_img, bbox_px, out_path, exam_type=exam_type, headroom=headroom)
 
 
 def _round_entries(round_slug, exam_type, session, subject):
