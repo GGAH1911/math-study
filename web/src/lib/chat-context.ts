@@ -61,7 +61,15 @@ const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
    {"fn":"x^2 - 3*x + 2","range":[-1,4],"title":"$y = x^2 - 3x + 2$"}
    \`\`\`
    여러 함수: \`"fns":[{"fn":"x^2","label":"$f$"},{"fn":"2*x+1","label":"$\\\\text{접선}$"}]\`.
-   \`points: [[1,0]]\`로 강조 점, \`closed: true\`+\`range\`로 영역 음영(정적분).
+   \`closed: true\`+\`range\`로 영역 음영(정적분).
+   **교점·근의 좌표를 직접 계산해 \`points\`에 넣지 마라 — 거의 틀린다(특히 교점).**
+   대신 함수와 *대략적 구간*만 선언하면 렌더러가 이분법으로 정확히 풀어 빨간 점으로 찍는다:
+     · 두 곡선의 교점 → \`"intersections":[{"f":"sqrt(x)/10","g":"tan(x)","in":[0,1.5]}]\`
+       (f·g 는 \`fns\`에 쓴 식 그대로, \`in\`은 교점 하나만 들어가는 x-bracket. 교점마다 한 항목.)
+     · 한 함수의 근(x절편) → \`"roots":[{"fn":"x^2 - 2","in":[0,3]}]\`
+     · 주기함수(tan 등)는 교점마다 그 *가지(branch) 하나*를 \`in\`으로. tan 은 가지
+       \`((k-1/2)π, (k+1/2)π)\` 마다 완만한 곡선과 한 번 만난다 → 각 가지를 bracket 으로.
+     · 좌표를 *확실히* 아는 점(원점, 주어진 정수점 등)만 \`"points":[[1,0]]\` 직접 지정.
 
 2. \`\`\`geometry\`\`\` — 도형/기하.
 
@@ -132,6 +140,8 @@ const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
      - \`assert_on_circle(point, center, radius, tag)\`
      - \`assert_distance(p1, p2, expected, tag)\`
      - \`assert_angle(vertex, a, b, expected_rad, tag)\` — ∠a-vertex-b 가 expected 인지
+     - \`assert_segments_disjoint(p1, p2, q1, q2, tag)\` — 선분 p1p2 와 q1q2 가 **안 만나는지** ("~와 만나지 않도록")
+     - \`assert_segments_cross(p1, p2, q1, q2, tag)\` — 선분 p1p2 와 q1q2 가 **만나는지** ("~와 만나도록")
 
      **검증 호출은 의무 — 빠뜨리면 사고**:
      문제에 명시된 모든 기하 조건 (각·거리·점-on-도형) 마다 대응하는
@@ -142,7 +152,21 @@ const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
        - "P on 반원"      → \`assert_on_circle(P, O, 1, "P on circle")\`
        - "R on 직선 AP"  → \`assert_on_line(R, A, P, "R on AP")\`
        - "|AB| = 2"      → \`assert_distance(A, B, 2, "|AB|=2")\`
+       - "선분 D2C2가 A2E1과 만나지 않도록" → \`assert_segments_disjoint(D2, C2, A2, E1, "D2C2 ∦ A2E1")\`
+       - "선분 ~이 ~과 만나도록 점 ~를 잡는다"  → \`assert_segments_cross(...)\`
      stdout 에 \`[VERIFY FAIL]\` 한 줄이라도 뜨면 자동 재계산 trigger.
+
+     **★ 자기닮음·등비급수 도형 (Sₙ·Rₙ, 색칠넓이 lim) — 방향 결정이 핵심**:
+       이 부류는 거의 항상 "선분 ~가 ~와 **만나도록**/**만나지 않도록**", "~와 만나도록
+       점 P를 잡는다" 같은 문구로 **새 단계 도형이 그려질 쪽(부호)** 을 못박는다.
+       후보 좌표는 ±두 방향이 나오는데(예: 90° 회전, 직사각형 높이 방향), 둘 중
+       **이 만남 조건을 만족하는 쪽**이 정답이다. 반드시:
+       1) derive 주석에 "조건: D2C2가 A2E1과 안 만남 → 새 직사각형은 E1에서 *멀어지는*
+          위쪽(+) 방향" 처럼 어느 부호를 왜 골랐는지 명시.
+       2) 그 만남 조건을 \`assert_segments_disjoint\`/\`assert_segments_cross\` 로 **검증**.
+          (부호를 반대로 잡으면 여기서 FAIL → 재계산.)
+       핵심 직관: **각 단계 도형은 직전 도형에서 멀어지는 쪽으로 성장**한다(겹치면 틀림).
+       안쪽으로 접어 그리면 이전 도형과 겹쳐 100% 오답.
 
      예 (다단 작도. **각 단계 derive 를 주석으로 명시 — assert_* 가
      좌표 자체의 부호 오류는 못 잡으니 derive 가 맞는지 사람도 검토 가능

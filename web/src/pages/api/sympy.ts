@@ -105,6 +105,29 @@ def assert_angle(vertex, a, b, expected, tag):
         except Exception:
             eval_ = expected
         print(f"[VERIFY FAIL] {tag}: angle={ang_val} != {eval_}")
+
+def _seg(p1, p2):
+    return Segment(Point(*p1), Point(*p2))
+
+def assert_segments_cross(p1, p2, q1, q2, tag):
+    """선분 p1p2 와 q1q2 가 실제로 만나는지 — "~가 ~와 만나도록" 조건 검증."""
+    if _seg(p1, p2).intersection(_seg(q1, q2)):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        print(f"[VERIFY FAIL] {tag}: segments {tuple(p1)}-{tuple(p2)} & {tuple(q1)}-{tuple(q2)} do NOT meet")
+
+def assert_segments_disjoint(p1, p2, q1, q2, tag):
+    """선분 p1p2 와 q1q2 가 안 만나는지 — "~가 ~와 만나지 않도록" 조건 검증.
+    등비급수 자기닮음 도형에서 새 단계 직사각형의 방향(부호)을 직격으로 잡는다."""
+    inter = _seg(p1, p2).intersection(_seg(q1, q2))
+    if not inter:
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            where = [(float(o.x), float(o.y)) for o in inter if hasattr(o, 'x')] or inter
+        except Exception:
+            where = inter
+        print(f"[VERIFY FAIL] {tag}: segments {tuple(p1)}-{tuple(p2)} & {tuple(q1)}-{tuple(q2)} MEET at {where}")
 `;
 
 type RunRequest = { code: string };

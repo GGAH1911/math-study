@@ -180,33 +180,36 @@ export function parseGraphSegments(text: string): Segment[] {
           .replace(/\t/g, '\\t');
         return `"${fixed}"`;
       });
-      // (2) string 안 LaTeX backslash (\frac, \alpha, \sqrt 등) — JSON 표준 외 escape → \\
-      // JSON 표준 escape: \" \\ \/ \b \f \n \r \t \uXXXX. 그 외 \X 는 invalid.
+      // (2) string 안 LaTeX backslash (\frac, \alpha, \sqrt, \tan, \nu, \rho, \beta 등) → \\
+      //   JSON 표준 escape \b\f\n\r\t 는 LaTeX 명령(\frac=\f, \tan=\t, \nu=\n, \rho=\r, \beta=\b)과
+      //   글자가 겹쳐 단순히 "비표준만 double" 하면 \frac→[FF]rac 로 깨진다. 그래서:
+      //   기존 \\ 와 \uXXXX(유니코드)만 보존하고, *나머지 모든 lone backslash 를 double*.
+      //   (수식 라벨엔 실제 제어문자 newline/tab 이 거의 없어 안전. \" \/ 는 글자 아니라 제외.)
       out = out.replace(/"((?:[^"\\]|\\.)*)"/g, (_m, inner: string) => {
-        const fixed = inner.replace(/\\([^"\\/bfnrtu])/g, '\\\\$1');
+        const fixed = inner
+          .replace(/\\\\/g, '')                    // 이미 유효한 \\ 보호
+          .replace(/\\u([0-9a-fA-F]{4})/g, '$1')   // 유효한 \uXXXX 보호
+          .replace(/\\([^"/])/g, '\\\\$1')               // 남은 lone \X (LaTeX 포함) → \\X
+          .replace(//g, '\\u')                     // \uXXXX 복원
+          .replace(//g, '\\\\');                   // \\ 복원
         return `"${fixed}"`;
       });
-      // (3) JSON value 자리의 raw 수식 (예: 2*1.732, 3*sqrt(2)) → 평가 결과
-      // pattern: : <number/expr>[,}\]]  안전한 평가만 (sqrt, *, /, +, -, 괄호, 숫자).
-      out = out.replace(/:\s*([0-9][0-9eE.+\-*/\s()]*(?:sqrt|sin|cos|tan|pi)[a-zA-Z0-9_.+\-*/\s()]*)\s*([,}\]])/g,
-        (_m, expr: string, tail: string) => {
+      // (3) value/배열 자리의 raw 수식(pi·sqrt·sin·cos·tan·*·/·괄호) → 평가 결과.
+      //     `:` 뿐 아니라 `[`·`,` 뒤(배열 원소: "range":[0, 0.4*pi], [pi, 2*pi])도 처리한다.
+      //     후행 구분자는 lookahead 로 보존 → 연속 배열 원소([2*pi, 2.4*pi])도 둘 다 잡힘.
+      //     순수 숫자(-3, 5.5)는 math 토큰이 없어 그대로 둔다(유효 JSON).
+      out = out.replace(
+        /([:[,]\s*)((?:pi|sqrt|sin|cos|tan|[0-9.eE+\-*/() \t])+?)(?=\s*[,}\]])/g,
+        (_m: string, pre: string, expr: string) => {
+          if (!/(pi|sqrt|sin|cos|tan|[*/])/.test(expr)) return _m;   // math 토큰 없으면 순수 숫자 → 유지
           try {
-            // mathjs 없이 간단 safe-eval — Function 생성. 매우 제한된 패턴만.
-            const safe = expr.replace(/sqrt/g, 'Math.sqrt')
-              .replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos')
-              .replace(/tan/g, 'Math.tan').replace(/pi/g, 'Math.PI');
+            const safe = expr
+              .replace(/\bsqrt\b/g, 'Math.sqrt').replace(/\bsin\b/g, 'Math.sin')
+              .replace(/\bcos\b/g, 'Math.cos').replace(/\btan\b/g, 'Math.tan')
+              .replace(/\bpi\b/g, 'Math.PI');
             const v = Function(`"use strict"; return (${safe});`)();
-            if (typeof v === 'number' && Number.isFinite(v)) return `: ${v}${tail}`;
-          } catch { /* 평가 실패 — 그대로 (parse 실패 유도) */ }
-          return _m;
-        });
-      // (4) 단순 number * number 같은 raw expression (sqrt 등 함수 없음)
-      out = out.replace(/:\s*(-?\d+(?:\.\d+)?\s*[*/]\s*-?\d+(?:\.\d+)?(?:\s*[*/]\s*-?\d+(?:\.\d+)?)*)\s*([,}\]])/g,
-        (_m, expr: string, tail: string) => {
-          try {
-            const v = Function(`"use strict"; return (${expr});`)();
-            if (typeof v === 'number' && Number.isFinite(v)) return `: ${v}${tail}`;
-          } catch { /* */ }
+            if (typeof v === 'number' && Number.isFinite(v)) return `${pre}${v}`;
+          } catch { /* 평가 실패 — 원본 유지 */ }
           return _m;
         });
       // (5) 배열/값 자리 분수 `a/b` → 소수. (4)는 `:` 직후만 잡아

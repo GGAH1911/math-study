@@ -42,6 +42,11 @@ export type PlotSpec = {
   yRange?: [number, number];     // y-axis (auto if omitted)
   points?: Array<[number, number]>;
   pointsLabel?: string;
+  // 교점·근 자동 계산 — LLM 이 좌표를 손계산하면 거의 틀리므로(교점은 특히),
+  // 두 함수(또는 한 함수)와 대략적 bracket 구간만 받아 렌더러가 이분법으로 정확히 푼다.
+  // 결과 좌표는 points 와 합쳐져 같은 빨간 점으로 찍힌다.
+  intersections?: Array<{ f: string; g: string; in: [number, number]; label?: string }>;
+  roots?: Array<{ fn: string; in: [number, number]; label?: string }>;
   title?: string;
   grid?: boolean;
   // Optional sliders shown in the modal — each binds a name in fn scope.
@@ -197,6 +202,69 @@ function loadMathEval() {
   return MATH_LOADER;
 }
 
+// 솔버 입력 정규화 — LLM 이 박는 유니코드 수학기호 → mathjs ASCII.
+function normExpr(s: string): string {
+  return s.replace(/√/g, 'sqrt').replace(/π/g, 'pi')
+    .replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-').replace(/[⋅·]/g, '*');
+}
+
+// 이분법 근 찾기 — bracket [a0,b0] 에서 expr(x)=0 의 근. 양 끝 부호가 안 갈리면
+// 256분할 스캔으로 부호 바뀌는 sub-bracket 을 먼저 찾고 이분한다. 미분 불필요(견고).
+// LLM 의 손계산 교점 좌표를 결정적 계산으로 대체하기 위한 핵심 루틴.
+function bisectRoot(expr: string, a0: number, b0: number,
+                    evalFn: (e: string, s: object) => number): number | null {
+  const f = (x: number): number => {
+    try { const v = evalFn(expr, { x }); return typeof v === 'number' ? v : NaN; }
+    catch { return NaN; }
+  };
+  let a = a0, b = b0, fa = f(a), fb = f(b);
+  if (!(Number.isFinite(fa) && Number.isFinite(fb) && fa * fb <= 0)) {
+    const N = 256; let pa = a0, pf = f(a0), ok = false;
+    for (let i = 1; i <= N; i++) {
+      const x = a0 + ((b0 - a0) * i) / N, fx = f(x);
+      if (Number.isFinite(pf) && Number.isFinite(fx) && pf * fx <= 0) {
+        a = pa; b = x; fa = pf; fb = fx; ok = true; break;
+      }
+      pa = x; pf = fx;
+    }
+    if (!ok) return null;
+  }
+  for (let i = 0; i < 100; i++) {
+    const m = (a + b) / 2, fm = f(m);
+    if (!Number.isFinite(fm)) return null;
+    if (Math.abs(fm) < 1e-12 || b - a < 1e-12) return m;
+    if (fa * fm <= 0) { b = m; fb = fm; } else { a = m; fa = fm; }
+  }
+  return (a + b) / 2;
+}
+
+// intersections/roots 스펙 → 실제 점 좌표. 점근선을 가로지른 가짜 근(|f-g| 큰 곳)은
+// 검증(eval 후 실제로 0 / f≈g 인지)으로 버린다 → tan 같은 주기함수도 안전.
+function solvePlotPoints(spec: PlotSpec,
+                         evalFn: ((e: string, s: object) => number) | null): Array<[number, number]> {
+  if (!evalFn) return [];
+  const out: Array<[number, number]> = [];
+  for (const it of spec.intersections ?? []) {
+    const f = normExpr(it.f), g = normExpr(it.g);
+    const x = bisectRoot(`(${f})-(${g})`, it.in[0], it.in[1], evalFn);
+    if (x == null) continue;
+    let fy = NaN, gy = NaN;
+    try { const a = evalFn(f, { x }); if (typeof a === 'number') fy = a; } catch { /* */ }
+    try { const b = evalFn(g, { x }); if (typeof b === 'number') gy = b; } catch { /* */ }
+    if (Number.isFinite(x) && Number.isFinite(fy) && Number.isFinite(gy)
+        && Math.abs(fy - gy) < 1e-3 * (1 + Math.abs(fy))) out.push([x, fy]);
+  }
+  for (const it of spec.roots ?? []) {
+    const fn = normExpr(it.fn);
+    const x = bisectRoot(fn, it.in[0], it.in[1], evalFn);
+    if (x == null) continue;
+    let y = NaN;
+    try { const v = evalFn(fn, { x }); if (typeof v === 'number') y = v; } catch { /* */ }
+    if (Number.isFinite(x) && Number.isFinite(y) && Math.abs(y) < 1e-3) out.push([x, 0]);
+  }
+  return out;
+}
+
 // -------------------------------------------------------------- SVG sanitizer
 
 let DOMPURIFY_LOADER: Promise<typeof import('dompurify').default> | null = null;
@@ -334,7 +402,7 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
   useEffect(() => {
     let cancelled = false;
     setErr(null);
-    loadFunctionPlot().then((fp) => {
+    Promise.all([loadFunctionPlot(), loadMathEval()]).then(([fp, evalFn]) => {
       if (cancelled || !ref.current) return;
       ref.current.innerHTML = '';
       try {
@@ -355,8 +423,11 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
           else if (Object.keys(sliderValues).length) d.scope = sliderValues;
           return d;
         });
-        const points = spec.points && spec.points.length > 0
-          ? [{ points: spec.points, fnType: 'points', graphType: 'scatter', color: '#f43f5e' }]
+        // 교점·근은 렌더러가 결정적으로 계산(LLM 손계산 대체) → literal points 와 합침.
+        const solvedPoints = solvePlotPoints(spec, evalFn);
+        const allPoints = [...(spec.points ?? []), ...solvedPoints];
+        const points = allPoints.length > 0
+          ? [{ points: allPoints, fnType: 'points', graphType: 'scatter', color: '#f43f5e' }]
           : [];
         // Add invisible (visually merged with origin-axis line) function
         // entries for y=0 and x=0 so that function-plot's tip will snap
@@ -490,7 +561,7 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
       if (!cancelled) setErr(String(e));
     });
     return () => { cancelled = true; };
-  }, [resolvedFns, spec.points, spec.range, spec.yRange, spec.grid, effWidth, height, interactive, sliderValues]);
+  }, [resolvedFns, spec.points, spec.intersections, spec.roots, spec.range, spec.yRange, spec.grid, effWidth, height, interactive, sliderValues]);
 
   if (err) {
     return <pre className="text-xs text-rose-300 bg-rose-500/10 border border-rose-500/30 p-2 rounded">{err}</pre>;
