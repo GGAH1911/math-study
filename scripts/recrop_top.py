@@ -11,6 +11,16 @@ from __future__ import annotations
 import sys, re, glob, argparse, os, shutil
 from pathlib import Path
 from PIL import Image
+import numpy as np
+
+SKIP_TOP_INK = 20            # 현재 상단여백이 이보다 크면 이미 깨끗 → 재크롭 스킵
+
+
+def _top_ink_row(path, t=0.015):
+    a = np.asarray(Image.open(path).convert('L'))
+    d = (a < 128).mean(axis=1)
+    r = np.where(d > t)[0]
+    return int(r[0]) if len(r) else 9999
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'scripts' / 'ingest_kice'))
@@ -88,6 +98,12 @@ def recrop_slug(slug, md_text, dry=False):
     page = page_by_num.get(e['page_num'])
     if not page:
         return 'no-page'
+    if img_fs.exists():
+        ti = _top_ink_row(img_fs)
+        if ti > SKIP_TOP_INK:
+            return 'skip-clean'                      # 이미 상단여백 충분 → 안 건드림
+        if ti < 6:
+            return 'skip-bleed'                      # top≤5 = 파편/헤더 유입 → +여백 주면 악화, 스킵
     before = Image.open(img_fs).size if img_fs.exists() else None
     if not dry:
         gap_aware(Image.open(page), e['bbox_px'], img_fs, '모의고사' if exam_type == '모의고사' else exam_type)
@@ -105,16 +121,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--numbers', help='쉼표구분 문제번호 (예: 1 또는 1,2,3)')
     ap.add_argument('--list', help='쉼표구분 slug')
+    ap.add_argument('--all', action='store_true', help='전체 문제 (잘린 것만 자동 보정)')
     ap.add_argument('--dry', action='store_true')
     a = ap.parse_args()
     md_by = {p.split('/')[-1][:-3]: p for p in glob.glob(str(ROOT / 'docs' / 'problems' / '**' / '*.md'), recursive=True)}
     if a.list:
         slugs = [s.strip() for s in a.list.split(',') if s.strip()]
+    elif a.all:
+        slugs = list(md_by)
     elif a.numbers:
         nums = set(a.numbers.split(','))
         slugs = [s for s in md_by if s.rsplit('_', 1)[-1] in {n.zfill(2) for n in nums}]
     else:
-        print('--numbers 또는 --list 필요'); return
+        print('--numbers / --list / --all 필요'); return
     print(f"대상 {len(slugs)}개 (dry={a.dry})", flush=True)
     from collections import Counter
     res = Counter()
