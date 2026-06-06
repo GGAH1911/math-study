@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-06T00:26:26.972Z",
-  "totalProblems": 2904,
-  "conceptsWithProblems": 2135,
-  "totalMappings": 9185,
+  "generatedAt": "2026-06-06T02:15:41.860Z",
+  "totalProblems": 2964,
+  "conceptsWithProblems": 2151,
+  "totalMappings": 9201,
   "propagatedMappings": 4366,
   "byConcept": {
     "함수의_연속성_정의": [
@@ -1351,6 +1351,262 @@
         "score": 4,
         "killer_tier": "killer",
         "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "최고차항": [
+      {
+        "slug": "2021/수능/2021_수능_가형_02",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 2,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "지수함수의_적분": [
+      {
+        "slug": "2021/수능/2021_수능_가형_08",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직사각형_조건": [
+      {
+        "slug": "2021/수능/2021_수능_가형_13",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "재귀적_도형_구성": [
+      {
+        "slug": "2021/수능/2021_수능_가형_14",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "무한급수와_수렴": [
+      {
+        "slug": "2021/수능/2021_수능_가형_14",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "기하학적_닮음": [
+      {
+        "slug": "2021/수능/2021_수능_가형_14",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "전체확률법칙": [
+      {
+        "slug": "2021/수능/2021_수능_가형_19",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극값과_극한": [
+      {
+        "slug": "2021/수능/2021_수능_가형_30",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수의_최대최소": [
+      {
+        "slug": "2021/수능/2021_수능_가형_30",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "가형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "인수분해를_이용한_극한값_계산": [
+      {
+        "slug": "2021/수능/2021_수능_나형_03",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 3,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "독립인_사건": [
+      {
+        "slug": "2021/수능/2021_수능_나형_05",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "확률의_곱셈_정리": [
+      {
+        "slug": "2021/수능/2021_수능_나형_05",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "법선(수직선)": [
+      {
+        "slug": "2021/수능/2021_수능_나형_09",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극값의_개수_조건": [
+      {
+        "slug": "2021/수능/2021_수능_나형_20",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "적분과_넓이": [
+      {
+        "slug": "2021/수능/2021_수능_나형_27",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "전확률_공식": [
+      {
+        "slug": "2021/수능/2021_수능_나형_29",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
         "has_image": true,
         "via": "direct"
       }

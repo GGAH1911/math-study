@@ -349,8 +349,16 @@ def build_one(p: Path) -> str:
                     ok2, log2 = run_verifier(sol2.get('verifier_python', ''))
                     if ok2:
                         sol, ok, log = sol2, True, log2   # 새(깨끗한) 검증기 통과 → 채택
-            if not ok:                            # 재시도까지 실패 → escalate (난이도와 무관)
-                last = f'{model}:verify-fail:{log[:30]}'; trace.append((model, f'verify-fail×{1 + vtry}')); continue
+            if not ok:                            # 재시도까지 실패
+                last = f'{model}:verify-fail:{log[:30]}'; trace.append((model, f'verify-fail×{1 + vtry}'))
+                # 비킬러인데 답은 이미 gold 일치(쉬운 문제, 검증기만 못 짬) → opus까지 escalation은 낭비.
+                # haiku 다음 sonnet에서도 막히면 그 답·풀이를 즉시 verified:false 로 인플레이스 구제(추가 콜 0).
+                if tier != 'killer' and model != 'haiku':
+                    trace.append((model, 'salvage-inplace(미검증)'))
+                    write_solution(p, sol, 'unverified', model, solved_by, trace, verified=False)
+                    fix_score(p, str(sol.get('score', '')))
+                    return f'CACHED@{model[0]}~'
+                continue                          # 킬러/haiku → 상위 모델로 escalate
             VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
             (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
             vref = f'db/solutions/{p.stem}.py'
@@ -427,12 +435,15 @@ if __name__ == '__main__':
     # circuit-breaker: 연속 N개 실패면 API 한도/장애로 보고 중단 (죽은 API에 헛 FLAG 방지).
     # CACHED 가 나오면 리셋, skip(이미 캐시)은 무시.
     consec_fail = 0; ABORT_AFTER = 8; aborted = False
+    def _timed(p):                       # 문항별 실측 소요시간(워커 점유~완료) → 느린 문항 식별
+        _s = time.time()
+        try: return build_one(p), time.time() - _s
+        except Exception as e: return f'ERROR:{type(e).__name__}', time.time() - _s
     with ThreadPoolExecutor(max_workers=parallel) as ex:
-        futs = {ex.submit(build_one, p): p for p in targets}
+        futs = {ex.submit(_timed, p): p for p in targets}
         for fut in as_completed(futs):
             p = futs[fut]; done += 1
-            try: r = fut.result()
-            except Exception as e: r = f'ERROR:{type(e).__name__}'
+            r, dt = fut.result()
             cat = _bucket(r)
             res[cat] += 1
             if cat in ('FLAG', 'ERROR'):
@@ -442,7 +453,7 @@ if __name__ == '__main__':
                 consec_fail = consec_fail + 1 if ('gen-fail' in r or cat == 'ERROR') else 0
             elif cat == 'CACHED':
                 consec_fail = 0
-            print(f'[{done}/{len(targets)}] {p.stem}  →  {r}', flush=True)
+            print(f'[{done}/{len(targets)}] {p.stem}  →  {r}  ({dt:.0f}s)', flush=True)
             if consec_fail >= ABORT_AFTER:
                 aborted = True
                 print(f'\n⚠ {ABORT_AFTER}연속 실패 — API 한도/장애 의심. 중단 (캐시된 건 보존). 회복 후 재실행.', flush=True)

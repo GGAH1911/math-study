@@ -1,0 +1,1 @@
+import sympy as sp; a = sp.sqrt(6); t = sp.Symbol('t'); f = (t+1)*(t-1)*(t-a); F_a = sp.integrate(f, (t, 0, a)); result = sp.simplify(F_a); print('VERIFY_PASS' if result == 0 else f'VERIFY_FAIL: F(a) = {result}')
