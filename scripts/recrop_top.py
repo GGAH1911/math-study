@@ -98,12 +98,8 @@ def recrop_slug(slug, md_text, dry=False):
     page = page_by_num.get(e['page_num'])
     if not page:
         return 'no-page'
-    if img_fs.exists():
-        ti = _top_ink_row(img_fs)
-        if ti > SKIP_TOP_INK:
-            return 'skip-clean'                      # 이미 상단여백 충분 → 안 건드림
-        if ti < 6:
-            return 'skip-bleed'                      # top≤5 = 파편/헤더 유입 → +여백 주면 악화, 스킵
+    # 전수 적용: gap_aware 는 bbox+페이지에서 매번 재계산(idempotent) → 원래크롭+headroom 으로 통일.
+    # 깨끗한 문제엔 여백만 더해지고, 클립은 복구된다.
     before = Image.open(img_fs).size if img_fs.exists() else None
     if not dry:
         gap_aware(Image.open(page), e['bbox_px'], img_fs, '모의고사' if exam_type == '모의고사' else exam_type)
