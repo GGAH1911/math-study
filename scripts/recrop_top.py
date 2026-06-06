@@ -8,7 +8,7 @@
 사용: python recrop_top.py --numbers 1[,2,3]   |   --list slug1,slug2   [--dry]
 """
 from __future__ import annotations
-import sys, re, glob, argparse
+import sys, re, glob, argparse, os, shutil
 from pathlib import Path
 from PIL import Image
 
@@ -21,28 +21,39 @@ BLANK = CW.BLANK_ROW_INK_RATIO
 _bbox_cache: dict = {}
 
 
-def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, gen=90, big_gap=30):
+def gap_aware(page_img: Image.Image, bbox_px, out_path: Path, exam_type, gen=110, big_gap=30):
+    """완전성 우선 재크롭. 첫 줄에서 위로 스캔(희박한 위첨자 포함)해 top 확정,
+    바닥/좌측만 CW 로직 사용. crop_by_gap 의 _find_problem_start(희박행=빈줄 취급)에
+    내 top 이 덮어쓰이지 않게 *직접* 크롭한다."""
     x0, y0, x1, y1 = bbox_px
     top = max(0, y0 - gen)
     cand = page_img.crop((x0, top, x1, y1))
     ri = CW._row_ink_ratios(cand.convert('L'))
     anchor = y0 - top
     n = len(ri)
+    # 첫 본문줄: anchor 부근의 첫 (충분히 진한) 행 — 희박 위첨자는 건너뛰고 본줄을 앵커로
     sl = next((y for y in range(max(0, anchor - 3), n) if ri[y] >= BLANK), anchor)
+    SUP = BLANK / 3                                   # 위첨자는 희박 → 더 낮은 임계로 잡음
     ty, bl, y = sl, 0, sl - 1
     while y >= 0:
-        if ri[y] >= BLANK:
+        if ri[y] >= SUP:                              # 희박한 위첨자도 잉크로 인정
             ty = y; bl = 0
         else:
             bl += 1
             if bl >= big_gap:
                 break                                # 큰 갭 → 정지(문제 사이)
         y -= 1
-    clean = cand.crop((0, max(0, ty - 2), cand.width, cand.height))
-    tmp = ROOT / 'db' / 'raw' / '.recrop_tmp.png'
-    clean.save(tmp)
-    CW.crop_by_gap(tmp, out_path, exam_type=exam_type)
-    tmp.unlink(missing_ok=True)
+    clean = cand.crop((0, max(0, ty - 12), cand.width, cand.height))  # 내 top(위첨자 위 12px 여유)
+    ri2 = CW._row_ink_ratios(clean.convert('L'))
+    h2 = clean.height
+    gr = 0.25 if exam_type == '검정고시' else CW.DETACHED_GAP_RATIO
+    end_y = min(h2, CW._find_problem_end(ri2, h2, gap_ratio=gr) + max(CW.MIN_PADDING_PX, int(CW.PADDING_RATIO * h2)))
+    cropped = clean.crop((0, 0, clean.width, end_y))  # top 고정(재트림 금지), 바닥만 트림
+    xt = CW._left_trim_x(cropped)
+    if xt > 0:
+        cropped = cropped.crop((xt, 0, cropped.width, cropped.height))
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    cropped.save(out_path, 'PNG', optimize=True)
 
 
 def _round_entries(round_slug, exam_type, session, subject):
@@ -92,6 +103,12 @@ def recrop_slug(slug, md_text, dry=False):
     before = Image.open(img_fs).size if img_fs.exists() else None
     if not dry:
         gap_aware(Image.open(page), e['bbox_px'], img_fs, '모의고사' if exam_type == '모의고사' else exam_type)
+        # 웹 심링크 실타깃(메인 레포 db/raw)도 갱신 → dev 서버 즉시 반영 (worktree 심링크가 메인 가리킴)
+        web = ROOT / 'web' / 'public' / 'problem-images' / f'{slug}.png'
+        if web.exists():
+            real = Path(os.path.realpath(web))
+            if real != img_fs.resolve():
+                shutil.copy(img_fs, real)
     after = Image.open(img_fs).size if img_fs.exists() else None
     return f'ok {before}→{after}'
 
