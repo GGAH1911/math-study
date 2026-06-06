@@ -1,0 +1,1 @@
+import sympy as sp; x = sp.Symbol('x'); f_prime = 4*x; result = sp.integrate(f_prime, (x, 0, 4)); assert result == 32, f'Expected 32, got {result}'; print('VERIFY_PASS')
