@@ -248,15 +248,36 @@ def _section_label_bottoms(page: fitz.Page) -> list[float]:
 
 def _full_width_rules(page: fitz.Page) -> list[float]:
     """전체폭 가로 구분선(헤더/풋터 divider)의 y(pt) 목록. 문제 안 박스·표는 한 컬럼에
-    inset 돼 폭이 좁으므로(< 0.6·page_width) 안 잡힌다 — *페이지 전체를 가로지르는* 가로선은
-    헤더/풋터뿐이다. content-top 확장의 천장(헤더 위로 안 올라가게)으로 쓴다."""
+    inset 돼 폭이 좁으므로 안 잡힌다 — *페이지 전체를 가로지르는* 가로선은 헤더/풋터뿐이다.
+    content-top 확장의 천장(헤더 위로 안 올라가게)으로 쓴다.
+
+    벡터 + 픽셀 **둘 다** 본다: 룰을 얇은 벡터 stroke 로 그리는 PDF(평가원; 저DPI 렌더에선
+    0.6 못 채워 픽셀이 놓침)도, 비벡터로 그려 get_drawings 에 안 잡히는 PDF(2021 고1 학평)도
+    있어 한쪽만으론 불안정. 렌더 후 가로 전체폭(>0.55)이 검게 찬 행 = 룰(밀집 텍스트는 미만)."""
     pw = page.rect.width
-    out: list[float] = []
+    cand: list[float] = []
+    # 1) 벡터 stroke / thin fill
     for dr in page.get_drawings():
         r = dr['rect']
         if (r.y1 - r.y0) <= 2.5 and (r.x1 - r.x0) >= 0.6 * pw:
-            out.append((r.y0 + r.y1) / 2.0)
-    return sorted(out)
+            cand.append((r.y0 + r.y1) / 2.0)
+    # 2) 픽셀 full-width dark row (비벡터 룰)
+    DPI = 72
+    pix = page.get_pixmap(dpi=DPI)
+    import numpy as np
+    arr = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
+    gray = arr[:, :, :3].mean(axis=2) if pix.n >= 3 else arr[:, :, 0]
+    dark = (gray < 128).mean(axis=1)
+    scale = 72.0 / DPI
+    for y in range(pix.height):
+        if dark[y] > 0.55:
+            cand.append(y * scale)
+    # 인접(같은 룰) 병합
+    out: list[float] = []
+    for pt in sorted(cand):
+        if not out or pt - out[-1] > 3.0:
+            out.append(round(pt, 1))
+    return out
 
 
 def _content_top(col_lines: list[tuple[float, float, float, float]],
@@ -394,9 +415,10 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
                 if labels_above:
                     floor_y = max(floor_y, max(labels_above) + 1.0)
                 # 전체폭 룰(헤더 구분선) 천장: 룰 위(헤더)로는 절대 안 올라간다. 페이지 헤더
-                # ("수학 영역"·쪽번호)가 컬럼-첫 문제 번호 바로 위(갭<10pt)일 때 span-walk 가
-                # 헤더로 climb 하던 회귀를 막는다.
-                rule_ceiling = max([r for r in page_rules if r < y - 1.0], default=None)
+                # ("수학 영역"·"(미적분)"·쪽번호)가 컬럼-첫 문제 바로 위일 때 span-walk 가 헤더로
+                # climb 하던 회귀를 막는다. 첫 줄에 키 큰 분수가 있으면 줄 bbox top 이 룰보다
+                # 위로 솟아 룰이 앵커보다 *살짝 아래*(+12pt 이내)일 수 있어 그 경우도 천장으로 본다.
+                rule_ceiling = max([r for r in page_rules if r < y + 12.0], default=None)
                 if rule_ceiling is not None:
                     floor_y = max(floor_y, rule_ceiling)
                 content_top = _content_top(col_lines, y, floor_y)
