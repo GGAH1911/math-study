@@ -1,59 +1,72 @@
-"""
-2025 고1 3월모의고사 단일 27번
-외심·내심 성질과 이등변삼각형: 각도 계산
+from math import isclose
 
-조건:
-- AC = BC인 예각삼각형 ABC
-- 외심 O, ∠BAO = 28°
-- BC 연장선상의 점 D로 ∠ADC = 40°
-- 삼각형 ACD의 내심 I
-- ∠OAI = x°
+CANDIDATE = 42
 
-풀이:
-1. AC = BC → ∠BAC = ∠ABC (이등변)
-2. OA = OB (외접원 반지름) → ∠OBA = ∠OAB = 28° (이등변)
-3. ∠AOB = 180° - 28° - 28° = 124°
-4. 원주각 = 중심각/2 → ∠ACB = 124°/2 = 62°
-5. ∠BAC = ∠ABC = (180° - 62°)/2 = 59°
-6. ∠AOC = 2∠ABC = 118°
-7. ∠OAC = (180° - 118°)/2 = 31°
-8. D는 BC 연장선상 → ∠ACD = 180° - 62° = 118°
-9. ∠CAD = 180° - 118° - 40° = 22°
-10. 내심 I → AI는 ∠CAD의 이등분선 → ∠CAI = 11°
-11. ∠OAI = ∠OAC + ∠CAI = 31° + 11° = 42°
-"""
+# ========== 주어진 조건 ==========
+angle_BAO = 28  # Given: ∠BAO = 28°
+angle_ADC = 40  # Given: ∠ADC = 40°
 
-def solve():
-    # 외심 각도 계산
-    angle_BAO = 28  # 주어진 조건
-    angle_OAB = 28  # OA = OB인 이등변삼각형
-    angle_AOB = 180 - angle_OAB - angle_BAO
+# ========== 논리 검증 ==========
 
-    # 원주각과 중심각 관계
-    angle_ACB = angle_AOB / 2
+# AC = BC인 이등변삼각형이고, O가 외심이므로
+# OA = OB → △OAB는 이등변삼각형
+# ∠OAB = ∠OBA = 28°
+angle_OAB = angle_BAO
+angle_AOB = 180 - 2 * angle_OAB
+assert isclose(angle_AOB, 124), f"Check 1 failed: ∠AOB = {angle_AOB}"
 
-    # 이등변삼각형 ABC
-    angle_BAC = angle_ABC = (180 - angle_ACB) / 2
+# 원주각 정리: 중심각 = 2 × 원주각
+# ∠ACB = ∠AOB / 2
+angle_ACB = angle_AOB / 2
+assert isclose(angle_ACB, 62), f"Check 2 failed: ∠ACB = {angle_ACB}"
 
-    # 외심의 다른 중심각
-    angle_AOC = 2 * angle_ABC
+# AC = BC인 이등변삼각형
+# ∠BAC = ∠ABC = (180 - ∠ACB) / 2
+angle_BAC = (180 - angle_ACB) / 2
+angle_ABC = angle_BAC
+assert isclose(angle_BAC, 59), f"Check 3 failed: ∠BAC = {angle_BAC}"
 
-    # 이등변삼각형 OAC
-    angle_OAC = (180 - angle_AOC) / 2
+# 외심의 성질: ∠AOC = 2 × ∠ABC
+angle_AOC = 2 * angle_ABC
+assert isclose(angle_AOC, 118), f"Check 4 failed: ∠AOC = {angle_AOC}"
 
-    # D의 위치 (BC 연장선상, C 너머)
-    angle_ACD = 180 - angle_ACB
+# △OAC는 OA = OC인 이등변삼각형
+# ∠OAC = (180 - ∠AOC) / 2
+angle_OAC = (180 - angle_AOC) / 2
+assert isclose(angle_OAC, 31), f"Check 5 failed: ∠OAC = {angle_OAC}"
 
-    # 삼각형 ACD의 각도
-    angle_CAD = 180 - angle_ACD - 40
+# D는 BC 연장선(C 너머) 위의 점
+# ∠ACD와 ∠ACB는 보각 관계
+# ∠ACD = 180 - ∠ACB
+angle_ACD = 180 - angle_ACB
+assert isclose(angle_ACD, 118), f"Check 6 failed: ∠ACD = {angle_ACD}"
 
-    # 내심 I의 성질 (AI는 ∠CAD의 이등분선)
-    angle_CAI = angle_CAD / 2
+# △ACD에서 각의 합 = 180°
+# ∠CAD = 180 - ∠ACD - ∠ADC
+angle_CAD = 180 - angle_ACD - angle_ADC
+assert isclose(angle_CAD, 22), f"Check 7 failed: ∠CAD = {angle_CAD}"
 
-    # 최종 답
-    x = angle_OAC + angle_CAI
+# I는 △ACD의 내심
+# AI는 ∠CAD의 이등분선
+# ∠CAI = ∠CAD / 2
+angle_CAI = angle_CAD / 2
+assert isclose(angle_CAI, 11), f"Check 8 failed: ∠CAI = {angle_CAI}"
 
-    return int(x)
+# ========== ∠OAI 계산 ==========
+# A를 기준점으로 각도 설정:
+# AB 방향: 0°
+# AC 방향: ∠BAC = 59°
+# AO 방향: ∠BAO = 28°
+# AI 방향: ∠BAC + ∠CAI = 70° (AC로부터 이등분선으로 11° 추가)
 
-if __name__ == '__main__':
-    print(f"답: {solve()}")
+angle_AI_from_AB = angle_BAC + angle_CAI
+angle_AO_from_AB = angle_BAO
+
+# ∠OAI = AI 방향 - AO 방향
+angle_OAI_calculated = angle_AI_from_AB - angle_AO_from_AB
+
+# ========== 최종 검증 ==========
+if isclose(angle_OAI_calculated, CANDIDATE):
+    print("VERIFY_PASS")
+else:
+    print("VERIFY_FAIL")

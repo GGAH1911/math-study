@@ -1,57 +1,56 @@
-"""
-2025 고3 10월모의고사 미적분 29번
-등비수열·등비급수·정수 조건으로 매개변수 최댓값 구하기
+from sympy import Rational
 
-조건:
-1. Σ(aₙ + aₙ₊₁) = 5
-2. Σ(|aₙ₊₁ + aₙ₊₂| × sin(nπ/2)) = 2
-3. Σ(100aₙ - m·a₃ₙ)이 자연수가 되는 자연수 m의 최댓값
+CANDIDATE = 686
 
-풀이:
-1. 등비수열 {aₙ}: a₁=a, 공비 r (|r|<1)
-2. 조건 1: a(1+r)/(1-r) = 5
-3. sin(nπ/2)는 홀수일 때만 ±1
-4. r < 0 설정: r = -s (s∈(0,1))
-5. 조건 2에서: s = 1/3
-6. a = 10, r = -1/3 (검증 완료)
-7. Σaₙ = 15/2, Σa₃ₙ = 15/14
-8. Σ(100aₙ - ma₃ₙ) = 750 - 15m/14
-9. 자연수 조건: 14|m, 750 - 15m/14 ≥ 1
-10. m = 14k에서 k ≤ 49
-11. 최댓값: m = 686
-"""
+# 주어진 조건:
+# 1. sum(a_n + a_{n+1}) = 5
+# 2. sum(|a_{n+1}+a_{n+2}| * sin(nπ/2)) = 2
 
-def solve():
-    # 등비수열 계수
-    a = 10  # 첫째항
-    r = -1/3  # 공비
+# 등비수열 {a_n}: a_n = a*r^(n-1), |r| < 1
+# 조건 1: a(1+r)/(1-r) = 5
+# 조건 2 (r < 0): a(1-|r|)*|r|/(1+r^2) = 2
+# 풀이: r = -1/3, a = 10
 
-    # 무한급수 계산
-    sum_an = a / (1 - r)  # 15/2
+a = Rational(10)
+r = Rational(-1, 3)
 
-    # a₃ₙ = a·r^(3n-1)의 합
-    # = a·r²·(r³)^(n-1)의 합 (첫째항 a·r², 공비 r³)
-    # = a·r²/(1-r³)
+# 원본 조건 1 검증
+cond1_value = a * (1 + r) / (1 - r)
+assert cond1_value == 5, f"Condition 1 failed: {cond1_value} != 5"
 
-    # r = -1/3이므로 r³ = -1/27
-    r_cubed = r ** 3
-    sum_a3n = a * (r ** 2) / (1 - r_cubed)  # 15/14
+# 원본 조건 2 검증
+abs_r = abs(r)
+cond2_value = a * (1 - abs_r) * abs_r / (1 + r**2)
+assert cond2_value == 2, f"Condition 2 failed: {cond2_value} != 2"
 
-    # Σ(100aₙ - ma₃ₙ) = 100·sum_an - m·sum_a3n
-    # = 100·(15/2) - m·(15/14)
-    # = 750 - 15m/14
+# 필요한 합 계산
+sum_a_n = a / (1 - r)  # = 15/2
+sum_a_3n = a * r**2 / (1 - r**3)  # = 15/14
 
-    # 자연수가 되려면:
-    # 1) 14|15m → 14|m (∵ gcd(14,15)=1)
-    # 2) 750 - 15m/14 ≥ 1 → 15m/14 ≤ 749
+# 문제에서 구하는 식
+# sum_{n=1}^{∞} (100*a_n - m*a_{3n}) = 100*sum_a_n - m*sum_a_3n
+# = 100*(15/2) - m*(15/14)
+# = 750 - 15m/14
 
-    # m = 14k로 놓으면:
-    # 750 - 15k ≥ 1 → k ≤ 49
-    # 최대 k = 49, m = 686
+def evaluate_sum(m):
+    return 100 * sum_a_n - m * sum_a_3n
 
-    m_max = 14 * 49
+# CANDIDATE 대입
+m = CANDIDATE
+result = evaluate_sum(m)
 
-    return m_max
+# 결과가 자연수인지 검증 (원본 문제 조건)
+is_natural_at_candidate = (result > 0) and (result.denominator == 1)
 
-if __name__ == '__main__':
-    print(f"답: {solve()}")
+# m이 최댓값임을 확인: m+1일 때는 자연수가 아님
+m_next = m + 1
+result_next = evaluate_sum(m_next)
+is_natural_at_next = (result_next > 0) and (result_next.denominator == 1)
+
+# 종합 검증
+is_valid = is_natural_at_candidate and not is_natural_at_next
+
+if is_valid:
+    print("VERIFY_PASS")
+else:
+    print("VERIFY_FAIL")

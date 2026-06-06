@@ -72,7 +72,7 @@ def build_prompt(img_paths: list[str], fmt: str, meta: str, hint: str = '', with
     lines.append('  "score": <2|3|4 정수, 이미지 상단의 "[N점]" 배점 그대로>,')
     if use_verifier:
         lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."],')
-        lines.append('  "verifier_python": "<자기완결 파이썬. **이미지에 주어진 원래 함수·방정식·조건**에 네 답을 역대입해 검사. 네가 유도한 *근사식·중간식을 쓰지 말고* 반드시 원래 문제의 식을 코드로 표현(필요하면 수치 root-find)해 답이 만족하는지 sympy/numpy 로 확인. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
+        lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의**. 그 아래에서 **이미지에 주어진 원래 함수·방정식·조건을 코드로 표현**하고 CANDIDATE 를 역대입/대조해 만족하는지 sympy·numpy 로 확인(근사식·중간식 금지, 원식 그대로; 필요시 수치 root-find). \'if CANDIDATE==답\' 같은 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
     else:
         lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."]')
     body = '\n'.join(lines)
@@ -148,7 +148,7 @@ SYSTEM_TEXT = ("당신은 한국 수능 수학 문제를 정확히 푸는 전문
 
 
 def extract_searchable(md_text: str) -> str:
-    m = re.search(r'^searchable_text:\s*\|\s*\n(.*?)(?=^\S|\Z)', md_text, re.M | re.S)
+    m = re.search(r'^searchable_text:\s*[|>][-+]?\s*\n(.*?)(?=^\S|\Z)', md_text, re.M | re.S)
     return m.group(1).strip() if m else ''
 
 
@@ -157,11 +157,8 @@ def build_text_prompt(problem_text: str, fmt: str, meta: str) -> str:
              else '  "answer": <네가 푼 단답형 정답 정수(0-999)>,']
     lines.append('  "answer_value": "<최종 답의 값만, 설명·중간식 없이. 예: -7/64 또는 163>",')
     lines.append('  "score": <2|3|4 정수, 배점이 보이면 그대로, 없으면 4>,')
-    if fmt == 'choice':
-        lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."],')
-        lines.append('  "verifier_python": "<자기완결 파이썬. **문제에 주어진 원래 함수·방정식·조건**에 네 답을 역대입해 검사. 네가 유도한 *근사식·중간식을 쓰지 말고* 반드시 원래 문제의 식을 코드로 표현(필요하면 수치 root-find)해 답이 만족하는지 sympy/numpy 로 확인. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
-    else:
-        lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."]')
+    lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."],')
+    lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의**. 그 아래에서 **문제에 주어진 원래 함수·방정식·조건을 코드로 표현**하고 CANDIDATE 를 역대입/대조해 만족하는지 sympy·numpy 로 확인(근사식·중간식 금지, 원식 그대로; 필요시 수치 root-find). \'if CANDIDATE==답\' 같은 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
     body = '\n'.join(lines)
     return (f"다음은 한국 수능 수학 문제다 (텍스트):\n\n{problem_text}\n\n{meta}\n\n"
             f"위 문제를 **스스로 끝까지 풀어라. 정답은 주어지지 않는다.** "
@@ -192,6 +189,18 @@ def call_model_text(problem_text: str, fmt: str, meta: str, model: str, effort: 
 
 def verify_hint(log: str) -> str:
     """검증기 실패 사유별 맞춤 힌트 — 재시도 프롬프트에 덧붙여 같은 실수 반복 방지."""
+    if 'mutation-pass' in log:
+        return ('⚠ 직전 검증기가 *틀린 답*에도 VERIFY_PASS 를 냈다(하드코딩 의심). 맨 위 CANDIDATE 를 '
+                '원래 문제의 식·조건에 실제로 대입/풀이해서, CANDIDATE 가 틀린 값이면 반드시 VERIFY_FAIL 이 '
+                '나오도록 다시 작성하라.')
+    if 'no-realmath' in log:
+        return ('⚠ 직전 검증기에 실제 수식 풀이(sympy solve/Eq/subs/isclose 등)가 없다. 원래 문제의 식을 '
+                '코드로 표현하고 CANDIDATE 를 대입해 판정하라.')
+    if 'self-compare' in log:
+        return ('⚠ 직전 검증기가 답을 자기 자신과 직접 비교(if CANDIDATE == 정답)했다. 금지다. 원래 문제의 '
+                '식에 대입한 결과로만 판정하라.')
+    if 'no-CANDIDATE' in log:
+        return '⚠ 맨 윗줄에 CANDIDATE = <답> 정의가 없다. 반드시 그렇게 시작하고 그 값으로 원식을 검증하라.'
     if 'forbidden-import' in log:
         return ('⚠ 직전 검증기가 금지어(os·open·Path·pathlib·subprocess·shutil 등)를 사용해 거부됐다. '
                 '아무것도 파일/시스템 접근하지 말고 sympy·numpy·math·fractions 만 써서 verifier_python 을 다시 작성하라.')
@@ -219,6 +228,109 @@ def run_verifier(code: str) -> tuple[bool, str]:
     finally:
         try: os.unlink(tmp)
         except Exception: pass
+
+
+# ───────────────────────── open-book 솔버 작성 (정답+풀이 제공) ─────────────────────────
+def build_openbook_prompt(problem_text: str, gold: str, fmt: str, steps_text: str = '') -> str:
+    """정답과 검증된 풀이단계를 주고, 원래 식에 역대입하는 검산기를 쓰게 하는 프롬프트."""
+    kind = '객관식(보기 번호 1-5)' if fmt == 'choice' else '단답형(정수)'
+    steps_block = (f"\n[검증된 풀이 단계 — 이 논리를 코드로 옮겨라]\n{steps_text}\n"
+                   if steps_text else '')
+    return (
+        f"다음은 한국 수능 수학 문제다 (텍스트):\n\n{problem_text}\n\n"
+        f"이 문제의 정답은 이미 검증돼 있다: **정답 = {gold}** ({kind}).{steps_block}\n"
+        f"임무: 이 정답이 옳음을 **원래 문제의 식·조건으로 직접 확인**하는 자기완결 파이썬 검산기를 작성하라.\n\n"
+        f"엄격 규칙:\n"
+        f"1. 맨 윗줄에 검사할 답을 정확히 이렇게 정의: CANDIDATE = {gold}\n"
+        f"2. 그 아래에서 **문제에 주어진 원래 함수·방정식·조건을 코드로 인코딩**하고, CANDIDATE 를 그 식에 "
+        f"대입/대조해 만족하는지 sympy·numpy·math·fractions 로 확인하라. 문제에 나온 계수·상수를 코드에 그대로 써라.\n"
+        f"3. 'if CANDIDATE == {gold}' 처럼 답을 자기 자신(또는 같은 상수)과 직접 비교하지 마라. "
+        f"반드시 원래 식을 풀거나 대입한 결과로 판정하라.\n"
+        f"4. CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게, 진짜 문제 조건에 의존시켜라.\n"
+        f"5. 통과 시 정확히 VERIFY_PASS, 아니면 VERIFY_FAIL 를 print. 파일·네트워크·os 금지(sympy·numpy·math·fractions 만).\n\n"
+        f"**마지막 메시지에 오직 하나의 ```json 블록**만 출력 (산문 금지):\n"
+        f"```json\n{{\n  \"verifier_python\": \"<자기완결 파이썬 검산기 (CANDIDATE 로 시작)>\"\n}}\n```"
+    )
+
+
+def call_openbook(problem_text: str, gold: str, fmt: str, steps_text: str,
+                  model: str, effort: str, hint: str = '') -> dict | None:
+    """Open-book: 정답+풀이단계를 주고 역대입 검산기를 작성하게 함 (이미지 없음)."""
+    prompt = build_openbook_prompt(problem_text, gold, fmt, steps_text)
+    if hint:
+        prompt += f"\n\n{hint}"
+    args = ['claude', '-p', '--model', model, '--effort', effort,
+            '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
+            '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
+    try:
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S)
+    except subprocess.TimeoutExpired:
+        return None
+    blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
+    if not blocks:
+        blocks = re.findall(r'(\{.*"verifier_python".*\})', r.stdout, re.DOTALL)
+    for b in reversed(blocks):
+        try:
+            return json.loads(b.strip())
+        except Exception:
+            continue
+    return None
+
+
+_REALMATH = re.compile(r'\b(solve|solveset|linsolve|nsolve|roots|Eq|subs|isclose|allclose|'
+                       r'integrate|diff|limit|Poly|simplify|expand|factor|Matrix|det|Rational)\b')
+
+
+def _set_candidate(code: str, val: str) -> str:
+    return re.sub(r'(?m)^CANDIDATE\s*=.*$', f'CANDIDATE = {val}', code, count=1)
+
+
+def hardcode_gate(code: str, gold: str, fmt: str) -> tuple[bool, str]:
+    """역대입 검산기 진위 판정 — 변이테스트로 하드코딩 차단.
+    반환 (통과, 사유). 통과 = 원래 문제식에 실제로 의존하는 검산기."""
+    from fractions import Fraction
+    if not re.search(r'(?m)^CANDIDATE\s*=', code):
+        return False, 'no-CANDIDATE'
+    gq = re.escape(str(gold))
+    if re.search(rf'CANDIDATE\s*==\s*{gq}\b', code) or re.search(rf'{gq}\s*==\s*CANDIDATE', code):
+        return False, 'self-compare'                      # 답을 자기 자신과 직접 비교
+    if not _REALMATH.search(code):
+        return False, 'no-realmath'                       # 실제 수식 풀이 흔적 없음
+    ok, _ = run_verifier(code)
+    if not ok:
+        return False, 'orig-fail'                         # 원본이 통과 못 함
+    if fmt == 'choice':
+        muts = [str(x) for x in range(1, 6) if str(x) != str(gold)]
+    else:
+        try:
+            g = Fraction(str(gold)); muts = [str(g + 1), str(g - 1), str(g + 2)]
+        except Exception:
+            muts = [f'(({gold})+1)', f'(({gold})-1)']
+    for mv in muts:
+        passed, _ = run_verifier(_set_candidate(code, mv))
+        if passed:
+            return False, f'mutation-pass:{mv}'           # 틀린 답이 통과 → 하드코딩
+    return True, 'ok'
+
+
+def accept_verifier(vp: str, gold: str, fmt: str) -> tuple[bool, str]:
+    """검산기 수용 판정 — 단순 VERIFY_PASS 가 아니라 하드코딩 게이트(변이테스트)까지 통과해야 채택.
+    인제스트·백필 공통 진입점. 실패 시 사유를 로그로 반환해 재시도 힌트에 사용."""
+    if not vp:
+        return False, 'no-verifier'
+    return hardcode_gate(vp, gold, fmt)
+
+
+def try_write_verifier(p: Path, vp: str, gold: str, fmt: str) -> str:
+    """단답형 additive 검산기: 게이트 통과 시 db/solutions 에 기록하고 경로 반환, 아니면 'gold-match'.
+    정수 일치로 이미 verified:true 이므로 검산기는 유사문제 재생성용 부가물 — 실패해도 무손상."""
+    if vp:
+        ok, _ = accept_verifier(vp, gold, fmt)
+        if ok:
+            VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
+            (VERIFIER_DIR / f'{p.stem}.py').write_text(vp, encoding='utf-8')
+            return f'db/solutions/{p.stem}.py'
+    return 'gold-match'
 
 
 def gold_answer(md_text: str) -> str | None:
@@ -282,11 +394,8 @@ def _agent_prompt(img_paths: list[str], fmt: str, meta: str) -> str:
              if len(img_paths) > 1 else f"문제 이미지: {img_paths[0]}")
     lines = ['  "answer": <보기 번호 1-5 정수>,' if fmt == 'choice' else '  "answer": <단답형 정답 정수(0-999)>,',
              '  "answer_value": "<최종 값만, 설명 없이>",', '  "score": <2|3|4 정수, 이미지 상단 [N점]>,']
-    if fmt == 'choice':
-        lines.append('  "solution_steps": ["<핵심 단계, 한국어 KaTeX $...$ 허용>", "..."],')
-        lines.append('  "verifier_python": "<자기완결 파이썬. **원래 문제의 조건/식에 네 답을 역대입·재계산**해 검사. sympy/numpy/math/fractions 만, 파일·os·네트워크 금지. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print.>"')
-    else:
-        lines.append('  "solution_steps": ["<핵심 단계, 한국어 KaTeX $...$ 허용>", "..."]')
+    lines.append('  "solution_steps": ["<핵심 단계, 한국어 KaTeX $...$ 허용>", "..."],')
+    lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의** 후 **원래 문제의 조건/식에 CANDIDATE 를 역대입·재계산**해 검사. \'if CANDIDATE==답\' 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 VERIFY_FAIL 이 나오게. sympy/numpy/math/fractions 만, 파일·os·네트워크 금지. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print.>"')
     body = '\n'.join(lines)
     return f"""{intro}
 {meta}
@@ -337,7 +446,7 @@ def _agent_solve(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
         trace.append(('agent', 'ans-wrong')); return None
     by = solved_by or 'agent'
     if fmt == 'choice':
-        ok, vlog = run_verifier(sol.get('verifier_python', ''))
+        ok, vlog = accept_verifier(sol.get('verifier_python', ''), gold, fmt)
         if ok:
             VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
             (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
@@ -348,7 +457,7 @@ def _agent_solve(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
         write_solution(p, sol, 'unverified', 'agent', by, trace, verified=False)
         fix_score(p, str(sol.get('score', ''))); return 'CACHED@A~'    # 답 맞음·검증기만 실패
     trace.append(('agent', 'pass'))
-    write_solution(p, sol, 'gold-match', 'agent', by, trace)
+    write_solution(p, sol, try_write_verifier(p, sol.get('verifier_python', ''), gold, fmt), 'agent', by, trace)
     fix_score(p, str(sol.get('score', ''))); return 'CACHED@A'
 
 
@@ -399,11 +508,13 @@ def build_one(p: Path) -> str:
         if solt and str(solt.get('answer')).strip().strip('\'"') == gold:
             okt, vref_t = True, 'gold-match'
             if fmt == 'choice':
-                okt, _ = run_verifier(solt.get('verifier_python', ''))
+                okt, _ = accept_verifier(solt.get('verifier_python', ''), gold, fmt)
                 if okt:
                     VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
                     (VERIFIER_DIR / f'{p.stem}.py').write_text(solt['verifier_python'], encoding='utf-8')
                     vref_t = f'db/solutions/{p.stem}.py'
+            else:                                 # 단답형 additive 검산기(게이트 통과 시만)
+                vref_t = try_write_verifier(p, solt.get('verifier_python', ''), gold, fmt)
             if okt:                               # 텍스트만으로 검증 통과 → 난이도=haiku, 끝
                 write_solution(p, solt, vref_t, 'haiku', 'haiku', [('haiku-text', 'pass')], source='text')
                 return 'CACHED@T'
@@ -421,12 +532,12 @@ def build_one(p: Path) -> str:
         # 단답형: gold 정수 일치로 충분. 5지선다: 원본식 역대입 검증기까지.
         vtry = 0
         if fmt == 'choice':
-            ok, log = run_verifier(sol.get('verifier_python', ''))
+            ok, log = accept_verifier(sol.get('verifier_python', ''), gold, fmt)
             while not ok and vtry < VERIFY_RETRIES:   # 검증기-코딩은 확률적 → 같은 모델에 에러힌트 주고 재시도
                 vtry += 1                              # (escalation/FLAG의 상당수가 이 '검증기 누명' → 같은 티어서 흡수)
                 sol2 = call_model(tiles, fmt, meta, model, effort, img_dir, verify_hint(log))
                 if sol2 and str(sol2.get('answer')).strip().strip('\'"') == gold:
-                    ok2, log2 = run_verifier(sol2.get('verifier_python', ''))
+                    ok2, log2 = accept_verifier(sol2.get('verifier_python', ''), gold, fmt)
                     if ok2:
                         sol, ok, log = sol2, True, log2   # 새(깨끗한) 검증기 통과 → 채택
             if not ok:                            # 재시도까지 실패 (답은 gold 일치, 검증기만 못 짬)
@@ -444,7 +555,7 @@ def build_one(p: Path) -> str:
             (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
             vref = f'db/solutions/{p.stem}.py'
         else:
-            vref = 'gold-match'                    # 단답형 — 검증기 없음
+            vref = try_write_verifier(p, sol.get('verifier_python', ''), gold, fmt)  # 단답형 additive 검산기(게이트 통과 시만, 아니면 gold-match)
         trace.append((model, f'pass(retry×{vtry})' if vtry else 'pass'))
         write_solution(p, sol, vref, model, solved_by, trace)
         fix_score(p, str(sol.get('score', '')))   # 같은 이미지 읽기로 배점도 교정

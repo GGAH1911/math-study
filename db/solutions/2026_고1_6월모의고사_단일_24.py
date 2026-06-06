@@ -1,0 +1,1 @@
+import sympy as sp; a = 6; x = sp.Symbol('x'); roots = sp.solve(x**2 + a*x + 5, x); alpha, beta = roots[0], roots[1]; result = (alpha - 1) * (beta - 1); print('VERIFY_PASS' if sp.simplify(result - 12) == 0 else 'VERIFY_FAIL')

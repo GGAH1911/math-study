@@ -1,17 +1,20 @@
-"""
-2024_고2_6월모의고사_단일_22
+from sympy import sqrt, simplify
 
-풀이:
-1. "지수법칙  적용: "
-2. "지수 부분 계산 (합차 공식): "
-3. "따라서 "
+CANDIDATE = 5
 
-정답: 5
-"""
+# 원래 문제의 식: (5^(2-√3))^(2+√3)
+# 지수법칙 적용: 5^((2-√3)(2+√3))
 
-def solve():
-    result = 5
-    return result
+# 지수 부분 계산
+exponent_factor_1 = 2 - sqrt(3)
+exponent_factor_2 = 2 + sqrt(3)
+exponent = simplify(exponent_factor_1 * exponent_factor_2)
 
-if __name__ == '__main__':
-    print(f"답: {solve()}")
+# 원래 식 계산
+original_expression_result = simplify(5 ** exponent)
+
+# 정답 검증
+if original_expression_result == CANDIDATE:
+    print("VERIFY_PASS")
+else:
+    print("VERIFY_FAIL")

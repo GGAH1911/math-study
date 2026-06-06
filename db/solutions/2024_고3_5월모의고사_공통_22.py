@@ -1,64 +1,68 @@
-"""
-2024 고3 5월모의고사 공통 22번
-절댓값 등식·우극한·연속성 조건으로 사차함수 결정
+from sympy import symbols, expand, integrate, Rational, simplify
 
-주요 조건:
-1. |g(x)| = f(x) (모든 x)
-2. 우극한 도함수 g'₊(x) = |f'(x)|
-3. g(x)h(x) 연속성
-4. g(0) = 40/3
+CANDIDATE = 114
 
-핵심 분석:
-1. |g(x)| = f(x) ≥ 0이고 우극한 도함수 ≥ 0 → g는 우연속
-2. f'≠0인 곳에서 g(x) = sgn(f'(x))·f(x)
-3. g는 극점에서 점프 (|g| = f이므로 부호 바뀜)
-4. g점프 극점 중:
-   - 하나는 h(p₁)=0 조건
-   - 다른 하나는 p₂=a에서 g·h 연속성
+# 문제 조건으로부터 결정된 극점 위치
+p1 = Rational(-1, 2)  # 첫 번째 극점
+p2 = Rational(1, 2)   # 두 번째 극점 = a (h의 분기점)
+p3 = 2                 # 세 번째 극점
+a = Rational(1, 2)
 
-계산:
-1. 극값점: p₁=-1/2, p₂=1/2, p₃=2
-2. h(p₁)=0: 4p₁+2=0 → p₁=-1/2 ✓
-3. p₂=a=1/2에서 f(a)(1-2a)=0 ✓
-4. g(0)=f(0)=40/3에서 p₃=2 도출
-5. f(1) = 4 - 32/3 - 2 + 8 + 64/3 - 8 = 38/3
-6. 1 ∈ (1/2, 2)에서 g = -f → g(1) = -38/3
-7. h(3) = -2(3)-3 = -9
-8. g(1)×h(3) = (-38/3)×(-9) = 114
-"""
+# f'(x) = 16(x - p1)(x - p2)(x - p3) 형태
+# f(x)는 최고차 계수 4인 사차함수
+x = symbols('x')
+f_prime = 16 * (x - p1) * (x - p2) * (x - p3)
+f_prime = expand(f_prime)
 
-def solve():
-    # 극값점 결정
-    p1 = -0.5    # h(p1)=0에서
-    p2 = 0.5     # a=1/2
-    p3 = 2       # g(0)=40/3 조건에서
+# f(x)를 f'(x)에서 적분하여 구함
+f_indefinite = integrate(f_prime, x)
 
-    # f(1) 계산
-    # f(x) = 4x⁴ - (16p₃/3)x³ - 2x² + 4p₃x + C
-    # p₃=2일 때 f(x) = 4x⁴ - (32/3)x³ - 2x² + 8x + 40/3
-    f_1 = 4 * (1**4) - (32/3) * (1**3) - 2 * (1**2) + 8 * (1) + 40/3
-    f_1 = 4 - 32/3 - 2 + 8 + 40/3
-    f_1 = 4 - 2 + 8 + (40 - 32)/3
-    f_1 = 10 + 8/3
-    f_1 = 30/3 + 8/3
-    f_1 = 38/3
+# 초기조건 g(0) = 40/3
+# 0 ∈ (p1, p2)이므로 g(0) = f(0), 따라서 C = 40/3
+C = Rational(40, 3)
+f_expr = f_indefinite + C
 
-    # g(1) = -f(1) (구간 (1/2, 2)에서 g = -f)
-    g_1 = -f_1
-    g_1 = -38/3
+# ====== 검증: 주어진 조건들 ======
 
-    # h(3) 계산 (x ≥ a = 1/2일 때 h(x) = -2x - 3)
-    h_3 = -2 * 3 - 3
-    h_3 = -9
+# 조건 1: g(0) = 40/3
+g_at_0 = f_expr.subs(x, 0)
+assert g_at_0 == Rational(40, 3), f"조건 실패: g(0) = {g_at_0} != 40/3"
 
-    # g(1) × h(3)
-    result = g_1 * h_3
-    result = (-38/3) * (-9)
-    result = 38 * 9 / 3
-    result = 38 * 3
-    result = 114
+# 조건 2: f(p3) = 0 (세 극값 중 한 극솟값이 0)
+f_at_p3 = f_expr.subs(x, p3)
+assert f_at_p3 == 0, f"조건 실패: f({p3}) = {f_at_p3} != 0"
 
-    return int(result)
+# 조건 3: h(p1) = 0 (x = p1에서 g의 점프가 h=0에서 상쇄)
+h_at_p1 = 4 * p1 + 2  # x < a일 때 h(x) = 4x + 2
+assert h_at_p1 == 0, f"조건 실패: h({p1}) = {h_at_p1} != 0"
 
-if __name__ == '__main__':
-    print(f"답: {solve()}")
+# 조건 4: g(x)h(x)가 x = a에서 연속
+# x < a: g(a-) = f(a), h(a-) = 4a+2
+# x >= a: g(a+) = -f(a), h(a+) = -2a-3
+f_at_a = f_expr.subs(x, a)
+h_minus = 4 * a + 2      # = 4
+h_plus = -2 * a - 3     # = -4
+product_left = f_at_a * h_minus
+product_right = (-f_at_a) * h_plus
+assert product_left == product_right, f"연속성 실패: {product_left} != {product_right}"
+
+# ====== 최종 답 계산 ======
+
+# f(1) 계산
+f_at_1 = f_expr.subs(x, 1)
+
+# 1 ∈ (p2, p3) = (1/2, 2)이고 이 구간에서 f'(x) < 0
+# 따라서 |g(x)| = f(x)이고 g'_+ = |f'|이므로 g(1) = -f(1)
+g_at_1 = -f_at_1
+
+# h(3): 3 >= a = 1/2이므로 h(3) = -2(3) - 3
+h_at_3 = -2 * 3 - 3
+
+# g(1) × h(3) 계산
+result = simplify(g_at_1 * h_at_3)
+
+# 최종 검증: CANDIDATE와 일치하는가?
+if result == CANDIDATE:
+    print("VERIFY_PASS")
+else:
+    print("VERIFY_FAIL")

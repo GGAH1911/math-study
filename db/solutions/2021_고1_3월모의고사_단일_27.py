@@ -1,44 +1,55 @@
-"""
-2021 고1 3월모의고사 27번
-이차함수 y=ax² 그래프 위 점과 도형의 넓이
+from sympy import sqrt, simplify, Rational, Abs
 
-A(-√(3/a), 3), B(√(3/a), 3), C(-1,-1), D(1,-1)
-사다리꼴 ACDB의 넓이 = 4√(3/a) + 4
+CANDIDATE = 48
 
-넓이가 자연수 ⟺ 4√(3/a) = k (k는 양의 정수)
-a = 48/k²
+# 원래 문제의 조건 인코딩:
+# 1. 이차함수: y = ax^2 (a > 0)
+# 2. 포물선 위의 두 점 A(p, 3), B(q, 3)
+#    - ap^2 = 3, aq^2 = 3 조건을 만족
+# 3. 점 C(-1, -1), D(1, -1)
+# 4. 사각형 ACDB의 넓이가 자연수
 
-a가 자연수 ⟺ k²|48 (48 = 2⁴×3)
-k²의 약수: 1, 4, 16 (9는 48을 나누지 않음)
-- k=1: a=48 ✓
-- k=2: a=12 ✓
-- k=4: a=3 ✓
+a = CANDIDATE
 
-최댓값: a=48
-"""
+# 조건 1: 포물선 y = ax^2 위의 점 A, B
+# ap^2 = 3에서 p^2 = 3/a
+# p < 0, q > 0 (y축 대칭, p < q)
+p = -sqrt(Rational(3, a))
+q = sqrt(Rational(3, a))
 
-from math import sqrt
+# 포물선 위의 점인지 검증
+verify_A = simplify(a * p**2 - 3)
+verify_B = simplify(a * q**2 - 3)
 
-def solve():
-    # 넓이 = 4√(3/a) + 4가 자연수
-    # 4√(3/a) ∈ ℤ ⟹ √(3/a) ∈ {0,1/4,1/2,3/4,1,...}
-    # √(3/a) = k/4 (k는 양의 정수)
-    # 3/a = k²/16
-    # a = 48/k²
+if verify_A != 0 or verify_B != 0:
+    print("VERIFY_FAIL")
+    exit()
 
-    # a가 자연수가 되려면 k²|48
-    # 48 = 2⁴ × 3
-    # k²의 가능한 값: 1, 4, 16
+# 조건 2: 사각형 ACDB의 넓이 계산
+# 신발끈 공식(Shoelace formula)으로 사각형 넓이 계산
+A = (p, 3)
+C = (-1, -1)
+D = (1, -1)
+B = (q, 3)
 
-    candidates = []
-    for k_squared in [1, 4, 9, 16, 25, 36]:
-        if 48 % k_squared == 0:
-            a = 48 // k_squared
-            if a > 0:
-                candidates.append(a)
+vertices = [A, C, D, B]
+shoelace_sum = 0
 
-    return max(candidates)
+for i in range(4):
+    j = (i + 1) % 4
+    shoelace_sum += vertices[i][0] * vertices[j][1] - vertices[j][0] * vertices[i][1]
 
-if __name__ == '__main__':
-    answer = solve()
-    print(f"답: {answer}")
+area = Abs(shoelace_sum) / 2
+area = simplify(area)
+
+# 조건 3: 넓이가 자연수인지 검증
+# a = 48일 때:
+# area = 4*sqrt(3/48) + 4 = 4*sqrt(1/16) + 4 = 4*(1/4) + 4 = 1 + 4 = 5
+
+area_numeric = float(area)
+
+# 자연수 판정: 양수이면서 정수값
+if area_numeric > 0 and area_numeric == int(area_numeric):
+    print("VERIFY_PASS")
+else:
+    print("VERIFY_FAIL")

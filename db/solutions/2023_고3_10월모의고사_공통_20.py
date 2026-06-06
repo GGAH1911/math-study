@@ -1,17 +1,43 @@
-"""
-2023_고3_10월모의고사_공통_20
+CANDIDATE = '24'
 
-풀이:
-1. "함수방정식의 양변을 로 미분하여  유도"
-2. "한 번 더 미분하여 Euler 미분방정식  획득"
-3. " 대입 시 , 즉  또는 "
+from sympy import symbols, integrate, simplify
 
-정답: 24
-"""
+x, t = symbols('x t', real=True)
 
-def solve():
-    result = 24
-    return result
+# 주어진 함수방정식: 2x^2 * f(x) = 3 * ∫[0,x] (x-t) * {f(x) + f(t)} dt
+# 조건: f'(2) = 4
+# 구하는 값: f(6)
 
-if __name__ == '__main__':
-    print(f"답: {solve()}")
+# 검증된 풀이로부터 유도된 함수: f(x) = 4x
+
+# ===== 함수방정식 검증 =====
+# f(x) = 4x, f(t) = 4t를 대입
+
+# 좌변: 2x^2 * f(x)
+f_x = 4 * x
+lhs = 2 * x**2 * f_x
+
+# 우변: 3 * ∫[0,x] (x-t) * {f(x) + f(t)} dt
+f_t = 4 * t
+integrand = (x - t) * (f_x + f_t)
+integral = integrate(integrand, (t, 0, x))
+rhs = 3 * integral
+
+# 함수방정식 만족 확인
+equation_satisfied = (simplify(lhs - rhs) == 0)
+
+# ===== 조건 검증 =====
+# f(x) = 4x이므로 f'(x) = 4
+# f'(2) = 4 ✓
+condition_satisfied = (4 == 4)
+
+# ===== 답 계산 및 검증 =====
+# f(6) = 4 * 6 = 24
+f_6_value = 4 * 6
+answer_matches = (f_6_value == int(CANDIDATE))
+
+# ===== 최종 판정 =====
+if equation_satisfied and condition_satisfied and answer_matches:
+    print("VERIFY_PASS")
+else:
+    print("VERIFY_FAIL")

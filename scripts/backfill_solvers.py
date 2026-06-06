@@ -34,6 +34,22 @@ def targets(limit=None):
     return out[:limit] if limit else out
 
 
+def _extract_steps(md: str) -> str:
+    """md 의 solution.steps 를 읽어 텍스트로 (open-book 프롬프트에 주입)."""
+    m = re.search(r'(?m)^\s*steps:\s*$\n((?:\s+-\s+.*\n?)+)', md)
+    if not m:
+        return ''
+    out = []
+    for s in re.findall(r'(?m)^\s+-\s+(.*)$', m.group(1)):
+        s = s.strip()
+        try:
+            import json as _j
+            out.append(_j.loads(s))                # JSON 인코딩 문자열 디코드
+        except Exception:
+            out.append(s.strip('"'))
+    return '\n'.join(f'- {x}' for x in out)
+
+
 def backfill_one(p: str):
     slug = Path(p).stem
     t = open(p, encoding='utf-8').read()
@@ -42,27 +58,38 @@ def backfill_one(p: str):
     fmt = (re.search(r'^format:\s*(\w+)', t, re.M) or [None, 'numeric'])[1]
     if not gold:
         return slug, 'no-gold'
-    img = (B.IMGDIR / (slug + '.png')).resolve()
-    if not img.exists():
-        return slug, 'no-img'
-    tiles = [str(x) for x in B.tile_for_vision(img)]
-    meta = f"문항 형식: {'객관식 5지선다' if fmt == 'choice' else '단답형(정수 정답)'}"
-    for _ in range(REROLL + 1):                   # Haiku-only (에스컬레이트 X)
+    problem = B.extract_searchable(t)             # searchable_text (문제 본문)
+    if not problem:
+        return slug, 'no-text'
+    steps = _extract_steps(t)                     # 기존 검증된 풀이단계 (있으면)
+    hint = ''
+    for _ in range(REROLL + 1):                   # Haiku-only · open-book
         try:
-            sol = B.call_model(tiles, fmt, meta, 'haiku', 'high', str(img.parent))
+            sol = B.call_openbook(problem, gold, fmt, steps, 'haiku', 'high', hint)
         except Exception:
             sol = None
         if not sol:
             continue
-        ans = str(sol.get('answer_value') or sol.get('answer') or '').strip()
-        if ans != str(gold):
-            continue                              # Haiku 답 틀림 → 재롤
         vp = sol.get('verifier_python', '') or ''
         if not vp:
             continue
-        ok, _ = B.run_verifier(vp)
-        if not ok:
-            continue                              # 솔버 코드 크래시/FAIL → 재롤
+        good, why = B.hardcode_gate(vp, gold, fmt)  # ★ 하드코딩 게이트(변이테스트)
+        if not good:
+            if why == 'orig-fail':
+                hint = ('⚠ 직전 검산기가 VERIFY_FAIL/크래시였다. 원래 문제의 식·조건에 CANDIDATE 를 '
+                        '역대입하는 로직을 처음부터 재검토해 다시 작성하라.')
+            elif why.startswith('mutation-pass'):
+                hint = ('⚠ 직전 검산기가 *틀린 답*에도 VERIFY_PASS 를 냈다(하드코딩 의심). 원래 문제의 '
+                        '식·조건에 CANDIDATE 를 실제로 대입/풀이해서, 틀린 값이면 반드시 VERIFY_FAIL 이 나오게 하라.')
+            elif why == 'no-realmath':
+                hint = ('⚠ 직전 검산기에 실제 수식 풀이(sympy solve/Eq/subs/isclose 등)가 없다. '
+                        '문제의 원래 식을 코드로 표현하고 CANDIDATE 를 대입해 판정하라.')
+            elif why == 'self-compare':
+                hint = ('⚠ 직전 검산기가 답을 자기 자신과 직접 비교(if CANDIDATE == 정답)했다. 금지다. '
+                        '원래 문제의 식에 대입한 결과로만 판정하라.')
+            elif why == 'no-CANDIDATE':
+                hint = '⚠ 맨 윗줄에 CANDIDATE = <정답> 정의가 없다. 반드시 그렇게 시작하라.'
+            continue
         B.VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
         (B.VERIFIER_DIR / f'{slug}.py').write_text(vp, encoding='utf-8')
         t2 = open(p, encoding='utf-8').read()     # 최신 재읽기(레이스 안전)
@@ -73,7 +100,7 @@ def backfill_one(p: str):
             t2 = re.sub(r'(^(\s*)verified:\s*true\s*$)', rf'\g<1>\n\g<2>verifier: {rel}', t2, count=1, flags=re.M)
         open(p, 'w', encoding='utf-8').write(t2)
         return slug, 'SOLVER'
-    return slug, 'KEEP-GOLD'                       # Haiku 실패 → gold-match 유지(무손상)
+    return slug, 'KEEP-GOLD'                       # 게이트 통과 실패 → gold-match 유지(무손상)
 
 
 if __name__ == '__main__':
@@ -92,4 +119,4 @@ if __name__ == '__main__':
             mark = {'SOLVER': '✅', 'KEEP-GOLD': '·'}.get(r, '⚠')
             print(f"  [{done}/{len(tg)}] {mark} {slug} → {r}", flush=True)
     print(f"\n완료 ({time.time() - t0:.0f}s): {dict(res)}", flush=True)
-    print(f"  솔버 추가 {res['SOLVER']} / gold유지 {res['KEEP-GOLD']} / 스킵 {res['no-gold'] + res['no-img']}", flush=True)
+    print(f"  솔버 추가 {res['SOLVER']} / gold유지 {res['KEEP-GOLD']} / 스킵 {res['no-gold'] + res['no-text']}", flush=True)
