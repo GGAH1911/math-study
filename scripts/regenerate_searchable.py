@@ -22,7 +22,7 @@ SYSTEM = ("당신은 한국 수능 수학 문제를 한 글자도 틀리지 않�
 
 
 def extract(t):
-    m = re.search(r'^searchable_text:\s*\|\s*\n(.*?)(?=^\S|\Z)', t, re.M | re.S)
+    m = re.search(r'^searchable_text:\s*[|>][-+]?\s*\n(.*?)(?=^\S|\Z)', t, re.M | re.S)
     return m.group(1).strip() if m else ''
 
 
@@ -50,14 +50,19 @@ def regen_one(item):
     except Exception:
         return dict(stem=stem, ok=False, err='timeout/err', cost=0.0)
     cost = env.get('total_cost_usd', 0) or 0.0
+    if env.get('is_error') or env.get('api_error_status'):       # 401 등 에러를 텍스트로 쓰지 않기
+        return dict(stem=stem, ok=False, err=f"api-error:{env.get('api_error_status', '')}", cost=cost)
     txt = (env.get('result', '') or '').strip()
     txt = re.sub(r'^```\w*\n?|\n?```$', '', txt).strip()
     txt = re.sub(r'\s+', ' ', txt)
-    if len(txt) < 40:
+    if len(txt) < 12:                                # 짧은 정상문제(예: "10cos(5/3π)의 값을…") 허용
         return dict(stem=stem, ok=False, err='too-short', cost=cost)
     t = path.read_text(encoding='utf-8')
     newblock = f"searchable_text: |\n  {txt}\n"
-    t2, n = re.subn(r'(?ms)^searchable_text: \|\n(?: +[^\n]*\n)+', lambda m: newblock, t, count=1)
+    # 블록형(| 또는 >) 교체
+    t2, n = re.subn(r'(?ms)^searchable_text: [|>][-+]?\n(?: +[^\n]*\n)+', lambda m: newblock, t, count=1)
+    if n != 1:                                       # 인라인/빈값형(searchable_text: '' 등) → 블록 삽입
+        t2, n = re.subn(r'(?m)^searchable_text:.*\n', lambda m: newblock, t, count=1)
     if n != 1:
         return dict(stem=stem, ok=False, err='no-block', cost=cost)
     path.write_text(t2, encoding='utf-8')

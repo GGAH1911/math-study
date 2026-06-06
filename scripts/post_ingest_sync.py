@@ -131,15 +131,30 @@ def server_refresh():
     return subprocess.run([str(sv), 'restart'], cwd=str(ROOT)).returncode == 0
 
 
+def solver_audit():
+    """솔버 무결성(orphan/누락) + 일관성(format 오분류) 비차단 감사 — 결함 있으면 경고만."""
+    jobs = [('audit_solvers.py', []), ('consistency_gate.py', ['--all'])]
+    for script, extra in jobs:
+        r = subprocess.run([sys.executable, str(ROOT / 'scripts' / script)] + extra,
+                           cwd=str(ROOT), capture_output=True, text=True)
+        head = (r.stdout or '').strip().splitlines()
+        print(f"     [{script}] {head[0] if head else '(무출력)'}", flush=True)
+        if r.returncode != 0:
+            print(f"     ⚠ {script} 결함 감지 — 위 출력 확인(비차단)", flush=True)
+    return True
+
+
 def main():
     print("══ 인제스트 후처리 동기화 ══", flush=True)
-    print("[1/3] frontmatter 무결성 가드 (중복키 YAML 크래시 방지)", flush=True)
+    print("[1/4] frontmatter 무결성 가드 (중복키 YAML 크래시 방지)", flush=True)
     if not guard():
         sys.exit("🔴 가드 실패 — 위 파일 수정 후 재실행 (서버 재시작 안 함)")
-    print("[2/3] 개념 매핑·역인덱스·그래프 동기화", flush=True)
+    print("[2/4] 솔버 무결성·일관성 감사 (비차단)", flush=True)
+    solver_audit()
+    print("[3/4] 개념 매핑·역인덱스·그래프 동기화", flush=True)
     if not node_sync():
         sys.exit("🔴 동기화 실패")
-    print("[3/3] dev 서버 콘텐츠 리프레시", flush=True)
+    print("[4/4] dev 서버 콘텐츠 리프레시", flush=True)
     if NO_SERVER:
         print("  (--no-server: 재시작 생략)", flush=True)
     else:

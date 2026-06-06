@@ -1,28 +1,27 @@
-from sympy import sqrt, Rational, simplify
+"""2022 고3 4월 기하 23 (평면벡터, 객관식)
+한 변 s=1인 정육각형 ABCDEF. |AD+2DE|=? 좌표:
+A(-s/2,s√3/2) B(-s,0) C(-s/2,-s√3/2) D(s/2,-s√3/2) E(s,0) F(s/2,s√3/2).
+AD=(s,-s√3), DE=(s/2,s√3/2) → AD+2DE=(2s,0) → |·|=2s=2=보기③."""
+import sympy as sp
 
 CANDIDATE = 3
+choices = {1: sp.Integer(1), 2: sp.sqrt(3), 3: sp.Integer(2), 4: sp.Integer(3), 5: 2 * sp.sqrt(3)}
 
-# 한 변의 길이가 1인 정육각형 ABCDEF
-# 중심 O를 원점으로 설정
-A = (Rational(-1, 2), sqrt(3)/2)
-D = (Rational(1, 2), -sqrt(3)/2)
-E = (1, 0)
 
-# 선분 AD의 길이 계산
-# |AD| = sqrt((D_x - A_x)^2 + (D_y - A_y)^2)
-AD_vec = (D[0] - A[0], D[1] - A[1])
-AD_length = sqrt(AD_vec[0]**2 + AD_vec[1]**2)
+def solve(s=1):
+    s = sp.Integer(s)
+    h = s * sp.sqrt(3) / 2
+    A, B, C = (-s / 2, h), (-s, 0), (-s / 2, -h)
+    D, E, F = (s / 2, -h), (s, 0), (s / 2, h)
+    AD = (D[0] - A[0], D[1] - A[1])
+    DE = (E[0] - D[0], E[1] - D[1])
+    v = (AD[0] + 2 * DE[0], AD[1] + 2 * DE[1])
+    val = sp.simplify(sp.sqrt(v[0] ** 2 + v[1] ** 2))
+    for num, cval in choices.items():
+        if sp.simplify(val - cval) == 0:
+            return num
+    return -1
 
-# 선분 DE의 길이 계산
-# |DE| = sqrt((E_x - D_x)^2 + (E_y - D_y)^2)
-DE_vec = (E[0] - D[0], E[1] - D[1])
-DE_length = sqrt(DE_vec[0]**2 + DE_vec[1]**2)
 
-# 문제: 선분 AD와 DE를 이용한 값 = |AD| + |DE|
-result = simplify(AD_length + DE_length)
-
-# CANDIDATE 검증
-if result == CANDIDATE:
-    print("VERIFY_PASS")
-else:
-    print("VERIFY_FAIL")
+if __name__ == '__main__':
+    print('VERIFY_PASS' if solve() == CANDIDATE else 'VERIFY_FAIL')

@@ -225,15 +225,21 @@ def main():
         else:
             print(f'  ✗ {slug} 인제스트 실패')
 
-    if ok and not a.no_cache:
+    if ok:
         slugs = []
         for slug in ok:
             rd = slug.split('_', 1)[1]
             year = rounds[slug]['meta']['year']
             slugs += sorted(Path(p).stem for p in glob.glob(str(ROOT / 'docs' / 'problems' / str(year) / rd / '*.md')))
-        print(f'\n══════ 풀이캐시 {len(slugs)}문제 --parallel {a.parallel} ══════', flush=True)
-        subprocess.run([PY, 'scripts/build_solution_cache.py', '--list', ','.join(slugs),
-                        '--parallel', str(a.parallel)], env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
+        print(f'\n══════ 텍스트 품질 게이트 {len(slugs)}문제 ══════', flush=True)
+        subprocess.run([PY, 'scripts/text_quality_gate.py', '--list', ','.join(slugs)],
+                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # 손상 자동 재전사 (캐시 전)
+        subprocess.run([PY, 'scripts/consistency_gate.py', '--list', ','.join(slugs), '--fix'],
+                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # format 오분류 자동교정
+        if not a.no_cache:
+            print(f'\n══════ 풀이캐시 {len(slugs)}문제 --parallel {a.parallel} ══════', flush=True)
+            subprocess.run([PY, 'scripts/build_solution_cache.py', '--list', ','.join(slugs),
+                            '--parallel', str(a.parallel)], env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
     if ok and not a.no_sync:
         print('\n══════ 후처리 동기화 ══════', flush=True)
         subprocess.run([PY, 'scripts/post_ingest_sync.py'], env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})

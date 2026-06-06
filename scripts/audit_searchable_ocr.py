@@ -22,7 +22,7 @@ SYSTEM = ("당신은 한국 수능 수학 문제의 OCR 전사를 검수하는 �
 
 
 def extract_searchable(text):
-    m = re.search(r'^searchable_text:\s*\|\s*\n(.*?)(?=^\S|\Z)', text, re.M | re.S)
+    m = re.search(r'^searchable_text:\s*[|>][-+]?\s*\n(.*?)(?=^\S|\Z)', text, re.M | re.S)
     return (m.group(1) if m else '').strip()
 
 

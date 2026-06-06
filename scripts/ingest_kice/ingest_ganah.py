@@ -199,10 +199,15 @@ if __name__ == '__main__':
     result = ingest(a.year, a.exam_type, a.session, a.limit)
     print(json.dumps(result, ensure_ascii=False))
     if result.get('ok'):
+        slug = result['round']
+        md_dir = ROOT / 'docs' / 'problems' / str(a.year) / slug.split('_', 1)[1]
+        slugs = sorted(p.stem for p in md_dir.glob('*.md'))
+        print(f'\n══════ 텍스트 품질 게이트 {len(slugs)}문제 ══════', flush=True)
+        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'text_quality_gate.py'),
+                        '--list', ','.join(slugs)])           # 손상 searchable_text 자동 재전사 (캐시 전)
+        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'consistency_gate.py'),
+                        '--list', ','.join(slugs), '--fix'])  # format 오분류 등 자동교정 (캐시 전)
         if a.with_cache:
-            slug = result['round']
-            md_dir = ROOT / 'docs' / 'problems' / str(a.year) / slug.split('_', 1)[1]
-            slugs = sorted(p.stem for p in md_dir.glob('*.md'))
             print(f'\n══════ 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
             subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
                             '--list', ','.join(slugs), '--parallel', '20'])

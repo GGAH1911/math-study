@@ -92,7 +92,7 @@ def relabel_md(p):
 def overwrite_text(p, newtxt):
     t = p.read_text(encoding='utf-8')
     nb = f"searchable_text: |\n  {newtxt}\n"
-    t2, n = re.subn(r'(?ms)^searchable_text: \|\n(?: +[^\n]*\n)+', lambda m: nb, t, count=1)
+    t2, n = re.subn(r'(?ms)^searchable_text: [|>][-+]?\n(?: +[^\n]*\n)+', lambda m: nb, t, count=1)
     if n == 1:
         p.write_text(t2, encoding='utf-8')
 

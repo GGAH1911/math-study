@@ -32,7 +32,7 @@ def safe_eval(s):
 
 
 def extract_searchable(text):
-    m = re.search(r'^searchable_text:\s*\|\s*\n(.*?)(?=^\S|\Z)', text, re.M | re.S)
+    m = re.search(r'^searchable_text:\s*[|>][-+]?\s*\n(.*?)(?=^\S|\Z)', text, re.M | re.S)
     return m.group(1) if m else ''
 
 

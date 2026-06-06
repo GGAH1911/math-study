@@ -217,5 +217,13 @@ mastery_updated: 2026-05-16
 - **Escape — TikZ**: matplotlib으로 표현 어려운 정밀 기하 작도(컴퍼스 작도·접선·각의 이등분선·복잡한 평면도형)는 TikZ 허용. 페이지 frontmatter에 `figure_engine: tikz` 명시. JIT 스크립트가 `pdflatex → pdf2svg`로 변환해 동일하게 `assets/.../fig.svg`로 저장.
 - **Manim 사용 안 함** — 영상 자산 관리 부담·렌더 지연으로 채택 보류; 추후 필요성 발생 시 사용자와 재논의.
 
+### D17. 문제 이미지 소비 규칙 — 전체이미지=사용자용 / 개발·LLM=타일만
+문제 이미지(`web/public/problem-images/<slug>.png`, 원본 `db/raw/.../images/`)에는 **두 종류의 소비자**가 있고 보는 방식이 다르다.
+
+- **전체 PNG = 사용자(웹앱) 표시 전용.** 학생에게 렌더되는 user-facing 자산. 화질/레이아웃이 그대로 보존돼야 한다.
+- **개발·LLM 처리(전사·풀이·검증·재-OCR)는 반드시 `scripts/tiling.py`의 `tile_for_vision()` 타일만 본다.** 통이미지를 LLM이 Read하면 **harness/디스플레이가 다운스케일**해 작은 수식·위첨자·부호·보기가 깨져 읽힌다. 타일은 원해상도 크롭이라 정합성이 유지된다.
+- **searchable_text(전사)는 vision이 필수다.** `text_meta.py`가 속도를 위해 PDF 텍스트레이어+Haiku(이미지 X)만 쓰는데, 한국 시험 PDF는 수식을 **PUA 폰트 인코딩**으로 넣어 텍스트레이어가 *조용히 깨진다*(예: `a^(ax)`→`a^x`, `−1/a`→`+1/a`, 보기값 오류). 분류(format·tier·unit)는 텍스트로 충분하나 **전사는 타일 vision으로 교차검증·폴백**해야 한다(`text_quality_gate.py` → `regenerate_searchable.regen_one`은 `tile_for_vision` 사용).
+- **교훈(2026-06-06):** `2025_고2_6월_단일_18`은 텍스트레이어 PUA 손상으로 searchable_text가 곡선식·보기까지 전부 깨졌으나, `solution.steps`는 타일 vision으로 생성돼 정확했다. 같은 문제·다른 파이프라인이 입력(타일 vs 텍스트레이어)에서 갈렸다. **금지: LLM이 통이미지나 텍스트레이어만으로 전사/풀이하는 것. 반드시 타일.**
+
 ---
-*Signed by the Architect. Valid under LWIP v1.2 + Math Study Chapter 7 D1-D16.*
+*Signed by the Architect. Valid under LWIP v1.2 + Math Study Chapter 7 D1-D17.*

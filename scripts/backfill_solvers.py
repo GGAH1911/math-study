@@ -19,6 +19,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_solution_cache as B   # noqa: E402  call_model/run_verifier/tile_for_vision/상수 재사용
 
 REROLL = int(os.environ.get('REROLL', '2'))     # Haiku 동티어 재롤 최대(총 시도 = REROLL+1)
+LITE = os.environ.get('LITE', '1') == '1'        # 전체 역대입 실패 시 경량 관계식 검산기 폴백(킬러 회복)
+LITE_REROLL = int(os.environ.get('LITE_REROLL', '2'))   # 경량 페이즈 재롤
 
 
 def targets(limit=None):
@@ -50,6 +52,45 @@ def _extract_steps(md: str) -> str:
     return '\n'.join(f'- {x}' for x in out)
 
 
+def _gate_hint(why: str) -> str:
+    """게이트 실패사유 → 다음 재롤 교정 힌트."""
+    if why == 'orig-fail':
+        return ('⚠ 직전 검산기가 VERIFY_FAIL/크래시였다. 원래 문제의 식·조건에 CANDIDATE 를 '
+                '역대입하는 로직을 처음부터 재검토해 다시 작성하라.')
+    if why.startswith('mutation-pass'):
+        return ('⚠ 직전 검산기가 *틀린 답*에도 VERIFY_PASS 를 냈다(하드코딩 의심). 원래 문제의 '
+                '식·조건에 CANDIDATE 를 실제로 대입/풀이해서, 틀린 값이면 반드시 VERIFY_FAIL 이 나오게 하라.')
+    if why == 'no-realmath':
+        return ('⚠ 직전 검산기에 실제 수식 풀이(sympy solve/Eq/subs/isclose 등)가 없다. '
+                '문제의 원래 식을 코드로 표현하고 CANDIDATE 를 대입해 판정하라.')
+    if why == 'self-compare':
+        return ('⚠ 직전 검산기가 답을 자기 자신과 직접 비교(if CANDIDATE == 정답)했다. 금지다. '
+                '원래 문제의 식에 대입한 결과로만 판정하라.')
+    if why == 'no-CANDIDATE':
+        return '⚠ 맨 윗줄에 CANDIDATE = <정답> 정의가 없다. 반드시 그렇게 시작하라.'
+    return ''
+
+
+def _try_phase(problem, gold, fmt, steps, rerolls, lite):
+    """한 페이즈(full 또는 lite) 시도 — 게이트 통과 verifier_python 반환, 실패 시 None."""
+    hint = ''
+    for _ in range(rerolls + 1):                   # Haiku-only · open-book
+        try:
+            sol = B.call_openbook(problem, gold, fmt, steps, 'haiku', 'high', hint, lite=lite)
+        except Exception:
+            sol = None
+        if not sol:
+            continue
+        vp = sol.get('verifier_python', '') or ''
+        if not vp:
+            continue
+        good, why = B.hardcode_gate(vp, gold, fmt)  # ★ 하드코딩 게이트(변이테스트)
+        if good:
+            return vp
+        hint = _gate_hint(why)
+    return None
+
+
 def backfill_one(p: str):
     slug = Path(p).stem
     t = open(p, encoding='utf-8').read()
@@ -62,45 +103,25 @@ def backfill_one(p: str):
     if not problem:
         return slug, 'no-text'
     steps = _extract_steps(t)                     # 기존 검증된 풀이단계 (있으면)
-    hint = ''
-    for _ in range(REROLL + 1):                   # Haiku-only · open-book
-        try:
-            sol = B.call_openbook(problem, gold, fmt, steps, 'haiku', 'high', hint)
-        except Exception:
-            sol = None
-        if not sol:
-            continue
-        vp = sol.get('verifier_python', '') or ''
-        if not vp:
-            continue
-        good, why = B.hardcode_gate(vp, gold, fmt)  # ★ 하드코딩 게이트(변이테스트)
-        if not good:
-            if why == 'orig-fail':
-                hint = ('⚠ 직전 검산기가 VERIFY_FAIL/크래시였다. 원래 문제의 식·조건에 CANDIDATE 를 '
-                        '역대입하는 로직을 처음부터 재검토해 다시 작성하라.')
-            elif why.startswith('mutation-pass'):
-                hint = ('⚠ 직전 검산기가 *틀린 답*에도 VERIFY_PASS 를 냈다(하드코딩 의심). 원래 문제의 '
-                        '식·조건에 CANDIDATE 를 실제로 대입/풀이해서, 틀린 값이면 반드시 VERIFY_FAIL 이 나오게 하라.')
-            elif why == 'no-realmath':
-                hint = ('⚠ 직전 검산기에 실제 수식 풀이(sympy solve/Eq/subs/isclose 등)가 없다. '
-                        '문제의 원래 식을 코드로 표현하고 CANDIDATE 를 대입해 판정하라.')
-            elif why == 'self-compare':
-                hint = ('⚠ 직전 검산기가 답을 자기 자신과 직접 비교(if CANDIDATE == 정답)했다. 금지다. '
-                        '원래 문제의 식에 대입한 결과로만 판정하라.')
-            elif why == 'no-CANDIDATE':
-                hint = '⚠ 맨 윗줄에 CANDIDATE = <정답> 정의가 없다. 반드시 그렇게 시작하라.'
-            continue
-        B.VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
-        (B.VERIFIER_DIR / f'{slug}.py').write_text(vp, encoding='utf-8')
-        t2 = open(p, encoding='utf-8').read()     # 최신 재읽기(레이스 안전)
-        rel = f'db/solutions/{slug}.py'
-        if re.search(r'^\s*verifier:\s*.+$', t2, re.M):
-            t2 = re.sub(r'(^\s*verifier:\s*).+$', rf'\g<1>{rel}', t2, count=1, flags=re.M)
-        else:                                     # verifier 라인 없으면 verified 다음에 삽입
-            t2 = re.sub(r'(^(\s*)verified:\s*true\s*$)', rf'\g<1>\n\g<2>verifier: {rel}', t2, count=1, flags=re.M)
-        open(p, 'w', encoding='utf-8').write(t2)
-        return slug, 'SOLVER'
-    return slug, 'KEEP-GOLD'                       # 게이트 통과 실패 → gold-match 유지(무손상)
+    vp = _try_phase(problem, gold, fmt, steps, REROLL, lite=False)       # L1: 전체 역대입
+    tag = 'SOLVER'
+    if vp is None and LITE:
+        vp = _try_phase(problem, gold, fmt, steps, LITE_REROLL, lite=True)  # L2: 경량 관계식 폴백
+        tag = 'SOLVER-LITE'
+    if vp is None:
+        return slug, 'KEEP-GOLD'                   # 두 페이즈 다 실패 → gold-match 유지(무손상)
+    if tag == 'SOLVER-LITE' and '# verifier-tier: lite' not in vp[:40]:
+        vp = '# verifier-tier: lite\n' + vp         # 승격(promote_lite) 대상 식별 마커
+    B.VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
+    (B.VERIFIER_DIR / f'{slug}.py').write_text(vp, encoding='utf-8')
+    t2 = open(p, encoding='utf-8').read()         # 최신 재읽기(레이스 안전)
+    rel = f'db/solutions/{slug}.py'
+    if re.search(r'^\s*verifier:\s*.+$', t2, re.M):
+        t2 = re.sub(r'(^\s*verifier:\s*).+$', rf'\g<1>{rel}', t2, count=1, flags=re.M)
+    else:                                         # verifier 라인 없으면 verified 다음에 삽입
+        t2 = re.sub(r'(^(\s*)verified:\s*true\s*$)', rf'\g<1>\n\g<2>verifier: {rel}', t2, count=1, flags=re.M)
+    open(p, 'w', encoding='utf-8').write(t2)
+    return slug, tag
 
 
 if __name__ == '__main__':
@@ -116,7 +137,8 @@ if __name__ == '__main__':
         for fu in cf.as_completed(futs):
             slug, r = fu.result()
             res[r] += 1; done += 1
-            mark = {'SOLVER': '✅', 'KEEP-GOLD': '·'}.get(r, '⚠')
+            mark = {'SOLVER': '✅', 'SOLVER-LITE': '✅', 'KEEP-GOLD': '·'}.get(r, '⚠')
             print(f"  [{done}/{len(tg)}] {mark} {slug} → {r}", flush=True)
     print(f"\n완료 ({time.time() - t0:.0f}s): {dict(res)}", flush=True)
-    print(f"  솔버 추가 {res['SOLVER']} / gold유지 {res['KEEP-GOLD']} / 스킵 {res['no-gold'] + res['no-text']}", flush=True)
+    print(f"  솔버 추가 {res['SOLVER'] + res['SOLVER-LITE']} (경량 {res['SOLVER-LITE']}) / "
+          f"gold유지 {res['KEEP-GOLD']} / 스킵 {res['no-gold'] + res['no-text']}", flush=True)

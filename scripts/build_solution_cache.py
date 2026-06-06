@@ -231,11 +231,30 @@ def run_verifier(code: str) -> tuple[bool, str]:
 
 
 # ───────────────────────── open-book 솔버 작성 (정답+풀이 제공) ─────────────────────────
-def build_openbook_prompt(problem_text: str, gold: str, fmt: str, steps_text: str = '') -> str:
-    """정답과 검증된 풀이단계를 주고, 원래 식에 역대입하는 검산기를 쓰게 하는 프롬프트."""
+def build_openbook_prompt(problem_text: str, gold: str, fmt: str, steps_text: str = '',
+                          lite: bool = False) -> str:
+    """정답과 검증된 풀이단계를 주고, 원래 식에 역대입하는 검산기를 쓰게 하는 프롬프트.
+    lite=True: 전체 재구성이 어려운 킬러용 — steps의 *핵심 관계식 하나*만 검증(게이트는 그대로)."""
     kind = '객관식(보기 번호 1-5)' if fmt == 'choice' else '단답형(정수)'
     steps_block = (f"\n[검증된 풀이 단계 — 이 논리를 코드로 옮겨라]\n{steps_text}\n"
                    if steps_text else '')
+    if lite:
+        return (
+            f"다음은 한국 수능 수학 킬러 문제다 (텍스트):\n\n{problem_text}\n\n"
+            f"이 문제의 정답은 이미 검증돼 있다: **정답 = {gold}** ({kind}).{steps_block}\n"
+            f"문제 전체를 코드로 재구성하기 어렵다. 대신 **solution_steps 에서 정답이 만족하는 "
+            f"'핵심 등식·관계식' 단 하나**를 골라(예: 최종 단계의 'M-m=7/2', 'f(3)=31', "
+            f"'aₙ³tan²(…)→25π²' 같은 관계) 그 관계식만 sympy 로 표현하고 CANDIDATE 를 대입해 "
+            f"성립하는지 확인하는 *경량* 검산기를 작성하라.\n\n"
+            f"규칙:\n"
+            f"1. 맨 윗줄: CANDIDATE = {gold}\n"
+            f"2. steps 의 핵심 관계식을 sympy(Eq/solve/subs/simplify/isclose)로 표현하고 CANDIDATE 대입.\n"
+            f"3. 'if CANDIDATE == {gold}' 자기비교 금지 — 반드시 steps 의 수식 관계로 판정. "
+            f"CANDIDATE 를 틀린 값으로 바꾸면 VERIFY_FAIL 이 나와야 한다.\n"
+            f"4. 통과 시 정확히 VERIFY_PASS, 아니면 VERIFY_FAIL print. sympy·numpy·math·fractions 만.\n\n"
+            f"**마지막 메시지에 오직 하나의 ```json 블록**:\n"
+            f"```json\n{{\n  \"verifier_python\": \"<경량 검산기 (CANDIDATE 로 시작)>\"\n}}\n```"
+        )
     return (
         f"다음은 한국 수능 수학 문제다 (텍스트):\n\n{problem_text}\n\n"
         f"이 문제의 정답은 이미 검증돼 있다: **정답 = {gold}** ({kind}).{steps_block}\n"
@@ -254,9 +273,10 @@ def build_openbook_prompt(problem_text: str, gold: str, fmt: str, steps_text: st
 
 
 def call_openbook(problem_text: str, gold: str, fmt: str, steps_text: str,
-                  model: str, effort: str, hint: str = '') -> dict | None:
-    """Open-book: 정답+풀이단계를 주고 역대입 검산기를 작성하게 함 (이미지 없음)."""
-    prompt = build_openbook_prompt(problem_text, gold, fmt, steps_text)
+                  model: str, effort: str, hint: str = '', lite: bool = False) -> dict | None:
+    """Open-book: 정답+풀이단계를 주고 역대입 검산기를 작성하게 함 (이미지 없음).
+    lite=True: 핵심 관계식 하나만 검증하는 경량 모드(킬러 회복용)."""
+    prompt = build_openbook_prompt(problem_text, gold, fmt, steps_text, lite=lite)
     if hint:
         prompt += f"\n\n{hint}"
     args = ['claude', '-p', '--model', model, '--effort', effort,
@@ -291,6 +311,14 @@ def hardcode_gate(code: str, gold: str, fmt: str) -> tuple[bool, str]:
     from fractions import Fraction
     if not re.search(r'(?m)^CANDIDATE\s*=', code):
         return False, 'no-CANDIDATE'
+    # CANDIDATE 리터럴이 gold 와 일치해야 함 (객관식: 값-6을 CANDIDATE로 잡고 gold보기번호와 안 엮는 lite 차단)
+    mcand = re.search(r'(?m)^CANDIDATE\s*=\s*([^\n#]+?)\s*$', code)
+    if mcand:
+        try:
+            if Fraction(mcand.group(1).strip()) != Fraction(str(gold)):
+                return False, 'candidate-not-gold'
+        except Exception:
+            pass                                          # 파싱 불가 → 관대(변이테스트가 추가 방어)
     gq = re.escape(str(gold))
     if re.search(rf'CANDIDATE\s*==\s*{gq}\b', code) or re.search(rf'{gq}\s*==\s*CANDIDATE', code):
         return False, 'self-compare'                      # 답을 자기 자신과 직접 비교
@@ -331,6 +359,113 @@ def try_write_verifier(p: Path, vp: str, gold: str, fmt: str) -> str:
             (VERIFIER_DIR / f'{p.stem}.py').write_text(vp, encoding='utf-8')
             return f'db/solutions/{p.stem}.py'
     return 'gold-match'
+
+
+# ───────────────── lite → full 승격 (파라미터 솔버 = 유사문제 재생성 가능) ─────────────────
+def _run_code(code: str, timeout: int = 40) -> str:
+    """코드 실행 후 전체 stdout+stderr 반환 (param 변이 하네스용)."""
+    if FORBIDDEN.search(code):
+        return 'FORBIDDEN'
+    with tempfile.NamedTemporaryFile('w', suffix='.py', delete=False) as f:
+        f.write(code); tmp = f.name
+    try:
+        r = subprocess.run([str(VENV_PY), tmp], capture_output=True, text=True, timeout=timeout)
+        return r.stdout + '\n' + r.stderr
+    except subprocess.TimeoutExpired:
+        return 'TIMEOUT'
+    finally:
+        try: os.unlink(tmp)
+        except Exception: pass
+
+
+_PARAM_HARNESS = """
+# === param-mutation harness (auto-appended) ===
+def __param_test():
+    import inspect
+    try:
+        base = solve()
+    except Exception as e:
+        print("PARAM_BASE_ERR:", e); return
+    try:
+        params = inspect.signature(solve).parameters
+    except Exception:
+        print("PARAM_NO_SIG"); return
+    dep = False
+    for nm, pr in params.items():
+        d = pr.default
+        cands = [not d] if isinstance(d, bool) else (
+                [d + 1, d + 2, d - 1] if isinstance(d, (int, float)) else [])
+        for c in cands:
+            try:
+                if solve(**{nm: c}) != base:
+                    dep = True; break
+            except Exception:
+                continue
+        if dep:
+            break
+    print("PARAM_DEPENDENT" if dep else "PARAM_INDEPENDENT")
+__param_test()
+"""
+
+
+def param_mutation_gate(code: str, gold: str) -> tuple[bool, str]:
+    """full(파라미터 솔버) 판정 — solve(**계수) 가 (1) 기본호출 시 정답 산출(VERIFY_PASS),
+    (2) 문제 계수를 바꾸면 답이 바뀜(=유사문제 재생성 가능). lite·답박힘은 param-independent 로 탈락."""
+    if not re.search(r'(?m)^\s*def\s+solve\s*\(', code):
+        return False, 'no-solve-fn'
+    ok, _ = run_verifier(code)                       # 기본호출 solve()==CANDIDATE==gold (솔버 자체검증)
+    if not ok:
+        return False, 'base-fail'
+    out = _run_code(code + '\n' + _PARAM_HARNESS)
+    if 'PARAM_DEPENDENT' in out:
+        return True, 'ok'
+    if 'PARAM_INDEPENDENT' in out:
+        return False, 'param-independent'            # 계수 바꿔도 답 불변 = 재생성 불가(답만 박힘)
+    if 'PARAM_BASE_ERR' in out:
+        return False, 'base-err'
+    return False, 'harness-err'
+
+
+def build_promote_prompt(problem_text: str, gold: str, fmt: str, steps_text: str, lite_code: str) -> str:
+    steps_block = f"\n[검증된 풀이 단계]\n{steps_text}\n" if steps_text else ''
+    return (
+        f"한국 수능 수학 문제:\n\n{problem_text}\n\n이 문제의 정답은 검증돼 있다: 정답 = {gold}.{steps_block}\n"
+        f"아래는 *최종 관계식만* 확인하는 경량 검산기다(작동 확인됨). 이걸 **유사문제 재생성이 가능한 "
+        f"완전 파라미터 솔버**로 확장하라:\n```python\n{lite_code}\n```\n\n"
+        f"요구사항:\n"
+        f"1. `def solve(<문제계수1>=<원값1>, <문제계수2>=<원값2>, ...):` — **문제 본문의 계수·각도·조건을 "
+        f"키워드 인자(기본값=원문제 값)로 노출**하라.\n"
+        f"2. solve 내부에서 그 인자들로부터 정답을 **forward 계산**(sympy)해 return 하라. 경량 관계식을 최종 단계로 써도 된다.\n"
+        f"3. 맨 아래: `CANDIDATE = {gold}` 그리고 `print('VERIFY_PASS' if solve()==CANDIDATE else 'VERIFY_FAIL')`.\n"
+        f"4. **계수를 바꾸면 답이 바뀌어야 한다** — 답을 코드에 박지 말고 계수에서 계산하라(이게 유사문제 재생성의 핵심).\n"
+        f"5. sympy·numpy·math·fractions 만. 파일·os·네트워크 금지.\n\n"
+        f"**마지막 메시지에 오직 하나의 ```json 블록**:\n"
+        f"```json\n{{\n  \"verifier_python\": \"<def solve(...) 포함 완전 파라미터 솔버>\"\n}}\n```"
+    )
+
+
+def call_promote(problem_text: str, gold: str, fmt: str, steps_text: str, lite_code: str,
+                 model: str, effort: str, hint: str = '') -> dict | None:
+    """lite 검산기를 앵커로 full 파라미터 솔버를 작성하게 함."""
+    prompt = build_promote_prompt(problem_text, gold, fmt, steps_text, lite_code)
+    if hint:
+        prompt += f"\n\n{hint}"
+    args = ['claude', '-p', '--model', model, '--effort', effort,
+            '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
+            '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
+    try:
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S)
+    except subprocess.TimeoutExpired:
+        return None
+    blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
+    if not blocks:
+        blocks = re.findall(r'(\{.*"verifier_python".*\})', r.stdout, re.DOTALL)
+    for b in reversed(blocks):
+        try:
+            return json.loads(b.strip())
+        except Exception:
+            continue
+    return None
 
 
 def gold_answer(md_text: str) -> str | None:

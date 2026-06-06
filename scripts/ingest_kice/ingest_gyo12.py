@@ -171,15 +171,23 @@ if __name__ == '__main__':
     print(f'══════ 인제스트 {len(ok)}/{len(results)} 회차, {sum(r.get("count",0) for r in ok)}문제 ({time.time()-t0:.0f}s) ══════', flush=True)
     print(json.dumps(results, ensure_ascii=False))
 
-    if ok and a.with_cache:
+    if ok:
         slugs = []
         for r in ok:
             md_dir = ROOT / 'docs' / 'problems' / str(a.year) / r['round'].split('_', 1)[1]
             slugs += sorted(p.stem for p in md_dir.glob('*.md'))
-        print(f'\n══════ 풀이 캐시 {len(slugs)}문제 (병렬 {a.parallel}) ══════', flush=True)
-        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
-                        '--list', ','.join(slugs), '--parallel', str(a.parallel)],
-                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
+        print(f'\n══════ 텍스트 품질 게이트 {len(slugs)}문제 ══════', flush=True)
+        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'text_quality_gate.py'),
+                        '--list', ','.join(slugs)],
+                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # 손상 자동 재전사 (캐시 전)
+        subprocess.run([sys.executable, str(ROOT / 'scripts' / 'consistency_gate.py'),
+                        '--list', ','.join(slugs), '--fix'],
+                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # format 오분류 자동교정
+        if a.with_cache:
+            print(f'\n══════ 풀이 캐시 {len(slugs)}문제 (병렬 {a.parallel}) ══════', flush=True)
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
+                            '--list', ','.join(slugs), '--parallel', str(a.parallel)],
+                           env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
     if ok and not a.no_sync:
         print('\n══════ 후처리 동기화 (역인덱스·그래프 + dev 리프레시) ══════', flush=True)
         subprocess.run([sys.executable, str(ROOT / 'scripts' / 'post_ingest_sync.py')],

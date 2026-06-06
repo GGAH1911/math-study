@@ -17,7 +17,7 @@ random.seed(11)
 
 def meta(t):
     g = lambda k: (m.group(1).strip().strip('\'"') if (m := re.search(rf'^\s*{k}:\s*(.+?)\s*$', t, re.M)) else None)
-    st = re.search(r'^searchable_text:\s*\|\s*\n(.*?)(?=^\S|\Z)', t, re.M | re.S)
+    st = re.search(r'^searchable_text:\s*[|>][-+]?\s*\n(.*?)(?=^\S|\Z)', t, re.M | re.S)
     return dict(ans=g('answer'), fmt=g('format'), sb=g('solved_by'), st=(st.group(1).strip() if st else ''))
 
 
