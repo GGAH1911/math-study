@@ -209,6 +209,16 @@ def crop_problem(page_img, bbox_px, out_path, exam_type=None, headroom=18):
     page_top = max(0, y0 + orig_top - headroom)             # 원래 top 에서 위로 headroom
     # (키 큰 분수·지수가 bbox 위로 솟어 잘리는 문제는 bbox.py 의 extract_problem_bboxes 가
     #  span 클러스터로 y0 를 이미 올바르게 잡으므로 여기선 추가 스캔 불필요.)
+    # 전체폭 룰(헤더/풋터 구분선) 가로지르기 방지: headroom 이 위로 가다 컬럼을 가득 채우는
+    # 가로선(ink>0.7; 문제 안 박스·표는 좁아 해당 X)을 만나면 그 아래로 클램프해 헤더 차단.
+    # band 를 y0 보다 약간 아래(LOOK)까지 봐서 룰이 bbox top 바로 밑에 걸쳐도 잡는다.
+    LOOK = 10
+    band_bot = min(y0 + LOOK, y0 + orig_bot)
+    if 0 < page_top < band_bot:
+        bi = _row_ink_ratios(page_img.crop((x0, page_top, x1, band_bot)).convert('L'))
+        rule_rows = [r for r, v in enumerate(bi) if v > 0.70]
+        if rule_rows:
+            page_top = page_top + max(rule_rows) + 1         # 가장 아래 룰 바로 밑
     cropped = page_img.crop((x0, page_top, x1, y0 + orig_bot))
     xt = _left_trim_x(cropped)
     if xt > 0:

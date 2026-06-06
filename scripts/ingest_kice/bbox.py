@@ -246,6 +246,19 @@ def _section_label_bottoms(page: fitz.Page) -> list[float]:
     return out
 
 
+def _full_width_rules(page: fitz.Page) -> list[float]:
+    """전체폭 가로 구분선(헤더/풋터 divider)의 y(pt) 목록. 문제 안 박스·표는 한 컬럼에
+    inset 돼 폭이 좁으므로(< 0.6·page_width) 안 잡힌다 — *페이지 전체를 가로지르는* 가로선은
+    헤더/풋터뿐이다. content-top 확장의 천장(헤더 위로 안 올라가게)으로 쓴다."""
+    pw = page.rect.width
+    out: list[float] = []
+    for dr in page.get_drawings():
+        r = dr['rect']
+        if (r.y1 - r.y0) <= 2.5 and (r.x1 - r.x0) >= 0.6 * pw:
+            out.append((r.y0 + r.y1) / 2.0)
+    return sorted(out)
+
+
 def _content_top(col_lines: list[tuple[float, float, float, float]],
                  anchor_y: float, floor_y: float,
                  gap_pt: float = CONTENT_GAP_PT) -> float:
@@ -316,10 +329,12 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
     # Cache page → text lines + 섹션 라벨 bottom (avoid re-parsing each anchor)
     page_lines_cache: dict[int, list[tuple[float, float, float, float]]] = {}
     page_label_cache: dict[int, list[float]] = {}
+    page_rule_cache: dict[int, list[float]] = {}
     d2 = fitz.open(pdf_path)
     for i in range(d2.page_count):
         page_lines_cache[i + 1] = _collect_text_lines(d2[i])
         page_label_cache[i + 1] = _section_label_bottoms(d2[i])
+        page_rule_cache[i + 1] = _full_width_rules(d2[i])
     d2.close()
 
     # Detect column layout for this PDF (mid / overlap / left_min / right_max)
@@ -350,6 +365,7 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
             col_lines = [ln for ln in page_lines_cache[page_num]
                          if _column_of((ln[0] + ln[2]) / 2.0, classify_mid) == col_idx]
             labels = page_label_cache[page_num]
+            page_rules = page_rule_cache[page_num]
             for idx, (n, x, y) in enumerate(col_anchors):
                 # Generous hard upper bound: next anchor in same column or
                 # column bottom. The actual end (so the cropped PNG doesn't
@@ -377,8 +393,16 @@ def extract_problem_bboxes(pdf_path: Path, exam_type: str, grade: str | None,
                 labels_above = [lb for lb in labels if y - CONTENT_MAX_UP_PT < lb < y]
                 if labels_above:
                     floor_y = max(floor_y, max(labels_above) + 1.0)
+                # 전체폭 룰(헤더 구분선) 천장: 룰 위(헤더)로는 절대 안 올라간다. 페이지 헤더
+                # ("수학 영역"·쪽번호)가 컬럼-첫 문제 번호 바로 위(갭<10pt)일 때 span-walk 가
+                # 헤더로 climb 하던 회귀를 막는다.
+                rule_ceiling = max([r for r in page_rules if r < y - 1.0], default=None)
+                if rule_ceiling is not None:
+                    floor_y = max(floor_y, rule_ceiling)
                 content_top = _content_top(col_lines, y, floor_y)
                 y_start = max(PAGE_TOP_MARGIN_PT, min(y, content_top) - BBOX_PAD_PT)
+                if rule_ceiling is not None:
+                    y_start = max(y_start, rule_ceiling)   # bbox 도 룰 아래에서 시작
                 y_end = hard_end
                 bbox_pdf = (col_x0, y_start, col_x1, y_end)
                 subject = _classify_subject(canonical_area, exam_type, grade, n)
