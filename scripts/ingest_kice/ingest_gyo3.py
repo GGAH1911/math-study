@@ -62,19 +62,16 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
         entries = entries[:limit]
     print(f'  ✓ {len(entries)} 문제 (공통 + 미적분/기하/확률과통계 23-30)', flush=True)
 
-    # 2) 크롭 (ingest_v2 와 동일: bbox_px 후보 → crop_by_gap)
+    # 2) 크롭 (ingest_v2/ganah/gyo12 와 동일: 페이지+bbox → crop_problem,
+    #    원래 경계 + 위로 headroom 18px. 위첨자 클립 방지·스캔으로 헤더 끌어옴 없음)
     for e in entries:
         name = f'{slug}_{e["subject"]}_{e["number"]:02d}.png'
         img_path = images_dir / name
         e['image_fs'] = f'db/raw/{slug}/images/{name}'
         e['image_url'] = f'/problem-images/{name}'
-        cand = Image.open(e['_page_png']).crop(e['bbox_px'])
-        tmp = images_dir / f'.cand_{e["subject"]}_{e["number"]:02d}.png'; cand.save(tmp)
-        try:
-            if not IV.crop_by_gap(tmp, img_path, exam_type=EXAM_TYPE):
-                cand.save(img_path)
-        finally:
-            tmp.unlink(missing_ok=True)
+        page_im = Image.open(e['_page_png'])
+        if not IV.crop_problem(page_im, e['bbox_px'], img_path, exam_type=EXAM_TYPE):
+            page_im.crop(e['bbox_px']).save(img_path)     # degenerate 폴백
         IV._ensure_web_symlink(img_path)
     print(f'  ✓ 크롭 {len(entries)}장', flush=True)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Crop-only smoke-test for v3.1 gap-based PIL crop.
+"""Crop-only smoke-test — 인제스트와 동일한 crop_problem(원래경계+headroom) 사용.
 
 Runs the cheap part of the v3 ingest pipeline (PDF render + bbox extract +
 PIL crop) across every round in db/raw/ — no LLM, no metadata, no DB
@@ -28,7 +28,7 @@ import json
 import bbox; importlib.reload(bbox)
 import crop_with_llm; importlib.reload(crop_with_llm)
 from bbox import extract_problem_bboxes  # noqa: E402
-from crop_with_llm import crop_by_gap  # noqa: E402
+from crop_with_llm import crop_problem  # noqa: E402  (인제스트와 동일 크롭: 원래경계+headroom)
 from ingest_v2 import _ensure_web_symlink, ROOT  # noqa: E402
 from ingest_round import download, slugify_round  # noqa: E402
 
@@ -133,21 +133,14 @@ def recrop_round(slug: str, workers: int = 4, wipe: bool = False, dpi: int = 200
         img_name = f'{slug}_{e["subject"]}_{e["number"]:02d}.png'
         img_path = images_dir / img_name
         img = Image.open(page_png)
-        candidate = img.crop(e['bbox_px'])
-        tmp = images_dir / f'.cand_{e["subject"]}_{e["number"]:02d}.png'
-        try:
-            candidate.save(tmp)
-            ok = crop_by_gap(tmp, img_path, exam_type=exam_type)
-            if not ok:
-                # degenerate; save raw candidate so user still sees something
-                candidate.save(img_path)
-                _ensure_web_symlink(img_path)
-                return e, False, 'degenerate'
+        ok = crop_problem(img, e['bbox_px'], img_path, exam_type=exam_type)
+        if not ok:
+            # degenerate; save raw candidate so user still sees something
+            img.crop(e['bbox_px']).save(img_path)
             _ensure_web_symlink(img_path)
-            return e, True, None
-        finally:
-            try: tmp.unlink()
-            except Exception: pass
+            return e, False, 'degenerate'
+        _ensure_web_symlink(img_path)
+        return e, True, None
 
     done = ok_count = fail_count = 0
     t0 = time.time()
