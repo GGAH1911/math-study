@@ -3,7 +3,7 @@
 // 시점 캐시라 stale. concept 페이지와 동일 패턴.
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getEntry, render } from 'astro:content';
+import { getEntry, getCollection, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 import SolutionPanel from '../../components/SolutionPanel.tsx';
@@ -24,6 +24,24 @@ const subjLabel = fm.source?.subject && fm.source.subject !== '단일' ? `${fm.s
 const unitTitle = fm.source?.subject
   ? `${yearLabel(fm.source.year, fm.source.exam_type)} ${fm.source.exam_type} ${subjLabel}${fm.source.number}번`
   : entry.id;
+
+// 같은 회차(연도·시험·세션·학년·기관) + 같은 과목 내 번호순 이전/다음 네비게이션.
+const src = fm.source;
+const sib = src
+  ? (await getCollection('problems', (e) => {
+      const s = e.data.source;
+      return !!s && s.year === src.year && s.exam_type === src.exam_type
+        && (s.session ?? '') === (src.session ?? '')
+        && (s.grade ?? '') === (src.grade ?? '')
+        && (s.agency ?? '') === (src.agency ?? '')
+        && s.subject === src.subject;
+    })).sort((a, b) => (a.data.source?.number ?? 0) - (b.data.source?.number ?? 0))
+  : [];
+const navIdx = sib.findIndex((e) => e.id === entry.id);
+const prevEntry = navIdx > 0 ? sib[navIdx - 1] : null;
+const nextEntry = navIdx >= 0 && navIdx < sib.length - 1 ? sib[navIdx + 1] : null;
+const navBtn = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm border border-[color:var(--color-border)] bg-[color:var(--color-surface-2)] hover:border-[color:var(--color-accent)] transition';
+const navOff = 'px-3 py-1.5 text-sm text-[color:var(--color-subtle)] opacity-40 select-none';
 ---
 <BaseLayout title={entry.id}>
   {/* 하이브리드 레이아웃:
@@ -37,6 +55,18 @@ const unitTitle = fm.source?.subject
 
     {/* ── 왼쪽: 문제 + 풀이 + 메타 (문서와 함께 스크롤) ── */}
     <div class="min-w-0">
+      {/* 회차 내 이전/다음 네비게이션 (같은 과목 번호순) */}
+      {src && (prevEntry || nextEntry) && (
+        <nav class="mb-4 flex items-center justify-between gap-2" aria-label="회차 내 문제 이동">
+          {prevEntry
+            ? <a href={`/problems/${prevEntry.id}`} class={navBtn} rel="prev"><span aria-hidden="true">←</span> {prevEntry.data.source?.number}번</a>
+            : <span class={navOff}><span aria-hidden="true">←</span> 이전</span>}
+          <span class="text-xs text-[color:var(--color-muted)] truncate px-1">{subjLabel}{src.number}번</span>
+          {nextEntry
+            ? <a href={`/problems/${nextEntry.id}`} class={navBtn} rel="next">{nextEntry.data.source?.number}번 <span aria-hidden="true">→</span></a>
+            : <span class={navOff}>다음 <span aria-hidden="true">→</span></span>}
+        </nav>
+      )}
       <article class="max-w-none">
         <div class="prose prose-invert max-w-none">
           <Content />
@@ -104,6 +134,19 @@ const unitTitle = fm.source?.subject
           </section>
         )}
       </div>
+
+      {/* 회차 내 이전/다음 네비게이션 (하단 반복) */}
+      {src && (prevEntry || nextEntry) && (
+        <nav class="mt-8 flex items-center justify-between gap-2" aria-label="회차 내 문제 이동">
+          {prevEntry
+            ? <a href={`/problems/${prevEntry.id}`} class={navBtn} rel="prev"><span aria-hidden="true">←</span> {prevEntry.data.source?.number}번</a>
+            : <span class={navOff}><span aria-hidden="true">←</span> 이전</span>}
+          <span class="text-xs text-[color:var(--color-muted)] truncate px-1">{subjLabel}{src.number}번</span>
+          {nextEntry
+            ? <a href={`/problems/${nextEntry.id}`} class={navBtn} rel="next">{nextEntry.data.source?.number}번 <span aria-hidden="true">→</span></a>
+            : <span class={navOff}>다음 <span aria-hidden="true">→</span></span>}
+        </nav>
+      )}
     </div>
 
     {/* 드래그 핸들 — 채팅 폭 조절 (lg 전용; 좁으면 grid collapse + hidden) */}
