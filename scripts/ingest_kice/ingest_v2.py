@@ -594,11 +594,20 @@ if __name__ == '__main__':
     # 재생성 + dev 콘텐츠 리프레시). 같은 프로세스/로그라 /progress 가 각 패널 표시.
     if result.get('ok'):
         import subprocess, sys, os
+        round_slug = result['round']
+        round_dir = round_slug.split('_', 1)[1] if '_' in round_slug else round_slug
+        md_dir = DOCS_PROBLEMS / str(args.year) / round_dir
+        slugs = sorted(p.stem for p in md_dir.glob('*.md'))
+        # 텍스트 품질·정합성 게이트 (캐시/동기화 전 — ganah/gyo12 와 동일). PUA 손상 searchable_text
+        # 자동 재전사 + format 오분류 교정. 캐시 전에 끝내야 손상 텍스트로 솔버를 만들지 않는다.
+        # (손상 *탐지된* 문제만 vision 재전사 → 비용은 손상분에 한정)
+        if slugs:
+            print(f'\n══════ 체이닝 0/2: 텍스트 품질·정합성 게이트 {len(slugs)}문제 ══════', flush=True)
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'text_quality_gate.py'),
+                            '--list', ','.join(slugs)])
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'consistency_gate.py'),
+                            '--list', ','.join(slugs), '--fix'])
         if args.with_cache:
-            round_slug = result['round']
-            round_dir = round_slug.split('_', 1)[1] if '_' in round_slug else round_slug
-            md_dir = DOCS_PROBLEMS / str(args.year) / round_dir
-            slugs = sorted(p.stem for p in md_dir.glob('*.md'))
             print(f'\n══════ 체이닝 1/2: 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
             subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
                             '--list', ','.join(slugs), '--parallel', '10'])   # 킬러-먼저는 build_solution_cache가 정렬

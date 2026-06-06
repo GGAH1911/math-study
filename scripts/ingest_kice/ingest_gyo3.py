@@ -140,10 +140,27 @@ if __name__ == '__main__':
     ap.add_argument('--session', required=True)
     ap.add_argument('--grade', default='고3')
     ap.add_argument('--limit', type=int, default=None)
+    ap.add_argument('--with-cache', action='store_true', help='인제스트 후 풀이 캐시까지 (ganah/gyo12 와 동일)')
     ap.add_argument('--no-sync', action='store_true',
                     help='후처리 동기화(post_ingest_sync) 생략 — orchestrate가 일괄 처리할 때 사용')
     a = ap.parse_args()
-    print(json.dumps(ingest(a.year, a.session, a.grade, a.limit), ensure_ascii=False))
+    result = ingest(a.year, a.session, a.grade, a.limit)
+    print(json.dumps(result, ensure_ascii=False))
+    if result.get('ok'):
+        md_dir = ROOT / 'docs' / 'problems' / str(a.year) / result['round'].split('_', 1)[1]
+        slugs = sorted(p.stem for p in md_dir.glob('*.md'))
+        # 텍스트 품질·정합성 게이트 (캐시/동기화 전 — ganah/gyo12 와 동일):
+        # PUA 손상 searchable_text 자동 재전사 + format 오분류 자동교정.
+        if slugs:
+            print(f'\n══════ 텍스트 품질·정합성 게이트 {len(slugs)}문제 ══════', flush=True)
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'text_quality_gate.py'),
+                            '--list', ','.join(slugs)])
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'consistency_gate.py'),
+                            '--list', ','.join(slugs), '--fix'])
+        if a.with_cache:
+            print(f'\n══════ 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
+                            '--list', ','.join(slugs), '--parallel', '20'])
     # 파이프라인: markdown 작성 후 개념 역인덱스·그래프 재생성 + dev 콘텐츠 리프레시 (안 하면 stale)
     if not a.no_sync:
         subprocess.run([sys.executable, str(Path(__file__).resolve().parent.parent / 'post_ingest_sync.py')],
