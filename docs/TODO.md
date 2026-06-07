@@ -17,6 +17,7 @@
 - [x] **백엔드 게이트 균일화** — text_quality_gate(v2·gyo3 누락분)·consistency_gate 캐시前 인라인·풀이캐시 체이닝(gyo3 누락분) 추가 → 4개 백엔드(v2/ganah/gyo12/gyo3) 동일 템플릿
 
 ## 잔여 (난이도순)
+- [ ] **랜덤 시험 객관식↔단답형 자리 뒤바뀜** (버그) — `/exam/random`에서 객관식 자리에 단답형이, 단답형 자리에 객관식이 나옴. 원인: `web/src/lib/exam-build.ts`가 **영역(대수/미적분1/확통)·난이도 tier로만** 30문제를 뽑고 **format(choice/numeric) 위치 구조를 안 지킴**. 수정: 뽑은 뒤 실제 수능 배치(공통: 1-15 객관식·16-22 단답 / 선택: 23-28 객관식·29-30 단답; 양식별 상이)에 맞게 format별로 슬롯 배정·정렬. ExamRunner.tsx 표시 순서도 확인. consistency_gate가 고친 정확한 format 기준으로.
 - [ ] **섹션 라벨 박스 테두리 sliver 제거** — 섹션 시작 문제(#16·#22·#23·#29; 5지선다형/단답형 박스 바로 아래)에서 크롭 상단에 라벨 **박스 하단 테두리**가 살짝 걸림(28건, 자기검증 CLIP 8~32px). 본문은 온전(허용 범위)이라 우선순위 낮음. 해법: `bbox.py _section_label_bottoms`가 라벨 *텍스트* 하단이 아니라 **박스 테두리** 하단(박스 drawing의 y1)까지 천장으로 잡게 보정 → 박스 완전 제외. 대상 목록: 자기검증 `scripts/selfcheck_crop.py` 재실행으로 재생성.
 - [ ] **크로스-스크립트 게이트/타일 일관성 감사** — 이번엔 *인제스트 4개 백엔드*만 균일화. 풀이캐시(build_solution_cache)·백필(backfill_solvers)·vision 폴백(vision_meta)·promote 가 동일 게이트/타일(D17) 규약 쓰는지 전수 대조 남음.
 - [ ] **synthesis 페이지 그래프 렌더** — `docs/syntheses/` 의 promote된 plot/geometry 펜스가 Astro `<Content />`(plot 변환 플러그인 없음)에서 코드블록으로만 표시됨. remark 플러그인으로 실제 그래프 렌더 필요(튜터 런타임과 별개 경로).
