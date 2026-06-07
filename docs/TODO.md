@@ -24,3 +24,19 @@
 - [ ] **신규 인제스트 full 솔버에 파라미터 변이 게이트** — 현재 backfill/promote만. build_one 객관식 수용에도 solve(**계수) 규약+param 게이트 적용.
 - [ ] **brute-force 프롬프트 모드** — 조합/경우의수 단원 자동화(현재 수동 검증만).
 - [ ] searchable_text 생성에 타일 적용(D17) — 속도 영향 검토 후.
+
+## 아이패드 앱 출시 (장기 · 제품 방향)
+
+> 비전: 기출문제를 보면서 **애플펜슬로 풀이를 직접 필기** → **LLM이 풀이 *과정*을 평가**(정답뿐 아니라 논리 단계까지). 검증된 풀이 캐시(3324/3324)가 채점 기준(rubric)이라 "일반 AI 채점"과 차별화.
+
+**개발 가능성: 높음.** 어려운 코어(콘텐츠·검증풀이·sympy 검증·LLM 튜터)는 이미 완성돼 웹 API로 노출됨. 신규 작업은 ① 아이패드 UI ② 펜슬 필기 캔버스 ③ 필기→평가 파이프라인 ④ 호스팅 백엔드뿐.
+
+- [ ] **아키텍처 결정** (3안):
+  - (A) **네이티브 SwiftUI + PencilKit** — 펜슬 UX 최상(저지연·압력·tilt), 단 Swift 신규 코드베이스. 콘텐츠/그래프/튜터는 WKWebView로 기존 웹 재사용 + PencilKit 오버레이.
+  - (B) **Capacitor 래핑(기존 Astro 웹 그대로)** + PencilKit 플러그인 — 기존 UI(문제브라우저·튜터챗·그래프) 최대 재사용, 최단 출시. 펜슬은 네이티브 플러그인으로.
+  - (C) PWA(홈화면 추가) + 웹 canvas pointer events — 가장 빠르나 App Store 출시 아님 + Safari 펜슬 한계.
+  - → **추천: B(빠른 출시) 또는 A(펜슬이 핵심 차별점이면)**. 핵심은 "필기 표면"만 네이티브, 나머지는 웹 재사용.
+- [ ] **필기→평가 파이프라인**: 펜슬 필기 → PNG 래스터화 → **비전 LLM**(Claude vision)에 [문제 + 검증된 solution.steps + gold answer + 학생 필기이미지] 전달 → 단계별 채점(맞음/어디서 틀림/누락단계/최종답 검증). 최종답은 `sympy.ts`로 교차검증. **타일 규칙(D17) 적용** — 필기 이미지도 타일로.
+- [ ] **호스팅 백엔드** (출시 차단요소): 현재 `chat.ts`는 노트북 `claude` CLI spawn(Tailscale 자가호스팅). 출시엔 Anthropic API 직결 + 클라우드 서버 필요. chat.ts의 프롬프트인젝션 방어·모델락(haiku)·slug 검증을 그대로 이식. 비전 평가 호출당 API 비용 산정.
+- [ ] **리스크/검증 선행**: (1) 비전 LLM이 **손글씨 한글 수식**을 얼마나 정확히 읽나 — 소수 샘플로 PoC 먼저(가장 큰 불확실성). (2) PencilKit vs 웹 canvas 지연 비교. (3) 채점 프롬프트는 튜터(대화형)와 별개 — *완성된 시도를 루브릭 대비 채점*하는 전용 프롬프트 필요.
+- [ ] **재사용 자산 확인됨**: API(chat·sympy·attempt·problem-state·progress·mastery-promote), 검증풀이 3324, 크롭 이미지, searchable_text, SRS 상태. UI(ProblemAttemptPanel·ChatPanel·Graph)도 웹뷰로 재활용 가능.
