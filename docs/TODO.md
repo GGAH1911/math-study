@@ -17,6 +17,7 @@
 - [x] **백엔드 게이트 균일화** — text_quality_gate(v2·gyo3 누락분)·consistency_gate 캐시前 인라인·풀이캐시 체이닝(gyo3 누락분) 추가 → 4개 백엔드(v2/ganah/gyo12/gyo3) 동일 템플릿
 
 ## 잔여 (난이도순)
+- [ ] **섹션 라벨 박스 테두리 sliver 제거** — 섹션 시작 문제(#16·#22·#23·#29; 5지선다형/단답형 박스 바로 아래)에서 크롭 상단에 라벨 **박스 하단 테두리**가 살짝 걸림(28건, 자기검증 CLIP 8~32px). 본문은 온전(허용 범위)이라 우선순위 낮음. 해법: `bbox.py _section_label_bottoms`가 라벨 *텍스트* 하단이 아니라 **박스 테두리** 하단(박스 drawing의 y1)까지 천장으로 잡게 보정 → 박스 완전 제외. 대상 목록: 자기검증 `scripts/selfcheck_crop.py` 재실행으로 재생성.
 - [ ] **크로스-스크립트 게이트/타일 일관성 감사** — 이번엔 *인제스트 4개 백엔드*만 균일화. 풀이캐시(build_solution_cache)·백필(backfill_solvers)·vision 폴백(vision_meta)·promote 가 동일 게이트/타일(D17) 규약 쓰는지 전수 대조 남음.
 - [ ] **synthesis 페이지 그래프 렌더** — `docs/syntheses/` 의 promote된 plot/geometry 펜스가 Astro `<Content />`(plot 변환 플러그인 없음)에서 코드블록으로만 표시됨. remark 플러그인으로 실제 그래프 렌더 필요(튜터 런타임과 별개 경로).
 - [ ] **PUA-silent 손상 감지** — text_meta 인제스트 시점에 PDF 텍스트레이어 PUA 디코드 이상 → 타일-vision 전사 승급. (silent라 감지 자체가 난제; 현 게이트는 loud 손상만)
