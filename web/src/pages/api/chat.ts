@@ -4,7 +4,7 @@ import { writeFileSync, mkdirSync, unlinkSync, existsSync, readdirSync, statSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
-import { buildTutorPrompt } from '../../lib/chat-context.ts';
+import { buildTutorPrompt, searchConcepts } from '../../lib/chat-context.ts';
 
 export const prerender = false;
 
@@ -158,7 +158,28 @@ export const POST: APIRoute = async ({ request }) => {
     }
   }
 
-  const { systemPrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection);
+  const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection);
+  // Retrieval grounding: 학생 질문에 매칭되는 *실존* 개념 노드를 프롬프트에 주입해
+  // 튜터가 경로를 지어내지 않게 한다(개념 튜터는 현재 페이지 이웃만 알아 멀리 있는
+  // 개념은 추측하던 문제). concepts 컬렉션에서만.
+  let systemPrompt = basePrompt;
+  if (collection === 'concepts' && lastUser.content) {
+    const hits = searchConcepts(lastUser.content, 6);
+    if (hits.length > 0) {
+      // 표시이름(개념명) + **그대로 복사할 완전한 URL**. Haiku 가 긴 nested 경로를 줄여
+      // 쓰면 404 (라우트는 전체 경로만 인식) → URL 통째 제시 + verbatim 강조.
+      const lines = hits.map((c) => {
+        const name = (c.slug.split('/').pop() ?? c.slug).replace(/_/g, ' ');
+        return `  - ${name}${c.grade ? ` (${c.grade})` : ''}:  /concepts/${c.slug}`;
+      }).join('\n');
+      systemPrompt += `\n\n--- 질문 관련 개념 후보 (개념지도에 *실존* · 링크 URL 그대로 복사) ---
+학생 질문과 매칭된 실제 개념 노드들. 어디로 가야 할지 안내할 때 **반드시 이 목록에서 고르고**,
+마크다운 링크 URL은 **아래 \`/concepts/...\` 를 글자 그대로 복사**한다 — 경로를 절대 줄이거나
+바꾸지 말 것(줄이면 404). **이 목록에 없는 개념 경로는 지어내지 말 것**; 적절한 후보가 없으면
+"개념지도에 아직 해당 노드가 없다"고 솔직히 말한다.
+${lines}`;
+    }
+  }
   let userPrompt = (formatHistory(messages) + '\n' + lastUser.content).trim();
 
   // 사용자가 첨부한 이미지를 임시 PNG 로 저장 → claude CLI 가 Read 도구로 직접 본다

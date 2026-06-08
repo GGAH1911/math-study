@@ -493,6 +493,35 @@ function listAllConcepts(): ConceptFM[] {
     .filter((c): c is ConceptFM => c !== null);
 }
 
+// 질문 텍스트와 개념 인덱스를 bigram(2글자) 오버랩으로 매칭 → 실존 개념 후보.
+// 한국어는 토큰 경계가 모호해 char-bigram 이 견고. score = 개념명 bigram 중 질문에
+// 들어있는 비율 → 개념명이 질문에 얼마나 등장하나. 튜터에 "실존 후보"를 주입해
+// 경로 추측(hallucination)을 막는 retrieval grounding 용.
+function _bigrams(s: string): Set<string> {
+  const t = s.replace(/[\s_]/g, '').toLowerCase();
+  const out = new Set<string>();
+  if (t.length === 1) { out.add(t); return out; }
+  for (let i = 0; i < t.length - 1; i++) out.add(t.slice(i, i + 2));
+  return out;
+}
+
+export function searchConcepts(query: string, limit = 6, minScore = 0.5): ConceptFM[] {
+  const qb = _bigrams(query);
+  if (qb.size === 0) return [];
+  const scored: { c: ConceptFM; score: number }[] = [];
+  for (const c of listAllConcepts()) {
+    const name = c.slug.split('/').pop() ?? c.slug;        // 마지막 세그먼트 = 개념명
+    const nb = _bigrams(name);
+    if (nb.size === 0) continue;
+    let inter = 0;
+    for (const g of nb) if (qb.has(g)) inter++;
+    const score = inter / nb.size;
+    if (score >= minScore) scored.push({ c, score });
+  }
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, limit).map((s) => s.c);
+}
+
 function readProblem(slug: string): { slug: string; fm: Record<string, any>; body: string } | null {
   const p = safeJoin(PROBLEMS_DIR, slug);
   if (!p || !existsSync(p)) return null;
