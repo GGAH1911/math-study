@@ -34,6 +34,10 @@ export const KATEX_STRICT: KatexOpts['strict'] = (code) =>
 // output isn't a sea of red parse-error text.
 export function normalizeKatex(tex: string): string {
   return tex
+    // 이스케이프 안 된 `%` → `\%`. KaTeX/LaTeX 에서 `%` 는 주석 시작 문자라
+    // `\text{171.8% 유효이자율}` 의 `%` 가 뒤(닫는 `}`·`$$`)를 통째로 주석처리해
+    // 파싱 실패 → raw 노출. 튜터 수식 안 `%` 는 항상 퍼센트 의미이므로 escape.
+    .replace(/(?<!\\)%/g, '\\%')
     .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
