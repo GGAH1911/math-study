@@ -85,6 +85,16 @@ function renderMarkdown(text: string): string {
     s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const inline = (s: string) =>
     s
+      // 링크 [text](url) → 클릭 가능한 <a>. 보안: 내부경로(/..)·http(s) 만 허용(javascript: 차단),
+      // url 에 따옴표 있으면 거부. 가독성: 경로형 텍스트(algebra/math-1/지수와_로그)는 마지막
+      // 세그먼트만 + `_`→공백 (지수와 로그). escape 이후 실행 — []()/_ 는 escape 가 안 건드림.
+      .replace(/\[([^\]\n]+?)\]\(([^)\s]+?)\)/g, (m, txt: string, url: string) => {
+        if (!/^(\/|https?:\/\/)/.test(url) || /["']/.test(url)) return m;
+        const label = txt.includes('/') && !/\s/.test(txt)
+          ? (txt.split('/').pop() || txt).replace(/_/g, ' ')
+          : txt;
+        return `<a href="${url}" class="text-[color:var(--color-accent)] underline decoration-dotted underline-offset-2 hover:decoration-solid">${label}</a>`;
+      })
       // bold
       .replace(/\*\*([^\n*]+?)\*\*/g, '<strong>$1</strong>')
       // italic (single * or _)
