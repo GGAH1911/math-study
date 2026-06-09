@@ -1,0 +1,74 @@
+---
+// 가입 페이지(공개 라우트). 이미 로그인된 사용자는 미들웨어가 홈으로 보냄.
+import '../styles/global.css';
+const returnTo = Astro.url.searchParams.get('returnTo') || '/';
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>가입 · 수능 수학</title>
+  </head>
+  <body class="min-h-screen bg-[color:var(--color-bg,#09090b)] text-[color:var(--color-text,#fafafa)] flex items-center justify-center p-4">
+    <main class="w-full max-w-sm">
+      <h1 class="text-xl font-semibold mb-1">계정 만들기</h1>
+      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mb-6">수능 수학 학습 시스템</p>
+
+      <form id="f" class="space-y-3">
+        <input type="text" name="displayName" autocomplete="nickname" placeholder="이름(선택)"
+          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
+        <input type="email" name="email" required autocomplete="email" placeholder="이메일"
+          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
+        <input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="비밀번호 (8자 이상)"
+          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
+        <button type="submit"
+          class="w-full px-3 py-2 rounded-md bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/30 transition font-medium disabled:opacity-50">
+          가입하기
+        </button>
+        <p id="msg" class="text-sm min-h-[1.25rem]" role="alert"></p>
+      </form>
+
+      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mt-6">
+        이미 계정이 있으신가요?
+        <a href="/login" class="text-[color:var(--color-accent,#818cf8)] hover:underline">로그인</a>
+      </p>
+    </main>
+
+    <script define:vars={{ returnTo }}>
+      const f = document.getElementById('f');
+      const msg = document.getElementById('msg');
+      f.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msg.textContent = '';
+        msg.className = 'text-sm min-h-[1.25rem]';
+        const btn = f.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try {
+          const r = await fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              email: f.email.value,
+              password: f.password.value,
+              displayName: f.displayName.value,
+            }),
+          });
+          const d = await r.json().catch(() => ({}));
+          if (r.ok && d.ok) {
+            let dest = returnTo;
+            if (typeof dest !== 'string' || !dest.startsWith('/') || dest.startsWith('//')) dest = '/';
+            location.href = dest;
+            return;
+          }
+          msg.className = 'text-sm min-h-[1.25rem] text-rose-400';
+          msg.textContent = d.error || '가입에 실패했습니다.';
+        } catch {
+          msg.className = 'text-sm min-h-[1.25rem] text-rose-400';
+          msg.textContent = '네트워크 오류가 발생했습니다.';
+        }
+        btn.disabled = false;
+      });
+    </script>
+  </body>
+</html>

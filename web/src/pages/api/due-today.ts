@@ -4,7 +4,7 @@
 //
 // GET /api/due-today?limit=20&includeNew=1
 import type { APIRoute } from 'astro';
-import sql, { SINGLE_USER_ID } from '../../lib/db.ts';
+import sql from '../../lib/db.ts';
 
 export const prerender = false;
 
@@ -20,7 +20,9 @@ type Row = {
   source: string;
 };
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, locals }) => {
+  const userId = locals.user?.id;
+  if (!userId) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: { 'content-type': 'application/json' } });
   const limit = Math.min(parseInt(url.searchParams.get('limit') ?? '20', 10) || 20, 100);
   const includeNew = url.searchParams.get('includeNew') !== '0';
 
@@ -34,7 +36,7 @@ export const GET: APIRoute = async ({ url }) => {
       FROM problem_state s
       JOIN problems p ON p.id = s.problem_id
       JOIN exams e ON e.id = p.exam_id
-     WHERE s.user_id = ${SINGLE_USER_ID}
+     WHERE s.user_id = ${userId}
        AND s.next_review IS NOT NULL
        AND s.next_review <= current_date
      ORDER BY s.next_review ASC, p.killer_tier NULLS LAST
@@ -51,7 +53,7 @@ export const GET: APIRoute = async ({ url }) => {
         FROM problems p
         JOIN exams e ON e.id = p.exam_id
         LEFT JOIN problem_state s
-               ON s.problem_id = p.id AND s.user_id = ${SINGLE_USER_ID}
+               ON s.problem_id = p.id AND s.user_id = ${userId}
        WHERE s.problem_id IS NULL
        ORDER BY e.year DESC, p.killer_tier ASC NULLS LAST, p.number ASC
        LIMIT ${limit - due.length}

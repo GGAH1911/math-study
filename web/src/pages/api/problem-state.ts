@@ -4,7 +4,7 @@
 // POST /api/problem-state              → {ok}
 //   body: { slug, action: 'reset' | 'mark-mastered' | 'skip' }
 import type { APIRoute } from 'astro';
-import sql, { SINGLE_USER_ID } from '../../lib/db.ts';
+import sql from '../../lib/db.ts';
 
 export const prerender = false;
 
@@ -25,7 +25,9 @@ async function findProblemId(slug: string): Promise<string | null> {
   return rows[0]?.id ?? null;
 }
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, locals }) => {
+  const userId = locals.user?.id;
+  if (!userId) return j({ error: 'unauthorized' }, 401);
   const slug = url.searchParams.get('slug') ?? '';
   if (!SLUG_RE.test(slug)) return j({ error: 'invalid slug' }, 400);
   const pid = await findProblemId(slug);
@@ -37,7 +39,7 @@ export const GET: APIRoute = async ({ url }) => {
   }>>`
     SELECT status, review_state, next_review, last_attempted, attempt_count
       FROM problem_state
-     WHERE user_id = ${SINGLE_USER_ID} AND problem_id = ${pid}
+     WHERE user_id = ${userId} AND problem_id = ${pid}
   `;
   const recent = await sql<Array<{
     answer_given: string | null; is_correct: boolean | null;
@@ -45,13 +47,15 @@ export const GET: APIRoute = async ({ url }) => {
   }>>`
     SELECT answer_given, is_correct, attempted_at, time_taken_sec, notes
       FROM problem_attempts
-     WHERE user_id = ${SINGLE_USER_ID} AND problem_id = ${pid}
+     WHERE user_id = ${userId} AND problem_id = ${pid}
      ORDER BY attempted_at DESC LIMIT 5
   `;
   return j({ state: state ?? null, recentAttempts: recent });
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+  const userId = locals.user?.id;
+  if (!userId) return j({ error: 'unauthorized' }, 401);
   let body: { slug: string; action: string };
   try { body = await request.json(); } catch { return j({ error: 'invalid json' }, 400); }
   const { slug, action } = body;
@@ -60,14 +64,14 @@ export const POST: APIRoute = async ({ request }) => {
   if (!pid) return j({ error: 'problem not found' }, 404);
 
   if (action === 'reset') {
-    await sql`DELETE FROM problem_state WHERE user_id = ${SINGLE_USER_ID} AND problem_id = ${pid}`;
+    await sql`DELETE FROM problem_state WHERE user_id = ${userId} AND problem_id = ${pid}`;
     return j({ ok: true, action: 'reset' });
   }
   if (action === 'mark-mastered') {
     const next = new Date(Date.now() + 60 * 86_400_000).toISOString().slice(0, 10);
     await sql`
       INSERT INTO problem_state (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
-      VALUES (${SINGLE_USER_ID}, ${pid}, 'solved', 'mature', ${next}, now(), 1)
+      VALUES (${userId}, ${pid}, 'solved', 'mature', ${next}, now(), 1)
       ON CONFLICT (user_id, problem_id) DO UPDATE SET
         status='solved', review_state='mature', next_review=EXCLUDED.next_review, last_attempted=now()
     `;
@@ -77,7 +81,7 @@ export const POST: APIRoute = async ({ request }) => {
     const next = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
     await sql`
       INSERT INTO problem_state (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
-      VALUES (${SINGLE_USER_ID}, ${pid}, 'review', 'new', ${next}, now(), 0)
+      VALUES (${userId}, ${pid}, 'review', 'new', ${next}, now(), 0)
       ON CONFLICT (user_id, problem_id) DO UPDATE SET next_review=EXCLUDED.next_review
     `;
     return j({ ok: true, action: 'skip' });

@@ -7,7 +7,7 @@
 //   body: { slug: string, answer: string, timeTakenSec?: number, notes?: string }
 //   200: { ok, correct, expected, nextReview, reviewState, intervalDays }
 import type { APIRoute } from 'astro';
-import sql, { SINGLE_USER_ID } from '../../lib/db.ts';
+import sql from '../../lib/db.ts';
 import { answersMatch, nextSrsState } from '../../lib/srs.ts';
 
 export const prerender = false;
@@ -23,7 +23,9 @@ type AttemptBody = {
   notes?: string;
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+  const userId = locals.user?.id;
+  if (!userId) return json({ error: 'unauthorized' }, 401);
   let body: AttemptBody;
   try { body = (await request.json()) as AttemptBody; }
   catch {
@@ -57,7 +59,7 @@ export const POST: APIRoute = async ({ request }) => {
   const stateRows = await sql<{ review_state: 'new'|'learning'|'mature'; attempt_count: number }[]>`
     SELECT review_state, attempt_count
       FROM problem_state
-     WHERE user_id = ${SINGLE_USER_ID} AND problem_id = ${problemId}
+     WHERE user_id = ${userId} AND problem_id = ${problemId}
   `;
   const transition = nextSrsState(stateRows[0] ?? null, correct);
 
@@ -65,7 +67,7 @@ export const POST: APIRoute = async ({ request }) => {
   await sql.begin(async (tx) => {
     await tx`
       INSERT INTO problem_attempts (user_id, problem_id, answer_given, is_correct, time_taken_sec, notes)
-      VALUES (${SINGLE_USER_ID}, ${problemId}, ${answer},
+      VALUES (${userId}, ${problemId}, ${answer},
               ${expected === '' ? null : correct},
               ${timeTakenSec ?? null}, ${notes ?? null})
     `;
@@ -73,7 +75,7 @@ export const POST: APIRoute = async ({ request }) => {
       INSERT INTO problem_state
         (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
       VALUES
-        (${SINGLE_USER_ID}, ${problemId}, ${transition.status},
+        (${userId}, ${problemId}, ${transition.status},
          ${transition.reviewState}, ${transition.nextReview}, now(), 1)
       ON CONFLICT (user_id, problem_id) DO UPDATE SET
         status = EXCLUDED.status,

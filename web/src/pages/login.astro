@@ -1,0 +1,75 @@
+---
+// 로그인 페이지(공개 라우트). 이미 로그인된 사용자는 미들웨어가 홈으로 보냄.
+import '../styles/global.css';
+const returnTo = Astro.url.searchParams.get('returnTo') || '/';
+// OAuth 자격증명이 설정돼 있으면 Google 버튼 노출(현재는 슬롯만).
+const googleEnabled = !!process.env.GOOGLE_OAUTH_CLIENT_ID;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>로그인 · 수능 수학</title>
+  </head>
+  <body class="min-h-screen bg-[color:var(--color-bg,#09090b)] text-[color:var(--color-text,#fafafa)] flex items-center justify-center p-4">
+    <main class="w-full max-w-sm">
+      <h1 class="text-xl font-semibold mb-1">로그인</h1>
+      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mb-6">수능 수학 학습 시스템</p>
+
+      <form id="f" class="space-y-3">
+        <input type="email" name="email" required autocomplete="email" placeholder="이메일"
+          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
+        <input type="password" name="password" required autocomplete="current-password" placeholder="비밀번호"
+          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
+        <button type="submit"
+          class="w-full px-3 py-2 rounded-md bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/30 transition font-medium disabled:opacity-50">
+          로그인
+        </button>
+        <p id="err" class="text-sm text-rose-400 min-h-[1.25rem]" role="alert"></p>
+      </form>
+
+      {googleEnabled && (
+        <a href="/api/auth/google/start"
+          class="mt-2 block text-center w-full px-3 py-2 rounded-md border border-[color:var(--color-border,#27272a)] hover:border-zinc-500 transition text-sm">
+          Google로 로그인
+        </a>
+      )}
+
+      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mt-6">
+        계정이 없으신가요?
+        <a href="/signup" class="text-[color:var(--color-accent,#818cf8)] hover:underline">가입하기</a>
+      </p>
+    </main>
+
+    <script define:vars={{ returnTo }}>
+      const f = document.getElementById('f');
+      const err = document.getElementById('err');
+      f.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        err.textContent = '';
+        const btn = f.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try {
+          const r = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ email: f.email.value, password: f.password.value }),
+          });
+          const d = await r.json().catch(() => ({}));
+          if (r.ok && d.ok) {
+            // open-redirect 방지: 동일출처 상대경로만 허용.
+            let dest = returnTo;
+            if (typeof dest !== 'string' || !dest.startsWith('/') || dest.startsWith('//')) dest = '/';
+            location.href = dest;
+            return;
+          }
+          err.textContent = d.error || '로그인에 실패했습니다.';
+        } catch {
+          err.textContent = '네트워크 오류가 발생했습니다.';
+        }
+        btn.disabled = false;
+      });
+    </script>
+  </body>
+</html>

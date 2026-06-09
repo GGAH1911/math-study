@@ -32,6 +32,14 @@ export async function hashPassword(password: string): Promise<string> {
   return `scrypt$${SCRYPT.N}$${SCRYPT.r}$${SCRYPT.p}$${salt.toString('hex')}$${hash.toString('hex')}`;
 }
 
+// 사용자 미존재 시에도 동일한 scrypt 비용을 치르게 해 타이밍 기반 계정 열거를 막는다.
+// (login 에서 password_hash 가 없으면 이 더미 해시로 verifyPassword 를 돌린다.)
+let _dummyHash: Promise<string> | null = null;
+export function getDummyHash(): Promise<string> {
+  if (!_dummyHash) _dummyHash = hashPassword(randomBytes(24).toString('hex'));
+  return _dummyHash;
+}
+
 export async function verifyPassword(password: string, stored: string | null): Promise<boolean> {
   if (!stored) return false;
   try {
