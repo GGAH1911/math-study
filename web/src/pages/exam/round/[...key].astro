@@ -21,25 +21,25 @@ probs.sort((a, b) => {
   return Number(a.data.source?.number ?? 0) - Number(b.data.source?.number ?? 0);
 });
 
-const s0 = probs[0].data.source ?? {};
+const s0 = probs[0].data.source;
 const year = key.split('/')[0];
 const title = roundTitle({
   year,
-  agency: String(s0.agency ?? ''),
-  exam_type: String(s0.exam_type ?? ''),
-  grade: String(s0.grade ?? ''),
-  session: String(s0.session ?? ''),
+  agency: String(s0?.agency ?? ''),
+  exam_type: String(s0?.exam_type ?? ''),
+  grade: String(s0?.grade ?? ''),
+  session: String(s0?.session ?? ''),
 });
 
 const examProblems = probs.map((p) => {
-  const s = p.data.source ?? {};
+  const s = p.data.source;
   return {
     slug: p.id,
-    number: Number(s.number ?? 0),
-    subject: String(s.subject ?? ''),
+    number: Number(s?.number ?? 0),
+    subject: String(s?.subject ?? ''),
     format: p.data.format ?? 'choice',
     image: p.data.problem_image ?? `/problem-images/${p.id.split('/').pop()}.png`,
-    score: Number(s.score ?? 0),
+    score: Number(s?.score ?? 0),
   };
 });
 

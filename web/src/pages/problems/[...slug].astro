@@ -31,7 +31,7 @@ const unitTitle = fm.source?.subject
 // 가/나형·단일(검정고시·고1·2)은 공통이 없어 같은 과목 내 선형 이동.
 const src = fm.source;
 type ProbEntry = Awaited<ReturnType<typeof getCollection<'problems'>>>[number];
-const byNum = (a: ProbEntry, b: ProbEntry) => (a.data.source?.number ?? 0) - (b.data.source?.number ?? 0);
+const byNum = (a: ProbEntry, b: ProbEntry) => Number(a.data.source?.number ?? 0) - Number(b.data.source?.number ?? 0);
 const roundAll: ProbEntry[] = src
   ? (await getCollection('problems', (e) => {
       const s = e.data.source;

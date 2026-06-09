@@ -14,7 +14,7 @@ import { visit } from 'unist-util-visit';
 // errorColor 도 기본 빨강(#cc0000) 대신 amber 로 — 본문 한가운데 시뻘건
 // 텍스트가 튀어나오는 사고를 막음. (LLM 이 만든 식이 종종 깨짐.)
 const katexOptions = {
-  strict: (code) => (code === 'unicodeTextInMathMode' ? 'ignore' : 'warn'),
+  strict: (/** @type {string} */ code) => (code === 'unicodeTextInMathMode' ? 'ignore' : 'warn'),
   errorColor: '#a16207',
 };
 
@@ -26,12 +26,12 @@ const katexOptions = {
  * every author memorize the difference, normalize here.
  */
 function remarkKatexCompat() {
-  const rewrite = (src) => src
+  const rewrite = (/** @type {string} */ src) => src
     .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
-  return (tree) => {
+  return (/** @type {any} */ tree) => {
     visit(tree, ['math', 'inlineMath'], (node) => {
       if (typeof node.value === 'string') node.value = rewrite(node.value);
     });
@@ -48,7 +48,7 @@ function remarkKatexCompat() {
  * (`docs/<collection>/...`) via vfile.history/path.
  */
 function remarkRewritePaths() {
-  return (tree, file) => {
+  return (/** @type {any} */ tree, /** @type {any} */ file) => {
     const filePath = (file?.history?.[0] ?? file?.path ?? '').toString();
     const colMatch = filePath.match(/[\\/]docs[\\/](concepts|problems|mistakes|tools|syntheses)[\\/]/);
     const currentCol = colMatch ? colMatch[1] : null;
@@ -86,13 +86,13 @@ function remarkRewritePaths() {
  * "학습 시 채워짐" 텍스트로 스코프되므로 실제 풀이가 적힌 경우엔 매칭 안 됨.
  */
 function remarkStripSolutionPlaceholder() {
-  return (tree) => {
+  return (/** @type {any} */ tree) => {
     const kids = tree.children;
     if (!Array.isArray(kids)) return;
     for (let i = 0; i < kids.length; i++) {
       const node = kids[i];
       if (node.type !== 'heading' || node.depth !== 2) continue;
-      const text = (node.children || []).map((c) => c.value || '').join('');
+      const text = (node.children || []).map((/** @type {any} */ c) => c.value || '').join('');
       if (!(text.includes('풀이') && text.includes('학습 시 채워짐'))) continue;
       let j = i + 1;
       while (j < kids.length && kids[j].type !== 'heading') j++;

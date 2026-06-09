@@ -5,13 +5,15 @@
 // - Dark-mode styled to match the rest of the UI
 import { useEffect, useRef } from 'react';
 
-declare global {
+// React 19 + @types/react@19 는 JSX 네임스페이스가 전역 `JSX` 가 아니라 `react`
+// 모듈 안(`React.JSX`)에 있다. 따라서 커스텀 엘리먼트는 전역이 아니라 react 모듈을
+// augment 해야 인식된다(전역 augment 는 무시됨 → ts2339). MathLive 의 <math-field>
+// 는 서드파티 웹컴포넌트라 prop 타입은 any 로 둔다.
+declare module 'react' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      'math-field': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        ref?: React.Ref<HTMLElement>;
-      };
+      'math-field': any;
     }
   }
 }

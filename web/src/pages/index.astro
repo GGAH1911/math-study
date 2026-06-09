@@ -63,7 +63,7 @@ const leafOf = (p: string | null) => p ? (p.split('/').pop() ?? p).replace(/_/g,
         </header>
         <div class="h-[340px] border-t border-[color:var(--color-border)]">
           {graph.stats.nodes > 0 ? (
-            <ConceptDAG client:load data={graph} variant="mini" />
+            <ConceptDAG client:load data={graph as any} variant="mini" />
           ) : (
             <p class="text-sm text-[color:var(--color-muted)] p-6">아직 concept 노드가 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 첫 페이지를 시드해보세요.</p>
           )}

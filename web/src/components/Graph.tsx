@@ -187,8 +187,9 @@ function loadFunctionPlot() {
 }
 
 // Lazy mathjs evaluator (function-plot bundles it but doesn't expose).
-let MATH_EVAL: ((expr: string, scope: object) => number) | null = null;
-let MATH_LOADER: Promise<typeof MATH_EVAL> | null = null;
+type MathEvalFn = (expr: string, scope: object) => number;
+let MATH_EVAL: MathEvalFn | null = null;
+let MATH_LOADER: Promise<MathEvalFn | null> | null = null;
 function loadMathEval() {
   if (!MATH_LOADER) {
     MATH_LOADER = import('mathjs')

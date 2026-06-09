@@ -289,7 +289,15 @@ export function parseGraphSegments(text: string): Segment[] {
 // Loader/cache lives in `lib/mathish` so all graphic components share one
 // KaTeX instance.
 type KatexImpl = {
-  renderToString: (tex: string, opts?: { displayMode?: boolean; throwOnError?: boolean }) => string;
+  // strict/errorColor 타입은 mathish 의 KatexOpts 와 정확히 일치시켜야 ensureKatex()
+  // 가 돌려주는 Katex 인스턴스를 이 KatexImpl 로 받을 수 있다(더 넓게 잡으면 함수
+  // 파라미터 contravariance 가 깨져 ts2345).
+  renderToString: (tex: string, opts?: {
+    displayMode?: boolean;
+    throwOnError?: boolean;
+    strict?: 'ignore' | 'warn' | 'error' | ((code: string) => 'ignore' | 'warn' | 'error');
+    errorColor?: string;
+  }) => string;
 };
 
 // Haiku 같은 작은 모델이 `$...$` 마커를 까먹고 부등식·절댓값·LaTeX 명령어를

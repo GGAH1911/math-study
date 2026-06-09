@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
     "graph": "node scripts/build-concept-graph.mjs",
     "sync-assets": "node scripts/sync-assets.mjs"
   },
@@ -47,6 +48,9 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
-    "@types/three": "^0.184.1"
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^25.9.2",
+    "@types/three": "^0.184.1",
+    "typescript": "^6.0.3"
   }
 }

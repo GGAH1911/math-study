@@ -1,7 +1,8 @@
 ---
 // 회차 내 이전/다음 네비게이션 바. 공통↔선택 경계에서 다음이 여러 과목으로 분기할 수
 // 있어 nexts 는 배열(보통 1개, 공통 마지막에서만 선택과목 수만큼).
-type Entry = { id: string; data: { source?: { subject?: string; number?: number } } };
+// number 는 content schema 상 string|number (정답표 OCR 변이 허용) — 둘 다 받음.
+type Entry = { id: string; data: { source?: { subject?: string; number?: string | number } } };
 interface Props {
   prev: Entry | null;
   nexts: Entry[];

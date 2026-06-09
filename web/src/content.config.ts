@@ -21,7 +21,7 @@ const concepts = defineCollection({
     prerequisites: z.array(z.string()).optional().default([]),
     enables: z.array(z.string()).optional().default([]),
     mastery: masteryEnum,
-    mastery_evidence: z.array(z.union([z.string(), z.record(z.unknown())])).optional().default([]),
+    mastery_evidence: z.array(z.union([z.string(), z.record(z.string(), z.unknown())])).optional().default([]),
     mastery_updated: z.coerce.date().optional(),
     review_state: reviewStateEnum.optional(),
     next_review: z.coerce.date().optional(),
@@ -76,7 +76,7 @@ const problems = defineCollection({
     // 모든 수능 도형이 이 spec으로 표현 가능한 건 아님 — fallback은 PNG.
     figure_spec: z.object({
       kind: z.enum(['geometry', 'plot', 'numberline', 'chart']),
-      spec: z.record(z.unknown()),
+      spec: z.record(z.string(), z.unknown()),
       confidence: z.number().min(0).max(1).optional(),
     }).optional(),
     // 검증된 풀이 캐시 (scripts/build_solution_cache.py 생성). 튜터 레퍼런스 + 페이지 "풀이 보기".

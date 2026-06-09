@@ -57,7 +57,7 @@ function groupByType(paths: string[]): { type: string; label: string; items: { s
   }
   // 알려진 type 순서대로 + 그 외 type을 알파벳 순으로
   const knownOrder = TYPE_ORDER.filter((t) => buckets[t]?.length);
-  const otherTypes = Object.keys(buckets).filter((t) => !TYPE_ORDER.includes(t)).sort();
+  const otherTypes = Object.keys(buckets).filter((t) => !(TYPE_ORDER as readonly string[]).includes(t)).sort();
   return [...knownOrder, ...otherTypes].map((t) => ({
     type: t,
     label: TYPE_LABEL[t] ?? t,
