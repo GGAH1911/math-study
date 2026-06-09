@@ -121,7 +121,8 @@ function progressToStatus(pct: number): UnitStatus {
 }
 
 // 51개 단원 각각의 진행도. 멤버 = 그 단원의 스포크 + 단원 노드 자신.
-export function computeUnitProgress(): UnitProgress[] {
+// masteryOf: 멀티유저에서 사용자별 mastery 를 주입하는 resolver(없으면 그래프 전역값).
+export function computeUnitProgress(masteryOf?: (conceptId: string) => UnitStatus): UnitProgress[] {
   const graph = readConceptGraph();
   const units = graph.nodes.filter((n) => n.concept_type === 'unit');
   const membersByUnit = new Map<string, GNode[]>();
@@ -131,14 +132,15 @@ export function computeUnitProgress(): UnitProgress[] {
     const home = n.home_unit;
     if (home && membersByUnit.has(home)) membersByUnit.get(home)!.push(n);
   }
+  const lvlOf = (m: GNode): UnitStatus => (masteryOf ? masteryOf(m.id) : (m.mastery as UnitStatus));
   return units.map((u) => {
     const members = membersByUnit.get(u.id)!;
     const mastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 };
     let points = 0;
     for (const m of members) {
-      const k = m.mastery as keyof typeof mastery;
-      if (k in mastery) mastery[k]++;
-      points += MASTERY_POINTS[m.mastery] ?? 0;
+      const lvl = lvlOf(m);
+      if (lvl in mastery) mastery[lvl]++;
+      points += MASTERY_POINTS[lvl] ?? 0;
     }
     const max = members.length * 3;
     const progressPercent = max > 0 ? Math.round((points / max) * 100) : 0;
@@ -162,8 +164,8 @@ export type UnitSummary = {
 };
 
 // 헤더/대시보드 도넛용 단원 요약 (분모 = 단원 51).
-export function unitSummary(): UnitSummary {
-  const units = computeUnitProgress();
+export function unitSummary(masteryOf?: (conceptId: string) => UnitStatus): UnitSummary {
+  const units = computeUnitProgress(masteryOf);
   const byStatus = { unknown: 0, learning: 0, proficient: 0, mastered: 0 };
   let started = 0;
   for (const u of units) {
@@ -181,9 +183,9 @@ const GRADE_RANK: Record<string, number> = {
 //  - continuing: 진행 중(0<진행<100), 진행률 높은 순.
 //  - ready: 미착수(0%) & 모든 선수 단원이 능숙+ (선수 없는 root = "여기서 시작"), 기초 학년 우선.
 //  - review: next_review ≤ 오늘인 개념을 가진 단원.
-export function recommendUnits(): { continuing: UnitProgress[]; ready: UnitProgress[]; review: UnitProgress[] } {
+export function recommendUnits(masteryOf?: (conceptId: string) => UnitStatus): { continuing: UnitProgress[]; ready: UnitProgress[]; review: UnitProgress[] } {
   const graph = readConceptGraph();
-  const units = computeUnitProgress();
+  const units = computeUnitProgress(masteryOf);
   const byId = new Map(units.map((u) => [u.unitId, u]));
   const prereqOf = new Map(
     graph.nodes.filter((n) => n.concept_type === 'unit').map((n) => [n.id, n.prerequisites ?? []]),

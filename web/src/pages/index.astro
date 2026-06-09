@@ -9,11 +9,16 @@ import MasteryDonut from '../components/MasteryDonut.tsx';
 import ConceptDAG from '../components/ConceptDAG.tsx';
 import ChatPanel from '../components/ChatPanel.tsx';
 import { readHealth, readConceptGraph, unitSummary } from '../lib/health.ts';
+import { getMasteryMap } from '../lib/mastery.ts';
 import synthesesIndex from '../data/syntheses-by-concept.json';
 
 const health = readHealth();
 const graph = readConceptGraph();
-const units = unitSummary();
+// 멀티유저: 로그인 사용자의 mastery 를 그래프·단원요약에 오버레이(전역 frontmatter 대신).
+const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
+const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'learning' | 'proficient' | 'mastered';
+const graphForUser = { ...graph, nodes: graph.nodes.map((n) => ({ ...n, mastery: masteryMap.get(n.id) ?? 'unknown' })) };
+const units = unitSummary(mof);
 const us = units.byStatus;
 type SynthesisRecent = { slug: string; title: string; created: string | null; origin_concept: string | null; excerpt: string | null };
 const recentSyntheses: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []).slice(0, 5);
@@ -63,7 +68,7 @@ const leafOf = (p: string | null) => p ? (p.split('/').pop() ?? p).replace(/_/g,
         </header>
         <div class="h-[340px] border-t border-[color:var(--color-border)]">
           {graph.stats.nodes > 0 ? (
-            <ConceptDAG client:load data={graph as any} variant="mini" />
+            <ConceptDAG client:load data={graphForUser as any} variant="mini" />
           ) : (
             <p class="text-sm text-[color:var(--color-muted)] p-6">아직 concept 노드가 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 첫 페이지를 시드해보세요.</p>
           )}

@@ -3,16 +3,20 @@ export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ConceptDAG from '../components/ConceptDAG.tsx';
 import { readConceptGraph } from '../lib/health.ts';
+import { getMasteryMap } from '../lib/mastery.ts';
 
 import synthesesIndex from '../data/syntheses-by-concept.json';
 
 const graph = readConceptGraph();
+// 멀티유저: 로그인 사용자의 mastery 를 노드에 오버레이(전역 그래프값 대신).
+const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
 // 노트 카운트 (concept slug → 개수)를 노드에 주입해서 그래프가 `🗒N` 배지를 그릴 수 있게.
 const notesByConcept: Record<string, unknown[]> = (synthesesIndex as any).byConcept ?? {};
 const annotatedGraph = {
   ...graph,
   nodes: graph.nodes.map((n: any) => ({
     ...n,
+    mastery: masteryMap.get(n.id) ?? 'unknown',
     note_count: notesByConcept[n.id]?.length ?? 0,
   })),
 };

@@ -4,13 +4,12 @@
 // write해도 SSR 시 stale 값을 반환할 수 있으므로, mastery 같은 빠르게
 // 변하는 필드는 fs에서 직접 다시 읽어 override한다.
 export const prerender = false;
-import { readFileSync, existsSync } from 'node:fs';
-import { resolve } from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
 import RegenerateBodyButton from '../../components/RegenerateBodyButton.tsx';
 import LearningNoteButton from '../../components/LearningNoteButton.tsx';
+import { getMastery } from '../../lib/mastery.ts';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('concepts', slug);
@@ -20,18 +19,13 @@ if (!entry) {
 const { Content } = await render(entry);
 const fm = { ...entry.data } as typeof entry.data;
 
-// content collection cache bypass — frontmatter의 동적 필드(mastery,
-// mastery_updated)를 디스크에서 직접 다시 읽어 override.
-const mdPath = resolve(process.cwd(), '..', 'docs', 'concepts', `${slug}.md`);
-if (existsSync(mdPath)) {
-  const raw = readFileSync(mdPath, 'utf-8');
-  const m1 = raw.match(/^mastery:\s*(\w+)/m);
-  if (m1) fm.mastery = m1[1] as typeof fm.mastery;
-  const m2 = raw.match(/^mastery_updated:\s*(\S+)/m);
-  if (m2) {
-    const d = new Date(m2[1]);
-    if (!isNaN(d.getTime())) fm.mastery_updated = d;
-  }
+// 멀티유저: mastery 는 frontmatter(전역)가 아니라 로그인 사용자의 concept_mastery
+// 에서 읽는다. (페이지는 미들웨어 게이팅 하 SSR → Astro.locals.user 존재.)
+const um = Astro.locals.user ? await getMastery(Astro.locals.user.id, entry.id) : null;
+fm.mastery = (um?.mastery ?? 'unknown') as typeof fm.mastery;
+if (um?.mastery_updated) {
+  const d = new Date(um.mastery_updated);
+  if (!isNaN(d.getTime())) fm.mastery_updated = d;
 }
 
 // sub-dir 호환: 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
