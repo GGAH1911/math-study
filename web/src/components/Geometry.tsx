@@ -41,6 +41,103 @@ function _evalMathjs(s: string | number): number {
   try { return _math.evaluate(s); } catch { return NaN; }
 }
 
+// 좌표 정규화 — LLM 이 'sqrt(3)'·'3*sqrt(3)' 같은 raw 수학식 string 을 좌표에
+// 박는 경우 mathjs 로 evaluate. number/evaluable string → 유한 number, 아니면 null.
+// (Geometry3D 의 coerceCoord/normalizeMathExprStr 와 동일한 동작.)
+function _normalizeMathExprStr(s: string): string {
+  return s.replace(/√/g, 'sqrt').replace(/π/g, 'pi').replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+}
+function _coerceCoord(v: unknown): number | null {
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  if (typeof v === 'string') {
+    const expr = _normalizeMathExprStr(v.startsWith('=') ? v.slice(1) : v);
+    try {
+      const r = _math.evaluate(expr);
+      if (typeof r === 'number' && Number.isFinite(r)) return r;
+    } catch { /* fall through */ }
+    return null;
+  }
+  return null;
+}
+// [x,y] 쌍을 coerce. 둘 다 유한해야 통과, 아니면 null (해당 shape drop 신호).
+function _coercePair(p: unknown): [number, number] | null {
+  if (!Array.isArray(p) || p.length < 2) return null;
+  const x = _coerceCoord(p[0]);
+  const y = _coerceCoord(p[1]);
+  return (x === null || y === null) ? null : [x, y];
+}
+
+// spec.shapes 를 정규화: 문자열/수식 좌표를 유한 number 로 강제하고, 좌표가
+// 비유한(NaN/Infinity/eval 실패)인 shape 는 통째로 drop 한다. autoBounds 와
+// 렌더가 같은 정규화 입력을 공유하므로, 깨진 좌표 하나가 전체 bounds 를
+// 오염(±Infinity → scale=NaN → 빈 캔버스)시키는 사고를 막는다.
+function normalizeShapes(shapes: GeomShape[]): GeomShape[] {
+  const out: GeomShape[] = [];
+  for (const s of shapes) {
+    switch (s.type) {
+      case 'point': {
+        const at = _coercePair(s.at);
+        if (at) out.push({ ...s, at });
+        break;
+      }
+      case 'polygon': {
+        const vertices = s.vertices.map((v) => _coercePair(v));
+        if (vertices.every((v): v is [number, number] => v !== null)) {
+          out.push({ ...s, vertices });
+        }
+        break;
+      }
+      case 'line': case 'segment': case 'vector': {
+        const from = _coercePair(s.from), to = _coercePair(s.to);
+        if (from && to) out.push({ ...s, from, to });
+        break;
+      }
+      case 'circle': {
+        const center = _coercePair(s.center);
+        const radius = _coerceCoord(s.radius);
+        if (center && radius !== null) out.push({ ...s, center, radius });
+        break;
+      }
+      case 'ellipse': {
+        const center = _coercePair(s.center);
+        const rx = _coerceCoord(s.rx ?? (s as unknown as { a?: unknown }).a);
+        const ry = _coerceCoord(s.ry ?? (s as unknown as { b?: unknown }).b);
+        if (center && rx !== null && ry !== null) out.push({ ...s, center, rx, ry });
+        break;
+      }
+      case 'hyperbola': {
+        const center = _coercePair(s.center);
+        const a = _coerceCoord(s.a), b = _coerceCoord(s.b);
+        if (center && a !== null && b !== null) out.push({ ...s, center, a, b });
+        break;
+      }
+      case 'parabola': {
+        const vertex = _coercePair(s.vertex);
+        const focus = s.focus === undefined ? undefined : _coerceCoord(s.focus);
+        if (vertex && focus !== null) out.push({ ...s, vertex, ...(focus === undefined ? {} : { focus }) });
+        break;
+      }
+      case 'angle': {
+        const at = _coercePair(s.at), from = _coercePair(s.from), to = _coercePair(s.to);
+        if (at && from && to) out.push({ ...s, at, from, to });
+        break;
+      }
+      case 'text': {
+        const at = _coercePair(s.at);
+        if (at) out.push({ ...s, at });
+        break;
+      }
+      case 'parametric':
+        // 문자열 expr 좌표는 sampleParametric 가 이미 mathjs 로 평가 + 유한성 필터.
+        out.push(s);
+        break;
+      default:
+        out.push(s);
+    }
+  }
+  return out;
+}
+
 // 매개변수 곡선을 sample. null 은 끊김 marker (NaN/Infinity/eval 실패).
 function sampleParametric(
   s: { x: string; y: string; tRange: [number | string, number | string]; samples?: number },
@@ -159,9 +256,12 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
         xs.push(s.at[0]); ys.push(s.at[1]); break;
     }
   }
-  if (xs.length === 0) return { x: [-5, 5], y: [-5, 5] };
-  const xMin = Math.min(...xs), xMax = Math.max(...xs);
-  const yMin = Math.min(...ys), yMax = Math.max(...ys);
+  // 비유한 좌표(±Infinity from JSON.parse('1e309'), NaN)는 제외 — 단 하나라도
+  // 섞이면 min/max 가 ±Infinity 가 되어 padX=Infinity → scale=NaN → 빈 캔버스.
+  const fxs = xs.filter(Number.isFinite), fys = ys.filter(Number.isFinite);
+  if (fxs.length === 0 || fys.length === 0) return { x: [-5, 5], y: [-5, 5] };
+  const xMin = Math.min(...fxs), xMax = Math.max(...fxs);
+  const yMin = Math.min(...fys), yMax = Math.max(...fys);
   // padding 25% — 점이 viewport 끝에 안 붙도록. min 0.5 라 한 점만 있는 케이스도 보임.
   const padX = Math.max((xMax - xMin) * 0.25, 0.5);
   const padY = Math.max((yMax - yMin) * 0.25, 0.5);
@@ -190,8 +290,12 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
     return () => { if (raf) cancelAnimationFrame(raf); ro.disconnect(); };
   }, [width]);
 
+  // 문자열/수식 좌표를 유한 number 로 강제하고, 깨진 좌표 shape 는 drop.
+  // autoBounds·렌더가 같은 정규화 입력을 쓰도록 한 번만 계산.
+  const shapes = useMemo(() => normalizeShapes(spec.shapes), [spec.shapes]);
+
   const bounds = useMemo(() => {
-    const auto = autoBounds(spec.shapes);
+    const auto = autoBounds(shapes);
     // LLM 명시 range/yRange 가 auto 보다 작으면 union — 모든 점이 화면 안 보장.
     // 명시 안 했으면 auto 사용.
     const ux: [number, number] = spec.range
@@ -201,7 +305,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
       ? [Math.min(spec.yRange[0], auto.y[0]), Math.max(spec.yRange[1], auto.y[1])]
       : auto.y;
     return { x: ux, y: uy };
-  }, [spec]);
+  }, [shapes, spec.range, spec.yRange]);
 
   // Map math coords → pixel coords, equal-aspect scaling so shapes
   // don't get distorted.
@@ -279,7 +383,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   // point shape + polygon vertex labels 양쪽으로 같은 라벨을 emit 해서
   // 같은 문자가 두 번 그려지는 사고를 막는다.
   const claimedLabels = new Set<string>();
-  for (const s of spec.shapes) {
+  for (const s of shapes) {
     if (s.type === 'point' && s.label
         && Array.isArray(s.at) && typeof s.at[0] === 'number' && typeof s.at[1] === 'number'
         && Number.isFinite(s.at[0]) && Number.isFinite(s.at[1])) {
@@ -288,7 +392,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   }
 
   // Shapes
-  spec.shapes.forEach((s, i) => {
+  shapes.forEach((s, i) => {
     const c0 = PLOT_COLORS[i % PLOT_COLORS.length];
     switch (s.type) {
       case 'point': {
@@ -365,7 +469,9 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         break;
       }
       case 'circle': {
-        els.push(<circle key={`ci${i}`} cx={xPx(s.center[0])} cy={yPx(s.center[1])} r={s.radius * scale}
+        // r 은 절댓값 — 부호 있는 계산값으로 음수 radius 가 넘어오면 SVG <circle>
+        // 사양상 r<0 은 무효라 원이 에러 없이 사라진다(autoBounds 는 ±radius 라 생존).
+        els.push(<circle key={`ci${i}`} cx={xPx(s.center[0])} cy={yPx(s.center[1])} r={Math.abs(s.radius) * scale}
                          fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
                          stroke={s.stroke ?? c0} strokeWidth={1.8} />);
         if (s.label) labels.push(
@@ -541,7 +647,13 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         const d = `M ${xPx(startX)} ${yPx(startY)} A ${r * scale} ${r * scale} 0 ${sweep} 0 ${xPx(endX)} ${yPx(endY)}`;
         els.push(<path key={`ag${i}`} d={d} fill="none" stroke={s.color ?? c0} strokeWidth={1.5} />);
         if (s.label) {
-          const midA = (a1 + a2) / 2;
+          // 단순 평균 (a1+a2)/2 는 두 팔이 −x축(±π 경계)을 사이에 두면 실제
+          // 이등분선과 180° 반대를 가리킴. sweep 판정과 같은 최단호 기준으로
+          // wrap-aware 하게 계산.
+          let dA = a2 - a1;
+          while (dA > Math.PI) dA -= 2 * Math.PI;
+          while (dA < -Math.PI) dA += 2 * Math.PI;
+          const midA = a1 + dA / 2;
           const lx = s.at[0] + (r + 0.3) * Math.cos(midA);
           const ly = s.at[1] + (r + 0.3) * Math.sin(midA);
           labels.push(

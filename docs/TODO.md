@@ -16,7 +16,12 @@
 - [x] **상단 크롭 보정** — `crop_problem`(원래경계+headroom 18px, 스캔 제거) 전 3056문제 적용 + 인제스트 4개 백엔드 반영(**gyo3 누락분 포함**) + recrop_v3 footgun 제거 → `crop_by_gap` 호출자 0(은퇴)
 - [x] **백엔드 게이트 균일화** — text_quality_gate(v2·gyo3 누락분)·consistency_gate 캐시前 인라인·풀이캐시 체이닝(gyo3 누락분) 추가 → 4개 백엔드(v2/ganah/gyo12/gyo3) 동일 템플릿
 
+## 완료 (2026-06-09)
+- [x] **변수지수 plot 선 미렌더** — function-plot 기본 `interval` 샘플러가 `pow(interval,interval)`=변수지수 `(1+1/x)^x`·`a^x`·`x^x` 평가 못 해 선 통째로 미생성(에러 없음, hover 값만 뜸). `Graph.tsx`에서 변수지수 함수만 `graphType:'polyline'` 전환(상수지수·asymptote는 interval 유지, 회귀 0)
+- [x] **엣지케이스 버그 전수 스윕 + 수정 (42건)** — 다중에이전트로 코드베이스 전체에서 "조용한 엣지케이스 실패" 탐색(14그룹) → 적대적 검증(42확인/20기각) → 파일분리 4버킷 병렬 수정. **HIGH 1**: `ingest_gyo3.py` 미설정 `image_path` KeyError로 회차 전체 인제스트 크래시(gyo12 패턴 이식). **MEDIUM**: promote.ts `$$`→single-`$` 손상(함수형 replacer), chat-context 대시보드 spoke 전량 드롭·compact헤더 `===`/`---`·searchConcepts 1글자개념, chat.ts SSE 한글 멀티바이트 청크경계 깨짐, ingest_v2 format 오분류, ConceptDAG NFC/NFD·대소문자 검색, Geometry angle 라벨 ±π 분기. **LOW 다수**: Numberline/StatsChart/Geometry 퇴화입력 NaN 가드, srs.ts KST off-by-one, answer_textlayer 선택N fallback, ingest_auto zip가드, build_solution_cache FORBIDDEN 오탐 등. 검증: 신규 타입에러 0(astro check 92=92 baseline), py_compile·esbuild 통과, dev서버 HMR 정상.
+
 ## 잔여 (난이도순)
+- [ ] **기존 타입부채 92건 (astro check 미적용)** — 프로젝트가 `astro check`/tsc 를 CI/예: prebuild 에 안 걸어 타입에러 92건 누적(런타임엔 Vite/esbuild가 타입 무시라 무영향이지만 잠재 버그·리팩터 안전망 부재). 주요: `[...slug].astro`·`round/[...key].astro` 의 `source.number` string|number 산술, sympy.ts·progress.ts·db.ts 등. 별도 정리 배치 필요(@astrojs/check + typescript devDep 추가 후 일괄). 본 스윕 변경분은 신규에러 0 확인.
 - [x] **학습 길잡이 개념 검색 그라운딩** (ffcb8a0b) — `searchConcepts`(char-bigram) + chat.ts 가 질문 매칭 실존 개념을 "복사할 전체 URL"로 프롬프트 주입. 자연상수_e 등 전용 노드를 찾아 정확 경로 링크. 잔여(선택): Haiku 가 가끔 무링크/경로축약 → **결정적 안전망**(SSE 델타 버퍼링 또는 client 측 후보맵으로 `/concepts/<leaf>`→전체slug 교정)으로 100% 링크 보장. math `[` 엣지케이스 주의.
 - [ ] **랜덤 시험 객관식↔단답형 자리 뒤바뀜** (버그) — `/exam/random`에서 객관식 자리에 단답형이, 단답형 자리에 객관식이 나옴. 원인: `web/src/lib/exam-build.ts`가 **영역(대수/미적분1/확통)·난이도 tier로만** 30문제를 뽑고 **format(choice/numeric) 위치 구조를 안 지킴**. 수정: 뽑은 뒤 실제 수능 배치(공통: 1-15 객관식·16-22 단답 / 선택: 23-28 객관식·29-30 단답; 양식별 상이)에 맞게 format별로 슬롯 배정·정렬. ExamRunner.tsx 표시 순서도 확인. consistency_gate가 고친 정확한 format 기준으로.
 - [ ] **섹션 라벨 박스 테두리 sliver 제거** — 섹션 시작 문제(#16·#22·#23·#29; 5지선다형/단답형 박스 바로 아래)에서 크롭 상단에 라벨 **박스 하단 테두리**가 살짝 걸림(28건, 자기검증 CLIP 8~32px). 본문은 온전(허용 범위)이라 우선순위 낮음. 해법: `bbox.py _section_label_bottoms`가 라벨 *텍스트* 하단이 아니라 **박스 테두리** 하단(박스 drawing의 y1)까지 천장으로 잡게 보정 → 박스 완전 제외. 대상 목록: 자기검증 `scripts/selfcheck_crop.py` 재실행으로 재생성.

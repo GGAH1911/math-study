@@ -127,6 +127,11 @@ def _stage(slug, meta, files, d: Path):
     dst.mkdir(parents=True, exist_ok=True)
     backend = meta['backend']
     for nf, spec in files:
+        # zip 가드는 target 이름이 아니라 **소스 확장자**로 검사해야 한다.
+        # ganah 트랙 케이스(가형_문제.pdf 등)는 target 이 .pdf 라 target 검사로는
+        # zip 이 안 걸리고 fitz 가 zip 을 PDF 로 열다 실패한다. zip 은 사용자가 미리 풀어야.
+        if nf.lower().endswith('.zip'):
+            continue
         src = d / next(x for x in os.listdir(d) if _nfc(x) == nf)
         role = spec.get('role')
         if backend == 'ganah':

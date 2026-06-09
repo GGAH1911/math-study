@@ -31,6 +31,19 @@ function todayISO(): string {
  *   - `key:`        (다음 줄에 `  - item` 들여쓰기)
  *   - `key: []`     (빈 배열, multi-line으로 승급)
  */
+// YAML 스칼라 un-escape: 바깥 따옴표를 벗기고, single-quoted 였으면 내부 `''` → `'`
+// 복원. 쓰기(line ~88)에서 `'` → `''` escape 한 것을 읽기에서 되돌려야 dedup 이
+// 정확하고, 매 promote 마다 따옴표가 두 배로 증식하지 않는다.
+function unquoteYaml(s: string): string {
+  if (s.length >= 2 && s[0] === "'" && s[s.length - 1] === "'") {
+    return s.slice(1, -1).replace(/''/g, "'");
+  }
+  if (s.length >= 2 && s[0] === '"' && s[s.length - 1] === '"') {
+    return s.slice(1, -1);
+  }
+  return s;
+}
+
 function patchFrontmatter(text: string, to: MasteryLevel, newEvidence: string[]): string {
   const lines = text.split('\n');
   if (lines[0] !== '---') throw new Error('no frontmatter');
@@ -53,7 +66,7 @@ function patchFrontmatter(text: string, to: MasteryLevel, newEvidence: string[])
         const body = inline[1].trim();
         if (body) {
           for (const part of body.split(',')) {
-            const trimmed = part.trim().replace(/^["']|["']$/g, '');
+            const trimmed = unquoteYaml(part.trim());
             if (trimmed) evidenceItems.push(trimmed);
           }
         }
@@ -61,7 +74,7 @@ function patchFrontmatter(text: string, to: MasteryLevel, newEvidence: string[])
         // multi-line: 다음 줄들이 `  - ...` indented
         let j = i + 1;
         while (j < fmEnd && /^\s+-\s+/.test(lines[j])) {
-          const item = lines[j].replace(/^\s+-\s+/, '').replace(/^["']|["']$/g, '');
+          const item = unquoteYaml(lines[j].replace(/^\s+-\s+/, '').trim());
           if (item) evidenceItems.push(item);
           j++;
         }

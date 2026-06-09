@@ -97,10 +97,13 @@ function renderMarkdown(text: string): string {
       })
       // bold
       .replace(/\*\*([^\n*]+?)\*\*/g, '<strong>$1</strong>')
-      // italic (single * or _)
-      .replace(/(^|[^*])\*([^\n*]+?)\*(?!\*)/g, '$1<em>$2</em>')
-      // inline code
-      .replace(/`([^`\n]+?)`/g, '<code>$1</code>');
+      // inline code — code 를 italic 보다 먼저 소비해 backtick sympy(`2*3`,`f * g`)의
+      // 별표를 <em> 변환에서 보호한다.
+      .replace(/`([^`\n]+?)`/g, '<code>$1</code>')
+      // italic (single *) — 별표 안쪽 가장자리를 비공백으로 강제(`*x*` 만 매칭).
+      // 여는 `*` 앞은 단어문자/별표가 아니어야 하므로 평문 곱셈(`5 * 3`, `2*4`)은
+      // 건드리지 않는다.
+      .replace(/(^|[^*\w])\*(?=\S)([^\n*]+?)(?<=\S)\*(?!\*)/g, '$1<em>$2</em>');
 
   const parts: string[] = [];
   // Preserve fenced code blocks
@@ -314,7 +317,10 @@ const ENTITY_TO_LATEX: Record<string, string> = {
 // raw `\command` 단독 (또는 sequence)를 KaTeX로. 부등호 없이도 `\quad`, `\frac{a}{b}`
 // 같이 명령어만 raw로 흘러 들어온 경우 처리. 한국어/일반 텍스트와 섞이면
 // 명령어 토큰 직접 주변만 wrap.
-const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+[A-Za-z0-9\-+*/^=.,()|\\{}]+)*)/g;
+// 꼬리 token run 이 `\cmd` 뒤의 영문 단어(and, the, where…)를 탐욕적으로 흡수해
+// 영문이 수식 italic 으로 오렌더되지 않도록, 3+ 글자 순수 알파벳 단어(영단어)가
+// 시작되는 지점에서 run 을 끊는다. 1~2글자 math 식별자(x, n, ab)는 그대로 둔다.
+const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+(?![A-Za-z]{3,}(?![A-Za-z]))[A-Za-z0-9\-+*/^=.,()|\\{}]+)*)/g;
 
 function decodeEntities(s: string): string {
   return s
@@ -703,7 +709,9 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     } catch { /* localStorage 비활성 */ }
   }, []);
   // BYOK 활성 조건 — OpenRouter 면 apiKey 필수, Ollama (localhost/tailnet) 면 apiKey 없어도 OK
-  const isOllamaLike = /\/\/(localhost|127\.0\.0\.1|100\.|0\.0\.0\.0|192\.168\.|10\.)/.test(byokBaseURL);
+  // 호스트가 스킴(`//`) 직후에 오도록 앵커링 — 앵커 없으면 `https://10.example.com`
+  // 같은 공인 도메인이나 경로에 박힌 `//100.` 이 로컬로 오판돼 무인증 더미키로 전송됨.
+  const isOllamaLike = /^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0|100\.\d|10\.\d|192\.168\.)/.test(byokBaseURL.trim());
   const byokActive = byokApiKey.length > 0 || (isOllamaLike && byokBaseURL.length > 0);
   const saveByok = useCallback((apiKey: string, modelId: string, baseURL: string) => {
     setByokApiKey(apiKey);
@@ -811,8 +819,18 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     // python block 을 채팅창에 노출하지 않기 위한 display sanitize.
     // python block 만 있는 응답은 chip 으로, geometry 등 다른 본문이 있으면 그대로.
     const sanitizeForDisplay = (s: string) => {
-      const stripped = s.replace(/```(?:python|py|sympy)[\s\S]*?```/g, '').trim();
-      const hadPy = stripped !== s.trim();
+      // ① 닫힌 python block 제거.
+      let stripped = s.replace(/```(?:python|py|sympy)[\s\S]*?```/g, '');
+      // ② 스트리밍 중 아직 닫는 ``` 가 안 온 미완성 펜스도 잘라낸다. 안 그러면
+      //    여는 펜스부터 끝까지 raw python 이 사용자에게 노출됨.
+      let hadOpenPy = false;
+      const openIdx = stripped.search(/```(?:python|py|sympy)\b/);
+      if (openIdx !== -1) {
+        stripped = stripped.slice(0, openIdx);
+        hadOpenPy = true;
+      }
+      stripped = stripped.trim();
+      const hadPy = hadOpenPy || stripped !== s.trim();
       if (hadPy && stripped.length < 50) return '⚙ 정확한 좌표 계산 중…';
       return stripped;
     };
@@ -916,7 +934,10 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       finalizeAssistant(assistantText);
 
       // ===== Sympy auto-exec + VERIFY FAIL retry (1회 cap) =====
-      const extractPy = (s: string) => s.match(/```(?:python|py|sympy)\s*\n([\s\S]*?)```/);
+      // 펜스 정규식을 sanitizeForDisplay(L817) 의 strip 형태와 일치시킨다.
+      // 개행 강제(\s*\n)면 한 줄 펜스(```python x=1```)가 표시에선 제거되는데
+      // 여기선 매칭 실패 → 실행 안 됨 → '계산 중…' chip 영구 고착. \n? 로 완화.
+      const extractPy = (s: string) => s.match(/```(?:python|py|sympy)[ \t]*\n?([\s\S]*?)```/);
       const isFollowupInput = text.startsWith('[자동 계산 결과]') || text.startsWith('[시각 검증]');
       const MAX_SYMPY_ROUNDS = 3;
       let rounds = 0;
@@ -1053,11 +1074,16 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     async (idx: number) => {
       const assistant = messages[idx];
       if (!assistant || assistant.role !== 'assistant') return;
-      // Find the preceding user question
+      // Find the preceding user question — skip internal protocol messages
+      // ([자동 계산 결과], [자동 계산 결과 — 검증 실패], [시각 검증]) that the
+      // sympy/visual-verification loop pushes as user messages, so the real
+      // student question is captured instead of an internal protocol string.
       let question = '';
       for (let i = idx - 1; i >= 0; i--) {
         if (messages[i].role === 'user') {
-          question = messages[i].content;
+          const c = messages[i].content;
+          if (c.startsWith('[자동 계산 결과') || c.startsWith('[시각 검증]')) continue;
+          question = c;
           break;
         }
       }

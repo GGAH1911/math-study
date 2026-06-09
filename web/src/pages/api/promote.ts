@@ -36,9 +36,12 @@ function normalizeChatMarkdown(s: string): string {
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
   // `$$content` (no newline after) → `$$\ncontent`
-  out = out.replace(/(\$\$)(?=\S)/g, '$$\n');
+  // NOTE: in a String.replace replacement, `$$` denotes a literal single `$`,
+  // so use a function replacer to emit a real `$$` and avoid corrupting the
+  // display delimiter into a single `$`.
+  out = out.replace(/(\$\$)(?=\S)/g, () => '$$\n');
   // `content$$` (no newline before) → `content\n$$`
-  out = out.replace(/(\S)(\$\$)/g, '$1\n$$');
+  out = out.replace(/(\S)(\$\$)/g, (_m, p1) => `${p1}\n$$`);
   return out;
 }
 

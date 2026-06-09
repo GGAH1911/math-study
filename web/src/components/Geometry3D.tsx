@@ -488,7 +488,32 @@ function collectPoints(shapes: Geom3DShape[]): THREE.Vector3[] {
         out.push(new THREE.Vector3(origin[0] - half, origin[1] + half, origin[2]));
         break;
       }
-      // parametricSurface 는 렌더 단계에서 무시 — bbox 도 무시.
+      case 'parametricSurface': {
+        // 성긴 격자(5×5) 로 surface 위 점 일부를 bbox 에 포함 — surface 하나만
+        // 있는 spec 도 CameraFit 이 동작하도록(원점에서 멀거나 큰 곡면 대응).
+        const u0 = _eval(s.uRange[0]), u1 = _eval(s.uRange[1]);
+        const v0 = _eval(s.vRange[0]), v1 = _eval(s.vRange[1]);
+        if (!Number.isFinite(u0) || !Number.isFinite(u1) || !Number.isFinite(v0) || !Number.isFinite(v1)) break;
+        try {
+          const xN = _math.parse(s.x).compile();
+          const yN = _math.parse(s.y).compile();
+          const zN = _math.parse(s.z).compile();
+          const m = 4; // 4 구간 → 5×5 = 25 점
+          for (let i = 0; i <= m; i++) {
+            for (let j = 0; j <= m; j++) {
+              const u = u0 + ((u1 - u0) * i) / m;
+              const v = v0 + ((v1 - v0) * j) / m;
+              const xv = xN.evaluate({ u, v }) as number;
+              const yv = yN.evaluate({ u, v }) as number;
+              const zv = zN.evaluate({ u, v }) as number;
+              if (Number.isFinite(xv) && Number.isFinite(yv) && Number.isFinite(zv)) {
+                out.push(new THREE.Vector3(xv, yv, zv));
+              }
+            }
+          }
+        } catch { /* skip */ }
+        break;
+      }
     }
   }
   return out;

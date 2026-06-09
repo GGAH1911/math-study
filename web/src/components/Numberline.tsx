@@ -93,10 +93,14 @@ export default function Numberline({ spec, width = 420, height, onOpen, interact
   const H = interactive && height && height > naturalH ? height : naturalH;
   const PAD = 30;
   const W = effWidth;
-  const [a, b] = spec.range;
+  // 역순 range([5,-5]) 정규화 — 안 하면 tickStep span<0, 눈금 0개, 모든 점이
+  // 한 점으로 클램프. 그리고 폭 0([c,c]) 은 분모 0 → xPx 0/0=NaN(모든 좌표 소실).
+  let [a, b] = spec.range;
+  if (a > b) [a, b] = [b, a];
+  const denom = (b - a) || 1;
   const xPx = (v: number) => {
     const clamped = Math.max(a, Math.min(b, v));
-    return PAD + (clamped - a) / (b - a) * (W - 2 * PAD);
+    return PAD + (clamped - a) / denom * (W - 2 * PAD);
   };
   const baseY = H - 32;     // y of the main line — leave 32px below for mark labels
 
@@ -151,9 +155,14 @@ export default function Numberline({ spec, width = 420, height, onOpen, interact
         intEls.push(<circle key={key} cx={atX} cy={y} r={5} fill="#0a0a0a" stroke={color} strokeWidth={2} />);
       }
     };
-    const closed = iv.closed ?? [true, true];
-    drawEndpoint(x1, Number.isFinite(from), closed[0], 'left', `iv${i}_a`);
-    drawEndpoint(x2, Number.isFinite(to), closed[1], 'right', `iv${i}_b`);
+    // `iv.closed ?? [true,true]` 만으로는 closed=[true] 처럼 원소 1개로 오면
+    // closed[1]=undefined → 오른쪽 끝점이 (닫힘 의도인데) 조용히 열림. 각 원소를
+    // 개별 기본값 처리.
+    const c = iv.closed ?? [];
+    const closedL = c[0] ?? true;
+    const closedR = c[1] ?? true;
+    drawEndpoint(x1, Number.isFinite(from), closedL, 'left', `iv${i}_a`);
+    drawEndpoint(x2, Number.isFinite(to), closedR, 'right', `iv${i}_b`);
     if (iv.label) {
       intLabels.push(
         <div key={`il${i}`} className="geom-label" style={{ left: (x1 + x2) / 2, top: y - 22, transform: 'translateX(-50%)' }}>

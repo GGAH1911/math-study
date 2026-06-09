@@ -12,8 +12,6 @@
 export type ReviewState = 'new' | 'learning' | 'mature';
 export type Status = 'unsolved' | 'solved' | 'review';
 
-const DAY_MS = 86_400_000;
-
 export interface SrsTransition {
   status: Status;
   reviewState: ReviewState;
@@ -21,8 +19,21 @@ export interface SrsTransition {
   intervalDays: number;
 }
 
+// Compute next_review off the *local* calendar day, not UTC. A KST (UTC+9)
+// user submitting between local 00:00–08:59 is still on the previous UTC day,
+// so `.toISOString().slice(0,10)` would emit yesterday's date and
+// todayPlusDays(1) would collapse "tomorrow" into "today" (off-by-one vs a
+// local-time `current_date` due check). Stepping the local calendar date and
+// formatting the local Y-M-D keeps generation and the due-today comparison in
+// the same timezone.
 function todayPlusDays(days: number): string {
-  return new Date(Date.now() + days * DAY_MS).toISOString().slice(0, 10);
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + days);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 /**

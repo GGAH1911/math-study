@@ -44,8 +44,20 @@ TIMEOUT_S = int(os.environ.get('SOLVE_TIMEOUT', '480'))
 # tesseract/DeepSeek 안 씀 — 모든 문제를 '풀이 성공'으로 해결하고 점수는 거기 올라탄다.
 LADDER_DEFAULT = [('haiku', 'high'), ('sonnet', 'max'), ('opus', 'max')]   # early / mid
 LADDER_KILLER  = [('sonnet', 'max'), ('opus', 'max')]                       # killer: Haiku 스킵
-# verifier 안전: 파일/네트워크/시스템 접근 금지 — 순수 수학만 허용
-FORBIDDEN = re.compile(r'\b(os|subprocess|socket|shutil|requests|httpx|urllib|open|eval|exec|__import__|pathlib|Path)\b')
+# verifier 안전: 파일/네트워크/시스템 접근 금지 — 순수 수학만 허용.
+# 위험 토큰은 *호출/import/속성 문맥*에 한정해 차단한다(bare word boundary 금지 X):
+#   · 위험 모듈(os/subprocess/...): `import X` / `from X` / `X.` 속성접근만 차단
+#   · 위험 빌트인(open/eval/exec): 메서드호출 `.eval(`(sympy Poly/expr) 은 허용,
+#     `.`·식별자문자 앞이 없는 *bare* 호출만 차단
+#   · `__import__(...)` 차단. `Path` 는 sympy 심볼/클래스명으로 합법 → 목록에서 제거하고
+#     대신 pathlib/os.path import·속성접근으로 막는다.
+_FORBID_MODS = r'os|subprocess|socket|shutil|requests|httpx|urllib|pathlib'
+FORBIDDEN = re.compile(
+    r'(?:\b(?:import|from)\s+(?:' + _FORBID_MODS + r')\b'      # import os / from subprocess ...
+    r'|\b(?:' + _FORBID_MODS + r')\.'                          # os.path / subprocess.run 등 속성접근
+    r'|(?<![.\w])(?:open|eval|exec)\s*\('                      # bare open(/eval(/exec( (메서드호출 .eval( 제외)
+    r'|\b__import__\s*\()'                                     # 동적 import
+)
 # 검증기-코딩 누명 회복: ans==gold인데 검증기만 실패하면 같은 모델에 '에러 힌트' 주고 재시도.
 # 검증기 작성은 확률적이라(금지import·크래시·로직버그) 재롤하면 깨끗이 나옴 → 불필요한 escalation/FLAG 흡수.
 VERIFY_RETRIES = int(os.environ.get('VERIFY_RETRIES', '2'))

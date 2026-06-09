@@ -69,13 +69,15 @@ function AxisTitles({ W, H, xLabel, yLabel }: { W: number; H: number; xLabel?: s
 }
 
 // Histogram + bar share the layout — bars vary, axes identical.
-function BarLike({ width, height, bars, xLabels, yMax, xLabel, yLabel }: {
+function BarLike({ width, height, bars, xLabels, yMax: yMaxRaw, xLabel, yLabel }: {
   width: number; height: number;
   bars: Array<{ x0: number; x1: number; h: number; color: string }>;
   xLabels: Array<{ x: number; text: string }>;
   yMax: number;
   xLabel?: string; yLabel?: string;
 }) {
+  // 모든 값/빈도가 0이면 yMax=0 → 라벨·막대 좌표에서 0/0=NaN(빈 차트). 하한 1.
+  const yMax = yMaxRaw > 0 && Number.isFinite(yMaxRaw) ? yMaxRaw : 1;
   const W = width, H = height;
   const plotW = W - PAD.l - PAD.r;
   const plotH = H - PAD.t - PAD.b;
@@ -225,7 +227,10 @@ function NormalView({ spec, width, height }: { spec: Extract<ChartSpec, { kind: 
   const W = width, H = height;
   const plotW = W - PAD.l - PAD.r;
   const plotH = H - PAD.t - PAD.b;
-  const { mean, std } = spec;
+  const { mean } = spec;
+  // std=0 이면 range=[mean,mean] → sx 분모 0/0=NaN, pdf 계수 1/0=Infinity,
+  // yMax=NaN 으로 곡선 path 전체가 NaN(통째로 안 그려짐). 하한 가드.
+  const std = Math.max(spec.std, 1e-9);
   const range = spec.range ?? [mean - 4 * std, mean + 4 * std];
   const pdf = (x: number) => (1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-((x - mean) ** 2) / (2 * std * std));
   const N = 200;
@@ -235,7 +240,8 @@ function NormalView({ spec, width, height }: { spec: Extract<ChartSpec, { kind: 
     samples.push([x, pdf(x)]);
   }
   const yMax = pdf(mean) * 1.15;
-  const sx = (v: number) => PAD.l + plotW * (v - range[0]) / (range[1] - range[0]);
+  const xDen = (range[1] - range[0]) || 1;
+  const sx = (v: number) => PAD.l + plotW * (v - range[0]) / xDen;
   const sy = (v: number) => PAD.t + plotH * (1 - v / yMax);
   const curveD = samples.map((p, i) => `${i === 0 ? 'M' : 'L'} ${sx(p[0])} ${sy(p[1])}`).join(' ');
 
@@ -300,8 +306,9 @@ function BoxView({ spec, width, height }: { spec: Extract<ChartSpec, { kind: 'bo
       <line x1={sx(q3)} y1={midY} x2={sx(max)} y2={midY} stroke="#fafafa" strokeWidth={1.5} />
       <line x1={sx(min)} y1={boxY} x2={sx(min)} y2={boxY + boxH} stroke="#fafafa" strokeWidth={1.5} />
       <line x1={sx(max)} y1={boxY} x2={sx(max)} y2={boxY + boxH} stroke="#fafafa" strokeWidth={1.5} />
-      {/* box */}
-      <rect x={sx(q1)} y={boxY} width={sx(q3) - sx(q1)} height={boxH}
+      {/* box — q1>q3(분위수 뒤바뀜)이면 width 음수 → SVG rect 미렌더라 상자가
+          사라진다. 좌/우를 정렬해서 항상 음수 아닌 width 로 그린다. */}
+      <rect x={Math.min(sx(q1), sx(q3))} y={boxY} width={Math.abs(sx(q3) - sx(q1))} height={boxH}
             fill="rgba(165,180,252,0.35)" stroke="#a5b4fc" strokeWidth={1.8} />
       {/* median */}
       <line x1={sx(median)} y1={boxY} x2={sx(median)} y2={boxY + boxH} stroke="#fbbf24" strokeWidth={2.5} />

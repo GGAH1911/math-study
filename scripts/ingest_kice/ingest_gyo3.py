@@ -69,6 +69,7 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
         img_path = images_dir / name
         e['image_fs'] = f'db/raw/{slug}/images/{name}'
         e['image_url'] = f'/problem-images/{name}'
+        e['image_path'] = str(img_path.resolve())    # vision 폴백용 (gyo12/ganah와 동일)
         page_im = Image.open(e['_page_png'])
         if not IV.crop_problem(page_im, e['bbox_px'], img_path, exam_type=EXAM_TYPE):
             page_im.crop(e['bbox_px']).save(img_path)     # degenerate 폴백
@@ -79,16 +80,24 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
     units = IV.load_concept_index(); meta_cache = raw / 'meta_cache'
 
     def meta_one(e):
-        m = IV.extract_metadata(
-            pdf_path=e['_pdf'], page_num=e['page_num'], bbox_pdf=e['bbox_pdf'],
-            number=e['number'], subject=e['subject'], units_index=units,
-            cache_dir=meta_cache, cache_key=f'{e["subject"]}_{e["number"]:02d}', timeout=60)
-        # PUA 특수기호(벡터 화살표 등)로 텍스트 메타가 searchable_text를 비우면 → 이미지 vision 폴백
-        if not (isinstance(m, dict) and len((m.get('searchable_text') or '').strip()) >= 10):
-            import vision_meta
-            m2 = vision_meta.extract_metadata(e['image_path'], units, cache_dir=meta_cache, timeout=90)
-            if m2 and (m2.get('searchable_text') or '').strip():
-                m = m2
+        # 메타 실패(예: claude 인증 401·타임아웃)는 *비치명적* — 빈 meta로 강등하고 계속.
+        # 한 문항 실패가 회차 오케스트레이터를 죽이면 안 된다. (gyo12 meta_one 패턴)
+        m = {}
+        try:
+            m = IV.extract_metadata(
+                pdf_path=e['_pdf'], page_num=e['page_num'], bbox_pdf=e['bbox_pdf'],
+                number=e['number'], subject=e['subject'], units_index=units,
+                cache_dir=meta_cache, cache_key=f'{e["subject"]}_{e["number"]:02d}', timeout=60)
+            # PUA 특수기호(벡터 화살표 등)로 텍스트 메타가 searchable_text를 비우면 → 이미지 vision 폴백
+            if not (isinstance(m, dict) and len((m.get('searchable_text') or '').strip()) >= 10):
+                import vision_meta
+                m2 = vision_meta.extract_metadata(Path(e['image_path']), units,  # Path 필수(.stem)
+                                                  cache_dir=meta_cache, timeout=90)
+                if m2 and (m2.get('searchable_text') or '').strip():
+                    m = m2
+        except Exception as ex:
+            print(f'  ⚠ meta 강등 {e["subject"]} #{e["number"]:02d}: {type(ex).__name__}: {str(ex)[:80]}', flush=True)
+            m = m if isinstance(m, dict) else {}
         return e, m
     nfail = 0
     with cf.ThreadPoolExecutor(max_workers=int(os.environ.get('META_WORKERS', '20'))) as ex:
@@ -104,6 +113,13 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
     for (s, n), a in flat.items():
         answers.setdefault(s, {})[str(n)] = a
     print(f'  ✓ 정답 {sum(len(v) for v in answers.values())}개 (해설 정답표)', flush=True)
+    # 🔴 개수 게이트 (gyo12 len==30·ganah got==30 대응): 공통 22 + 각 선택 8.
+    #    parse_haesol_answers가 한 과목 정답을 조용히 누락해도 ans=None으로 박히는 것을 시끄럽게.
+    got_common = len(answers.get('공통', {}))
+    assert got_common == 22, f"🔴 공통 정답 {got_common}개 (22 아님) — 해설 정답표 파싱 점검"
+    for s in SELECTIVES:
+        got = len(answers.get(s, {}))
+        assert got == 8, f"🔴 {s} 선택 정답 {got}개 (8 아님) — 해설 정답표 파싱 점검"
     A.assert_selectives_distinct(answers)   # 🔴 안전장치: 선택 3과목 답 동일하면 중단
     print('  ✓ 안전장치 통과 (선택 3과목 distinct)', flush=True)
 

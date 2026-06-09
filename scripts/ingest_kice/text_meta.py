@@ -22,6 +22,39 @@ sys.path.insert(0, str(_HERE))
 from ingest_round import claude_p  # noqa: E402
 
 
+def _first_json_object(s: str) -> str | None:
+    """Return the first balanced {...} object in s (string/escape aware).
+
+    Tolerant of trailing prose after the closing brace and of nested braces
+    inside the object — unlike the lazy lookahead regex which only recovers an
+    object that is the very last token of the output.
+    """
+    start = s.find('{')
+    if start < 0:
+        return None
+    depth = 0
+    in_str = False
+    esc = False
+    for i in range(start, len(s)):
+        c = s[i]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == '\\':
+                esc = True
+            elif c == '"':
+                in_str = False
+        elif c == '"':
+            in_str = True
+        elif c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                return s[start:i + 1]
+    return None
+
+
 # EBSi / KICE PUA digit glyphs:   → 1..9,  → 0
 _PUA_DIGIT_MAP = {0xe034 + i: ord(str(i + 1)) for i in range(9)}
 _PUA_DIGIT_MAP[0xe03d] = ord('0')
@@ -136,10 +169,10 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
         try:
             parsed = json.loads(out)
         except Exception as e:
-            m = re.search(r'\{.*?\}(?=\s*(?:\{|\Z))', out, re.DOTALL)
-            if m:
+            salvaged = _first_json_object(out)
+            if salvaged is not None:
                 try:
-                    parsed = json.loads(m.group(0))
+                    parsed = json.loads(salvaged)
                 except Exception as e2:
                     last_err = f'parse fail (try {attempt+1}): {e}; salvage: {e2}'
                     continue

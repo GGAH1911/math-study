@@ -270,8 +270,12 @@ ${lines}`;
 
       let buf = '';
       const recentLines: string[] = []; // 디버깅 위해 마지막 10줄 보관
+      // Streaming decoder: a multibyte (Korean) char can straddle a stdout
+      // chunk boundary. Per-chunk Buffer.toString('utf-8') would corrupt it;
+      // a single TextDecoder with {stream:true} carries the partial bytes.
+      const stdoutDecoder = new TextDecoder();
       child.stdout.on('data', (chunk: Buffer) => {
-        buf += chunk.toString('utf-8');
+        buf += stdoutDecoder.decode(chunk, { stream: true });
         let nl;
         while ((nl = buf.indexOf('\n')) !== -1) {
           const line = buf.slice(0, nl).trim();
@@ -303,8 +307,9 @@ ${lines}`;
       // paths, env-derived strings, or stack traces from the CLI. Log
       // server-side instead, surface a generic error to the browser.
       let stderrBuf = '';
+      const stderrDecoder = new TextDecoder();
       child.stderr.on('data', (chunk: Buffer) => {
-        stderrBuf += chunk.toString('utf-8');
+        stderrBuf += stderrDecoder.decode(chunk, { stream: true });
         if (stderrBuf.length > 8192) stderrBuf = stderrBuf.slice(-8192);
       });
 

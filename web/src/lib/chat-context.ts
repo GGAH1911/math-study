@@ -508,11 +508,19 @@ function _bigrams(s: string): Set<string> {
 export function searchConcepts(query: string, limit = 6, minScore = 0.5): ConceptFM[] {
   const qb = _bigrams(query);
   if (qb.size === 0) return [];
+  // 단일 글자 개념명(예: '원')은 multi-char 질의의 bigram 집합과 절대 교집합이
+  // 안 생겨 누락된다 — 1글자 이름은 질의 본문 substring 포함 여부로 별도 판정.
+  const qNorm = query.replace(/[\s_]/g, '').toLowerCase();
   const scored: { c: ConceptFM; score: number }[] = [];
   for (const c of listAllConcepts()) {
     const name = c.slug.split('/').pop() ?? c.slug;        // 마지막 세그먼트 = 개념명
     const nb = _bigrams(name);
     if (nb.size === 0) continue;
+    const nNorm = name.replace(/[\s_]/g, '').toLowerCase();
+    if (nNorm.length === 1) {
+      if (qNorm.includes(nNorm)) scored.push({ c, score: 1 });
+      continue;
+    }
     let inter = 0;
     for (const g of nb) if (qb.has(g)) inter++;
     const score = inter / nb.size;
@@ -544,7 +552,7 @@ export function buildCompactTutorPrompt(pageSlug: string, collection: 'concepts'
 
   // 페이지 컨텍스트 추출 (간략)
   const fullText = full.systemPrompt;
-  const pageContext = fullText.match(/=== 현재 페이지[\s\S]*?(?=\n##|\n---|\n\*\*|$)/)?.[0]?.slice(0, 1500) ?? '';
+  const pageContext = fullText.match(/--- 현재 (?:페이지|문제)[\s\S]*?(?=\n##|\n---|\n\*\*|$)/)?.[0]?.slice(0, 1500) ?? '';
   // 이미지가 있는 problem 은 본문 text 일부러 안 넣음 — 학생 메시지에 첨부된 이미지로만 풀어야 함.
   // 이미지 없는 problem (또는 concept/dashboard) 만 문제 본문 인용.
   const hasImage = /문제 이미지 \(유일한 원본 소스\)/.test(fullText);
@@ -946,8 +954,10 @@ function buildDashboardPrompt(): { systemPrompt: string; pageTitle: string } {
       byGrade[g].forEach((c) => {
         if (c.concept_type === 'unit') return;
         for (const pre of c.prerequisites) {
-          const ps = pre.split('/').pop()?.replace(/\.md$/, '');
-          if (ps && units.includes(ps)) { (spokesOfUnit[ps] ??= []).push(c.slug); break; }
+          // `pre` is already a slugOf-normalized FULL slug (e.g. 'algebra/math-1/지수와_로그'),
+          // and `units` holds full slugs too — match on the full slug, not the last
+          // path segment (the old `.pop()` compare never matched, dropping all spokes).
+          if (units.includes(pre)) { (spokesOfUnit[pre] ??= []).push(c.slug); break; }
         }
       });
       const lines = units.map((u) => {

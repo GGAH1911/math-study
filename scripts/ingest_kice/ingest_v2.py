@@ -189,7 +189,9 @@ def write_markdown_v2(prob: dict, meta: dict | None, answer: str | None,
     intent = (meta.get('exam_intent') or '').replace('\\', '\\\\').replace('"', '\\"')
     killer = meta.get('killer_tier') or ''
     cog = meta.get('cognitive_type') or ''
-    fmt = meta.get('format') or 'numeric'
+    # prob['format']은 어댑터가 시험 구조상 결정한 권위 있는 값이므로 우선.
+    # (v2 본체는 meta.get('format')을 prob에 넣으므로 v2 경로 동작은 동일.)
+    fmt = prob.get('format') or meta.get('format') or 'numeric'
     has_fig = bool(meta.get('has_figure'))
     # YAML block scalar (|) preserves raw content — no escape needed.
     searchable = meta.get('searchable_text') or ''

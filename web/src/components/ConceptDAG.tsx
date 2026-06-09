@@ -64,6 +64,10 @@ type Props = {
   highlight?: string;
 };
 
+// 검색 매칭용 정규화: 한글 NFC(맥/아이패드는 NFD 입력 가능) + 소문자(ASCII 라벨).
+// 라벨과 질의 양쪽에 동일 적용해 NFD 질의·대소문자 불일치로 인한 0건 매칭을 방지.
+const searchNorm = (s: string): string => s.normalize('NFC').toLowerCase();
+
 // Edge color is keyed off the *other* node's concept_type — i.e. when
 // the user selects a unit, every line leading to a 정의 is blue, to a
 // 정리 is purple, to a 예제 is pink, etc. Makes it visible at a glance
@@ -347,9 +351,10 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   // visible. Computed separately from the user-toggled expansion set.
   const searchAutoExpanded = useMemo(() => {
     if (!debouncedTerm) return new Set<string>();
+    const term = searchNorm(debouncedTerm);
     const out = new Set<string>();
     for (const n of data.nodes) {
-      if (n.label.includes(debouncedTerm)) {
+      if (searchNorm(n.label).includes(term)) {
         const u = homeUnitOf.get(n.id);
         if (u) out.add(u);
       }
@@ -359,12 +364,13 @@ function Inner({ data, variant = 'full', highlight }: Props) {
 
   const filteredIds = useMemo(() => {
     const effectiveExpanded = new Set([...expandedUnits, ...searchAutoExpanded]);
+    const term = debouncedTerm ? searchNorm(debouncedTerm) : '';
     return new Set(
       data.nodes
         .filter((n) => masteryFilter.size === 0 || masteryFilter.has(n.mastery))
         .filter((n) => gradeFilter.size === 0 || !n.grade || gradeFilter.has(n.grade))
         .filter((n) => domainFilter.size === 0 || !n.domain || domainFilter.has(n.domain))
-        .filter((n) => !debouncedTerm || n.label.includes(debouncedTerm))
+        .filter((n) => !term || searchNorm(n.label).includes(term))
         // "노트 있음" 토글: 노트 카운트가 있는 노드만 통과. 단원도 동일
         // 기준으로 dim — 노트 없는 단원도 어차피 흥미 없으니 일관 처리.
         .filter((n) => !notesOnly || (n.note_count ?? 0) > 0)
@@ -372,7 +378,10 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           if (!collapseMode) return true;
           if (n.concept_type === 'unit') return true;
           const u = homeUnitOf.get(n.id);
-          if (!u) return false;
+          // home unit 없는 orphan spoke(301개): 무검색 접기뷰에선 숨김(기존 동작)이되,
+          // 검색 중이면 노출 — 그래야 정확히 검색해도 영영 안 보이는 문제 해소.
+          // (검색 매칭은 위 373줄 search 필터에서 이미 통과한 노드만 여기 옴)
+          if (!u) return !!term;
           return effectiveExpanded.has(u);
         })
         .map((n) => n.id),
@@ -598,8 +607,11 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   }, [rf, data.nodes]);
 
   const goto = useCallback((nodeId: string) => {
-    setSelected(nodeId);
     const target = nodeById.get(nodeId);
+    // dangling 참조(그래프에 없는 prereq/enables slug)면 selectedNode 가 null 이 되어
+    // 패널이 조용히 닫히는 죽은 버튼이 된다 → 선택 자체를 막아 현재 패널 유지.
+    if (!target) return;
+    setSelected(nodeId);
     // If clicking a spoke from a list and its home unit is collapsed,
     // expand it first so the spoke becomes visible — otherwise we'd fly
     // the camera to an empty (hidden) area.
@@ -651,7 +663,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   // 다수 매치는 fitView로 한 화면에 모아주는 것까지만 (그건 길 잃지 않음).
   useEffect(() => {
     if (!debouncedTerm) return;
-    const matches = data.nodes.filter((n) => n.label.includes(debouncedTerm));
+    const term = searchNorm(debouncedTerm);
+    const matches = data.nodes.filter((n) => searchNorm(n.label).includes(term));
     if (matches.length === 1) {
       setSelected(matches[0].id);
     } else if (matches.length > 1 && matches.length <= 12) {
@@ -1055,10 +1068,18 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                         <ul className="text-sm space-y-0.5 pl-4">
                           {refs.map((p) => (
                             <li key={p}>
-                              <button
-                                onClick={() => goto(p)}
-                                className="text-indigo-400 hover:underline text-left"
-                              >{prettyLabel(p)}</button>
+                              {nodeById.has(p) ? (
+                                <button
+                                  onClick={() => goto(p)}
+                                  className="text-indigo-400 hover:underline text-left"
+                                >{prettyLabel(p)}</button>
+                              ) : (
+                                // dangling 참조 — 그래프에 노드가 없으므로 클릭 비활성.
+                                <span
+                                  className="text-zinc-500 text-left cursor-default"
+                                  title="이 개념은 그래프에 없습니다"
+                                >{prettyLabel(p)}</span>
+                              )}
                             </li>
                           ))}
                         </ul>
@@ -1081,10 +1102,18 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                         <ul className="text-sm space-y-0.5 pl-4">
                           {refs.map((p) => (
                             <li key={p}>
-                              <button
-                                onClick={() => goto(p)}
-                                className="text-indigo-400 hover:underline text-left"
-                              >{prettyLabel(p)}</button>
+                              {nodeById.has(p) ? (
+                                <button
+                                  onClick={() => goto(p)}
+                                  className="text-indigo-400 hover:underline text-left"
+                                >{prettyLabel(p)}</button>
+                              ) : (
+                                // dangling 참조 — 그래프에 노드가 없으므로 클릭 비활성.
+                                <span
+                                  className="text-zinc-500 text-left cursor-default"
+                                  title="이 개념은 그래프에 없습니다"
+                                >{prettyLabel(p)}</span>
+                              )}
                             </li>
                           ))}
                         </ul>

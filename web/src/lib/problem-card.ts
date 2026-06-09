@@ -26,10 +26,13 @@ export function subjectBreakdown(problems: P[]): string {
   }
   const keys = Object.keys(counts);
   if (keys.length === 1) return `${counts[keys[0]]}문항`;
-  return (['공통', '미적분', '확률과통계', '기하', '가형', '나형', '단일'] as const)
-    .filter((s) => counts[s])
-    .map((s) => `${s} ${counts[s]}`)
-    .join(' · ');
+  const ORDER = ['공통', '미적분', '확률과통계', '기하', '가형', '나형', '단일'];
+  // 알려진 순서 우선, 화이트리스트에 없는 과목은 뒤에 append (조용히 누락 방지).
+  const ordered = [
+    ...ORDER.filter((s) => counts[s]),
+    ...keys.filter((k) => !ORDER.includes(k)),
+  ];
+  return ordered.map((s) => `${s} ${counts[s]}`).join(' · ');
 }
 
 // astro:content 엔트리의 느슨한 구조 타입 (스키마는 content.config.ts).

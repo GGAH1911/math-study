@@ -73,8 +73,15 @@ def parse_answer_table(pdf_path):
             if n <= 22:
                 ans[('공통', n)] = answer
             else:
-                subj = sel_order[si] if si < len(sel_order) else f'선택{si}'
-                ans[(subj, n)] = answer
+                # 선택 헤더가 하나라도 미검출(OCR 편차·헤더가 데이터행에 클러스터)되면
+                # sel_order 가 짧아져 합성 '선택N' 과목명이 박힌다 → 다운스트림에서 조용히
+                # 누락(과목명 불일치)된다. 합성명을 만들지 말고 거부해 ingest_v2 가 vision 으로
+                # 폴백하게 한다(try/except 경유). 정확한 textlayer 만 채택.
+                if si >= len(sel_order):
+                    raise ValueError(
+                        f'선택 헤더 미검출: 행에 선택 묶음 {si + 1}개인데 검출 헤더 {len(sel_order)}개 '
+                        f'(sel_order={sel_order}) — textlayer 거부, vision 폴백')
+                ans[(sel_order[si], n)] = answer
                 si += 1
     return ans
 

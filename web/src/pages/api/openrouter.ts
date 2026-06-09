@@ -60,7 +60,9 @@ export const POST: APIRoute = async ({ request }) => {
   const { slug, collection = 'concepts', messages, model, apiKey, baseURL: rawBaseURL } = body;
   // baseURL whitelist — SSRF 차단. https / 또는 localhost·tailnet IP 만.
   const baseURL = (rawBaseURL || 'https://openrouter.ai/api/v1').trim();
-  if (!/^https:\/\/|^http:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0|192\.168\.|10\.|100\.[0-9]{1,3}\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(baseURL)) {
+  // 100.x branch is restricted to the Tailscale CGNAT block 100.64.0.0/10
+  // (100.64–100.127); the old `100.[0-9]{1,3}.` leaked public 100.0–63/128–255.
+  if (!/^https:\/\/|^http:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0|192\.168\.|10\.|100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(baseURL)) {
     console.warn('[openrouter] invalid baseURL:', baseURL);
     return new Response(JSON.stringify({ error: 'baseURL must be https:// or http://(localhost|RFC1918|tailnet)', got: baseURL }), { status: 400 });
   }

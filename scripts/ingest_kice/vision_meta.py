@@ -33,6 +33,39 @@ except Exception as e:
     raise
 
 
+def _first_json_object(s: str) -> str | None:
+    """Return the first balanced {...} object in s (string/escape aware).
+
+    Tolerant of trailing prose after the closing brace and of nested braces
+    inside the object — unlike the lazy lookahead regex which only recovers an
+    object that is the very last token of the output.
+    """
+    start = s.find('{')
+    if start < 0:
+        return None
+    depth = 0
+    in_str = False
+    esc = False
+    for i in range(start, len(s)):
+        c = s[i]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == '\\':
+                esc = True
+            elif c == '"':
+                in_str = False
+        elif c == '"':
+            in_str = True
+        elif c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                return s[start:i + 1]
+    return None
+
+
 VISION_SYSTEM = """너는 한국 수능 수학 기출문제 분류 전문가다. 주어진 PNG 이미지는
 PDF에서 잘라낸 문제 하나의 영역이다 (본문 + 보기 + 그림이 모두 포함됨).
 
@@ -168,11 +201,11 @@ def extract_metadata(image_path: Path, units_index: dict[str, list[str]],
         try:
             parsed = json.loads(out)
         except Exception as e:
-            # salvage: first {...} block
-            m = re.search(r'\{.*?\}(?=\s*(?:\{|\Z))', out, re.DOTALL)
-            if m:
+            # salvage: first balanced {...} block (tolerant of trailing prose)
+            salvaged = _first_json_object(out)
+            if salvaged is not None:
                 try:
-                    parsed = json.loads(m.group(0))
+                    parsed = json.loads(salvaged)
                 except Exception as e2:
                     last_err = f'parse fail (try {attempt+1}): {e}; salvage: {e2}'
                     continue

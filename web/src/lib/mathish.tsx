@@ -103,7 +103,16 @@ export function MathishText({ text, auto = false, display = false, className }: 
           out = out.replace(/\$([^\n$]+?)\$/g, (_, tex) =>
             k.renderToString(normalizeKatex(decodeHtml(tex)), { displayMode: false, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR }));
         } else if (text.includes('$')) {
-          out = escapeHtml(text).replace(/\$([^\n$]+?)\$/g, (_, tex) =>
+          out = escapeHtml(text);
+          // display=false 인 기본 경로에서도 `$$...$$` 를 먼저 소비한다. 안 하면
+          // 아래 인라인 정규식 `\$([^\n$]+?)\$` 가 `$$x$$` 의 안쪽 `$x$` 만 잡아
+          // 바깥 `$` 두 개가 stray literal 로 화면에 남는다. (display 미요청이므로
+          // 인라인 모드로 렌더.)
+          if (out.includes('$$')) {
+            out = out.replace(/\$\$([^$]+?)\$\$/g, (_, tex) =>
+              k.renderToString(normalizeKatex(decodeHtml(tex)), { displayMode: false, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR }));
+          }
+          out = out.replace(/\$([^\n$]+?)\$/g, (_, tex) =>
             k.renderToString(normalizeKatex(decodeHtml(tex)), { displayMode: false, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR }));
         } else if (auto) {
           // 한글/CJK 문자가 섞이면 그 토큰을 \text{...} 로 감싸 KaTeX 의

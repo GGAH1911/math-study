@@ -160,11 +160,14 @@ ${noteBlock}`;
       // Drop accidental h1/h2 prefix
       body = body.replace(/^\s*#{1,2}\s+[^\n]+\n+/, '');
 
-      // Splice into the spoke file
-      const splicePattern = /(## 본문[^\n]*\n)([\s\S]*?)(\n## )/;
+      // Splice into the spoke file. Use a lookahead end-anchor so `## 본문`
+      // being the *last* section (no following `\n## ` header) still matches
+      // and gets replaced in-place — otherwise the fallback below appended a
+      // duplicate `## 본문` and left the stale body untouched.
+      const splicePattern = /(## 본문[^\n]*\n)([\s\S]*?)(?=\n## |\s*$)/;
       let newText: string;
       if (splicePattern.test(text)) {
-        newText = text.replace(splicePattern, (_, h, _old, tail) => `${h}\n${body}\n${tail}`);
+        newText = text.replace(splicePattern, (_, h) => `${h}\n${body}\n`);
       } else {
         const checkIdx = text.indexOf('## 학습 체크');
         if (checkIdx >= 0) {

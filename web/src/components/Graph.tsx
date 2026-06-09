@@ -410,12 +410,23 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
           setErr('plot spec needs `fn` or `fns`');
           return;
         }
+        // function-plot 의 기본 `interval` 샘플러(구간연산)는 `pow(interval,
+        // interval)` 즉 **변수 지수** `(...)^x`·`a^x`·`x^x` 를 평가하지 못해
+        // 선을 통째로 안 그린다(NaN 구간 반환). 그런데 hover 툴팁은 mathjs 로
+        // 따로 재계산하므로 "선은 안 보이는데 hover 하면 값이 뜨는" 증상이 됨.
+        // → 지수에 변수(letter)가 있으면 `polyline`(builtIn 선형 샘플러, 점마다
+        //   실제 평가)로 전환. 상수 지수(`x^2`)는 asymptote 처리가 나은 interval 유지.
+        const hasVarExponent = (s: string) => /(\^|\*\*)\s*\(?[^)\s,]*[a-zA-Z]/.test(s);
         const data = resolvedFns.map((f) => {
           const d: Record<string, unknown> = { fn: f.fn, color: f.color };
           if (f.closed) {
             d.closed = true;
             // Translucent fill when closed — derive from line color
             d.color = f.color;
+          }
+          if (hasVarExponent(f.fn)) {
+            d.graphType = 'polyline';
+            if (!f.nSamples) d.nSamples = 1000;
           }
           if (f.range) d.range = f.range;
           if (f.nSamples) d.nSamples = f.nSamples;
@@ -433,8 +444,13 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
         // entries for y=0 and x=0 so that function-plot's tip will snap
         // to those lines too. Without these, hovering over the axis lines
         // doesn't trigger any snap.
-        const xRange = spec.range ?? [-5, 5];
-        const yRangeForAxes = spec.yRange ?? [-10, 10];
+        // `?? [-5,5]` only catches null/undefined — an LLM-emitted `range: []`
+        // or `range: [3]` is truthy and would slip through, producing a broken
+        // (empty/single-element) d3 domain. Require exactly two finite numbers.
+        const validRange = (r: unknown): r is [number, number] =>
+          Array.isArray(r) && r.length === 2 && r.every((n) => typeof n === 'number' && Number.isFinite(n));
+        const xRange: [number, number] = validRange(spec.range) ? spec.range : [-5, 5];
+        const yRangeForAxes: [number, number] = validRange(spec.yRange) ? spec.yRange : [-10, 10];
         const axisData: Array<Record<string, unknown>> = [];
         if (yRangeForAxes[0] <= 0 && yRangeForAxes[1] >= 0) {
           axisData.push({ fn: '0', color: '#fafafa', skipTip: false });
@@ -480,7 +496,7 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
           width: effWidth,
           height,
           xAxis: { domain: xRange },
-          yAxis: spec.yRange ? { domain: spec.yRange } : undefined,
+          yAxis: validRange(spec.yRange) ? { domain: spec.yRange } : undefined,
           grid: spec.grid !== false,
           // title rendered above by <Caption />
           disableZoom: !interactive,
@@ -492,7 +508,7 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
             xLine: true,
             yLine: true,
             renderer: (x: number, y: number, index: number) => {
-              const item = allData[index] as { fn?: string; fnType?: string };
+              const item = allData[index] as { fn?: string; fnType?: string; scope?: Record<string, number> };
               let xr = Math.round(x / xStep) * xStep;
               let yr = y;
               if (item?.fnType === 'parametric') {
@@ -500,8 +516,15 @@ function PlotGraph({ spec, width = 360, height = 220, interactive = false, hideC
                 xr = 0;
                 yr = Math.round(y / xStep) * xStep;
               } else if (item?.fn && MATH_EVAL) {
-                try { yr = MATH_EVAL(item.fn, { x: xr }); }
-                catch { yr = Math.round(y / xStep) * xStep; }
+                // Re-evaluate with the SAME scope (slider/param values) the
+                // sampler used — otherwise `a*x` etc. resolves `a` to NaN.
+                // mathjs returns a Complex object (not a number) outside the
+                // real domain (e.g. sqrt/log of a negative); fall back to the
+                // sampler's y in that case instead of showing "?".
+                try {
+                  const v = MATH_EVAL(item.fn, { x: xr, ...(item.scope ?? {}) });
+                  yr = typeof v === 'number' && Number.isFinite(v) ? v : Math.round(y / xStep) * xStep;
+                } catch { yr = Math.round(y / xStep) * xStep; }
               } else {
                 yr = Math.round(y / xStep) * xStep;
               }
