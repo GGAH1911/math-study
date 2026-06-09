@@ -47,10 +47,24 @@ const all = await getCollection('concepts');
 const typeBySlug = new Map<string, string>();
 for (const c of all) typeBySlug.set(c.id, c.data.concept_type ?? 'other');
 
+// flat leaf → full 중첩 slug. prerequisites/enables 가 flat slug(`이차함수`)로 저장돼
+// `/concepts/이차함수` 가 404 나는 것을, 실제 c.id(`functions/middle-3/이차함수`)로
+// 해석해 고친다. (readdir NFD 대비 NFC 정규화. 같은 leaf 중복 시 첫 매칭 우선.)
+const leafToFull = new Map<string, string>();
+for (const c of all) {
+  const leaf = (c.id.split('/').pop() ?? c.id).normalize('NFC');
+  if (!leafToFull.has(leaf)) leafToFull.set(leaf, c.id);
+}
+
 function groupByType(paths: string[]): { type: string; label: string; items: { slug: string; label: string }[] }[] {
   const buckets: Record<string, { slug: string; label: string }[]> = {};
   for (const p of paths) {
-    const slug = fmtPath(p);
+    let slug = fmtPath(p);
+    // flat slug 면 실제 중첩 slug 로 해석(prerequisites/enables 가 flat 저장 → 404 보정).
+    if (!typeBySlug.has(slug)) {
+      const full = leafToFull.get((slug.split('/').pop() ?? slug).normalize('NFC'));
+      if (full) slug = full;
+    }
     const t = typeBySlug.get(slug) ?? 'other';
     buckets[t] = buckets[t] ?? [];
     buckets[t].push({ slug, label: prettySlug(slug) });

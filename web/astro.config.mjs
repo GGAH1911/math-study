@@ -7,6 +7,44 @@ import tailwindcss from '@tailwindcss/vite';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { visit } from 'unist-util-visit';
+import { readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+// 개념 leaf 이름 → 실제 중첩 slug 맵.
+// 개념 .md 본문이 flat 링크(`/concepts/이차함수`)를 쓰는데 실제 라우트는 중첩
+// (`/concepts/functions/middle-3/이차함수`)이라 통째로 404 나는 시스템 와이드 버그가
+// 있다. 렌더 시 leaf 를 실제 slug 로 해석해 고친다(아래 remarkRewritePaths).
+// readdir 은 macOS-origin 파일명이 NFD 라 세그먼트마다 NFC 정규화(Astro content id 와 일치).
+const CONCEPT_LEAF_MAP = (() => {
+  /** @type {Map<string, string>} */
+  const map = new Map();
+  /** @type {Map<string, number>} */
+  const dups = new Map();
+  let root;
+  try { root = fileURLToPath(new URL('../docs/concepts', import.meta.url)); }
+  catch { return map; }
+  /** @param {string} dir @param {string} prefix */
+  const walk = (dir, prefix) => {
+    /** @type {import('node:fs').Dirent[]} */
+    let ents = [];
+    try { ents = readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const ent of ents) {
+      const nfc = ent.name.normalize('NFC');
+      if (ent.isDirectory()) {
+        walk(`${dir}/${ent.name}`, prefix ? `${prefix}/${nfc}` : nfc);
+      } else if (ent.name.endsWith('.md')) {
+        const leaf = nfc.replace(/\.md$/, '');
+        const full = prefix ? `${prefix}/${leaf}` : leaf;
+        // 첫 매칭 우선. 같은 leaf 가 여러 경로에 있으면(드묾) 카운트해 경고.
+        if (map.has(leaf)) dups.set(leaf, (dups.get(leaf) ?? 1) + 1);
+        else map.set(leaf, full);
+      }
+    }
+  };
+  walk(root, '');
+  if (dups.size) console.warn(`[concept-links] 중복 leaf ${dups.size}개 — 첫 경로로 해석:`, [...dups.keys()].slice(0, 8).join(', '));
+  return map;
+})();
 
 // KaTeX strict 모드: 한국어 콘텐츠라 `$...의 ...$` 같은 raw 한글이
 // 자주 등장. `unicodeTextInMathMode` 만 ignore하고 나머지 (브래킷 불일치
@@ -60,6 +98,18 @@ function remarkRewritePaths() {
     });
     visit(tree, 'link', (node) => {
       if (typeof node.url !== 'string') return;
+      // `/concepts/<leaf>` (flat 단일 세그먼트) → 실제 중첩 slug 로 해석. 개념 본문
+      // 링크가 flat 인데 라우트는 중첩이라 404 나는 시스템 와이드 버그 보정.
+      // leaf 가 top-level(맵값==leaf)이거나 맵에 없으면 원본 유지.
+      const flat = node.url.match(/^\/concepts\/([^/?#]+)\/?$/);
+      if (flat) {
+        let leaf = flat[1];
+        try { leaf = decodeURIComponent(leaf); } catch { /* already raw */ }
+        leaf = leaf.normalize('NFC');
+        const full = CONCEPT_LEAF_MAP.get(leaf);
+        if (full && full !== leaf) node.url = '/concepts/' + full;
+        return;
+      }
       // External / anchor / absolute — skip
       if (/^(https?:|mailto:|#|\/)/.test(node.url)) return;
       // ../<col>/<slug>.md or similar cross-collection
