@@ -78,6 +78,26 @@ function saveHistory(slug: string, msgs: ChatMessage[]): void {
   }
 }
 
+// 대화 이력 DB 동기화(계정별 · 기기 넘어 유지). localStorage 는 빠른 캐시로 병행.
+async function loadDbHistory(collection: string, slug: string): Promise<ChatMessage[] | null> {
+  try {
+    const r = await fetch(`/api/chat-history?collection=${encodeURIComponent(collection)}&slug=${encodeURIComponent(slug)}`);
+    if (!r.ok) return null;
+    const d = await r.json();
+    return Array.isArray(d.messages) ? (d.messages as ChatMessage[]) : null;
+  } catch { return null; }
+}
+function saveDbHistory(collection: string, slug: string, msgs: ChatMessage[]): void {
+  try {
+    const slim = msgs.map((m) => (m.images?.length ? { ...m, images: undefined } : m));
+    fetch('/api/chat-history', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ collection, slug, messages: slim }),
+    }).catch(() => { /* offline/실패 무시 — localStorage 에 캐시됨 */ });
+  } catch { /* ignore */ }
+}
+
 // Lightweight markdown rendering: bold, italic, code spans, code blocks, paragraphs, KaTeX-aware passthrough.
 // Strategy: split paragraphs, wrap code fences as <pre><code>, render inline.
 function renderMarkdown(text: string): string {
@@ -785,16 +805,29 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   }, []);
 
 
-  // Load history on mount
+  // Load history on mount — localStorage 즉시 표시 후 DB(계정·기기 넘어) 권위로 동기화.
   useEffect(() => {
-    setMessages(loadHistory(storageKey));
+    const local = loadHistory(storageKey);
+    setMessages(local);
     // pyodide worker 선제 로드 — 첫 sympy 호출 시 대기 ↓
     prewarmPyodide();
+    let cancelled = false;
+    (async () => {
+      const db = await loadDbHistory(collection, slug);
+      if (cancelled) return;
+      if (db && db.length > 0) setMessages(db);            // DB 권위(다른 기기 대화 포함)
+      else if (local.length > 0) saveDbHistory(collection, slug, local); // 마이그레이션
+    })();
+    return () => { cancelled = true; };
   }, [storageKey]);
 
-  // Persist on every change
+  // Persist on every change — localStorage 캐시 + DB(디바운스).
   useEffect(() => {
-    if (messages.length > 0) saveHistory(storageKey, messages);
+    if (messages.length > 0) {
+      saveHistory(storageKey, messages);
+      const t = setTimeout(() => saveDbHistory(collection, slug, messages), 800);
+      return () => clearTimeout(t);
+    }
   }, [storageKey, messages]);
 
   // Auto-scroll to bottom on new content
@@ -1130,6 +1163,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     if (!confirm('대화를 모두 지울까요?')) return;
     setMessages([]);
     try { window.localStorage.removeItem(STORAGE_PREFIX + storageKey); } catch {}
+    saveDbHistory(collection, slug, []); // DB 도 비움
   };
 
   return (

@@ -20,7 +20,7 @@ export async function claimLegacyDataIfFirst(
     .map((c) => ({
       id: c.id,
       mastery: c.data.mastery,
-      evidence: JSON.stringify(c.data.mastery_evidence ?? []),
+      evidence: (c.data.mastery_evidence ?? []) as unknown[],
       updated: c.data.mastery_updated ?? null,
       review_state: c.data.review_state ?? null,
       next_review: c.data.next_review ?? null,
@@ -37,7 +37,7 @@ export async function claimLegacyDataIfFirst(
     for (const s of seed) {
       await tx`
         INSERT INTO concept_mastery (user_id, concept_id, mastery, mastery_evidence, mastery_updated, review_state, next_review)
-        VALUES (${newUserId}, ${s.id}, ${s.mastery}, ${s.evidence}::jsonb, ${s.updated}, ${s.review_state}, ${s.next_review})
+        VALUES (${newUserId}, ${s.id}, ${s.mastery}, ${sql.json(s.evidence)}, ${s.updated}, ${s.review_state}, ${s.next_review})
         ON CONFLICT (user_id, concept_id) DO NOTHING
       `;
     }

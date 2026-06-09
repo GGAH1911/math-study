@@ -53,12 +53,11 @@ export async function promoteMastery(
   const from = existing?.mastery ?? 'unknown';
   const evidence = [...(existing?.mastery_evidence ?? [])];
   for (const e of newEvidence) if (e && !evidence.includes(e)) evidence.push(e);
-  const json = JSON.stringify(evidence);
   await sql`
     INSERT INTO concept_mastery (user_id, concept_id, mastery, mastery_evidence, mastery_updated)
-    VALUES (${userId}, ${conceptId}, ${to}, ${json}::jsonb, NOW())
+    VALUES (${userId}, ${conceptId}, ${to}, ${sql.json(evidence)}, NOW())
     ON CONFLICT (user_id, concept_id)
-      DO UPDATE SET mastery = ${to}, mastery_evidence = ${json}::jsonb, mastery_updated = NOW()
+      DO UPDATE SET mastery = ${to}, mastery_evidence = ${sql.json(evidence)}, mastery_updated = NOW()
   `;
   return { from, to, evidenceCount: evidence.length };
 }

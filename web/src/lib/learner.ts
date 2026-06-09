@@ -41,10 +41,10 @@ export async function upsertUserProfile(userId: string, patch: ProfilePatch): Pr
   };
   await sql`
     INSERT INTO user_profile (user_id, self_reported_level, goals, weakness_patterns, learning_pace, notes, updated_at)
-    VALUES (${userId}, ${merged.self_reported_level}, ${merged.goals}, ${JSON.stringify(merged.weakness_patterns)}::jsonb, ${merged.learning_pace}, ${merged.notes}, NOW())
+    VALUES (${userId}, ${merged.self_reported_level}, ${merged.goals}, ${sql.json(merged.weakness_patterns)}, ${merged.learning_pace}, ${merged.notes}, NOW())
     ON CONFLICT (user_id) DO UPDATE SET
       self_reported_level = ${merged.self_reported_level}, goals = ${merged.goals},
-      weakness_patterns = ${JSON.stringify(merged.weakness_patterns)}::jsonb,
+      weakness_patterns = ${sql.json(merged.weakness_patterns)},
       learning_pace = ${merged.learning_pace}, notes = ${merged.notes}, updated_at = NOW()
   `;
   return merged;
