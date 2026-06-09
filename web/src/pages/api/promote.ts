@@ -49,7 +49,8 @@ function todayISO(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+  if (!locals.user) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: { 'content-type': 'application/json' } });
   const body = (await request.json()) as PromoteBody;
   if (!body.slug || !body.question || !body.answer) {
     return new Response(JSON.stringify({ error: 'slug + question + answer required' }), {

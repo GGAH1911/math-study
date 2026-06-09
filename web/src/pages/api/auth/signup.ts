@@ -4,7 +4,7 @@ import type { APIRoute } from 'astro';
 import sql from '../../../lib/db.ts';
 import {
   hashPassword, normalizeEmail, isValidEmail, validatePassword,
-  createSession, setSessionCookie, clientIp,
+  createSession, setSessionCookie, clientIp, isThrottled, recordAuthFailure,
 } from '../../../lib/auth.ts';
 import { claimLegacyDataIfFirst } from '../../../lib/user-claim.ts';
 
@@ -25,7 +25,16 @@ async function readBody(request: Request): Promise<Record<string, string>> {
   return o;
 }
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, clientAddress }) => {
+  // 가입 레이트리밋(위조 불가 실제 IP) — scrypt(16MB/요청) 자원소진·계정스팸 방어. scrypt 전.
+  const ip = clientIp(request, clientAddress);
+  const ipKey = ip ? `ip:signup:${ip}` : null;
+  if (ipKey) {
+    const t = await isThrottled(ipKey);
+    if (t.locked) return json({ error: `가입 시도가 너무 많습니다. ${t.retryAfterSec}초 후 다시 시도하세요.` }, 429);
+    await recordAuthFailure(ipKey); // 매 시도 카운트(8회/15분 IP 상한)
+  }
+
   const body = await readBody(request);
   const email = normalizeEmail(body.email ?? '');
   const password = body.password ?? '';
@@ -62,7 +71,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
   const { token, expiresAt } = await createSession(user.id, {
     userAgent: request.headers.get('user-agent'),
-    ip: clientIp(request),
+    ip,
   });
   setSessionCookie(cookies, token, expiresAt);
   await sql`UPDATE users SET last_login_at = NOW() WHERE id = ${user.id}`;

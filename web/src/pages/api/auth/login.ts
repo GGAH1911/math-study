@@ -25,17 +25,14 @@ async function readBody(request: Request): Promise<Record<string, string>> {
   return o;
 }
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, clientAddress }) => {
   const body = await readBody(request);
   const email = normalizeEmail(body.email ?? '');
   const password = body.password ?? '';
-  const ip = clientIp(request);
-  const emailKey = `login:${email}`;
-  const ipKey = ip ? `ip:${ip}` : null;
-
-  // 레이트리밋: 이메일·IP 각각.
-  const te = await isThrottled(emailKey);
-  if (te.locked) return json({ error: `시도가 너무 많습니다. ${te.retryAfterSec}초 후 다시 시도하세요.` }, 429);
+  const ip = clientIp(request, clientAddress);
+  // 락은 위조 불가능한 실제 소켓 IP 기준만. 이메일 단독 락은 표적 계정잠금 DoS 라 안 씀
+  // (단일 IP 의 추측은 IP 락이, 비번경로는 dummy-hash 타이밍이 함께 방어).
+  const ipKey = ip ? `ip:login:${ip}` : null;
   if (ipKey) {
     const ti = await isThrottled(ipKey);
     if (ti.locked) return json({ error: `시도가 너무 많습니다. ${ti.retryAfterSec}초 후 다시 시도하세요.` }, 429);
@@ -52,12 +49,10 @@ export const POST: APIRoute = async ({ request, cookies }) => {
   const ok = !!u && u.is_active && passOk;
 
   if (!ok) {
-    await recordAuthFailure(emailKey);
     if (ipKey) await recordAuthFailure(ipKey);
     return json({ error: '이메일 또는 비밀번호가 올바르지 않습니다.' }, 401);
   }
 
-  await clearAuthFailures(emailKey);
   if (ipKey) await clearAuthFailures(ipKey);
 
   const { token, expiresAt } = await createSession(u.id, {

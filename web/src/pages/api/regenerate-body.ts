@@ -68,7 +68,8 @@ function listField(text: string, key: string): string[] {
   return m[1].split(',').map((s) => s.trim()).filter(Boolean);
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+  if (!locals.user) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: { 'content-type': 'application/json' } });
   const { slug, model = 'haiku', useNotes = false } = (await request.json()) as RegenerateRequest;
   // sub-dir slug 허용. `..` 와 backslash 차단.
   if (!slug || /\\|\.\./.test(slug) || !/^[\w가-힣/-]+$/.test(slug)) {

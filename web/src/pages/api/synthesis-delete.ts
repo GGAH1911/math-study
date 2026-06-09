@@ -31,7 +31,8 @@ function json(payload: unknown, status: number): Response {
   });
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+  if (!locals.user) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: { 'content-type': 'application/json' } });
   let body: DeleteBody;
   try { body = (await request.json()) as DeleteBody; }
   catch { return json({ error: 'invalid json' }, 400); }

@@ -188,9 +188,15 @@ export function validatePassword(pw: unknown): string | null {
   return null;
 }
 
-// 클라이언트 IP 추출(프록시 헤더는 신뢰 경계 주의 — 자가호스팅 기준 보수적).
-export function clientIp(request: Request): string | null {
-  const xff = request.headers.get('x-forwarded-for');
-  if (xff) return xff.split(',')[0].trim();
-  return request.headers.get('x-real-ip');
+// 클라이언트 IP 추출. 기본은 위조 불가능한 소켓 peer(Astro clientAddress).
+// X-Forwarded-For 는 클라이언트가 임의 지정 가능해 throttle 우회·표적 락아웃에 악용되므로,
+// 신뢰 프록시 뒤일 때만(MATH_STUDY_TRUST_PROXY=true) 옵트인으로 사용한다.
+export function clientIp(request: Request, clientAddress?: string | null): string | null {
+  if (process.env.MATH_STUDY_TRUST_PROXY === 'true') {
+    const xff = request.headers.get('x-forwarded-for');
+    if (xff) return xff.split(',')[0].trim();
+    const xr = request.headers.get('x-real-ip');
+    if (xr) return xr;
+  }
+  return clientAddress ?? null;
 }
