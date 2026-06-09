@@ -26,8 +26,14 @@ let _katex: Katex | null = null;
 // elements like `{가, 나, 다}`). KaTeX's default strict mode logs a
 // warning per character which floods the console; muting the
 // `unicodeTextInMathMode` code keeps real LaTeX errors visible.
+//
+// `unknownSymbol` 도 ignore: LLM 이 `\text{증가 → 감소}` 처럼 `\text{}` 안에 raw
+// 유니코드(→·×·≈ …)를 넣으면 KaTeX 가 글리프로 정상 렌더하면서도 문자마다 warn 을
+// 쏟아낸다. 이걸 LaTeX 명령(\to 등)으로 치환하면 text 모드에선 오히려 "Undefined
+// control sequence" 하드에러가 난다(검증함). 따라서 변환하지 말고 경고만 끈다 —
+// 렌더 결과는 동일(raw 글리프), 콘솔만 조용해진다. 진짜 LaTeX 오류는 여전히 보임.
 export const KATEX_STRICT: KatexOpts['strict'] = (code) =>
-  code === 'unicodeTextInMathMode' ? 'ignore' : 'warn';
+  code === 'unicodeTextInMathMode' || code === 'unknownSymbol' ? 'ignore' : 'warn';
 
 // LLM-generated math frequently uses `\begin{align}` (standard LaTeX,
 // unsupported by KaTeX). Normalize to `aligned` before rendering so the
