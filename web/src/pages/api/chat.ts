@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { buildTutorPrompt, searchConcepts } from '../../lib/chat-context.ts';
+import { buildLearnerContext } from '../../lib/learner.ts';
 
 export const prerender = false;
 
@@ -71,7 +72,7 @@ function formatHistory(messages: ChatMessage[]): string {
   ].join('\n');
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   // --- Input validation -------------------------------------------------
   // Note: no Origin/Host check here on purpose. The app is reachable both
   // via the Astro dev host (127.0.0.1:4321) and a Tailscale reverse proxy
@@ -180,6 +181,15 @@ export const POST: APIRoute = async ({ request }) => {
 ${lines}`;
     }
   }
+  // 학습자 모델: 이 학생의 정량 수준 + 정성 프로필을 프롬프트에 주입(per-user, 하드코딩 0).
+  const learnerUserId = locals.user?.id;
+  if (learnerUserId) {
+    try {
+      const learner = await buildLearnerContext(learnerUserId);
+      if (learner) systemPrompt += `\n\n${learner}`;
+    } catch { /* 학습자 컨텍스트 실패는 튜터 동작을 막지 않음 */ }
+  }
+
   let userPrompt = (formatHistory(messages) + '\n' + lastUser.content).trim();
 
   // 사용자가 첨부한 이미지를 임시 PNG 로 저장 → claude CLI 가 Read 도구로 직접 본다
