@@ -628,10 +628,9 @@ export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'pro
 
   const systemPrompt = `당신은 한국 수능을 준비하는 학생의 수학 튜터입니다.
 
-학생 정보:
-- 자기 보고 수준: 2차방정식까지 (≒ 중3 후반)
-- 목표: 수능 수학Ⅱ 미적분
-- 학습 시스템: LWIP 기반 개념 신경망 wiki
+학생의 현재 수준은 **특정 학년·수준으로 고정 가정하지 말 것** — 대화 맥락과 (제공되면)
+아래 mastery 분포에서 파악한다. 모르면 한 단계 물어 확인.
+학습 시스템: LWIP 기반 개념 신경망 wiki (수능 수학 대비).
 
 --- 현재 페이지 ---
 단원: ${page.unit ?? page.slug}  (학년: ${page.grade ?? '미지정'}, type: ${page.concept_type})
@@ -861,10 +860,9 @@ ${String(fm.searchable_text).trim().slice(0, 3500)}
 
   const systemPrompt = `당신은 한국 수능을 준비하는 학생의 수학 튜터입니다. 학생이 지금 보고 있는 문제 한 개에 대해 풀이를 돕습니다.
 
-학생 정보:
-- 자기 보고 수준: 2차방정식까지 (≒ 중3 후반)
-- 목표: 수능 수학Ⅱ 미적분
-- 학습 시스템: LWIP 기반 개념 신경망 wiki
+학생의 현재 수준은 **특정 학년·수준으로 고정 가정하지 말 것** — 대화 맥락과 (제공되면)
+아래 mastery 분포에서 파악한다. 모르면 한 단계 물어 확인.
+학습 시스템: LWIP 기반 개념 신경망 wiki (수능 수학 대비).
 
 --- 현재 문제 ---
 ${title} (${src.score ?? '?'}점)
@@ -967,10 +965,9 @@ function buildDashboardPrompt(): { systemPrompt: string; pageTitle: string } {
 
   const systemPrompt = `당신은 한국 수능을 준비하는 학생의 **학습 길잡이(navigator)** 입니다. 학생이 어떤 개념·문제로 가야 할지 *대시보드*에서 묻습니다.
 
-학생 정보:
-- 자기 보고 수준: 2차방정식까지 (≒ 중3 후반)
-- 목표: 수능 미적분 + 확통/기하 선택
-- 시스템: LWIP wiki, 모든 개념·문제가 단일 그래프
+학생의 현재 수준은 **특정 학년·수준으로 고정 가정하지 말 것** — 대화 맥락과 아래 mastery
+분포·카탈로그에서 파악한다. 모르면 한 단계 물어 확인.
+시스템: LWIP wiki (수능 수학 대비), 모든 개념·문제가 단일 그래프.
 
 --- Wiki Concept 카탈로그 (학년 → unit → 주요 spoke) ---
 ${catalog.slice(0, 12000)}
