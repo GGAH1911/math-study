@@ -9,9 +9,12 @@ const TILE_TARGET = 1040;                         // 타일 셀 목표 변(≤15
 const TILE_OVERLAP = 90;                          // 타일 경계 겹침(px)
 const MAX_TILES = 6;                              // 자동 타일 상한 — 초과(초대형)는 크롭 폴백
                                                   // (2D는 ~16조각서 LLM 조립 실패 → 보수적으로)
+const DISPLAY_LONG_EDGE = 512;                    // 사용자 표시용 통이미지(작게). 비전 타일과 분리.
 
 export type Prepared =
-  | { kind: 'ready'; dataUrls: string[] }         // 1장 또는 N타일(원해상도) → 바로 첨부
+  // display = 원본 통이미지(사용자 표시용), tiles = 비전(LLM)용 원해상도 타일.
+  // 사용자에겐 "조각"을 노출하지 않고 자기가 첨부한 통이미지 1장만 보인다.
+  | { kind: 'ready'; display: string; tiles: string[] }
   | { kind: 'needsCrop'; rawDataUrl: string };    // 상한 초과(초대형) → 크롭 모달 폴백
 
 const isHeic = (f: File) => /image\/hei[cf]/i.test(f.type) || /\.hei[cf]$/i.test(f.name);
@@ -99,7 +102,9 @@ export async function prepareImage(file: File): Promise<Prepared> {
   const img = await loadImage(rawDataUrl);
   const tiles = tileForVision(img);
   if (tiles === null) return { kind: 'needsCrop', rawDataUrl };  // 초대형 → 크롭 폴백
-  return { kind: 'ready', dataUrls: tiles };
+  // 표시는 통이미지(작게 다운스케일), 전송은 원해상도 타일 — "조각"을 사용자에게 안 보인다.
+  const display = toPng(img, 0, 0, img.naturalWidth, img.naturalHeight, DISPLAY_LONG_EDGE);
+  return { kind: 'ready', display, tiles };
 }
 
 // paste/drop 의 DataTransfer 에서 이미지 File 추출.

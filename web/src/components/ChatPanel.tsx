@@ -28,7 +28,8 @@ type ChatMessage = {
   role: 'user' | 'assistant';
   content: string;
   promoted?: { path: string };
-  images?: string[];   // dataURL (user 메시지에만, max 1)
+  images?: string[];   // 비전(LLM)용 타일 dataURL (user 메시지에만). 표시엔 displayImage 사용.
+  displayImage?: string; // 사용자 표시용 통이미지 dataURL(작게). 타일과 분리해 "조각" 노출 안 함.
 };
 
 type Props = {
@@ -554,12 +555,9 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
             ? 'bg-indigo-500/10 border border-indigo-500/30 text-zinc-100'
             : 'bg-[color:var(--color-surface-2)] border border-[color:var(--color-border)] text-zinc-100'}`}
       >
-        {isUser && msg.images && msg.images.length > 0 && (
+        {isUser && (msg.displayImage || (msg.images && msg.images.length > 0)) && (
           <div className="flex items-end gap-1.5 mb-1">
-            <img src={msg.images[0]} alt="첨부 이미지" className="max-h-40 rounded border border-indigo-500/30" />
-            {msg.images.length > 1 && (
-              <span className="text-[10px] text-zinc-400 mb-1">+{msg.images.length - 1}조각</span>
-            )}
+            <img src={msg.displayImage ?? msg.images![0]} alt="첨부 이미지" className="max-h-40 rounded border border-indigo-500/30" />
           </div>
         )}
         {segments.map((s, i) => {
@@ -714,7 +712,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   // 이미지 첨부 state
-  const [pending, setPending] = useState<string[]>([]);          // 전송 대기 타일들 (원해상도 PNG dataURL N장 — 보통 1장)
+  const [pending, setPending] = useState<string[]>([]);          // 전송 대기 비전 타일들 (원해상도 PNG dataURL N장)
+  const [pendingDisplay, setPendingDisplay] = useState<string | null>(null);  // 사용자 표시용 통이미지(타일과 분리)
   const [cropSrc, setCropSrc] = useState<string | null>(null);   // 크롭 모달 대상 (원본 dataURL)
   const [imgError, setImgError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -844,14 +843,16 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const send = useCallback(async (override?: string) => {
     const text = (override ?? input).trim();
     const attachedImgs = override === undefined ? pending : [];    // 합성/노트 호출엔 첨부 없음 (첫 user 메시지에만)
+    const attachedDisplay = override === undefined ? pendingDisplay : null;  // 표시용 통이미지(타일과 분리)
     if ((!text && !attachedImgs.length) || streaming) return;      // 이미지만 있어도 전송 허용
     setError(null);
-    if (override === undefined) { setInput(''); setPending([]); setImgError(null); }
+    if (override === undefined) { setInput(''); setPending([]); setPendingDisplay(null); setImgError(null); }
 
     const newUserMsg: ChatMessage = {
       role: 'user',
       content: text || '(첨부한 이미지를 봐주세요)',
-      ...(attachedImgs.length ? { images: attachedImgs } : {}),
+      // images=비전 타일(LLM 전송), displayImage=통이미지(표시) — 사용자에겐 통이미지만 보임.
+      ...(attachedImgs.length ? { images: attachedImgs, displayImage: attachedDisplay ?? attachedImgs[0] } : {}),
     };
     const placeholder: ChatMessage = { role: 'assistant', content: '' };
     setMessages([...messages, newUserMsg, placeholder]);
@@ -1083,7 +1084,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     try {
       const p = await prepareImage(files[0]);
       if (p.kind === 'needsCrop') { setCropSrc(p.rawDataUrl); setImgError(null); }
-      else { setPending(p.dataUrls); setImgError(null); }   // 큰 이미지는 자동 타일 N장
+      else { setPending(p.tiles); setPendingDisplay(p.display); setImgError(null); }   // 타일=전송, display=표시
     } catch (e) {
       setImgError(e instanceof Error ? e.message : '이미지 처리에 실패했어요.');
     }
@@ -1374,13 +1375,10 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         <div className="flex items-center gap-2 mb-2 shrink-0">
           {pending.length > 0 && (
             <div className="relative">
-              <img src={pending[0]} alt="첨부 이미지" className="h-14 w-14 object-cover rounded border border-[color:var(--color-border)]" />
-              {pending.length > 1 && (
-                <span className="absolute bottom-0 left-0 px-1 text-[10px] bg-zinc-900/80 text-zinc-200 rounded-tr">{pending.length}조각</span>
-              )}
+              <img src={pendingDisplay ?? pending[0]} alt="첨부 이미지" className="h-14 w-14 object-cover rounded border border-[color:var(--color-border)]" />
               <button
                 type="button"
-                onClick={() => { setPending([]); setImgError(null); }}
+                onClick={() => { setPending([]); setPendingDisplay(null); setImgError(null); }}
                 className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-zinc-900 border border-zinc-600 text-zinc-300 text-xs grid place-items-center hover:text-white"
                 aria-label="첨부 제거"
               >×</button>
@@ -1455,7 +1453,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       {cropSrc && (
         <ImageCropper
           src={cropSrc}
-          onCrop={(dataUrl) => { setPending([dataUrl]); setCropSrc(null); setImgError(null); }}
+          onCrop={(dataUrl) => { setPending([dataUrl]); setPendingDisplay(dataUrl); setCropSrc(null); setImgError(null); }}
           onCancel={() => setCropSrc(null)}
         />
       )}
