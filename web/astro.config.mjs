@@ -181,8 +181,13 @@ export default defineConfig({
     // 그동안 페이지가 들고있던 stale browser-hash URL이 504 로 깨짐.
     // 명시적으로 pre-bundle 시키면 startup 직후부터 deps 캐시에 존재해
     // 재최적화 사이클을 회피.
+    //
+    // @xyflow/react 도 동일: /graph 의 ConceptDAG 는 client:only 아일랜드라
+    // startup 스캔에 안 잡혀, /graph 첫 방문 시 vite가 @xyflow 를 뒤늦게
+    // 발견→재최적화→그 페이지의 stale hash 가 504(Outdated Optimize Dep)로
+    // 깨지고 노드가 안 보였다. pre-bundle 로 회피.
     optimizeDeps: {
-      include: ['mathlive'],
+      include: ['mathlive', '@xyflow/react'],
     },
   },
   markdown: {
