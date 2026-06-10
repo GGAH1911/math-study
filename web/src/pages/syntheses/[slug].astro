@@ -1,15 +1,18 @@
 ---
+// SSR (prerender=false, 인증 게이팅). getStaticPaths/Astro.props 는 prerender=true
+// 에서만 동작 — SSR 에선 실행되지 않아 Astro.props 가 비고 entry=undefined →
+// render(undefined) 크래시(500)였다. Astro.params + getEntry 로 직접 조회한다
+// (concepts/[...slug] 와 동일한 SSR 패턴).
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import SynthesisDeleteButton from '../../components/SynthesisDeleteButton.tsx';
 
-export async function getStaticPaths() {
-  const items = await getCollection('syntheses');
-  return items.map((c) => ({ params: { slug: c.id }, props: { entry: c } }));
+const slug = Astro.params.slug as string;
+const entry = await getEntry('syntheses', slug);
+if (!entry) {
+  return new Response('Not found', { status: 404 });
 }
-
-const { entry } = Astro.props;
 const { Content } = await render(entry);
 const fm = entry.data;
 
