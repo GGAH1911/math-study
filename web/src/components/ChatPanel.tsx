@@ -825,14 +825,18 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     return () => { cancelled = true; };
   }, [storageKey]);
 
-  // Persist on every change — localStorage 캐시 + DB(디바운스).
+  // Persist on change — localStorage 캐시 + DB 둘 다 디바운스. 스트리밍 중엔 토큰마다
+  // messages 가 바뀌는데, 그때마다 saveHistory(전체 JSON.stringify=O(n))를 동기 실행하면
+  // 긴 히스토리에서 O(n²) 누적으로 스크롤이 버벅인다. 중간 토큰 상태 저장은 무의미(응답
+  // 미완성)하므로 스트림이 잦아든 뒤(또는 단일 액션 후) 한 번만 저장한다.
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages.length === 0) return;
+    const t = setTimeout(() => {
       saveHistory(storageKey, messages);
-      const t = setTimeout(() => saveDbHistory(collection, slug, messages), 800);
-      return () => clearTimeout(t);
-    }
-  }, [storageKey, messages]);
+      saveDbHistory(collection, slug, messages);
+    }, 500);
+    return () => clearTimeout(t);
+  }, [storageKey, messages, collection, slug]);
 
   // Auto-scroll to bottom on new content
   useEffect(() => {
@@ -1100,6 +1104,14 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const sendRef = useRef(send);
   useEffect(() => { sendRef.current = send; }, [send]);
 
+  // promote() 는 클릭 시점의 최신 messages 만 있으면 된다. messages 를 useCallback deps
+  // 에 넣으면 스트리밍 토큰마다 promote 정체성이 바뀌고, 그게 모든 <Message> 의 onPromote
+  // prop 을 흔들어 memo 를 전 메시지에서 깨뜨린다(긴 채팅 스크롤 버벅임의 회귀 원인 —
+  // 3881d211 의 memo 최적화가 스트리밍 경로에서 무력화됨). ref 로 최신값을 읽어 promote 를
+  // 안정화 → memo 유지.
+  const messagesRef = useRef(messages);
+  useEffect(() => { messagesRef.current = messages; }, [messages]);
+
   // LearningNoteButton (우측 카드) → 학습 노트 작성 요청. 입력창을 거치지 않고
   // 곧장 send() 로 user message 전송 (override 인자 — input 비우지 않음).
   useEffect(() => {
@@ -1119,7 +1131,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
 
   const promote = useCallback(
     async (idx: number) => {
-      const assistant = messages[idx];
+      const msgs = messagesRef.current;
+      const assistant = msgs[idx];
       if (!assistant || assistant.role !== 'assistant') return;
       // Find the preceding user question — skip internal protocol messages
       // ([자동 계산 결과], [자동 계산 결과 — 검증 실패], [시각 검증]) that the
@@ -1127,8 +1140,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       // student question is captured instead of an internal protocol string.
       let question = '';
       for (let i = idx - 1; i >= 0; i--) {
-        if (messages[i].role === 'user') {
-          const c = messages[i].content;
+        if (msgs[i].role === 'user') {
+          const c = msgs[i].content;
           if (c.startsWith('[자동 계산 결과') || c.startsWith('[시각 검증]')) continue;
           question = c;
           break;
@@ -1162,7 +1175,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         setError(`Promote 실패: ${(e as Error).message}`);
       }
     },
-    [messages, slug, unitTitle, collection],
+    [slug, unitTitle, collection], // messages 는 messagesRef 로 읽음 — deps 에서 제외해 promote 안정화
   );
 
   const clearChat = () => {
