@@ -127,7 +127,7 @@ const PREVIEW_COUNT = 8;
           {fm.grade && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">grade</dt><dd>{fm.grade}</dd></div>}
           {fm.unit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">unit</dt><dd>{fm.unit}</dd></div>}
           {fm.subunit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">subunit</dt><dd>{fm.subunit}</dd></div>}
-          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">mastery</dt><dd><span class={`chip chip-mastery-${fm.mastery}`}>{fm.mastery}</span></dd></div>
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">mastery</dt><dd><span id="masteryChip" class={`chip chip-mastery-${fm.mastery}`}>{fm.mastery}</span></dd></div>
           {fm.review_state && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">review</dt><dd>{fm.review_state}</dd></div>}
           {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next_review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
           {fm.updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">updated</dt><dd>{fm.updated.toISOString().slice(0,10)}</dd></div>}
@@ -256,4 +256,15 @@ const PREVIEW_COUNT = 8;
       )}
     </aside>
   </div>
+
+  <script define:vars={{ conceptSlug: entry.id }}>
+    // PromotionCard 가 mastery 적용 시 보내는 이벤트로 사이드바 mastery 칩을 리로드 없이
+    // 즉시 갱신(리로드는 대화의 promote 펜스 재프롬프트 루프를 유발하므로 제거됨).
+    window.addEventListener('math-study:mastery-applied', (e) => {
+      const d = e.detail;
+      if (!d || d.slug !== conceptSlug) return;
+      const chip = document.getElementById('masteryChip');
+      if (chip) { chip.textContent = d.to; chip.className = `chip chip-mastery-${d.to}`; }
+    });
+  </script>
 </BaseLayout>

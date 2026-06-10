@@ -29,8 +29,26 @@ const LEVEL_COLOR: Record<MasteryLevel, string> = {
   mastered: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
 };
 
+// 적용된 제안을 localStorage 에 영속화 → 리로드/재방문 시 같은 promote 펜스가
+// 다시 "적용" 버튼으로 뜨는 루프를 막는다(적용 상태가 컴포넌트 로컬 state 라 소실되던 버그).
+const APPLIED_KEY = 'math-study:mastery-applied';
+function loadApplied(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try { return new Set(JSON.parse(window.localStorage.getItem(APPLIED_KEY) || '[]') as string[]); } catch { return new Set(); }
+}
+function markApplied(key: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const s = loadApplied(); s.add(key);
+    window.localStorage.setItem(APPLIED_KEY, JSON.stringify([...s].slice(-300)));
+  } catch { /* quota/disabled */ }
+}
+
 export default function PromotionCard({ slug, to, reason, evidence }: Props) {
-  const [status, setStatus] = useState<'pending' | 'applying' | 'applied' | 'declined' | 'error'>('pending');
+  const sugKey = `${slug}|${to}|${reason ?? ''}`;
+  const [status, setStatus] = useState<'pending' | 'applying' | 'applied' | 'declined' | 'error'>(
+    () => (loadApplied().has(sugKey) ? 'applied' : 'pending'),
+  );
   const [from, setFrom] = useState<MasteryLevel | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,10 +73,11 @@ export default function PromotionCard({ slug, to, reason, evidence }: Props) {
         return;
       }
       if (json.from) setFrom(json.from);
+      markApplied(sugKey);
       setStatus('applied');
-      // 페이지의 mastery 칩 등 SSR-rendered 영역을 즉시 새 frontmatter로
-      // 반영 — 짧은 딜레이 후 reload (사용자가 "적용됨" 메시지 확인할 시간).
-      setTimeout(() => { window.location.reload(); }, 600);
+      // 리로드 대신 사이드바 mastery 칩을 in-place 갱신. 리로드하면 대화에 남은
+      // ```promote``` 펜스가 새 카드(pending)로 다시 떠 "적용"을 반복 요구하는 루프 발생.
+      window.dispatchEvent(new CustomEvent('math-study:mastery-applied', { detail: { slug, to } }));
     } catch (e) {
       setStatus('error');
       setError((e as Error).message);
@@ -128,9 +147,7 @@ export default function PromotionCard({ slug, to, reason, evidence }: Props) {
       )}
 
       {status === 'applied' && (
-        <p className="text-emerald-300 text-[11px]">
-          ✓ 적용됨 — 다음 새로고침에 반영 (frontmatter 갱신)
-        </p>
+        <p className="text-emerald-300 text-[11px]">✓ 적용됨</p>
       )}
 
       {status === 'declined' && (
