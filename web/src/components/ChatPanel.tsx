@@ -101,7 +101,27 @@ function saveDbHistory(collection: string, slug: string, msgs: ChatMessage[]): v
 
 // Lightweight markdown rendering: bold, italic, code spans, code blocks, paragraphs, KaTeX-aware passthrough.
 // Strategy: split paragraphs, wrap code fences as <pre><code>, render inline.
+// LLM(특히 Haiku 튜터)이 가끔 서식을 잘못 낸다: ① **굵게** 대신 <strong>/<em> 같은
+// 원시 HTML 태그를 쓰고, ② 수식이 아닌 한글 산문을 $…$/$$…$$ 로 감싼다. 그대로 두면
+// ①은 escape 돼 literal `<strong>` 이 보이고, ②는 KaTeX 가 실패해 raw `$…$` 가 노출된다
+// (예: `$공통: 30 ← <strong>…</strong>$`). renderMarkdown 진입 직전에 마크다운/평문으로
+// 정규화해 LLM 이 실수해도 깨지지 않게 한다.
+function normalizeLlmMarkup(text: string): string {
+  // ① HTML 강조 태그 → 마크다운 (escape 전이라 안전; <br>/<input> 등은 안 건드림).
+  let out = text
+    .replace(/<\s*\/?\s*(?:strong|b)\s*>/gi, '**')
+    .replace(/<\s*\/?\s*(?:em|i)\s*>/gi, '*');
+  // ② \text{…} 밖에 '맨' 한글이 든 $…$ / $$…$$ 는 수식이 아니라 산문 → delimiter 제거.
+  //    (\text{공통배수} 처럼 정상 수식 안의 한글은 strip 후 판정해 보존.)
+  const isProse = (inner: string): boolean =>
+    /[가-힣]/.test(inner.replace(/\\(?:text|mathrm|mathbf|mathsf|operatorname)\s*\{[^{}]*\}/g, ''));
+  out = out.replace(/\$\$([^$]+?)\$\$/g, (m, inner: string) => (isProse(inner) ? inner : m));
+  out = out.replace(/\$([^$\n]+?)\$/g, (m, inner: string) => (isProse(inner) ? inner : m));
+  return out;
+}
+
 function renderMarkdown(text: string): string {
+  text = normalizeLlmMarkup(text);
   const escape = (s: string) =>
     s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const inline = (s: string) =>
