@@ -22,6 +22,8 @@ const returnTo = Astro.url.searchParams.get('returnTo') || '/';
           class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
         <input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="비밀번호 (8자 이상)"
           class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
+        <input type="password" name="passwordConfirm" required minlength="8" autocomplete="new-password" placeholder="비밀번호 확인 (다시 입력)"
+          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
         <button type="submit"
           class="w-full px-3 py-2 rounded-md bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/30 transition font-medium disabled:opacity-50">
           가입하기
@@ -43,6 +45,13 @@ const returnTo = Astro.url.searchParams.get('returnTo') || '/';
         msg.textContent = '';
         msg.className = 'text-sm min-h-[1.25rem]';
         const btn = f.querySelector('button[type=submit]');
+        // 비밀번호 확인 일치 검사 — 오타로 잘못된 비번이 등록되는 것을 막는다.
+        if (f.password.value !== f.passwordConfirm.value) {
+          msg.className = 'text-sm min-h-[1.25rem] text-rose-400';
+          msg.textContent = '비밀번호가 일치하지 않습니다. 다시 확인해주세요.';
+          f.passwordConfirm.focus();
+          return;
+        }
         btn.disabled = true;
         try {
           const r = await fetch('/api/auth/signup', {
