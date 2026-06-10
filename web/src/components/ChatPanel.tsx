@@ -399,9 +399,14 @@ function applyKatex(html: string, katex: KatexImpl): string {
   // 중첩된 `$` 가 들어간 display 수식도 통째로 잡는다(KaTeX 는 \text{} 안 `$...$` 를
   // 정상 처리). 짝 안 맞는 `$$` 의 폭주는 `<>` 가드(태그를 못 건넘) + KaTeX
   // throwOnError(유효 TeX 가 아니면 catch→원본 raw) 로 여전히 막힌다.
-  html = html.replace(/\$\$([^<>]+?)\$\$/g, (_, tex) => {
+  // 멀티라인 $$…$$ : renderMarkdown 이 문단 내 개행을 전부 <br/> 로 바꾸므로(line 154)
+  // `[^<>]` 만으론 <br/> 를 못 건너 닫는 $$ 까지 매칭 실패 → align 블록이 통째로 raw 노출.
+  // <br/> 만 추가 허용(다른 태그는 여전히 차단=폭주 가드 유지)해 통째로 잡은 뒤, 매칭 본문의
+  // <br/> 를 \n 으로 되돌린다(KaTeX aligned 는 \\ 로 행 구분, \n 은 무시 — 안전).
+  html = html.replace(/\$\$((?:<br\s*\/?>|[^<>])+?)\$\$/g, (_, tex: string) => {
     try {
-      return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: true, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
+      const clean = tex.replace(/<br\s*\/?>/g, '\n');
+      return katex.renderToString(normalizeKatex(decodeEntities(clean)), { displayMode: true, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
     } catch {
       return _;
     }

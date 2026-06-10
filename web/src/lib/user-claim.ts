@@ -20,7 +20,7 @@ export async function claimLegacyDataIfFirst(
     .map((c) => ({
       id: c.id,
       mastery: c.data.mastery,
-      evidence: (c.data.mastery_evidence ?? []) as unknown[],
+      evidence: (c.data.mastery_evidence ?? []) as string[],
       updated: c.data.mastery_updated ?? null,
       review_state: c.data.review_state ?? null,
       next_review: c.data.next_review ?? null,
