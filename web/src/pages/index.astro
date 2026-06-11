@@ -1,424 +1,153 @@
 ---
 export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
-import AtlasMap from '../components/AtlasMap.tsx';
-import ChatPanel from '../components/ChatPanel.tsx';
+import HealthCards from '../components/HealthCards.astro';
+import DueTodayList from '../components/DueTodayList.astro';
+import DueTodayListDb from '../components/DueTodayListDb.tsx';
 import ActivityFeed from '../components/ActivityFeed.astro';
-import { buildAtlas } from '../lib/atlas.ts';
-import { recommendUnits, type UnitStatus } from '../lib/health.ts';
-import { getMasteryMap, getDueConceptIds } from '../lib/mastery.ts';
-import { getWeeklyActivity, type WeeklyActivity } from '../lib/activity.ts';
+import MasteryDonut from '../components/MasteryDonut.tsx';
+import ConceptDAG from '../components/ConceptDAG.tsx';
+import ChatPanel from '../components/ChatPanel.tsx';
+import PaperHero from '../components/PaperHero.tsx';
+import { readHealth, readConceptGraph, unitSummary } from '../lib/health.ts';
+import { getMasteryMap } from '../lib/mastery.ts';
 import synthesesIndex from '../data/syntheses-by-concept.json';
 
-// ── 멀티유저: 로그인 사용자의 mastery·due·활동을 항해 지도에 오버레이 ──
-// 비인증이면 전역 그래프값(mof='unknown' 폴백)으로 빈 바다를 그린다(미들웨어가 / 를 302 게이팅하므로
-// 실사용 경로에선 항상 user 존재 — 아래는 SSR 안전 폴백).
-const user = Astro.locals.user;
-const masteryMap = user ? await getMasteryMap(user.id) : new Map<string, string>();
-const mof = (id: string): UnitStatus =>
-  (masteryMap.get(id) ?? 'unknown') as UnitStatus;
-const dueIds = user ? await getDueConceptIds(user.id) : new Set<string>();
+const health = readHealth();
+const graph = readConceptGraph();
+// 멀티유저: 로그인 사용자의 mastery 를 그래프·단원요약에 오버레이(전역 frontmatter 대신).
+const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
+const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'learning' | 'proficient' | 'mastered';
+const graphForUser = { ...graph, nodes: graph.nodes.map((n) => ({ ...n, mastery: masteryMap.get(n.id) ?? 'unknown' })) };
+const units = unitSummary(mof);
+const us = units.byStatus;
+type SynthesisRecent = { slug: string; title: string; created: string | null; origin_concept: string | null; excerpt: string | null };
+const recentSyntheses: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []).slice(0, 5);
+const totalSyntheses: number = (synthesesIndex as any).total ?? 0;
+const leafOf = (p: string | null) => p ? (p.split('/').pop() ?? p).replace(/_/g, ' ') : '';
 
-// 단일 데이터 빌더 — 좌표·블롭·에지·항로·심도 전부 여기서(난수 0, SSR 결정적).
-const atlas = buildAtlas(mof, dueIds);
-
-// 레일 요약: 추천(이어서/준비됨) + 주간 활동.
-const { continuing, ready } = recommendUnits(mof);
-const weekly: WeeklyActivity = user
-  ? await getWeeklyActivity(user.id)
-  : { days: Array.from({ length: 7 }, () => ({ date: '', count: 0 })), streak: 0 };
-
-// 오늘의 항로 카드: 빌더가 만든 leg 들을 그대로 요약(첫 leg 가 출항 href).
-const route = atlas.route;
-const firstLeg = route[0] ?? null;
-const LEG_GLYPH: Record<string, string> = { review: '⚑', continue: '✕', problem: '★' };
-
-// 어제 남긴 노트(가장 최근 synthesis).
-type SynthesisRecent = { slug: string; title: string; created: string | null; origin_concept?: string | null; excerpt?: string | null };
-const recent: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []).slice(0, 2);
-const recentNote = recent[0] ?? null;
-const leafOf = (p?: string | null) => (p ? (p.split('/').pop() ?? p).replace(/_/g, ' ') : '');
-
-// 심도 범례 수치 — [미답, 답사, 정착, 개척].
-const [dUnknown, dLearning, dProficient, dMastered] = atlas.depthCounts;
-
-// 주간 바: 가장 큰 날 대비 높이 비율. 요일 한글(오래된→오늘).
-const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
-const maxCount = Math.max(1, ...weekly.days.map((d) => d.count));
-const weekBars = weekly.days.map((d) => {
-  const wd = d.date ? new Date(`${d.date}T12:00:00+09:00`).getDay() : 0;
-  return { label: DAYS[wd], count: d.count, h: Math.round((d.count / maxCount) * 100) };
-});
-const todayIdx = weekBars.length - 1;
-
-// 「오늘의 페이지」 날짜줄 — KST. 지도 좌상 오버레이에 보존(기존 dateLine 로직).
+// 「오늘의 페이지」 히어로 — KST 날짜줄 + 페이지 번호(2025-01-01 기점, 매일 1장씩 넘어가는 노트).
 const nowKST = new Date(Date.now() + 9 * 3600 * 1000);
+const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 const pageNo = Math.floor((nowKST.getTime() - Date.UTC(2025, 0, 1)) / 86400000) + 1;
 const dateLine = `${nowKST.getUTCMonth() + 1}월 ${nowKST.getUTCDate()}일 ${DAYS[nowKST.getUTCDay()]}요일 — ${pageNo}번째 페이지`;
-
-// 항로 카드 부제(leg 별 한 줄). label 은 빌더가 단원명까지 포함.
-const routeMinutes = route.length * 8; // 구간당 ~8분 어림(표시용).
 ---
-<BaseLayout title="항해 지도">
-  <!-- ════════ 뷰포트 히어로: [지도 | 286px 항해 계기판] ════════ -->
-  <section class="atlas-hero h-[calc(100dvh-3.5rem)]">
-    <!-- ── 지도 컬럼(풀블리드) ── -->
-    <div class="atlas-col">
-      <AtlasMap client:load atlas={atlas} />
-      <!-- 날짜 손글씨 오버레이(지도 좌상) — 잉크 인트로 위 떠 있음 -->
-      <p class="atlas-dateline font-hand">{dateLine}</p>
+<BaseLayout title="Dashboard">
+  <!-- 히어로 「오늘의 페이지」 — 모눈이 그대로 비치는 영역(카드로 감싸지 않는다) -->
+  <section class="max-w-6xl mx-auto px-6 pt-8 pb-6">
+    <p class="font-hand text-[22px] leading-none text-[color:var(--color-muted)]">{dateLine}</p>
+    <h1 class="mt-2 text-3xl md:text-4xl font-bold tracking-tight">오늘의 페이지</h1>
+    <PaperHero client:idle />
+    <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
+      <p class="text-sm text-[color:var(--color-muted)] max-w-2xl">
+        <span class="text-[color:var(--color-subtle)]">권장 다음 작업:</span> {health.suggestedAction}
+      </p>
+      {/* flex-wrap + nowrap 라벨: 380px 에서 버튼이 압착돼 2줄로 깨지는 대신 다음 줄로 떨어진다 */}
+      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+        <a href="#due-today" class="btn-ink whitespace-nowrap">이어서 풀기 — Due {health.dueToday}건</a>
+        <a href="/graph" class="btn-ghost whitespace-nowrap">◈ 개념 지도 열기</a>
+      </div>
     </div>
-
-    <!-- ── 항해 계기판 레일(SSR) ── -->
-    <aside class="nav-rail" id="navRail" aria-label="항해 계기판">
-      <button class="nav-handle" type="button" id="navHandle" aria-expanded="false">⌃ 항해 계기판</button>
-
-      <!-- ① 오늘의 항로 -->
-      <div class="nav-gauge nav-route">
-        <div class="nav-t">
-          {route.length > 0
-            ? <>오늘의 항로 — {route.length}구간 · 약 {routeMinutes}분</>
-            : <>오늘의 항로</>}
-        </div>
-        {route.length > 0 ? (
-          <div class="nav-s">
-            {route.map((leg) => (
-              <span class="nav-leg-line">{LEG_GLYPH[leg.kind] ?? '·'} {leg.label}</span>
-            ))}
-          </div>
-        ) : (
-          <div class="nav-s">지도에서 시작할 단원을 골라보세요.</div>
-        )}
-        {firstLeg ? (
-          <a class="nav-depart" href={firstLeg.href}>⛵ 출항</a>
-        ) : (
-          <a class="nav-depart" href="/graph">◈ 지도 둘러보기</a>
-        )}
-      </div>
-
-      <!-- ② 연속 항해 + 주간 바 -->
-      <div class="nav-gauge">
-        <div class="nav-t-sm">연속 항해 <span class="nav-streak">{weekly.streak}일</span></div>
-        <div class="nav-week" aria-label="최근 7일 학습량">
-          {weekBars.map((b, i) => (
-            <span
-              class:list={["nav-bar", i === todayIdx && "is-today"]}
-              style={`height:${Math.max(b.count > 0 ? 14 : 6, b.h)}%`}
-              title={`${b.label} · ${b.count}문제`}
-            ></span>
-          ))}
-        </div>
-        <div class="nav-week-labels" aria-hidden="true">
-          {weekBars.map((b) => <span>{b.label}</span>)}
-        </div>
-      </div>
-
-      <!-- ③ 모의시험 -->
-      <a class="nav-gauge nav-gauge-link" href="/exam">
-        <div class="nav-t-sm">모의시험 <span class="nav-pill">87회차</span></div>
-        <div class="nav-s">기출·모평 회차로 실전 점검 →</div>
-      </a>
-
-      <!-- ④ 어제 남긴 노트 -->
-      {recentNote ? (
-        <a class="nav-gauge nav-gauge-link" href={`/syntheses/${encodeURIComponent(recentNote.slug)}`}>
-          <div class="nav-t-sm">최근 남긴 노트</div>
-          <div class="nav-s nav-note"><b>{recentNote.title}</b>{recentNote.origin_concept && <> — {leafOf(recentNote.origin_concept)}</>} →</div>
-        </a>
-      ) : (
-        <a class="nav-gauge nav-gauge-link" href="/syntheses">
-          <div class="nav-t-sm">학습 노트</div>
-          <div class="nav-s">채팅에서 promote 한 영구 노트 →</div>
-        </a>
-      )}
-
-      <!-- ⑤ 단원 심도 범례 -->
-      <div class="nav-block">
-        <h5>단원 심도 — 잉크로 칠한 만큼 내 것</h5>
-        <div class="nav-depth-legend">
-          <div class="row"><span class="nav-dl nav-dl-0"></span>미답 — 윤곽만<span class="nav-dl-n">{dUnknown}</span></div>
-          <div class="row"><span class="nav-dl nav-dl-1"></span>답사 — 연필 해칭<span class="nav-dl-n">{dLearning}</span></div>
-          <div class="row"><span class="nav-dl nav-dl-2"></span>정착 — 코어 잉크<span class="nav-dl-n">{dProficient}</span></div>
-          <div class="row"><span class="nav-dl nav-dl-3"></span>개척 완료 — 금테<span class="nav-dl-n">{dMastered}</span></div>
-        </div>
-      </div>
-
-      <!-- ⑥ 학습 길잡이 앵커 -->
-      <a class="nav-guide" href="#guide">✎ 학습 길잡이에게 물어보기</a>
-    </aside>
   </section>
 
-  <!-- ════════ 뷰포트 아래: 학습 길잡이 + 활동 ════════ -->
-  <section id="guide" class="max-w-6xl mx-auto px-6 py-8 scroll-mt-16">
-    <header class="mb-4">
-      <h2 class="text-xl font-bold tracking-tight">학습 길잡이</h2>
-      <p class="text-sm text-[color:var(--color-muted)]">무엇을 먼저 할지 모르겠다면 — 지도를 보며 길잡이에게 물어보세요.</p>
-    </header>
-    <div class="grid gap-5 lg:grid-cols-2">
-      <ChatPanel client:load slug="__nav__" unitTitle="학습 길잡이" collection="dashboard" />
+  <!-- 본문: 모바일 = 「행동 먼저」 order 스택 / lg = 6컬럼 그리드(row 명시로 현행 시각 순서 유지) -->
+  <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col gap-5 lg:grid lg:grid-cols-6 lg:gap-5">
+    <!-- 오늘 복습 큐 — 모바일 1순위 · 데스크톱 Due 행 좌 -->
+    <section id="due-today" class="order-1 lg:order-none lg:row-start-3 lg:col-start-1 lg:col-span-3">
+      <DueTodayListDb client:load />
+    </section>
+
+    <!-- 스탯 — 데스크톱 1행 풀폭 -->
+    <div class="order-2 lg:order-none lg:row-start-1 lg:col-start-1 lg:col-span-6">
+      <HealthCards />
+    </div>
+
+    <!-- 최근 학습 노트 -->
+    <section class="card order-3 lg:order-none lg:row-start-4 lg:col-start-1 lg:col-span-6">
+      <header class="mb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-sm font-semibold">🗒 최근 학습 노트</h2>
+          <p class="text-xs text-[color:var(--color-muted)]">{totalSyntheses}개 · 채팅에서 promote한 영구 노트</p>
+        </div>
+        <a href="/syntheses" class="text-xs text-[color:var(--color-accent)] hover:underline">전체 보기 →</a>
+      </header>
+      {recentSyntheses.length === 0 ? (
+        <p class="font-hand text-[18px] text-[color:var(--color-muted)] py-3">
+          아직 저장한 노트가 없어요. 컨셉 페이지에서 LLM과 대화한 뒤
+          <span class="text-[color:var(--color-fg)]"> "📝 학습 노트 작성 요청" → "💾 저장"</span> 으로 만들 수 있습니다.
+        </p>
+      ) : (
+        <ul class="divide-y divide-[color:var(--color-border)]/40">
+          {recentSyntheses.map((s) => (
+            <li class="py-2 first:pt-0 last:pb-0">
+              <div class="flex items-baseline gap-2">
+                <a class="text-sm font-medium font-serif text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] truncate" href={`/syntheses/${encodeURIComponent(s.slug)}`}>{s.title}</a>
+                {s.created && <span class="text-[10px] text-[color:var(--color-subtle)] tabular-nums whitespace-nowrap">{s.created}</span>}
+              </div>
+              {s.origin_concept && (
+                <a class="text-[11px] text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] truncate block" href={`/concepts/${s.origin_concept}`} title={s.origin_concept}>
+                  ← {leafOf(s.origin_concept)}
+                </a>
+              )}
+              {s.excerpt && <p class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-1">{s.excerpt}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+
+    <!-- 모바일 전용: 개념 지도 정적 프리뷰 — DAG 하이드레이션 컷의 대체 진입점 -->
+    <a href="/graph" class="card order-4 lg:hidden flex items-center gap-3">
+      <span class="text-2xl text-[color:var(--color-accent)]">◈</span>
+      <span>
+        <span class="block text-sm font-semibold">개념 지도</span>
+        <span class="block text-xs text-[color:var(--color-muted)]">{graph.stats.nodes} 노드 · 탭하여 펼치기</span>
+      </span>
+    </a>
+
+    <!-- Concept Network 미리보기 — 데스크톱 전용(client:media 로 모바일 ReactFlow 비용 0) -->
+    <section class="card hidden lg:block lg:order-none lg:row-start-2 lg:col-start-1 lg:col-span-4 p-0 overflow-hidden">
+      <header class="flex items-center justify-between px-5 pt-4 pb-2">
+        <div>
+          <h2 class="text-sm font-semibold">Concept Network</h2>
+          <p class="text-xs text-[color:var(--color-muted)]">개념 의존성 DAG 미리보기 · 노드 색 = mastery</p>
+        </div>
+        <a href="/graph" class="text-xs text-[color:var(--color-accent)] hover:underline">풀스크린 →</a>
+      </header>
+      <div class="h-[340px] border-t border-[color:var(--color-border)]">
+        {graph.stats.nodes > 0 ? (
+          <ConceptDAG client:media="(min-width: 1024px)" data={graphForUser as any} variant="mini" />
+        ) : (
+          <p class="text-sm text-[color:var(--color-muted)] p-6">아직 concept 노드가 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 첫 페이지를 시드해보세요.</p>
+        )}
+      </div>
+    </section>
+
+    <!-- 단원 진행 (스포크 mastery 롤업) -->
+    <section class="card order-5 lg:order-none lg:row-start-2 lg:col-start-5 lg:col-span-2">
+      <header class="mb-3">
+        <h2 class="text-sm font-semibold">단원 진행</h2>
+        <p class="text-xs text-[color:var(--color-muted)]">
+          착수 <span class="stat-num text-[color:var(--color-text)]">{units.started}</span> / {units.total} 단원 · 스포크 mastery 롤업
+        </p>
+      </header>
+      <MasteryDonut client:load unknown={us.unknown} learning={us.learning} proficient={us.proficient} mastered={us.mastered} />
+      <ul class="mt-4 space-y-1.5 text-sm">
+        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-unknown)]"></span><span class="text-[color:var(--color-muted)]">미착수</span><span class="ml-auto stat-num">{us.unknown}</span></li>
+        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-learning)]"></span><span class="text-[color:var(--color-muted)]">학습중</span><span class="ml-auto stat-num">{us.learning}</span></li>
+        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-proficient)]"></span><span class="text-[color:var(--color-muted)]">능숙</span><span class="ml-auto stat-num">{us.proficient}</span></li>
+        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-mastered)]"></span><span class="text-[color:var(--color-muted)]">숙달</span><span class="ml-auto stat-num">{us.mastered}</span></li>
+      </ul>
+    </section>
+
+    <!-- 활동 피드 — 데스크톱 Due 행 우 -->
+    <div class="order-6 lg:order-none lg:row-start-3 lg:col-start-4 lg:col-span-3">
       <ActivityFeed />
     </div>
-    <p class="font-hand text-[20px] text-[color:var(--color-muted)] mt-6 -rotate-1">
-      잉크로 칠한 단원만큼이 진짜 내 것 — 천천히, 한 칸씩 개척해 나가요.
-    </p>
-  </section>
+
+    <!-- 학습 길잡이 채팅 — 모바일 최하단 · 데스크톱 풀폭 -->
+    <div class="order-7 lg:order-none lg:row-start-5 lg:col-start-1 lg:col-span-6">
+      <ChatPanel client:load slug="__nav__" unitTitle="학습 길잡이" collection="dashboard" />
+    </div>
+  </div>
 </BaseLayout>
-
-<style>
-  /* ════════ 히어로 레이아웃: 지도 | 항해 계기판 레일 ════════ */
-  .atlas-hero {
-    display: grid;
-    grid-template-columns: 1fr 286px;
-    /* 지도 잉크가 레일 밑으로 새지 않게 */
-    overflow: hidden;
-  }
-  /* 지도 컬럼: AtlasMap(.atlas-stage)의 풀블리드 높이 컨테이너 */
-  .atlas-col {
-    position: relative;
-    min-width: 0;
-    height: 100%;
-  }
-  /* 날짜 손글씨 — 지도 좌상 오버레이(잉크 인트로 위, 포인터 통과) */
-  .atlas-dateline {
-    position: absolute;
-    top: 12px;
-    left: 16px;
-    z-index: 4;
-    font-size: 19px;
-    line-height: 1;
-    color: var(--ink-faint);
-    pointer-events: none;
-    transform: rotate(-1.5deg);
-  }
-
-  /* ════════ 항해 계기판 레일 (목업 .rail 시각 언어 이식, 토큰화) ════════ */
-  .nav-rail {
-    border-left: 1.5px solid var(--paper-line-strong);
-    background: color-mix(in srgb, var(--paper-card) 60%, transparent);
-    backdrop-filter: blur(3px);
-    padding: 16px 16px 22px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-  }
-  .nav-rail h5 {
-    font-size: 11px;
-    letter-spacing: 0.13em;
-    color: var(--ink-faint);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  /* 데스크톱: 모바일 핸들 숨김 */
-  .nav-handle { display: none; }
-
-  .nav-gauge {
-    background: var(--paper-page);
-    border: 1px solid var(--paper-line);
-    border-radius: 10px;
-    padding: 12px 14px;
-    box-shadow: 1px 2px 0 rgba(29, 26, 20, 0.04);
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-  :global(html.dark) .nav-gauge { box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.2); }
-  .nav-gauge-link { transition: border-color 0.15s ease, transform 0.1s ease; }
-  .nav-gauge-link:hover { border-color: var(--color-accent); }
-  .nav-gauge-link:active { transform: translateY(1px); }
-
-  .nav-route { border-left: 4px solid var(--pen-red); }
-  .nav-t {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--ink-strong);
-  }
-  .nav-t-sm {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 13.5px;
-    color: var(--ink-strong);
-  }
-  .nav-s {
-    font-size: 12.5px;
-    color: var(--ink-muted);
-    margin-top: 4px;
-    line-height: 1.55;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .nav-leg-line { display: block; }
-  .nav-streak { color: var(--pen-red); }
-  .nav-pill {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--pen-amber);
-    border: 1.2px solid var(--pen-amber);
-    border-radius: 999px;
-    padding: 1px 7px;
-    margin-left: 2px;
-  }
-  .nav-note b { font-family: var(--font-serif); color: var(--color-accent-strong); font-weight: 700; }
-
-  /* 출항 버튼 — 솔리드 잉크 */
-  .nav-depart {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    gap: 7px;
-    margin-top: 10px;
-    background: var(--color-accent);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 11px;
-    border-radius: 9px;
-    box-shadow: 0 2.5px 0 var(--color-accent-strong);
-    min-height: 46px;
-    text-decoration: none;
-  }
-  .nav-depart:hover { transform: translateY(1px); box-shadow: 0 1.5px 0 var(--color-accent-strong); }
-
-  /* 주간 바 */
-  .nav-week {
-    display: flex;
-    gap: 5px;
-    align-items: flex-end;
-    height: 42px;
-    margin-top: 8px;
-  }
-  .nav-bar {
-    flex: 1;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--pen-green) 65%, var(--paper-page)), var(--pen-green));
-    border-radius: 3px 3px 0 0;
-    opacity: 0.85;
-    min-height: 4px;
-  }
-  .nav-bar.is-today { outline: 2px solid var(--pen-amber); outline-offset: 1px; opacity: 1; }
-  .nav-week-labels {
-    display: flex;
-    gap: 5px;
-    margin-top: 4px;
-  }
-  .nav-week-labels span {
-    flex: 1;
-    text-align: center;
-    font-size: 10px;
-    color: var(--ink-faint);
-  }
-
-  /* 심도 범례 */
-  .nav-block { margin-top: 2px; }
-  .nav-depth-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--ink-soft);
-  }
-  .nav-depth-legend .row { display: flex; align-items: center; gap: 8px; }
-  .nav-dl { width: 15px; height: 15px; border-radius: 50%; flex: none; }
-  .nav-dl-0 { border: 1.7px dashed var(--paper-dim); }
-  .nav-dl-1 {
-    border: 1.7px solid var(--ink-soft);
-    background: repeating-linear-gradient(45deg, transparent 0 2px, var(--atlas-hatch-ink) 2px 3.5px);
-  }
-  .nav-dl-2 { border: 1.7px solid var(--color-accent); background: var(--color-accent); }
-  .nav-dl-3 {
-    border: 2px solid var(--atlas-gold);
-    background: var(--color-accent);
-    box-shadow: inset 0 0 0 1.5px var(--paper-page);
-  }
-  .nav-dl-n {
-    margin-left: auto;
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--ink-faint);
-  }
-
-  /* 학습 길잡이 앵커 */
-  .nav-guide {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2px;
-    border: 1.5px solid var(--color-accent);
-    color: var(--color-accent);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 10px;
-    border-radius: 9px;
-    min-height: 44px;
-    text-decoration: none;
-  }
-  .nav-guide:hover { background: var(--paper-well); }
-
-  /* ════════ 모바일(≤880px): 레일 → 하단 시트, 지도 풀블리드 ════════ */
-  @media (max-width: 880px) {
-    .atlas-hero { grid-template-columns: 1fr; }
-    .nav-rail {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: calc(56px + env(safe-area-inset-bottom)); /* 모바일 하단 도크 위에 */
-      top: auto;
-      max-height: 64vh;
-      border-left: none;
-      border-top: 1.5px solid var(--paper-line-strong);
-      border-radius: 18px 18px 0 0;
-      box-shadow: 0 -14px 40px rgba(29, 26, 20, 0.18);
-      background: var(--paper-card);
-      transform: translateY(calc(100% - 52px));
-      transition: transform 0.3s ease;
-      z-index: 30;
-      padding-top: 8px;
-    }
-    :global(html.dark) .nav-rail { box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.5); }
-    .nav-rail.is-open { transform: none; }
-    .nav-handle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      min-height: 44px;
-      width: 100%;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-soft);
-      position: relative;
-    }
-    .nav-handle::before {
-      content: "";
-      width: 44px;
-      height: 5px;
-      border-radius: 99px;
-      background: var(--paper-line-strong);
-      position: absolute;
-      top: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .nav-rail { transition: none !important; }
-  }
-</style>
-
-<script is:inline>
-  // 모바일 하단 시트 토글(목업 rail-handle 패턴). 데스크톱에선 핸들 숨김 → no-op.
-  (function () {
-    var rail = document.getElementById('navRail');
-    var handle = document.getElementById('navHandle');
-    if (!rail || !handle) return;
-    handle.addEventListener('click', function () {
-      var open = rail.classList.toggle('is-open');
-      handle.setAttribute('aria-expanded', String(open));
-    });
-  })();
-</script>
