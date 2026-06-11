@@ -10,6 +10,7 @@ const links: Array<{ href: string; label: string; icon: string; match?: string[]
   { href: '/paths',     label: 'Paths',      icon: '↝' },
   { href: '/syntheses', label: '학습 노트', icon: '🗒' },
   { href: '/log',       label: 'Log',        icon: '☴' },
+  { href: '/settings',  label: '설정',       icon: '⚙' },
 ];
 function active(l: { href: string; match?: string[] }): string {
   if (l.href === '/') return pathname === '/' ? 'active' : '';

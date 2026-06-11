@@ -1,0 +1,118 @@
+---
+// 설정 — 폰트 프리셋 선택(인증 SSR). 각 카드는 그 프리셋 폰트로 직접 렌더한 미리보기.
+// 선택 시 localStorage['ms-font'] 저장 + html[data-font] + 동적 <link> 교체 → 전 페이지 즉시 반영.
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { FONT_PRESETS, DEFAULT_FONT_ID } from '../lib/fonts.ts';
+
+// 미리보기용 — 모든 프리셋 폰트를 이 페이지에서만 로드(카드가 각자 제 폰트로 보이게).
+const allPreviewHref = 'https://fonts.googleapis.com/css2?'
+  + 'family=IBM+Plex+Sans+KR:wght@400;500;600;700'
+  + '&family=Gowun+Batang:wght@400;700'
+  + '&family=Nanum+Pen+Script'
+  + '&family=Gowun+Dodum'
+  + '&family=Gaegu:wght@400;700'
+  + '&family=Jua'
+  + '&family=Hi+Melody'
+  + '&family=Nanum+Myeongjo:wght@400;700;800'
+  + '&family=Noto+Sans+KR:wght@400;500;700'
+  + '&display=swap';
+---
+<BaseLayout title="설정">
+  <script is:inline define:vars={{ allPreviewHref }}>
+    // 미리보기 폰트 전체 로드(이 페이지 한정).
+    (function () {
+      var l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = allPreviewHref;
+      document.head.appendChild(l);
+    })();
+  </script>
+
+  <main class="max-w-4xl mx-auto px-6 py-8">
+    <h1 class="text-3xl font-bold tracking-tight">설정</h1>
+    <p class="mt-1 text-sm text-[color:var(--color-muted)]">취향에 맞는 글꼴을 고르세요. 모두 무료 글꼴(SIL Open Font License)이라 마음껏 써도 됩니다.</p>
+
+    <section class="mt-8">
+      <header class="mb-3 flex items-baseline justify-between">
+        <h2 class="text-sm font-semibold tracking-[0.1em] text-[color:var(--color-subtle)] uppercase">글꼴</h2>
+        <span class="text-xs text-[color:var(--color-muted)]">카드를 누르면 바로 적용됩니다</span>
+      </header>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {FONT_PRESETS.map((p) => (
+          <button
+            type="button"
+            class="font-card card text-left transition hover:-translate-y-0.5"
+            data-font-id={p.id}
+            data-font-href={p.href}
+            aria-pressed="false"
+            style={`font-family: ${p.names.sans}, system-ui, sans-serif`}
+          >
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <span class="text-base font-semibold">{p.label}</span>
+              <span class="font-check text-[color:var(--color-accent)] text-sm font-semibold opacity-0">✓ 사용 중</span>
+            </div>
+
+            {/* 미리보기 — 각 줄을 해당 프리셋의 제목/본문/손글씨 폰트로 직접 렌더 */}
+            <div class="rounded-md bg-[color:var(--color-surface-2)] px-3.5 py-3 space-y-1.5">
+              <div class="text-xl font-bold leading-snug" style={`font-family: ${p.names.serif}, Georgia, serif`}>수학의 아름다움</div>
+              <div class="text-sm leading-relaxed text-[color:var(--color-text)]">
+                미분은 순간의 변화율을 재는 도구입니다. 이차함수 𝑓(𝑥)=𝑥²−4𝑥+3 의 그래프는 아래로 볼록한 포물선이에요.
+              </div>
+              <div class="text-[19px] leading-none text-[color:var(--color-accent)]" style={`font-family: ${p.names.hand}, cursive`}>오늘도 한 페이지 ✎</div>
+            </div>
+
+            <div class="mt-2.5 text-xs text-[color:var(--color-muted)] leading-relaxed">{p.desc}</div>
+            <div class="mt-1 text-[10px] font-mono text-[color:var(--color-subtle)]">
+              {p.names.sans} · {p.names.serif} · {p.names.hand}
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .font-card { cursor: pointer; border: 1.5px solid var(--color-border); }
+    .font-card.is-active {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 35%, transparent);
+    }
+    .font-card.is-active .font-check { opacity: 1; }
+  </style>
+
+  <script is:inline define:vars={{ DEFAULT_FONT_ID }}>
+    (function () {
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.font-card'));
+      function current() {
+        try { return localStorage.getItem('ms-font') || DEFAULT_FONT_ID; } catch (e) { return DEFAULT_FONT_ID; }
+      }
+      function mark(id) {
+        cards.forEach(function (c) {
+          var on = c.getAttribute('data-font-id') === id;
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', String(on));
+        });
+      }
+      function apply(id, href) {
+        try { localStorage.setItem('ms-font', id); } catch (e) {}
+        document.documentElement.setAttribute('data-font', id);
+        var link = document.getElementById('ms-font-link');
+        if (link) {
+          link.href = href;
+        } else {
+          link = document.createElement('link');
+          link.rel = 'stylesheet'; link.id = 'ms-font-link'; link.href = href;
+          document.head.appendChild(link);
+        }
+        mark(id);
+      }
+      mark(current());
+      cards.forEach(function (c) {
+        c.addEventListener('click', function () {
+          apply(c.getAttribute('data-font-id'), c.getAttribute('data-font-href'));
+        });
+      });
+    })();
+  </script>
+</BaseLayout>

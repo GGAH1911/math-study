@@ -1203,3 +1203,27 @@ html.dark .atlas-sheet { box-shadow: -18px 0 44px rgba(0, 0, 0, 0.5); }
   .atlas-frontier-halo { animation: none !important; }
   .atlas-sheet { transition: none !important; }
 }
+
+/* ===== 폰트 프리셋 (lib/fonts.ts 와 동기) =====
+   설정에서 고른 프리셋을 html[data-font] 로 적용 → --font-sans/serif/hand 오버라이드.
+   기본(:root, line 83~)은 'sketchbook'. 폰트 파일 로딩은 BaseLayout 프리페인트가 담당. */
+html[data-font="warm"] {
+  --font-sans: "Gowun Dodum", "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-serif: "Gowun Batang", "Noto Serif KR", Georgia, serif;
+  --font-hand: "Gaegu", "Nanum Pen Script", cursive;
+}
+html[data-font="round"] {
+  --font-sans: "Jua", "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-serif: "Jua", "Gowun Batang", Georgia, serif;
+  --font-hand: "Hi Melody", "Nanum Pen Script", cursive;
+}
+html[data-font="classic"] {
+  --font-sans: "Nanum Myeongjo", Georgia, serif;
+  --font-serif: "Nanum Myeongjo", "Noto Serif KR", Georgia, serif;
+  --font-hand: "Nanum Pen Script", "Gowun Batang", cursive;
+}
+html[data-font="clean"] {
+  --font-sans: "Noto Sans KR", "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-serif: "Gowun Batang", "Noto Serif KR", Georgia, serif;
+  --font-hand: "Nanum Pen Script", "Gowun Batang", cursive;
+}

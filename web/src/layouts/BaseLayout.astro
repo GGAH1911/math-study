@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import Header from '../components/Header.astro';
 import { StickyGraphPanel } from '../components/Graph.tsx';
+import { FONT_HREFS, DEFAULT_FONT_ID } from '../lib/fonts.ts';
 
 interface Props {
   title?: string;
@@ -36,7 +37,22 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    {/* 폰트 프리페인트 — 설정에서 고른 프리셋(localStorage['ms-font'])을 html[data-font] 로
+        적용하고 그 프리셋의 Google Fonts 만 동적 로드(전 프리셋을 미리 받지 않아 가볍다).
+        프리셋 정의는 lib/fonts.ts 단일 진실원천. FOUC 방지로 <head> 상단. */}
+    <script is:inline define:vars={{ FONT_HREFS, DEFAULT_FONT_ID }}>
+      (function () {
+        var f = DEFAULT_FONT_ID;
+        try {
+          var saved = localStorage.getItem('ms-font');
+          if (saved && FONT_HREFS[saved]) f = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute('data-font', f);
+        var l = document.createElement('link');
+        l.rel = 'stylesheet'; l.id = 'ms-font-link'; l.href = FONT_HREFS[f];
+        document.head.appendChild(l);
+      })();
+    </script>
   </head>
   <body class="min-h-screen flex">
     <Sidebar />
