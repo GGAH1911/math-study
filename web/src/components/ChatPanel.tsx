@@ -1560,7 +1560,9 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         .prose-chat pre code { background: none; padding: 0; }
         .prose-chat .katex { color: inherit; }
         /* 좁은 채팅 폭에서 긴 display 수식이 깨지지 않고 가로 스크롤 */
-        .prose-chat .katex-display { margin: 0.5rem 0; overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 2px; }
+        /* padding 0.35em: 한글 글리프 잉크가 KaTeX 메트릭 박스 위아래로 솟는데
+           overflow-y:hidden 이 패딩 경계에서 클립 → 패딩으로 흡수(글자 상단 잘림 방지). */
+        .prose-chat .katex-display { margin: 0.5rem 0; overflow-x: auto; overflow-y: hidden; max-width: 100%; padding: 0.35em 0; }
         .prose-chat table {
           border-collapse: collapse;
           margin: 0.6em 0;
