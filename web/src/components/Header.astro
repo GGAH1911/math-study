@@ -1,9 +1,17 @@
 ---
-import { readHealth, unitSummary } from '../lib/health.ts';
+import { readHealth, unitSummary, type UnitStatus } from '../lib/health.ts';
+import { getMasteryMap } from '../lib/mastery.ts';
+import { getDueProblemCount } from '../lib/activity.ts';
 import ThemeToggle from './ThemeToggle.astro';
-const health = readHealth();
-const u = unitSummary();
+const health = readHealth(); // dagIntegrity(라이브 실측)용 — dueToday(박제)는 안 씀.
+// 단원 통계·Due 는 사용자별 라이브로. unitSummary()(인자 없음)는 전역 frontmatter
+// 기준이라 멀티유저에서 부정확 → mof 주입. Due 는 readHealth.dueToday(단일유저 시절
+// 전역 next_review 집계, 예: 390) 대신 사용자 problem_state 큐로(홈·DueTodayListDb 와 동일).
+const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
+const mof = (id: string): UnitStatus => (masteryMap.get(id) ?? 'unknown') as UnitStatus;
+const u = unitSummary(mof);
 const s = u.byStatus;
+const dueCount = Astro.locals.user ? await getDueProblemCount(Astro.locals.user.id) : 0;
 const { pathname } = Astro.url; // 모바일 도크 active 판정용
 ---
 
@@ -35,8 +43,8 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
 
     {/* Due 칩 — 모바일에도 상시 노출(hidden md: 제거, 계약 §8-A) */}
     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">
-      <span class={`size-1.5 rounded-full ${health.dueToday > 0 ? 'bg-[color:var(--color-mastery-learning)]' : 'bg-[color:var(--color-subtle)]'}`}></span>
-      <span class="stat-num">Due {health.dueToday}</span>
+      <span class={`size-1.5 rounded-full ${dueCount > 0 ? 'bg-[color:var(--color-mastery-learning)]' : 'bg-[color:var(--color-subtle)]'}`}></span>
+      <span class="stat-num">Due {dueCount}</span>
     </span>
 
     <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">

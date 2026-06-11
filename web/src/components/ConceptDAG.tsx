@@ -116,7 +116,10 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
           minWidth: isUnit ? 168 : 140,
           padding: isUnit ? '10px 14px' : '8px 12px',
           border: `${isUnit ? (data.highlighted ? 4 : 2.5) : (data.highlighted ? 3 : 2)}px solid ${primary}`,
-          background: data.highlighted ? `${primary}30` : '#18181b',
+          // 노드 배경·라벨은 짝이 맞는 테마 토큰으로(라이트=종이/잉크·다크=흑연/초크).
+          // 옛 '#18181b' 검정 하드코딩은 라이트 카드(홈 mini)·라이트 테마에서 라벨(zinc-50,
+          // .react-flow 흑판 스코프가 초크로 강제)과 명도 충돌해 라벨이 사라졌다.
+          background: data.highlighted ? `${primary}22` : 'var(--color-surface)',
         }}
       >
         <div className="flex items-center justify-between gap-2">
@@ -132,9 +135,9 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
                 onDoubleClick={(e) => e.stopPropagation()}
                 className="text-[11px] font-mono px-2 py-0.5 rounded-full hover:scale-105 transition cursor-pointer leading-none"
                 style={{
-                  background: data.expanded ? `${primary}40` : '#27272a',
-                  color: data.expanded ? primary : '#d4d4d8',
-                  border: `1px solid ${data.expanded ? primary : '#3f3f46'}`,
+                  background: data.expanded ? `${primary}40` : 'var(--color-surface-2)',
+                  color: data.expanded ? primary : 'var(--color-muted)',
+                  border: `1px solid ${data.expanded ? primary : 'var(--color-border)'}`,
                 }}
                 title={data.expanded ? `접기 (${data.childCount}개 spoke)` : `펼치기 (${data.childCount}개 spoke)`}
               >
@@ -159,7 +162,7 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
             />
           </div>
         </div>
-        <div className={`mt-1 font-semibold text-zinc-50 ${isUnit ? 'text-sm' : 'text-xs'}`}>
+        <div className={`mt-1 font-semibold text-[color:var(--color-text)] ${isUnit ? 'text-sm' : 'text-xs'}`}>
           {data.label.replace(/_/g, ' ')}
         </div>
         <div className="mt-1.5 flex gap-1 flex-wrap">
