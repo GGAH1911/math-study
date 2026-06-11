@@ -11,7 +11,7 @@ import ChatPanel from '../components/ChatPanel.tsx';
 import PaperHero from '../components/PaperHero.tsx';
 import { readHealth, readConceptGraph, unitSummary, recommendUnits } from '../lib/health.ts';
 import { getMasteryMap } from '../lib/mastery.ts';
-import { getDueProblemCount } from '../lib/activity.ts';
+import { getDueProblemCount, getWeeklyActivity } from '../lib/activity.ts';
 import synthesesIndex from '../data/syntheses-by-concept.json';
 
 const health = readHealth();
@@ -41,11 +41,14 @@ const recentSyntheses: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []
 const totalSyntheses: number = (synthesesIndex as any).total ?? 0;
 const leafOf = (p: string | null) => p ? (p.split('/').pop() ?? p).replace(/_/g, ' ') : '';
 
-// 「오늘의 페이지」 히어로 — KST 날짜줄 + 페이지 번호(2025-01-01 기점, 매일 1장씩 넘어가는 노트).
+// 「오늘의 페이지」 히어로 날짜줄 — KST 날짜 + 연속 학습일(streak).
+// 옛 "N번째 페이지"는 2025-01-01 임의 기점이라 사용자와 무관한 숫자였음 → streak 으로 교체.
+// streak 은 오늘부터 역방향 끊기지 않은 학습일(activity.ts). 끊겨 0이면 어색하므로 날짜만 노출.
 const nowKST = new Date(Date.now() + 9 * 3600 * 1000);
 const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
-const pageNo = Math.floor((nowKST.getTime() - Date.UTC(2025, 0, 1)) / 86400000) + 1;
-const dateLine = `${nowKST.getUTCMonth() + 1}월 ${nowKST.getUTCDate()}일 ${DAYS[nowKST.getUTCDay()]}요일 — ${pageNo}번째 페이지`;
+const datePart = `${nowKST.getUTCMonth() + 1}월 ${nowKST.getUTCDate()}일 ${DAYS[nowKST.getUTCDay()]}요일`;
+const streak = Astro.locals.user ? (await getWeeklyActivity(Astro.locals.user.id)).streak : 0;
+const dateLine = streak >= 1 ? `${datePart} · 연속 ${streak}일째` : datePart;
 ---
 <BaseLayout title="Dashboard">
   <!-- 히어로 「오늘의 페이지」 — 모눈이 그대로 비치는 영역(카드로 감싸지 않는다) -->
