@@ -52,3 +52,17 @@ export async function getWeeklyActivity(userId: string): Promise<WeeklyActivity>
   }
   return { days, streak };
 }
+
+// 사용자별 due 문제 수(/api/due-today 와 동일 기준: problem_state.next_review ≤ KST 오늘).
+// 홈 히어로의 "Due N건" 버튼 소스 — 옛 frontmatter 전역 집계(readHealth.dueToday, 단일유저
+// 시절 박제)를 대체한다. 큐 목록(DueTodayListDb)과 같은 테이블을 보므로 수치가 일치한다.
+export async function getDueProblemCount(userId: string): Promise<number> {
+  const rows = await sql<{ n: number }[]>`
+    SELECT count(*)::int AS n
+      FROM problem_state
+     WHERE user_id = ${userId}
+       AND next_review IS NOT NULL
+       AND next_review <= (now() AT TIME ZONE 'Asia/Seoul')::date
+  `;
+  return rows[0]?.n ?? 0;
+}

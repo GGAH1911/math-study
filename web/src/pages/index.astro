@@ -9,8 +9,9 @@ import MasteryDonut from '../components/MasteryDonut.tsx';
 import ConceptDAG from '../components/ConceptDAG.tsx';
 import ChatPanel from '../components/ChatPanel.tsx';
 import PaperHero from '../components/PaperHero.tsx';
-import { readHealth, readConceptGraph, unitSummary } from '../lib/health.ts';
+import { readHealth, readConceptGraph, unitSummary, recommendUnits } from '../lib/health.ts';
 import { getMasteryMap } from '../lib/mastery.ts';
+import { getDueProblemCount } from '../lib/activity.ts';
 import synthesesIndex from '../data/syntheses-by-concept.json';
 
 const health = readHealth();
@@ -21,6 +22,20 @@ const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'le
 const graphForUser = { ...graph, nodes: graph.nodes.map((n) => ({ ...n, mastery: masteryMap.get(n.id) ?? 'unknown' })) };
 const units = unitSummary(mof);
 const us = units.byStatus;
+
+// 히어로 「권장 다음 작업」·Due 버튼 — 박제 소스 교체.
+// 옛 fm.suggested_action(초창기 390개념 시절 문자열)·readHealth.dueToday(단일유저
+// frontmatter 전역 next_review 집계) 대신, 사용자별 라이브 데이터로 문구를 만든다.
+const rec = recommendUnits(mof);
+const dueCount = Astro.locals.user ? await getDueProblemCount(Astro.locals.user.id) : 0;
+const suggestion = (() => {
+  const cont = rec.continuing[0];
+  const ready = rec.ready[0];
+  if (rec.review[0]) return `복습이 기다리는 단원: 「${rec.review[0].label}」 — 기억이 흐려지기 전에 먼저.`;
+  if (cont) return `이어서: 「${cont.label}」 (${cont.progressPercent}%)${ready ? ` · 다음 추천: 「${ready.label}」 (선수 충족)` : ''}`;
+  if (ready) return `새로 시작하기 좋은 단원: 「${ready.label}」 — 선수 개념이 모두 준비됐습니다.`;
+  return '오늘도 한 페이지 — 개념 지도에서 출발점을 골라보세요.';
+})();
 type SynthesisRecent = { slug: string; title: string; created: string | null; origin_concept: string | null; excerpt: string | null };
 const recentSyntheses: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []).slice(0, 5);
 const totalSyntheses: number = (synthesesIndex as any).total ?? 0;
@@ -40,11 +55,11 @@ const dateLine = `${nowKST.getUTCMonth() + 1}월 ${nowKST.getUTCDate()}일 ${DAY
     <PaperHero client:idle />
     <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
       <p class="text-sm text-[color:var(--color-muted)] max-w-2xl">
-        <span class="text-[color:var(--color-subtle)]">권장 다음 작업:</span> {health.suggestedAction}
+        <span class="text-[color:var(--color-subtle)]">권장 다음 작업:</span> {suggestion}
       </p>
       {/* flex-wrap + nowrap 라벨: 380px 에서 버튼이 압착돼 2줄로 깨지는 대신 다음 줄로 떨어진다 */}
       <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-        <a href="#due-today" class="btn-ink whitespace-nowrap">이어서 풀기 — Due {health.dueToday}건</a>
+        <a href="#due-today" class="btn-ink whitespace-nowrap">{dueCount > 0 ? `이어서 풀기 — Due ${dueCount}건` : '오늘의 풀이 큐 열기'}</a>
         <a href="/graph" class="btn-ghost whitespace-nowrap">◈ 개념 지도 열기</a>
       </div>
     </div>
