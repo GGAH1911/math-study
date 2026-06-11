@@ -1236,3 +1236,7 @@ html[data-font="clean"] {
    폰트가 어색한 자간 + 잡티 세로막대 아티팩트를 만들었음. 사이트 본문 폰트로 고정해
    플랫폼 편차 제거. (unlayered — @import 된 katex.min.css 를 소스 순서로 이긴다.) */
 .katex .hangul_fallback { font-family: var(--font-sans), "Noto Sans KR", sans-serif; }
+/* 분수 가로선(frac-line)이 0.04em(소수 px) border 라 일부 브라우저·배율에서 끝단에
+   세로 잔상(paint seam)을 그린다(맥 Chrome 제보). 정수 px 로 강제해 서브픽셀 페인트 제거. */
+.katex .frac-line { border-bottom-width: 1px !important; }
+.katex .overline-line, .katex .underline-line { border-bottom-width: 1px !important; }
