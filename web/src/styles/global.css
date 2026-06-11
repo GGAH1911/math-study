@@ -1230,3 +1230,9 @@ html[data-font="clean"] {
   --font-serif: "Gowun Batang", "Noto Serif KR", Georgia, serif;
   --font-hand: "Nanum Pen Script", "Gowun Batang", cursive;
 }
+
+/* KaTeX 수식 속 한글(.hangul_fallback) — katex.min.css 에 이 클래스 규칙이 없어
+   KaTeX_Main→Times→serif 끝의 'OS 기본 세리프'로 떨어진다(통제 밖). 맥에선 폴백
+   폰트가 어색한 자간 + 잡티 세로막대 아티팩트를 만들었음. 사이트 본문 폰트로 고정해
+   플랫폼 편차 제거. (unlayered — @import 된 katex.min.css 를 소스 순서로 이긴다.) */
+.katex .hangul_fallback { font-family: var(--font-sans), "Noto Sans KR", sans-serif; }
