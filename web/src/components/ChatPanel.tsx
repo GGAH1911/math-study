@@ -573,7 +573,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
     );
   }
   return (
-    <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
+    <div data-mi={index} className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
       <div
         className={`max-w-[92%] rounded-xl px-3.5 py-2 text-sm leading-relaxed space-y-2
           ${isUser
@@ -858,11 +858,25 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     return () => clearTimeout(t);
   }, [storageKey, messages, collection, slug]);
 
-  // Auto-scroll to bottom on new content
+  // 스크롤 정책 (ChatGPT 식):
+  //  - 새 user 질문이 들어오면 그 질문을 스크롤 영역 '상단'으로 → 이어질 (긴) 답변이
+  //    위에서부터 펼쳐져, 첫 줄이 자동 하단스크롤에 가려져 잘려 보이던 문제를 없앤다.
+  //  - assistant 스트리밍/갱신은 사용자가 거의 바닥에 있을 때만 추종(near-bottom).
+  //    위로 올려 읽는 중이면 끌어내리지 않는다.
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    const el = scrollRef.current;
+    if (!el) return;
+    const last = messages[messages.length - 1];
+    if (last && last.role === 'user') {
+      const node = el.querySelector(`[data-mi="${messages.length - 1}"]`) as HTMLElement | null;
+      if (node) {
+        // 영역 내 상대 위치만큼 스크롤(페이지 전체 스크롤 부작용 없는 방식).
+        el.scrollTop += node.getBoundingClientRect().top - el.getBoundingClientRect().top - 8;
+        return;
+      }
     }
+    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 200;
+    if (nearBottom) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
   // `override`: when called from the 학습 노트 buttons (right-side card or
