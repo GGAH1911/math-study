@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { buildTutorPrompt, searchConcepts } from '../../lib/chat-context.ts';
 import { buildLearnerContext } from '../../lib/learner.ts';
+import { getMastery } from '../../lib/mastery.ts';
 
 export const prerender = false;
 
@@ -159,7 +160,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
   }
 
-  const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection);
+  // 현재 개념의 **사용자별** mastery — promote(승급/강등) 판정의 기준 상태.
+  // frontmatter mastery(전역)는 멤버십 후 무의미하므로, 로그인 사용자의 concept_mastery
+  // 를 buildTutorPrompt 에 주입해 튜터가 "현재 상태"를 정확히 알고 판단하게 한다.
+  // (이게 없으면 튜터가 절대 레벨을 던져, 실제보다 낮으면 강등으로 뒤집혀 보였다.)
+  let userMastery: string | undefined;
+  if (collection === 'concepts' && locals.user?.id) {
+    try {
+      const m = await getMastery(locals.user.id, slug);
+      if (m?.mastery) userMastery = m.mastery;
+    } catch { /* 조회 실패 시 frontmatter 폴백 */ }
+  }
+  const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection, userMastery);
   // Retrieval grounding: 학생 질문에 매칭되는 *실존* 개념 노드를 프롬프트에 주입해
   // 튜터가 경로를 지어내지 않게 한다(개념 튜터는 현재 페이지 이웃만 알아 멀리 있는
   // 개념은 추측하던 문제). concepts 컬렉션에서만.

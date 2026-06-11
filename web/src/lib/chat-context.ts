@@ -600,7 +600,7 @@ ${hasImage ? `## 문제 이미지 (유일한 원본)
   return { systemPrompt: compact, pageTitle: full.pageTitle, allowedDirs: full.allowedDirs, imagePaths: full.imagePaths };
 }
 
-export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
+export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts', userMastery?: string): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
   if (collection === 'dashboard') {
     return buildDashboardPrompt();
   }
@@ -614,6 +614,9 @@ export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'pro
       pageTitle: pageSlug,
     };
   }
+  // 이 학생의 현재 mastery(promote 판정 기준). 없으면 frontmatter 폴백
+  // (frontmatter mastery 는 전역이라 멤버십 후 사용자 실제 상태가 아님 — chat.ts 가 주입).
+  const currentMastery = userMastery ?? page.mastery;
   const allConcepts = listAllConcepts();
   const masteryByLevel: Record<string, string[]> = {
     unknown: [], learning: [], proficient: [], mastered: [],
@@ -648,7 +651,7 @@ export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'pro
 
 --- 현재 페이지 ---
 단원: ${page.unit ?? page.slug}  (학년: ${page.grade ?? '미지정'}, type: ${page.concept_type})
-Mastery: ${page.mastery}
+Mastery: ${currentMastery}${userMastery ? ' (이 학생의 실제 현재 상태)' : ''}
 
 본문 (학생이 보고 있는 페이지):
 ${page.body.trim().slice(0, 2000)}
@@ -671,15 +674,27 @@ ${enablesInfo || '(아직 정의 안 됨)'}
 4. 답변은 markdown. 수치/대수 계산은 정확한 식 형태 유지.
 5. 짧고 정확하게. 학생이 막힌 단계를 정확히 짚어 한 걸음만 진전시키는 것이 목표.
 
---- Mastery 승급 판정 (agent.md D13) ---
-이 단원의 현재 mastery는 **${page.mastery}**. 대화 중 학생이 다음 기준을 명확히 충족했다고 판단되면 \`\`\`promote\`\`\` fenced 블록을 응답 끝에 emit한다. 판단 보수적으로 — 학생이 한 단계 위 수준의 문제를 막힘 없이 풀어냈을 때만.
+--- Mastery 승급/강등 판정 (agent.md D13) ---
+이 단원에서 이 학생의 **현재 상태는 \`${currentMastery}\`** 다. promote 의 \`to\` 는 반드시
+이 현재 상태를 기준으로 정한다 — 절대 레벨을 그냥 던지지 말 것.
 
-승급 기준:
+레벨 순서: unknown < learning < proficient < mastered.
+
+**핵심 규칙 (반드시):**
+- \`to\` 는 **현재 상태보다 한 단계 높을 때만**(=승급). 현재(\`${currentMastery}\`)가 이미 그
+  단계 이상이면 promote 를 **emit하지 말 것**. 학생이 기본 문제를 잘 풀어도, 현재가 이미
+  proficient 면 그대로 두거나(emit X) mastered 만 제안한다.
+- ⚠️ 현재(\`${currentMastery}\`)보다 **낮은** \`to\` 는 **강등**이다. "정의·예제를 잘 풀었다"는
+  강등 사유가 절대 아니다 — 잘 푼 건 현 상태 유지 또는 승급의 근거다. 잘 했는데 낮은 to 를
+  쓰면 학생 데이터를 깎는 버그가 된다.
+- 강등(낮은 to)은 학생이 **이전에 알던 것을 지금 명백히 틀려** 현 단계 자격이 없음이 드러난
+  명확한 퇴행일 때만, 그 퇴행 증거를 reason 에 구체적으로 적는다.
+- 판단은 보수적으로. 애매하면 emit하지 말 것.
+
+승급 기준 (현재가 그 직전 단계일 때만 해당 to 를 쓴다):
 - unknown → learning: 정의·기본 예제 1회 무리 없이 통과
 - learning → proficient: 4점 수준 문항 2회 무오답 통과
 - proficient → mastered: 킬러 문항(20·21·22·28·29·30번대) 1회 통과
-강등 기준:
-- 학생이 같은 단원의 핵심 개념을 잘못 알고 있어 풀이가 막힌 경우 한 단계 강등 제안
 
 emit 형식 (반드시 JSON, evidence는 선택):
 \`\`\`promote
