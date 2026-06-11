@@ -42,7 +42,10 @@ export default function SolutionPanel({ solution }: { solution?: Solution }) {
               <span className="shrink-0 w-5 h-5 mt-0.5 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-[11px] flex items-center justify-center">
                 {i + 1}
               </span>
-              <div className="flex-1 leading-relaxed space-y-1 min-w-0 overflow-x-auto">
+              {/* overflow 는 안쪽 .katex-display(max-width:100% + 자체 overflow-x:auto)에 맡긴다.
+                  바깥에 overflow-x-auto 를 또 두면 수식이 폭에 거의 맞을 때 1~2px 넘쳐
+                  불필요한 스크롤바가 생긴다(우측 스크롤바 버그). min-w-0 만 유지(flex 축소 허용). */}
+              <div className="flex-1 leading-relaxed space-y-1 min-w-0">
                 {lines(s).map((line, j) => (
                   <MathishText key={j} text={line} display className="block" />
                 ))}
