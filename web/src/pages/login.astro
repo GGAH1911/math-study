@@ -32,10 +32,10 @@ const googleEnabled = !!process.env.GOOGLE_OAUTH_CLIENT_ID;
     <!-- 노트의 첫 장 — 모눈 위에 마스킹테이프로 붙여 둔 인덱스 카드 -->
     <main class="w-full max-w-sm card card-taped">
       <div class="flex items-center gap-2.5 mb-4">
-        <!-- 數 인장 — 빨간펜 도장(브랜드) -->
+        <!-- 브랜드 인장 — 모눈 위 빨간 곡선 한 획(작도 모티프). 한자 금지. -->
         <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
           <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
-          <text x="14" y="19.5" text-anchor="middle" font-family="'Gowun Batang', serif" font-size="14" font-weight="700" fill="var(--pen-red)">數</text>
+          <path d="M6 21 Q 14 -2 22 21" fill="none" stroke="var(--pen-red)" stroke-width="2.4" stroke-linecap="round"/>
         </svg>
         <span class="font-serif font-bold text-[22px]">Math Study</span>
       </div>

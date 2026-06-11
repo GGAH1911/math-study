@@ -11,10 +11,10 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
      border-b 대신 손그림 괘선 SVG(마지막 자식)가 하단 경계를 담당한다. */}
 <header class="sticky top-0 z-30 flex items-center gap-4 px-6 h-14 relative bg-[color:var(--color-bg)]/85 backdrop-blur">
   <div class="lg:hidden flex items-center gap-2">
-    {/* 數 인장 — 빨간 낙관 도장 브랜드 (계약 §8-A) */}
+    {/* 브랜드 인장 — 모눈 위 빨간 곡선 한 획(작도 모티프). 한자 사용 금지(사용자 지침). */}
     <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
       <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
-      <text x="14" y="19.5" text-anchor="middle" font-family="'Gowun Batang', serif" font-size="14" font-weight="700" fill="var(--pen-red)">數</text>
+      <path d="M6 21 Q 14 -2 22 21" fill="none" stroke="var(--pen-red)" stroke-width="2.4" stroke-linecap="round"/>
     </svg>
     <span class="text-sm font-serif font-bold">Math Study</span>
   </div>
