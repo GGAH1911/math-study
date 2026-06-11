@@ -10,20 +10,45 @@ const googleEnabled = !!process.env.GOOGLE_OAUTH_CLIENT_ID;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 테마 프리페인트(FOUC 방지) — CSS 로드 전에 html.dark를 확정해야 깜빡임이 없다 -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('ms-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.classList.toggle('dark', t === 'dark');
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>로그인 · 수능 수학</title>
   </head>
-  <body class="min-h-screen bg-[color:var(--color-bg,#09090b)] text-[color:var(--color-text,#fafafa)] flex items-center justify-center p-4">
-    <main class="w-full max-w-sm">
-      <h1 class="text-xl font-semibold mb-1">로그인</h1>
-      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mb-6">수능 수학 학습 시스템</p>
+  <body class="min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)] flex items-center justify-center p-4">
+    <!-- 노트의 첫 장 — 모눈 위에 마스킹테이프로 붙여 둔 인덱스 카드 -->
+    <main class="w-full max-w-sm card card-taped">
+      <div class="flex items-center gap-2.5 mb-4">
+        <!-- 數 인장 — 빨간펜 도장(브랜드) -->
+        <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
+          <text x="14" y="19.5" text-anchor="middle" font-family="'Gowun Batang', serif" font-size="14" font-weight="700" fill="var(--pen-red)">數</text>
+        </svg>
+        <span class="font-serif font-bold text-[22px]">Math Study</span>
+      </div>
+      <h1 class="font-sans text-xl font-semibold mb-1">로그인</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mb-6">수능 수학 학습 시스템</p>
 
       <form id="f" class="space-y-3">
-        <input type="email" name="email" required autocomplete="email" placeholder="이메일"
-          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
-        <input type="password" name="password" required autocomplete="current-password" placeholder="비밀번호"
-          class="w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none" />
-        <button type="submit"
-          class="w-full px-3 py-2 rounded-md bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/30 transition font-medium disabled:opacity-50">
+        {/* placeholder 는 입력 시작과 동시에 사라지는 유일 라벨이라 aria-label 로 보강(WCAG 3.3.2 최소 수선) */}
+        <input type="email" name="email" required autocomplete="email" placeholder="이메일" aria-label="이메일"
+          class="w-full px-3 py-2 rounded-md outline-none" />
+        <input type="password" name="password" required autocomplete="current-password" placeholder="비밀번호" aria-label="비밀번호"
+          class="w-full px-3 py-2 rounded-md outline-none" />
+        <button type="submit" class="btn-ink w-full disabled:opacity-50">
           로그인
         </button>
         <p id="err" class="text-sm text-rose-400 min-h-[1.25rem]" role="alert"></p>
@@ -31,14 +56,14 @@ const googleEnabled = !!process.env.GOOGLE_OAUTH_CLIENT_ID;
 
       {googleEnabled && (
         <a href="/api/auth/google/start"
-          class="mt-2 block text-center w-full px-3 py-2 rounded-md border border-[color:var(--color-border,#27272a)] hover:border-zinc-500 transition text-sm">
+          class="mt-2 block text-center w-full px-3 py-2 rounded-md border border-[color:var(--color-border)] hover:border-zinc-500 transition text-sm">
           Google로 로그인
         </a>
       )}
 
-      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mt-6">
+      <p class="text-sm text-[color:var(--color-muted)] mt-6">
         계정이 없으신가요?
-        <a href="/signup" class="text-[color:var(--color-accent,#818cf8)] hover:underline">가입하기</a>
+        <a href="/signup" class="text-[color:var(--color-accent)] hover:underline">가입하기</a>
       </p>
     </main>
 

@@ -1,0 +1,23 @@
+{/* 라이트/다크 테마 토글 — 클릭 시 html.dark 토글 + localStorage['ms-theme'] 갱신.
+     이벤트 위임(document 1회 바인딩)이라 인스턴스가 여러 개(헤더 + 모바일 시트)여도 안전.
+     차트류는 html class MutationObserver 로 추종하므로 커스텀 이벤트 불필요(계약 §14-C). */}
+<button
+  type="button"
+  data-theme-toggle
+  class="inline-flex items-center justify-center min-w-11 min-h-11 size-11 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-[color:var(--color-muted)] hover:text-[color:var(--color-text)] hover:border-[color:var(--color-border-strong)] transition"
+  aria-label="라이트/다크 테마 전환" title="테마 전환">
+  <span class="dark:hidden" aria-hidden="true">✒</span><!-- 라이트: 만년필 → 누르면 밤으로 -->
+  <span class="hidden dark:inline" aria-hidden="true">✏</span><!-- 다크: 연필 → 누르면 낮으로 -->
+</button>
+<script is:inline>
+  (function () {
+    if (window.__msThemeBound) return;
+    window.__msThemeBound = true;
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-theme-toggle]');
+      if (!btn) return;
+      var dark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('ms-theme', dark ? 'dark' : 'light'); } catch (err) {}
+    });
+  })();
+</script>

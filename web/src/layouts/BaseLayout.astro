@@ -17,18 +17,34 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- 테마 프리페인트 — FOUC 방지를 위해 CSS·title 보다 먼저 실행(계약 §6-A).
+         localStorage['ms-theme'] 우선, 없으면 OS prefers-color-scheme 추종. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('ms-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.classList.toggle('dark', t === 'dark');
+        } catch (e) {}
+      })();
+    </script>
     <meta name="description" content={description} />
     <title>{title} · Math Study</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   </head>
   <body class="min-h-screen flex">
     <Sidebar />
     <div class="flex-1 min-w-0 flex flex-col">
       <Header />
-      <main class={`flex-1 min-w-0 ${containerClass}`}>
+      {/* <lg 에서 모바일 하단 도크(56px + safe-area)에 본문이 가리지 않게(계약 §8-C).
+           홈 인디케이터 기기는 inset-bottom≈34px 라 고정 72px 로는 모자람 — env() 가산. */}
+      <main class={`flex-1 min-w-0 pb-[calc(72px_+_env(safe-area-inset-bottom))] lg:pb-0 ${containerClass}`}>
         <slot />
       </main>
     </div>

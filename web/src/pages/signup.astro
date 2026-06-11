@@ -4,66 +4,96 @@
 // (부동산 포렌식 서비스 가입폼 패턴 이식 — 신원검증/전화/이메일인증은 학습앱엔 과해 제외).
 import '../styles/global.css';
 const returnTo = Astro.url.searchParams.get('returnTo') || '/';
-const inputCls = 'w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#18181b)] border border-[color:var(--color-border,#27272a)] focus:border-[color:var(--color-accent,#6366f1)] outline-none';
+// 색·보더는 전역 input 규칙(global.css '줄노트')에 위임 — 레이아웃 유틸만 남긴다.
+const inputCls = 'w-full px-3 py-2 rounded-md outline-none';
 ---
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 테마 프리페인트(FOUC 방지) — CSS 로드 전에 html.dark를 확정해야 깜빡임이 없다 -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('ms-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.classList.toggle('dark', t === 'dark');
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>가입 · 수능 수학</title>
   </head>
-  <body class="min-h-screen bg-[color:var(--color-bg,#09090b)] text-[color:var(--color-text,#fafafa)] flex items-center justify-center p-4">
-    <main class="w-full max-w-sm">
-      <h1 class="text-xl font-semibold mb-1">계정 만들기</h1>
-      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mb-6">수능 수학 학습 시스템</p>
+  <body class="min-h-screen bg-[color:var(--color-bg)] text-[color:var(--color-text)] flex items-center justify-center p-4">
+    <!-- 노트의 첫 장 — 모눈 위에 마스킹테이프로 붙여 둔 인덱스 카드 -->
+    <main class="w-full max-w-sm card card-taped">
+      <div class="flex items-center gap-2.5 mb-4">
+        <!-- 數 인장 — 빨간펜 도장(브랜드) -->
+        <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
+          <text x="14" y="19.5" text-anchor="middle" font-family="'Gowun Batang', serif" font-size="14" font-weight="700" fill="var(--pen-red)">數</text>
+        </svg>
+        <span class="font-serif font-bold text-[22px]">Math Study</span>
+      </div>
+      <h1 class="font-sans text-xl font-semibold mb-1">계정 만들기</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mb-6">수능 수학 학습 시스템</p>
 
       <form id="f" class="space-y-3" novalidate>
-        <input type="text" name="displayName" autocomplete="nickname" placeholder="이름(선택)" class={inputCls} />
+        {/* placeholder 는 입력 시작과 동시에 사라지는 유일 라벨이라 aria-label 로 보강(WCAG 3.3.2 최소 수선) */}
+        <input type="text" name="displayName" autocomplete="nickname" placeholder="이름(선택)" aria-label="이름(선택)" class={inputCls} />
 
         <div>
-          <input type="email" name="email" required autocomplete="email" placeholder="이메일" class={inputCls} />
+          <input type="email" name="email" required autocomplete="email" placeholder="이메일" aria-label="이메일" class={inputCls} />
           <p data-err="email" class="hidden text-xs text-rose-400 mt-1">올바른 이메일 형식이 아닙니다.</p>
         </div>
 
         <div>
           <div class="relative">
-            <input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="비밀번호 (8자 이상)" class={`${inputCls} pr-14`} />
-            <button type="button" data-toggle="password" class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[color:var(--color-muted,#a1a1aa)] hover:text-[color:var(--color-text)]">표시</button>
+            <input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="비밀번호 (8자 이상)" aria-label="비밀번호 (8자 이상)" class={`${inputCls} pr-14`} />
+            {/* min 44px 히트영역(WCAG 2.5.8) — 시각 크기는 text-xs 그대로, 타깃만 키운다 */}
+            <button type="button" data-toggle="password" aria-label="비밀번호 표시 전환" class="absolute right-0 top-1/2 -translate-y-1/2 min-h-11 min-w-11 inline-flex items-center justify-center px-2 text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-text)]">표시</button>
           </div>
           <div class="flex items-center gap-2 mt-1.5">
-            <div class="flex-1 h-1 rounded bg-[color:var(--color-border,#27272a)] overflow-hidden">
+            <div class="flex-1 h-1 rounded bg-[color:var(--color-border)] overflow-hidden">
               <div id="strengthBar" class="h-full w-0 transition-all duration-200"></div>
             </div>
-            <span id="strengthLabel" class="text-[10px] text-[color:var(--color-muted,#a1a1aa)] w-8 text-right tabular-nums"></span>
+            <span id="strengthLabel" class="text-[10px] text-[color:var(--color-muted)] w-8 text-right tabular-nums"></span>
           </div>
         </div>
 
         <div>
           <div class="relative">
-            <input type="password" name="passwordConfirm" required minlength="8" autocomplete="new-password" placeholder="비밀번호 확인 (다시 입력)" class={`${inputCls} pr-14`} />
-            <button type="button" data-toggle="passwordConfirm" class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[color:var(--color-muted,#a1a1aa)] hover:text-[color:var(--color-text)]">표시</button>
+            <input type="password" name="passwordConfirm" required minlength="8" autocomplete="new-password" placeholder="비밀번호 확인 (다시 입력)" aria-label="비밀번호 확인 (다시 입력)" class={`${inputCls} pr-14`} />
+            <button type="button" data-toggle="passwordConfirm" aria-label="비밀번호 확인 표시 전환" class="absolute right-0 top-1/2 -translate-y-1/2 min-h-11 min-w-11 inline-flex items-center justify-center px-2 text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-text)]">표시</button>
           </div>
           <p data-err="match" class="hidden text-xs text-rose-400 mt-1">비밀번호가 일치하지 않습니다.</p>
           <p data-ok="match" class="hidden text-xs text-emerald-400 mt-1">비밀번호가 일치합니다.</p>
         </div>
 
-        <label class="flex items-start gap-2 text-xs text-[color:var(--color-muted,#a1a1aa)] cursor-pointer select-none">
+        <label class="flex items-start gap-2 text-xs text-[color:var(--color-muted)] cursor-pointer select-none">
           <input type="checkbox" name="terms" class="mt-0.5 accent-indigo-500" />
           <span>이용약관 및 개인정보 처리방침에 동의합니다. <span class="text-rose-400">(필수)</span></span>
         </label>
 
-        <button type="submit" id="submitBtn" disabled
-          class="w-full px-3 py-2 rounded-md bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/30 transition font-medium disabled:opacity-40 disabled:cursor-not-allowed">
+        <button type="submit" id="submitBtn" disabled class="btn-ink w-full disabled:opacity-50">
           가입하기
         </button>
         <p id="msg" class="text-sm min-h-[1.25rem]" role="alert"></p>
       </form>
 
-      <p class="text-sm text-[color:var(--color-muted,#a1a1aa)] mt-6">
+      <p class="text-sm text-[color:var(--color-muted)] mt-6">
         이미 계정이 있으신가요?
-        <a href="/login" class="text-[color:var(--color-accent,#818cf8)] hover:underline">로그인</a>
+        <a href="/login" class="text-[color:var(--color-accent)] hover:underline">로그인</a>
       </p>
+
+      <!-- 마지널리아 — 손글씨 한 줄(Nanum Pen 예산 내) -->
+      <p class="mt-6 text-center font-hand text-[18px] text-[color:var(--color-subtle)]">∫ 오늘부터 1페이지씩</p>
     </main>
 
     <script define:vars={{ returnTo }}>
@@ -87,16 +117,17 @@ const inputCls = 'w-full px-3 py-2 rounded-md bg-[color:var(--color-surface-2,#1
       const matchOk = () => f.passwordConfirm.value.length > 0 && f.password.value === f.passwordConfirm.value;
       const termsOk = () => f.terms.checked;
 
+      // 강도 색은 펜 토큰(CSS 변수 문자열) — 테마 토글에도 자동 추종.
       function strength(pw) {
-        if (pw.length < 8) return { pct: Math.min((pw.length / 8) * 30, 30), label: '짧음', color: '#f43f5e' };
+        if (pw.length < 8) return { pct: Math.min((pw.length / 8) * 30, 30), label: '짧음', color: 'var(--pen-red)' };
         let s = 0;
         if (pw.length >= 12) s++;
         if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s++;
         if (/\d/.test(pw)) s++;
         if (/[^A-Za-z0-9]/.test(pw)) s++;
-        if (s <= 1) return { pct: 50, label: '약함', color: '#f59e0b' };
-        if (s <= 2) return { pct: 75, label: '보통', color: '#eab308' };
-        return { pct: 100, label: '강함', color: '#10b981' };
+        if (s <= 1) return { pct: 50, label: '약함', color: 'var(--pen-amber)' };
+        if (s <= 2) return { pct: 75, label: '보통', color: 'var(--pen-yellow)' };
+        return { pct: 100, label: '강함', color: 'var(--pen-green)' };
       }
 
       function toggleVis(sel, show) {

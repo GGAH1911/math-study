@@ -1,57 +1,297 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 @plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ════════════════════════════════════════════════════════════════════
+   「수학자의 스케치북」 토큰 시스템 (디자인 계약 v2.0)
+   라이트(기본) = 크림색 모눈종이 위 잉크 / 다크(html.dark) = 흑연 보드 위 초크.
+   레거시 raw 팔레트 유틸(zinc/indigo/rose/...)은 아래 @theme 리매핑으로
+   코드 수정 없이 양 테마를 추종한다 — 라이트는 「역방향」(950=가장 밝은 종이,
+   50=가장 진한 잉크). 신규 코드는 raw 팔레트 금지: 시맨틱 토큰·--pen-*·--hl-* 만.
+   ════════════════════════════════════════════════════════════════════ */
 
 @theme {
-  --color-bg: #09090b;
-  --color-surface: #18181b;
-  --color-surface-2: #1f1f23;
-  --color-border: #27272a;
-  --color-border-strong: #3f3f46;
-  --color-text: #fafafa;
-  --color-muted: #a1a1aa;
-  --color-subtle: #71717a;
-  --color-accent: #818cf8;
-  --color-accent-strong: #6366f1;
+  /* ── 시맨틱(레거시 전수 보존, 값만 교체) ───────────────── */
+  --color-bg: #FBF8F1;
+  --color-surface: #F5F0E4;
+  --color-surface-2: #EFE8D8;
+  --color-border: #E9E1CF;
+  --color-border-strong: #D7CDB5;
+  --color-text: #2A261E;
+  --color-muted: #6B6350;
+  --color-subtle: #746C55;   /* AA 보정: #8A8169(3.4:1)→4.6:1 on surface */
+  --color-accent: #39487D;
+  --color-accent-strong: #2D3963;
 
-  --color-mastery-unknown: #f43f5e;
-  --color-mastery-learning: #f59e0b;
-  --color-mastery-proficient: #10b981;
-  --color-mastery-mastered: #0ea5e9;
+  --color-mastery-unknown: #C13D38;
+  --color-mastery-learning: #9F600C;
+  --color-mastery-proficient: #2E7B4F;
+  --color-mastery-mastered: #166E8E;
 
-  --color-status-solved: #10b981;
-  --color-status-unsolved: #71717a;
-  --color-status-review: #f59e0b;
+  --color-status-solved: #2E7B4F;
+  --color-status-unsolved: #746C55;  /* = subtle, AA 동반 보정 */
+  --color-status-review: #9F600C;
 
-  --color-error-concept_gap: #f43f5e;
-  --color-error-careless: #a1a1aa;
-  --color-error-wrong_approach: #f59e0b;
-  --color-error-unknown_method: #818cf8;
+  --color-error-concept_gap: #C13D38;
+  --color-error-careless: #746C55;   /* = subtle, AA 동반 보정 */
+  --color-error-wrong_approach: #9F600C;
+  --color-error-unknown_method: #6A4E9C;
 
-  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  /* ── zinc 11단계 역방향 리매핑 「종이→잉크」 ─────────────── */
+  --color-zinc-950: #FBF8F1;  /* 페이지(가장 밝은 종이) */
+  --color-zinc-900: #F5F0E4;  /* 카드 표면 */
+  --color-zinc-800: #E9E1CF;  /* 기본 보더 = 연필 선 */
+  --color-zinc-700: #D7CDB5;  /* 강한 보더 */
+  --color-zinc-600: #B0A78F;  /* 비활성·디바이더 */
+  --color-zinc-500: #746C55;  /* subtle (AA 보정) */
+  --color-zinc-400: #6B6350;  /* muted (5.4:1) */
+  --color-zinc-300: #514B3B;  /* 강한 보조 텍스트 */
+  --color-zinc-200: #3A352A;  /* 부제목 */
+  --color-zinc-100: #2A261E;  /* 본문 잉크 (12.7:1) */
+  --color-zinc-50:  #1D1A14;  /* 제목·최대 강조 잉크 */
+
+  /* ── indigo 「만년필 블루블랙」 (라이트=미러) ────────────── */
+  --color-indigo-50:  #1A2138;
+  --color-indigo-100: #252E4D;
+  --color-indigo-200: #2D3963;
+  --color-indigo-300: #39487D;
+  --color-indigo-400: #485A96;
+  --color-indigo-500: #5F70AC;  /* 솔리드 버튼 — 양 테마 동일, white 4.8:1 */
+  --color-indigo-600: #7E8EC4;
+  --color-indigo-700: #A2B0D8;
+  --color-indigo-800: #C6D0E9;
+  --color-indigo-900: #E0E6F4;
+  --color-indigo-950: #EFF2FA;
+
+  /* ── 펜 스케일 미러 (사용 포지션 전수: 200/300/400/500/700) ─ */
+  --color-rose-200: #8C2D2A; --color-rose-300: #A33531; --color-rose-400: #C13D38;
+  --color-rose-500: #C9554F; --color-rose-700: #9E3E39;
+  --color-emerald-200: #1F5734; --color-emerald-300: #26693F; --color-emerald-400: #2E7B4F;
+  --color-emerald-500: #37905D; --color-emerald-700: #2A6F47;
+  --color-amber-200: #6F4408; --color-amber-300: #85510A; --color-amber-400: #9F600C;
+  --color-amber-500: #B26F14; --color-amber-700: #8A5710;
+  --color-sky-200: #0F4D63; --color-sky-300: #125D78; --color-sky-400: #166E8E;
+  --color-sky-500: #1E80A3; --color-sky-700: #17637E;
+  --color-cyan-200: #0F4D63; --color-cyan-300: #125D78; --color-cyan-400: #166E8E;
+  --color-cyan-500: #1E80A3; --color-cyan-700: #17637E;
+  --color-violet-200: #4A366D; --color-violet-300: #594183; --color-violet-400: #6A4E9C;
+  --color-violet-500: #7B5FB0; --color-violet-700: #604A8A;
+  --color-orange-300: #85510A;
+
+  /* ── 폰트 ────────────────────────────────────────────── */
+  --font-sans: "IBM Plex Sans KR", "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-serif: "Gowun Batang", "Noto Serif KR", Georgia, serif;
+  --font-hand: "Nanum Pen Script", "Gowun Batang", cursive;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+/* ── 비유틸 디자인 변수 — 신규 네임스페이스: --paper-* --ink-* --pen-* --hl-* ── */
+:root {
+  /* paper — 표면 원천 */
+  --paper-page: #FBF8F1;
+  --paper-card: #F5F0E4;
+  --paper-well: #EFE8D8;
+  --paper-line: #E9E1CF;
+  --paper-line-strong: #D7CDB5;
+  --paper-dim: #B0A78F;
+  --paper-tape: rgba(214, 200, 160, 0.5);
+
+  /* ink — 잉크 원천 */
+  --ink-faint: #8A8169;
+  --ink-muted: #6B6350;
+  --ink-soft: #514B3B;
+  --ink-sub: #3A352A;
+  --ink-body: #2A261E;
+  --ink-strong: #1D1A14;
+
+  /* pen — 시맨틱 펜 포인트 */
+  --pen-red: #C13D38;
+  --pen-green: #2E7B4F;
+  --pen-amber: #9F600C;
+  --pen-cyan: #166E8E;
+  --pen-violet: #6A4E9C;
+  --pen-yellow: #A98E0B;
+
+  /* hl — 형광펜(투명 오버레이) */
+  --hl-yellow: rgba(255, 213, 74, 0.40);
+  --hl-pink: rgba(255, 138, 171, 0.35);
+  --hl-green: rgba(142, 222, 134, 0.38);
+  --hl-blue: rgba(122, 196, 255, 0.35);
+
+  /* 모눈 */
+  --grid-minor: rgba(45, 57, 99, 0.06);
+  --grid-major: rgba(45, 57, 99, 0.11);
+
+  /* 그림자(라이트 전용 — 다크는 none) */
+  --shadow-card: 0 1px 2px rgba(29, 26, 21, 0.06), 0 4px 14px rgba(29, 26, 21, 0.05);
+  --shadow-card-hover: 0 2px 4px rgba(29, 26, 21, 0.07), 0 8px 24px rgba(29, 26, 21, 0.07);
+
+  /* 그래프 크롬 토큰 — hex 문자열 소비자(차트)는 getComputedStyle로 읽는다(§14-C) */
+  --plot-axis: #2A261E;
+  --plot-grid: rgba(45, 57, 99, 0.12);
+  --plot-tip-bg: rgba(245, 240, 228, 0.95);
+  --plot-tip-border: #D7CDB5;
+
+  /* 흑판(테마 불변 — xyflow·3D 아일랜드 스코프) */
+  --board-bg: #161310;
+
+  /* 미정의 변수 계약 수선(--color-fg 6회 + --color-primary 3회 사용처)
+     — 별칭이라 다크 재선언 불필요(중복 정의 = 드리프트 원천) */
+  --color-fg: var(--color-text);
+  --color-primary: var(--color-accent);
+}
+
+/* ── 다크 = 흑연 보드 위 초크 (정방향 램프) ─────────────────────────── */
+html.dark {
+  /* 시맨틱 */
+  --color-bg: #161310;
+  --color-surface: #1D1A16;
+  --color-surface-2: #242019;
+  --color-border: #2A2620;
+  --color-border-strong: #3A352D;
+  --color-text: #E7E1D2;
+  --color-muted: #968D7B;
+  --color-subtle: #8A8272;   /* AA 보정: #6E6759(3.1:1)→4.55:1 on surface */
+  --color-accent: #7E8EC4;
+  --color-accent-strong: #5F70AC;
+
+  --color-mastery-unknown: #E8857D;
+  --color-mastery-learning: #E3AE5A;
+  --color-mastery-proficient: #7CC79A;
+  --color-mastery-mastered: #6FC0D8;
+  --color-status-solved: #7CC79A;
+  --color-status-unsolved: #8A8272;  /* = subtle, AA 동반 보정 */
+  --color-status-review: #E3AE5A;
+  --color-error-concept_gap: #E8857D;
+  --color-error-careless: #968D7B;
+  --color-error-wrong_approach: #E3AE5A;
+  --color-error-unknown_method: #B29AD6;
+
+  /* zinc 「흑연→초크」 */
+  --color-zinc-950: #161310;
+  --color-zinc-900: #1D1A16;
+  --color-zinc-800: #2A2620;
+  --color-zinc-700: #3A352D;
+  --color-zinc-600: #4F4940;
+  --color-zinc-500: #8A8272;  /* subtle (AA 보정) */
+  --color-zinc-400: #968D7B;
+  --color-zinc-300: #B4AB99;
+  --color-zinc-200: #CFC7B5;
+  --color-zinc-100: #E7E1D2;
+  --color-zinc-50:  #F3EEE1;
+
+  /* indigo (다크=정방향) */
+  --color-indigo-50:  #EFF2FA;
+  --color-indigo-100: #E0E6F4;
+  --color-indigo-200: #C6D0E9;
+  --color-indigo-300: #A2B0D8;
+  --color-indigo-400: #7E8EC4;
+  --color-indigo-500: #5F70AC;
+  --color-indigo-600: #485A96;
+  --color-indigo-700: #39487D;
+  --color-indigo-800: #2D3963;
+  --color-indigo-900: #252E4D;
+  --color-indigo-950: #1A2138;
+
+  /* 펜 스케일(다크=틴트) */
+  --color-rose-200: #F0A29B; --color-rose-300: #E8857D; --color-rose-400: #DE6B62;
+  --color-rose-500: #D05A52; --color-rose-700: #B04A43;
+  --color-emerald-200: #99D5B2; --color-emerald-300: #7CC79A; --color-emerald-400: #5FB382;
+  --color-emerald-500: #48A06D; --color-emerald-700: #3A8758;
+  --color-amber-200: #ECC180; --color-amber-300: #E3AE5A; --color-amber-400: #D49A3F;
+  --color-amber-500: #C2882C; --color-amber-700: #A06F22;
+  --color-sky-200: #92D0E2; --color-sky-300: #6FC0D8; --color-sky-400: #54ACC7;
+  --color-sky-500: #3D98B4; --color-sky-700: #2F7E96;
+  --color-cyan-200: #92D0E2; --color-cyan-300: #6FC0D8; --color-cyan-400: #54ACC7;
+  --color-cyan-500: #3D98B4; --color-cyan-700: #2F7E96;
+  --color-violet-200: #C5B2E2; --color-violet-300: #B29AD6; --color-violet-400: #A186C9;
+  --color-violet-500: #8F71BB; --color-violet-700: #77599F;
+  --color-orange-300: #E3AE5A;
+
+  /* paper / ink */
+  --paper-page: #161310;
+  --paper-card: #1D1A16;
+  --paper-well: #242019;
+  --paper-line: #2A2620;
+  --paper-line-strong: #3A352D;
+  --paper-dim: #4F4940;
+  --paper-tape: rgba(120, 110, 90, 0.35);
+  --ink-faint: #6E6759;
+  --ink-muted: #968D7B;
+  --ink-soft: #B4AB99;
+  --ink-sub: #CFC7B5;
+  --ink-body: #E7E1D2;
+  --ink-strong: #F3EEE1;
+
+  /* pen / hl (밤의 초크·마른 형광펜) */
+  --pen-red: #E8857D;
+  --pen-green: #7CC79A;
+  --pen-amber: #E3AE5A;
+  --pen-cyan: #6FC0D8;
+  --pen-violet: #B29AD6;
+  --pen-yellow: #E0C84A;
+  --hl-yellow: rgba(255, 213, 74, 0.17);
+  --hl-pink: rgba(255, 138, 171, 0.16);
+  --hl-green: rgba(142, 222, 134, 0.15);
+  --hl-blue: rgba(122, 196, 255, 0.16);
+
+  /* 모눈: minor 소거, major만 초크 괘선 */
+  --grid-minor: rgba(243, 238, 225, 0);
+  --grid-major: rgba(243, 238, 225, 0.06);
+
+  /* 그림자 폐기 — 보더가 형태 담당 */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+
+  /* 그래프 크롬 */
+  --plot-axis: #E7E1D2;
+  --plot-grid: rgba(243, 238, 225, 0.08);
+  --plot-tip-bg: rgba(29, 26, 22, 0.95);
+  --plot-tip-border: #3A352D;
 }
 
 @layer base {
   html {
     background-color: var(--color-bg);
     color: var(--color-text);
-    color-scheme: dark;
+    color-scheme: light;            /* 기존 dark 하드코딩 교체 */
   }
+  html.dark { color-scheme: dark; }
 
   body {
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "ss02", "cv11";
-    text-rendering: optimizeLegibility;
+    font-size: 16px;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--color-bg);
+    /* 모눈종이 — 이미지 0, gradient 4겹(major 40px + minor 8px).
+       .card 등 표면은 불투명 배경으로 모눈을 차단(모눈은 거터·히어로에서만).
+       background-attachment: fixed 금지(iOS 리페인트 폭탄). */
+    background-image:
+      linear-gradient(var(--grid-major) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  }
+  @media (max-width: 640px) {
+    body {
+      font-size: 15px;
+      background-size: 32px 32px, 32px 32px, 0 0, 0 0; /* major만 — 페인트 비용 절감 */
+    }
   }
 
-  ::selection {
-    background-color: rgba(129, 140, 248, 0.35);
-    color: white;
-  }
+  /* 제목급 = Gowun Batang — KaTeX Computer Modern과 thick-thin 골격 호응 */
+  h1 { font-family: var(--font-serif); }
 
-  /* Scrollbar */
+  /* 포커스 링 = 작도 보조선 (시그니처) */
+  :focus-visible { outline: 2px dashed var(--color-accent); outline-offset: 3px; }
+
+  /* 드래그 = 형광펜 긋기 (기존 인디고+white 하드코딩 제거) */
+  ::selection { background: var(--hl-yellow); }
+
+  /* Scrollbar — 토큰 참조라 양 테마 자동 추종 */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--color-bg); }
   ::-webkit-scrollbar-thumb {
@@ -61,84 +301,62 @@
   }
   ::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
 
-  /* KaTeX color tweaks for dark theme */
-  .katex { color: var(--color-text); }
+  /* KaTeX — 한글 본문 속 수식 시인성 보정(1.06em) */
+  .katex { color: var(--color-text); font-size: 1.06em; }
   .katex-display { margin: 1em 0; overflow-x: auto; overflow-y: hidden; }
 
-  /* Prose adjustments */
-  .prose { color: var(--color-text); }
-  .prose :where(h1, h2, h3, h4) { color: var(--color-text); }
-  .prose :where(strong) { color: var(--color-text); }
-  .prose :where(a) { color: var(--color-accent); text-decoration: none; }
-  .prose :where(a):hover { color: var(--color-accent-strong); text-decoration: underline; }
-  .prose :where(code) {
-    color: #f4f4f5;
-    background: var(--color-surface);
-    padding: 0.15em 0.4em;
-    border-radius: 4px;
-    font-size: 0.875em;
-    font-weight: 500;
-  }
-  .prose :where(code)::before,
-  .prose :where(code)::after { content: none; }
-  .prose :where(pre) {
-    background: var(--color-surface) !important;
+  /* input = 줄노트 — base 레이어에 두어 개별 유틸리티가 이기게 한다 */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  textarea, select {
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
-  }
-  .prose :where(blockquote) {
-    border-left-color: var(--color-border-strong);
-    color: var(--color-muted);
-    font-style: normal;
-  }
-  .prose :where(blockquote p)::before,
-  .prose :where(blockquote p)::after { content: none; }
-  .prose :where(table) {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border-bottom-color: var(--color-border-strong);
     border-radius: 8px;
-    overflow: hidden;
+    color: var(--color-text);
   }
-  .prose :where(thead) {
-    background: var(--color-surface-2);
-    border-bottom: 1px solid var(--color-border);
+  input::placeholder, textarea::placeholder { color: var(--color-subtle); }
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    border-bottom: 2px solid var(--color-accent);
   }
-  .prose :where(th, td) {
-    border-color: var(--color-border);
+  input[type="checkbox"], input[type="radio"] { accent-color: var(--color-accent); }
+  @media (pointer: coarse) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+    select, .btn-ink, .btn-ghost { min-height: 44px; }
   }
-  .prose :where(hr) { border-color: var(--color-border); }
-  .prose :where(img) {
-    border-radius: 8px;
-    background: white;
-    padding: 8px;
-  }
+
 }
 
 @layer components {
+  /* 카드 = 인덱스 카드 — 불투명 배경으로 모눈 차단, 패딩 24px = 8px 셀 ×3 */
   .card {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    transition: border-color 150ms ease, transform 150ms ease;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    transition: border-color 150ms ease, box-shadow 150ms ease;
   }
-  .card:hover {
-    border-color: var(--color-border-strong);
-  }
-  .card-link:hover {
-    border-color: var(--color-accent);
+  @media (max-width: 640px) { .card { padding: 1rem; } }
+  .card:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-card-hover); }
+
+  /* 마스킹테이프 변형 (히어로·빈상태·login 한정 — 모티프 예산) */
+  .card-taped { position: relative; }
+  .card-taped::before {
+    content: ""; position: absolute; top: -9px; left: 50%;
+    width: 72px; height: 18px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: var(--paper-tape);
+    border: 1px solid rgba(0, 0, 0, 0.04);
   }
 
+  /* 칩 = 스탬프 라벨 — 변형 11종은 토큰 원천 교체로 자동 추종 */
   .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.15rem 0.6rem;
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.125rem 0.625rem;
     border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1.5;
+    font-size: 0.75rem; font-weight: 500;
     border: 1px solid var(--color-border);
-    background: var(--color-surface-2);
+    background: color-mix(in oklab, var(--color-surface-2) 70%, transparent);
     color: var(--color-muted);
   }
   .chip-mastery-unknown   { color: var(--color-mastery-unknown);   border-color: color-mix(in srgb, var(--color-mastery-unknown) 40%, var(--color-border)); }
@@ -155,37 +373,84 @@
   .chip-error-wrong_approach  { color: var(--color-error-wrong_approach);  border-color: color-mix(in srgb, var(--color-error-wrong_approach) 40%, var(--color-border)); }
   .chip-error-unknown_method  { color: var(--color-error-unknown_method);  border-color: color-mix(in srgb, var(--color-error-unknown_method) 40%, var(--color-border)); }
 
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.55rem 0.85rem;
-    border-radius: 8px;
-    color: var(--color-muted);
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: background 120ms ease, color 120ms ease;
+  /* 버튼 — 잉크(솔리드) / 고스트 */
+  .btn-ink {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 44px; padding: 0.55rem 1rem;
+    border-radius: 8px; border: 1px solid transparent;
+    background: var(--color-accent-strong);
+    color: #FFFFFF;
+    font-size: 0.875rem; font-weight: 600;
+    transition: background-color 150ms ease, transform 80ms ease;
   }
-  .nav-link:hover { background: var(--color-surface); color: var(--color-text); }
-  .nav-link.active {
-    background: var(--color-surface-2);
+  .btn-ink:hover { background: var(--color-accent); }
+  .btn-ink:active { transform: translateY(1px); }   /* '펜으로 꾹' */
+  .btn-ink:disabled { opacity: 0.5; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 44px; padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border-strong);
+    background: transparent; color: var(--color-text);
+    font-size: 0.875rem; font-weight: 500;
+    transition: background-color 150ms ease;
+  }
+  .btn-ghost:hover { background: color-mix(in srgb, var(--hl-yellow) 30%, transparent); }
+
+  /* 사이드바 탭 = 우측이 둥근 인덱스 탭 (Sidebar.astro 무수정 — 클래스만 재정의) */
+  .nav-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    min-height: 40px; padding: 0.45rem 0.625rem;
+    border-radius: 0 8px 8px 0;
+    border-left: 2px solid transparent;
+    color: var(--color-muted); font-size: 0.875rem;
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+  .nav-link:hover {
     color: var(--color-text);
-    box-shadow: inset 0 0 0 1px var(--color-border);
+    background: color-mix(in oklab, var(--color-surface-2) 60%, transparent);
+  }
+  .nav-link.active {
+    color: var(--color-text);
+    background: linear-gradient(var(--hl-yellow), var(--hl-yellow)) no-repeat 0 0 / 100% 100%;
+    border-left-color: var(--color-accent);     /* 좌측 잉크 바 */
   }
 
   .stat-num {
     font-family: var(--font-sans);
     font-weight: 600;
     font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
   }
 
-  .glow-hero {
-    background:
-      radial-gradient(60% 100% at 20% 0%, rgba(129,140,248,0.15) 0%, transparent 60%),
-      radial-gradient(40% 80% at 100% 0%, rgba(244,63,94,0.1) 0%, transparent 60%);
+  /* 형광펜 스윕 (체크·승급·완료 공용 동사 — JS는 .is-on 토글뿐) */
+  .hl-sweep {
+    background-image: linear-gradient(var(--hl-yellow), var(--hl-yellow));
+    background-repeat: no-repeat;
+    background-size: 0% 88%;
+    background-position: 0 60%;
+    transition: background-size 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hl-sweep.is-on { background-size: 100% 88%; }
+  .hl-sweep--green { background-image: linear-gradient(var(--hl-green), var(--hl-green)); }
+
+  /* 스티커 부착 (mastery 승급 '찰싹' — 와이어링은 2차 웨이브) */
+  @keyframes sticker-settle {
+    0%   { transform: scale(1.15) rotate(-4deg); opacity: 0; }
+    60%  { opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  .sticker-settle { animation: sticker-settle 260ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+  /* 채점 스탬프 (○=정답·✓=오답 — 마크업은 pathLength="1" SVG, 와이어링은 2차) */
+  @keyframes stamp-draw { to { stroke-dashoffset: 0; } }
+  .stamp-draw path {
+    stroke: var(--pen-red); stroke-width: 3; fill: none; stroke-linecap: round;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    animation: stamp-draw 360ms ease-out forwards;
   }
 
-  /* Inline sympy run button + output */
+  /* sympy 인라인 실행 버튼 + 출력 — 구조 유지, hex만 토큰 치환 */
   .sympy-run-btn {
     position: absolute;
     top: 6px;
@@ -194,14 +459,17 @@
     font-size: 0.7rem;
     font-family: var(--font-sans);
     font-weight: 500;
-    color: #c7d2fe;
-    background: rgba(129, 140, 248, 0.15);
-    border: 1px solid rgba(129, 140, 248, 0.4);
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
     border-radius: 5px;
     cursor: pointer;
     transition: background 120ms, color 120ms;
   }
-  .sympy-run-btn:hover { background: rgba(129, 140, 248, 0.3); color: white; }
+  .sympy-run-btn:hover {
+    background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-text);
+  }
   .sympy-run-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
   .sympy-out {
@@ -216,27 +484,43 @@
     white-space: pre-wrap;
     word-break: break-word;
     overflow-x: auto;
+    background: var(--color-surface-2);
+    color: var(--color-text);
   }
-  .sympy-out.running { background: rgba(129,140,248,0.07); color: var(--color-muted); }
-  .sympy-out.success { background: rgba(16,185,129,0.08); color: #6ee7b7; }
-  .sympy-out.error   { background: rgba(244,63,94,0.08);  color: #fda4af; }
+  .sympy-out.running { background: color-mix(in srgb, var(--color-accent) 7%, transparent); color: var(--color-muted); }
+  .sympy-out.success { background: color-mix(in srgb, var(--pen-green) 8%, transparent); color: var(--pen-green); }
+  .sympy-out.error   { background: color-mix(in srgb, var(--pen-red) 8%, transparent);   color: var(--pen-red); }
   .sympy-out::before { content: '⮑ '; opacity: 0.6; font-family: var(--font-sans); }
 
-  /* Spoiler / answer reveal */
+  /* 정답 가림 = 연필로 가려둔 답 + '채점 전' 빨간펜 라벨 (.revealed 토글 로직 불변).
+     본체에 filter: blur 를 걸면 pseudo 까지 통째로 래스터돼 라벨도 뭉개진다
+     (::before 의 filter: blur(0) 은 부모 블러를 취소하지 못함) — 대신
+     ::after 오버레이의 backdrop-filter 가 밑의 답만 블러하고,
+     라벨(::before)은 z-index 로 오버레이 위에 선명하게 띄운다. */
   .answer-blur {
-    filter: blur(7px);
+    position: relative;
     user-select: none;
     color: var(--color-muted);
-    transition: filter 200ms ease, color 200ms ease;
+    transition: color 200ms ease;
   }
   .answer-blur::before {
-    content: "🔒 ";
-    filter: blur(0);
-    color: var(--color-subtle);
+    content: "채점 전 ";
+    position: relative;
+    z-index: 1;                      /* 블러 오버레이(::after) 위 — 라벨만 선명 */
+    color: var(--pen-red);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.05em;
     font-family: var(--font-sans);
   }
+  .answer-blur:not(.revealed)::after {
+    /* 블러 + 연필 해칭 오버레이 — 가려둔 답 위에 빗금 */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    background: repeating-linear-gradient(45deg, rgba(107, 99, 80, 0.10) 0 2px, transparent 2px 6px);
+  }
   .answer-blur.revealed {
-    filter: none;
     color: var(--color-accent);
     user-select: text;
   }
@@ -244,46 +528,188 @@
     content: "";
   }
 
-  /* v2 problem PNGs — cropped from white-background PDF. The site is
-   * hard dark-mode; invert + hue-rotate flips white→dark while keeping
-   * any colored ink roughly the same hue. 0.92 not 1.0 so pure-black
-   * ink becomes near-white but not eye-burning bright. */
+  /* v2 문제 PNG — 라이트 = '붙여 둔 시험지 조각'(흰 배경+연필 보더),
+     다크에서만 기존 invert 필터 복원(흰 종이→흑연 보드 동화). */
   .problem-image {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 1rem 0;
-    background: white;
-    filter: invert(0.92) hue-rotate(180deg);
+    background: #FFFFFF;
+    border: 1px solid var(--color-border);
     border-radius: 4px;
+  }
+  html.dark .problem-image { filter: invert(0.92) hue-rotate(180deg); }
+
+  /* 모바일 하단 도크 (<lg — Header.astro가 렌더) */
+  .mobile-dock {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex;
+    height: calc(56px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    /* 가로 노치(landscape) 대응 — 탭이 노치 밑으로 들어가지 않게 */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+  }
+  .mobile-dock a, .mobile-dock button {
+    position: relative; flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    min-height: 44px; font-size: 10px; color: var(--color-muted);
+  }
+  .mobile-dock .icon { font-size: 16px; line-height: 1; }
+  .mobile-dock .active { color: var(--color-text); }
+  .mobile-dock .active::before {
+    content: ""; position: absolute; top: 5px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255, 213, 74, 0.85);        /* 형광펜 점 — 양 테마 공용 */
+  }
+  .dock-sheet {
+    position: fixed; left: 0; right: 0; z-index: 50;
+    bottom: calc(56px + env(safe-area-inset-bottom));
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-radius: 12px 12px 0 0;
+    box-shadow: var(--shadow-card);
+    padding: 8px;
+    display: grid; gap: 2px;
+  }
+  .dock-sheet a, .dock-sheet button {
+    display: flex; align-items: center; gap: 8px;
+    min-height: 48px; padding: 0 12px;
+    border-radius: 8px; font-size: 14px; text-align: left;
+    color: var(--color-text);
+  }
+  .dock-sheet a:hover, .dock-sheet button:hover { background: var(--color-surface-2); }
+
+  /* 모션 감수성 */
+  @media (prefers-reduced-motion: reduce) {
+    .hl-sweep { transition: none; }
+    .sticker-settle, .stamp-draw path { animation: none; }
+    .stamp-draw path { stroke-dashoffset: 0; }
   }
 }
 
+/* ---- Prose (의도적으로 unlayered — @layer 안에 넣지 말 것) ----------
+   @plugin "@tailwindcss/typography" 의 .prose/.prose-invert 는
+   @layer utilities 로 emit 되어 @layer base/components 의 동일 선언을
+   전부 이긴다(커스텀 프로퍼티·color·font-size 패배 → 라이트에서
+   prose-invert 4페이지 본문이 회백색으로 백지화). unlayered author CSS 는
+   모든 @layer 를 이기므로 여기 두어야 --tw-prose-invert-* 미러
+   (concepts/problems/mistakes/syntheses 상세 — 분장 외 파일 무수정 무력화)와
+   17px/1.8 타이포 계약이 실제로 작동한다. */
+.prose {
+  font-size: 1.0625rem;            /* 17px */
+  line-height: 1.8;
+  color: var(--color-text);
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-counters: var(--color-muted);
+  --tw-prose-bullets: var(--color-muted);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
+  --tw-prose-th-borders: var(--color-border-strong);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-quotes: var(--color-text);
+  --tw-prose-code: var(--color-text);
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-pre-code: var(--color-text);
+  /* invert 미러 — prose-invert 4곳 무력화(파일 무수정) */
+  --tw-prose-invert-body: var(--color-text);
+  --tw-prose-invert-headings: var(--color-text);
+  --tw-prose-invert-bold: var(--color-text);
+  --tw-prose-invert-links: var(--color-accent);
+  --tw-prose-invert-counters: var(--color-muted);
+  --tw-prose-invert-bullets: var(--color-muted);
+  --tw-prose-invert-captions: var(--color-muted);
+  --tw-prose-invert-lead: var(--color-muted);
+  --tw-prose-invert-hr: var(--color-border);
+  --tw-prose-invert-td-borders: var(--color-border);
+  --tw-prose-invert-th-borders: var(--color-border-strong);
+  --tw-prose-invert-quote-borders: var(--color-border);
+  --tw-prose-invert-quotes: var(--color-text);
+  --tw-prose-invert-code: var(--color-text);
+  --tw-prose-invert-pre-bg: var(--color-surface);
+  --tw-prose-invert-pre-code: var(--color-text);
+}
+.prose :where(h1, h2, h3) { font-family: var(--font-serif); }
+.prose :where(h1, h2, h3, h4) { color: var(--color-text); }
+.prose :where(strong) { color: var(--color-text); }
+.prose :where(a) { color: var(--color-accent); text-decoration: none; }
+.prose :where(a):hover { color: var(--color-accent-strong); text-decoration: underline; }
+.prose :where(code) {
+  color: var(--color-text);        /* 기존 zinc-100 하드코딩 제거 */
+  background: var(--color-surface);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+.prose :where(code)::before,
+.prose :where(code)::after { content: none; }
+.prose :where(pre) {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+}
+.prose :where(blockquote) {
+  border-left-color: var(--color-border-strong);
+  color: var(--color-muted);
+  font-style: normal;
+}
+.prose :where(blockquote p)::before,
+.prose :where(blockquote p)::after { content: none; }
+.prose :where(table) {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.prose :where(thead) {
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+.prose :where(th, td) {
+  border-color: var(--color-border);
+}
+.prose :where(hr) { border-color: var(--color-border); }
+.prose :where(img) {
+  /* C3 프레임 계약: '붙여 둔 인쇄물' — 양 테마 공용 흰 종이 조각 */
+  background: #FFFFFF;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
 /* ---- Function-plot graphs ---------------------------------------- */
-/* function-plot writes some inline styles that fight our setAttribute
-   post-processing. Mirror them with !important so dark-mode legibility
-   always wins. */
+/* function-plot이 인라인 스타일을 쓰며 setAttribute 후처리와 싸우므로
+   !important로 미러 — 종이 위 잉크 작도가 항상 이기게 한다.
+   리터럴 hex 대신 --plot-* 토큰: 양 테마 자동 추종(§14-A). */
 .graph-host svg { background: transparent; overflow: visible; }
 .graph-host .x.axis path.domain,
 .graph-host .y.axis path.domain,
 .graph-host .axis path.domain {
-  stroke: #fafafa !important;
+  stroke: var(--plot-axis) !important;
   stroke-width: 1.6 !important;
   fill: none !important;
 }
 .graph-host .axis g.tick line {
-  stroke: #a1a1aa !important;
+  stroke: var(--color-muted) !important;
   stroke-width: 1 !important;
 }
 .graph-host .axis g.tick text,
 .graph-host .axis text {
-  fill: #fafafa !important;
+  fill: var(--plot-axis) !important;
   font-size: 11px !important;
   font-weight: 500 !important;
 }
 .graph-host .graph .grid line,
 .graph-host g.grid line {
-  stroke: #3f3f46 !important;
+  stroke: var(--plot-grid) !important;
   stroke-width: 0.5 !important;
   opacity: 0.6;
 }
@@ -296,16 +722,16 @@
 .graph-host .tip-x-line,
 .graph-host .tip-y-line,
 .graph-host .tip line {
-  stroke: #a5b4fc !important;
+  stroke: var(--color-accent) !important;
   stroke-width: 1 !important;
   stroke-dasharray: 4 3 !important;
 }
-.graph-host .tip text { fill: #fafafa !important; font-size: 11px !important; }
-.graph-host .tip rect { fill: rgba(24,24,27,0.95) !important; stroke: #52525b !important; }
+.graph-host .tip text { fill: var(--plot-axis) !important; font-size: 11px !important; }
+.graph-host .tip rect { fill: var(--plot-tip-bg) !important; stroke: var(--plot-tip-border) !important; }
 
 /* Origin (x=0, y=0) axes drawn through the plot interior. */
 .graph-host .origin-axis {
-  stroke: #fafafa !important;
+  stroke: var(--plot-axis) !important;
   stroke-width: 1.4 !important;
 }
 
@@ -314,17 +740,44 @@
 .graph-host circle.tip-circle,
 .graph-host .tip .point {
   r: 6 !important;
-  fill: #fbbf24 !important;          /* amber-400 */
-  stroke: #fafafa !important;
+  fill: var(--pen-amber) !important;
+  stroke: var(--plot-axis) !important;
   stroke-width: 2 !important;
   filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
 }
 .graph-host .tip-x-line,
 .graph-host .tip-y-line {
-  stroke: #fbbf24 !important;
+  stroke: var(--pen-amber) !important;
   stroke-width: 1.2 !important;
   stroke-dasharray: 5 3 !important;
   opacity: 0.9;
+}
+
+/* 속성 셀렉터 브리지 — JSX 속성으로 박힌 다크 hex(StatsChart/Geometry/
+   Numberline)를 파일 무수정으로 토큰화(§14-A). */
+.graph-host svg [stroke="#fafafa"] { stroke: var(--plot-axis) !important; }
+.graph-host svg [fill="#fafafa"]   { fill: var(--plot-axis) !important; }
+.graph-host svg [stroke="#a1a1aa"] { stroke: var(--color-muted) !important; }
+.graph-host svg [fill="#a1a1aa"]   { fill: var(--color-muted) !important; }
+.graph-host svg [stroke="#3f3f46"] { stroke: var(--plot-grid) !important; }
+.graph-host svg [fill="#d4d4d8"]   { fill: var(--color-muted) !important; }
+.graph-host svg [fill="#0a0a0a"]   { fill: var(--color-bg) !important; }  /* 수직선 개구간 ○ — 의미 보존 필수 */
+.graph-host svg [stroke="#a5b4fc"] { stroke: var(--color-accent) !important; }  /* StatsChart 막대·꺾은선 */
+.graph-host svg [fill="#a5b4fc"]   { fill: var(--color-accent) !important; }
+.graph-host svg [stroke="#fbbf24"] { stroke: var(--pen-amber) !important; }     /* 박스플롯 중앙값 */
+.graph-host svg [fill="#fb7185"]   { fill: var(--pen-red) !important; }         /* 포인트·아웃라이어 */
+
+/* xyflow 개념 지도 = 의도된 다크 섬 — 캔버스를 테마 불변 흑판으로 스코프.
+   ConceptDAG 인라인 hex(분장 외 파일)가 라이트에서도 깨지지 않게 한다(§14-B).
+   변수 재선언: 노드 라벨(text-zinc-50)·학습노트 칩(text/bg-amber-*)은
+   Tailwind 유틸이 var(--color-*) 를 참조하므로, 라이트 역방향 리매핑이
+   #18181b 카드 위에서 잉크색(판독 불가)으로 뒤집는 구멍을 흑판 내부에서만
+   다크 값으로 고정해 막는다 — 컴포넌트 무수정. */
+.react-flow {
+  background-color: var(--board-bg);
+  --color-zinc-50: #F3EEE1;
+  --color-amber-300: #E3AE5A;
+  --color-amber-500: #C2882C;
 }
 
 /* Smooth expand/collapse + layout transitions for the concept graph.
@@ -352,8 +805,8 @@
   animation: graph-node-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-/* React Flow Controls — dark theme override. The default control panel is
-   white with white SVG icons, illegible against the dark canvas. */
+/* React Flow Controls — 흑판(--board-bg) 위에 앉는 다크 글래스라
+   양 테마 공통으로 그대로 유지(§14-B). */
 .react-flow__controls.dag-controls {
   background: rgba(24, 24, 27, 0.92);
   border: 1px solid #3f3f46;
@@ -392,22 +845,24 @@
    The font-size is set via the `--geom-label-size` CSS variable that each
    canvas wrapper computes from its rendered width — so labels stay legible
    at any panel size without going overboard.
-   The subtle dark background + tight padding masks lines passing under
-   the label (e.g. an axis line or a vector through the origin) so the
-   glyph stays readable regardless of where it lands. */
+   반투명 surface 배경이 라벨 밑을 지나는 선(축·벡터)을 가려 가독을 지킨다. */
 .geom-label {
   position: absolute;
   pointer-events: none;
-  color: #fafafa;
+  color: var(--color-text);
   font-size: var(--geom-label-size, 12px);
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
-  background: rgba(10, 10, 11, 0.72);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
   padding: 1px 4px;
   border-radius: 3px;
-  text-shadow:
-    0 0 4px rgba(0, 0, 0, 0.9),
-    0 0 2px rgba(0, 0, 0, 0.9);
 }
 .geom-label .katex { font-size: 1em; }
+
+/* ---- 분장 외 파일 응급 오버라이드(§14-D) — 2차 웨이브에서 본 수선 ---- */
+/* ProblemCard.astro의 중복 .thumb invert 필터 — 라이트에서 무력화 */
+html:not(.dark) .problem-card .thumb { filter: none !important; }
+/* ChatPanel styled-jsx 다크 하드코딩 — 응급 토큰화 */
+.prose-chat code { background: var(--color-surface-2) !important; color: var(--color-text); }
+.prose-chat pre  { background: var(--color-surface-2) !important; border-color: var(--color-border) !important; }
