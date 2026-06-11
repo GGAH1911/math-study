@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>시안 C · 튜터 — 대화가 무대</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper-page:#FBF8F1; --paper-card:#F5F0E4; --paper-well:#EFE8D8;
+  --paper-line:#E9E1CF; --paper-line-strong:#D7CDB5; --paper-dim:#B0A78F;
+  --tape:rgba(214,200,160,.5);
+  --ink-body:#2A261E; --ink-strong:#1D1A14; --ink-soft:#514B3B; --ink-muted:#6B6350; --ink-faint:#8A8169;
+  --accent:#39487D; --accent-strong:#2D3963;
+  --pen-red:#C13D38; --pen-green:#2E7B4F; --pen-amber:#9F600C; --pen-cyan:#166E8E; --pen-violet:#6A4E9C;
+  --hl-yellow:rgba(255,213,74,.40); --hl-green:rgba(142,222,134,.38); --hl-pink:rgba(255,138,171,.35);
+  --grid-minor:rgba(45,57,99,.06); --grid-major:rgba(45,57,99,.11);
+  --sans:"IBM Plex Sans KR",system-ui,sans-serif; --serif:"Gowun Batang",Georgia,serif; --hand:"Nanum Pen Script",cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--sans);color:var(--ink-body);background-color:var(--paper-page);
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid-minor) 1px,transparent 1px),linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:var(--accent);text-decoration:none}
+.math{font-family:var(--serif);font-style:italic}
+.hl{background:linear-gradient(transparent 35%,var(--hl-yellow) 36% 88%,transparent 89%)}
+
+/* 배지 + 접합 */
+.badge-wrap{position:fixed;top:12px;right:14px;z-index:90;display:flex;gap:8px}
+.spec-badge{background:var(--ink-strong);color:var(--paper-page);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(29,26,20,.25)}
+.pin-toggle{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1.5px solid var(--pen-cyan);color:var(--pen-cyan);background:var(--paper-page)}
+.pin-toggle[aria-pressed="true"]{background:var(--pen-cyan);color:var(--paper-page)}
+[data-api]{position:relative}
+body.pins [data-api]::after{content:attr(data-api);position:absolute;top:-9px;left:8px;z-index:85;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;line-height:1;background:#0E2A36;color:#BFE7F6;padding:5px 8px;border-radius:4px;box-shadow:0 2px 6px rgba(14,42,54,.35);white-space:nowrap;pointer-events:none}
+body.pins [data-api^="신규"]::after{background:#4A2727;color:#F6C9C9}
+
+/* 상단 */
+.top{flex:none;display:flex;align-items:center;gap:13px;padding:13px 18px;border-bottom:1.5px solid var(--paper-line)}
+.seal{font-family:var(--serif);font-weight:700;font-size:18px;color:var(--pen-red);border:2px solid var(--pen-red);border-radius:6px;width:31px;height:31px;display:inline-flex;align-items:center;justify-content:center;transform:rotate(-3deg)}
+.top .who{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--ink-strong)}
+.top .who small{display:block;font-family:var(--hand);font-size:15px;font-weight:400;color:var(--ink-faint);line-height:1}
+.top nav{margin-left:auto;display:flex;gap:14px;font-size:13.5px}
+.top nav a{color:var(--ink-muted)}
+.top nav a:hover{color:var(--accent)}
+
+/* ── 무대 레이아웃: 대화(주) + 서랍(보조) ── */
+.stage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 264px;min-height:0}
+.chat-col{display:flex;flex-direction:column;min-width:0;min-height:0}
+.scroll{flex:1;overflow-y:auto;padding:26px 0 12px}
+.thread{max-width:680px;margin:0 auto;padding:0 22px;display:flex;flex-direction:column;gap:14px}
+
+/* 말풍선 — 종이 위 잉크 */
+.msg{max-width:88%;font-size:15px;line-height:1.75;animation:rise .3s ease}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.msg.tutor{align-self:flex-start}
+.msg.tutor .bubble{background:var(--paper-card);border:1px solid var(--paper-line);border-radius:3px 14px 14px 14px;padding:13px 17px;box-shadow:1px 2px 0 rgba(29,26,20,.05)}
+.msg.me{align-self:flex-end}
+.msg.me .bubble{background:var(--paper-well);border:1px solid var(--paper-line-strong);border-radius:14px 3px 14px 14px;padding:11px 16px;font-family:var(--hand);font-size:19px;color:var(--ink-soft)}
+.msg .tag{font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin:0 4px 3px}
+.hand-em{font-family:var(--hand);font-size:18px;color:var(--pen-violet)}
+
+/* 대화 속 리치 카드 */
+.rich{align-self:stretch;max-width:100%}
+.rcard{background:var(--paper-card);border:1px solid var(--paper-line);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px;box-shadow:0 4px 14px rgba(29,26,20,.06);animation:rise .3s ease}
+.rcard h4{font-family:var(--serif);font-size:16.5px;color:var(--ink-strong);margin-bottom:8px}
+.plan-li{display:flex;gap:10px;align-items:baseline;font-size:14.5px;padding:5px 0;border-bottom:1px dashed var(--paper-line)}
+.plan-li:last-child{border-bottom:none}
+.plan-li .n{font-family:var(--serif);font-weight:700;color:var(--accent);flex:none}
+.plan-li .eta{margin-left:auto;font-family:var(--hand);font-size:16px;color:var(--ink-faint);flex:none}
+.rcard .q{font-size:16.5px;margin:6px 0 4px}
+.rcard .reveal{margin-top:10px;font-size:14px;font-weight:600;color:var(--accent);border:1.6px solid var(--accent);border-radius:8px;padding:9px 18px;min-height:44px}
+.rcard .ans{display:none;margin-top:12px;border-top:1.5px dashed var(--paper-line-strong);padding-top:12px}
+.rcard.revealed .ans{display:block;animation:rise .25s ease}
+.grade-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.grade{flex:1;min-width:96px;font-size:13.5px;font-weight:600;border-radius:8px;padding:10px 8px;border:1.6px solid;min-height:44px}
+.grade.again{color:var(--pen-red);border-color:var(--pen-red);background:rgba(193,61,56,.06)}
+.grade.good{color:var(--pen-green);border-color:var(--pen-green);background:rgba(46,123,79,.06)}
+.grade.easy{color:var(--pen-cyan);border-color:var(--pen-cyan);background:rgba(22,110,142,.06)}
+/* plot 카드(렌더러가 그림) */
+.plot{margin-top:10px;background:var(--paper-page);border:1px solid var(--paper-line);border-radius:8px;padding:8px}
+.plot svg{display:block;width:100%;height:auto}
+/* 승급 제안 카드 */
+.promote{border-left-color:var(--pen-violet)}
+.promote .lv{display:inline-block;font-size:12px;font-weight:600;border:1.5px solid var(--pen-violet);color:var(--pen-violet);border-radius:999px;padding:3px 10px;margin:2px 6px 8px 0}
+.promote .apply{background:var(--pen-violet);color:#fff;font-size:13.5px;font-weight:600;border-radius:8px;padding:9px 18px;box-shadow:0 2px 0 #54407C;min-height:44px}
+.promote .skip{font-size:13px;color:var(--ink-muted);padding:9px 12px;min-height:44px}
+
+/* 퀵 리플라이 칩 */
+.chips{max-width:680px;margin:0 auto;padding:6px 22px 10px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:13.5px;font-weight:500;border:1.5px solid var(--accent);color:var(--accent);border-radius:999px;padding:9px 16px;background:var(--paper-page);transition:all .12s;min-height:42px}
+.chip:hover{background:var(--accent);color:#fff}
+.chip.ghost{border-color:var(--paper-line-strong);color:var(--ink-muted)}
+
+/* 입력대 */
+.composer{flex:none;border-top:1.5px solid var(--paper-line);background:color-mix(in srgb,var(--paper-card) 70%,transparent);backdrop-filter:blur(4px)}
+.composer-in{max-width:680px;margin:0 auto;padding:12px 22px calc(14px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:flex-end}
+.composer textarea{flex:1;resize:none;border:none;border-bottom:2px solid var(--paper-line-strong);background:transparent;font-family:var(--hand);font-size:20px;color:var(--ink-body);padding:8px 2px;outline:none;height:44px;line-height:1.4}
+.composer textarea::placeholder{color:var(--ink-faint)}
+.composer .tool{font-size:17px;color:var(--ink-muted);min-width:44px;min-height:44px;border-radius:8px}
+.composer .tool:hover{background:var(--paper-well)}
+.composer .send{background:var(--accent);color:#fff;font-size:14.5px;font-weight:600;border-radius:9px;padding:11px 20px;box-shadow:0 2px 0 var(--accent-strong);min-height:44px}
+
+/* ── 책상 서랍(우측 레일) ── */
+.drawer{border-left:1.5px solid var(--paper-line);padding:18px 16px;overflow-y:auto;background:color-mix(in srgb,var(--paper-card) 45%,transparent)}
+.drawer h5{font-size:11px;letter-spacing:.14em;color:var(--ink-faint);margin:4px 0 10px}
+.d-card{display:block;background:var(--paper-page);border:1px solid var(--paper-line);border-radius:9px;padding:11px 13px;margin-bottom:9px;font-size:13.5px;color:var(--ink-body);box-shadow:1px 2px 0 rgba(29,26,20,.04)}
+.d-card:hover{border-color:var(--accent)}
+.d-card small{display:block;color:var(--ink-faint);font-size:11.5px;margin-top:1px}
+.d-card .flag{color:var(--pen-red);font-weight:600}
+.mini-map{background:var(--paper-page);border:1px solid var(--paper-line);border-radius:9px;padding:10px;margin-bottom:9px}
+.mini-map svg{width:100%;height:auto;display:block}
+.streak{font-family:var(--hand);font-size:18px;color:var(--ink-soft);text-align:center;padding:6px 0 2px}
+.streak b{color:var(--pen-red)}
+
+/* 모바일 */
+.dock{display:none}
+@media (max-width:880px){
+  .stage{grid-template-columns:1fr}
+  .drawer{display:none}
+  .dock{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:color-mix(in srgb,var(--paper-card) 92%,transparent);backdrop-filter:blur(6px);border-top:1.5px solid var(--paper-line-strong);padding:6px 8px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
+  .dock button{font-size:11px;color:var(--ink-muted);display:flex;flex-direction:column;align-items:center;gap:2px;min-width:56px;min-height:48px;border-radius:9px}
+  .dock button span{font-size:19px}
+  .composer-in{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+  .top nav{display:none}
+  .msg{max-width:94%}
+  .badge-wrap{top:8px;right:8px}
+}
+/* 모바일 서랍 시트 */
+.sheet{position:fixed;inset:auto 0 0 0;background:var(--paper-card);border-top:1.5px solid var(--paper-line-strong);border-radius:18px 18px 0 0;box-shadow:0 -14px 40px rgba(29,26,20,.16);transform:translateY(105%);transition:transform .28s ease;z-index:70;padding:20px 22px calc(26px + env(safe-area-inset-bottom));max-height:70vh;overflow-y:auto}
+.sheet.open{transform:none}
+.sheet .close{position:absolute;top:8px;right:12px;color:var(--ink-muted);font-size:13px;min-width:44px;min-height:44px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="badge-wrap">
+  <button class="pin-toggle" id="pinT" aria-pressed="false">⚙ 접합</button>
+  <span class="spec-badge" title="가설: 학습자 모델이 주입된 LLM 튜터가 이 제품의 차별점 — 대화를 보조 패널이 아닌 주 무대로">시안 C · 튜터</span>
+</div>
+
+<header class="top">
+  <span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17"><path d="M3.5 20 Q 12 -4 20.5 20" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span>
+  <div class="who">수학 조교<small>학습자 모델 주입됨 — 어제 21턴 기억</small></div>
+  <nav data-api="비대화 직행 라우트: /problems /graph /exam /syntheses /progress">
+    <a href="#" onclick="return false">문제집</a><a href="#" onclick="return false">지도</a><a href="#" onclick="return false">시험</a><a href="#" onclick="return false">노트</a><a href="#" onclick="return false">진도</a>
+  </nav>
+</header>
+
+<div class="stage">
+  <div class="chat-col">
+    <div class="scroll" id="scroll">
+      <div class="thread" id="thread" data-api="GET /api/chat-history (DB·계정별) → 이어서 렌더">
+        <div class="msg tutor"><div class="tag">조교 · 오늘 6/11 (목)</div>
+          <div class="bubble">좋은 아침이에요! 어제 <b>이차함수와 그래프</b> 21턴까지 했죠 — <span class="hand-em">꼭짓점 (p, q) 평행이동</span>에서 멈췄어요.<br>오늘은 <span class="hl">복습 7건(D+1이 4개)</span>이 먼저예요. 약 25분이면 다 끝나요. 어떻게 시작할까요?</div>
+        </div>
+      </div>
+    </div>
+    <div class="chips" id="chips" data-api="제안 칩: due-today + 학습자 모델(약점 패턴) 조합">
+      <button class="chip" onclick="flowPlan()">▶ 오늘 계획 시작</button>
+      <button class="chip" onclick="flowContinue()">어제 이어서</button>
+      <button class="chip ghost" onclick="flowFree()">그냥 질문 있어요</button>
+    </div>
+    <div class="composer">
+      <div class="composer-in" data-api="SSE POST /api/chat (plot·geometry fence → 렌더러)">
+        <button class="tool" title="이미지 첨부 — 타일은 LLM에게, 통이미지는 나에게">📎</button>
+        <button class="tool" title="∑ 수식 입력 (mathlive)">∑</button>
+        <textarea placeholder="✎ 손으로 쓰듯 물어보세요…"></textarea>
+        <button class="send" onclick="flowFree()">보내기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 책상 서랍 -->
+  <aside class="drawer">
+    <h5>오늘의 서랍</h5>
+    <div class="streak" data-api="신규 필요: GET /api/streak"><b>7일</b> 연속 — 오늘로 8일 ✊</div>
+    <a class="d-card" href="#" data-api="GET /api/due-today">복습 <span class="flag">7건</span><small>분수 변환 D+1 외 — 칩으로 바로 시작</small></a>
+    <a class="d-card" href="#" data-api="collection:problems + 풀이캐시">오늘의 문제<small>6월모평 14번 (정답률 31%)</small></a>
+    <h5 style="margin-top:16px">나의 지도</h5>
+    <div class="mini-map" data-api="concept-graph.json + getMasteryMap → /graph 확대">
+      <svg viewBox="0 0 200 110">
+        <path d="M30,55 C 25,35 45,22 65,24 C 85,26 95,40 90,55 C 85,72 60,80 45,74 C 35,70 33,65 30,55Z" fill="#39487D" opacity=".8"/>
+        <path d="M105,45 C 100,28 120,16 140,20 C 158,24 165,38 158,52 C 150,68 122,70 112,60 C 107,55 106,50 105,45Z" fill="none" stroke="#514B3B" stroke-width="1.6" stroke-dasharray="3 3"/>
+        <path d="M70,85 C 80,75 100,75 110,82 C 122,90 118,102 100,104 C 84,106 72,98 70,85Z" fill="url(#mh)"/>
+        <defs><pattern id="mh" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="rgba(81,75,59,.5)" stroke-width="1.1"/></pattern></defs>
+        <text x="52" y="58" font-size="9" fill="#FBF8F1" font-family="Gowun Batang">대수</text>
+        <text x="125" y="42" font-size="9" fill="#8A8169" font-family="Gowun Batang">미적분</text>
+        <text x="88" y="96" font-size="9" fill="#514B3B" font-family="Gowun Batang">함수 ✕</text>
+      </svg>
+      <small style="color:var(--ink-faint);font-size:11px">44 / 2,789 — 펼쳐 보기 →</small>
+    </div>
+    <h5 style="margin-top:16px">서랍 속</h5>
+    <a class="d-card" href="#" data-api="/exam (87회차)">모의시험<small>2027 6월모평 46문항 대기</small></a>
+    <a class="d-card" href="#" data-api="collection:syntheses + /mistakes">노트<small>어제: 분수 변환 학습 노트</small></a>
+    <a class="d-card" href="#" data-api="/progress">진도 통계<small>영역별 차트</small></a>
+  </aside>
+</div>
+
+<!-- 모바일 도크 -->
+<nav class="dock">
+  <button onclick="openSheet()"><span>🗄</span>서랍</button>
+  <button onclick="flowPlan()"><span>▶</span>오늘</button>
+  <button onclick="return false"><span>🗺</span>지도</button>
+  <button onclick="return false"><span>✎</span>노트</button>
+</nav>
+<div class="sheet" id="sheet">
+  <button class="close" onclick="closeSheet()">닫기 ✕</button>
+  <h5 style="font-size:12px;letter-spacing:.14em;color:var(--ink-faint);margin-bottom:12px">책상 서랍</h5>
+  <a class="d-card" href="#">복습 <span class="flag">7건</span><small>GET /api/due-today</small></a>
+  <a class="d-card" href="#">오늘의 문제<small>6월모평 14번 · 31%</small></a>
+  <a class="d-card" href="#">개념 지도<small>44 / 2,789</small></a>
+  <a class="d-card" href="#">모의시험 · 노트 · 진도</a>
+</div>
+
+<script>
+/* 접합 토글 */
+const pinT=document.getElementById('pinT');
+pinT.addEventListener('click',()=>{const on=document.body.classList.toggle('pins');pinT.setAttribute('aria-pressed',on)});
+function openSheet(){document.getElementById('sheet').classList.add('open')}
+function closeSheet(){document.getElementById('sheet').classList.remove('open')}
+
+const thread=document.getElementById('thread'),scroll=document.getElementById('scroll'),chips=document.getElementById('chips');
+const esc=s=>s; /* 데모 — 신뢰된 정적 콘텐츠만 */
+function add(html){const d=document.createElement('div');d.innerHTML=html;const el=d.firstElementChild;thread.appendChild(el);requestAnimationFrame(()=>scroll.scrollTo({top:scroll.scrollHeight,behavior:'smooth'}));return el}
+function me(t){add(`<div class="msg me"><div class="bubble">${t}</div></div>`)}
+function tutor(t){add(`<div class="msg tutor"><div class="tag">조교</div><div class="bubble">${t}</div></div>`)}
+function setChips(arr){chips.innerHTML=arr.map(([t,fn,g])=>`<button class="chip ${g?'ghost':''}" onclick="${fn}">${t}</button>`).join('')}
+
+/* ── 데모 동선 1: 오늘 계획 ── */
+function flowPlan(){
+  closeSheet();me('오늘 계획 시작!');
+  setTimeout(()=>{ add(`<div class="msg tutor"><div class="tag">조교</div><div class="bubble">좋아요 — 오늘은 이렇게 세 걸음이에요.</div></div>`);
+  add(`<div class="rich" data-api="GET /api/due-today + recommendUnits → 계획 카드">
+    <div class="rcard"><h4>📋 6/11 오늘의 계획 — 약 25분</h4>
+      <div class="plan-li"><span class="n">1</span>복습 7건 (D+1 분수 변환·순환소수 먼저)<span class="eta">12분</span></div>
+      <div class="plan-li"><span class="n">2</span>이어서: 이차함수와 그래프 — 꼭짓점 변환<span class="eta">10분</span></div>
+      <div class="plan-li"><span class="n">3</span>오늘의 문제: 6월모평 14번 (31%)<span class="eta">5분+</span></div>
+    </div></div>`);
+  setChips([['1번부터 — 복습 시작','flowReview()'],['2번 먼저 할래요','flowContinue()'],['오늘은 가볍게','flowFree()',1]]);},350);
+}
+
+/* ── 데모 동선 2: 대화 속 복습 카드 ── */
+function flowReview(){
+  me('복습부터!');
+  setTimeout(()=>{ tutor('첫 장 — 어제 노트로 만든 그 개념이에요. <span class="hand-em">머릿속으로 먼저</span> 답해 보세요.');
+  add(`<div class="rich" data-api="due-today[0] → 채점 시 POST /api/problem-state (SRS)">
+    <div class="rcard" id="rev1"><h4>복습 1/7 · 분수 변환 <span style="color:var(--pen-red);font-size:12px">D+1</span></h4>
+      <p class="q"><span class="math">6/11</span> 을 순환소수로 나타내면?</p>
+      <button class="reveal" onclick="this.closest('.rcard').classList.add('revealed')">✍ 답 확인</button>
+      <div class="ans"><p><span class="math">0.5̄4̄</span> — 순환마디 54. 모으는 건 나머지가 아니라 <b>몫</b>!</p>
+        <div class="grade-row">
+          <button class="grade again" onclick="flowGrade('또 틀림')">✗ 또 틀림</button>
+          <button class="grade good" onclick="flowGrade('맞음')">○ 맞음 — 4일 뒤</button>
+          <button class="grade easy" onclick="flowGrade('쉬움')">◎ 쉬움 — 9일 뒤</button>
+        </div></div>
+    </div></div>`);
+  setChips([['힌트 주세요','flowHint()',1],['그만하고 질문 있어요','flowFree()',1]]);},350);
+}
+function flowHint(){me('힌트 주세요');setTimeout(()=>tutor('어제 그 표 기억나요? <span class="hl">나머지 수열 6 → 5 → 6</span> — 나머지가 처음으로 돌아오는 순간이 순환의 끝이에요. 몫만 주워 담으면 끝!'),300)}
+
+/* ── 데모 동선 3: 채점 → plot + 승급 제안 ── */
+function flowGrade(g){
+  me(g+'!');
+  setTimeout(()=>{ tutor('기록했어요 ✓ 다음 복습은 자동으로 잡아둘게요. 이 흐름이면 <b>이차함수</b>로 넘어가도 되겠는데요 — 어제 멈춘 그래프, 제가 그려 봤어요.');
+  add(`<div class="rich" data-api="튜터 plot fence → Graph.tsx 가 이분법으로 교점 계산(렌더러)">
+    <div class="rcard"><h4>📈 y = (x−2)² − 1</h4>
+      <div class="plot"><svg viewBox="0 0 320 180">
+        <line x1="20" y1="150" x2="300" y2="150" stroke="#B0A78F" stroke-width="1.4"/>
+        <line x1="60" y1="14" x2="60" y2="168" stroke="#B0A78F" stroke-width="1.4"/>
+        <path d="M75,20 Q 140,250 245,20" fill="none" stroke="#39487D" stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="100" cy="150" r="4" fill="#C13D38"/><circle cx="220" cy="150" r="4" fill="#C13D38"/>
+        <circle cx="160" cy="132" r="4" fill="#2E7B4F"/>
+        <text x="152" y="124" font-size="12" fill="#2E7B4F" font-family="Nanum Pen Script">(2, −1)</text>
+        <text x="88" y="166" font-size="12" fill="#C13D38" font-family="Nanum Pen Script">x=1</text>
+        <text x="212" y="166" font-size="12" fill="#C13D38" font-family="Nanum Pen Script">x=3</text>
+      </svg></div></div></div>`);
+  setTimeout(()=>{ add(`<div class="rich" data-api="튜터 promote fence → POST /api/mastery-promote">
+    <div class="rcard promote"><h4>🎓 승급 제안 — 분수 변환</h4>
+      <span class="lv">learning · 학습 중</span>→<span class="lv" style="border-color:var(--pen-green);color:var(--pen-green)">proficient · 잘 앎</span>
+      <p style="font-size:13.5px;color:var(--ink-muted);margin:6px 0 10px">근거: D+1 복습 적중 + 어제 노트 승격 + 풀이 설명 정확</p>
+      <button class="apply" onclick="this.outerHTML='<b style=&quot;color:var(--pen-green)&quot;>✓ 적용됨</b>';">✓ 적용</button>
+      <button class="skip">건너뛰기</button>
+    </div></div>`);
+  setChips([['복습 2/7 계속','flowReview2()'],['이차함수로 넘어가기','flowContinue()'],['오늘 여기까지','flowEnd()',1]]);},500);},400);
+}
+function flowReview2(){me('계속!');setTimeout(()=>tutor('2/7 — <span class="math">x = 0.7̄2̄</span> 를 분수로? …<i style="color:var(--ink-faint)">(데모는 여기까지 — 실제 앱은 7장을 같은 리듬으로)</i>'),300)}
+
+/* ── 데모 동선 4: 이어서 학습 ── */
+function flowContinue(){
+  closeSheet();me('어제 이어서 할래요');
+  setTimeout(()=>{ tutor('<b>이차함수와 그래프</b> 21턴째에서 이어가요. 어제 마지막 여백 메모 — <span class="hand-em">“꼭짓점 (p, q)로 옮기는 게 핵심!”</span><br>그럼 바로: <span class="math">y = x² − 4x + 3</span> 의 꼭짓점은 어디일까요? 완전제곱으로 만들어 보세요.');
+  setChips([['(2, −1) 같아요','flowGrade(\'(2, −1)\')'],['완전제곱이 뭐였죠?','flowHint2()',1],['노트로 정리해줘','flowNote()',1]]);},350);
+}
+function flowHint2(){me('완전제곱이 뭐였죠?');setTimeout(()=>tutor('<span class="math">x²−4x</span> 에서 <span class="hl">(−4/2)² = 4</span> 를 더하고 빼는 것 — <span class="math">x²−4x+4−4+3 = (x−2)²−1</span>. 이게 전부예요.'),300)}
+function flowNote(){me('노트로 정리해줘');setTimeout(()=>tutor('어제처럼 <b>학습 노트</b>로 묶어 둘게요 — 핵심 정리 · 헷갈렸던 부분 · 다음 학습 4섹션으로. <i style="color:var(--ink-faint)">(→ POST /api/promote → /syntheses 영구 보관)</i>'),300)}
+function flowFree(){me('질문 있어요');setTimeout(()=>tutor('편하게 물어보세요 — 수식은 ∑ 버튼, 손글씨 사진은 📎 (타일은 제가 또렷이 읽고, 화면엔 원본 한 장만 보여요).'),300)}
+function flowEnd(){me('오늘 여기까지');setTimeout(()=>tutor('수고했어요! 오늘 분량은 기록해 뒀고, 내일 아침 이어서 열어 둘게요. <span class="hand-em">8일째 도장 쾅 ✊</span>'),300)}
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+</script>
+</body>
+</html>

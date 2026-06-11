@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>시안 B-v2 · 항해 지도 — 단원 중심</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper-page:#FBF8F1; --paper-card:#F5F0E4; --paper-well:#EFE8D8;
+  --paper-line:#E9E1CF; --paper-line-strong:#D7CDB5; --paper-dim:#B0A78F;
+  --tape:rgba(214,200,160,.5);
+  --ink-body:#2A261E; --ink-strong:#1D1A14; --ink-soft:#514B3B; --ink-muted:#6B6350; --ink-faint:#8A8169;
+  --accent:#39487D; --accent-strong:#2D3963;
+  --pen-red:#C13D38; --pen-green:#2E7B4F; --pen-amber:#9F600C; --pen-cyan:#166E8E; --pen-violet:#6A4E9C;
+  --gold:#B58A0B;
+  --hl-yellow:rgba(255,213,74,.40);
+  --grid-minor:rgba(45,57,99,.06); --grid-major:rgba(45,57,99,.11);
+  --sans:"IBM Plex Sans KR",system-ui,sans-serif; --serif:"Gowun Batang",Georgia,serif; --hand:"Nanum Pen Script",cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:var(--sans);color:var(--ink-body);background-color:var(--paper-page);
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid-minor) 1px,transparent 1px),linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px;
+  display:grid;grid-template-columns:1fr 286px;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:var(--accent);text-decoration:none}
+.hand{font-family:var(--hand)}
+
+/* 배지 + 접합 */
+.badge-wrap{position:fixed;top:12px;right:300px;z-index:90;display:flex;gap:8px}
+.spec-badge{background:var(--ink-strong);color:var(--paper-page);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;box-shadow:0 2px 8px rgba(29,26,20,.25)}
+.pin-toggle{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1.5px solid var(--pen-cyan);color:var(--pen-cyan);background:var(--paper-page)}
+.pin-toggle[aria-pressed="true"]{background:var(--pen-cyan);color:var(--paper-page)}
+[data-api]{position:relative}
+body.pins [data-api]::after{content:attr(data-api);position:absolute;top:-9px;left:8px;z-index:85;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;line-height:1;background:#0E2A36;color:#BFE7F6;padding:5px 8px;border-radius:4px;box-shadow:0 2px 6px rgba(14,42,54,.35);white-space:nowrap;pointer-events:none}
+body.pins [data-api^="신규"]::after,body.pins [data-api^="확장"]::after{background:#4A2727;color:#F6C9C9}
+body.pins .svg-pins{display:block}
+.svg-pins{display:none;position:fixed;top:54px;left:14px;z-index:85;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;line-height:1.8;background:#0E2A36;color:#BFE7F6;padding:8px 10px;border-radius:6px}
+.svg-pins .new{color:#F6C9C9}
+
+/* 좌상 브랜드+항행 */
+.topnav{position:fixed;top:14px;left:16px;z-index:80;display:flex;align-items:center;gap:13px}
+.seal{font-family:var(--serif);color:var(--pen-red);border:2px solid var(--pen-red);border-radius:6px;width:31px;height:31px;display:inline-flex;align-items:center;justify-content:center;transform:rotate(-3deg);background:var(--paper-page)}
+.topnav nav{display:flex;gap:13px;font-size:13.5px;background:color-mix(in srgb,var(--paper-page) 85%,transparent);backdrop-filter:blur(3px);padding:7px 14px;border-radius:999px;border:1px solid var(--paper-line)}
+.topnav nav a{color:var(--ink-muted)}
+.topnav nav a:hover{color:var(--accent)}
+
+/* ───── 지도 무대 ───── */
+#mapwrap{position:relative;overflow:hidden;cursor:grab;touch-action:none}
+#mapwrap.dragging{cursor:grabbing}
+svg#map{width:100%;height:100%;display:block}
+
+/* 잉크 인트로 — 대륙 워시 → 해안선 → 지명 → 항로 순서 */
+.wash{opacity:0;animation:fadein .9s ease forwards}
+@keyframes fadein{to{opacity:1}}
+.coast{fill:none;stroke-width:1.8;stroke-linecap:round;stroke-dasharray:2400;stroke-dashoffset:2400;animation:draw 1.5s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.dlabel{font-family:var(--serif);font-weight:700;opacity:0;animation:fadein .7s ease forwards}
+.road{stroke:var(--ink-soft);stroke-width:1.5;fill:none;opacity:0;animation:fadein .6s ease forwards}
+.road.bridge{stroke-dasharray:6 5;stroke-width:1.8}
+.unit-g{opacity:0;animation:pop .42s ease forwards;cursor:pointer}
+@keyframes pop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.unit-g text{font-family:var(--serif);font-size:13.5px;fill:var(--ink-body);paint-order:stroke;stroke:var(--paper-page);stroke-width:3px}
+.unit-g .sub{font-family:var(--sans);font-size:9.5px;fill:var(--ink-faint);stroke-width:2.4px}
+.unit-g.locked text{fill:var(--ink-faint)}
+.unit-g:hover circle.body{stroke-width:3}
+.frontier-halo{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.25;r:15}50%{opacity:.7;r:21}}
+.flagpole{stroke:var(--ink-soft);stroke-width:1.8}
+.flag-label{font-family:var(--hand);font-size:13px;fill:var(--pen-red)}
+/* 오늘의 항로 */
+.route{stroke:var(--pen-red);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-dasharray:9 8;opacity:0;animation:fadein .8s ease 1.9s forwards,ants 26s linear 2.7s infinite}
+@keyframes ants{to{stroke-dashoffset:-680}}
+.waypt{font-family:var(--serif);font-weight:700;opacity:0;animation:fadein .5s ease 2.1s forwards}
+
+/* ───── 항해 계기판 (우측 레일) ───── */
+.rail{border-left:1.5px solid var(--paper-line-strong);background:color-mix(in srgb,var(--paper-card) 55%,transparent);backdrop-filter:blur(3px);padding:16px 16px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.rail h5{font-size:11px;letter-spacing:.15em;color:var(--ink-faint);font-weight:600}
+.gauge{background:var(--paper-page);border:1px solid var(--paper-line);border-radius:10px;padding:12px 14px;box-shadow:1px 2px 0 rgba(29,26,20,.04)}
+.gauge.route-card{border-left:4px solid var(--pen-red)}
+.gauge .t{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--ink-strong)}
+.gauge .s{font-size:12.5px;color:var(--ink-muted);margin-top:2px;line-height:1.55}
+.depart{display:flex;width:100%;justify-content:center;align-items:center;gap:7px;margin-top:10px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:11px;border-radius:9px;box-shadow:0 2.5px 0 var(--accent-strong);min-height:46px}
+.depart:hover{transform:translateY(1px);box-shadow:0 1.5px 0 var(--accent-strong)}
+.stamps{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.stamp{width:27px;height:27px;border-radius:50%;border:1.7px solid var(--pen-red);color:var(--pen-red);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:14px;transform:rotate(-6deg)}
+.stamp.off{border-color:var(--paper-line-strong);color:var(--paper-line-strong);transform:none}
+.week{display:flex;gap:5px;align-items:flex-end;height:42px;margin-top:8px}
+.week i{flex:1;background:linear-gradient(180deg,#5BA67C,var(--pen-green));border-radius:3px 3px 0 0;opacity:.85}
+.week .today{outline:2px solid var(--pen-amber);outline-offset:1px}
+.depth-legend{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink-soft);margin-top:6px}
+.depth-legend .row{display:flex;align-items:center;gap:8px}
+.dl-dot{width:15px;height:15px;border-radius:50%;flex:none}
+.dl-0{border:1.7px dashed var(--paper-dim)}
+.dl-1{border:1.7px solid var(--ink-soft);background:repeating-linear-gradient(45deg,transparent 0 2px,rgba(81,75,59,.5) 2px 3.5px)}
+.dl-2{border:1.7px solid var(--accent);background:var(--accent)}
+.dl-3{border:2px solid var(--gold);background:var(--accent);box-shadow:inset 0 0 0 1.5px var(--paper-page)}
+.note-link{font-size:13px}
+.note-link b{font-family:var(--serif);color:var(--accent-strong)}
+.rail-handle{display:none}
+
+/* ───── 단원 시트 ───── */
+.side{position:fixed;top:0;right:286px;bottom:0;width:min(400px,calc(100vw - 286px));background:var(--paper-card);border-left:1.5px solid var(--paper-line-strong);border-right:1.5px solid var(--paper-line-strong);box-shadow:-18px 0 50px rgba(29,26,20,.16);transform:translateX(120%);transition:transform .3s ease;z-index:75;padding:24px;overflow-y:auto}
+.side.open{transform:none}
+.side .close{position:absolute;top:10px;right:12px;font-size:13px;color:var(--ink-muted);min-width:44px;min-height:44px}
+.side .crumb{font-size:11.5px;font-family:ui-monospace,Menlo,monospace;color:var(--ink-faint)}
+.side h2{font-family:var(--serif);font-size:24px;color:var(--ink-strong);margin:2px 0 2px}
+.depth-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:999px;padding:4px 11px;margin:6px 0 4px}
+.depth-tag.d0{border:1.5px dashed var(--paper-dim);color:var(--ink-faint)}
+.depth-tag.d1{border:1.5px solid var(--ink-soft);color:var(--ink-soft)}
+.depth-tag.d2{border:1.5px solid var(--accent);color:var(--accent)}
+.depth-tag.d3{border:2px solid var(--gold);color:var(--pen-amber)}
+.depth-bar{height:9px;background:var(--paper-well);border-radius:99px;overflow:hidden;margin:8px 0 3px}
+.depth-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#5C6FA8);border-radius:99px}
+.side .formula{font-size:11.5px;color:var(--ink-faint)}
+.lockbox{margin-top:12px;background:var(--paper-well);border:1.5px dashed var(--paper-dim);border-radius:9px;padding:11px 13px;font-size:13px;color:var(--ink-soft)}
+.lockbox b{color:var(--pen-amber)}
+.tsec{margin-top:16px}
+.tsec h4{font-size:11px;letter-spacing:.13em;color:var(--ink-faint);margin-bottom:7px}
+.trow{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:7px 2px;border-bottom:1px dashed var(--paper-line)}
+.trow:last-child{border-bottom:none}
+.tdot{width:9px;height:9px;border-radius:50%;flex:none}
+.t-def{background:var(--accent)} .t-thm{background:var(--pen-violet)} .t-tech{background:var(--pen-cyan)} .t-ex{background:var(--pen-green)}
+.trow .cnt{margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink-faint)}
+.trow .dflag{color:var(--pen-red);font-family:var(--hand);font-size:15px}
+.side .enter{display:flex;width:100%;justify-content:center;margin-top:16px;background:var(--accent);color:#fff;font-size:14.5px;font-weight:600;padding:12px;border-radius:9px;box-shadow:0 2.5px 0 var(--accent-strong);min-height:47px}
+.side .enter:disabled{background:var(--paper-dim);box-shadow:none;cursor:not-allowed}
+.side .next-leg{display:flex;width:100%;justify-content:center;margin-top:9px;border:1.7px solid var(--pen-red);color:var(--pen-red);font-size:13.5px;font-weight:600;padding:10px;border-radius:9px;min-height:44px}
+.side .hand-note{font-family:var(--hand);font-size:18px;color:var(--pen-violet);margin-top:12px}
+
+/* 완주 토스트 */
+.toast{position:fixed;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-4deg) scale(.6);z-index:95;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.2,1.4,.4,1)}
+.toast.show{opacity:1;transform:translate(-50%,-50%) rotate(-4deg) scale(1)}
+.toast .big{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--pen-red);border:3px solid var(--pen-red);padding:13px 26px;border-radius:10px;background:color-mix(in srgb,var(--paper-page) 92%,transparent)}
+
+/* ───── 모바일 ───── */
+@media (max-width:880px){
+  body{grid-template-columns:1fr}
+  .rail{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:62vh;border-left:none;border-top:1.5px solid var(--paper-line-strong);border-radius:18px 18px 0 0;box-shadow:0 -14px 40px rgba(29,26,20,.18);transform:translateY(calc(100% - 52px));transition:transform .3s ease;z-index:72;padding-top:8px}
+  .rail.open{transform:none}
+  .rail-handle{display:flex;justify-content:center;align-items:center;gap:8px;min-height:44px;font-size:13px;font-weight:600;color:var(--ink-soft)}
+  .rail-handle::before{content:"";width:44px;height:5px;border-radius:99px;background:var(--paper-line-strong);position:absolute;top:7px;left:50%;transform:translateX(-50%)}
+  .badge-wrap{top:8px;right:8px}
+  .side{right:0;width:100%;border-right:none}
+  .topnav nav{max-width:calc(100vw - 120px);overflow-x:auto}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.wash,.dlabel,.unit-g,.route,.waypt{opacity:1!important}.coast{stroke-dashoffset:0!important}}
+</style>
+</head>
+<body>
+
+<div class="badge-wrap">
+  <button class="pin-toggle" id="pinT" aria-pressed="false">⚙ 접합</button>
+  <span class="spec-badge" title="현 /graph 의 단원 중심 토폴로지·락언락 그대로 — 과목은 배경 워시, 위에 항로·계기판만 얹음">시안 B-v2 · 항해 지도</span>
+</div>
+<div class="svg-pins">
+  지도 노드·에지: concept-graph.json (x·y 레이아웃 재사용) + getMasteryMap(user)<br>
+  잠김/frontier: recommendUnits().ready — 선수 단원 proficient+ 판정 그대로<br>
+  심도 게이지: computeUnitProgress <span class="new">+ 확장: concept_type 가중 산식</span><br>
+  오늘의 항로: GET /api/due-today + recommendUnits 조합 · 깃발: next_review
+</div>
+
+<header class="topnav">
+  <span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17"><path d="M3.5 20 Q 12 -4 20.5 20" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span>
+  <nav data-api="라우트: /problems /exam /syntheses /mistakes /progress">
+    <a href="#" onclick="return false">문제집</a><a href="#" onclick="return false">모의시험</a><a href="#" onclick="return false">노트</a><a href="#" onclick="return false">진도</a>
+  </nav>
+</header>
+
+<!-- ════════ 지도 무대 ════════ -->
+<div id="mapwrap">
+<svg id="map" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" aria-label="단원 항해 지도">
+  <defs>
+    <pattern id="hatch" width="6.5" height="6.5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6.5" stroke="rgba(81,75,59,.55)" stroke-width="1.5"/>
+    </pattern>
+  </defs>
+
+  <!-- ── 배경: 과목 대륙 워시 (순수 장식 — 로직 0) ── -->
+  <g id="washes">
+    <path class="wash" style="animation-delay:.05s" d="M110,120 C 90,60 200,30 320,45 C 420,58 460,130 440,230 C 420,330 330,400 220,390 C 120,380 80,300 95,230 C 102,190 105,150 110,120Z" fill="rgba(22,110,142,.075)"/>
+    <path class="wash" style="animation-delay:.15s" d="M480,90 C 470,40 580,15 720,25 C 850,35 920,90 905,180 C 890,280 800,350 660,345 C 540,340 470,270 470,190 C 470,150 475,115 480,90Z" fill="rgba(57,72,125,.08)"/>
+    <path class="wash" style="animation-delay:.25s" d="M460,400 C 440,360 530,330 680,345 C 840,360 1060,420 1075,510 C 1090,600 960,650 800,640 C 640,630 480,560 460,480 C 455,450 455,425 460,400Z" fill="rgba(46,123,79,.075)"/>
+    <path class="wash" style="animation-delay:.35s" d="M110,480 C 95,430 190,410 290,425 C 390,440 430,500 415,580 C 400,665 300,720 200,705 C 110,692 75,610 85,550 C 90,520 100,500 110,480Z" fill="rgba(159,96,12,.07)"/>
+    <path class="wash" style="animation-delay:.45s" d="M980,130 C 975,80 1080,55 1190,70 C 1290,84 1340,140 1330,220 C 1320,305 1230,360 1120,350 C 1020,340 970,270 975,200 C 977,175 978,150 980,130Z" fill="rgba(106,78,156,.07)"/>
+    <path class="wash" style="animation-delay:.55s" d="M1010,560 C 1000,510 1090,485 1190,495 C 1290,505 1345,560 1335,635 C 1325,715 1235,765 1130,755 C 1035,746 990,680 995,620 C 997,598 1003,578 1010,560Z" fill="rgba(193,61,56,.065)"/>
+  </g>
+
+  <!-- 해안선 (잉크 인트로로 그려짐) -->
+  <g id="coasts">
+    <path class="coast" style="animation-delay:.2s" stroke="rgba(22,110,142,.4)" d="M110,120 C 90,60 200,30 320,45 C 420,58 460,130 440,230 C 420,330 330,400 220,390 C 120,380 80,300 95,230 C 102,190 105,150 110,120Z"/>
+    <path class="coast" style="animation-delay:.35s" stroke="rgba(57,72,125,.45)" d="M480,90 C 470,40 580,15 720,25 C 850,35 920,90 905,180 C 890,280 800,350 660,345 C 540,340 470,270 470,190 C 470,150 475,115 480,90Z"/>
+    <path class="coast" style="animation-delay:.5s" stroke="rgba(46,123,79,.42)" d="M460,400 C 440,360 530,330 680,345 C 840,360 1060,420 1075,510 C 1090,600 960,650 800,640 C 640,630 480,560 460,480 C 455,450 455,425 460,400Z"/>
+    <path class="coast" style="animation-delay:.6s" stroke="rgba(159,96,12,.4)" d="M110,480 C 95,430 190,410 290,425 C 390,440 430,500 415,580 C 400,665 300,720 200,705 C 110,692 75,610 85,550 C 90,520 100,500 110,480Z"/>
+    <path class="coast" style="animation-delay:.7s" stroke="rgba(106,78,156,.4)" stroke-dasharray="2400" d="M980,130 C 975,80 1080,55 1190,70 C 1290,84 1340,140 1330,220 C 1320,305 1230,360 1120,350 C 1020,340 970,270 975,200 C 977,175 978,150 980,130Z"/>
+    <path class="coast" style="animation-delay:.8s" stroke="rgba(193,61,56,.38)" d="M1010,560 C 1000,510 1090,485 1190,495 C 1290,505 1345,560 1335,635 C 1325,715 1235,765 1130,755 C 1035,746 990,680 995,620 C 997,598 1003,578 1010,560Z"/>
+  </g>
+
+  <!-- 과목 라벨 -->
+  <g font-size="15">
+    <text class="dlabel" style="animation-delay:.9s" x="150" y="95" fill="rgba(22,110,142,.65)">수와 연산 · 312</text>
+    <text class="dlabel" style="animation-delay:1s" x="620" y="65" fill="rgba(57,72,125,.7)">대수 · 487</text>
+    <text class="dlabel" style="animation-delay:1.1s" x="700" y="615" fill="rgba(46,123,79,.7)">함수 · 523</text>
+    <text class="dlabel" style="animation-delay:1.2s" x="150" y="465" fill="rgba(159,96,12,.65)">기하 · 498</text>
+    <text class="dlabel" style="animation-delay:1.3s" x="1110" y="110" fill="rgba(106,78,156,.62)">미적분 · 561</text>
+    <text class="dlabel" style="animation-delay:1.4s" x="1090" y="540" fill="rgba(193,61,56,.6)">확률과 통계 · 408</text>
+  </g>
+
+  <!-- ── 길(선수 에지) — 단원 토폴로지는 concept-graph 그대로 ── -->
+  <g id="roads" opacity=".5">
+    <path class="road" style="animation-delay:1.1s" d="M205,175 C 240,195 265,215 290,235"/>
+    <path class="road" style="animation-delay:1.15s" d="M290,250 C 265,268 240,285 220,300"/>
+    <path class="road" style="animation-delay:1.2s" d="M310,250 C 325,275 335,300 345,322"/>
+    <path class="road" style="animation-delay:1.25s" d="M545,155 C 580,170 615,185 640,198"/>
+    <path class="road" style="animation-delay:1.3s" d="M665,195 C 700,182 730,170 757,162"/>
+    <path class="road" style="animation-delay:1.35s" d="M650,215 C 625,230 600,245 578,258"/>
+    <path class="road" style="animation-delay:1.4s" d="M545,165 C 595,205 650,255 692,283"/>
+    <path class="road" style="animation-delay:1.45s" d="M715,295 C 750,285 785,272 812,262"/>
+    <path class="road bridge" style="animation-delay:1.5s" d="M650,218 C 645,300 643,400 641,505"/>
+    <path class="road" style="animation-delay:1.55s" d="M540,470 C 575,488 610,505 638,518"/>
+    <path class="road" style="animation-delay:1.6s" d="M665,520 C 700,505 730,490 757,478"/>
+    <path class="road" style="animation-delay:1.65s" d="M785,475 C 818,490 850,503 878,515"/>
+    <path class="road bridge" style="animation-delay:1.7s" d="M785,462 C 880,400 990,310 1072,268"/>
+    <path class="road" style="animation-delay:1.75s" d="M1100,272 C 1130,290 1155,308 1175,322"/>
+    <path class="road" style="animation-delay:1.8s" d="M255,572 C 280,595 300,615 318,633"/>
+    <path class="road" style="animation-delay:1.85s" d="M310,650 C 275,663 240,672 205,678"/>
+    <path class="road" style="animation-delay:1.9s" d="M1115,662 C 1145,675 1170,687 1192,697"/>
+  </g>
+
+  <!-- ── 단원 지명 (심도 4단계 + 잠김/frontier) ── -->
+  <g id="units"></g>
+
+  <!-- ── 오늘의 항로 ── -->
+  <path class="route" d="M225,315 C 360,400 560,455 745,470 M765,485 C 880,545 1000,585 1095,612"/>
+  <g class="waypt">
+    <text x="186" y="268" font-size="15" fill="var(--pen-red)">⚑ 출발 — 복습 2건</text>
+    <text x="700" y="442" font-size="16" fill="var(--pen-red)">✕ 이어서</text>
+    <text x="1088" y="598" font-size="16" fill="var(--pen-red)">★ 오늘의 문제</text>
+    <text class="hand" x="1130" y="640" font-size="17" fill="var(--ink-faint)" transform="rotate(-2 1130 640)">항로 끝 — 도장 쾅</text>
+  </g>
+
+  <!-- 여백 주석 -->
+  <text class="hand dlabel" style="animation-delay:1.6s" x="80" y="845" font-size="22" fill="var(--ink-soft)" transform="rotate(-1.5 80 845)">잉크로 칠한 단원만큼이 진짜 내 것 — 44 / 2,789 개념</text>
+</svg>
+</div>
+
+<!-- ════════ 항해 계기판 ════════ -->
+<aside class="rail" id="rail">
+  <button class="rail-handle" onclick="document.getElementById('rail').classList.toggle('open')">⌃ 항해 계기판</button>
+
+  <div class="gauge route-card" data-api="GET /api/due-today + recommendUnits 조합">
+    <div class="t">오늘의 항로 — 3구간 · 약 25분</div>
+    <div class="s">⚑ 유리수와 순환소수 복습 2건 (D+1)<br>✕ 이차함수와 그래프 — 이어서 (어제 21턴)<br>★ 6월모평 14번 (확통 · 31%)</div>
+    <button class="depart" onclick="depart()">⛵ 출항</button>
+  </div>
+
+  <div class="gauge" data-api="신규 필요: GET /api/streak">
+    <div class="t" style="font-size:13.5px">연속 항해 <span style="color:var(--pen-red)">7일</span></div>
+    <div class="stamps">
+      <span class="stamp">월</span><span class="stamp">화</span><span class="stamp">수</span><span class="stamp">목</span><span class="stamp">금</span><span class="stamp">토</span><span class="stamp">일</span><span class="stamp off">월</span>
+    </div>
+  </div>
+
+  <div class="gauge" data-api="확장: /api/problem-state·attempts 주간 집계">
+    <div class="t" style="font-size:13.5px">이번 주 항해 시간</div>
+    <div class="week">
+      <i style="height:40%"></i><i style="height:65%"></i><i style="height:30%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:20%"></i><i class="today" style="height:35%"></i>
+    </div>
+  </div>
+
+  <div class="gauge" data-api="/exam — 87회차 적재">
+    <div class="t" style="font-size:13.5px">모의시험 <span style="color:var(--pen-amber)">D-7</span></div>
+    <div class="s">2027학년도 6월 모평 · 46문항 대기</div>
+  </div>
+
+  <div class="gauge" data-api="collection:syntheses">
+    <div class="t" style="font-size:13.5px">어제 남긴 노트</div>
+    <div class="s note-link"><b>분수 변환 학습 노트</b> — 3분 복기 →</div>
+  </div>
+
+  <div>
+    <h5>단원 심도</h5>
+    <div class="depth-legend" data-api="확장: computeUnitProgress + concept_type 가중(정의·정리 60 / 기법·예제 30 / 연습 10)">
+      <div class="row"><span class="dl-dot dl-0"></span>미답 — 윤곽만</div>
+      <div class="row"><span class="dl-dot dl-1"></span>답사 — 연필 해칭</div>
+      <div class="row"><span class="dl-dot dl-2"></span>정착 — 코어(정의·정리) 잉크</div>
+      <div class="row"><span class="dl-dot dl-3"></span>개척 완료 — 전 개념+기출 검증 (금테)</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════ 단원 시트 ════════ -->
+<aside class="side" id="side">
+  <button class="close" onclick="closeSide()">닫기 ✕</button>
+  <div class="crumb" id="sCrumb"></div>
+  <h2 id="sName"></h2>
+  <span class="depth-tag" id="sDepth"></span>
+  <div class="depth-bar"><i id="sBar" style="width:0%"></i></div>
+  <div class="formula" id="sPct"></div>
+  <div class="lockbox" id="sLock" style="display:none"></div>
+  <div class="tsec" data-api="개념 타입 분류 — concept_type (보조 뷰)">
+    <h4>이 단원의 개념 — 타입별 (보조)</h4>
+    <div id="sTypes"></div>
+  </div>
+  <button class="enter" id="sEnter" data-api="이동: /concepts/<slug> (노드별 LLM 튜터는 지금 그대로)">⛺ 입장 — 이어서 배우기</button>
+  <button class="next-leg" id="sNext" style="display:none" onclick="nextLeg()">⛵ 다음 구간 →</button>
+  <p class="hand-note" id="sNote"></p>
+</aside>
+
+<div class="toast" id="toast"><span class="big">오늘 항로 완주!</span></div>
+
+<script>
+/* 접합 토글 */
+const pinT=document.getElementById('pinT');
+pinT.addEventListener('click',()=>{const on=document.body.classList.toggle('pins');pinT.setAttribute('aria-pressed',on)});
+
+/* ── 단원 데이터 (concept-graph.json 의 단원 노드 + recommendUnits 판정을 흉내) ──
+   depth: 0 미답 / 1 답사 / 2 정착 / 3 개척완료 · locked: 선수 미충족 · frontier: ready */
+const UNITS=[
+ {id:'소인수분해',x:200,y:165,depth:3,crumb:'number/middle-1',pct:100,core:'정의 4/4 · 정리 3/3',note:'첫 개척지 — 금테!',types:[['정의',4,4],['정리',3,3],['기법',5,5],['예제',6,6]]},
+ {id:'정수와 유리수',x:300,y:243,depth:2,crumb:'number/middle-1',pct:78,core:'코어 숙달',note:'예제 2개만 더 보면 금테',types:[['정의',5,5],['정리',2,2],['기법',4,3],['예제',7,4]]},
+ {id:'유리수와 순환소수',x:215,y:308,depth:2,crumb:'number/middle-2',pct:72,flags:['분수 변환 D+1','순환소수 D+1'],note:'⚑ 깃발부터 — 항로의 출발지',types:[['정의',3,3],['정리',2,2],['기법',4,3],['예제',5,2]]},
+ {id:'제곱근과 실수',x:350,y:330,depth:0,frontier:true,crumb:'number/middle-3',pct:0,note:'선수 충족 — 다음 개척지!',types:[['정의',4,0],['정리',3,0],['기법',5,0],['예제',6,0]]},
+ {id:'문자와 식',x:530,y:148,depth:2,crumb:'algebra/middle-1',pct:81,note:'대수의 항구',types:[['정의',4,4],['정리',2,2],['기법',6,5],['예제',8,5]]},
+ {id:'일차방정식',x:652,y:205,depth:2,crumb:'algebra/middle-1',pct:75,note:'함수 대륙으로 가는 다리가 여기서',types:[['정의',3,3],['정리',2,2],['기법',5,4],['예제',7,4]]},
+ {id:'연립방정식',x:770,y:158,depth:0,frontier:true,crumb:'algebra/middle-2',pct:0,note:'선수(일차방정식) 충족 — ready',types:[['정의',2,0],['정리',2,0],['기법',4,0],['예제',6,0]]},
+ {id:'일차부등식',x:565,y:262,depth:1,crumb:'algebra/middle-2',pct:34,flags:['일차부등식 D+7'],note:'훑는 중 — 코어 정리 2개 남음',types:[['정의',3,2],['정리',3,1],['기법',4,1],['예제',5,1]]},
+ {id:'인수분해',x:700,y:292,depth:1,crumb:'algebra/middle-3',pct:28,note:'이차방정식의 자물쇠 열쇠',types:[['정의',2,1],['정리',4,1],['기법',6,2],['예제',7,1]]},
+ {id:'이차방정식',x:825,y:258,depth:0,locked:'인수분해 — 정착 필요',crumb:'algebra/middle-3',pct:0,note:'',types:[['정의',3,0],['정리',4,0],['기법',5,0],['예제',8,0]]},
+ {id:'좌표평면과 그래프',x:528,y:465,depth:2,crumb:'functions/middle-1',pct:70,note:'함수 대륙의 상륙지',types:[['정의',4,4],['정리',1,1],['기법',3,2],['예제',5,3]]},
+ {id:'일차함수',x:650,y:522,depth:1,crumb:'functions/middle-2',pct:42,note:'기울기까지 — 절편 복습 권장',types:[['정의',4,2],['정리',3,1],['기법',5,2],['예제',6,2]]},
+ {id:'이차함수와 그래프',x:768,y:472,depth:1,here:true,crumb:'functions/middle-3',pct:38,flags:['이차함수와 그래프 D+3'],note:'✕ 어제 21턴 — 꼭짓점 변환에서 이어서',types:[['정의',3,2],['정리',4,1],['기법',5,2],['예제',7,1]]},
+ {id:'이차함수의 최대·최소',x:888,y:520,depth:0,locked:'이차함수와 그래프 — 정착 필요',crumb:'functions/middle-3',pct:0,note:'',types:[['정의',2,0],['정리',3,0],['기법',4,0],['예제',6,0]]},
+ {id:'기본 도형',x:248,y:565,depth:1,crumb:'geometry/middle-1',pct:31,note:'작도의 시작',types:[['정의',6,2],['정리',2,1],['기법',3,1],['예제',4,1]]},
+ {id:'평면도형의 성질',x:325,y:642,depth:0,locked:'기본 도형 — 정착 필요',crumb:'geometry/middle-1',pct:0,note:'',types:[['정의',4,0],['정리',5,0],['기법',3,0],['예제',5,0]]},
+ {id:'피타고라스 정리',x:195,y:682,depth:0,locked:'평면도형의 성질 — 정착 필요',crumb:'geometry/middle-2',pct:0,note:'',types:[['정의',1,0],['정리',3,0],['기법',4,0],['예제',6,0]]},
+ {id:'함수의 극한',x:1085,y:265,depth:0,locked:'이차함수와 그래프 외 2 — 정착 필요',crumb:'calculus/su2',pct:0,note:'',types:[['정의',5,0],['정리',6,0],['기법',7,0],['예제',9,0]]},
+ {id:'미분계수와 도함수',x:1185,y:328,depth:0,locked:'함수의 극한 — 정착 필요',crumb:'calculus/su2',pct:0,note:'',types:[['정의',4,0],['정리',7,0],['기법',8,0],['예제',10,0]]},
+ {id:'경우의 수',x:1105,y:655,depth:0,frontier:true,crumb:'probability/middle-2',pct:0,note:'선수 없음 — 여기서 시작 가능!',types:[['정의',3,0],['정리',2,0],['기법',5,0],['예제',7,0]]},
+ {id:'확률의 뜻',x:1198,y:700,depth:0,locked:'경우의 수 — 정착 필요',crumb:'probability/middle-2',pct:0,note:'',types:[['정의',3,0],['정리',3,0],['기법',4,0],['예제',6,0]]},
+];
+
+/* 단원 노드 렌더 */
+const NS='http://www.w3.org/2000/svg';
+const unitsG=document.getElementById('units');
+UNITS.forEach((u,i)=>{
+  const g=document.createElementNS(NS,'g');
+  g.setAttribute('class','unit-g'+(u.locked?' locked':''));
+  g.setAttribute('style',`animation-delay:${1.15+i*0.045}s;transform-origin:${u.x}px ${u.y}px`);
+  g.addEventListener('click',()=>openUnit(u.id));
+  let inner='';
+  if(u.frontier) inner+=`<circle class="frontier-halo" cx="${u.x}" cy="${u.y}" r="17" fill="none" stroke="var(--pen-green)" stroke-width="2.4"/>`;
+  const body={
+    0:`fill="${u.locked?'var(--paper-well)':'var(--paper-page)'}" stroke="var(--paper-dim)" stroke-dasharray="${u.locked?'0':'3 3'}" stroke-width="1.8"`,
+    1:`fill="url(#hatch)" stroke="var(--ink-soft)" stroke-width="1.8"`,
+    2:`fill="var(--accent)" stroke="var(--accent-strong)" stroke-width="1.8"`,
+    3:`fill="var(--accent)" stroke="var(--gold)" stroke-width="3"`,
+  }[u.depth];
+  inner+=`<circle class="body" cx="${u.x}" cy="${u.y}" r="11" ${body}/>`;
+  if(u.depth===3) inner+=`<circle cx="${u.x}" cy="${u.y}" r="6.2" fill="none" stroke="var(--paper-page)" stroke-width="1.4"/>`;
+  if(u.locked) inner+=`<text x="${u.x}" y="${u.y+4}" font-size="10" text-anchor="middle">🔒</text>`;
+  if(u.here) inner+=`<text x="${u.x-7}" y="${u.y-16}" font-size="20" fill="var(--pen-red)" font-weight="700" font-family="Gowun Batang">✕</text>`;
+  (u.flags||[]).forEach((f,fi)=>{
+    const fx=u.x+14+fi*10,fy=u.y-14;
+    inner+=`<line class="flagpole" x1="${fx}" y1="${fy}" x2="${fx}" y2="${fy-16}"/><path d="M${fx},${fy-16} l 15,4.5 l -15,5 Z" fill="var(--pen-red)"/>`;
+  });
+  inner+=`<text x="${u.x}" y="${u.y+27}" text-anchor="middle">${u.id}</text>`;
+  if(u.frontier) inner+=`<text class="sub" x="${u.x}" y="${u.y+40}" text-anchor="middle" fill="var(--pen-green)">다음 개척지</text>`;
+  g.innerHTML=inner;
+  unitsG.appendChild(g);
+});
+
+/* ── 팬/줌 ── */
+const svg=document.getElementById('map'),wrap=document.getElementById('mapwrap');
+let vb={x:0,y:0,w:1400,h:900},drag=null;
+const apply=()=>svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+wrap.addEventListener('pointerdown',e=>{if(e.target.closest('.unit-g'))return;drag={x:e.clientX,y:e.clientY,vx:vb.x,vy:vb.y};wrap.classList.add('dragging');wrap.setPointerCapture(e.pointerId)});
+wrap.addEventListener('pointermove',e=>{if(!drag)return;const k=vb.w/wrap.clientWidth;vb.x=drag.vx-(e.clientX-drag.x)*k;vb.y=drag.vy-(e.clientY-drag.y)*k;apply()});
+wrap.addEventListener('pointerup',()=>{drag=null;wrap.classList.remove('dragging')});
+wrap.addEventListener('wheel',e=>{e.preventDefault();const k=e.deltaY>0?1.12:0.89;const nw=Math.min(2600,Math.max(500,vb.w*k));const r=nw/vb.w;
+  const mx=vb.x+e.offsetX/wrap.clientWidth*vb.w,my=vb.y+e.offsetY/wrap.clientHeight*vb.h;
+  vb={x:mx-(mx-vb.x)*r,y:my-(my-vb.y)*r,w:nw,h:vb.h*r};apply()},{passive:false});
+
+/* ── 단원 시트 ── */
+const DEPTH_TAG=['미답 — 윤곽만','답사 — 연필','정착 — 코어 잉크','개척 완료 — 금테'];
+let routeIdx=-1;
+const ROUTE=['유리수와 순환소수','이차함수와 그래프','경우의 수'];
+function openUnit(id){
+  const u=UNITS.find(v=>v.id===id);if(!u)return;
+  document.getElementById('sCrumb').textContent=u.crumb+'/'+u.id.replaceAll(' ','_');
+  document.getElementById('sName').textContent=u.id;
+  const dt=document.getElementById('sDepth');dt.textContent=DEPTH_TAG[u.depth];dt.className='depth-tag d'+u.depth;
+  document.getElementById('sBar').style.width=u.pct+'%';
+  document.getElementById('sPct').textContent=`심도 ${u.pct}% — 정의·정리 60 / 기법·예제 30 / 연습 10 가중`;
+  const lock=document.getElementById('sLock');
+  if(u.locked){lock.style.display='block';lock.innerHTML=`🔒 잠김 — 선수 단원 <b>${u.locked}</b><br><span style="font-size:12px">recommendUnits: 선수 proficient+ 가 되면 자동 해제</span>`}
+  else lock.style.display='none';
+  document.getElementById('sTypes').innerHTML=u.types.map(([t,n,done],ti)=>{
+    const cls=['t-def','t-thm','t-tech','t-ex'][ti];
+    const flag=(u.flags&&ti===0)?`<span class="dflag">⚑ ${u.flags.length}건 복습</span>`:'';
+    return `<div class="trow"><span class="tdot ${cls}"></span>${t} ${flag}<span class="cnt">${done}/${n}</span></div>`;
+  }).join('');
+  const enter=document.getElementById('sEnter');
+  enter.disabled=!!u.locked;
+  enter.textContent=u.locked?'⛺ 입장 — 잠김':'⛺ 입장 — '+(u.depth===0?'첫 발 딛기':'이어서 배우기');
+  document.getElementById('sNote').textContent=u.note?('✎ '+u.note):'';
+  document.getElementById('sNext').style.display=(routeIdx>=0&&routeIdx<ROUTE.length-1&&ROUTE[routeIdx]===id)?'flex':'none';
+  document.getElementById('side').classList.add('open');
+}
+function closeSide(){document.getElementById('side').classList.remove('open')}
+
+/* ── 출항: 항로를 따라 구간별 진행 ── */
+function depart(){routeIdx=0;document.getElementById('rail').classList.remove('open');openUnit(ROUTE[0])}
+function nextLeg(){
+  routeIdx++;
+  if(routeIdx>=ROUTE.length){finishRoute();return}
+  openUnit(ROUTE[routeIdx]);
+  if(routeIdx===ROUTE.length-1){
+    const n=document.getElementById('sNext');n.style.display='flex';n.textContent='⛵ 항로 마지막 — 완주 도장';
+  }
+}
+function finishRoute(){
+  closeSide();routeIdx=-1;
+  const t=document.getElementById('toast');t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+/* 마지막 구간 카드에서 '완주 도장' */
+document.getElementById('sNext').addEventListener('click',e=>{
+  if(e.target.textContent.includes('완주')){finishRoute();e.stopPropagation()}
+},true);
+
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeSide();document.getElementById('rail').classList.remove('open')}});
+</script>
+</body>
+</html>

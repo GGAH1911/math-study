@@ -866,3 +866,340 @@ html:not(.dark) .problem-card .thumb { filter: none !important; }
 /* ChatPanel styled-jsx 다크 하드코딩 — 응급 토큰화 */
 .prose-chat code { background: var(--color-surface-2) !important; color: var(--color-text); }
 .prose-chat pre  { background: var(--color-surface-2) !important; border-color: var(--color-border) !important; }
+
+/* ════════════════════════════════════════════════════════════════════
+   ===== atlas =====
+   AtlasMap.tsx 전용 — 「항해 지도」(public/mockups/map.html 시각 언어 이식).
+   모든 색은 토큰 var → html.dark 자동 추종. 애니메이션은 CSS only(JS 루프 0).
+   --gold 토큰은 전역에 없어 여기서 신설(--atlas-gold). 해칭 잉크도 동봉.
+   ════════════════════════════════════════════════════════════════════ */
+:root {
+  --atlas-gold: #B58A0B;                 /* 개척(depth3) 금테 — 라이트 */
+  --atlas-hatch-ink: rgba(81, 75, 59, 0.55);  /* 답사 해칭선 — 라이트 */
+}
+html.dark {
+  --atlas-gold: #D9B45C;                 /* 금테 — 다크(초크 톤) */
+  --atlas-hatch-ink: rgba(180, 171, 153, 0.5); /* 해칭선 — 다크 */
+}
+
+/* ── 무대: 지도 + (내부) 시트를 담는 relative 컨테이너 ────────────────
+   풀블리드 높이는 페이지(index.astro)가 래퍼에서 잡고, 여기선 100% 채움. */
+.atlas-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  overflow: hidden;
+  touch-action: none;
+}
+.atlas-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  /* 캔버스 잉크가 시트 슬라이드 밖으로 새지 않게 — 무대가 clip */
+  background:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px;
+}
+.atlas-svg.is-dragging { cursor: grabbing; }
+
+/* ── 잉크 인트로: 워시 → 해안선 → 지명 → 노드 → 항로 순 ─────────────── */
+.atlas-wash { opacity: 0; animation: atlas-fadein 0.9s ease forwards; }
+@keyframes atlas-fadein { to { opacity: 1; } }
+
+.atlas-coast {
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  opacity: 0.5;
+  stroke-dasharray: 2600;
+  stroke-dashoffset: 2600;
+  animation: atlas-draw 1.5s ease forwards;
+}
+@keyframes atlas-draw { to { stroke-dashoffset: 0; } }
+
+.atlas-dlabel {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 15px;
+  opacity: 0;
+  animation: atlas-fadein 0.7s ease forwards;
+}
+
+/* 길/다리 */
+.atlas-roads { opacity: 0.5; }
+.atlas-road {
+  stroke: var(--ink-soft);
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0;
+  animation: atlas-fadein 0.6s ease forwards;
+}
+.atlas-road.is-bridge { stroke-dasharray: 6 5; stroke-width: 1.8; }
+
+/* ── 단원 노드 ─────────────────────────────────────────────────────── */
+.atlas-unit {
+  opacity: 0;
+  animation: atlas-pop 0.42s ease forwards;
+  cursor: pointer;
+}
+@keyframes atlas-pop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.atlas-unit:focus-visible { outline: none; }
+.atlas-unit:focus-visible .atlas-body { stroke: var(--pen-cyan); stroke-width: 3.4; }
+.atlas-unit:hover .atlas-body { stroke-width: 3; }
+
+.atlas-ulabel {
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  fill: var(--ink-body);
+  paint-order: stroke;       /* 후광: stroke 를 fill 아래로 → 라벨 가독 */
+  stroke: var(--paper-page);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+.atlas-ulabel.is-faint { font-size: 11px; fill: var(--ink-faint); }   /* 미답·잠김 — 흐리게 */
+.atlas-ulabel.is-strong { fill: var(--ink-strong); }                  /* frontier·진행·깃발 — 또렷 */
+.atlas-sublabel {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  paint-order: stroke;
+  stroke: var(--paper-page);
+  stroke-width: 2.4px;
+}
+.atlas-unit.is-locked .atlas-ulabel { fill: var(--ink-faint); }
+
+.atlas-glyph { paint-order: stroke; stroke: var(--paper-page); stroke-width: 0.5px; }
+.atlas-here {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  fill: var(--pen-red);
+  paint-order: stroke;
+  stroke: var(--paper-page);
+  stroke-width: 2.5px;
+}
+.atlas-flagpole { stroke: var(--ink-soft); stroke-width: 1.8; }
+
+/* frontier 초록 펄스 */
+.atlas-frontier-halo { animation: atlas-pulse 2.2s ease-in-out infinite; }
+@keyframes atlas-pulse {
+  0%, 100% { opacity: 0.25; r: 15; }
+  50%      { opacity: 0.7;  r: 21; }
+}
+
+/* ── 오늘의 항로(ants) ─────────────────────────────────────────────── */
+.atlas-route {
+  stroke: var(--pen-red);
+  stroke-width: 2.6;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 9 8;
+  opacity: 0;
+  animation: atlas-fadein 0.8s ease 1.9s forwards, atlas-ants 26s linear 2.7s infinite;
+}
+@keyframes atlas-ants { to { stroke-dashoffset: -680; } }
+.atlas-waypt {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 15px;
+  fill: var(--pen-red);
+  paint-order: stroke;        /* UX1: 단원 라벨 위로 떠도 후광으로 분리 */
+  stroke: var(--paper-page);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  opacity: 0;
+  animation: atlas-fadein 0.5s ease forwards;
+}
+
+/* ── 단원 시트: 무대 내부 우측 슬라이드(UX2 — 계기판 레일을 덮지 않음) ─── */
+.atlas-sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 88%);
+  background: var(--paper-card);
+  border-left: 1.5px solid var(--paper-line-strong);
+  box-shadow: -18px 0 44px rgba(29, 26, 20, 0.16);
+  transform: translateX(105%);
+  transition: transform 0.3s ease;
+  z-index: 5;
+  padding: 22px 22px 28px;
+  overflow-y: auto;
+  /* 닫힘 상태에선 포인터/스크롤 비활성 — 지도 드래그 방해 금지 */
+  pointer-events: none;
+}
+.atlas-sheet.is-open { transform: none; pointer-events: auto; }
+html.dark .atlas-sheet { box-shadow: -18px 0 44px rgba(0, 0, 0, 0.5); }
+
+.atlas-sheet-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.atlas-sheet-close:hover { color: var(--ink-body); }
+.atlas-crumb {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  word-break: break-all;
+}
+.atlas-sheet-title {
+  font-family: var(--font-serif);
+  font-size: 23px;
+  color: var(--ink-strong);
+  margin: 2px 0 6px;
+  line-height: 1.25;
+}
+.atlas-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.atlas-chip {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  background: var(--paper-well);
+  border: 1px solid var(--paper-line);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.atlas-depth-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 4px 11px;
+  margin: 4px 0;
+}
+.atlas-depth-tag.d0 { border: 1.5px dashed var(--paper-dim); color: var(--ink-faint); }
+.atlas-depth-tag.d1 { border: 1.5px solid var(--ink-soft); color: var(--ink-soft); }
+.atlas-depth-tag.d2 { border: 1.5px solid var(--color-accent); color: var(--color-accent); }
+.atlas-depth-tag.d3 { border: 2px solid var(--atlas-gold); color: var(--pen-amber); }
+
+.atlas-gauge {
+  height: 9px;
+  background: var(--paper-well);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 8px 0 3px;
+}
+.atlas-gauge i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-strong));
+  border-radius: 99px;
+}
+.atlas-pct { font-size: 11.5px; color: var(--ink-faint); }
+
+.atlas-lockbox {
+  margin-top: 12px;
+  background: var(--paper-well);
+  border: 1.5px dashed var(--paper-dim);
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.atlas-lockbox b { color: var(--pen-amber); }
+.atlas-due {
+  margin-top: 10px;
+  font-family: var(--font-hand);
+  font-size: 16px;
+  color: var(--pen-red);
+}
+
+.atlas-tsec { margin-top: 16px; }
+.atlas-tsec h4 {
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  color: var(--ink-faint);
+  margin-bottom: 7px;
+}
+.atlas-trow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  color: var(--ink-body);
+  padding: 7px 2px;
+  border-bottom: 1px dashed var(--paper-line);
+}
+.atlas-trow:last-child { border-bottom: none; }
+.atlas-tdot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.atlas-tcnt {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+
+.atlas-enter {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 9px;
+  box-shadow: 0 2.5px 0 var(--color-accent-strong);
+  min-height: 47px;
+  text-decoration: none;
+}
+.atlas-enter:hover { transform: translateY(1px); box-shadow: 0 1.5px 0 var(--color-accent-strong); }
+.atlas-enter.is-disabled {
+  background: var(--paper-dim);
+  color: var(--paper-page);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.atlas-graph-link {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 9px;
+  border: 1.7px solid var(--color-accent);
+  color: var(--color-accent);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 9px;
+  min-height: 44px;
+  text-decoration: none;
+}
+.atlas-graph-link:hover { background: var(--paper-well); }
+
+/* 모바일: 시트 전폭 슬라이드(380px 성립) */
+@media (max-width: 480px) {
+  .atlas-sheet { width: 100%; }
+}
+
+/* 감속 모드: 인트로/펄스/ants 정지, 최종 상태 노출 */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-wash,
+  .atlas-dlabel,
+  .atlas-unit,
+  .atlas-road,
+  .atlas-route,
+  .atlas-waypt { opacity: 1 !important; animation: none !important; }
+  .atlas-coast { stroke-dashoffset: 0 !important; animation: none !important; }
+  .atlas-frontier-halo { animation: none !important; }
+  .atlas-sheet { transition: none !important; }
+}

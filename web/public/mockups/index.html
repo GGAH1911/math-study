@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UX 구조 시안 3종</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBF8F1;--card:#F5F0E4;--line:#E9E1CF;--ink:#2A261E;--muted:#6B6350;--faint:#8A8169;--accent:#39487D;--red:#C13D38;
+--grid-minor:rgba(45,57,99,.06);--grid-major:rgba(45,57,99,.11)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"IBM Plex Sans KR",system-ui,sans-serif;color:var(--ink);background:var(--paper);
+background-image:linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),linear-gradient(var(--grid-minor) 1px,transparent 1px),linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);
+background-size:80px 80px,80px 80px,16px 16px,16px 16px;min-height:100vh;padding:48px 22px}
+.wrap{max-width:880px;margin:0 auto}
+h1{font-family:"Gowun Batang",serif;font-size:30px}
+.hand{font-family:"Nanum Pen Script",cursive;font-size:22px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:28px}
+a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;color:var(--ink);text-decoration:none;box-shadow:2px 3px 0 rgba(29,26,20,.05);transition:transform .12s,box-shadow .12s}
+a.card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(29,26,20,.12)}
+a.card .k{font-family:"Gowun Batang",serif;font-weight:700;font-size:20px}
+a.card .hypo{font-size:13px;color:var(--accent);font-weight:600;margin:4px 0 10px}
+a.card p{font-size:13.5px;color:var(--muted);line-height:1.65}
+.tip{margin-top:30px;font-size:13.5px;color:var(--faint);line-height:1.8}
+.tip b{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>UX 구조 시안 3종 <span class="hand">— 처음부터 다시 설계한다면</span></h1>
+  <p style="margin-top:6px;color:var(--muted);font-size:14.5px">제품 가설이 다르면 첫 화면이 달라집니다. 셋 다 8개 직무(복습·개념·문제·시험·지도·노트·진도·계정) 전부의 자리가 있습니다.</p>
+  <div class="cards">
+    <a class="card" href="/mockups/routine.html">
+      <div class="k">시안 A · 루틴</div>
+      <div class="hypo">“매일 25분 루틴이 심장”</div>
+      <p>첫 화면이 ‘오늘 할 일 세 걸음’에 답한다. ▶ 시작하면 한 장씩 몰입 뷰. 통계는 여백의 소품.</p>
+    </a>
+    <a class="card" href="/mockups/map.html" style="outline:2px solid var(--accent);outline-offset:2px">
+      <div class="k">시안 B-v2 · 항해 지도 ★</div>
+      <div class="hypo">“단원 중심 + 항로 + 계기판” (선택안 개선판)</div>
+      <p>현 /graph 의 단원 토폴로지·락언락 그대로, 과목은 배경 워시. 단원 심도 4단계(미답→답사→정착→금테), 오늘의 항로 ⛵, 우측 항해 계기판.</p>
+    </a>
+    <a class="card" href="/mockups/tutor.html">
+      <div class="k">시안 C · 튜터</div>
+      <div class="hypo">“튜터와의 대화가 심장”</div>
+      <p>조교가 오늘을 열고, 계획·복습 카드·그래프·승급까지 대화 무대 위에서. 서랍엔 비대화 직행로.</p>
+    </a>
+  </div>
+  <p class="tip">
+    각 시안 우상단 <b>「⚙ 접합」</b>을 켜면 모든 영역이 어느 실제 API/데이터에 붙는지 핀으로 표시됩니다.<br>
+    클릭 동선이 실제로 동작합니다 — A: ▶ 오늘 시작하기 / B: 영토 클릭 → 입장 / C: 칩 눌러 대화 진행.<br>
+    폰·아이패드에서도 열어 보세요 (380px 반응형).
+  </p>
+</div>
+</body>
+</html>

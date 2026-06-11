@@ -175,7 +175,8 @@ export function unitSummary(masteryOf?: (conceptId: string) => UnitStatus): Unit
   return { total: units.length, started, byStatus };
 }
 
-const GRADE_RANK: Record<string, number> = {
+// 학년 정렬 키. atlas.ts 의 도메인 내 phyllotaxis 배치도 이 순위를 재사용한다.
+export const GRADE_RANK: Record<string, number> = {
   '중1': 1, '중2': 2, '중3': 3, '고1': 4, '수학1': 5, '수학2': 6, '미적분': 7, '기하': 7, '확률과통계': 7,
 };
 

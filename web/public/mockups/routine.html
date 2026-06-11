@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>시안 A · 루틴 — 오늘의 책상</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+/* ───── 수학자의 스케치북 토큰 ───── */
+:root{
+  --paper-page:#FBF8F1; --paper-card:#F5F0E4; --paper-well:#EFE8D8;
+  --paper-line:#E9E1CF; --paper-line-strong:#D7CDB5; --paper-dim:#B0A78F;
+  --tape:rgba(214,200,160,.5);
+  --ink-body:#2A261E; --ink-strong:#1D1A14; --ink-soft:#514B3B; --ink-muted:#6B6350; --ink-faint:#8A8169;
+  --accent:#39487D; --accent-strong:#2D3963;
+  --pen-red:#C13D38; --pen-green:#2E7B4F; --pen-amber:#9F600C; --pen-cyan:#166E8E; --pen-violet:#6A4E9C;
+  --hl-yellow:rgba(255,213,74,.40); --hl-pink:rgba(255,138,171,.35); --hl-green:rgba(142,222,134,.38); --hl-blue:rgba(122,196,255,.35);
+  --grid-minor:rgba(45,57,99,.06); --grid-major:rgba(45,57,99,.11);
+  --sans:"IBM Plex Sans KR",system-ui,sans-serif; --serif:"Gowun Batang",Georgia,serif; --hand:"Nanum Pen Script",cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--sans); color:var(--ink-body); background-color:var(--paper-page);
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid-minor) 1px,transparent 1px),linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px;
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ───── 시안 배지 + 접합 토글 ───── */
+.badge-wrap{position:fixed;top:12px;right:12px;z-index:90;display:flex;gap:8px;align-items:center}
+.spec-badge{background:var(--ink-strong);color:var(--paper-page);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;letter-spacing:.02em;box-shadow:0 2px 8px rgba(29,26,20,.25)}
+.pin-toggle{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1.5px solid var(--pen-cyan);color:var(--pen-cyan);background:var(--paper-page);transition:all .15s}
+.pin-toggle[aria-pressed="true"]{background:var(--pen-cyan);color:var(--paper-page)}
+/* 접합 핀: data-api 속성을 오버레이로 */
+[data-api]{position:relative}
+body.pins [data-api]::after{
+  content:attr(data-api); position:absolute; top:-10px; left:8px; z-index:80;
+  font-family:ui-monospace,Menlo,monospace; font-size:10.5px; line-height:1;
+  background:#0E2A36; color:#BFE7F6; padding:5px 8px; border-radius:4px;
+  box-shadow:0 2px 6px rgba(14,42,54,.35); white-space:nowrap; pointer-events:none;
+}
+body.pins [data-api="신규 필요: GET /api/streak"]::after{background:#4A2727;color:#F6C9C9}
+
+/* ───── 상단: 날짜 + 항행 ───── */
+.masthead{max-width:1080px;margin:0 auto;padding:28px 24px 0;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.seal{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--pen-red);border:2px solid var(--pen-red);border-radius:6px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;transform:rotate(-3deg);flex:none}
+.today-hand{font-family:var(--hand);font-size:26px;color:var(--ink-soft)}
+.masthead nav{margin-left:auto;display:flex;gap:18px;font-size:14px;color:var(--ink-muted)}
+.masthead nav a{color:var(--ink-muted);border-bottom:2px solid transparent;padding-bottom:2px}
+.masthead nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ───── 메인 무대 ───── */
+.stage{max-width:1080px;margin:0 auto;padding:20px 24px 80px;display:grid;grid-template-columns:1fr 280px;gap:36px}
+@media (max-width:900px){.stage{grid-template-columns:1fr;gap:20px}}
+
+/* 오늘의 흐름 — 카드 그리드가 아니라 한 줄기 계획 */
+.flow-title{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--ink-strong);margin:8px 0 2px}
+.flow-sub{font-size:14px;color:var(--ink-muted);margin-bottom:22px}
+.flow-sub b{color:var(--pen-amber);font-weight:600}
+.flow{position:relative;padding-left:34px}
+.flow::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:repeating-linear-gradient(var(--paper-line-strong) 0 6px,transparent 6px 11px)}
+.step{position:relative;padding:0 0 26px}
+.step-dot{position:absolute;left:-34px;top:4px;width:24px;height:24px;border-radius:50%;border:2px solid var(--ink-soft);background:var(--paper-page);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--ink-soft)}
+.step h3{font-family:var(--serif);font-size:19px;color:var(--ink-strong);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.step h3 .eta{font-family:var(--hand);font-size:18px;color:var(--ink-faint);font-weight:400}
+.step .meta{font-size:13.5px;color:var(--ink-muted);margin-top:2px}
+.due-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.due-item{display:flex;align-items:center;gap:10px;font-size:14.5px;background:var(--paper-card);border:1px solid var(--paper-line);border-radius:8px;padding:8px 12px;box-shadow:1px 2px 0 rgba(29,26,20,.04)}
+.due-item .box{width:16px;height:16px;border:1.8px solid var(--ink-soft);border-radius:4px;flex:none}
+.due-item .d{margin-left:auto;font-family:var(--hand);font-size:17px;color:var(--pen-red);flex:none}
+.due-more{font-size:13px;color:var(--ink-faint);padding-left:4px}
+.hl{background:linear-gradient(transparent 35%,var(--hl-yellow) 36% 88%,transparent 89%);padding:0 2px}
+.hl-g{background:linear-gradient(transparent 35%,var(--hl-green) 36% 88%,transparent 89%);padding:0 2px}
+.cont-card{margin-top:10px;background:var(--paper-card);border:1px solid var(--paper-line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 16px}
+.cont-card .crumb{font-size:12px;color:var(--ink-faint);font-family:ui-monospace,Menlo,monospace}
+.cont-card .name{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--accent-strong)}
+.cont-card .last{font-size:13px;color:var(--ink-muted);margin-top:3px}
+.cont-card .last q{font-family:var(--hand);font-size:16px;color:var(--ink-soft)}
+.prob-row{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.prob{flex:1;min-width:200px;background:var(--paper-card);border:1px solid var(--paper-line);border-radius:8px;padding:10px 14px;font-size:13.5px}
+.prob .no{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--ink-strong)}
+.prob .rate{color:var(--pen-red);font-weight:600}
+.math{font-family:var(--serif);font-style:italic}
+
+/* CTA */
+.cta-row{margin-top:6px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn-ink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:15.5px;font-weight:600;padding:13px 26px;border-radius:10px;box-shadow:0 3px 0 var(--accent-strong);transition:transform .12s,box-shadow .12s;min-height:48px}
+.btn-ink:hover{transform:translateY(1px);box-shadow:0 2px 0 var(--accent-strong)}
+.cta-note{font-family:var(--hand);font-size:19px;color:var(--ink-faint)}
+
+/* ───── 여백(우측 마진) — 통계는 소품으로 ───── */
+.margin-rail{display:flex;flex-direction:column;gap:18px}
+.scrap{background:var(--paper-card);border:1px solid var(--paper-line);border-radius:4px;padding:14px 16px;position:relative;box-shadow:2px 3px 0 rgba(29,26,20,.05);transform:rotate(.4deg)}
+.scrap::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);width:74px;height:18px;background:var(--tape);border-radius:2px}
+.scrap h4{font-size:12px;letter-spacing:.12em;color:var(--ink-faint);font-weight:600;margin-bottom:8px}
+.stamps{display:flex;gap:6px;flex-wrap:wrap}
+.stamp{width:30px;height:30px;border-radius:50%;border:1.8px solid var(--pen-red);color:var(--pen-red);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:16px;transform:rotate(-6deg)}
+.stamp.off{border-color:var(--paper-line-strong);color:var(--paper-line-strong);transform:none}
+.scrap .hand-note{font-family:var(--hand);font-size:18px;color:var(--ink-soft);line-height:1.4}
+.mini-bar{height:8px;background:var(--paper-well);border-radius:99px;overflow:hidden;margin:6px 0 2px}
+.mini-bar i{display:block;height:100%;width:34%;background:linear-gradient(90deg,var(--pen-green),#5BA67C);border-radius:99px}
+.scrap .num{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--ink-strong)}
+.scrap small{color:var(--ink-muted);font-size:12.5px}
+.note-link{display:block;font-size:14px;line-height:1.5}
+.note-link b{font-family:var(--serif);color:var(--accent-strong)}
+
+/* ───── 몰입(포커스) 뷰 ───── */
+#focus{display:none;max-width:760px;margin:0 auto;padding:30px 24px 80px}
+body.focusing #home{display:none}
+body.focusing #focus{display:block}
+.focus-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.focus-top .back{font-size:14px;color:var(--ink-muted);min-height:44px;display:inline-flex;align-items:center}
+.focus-top .prog{margin-left:auto;font-family:var(--hand);font-size:22px;color:var(--ink-soft)}
+.focus-card{background:var(--paper-card);border:1px solid var(--paper-line);border-radius:14px;padding:34px 34px 28px;box-shadow:0 10px 30px rgba(29,26,20,.08);position:relative;animation:rise .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.focus-card .kind{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--pen-amber);border:1.5px solid var(--pen-amber);padding:3px 10px;border-radius:999px;margin-bottom:14px}
+.focus-card h2{font-family:var(--serif);font-size:24px;color:var(--ink-strong);margin-bottom:6px}
+.focus-card .q{font-size:18px;margin:18px 0 6px}
+.focus-card .ans{margin-top:14px;border-top:1.5px dashed var(--paper-line-strong);padding-top:14px;display:none}
+.focus-card.revealed .ans{display:block;animation:rise .3s ease}
+.focus-card .ans .a-line{font-size:17px}
+.focus-card .ans .why{font-size:14px;color:var(--ink-muted);margin-top:6px}
+.reveal-btn{margin-top:16px;font-size:15px;font-weight:600;color:var(--accent);border:1.8px solid var(--accent);border-radius:9px;padding:10px 22px;min-height:46px}
+.grade-row{display:none;gap:10px;margin-top:20px;flex-wrap:wrap}
+.focus-card.revealed .grade-row{display:flex}
+.grade{flex:1;min-width:110px;font-size:14.5px;font-weight:600;border-radius:9px;padding:12px 10px;border:1.8px solid;min-height:48px}
+.grade.again{color:var(--pen-red);border-color:var(--pen-red);background:rgba(193,61,56,.06)}
+.grade.good{color:var(--pen-green);border-color:var(--pen-green);background:rgba(46,123,79,.06)}
+.grade.easy{color:var(--pen-cyan);border-color:var(--pen-cyan);background:rgba(22,110,142,.06)}
+.tutor-margin{margin-top:22px;font-family:var(--hand);font-size:20px;color:var(--pen-violet);transform:rotate(-.5deg)}
+.tutor-margin b{border-bottom:2px solid var(--hl-pink)}
+.done-stamp{display:none;text-align:center;padding:60px 0}
+body.alldone .focus-card,body.alldone .grade-row{display:none}
+body.alldone .done-stamp{display:block;animation:rise .4s ease}
+.done-stamp .big{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--pen-red);border:3px solid var(--pen-red);display:inline-block;padding:14px 30px;border-radius:10px;transform:rotate(-4deg)}
+.done-stamp p{margin-top:18px;font-family:var(--hand);font-size:24px;color:var(--ink-soft)}
+
+/* 탐색 시트 (항행 데모) */
+.sheet{position:fixed;inset:auto 0 0 0;background:var(--paper-card);border-top:1.5px solid var(--paper-line-strong);box-shadow:0 -14px 40px rgba(29,26,20,.14);border-radius:18px 18px 0 0;padding:22px 26px 34px;transform:translateY(105%);transition:transform .28s ease;z-index:70}
+.sheet.open{transform:none}
+.sheet h3{font-family:var(--serif);font-size:18px;margin-bottom:12px}
+.sheet ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.sheet li a{display:block;background:var(--paper-page);border:1px solid var(--paper-line);border-radius:9px;padding:13px 14px;font-size:14px;min-height:46px}
+.sheet li small{display:block;color:var(--ink-faint);font-size:12px;margin-top:2px}
+.sheet .close{position:absolute;top:10px;right:16px;font-size:13px;color:var(--ink-muted);min-height:44px;min-width:44px}
+
+/* ───── 모바일 ───── */
+@media (max-width:640px){
+  body{font-size:15px;background-size:80px 80px,80px 80px,32px 32px,32px 32px}
+  .masthead{padding:18px 16px 0}
+  .masthead nav{width:100%;order:3;margin-left:0;gap:14px;overflow-x:auto;padding-bottom:4px}
+  .stage{padding:14px 16px 70px}
+  .flow-title{font-size:25px}
+  .flow{padding-left:28px}.step-dot{left:-28px}
+  .focus-card{padding:24px 20px 22px}
+  .badge-wrap{top:8px;right:8px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="badge-wrap">
+  <button class="pin-toggle" id="pinT" aria-pressed="false">⚙ 접합</button>
+  <span class="spec-badge" title="가설: 매일 15~30분 루틴이 제품의 심장 — 첫 화면은 '오늘'에 답한다">시안 A · 루틴</span>
+</div>
+
+<!-- ════════ 홈: 오늘의 책상 ════════ -->
+<div id="home">
+  <header class="masthead">
+    <span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M3.5 20 Q 12 -4 20.5 20" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span>
+    <span class="today-hand">6월 11일 목요일 — 오늘의 페이지</span>
+    <nav data-api="라우트: /problems /graph /exam /syntheses /progress">
+      <a href="#" onclick="openSheet(event)">문제집</a>
+      <a href="#" onclick="openSheet(event)">개념 지도</a>
+      <a href="#" onclick="openSheet(event)">모의시험</a>
+      <a href="#" onclick="openSheet(event)">노트</a>
+      <a href="#" onclick="openSheet(event)">진도</a>
+    </nav>
+  </header>
+
+  <main class="stage">
+    <section>
+      <h1 class="flow-title">오늘 할 일은 세 걸음입니다</h1>
+      <p class="flow-sub">복습이 밀리지 않게 — 예상 <b>약 25분</b></p>
+
+      <div class="flow">
+        <!-- ① 복습 -->
+        <div class="step" data-api="GET /api/due-today (SRS: review_state·next_review)">
+          <span class="step-dot">1</span>
+          <h3><span class="hl">복습 7건</span> <span class="eta">≈ 12분</span></h3>
+          <p class="meta">기억이 흐려지기 직전의 것들부터.</p>
+          <div class="due-list">
+            <div class="due-item"><span class="box"></span> 분수 변환 — <span class="math">x/11 = 0.090909…</span><span class="d">D+1</span></div>
+            <div class="due-item"><span class="box"></span> 순환소수의 분수화<span class="d">D+1</span></div>
+            <div class="due-item"><span class="box"></span> 이차함수와 그래프 — 꼭짓점 변환<span class="d">D+3</span></div>
+            <div class="due-more">…외 4건 (근의 공식 D+5 · 일차부등식 D+7 등)</div>
+          </div>
+        </div>
+
+        <!-- ② 이어서 -->
+        <div class="step" data-api="GET /api/chat-history + collection:concepts + getMastery">
+          <span class="step-dot">2</span>
+          <h3><span class="hl-g">이어서 배우기</span> <span class="eta">≈ 10분</span></h3>
+          <div class="cont-card">
+            <div class="crumb">함수 / 중3 / 이차함수</div>
+            <div class="name">이차함수와 그래프</div>
+            <div class="last">어제 튜터와 21턴 — 마지막 여백 메모: <q>“꼭짓점 (p, q)로 옮기는 게 핵심!”</q></div>
+          </div>
+          <p class="meta" style="margin-top:6px">다음 추천: <a href="#" data-api="recommendUnits(masteryOf)">이차함수의 최대·최소</a> — 선수개념 100% 충족</p>
+        </div>
+
+        <!-- ③ 문제 -->
+        <div class="step" data-api="collection:problems + POST /api/attempt + 풀이캐시(SolutionPanel)">
+          <span class="step-dot">3</span>
+          <h3>오늘의 문제 2 <span class="eta">≈ 5분+</span></h3>
+          <div class="prob-row">
+            <div class="prob"><div class="no">2026 6월모평 공통 14번</div>확률과 통계 · 정답률 <span class="rate">31%</span></div>
+            <div class="prob"><div class="no">2024 수능 공통 12번</div>어제 학습한 <span class="math">f(x)=ax²+bx+c</span> 연결</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn-ink" onclick="startToday()" data-api="플로우: due-today → problem-state → attempt 순 조합">▶ 오늘 시작하기</button>
+        <span class="cta-note">한 번에 한 걸음씩, 25분.</span>
+      </div>
+    </section>
+
+    <!-- 여백: 통계는 소품으로 -->
+    <aside class="margin-rail">
+      <div class="scrap" data-api="신규 필요: GET /api/streak">
+        <h4>연속 학습</h4>
+        <div class="stamps">
+          <span class="stamp">월</span><span class="stamp">화</span><span class="stamp">수</span><span class="stamp">목</span><span class="stamp">금</span><span class="stamp">토</span><span class="stamp">일</span>
+          <span class="stamp off">월</span>
+        </div>
+        <p class="hand-note" style="margin-top:8px">7일째! 오늘로 8일 만들기 ✊</p>
+      </div>
+      <div class="scrap" data-api="getMasteryCounts(user) — concept_mastery 집계">
+        <h4>나의 지도</h4>
+        <span class="num">44</span> <small>/ 2,789 개념에 발자국</small>
+        <div class="mini-bar"><i></i></div>
+        <small>숙달 12 · 잘 앎 23 · 학습 중 9</small>
+      </div>
+      <div class="scrap" data-api="collection:syntheses (최근 학습 노트)">
+        <h4>어제 남긴 노트</h4>
+        <a class="note-link" href="#"><b>분수 변환 학습 노트</b><br><small>순환부는 ‘몫’을 모은다 — 3분 복기</small></a>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<!-- ════════ 몰입 뷰: 한 번에 한 걸음 ════════ -->
+<div id="focus">
+  <div class="focus-top">
+    <button class="back" onclick="exitFocus()">← 오늘의 페이지로</button>
+    <span class="prog" id="prog">1 / 7</span>
+  </div>
+
+  <div class="focus-card" id="card" data-api="GET /api/due-today[i] → 채점 후 POST /api/problem-state(SRS 갱신)">
+    <span class="kind" id="kindLabel">복습 · D+1</span>
+    <h2 id="cardTitle">분수 변환</h2>
+    <p class="q" id="cardQ"><span class="math">6/11</span> 을 순환소수로 나타내면?</p>
+    <button class="reveal-btn" id="revealBtn" onclick="reveal()">✍ 답 떠올렸으면 확인</button>
+    <div class="ans">
+      <p class="a-line" id="cardA"><span class="math">0.5̄4̄</span> — 순환마디 54</p>
+      <p class="why" id="cardWhy">나머지가 6 → 5 → 6 으로 돌아오는 순간 순환 확정. 모으는 건 나머지가 아니라 <b>몫</b>.</p>
+      <div class="grade-row">
+        <button class="grade again" onclick="grade()">✗ 또 틀림 — 내일</button>
+        <button class="grade good" onclick="grade()">○ 맞음 — 4일 뒤</button>
+        <button class="grade easy" onclick="grade()">◎ 쉬움 — 9일 뒤</button>
+      </div>
+    </div>
+    <p class="tutor-margin" data-api="SSE POST /api/chat (여백 호출형 튜터)">✎ 튜터: 막히면 <b>나머지 수열</b>부터 다시 — 어제 그 표 기억나요?</p>
+  </div>
+
+  <div class="done-stamp">
+    <span class="big">오늘 끝!</span>
+    <p>8일째 도장 쾅. 내일 또 한 페이지 — 총 25분 수고했어요.</p>
+  </div>
+</div>
+
+<!-- 탐색 시트 -->
+<div class="sheet" id="sheet">
+  <button class="close" onclick="closeSheet()">닫기 ✕</button>
+  <h3>어디로 갈까요?</h3>
+  <ul>
+    <li><a href="#" data-api="/problems (필터 브라우저)">문제집<small>기출 2,844 · 연도/회차/정답률</small></a></li>
+    <li><a href="#" data-api="/graph (xyflow + concept-graph.json)">개념 지도<small>2,789 노드 · mastery 색</small></a></li>
+    <li><a href="#" data-api="/exam → /exam/round/[key]">모의시험<small>87회차 · 타이머 실전</small></a></li>
+    <li><a href="#" data-api="/syntheses · /mistakes">노트<small>학습 노트 · 오답 노트</small></a></li>
+    <li><a href="#" data-api="/progress (도메인별 차트)">진도<small>영역별 진행 · 통계</small></a></li>
+  </ul>
+</div>
+
+<script>
+/* 접합 핀 토글 */
+const pinT=document.getElementById('pinT');
+pinT.addEventListener('click',()=>{const on=document.body.classList.toggle('pins');pinT.setAttribute('aria-pressed',on)});
+
+/* 탐색 시트 */
+function openSheet(e){e.preventDefault();document.getElementById('sheet').classList.add('open')}
+function closeSheet(){document.getElementById('sheet').classList.remove('open')}
+
+/* 몰입 플로우 — 데모 3걸음 */
+const STEPS=[
+ {kind:'복습 · D+1',title:'분수 변환',q:'<span class="math">6/11</span> 을 순환소수로 나타내면?',a:'<span class="math">0.5̄4̄</span> — 순환마디 54',why:'나머지가 6 → 5 → 6 으로 돌아오는 순간 순환 확정. 모으는 건 나머지가 아니라 <b>몫</b>.'},
+ {kind:'복습 · D+1',title:'순환소수의 분수화',q:'<span class="math">x = 0.7̄2̄</span> 를 분수로?',a:'<span class="math">x = 72/99 = 8/11</span>',why:'100x − x = 72. 마디 길이만큼 10ⁿ 을 곱해 빼는 것이 전부.'},
+ {kind:'복습 · D+3',title:'이차함수와 그래프',q:'<span class="math">y = (x−2)² + 3</span> 의 꼭짓점은?',a:'<span class="math">(2, 3)</span>',why:'어제 여백 메모 그대로 — 꼭짓점 (p, q)로 옮긴다.'}
+];
+let idx=0;
+function startToday(){document.body.classList.add('focusing');render()}
+function exitFocus(){document.body.classList.remove('focusing','alldone');idx=0;render()}
+function render(){
+  const s=STEPS[idx];if(!s)return;
+  document.getElementById('prog').textContent=(idx+1)+' / 7';
+  document.getElementById('kindLabel').textContent=s.kind;
+  document.getElementById('cardTitle').textContent=s.title;
+  document.getElementById('cardQ').innerHTML=s.q;
+  document.getElementById('cardA').innerHTML=s.a;
+  document.getElementById('cardWhy').innerHTML=s.why;
+  const card=document.getElementById('card');card.classList.remove('revealed');
+  card.style.animation='none';card.offsetHeight;card.style.animation='';
+}
+function reveal(){document.getElementById('card').classList.add('revealed')}
+function grade(){
+  idx++;
+  if(idx>=STEPS.length){document.body.classList.add('alldone');return}
+  render();
+}
+/* ESC: 시트/몰입 탈출 */
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeSheet();exitFocus()}});
+</script>
+</body>
+</html>

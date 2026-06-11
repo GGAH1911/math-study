@@ -31,6 +31,19 @@ export async function getMasteryMap(userId: string): Promise<Map<string, Mastery
   return m;
 }
 
+// 복습 도래(due) 개념 집합. concept_mastery.next_review 가 오늘(KST) 이하인 행의 concept_id.
+// next_review 는 date 컬럼이라 타임존 없이 비교 — 비교 기준일도 Asia/Seoul 의 '오늘'로 맞춘다.
+// (지도의 단원별 dueCount·오늘의 항로 복습 leg 가 이 집합을 소비.)
+export async function getDueConceptIds(userId: string): Promise<Set<string>> {
+  const rows = await sql<{ concept_id: string }[]>`
+    SELECT concept_id FROM concept_mastery
+     WHERE user_id = ${userId}
+       AND next_review IS NOT NULL
+       AND next_review <= (now() AT TIME ZONE 'Asia/Seoul')::date
+  `;
+  return new Set(rows.map((r) => r.concept_id));
+}
+
 // 레벨별 카운트 (대시보드 도넛용). 'unknown' 은 (총 개념수 - 기록된 수)로 보정해야
 // 하므로 호출부에서 totalConcepts 를 빼서 계산. 여기선 기록된 행만 집계.
 export async function getMasteryCounts(userId: string): Promise<Record<MasteryLevel, number>> {
