@@ -144,6 +144,15 @@ export function computeUnitProgress(masteryOf?: (conceptId: string) => UnitStatu
     }
     const max = members.length * 3;
     const progressPercent = max > 0 ? Math.round((points / max) * 100) : 0;
+    // 단원 status = 단원 노드 자신의 mastery 와 spoke 평균 status 중 **높은 쪽**.
+    // 사용자가 단원을 직접 능숙/숙달로 표시(튜터 promote)해도 spoke 평균만 쓰면,
+    // 미학습 하위개념 수십 개에 묻혀 progressPercent≈1% → unknown 으로 떨어진다.
+    // → 직접 표시한 능숙이 통계·지도에 전혀 반영 안 되는 버그. self 레벨로 끌어올린다.
+    // (progressPercent 는 '하위개념 완성도'라 spoke 평균 유지 — status 와는 다른 축.)
+    const selfLevel = lvlOf(u);
+    const pctStatus = progressToStatus(progressPercent);
+    const status: UnitStatus =
+      (MASTERY_POINTS[selfLevel] ?? 0) >= (MASTERY_POINTS[pctStatus] ?? 0) ? selfLevel : pctStatus;
     return {
       unitId: u.id,
       label: u.label,
@@ -152,7 +161,7 @@ export function computeUnitProgress(masteryOf?: (conceptId: string) => UnitStatu
       spokeCount: members.length - 1,
       mastery,
       progressPercent,
-      status: progressToStatus(progressPercent),
+      status,
     };
   });
 }
