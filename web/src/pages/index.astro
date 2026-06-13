@@ -64,10 +64,8 @@ const dc = DAILY_CURVES[curveIndexForMs(Date.now())];
       {/* 모눈 위 손글씨 메모 — 날짜줄·문구·버튼에 없는 유용한 학습 점보들을 군데군데(margin scribbles).
           pointer-events-none 으로 캔버스 호버 방해 안 함. 곡선은 중앙, 메모는 모서리. */}
       <div class="pointer-events-none absolute inset-0 select-none font-hand text-[15px] sm:text-[18px] leading-none text-[color:var(--color-subtle)]" aria-hidden="true">
-        <span class="absolute top-1 left-1 -rotate-2">숙달 {us.mastered} · 능숙 {us.proficient} · 학습중 {us.learning} 단원</span>
-        <span class="absolute bottom-2 left-1 rotate-1">착수 {units.started}/{units.total} 단원</span>
-        <span class="absolute top-1/2 -translate-y-1/2 right-2 rotate-1 hidden sm:block">개념 {graph.nodes.length.toLocaleString()}개 · 노트 {totalSyntheses}개</span>
-        {dueCount > 0 && <span class="absolute bottom-2 right-2 -rotate-1 text-[color:var(--pen-red)]">복습 {dueCount}건 대기 ↘</span>}
+        {/* 진도(숙달/착수/복습)는 아래 대시보드 카드들이 담당 — 히어로엔 비진도 한 줄(라이브러리 규모)만. */}
+        <span class="absolute bottom-2 left-1 -rotate-2">개념 {graph.nodes.length.toLocaleString()}개 · 학습 노트 {totalSyntheses}개</span>
       </div>
     </div>
     {/* 오늘의 곡선 짧은 설명 + 개념 노드 링크 — 장식 곡선을 학습 진입점으로 */}
