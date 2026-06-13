@@ -11,6 +11,12 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/api\/health\b/,
 ];
 
+// 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.
+const ADMIN_PATHS: RegExp[] = [
+  /^\/dev(\/|$)/,              // 개발/디버그 도구 페이지(figure-test·rounds·variants 등)
+  /^\/api\/regenerate-body\b/, // 공유 개념 본문 LLM 재생성(저작 행위)
+];
+
 // 정적/내부 자산·dev 모듈은 미들웨어 게이팅에서 제외(인증·CSRF 무관).
 // dev(Vite) 경로(/@vite, /@fs, /@id, /src/, /node_modules/.vite)와 빌드 자산(/_astro)을
 // 게이팅하면 모듈 로드·HMR 이 깨지므로 반드시 통과시킨다.
@@ -67,6 +73,18 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
     const returnTo = encodeURIComponent(pathname + url.search);
     return context.redirect(`/login?returnTo=${returnTo}`);
+  }
+
+  // 관리자 전용 경로 — dev 도구 + 공유 콘텐츠(개념 본문) 재생성.
+  // 인증은 됐지만 admin 이 아닌 사용자는 차단: 페이지=홈, API=403.
+  if (ADMIN_PATHS.some((re) => re.test(pathname)) && !user.is_admin) {
+    if (pathname.startsWith('/api/')) {
+      return new Response(JSON.stringify({ error: 'forbidden: admin only' }), {
+        status: 403,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+    return context.redirect('/');
   }
 
   return next();

@@ -8,6 +8,7 @@ import type { AstroCookies } from 'astro';
 import { scrypt as _scrypt, randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 import sql from './db.ts';
+import { isAdminEmail } from './admin.ts';
 
 const scrypt = promisify(_scrypt) as (
   password: string | Buffer, salt: string | Buffer, keylen: number,
@@ -20,6 +21,7 @@ export type User = {
   display_name: string | null;
   is_legacy: boolean;
   is_active: boolean;
+  is_admin: boolean; // 이메일 allowlist 로 결정(DB 컬럼 아님). admin.ts 참조.
 };
 
 // ─────────────────────────────────────────── 비밀번호 (scrypt)
@@ -79,13 +81,14 @@ export async function createSession(
 
 export async function getUserBySessionToken(token: string | undefined | null): Promise<User | null> {
   if (!token) return null;
-  const rows = await sql<User[]>`
+  const rows = await sql<Omit<User, 'is_admin'>[]>`
     SELECT u.id, u.email, u.display_name, u.is_legacy, u.is_active
     FROM sessions s JOIN users u ON u.id = s.user_id
     WHERE s.token_hash = ${hashToken(token)} AND s.expires_at > NOW() AND u.is_active = TRUE
     LIMIT 1
   `;
-  return rows[0] ?? null;
+  const u = rows[0];
+  return u ? { ...u, is_admin: isAdminEmail(u.email) } : null;
 }
 
 export async function destroySession(token: string | undefined | null): Promise<void> {
