@@ -14,6 +14,7 @@ import { readHealth, readConceptGraph, unitSummary, recommendUnits } from '../li
 import { getMasteryMap } from '../lib/mastery.ts';
 import { getDueProblemCount, getWeeklyActivity } from '../lib/activity.ts';
 import synthesesIndex from '../data/syntheses-by-concept.json';
+import { DAILY_CURVES, curveIndexForMs } from '../lib/daily-curve.mjs';
 
 const health = readHealth();
 const graph = readConceptGraph();
@@ -50,6 +51,8 @@ const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 const datePart = `${nowKST.getUTCMonth() + 1}월 ${nowKST.getUTCDate()}일 ${DAYS[nowKST.getUTCDay()]}요일`;
 const streak = Astro.locals.user ? (await getWeeklyActivity(Astro.locals.user.id)).streak : 0;
 const dateLine = streak >= 1 ? `${datePart} · 연속 ${streak}일째` : datePart;
+// 오늘의 히어로 곡선(PaperHero 와 동일 KST seed) → 그 곡선의 개념 노드·짧은 설명.
+const dc = DAILY_CURVES[curveIndexForMs(Date.now())];
 ---
 <BaseLayout title="Dashboard">
   <!-- 히어로 「오늘의 페이지」 — 모눈이 그대로 비치는 영역(카드로 감싸지 않는다) -->
@@ -67,6 +70,12 @@ const dateLine = streak >= 1 ? `${datePart} · 연속 ${streak}일째` : datePar
         {dueCount > 0 && <span class="absolute bottom-2 right-2 -rotate-1 text-[color:var(--pen-red)]">복습 {dueCount}건 대기 ↘</span>}
       </div>
     </div>
+    {/* 오늘의 곡선 짧은 설명 + 개념 노드 링크 — 장식 곡선을 학습 진입점으로 */}
+    <p class="mt-3 text-sm text-[color:var(--color-muted)] max-w-3xl">
+      <span class="font-hand text-[16px] sm:text-[18px] text-[color:var(--color-subtle)] mr-1.5">오늘의 곡선 「{dc.label}」</span>
+      {dc.blurb}
+      <a href={`/concepts/${dc.concept}`} class="ml-1 inline-block text-[color:var(--color-accent)] hover:underline font-medium whitespace-nowrap">→ 「{dc.conceptLabel}」 알아보기</a>
+    </p>
     <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
       <p class="text-sm text-[color:var(--color-muted)] max-w-2xl">
         <span class="text-[color:var(--color-subtle)]">권장 다음 작업:</span> {suggestion}
