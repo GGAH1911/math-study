@@ -1,24 +1,38 @@
 ---
-import { readLog } from '../lib/health.ts';
-const entries = readLog(8);
+import { readLog, cleanLogSubject, USER_ACTIVITY_OPS } from '../lib/health.ts';
+
+const isAdmin = !!Astro.locals.user?.is_admin;
+// 관리자: 전체 운영 로그(promote·prune·restructure·ingest…). 사용자: 학습 관련(노트 promote)만 —
+// prune/restructure/LWIP/ingest 등 개발·운영 작업은 비관리자 피드에서 제외.
+const all = readLog(isAdmin ? 8 : 40);
+const entries = (isAdmin ? all : all.filter((e) => USER_ACTIVITY_OPS.some((op) => e.operation.startsWith(op)))).slice(0, 8);
+
+const heading = isAdmin ? 'Recent Activity' : '최근 학습 활동';
+const subtitle = isAdmin ? '최근 작업 기록 (docs/log.md)' : '내가 정리한 학습 노트 활동';
+const moreHref = isAdmin ? '/log' : '/syntheses';
+const moreLabel = isAdmin ? '전체 기록 보기 →' : '학습 노트 전체 →';
+
+// 사용자에겐 'promote' 같은 내부 op 명을 친화적으로.
+const opLabel = (op: string): string => (!isAdmin && op.startsWith('promote') ? '학습 노트' : op);
 
 const iconFor = (op: string): string => {
+  if (op.startsWith('promote')) return '✎';
   if (op.startsWith('init')) return '✦';
   if (op.startsWith('smoke')) return '⌬';
   if (op.startsWith('ingest')) return '↧';
   if (op.startsWith('prune')) return '✂';
-  if (op.startsWith('merge')) return '⇄';
+  if (op.startsWith('restructure') || op.startsWith('merge')) return '⇄';
   if (op.startsWith('env')) return '⚙';
   return '·';
 };
 ---
 <section class="card">
   <header class="mb-3">
-    <h2 class="text-sm font-semibold">Recent Activity</h2>
-    <p class="text-xs text-[color:var(--color-muted)]">최근 작업 기록 (docs/log.md)</p>
+    <h2 class="text-sm font-semibold">{heading}</h2>
+    <p class="text-xs text-[color:var(--color-muted)]">{subtitle}</p>
   </header>
   {entries.length === 0 ? (
-    <p class="text-sm text-[color:var(--color-subtle)]">기록 없음.</p>
+    <p class="text-sm text-[color:var(--color-subtle)]">{isAdmin ? '기록 없음.' : '아직 학습 노트 활동이 없습니다.'}</p>
   ) : (
     <ol class="space-y-3 relative">
       {entries.map((e) => (
@@ -27,13 +41,13 @@ const iconFor = (op: string): string => {
           <div class="min-w-0 flex-1">
             <div class="flex items-baseline gap-2">
               <time class="font-mono text-[11px] text-[color:var(--color-subtle)]">{e.date}</time>
-              <span class="text-xs font-medium text-[color:var(--color-muted)]">{e.operation}</span>
+              <span class="text-xs font-medium text-[color:var(--color-muted)]">{opLabel(e.operation)}</span>
             </div>
-            <div class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-2">{e.subject}</div>
+            <div class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-2">{cleanLogSubject(e.subject)}</div>
           </div>
         </li>
       ))}
     </ol>
   )}
-  <a href="/log" class="block mt-3 text-center text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] transition">전체 기록 보기 →</a>
+  <a href={moreHref} class="block mt-3 text-center text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] transition">{moreLabel}</a>
 </section>

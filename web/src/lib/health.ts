@@ -66,6 +66,21 @@ export function readLog(limit?: number): LogEntry[] {
   return limit ? entries.slice(0, limit) : entries;
 }
 
+// 로그 subject 의 raw 슬러그 경로(예: logic/high-1/집합과_명제/논리, 2023/6월모평/2023_6월모평_미적분_30)를
+// 사람이 읽는 leaf 라벨(논리 / 2023 6월모평 미적분 30)로 치환. 활동 피드·/log 의 슬래시 경로 노출 제거.
+const _LOG_PATH_RE = /(?:[\w가-힣-]+\/)+[\w가-힣-]+/g;
+export function cleanLogSubject(subject: string): string {
+  if (!subject) return subject;
+  return subject.replace(_LOG_PATH_RE, (m) => {
+    const leaf = m.split('/').filter(Boolean).pop() ?? m;
+    return leaf.replace(/_/g, ' ');
+  });
+}
+
+// 사용자에게 의미 있는 학습 활동 op(노트 promote). 그 외(prune/restructure/ingest/init/env/merge/deploy/
+// curriculum/fix 등)는 개발·운영 작업이라 비관리자 피드에서 제외.
+export const USER_ACTIVITY_OPS = ['promote'];
+
 export type ConceptGraph = {
   generatedAt: string;
   nodes: Array<{

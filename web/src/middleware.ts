@@ -15,6 +15,7 @@ const PUBLIC_PATHS: RegExp[] = [
 const ADMIN_PATHS: RegExp[] = [
   /^\/dev(\/|$)/,              // 개발/디버그 도구 페이지(figure-test·rounds·variants 등)
   /^\/api\/regenerate-body\b/, // 공유 개념 본문 LLM 재생성(저작 행위)
+  /^\/log\/?$/,               // LWIP 운영 로그(promote/prune/restructure/ingest…) — 개발 기록
 ];
 
 // 정적/내부 자산·dev 모듈은 미들웨어 게이팅에서 제외(인증·CSRF 무관).
