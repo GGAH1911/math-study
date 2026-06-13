@@ -9,6 +9,7 @@ import MasteryDonut from '../components/MasteryDonut.tsx';
 import ConceptDAG from '../components/ConceptDAG.tsx';
 import ChatPanel from '../components/ChatPanel.tsx';
 import PaperHero from '../components/PaperHero.tsx';
+import { MathishText } from '../lib/mathish';
 import { readHealth, readConceptGraph, unitSummary, recommendUnits } from '../lib/health.ts';
 import { getMasteryMap } from '../lib/mastery.ts';
 import { getDueProblemCount, getWeeklyActivity } from '../lib/activity.ts';
@@ -107,7 +108,7 @@ const dateLine = streak >= 1 ? `${datePart} · 연속 ${streak}일째` : datePar
                   ← {leafOf(s.origin_concept)}
                 </a>
               )}
-              {s.excerpt && <p class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-1">{s.excerpt}</p>}
+              {s.excerpt && <p class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-1"><MathishText text={s.excerpt} display={false} client:visible /></p>}
             </li>
           ))}
         </ul>
