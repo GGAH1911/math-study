@@ -9,6 +9,9 @@ import rehypeKatex from 'rehype-katex';
 import { visit } from 'unist-util-visit';
 import { readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+// Pure KaTeX normalization shared with the client renderer (mathish.tsx) so
+// the build chain renders syntheses/concepts/problems at the same strength.
+import { normalizeKatex, KATEX_STRICT, KATEX_ERROR_COLOR } from './src/lib/katex-normalize.mjs';
 
 // 개념 leaf 이름 → 실제 중첩 slug 맵.
 // 개념 .md 본문이 flat 링크(`/concepts/이차함수`)를 쓰는데 실제 라우트는 중첩
@@ -46,32 +49,31 @@ const CONCEPT_LEAF_MAP = (() => {
   return map;
 })();
 
-// KaTeX strict 모드: 한국어 콘텐츠라 `$...의 ...$` 같은 raw 한글이
-// 자주 등장. `unicodeTextInMathMode` 만 ignore하고 나머지 (브래킷 불일치
-// 등 실제 LaTeX 오류) 는 그대로 경고로 둔다. 파싱 실패시 표시되는
+// KaTeX strict 모드: 한국어 콘텐츠라 `$...의 ...$` 같은 raw 한글이 자주 등장.
+// 클라이언트 위젯(mathish)과 동일한 정책을 공유 — `unicodeTextInMathMode`
+// 와 `unknownSymbol`(\text{} 안 raw 유니코드) 둘 다 ignore 하고 나머지
+// (브래킷 불일치 등 실제 LaTeX 오류) 는 그대로 경고로 둔다. 파싱 실패시 표시되는
 // errorColor 도 기본 빨강(#cc0000) 대신 amber 로 — 본문 한가운데 시뻘건
 // 텍스트가 튀어나오는 사고를 막음. (LLM 이 만든 식이 종종 깨짐.)
 const katexOptions = {
-  strict: (/** @type {string} */ code) => (code === 'unicodeTextInMathMode' ? 'ignore' : 'warn'),
-  errorColor: '#a16207',
+  strict: KATEX_STRICT,
+  errorColor: KATEX_ERROR_COLOR,
 };
 
 /**
- * Remark plugin: rewrite LaTeX environments that KaTeX doesn't support
- * (`align`, `align*`, `eqnarray`) to the closest supported equivalent
- * (`aligned`). LLM-generated notes routinely emit `\begin{align}` since
- * it's standard LaTeX, even though KaTeX rejects it. Rather than make
- * every author memorize the difference, normalize here.
+ * Remark plugin: normalize math nodes with the *same* pure routine the client
+ * widgets use (`normalizeKatex`):
+ *  - rewrite KaTeX-unsupported environments (`align`, `align*`, `eqnarray`)
+ *    to `aligned` — LLM notes routinely emit standard-LaTeX `\begin{align}`.
+ *  - escape unescaped `%` → `\%` — otherwise a `%` (LaTeX comment) swallows
+ *    the rest of the math segment and the whole equation silently vanishes.
+ * Scoped to `math`/`inlineMath` nodes, so `%` escaping touches math only
+ * (prose `50%` is untouched) — identical to how mathish confines it.
  */
 function remarkKatexCompat() {
-  const rewrite = (/** @type {string} */ src) => src
-    .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
-    .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
-    .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
-    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
   return (/** @type {any} */ tree) => {
     visit(tree, ['math', 'inlineMath'], (node) => {
-      if (typeof node.value === 'string') node.value = rewrite(node.value);
+      if (typeof node.value === 'string') node.value = normalizeKatex(node.value);
     });
   };
 }

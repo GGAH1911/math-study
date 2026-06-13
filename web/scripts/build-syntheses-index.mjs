@@ -13,8 +13,10 @@
  *         ...
  *       ],
  *     },
- *     recent: [{ slug, title, created, origin_concept, excerpt }, ...]
+ *     recent: [{ slug, title, created, origin_concept, origin_title, excerpt }, ...]
  *       // newest-first, full list (dashboard uses the first N).
+ *       // title is the chat h1, or the concept-graph label when the h1 is a
+ *       // raw concept path; origin_title is always the graph label (if any).
  *   }
  *
  * Consumer pages:
@@ -33,6 +35,34 @@ const REPO_ROOT = dirname(WEB_ROOT);
 const SYNTHESES_DIR = join(REPO_ROOT, 'docs', 'syntheses');
 const OUT_DIR = join(WEB_ROOT, 'src', 'data');
 const OUT_FILE = join(OUT_DIR, 'syntheses-by-concept.json');
+const CONCEPT_GRAPH_FILE = join(OUT_DIR, 'concept-graph.json');
+
+// concept-graph.json: { nodes: [{ id, label, prerequisites: [...] }, ...] }.
+// Build id → { label, prereq } so deriveTitle can swap a raw-path h1 for the
+// node's human label (e.g. id '.../논리' → label '논리').
+function loadConceptLabels() {
+  const map = new Map();
+  if (!existsSync(CONCEPT_GRAPH_FILE)) return map;
+  try {
+    const graph = JSON.parse(readFileSync(CONCEPT_GRAPH_FILE, 'utf-8'));
+    for (const n of graph.nodes ?? []) {
+      if (n?.id) map.set(n.id, { label: n.label ?? null, prereq: n.prerequisites?.[0] ?? null });
+    }
+  } catch (e) {
+    console.warn(`[syntheses-index] could not read concept-graph.json: ${e.message}`);
+  }
+  return map;
+}
+
+// Resolve a concept ref to a display title via the graph: leaf node label,
+// optionally prefixed with its parent unit label as '<unit> › <leaf>'.
+function conceptTitle(conceptRef, conceptLabels) {
+  if (!conceptRef) return null;
+  const node = conceptLabels.get(conceptRef);
+  if (!node?.label) return null;
+  const parent = node.prereq ? conceptLabels.get(node.prereq) : null;
+  return parent?.label ? `${parent.label} › ${node.label}` : node.label;
+}
 
 // origin_concept frontmatter is `docs/concepts/<slug>.md` — strip the
 // wrapping bits so we can join with concept-graph node ids directly.
@@ -75,13 +105,36 @@ function extractExcerpt(body) {
   return text.slice(0, 140) || null;
 }
 
+// A raw-path h1 is one promote.ts emitted from the concept slug rather than
+// a real chat title — e.g. '학습 노트 - logic/high-1/집합과_명제/논리'. We
+// detect path-ish shapes (slash segments / underscore-joined slug segments /
+// ascii slug tokens like 'algebra'·'high-1') so they can be replaced by the
+// concept label. A clean Korean label ('여러가지 함수의 극한과 연속') is kept.
+function isRawPathTitle(h1) {
+  if (!h1) return false;
+  // strip the standard '학습 노트 - ' prefix before inspecting the remainder
+  const rest = h1.replace(/^학습\s*노트\s*-\s*/, '');
+  if (rest.includes('/')) return true;                 // slash path segments
+  if (/[A-Za-z0-9가-힣]+_[A-Za-z0-9가-힣]/.test(rest)) return true; // underscore-joined slug
+  if (/(^|\s)[a-z][a-z0-9-]*([/_]|$)/.test(rest)) return true;     // ascii slug token
+  return false;
+}
+
 // Derive a human-readable title. promote.ts writes `# <something>` as the
-// first line of the body; we prefer that. Fall back to the filename's
-// trailing segment (after the leading date and slug-leaf) if the body has
-// no h1.
-function deriveTitle(filename, body) {
+// first line of the body; we prefer that, *unless* it is a raw concept-path
+// h1 — then we use the concept-graph label (conceptTitle) instead. Fall back
+// to the filename's trailing segment (after the leading date and slug-leaf)
+// if the body has no usable h1.
+function deriveTitle(filename, body, conceptTitleHint) {
   const m = body?.match(/^#\s+(.+?)\s*$/m);
-  if (m) return m[1].trim();
+  if (m) {
+    const h1 = m[1].trim();
+    if (!isRawPathTitle(h1)) return h1;
+    if (conceptTitleHint) return conceptTitleHint;
+    // no graph label: fall through to filename/leaf cleanup below
+  } else if (conceptTitleHint) {
+    return conceptTitleHint;
+  }
   // filename: YYYY-MM-DD_<slugLeaf>_<rest>.md
   const stem = filename.replace(/\.md$/, '');
   const parts = stem.split('_');
@@ -103,6 +156,7 @@ function main() {
   }
 
   const files = readdirSync(SYNTHESES_DIR).filter((f) => f.endsWith('.md'));
+  const conceptLabels = loadConceptLabels();
   const byConcept = {};
   const all = [];
 
@@ -112,16 +166,18 @@ function main() {
     const fm = parsed.data ?? {};
     const slug = f.replace(/\.md$/, '');
     const conceptRef = normalizeConceptRef(fm.origin_concept);
+    const originTitle = conceptTitle(conceptRef, conceptLabels);
     const created = fm.created
       ? new Date(fm.created).toISOString().slice(0, 10)
       : (f.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] ?? null);
     const entry = {
       slug,
-      title: deriveTitle(f, parsed.content),
+      title: deriveTitle(f, parsed.content, originTitle),
       created,
       review_state: fm.review_state ?? null,
       excerpt: extractExcerpt(parsed.content),
       origin_concept: conceptRef,
+      origin_title: originTitle,
     };
     all.push(entry);
     if (conceptRef) {

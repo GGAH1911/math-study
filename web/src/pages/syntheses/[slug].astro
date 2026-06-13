@@ -7,6 +7,7 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, render } from 'astro:content';
 import SynthesisDeleteButton from '../../components/SynthesisDeleteButton.tsx';
+import synthesesIndex from '../../data/syntheses-by-concept.json';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('syntheses', slug);
@@ -21,12 +22,20 @@ const originSlug = (fm.origin_concept ?? '')
   .replace(/\.md$/, '');
 const originLabel = originSlug.split('/').pop()?.replace(/_/g, ' ') ?? '';
 
+// build-syntheses-index.mjs already cleaned the title (concept-graph label
+// when the note's h1 was a raw path). Use it for the page heading; fall back
+// to the concept leaf label, never the raw id.
+type IndexEntry = { slug: string; title?: string; origin_title?: string };
+const indexEntry = ((synthesesIndex as any).recent ?? [] as IndexEntry[])
+  .find((r: IndexEntry) => r.slug === entry.id);
+const pageTitle = indexEntry?.title ?? indexEntry?.origin_title ?? originLabel ?? entry.id;
+
 const fmt = (d: Date | undefined) => d ? d.toISOString().slice(0, 10) : null;
 const created = fmt(fm.created) ?? entry.id.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] ?? null;
 const updated = fmt(fm.updated);
 const nextReview = fmt(fm.next_review);
 ---
-<BaseLayout title={entry.id}>
+<BaseLayout title={pageTitle}>
   <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
     <article class="prose prose-invert max-w-none">
       <Content />

@@ -15,7 +15,7 @@ const dateOf = (s: typeof all[number]): string => {
 all.sort((a, b) => dateOf(b).localeCompare(dateOf(a)));
 
 // build-syntheses-index.mjs가 미리 추출한 excerpt + title.
-type IndexEntry = { slug: string; title?: string; created?: string; excerpt?: string; origin_concept?: string };
+type IndexEntry = { slug: string; title?: string; created?: string; excerpt?: string; origin_concept?: string; origin_title?: string };
 const indexBySlug = new Map<string, IndexEntry>(
   ((synthesesIndex as any).recent ?? []).map((r: IndexEntry) => [r.slug, r]),
 );
@@ -43,7 +43,10 @@ const leafOf = (p?: string): string => p ? (p.split('/').pop() ?? p).replace(/_/
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {all.map((s) => {
           const idx = indexBySlug.get(s.id);
-          const title = idx?.title ?? s.id;
+          // index title is already cleaned (graph label when h1 was a raw
+          // path); if the entry is missing, prefer the graph label, else a
+          // leaf-cleaned slug rather than the raw id.
+          const title = idx?.title ?? idx?.origin_title ?? leafOf(s.id);
           const originLeaf = leafOf(idx?.origin_concept ?? s.data.origin_concept ?? '');
           const created = dateOf(s);
           return (

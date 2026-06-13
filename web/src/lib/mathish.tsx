@@ -8,6 +8,13 @@
 // source of truth.
 
 import { useEffect, useState } from 'react';
+// Pure string→string normalization + strict policy live in a shared `.mjs`
+// module so the build chain (astro.config.mjs) renders syntheses/concepts/
+// problems with the *same* strength as these client widgets. Re-exported
+// below so existing `from './mathish'` importers keep working unchanged.
+import { normalizeKatex, KATEX_STRICT, KATEX_ERROR_COLOR } from './katex-normalize.mjs';
+
+export { normalizeKatex, KATEX_STRICT, KATEX_ERROR_COLOR };
 
 // Cached KaTeX singleton — once one component loads it, all share the same
 // instance via `window.katex`. function-plot also pulls KaTeX in, so most
@@ -21,40 +28,6 @@ type KatexOpts = {
 };
 type Katex = { renderToString: (tex: string, opts?: KatexOpts) => string };
 let _katex: Katex | null = null;
-
-// Korean prose routinely puts Hangul tokens inside `$...$` (e.g. set
-// elements like `{가, 나, 다}`). KaTeX's default strict mode logs a
-// warning per character which floods the console; muting the
-// `unicodeTextInMathMode` code keeps real LaTeX errors visible.
-//
-// `unknownSymbol` 도 ignore: LLM 이 `\text{증가 → 감소}` 처럼 `\text{}` 안에 raw
-// 유니코드(→·×·≈ …)를 넣으면 KaTeX 가 글리프로 정상 렌더하면서도 문자마다 warn 을
-// 쏟아낸다. 이걸 LaTeX 명령(\to 등)으로 치환하면 text 모드에선 오히려 "Undefined
-// control sequence" 하드에러가 난다(검증함). 따라서 변환하지 말고 경고만 끈다 —
-// 렌더 결과는 동일(raw 글리프), 콘솔만 조용해진다. 진짜 LaTeX 오류는 여전히 보임.
-export const KATEX_STRICT: KatexOpts['strict'] = (code) =>
-  code === 'unicodeTextInMathMode' || code === 'unknownSymbol' ? 'ignore' : 'warn';
-
-// LLM-generated math frequently uses `\begin{align}` (standard LaTeX,
-// unsupported by KaTeX). Normalize to `aligned` before rendering so the
-// output isn't a sea of red parse-error text.
-export function normalizeKatex(tex: string): string {
-  return tex
-    // 이스케이프 안 된 `%` → `\%`. KaTeX/LaTeX 에서 `%` 는 주석 시작 문자라
-    // `\text{171.8% 유효이자율}` 의 `%` 가 뒤(닫는 `}`·`$$`)를 통째로 주석처리해
-    // 파싱 실패 → raw 노출. 튜터 수식 안 `%` 는 항상 퍼센트 의미이므로 escape.
-    .replace(/(?<!\\)%/g, '\\%')
-    .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
-    .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
-    .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
-    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
-}
-
-// Muted error color for cases that DO fall through (unknown commands,
-// brace mismatches the LLM still produces). Bright red `#cc0000` is too
-// alarming for a body that's otherwise readable; amber keeps it visible
-// without making the whole note feel broken.
-export const KATEX_ERROR_COLOR = '#a16207';
 
 export async function ensureKatex(): Promise<Katex | null> {
   if (_katex) return _katex;
