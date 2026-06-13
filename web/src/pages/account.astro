@@ -1,0 +1,183 @@
+---
+// 회원정보("내 정보") 페이지 — 인증 필수(SSR). 계정 정보 + 로그아웃 + 학습 현황 +
+// 학습자 프로필(정성) 편집. 약점 패턴은 튜터가 자동 누적한 것을 읽기 전용으로 노출.
+export const prerender = false;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getMasteryCounts } from '../lib/mastery.ts';
+import { getUserProfile } from '../lib/learner.ts';
+
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?returnTo=/account');
+
+const counts = await getMasteryCounts(user.id);
+const profile = await getUserProfile(user.id);
+const recorded = counts.learning + counts.proficient + counts.mastered;
+
+const masteryChips = [
+  { key: 'mastered', label: '숙달', n: counts.mastered, v: 'mastered' },
+  { key: 'proficient', label: '능숙', n: counts.proficient, v: 'proficient' },
+  { key: 'learning', label: '학습중', n: counts.learning, v: 'learning' },
+  { key: 'unknown', label: '미착수', n: counts.unknown, v: 'unknown' },
+];
+---
+
+<BaseLayout title="내 정보">
+  <div class="max-w-3xl mx-auto px-6 py-8 space-y-8">
+    <h1 class="text-2xl font-semibold">내 정보</h1>
+
+    {/* ── 계정 ── */}
+    <section class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-5">
+      <div class="flex items-start justify-between gap-4">
+        <div class="min-w-0">
+          <h2 class="text-sm font-semibold text-[color:var(--color-subtle)] mb-3">계정</h2>
+          <dl class="space-y-1.5 text-sm">
+            <div class="flex gap-3">
+              <dt class="w-20 shrink-0 text-[color:var(--color-muted)]">이메일</dt>
+              <dd class="font-mono truncate">{user.email}</dd>
+            </div>
+            {user.display_name && (
+              <div class="flex gap-3">
+                <dt class="w-20 shrink-0 text-[color:var(--color-muted)]">이름</dt>
+                <dd>{user.display_name}</dd>
+              </div>
+            )}
+            <div class="flex gap-3">
+              <dt class="w-20 shrink-0 text-[color:var(--color-muted)]">유형</dt>
+              <dd class="text-[color:var(--color-muted)]">{user.is_legacy ? '기존 학습 데이터 상속 계정' : '일반 계정'}</dd>
+            </div>
+          </dl>
+        </div>
+        <button id="logout-btn" type="button"
+          class="shrink-0 px-3 py-1.5 rounded-md border border-[color:var(--color-border)] text-sm text-[color:var(--color-muted)] hover:border-rose-500/50 hover:text-rose-300 transition">
+          로그아웃
+        </button>
+      </div>
+    </section>
+
+    {/* ── 학습 현황 ── */}
+    <section class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-sm font-semibold text-[color:var(--color-subtle)]">학습 현황 (개념 숙달)</h2>
+        <a href="/" class="text-xs text-[color:var(--color-accent)] hover:underline">대시보드 →</a>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {masteryChips.map((c) => (
+          <div class="rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3 py-2.5">
+            <div class="flex items-center gap-1.5 text-xs text-[color:var(--color-muted)]">
+              <span class={`inline-block size-1.5 rounded-full bg-[color:var(--color-mastery-${c.v})]`}></span>
+              {c.label}
+            </div>
+            <div class="stat-num text-xl mt-0.5">{c.n}</div>
+          </div>
+        ))}
+      </div>
+      {recorded === 0 && (
+        <p class="text-xs text-[color:var(--color-muted)] mt-3">아직 숙달 기록이 없습니다. 단원을 학습하면 여기에 쌓입니다.</p>
+      )}
+    </section>
+
+    {/* ── 학습자 프로필 (정성, 편집 가능) ── */}
+    <section class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-5">
+      <h2 class="text-sm font-semibold text-[color:var(--color-subtle)] mb-1">학습자 프로필</h2>
+      <p class="text-xs text-[color:var(--color-muted)] mb-4">튜터가 이 정보로 설명 깊이를 맞춥니다. 직접 적어두셔도 되고, 대화하다 보면 자동으로 채워집니다.</p>
+
+      <form id="profile-form" class="space-y-4">
+        <div>
+          <label class="block text-xs text-[color:var(--color-muted)] mb-1" for="self_reported_level">현재 수준 (자기 보고)</label>
+          <input id="self_reported_level" name="self_reported_level" type="text" maxlength="200"
+            placeholder="예: 수학Ⅰ까지 봤고 미적분은 처음"
+            value={profile?.self_reported_level ?? ''}
+            class="w-full px-3 py-2 rounded-md bg-[color:var(--color-bg)] border border-[color:var(--color-border)] focus:border-[color:var(--color-accent)] outline-none text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs text-[color:var(--color-muted)] mb-1" for="goals">학습 목표</label>
+          <textarea id="goals" name="goals" rows="2" maxlength="500"
+            placeholder="예: 6월 모평 미적분 4등급 → 2등급"
+            class="w-full px-3 py-2 rounded-md bg-[color:var(--color-bg)] border border-[color:var(--color-border)] focus:border-[color:var(--color-accent)] outline-none text-sm resize-y">{profile?.goals ?? ''}</textarea>
+        </div>
+        <div>
+          <label class="block text-xs text-[color:var(--color-muted)] mb-1" for="learning_pace">학습 페이스</label>
+          <input id="learning_pace" name="learning_pace" type="text" maxlength="200"
+            placeholder="예: 하루 2시간, 주말 집중"
+            value={profile?.learning_pace ?? ''}
+            class="w-full px-3 py-2 rounded-md bg-[color:var(--color-bg)] border border-[color:var(--color-border)] focus:border-[color:var(--color-accent)] outline-none text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs text-[color:var(--color-muted)] mb-1" for="notes">메모</label>
+          <textarea id="notes" name="notes" rows="3" maxlength="2000"
+            placeholder="자유 메모 (튜터에게 전하고 싶은 것 등)"
+            class="w-full px-3 py-2 rounded-md bg-[color:var(--color-bg)] border border-[color:var(--color-border)] focus:border-[color:var(--color-accent)] outline-none text-sm resize-y">{profile?.notes ?? ''}</textarea>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button type="submit"
+            class="px-4 py-2 rounded-md bg-indigo-500/20 border border-indigo-500/40 text-indigo-200 hover:bg-indigo-500/30 transition text-sm font-medium disabled:opacity-50">
+            저장
+          </button>
+          <span id="profile-status" class="text-xs min-h-[1rem]" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+
+      {/* 자동 감지된 약점 — 튜터가 누적 기록(읽기 전용) */}
+      <div class="mt-5 pt-4 border-t border-[color:var(--color-border)]">
+        <h3 class="text-xs font-semibold text-[color:var(--color-subtle)] mb-2">튜터가 감지한 약점 패턴</h3>
+        {profile && profile.weakness_patterns.length > 0 ? (
+          <ul class="flex flex-wrap gap-2">
+            {profile.weakness_patterns.map((w) => (
+              <li class="px-2.5 py-1 rounded-full bg-[color:var(--color-bg)] border border-[color:var(--color-border)] text-xs text-[color:var(--color-muted)]">{w}</li>
+            ))}
+          </ul>
+        ) : (
+          <p class="text-xs text-[color:var(--color-muted)]">아직 없습니다 — 튜터와 대화하면서 막히는 지점이 자동으로 기록됩니다.</p>
+        )}
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById('profile-form') as HTMLFormElement | null;
+    const status = document.getElementById('profile-status');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!status) return;
+      const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
+      btn.disabled = true;
+      status.textContent = '저장 중…';
+      status.className = 'text-xs min-h-[1rem] text-[color:var(--color-muted)]';
+      const fd = new FormData(form);
+      try {
+        const r = await fetch('/api/profile-update', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            self_reported_level: String(fd.get('self_reported_level') ?? ''),
+            goals: String(fd.get('goals') ?? ''),
+            learning_pace: String(fd.get('learning_pace') ?? ''),
+            notes: String(fd.get('notes') ?? ''),
+          }),
+        });
+        const d = await r.json().catch(() => ({}));
+        if (r.ok && d.ok) {
+          status.textContent = '저장되었습니다.';
+          status.className = 'text-xs min-h-[1rem] text-emerald-400';
+        } else {
+          status.textContent = d.error || '저장에 실패했습니다.';
+          status.className = 'text-xs min-h-[1rem] text-rose-400';
+        }
+      } catch {
+        status.textContent = '네트워크 오류가 발생했습니다.';
+        status.className = 'text-xs min-h-[1rem] text-rose-400';
+      }
+      btn.disabled = false;
+    });
+
+    const logoutBtn = document.getElementById('logout-btn') as HTMLButtonElement | null;
+    logoutBtn?.addEventListener('click', async () => {
+      logoutBtn.disabled = true;
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch { /* 무시하고 로그인으로 */ }
+      location.href = '/login';
+    });
+  </script>
+</BaseLayout>

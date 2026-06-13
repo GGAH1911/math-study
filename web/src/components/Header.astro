@@ -3,6 +3,7 @@ import { readHealth, unitSummary } from '../lib/health.ts';
 const health = readHealth();
 const u = unitSummary();
 const s = u.byStatus;
+const user = Astro.locals.user;
 ---
 
 <header class="sticky top-0 z-30 flex items-center gap-4 px-6 py-3 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/85 backdrop-blur">
@@ -34,5 +35,13 @@ const s = u.byStatus;
       <span class={`size-1.5 rounded-full ${health.dagIntegrity === 'ok' ? 'bg-[color:var(--color-mastery-proficient)]' : 'bg-[color:var(--color-mastery-unknown)]'}`}></span>
       <span>DAG {health.dagIntegrity}</span>
     </span>
+
+    {user && (
+      <a href="/account" title="내 정보"
+        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] hover:border-[color:var(--color-accent)] transition max-w-[11rem]">
+        <span class="text-[color:var(--color-subtle)]">👤</span>
+        <span class="truncate">{user.email}</span>
+      </a>
+    )}
   </div>
 </header>
