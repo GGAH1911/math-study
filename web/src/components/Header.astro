@@ -12,6 +12,7 @@ const mof = (id: string): UnitStatus => (masteryMap.get(id) ?? 'unknown') as Uni
 const u = unitSummary(mof);
 const s = u.byStatus;
 const dueCount = Astro.locals.user ? await getDueProblemCount(Astro.locals.user.id) : 0;
+const user = Astro.locals.user;
 const { pathname } = Astro.url; // 모바일 도크 active 판정용
 ---
 
@@ -53,6 +54,18 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
     </span>
 
     <ThemeToggle />
+
+    {user && (
+      <a href="/account" title="내 정보"
+        class="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] hover:border-[color:var(--color-accent)] transition max-w-[9rem]">
+        <span class="text-[color:var(--color-subtle)]">👤</span>
+        <span class="truncate">{user.email}</span>
+      </a>
+    )}
+    {user && (
+      <button type="button" data-logout title="로그아웃"
+        class="hidden lg:inline-flex items-center px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] hover:border-[color:var(--pen-red)] hover:text-[color:var(--pen-red)] transition">로그아웃</button>
+    )}
   </div>
 
   {/* 손그림 괘선 — 미세하게 흔들리는 펜선(wobble 예산 1/3, 계약 §15) */}
