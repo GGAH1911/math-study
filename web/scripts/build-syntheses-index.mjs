@@ -102,7 +102,12 @@ function extractExcerpt(body) {
     .replace(/[*_`]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
-  return text.slice(0, 140) || null;
+  let out = text.slice(0, 140);
+  // 140자 컷이 `$…$` 한가운데를 끊으면 닫는 `$` 없는 dangling `$` 가 남아
+  // KaTeX 가 못 렌더하고 리터럴 `$a < 0` 로 노출된다 → `$` 개수가 홀수면
+  // 마지막 여는 `$` 이후를 잘라낸다(수식 토막 제거).
+  if (((out.match(/\$/g) || []).length) % 2 === 1) out = out.slice(0, out.lastIndexOf('$')).trim();
+  return out || null;
 }
 
 // A raw-path h1 is one promote.ts emitted from the concept slug rather than
