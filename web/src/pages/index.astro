@@ -56,7 +56,17 @@ const dateLine = streak >= 1 ? `${datePart} · 연속 ${streak}일째` : datePar
   <section class="max-w-6xl mx-auto px-6 pt-8 pb-6">
     <p class="font-hand text-[22px] leading-none text-[color:var(--color-muted)]">{dateLine}</p>
     <h1 class="mt-2 text-3xl md:text-4xl font-bold tracking-tight">오늘의 페이지</h1>
-    <PaperHero client:idle />
+    <div class="relative">
+      <PaperHero client:idle />
+      {/* 모눈 위 손글씨 메모 — 날짜줄·문구·버튼에 없는 유용한 학습 점보들을 군데군데(margin scribbles).
+          pointer-events-none 으로 캔버스 호버 방해 안 함. 곡선은 중앙, 메모는 모서리. */}
+      <div class="pointer-events-none absolute inset-0 select-none font-hand text-[15px] sm:text-[18px] leading-none text-[color:var(--color-subtle)]" aria-hidden="true">
+        <span class="absolute top-1 left-1 -rotate-2">숙달 {us.mastered} · 능숙 {us.proficient} · 학습중 {us.learning} 단원</span>
+        <span class="absolute bottom-2 left-1 rotate-1">착수 {units.started}/{units.total} 단원</span>
+        <span class="absolute top-1/2 -translate-y-1/2 right-2 rotate-1 hidden sm:block">개념 {graph.nodes.length.toLocaleString()}개 · 노트 {totalSyntheses}개</span>
+        {dueCount > 0 && <span class="absolute bottom-2 right-2 -rotate-1 text-[color:var(--pen-red)]">복습 {dueCount}건 대기 ↘</span>}
+      </div>
+    </div>
     <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
       <p class="text-sm text-[color:var(--color-muted)] max-w-2xl">
         <span class="text-[color:var(--color-subtle)]">권장 다음 작업:</span> {suggestion}
