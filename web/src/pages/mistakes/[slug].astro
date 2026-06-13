@@ -23,8 +23,8 @@ const fmtProblemPath = (p: string) => {
 const labelOf = (slug: string) => slug.split('/').pop() ?? slug;
 ---
 <BaseLayout title={entry.id}>
-  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
-    <article class="prose prose-invert max-w-none">
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_280px] gap-8">
+    <article class="prose prose-invert max-w-none min-w-0">
       <Content />
     </article>
 

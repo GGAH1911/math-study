@@ -124,7 +124,7 @@ export default function ProgressView() {
   else stageLabel = '대기/시작 전';
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-6">
       {/* Log */}
       <section className="card p-0 overflow-hidden">
         <header className="flex items-center justify-between px-4 py-2 border-b border-zinc-800 bg-zinc-900/50">
