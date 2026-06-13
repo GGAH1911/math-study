@@ -15,6 +15,15 @@ const moreLabel = isAdmin ? '전체 기록 보기 →' : '학습 노트 전체 �
 // 사용자에겐 'promote' 같은 내부 op 명을 친화적으로.
 const opLabel = (op: string): string => (!isAdmin && op.startsWith('promote') ? '학습 노트' : op);
 
+// 사용자 뷰 subject 간결화: 'chat → synthesis: "[요청]…" from 논리' → 개념 '논리'.
+// (op 라벨이 이미 "학습 노트"라 개념만 보이면 충분.) from 없으면 dev 접두만 제거.
+const friendlySubject = (subject: string): string => {
+  const s = cleanLogSubject(subject);
+  const i = s.lastIndexOf(' from ');
+  if (i >= 0) return s.slice(i + 6).trim();
+  return s.replace(/^\s*chat\s*→\s*synthesis:\s*/i, '').trim();
+};
+
 const iconFor = (op: string): string => {
   if (op.startsWith('promote')) return '✎';
   if (op.startsWith('init')) return '✦';
@@ -43,7 +52,7 @@ const iconFor = (op: string): string => {
               <time class="font-mono text-[11px] text-[color:var(--color-subtle)]">{e.date}</time>
               <span class="text-xs font-medium text-[color:var(--color-muted)]">{opLabel(e.operation)}</span>
             </div>
-            <div class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-2">{cleanLogSubject(e.subject)}</div>
+            <div class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-2">{isAdmin ? cleanLogSubject(e.subject) : friendlySubject(e.subject)}</div>
           </div>
         </li>
       ))}
