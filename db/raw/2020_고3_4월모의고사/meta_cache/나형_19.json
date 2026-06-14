@@ -1,0 +1,17 @@
+{
+  "text_sha": "ccc70954aa00",
+  "meta": {
+    "searchable_text": "4주간 월수요일(총 12일)에 봉사활동 A, B, C를 각각 3회, 3회, 6회 신청. 규칙: (1) 첫째 주에 A, B, C 모두 신청, (2) 같은 요일에는 두 종류 이상 신청. 첫째 주에 A, B, C를 모두 신청하는 경우 $3!$가지. (ⅰ) 첫째 주 제외 3주간 A 2회, B 2회, C 5회 신청 경우의 수를 $\\square$가$\\square$라 함. (ⅱ) 첫째 주에 C를 신청한 요일과 같은 요일에 모두 C를 신청하는 경우의 수를 $\\square$나$\\square$라 함. 구하는 경우의 수는 $3! \\times (\\square가\\square - \\square나\\square)$. $\\square$의 값은? ① 825 ② 832 ③ 839 ④ 846 ⑤ 853",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "경우의_수_고1",
+      "조합",
+      "포함배제원리"
+    ],
+    "exam_intent": "조건부 경우의 수에서 포함-배제 원리를 적용하여 정확히 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

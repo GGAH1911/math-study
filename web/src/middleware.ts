@@ -9,6 +9,8 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/signup\/?$/,
   /^\/api\/auth\//, // 로그인/가입/로그아웃 API
   /^\/api\/health\b/,
+  /^\/progress\/?$/,    // 인제스트 진행 관측 — 개발용, 미인증 허용
+  /^\/api\/progress\b/, // progress 폴링 API
 ];
 
 // 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.

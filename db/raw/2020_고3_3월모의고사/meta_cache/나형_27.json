@@ -1,0 +1,18 @@
+{
+  "text_sha": "ae8d71b50ce9",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t$에서의 속도 $v(t) = -3t^2 + 12t - 9$이다. 점 P가 $t=0$일 때 원점을 출발하여 처음으로 운동 방향을 바꾼 순간의 위치를 A라 하자. 점 P가 A에서 방향을 바꾼 순간부터 다시 A로 돌아올 때까지 움직인 거리를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "부정적분",
+      "속도와_위치",
+      "거리_계산",
+      "함수의_근"
+    ],
+    "exam_intent": "도함수로부터 원함수를 구하고 운동 거리를 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

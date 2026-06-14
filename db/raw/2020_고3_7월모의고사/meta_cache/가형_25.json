@@ -1,0 +1,17 @@
+{
+  "text_sha": "54aedd8b6909",
+  "meta": {
+    "searchable_text": "좌표평면 위를 움직이는 점 $P$의 시각 $t$에서의 위치가 $\\left(\\sqrt{3}\\cos t, 6\\ln(2\\sin t)\\right)$이다. 시각 $t = \\frac{\\pi}{2}$에서 점 $P$의 속력을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_방정식",
+      "속력",
+      "합성함수_미분"
+    ],
+    "exam_intent": "매개변수 곡선에서 합성함수 미분으로 속력을 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

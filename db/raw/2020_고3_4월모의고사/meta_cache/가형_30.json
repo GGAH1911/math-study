@@ -1,0 +1,16 @@
+{
+  "text_sha": "19843d92229e",
+  "meta": {
+    "searchable_text": "두 수열 {aₙ}, {bₙ}이 모든 자연수 n에 대하여 다음 조건을 만족시킨다. (가) aₙ₊₂ = bₙ₊₂ (나) aₙ₊₂ = aₙ₊₁ + aₙ + 1 (다) bₙ₊₂ = [점화식 불명확—텍스트레이어 손상] (라) bₙ₊₂ = bₙ₊₁ + bₙ + 3. a₄₈ = 49이고 Σ(i=1 to 31) aᵢ = 63, Σ(i=1 to 31) bᵢ = 155일 때, a₃₂의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "수열의_합"
+    ],
+    "exam_intent": "두 수열 간 점화식 관계와 부분합 조건으로부터 특정 항의 값 도출",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

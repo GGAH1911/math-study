@@ -1,0 +1,15 @@
+{
+  "text_sha": "bfdeff07e5e7",
+  "meta": {
+    "searchable_text": "$(x+2)^5$의 전개식에서 $x^3$의 계수는? ① 20 ② 25 ③ 30 ④ 35 ⑤ 40",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리"
+    ],
+    "exam_intent": "이항정리를 이용한 전개식의 특정 항 계수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -316,6 +316,15 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
     page_files = render_pdf_pages(prob_pdf, pages_dir)
     print(f'  ✓ {len(page_files)} pages rendered', flush=True)
 
+    # Step 1.5: 로제타 자동 확장 — 신규 PUA 글리프(사전에 없는 것)가 있으면 비전으로 식별해 등록
+    try:
+        import rosetta_extend
+        _added = rosetta_extend.extend(prob_pdf, log=lambda m: print('  ' + m, flush=True))
+        if _added:
+            print(f'  ✓ 로제타 사전 확장 {len(_added)}종', flush=True)
+    except Exception as _e:
+        print(f'  · rosetta_extend 건너뜀: {str(_e)[:80]}', flush=True)
+
     # Step 2: identify problem bboxes
     entries = extract_problem_bboxes(prob_pdf, exam_type=exam_type, grade=grade)
     if not entries:

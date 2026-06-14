@@ -1,0 +1,17 @@
+{
+  "text_sha": "807a207f777e",
+  "meta": {
+    "searchable_text": "삼각형 ABC에서 ∠A, ∠B, ∠C를 각각 A, B, C라 할 때, A, B, C가 이 순서대로 등차수열을 이루고 $\\cos A$, $2\\cos B$, $8\\cos C$가 이 순서대로 등비수열을 이룬다. $\\tan A \\tan C$의 값을 구하시오. (단, $0 < A, B, C < \\pi$)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "등차수열과_등비수열",
+      "삼각형의_성질"
+    ],
+    "exam_intent": "삼각형의 각도 조건과 등차·등비 수열을 결합하여 삼각함수 관계식으로부터 답 도출",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

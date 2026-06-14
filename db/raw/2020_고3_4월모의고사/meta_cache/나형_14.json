@@ -1,0 +1,17 @@
+{
+  "text_sha": "104b3432d7a7",
+  "meta": {
+    "searchable_text": "다항함수 $f(x)$가 $\\lim_{x \\to \\infty} \\frac{f(x)}{x^2} = 3$, $\\lim_{x \\to 2} \\frac{f(x) - f(2)}{x - 2} = 6$을 만족시킬 때, $f(0)$의 값은? ① -24 ② -21 ③ -18 ④ -15 ⑤ -12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_정의",
+      "다항함수의_결정",
+      "미분가능성"
+    ],
+    "exam_intent": "극한 조건으로부터 다항함수의 차수 및 계수를 결정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-06-06
-updated: 2026-06-06
+created: 2026-06-13
+updated: 2026-06-13
 hub_type: concepts-grade
 domain: equations
 grade: high-1

@@ -1,0 +1,16 @@
+{
+  "text_sha": "db16670e6c23",
+  "meta": {
+    "searchable_text": "등차수열 $\\{a_n\\}$에 대하여 $b_n = a_1 + a_n$, $c_n = a_1 \\cdot a_n$이라 할 때, $b_n$, $c_n$은 다음 조건을 만족시킨다. (가) $b_7 = c_7$ (나) 6 이상의 모든 자연수 $n$에 대하여 $c_n \\leq 84$이다. $a_{15}$의 값은? ① 96 ② 102 ③ 108 ④ 114 ⑤ 120",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열의_일반항",
+      "조건식을_이용한_미지수_결정"
+    ],
+    "exam_intent": "등차수열의 성질과 주어진 조건들을 결합하여 첫째항과 공차를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

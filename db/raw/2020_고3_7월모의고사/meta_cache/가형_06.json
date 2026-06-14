@@ -1,0 +1,16 @@
+{
+  "text_sha": "5adda7633fc6",
+  "meta": {
+    "searchable_text": "$$\\lim_{x \\to 0} \\frac{\\ln(x^2+x+1)}{x^2+4x}$$의 값은? [3점]\n①3\n②4\n③5\n④6\n⑤7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "로그함수"
+    ],
+    "exam_intent": "로그함수 극한과 로피탈의 정리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

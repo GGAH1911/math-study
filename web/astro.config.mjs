@@ -176,6 +176,12 @@ export default defineConfig({
         '.ts.net',           // any Tailscale MagicDNS hostname
         '.tailf47aa4.ts.net', // this tailnet specifically
       ],
+      // worktree 의 node_modules 는 메인 레포로 심링크돼 있어, vite 가 심링크를
+      // resolve 하면 서빙 루트(WT/web) 밖이 된다 → react client.js 등이 allow
+      // list 밖으로 막힌다. 메인 레포 루트를 허용해 통과시킨다.
+      fs: {
+        allow: ['..', '/home/insung/Projects/math-study'],
+      },
     },
     // mathlive 는 ChatPanel 의 '∑ 수식' 버튼을 처음 누를 때 동적 import
     // 된다. dev 서버 startup 시 vite가 정적 import 만 스캔하므로 mathlive

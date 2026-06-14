@@ -1,0 +1,16 @@
+{
+  "text_sha": "210776f6de5c",
+  "meta": {
+    "searchable_text": "10 ≤ $a$ ≤ 1000인 실수 $a$에 대하여 $\\log_3 a - \\log_a a^2 + 1$의 값이 자연수가 되도록 하는 모든 $a$의 개수를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "지수방정식"
+    ],
+    "exam_intent": "로그의 성질을 이용한 자연수 조건식 풀이",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "feb9ce4e9f71",
+  "meta": {
+    "searchable_text": "a > 1인 실수 a에 대하여 직선이 곡선 $y = a^x$와 만나는 점의 좌표를 구하고, 곡선 $y = \\log_a x$와 만나는 점의 좌표를 구하여 로그값 조건으로부터 답을 구하는 문제. 선택지: ① 0 ② 2 ③ 4 ④ 6 ⑤ 8",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수방정식과_로그방정식",
+      "함수의_그래프"
+    ],
+    "exam_intent": "지수·로그함수 교점과 로그 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "d7035b1a39d7",
+  "meta": {
+    "searchable_text": "부등식 $\\log_{18} 2 < \\log_x 9 < \\log_{18} x < 1$을 만족시키는 모든 자연수 $x$의 값의 합은?\n① 14\n② 15\n③ 16\n④ 17\n⑤ 18",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그부등식",
+      "로그함수의_성질",
+      "부등식의_해집합"
+    ],
+    "exam_intent": "로그 부등식의 조건을 동시에 만족하는 자연수를 찾아 합 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

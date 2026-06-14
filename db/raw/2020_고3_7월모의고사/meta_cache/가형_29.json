@@ -1,0 +1,16 @@
+{
+  "text_sha": "5920627069ff",
+  "meta": {
+    "searchable_text": "길이가 4인 선분 AB를 지름으로 하고 중심이 O인 원이 있다. 원 위를 움직이는 점 P에 대하여 ∠PAB = α라 할 때, 선분 AB 위에 ∠APQ = 2α를 만족시키는 점 Q를 정한다. 직선 PQ가 원과 만나는 점 중 P가 아닌 점을 R이라 할 때, 중심이 삼각형 AQP의 내부에 있고 두 선분 PA, PR에 동시에 접하는 원 ⋄'이 있다. 원 ⋄'이 점 O를 지날 때, 원 ⋄'의 반지름의 길이를 $r$, 삼각형 BQR의 넓이를 $S$라 하자. $$\\lim_{\\alpha \\to 0} \\frac{S}{r}$$ 일 때, $45 \\times \\text{극한값}$의 값을 구하시오. (단, $0 < \\alpha < \\frac{\\pi}{4}$) [4점]",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "호와_원주각",
+      "접선의_성질"
+    ],
+    "exam_intent": "극한을 이용한 복잡한 기하 최적화 문제 해결 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

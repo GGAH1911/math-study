@@ -1,0 +1,18 @@
+{
+  "text_sha": "193274a84ea0",
+  "meta": {
+    "searchable_text": "자연수에 대하여 두 함수 $f(x) = ax^4 + bx^2 + cx + d$, $g(x) = ex^3 + fx^2 + h$가 있다. 다음을 만족시키는 자연수 값을 구하시오. 모든 실수 $x$에 대하여 부등식 $g(x) \\leq 12x \\leq f(x)$를 만족시키는 자연수의 개수는 3이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "부등식_조건",
+      "함수_대소관계",
+      "극값",
+      "매개변수"
+    ],
+    "exam_intent": "복잡한 부등식 조건을 만족하는 매개변수를 찾기 위한 체계적 분석",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

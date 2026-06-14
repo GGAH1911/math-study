@@ -1,0 +1,17 @@
+{
+  "text_sha": "b02cc496c660",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 $a_1 = 1$이고 모든 자연수 $n$에 대하여 $(a_{n+1})^2 \\le 1 + \\log_2 a_n$을 만족시킬 때, $a_{12} \\times a_{13}$의 값은? [3점]\n① $\\frac{\\sqrt{2}}{2}$\n② $1$\n③ $\\sqrt{2}$\n④ $2$\n⑤ $2\\sqrt{2}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "로그",
+      "수열의_극한",
+      "부등식"
+    ],
+    "exam_intent": "로그 부등식 조건에서 수열의 수렴성과 일반항 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

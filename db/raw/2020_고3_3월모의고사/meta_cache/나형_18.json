@@ -1,0 +1,16 @@
+{
+  "text_sha": "504e81d89fa6",
+  "meta": {
+    "searchable_text": "$a > 0$인 상수 $a$에 대하여 함수 $f(x)$가 오직 한 개의 $x$ 값에서만 미분가능하지 않을 때, 함수 $f(x)$의 극댓값은? ① 32 ② 34 ③ 36 ④ 38 ⑤ 40",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "미분가능성"
+    ],
+    "exam_intent": "절댓값 포함 함수의 미분가능 조건에서 극값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

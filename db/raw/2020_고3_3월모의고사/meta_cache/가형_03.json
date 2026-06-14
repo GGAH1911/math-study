@@ -1,0 +1,16 @@
+{
+  "text_sha": "b14482e1c06d",
+  "meta": {
+    "searchable_text": "$\\lim_{n \\to \\infty} \\frac{4^n + 2^n + 2^n + 1^n}{4^{n-1} + 2^{n-1} + 2^{n-1} + 1^{n-1}}$의 값은? (선택지: ① 1 ② 2 ③ 3 ④ 4 ⑤ 5)",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "지수함수의_극한",
+      "수열의_수렴"
+    ],
+    "exam_intent": "지수함수의 합으로 이루어진 수열의 극한값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

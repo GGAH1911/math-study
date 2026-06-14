@@ -1,0 +1,17 @@
+{
+  "text_sha": "920b0b6edb69",
+  "meta": {
+    "searchable_text": "함수 $f(x)$의 극솟값이 음수 값일 때, 상수를 구하는 문제. 선택지: ①$-2$ ②$-1$ ③$0$ ④$1$ ⑤$2$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "극값",
+      "도함수",
+      "3차함수"
+    ],
+    "exam_intent": "3차함수의 극솟값 조건으로부터 미지의 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

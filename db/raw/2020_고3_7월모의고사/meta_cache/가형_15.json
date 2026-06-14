@@ -1,0 +1,16 @@
+{
+  "text_sha": "6c0a37c55946",
+  "meta": {
+    "searchable_text": "두 함수 $f$, $g$가 실수 전체의 집합에서 이계도함수를 가지고 $g$가 증가함수일 때, 함수 $h$를 $h = f \\circ g$라 하자. 점 $(2, f(g(2)))$가 곡선 $h$의 변곡점이고 $f''(g(2)) = -4$, $g''(2) = 4$이다. $f'(g(2)) = 4$일 때, $h'(2)$의 값은? ① 8 ② 10 ③ 12 ④ 14 ⑤ 16",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "합성함수의_미분",
+    "concepts": [
+      "합성함수의_미분",
+      "변곡점"
+    ],
+    "exam_intent": "합성함수 미분과 변곡점 조건을 이용한 도함수값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -128,9 +128,12 @@ def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, 
         args += ['--add-dir', add_dir]
     args += ['--system-prompt', system, user]
 
+    # 중첩 Claude Code 의 만료 가능한 OAuth env 토큰을 빼고 호출 → subprocess claude 가 디스크
+    # 자격증명(~/.claude/.credentials.json, 자동 refresh)을 쓰게 한다. (env 토큰 상속 시 401.)
+    sub_env = {k: v for k, v in os.environ.items() if k != 'CLAUDE_CODE_OAUTH_TOKEN'}
     for attempt in range(retries + 1):
         try:
-            r = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+            r = subprocess.run(args, capture_output=True, text=True, timeout=timeout, env=sub_env)
             if r.returncode == 0 and r.stdout.strip():
                 return r.stdout.strip()
             if attempt < retries:

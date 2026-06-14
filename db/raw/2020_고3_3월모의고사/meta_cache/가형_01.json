@@ -1,0 +1,16 @@
+{
+  "text_sha": "8537356efe4b",
+  "meta": {
+    "searchable_text": "$\\sqrt[3]{8} \\times 4 \\times 2^{-2}$의 값은?\n\n① 1\n② 2\n③ 3\n④ 4\n⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "세제곱근",
+      "음의지수"
+    ],
+    "exam_intent": "지수와 근호의 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

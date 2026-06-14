@@ -1,0 +1,16 @@
+{
+  "text_sha": "be0cb7ed3f39",
+  "meta": {
+    "searchable_text": "$32 \\times 2^{-3}$의 값은?\n① 1\n② 2\n③ 4\n④ 8\n⑤ 16",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "음의_지수",
+      "지수법칙"
+    ],
+    "exam_intent": "음의 지수를 포함한 지수 계산 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

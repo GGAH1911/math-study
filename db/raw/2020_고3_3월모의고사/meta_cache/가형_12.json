@@ -1,0 +1,17 @@
+{
+  "text_sha": "0c43c67df7b3",
+  "meta": {
+    "searchable_text": "두 함수에 대하여 함수가 실수 전체의 집합에서 연속일 때, 두 상수의 합의 값은? (단, $a$, $b$는 상수이다.) ① 10 ② 9 ③ 8 ④ 7 ⑤ 6",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "연속성",
+      "분할함수",
+      "극한값"
+    ],
+    "exam_intent": "분할함수가 모든 점에서 연속이 되는 상수 조건 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

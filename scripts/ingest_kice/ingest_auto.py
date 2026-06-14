@@ -47,6 +47,11 @@ def _rules():
        lambda m: dict(exam_type='모의고사', year=int(m[1]), session=f'{m[2]}월', grade='고3',
                       agency='교육청', backend='v2_haesol', subject=SELECTIVE[m[3]],
                       role='해설' if m[4] else '문제')))
+    # 교육청 고3 가/나형 (옛 교육과정, 트랙별 단일 30) 문제·정답 — '10원'=10월 오타 허용
+    A((re.compile(r'^(\d{4})\s+고3\s+(\d+)[월원]\s+(가형|나형)(\s*정답)?\.pdf$'),
+       lambda m: dict(exam_type='모의고사', year=int(m[1]), session=f'{m[2]}월', grade='고3',
+                      agency='교육청', backend='ganah', track=m[3],
+                      role='정답' if m[4] else '문제')))
     # 교육청 고3 통합본 (수학 (통합본)/(정답)) — 연도 없으면 ambiguous
     A((re.compile(r'^(\d{4})?\s*고3\s+(\d+)월\s+수학\s*\((통합본|정답)\)\.pdf$'),
        lambda m: dict(exam_type='모의고사', year=int(m[1]) if m[1] else None, session=f'{m[2]}월',
@@ -162,6 +167,10 @@ def _dispatch(slug, meta, parallel, no_sync):
         cmd = [PY, 'scripts/ingest_kice/ingest_ganah.py', '--year', y, '--exam-type', et, '--no-sync']
         if meta.get('session'):
             cmd += ['--session', meta['session']]
+        if meta.get('agency') and meta['agency'] != '평가원':     # 교육청 고3 가/나형 학평
+            cmd += ['--agency', meta['agency']]
+        if meta.get('grade'):
+            cmd += ['--grade', meta['grade']]
     elif backend == 'gyo12':
         cmd = [PY, 'scripts/ingest_kice/ingest_gyo12.py', '--year', y,
                '--rounds', f"{meta['grade']}_{meta['session']}", '--no-sync']

@@ -9,6 +9,7 @@ import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 import SolutionPanel from '../../components/SolutionPanel.tsx';
 import RoundNav from '../../components/RoundNav.astro';
 import { yearLabel } from '../../lib/problem-meta';
+import { renderReconstruct } from '../../lib/reconstruct';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('problems', slug);
@@ -17,6 +18,36 @@ if (!entry) {
 }
 const { Content } = await render(entry);
 const fm = entry.data;
+// 재구성 뷰: searchable_text(로제타 기하 디코드)를 KaTeX 로 렌더 (원본 이미지 토글용)
+// 도형은 figure_after_line(추출 시 PDF 세로 위치로 계산된 줄) 뒤에 삽입; 없으면 첫 줄 뒤.
+// 도형: 추출 PNG(figure_image) 우선. 없으면(선택과목 등 추출불가) 원본 전체이미지 폴백 —
+// /problem-images/<stem>.png 은 db/raw 이미지의 public 심링크(도형 포함 전체 문제, 과목별 정상).
+const figFull =
+  !fm.figure_image && fm.has_figure && fm.image_paths && fm.image_paths[0]
+    ? `/problem-images/${String(fm.image_paths[0]).split('/').pop()}`
+    : null;
+const figSrc = fm.figure_image || figFull;
+const figDiv = figSrc
+  ? `<div class="recon-fig-wrap"><img src="${figSrc}" alt="도형" class="recon-fig${figFull ? ' recon-fig-full' : ''}" loading="lazy" />${figFull ? '<span class="recon-fig-note">원본 전체 이미지 (도형만 추출 불가)</span>' : ''}</div>`
+  : '';
+// 표·연립 등 복잡한 2D 구조는 텍스트 재구성이 근본적으로 깨진다(표준정규분포표→분수, 연립 2식
+// 뒤섞임) → 재구성 대신 원본 전체이미지로 표시(해당 문제들은 전부 image_paths 보유).
+const _sText = fm.searchable_text ?? '';
+const _wholeStem =
+  fm.image_paths && fm.image_paths[0] ? String(fm.image_paths[0]).split('/').pop() : null;
+// 표: 표준정규분포표(셀이 분수로 깨짐)·P(0≤Z 헤더·소수격자 분수. 연립: '연립방정식'이되 정상
+// \begin{cases}로 디코드된 건 제외(텍스트 재구성 양호). 해당 문제는 전부 image_paths 보유.
+const reconUnsupported =
+  !!_wholeStem &&
+  (/표준정규분포표|P\(\s*0\s*[≤<]\s*Z|\\frac\{[\d.]+\s+[\d.]+/.test(_sText) ||
+    (/연립방정식/.test(_sText) && !/\\begin\{cases\}/.test(_sText)));
+const reconFull = reconUnsupported
+  ? `<div class="recon-fig-wrap"><img src="/problem-images/${_wholeStem}" alt="문제" class="recon-fig recon-fig-full" loading="lazy" /><span class="recon-fig-note">표·연립 등 복잡한 구조 — 원본 이미지로 표시 (텍스트 재구성 미지원)</span></div>`
+  : renderReconstruct(_sText, {
+      figureHtml: figDiv,
+      figureAfterLine: fm.figure_after_line,
+    });
+const reconHTML = reconFull; // 토글 버튼 표시 여부 판단(빈 문자열이면 재구성 버튼 숨김)
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
@@ -83,9 +114,24 @@ if (src) {
         <div class="mb-4"><RoundNav prev={prevEntry} nexts={nextEntries} curSubject={src.subject} currentLabel={`${subjLabel}${src.number}번`} /></div>
       )}
       <article class="max-w-none">
-        <div class="prose prose-invert max-w-none">
+        {reconHTML && (
+          <div class="prob-toggle inline-flex rounded-lg border border-[color:var(--color-border)] overflow-hidden mb-4 text-sm" role="tablist" aria-label="문제 보기 방식">
+            <button type="button" id="pv-raw" class="px-3.5 py-1.5 font-medium">🖼 원본 이미지</button>
+            <button type="button" id="pv-recon" class="px-3.5 py-1.5 font-medium border-l border-[color:var(--color-border)]">✦ 재구성</button>
+          </div>
+        )}
+        <div class="prose prose-invert max-w-none" id="pv-content">
           <Content />
         </div>
+        {reconHTML && (
+          <div class="recon-view" id="pv-reconview" hidden>
+            <div class="recon-head">
+              <span class="recon-num">{fm.source?.number ?? ''}.</span>
+              {fm.source?.score && <span class="recon-score">[{fm.source.score}점]</span>}
+            </div>
+            <div set:html={reconFull} />
+          </div>
+        )}
         <div class="my-6">
           <ProblemAttemptPanel client:load slug={entry.id} />
         </div>
@@ -227,7 +273,49 @@ if (src) {
     })();
   </script>
 
+  {/* 원본 이미지 ↔ 재구성(LaTeX) 토글 — 선택 기억 */}
+  <script is:inline>
+    (function () {
+      const KEY = 'math-study:prob-view';
+      const content = document.getElementById('pv-content');
+      const recon = document.getElementById('pv-reconview');
+      const bRaw = document.getElementById('pv-raw');
+      const bRecon = document.getElementById('pv-recon');
+      if (!content || !recon || !bRaw || !bRecon) return;
+      function apply(mode) {
+        const r = mode === 'recon';
+        content.hidden = r;
+        recon.hidden = !r;
+        bRaw.classList.toggle('pv-active', !r);
+        bRecon.classList.toggle('pv-active', r);
+      }
+      apply(localStorage.getItem(KEY) === 'recon' ? 'recon' : 'raw');
+      bRaw.addEventListener('click', function () { localStorage.setItem(KEY, 'raw'); apply('raw'); });
+      bRecon.addEventListener('click', function () { localStorage.setItem(KEY, 'recon'); apply('recon'); });
+    })();
+  </script>
+
   <style is:global>
+    .prob-toggle button { background: var(--color-surface-2, #1b1b1f); color: var(--color-muted, #9ca3af); cursor: pointer; transition: background .15s, color .15s; }
+    .prob-toggle button.pv-active { background: var(--color-accent, #6366f1); color: #fff; }
+    .recon-view { font-family: var(--font-serif, serif); font-size: 1.05rem; line-height: 1.95; color: var(--color-text, #e5e7eb); background: var(--color-surface, #18181b); border: 1px solid var(--color-border, #333); border-radius: 12px; padding: 1.5rem 1.75rem; overflow-wrap: break-word; }
+    .recon-view .recon-line { overflow-wrap: anywhere; }
+    .recon-view .recon-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border, #333); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+    .recon-view .recon-num { font-size: 1.25rem; font-weight: 500; }
+    .recon-view .recon-score { font-size: 0.9rem; color: var(--color-muted, #9ca3af); }
+    .recon-view .recon-line { margin: 0.5em 0; }
+    .recon-view .recon-disp { text-align: center; margin: 1.1em 0; overflow-x: auto; }
+    .recon-view .recon-fig-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 1.3em 0; gap: 0.3em; }
+    .recon-view .recon-fig { max-width: 380px; width: 100%; height: auto; background: #fff; border-radius: 8px; padding: 10px; box-sizing: border-box; }
+    .recon-view .recon-fig-full { max-width: 560px; }
+    .recon-view .recon-fig-note { font-size: 0.8rem; color: var(--color-muted, #9ca3af); }
+    .recon-view .recon-choices { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 1.3rem; padding-top: 0.7rem; border-top: 1px solid var(--color-border, #333); }
+    .recon-view .recon-choice { white-space: nowrap; display: inline-flex; align-items: baseline; gap: 0.3em; }
+    .recon-view .recon-cnum { font-weight: 500; }
+    .recon-view .recon-box { border: 1px solid var(--color-border, #555); border-radius: 8px; padding: 0.6em 1.1em; margin: 1.1em 0; }
+    .recon-view .recon-bullet { text-align: left; padding-left: 1.3em; text-indent: -1.3em; }
+    .recon-view .recon-box .recon-line:first-child { margin-top: 0; }
+    .recon-view .recon-box .recon-line:last-child { margin-bottom: 0; }
     @media (max-width: 1023px) {
       #chat-dock.chat-dock--collapsed { height: auto; }
       #chat-dock.chat-dock--collapsed #dock-body { display: none; }

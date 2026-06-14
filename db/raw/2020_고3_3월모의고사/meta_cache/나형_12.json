@@ -1,0 +1,17 @@
+{
+  "text_sha": "68294a3b5e69",
+  "meta": {
+    "searchable_text": "두 함수 $f$, $g$의 그래프가 그림과 같다. 다음 중 옳은 것을 모두 고른 것은?\n\n**ㄱ.** $\\lim_{x \\to 1^-} f(x) = 1$\n\n**ㄴ.** $f(1) + g(1) = 0$\n\n**ㄷ.** 함수 $f$는 $x=1$에서 불연속이다.\n\n① ㄱ\n② ㄴ\n③ ㄷ\n④ ㄱ, ㄴ\n⑤ ㄴ, ㄷ",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "좌극한",
+      "함수의_연속성",
+      "함수의_그래프"
+    ],
+    "exam_intent": "함수의 그래프로부터 극한값과 연속성을 판정하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

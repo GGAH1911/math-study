@@ -1,0 +1,17 @@
+{
+  "text_sha": "e19764c5dd72",
+  "meta": {
+    "searchable_text": "좌표평면 위의 네 점 $O(0,0)$, $A(0,2)$, $B(2,2)$, $C(2,0)$과 점 $P(p,0)$에 대하여 직선 $l$이 정사각형 $OABC$의 넓이와 직각삼각형 $AOP$의 넓이를 각각 이등분한다. 양의 실수 $p$에 대하여 직선 $l$의 $y$절편을 $q$라 할 때, $\\lim_{p \\to 0^+} q$의 값은?\n\n①  $\\frac{\\sqrt{2}}{2}$\n②  $2\\sqrt{2}$\n③  $\\frac{\\sqrt{4}}{2\\sqrt{2}}$\n④  $1$\n⑤  $\\frac{\\sqrt{3}}{2\\sqrt{2}}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "도형의_이등분선",
+      "기하학적_조건"
+    ],
+    "exam_intent": "기하학적 제약 조건 하에서 직선의 y절편의 극한값을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

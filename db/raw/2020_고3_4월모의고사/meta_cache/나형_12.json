@@ -1,0 +1,16 @@
+{
+  "text_sha": "0e69e595caed",
+  "meta": {
+    "searchable_text": "방정식을 만족시키는 자연수 네 개의 모든 순서쌍의 개수는? ① 80 ② 90 ③ 100 ④ 110 ⑤ 120",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "부정방정식",
+      "중복조합"
+    ],
+    "exam_intent": "자연수 해를 갖는 일차방정식의 해의 개수를 중복조합으로 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

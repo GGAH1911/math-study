@@ -1,0 +1,18 @@
+{
+  "text_sha": "b917e71ade3e",
+  "meta": {
+    "searchable_text": "두 사건 $A$, $B$에 대하여 $P(A) = \\frac{7}{12}$, $P(A \\cap B^c) = \\frac{1}{6}$일 때, $P(A \\cap B)$의 값은? (단, $A^c$은 $A$의 여사건이다.) [3점] ① $\\frac{1}{12}$ ② $\\frac{1}{6}$ ③ $\\frac{1}{4}$ ④ $\\frac{1}{3}$ ⑤ $\\frac{5}{12}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "여사건",
+      "교집합",
+      "확률의_덧셈법칙",
+      "표본공간의_분할"
+    ],
+    "exam_intent": "표본공간의 분할을 이용한 교집합 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

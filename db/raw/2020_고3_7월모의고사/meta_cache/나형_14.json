@@ -1,0 +1,17 @@
+{
+  "text_sha": "9ee0ea044679",
+  "meta": {
+    "searchable_text": "14. 다항함수 $f(x)$가 다음 조건을 만족시킨다.\n(가) $\\lim_{x \\to \\infty} \\frac{(f(x))^2}{x^3}$ = (조건값)\n(나) $\\int_0^1 \\frac{f(x)}{x^3} dx = 3$\n\n$f(\\cdot)$의 값은?\n① 13  ② 15  ③ 17  ④ 19  ⑤ 21",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "다항함수",
+      "함수의_극한",
+      "정적분"
+    ],
+    "exam_intent": "극한과 정적분 조건으로 다항함수 계수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

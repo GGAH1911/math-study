@@ -1,0 +1,17 @@
+{
+  "text_sha": "d4dfca66ebd1",
+  "meta": {
+    "searchable_text": "중심각의 크기가 1라디안이고 둘레의 길이가 24인 부채꼴의 넓이를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "라디안",
+      "부채꼴의_호의_길이",
+      "부채꼴의_넓이"
+    ],
+    "exam_intent": "부채꼴의 둘레와 중심각으로부터 반지름을 구하고 넓이를 계산할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "2b4151f8f337",
+  "meta": {
+    "searchable_text": "서로 다른 두 개의 주사위를 동시에 한 번 던져서 나온 두 눈의 수의 곱이 짝수일 때, 나온 두 눈의 수의 합이 짝수일 확률은?\n① $\\dfrac{1}{12}$\n② $\\dfrac{1}{6}$\n③ $\\dfrac{1}{4}$\n④ $\\dfrac{1}{3}$\n⑤ $\\dfrac{5}{12}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부확률",
+      "곱의_법칙"
+    ],
+    "exam_intent": "조건부 확률의 개념과 경우의 수 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

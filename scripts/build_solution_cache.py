@@ -84,7 +84,10 @@ def build_prompt(img_paths: list[str], fmt: str, meta: str, hint: str = '', with
     lines.append('  "score": <2|3|4 정수, 이미지 상단의 "[N점]" 배점 그대로>,')
     if use_verifier:
         lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."],')
-        lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의**. 그 아래에서 **이미지에 주어진 원래 함수·방정식·조건을 코드로 표현**하고 CANDIDATE 를 역대입/대조해 만족하는지 sympy·numpy 로 확인(근사식·중간식 금지, 원식 그대로; 필요시 수치 root-find). \'if CANDIDATE==답\' 같은 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
+        if fmt == 'choice':   # ④ 객관식: 보기번호가 아니라 실제 답값을 풀이로 검증 (CANDIDATE 강제 X)
+            lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **보기 번호가 아니라 이 문제의 실제 답 값**을 이미지에 주어진 원래 함수·방정식·조건으로 직접 풀이해 구하고(sympy·numpy, 근사식·하드코딩 금지, 원식 그대로; 필요시 수치 root-find), 그 값이 문제 조건을 만족하면 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
+        else:
+            lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의**. 그 아래에서 **이미지에 주어진 원래 함수·방정식·조건을 코드로 표현**하고 CANDIDATE 를 역대입/대조해 만족하는지 sympy·numpy 로 확인(근사식·중간식 금지, 원식 그대로; 필요시 수치 root-find). \'if CANDIDATE==답\' 같은 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
     else:
         lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."]')
     body = '\n'.join(lines)
@@ -170,7 +173,10 @@ def build_text_prompt(problem_text: str, fmt: str, meta: str) -> str:
     lines.append('  "answer_value": "<최종 답의 값만, 설명·중간식 없이. 예: -7/64 또는 163>",')
     lines.append('  "score": <2|3|4 정수, 배점이 보이면 그대로, 없으면 4>,')
     lines.append('  "solution_steps": ["<핵심 단계 1, 한국어, KaTeX $...$ 허용>", "..."],')
-    lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의**. 그 아래에서 **문제에 주어진 원래 함수·방정식·조건을 코드로 표현**하고 CANDIDATE 를 역대입/대조해 만족하는지 sympy·numpy 로 확인(근사식·중간식 금지, 원식 그대로; 필요시 수치 root-find). \'if CANDIDATE==답\' 같은 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
+    if fmt == 'choice':   # ④ 객관식: 보기번호가 아니라 실제 답값을 풀이로 검증 (CANDIDATE 강제 X)
+        lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **보기 번호가 아니라 이 문제의 실제 답 값**을 문제에 주어진 원래 함수·방정식·조건으로 직접 풀이해 구하고(sympy·numpy, 근사식·하드코딩 금지, 원식 그대로; 필요시 수치 root-find), 그 값이 문제 조건을 만족하면 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
+    else:
+        lines.append('  "verifier_python": "<자기완결 파이썬 검산기. **맨 윗줄에 `CANDIDATE = <네가 구한 답>` 정의**. 그 아래에서 **문제에 주어진 원래 함수·방정식·조건을 코드로 표현**하고 CANDIDATE 를 역대입/대조해 만족하는지 sympy·numpy 로 확인(근사식·중간식 금지, 원식 그대로; 필요시 수치 root-find). \'if CANDIDATE==답\' 같은 자기비교 금지 — CANDIDATE 를 틀린 값으로 바꾸면 반드시 VERIFY_FAIL 이 나오게. 통과 시 정확히 \'VERIFY_PASS\', 아니면 \'VERIFY_FAIL\' print. 파일·네트워크·os 금지, 수학 라이브러리만.>"')
     body = '\n'.join(lines)
     return (f"다음은 한국 수능 수학 문제다 (텍스트):\n\n{problem_text}\n\n{meta}\n\n"
             f"위 문제를 **스스로 끝까지 풀어라. 정답은 주어지지 않는다.** "
@@ -267,6 +273,20 @@ def build_openbook_prompt(problem_text: str, gold: str, fmt: str, steps_text: st
             f"**마지막 메시지에 오직 하나의 ```json 블록**:\n"
             f"```json\n{{\n  \"verifier_python\": \"<경량 검산기 (CANDIDATE 로 시작)>\"\n}}\n```"
         )
+    if fmt == 'choice':                          # 객관식: 보기번호 대신 실제 답값을 풀이로 검증 (2021 방식)
+        return (
+            f"다음은 한국 수능 수학 5지선다 문제다 (텍스트):\n\n{problem_text}\n\n"
+            f"정답 보기번호 = {gold}.{steps_block}\n"
+            f"임무: 보기번호가 아니라 **이 문제의 실제 답 값**을 풀이로 직접 구하고, 그 값이 원래 식·조건을 "
+            f"만족하는지 확인하는 자기완결 파이썬 검산기를 작성하라.\n\n"
+            f"규칙:\n"
+            f"1. 'CANDIDATE = 보기번호' 같은 변수를 쓰지 마라. 문제의 원래 식·조건을 sympy/numpy 로 코드화하고 "
+            f"풀이로 답을 도출하라 (근사식·중간식 하드코딩 금지, 원래 식 그대로).\n"
+            f"2. 도출한 답이 문제 조건을 만족하면 정확히 'VERIFY_PASS', 아니면 'VERIFY_FAIL' 를 print.\n"
+            f"3. sympy·numpy·math·fractions 만, 파일·os·네트워크 금지.\n\n"
+            f"**마지막 메시지에 오직 하나의 ```json 블록**만 출력:\n"
+            f"```json\n{{\n  \"verifier_python\": \"<자기완결 파이썬 검산기>\"\n}}\n```"
+        )
     return (
         f"다음은 한국 수능 수학 문제다 (텍스트):\n\n{problem_text}\n\n"
         f"이 문제의 정답은 이미 검증돼 있다: **정답 = {gold}** ({kind}).{steps_block}\n"
@@ -310,7 +330,8 @@ def call_openbook(problem_text: str, gold: str, fmt: str, steps_text: str,
 
 
 _REALMATH = re.compile(r'\b(solve|solveset|linsolve|nsolve|roots|Eq|subs|isclose|allclose|'
-                       r'integrate|diff|limit|Poly|simplify|expand|factor|Matrix|det|Rational)\b')
+                       r'integrate|diff|limit|Poly|simplify|expand|factor|Matrix|det|Rational|'
+                       r'binomial|factorial|permutations|combinations|product|ff|rf)\b')
 
 
 def _set_candidate(code: str, val: str) -> str:
@@ -321,6 +342,13 @@ def hardcode_gate(code: str, gold: str, fmt: str) -> tuple[bool, str]:
     """역대입 검산기 진위 판정 — 변이테스트로 하드코딩 차단.
     반환 (통과, 사유). 통과 = 원래 문제식에 실제로 의존하는 검산기."""
     from fractions import Fraction
+    # 객관식(gold=보기번호 1-5): 보기번호↔값 매핑(=선택지)을 솔버에 강제하지 않으면 보기번호 변이가
+    # 성립 안 함. 변이테스트 도입(b639cd88) 전 2021 성공 방식 복원 — 실제 식 풀이 + 원본 통과만 요구.
+    if fmt == 'choice':
+        if not _REALMATH.search(code):
+            return False, 'no-realmath'
+        ok, _ = run_verifier(code)
+        return (True, 'ok') if ok else (False, 'orig-fail')
     if not re.search(r'(?m)^CANDIDATE\s*=', code):
         return False, 'no-CANDIDATE'
     # CANDIDATE 리터럴이 gold 와 일치해야 함 (객관식: 값-6을 CANDIDATE로 잡고 gold보기번호와 안 엮는 lite 차단)
@@ -624,6 +652,52 @@ def _salvage(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
     return f'CACHED@{sal_model[0]}~'                  # '~' = 미검증 구제(답만, python 역대입 보류)
 
 
+OPENBOOK_REROLL = int(os.environ.get('OPENBOOK_REROLL', '2'))
+
+
+def _ob_gate_hint(why: str) -> str:
+    """변이게이트 실패사유 → 다음 재롤 교정 힌트 (backfill 과 동일)."""
+    if why == 'orig-fail':
+        return ('⚠ 직전 검산기가 VERIFY_FAIL/크래시였다. 원래 문제의 식·조건에 CANDIDATE 를 '
+                '역대입하는 로직을 처음부터 재검토해 다시 작성하라.')
+    if why.startswith('mutation-pass'):
+        return ('⚠ 직전 검산기가 *틀린 답*에도 VERIFY_PASS 를 냈다(하드코딩 의심). 원래 문제의 '
+                '식·조건에 CANDIDATE 를 실제로 대입/풀이해서, 틀린 값이면 반드시 VERIFY_FAIL 이 나오게 하라.')
+    if why == 'no-realmath':
+        return ('⚠ 직전 검산기에 실제 수식 풀이(sympy solve/Eq/subs/isclose 등)가 없다. '
+                '문제의 원래 식을 코드로 표현하고 CANDIDATE 를 대입해 판정하라.')
+    if why == 'self-compare':
+        return ('⚠ 직전 검산기가 답을 자기 자신과 직접 비교(if CANDIDATE == 정답)했다. 금지다. '
+                '원래 문제의 식에 대입한 결과로만 판정하라.')
+    if why == 'no-CANDIDATE':
+        return '⚠ 맨 윗줄에 CANDIDATE = <정답> 정의가 없다. 반드시 그렇게 시작하라.'
+    return ''
+
+
+def openbook_phase(problem: str, gold: str, fmt: str, steps: str,
+                   rerolls: int = OPENBOOK_REROLL, lite: bool = False) -> str | None:
+    """정답+steps 주입 open-book 단계적 솔버 + 하드코딩 게이트(변이테스트). 통과 verifier_python / None.
+
+    build_one(인제스트)·backfill 공용: blind 가 '답은 맞췄으나 검증기를 못 짤' 때, 이미 아는 정답과
+    풀이단계를 주입해 Haiku 가 솔버를 단계적으로 작성하게 한다. 변이테스트로 하드코딩 가짜를 차단."""
+    hint = ''
+    for _ in range(rerolls + 1):                   # Haiku-only · open-book
+        try:
+            sol = call_openbook(problem, gold, fmt, steps, 'haiku', 'high', hint, lite=lite)
+        except Exception:
+            sol = None
+        if not sol:
+            continue
+        vp = sol.get('verifier_python', '') or ''
+        if not vp:
+            continue
+        good, why = hardcode_gate(vp, gold, fmt)    # ★ 하드코딩 게이트(변이테스트)
+        if good:
+            return vp
+        hint = _ob_gate_hint(why)
+    return None
+
+
 def build_one(p: Path) -> str:
     t = p.read_text(encoding='utf-8')
     if already_cached(t):
@@ -632,6 +706,16 @@ def build_one(p: Path) -> str:
     img = IMGDIR / (p.stem + '.png')
     if not gold or not img.exists():
         return 'skip-no-gold-or-img'
+    # ── 전항정답(출제오류로 모두 정답) 등 비정수 gold: blind-solve 불가(정수 답과 영원히 불일치)
+    #    → 가짜 FLAG 대신, 손-작성 솔버(db/solutions/<stem>.py)가 있으면 verified 로 연결한다. ──
+    if not gold.lstrip('-').isdigit():
+        if (VERIFIER_DIR / f'{p.stem}.py').exists():
+            write_solution(p, {'answer_value': gold, 'solution_steps': [
+                f'출제오류로 전항정답(모두 정답) 처리된 문항이라 단일 정답이 없다 (answer="{gold}").',
+                f'그 사유(전제 모순 등)는 검증 솔버 db/solutions/{p.stem}.py 가 수학적으로 증명한다.',
+            ]}, f'db/solutions/{p.stem}.py', 'hand', solved_by='errata', verified=True)
+            return 'ERRATA(전항정답·hand-solver)'
+        return 'skip-errata(no-hand-solver)'
     fm = re.search(r'^format:\s*(\w+)', t, re.M)
     fmt = fm.group(1) if fm else 'choice'
     tier = (re.search(r'^killer_tier:\s*(\w+)', t, re.M) or [None, None])[1]
@@ -643,6 +727,7 @@ def build_one(p: Path) -> str:
     last = ''
     trace = []           # 모델별 결과 (escalation 사유 기록)
     solved_by = None     # 최초로 답(ans==gold)을 맞힌 모델 = 난이도 신호 (검증기 통과와 무관)
+    last_ok_sol = None   # 답은 맞췄으나 blind 검증기를 못 짠 sol (사다리 후 open-book·구제용)
 
     if SALVAGE_ONLY:     # 사다리 건너뛰고 바로 구제(알려진 FLAG 재시도) — 검증기 없이 답만
         return _salvage(p, tiles, fmt, meta, img_dir, gold, solved_by, trace) or 'FLAG(salvage-fail)'
@@ -689,15 +774,8 @@ def build_one(p: Path) -> str:
                         sol, ok, log = sol2, True, log2   # 새(깨끗한) 검증기 통과 → 채택
             if not ok:                            # 재시도까지 실패 (답은 gold 일치, 검증기만 못 짬)
                 last = f'{model}:verify-fail:{log[:30]}'; trace.append((model, f'verify-fail×{1 + vtry}'))
-                if AGENT_TIER:
-                    break                          # 답 맞음 → 사다리 그라인딩 멈추고 에이전트가 verified:true 마무리
-                # (빠른 모드) 비킬러면 즉시 verified:false 인플레이스 구제(추가 콜 0); 킬러/haiku는 escalate
-                if tier != 'killer' and model != 'haiku':
-                    trace.append((model, 'salvage-inplace(미검증)'))
-                    write_solution(p, sol, 'unverified', model, solved_by, trace, verified=False)
-                    fix_score(p, str(sol.get('score', '')))
-                    return f'CACHED@{model[0]}~'
-                continue                          # 킬러/haiku → 상위 모델로 escalate
+                last_ok_sol = sol                 # ① 답 맞췄으나 검증기 실패 → 보존(사다리 후 open-book·구제용)
+                continue                          # ① opus 까지 모든 모델의 검증기를 escalate (sonnet 에서 멈추지 않음)
             VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
             (VERIFIER_DIR / f'{p.stem}.py').write_text(sol['verifier_python'], encoding='utf-8')
             vref = f'db/solutions/{p.stem}.py'
@@ -707,12 +785,27 @@ def build_one(p: Path) -> str:
         write_solution(p, sol, vref, model, solved_by, trace)
         fix_score(p, str(sol.get('score', '')))   # 같은 이미지 읽기로 배점도 교정
         return f'CACHED@{model[0]}'
-    # 사다리 전멸(또는 verify-fail에서 break) →
-    if AGENT_TIER:        # ① 전체도구 에이전트 직접 풀이(코드+검증기) — verified:true 목표
+    # 사다리 전멸(opus 까지 blind 검증기 실패) →
+    # ★ ② open-book 단계적 솔버 (텍스트, 한 번): 답 맞췄으나 검증기 못 짠 경우 정답+풀이단계 주입
+    if solved_by and last_ok_sol is not None:
+        ob_problem = stext if (stext and len(stext) > 40) else (extract_searchable(t) or '')
+        ob_steps = '\n'.join(f'- {s}' for s in (last_ok_sol.get('solution_steps') or []))
+        if ob_problem:
+            ob_vp = (openbook_phase(ob_problem, gold, fmt, ob_steps)
+                     or openbook_phase(ob_problem, gold, fmt, ob_steps, lite=True))
+            if ob_vp:
+                VERIFIER_DIR.mkdir(parents=True, exist_ok=True)
+                (VERIFIER_DIR / f'{p.stem}.py').write_text(ob_vp, encoding='utf-8')
+                trace.append(('open-book', 'pass'))
+                write_solution(p, last_ok_sol, f'db/solutions/{p.stem}.py', solved_by, solved_by, trace)
+                fix_score(p, str(last_ok_sol.get('score', '')))
+                return f'CACHED@{solved_by[0]}+ob'
+    # ② open-book(텍스트)도 실패 → 이미지 에이전트 (텍스트 오전사 대비 이미지로 직접 풀이)
+    if AGENT_TIER:
         r = _agent_solve(p, tiles, fmt, meta, img_dir, gold, solved_by, trace)
         if r:
             return r
-    # ② 답만이라도 구제(verified:false) → 그것도 안 되면 FLAG
+    # 답만이라도 구제(verified:false) → 그것도 안 되면 FLAG
     return _salvage(p, tiles, fmt, meta, img_dir, gold, solved_by, trace) or f'FLAG({last})'
 
 

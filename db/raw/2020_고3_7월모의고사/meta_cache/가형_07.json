@@ -1,0 +1,16 @@
+{
+  "text_sha": "367749f07662",
+  "meta": {
+    "searchable_text": "$AB = 2, AC = 7$인 예각삼각형 $ABC$의 넓이가 $\\sqrt{6}$이다. $\\angle A = \\theta$일 때, $\\sin 2\\theta$의 값은?\n① $\\dfrac{\\sqrt{3}}{7}$\n② $\\dfrac{\\sqrt{7}}{2}$\n③ $\\dfrac{\\sqrt{5}}{7}$\n④ $\\dfrac{\\sqrt{6}}{7}$\n⑤ $\\dfrac{\\sqrt{7}}{7}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각형의_넓이",
+      "배각공식"
+    ],
+    "exam_intent": "삼각형 넓이 공식과 배각공식을 이용하여 sin 2θ 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

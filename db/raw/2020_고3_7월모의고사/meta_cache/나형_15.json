@@ -1,0 +1,18 @@
+{
+  "text_sha": "dfcf2ae73a33",
+  "meta": {
+    "searchable_text": "평면 위에 한 변의 길이가 3인 정사각형 ABCD와 한 변의 길이가 4인 정사각형 CEFG가 있다. $\\angle DCG = \\theta$라 할 때, $\\sin(\\theta/6) = 11/\\square$이다. $DG \\times BE$의 값은? ① 15 ② 17 ③ 19 ④ 21 ⑤ 23",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "각도",
+      "거리",
+      "정사각형",
+      "삼각함수"
+    ],
+    "exam_intent": "두 정사각형 배치와 각도 조건에서 거리의 곱 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

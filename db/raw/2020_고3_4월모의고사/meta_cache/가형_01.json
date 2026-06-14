@@ -1,0 +1,15 @@
+{
+  "text_sha": "d4cfca5d11d2",
+  "meta": {
+    "searchable_text": "문제 1. 다음 식의 값은?\n\n$$\\dfrac{\\sqrt{3\\sqrt{9} \\times 3}}{\\sqrt{3}}$$\n\n① 1\n② 3\n③ 5\n④ 7\n⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호의_계산"
+    ],
+    "exam_intent": "중첩 근호와 분수의 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

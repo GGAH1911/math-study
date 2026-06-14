@@ -1,0 +1,17 @@
+{
+  "text_sha": "d698c5587187",
+  "meta": {
+    "searchable_text": "두 함수의 그래프가 점 P에서 만난다. 서로 다른 두 실수 $a$, $b$에 대하여 두 점 $A(a, f(a))$, $B(b, g(b))$의 중점이 $P$일 때, 선분 $AB$의 길이는? ① $2\\sqrt{2}$ ② $2\\sqrt{3}$ ③ 4 ④ $2\\sqrt{5}$ ⑤ $2\\sqrt{6}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_교점",
+      "중점의_조건",
+      "선분의_길이"
+    ],
+    "exam_intent": "두 곡선의 교점과 중점 조건을 이용한 거리 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

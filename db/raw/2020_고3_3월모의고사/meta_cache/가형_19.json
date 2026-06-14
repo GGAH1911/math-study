@@ -1,0 +1,17 @@
+{
+  "text_sha": "02f1b15f936c",
+  "meta": {
+    "searchable_text": "중심이 $O$이고 반지름의 길이가 $10$인 원에 내접하는 예각삼각형 $ABC$에 대하여 두 삼각형 $OAB$, $OCA$의 넓이를 각각 $S_1$, $S_2$라 하자. $3S_1 = 4S_2$이고 $BC = 2\\sqrt{5}$일 때, 선분 $AB$의 길이는? ① $2\\sqrt{7}$ ② $\\sqrt{30}$ ③ $4\\sqrt{2}$ ④ $\\sqrt{34}$ ⑤ $6$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원에_내접하는_삼각형",
+      "삼각형의_넓이",
+      "코사인_법칙"
+    ],
+    "exam_intent": "원의 성질과 삼각형 넓이 공식을 결합하여 변의 길이를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

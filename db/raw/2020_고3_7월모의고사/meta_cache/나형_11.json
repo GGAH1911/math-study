@@ -1,0 +1,16 @@
+{
+  "text_sha": "7850ca909ba6",
+  "meta": {
+    "searchable_text": "$$\\sin\\theta \\cos\\theta = \\frac{1}{2}$$일 때, $$\\frac{\\sin\\theta - 1}{\\tan\\theta}$$의 값은?\n\n① $$-\\frac{3}{7}$$\n② $$-\\frac{3}{4}$$\n③ $$-3$$\n④ $$-\\frac{3}{2}$$\n⑤ $$-\\frac{3}{5}$$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "삼각함수_값_계산"
+    ],
+    "exam_intent": "삼각함수 기본 항등식을 이용한 삼각함수 식의 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

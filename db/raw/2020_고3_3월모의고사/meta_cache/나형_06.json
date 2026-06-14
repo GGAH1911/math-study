@@ -1,0 +1,17 @@
+{
+  "text_sha": "2478f221f537",
+  "meta": {
+    "searchable_text": "모든 실수에서 연속인 함수 $f$가 주어진 함수 관계식을 만족시킬 때, $f'(1)$의 값은?\n① $-2$  ② $-1$  ③ $0$  ④ $1$  ⑤ $2$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "연속함수",
+      "미분가능성",
+      "도함수"
+    ],
+    "exam_intent": "연속함수의 정의와 도함수의 기본 개념 이해",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

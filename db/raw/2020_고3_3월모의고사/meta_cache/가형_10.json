@@ -1,0 +1,17 @@
+{
+  "text_sha": "3232e1d662c2",
+  "meta": {
+    "searchable_text": "그림과 같이 두 함수의 그래프가 두 점 A, B에서 각각 접한다. 두 함수의 그래프로 둘러싸인 부분의 넓이를 구하시오. (단, 상수는 $a$이다) ① $\\frac{a}{6}$ ② $\\frac{a^3}{7}$ ③ $\\frac{a^2}{5}$ ④ $\\frac{a^3}{8}$ ⑤ $\\frac{a}{6}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "접선",
+      "정적분",
+      "이차함수"
+    ],
+    "exam_intent": "두 곡선의 접선 조건을 이용한 정적분 넓이 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

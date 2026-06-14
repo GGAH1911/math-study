@@ -1,0 +1,17 @@
+{
+  "text_sha": "8d21ceb84937",
+  "meta": {
+    "searchable_text": "0 < a < 6인 실수 a에 대하여 원점에서 곡선 $y = \\frac{x^2}{a}$에 그은 두 접선의 기울기의 곱의 최솟값은? ① -54 ② -51 ③ -48 ④ -45 ⑤ -42",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "접선",
+      "기울기",
+      "최솟값"
+    ],
+    "exam_intent": "곡선 위 접선 조건을 이용한 기울기 곱의 최솟값",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

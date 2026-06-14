@@ -1,0 +1,16 @@
+{
+  "text_sha": "c0fdf7810ff3",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$은 $a_1 = 7$이고, 모든 자연수 $n$에 대하여 다음을 만족한다: $a_{n+1} = a_n + 4$ ($n$이 소수인 경우), $a_{n+1} = a_n - 2$ ($n$이 소수가 아닌 경우). $a_8$의 값은? ① 11 ② 13 ③ 15 ④ 17 ⑤ 19",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "소수_판정"
+    ],
+    "exam_intent": "조건부 점화식을 추적하여 수열값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

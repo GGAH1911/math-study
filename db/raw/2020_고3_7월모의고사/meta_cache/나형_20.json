@@ -1,0 +1,13 @@
+{
+  "text_sha": "aff0b3dd29be",
+  "meta": {
+    "searchable_text": "20. 두 다항함수 $f$, $g$가 다음 조건을 만족시킨다.\n\n(가) $f'(x) = 2x(4-x)$, $g'(x) = 2(x-2)$\n\n(나) 함수 $f$의 그래프와 함수 $g$의 그래프는 서로 다른 두 점에서만 만난다.\n\n<보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n\n<보기>\n\nㄱ. 두 함수 $f$와 $g$는 모두 $x=0$에서 극대이다.\n\nㄴ. $f(0) \\geq g(0)$이고 $f(2) - g(2) \\geq 0$이다.\n\nㄷ. 모든 실수 $a$에 대하여 $\\int_{-1}^{a} [f(x) - g(x)] \\, dx \\geq 0$이면, $\\int_{-1}^{a} f(x) \\, dx \\geq \\int_{-1}^{1} g(x) \\, dx$이다.\n\n① ㄱ\n② ㄱ, ㄴ\n③ ㄱ, ㄷ\n④ ㄴ, ㄷ\n⑤ ㄱ, ㄴ, ㄷ",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [],
+    "exam_intent": "극값·교점 조건·적분 부등식을 통합하여 함수 성질 파악 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "b483dfc633a4",
+  "meta": {
+    "searchable_text": "중심각의 크기가 $\\frac{\\pi}{3}$인 부채꼴 OAB에서 선분 OA를 3:1로 내분하는 점을 P, 선분 OB를 1:2로 내분하는 점을 Q라 하자. 삼각형 OPQ의 넓이가 $4\\sqrt{3}$일 때, 호 AB의 길이는?\n\n① $\\frac{5\\pi}{3}$\n② $2\\pi$\n③ $\\frac{7\\pi}{3}$\n④ $\\frac{8\\pi}{3}$\n⑤ $3\\pi$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [],
+    "exam_intent": "부채꼴 호의 길이를 내분점과 삼각형 넓이로 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

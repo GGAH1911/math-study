@@ -70,6 +70,8 @@ const problems = defineCollection({
     // vision-extracted plain-text shadow used by the tutor LLM and search.
     problem_image: z.string().optional(),
     has_figure: z.boolean().optional(),
+    figure_image: z.string().optional(),  // 추출·stitch 한 도형만 잘라낸 PNG (재구성 뷰용)
+    figure_after_line: z.number().optional(),  // 재구성 본문 몇 번째 줄 뒤에 도형 삽입 (백필이 PDF 위치로 계산)
     searchable_text: z.string().optional(),
     // Stage C — vision LLM이 ingest 시 추출한 도형 spec (geometry/plot/numberline/chart).
     // 채워져 있으면 problem 페이지가 raw PNG 외에 spec 기반 SVG 도 함께 렌더 가능.

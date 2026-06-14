@@ -1,0 +1,18 @@
+{
+  "text_sha": "f7882d5aceba",
+  "meta": {
+    "searchable_text": "예각삼각형 ABC가 한 원에 내접하고 있다. AB = 6이고, ∠ABC = β라 할 때 cos β = 3/4이다. 점 A를 지나지 않는 호 BC 위의 점 D에 대하여 CD = 4이다. 두 삼각형 ABD, CBD의 넓이를 각각 S₁, S₂라 할 때, S₁ + S₂ = 9√5이다. 삼각형 ADC의 넓이를 S라 할 때, S²의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원에_내접하는_도형",
+      "원주각의_성질",
+      "삼각형의_넓이",
+      "정현법칙"
+    ],
+    "exam_intent": "원에 내접하는 삼각형과 호 위의 점에서 정현법칙·원주각·넓이 관계를 종합 활용",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

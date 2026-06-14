@@ -1,0 +1,16 @@
+{
+  "text_sha": "e372b143b7b9",
+  "meta": {
+    "searchable_text": "$\\binom{20}{1} + \\binom{20}{2}$의 값은?\n① 195\n② 200\n③ 205\n④ 210\n⑤ 215",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "이항계수",
+      "조합"
+    ],
+    "exam_intent": "이항계수의 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

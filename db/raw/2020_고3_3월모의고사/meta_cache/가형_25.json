@@ -1,0 +1,16 @@
+{
+  "text_sha": "6f6a01f0b326",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_n\\}$, $\\{b_n\\}$이 두 극한 조건을 만족시킬 때, 특정 극한값을 구하는 문제. (정확한 조건식은 PDF 텍스트레이어 손상)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수열의_극한",
+      "극한_조건_활용"
+    ],
+    "exam_intent": "극한 조건으로부터 수열의 관계를 파악하여 새로운 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

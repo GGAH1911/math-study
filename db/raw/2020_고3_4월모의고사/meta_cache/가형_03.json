@@ -1,0 +1,16 @@
+{
+  "text_sha": "c5f9ed3666bb",
+  "meta": {
+    "searchable_text": "등비수열 $\\{a_n\\}$에 대하여 $a_5 = 2$일 때, $a_4 \\times a_6$의 값은? ① 4 ② 8 ③ 12 ④ 16 ⑤ 20",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "수열의_성질"
+    ],
+    "exam_intent": "등비수열의 중항 성질을 이용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

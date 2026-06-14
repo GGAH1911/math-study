@@ -1,0 +1,16 @@
+{
+  "text_sha": "3b9b70a0f8ac",
+  "meta": {
+    "searchable_text": "함수가 주어져 있고, $x \\to 0$일 때의 극한값을 구하는 문제. 선택지: ①6 ②7 ③8 ④9 ⑤10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "함수의_극한"
+    ],
+    "exam_intent": "함수의 극한값 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

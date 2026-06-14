@@ -1,0 +1,16 @@
+{
+  "text_sha": "712ee09e3ee2",
+  "meta": {
+    "searchable_text": "수직선 위를 움직이는 점 P의 시각 $t \\geq 0$에서의 위치 $x$가 $x = at^3 + bt^2 + c$ (단, $a, b, c$는 상수)이다. 시각 $t_1$에서 점 P가 운동 방향을 바꿀 때, 시각 $t_1$에서의 점 P의 가속도를 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수의_물리적_의미",
+      "극값과_도함수"
+    ],
+    "exam_intent": "위치함수의 미분을 통해 속도·가속도를 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

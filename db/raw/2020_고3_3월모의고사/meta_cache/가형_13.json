@@ -1,0 +1,16 @@
+{
+  "text_sha": "8f3a8147ee54",
+  "meta": {
+    "searchable_text": "공비가 1보다 큰 등비수열 $\\{a_n\\}$이 다음 조건을 만족시킨다. (가) $a_3 \\times a_5 \\times a_7 = 125$ (나) $\\frac{a_4 + a_8}{a_6} = \\frac{13}{6}$ $a_9$의 값은? ① 10 ② $\\frac{45}{4}$ ③ $\\frac{25}{2}$ ④ $\\frac{55}{4}$ ⑤ 15",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비중항"
+    ],
+    "exam_intent": "등비수열의 조건으로부터 공비를 결정하고 항의 값을 계산하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

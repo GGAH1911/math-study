@@ -1,0 +1,16 @@
+{
+  "text_sha": "26473835dfab",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_n\\}$, $\\{b_n\\}$에 대하여 $\\lim_{n \\to \\infty}$... $= 3$이고 급수 $\\sum_{n=1}^{\\infty}$...이 수렴할 때, $\\lim_{n \\to \\infty}$...의 값은?\n\n① 1\n② 2\n③ 3\n④ 4\n⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "극한",
+      "급수의_수렴"
+    ],
+    "exam_intent": "급수 수렴 조건과 수열의 극한값 관계 파악",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

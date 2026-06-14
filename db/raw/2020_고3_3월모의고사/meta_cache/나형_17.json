@@ -1,0 +1,16 @@
+{
+  "text_sha": "bf07a01021ce",
+  "meta": {
+    "searchable_text": "17. 등차수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. $S_3=42$일 때, 다음 조건을 만족시키는 4 이상의 자연수 $n$의 값은? [4점]\n(가) [PDF 텍스트레이어 손상으로 조건 불명확]\n(나) [PDF 텍스트레이어 손상으로 조건 불명확]\n① 13  ② 14  ③ 15  ④ 16  ⑤ 17",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의합"
+    ],
+    "exam_intent": "등차수열 조건을 활용한 특정 항 찾기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

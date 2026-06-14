@@ -1,0 +1,17 @@
+{
+  "text_sha": "71339c4f608e",
+  "meta": {
+    "searchable_text": "다항함수 $f$가 극한식 $\\lim_{x \\to 0} \\frac{2x}{x^3 + 4x + 1}$ (텍스트레이어 글리프 손상으로 정확한 식 미확인)을 만족시킬 때, $f(3) \\cdot f'(3)$의 값은? [3점] ① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "도함수",
+      "다항함수"
+    ],
+    "exam_intent": "극한조건에서 다항함수의 계수를 결정하고 도함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

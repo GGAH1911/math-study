@@ -1,0 +1,16 @@
+{
+  "text_sha": "443e426bb945",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 $1 \\leq n \\leq 21$일 때, 부등식 $\\cos\\frac{\\pi n}{12} \\leq \\frac{n^2-1}{n}$을 만족시키는 서로 다른 모든 자연수 $n$의 개수를 $a$라 하자. $\\frac{a-1}{7}$의 값을 구하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각부등식",
+      "삼각함수의_범위"
+    ],
+    "exam_intent": "삼각함수 부등식 조건에서 자연수 판정 및 개수 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

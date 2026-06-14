@@ -1,0 +1,15 @@
+{
+  "text_sha": "eb96d94cd7ba",
+  "meta": {
+    "searchable_text": "$$\\lim_{n \\to \\infty} \\frac{2n^2 + 2n + 7n + 9}{2n^2 + 2n + 3}$$의 값은?\n\n① 1\n② 2\n③ 3\n④ 4\n⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "다항식의_극한"
+    ],
+    "exam_intent": "분수 형태 다항식 극한에서 최고차항 계수 비 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "494972116027",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$이 모든 자연수 $n$에 대하여 점화식을 만족시킬 때, $\\lim_{n\\to\\infty} a_n$의 값은? ① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "점화식",
+      "수렴"
+    ],
+    "exam_intent": "수렴하는 수열의 점화식으로부터 극한값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

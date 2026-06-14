@@ -1,0 +1,16 @@
+{
+  "text_sha": "35dafedb7cf5",
+  "meta": {
+    "searchable_text": "수열이 수렴하도록 하는 모든 정수의 개수는? ① 2 ② 4 ③ 6 ④ 8 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "수렴",
+      "수열의_극한"
+    ],
+    "exam_intent": "수열의 수렴을 위한 정수 조건의 개수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

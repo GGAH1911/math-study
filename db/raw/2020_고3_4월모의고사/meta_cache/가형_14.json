@@ -1,0 +1,17 @@
+{
+  "text_sha": "aa37fc03af8a",
+  "meta": {
+    "searchable_text": "2 이상의 자연수 $n$에 대하여 $n$의 $5n$제곱근 중 실수인 것의 개수를 $f(n)$이라 할 때, $\\sum_{n=2}^{10} f(n)$의 값은? ① 8 ② 9 ③ 10 ④ 11 ⑤ 12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "완전거듭제곱",
+      "소인수분해",
+      "지수의_성질"
+    ],
+    "exam_intent": "완전거듭제곱 판정과 소인수 지수의 최대공약수를 이용하여 함수값을 구하고 합을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

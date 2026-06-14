@@ -28,7 +28,36 @@ sys.path.insert(0, str(_SCRIPTS))
 try:
     from ocr_client import _canonical_area_for_page  # type: ignore
 except Exception:
-    _canonical_area_for_page = lambda p, n: None  # noqa: E731
+    # ocr_client(dotenv 등) import 실패 시 자립형 섹션 감지로 대체. 수능/모평 PDF 한 파일에
+    # 공통 + 확률과통계 + 미적분 + 기하가 순서대로 들어있고, 각 선택과목 섹션 직전 페이지에
+    # "◦ 이어서, 「선택과목(X)」 문제가 제시되오니…" 안내가 있다 → 이를 경계로 sticky 적용.
+    # (이게 None만 반환하면 과목분리 비활성 → 23-30이 전부 공통으로 묶여 미적/기하 섹션 누락.)
+    _AREA_NOTE = re.compile(r'이어서[\s\S]{0,40}?선택\s*과목\s*[(（]\s*([가-힣\s]+?)\s*[)）]')
+    _AREA_NORM = {'확률과통계', '미적분', '기하'}
+    _page_area_cache: dict = {}
+
+    def _canonical_area_for_page(pdf_path, page_num):  # noqa: F811
+        key = str(pdf_path)
+        areas = _page_area_cache.get(key)
+        if areas is None:
+            try:
+                dd = fitz.open(pdf_path)
+                texts = [dd[i].get_text() for i in range(dd.page_count)]
+                dd.close()
+            except Exception:
+                return None
+            areas = []
+            cur = None
+            for t in texts:
+                areas.append(cur)  # 이 페이지 시작 시점의 선택과목(공통=None)
+                m = _AREA_NOTE.search(t)
+                if m:
+                    nm = re.sub(r'\s', '', m.group(1))
+                    if nm in _AREA_NORM:
+                        cur = nm  # 이 페이지 이후로 전환
+            _page_area_cache[key] = areas
+        idx = page_num - 1
+        return areas[idx] if 0 <= idx < len(areas) else None
 
 
 # Two-column layout — column geometry is fixed relative to page width.

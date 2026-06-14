@@ -1,0 +1,17 @@
+{
+  "text_sha": "3a218dd05f0b",
+  "meta": {
+    "searchable_text": "원 $O$에 내접하고 $AB=3$, $\\angle BAC=\\frac{\\pi}{3}$인 삼각형 $ABC$가 있다. 원 $O$의 넓이가 $\\frac{49\\pi}{3}$일 때, 원 $O$ 위의 점 $P$에 대하여 삼각형 $PAC$의 넓이의 최댓값은? (단, 점 $P$는 점 $A$도 아니고 점 $C$도 아니다.) ① $\\frac{32\\sqrt{3}}{3}$ ② $\\frac{34\\sqrt{3}}{3}$ ③ $12\\sqrt{3}$ ④ $\\frac{38\\sqrt{3}}{3}$ ⑤ $\\frac{40\\sqrt{3}}{3}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "정현법칙",
+      "원에_내접하는_삼각형",
+      "점과_직선_사이의_거리"
+    ],
+    "exam_intent": "정현법칙과 원의 성질을 이용해 특정 현에 대한 삼각형 넓이의 최댓값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

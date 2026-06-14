@@ -1,10 +1,1442 @@
 {
-  "generatedAt": "2026-06-06T06:07:20.312Z",
-  "totalProblems": 3324,
-  "conceptsWithProblems": 2294,
-  "totalMappings": 9349,
+  "generatedAt": "2026-06-13T17:05:35.265Z",
+  "totalProblems": 3564,
+  "conceptsWithProblems": 2366,
+  "totalMappings": 9430,
   "propagatedMappings": 4366,
   "byConcept": {
+    "거리와기울기": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_15",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "무한등비급수": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_18",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조합항등식": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_19",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "근과_방정식": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_20",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원에_내접하는_각": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_21",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 21,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "순서쌍개수": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수_조건_해석": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_가형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이항확률": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_나형_09",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직사각형의_성질": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_나형_13",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원에_내접하는_정삼각형": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_나형_19",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수와_각도": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_나형_19",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극한_조건": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_나형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "도함수와_교점_개수": [
+      {
+        "slug": "2020/고3_10월모의고사/2020_고3_10월모의고사_나형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "음의지수": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_01",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 1,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "소수_판정": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_09",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 9,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "동일_원소의_배열": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_11",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 11,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "제약조건이_있는_배열": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_11",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 11,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "직선의_수직_관계": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_14",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "속도와_위치_관계": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_15",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_10",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 10,
+        "score": 4,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "정적분_응용": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_15",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "n제곱근의_실근_존재성": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_18",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "홀수차_근과_짝수차_근": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_18",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원에_내접하는_삼각형": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_19",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_19",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 19,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/6월모평/2021_6월모평_나형_05",
+        "year": 2021,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "도형의_이등분선": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_20",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극한_조건_활용": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_25",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "좌표평면과_각도": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "합차공식": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이배각공식": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "정현함수의_그래프": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_28",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "격자점_개수_세기": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "선형_부등식의_영역": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "합의_공식": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_가형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등차수열의_정의": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_04",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 4,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "지수방정식과_로그방정식": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_08",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "2차원_규칙_구조": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_10",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 10,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함숫값_계산": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_16",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "기함수": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_20",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "실근_개수": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_21",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 21,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "이차함수의_근과_계수의_관계": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수_대소관계": [
+      {
+        "slug": "2020/고3_3월모의고사/2020_고3_3월모의고사_나형_28",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "3월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "제약_조건이_있는_순열": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_07",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 7,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등비수열_일반항": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_17",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "수열_극한": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_18",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "합의_배수_조건": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_20",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 20,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "블록_치환": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_25",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수와_직선의_교점": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "점열의_극한": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_가형_27",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수의_상수결정": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_06",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 6,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극한값과_함수값의_관계": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_08",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 8,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "부정방정식": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_12",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 12,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원에내접하는삼각형": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_13",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 13,
+        "score": 4,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "다항함수의_결정": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_14",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "도함수의_정의와_계산": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_16",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "원분의_넓이": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_17",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등차수열의_성질": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_24",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 24,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "속도함수의_적분": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "경로의_개수": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극값과_도함수": [
+      {
+        "slug": "2027/6월모평/2027_6월모평_미적분_30",
+        "year": 2027,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "미적분",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고3_7월모의고사/2021_고3_7월모의고사_공통_15",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_25",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_18",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 18,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "절댓값_함수의_미분": [
+      {
+        "slug": "2020/고3_4월모의고사/2020_고3_4월모의고사_나형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "4월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "중점의_조건": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_13",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건식을_이용한_미지수_결정": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_17",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 17,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "프랙탈_반복": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_18",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "기댓값과_분산": [
+      {
+        "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_확률과통계_30",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_24",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 24,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "선형변환": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_24",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 24,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "속력": [
+      {
+        "slug": "2027/6월모평/2027_6월모평_미적분_27",
+        "year": 2027,
+        "exam_type": "모의평가",
+        "session": "6월",
+        "grade": null,
+        "subject": "미적분",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_미적분_25",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "10월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_25",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 25,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "등차수열과_등비수열": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_26",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 26,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "로그함수의_교점": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_27",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "호와_원주각": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "극값과_극값의_위치": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "조건을_만족하는_함수결정": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_가형_30",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "가형",
+        "number": 30,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "표본공간의_분할": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_05",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 5,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "구간별_함수의_연속성": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_06",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 6,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "그래프_읽기": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_07",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 7,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "표": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_12",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 12,
+        "score": 4,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "확률질량함수": [
+      {
+        "slug": "2028/예시/2028_예시_단일_26",
+        "year": 2028,
+        "exam_type": "수능",
+        "session": "예시문항",
+        "grade": null,
+        "subject": "단일",
+        "number": 26,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_16",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 16,
+        "score": 4,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "정규분포의_대칭성": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_18",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 18,
+        "score": 4,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "삼각함수의_범위": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_27",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 27,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_13",
+        "year": 2021,
+        "exam_type": "모의고사",
+        "session": "6월",
+        "grade": "고2",
+        "subject": "단일",
+        "number": 13,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "함수의_최적화": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_28",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
+    "체계적_경우_분류": [
+      {
+        "slug": "2020/고3_7월모의고사/2020_고3_7월모의고사_나형_29",
+        "year": 2020,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "나형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      }
+    ],
     "근호의_곱셈": [
       {
         "slug": "2021/6월모평/2021_6월모평_가형_01",
@@ -174,22 +1606,6 @@
         "grade": null,
         "subject": "나형",
         "number": 4,
-        "score": 3,
-        "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "원에_내접하는_삼각형": [
-      {
-        "slug": "2021/6월모평/2021_6월모평_나형_05",
-        "year": 2021,
-        "exam_type": "모의평가",
-        "session": "6월",
-        "grade": null,
-        "subject": "나형",
-        "number": 5,
         "score": 3,
         "killer_tier": "early",
         "format": "choice",
@@ -2123,22 +3539,6 @@
         "via": "direct"
       }
     ],
-    "삼각함수의_범위": [
-      {
-        "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_13",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "6월",
-        "grade": "고2",
-        "subject": "단일",
-        "number": 13,
-        "score": 3,
-        "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
     "헤론의_공식": [
       {
         "slug": "2021/고2_6월모의고사/2021_고2_6월모의고사_단일_18",
@@ -2699,36 +4099,6 @@
         "via": "direct"
       }
     ],
-    "속력": [
-      {
-        "slug": "2027/6월모평/2027_6월모평_미적분_27",
-        "year": 2027,
-        "exam_type": "모의평가",
-        "session": "6월",
-        "grade": null,
-        "subject": "미적분",
-        "number": 27,
-        "score": 3,
-        "killer_tier": "mid",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_미적분_25",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "10월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 25,
-        "score": 3,
-        "killer_tier": "mid",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
     "조건을_만족하는_값": [
       {
         "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_미적분_29",
@@ -2757,22 +4127,6 @@
         "score": 3,
         "killer_tier": "mid",
         "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "기댓값과_분산": [
-      {
-        "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_확률과통계_30",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "10월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 30,
-        "score": 4,
-        "killer_tier": "killer",
-        "format": "numeric",
         "has_image": true,
         "via": "direct"
       }
@@ -3063,22 +4417,6 @@
         "via": "direct"
       }
     ],
-    "속도와_위치_관계": [
-      {
-        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_10",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "4월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 10,
-        "score": 4,
-        "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
     "변위_조건": [
       {
         "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_10",
@@ -3107,50 +4445,6 @@
         "score": 4,
         "killer_tier": "early",
         "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "극값과_도함수": [
-      {
-        "slug": "2027/6월모평/2027_6월모평_미적분_30",
-        "year": 2027,
-        "exam_type": "모의평가",
-        "session": "6월",
-        "grade": null,
-        "subject": "미적분",
-        "number": 30,
-        "score": 4,
-        "killer_tier": "killer",
-        "format": "numeric",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2021/고3_7월모의고사/2021_고3_7월모의고사_공통_15",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": "mid",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2021/고3_4월모의고사/2021_고3_4월모의고사_공통_18",
-        "year": 2021,
-        "exam_type": "모의고사",
-        "session": "4월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 18,
-        "score": 3,
-        "killer_tier": "early",
-        "format": "numeric",
         "has_image": true,
         "via": "direct"
       }
@@ -22734,7 +24028,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "propagated"
       },
@@ -75708,7 +77002,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -78566,7 +79860,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -79126,7 +80420,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -83346,7 +84640,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "propagated"
       },
@@ -84172,7 +85466,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "propagated"
       },
@@ -85860,7 +87154,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -86576,7 +87870,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       }
@@ -87100,7 +88394,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "propagated"
       },
@@ -87522,7 +88816,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -87606,7 +88900,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -90478,7 +91772,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -99244,7 +100538,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "propagated"
       },
@@ -125488,7 +126782,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -162156,7 +163450,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -162240,7 +163534,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       },
@@ -164530,7 +165824,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       }
@@ -164546,7 +165840,7 @@
         "number": 24,
         "score": 3,
         "killer_tier": "mid",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       }
@@ -179082,7 +180376,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       }
@@ -179098,7 +180392,7 @@
         "number": 23,
         "score": 2,
         "killer_tier": "early",
-        "format": "numeric",
+        "format": "choice",
         "has_image": true,
         "via": "direct"
       }
@@ -196550,22 +197844,6 @@
         "number": 24,
         "score": 3,
         "killer_tier": "mid",
-        "format": "numeric",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "확률질량함수": [
-      {
-        "slug": "2028/예시/2028_예시_단일_26",
-        "year": 2028,
-        "exam_type": "수능",
-        "session": "예시문항",
-        "grade": null,
-        "subject": "단일",
-        "number": 26,
-        "score": 4,
-        "killer_tier": "killer",
         "format": "numeric",
         "has_image": true,
         "via": "direct"

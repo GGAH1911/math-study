@@ -1,0 +1,13 @@
+{
+  "text_sha": "6b07f8909fa0",
+  "meta": {
+    "searchable_text": "[텍스트 글리프 손상으로 정확한 식을 재구성할 수 없음] $\\lim_{x \\to 0} \\text{[미지의 식]}$의 값은?\n① 1\n② 2\n③ 3\n④ 4\n⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [],
+    "exam_intent": "극한의 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

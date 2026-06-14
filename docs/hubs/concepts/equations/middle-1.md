@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-06-06
-updated: 2026-06-06
+created: 2026-06-13
+updated: 2026-06-13
 hub_type: concepts-grade
 domain: equations
 grade: middle-1
@@ -15,7 +15,7 @@ counts:
 
 ## 단원 (1)
 
-- [일차방정식](../../../concepts/equations/middle-1/일차방정식.md) · 일차방정식 `learning`
+- [일차방정식](../../../concepts/equations/middle-1/일차방정식.md) · 일차방정식 `proficient`
 
 ## 정의 (6)
 

@@ -1,0 +1,16 @@
+{
+  "text_sha": "edd52b57b9be",
+  "meta": {
+    "searchable_text": "$\\left(x^2 + \\dfrac{2}{x}\\right)^6$의 전개식에서 $x^6$의 계수는?\n① 36  ② 44  ③ 52  ④ 60  ⑤ 68",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리",
+      "전개식의_계수"
+    ],
+    "exam_intent": "이항정리를 이용하여 특정 차수 항의 계수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "e576b7d95fa2",
+  "meta": {
+    "searchable_text": "두 수열 $\\{a_n\\}$, $\\{b_n\\}$에 대하여 $\\sum_{n=1}^{10} a_n = 10$, $\\sum_{n=1}^{10} b_n = 3$일 때, $\\sum_{n=1}^{10} (2a_n - b_n)$의 값은? ① 17 ② 18 ③ 19 ④ 20 ⑤ 21",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등비수열",
+      "수열의_합"
+    ],
+    "exam_intent": "두 수열의 시그마 합을 이용한 선형 결합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

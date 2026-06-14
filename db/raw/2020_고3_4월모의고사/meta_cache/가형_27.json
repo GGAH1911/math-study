@@ -1,0 +1,17 @@
+{
+  "text_sha": "502f4719639a",
+  "meta": {
+    "searchable_text": "자연수 $n$에 대하여 점을 지나고 특정 직선과 접하는 원의 중심의 좌표에 관한 극한 문제. 중심을 $(a_n, b_n)$이라 할 때 $\\lim_{n \\to \\infty} \\frac{b_n^2}{a_n}$을 구하시오.",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "수열의_극한",
+    "concepts": [
+      "점열의_극한",
+      "기하학적_극한",
+      "원의_접선"
+    ],
+    "exam_intent": "자연수 매개변수 원의 기하학적 극한 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

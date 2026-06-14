@@ -1,0 +1,16 @@
+{
+  "text_sha": "2743626cd09d",
+  "meta": {
+    "searchable_text": "그림과 같이 반지름의 길이가 4인 원에 내접하고 변 AC의 길이가 5인 삼각형 ABC가 있다. ∠ABC = θ라 할 때, sin θ의 값은? (단, 0 < θ < π)\n\n① 1/4\n② 3/8\n③ 1/2\n④ 5/8\n⑤ 3/4",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "원에내접하는삼각형"
+    ],
+    "exam_intent": "정현법칙으로 원에 내접하는 삼각형의 각의 삼각비 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

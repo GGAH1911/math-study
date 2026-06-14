@@ -12,7 +12,7 @@
 기존 ingest_v2 헬퍼만 재사용(회귀0). MATHSTUDY_ROOT 로 워크트리 오버라이드.
 """
 from __future__ import annotations
-import sys, os, json, argparse, subprocess
+import re, sys, os, json, argparse, subprocess
 from pathlib import Path
 import concurrent.futures as cf
 
@@ -75,10 +75,50 @@ def parse_moapyeong(ans_pdf: Path) -> dict:
     return out
 
 
-def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, limit=None) -> dict:
+def parse_gyo3_ganah(ans_pdf: Path) -> dict:
+    """교육청 고3 가/나형 정답표(트랙별 단일 파일) → {num: (answer_str, None)}.
+
+    평가원 가/나형과 달리 (번호 정답) **pair** — 배점·홀짝형 헤더가 없다. 객관식 1-21은
+    동그라미/HyhwpEQ PUA 글리프지만, **단답 22-30 인코딩이 회차마다 다르다**:
+      · PUA 글리프 (3월형, U+E034~E03D)  · 평문 ASCII 숫자 (4·7월형, '43' '120' 등)
+    또 '정답 및 해 설' 제목이 정답표보다 **앞**에 오는 회차(7월)가 있어 단순 '해설' 컷은
+    표를 통째로 날린다. → 마커 컷 대신 **번호 1→30 순증 연속**으로 정답표를 직접 식별한다
+    (해설 본문은 번호가 1,2,3… 순증하지 않아 자연 배제). 단답은 글리프면 _decode_single_ans,
+    평문이면 그대로. 전 페이지를 훑어 가장 많이 채운 페이지를 채택(30 도달 시 조기 종료).
+    배점은 정답표에 없어 None 반환 → ingest 가 _guess_score 로 채운다."""
+    from answer_textlayer import _is_ans_glyph, _decode_single_ans
+    doc = fitz.open(str(ans_pdf))
+    best: dict = {}
+    for page in doc:
+        toks = page.get_text().split()
+        out: dict = {}
+        expect, i = 1, 0
+        while i < len(toks) and expect <= 30:
+            t = toks[i]
+            if t.isascii() and t.isdigit() and int(t) == expect:   # 정답표 번호는 순증(ascii)
+                nxt = toks[i + 1] if i + 1 < len(toks) else ''
+                ans = None
+                if nxt and all(_is_ans_glyph(c) for c in nxt):     # 글리프(동그라미/PUA)
+                    ans = _decode_single_ans(nxt)
+                elif expect >= 22 and nxt.isascii() and nxt.isdigit():  # 단답 평문 숫자(4·7월형)
+                    ans = nxt
+                elif nxt in ('-', '‐', '–', '—', '*'):             # 전항정답(모두 정답) 마커
+                    ans = '전항정답'
+                if ans is not None:
+                    out[expect] = (ans, None); expect += 1; i += 2; continue
+            i += 1
+        if len(out) > len(best):
+            best = out
+        if len(best) == 30:
+            break
+    return best
+
+
+def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, limit=None,
+           agency: str = AGENCY, grade: str | None = None) -> dict:
     if exam_type in ('모평', '모의평가'):
         exam_type = '모의평가'                                     # slugify·bbox·score 가 보는 정식 값
-    slug = IV.slugify_round(year, exam_type, session, None)        # 2021_수능 / 2021_6월모평
+    slug = IV.slugify_round(year, exam_type, session, grade)       # 2021_수능 / 2021_6월모평 / 2020_고3_10월모의고사
     raw = ROOT / 'db' / 'raw' / slug
     images_dir = raw / 'images'; images_dir.mkdir(parents=True, exist_ok=True)
     print(f'══════ {slug} (가/나형 어댑터: {exam_type}{" " + session if session else ""}) ══════', flush=True)
@@ -135,12 +175,18 @@ def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, li
                 nfail += 1
     print(f'  ✓ 메타데이터 (unit실패 {nfail})', flush=True)
 
-    # 4) 정답 — 수능=통합 정답.pdf(홀수형) / 모평=트랙별 {가형,나형}_정답.pdf(form 없음) + 안전장치
+    # 4) 정답 — 수능=통합 정답.pdf(홀수형) / 모평=트랙별(form 없음) / 교육청 고3=트랙별(배점·홀짝 없음, PUA 단답)
     combined = raw / '정답.pdf'
-    if combined.exists():
+    flat = {}
+    if agency == '교육청':                                        # 교육청 고3 가/나형 학평
+        for track in TRACKS:
+            tp = raw / f'{track}_정답.pdf'
+            if tp.exists():
+                for num, (ans, sc) in parse_gyo3_ganah(tp).items():
+                    flat[(track, num)] = (ans, sc)
+    elif combined.exists():
         flat = parse_answers(combined)                            # 수능 통합본
     else:
-        flat = {}
         for track in TRACKS:                                      # 모평 트랙별 분리본
             tp = raw / f'{track}_정답.pdf'
             if tp.exists():
@@ -148,7 +194,9 @@ def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, li
                     flat[(track, num)] = (ans, sc)
     answers: dict = {}; scores: dict = {}
     for (t, n), (a, s) in flat.items():
-        answers.setdefault(t, {})[str(n)] = a; scores[(t, n)] = s
+        answers.setdefault(t, {})[str(n)] = a
+        if s is not None:                                         # 교육청은 배점 없음 → _guess_score 가 채움
+            scores[(t, n)] = s
     for t in TRACKS:
         got = len(answers.get(t, {}))
         assert got == 30, f"🔴 {t} 정답 {got}개 (30 아님) — 정답표 파싱 점검"
@@ -173,12 +221,12 @@ def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, li
         for sp in (meta.get('concepts') or []) if isinstance(meta, dict) else []:
             IV._ensure_concept_exists(sp, parent_unit=us, concept_type='definition')
         IV.write_markdown_v2(prob, meta, ans, e['image_url'], e['image_fs'],
-                             slug, year, exam_type, session, grade=None, agency=AGENCY)
+                             slug, year, exam_type, session, grade=grade, agency=agency)
         written.append({'prob': prob, 'mapping': meta, 'answer': ans})
         print(f'  [{subj} {num:>2}] ans={ans!s:>4} {prob["format"][:3]} {prob["score"]}점 unit={meta.get("unit","?")}', flush=True)
 
     IV.db_upsert(written, year, exam_type, session,
-                 f'db/raw/{slug}/가형_문제.pdf', grade=None, agency=AGENCY)
+                 f'db/raw/{slug}/가형_문제.pdf', grade=grade, agency=agency)
     print(f'  ✓ DB upsert {len(written)}문제', flush=True)
     return {'round': slug, 'ok': True, 'count': len(written)}
 
@@ -186,13 +234,15 @@ def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, li
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--year', type=int, default=2021)
-    ap.add_argument('--exam-type', default='수능', help='수능 / 모평')
-    ap.add_argument('--session', default=None, help='모평이면 6월/9월 (수능은 생략)')
+    ap.add_argument('--exam-type', default='수능', help='수능 / 모평 / 모의고사(교육청 고3 가나형)')
+    ap.add_argument('--session', default=None, help='모평/모의고사면 6월/9월/10월 (수능은 생략)')
+    ap.add_argument('--agency', default='평가원', help='평가원 / 교육청(고3 가나형 학평)')
+    ap.add_argument('--grade', default=None, help='교육청 고3 가나형이면 고3')
     ap.add_argument('--with-cache', action='store_true', help='인제스트 후 풀이 캐시까지')
     ap.add_argument('--no-sync', action='store_true', help='후처리 동기화 생략')
     ap.add_argument('--limit', type=int, default=None)
     a = ap.parse_args()
-    result = ingest(a.year, a.exam_type, a.session, a.limit)
+    result = ingest(a.year, a.exam_type, a.session, a.limit, agency=a.agency, grade=a.grade)
     print(json.dumps(result, ensure_ascii=False))
     if result.get('ok'):
         slug = result['round']

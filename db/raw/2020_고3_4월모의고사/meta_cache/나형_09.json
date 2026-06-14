@@ -1,0 +1,17 @@
+{
+  "text_sha": "9d5fa1768f7b",
+  "meta": {
+    "searchable_text": "$$\\frac{\\log_3 10 \\cdot \\log_3 5}{9 \\cdot \\log_3 3 \\cdot 2}$$의 값은? ① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그_계산",
+      "로그_성질",
+      "밑변환_공식"
+    ],
+    "exam_intent": "로그의 기본 성질과 계산 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "ba88471aa795",
+  "meta": {
+    "searchable_text": "함수 $y = a\\log_2 x$의 그래프가 점 $(4, 7)$을 지날 때, 상수 $a$의 값은?\n①1 ②2 ③3 ④4 ⑤5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_그래프",
+      "함수의_상수결정"
+    ],
+    "exam_intent": "로그함수 정의와 점 통과 조건을 이용해 상수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

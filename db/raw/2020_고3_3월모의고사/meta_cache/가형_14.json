@@ -1,0 +1,18 @@
+{
+  "text_sha": "c23d353e8a4b",
+  "meta": {
+    "searchable_text": "함수 $y = x\\log_3 2$의 그래프와 함수 $y = \\log_3(3x)$의 그래프가 만나는 서로 다른 두 점을 각각 A, B라 하자. 점 A를 지나고 직선 AB와 수직인 직선이 x축과 만나는 점을 C라 할 때, 삼각형 ABC의 넓이는? (단, 점 A의 x좌표는 점 B의 x좌표보다 작다.) ① $\\frac{13}{2}$ ② 7 ③ $\\frac{15}{2}$ ④ 8 ⑤ $\\frac{17}{2}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "교점",
+      "직선의_수직_관계",
+      "삼각형_넓이"
+    ],
+    "exam_intent": "로그함수의 교점과 기울기 조건을 이용해 좌표를 구하고 도형의 넓이를 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

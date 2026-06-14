@@ -69,7 +69,7 @@ META_SYSTEM = """너는 한국 수능 수학 기출문제 분류 전문가다.
 다음 JSON을 출력하라:
 
 {
-  "searchable_text": "본문을 가능한 한 자연스럽게 옮긴 한국어 + LaTeX",
+  "searchable_text": "본문을 자연스럽게 옮긴 한국어 + LaTeX. 객관식(5지선다)이면 선택지 ①②③④⑤를 각각의 값·식과 함께 모두 포함(솔버 검증·유사문제 재생성에 필수)",
   "format": "choice" 또는 "numeric"   # 5지선다면 choice, 단답형이면 numeric
   "has_figure": true 또는 false   # 본문에 [그림] 또는 도형 언급이 있으면 true
   "unit": "단원 slug — 아래 단원 목록 중 하나",
@@ -88,8 +88,15 @@ killer_tier:
 
 
 def _extract_problem_text(pdf_path: Path, page_num: int, bbox_pdf: tuple) -> str:
-    """Extract text inside a PDF bbox, decode PUA digit glyphs, normalize
-    whitespace. Returns a single string ready for the classifier prompt."""
+    """문제 영역 본문 추출. hancom_decode 기하 구조복원(로제타+분수·지수·첨자·cases·근호)을
+    먼저 시도(한컴 PUA 수식을 ⋄로 폐기하던 옛 로직 대체) → 실패 시 fitz+PUA-digit 폴백."""
+    try:
+        import hancom_decode as _hd
+        _t = _hd.decode_problem(str(pdf_path), page_num, bbox_pdf)
+        if _t and len(_t.strip()) >= 8:
+            return _t.strip()
+    except Exception:
+        pass
     try:
         d = fitz.open(pdf_path)
         if page_num - 1 >= len(d):
@@ -185,10 +192,9 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
             last_err = f'non-dict (try {attempt+1})'
             continue
         normalized = _normalize(parsed)
-        # If the classifier didn't include a usable searchable_text, fall
-        # back to the raw PDF text (lossy but at least searchable).
-        if not normalized.get('searchable_text'):
-            normalized['searchable_text'] = body_text[:2000]
+        # searchable_text 는 기하 디코드(정확)를 그대로 사용 — Haiku 재작성 환각 방지.
+        # (Haiku 는 format/tier/unit 분류용으로만 신뢰)
+        normalized['searchable_text'] = body_text[:3000]
         if cache_file:
             try:
                 cache_file.write_text(

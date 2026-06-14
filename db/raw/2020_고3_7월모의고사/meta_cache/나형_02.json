@@ -1,0 +1,17 @@
+{
+  "text_sha": "769ac7b833e3",
+  "meta": {
+    "searchable_text": "등비수열 $\\{a_n\\}$에 대하여 $a_2 \\cdot a_3 = 2$, $a_3 \\cdot a_6 = 6$일 때, $\\dfrac{a_1 \\cdot a_4}{a_2^2}$의 값은?\n①1 ②2 ③3 ④4 ⑤5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비수열의_일반항",
+      "등비중항"
+    ],
+    "exam_intent": "등비수열의 조건식으로부터 공비를 구하고 항의 관계식을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

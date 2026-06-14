@@ -1,0 +1,16 @@
+{
+  "text_sha": "766d7007cf96",
+  "meta": {
+    "searchable_text": "x ≥ 1인 모든 실수 x의 집합에서 정의되고 미분가능한 함수 f가 f(1) = ..., f'(3) = 4를 만족시킬 때, f(5) + 2f(...)의 값은? ① 4 ② 6 ③ 8 ④ 10 ⑤ 12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "미분",
+      "도함수"
+    ],
+    "exam_intent": "주어진 조건으로부터 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "11d8f030bbe5",
+  "meta": {
+    "searchable_text": "첫째항이 2이고 공비가 5인 등비수열 $\\{a_n\\}$에 대하여 $a_2$의 값은? ① 5  ② 10  ③ 15  ④ 20  ⑤ 25",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "공비",
+      "일반항"
+    ],
+    "exam_intent": "등비수열의 일반항 공식 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

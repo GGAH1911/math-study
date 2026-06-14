@@ -1,0 +1,16 @@
+{
+  "text_sha": "cb76e2cd1f91",
+  "meta": {
+    "searchable_text": "$\\frac{\\sin^4\\theta - \\cos^4\\theta}{\\sin^2\\theta - \\cos^2\\theta}$의 값은? ①-1 ②$\\frac{\\sqrt{2}}{2}$ ③0 ④$-\\frac{\\sqrt{2}}{2}$ ⑤1",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "인수분해"
+    ],
+    "exam_intent": "삼각함수 식을 인수분해로 정리하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

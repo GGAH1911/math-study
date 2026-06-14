@@ -1,0 +1,17 @@
+{
+  "text_sha": "1c4161297e4b",
+  "meta": {
+    "searchable_text": "0 ≤ x ≤ 2π일 때, 두 곡선 $y = \\cos 2x$와 $y = \\sin 4x$가 만나는 점의 개수는?\n\n① 2\n② 4\n③ 6\n④ 8\n⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각방정식",
+      "함수의_교점",
+      "주기성"
+    ],
+    "exam_intent": "삼각함수의 그래프를 이용하여 방정식의 해의 개수를 판단하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

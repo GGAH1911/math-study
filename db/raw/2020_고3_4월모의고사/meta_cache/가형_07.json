@@ -1,0 +1,16 @@
+{
+  "text_sha": "243a571c3539",
+  "meta": {
+    "searchable_text": "6개의 문자를 일렬로 나열할 때, 특정 문자들이 이웃하지 않도록 나열하는 경우의 수는?\n① 50\n② 55\n③ 60\n④ 65\n⑤ 70",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "제약_조건이_있는_순열",
+      "포함-배제_원리"
+    ],
+    "exam_intent": "조건부 순열 계산으로 경우의 수 논리 적용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "a316c05ee29c",
+  "meta": {
+    "searchable_text": "두 곡선 $y = \\log_2 x$, $y = \\log_a x$가 $x$축 위의 점 $A$에서 만난다. 직선 $x=4$가 곡선 $y=\\log_2 x$와 만나는 점을 $B$, 곡선 $y=\\log_a x$와 만나는 점을 $C$라 하자. 삼각형 $ABC$의 넓이가 $\\frac{9}{2}$일 때, 상수 $a$의 값은? ① $\\frac{1}{16}$ ② $\\frac{1}{8}$ ③ $\\frac{3}{16}$ ④ $\\frac{1}{4}$ ⑤ $\\frac{5}{16}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [],
+    "exam_intent": "로그함수의 성질과 그래프를 이용하여 조건을 만족하는 로그의 밑을 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

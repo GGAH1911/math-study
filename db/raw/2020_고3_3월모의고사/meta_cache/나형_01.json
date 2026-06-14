@@ -1,0 +1,16 @@
+{
+  "text_sha": "8faf8fb731fd",
+  "meta": {
+    "searchable_text": "$$\\lim_{x \\to 2} (2x + 5)$$의 값은? ① 5 ② 7 ③ 9 ④ 11 ⑤ 13",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_정의",
+      "다항식의_극한"
+    ],
+    "exam_intent": "일차함수의 극한값을 직접 대입으로 구하는 기초 계산 문제",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

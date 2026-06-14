@@ -1,0 +1,16 @@
+{
+  "text_sha": "47ee87abc70e",
+  "meta": {
+    "searchable_text": "수열 $\\{a_n\\}$의 일반항이 $a_n = 2n - 1$일 때, $\\sum$ [수식]의 값은? [3점]\n① $\\frac{9}{1}$ ② $\\frac{27}{4}$ ③ $\\frac{27}{5}$ ④ $\\frac{9}{2}$ ⑤ $\\frac{27}{7}$",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "등차수열의 일반항으로부터 특정 합의 값을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

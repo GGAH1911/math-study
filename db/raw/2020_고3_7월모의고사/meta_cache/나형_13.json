@@ -1,0 +1,16 @@
+{
+  "text_sha": "35683ff5313a",
+  "meta": {
+    "searchable_text": "곡선 $y = x^4$ 위의 점 $P(a, a^4)$에서 직선 $y = 2x + 1$에 내린 수선의 발을 $H$라 하자. $$\\lim_{a \\to \\infty} \\frac{|OP|^2}{|OH|^2}$$의 값은? (단, $O$는 원점이다.) [3점]\n① $\\dfrac{5}{3}$\n② $\\dfrac{3}{2}$\n③ $\\dfrac{15}{11}$\n④ $\\dfrac{5}{4}$\n⑤ $\\dfrac{15}{13}$",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "점과_직선의_거리",
+      "극한"
+    ],
+    "exam_intent": "고차 곡선 위의 점에서 직선까지의 거리 극한으로 함수와 기하의 통합 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

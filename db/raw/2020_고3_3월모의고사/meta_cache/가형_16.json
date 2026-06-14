@@ -1,0 +1,16 @@
+{
+  "text_sha": "1300a6bc02a8",
+  "meta": {
+    "searchable_text": "함수 $f$가 모든 실수 $x$에 대하여 [함수 관계식: 텍스트 레이어 손상으로 정확한 조건 확인 불가]을 만족시킨다. $f(1)=0$일 때, $f(2)$의 값은?\n\n① 6\n② 7\n③ 8\n④ 9\n⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수_방정식",
+      "함수값"
+    ],
+    "exam_intent": "함수 방정식 조건에서 특정 함수값 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

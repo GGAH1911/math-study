@@ -1,0 +1,16 @@
+{
+  "text_sha": "d30773591205",
+  "meta": {
+    "searchable_text": "0≤θ≤2π일 때, 방정식 sin2θ=cos2θ+cosθ와 부등식 sinθ>cosθ를 동시에 만족시키는 모든 θ의 값의 합은?\n\n① 3π/4\n② 5π/3\n③ 2π\n④ 7π/3\n⑤ 8π/3",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "배각공식",
+      "삼각방정식과_부등식"
+    ],
+    "exam_intent": "배각공식을 이용하여 삼각방정식과 부등식을 동시에 풀기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}
