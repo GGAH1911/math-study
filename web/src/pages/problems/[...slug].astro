@@ -47,7 +47,10 @@ const reconFull = reconUnsupported
       figureHtml: figDiv,
       figureAfterLine: fm.figure_after_line,
     });
-const reconHTML = reconFull; // 토글 버튼 표시 여부 판단(빈 문자열이면 재구성 버튼 숨김)
+// 재구성은 어드민 전용: 도형 라벨이 이미지 밖으로 새는 등 엣지케이스가 있어 사용자에겐 부적합 →
+// 사용자는 원본 이미지(<Content/>)만, 재구성 토글·뷰는 admin 만. (디코더의 가치는 인제스트용 searchable_text.)
+const isAdmin = !!Astro.locals.user?.is_admin;
+const reconHTML = isAdmin ? reconFull : ''; // 빈 문자열=토글/재구성 숨김 → 비어드민은 <Content/> 원본만
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
