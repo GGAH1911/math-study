@@ -91,10 +91,10 @@ type SynthesisBrief = { slug: string; title: string; created: string | null; rev
 const linkedSyntheses: SynthesisBrief[] = (synthesesIndex as any).byConcept?.[slug] ?? [];
 
 const TIER_LABEL: Record<string, { text: string; cls: string }> = {
-  killer: { text: '킬러', cls: 'bg-rose-500/20 text-rose-300 border-rose-500/40' },
-  high:   { text: 'high', cls: 'bg-amber-500/20 text-amber-300 border-amber-500/40' },
-  mid:    { text: 'mid',  cls: 'bg-sky-500/20 text-sky-300 border-sky-500/40' },
-  early:  { text: 'early', cls: 'bg-zinc-600/30 text-zinc-300 border-zinc-600' },
+  killer: { text: '상', cls: 'bg-rose-500/20 text-rose-300 border-rose-500/40' },
+  high:   { text: '상', cls: 'bg-amber-500/20 text-amber-300 border-amber-500/40' },
+  mid:    { text: '중',  cls: 'bg-sky-500/20 text-sky-300 border-sky-500/40' },
+  early:  { text: '하', cls: 'bg-zinc-600/30 text-zinc-300 border-zinc-600' },
 };
 function tierBadge(t: string | null) {
   return TIER_LABEL[t ?? ''] ?? { text: '기타', cls: 'bg-zinc-700/30 text-zinc-400 border-zinc-700' };

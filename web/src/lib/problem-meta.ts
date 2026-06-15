@@ -15,12 +15,13 @@ export const FORMAT_LABEL: Record<string, string> = {
   descriptive: '서술형',
 };
 
-// 난이도 배지 — concepts/[...slug].astro 의 TIER_LABEL 을 이전·공유.
+// 난이도 배지 — 상/중/하 3단(데이터 키는 early/mid/killer 유지, 표시만 한글).
+// 난이도순: killer(최고난도)=상, mid=중, early=하. cls 색도 난이도 직관에 맞춤(상=rose, 하=중립).
 export const TIER_BADGE: Record<string, { text: string; cls: string }> = {
-  killer: { text: '킬러', cls: 'bg-rose-500/20 text-rose-300 border-rose-500/40' },
-  high: { text: 'high', cls: 'bg-amber-500/20 text-amber-300 border-amber-500/40' },
-  mid: { text: 'mid', cls: 'bg-sky-500/20 text-sky-300 border-sky-500/40' },
-  early: { text: 'early', cls: 'bg-zinc-600/30 text-zinc-300 border-zinc-600' },
+  killer: { text: '상', cls: 'bg-rose-500/20 text-rose-300 border-rose-500/40' },
+  high: { text: '상', cls: 'bg-amber-500/20 text-amber-300 border-amber-500/40' }, // 레거시 슬롯(미사용)
+  mid: { text: '중', cls: 'bg-sky-500/20 text-sky-300 border-sky-500/40' },
+  early: { text: '하', cls: 'bg-zinc-600/30 text-zinc-300 border-zinc-600' },
 };
 
 export const MONTH_ORDER = ['3월', '4월', '5월', '6월', '7월', '9월', '10월', '11월'];
