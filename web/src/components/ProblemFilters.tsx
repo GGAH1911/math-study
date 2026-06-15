@@ -9,6 +9,8 @@ type Props = {
   // 회차별 렌즈는 중간 그룹(.problem-group)이 있어 카드→그룹→섹션 3단으로 접는다.
   // 단원별 렌즈는 그룹이 없어 omit → 카드→섹션 2단.
   groupSelector?: string;
+  // 단원별 렌즈: concepts 탭과 동일한 과목→단원 2단 collapse 를 켠다(.pdomain-toggle/.punit-toggle 위임 + 필터 시 자동 펼침).
+  collapsible?: boolean;
 };
 
 function readQuerySet(name: string): Set<string> | null {
@@ -28,7 +30,7 @@ function writeQuerySet(name: string, set: Set<string>) {
   window.history.replaceState(null, '', url.toString());
 }
 
-export default function ProblemFilters({ axes, total, groupSelector }: Props) {
+export default function ProblemFilters({ axes, total, groupSelector, collapsible = false }: Props) {
   // opt-in: 빈 Set = 그 축 전체(필터 없음). 클릭으로 좁힌다.
   // (SSR/CSR 첫 렌더 모두 빈 Set → hydration mismatch 없음.)
   const [sets, setSets] = useState<Record<string, Set<string>>>(
@@ -38,6 +40,10 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
   const [debounced, setDebounced] = useState('');
   const [hydrated, setHydrated] = useState(false);
   const [visibleCount, setVisibleCount] = useState(total);
+  // 과목→단원 collapse 상태(단원별 렌즈 전용). concepts 탭과 동일 전략.
+  const [expandedDomains, setExpandedDomains] = useState<Set<string>>(() => new Set());
+  const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
+  const [allDomainIds, setAllDomainIds] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   // 마운트 후 URL 상태 replay. document 완료 전엔 카드가 아직 스트리밍 중이라
@@ -114,6 +120,13 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
     for (const s of document.querySelectorAll<HTMLElement>('.problem-lens-section')) {
       s.classList.toggle('filtered-out', !s.querySelector('.problem-card-wrap:not(.filtered-out)'));
     }
+    // 단원별 렌즈: 매칭 카드 없는 단원 그룹·과목 섹션도 접어 숨김.
+    for (const grp of document.querySelectorAll<HTMLElement>('.problem-unit-group')) {
+      grp.classList.toggle('filtered-out', !grp.querySelector('.problem-card-wrap:not(.filtered-out)'));
+    }
+    for (const sec of document.querySelectorAll<HTMLElement>('.problem-domain-section')) {
+      sec.classList.toggle('filtered-out', !sec.querySelector('.problem-card-wrap:not(.filtered-out)'));
+    }
     setVisibleCount(visible);
   }, [hydrated, sets, debounced, axes, groupSelector]);
 
@@ -147,6 +160,68 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
     setSearch('');
   };
 
+  // ── 과목→단원 collapse (concepts 탭과 동일 전략) — collapsible 일 때만, 토글 위임 ──
+  // 회차별 렌즈(collapsible=false)엔 .pdomain-toggle 이 없어 querySelectorAll 이 비어 no-op.
+  useEffect(() => {
+    if (!hydrated || !collapsible) return;
+    const dBtns = Array.from(document.querySelectorAll<HTMLElement>('.pdomain-toggle'));
+    setAllDomainIds(dBtns.map((b) => b.dataset.pdomain ?? '').filter(Boolean));
+    const onDomain = (e: Event) => {
+      const id = (e.currentTarget as HTMLElement).dataset.pdomain;
+      if (!id) return;
+      setExpandedDomains((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id); else next.add(id);
+        return next;
+      });
+    };
+    const uBtns = Array.from(document.querySelectorAll<HTMLElement>('.punit-toggle'));
+    const onUnit = (e: Event) => {
+      const id = (e.currentTarget as HTMLElement).dataset.punit;
+      if (!id) return;
+      setExpandedUnits((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id); else next.add(id);
+        return next;
+      });
+    };
+    dBtns.forEach((b) => b.addEventListener('click', onDomain));
+    uBtns.forEach((b) => b.addEventListener('click', onUnit));
+    return () => {
+      dBtns.forEach((b) => b.removeEventListener('click', onDomain));
+      uBtns.forEach((b) => b.removeEventListener('click', onUnit));
+    };
+  }, [hydrated, collapsible]);
+
+  // 접힘 반영: 필터 active 면 전부 펼침(매칭 카드 보이게), 아니면 expanded 집합 외 접힘.
+  useEffect(() => {
+    if (!hydrated || !collapsible) return;
+    const force = anyFilter;
+    for (const body of document.querySelectorAll<HTMLElement>('.pdomain-body')) {
+      const id = body.dataset.pdomainBody ?? '';
+      body.classList.toggle('collapsed', !(force || expandedDomains.has(id)));
+    }
+    for (const btn of document.querySelectorAll<HTMLElement>('.pdomain-toggle')) {
+      const id = btn.dataset.pdomain ?? '';
+      const open = force || expandedDomains.has(id);
+      const chev = btn.querySelector('.pdomain-chevron');
+      if (chev) chev.textContent = open ? '▾' : '▸';
+      btn.setAttribute('aria-expanded', String(open));
+    }
+    for (const ul of document.querySelectorAll<HTMLElement>('.punit-problems')) {
+      const id = ul.dataset.punitProblems ?? '';
+      ul.classList.toggle('collapsed', !(force || expandedUnits.has(id)));
+    }
+    for (const btn of document.querySelectorAll<HTMLElement>('.punit-toggle')) {
+      const id = btn.dataset.punit ?? '';
+      const open = force || expandedUnits.has(id);
+      btn.textContent = open ? '▾' : '▸';
+      btn.setAttribute('aria-expanded', String(open));
+    }
+  }, [hydrated, collapsible, expandedDomains, expandedUnits, anyFilter]);
+
+  const allDomainsExpanded = allDomainIds.length > 0 && allDomainIds.every((id) => expandedDomains.has(id));
+
   return (
     <div className="sticky top-0 z-20 -mx-6 px-6 py-3 bg-[color:var(--color-bg)]/95 backdrop-blur border-b border-[color:var(--color-border)] space-y-2">
       <div className="flex items-center gap-3 flex-wrap">
@@ -178,6 +253,17 @@ export default function ProblemFilters({ axes, total, groupSelector }: Props) {
             >모두 해제</button>
           )}
         </span>
+        {collapsible && allDomainIds.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setExpandedDomains(allDomainsExpanded ? new Set() : new Set(allDomainIds))}
+            disabled={anyFilter}
+            className="ml-auto chip opacity-70 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
+            title={anyFilter ? '필터 중에는 매칭 문제가 모두 보입니다' : allDomainsExpanded ? '모든 과목 접기' : '모든 과목 펼치기'}
+          >
+            {allDomainsExpanded ? '◢ 모두 접기' : '◣ 모두 펼치기'}
+          </button>
+        )}
       </div>
 
       {axes.map((a) => (
