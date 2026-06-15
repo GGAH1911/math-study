@@ -16,7 +16,7 @@ export const MASTERY_LABEL_KO: Record<string, string> = {
   unknown: '미습득',
   learning: '학습중',
   proficient: '능숙',
-  mastered: '숙달',
+  mastered: '마스터',
 };
 
 export const TYPE_ORDER = ['unit', 'definition', 'theorem', 'lemma', 'example'] as const;

@@ -34,7 +34,8 @@ const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$
 const prettySlug = (s: string) => (s.split('/').pop() ?? s).replace(/_/g, ' ');
 
 // 타입별 그루핑 — 노드 맵의 라벨/순서와 동일.
-import { TYPE_LABEL_KO as TYPE_LABEL, TYPE_ORDER } from '../../lib/concept-meta';
+import { TYPE_LABEL_KO as TYPE_LABEL, TYPE_ORDER, MASTERY_LABEL_KO } from '../../lib/concept-meta';
+import { REVIEW_STATE_LABEL_KO } from '../../lib/srs.ts';
 
 // 모든 concept frontmatter를 한 번에 로드해 link slug → concept_type 매핑.
 const all = await getCollection('concepts');
@@ -120,23 +121,23 @@ const PREVIEW_COUNT = 8;
 
     <aside class="lg:sticky lg:top-20 self-start space-y-4">
       <section class="card">
-        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Meta</h3>
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">메타정보</h3>
         <dl class="text-sm space-y-1.5">
-          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">type</dt><dd>{fm.concept_type}</dd></div>
-          {fm.domain && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">domain</dt><dd>{fm.domain}</dd></div>}
-          {fm.grade && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">grade</dt><dd>{fm.grade}</dd></div>}
-          {fm.unit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">unit</dt><dd>{fm.unit}</dd></div>}
-          {fm.subunit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">subunit</dt><dd>{fm.subunit}</dd></div>}
-          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">mastery</dt><dd><span id="masteryChip" class={`chip chip-mastery-${fm.mastery}`}>{fm.mastery}</span></dd></div>
-          {fm.review_state && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">review</dt><dd>{fm.review_state}</dd></div>}
-          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next_review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
-          {fm.updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">updated</dt><dd>{fm.updated.toISOString().slice(0,10)}</dd></div>}
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">유형</dt><dd>{TYPE_LABEL[fm.concept_type] ?? fm.concept_type}</dd></div>
+          {fm.domain && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">과목</dt><dd>{fm.domain}</dd></div>}
+          {fm.grade && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">학년·과정</dt><dd>{fm.grade}</dd></div>}
+          {fm.unit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">단원</dt><dd>{fm.unit}</dd></div>}
+          {fm.subunit && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">소단원</dt><dd>{fm.subunit}</dd></div>}
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">숙련도</dt><dd><span id="masteryChip" class={`chip chip-mastery-${fm.mastery}`}>{MASTERY_LABEL_KO[fm.mastery] ?? fm.mastery}</span></dd></div>
+          {fm.review_state && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">복습 상태</dt><dd>{REVIEW_STATE_LABEL_KO[fm.review_state] ?? fm.review_state}</dd></div>}
+          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다음 복습</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
+          {fm.updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">수정일</dt><dd>{fm.updated.toISOString().slice(0,10)}</dd></div>}
         </dl>
       </section>
 
       {prereqGroups.length > 0 && (
         <section class="card">
-          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">선수 (prerequisites)</h3>
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">선수 개념</h3>
           <div class="space-y-3 text-sm">
             {prereqGroups.map((g) => (
               <div>
@@ -154,7 +155,7 @@ const PREVIEW_COUNT = 8;
 
       {enablesGroups.length > 0 && (
         <section class="card">
-          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">enables</h3>
+          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">후속 개념</h3>
           <div class="space-y-3 text-sm">
             {enablesGroups.map((g) => (
               <div>
@@ -264,7 +265,8 @@ const PREVIEW_COUNT = 8;
       const d = e.detail;
       if (!d || d.slug !== conceptSlug) return;
       const chip = document.getElementById('masteryChip');
-      if (chip) { chip.textContent = d.to; chip.className = `chip chip-mastery-${d.to}`; }
+      const KO = { unknown: '미습득', learning: '학습중', proficient: '능숙', mastered: '마스터' };
+      if (chip) { chip.textContent = KO[d.to] ?? d.to; chip.className = `chip chip-mastery-${d.to}`; }
     });
   </script>
 </BaseLayout>

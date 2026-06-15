@@ -14,7 +14,7 @@ const profile = await getUserProfile(user.id);
 const recorded = counts.learning + counts.proficient + counts.mastered;
 
 const masteryChips = [
-  { key: 'mastered', label: '숙달', n: counts.mastered, v: 'mastered' },
+  { key: 'mastered', label: '마스터', n: counts.mastered, v: 'mastered' },
   { key: 'proficient', label: '능숙', n: counts.proficient, v: 'proficient' },
   { key: 'learning', label: '학습중', n: counts.learning, v: 'learning' },
   { key: 'unknown', label: '미착수', n: counts.unknown, v: 'unknown' },

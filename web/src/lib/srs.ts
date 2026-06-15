@@ -12,6 +12,14 @@
 export type ReviewState = 'new' | 'learning' | 'mature';
 export type Status = 'unsolved' | 'solved' | 'review';
 
+// 표시용 한글 라벨 — 코드/DB 값(위 enum)은 그대로 두고 UI 표시에만 매핑.
+export const REVIEW_STATE_LABEL_KO: Record<string, string> = {
+  new: '신규', learning: '학습 중', mature: '익힘',
+};
+export const STATUS_LABEL_KO: Record<string, string> = {
+  unsolved: '미풀이', solved: '완료', review: '복습',
+};
+
 export interface SrsTransition {
   status: Status;
   reviewState: ReviewState;

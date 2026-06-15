@@ -8,7 +8,8 @@ import ChatPanel from '../../components/ChatPanel.tsx';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 import SolutionPanel from '../../components/SolutionPanel.tsx';
 import RoundNav from '../../components/RoundNav.astro';
-import { yearLabel } from '../../lib/problem-meta';
+import { yearLabel, FORMAT_LABEL, TIER_BADGE } from '../../lib/problem-meta';
+import { STATUS_LABEL_KO } from '../../lib/srs.ts';
 import { renderReconstruct } from '../../lib/reconstruct';
 
 const slug = Astro.params.slug as string;
@@ -146,10 +147,10 @@ if (src) {
         <section class="card">
           <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">상태</h3>
           <dl class="text-sm space-y-1.5">
-            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">status</dt><dd><span class={`chip chip-status-${fm.status}`}>{fm.status}</span></dd></div>
-            {fm.format && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">format</dt><dd>{fm.format}</dd></div>}
-            {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">tier</dt><dd><span class="chip">{fm.killer_tier}</span></dd></div>}
-            {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">cognitive</dt><dd>{fm.cognitive_type}</dd></div>}
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">상태</dt><dd><span class={`chip chip-status-${fm.status}`}>{STATUS_LABEL_KO[fm.status] ?? fm.status}</span></dd></div>
+            {fm.format && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">유형</dt><dd>{FORMAT_LABEL[fm.format] ?? fm.format}</dd></div>}
+            {fm.killer_tier && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">난이도</dt><dd><span class={`chip ${TIER_BADGE[fm.killer_tier]?.cls ?? ''}`}>{TIER_BADGE[fm.killer_tier]?.text ?? fm.killer_tier}</span></dd></div>}
+            {fm.cognitive_type && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">인지 유형</dt><dd>{fm.cognitive_type}</dd></div>}
             {fm.answer && (
               <div class="flex justify-between items-center"><dt class="text-[color:var(--color-muted)]">정답</dt>
                 <dd>
@@ -164,8 +165,8 @@ if (src) {
               </div>
             )}
             {fm.official_pass_rate && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">정답률</dt><dd>{fm.official_pass_rate}%</dd></div>}
-            {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">difficulty</dt><dd>{fm.difficulty}</dd></div>}
-            {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
+            {fm.difficulty && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">난이도</dt><dd>{fm.difficulty}</dd></div>}
+            {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다음 복습</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
           </dl>
           {fm.exam_intent && (
             <p class="mt-3 pt-3 border-t border-[color:var(--color-border)] text-xs text-[color:var(--color-muted)] leading-relaxed">

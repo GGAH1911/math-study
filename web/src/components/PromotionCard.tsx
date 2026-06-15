@@ -20,7 +20,7 @@ const LEVEL_LABEL: Record<MasteryLevel, string> = {
   unknown: '아직',
   learning: '학습 중',
   proficient: '잘 앎',
-  mastered: '숙달',
+  mastered: '마스터',
 };
 const LEVEL_COLOR: Record<MasteryLevel, string> = {
   unknown: 'bg-zinc-500/20 text-zinc-300 border-zinc-600',
@@ -103,13 +103,13 @@ export default function PromotionCard({ slug, to, reason, evidence }: Props) {
         {from && (
           <>
             <span className={`px-2 py-0.5 rounded border ${LEVEL_COLOR[from]}`}>
-              {from} · {LEVEL_LABEL[from]}
+              {LEVEL_LABEL[from]}
             </span>
             <span className="text-zinc-500">→</span>
           </>
         )}
         <span className={`px-2 py-0.5 rounded border ${LEVEL_COLOR[to]}`}>
-          {to} · {LEVEL_LABEL[to]}
+          {LEVEL_LABEL[to]}
         </span>
       </div>
 
