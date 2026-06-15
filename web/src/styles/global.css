@@ -5,7 +5,8 @@
 
 /* ════════════════════════════════════════════════════════════════════
    「수학자의 스케치북」 토큰 시스템 (디자인 계약 v2.0)
-   라이트(기본) = 크림색 모눈종이 위 잉크 / 다크(html.dark) = 흑연 보드 위 초크.
+   라이트(기본) = 따뜻한 매닐라 종이(질감) 위 잉크 / 다크(html.dark) = 흑연 보드 위 초크.
+   (배경은 격자/모눈이 아니라 plain 종이질감 — body 의 fractalNoise grain 참조.)
    레거시 raw 팔레트 유틸(zinc/indigo/rose/...)은 아래 @theme 리매핑으로
    코드 수정 없이 양 테마를 추종한다 — 라이트는 「역방향」(950=가장 밝은 종이,
    50=가장 진한 잉크). 신규 코드는 raw 팔레트 금지: 시맨틱 토큰·--pen-*·--hl-* 만.
@@ -13,7 +14,9 @@
 
 @theme {
   /* ── 시맨틱(레거시 전수 보존, 값만 교체) ───────────────── */
-  --color-bg: #FBF8F1;
+  /* 페이지(데스크) 바탕 = 따뜻한 매닐라 종이(Numberphile식). 격자 대신 종이질감(body 참조).
+     카드(surface #F5F0E4)는 이보다 밝아 '매닐라 데스크 위 흰 노트'처럼 떠 보인다. */
+  --color-bg: #EFE3C9;
   --color-surface: #F5F0E4;
   --color-surface-2: #EFE8D8;
   --color-border: #E9E1CF;
@@ -265,21 +268,15 @@ html.dark {
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     background-color: var(--color-bg);
-    /* 모눈종이 — 이미지 0, gradient 4겹(major 40px + minor 8px).
-       .card 등 표면은 불투명 배경으로 모눈을 차단(모눈은 거터·히어로에서만).
-       background-attachment: fixed 금지(iOS 리페인트 폭탄). */
-    background-image:
-      linear-gradient(var(--grid-major) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-      linear-gradient(var(--grid-minor) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+    /* 종이질감(Numberphile식 plain 종이) — 격자(모눈) 제거. fractalNoise 알갱이 1겹을
+       soft-light 로 블렌드해 라이트/다크 모두 은은한 종이 결만 살린다(타일 240px, stitch).
+       .card 등 표면은 불투명 배경이라 그대로 덮인다. background-attachment: fixed 금지(iOS 리페인트). */
+    background-image: url('/textures/paper-grain.svg');
+    background-size: 240px 240px;
+    background-blend-mode: soft-light;
   }
   @media (max-width: 640px) {
-    body {
-      font-size: 15px;
-      background-size: 32px 32px, 32px 32px, 0 0, 0 0; /* major만 — 페인트 비용 절감 */
-    }
+    body { font-size: 15px; }
   }
 
   /* 제목급 = Gowun Batang — KaTeX Computer Modern과 thick-thin 골격 호응 */

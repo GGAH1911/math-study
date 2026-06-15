@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <filter id="grain">
+    <!-- 다중 옥타브 fractalNoise = 미세 알갱이 + 약한 얼룩(종이 섬유). stitchTiles 로 타일 이음새 제거. -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" seed="7" stitchTiles="stitch"/>
+    <!-- 채도 제거(회색) -->
+    <feColorMatrix type="saturate" values="0"/>
+    <!-- 명암 압축: [0,1]→[0.4,0.6] (±0.1, 저대비) → soft-light 블렌드 시 은은한 질감만. -->
+    <feComponentTransfer>
+      <feFuncR type="linear" slope="0.2" intercept="0.4"/>
+      <feFuncG type="linear" slope="0.2" intercept="0.4"/>
+      <feFuncB type="linear" slope="0.2" intercept="0.4"/>
+    </feComponentTransfer>
+  </filter>
+  <rect width="240" height="240" filter="url(#grain)"/>
+</svg>
