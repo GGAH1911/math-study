@@ -111,8 +111,11 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
   }
 
   const maxLen = Math.max(1, ...[...items.values()].map((a) => a.length));
-  const W = Math.max(cw, maxLen * MIN_COL + 2 * PAD_X);
-  const innerW = W - 2 * PAD_X;
+  // 자연 좌표폭: 노드가 편한 간격(MIN_COL)을 갖는 폭. 컨테이너보다 좁으면 컨테이너에 맞춤(확대 방지).
+  // SVG 는 viewBox=naturalW + width:100% 로 컨테이너에 *맞춰 스케일* → 가로 오버플로우 없음.
+  // 작은 경로 = 1:1 정상, 빽빽한 경로 = 통째로 축소(노드·라벨 비율 유지, 겹침 없이 작아짐).
+  const naturalW = Math.max(cw, maxLen * MIN_COL + 2 * PAD_X);
+  const innerW = naturalW - 2 * PAD_X;
   const H = PAD_TOP + maxLayer * LAYER_GAP + PAD_BOTTOM;
   const XY = new Map<string, { x: number; y: number }>();
   for (const [L, arr] of items) {
@@ -141,7 +144,14 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
       </div>
 
       <div className="metro-scroll">
-        <svg className="metro-svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="list" aria-label="학습 경로 그래프">
+        <svg
+          className="metro-svg"
+          viewBox={`0 0 ${naturalW} ${H}`}
+          preserveAspectRatio="xMidYMin meet"
+          style={{ width: '100%', height: 'auto' }}
+          role="list"
+          aria-label="학습 경로 그래프"
+        >
           <g>
             {chains.map((chain, i) => (
               <path key={`e${i}`} className="metro-edge" d={chainPath(chain)} pathLength={1} />
