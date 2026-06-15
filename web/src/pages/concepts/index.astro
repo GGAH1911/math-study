@@ -219,7 +219,13 @@ const filterOptions = {
     ) : (
       orderedDomains.map((d) => (
         <section class="concept-domain-section space-y-3" data-domain-section={d}>
-          <header class="flex items-baseline gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)]">
+          <button
+            type="button"
+            class="domain-toggle w-full flex items-center gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)] text-left hover:bg-[color:var(--color-surface)]/50 transition-colors"
+            data-domain={d}
+            aria-expanded="false"
+          >
+            <span class="domain-chevron text-[color:var(--color-subtle)] text-xs w-3 shrink-0 select-none">▸</span>
             <h2 class="text-base font-semibold flex items-center gap-2">
               <span class="size-2.5 rounded-full inline-block" style={`background:${DOMAIN_COLOR[d] ?? '#71717a'}`}></span>
               {d === 'misc' ? '기타' : d}
@@ -228,8 +234,9 @@ const filterOptions = {
               {byDomainNodes[d].length}개 노드
               ({groupedByDomain[d].filter((g) => g.unit).length} 단원)
             </span>
-          </header>
+          </button>
 
+          <div class="concept-domain-body collapsed space-y-3" data-domain-body={d}>
           {groupedByDomain[d].map((g) => (
             <div class="concept-unit-group space-y-2" data-unit-group={g.unitId ?? 'orphan'}>
               {g.unit && (
@@ -269,6 +276,7 @@ const filterOptions = {
               )}
             </div>
           ))}
+          </div>
         </section>
       ))
     )}
@@ -278,9 +286,12 @@ const filterOptions = {
 <style>
   /* Browser skips layout/paint for off-screen sections. Each section is
      2789 cards-worth of work otherwise, so this keeps initial paint fast. */
-  .concept-domain-section {
+  /* 펼쳐진 도메인 본문만 content-visibility 로 오프스크린 페인트 스킵.
+     도메인 헤더는 본문 밖 sticky 버튼이라 무관, 접힌 본문은 display:none 이라
+     공간을 차지하지 않는다(예전 .section 에 걸면 접혀도 4000px 예약돼 큰 빈공간 생김). */
+  .concept-domain-body {
     content-visibility: auto;
-    contain-intrinsic-size: 800px 4000px;
+    contain-intrinsic-size: 800px 2000px;
   }
   /* Filter-driven hide: keeps the DOM but takes the card out of flow. */
   :global(.concept-card-wrap.filtered-out),
@@ -288,7 +299,8 @@ const filterOptions = {
   :global(.concept-unit-group.filtered-out) {
     display: none !important;
   }
-  /* 단원 접기: 스포크 그리드 숨김 (ConceptFilters 가 .collapsed 토글). */
+  /* 도메인(과목) 접기 + 단원 접기 — ConceptFilters 가 .collapsed 토글. */
+  :global(.concept-domain-body.collapsed),
   :global(.concept-spokes.collapsed) {
     display: none !important;
   }

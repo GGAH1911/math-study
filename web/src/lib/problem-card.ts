@@ -135,7 +135,8 @@ export function groupByRound(problems: P[]): Map<string, RoundGroup[]> {
       const rb = roundRank(b.meta);
       if (ra.agency !== rb.agency) return ra.agency - rb.agency;
       if (ra.grade !== rb.grade) return ra.grade - rb.grade;
-      return ra.month - rb.month;
+      // 시험일자(월) 내림차순 — 연도 desc 와 결을 맞춰 한 해 안에서도 최신 회차가 위로.
+      return rb.month - ra.month;
     });
   }
   // 연도 desc

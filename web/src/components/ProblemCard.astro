@@ -48,16 +48,18 @@ const badge = tier ? TIER_BADGE[tier] : null;
   }
   .thumb-wrap {
     position: relative;
-    height: 150px;
+    height: 160px;
     overflow: hidden;
     background: white;
     border-bottom: 1px solid var(--color-border);
   }
+  /* 썸네일 = 문제 이미지를 좌우 꽉 채워(원본 가로 100%) 상단만 보여준다.
+     object-fit:cover 는 긴 문제를 확대-크롭해 무슨 문제인지 안 보였음 →
+     width:100% + height:auto 로 원본 비율 유지, 넘치는 하단은 wrap 이 클립. */
   .thumb {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
+    height: auto;
+    display: block;
     /* 다크모드 가독성 — global.css 의 .problem-image 와 동일 invert */
     filter: invert(0.92) hue-rotate(180deg);
   }

@@ -50,7 +50,8 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
   const [hydrated, setHydrated] = useState(false);
   const [visibleCount, setVisibleCount] = useState<number>(totalConcepts);
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
-  const [allUnitIds, setAllUnitIds] = useState<string[]>([]);
+  const [expandedDomains, setExpandedDomains] = useState<Set<string>>(() => new Set());
+  const [allDomainIds, setAllDomainIds] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   // After hydration, replay any URL state. `hydrated` guards the
@@ -196,7 +197,6 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
   useEffect(() => {
     if (!hydrated) return;
     const btns = Array.from(document.querySelectorAll<HTMLElement>('.unit-toggle'));
-    setAllUnitIds(btns.map((b) => b.dataset.unit ?? '').filter(Boolean));
     const onClick = (e: Event) => {
       const id = (e.currentTarget as HTMLElement).dataset.unit;
       if (!id) return;
@@ -227,7 +227,44 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
     }
   }, [hydrated, expandedUnits, anyFilter]);
 
-  const allExpanded = allUnitIds.length > 0 && allUnitIds.every((id) => expandedUnits.has(id));
+  // --- 도메인(과목) 접기/펼치기 -------------------------------------------
+  // 최상위 레벨. 기본 전부 접힘 → 클릭하면 그 과목의 단원 목록이 펼쳐지고,
+  // 단원은 다시 개별 토글로 스포크를 편다(과목 → 단원 → 스포크 계층 접기).
+  useEffect(() => {
+    if (!hydrated) return;
+    const btns = Array.from(document.querySelectorAll<HTMLElement>('.domain-toggle'));
+    setAllDomainIds(btns.map((b) => b.dataset.domain ?? '').filter(Boolean));
+    const onClick = (e: Event) => {
+      const id = (e.currentTarget as HTMLElement).dataset.domain;
+      if (!id) return;
+      setExpandedDomains((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id); else next.add(id);
+        return next;
+      });
+    };
+    btns.forEach((b) => b.addEventListener('click', onClick));
+    return () => btns.forEach((b) => b.removeEventListener('click', onClick));
+  }, [hydrated]);
+
+  // 도메인 접힘 반영: 필터 active 면 전부 펼침(필터가 가시성 결정), 아니면 expandedDomains 외 접힘.
+  useEffect(() => {
+    if (!hydrated) return;
+    const force = anyFilter;
+    for (const body of document.querySelectorAll<HTMLElement>('.concept-domain-body')) {
+      const id = body.dataset.domainBody ?? '';
+      body.classList.toggle('collapsed', !(force || expandedDomains.has(id)));
+    }
+    for (const btn of document.querySelectorAll<HTMLElement>('.domain-toggle')) {
+      const id = btn.dataset.domain ?? '';
+      const open = force || expandedDomains.has(id);
+      const chev = btn.querySelector('.domain-chevron');
+      if (chev) chev.textContent = open ? '▾' : '▸';
+      btn.setAttribute('aria-expanded', String(open));
+    }
+  }, [hydrated, expandedDomains, anyFilter]);
+
+  const allExpanded = allDomainIds.length > 0 && allDomainIds.every((id) => expandedDomains.has(id));
   const applyTrack = (grades: string[]) => setGrade(new Set(grades.filter((g) => gradeKeys.includes(g))));
 
   return (
@@ -261,13 +298,13 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
             >모두 해제</button>
           )}
         </span>
-        {allUnitIds.length > 0 && (
+        {allDomainIds.length > 0 && (
           <button
             type="button"
-            onClick={() => setExpandedUnits(allExpanded ? new Set() : new Set(allUnitIds))}
+            onClick={() => setExpandedDomains(allExpanded ? new Set() : new Set(allDomainIds))}
             disabled={anyFilter}
             className="ml-auto chip opacity-70 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
-            title={anyFilter ? '필터 중에는 매칭 스포크가 모두 보입니다' : allExpanded ? '모든 단원 접기' : '모든 단원 펼치기'}
+            title={anyFilter ? '필터 중에는 매칭 항목이 모두 보입니다' : allExpanded ? '모든 과목 접기' : '모든 과목 펼치기'}
           >
             {allExpanded ? '◢ 모두 접기' : '◣ 모두 펼치기'}
           </button>

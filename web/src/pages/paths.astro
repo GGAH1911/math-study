@@ -1,23 +1,101 @@
 ---
 export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PathPicker from '../components/PathPicker.tsx';
+import { readConceptGraph, recommendUnits } from '../lib/health.ts';
+import { getMasteryMap } from '../lib/mastery.ts';
+import { buildLearningPath } from '../lib/learning-path.ts';
+import { MASTERY_LABEL_KO } from '../lib/concept-meta';
+
+const graph = readConceptGraph();
+// 멀티유저: 로그인 사용자의 mastery 로 "미숙 선행"을 판정(전역 frontmatter 아님).
+const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
+const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'learning' | 'proficient' | 'mastered';
+
+const goalId = Astro.url.searchParams.get('goal') ?? '';
+const path = goalId ? buildLearningPath(graph, goalId, mof) : null;
+
+const concepts = graph.nodes.map((n) => ({
+  id: n.id,
+  label: n.label,
+  domain: n.domain ?? null,
+  grade: n.grade ?? null,
+  type: n.concept_type,
+}));
+
+// 빠른 진입용 예시 목표 = 진행 중·시작하기 좋은 단원.
+const rec = recommendUnits(mof);
+const quickGoals = [...rec.continuing, ...rec.ready].slice(0, 6).map((u) => ({ id: u.unitId, label: u.label }));
+
+const todoCount = path ? path.steps.filter((s) => !s.isGoal).length : 0;
 ---
 <BaseLayout title="Learning Paths">
   <div class="max-w-4xl mx-auto px-6 py-8 space-y-6">
     <header>
-      <h1 class="text-2xl font-semibold tracking-tight">Learning Paths</h1>
-      <p class="text-sm text-[color:var(--color-muted)] mt-1">D15 — 목표 concept을 지정하면 미숙 선행 노드의 위상정렬된 학습 시퀀스 자동 생성</p>
+      <h1 class="text-2xl font-semibold tracking-tight">학습 경로</h1>
+      <p class="text-sm text-[color:var(--color-muted)] mt-1">
+        목표 개념을 고르면, 아직 익히지 않은 <strong>선행 개념</strong>을 학습 순서(선행 → 목표)대로 위상정렬해 보여줍니다.
+      </p>
     </header>
 
-    <div class="card text-center py-12">
-      <p class="text-base">아직 생성된 학습 경로가 없습니다.</p>
-      <p class="text-sm text-[color:var(--color-muted)] mt-2 max-w-md mx-auto">
-        Librarian에게 다음과 같이 요청해보세요:<br/>
-        <span class="text-[color:var(--color-accent)]">"미적분 4점 킬러를 풀고 싶어. 학습 경로 만들어줘."</span>
+    <section class="card space-y-3">
+      <PathPicker client:load concepts={concepts} />
+      {quickGoals.length > 0 && (
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs text-[color:var(--color-subtle)]">예시 목표:</span>
+          {quickGoals.map((g) => (
+            <a href={`/paths?goal=${encodeURIComponent(g.id)}`} class="chip hover:border-[color:var(--color-accent)]">{g.label}</a>
+          ))}
+        </div>
+      )}
+    </section>
+
+    {path && path.missingGoal && (
+      <p class="card text-sm text-[color:var(--color-muted)]">
+        해당 개념을 찾지 못했습니다. 위 검색에서 다시 골라주세요.
       </p>
-      <p class="text-xs text-[color:var(--color-subtle)] mt-4">
-        산출물은 <code class="text-[color:var(--color-accent)]">docs/paths/&lt;목표명&gt;.md</code>에 저장됩니다.
+    )}
+
+    {path && path.goal && (
+      <section class="space-y-4">
+        <div class="flex items-baseline justify-between gap-3 flex-wrap">
+          <h2 class="text-lg font-semibold">
+            목표: <a href={`/concepts/${path.goal.id}`} class="text-[color:var(--color-accent)] hover:underline">{path.goal.label}</a>
+          </h2>
+          <p class="text-xs text-[color:var(--color-muted)]">
+            선행 {path.totalPrereqs}개 중 {path.donePrereqs}개 이수 · <strong>{todoCount}개 학습 필요</strong>
+          </p>
+        </div>
+
+        {todoCount === 0 ? (
+          <p class="card text-sm">
+            선행 개념을 모두 익혔습니다 🎉 바로
+            <a href={`/concepts/${path.goal.id}`} class="text-[color:var(--color-accent)] hover:underline"> 목표 개념</a>을 학습하세요.
+          </p>
+        ) : (
+          <ol class="space-y-2">
+            {path.steps.map((s, i) => (
+              <li class={`card flex items-center gap-3 ${s.isGoal ? 'border-[color:var(--color-accent)]' : ''}`}>
+                <span class="grid place-items-center size-7 rounded-full bg-[color:var(--color-surface-2)] text-xs font-semibold tabular-nums shrink-0">{i + 1}</span>
+                <div class="min-w-0 flex-1">
+                  <a href={`/concepts/${s.id}`} class="text-sm font-medium hover:text-[color:var(--color-accent)] truncate block">
+                    {s.label}{s.isGoal && <span class="text-[color:var(--color-accent)]"> · 목표</span>}
+                  </a>
+                  <span class="text-[11px] text-[color:var(--color-subtle)]">{[s.grade, s.domain].filter(Boolean).join(' · ')}</span>
+                </div>
+                <span class={`chip chip-mastery-${s.mastery} shrink-0 text-[10px]`}>{MASTERY_LABEL_KO[s.mastery] ?? s.mastery}</span>
+                <a href={`/concepts/${s.id}`} class="chip shrink-0 text-[10px] hover:border-[color:var(--color-accent)]">학습 →</a>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
+    )}
+
+    {!path && (
+      <p class="text-sm text-[color:var(--color-subtle)]">
+        위에서 목표를 고르면 경로가 생성됩니다. 예: 「도함수의 활용」을 목표로 하면 함수·극한·미분 선행 개념이 순서대로 나열됩니다.
       </p>
-    </div>
+    )}
   </div>
 </BaseLayout>
