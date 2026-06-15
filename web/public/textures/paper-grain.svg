@@ -1,15 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
   <filter id="grain">
-    <!-- 다중 옥타브 fractalNoise = 미세 알갱이 + 약한 얼룩(종이 섬유). stitchTiles 로 타일 이음새 제거. -->
-    <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" seed="7" stitchTiles="stitch"/>
-    <!-- 채도 제거(회색) -->
+    <!-- 옥타브 4 = 미세 알갱이 + 굵은 섬유/얼룩 동시. baseFrequency 낮춰 종이 결이 또렷하게. -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="4" seed="11" stitchTiles="stitch"/>
     <feColorMatrix type="saturate" values="0"/>
-    <!-- 명암 압축: [0,1]→[0.4,0.6] (±0.1, 저대비) → soft-light 블렌드 시 은은한 질감만. -->
+    <!-- 명암 확대: [0,1]→[0.27,0.73] (±0.23 고대비) → overlay/soft-light 블렌드 시 결이 도드라짐. -->
     <feComponentTransfer>
-      <feFuncR type="linear" slope="0.2" intercept="0.4"/>
-      <feFuncG type="linear" slope="0.2" intercept="0.4"/>
-      <feFuncB type="linear" slope="0.2" intercept="0.4"/>
+      <feFuncR type="linear" slope="0.46" intercept="0.27"/>
+      <feFuncG type="linear" slope="0.46" intercept="0.27"/>
+      <feFuncB type="linear" slope="0.46" intercept="0.27"/>
     </feComponentTransfer>
   </filter>
-  <rect width="240" height="240" filter="url(#grain)"/>
+  <rect width="300" height="300" filter="url(#grain)"/>
 </svg>

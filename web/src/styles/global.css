@@ -268,13 +268,15 @@ html.dark {
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     background-color: var(--color-bg);
-    /* 종이질감(Numberphile식 plain 종이) — 격자(모눈) 제거. fractalNoise 알갱이 1겹을
-       soft-light 로 블렌드해 라이트/다크 모두 은은한 종이 결만 살린다(타일 240px, stitch).
+    /* 종이질감(Numberphile식 plain 종이) — 격자(모눈) 제거. fractalNoise 알갱이(고대비 ±0.23)를
+       블렌드해 종이 결을 살린다(타일 300px, stitch). 라이트는 overlay 로 결을 또렷하게(매닐라가
+       밝아 soft-light 로는 약함), 다크는 soft-light 로 은은하게(흑연 보드는 과하면 지저분).
        .card 등 표면은 불투명 배경이라 그대로 덮인다. background-attachment: fixed 금지(iOS 리페인트). */
     background-image: url('/textures/paper-grain.svg');
-    background-size: 240px 240px;
-    background-blend-mode: soft-light;
+    background-size: 300px 300px;
+    background-blend-mode: overlay;
   }
+  html.dark body { background-blend-mode: soft-light; }
   @media (max-width: 640px) {
     body { font-size: 15px; }
   }
