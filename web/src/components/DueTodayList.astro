@@ -1,5 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
+import { MASTERY_LABEL_KO } from '../lib/concept-meta';
+import { STATUS_LABEL_KO } from '../lib/srs.ts';
+
+// 오답 유형 표시 라벨(코드 키는 유지).
+const ERROR_TYPE_LABEL_KO: Record<string, string> = {
+  concept_gap: '개념 부족', careless: '실수', wrong_approach: '접근 오류', unknown_method: '풀이법 모름',
+};
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -15,7 +22,7 @@ for (const c of concepts) {
       href: `/concepts/${c.id}`,
       title: c.id.split('/').pop() ?? c.id,
       collection: 'concept',
-      chip: c.data.mastery,
+      chip: MASTERY_LABEL_KO[c.data.mastery] ?? c.data.mastery,
       chipClass: `chip-mastery-${c.data.mastery}`,
     });
   }
@@ -27,7 +34,7 @@ for (const p of problems) {
       href: `/problems/${p.id}`,
       title: p.id.split('/').pop() ?? p.id,
       collection: 'problem',
-      chip: p.data.status,
+      chip: STATUS_LABEL_KO[p.data.status] ?? p.data.status,
       chipClass: `chip-status-${p.data.status}`,
     });
   }
@@ -39,7 +46,7 @@ for (const m of mistakes) {
       href: `/mistakes/${encodeURIComponent(m.id)}`,
       title: m.id,
       collection: 'mistake',
-      chip: m.data.error_type,
+      chip: ERROR_TYPE_LABEL_KO[m.data.error_type] ?? m.data.error_type,
       chipClass: `chip-error-${m.data.error_type}`,
     });
   }
@@ -48,14 +55,14 @@ for (const m of mistakes) {
 <section class="card">
   <header class="flex items-center justify-between mb-3">
     <div>
-      <h2 class="text-sm font-semibold">Due Today</h2>
-      <p class="text-xs text-[color:var(--color-muted)]">오늘 복습할 페이지 (D7 간격 반복)</p>
+      <h2 class="text-sm font-semibold">오늘 복습</h2>
+      <p class="text-xs text-[color:var(--color-muted)]">오늘 복습할 페이지 (간격 반복)</p>
     </div>
     <span class="stat-num text-lg">{rows.length}</span>
   </header>
   {rows.length === 0 ? (
     <p class="text-sm text-[color:var(--color-subtle)] py-4 text-center">
-      ✨ 모두 일정대로 진행 중입니다. 새 자료 ingest하거나 다음 단계로 진행하세요.
+      ✨ 모두 일정대로 진행 중입니다. 새 자료를 추가하거나 다음 단계로 진행하세요.
     </p>
   ) : (
     <ul class="space-y-1.5">

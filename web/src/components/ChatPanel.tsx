@@ -694,7 +694,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
               : 'text-zinc-500 hover:text-zinc-100 cursor-pointer'
           }`}
         >
-          {msg.promoted ? `✓ wiki에 저장됨 (${msg.promoted.path.split('/').pop()})` : '↑ wiki에 영구화 (Promote)'}
+          {msg.promoted ? `✓ 노트에 저장됨 (${msg.promoted.path.split('/').pop()})` : '↑ 노트에 영구 저장'}
         </button>
       )}
       {modal && (
@@ -1119,7 +1119,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const addFile = useCallback(async (files: File[]) => {
     if (!files.length) return;
     if (byokActive && isVisionDisabled(byokModel)) {
-      setImgError('현재 BYOK 모델은 이미지를 못 읽어요 — vision 모델(claude/gemini 등)로 바꾸거나 기본 모드를 쓰세요.');
+      setImgError('현재 모델은 이미지를 못 읽어요 — 비전 지원 모델(claude/gemini 등)로 바꾸거나 기본 모드를 쓰세요.');
       return;
     }
     if (pending.length) { setImgError('이미지는 한 번에 하나만 첨부할 수 있어요.'); return; }
@@ -1206,7 +1206,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           window.localStorage.setItem(recentKey, filename);
         } catch { /* ignore */ }
       } catch (e) {
-        setError(`Promote 실패: ${(e as Error).message}`);
+        setError(`저장 실패: ${(e as Error).message}`);
       }
     },
     [slug, unitTitle, collection], // messages 는 messagesRef 로 읽음 — deps 에서 제외해 promote 안정화
@@ -1247,12 +1247,12 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           )}
           <button
             onClick={() => setByokOpen((v) => !v)}
-            title="API key 설정 (BYOK)"
-            className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded transition ${
+            title="내 API 키 설정"
+            className={`text-[10px] tracking-wider px-2 py-1 rounded transition ${
               byokOpen ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-500 hover:text-zinc-200'
             }`}
           >
-            ⚙ {byokActive ? 'BYOK' : '설정'}
+            ⚙ {byokActive ? '내 키' : '설정'}
           </button>
           {messages.length > 0 && (
             <button
@@ -1268,8 +1268,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       {byokOpen && (
         <div className="mb-3 rounded-lg border border-indigo-500/30 bg-indigo-500/5 p-3 space-y-2 text-xs">
           <div className="flex items-baseline justify-between">
-            <p className="font-semibold text-zinc-200">🔑 BYOK — LLM provider 설정</p>
-            <span className="text-[10px] text-zinc-500">localStorage 에만 저장</span>
+            <p className="font-semibold text-zinc-200">🔑 내 API 키 설정</p>
+            <span className="text-[10px] text-zinc-500">이 기기에만 저장</span>
           </div>
 
           {/* Provider preset 칩 */}

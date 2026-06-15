@@ -8,6 +8,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, render } from 'astro:content';
 import SynthesisDeleteButton from '../../components/SynthesisDeleteButton.tsx';
 import synthesesIndex from '../../data/syntheses-by-concept.json';
+import { REVIEW_STATE_LABEL_KO } from '../../lib/srs.ts';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('syntheses', slug);
@@ -43,15 +44,15 @@ const nextReview = fmt(fm.next_review);
 
     <aside class="lg:sticky lg:top-20 self-start space-y-4">
       <section class="card">
-        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Meta</h3>
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">메타정보</h3>
         <dl class="text-sm space-y-1.5">
-          {created && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">created</dt><dd>{created}</dd></div>}
-          {updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">updated</dt><dd>{updated}</dd></div>}
+          {created && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">작성일</dt><dd>{created}</dd></div>}
+          {updated && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">수정일</dt><dd>{updated}</dd></div>}
           {fm.review_state && (
-            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">review</dt><dd><span class="chip">{fm.review_state}</span></dd></div>
+            <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">복습 상태</dt><dd><span class="chip">{REVIEW_STATE_LABEL_KO[fm.review_state] ?? fm.review_state}</span></dd></div>
           )}
-          {nextReview && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next_review</dt><dd>{nextReview}</dd></div>}
-          {fm.promoted_from && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">source</dt><dd>{fm.promoted_from}</dd></div>}
+          {nextReview && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다음 복습</dt><dd>{nextReview}</dd></div>}
+          {fm.promoted_from && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">출처</dt><dd>{fm.promoted_from}</dd></div>}
         </dl>
       </section>
 

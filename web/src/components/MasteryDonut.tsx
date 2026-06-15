@@ -72,7 +72,7 @@ export default function MasteryDonut({ unknown, learning, proficient, mastered }
 
   const total = unknown + learning + proficient + mastered;
   const data = {
-    labels: ['unknown', 'learning', 'proficient', 'mastered'],
+    labels: ['미습득', '학습중', '능숙', '마스터'],
     datasets: [
       {
         data: [unknown, learning, proficient, mastered],
@@ -114,7 +114,7 @@ export default function MasteryDonut({ unknown, learning, proficient, mastered }
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="text-center">
           <div className="stat-num text-2xl">{total}</div>
-          <div className="text-[10px] uppercase tracking-[0.15em] text-[color:var(--color-subtle)]">concepts</div>
+          <div className="text-[10px] tracking-[0.1em] text-[color:var(--color-subtle)]">단원</div>
         </div>
       </div>
     </div>

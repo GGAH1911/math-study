@@ -16,6 +16,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import {
   MASTERY_COLOR,
+  MASTERY_LABEL_KO,
   TYPE_LABEL_KO,
   TYPE_ICON,
   GRADE_ORDER,
@@ -23,6 +24,7 @@ import {
   DOMAIN_ORDER,
   DOMAIN_COLOR,
 } from '../lib/concept-meta';
+import { REVIEW_STATE_LABEL_KO } from '../lib/srs.ts';
 
 type GraphNode = {
   id: string;
@@ -124,7 +126,7 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
       >
         <div className="flex items-center justify-between gap-2">
           <span className="text-base leading-none" style={{ color: primary }}
-                title={`${TYPE_LABEL_KO[data.concept_type] ?? '기타'} (${data.concept_type})`}>
+                title={TYPE_LABEL_KO[data.concept_type] ?? '기타'}>
             {TYPE_ICON[data.concept_type] ?? '·'}
           </span>
           <div className="flex items-center gap-1.5">
@@ -822,9 +824,9 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                       ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-300'
                       : 'border-zinc-700 text-zinc-400 hover:text-zinc-100'
                   }`}
-                  title="끄면 모든 spoke 강제 표시"
+                  title="끄면 모든 하위 개념 표시"
                 >
-                  접기 모드 {collapseMode ? 'ON' : 'OFF'}
+                  접기 모드 {collapseMode ? '켜짐' : '꺼짐'}
                 </button>
                 <button onClick={expandAll}
                         className="text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-300 hover:bg-zinc-800">
@@ -860,7 +862,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500">Mastery</label>
+                <label className="text-[10px] tracking-[0.15em] text-zinc-500">숙련도</label>
                 <button
                   onClick={resetMastery}
                   disabled={masteryAllActive}
@@ -892,7 +894,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                       title="클릭하여 토글"
                     >
                       <span className="inline-block size-1.5 rounded-full" style={{ background: color }} />
-                      <span>{m}</span>
+                      <span>{MASTERY_LABEL_KO[m] ?? m}</span>
                       <span className="text-zinc-500 font-normal">
                         {masteryCounts[m] ?? 0}
                       </span>
@@ -1009,13 +1011,13 @@ function Inner({ data, variant = 'full', highlight }: Props) {
             )}
             <div className="text-[11px] text-zinc-500 pt-2 border-t border-zinc-800">
               <div className="flex justify-between">
-                <span>nodes</span><span className="font-mono">{data.stats.nodes}</span>
+                <span>노드</span><span className="font-mono">{data.stats.nodes}</span>
               </div>
               <div className="flex justify-between">
-                <span>edges</span><span className="font-mono">{data.stats.edges}</span>
+                <span>연결</span><span className="font-mono">{data.stats.edges}</span>
               </div>
               <div className="flex justify-between">
-                <span>cycles</span>
+                <span>순환</span>
                 <span className={`font-mono ${data.stats.cycles > 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
                   {data.stats.cycles}
                 </span>
@@ -1031,8 +1033,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                 <button onClick={() => setSelected(null)} className="text-zinc-500 hover:text-zinc-100 text-lg leading-none">×</button>
               </header>
               <div className="flex gap-1.5 flex-wrap">
-                <span className={`chip chip-mastery-${selectedNode.mastery}`}>{selectedNode.mastery}</span>
-                <span className="chip">{selectedNode.concept_type}</span>
+                <span className={`chip chip-mastery-${selectedNode.mastery}`}>{MASTERY_LABEL_KO[selectedNode.mastery] ?? selectedNode.mastery}</span>
+                <span className="chip">{TYPE_LABEL_KO[selectedNode.concept_type] ?? selectedNode.concept_type}</span>
                 {selectedNode.domain && (
                   <span
                     className="chip"
@@ -1055,11 +1057,11 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                     {selectedNode.grade}
                   </span>
                 )}
-                {selectedNode.review_state && <span className="chip">review: {selectedNode.review_state}</span>}
+                {selectedNode.review_state && <span className="chip">복습 {REVIEW_STATE_LABEL_KO[selectedNode.review_state] ?? selectedNode.review_state}</span>}
               </div>
               {selectedNode.prerequisites.length > 0 && (
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1.5">선수 (prerequisites)</div>
+                  <div className="text-[10px] tracking-[0.15em] text-zinc-500 mb-1.5">선수 개념</div>
                   <div className="space-y-2">
                     {groupRefsByType(selectedNode.prerequisites).map(([t, refs]) => (
                       <div key={t}>
@@ -1093,7 +1095,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               )}
               {selectedNode.enables.length > 0 && (
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1.5">enables</div>
+                  <div className="text-[10px] tracking-[0.15em] text-zinc-500 mb-1.5">후속 개념</div>
                   <div className="space-y-2">
                     {groupRefsByType(selectedNode.enables).map(([t, refs]) => (
                       <div key={t}>
@@ -1142,8 +1144,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                 <span key={t} className="flex items-center gap-1.5">
                   <span className="text-base" style={{ color: TYPE_EDGE_COLOR[t] }}>{TYPE_ICON[t]}</span>
                   <span className="flex items-baseline gap-1">
-                    <span>{TYPE_LABEL_KO[t]}</span>
-                    <span className="text-[9px] text-zinc-600 lowercase">{t}</span>
+                    <span>{TYPE_LABEL_KO[t] ?? t}</span>
                   </span>
                   <span
                     className="inline-block rounded-sm"

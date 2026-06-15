@@ -4,6 +4,7 @@
 // - POST /api/problem-state   for "다시" / "이미 알아요" / "스킵" actions
 import { useEffect, useRef, useState } from 'react';
 import MathField from './MathField.tsx';
+import { REVIEW_STATE_LABEL_KO } from '../lib/srs.ts';
 
 type State = {
   status: string;
@@ -21,9 +22,9 @@ type Attempt = {
 };
 
 const STATE_LABEL: Record<string, string> = {
-  new: '🌱 new',
-  learning: '📘 learning',
-  mature: '🌳 mature',
+  new: '🌱 신규',
+  learning: '📘 학습중',
+  mature: '🌳 익힘',
 };
 
 export default function ProblemAttemptPanel({ slug }: { slug: string }) {
@@ -227,7 +228,7 @@ export default function ProblemAttemptPanel({ slug }: { slug: string }) {
             : 'bg-zinc-700/40 border-zinc-700 text-zinc-300'
           }`}
         >
-          {feedback.correct === true && <>✓ 정답! 다음 복습: <code>{feedback.nextReview}</code> ({feedback.intervalDays}일 후 · {feedback.reviewState})</>}
+          {feedback.correct === true && <>✓ 정답! 다음 복습: <code>{feedback.nextReview}</code> ({feedback.intervalDays}일 후 · {REVIEW_STATE_LABEL_KO[feedback.reviewState] ?? feedback.reviewState})</>}
           {feedback.correct === false && <>✗ 오답. 정답은 <code>{feedback.expected}</code>. 내일 다시 풀어요.</>}
           {feedback.correct === null && <>기록됨 (정답 데이터 없음). 다음 복습: <code>{feedback.nextReview}</code></>}
         </div>
@@ -238,7 +239,7 @@ export default function ProblemAttemptPanel({ slug }: { slug: string }) {
       <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-800">
         <button onClick={() => action('mark-mastered')} disabled={busy}
                 className="text-xs px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20">
-          ✓ 이미 알아요 (mature)
+          ✓ 이미 알아요
         </button>
         <button onClick={() => action('skip')} disabled={busy}
                 className="text-xs px-2 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20">
