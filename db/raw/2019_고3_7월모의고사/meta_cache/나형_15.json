@@ -1,0 +1,18 @@
+{
+  "text_sha": "d67ae210bab9",
+  "meta": {
+    "searchable_text": "15. 집합 X의 모든 원소의 합을 S(X)라 할 때, 실수 전체의\n집합의 두 부분집합\nA={a,b,c,d,e},\nB={a+k,b+k,c+k,d+k,e+k}\n에 대하여 다음 조건을 만족시키는 상수 k의 값은? [4점]\n(가) S(A)=37\n(나) A-B={2,4,9}\n(다) S(A∪B)=92\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_연산",
+      "차집합",
+      "합집합",
+      "교집합"
+    ],
+    "exam_intent": "집합 연산과 합의 성질을 이용해 미지수를 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

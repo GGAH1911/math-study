@@ -1,0 +1,17 @@
+{
+  "text_sha": "b3c0d162b6a4",
+  "meta": {
+    "searchable_text": "역(가형)\n16. 두 곡선 y=(sinx)lnx, y=\\frac{cosx}{x}와 두 직선 x=\\frac{π}{2}, x=π로\n둘러싸인 부분의 넓이는? [4점]\n① \\frac{1}{4}lnπ ② \\frac{1}{2}lnπ ③ \\frac{3}{4}lnπ ④ lnπ ⑤ \\frac{5}{4}lnπ\ny y=\\frac{cosx}{x}\nO x\ny=(sinx)lnx\nx=\\frac{π}{2}x=π",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "부분적분",
+      "정적분",
+      "곡선_사이의_넓이"
+    ],
+    "exam_intent": "부분적분을 이용한 곡선 사이의 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

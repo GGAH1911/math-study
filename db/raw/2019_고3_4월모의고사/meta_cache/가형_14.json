@@ -1,0 +1,16 @@
+{
+  "text_sha": "c67291afeab4",
+  "meta": {
+    "searchable_text": "14. 집합 A={x|x는 25 이하의 자연수}의 부분집합 중\n두 원소 1, 2를 모두 포함하고 원소의 개수가 홀수인 부분집합의\n개수는? [4점]\n① 218 ② 219 ③ 220 ④ 221 ⑤ 222",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "부분집합",
+      "이항계수"
+    ],
+    "exam_intent": "특정 원소를 포함하는 부분집합의 개수를 이항계수로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

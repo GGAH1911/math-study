@@ -1,0 +1,17 @@
+{
+  "text_sha": "44947926f28c",
+  "meta": {
+    "searchable_text": "18. 닫힌 구간 |0,|[\\frac{π}{2 (}]에서 정의된 함수 f(x)=sinx의 그래프 위의\n)\n한 점 P(a,sina)0<a<\\frac{π}{2}에서의 접선을 l이라 하자.\n곡선 y=f(x)와 x축 및 직선 l로 둘러싸인 부분의 넓이와\n곡선 y=f(x)와 x축 및 직선 x=a로 둘러싸인 부분의 넓이가\n같을 때, cosa의 값은? [4점]\n① \\frac{1}{6}② \\frac{1}{3}③ \\frac{1}{2}④ \\frac{2}{3}⑤ \\frac{5}{6}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "접선의_방정식",
+      "정적분을_이용한_넓이_계산",
+      "삼각함수의_미분"
+    ],
+    "exam_intent": "접선과 곡선으로 둘러싸인 넓이를 정적분으로 구하고 조건식을 세워 푸는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

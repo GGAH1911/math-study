@@ -1,0 +1,16 @@
+{
+  "text_sha": "ee0eb0bd6b37",
+  "meta": {
+    "searchable_text": "11. 같은 종류의 상자 3개에 같은 종류의 야구공 8개를 남김없이\n나누어 담을 때, 빈 상자가 없도록 담는 경우의 수는? [3점]\n① 5 ② 6 ③ 7 ④ 8 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "제약조건_수식화"
+    ],
+    "exam_intent": "비음정수 해의 개수를 이용한 조건부 경우의 수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

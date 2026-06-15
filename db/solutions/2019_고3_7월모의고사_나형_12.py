@@ -1,0 +1,1 @@
+from sympy import *; a, b = symbols('a b', positive=True, real=True); eq = Eq(log(a**3/b**2, a), 2); log_ab = Rational(1,2); log_ba = 1/log_ab; result = log_ab + 3*log_ba; print('VERIFY_PASS' if result == Rational(13, 2) else f'VERIFY_FAIL: {result}')

@@ -1,0 +1,16 @@
+{
+  "text_sha": "ba7ac2591d24",
+  "meta": {
+    "searchable_text": "15.주머니에 1부터 8까지의 자연수가 하나씩 적힌 8개의 공이\n들어 있다. 이 주머니에서 임의로 3개의 공을 동시에 꺼낼 때,\n꺼낸 3개의 공에 적힌 수를 a, b, c(a<b<c)라 하자.\na+b+c가 짝수일 때, a가 홀수일 확률은? [4점]\n① \\frac{3}{7}② \\frac{1}{2}③ \\frac{4}{7}④ \\frac{9}{14}⑤ \\frac{5}{7}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부확률",
+      "경우의수"
+    ],
+    "exam_intent": "합이 짝수일 조건하에서 최솟값이 홀수일 조건부확률",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

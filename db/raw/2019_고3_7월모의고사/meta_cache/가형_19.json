@@ -1,0 +1,17 @@
+{
+  "text_sha": "bf841fc4e48d",
+  "meta": {
+    "searchable_text": "19. 그림과 같이 \\overline{AB}=\\overline{AD}이고 \\overline{AE}=\\sqrt{15}인 직육면체\nABCD-EFGH가 있다. 선분 BC 위의 점 P와 선분 EF\n위의 점 Q에 대하여 삼각형 PHQ의 평면 EFGH 위로의\n정사영은 한 변의 길이가 4인 정삼각형이다. 삼각형 EQH의\n평면 PHQ 위로의 정사영의 넓이는? [4점]\nD C\nP\nA B\nH G\nE Q F\n①\\frac{1}{3}②\\frac{2}{3}③ 1 ④\\frac{4}{3}⑤\\frac{5}{3}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "정사영",
+      "벡터의_외적",
+      "정삼각형_조건"
+    ],
+    "exam_intent": "공간벡터와 정사영을 이용한 기하 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

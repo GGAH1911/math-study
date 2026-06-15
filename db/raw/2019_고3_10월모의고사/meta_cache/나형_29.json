@@ -1,0 +1,15 @@
+{
+  "text_sha": "af47ecbcbbdd",
+  "meta": {
+    "searchable_text": "29.첫째항이 짝수인 수열 {a_{n}}은 모든 자연수 n에 대하여\n이홀수인경우\na_{n+1}=\\begin{cases}a 3 (a_{n} ) \\\\ \\frac{_{n}+ a_{n}}{2}(an )\\end{cases}이짝수인경우\n를 만족시킨다. a_{5}=5일 때, 수열 {a_{n}}의 첫째항이 될 수 있는\n모든 수의 합을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식"
+    ],
+    "exam_intent": "조건부 점화식에서 역산하여 모든 가능한 첫째항 찾기",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

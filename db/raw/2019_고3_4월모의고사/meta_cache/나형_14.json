@@ -1,0 +1,16 @@
+{
+  "text_sha": "67b5ce17bd8c",
+  "meta": {
+    "searchable_text": "14. 공차가 양수인 등차수열 {a}의 첫째항부터 제n항까지의 합을\nn\nS_{n}이라 하자. S_{9}=|S|_{3}=27일 때, a_{10}의 값은? [4점]\n① 23 ② 24 ③ 25 ④ 26 ⑤ 27",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의합"
+    ],
+    "exam_intent": "등차수열의 합 공식으로 항과 공차를 구하는 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

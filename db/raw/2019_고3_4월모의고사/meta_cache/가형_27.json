@@ -1,0 +1,13 @@
+{
+  "text_sha": "0284ba2b916b",
+  "meta": {
+    "searchable_text": "27. 실수 전체의 집합에서 미분가능한 두 함수 f(x), g(x)가 있다.\ng(x)가 f(x)의 역함수이고 g(2)=1, g(5)=5일 때,\n\\int_{5}\n\\frac{40}{g′(f(x)){f(x)}2}dx의 값을 구하시오. [4점]\n1",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [],
+    "exam_intent": "역함수 미분 성질과 정적분 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

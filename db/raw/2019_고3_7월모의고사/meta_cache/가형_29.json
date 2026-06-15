@@ -1,0 +1,17 @@
+{
+  "text_sha": "776f3c9d5dc0",
+  "meta": {
+    "searchable_text": "29. 중심이 O이고 반지름의 길이가 1인 원이 있다.\n양수 x에 대하여 원 위의 서로 다른 세 점 A, B, C가\nx\\vec{OA}+5\\vec{OB}+3\\vec{OC}=\\vec{0}\n를 만족시킨다. \\vec{OA}∙\\vec{OB}의 값이 최대일 때, 삼각형 ABC의\n넓이를 S라 하자. 50S의 값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_내적",
+      "내적의_최댓값",
+      "삼각형_넓이"
+    ],
+    "exam_intent": "벡터 조건의 제약 하에서 내적 최댓값을 구하고 도형의 넓이를 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "bbb469df0aa2",
+  "meta": {
+    "searchable_text": "1.두 벡터 \\vec{a}=(1,2), \\vec{b}=(-2,5)에 대하여 벡터 2\\vec{a}-\\vec{b}의 모든\n성분의 합은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_스칼라배",
+      "벡터의_덧셈과_뺄셈",
+      "벡터의_성분_표현"
+    ],
+    "exam_intent": "벡터 선형결합의 성분 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

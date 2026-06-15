@@ -1,0 +1,17 @@
+{
+  "text_sha": "21fecb81da6b",
+  "meta": {
+    "searchable_text": "7. 함수 y=f(x)의 그래프가 그림과 같다.\ny\n5\n4\n3\ny=f(x)\n2\nO 2 4 x\nf(0)+\\lim_{x→2+}f(x)의 값은? [3점]\n① 5 ② 6 ③ 7 ④ 8 ⑤ 9",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "우극한",
+      "함수값",
+      "그래프_해석"
+    ],
+    "exam_intent": "극한과 함수값을 그래프에서 읽고 합을 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

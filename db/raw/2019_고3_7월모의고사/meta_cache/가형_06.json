@@ -1,0 +1,17 @@
+{
+  "text_sha": "e670b770910e",
+  "meta": {
+    "searchable_text": "6. 한 개의 주사위를 5번 던져서 나오는 다섯 눈의 수의 곱이\n짝수일 확률은? [3점]\n①\\frac{23}{32}②\\frac{25}{32}③\\frac{27}{32}④\\frac{29}{32}⑤\\frac{31}{32}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "여사건",
+      "독립사건",
+      "곱의_법칙"
+    ],
+    "exam_intent": "여사건을 이용한 독립적 사건의 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

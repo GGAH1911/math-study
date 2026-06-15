@@ -1,0 +1,17 @@
+{
+  "text_sha": "64103ede9c31",
+  "meta": {
+    "searchable_text": "13. 실수 전체의 집합에서 미분가능한 함수 f(x)가\n\\int_{x}\nxf(x)=3x+a+ tf′(t)dt\n0\n를 만족시킬 때, f(a)의 값은? (단, a는 상수이다.) [3점]\n① \\frac{ln2}{6}② \\frac{ln2}{3}③ \\frac{ln2}{2}④ \\frac{ln3}{3}⑤ \\frac{ln3}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분",
+      "함수방정식",
+      "미분"
+    ],
+    "exam_intent": "적분방정식을 부분적분으로 변형하여 미분방정식을 세우고 풀 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

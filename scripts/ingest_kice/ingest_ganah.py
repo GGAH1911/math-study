@@ -85,14 +85,16 @@ def parse_gyo3_ganah(ans_pdf: Path) -> dict:
     표를 통째로 날린다. → 마커 컷 대신 **번호 1→30 순증 연속**으로 정답표를 직접 식별한다
     (해설 본문은 번호가 1,2,3… 순증하지 않아 자연 배제). 단답은 글리프면 _decode_single_ans,
     평문이면 그대로. 전 페이지를 훑어 가장 많이 채운 페이지를 채택(30 도달 시 조기 종료).
-    배점은 정답표에 없어 None 반환 → ingest 가 _guess_score 로 채운다."""
+    배점은 정답표에 없어 None 반환 → ingest 가 _guess_score 로 채운다.
+
+    ⚠️ 추출기 quirk: 회차마다 단어병합/reading-order 가 달라 한 추출기로는 단답 26-30(나형 7월)
+    이나 객관식 8·18(가형 7월) 이 깨진다. → fitz → pdfplumber → find_tables(격자) 순으로 시도하고
+    '30개 + 객관식 1-21 ∈ {1..5}' 를 만족하는 첫 결과를 채택한다 (격자선은 순서 혼란을 무시)."""
+    import pdfplumber
     from answer_textlayer import _is_ans_glyph, _decode_single_ans
-    doc = fitz.open(str(ans_pdf))
-    best: dict = {}
-    for page in doc:
-        toks = page.get_text().split()
-        out: dict = {}
-        expect, i = 1, 0
+
+    def _scan(toks: list) -> dict:
+        out, expect, i = {}, 1, 0
         while i < len(toks) and expect <= 30:
             t = toks[i]
             if t.isascii() and t.isdigit() and int(t) == expect:   # 정답표 번호는 순증(ascii)
@@ -100,17 +102,40 @@ def parse_gyo3_ganah(ans_pdf: Path) -> dict:
                 ans = None
                 if nxt and all(_is_ans_glyph(c) for c in nxt):     # 글리프(동그라미/PUA)
                     ans = _decode_single_ans(nxt)
-                elif expect >= 22 and nxt.isascii() and nxt.isdigit():  # 단답 평문 숫자(4·7월형)
+                elif expect >= 22 and nxt.isascii() and nxt.isdigit():  # 단답 평문 숫자
                     ans = nxt
-                elif nxt in ('-', '‐', '–', '—', '*'):             # 전항정답(모두 정답) 마커
+                elif nxt in ('-', '‐', '–', '—', '*'):             # 전항정답(모두 정답)
                     ans = '전항정답'
                 if ans is not None:
                     out[expect] = (ans, None); expect += 1; i += 2; continue
             i += 1
-        if len(out) > len(best):
-            best = out
-        if len(best) == 30:
-            break
+        return out
+
+    def _valid(d: dict) -> bool:                    # 30개 + 객관식 1-21 ∈ {1..5}
+        return len(d) == 30 and all((d.get(n) or ('',))[0] in '12345' for n in range(1, 22))
+
+    best: dict = {}
+
+    def _try(d: dict):
+        nonlocal best
+        if _valid(d):
+            return d
+        if len(d) > len(best):
+            best = d
+        return None
+
+    for page in fitz.open(str(ans_pdf)):            # 1) fitz reading-order (대부분 회차 OK)
+        if (r := _try(_scan(page.get_text().split()))) is not None:
+            return r
+    with pdfplumber.open(str(ans_pdf)) as pp:       # 2) pdfplumber reading-order
+        for page in pp.pages:
+            if (r := _try(_scan((page.extract_text() or '').split()))) is not None:
+                return r
+    for page in fitz.open(str(ans_pdf)):            # 3) find_tables 격자 (테두리로 순서 무시)
+        for tb in page.find_tables(strategy='lines').tables:
+            flat = [(c.strip() if c else '') for row in tb.extract() for c in row]
+            if (r := _try(_scan(flat))) is not None:
+                return r
     return best
 
 

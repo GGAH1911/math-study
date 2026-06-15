@@ -1,0 +1,13 @@
+{
+  "text_sha": "6b44394b0582",
+  "meta": {
+    "searchable_text": "19.그림과 같이 한 모서리의 길이가 1인 정사면체 ABCD에서\n선분 AB의 중점을 M, 선분 CD를 1로 내분하는 점을\nN이라 하자. 선분 AC 위에 \\overline{MP}+\\frac{3:}{PN}의 값이 최소가 되도록\n점 P를 잡고, 선분 AD 위에 \\overline{MQ}+\\overline{QN}의 값이 최소가 되도록\n점 Q를 잡는다. 삼각형 MPQ의 평면 BCD 위로의 정사영의\n넓이는? [4점]\n① \\frac{\\sqrt{3}}{30}② \\frac{\\sqrt{3}}{15}③ \\frac{\\sqrt{3}}{10}④ \\frac{2\\sqrt{3}}{15}⑤ \\frac{\\sqrt{3}}{6}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [],
+    "exam_intent": "공간벡터와 정사면체 기하를 이용한 최소값 조건에서의 정사영 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

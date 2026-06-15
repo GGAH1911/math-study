@@ -1,0 +1,16 @@
+{
+  "text_sha": "705f148399de",
+  "meta": {
+    "searchable_text": "6. 함수\nf(x)=\\begin{cases}x+1 (x<2) \\\\ x^{2}-4x+a (x≥2)\\end{cases}\n가 실수 전체의 집합에서 연속일 때, 상수 a의 값은? [3점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_연속성",
+      "연속의_조건"
+    ],
+    "exam_intent": "함수의 연속 조건으로부터 미지상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

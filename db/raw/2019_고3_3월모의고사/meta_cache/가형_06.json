@@ -1,0 +1,16 @@
+{
+  "text_sha": "b78a6672f624",
+  "meta": {
+    "searchable_text": "6.\\int_{0}^{\\sqrt{3}}2x\\sqrt{x +1}^{2} dx의 값은? [3점]\n① 4 ② \\frac{13}{3}③ \\frac{14}{3}④ 5 ⑤ \\frac{16}{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "치환적분",
+      "정적분"
+    ],
+    "exam_intent": "치환적분을 이용한 정적분 값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

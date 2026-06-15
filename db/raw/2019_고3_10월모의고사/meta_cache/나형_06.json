@@ -1,0 +1,16 @@
+{
+  "text_sha": "dfb399084e21",
+  "meta": {
+    "searchable_text": "6.\\int_{-3}^{3}(x^{3}+4x^{2})dx+\\int_{3}^{-3}(x^{3}+x^{2})dx의 값은? [3점]\n① 36 ② 42 ③ 48 ④ 54 ⑤ 60",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "정적분",
+      "정적분의_성질"
+    ],
+    "exam_intent": "홀짝함수 성질과 구간 역순을 이용한 정적분 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

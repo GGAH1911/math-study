@@ -1,0 +1,16 @@
+{
+  "text_sha": "809138731823",
+  "meta": {
+    "searchable_text": "7.10 이하의 자연수 a에 대하여 (\\frac{2}{a^{3}})\\frac{1}{2}의 값이 자연수가 되도록\n하는 모든 a의 값의 합은? [3점]\n① 5 ② 7 ③ 9 ④ 11 ⑤ 13",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "실수와_그_계산",
+    "concepts": [
+      "근호",
+      "자연수_조건"
+    ],
+    "exam_intent": "분수식의 자연수 조건으로부터 정수해 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

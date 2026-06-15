@@ -1,0 +1,17 @@
+{
+  "text_sha": "8978dded7dfb",
+  "meta": {
+    "searchable_text": "12.x≥-1에서 정의된 함수 f(x)=\\sqrt{x+1}+1과 x≥1에서\n정의된 함수 g(x)=(x-1)^{2}-1에 대하여 (g∘f∘f)(15)의\n값은? [3점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수값_계산",
+      "정의역_확인"
+    ],
+    "exam_intent": "합성함수를 정의역 조건 내에서 단계적으로 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

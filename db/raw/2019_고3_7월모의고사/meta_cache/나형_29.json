@@ -1,0 +1,17 @@
+{
+  "text_sha": "3c777d62df3e",
+  "meta": {
+    "searchable_text": "29. 첫째항이 0이 아닌 등차수열 {a_{n}}의 첫째항부터\n제n항까지의 합 S_{n}에 대하여 S_{9}=S_{18}이다. 집합 T_{n}을\nT_{n}={S_{k}|k=1,2,3, ⋯ ,n}\n이라 하자. 집합 T_{n}의 원소의 개수가 13이 되도록 하는\n모든 자연수 n의 값의 합을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의_합",
+      "집합"
+    ],
+    "exam_intent": "등차수열의 성질과 조건으로부터 집합의 원소 개수를 분석하여 조건을 만족하는 모든 n을 찾는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

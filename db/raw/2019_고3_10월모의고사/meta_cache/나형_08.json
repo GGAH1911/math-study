@@ -1,0 +1,16 @@
+{
+  "text_sha": "1f246dd2edb0",
+  "meta": {
+    "searchable_text": "8.m≤135, n≤9인 두 자연수 m, n에 대하여 \\sqrt[3]{2m}×\\sqrt{n^{3}}의\n값이 자연수일 때, m+n의 최댓값은? [3점]\n① 97 ② 102 ③ 107 ④ 112 ⑤ 117",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "근호와_지수_관계",
+      "자연수_조건"
+    ],
+    "exam_intent": "지수 표현식이 자연수가 되는 조건을 찾아 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

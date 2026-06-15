@@ -1,0 +1,16 @@
+{
+  "text_sha": "e52440905a69",
+  "meta": {
+    "searchable_text": "25. 수직선 위를 움직이는 점 P의 시각 t(t≥0)에서의 위치 x가\nx=t^{3}-3t^{2}+at (a는 상수)\n이다. 점 P의 시각 t=3에서의 속도가 15일 때, a의 값을\n구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수_계산",
+      "순간속도"
+    ],
+    "exam_intent": "도함수 계산과 순간속도의 의미 이해 확인",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

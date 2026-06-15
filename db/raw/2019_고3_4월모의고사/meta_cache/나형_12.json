@@ -1,0 +1,17 @@
+{
+  "text_sha": "80142f07b224",
+  "meta": {
+    "searchable_text": "12. 수열 {a_{n}}에 대하여 _{n}Σ^{∞}_{=1}7-\\frac{a_{n}}{2^{n}}=19일 때,\n\\lim_{n→∞}\\frac{a_{n}}{2^{n+1}}의 값은? [3점]\n① 2 ② \\frac{5}{2}③ 3 ④ \\frac{7}{2}⑤ 4",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "급수_수렴성",
+      "일반항_판정법",
+      "극한의_성질"
+    ],
+    "exam_intent": "급수 수렴의 필요조건으로 수열 극한값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

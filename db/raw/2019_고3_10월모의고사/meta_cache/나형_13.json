@@ -1,0 +1,17 @@
+{
+  "text_sha": "b30039295689",
+  "meta": {
+    "searchable_text": "13.그림은 모든 실수 x에 대하여 f(-x)=-f(x)인 연속함수\ny=f(x)의 그래프와 함수 y=f(x)의 그래프를 x축의 방향으로\n1만큼, y축의 방향으로 1만큼 평행이동시킨 함수 y=g(x)의\n그래프이다. \\int_{0}^{2}g(x)dx의 값은? [3점]\n① \\frac{7}{4}② 2 ③ \\frac{9}{4}④ \\frac{5}{2}⑤ \\frac{11}{4}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "적분",
+    "concepts": [
+      "홀함수",
+      "함수의_평행이동",
+      "정적분"
+    ],
+    "exam_intent": "홀함수의 성질과 함수의 평행이동을 활용한 정적분 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "6a68a60ee393",
+  "meta": {
+    "searchable_text": "15.자연수 n에 대하여 n(n-4)의 세제곱근 중 실수인 것의\n개수를 f(n)이라 하고, n(n-4)의 네제곱근 중 실수인 것의\n개수를 g(n)이라 하자. f(n)>g(n)을 만족시키는 모든 n의\n값의 합은? [4점]\n① 4 ② 5 ③ 6 ④ 7 ⑤ 8",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "근의_개수_판정",
+      "부호에_따른_실근",
+      "짝수/홀수_지수의_성질"
+    ],
+    "exam_intent": "피제곱수의 부호에 따른 세·네제곱근의 실근 개수 구분",
+    "killer_tier": "early",
+    "cognitive_type": "추론"
+  }
+}

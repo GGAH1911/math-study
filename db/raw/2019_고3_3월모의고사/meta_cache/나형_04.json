@@ -1,0 +1,16 @@
+{
+  "text_sha": "4d1189c3a511",
+  "meta": {
+    "searchable_text": "4.그림은 함수 f:X→X를 나타낸 것이다.\n(f∘f)(3)의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수값"
+    ],
+    "exam_intent": "함수 다이어그램에서 합성함수 f∘f의 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

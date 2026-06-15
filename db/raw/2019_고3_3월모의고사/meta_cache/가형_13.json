@@ -1,0 +1,18 @@
+{
+  "text_sha": "d0242917d871",
+  "meta": {
+    "searchable_text": "13.0≤x≤π에서 정의된 함수\nf(x)=\\begin{cases}2cosxtanx+a (x≠\\frac{π}{2}) \\\\ 3a (x=\\frac{π}{2})\\end{cases}\n가 x=\\frac{π}{2}에서 연속일 때, 함수 f(x)의 최댓값과 최솟값의\n합은? (단, a는 상수이다.) [3점]\n① \\frac{5}{2}② 3 ③ \\frac{7}{2}④ 4 ⑤ \\frac{9}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한의_성질",
+      "함수의_연속성",
+      "삼각함수",
+      "극값"
+    ],
+    "exam_intent": "극한의 연속성 조건으로 상수를 구하고 극값의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

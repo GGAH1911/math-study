@@ -1,0 +1,17 @@
+{
+  "text_sha": "26eebbdd7b51",
+  "meta": {
+    "searchable_text": "11.함수 f(x)=tan(πx^{2}+ax)가 x=\\frac{1}{2}에서 극솟값 k를 가질 때,\nk의 값은? (단, a는 상수이다.) [3점]\n① -\\sqrt{3}② -1 ③ -\\frac{\\sqrt{3}}{3}\n④ 0 ⑤ \\frac{\\sqrt{3}}{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "도함수와_극값",
+      "삼각함수의_미분",
+      "극솟값의_판정"
+    ],
+    "exam_intent": "삼각함수와 합성함수 미분으로 극값 조건에서 상수를 결정하고 극솟값을 구함",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

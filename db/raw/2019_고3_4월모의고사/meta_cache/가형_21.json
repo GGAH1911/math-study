@@ -1,0 +1,16 @@
+{
+  "text_sha": "48ed2b62a327",
+  "meta": {
+    "searchable_text": "21. 자연수 n에 대하여 열린 구간 (3n-3,3n)에서 함수\nf(x)=(2x-3n)sin2x-(2x2-6nx+4n2-1)cos2x\n가 x=α에서 극대 또는 극소가 되는 모든 α의 값의 합을\na이라 하자.\nn\ncosa =0이 되도록 하는 자연수 m의 최솟값을 l이라 할 때,\nm\n\\sum_{=}^{l+2}a의 값은? [4점]\nk 1^{k}\n① 7+\\frac{45}{2}π ② 8+\\frac{45}{2}π ③ 7+\\frac{47}{2}π\n④ 8+\\frac{47}{2}π ⑤ 7+\\frac{49}{2}π",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "삼각함수의_미분"
+    ],
+    "exam_intent": "극값 합의 규칙을 파악하여 조건을 만족하는 부분합을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

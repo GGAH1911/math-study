@@ -1,0 +1,17 @@
+{
+  "text_sha": "b51db551c289",
+  "meta": {
+    "searchable_text": "11.그림과 같이 점 F가 초점인 포물선 y^{2}=4px 위의 점 P를\n지나고 y축에 수직인 직선이 포물선 y^{2}=-4px와 만나는 점을\nQ라 하자. \\overline{OP}=\\overline{PF}이고 \\overline{PQ}=6일 때, 선분 PF의 길이는? (단,\nO는 원점이고, p는 양수이다.) [3점]\n① 7 ② 8 ③ 9 ④ 10 ⑤ 11",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "포물선",
+      "초점",
+      "거리"
+    ],
+    "exam_intent": "포물선의 초점 거리와 곡선 교점 활용",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

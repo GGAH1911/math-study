@@ -1,0 +1,17 @@
+{
+  "text_sha": "4d9a107f1727",
+  "meta": {
+    "searchable_text": "15.그림과 같이 한 변의 길이가 1인 정사각형 ABCD가 있다.\n선분 AD 위의 점 E와 정사각형 ABCD의 내부에 있는 점 F가\n다음 조건을 만족시킨다.\n(가) 두 삼각형 ABE와 FBE는 서로 합동이다.\n(나) 사각형 ABFE의 넓이는 \\frac{1}{3}이다.\ntan(∠ABF)의 값은? [4점]\n① \\frac{5}{12}② \\frac{1}{2}③ \\frac{7}{12}④ \\frac{2}{3}⑤ \\frac{3}{4}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각비",
+    "concepts": [
+      "삼각형의_합동",
+      "도형의_넓이",
+      "삼각비"
+    ],
+    "exam_intent": "합동 조건과 넓이 제약으로부터 도형 위치를 결정하고 삼각비를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

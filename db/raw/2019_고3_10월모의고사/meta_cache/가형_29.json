@@ -1,0 +1,17 @@
+{
+  "text_sha": "8caad0286269",
+  "meta": {
+    "searchable_text": "29.좌표공간의 세 점 A(-1,0,6), B(2,-\\sqrt{3},0), C(3,0,0)에\n대하여 두 점 P, Q가\n||=2,|\\vec{AP}\\vec{CQ}|=2\\sqrt{3},  \\vec{BC}⋅\\vec{CQ}=6\n을 만족시킨다. |\\vec{PQ}|의 최댓값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간벡터의_내적",
+      "공간벡터의_외적",
+      "점의_자취"
+    ],
+    "exam_intent": "공간벡터의 내적·외적 조건을 만족하는 점의 자취를 파악하고 최댓값을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

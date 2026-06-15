@@ -1,0 +1,18 @@
+{
+  "text_sha": "9d6371955f10",
+  "meta": {
+    "searchable_text": "25. 좌표평면 위를 움직이는 점 P의 시각 t(t>0)에서의 위치\nP(x, y)가\nx=t+lnt, y=\\frac{1}{2}t^{2}+t\n이다. \\frac{dx}{dt}=\\frac{dy}{dt}일 때, 점 P의 속도를 \\vec{v}라 하자. |\\vec{v}|^{2}의\n값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_방정식",
+      "도함수",
+      "속도_벡터",
+      "벡터의_크기"
+    ],
+    "exam_intent": "매개변수 곡선에서 미분 조건을 통해 속도 벡터의 크기를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

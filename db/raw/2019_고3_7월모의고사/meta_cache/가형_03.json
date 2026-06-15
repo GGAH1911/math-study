@@ -1,0 +1,17 @@
+{
+  "text_sha": "e698b80e01dd",
+  "meta": {
+    "searchable_text": "3. 좌표공간의 두 점 A(1, 0, 2), B(2, 0, a)에 대하여\n선분 AB를 1:2로 외분하는 점이 원점일 때, a의 값은?\n[2점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "외분점",
+      "공간벡터_좌표",
+      "점의_좌표"
+    ],
+    "exam_intent": "외분점 공식과 좌표 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

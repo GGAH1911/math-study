@@ -1,0 +1,17 @@
+{
+  "text_sha": "76d18adaafdb",
+  "meta": {
+    "searchable_text": "7.좌표평면 위를 움직이는 점 P의 시각 t에서의 위치 (x,y)가\nx=2t+sint,    y=1-cost\n이다. 시각 t=\\frac{π}{3}에서 점 P의 속력은? [3점]\n① \\sqrt{3}② 2 ③ \\sqrt{5}④ \\sqrt{6}⑤ \\sqrt{7}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "매개변수_방정식의_미분",
+      "속력",
+      "삼각함수의_미분"
+    ],
+    "exam_intent": "매개변수 방정식으로 표현된 곡선의 속력 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

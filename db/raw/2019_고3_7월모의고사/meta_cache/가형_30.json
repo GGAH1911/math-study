@@ -1,0 +1,18 @@
+{
+  "text_sha": "d96b5f1202a8",
+  "meta": {
+    "searchable_text": "30. x=a(a>0)에서 극댓값을 갖는 사차함수 f(x)에 대하여\n함수 g(x)가\ng(x)=\\begin{cases}\\frac{1-cosπx}{f(x)}(f(x)≠0) \\\\ \\frac{7}{128}π^{2} (f(x)=0)\\end{cases}\n일 때, 함수 g(x)는 실수 전체의 집합에서 미분가능하고\n다음 조건을 만족시킨다.\n(가) g′(0)×g′(2a)≠0\n(나) 함수 g(x)는 x=a에서 극값을 갖는다.\ng(1)=\\frac{2}{7}일 때, g(-1)=\\frac{q}{p}이다. p+q의 값을 구하시오. (단,\np와 q는 서로소인 자연수이다.) [4점]\n* 확인 사항\n◦답안지의 해당란에 필요한 내용을 정확히 기입(표기)했는지 확인\n하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극댓값",
+      "미분가능성",
+      "로피탈_정리",
+      "삼각함수의_미분"
+    ],
+    "exam_intent": "사차함수와 삼각함수 합성에서 미분가능조건으로 함수결정",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

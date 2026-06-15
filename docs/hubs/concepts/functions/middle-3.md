@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-06-13
-updated: 2026-06-13
+created: 2026-06-15
+updated: 2026-06-15
 hub_type: concepts-grade
 domain: functions
 grade: middle-3

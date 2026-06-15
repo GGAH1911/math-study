@@ -1,0 +1,18 @@
+{
+  "text_sha": "f32274e1baa1",
+  "meta": {
+    "searchable_text": "16.그림과 같이 길이가 2인 선분 AB를 지름으로 하는 원 C_{1}과\n점 B를 중심으로 하고 원 C_{1} 위의 점 P를 지나는 원 C_{2}가\n있다. 원 C_{1}의 중심 O에서 원 C_{2}에 그은 두 접선의 접점을\n각각 Q, R라 하자. ∠PAB=θ일 때, 사각형 ORBQ의 넓이를\nS(θ)라 하자. \\lim_{θ→0+}\\frac{S(θ)}{θ}의 값은? (단, 0<θ<\\frac{π}{6}) [4점]\n① 2 ② \\sqrt{3}③ 1 ④ \\frac{\\sqrt{3}}{2}⑤ \\frac{1}{2}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원의_접선의_성질",
+      "중심에서_접선까지의_거리",
+      "극한과_미분",
+      "삼각함수_관계식"
+    ],
+    "exam_intent": "원의 접선을 이용한 넓이 극한값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

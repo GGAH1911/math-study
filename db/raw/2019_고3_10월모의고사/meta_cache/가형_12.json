@@ -1,0 +1,17 @@
+{
+  "text_sha": "e8f0d7d9d8ad",
+  "meta": {
+    "searchable_text": "12.실수 전체의 집합에서 미분가능한 두 함수 f(x), g(x)에\n대하여 함수 h(x)를 h(x)=(f∘g)(x)라 하자.\n\\lim_{x→1}\\frac{g(x)+1}{x-1}=2,    \\lim_{x→1}\\frac{h(x)-2}{x-1}=12\n일 때, f(-1)+f′(-1)의 값은? [3점]\n① 4 ② 5 ③ 6 ④ 7 ⑤ 8",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "합성함수의_미분",
+    "concepts": [
+      "극한으로부터_함수값_결정",
+      "극한으로부터_미분값_결정",
+      "합성함수의_미분법(연쇄법칙)"
+    ],
+    "exam_intent": "합성함수와 극한 조건으로부터 함수값·도함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

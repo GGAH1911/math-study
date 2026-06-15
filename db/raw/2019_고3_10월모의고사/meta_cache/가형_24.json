@@ -1,0 +1,17 @@
+{
+  "text_sha": "855928433c82",
+  "meta": {
+    "searchable_text": "24.이항분포 B(n,\\frac{1}{3})을 따르는 확률변수 X에 대하여\nV(2X-1)=80일 때, E(2X-1)의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [
+      "이항분포",
+      "기댓값과_분산",
+      "선형변환"
+    ],
+    "exam_intent": "이항분포의 분산 성질과 선형변환 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

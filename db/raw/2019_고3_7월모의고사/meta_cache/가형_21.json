@@ -1,0 +1,16 @@
+{
+  "text_sha": "d8187d325aec",
+  "meta": {
+    "searchable_text": "21. 0<t<1인 실수 t에 대하여 직선 y=t와\n함수 f(x)=sinx(0<x<\\frac{π}{2})의 그래프가 만나는 점을 P라\n할 때, 곡선 y=f(x) 위의 점 P에서 그은 접선의 x절편을\ng(t)라 하자. g′(\\frac{2\\sqrt{2}}{3})의 값은? [4점]\n① -28 ② -24 ③ -20 ④ -16 ⑤ -12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "접선의_방정식",
+      "역함수의_미분"
+    ],
+    "exam_intent": "접선의 절편을 매개변수 함수로 표현하여 미분하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "8565c6489791",
+  "meta": {
+    "searchable_text": "10. 실수 전체의 집합에서 연속인 함수 f(x)가\n\\int_{a}^{x}f(t)dt=(x+a-4)e^{x}\n을 만족시킬 때, f(a)의 값은? (단, a는 상수이다.) [3점]\n① e ② e^{2} ③ e^{3} ④ e^{4} ⑤ e^{5}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "기본정리"
+    ],
+    "exam_intent": "미적분학의 기본정리로 함수 결정 후 특정값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

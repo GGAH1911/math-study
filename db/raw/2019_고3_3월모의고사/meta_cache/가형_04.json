@@ -1,0 +1,17 @@
+{
+  "text_sha": "66641ca6bb9f",
+  "meta": {
+    "searchable_text": "4.함수 f(x)=\\frac{x}{2}+sinx에 대하여 \\lim_{x→}\\frac{f(x)-f(π)}{_{π} x-π}의 값은?\n[3점]\n① -\\frac{5}{2}② -2 ③ -\\frac{3}{2}④ -1 ⑤ -\\frac{1}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "미분계수",
+      "도함수",
+      "삼각함수의_미분"
+    ],
+    "exam_intent": "미분계수 극한정의를 이용하여 도함수값을 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

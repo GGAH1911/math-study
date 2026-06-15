@@ -1,0 +1,16 @@
+{
+  "text_sha": "e57baaab2c19",
+  "meta": {
+    "searchable_text": "20.집합 X={1,2,3,4}에 대하여 함수 f:X→X가 다음\n조건을 만족시킨다.\n집합 X의 임의의 두 원소 a, b에 대하여\nf(a)≥b이면 f(a)≥f(b)\n이다.\nf(1)=3일 때, f(2)+f(4)의 최솟값은? [4점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_성질",
+      "조건분석"
+    ],
+    "exam_intent": "함수의 조건을 논리적으로 분석하여 함수값을 결정하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

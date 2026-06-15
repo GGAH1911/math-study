@@ -1,0 +1,16 @@
+{
+  "text_sha": "317c0fd4668a",
+  "meta": {
+    "searchable_text": "7. 매개변수 t(t>0)으로 나타내어진 함수\nx=t2+lnt, y=t3+6t\n에서 t=1일 때, \\frac{dy}{dx}의 값은? [3점]\n① 1 ② \\frac{3}{2}③ 2 ④ \\frac{5}{2}⑤ 3",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_미분",
+      "연쇄법칙"
+    ],
+    "exam_intent": "매개변수 함수의 미분값을 연쇄법칙으로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

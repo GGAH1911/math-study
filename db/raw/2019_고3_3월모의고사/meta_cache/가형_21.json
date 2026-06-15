@@ -1,0 +1,15 @@
+{
+  "text_sha": "d44c68c0874b",
+  "meta": {
+    "searchable_text": "21.함수 f(x)의 도함수가 f′(x)=xe^{-x2}이다. 모든 실수 x에\n대하여 두 함수 f(x), g(x)가 다음 조건을 만족시킬 때,\n<보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n(가) g(x)=\\int_{1}^{x}f′(t)(x+1-t)dt\n(나) f(x)=g′(x)-f′(x)\n< 보 기 >\nㄱ. g′(1)=\\frac{1}{e}\nㄴ. f(1)=g(1)\nㄷ. 어떤 양수 x에 대하여 g(x)<f(x)이다.\n① ㄱ ② ㄱ, ㄴ ③ ㄱ, ㄷ\n④ ㄴ, ㄷ ⑤ ㄱ, ㄴ, ㄷ",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분"
+    ],
+    "exam_intent": "정적분 조건식에서 도함수를 이용해 함수의 성질을 파악하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

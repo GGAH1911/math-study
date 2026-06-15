@@ -1,0 +1,17 @@
+{
+  "text_sha": "0c3387241397",
+  "meta": {
+    "searchable_text": "17. 그림과 같이 자연수 n에 대하여 직선 x=n이 두 곡선\ny=√5x+4, y=√2x-1과 만나는 점을 각각 A_{n}, B_{n}이라\n하자. 선분 OA의 길이를 a, 선분 OB의 길이를 b이라 할 때,\nn n n n\n\\lim_{n→∞}\\frac{12}{a -b n n}의 값은? (단, O는 원점이다.) [4점]\ny x=n y=√5x+4\nA\nn\ny=√2x-1\nB\nn\n-\\frac{4}{5}O\\frac{1}{2}x\n① 4 ② 6 ③ 8 ④ 10 ⑤ 12",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열_극한",
+    "concepts": [
+      "수열의_극한",
+      "유리화",
+      "점근_분석"
+    ],
+    "exam_intent": "유리화 기법으로 수열의 극한값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

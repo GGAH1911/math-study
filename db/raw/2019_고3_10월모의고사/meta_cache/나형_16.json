@@ -1,0 +1,17 @@
+{
+  "text_sha": "6c869a0e51d6",
+  "meta": {
+    "searchable_text": "16.삼차함수 f(x)에 대하여 방정식 f′(x)=0의 두 실근 α, β는\n다음 조건을 만족시킨다.\n(가)|α-β|=10\n(나)두 점 (α,f(α)), (β,f(β)) 사이의 거리는 26이다.\n함수 f(x)의 극댓값과 극솟값의 차는? [4점]\n① 12\\sqrt{2}② 18 ③ 24 ④ 30 ⑤ 24\\sqrt{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "도함수의_근",
+      "거리_공식"
+    ],
+    "exam_intent": "극값점의 거리 조건으로 극값의 차를 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "2f889620d7a1",
+  "meta": {
+    "searchable_text": "2.첫째항이 7, 공차가 3인 등차수열의 제7항은? [2점]\n① 24 ② 25 ③ 26 ④ 27 ⑤ 28",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "일반항"
+    ],
+    "exam_intent": "등차수열의 제n항 공식 적용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

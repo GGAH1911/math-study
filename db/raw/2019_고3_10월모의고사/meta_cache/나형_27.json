@@ -1,0 +1,17 @@
+{
+  "text_sha": "8cdd7f46586f",
+  "meta": {
+    "searchable_text": "27.최고차항의 계수가 1인 삼차함수 f(x)가 다음 조건을\n만족시킬 때, f(4)의 값을 구하시오. [4점]\n(가)\\lim_{x→0}\\frac{f(x)-3}{x}=0\n(나)곡선 y=f(x)와 직선 y=-1의 교점의 개수는 2이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값",
+      "교점의_개수",
+      "함수의_극한"
+    ],
+    "exam_intent": "극한과 극값·교점 조건으로부터 삼차함수를 결정하고 함수값 계산하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

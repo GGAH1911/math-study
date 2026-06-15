@@ -1,0 +1,17 @@
+{
+  "text_sha": "18797bdee1b4",
+  "meta": {
+    "searchable_text": "10. 두 상수 a, b에 대하여 함수 f(x)=acosbx의 그래프가\n그림과 같다. 함수 g(x)=bsinx+a의 최댓값은? (단, b>0)\n[3점]\ny\n3\ny=f(x)\nπ\nO x\n-3\n① -2 ② -1 ③ 0 ④ 1 ⑤ 2",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "진폭과_주기",
+      "함수의_최댓값과_최솟값"
+    ],
+    "exam_intent": "삼각함수 그래프로부터 계수를 결정하고 다른 함수의 최댓값을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

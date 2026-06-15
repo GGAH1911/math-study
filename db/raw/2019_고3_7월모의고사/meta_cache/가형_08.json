@@ -1,0 +1,17 @@
+{
+  "text_sha": "923eef3e3e94",
+  "meta": {
+    "searchable_text": "8. 곡선 xy-y^{3}lnx=2에 대하여 x=1일 때, \\frac{dy}{dx}의 값은?\n[3점]\n① 0 ② 2 ③ 4 ④ 6 ⑤ 8",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "음함수미분",
+      "곱의미분법",
+      "연쇄법칙"
+    ],
+    "exam_intent": "음함수 미분법으로 곡선 위의 점에서 도함수 값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

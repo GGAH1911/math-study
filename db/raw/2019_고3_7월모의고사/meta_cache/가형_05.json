@@ -1,0 +1,16 @@
+{
+  "text_sha": "db31966e9977",
+  "meta": {
+    "searchable_text": "5. 부등식 log_{3}(x-3)+log_{3}(x+3)≤3을 만족시키는 모든\n정수 x의 값의 합은? [3점]\n① 15 ② 17 ③ 19 ④ 21 ⑤ 23",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그부등식"
+    ],
+    "exam_intent": "로그 성질을 이용해 부등식을 풀고 정수해의 합을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

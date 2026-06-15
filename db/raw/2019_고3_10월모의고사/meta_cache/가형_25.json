@@ -1,0 +1,16 @@
+{
+  "text_sha": "3640f4874d62",
+  "meta": {
+    "searchable_text": "25.점 A(6,4)에서 타원 \\frac{x^{2}}{12}+\\frac{y^{2}}{16}=1에 그은 두 접선의 접점을\n각각 B, C라 할 때, 삼각형 ABC의 넓이를 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_접선",
+      "외부점에서의_접선"
+    ],
+    "exam_intent": "외부점에서 타원에 그은 접선의 접점 좌표와 삼각형 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

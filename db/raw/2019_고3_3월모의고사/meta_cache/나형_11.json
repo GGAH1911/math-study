@@ -1,0 +1,16 @@
+{
+  "text_sha": "73e6de347837",
+  "meta": {
+    "searchable_text": "11.그림과 같이 한 변의 길이가 1인 정사각형 3개로 이루어진\n도형 R가 있다.\nR\n자연수 n에 대하여 2n개의 도형 R를 겹치지 않게 빈틈없이\n붙여서 만든 직사각형의 넓이를 a_{n}이라 할 때, \\sum_{n=10}^{15}a_{n}의 값은?\n[3점]\n① 378 ② 396 ③ 414 ④ 432 ⑤ 450",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합"
+    ],
+    "exam_intent": "도형 규칙을 수열로 모델링하고 합 공식을 적용하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

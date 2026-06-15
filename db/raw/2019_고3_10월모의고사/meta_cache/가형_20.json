@@ -1,0 +1,17 @@
+{
+  "text_sha": "f2969c53d4f2",
+  "meta": {
+    "searchable_text": "20.함수 f(x)=\\int_{x}^{x+2}|2^{t}-5|dt의 최솟값을 m이라 할 때, 2^{m}의\n값은? [4점]\n8 9 10 11 12\n① (\\frac{5}{4}) ② (\\frac{5}{4}) ③ (\\frac{5}{4}) ④ (\\frac{5}{4}) ⑤ (\\frac{5}{4})",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "절댓값_함수의_적분",
+      "정적분_함수의_최솟값",
+      "지수함수"
+    ],
+    "exam_intent": "이동하는 고정 길이 구간에서 절댓값 적분의 최솟값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

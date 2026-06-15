@@ -1,0 +1,17 @@
+{
+  "text_sha": "82af3fa931ef",
+  "meta": {
+    "searchable_text": "16. 두 실수 a, b에 대하여 2a=3, 6b=5일 때, 2ab+a+b의 값은?\n[4점]\n① 15 ② 18 ③ 21 ④ 24 ⑤ 27",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수와_로그의_관계",
+      "지수의_밑_변환",
+      "지수_법칙의_응용"
+    ],
+    "exam_intent": "지수 방정식 조건을 조합하여 복잡한 지수식 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

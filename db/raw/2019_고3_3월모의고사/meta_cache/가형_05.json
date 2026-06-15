@@ -1,0 +1,16 @@
+{
+  "text_sha": "7eb622a3b299",
+  "meta": {
+    "searchable_text": "5.함수 y=ln(x-a)+b의 그래프는 점 (2,5)를 지나고,\n직선 x=1을 점근선으로 갖는다. a+b의 값은? (단, a, b는\n상수이다.) [3점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_점근선",
+      "함수의_조건과_상수결정"
+    ],
+    "exam_intent": "로그함수의 점근선 개념 이해 및 주어진 조건으로부터 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

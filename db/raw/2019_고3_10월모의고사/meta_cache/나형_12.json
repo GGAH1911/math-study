@@ -1,0 +1,17 @@
+{
+  "text_sha": "feb959fc1783",
+  "meta": {
+    "searchable_text": "12.이차함수 y=f(x)의 그래프와 직선 y=2가 그림과 같다.\n열린 구간 (-3,7)에서 부등식 f′(x){f(x)-2}≤0을 만족시키는\n정수 x의 개수는? (단, f′(2)=0) [3점]\n① 4 ② 5 ③ 6 ④ 7 ⑤ 8",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수의_부호와_증감",
+      "함수의_극값",
+      "부등식의_정수해"
+    ],
+    "exam_intent": "도함수 부호와 함수값을 결합하여 복합 부등식의 정수해 개수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "a8042bd64079",
+  "meta": {
+    "searchable_text": "2 수학 영\n5. 함수 f(x)=\\frac{1}{x-2}에 대하여 \\lim_{h→0}\\frac{f(a+h)-f(a)}{h}=-\\frac{1}{4}을\n만족시키는 양수 a의 값은? [3점]\n① 4 ② \\frac{9}{2}③ 5 ④ \\frac{11}{2}⑤ 6\n\\int_{16}1",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "미분계수의_정의",
+      "유리함수의_미분"
+    ],
+    "exam_intent": "미분계수의 정의를 이용하여 주어진 조건을 만족하는 양수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

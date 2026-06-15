@@ -1,0 +1,17 @@
+{
+  "text_sha": "8789035041ae",
+  "meta": {
+    "searchable_text": "19.그림과 같이 중심이 O이고 길이가 2인 선분 AB를 지름으로\n하는 반원이 있다. 호 AB 위의 점 P에서 선분 AB에 내린\n수선의 발을 H라 하고, 점 H를 지나고 선분 OP에 수직인\n직선이 선분 OP, 호 AB와 만나는 점을 각각 I, Q라 하자.\n점 Q를 지나고 직선 OP에 평행한 직선이 호 AB와\n만나는 점 중 Q가 아닌 점을 R라 하자. ∠POB=θ일 때,\n두 삼각형 RIP, IHP의 넓이를 각각 S(θ), T(θ)라 하자.\n\\lim_{θ→0}\\frac{S(θ)-T(θ)}{+ θ^{3}}의 값은? (단, 0<θ<\\frac{π}{2}) [4점]\n① \\frac{\\sqrt{2}-1}{4}② \\frac{\\sqrt{2}-1}{2}③ \\sqrt{2}-1\n④ \\frac{2\\sqrt{2}-1}{4}⑤ \\frac{2\\sqrt{2}-1}{2}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한",
+      "도형의성질",
+      "삼각형의넓이"
+    ],
+    "exam_intent": "기하도형의 극한을 이용해 매개변수 함수의 고차 극한값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

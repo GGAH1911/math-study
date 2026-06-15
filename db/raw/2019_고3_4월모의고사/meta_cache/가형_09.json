@@ -1,0 +1,13 @@
+{
+  "text_sha": "48c291ce2ebb",
+  "meta": {
+    "searchable_text": "9. 자연수 7을 같은 자연수가 3개 이상 포함되도록 분할하는\n방법의 수는? [3점]\n① 2 ② 4 ③ 6 ④ 8 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "같은 수가 3개 이상인 정수 분할의 개수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

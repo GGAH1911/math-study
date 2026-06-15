@@ -1,0 +1,13 @@
+{
+  "text_sha": "6c770b8f7388",
+  "meta": {
+    "searchable_text": "29. 다음 조건을 만족시키는 자연수 a, b, c의\n모든 순서쌍 (a,b,c)의 개수를 구하시오. [4점]\n(가) a, b, c는 모두 짝수이다.\n(나) a×b×c=105",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "홀수·짝수 성질로 조건의 모순 인식",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

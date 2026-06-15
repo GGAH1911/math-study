@@ -1,0 +1,17 @@
+{
+  "text_sha": "455bc08220d6",
+  "meta": {
+    "searchable_text": "15. tanα=-\\frac{5}{12}(\\frac{3}{2}π<α<2π)이고 0≤x<\\frac{π}{2}일 때,\n부등식\ncosx≤sin(x+α)≤2cosx\n를 만족시키는 x에 대하여 tanx의 최댓값과 최솟값의 합은?\n[4점]\n①\\frac{31}{12}②\\frac{37}{12}③\\frac{43}{12}④\\frac{49}{12}⑤\\frac{55}{12}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_합차공식",
+      "삼각함수_부등식",
+      "탄젠트_함수_범위"
+    ],
+    "exam_intent": "삼각함수 합차공식으로 부등식을 $\\tan x$ 범위로 변환하는 응용력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "348e042942c1",
+  "meta": {
+    "searchable_text": "4. 두 사건 A, B가 서로 독립이고\nP(A)=\\frac{2}{3}, P(A∪B)=\\frac{7}{9}\n일 때, P(B)의 값은? [3점]\n①\\frac{2}{9}②\\frac{1}{3}③\\frac{4}{9}④\\frac{5}{9}⑤\\frac{2}{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "독립사건",
+      "합사건의확률"
+    ],
+    "exam_intent": "독립사건의 조건을 활용하여 합사건의 확률을 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

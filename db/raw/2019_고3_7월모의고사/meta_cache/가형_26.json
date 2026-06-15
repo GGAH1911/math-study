@@ -1,0 +1,15 @@
+{
+  "text_sha": "9ae9351f50cd",
+  "meta": {
+    "searchable_text": "26. 실수 전체의 집합에서 미분가능한 함수 f(x)가 다음 조건을\n만족시킨다.\n(가) f(1)=0\n(나) 0이 아닌 모든 실수 x에 대하여\n\\frac{xf′(x)-f(x)}{x^{2}}=xe^{x}이다.\nf(3)×f(-3)의 값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분"
+    ],
+    "exam_intent": "미분조건으로부터 함수를 유도하고 특정값의 곱을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

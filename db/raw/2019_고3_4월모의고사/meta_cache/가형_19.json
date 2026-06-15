@@ -1,0 +1,17 @@
+{
+  "text_sha": "bda6e5263f3c",
+  "meta": {
+    "searchable_text": "8 수학 영\n19. 그림과 같이\\overline{AB}=1, ∠B=\\frac{π}{2}인 직각삼각형 ABC에서\n선분 AB 위에\\overline{AD}=\\overline{CD}가 되도록 점 D를 잡는다. 점 D에서\n선분 AC에 내린 수선의 발을 E, 점 D를 지나고 직선 AC에\n평행한 직선이 선분 BC와 만나는 점을 F라 하자.\n∠BAC=θ일 때, 삼각형 DEF의 넓이를 S(θ)라 하자.\n\\lim_{θ→0+}\\frac{S(θ)}{θ}의 값은? (단, 0<θ<\\frac{π}{4}) [4점]\nC\nE\nF\nA θ D B\n① \\frac{1}{32}② \\frac{1}{16}③ \\frac{3}{32}④ \\frac{1}{8}⑤ \\frac{5}{32}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "삼각함수의_극한",
+      "좌표를_이용한_기하_계산",
+      "함수의_극한"
+    ],
+    "exam_intent": "좌표계에서 기하 조건을 식으로 표현하고 극한값을 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

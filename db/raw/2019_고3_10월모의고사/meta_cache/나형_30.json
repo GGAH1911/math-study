@@ -1,0 +1,13 @@
+{
+  "text_sha": "5f5ac2ff22f7",
+  "meta": {
+    "searchable_text": "30.양수 a에 대하여 최고차항의 계수가 1인 이차함수 f(x)와\n최고차항의 계수가 1인 삼차함수 g(x)가 다음 조건을 만족시킨다.\n(가)f(0)=g(0)\n(나)\\lim_{x→0}\\frac{f(x)}{x}=0, \\lim_{x→a}\\frac{g(x)}{x-a}=0\n(다)\\int_{0}^{a}{g(x)-f(x)}dx=36\n3\\int_{0}^{a}|f(x)-g(x)|dx의 값을 구하시오. [4점]\n* 확인 사항\n◦답안지의 해당란에 필요한 내용을 정확히 기입\n(표기)했는지 확인하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [],
+    "exam_intent": "극한 조건으로부터 함수를 결정하고 정적분으로 값을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

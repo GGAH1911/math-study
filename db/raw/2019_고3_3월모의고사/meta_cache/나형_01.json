@@ -1,0 +1,15 @@
+{
+  "text_sha": "29b6c21c855a",
+  "meta": {
+    "searchable_text": "1.log_{6}2+log_{6}3의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질"
+    ],
+    "exam_intent": "로그의 곱셈 성질(덧셈으로 변환)을 이용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

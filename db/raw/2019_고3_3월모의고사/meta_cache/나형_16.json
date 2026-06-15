@@ -1,0 +1,17 @@
+{
+  "text_sha": "139f278bd8e2",
+  "meta": {
+    "searchable_text": "16.첫째항이 양수이고 공비가 -2인 등비수열 {a_{n}}에 대하여\n\\sum_{k=1}^{9}(|a_{k}|+a_{k})=66\n일 때, a_{1}의 값은? [4점]\n① \\frac{3}{31}② \\frac{5}{31}③ \\frac{7}{31}④ \\frac{9}{31}⑤ \\frac{11}{31}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "절댓값_성질",
+      "수열의_합"
+    ],
+    "exam_intent": "등비수열 항의 부호 패턴을 파악하고 절댓값 조건을 기하급수로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

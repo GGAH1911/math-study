@@ -1,0 +1,18 @@
+{
+  "text_sha": "566d87bc006d",
+  "meta": {
+    "searchable_text": "11. 양수 k에 대하여 함수 f(x)=3^{x-1}+k의 역함수의 그래프를\nx축의 방향으로 k^{2}만큼 평행이동시킨 곡선을 y=g(x)라\n하자. 두 곡선 y=f(x), y=g(x)의 점근선의 교점이 직선\ny=\\frac{1}{3}x 위에 있을 때, k의 값은? [3점]\n① 1 ②\\frac{3}{2}③ 2 ④\\frac{5}{2}⑤ 3",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "역함수",
+      "지수함수",
+      "로그함수",
+      "점근선"
+    ],
+    "exam_intent": "역함수 평행이동 후 점근선 교점 조건을 만족하는 매개변수 k 값",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

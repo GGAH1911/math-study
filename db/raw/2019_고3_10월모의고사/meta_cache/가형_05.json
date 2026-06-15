@@ -1,0 +1,17 @@
+{
+  "text_sha": "da002db48367",
+  "meta": {
+    "searchable_text": "5.직선 y=\\frac{1}{2}x가 쌍곡선 \\frac{x^{2}}{k}-\\frac{y^{2}}{64}=1의 한 점근선일 때, 이\n쌍곡선의 주축의 길이는? (단, k는 양수이다.) [3점]\n① 30 ② 32 ③ 34 ④ 36 ⑤ 38",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선",
+      "점근선",
+      "주축"
+    ],
+    "exam_intent": "쌍곡선의 점근선 조건으로부터 매개변수를 구하고 주축의 길이를 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

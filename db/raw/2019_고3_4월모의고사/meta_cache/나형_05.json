@@ -1,0 +1,15 @@
+{
+  "text_sha": "984bbbd3dcb1",
+  "meta": {
+    "searchable_text": "2 수학 영\n5. log_{2}3+log_{2}\\frac{8}{3}의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5\n( )\na+\\frac{1}{4}^{n}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_덧셈"
+    ],
+    "exam_intent": "로그의 덧셈 성질 적용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

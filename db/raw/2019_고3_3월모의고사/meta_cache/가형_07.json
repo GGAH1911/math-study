@@ -1,0 +1,16 @@
+{
+  "text_sha": "615b6aae0091",
+  "meta": {
+    "searchable_text": "7.함수 f(x)=ln(ax+b)에 대하여 \\lim_{x→0}\\frac{f(x)}{x}=2일 때,\nf(2)의 값은? (단, a, b는 상수이다.) [3점]\n① ln3 ② 2ln2 ③ ln5 ④ ln6 ⑤ ln7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "로그함수의_극한",
+      "로피탈의_정리"
+    ],
+    "exam_intent": "로그함수 극한 조건으로 계수 결정 후 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

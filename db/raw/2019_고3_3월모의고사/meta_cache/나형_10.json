@@ -1,0 +1,16 @@
+{
+  "text_sha": "ab35a79c7193",
+  "meta": {
+    "searchable_text": "10.log1.44=a일 때, 2log12를 a로 나타낸 것은? [3점]\n① a+1 ② a+2 ③ a+3 ④ a+4 ⑤ a+5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그의_밑_변환"
+    ],
+    "exam_intent": "로그의 성질을 이용해 주어진 로그값으로부터 다른 로그식을 유도하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "626491d7caf3",
+  "meta": {
+    "searchable_text": "10.부등식\nlog_{2}(x^{2}-1)+log_{2}3≤5\n를 만족시키는 정수 x의 개수는? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그부등식",
+      "정의역"
+    ],
+    "exam_intent": "로그 부등식의 정의역 확인 및 정수 범위 결정 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

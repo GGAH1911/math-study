@@ -652,6 +652,46 @@ def _salvage(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
     return f'CACHED@{sal_model[0]}~'                  # '~' = 미검증 구제(답만, python 역대입 보류)
 
 
+HANDSOLVE_MODE = os.environ.get('HANDSOLVE', '1') == '1'   # 도형·킬러·검증불가 → opus/agent 분단위 낭비 대신 손풀이 큐
+HANDSOLVE_DIR = VERIFIER_DIR / '_handsolve'
+
+
+def _round_parts(stem: str):
+    """slug → (round, subject, number). 2019_고3_3월모의고사_나형_19 → (…모의고사, 나형, 19)."""
+    parts = stem.rsplit('_', 2)
+    return (parts[0], parts[1], parts[2]) if len(parts) == 3 else (stem, '', '')
+
+
+def _queue_entry(p: Path, gold, fmt, has_fig, tier, reason, best_sol, trace):
+    """손풀이 큐 json 만 기록(md 는 안 건드림). gold-match-무솔버 처럼 답은 맞았지만
+    솔버가 필요한 경우에도 재사용."""
+    rnd, subj, num = _round_parts(p.stem)
+    HANDSOLVE_DIR.mkdir(parents=True, exist_ok=True)
+    entry = {
+        'slug': p.stem, 'round': rnd, 'subject': subj, 'number': num,
+        'gold': gold, 'format': fmt, 'has_figure': has_fig, 'tier': tier,
+        'reason': reason,
+        'best_answer': str((best_sol or {}).get('answer') or (best_sol or {}).get('answer_value') or ''),
+        'best_steps': (best_sol or {}).get('solution_steps') or [],
+        'trace': [f'{m}:{r}' for m, r in (trace or [])],
+        'image': f'/problem-images/{p.stem}.png',
+    }
+    (HANDSOLVE_DIR / f'{p.stem}.json').write_text(
+        json.dumps(entry, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
+def _defer(p: Path, best_sol, gold, fmt, has_fig, tier, reason, solved_by, trace):
+    """auto 가 검증된 솔버를 못 짠 문제(도형·킬러·검증불가)를 손풀이 큐로 넘긴다.
+    opus/agent/salvage 의 분 단위 낭비를 끊고 gold·잠정답·부분풀이를 _handsolve/<slug>.json 으로
+    핸드오프 → 세션의 Claude 가 직접 풀어 db/solutions/<slug>.py (파라미터 솔버) + verified:true 로 대체."""
+    _queue_entry(p, gold, fmt, has_fig, tier, reason, best_sol, trace)
+    steps = (best_sol or {}).get('solution_steps') or [f'auto 솔버 생성 실패({reason}) — 손풀이 대기(handsolve queue).']
+    av = (best_sol or {}).get('answer_value') or (best_sol or {}).get('answer') or gold
+    write_solution(p, {'answer_value': str(av), 'solution_steps': steps},
+                   'handsolve-pending', 'handsolve', solved_by, trace, verified=False)
+    return f'HANDSOLVE({reason})'
+
+
 OPENBOOK_REROLL = int(os.environ.get('OPENBOOK_REROLL', '2'))
 
 
@@ -719,6 +759,7 @@ def build_one(p: Path) -> str:
     fm = re.search(r'^format:\s*(\w+)', t, re.M)
     fmt = fm.group(1) if fm else 'choice'
     tier = (re.search(r'^killer_tier:\s*(\w+)', t, re.M) or [None, None])[1]
+    has_fig = bool(re.search(r'^has_figure:\s*true\b', t, re.M))
     ladder = LADDER_KILLER if tier == 'killer' else LADDER_DEFAULT   # 킬러는 Haiku 스킵
     meta = f"문항 형식: {'객관식 5지선다' if fmt == 'choice' else '단답형(정수 정답)'}"
     real_img = img.resolve()                        # 심링크 → 실제 db/raw 원본
@@ -749,8 +790,18 @@ def build_one(p: Path) -> str:
                 vref_t = try_write_verifier(p, solt.get('verifier_python', ''), gold, fmt)
             if okt:                               # 텍스트만으로 검증 통과 → 난이도=haiku, 끝
                 write_solution(p, solt, vref_t, 'haiku', 'haiku', [('haiku-text', 'pass')], source='text')
+                if vref_t == 'gold-match' and HANDSOLVE_MODE:   # 단답 gold-match(솔버 없음) → 솔버용 큐
+                    _queue_entry(p, gold, fmt, has_fig, tier, 'no-solver:gold-match', solt,
+                                 [('haiku-text', 'pass')])
+                    return 'CACHED@T|need-solver'
                 return 'CACHED@T'
         trace.append(('haiku-text', 'text-fail'))  # 텍스트 실패 → 이미지 사다리 폴백
+
+    # ── 사전 defer: 도형·킬러는 blind 검증기 사다리가 거의 항상 헛돔(분 단위 → 미검증 salvage) ──
+    #    싼 텍스트 패스로 못 풀면 opus/agent 안 태우고 바로 손풀이 큐로. (HANDSOLVE=0 으로 끔)
+    if HANDSOLVE_MODE and (has_fig or tier == 'killer'):
+        return _defer(p, None, gold, fmt, has_fig, tier,
+                      f'apriori:{"figure" if has_fig else "killer"}', solved_by, trace)
 
     for model, effort in ladder:                  # 모델별 1회 (blind)
         sol = call_model(tiles, fmt, meta, model, effort, img_dir)
@@ -784,6 +835,9 @@ def build_one(p: Path) -> str:
         trace.append((model, f'pass(retry×{vtry})' if vtry else 'pass'))
         write_solution(p, sol, vref, model, solved_by, trace)
         fix_score(p, str(sol.get('score', '')))   # 같은 이미지 읽기로 배점도 교정
+        if vref == 'gold-match' and HANDSOLVE_MODE:   # 답은 gold 일치(verified)나 솔버 없음 → 솔버용 손풀이 큐
+            _queue_entry(p, gold, fmt, has_fig, tier, 'no-solver:gold-match', sol, trace)
+            return f'CACHED@{model[0]}|need-solver'
         return f'CACHED@{model[0]}'
     # 사다리 전멸(opus 까지 blind 검증기 실패) →
     # ★ ② open-book 단계적 솔버 (텍스트, 한 번): 답 맞췄으나 검증기 못 짠 경우 정답+풀이단계 주입
@@ -800,12 +854,14 @@ def build_one(p: Path) -> str:
                 write_solution(p, last_ok_sol, f'db/solutions/{p.stem}.py', solved_by, solved_by, trace)
                 fix_score(p, str(last_ok_sol.get('score', '')))
                 return f'CACHED@{solved_by[0]}+ob'
-    # ② open-book(텍스트)도 실패 → 이미지 에이전트 (텍스트 오전사 대비 이미지로 직접 풀이)
+    # ② open-book(텍스트)도 실패 → 손풀이 큐 (opus/agent 분단위 낭비 대신 세션 Claude 가 직접 푼다)
+    if HANDSOLVE_MODE:
+        return _defer(p, last_ok_sol, gold, fmt, has_fig, tier, f'runtime:{last}', solved_by, trace)
+    # ── (legacy, HANDSOLVE=0) 이미지 에이전트 → 미검증 구제 ──
     if AGENT_TIER:
         r = _agent_solve(p, tiles, fmt, meta, img_dir, gold, solved_by, trace)
         if r:
             return r
-    # 답만이라도 구제(verified:false) → 그것도 안 되면 FLAG
     return _salvage(p, tiles, fmt, meta, img_dir, gold, solved_by, trace) or f'FLAG({last})'
 
 

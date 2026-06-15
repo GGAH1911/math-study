@@ -1,0 +1,17 @@
+{
+  "text_sha": "e6b1a799f72a",
+  "meta": {
+    "searchable_text": "9. 실수 a에 대한 조건\n‘어떤 실수 x에 대하여 (x-1)2+ax≠x2+1이다.’\n의 부정이 참인 명제가 되도록 하는 a의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제의_부정",
+      "존재_한정자와_전칭_한정자",
+      "동치_조건"
+    ],
+    "exam_intent": "명제의 부정과 한정자(∃, ∀) 관계를 이해하고 일차식 항등성 조건 적용",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

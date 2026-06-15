@@ -1,0 +1,18 @@
+{
+  "text_sha": "66e58766e3eb",
+  "meta": {
+    "searchable_text": "6.x에 대한 방정식\n4^{x}-k×2^{x+1}+16=0\n이 오직 하나의 실근 α를 가질 때, k+α의 값은? (단, k는\n상수이다.) [3점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수방정식",
+      "치환",
+      "판별식",
+      "근과_계수의_관계"
+    ],
+    "exam_intent": "지수방정식을 치환으로 이차방정식으로 변환 후 판별식 조건으로 유일해 존재 조건을 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

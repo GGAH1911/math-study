@@ -1,0 +1,15 @@
+{
+  "text_sha": "4dd2dfe7a448",
+  "meta": {
+    "searchable_text": "4. 함수 y=√2x의 그래프를 x축의 방향으로 a만큼 평행이동하면\n함수 y=√2x-4의 그래프와 일치한다. 상수 a의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_평행이동"
+    ],
+    "exam_intent": "함수의 평행이동 규칙을 적용하여 계수 비교",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

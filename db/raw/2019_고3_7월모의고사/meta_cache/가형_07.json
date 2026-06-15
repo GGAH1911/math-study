@@ -1,0 +1,17 @@
+{
+  "text_sha": "25d425aaca5d",
+  "meta": {
+    "searchable_text": "7. 두 점 F(5, 0), F′(-5, 0)을 초점으로 하는 타원이 있다.\n점 F′을 지나고 기울기가 양수인 직선과 타원의 교점을 각각\nA, B라 하자. 삼각형 ABF의 둘레의 길이가 52일 때, 타원의\n단축의 길이는? [3점]\n① 16 ② 18 ③ 20 ④ 22 ⑤ 24",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_정의",
+      "초점의_성질",
+      "타원의_표준형"
+    ],
+    "exam_intent": "타원의 정의를 이용하여 장축과 단축을 구한다.",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

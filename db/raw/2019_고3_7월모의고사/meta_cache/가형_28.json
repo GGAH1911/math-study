@@ -1,0 +1,16 @@
+{
+  "text_sha": "950ee8ab58f5",
+  "meta": {
+    "searchable_text": "28. 그림과 같이 두 점 F, F′을 초점으로 하는\n쌍곡선 \\frac{x^{2}}{9}-\\frac{y^{2}}{16}=1의 제1사분면 위의 점을 P라 하자.\n삼각형 PF′F에 내접하는 원의 반지름의 길이가 3일 때,\n이 원의 중심을 Q라 하자. 원점 O에 대하여 \\overline{OQ}^{2}의 값을\n구하시오. (단, 점 F의 x좌표는 양수이다.) [4점]\ny\n\\frac{x^{2}}{9}-\\frac{y^{2}}{16}=1 P\nF′ O F x",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "초점"
+    ],
+    "exam_intent": "쌍곡선과 내접원 성질을 결합한 좌표계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

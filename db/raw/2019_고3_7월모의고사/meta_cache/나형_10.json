@@ -1,0 +1,16 @@
+{
+  "text_sha": "168d91c234f8",
+  "meta": {
+    "searchable_text": "10. 함수 y=\\sqrt{x-1}+a의 그래프를 x축의 방향으로 b만큼,\ny축의 방향으로 -1만큼 평행이동하면 함수 y=\\sqrt{x-4}의\n그래프와 일치한다. a+b의 값은? (단, a, b는 상수이다.)\n[3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_평행이동",
+      "무리함수"
+    ],
+    "exam_intent": "함수의 평행이동 조건을 이용해 미지수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

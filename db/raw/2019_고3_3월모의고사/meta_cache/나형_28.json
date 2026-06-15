@@ -1,0 +1,13 @@
+{
+  "text_sha": "90e942f7145d",
+  "meta": {
+    "searchable_text": "28.전체집합\nU={x|x는 3의 배수가 아닌 30 이하의 자연수}\n의 부분집합 A에 대하여 n(A)=4이고 집합 A의 모든 원소의\n합은 100이다. 집합 A의 모든 원소를 작은 수부터 크기순으로\n나열한 것을 x_{1}, x_{2}, x_{3}, x_{4}라 할 때, x_{4}-x_{3}+x_{2}-x_{1}의\n최댓값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "조건 만족 부분집합 선택에서 식의 최댓값을 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

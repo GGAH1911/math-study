@@ -1,0 +1,15 @@
+{
+  "text_sha": "94cd6264ce7e",
+  "meta": {
+    "searchable_text": "25.첫째항이 4인 수열 {a_{n}}이 모든 자연수 n에 대하여\na_{n+2}=a_{n+1}+a_{n}\n을 만족시킨다. a_{4}=34일 때, a_{2}의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식"
+    ],
+    "exam_intent": "선형점화식에서 미지항을 역산하는 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

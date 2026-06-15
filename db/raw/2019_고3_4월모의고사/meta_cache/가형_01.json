@@ -1,0 +1,16 @@
+{
+  "text_sha": "e57375a8fdd3",
+  "meta": {
+    "searchable_text": "1. \\lim_{x→0}\\frac{e4x-1}{3x}의 값은? [2점]\n① 1 ② \\frac{4}{3}③ \\frac{5}{3}④ 2 ⑤ \\frac{7}{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "지수함수의_극한",
+      "표준_극한_공식"
+    ],
+    "exam_intent": "지수함수 극한의 표준 공식 $\\lim_{x→0}\\frac{e^{ax}-1}{bx}=\\frac{a}{b}$ 적용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "08a828d27b38",
+  "meta": {
+    "searchable_text": "21.그림과 같이 함수 y=2\\sqrt{x}의 그래프 위를 움직이는 점 P와\n직선 y=x+2 위를 움직이는 점 Q에 대하여 선분 PQ의\n중점을 M이라 하자. 점 M과 점 A(0,8) 사이의 거리의\n최솟값은? [4점]\n① \\frac{13\\sqrt{2}}{4}② \\frac{27\\sqrt{2}}{8}③ \\frac{7\\sqrt{2}}{2}④ \\frac{29\\sqrt{2}}{8}⑤ \\frac{15\\sqrt{2}}{4}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "중점의_궤적",
+      "거리_공식",
+      "거리_최소화"
+    ],
+    "exam_intent": "중점의 자취를 파악하고 주어진 점까지의 거리 최솟값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

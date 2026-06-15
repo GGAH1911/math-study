@@ -1,0 +1,16 @@
+{
+  "text_sha": "742fa2621821",
+  "meta": {
+    "searchable_text": "3. 등차수열 {a}에 대하여\nn\na =3, a =9일 때, 수열 {a}의 공차는? [2점]\n2 4 n\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차"
+    ],
+    "exam_intent": "등차수열의 정의와 공차 계산의 기본 개념",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

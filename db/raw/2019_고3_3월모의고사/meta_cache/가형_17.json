@@ -1,0 +1,17 @@
+{
+  "text_sha": "532c0af6de61",
+  "meta": {
+    "searchable_text": "17.두 함수 f(x)=ax^{2}(a>0), g(x)=lnx의 그래프가\n한 점 P에서 만나고, 곡선 y=f(x) 위의 점 P에서의 접선의\n기울기와 곡선 y=g(x) 위의 점 P에서의 접선의 기울기가 서로\n같다. 두 곡선 y=f(x), y=g(x)와 x축으로 둘러싸인 부분의\n넓이는? (단, a는 상수이다.) [4점]\n① \\frac{2\\sqrt{e}-3}{6}② \\frac{2\\sqrt{e}-3}{3}③ \\frac{\\sqrt{e}-1}{2}\n④ \\frac{4\\sqrt{e}-3}{6}⑤ \\sqrt{e}-1",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "로그함수",
+      "접선의_기울기",
+      "곡선_사이의_넓이"
+    ],
+    "exam_intent": "로그함수와 이차함수의 교점·접선 조건을 이용한 정적분 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

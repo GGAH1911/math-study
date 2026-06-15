@@ -1,0 +1,16 @@
+{
+  "text_sha": "b0fafa037f65",
+  "meta": {
+    "searchable_text": "16.전체집합 U={1,2,3,4,5}의 두 부분집합 A, B가\nn(A∩B)=1, n(A∪B)=3\n을 만족시킨다. 집합 A, B의 모든 순서쌍 (A,B)의 개수는?\n[4점]\n① 80 ② 90 ③ 100 ④ 110 ⑤ 120",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_연산",
+      "경우의_수"
+    ],
+    "exam_intent": "집합의 교·합 조건으로부터 부분집합 쌍의 개수를 체계적으로 센다",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

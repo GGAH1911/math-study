@@ -1,0 +1,17 @@
+{
+  "text_sha": "7d61f40fabf4",
+  "meta": {
+    "searchable_text": "14.곡선 y=log\\sqrt{2}(x-a)와 직선 y=\\frac{1}{2}x가 만나는 점 중 한\n점을 A라 하고, 점 A를 지나고 기울기가 -1인 직선이 곡선\ny=(\\sqrt{2})^{x}+a와 만나는 점을 B라 하자. 삼각형 OAB의 넓이가\n6일 때, 상수 a의 값은? (단, 0<a<4이고, O는 원점이다.)\n[4점]\n① \\frac{1}{2}② 1 ③ \\frac{3}{2}④ 2 ⑤ \\frac{5}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수",
+      "교점"
+    ],
+    "exam_intent": "지수·로그함수의 교점과 삼각형 넓이로 상수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}
