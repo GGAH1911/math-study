@@ -3,6 +3,7 @@ sources: []
 created: 2026-05-17
 updated: 2026-05-17
 concept_type: definition
+domain: 수와식
 prerequisites: [docs/concepts/닮음과_피타고라스.md]
 enables: []
 mastery: unknown

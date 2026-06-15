@@ -240,11 +240,15 @@ def ingest(year: int, exam_type: str = EXAM_TYPE, session: str | None = None, li
                 'format': _fmt(num), 'body': '',
                 'image_paths': [e['image_fs']],
                 'searchable_text': meta.get('searchable_text', '')}
+        # LLM 슬러그 → 기존 정규 개념 정규화 매칭(중복 stub 방지, 2019 490종 사고 재발 차단)
         us = meta.get('unit') if isinstance(meta, dict) else None
         if us:
+            us = IV._canonical_concept(us); meta['unit'] = us
             IV._ensure_concept_exists(us, parent_unit=None, concept_type='unit')
-        for sp in (meta.get('concepts') or []) if isinstance(meta, dict) else []:
-            IV._ensure_concept_exists(sp, parent_unit=us, concept_type='definition')
+        if isinstance(meta, dict) and meta.get('concepts'):
+            meta['concepts'] = [IV._canonical_concept(s) for s in meta['concepts']]
+            for sp in meta['concepts']:
+                IV._ensure_concept_exists(sp, parent_unit=us, concept_type='definition')
         IV.write_markdown_v2(prob, meta, ans, e['image_url'], e['image_fs'],
                              slug, year, exam_type, session, grade=grade, agency=agency)
         written.append({'prob': prob, 'mapping': meta, 'answer': ans})

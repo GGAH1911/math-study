@@ -126,6 +126,33 @@ def _ensure_web_symlink(image_path: Path) -> None:
             print(f'  ! could not link {image_path.name}: {e}; copy also failed: {e2}', flush=True)
 
 
+_CONCEPT_NORM_INDEX: dict | None = None
+
+
+def _norm_concept(s: str) -> str:
+    """언더스코어·공백 제거 + NFC. LLM이 '삼각함수의미분'으로 뽑아도 '삼각함수의_미분'에 매칭."""
+    import unicodedata
+    return re.sub(r'[_\s]', '', unicodedata.normalize('NFC', s or ''))
+
+
+def _concept_norm_index() -> dict:
+    """{정규화슬러그: 실제 basename} — 기존 개념 트리 전체(rglob 1회 캐시)."""
+    global _CONCEPT_NORM_INDEX
+    if _CONCEPT_NORM_INDEX is None:
+        idx = {}
+        for p in (ROOT / 'docs' / 'concepts').rglob('*.md'):
+            idx.setdefault(_norm_concept(p.stem), p.stem)
+        _CONCEPT_NORM_INDEX = idx
+    return _CONCEPT_NORM_INDEX
+
+
+def _canonical_concept(slug: str) -> str:
+    """LLM 슬러그를 기존 정규 개념 basename 으로 정규화 매칭. 없으면 원본(=진짜 신규)."""
+    if not slug:
+        return slug
+    return _concept_norm_index().get(_norm_concept(slug), slug)
+
+
 def _ensure_concept_exists(slug: str, parent_unit: str | None,
                             concept_type: str = 'definition') -> bool:
     """Create a placeholder docs/concepts/{slug}.md if it doesn't exist.
@@ -136,10 +163,9 @@ def _ensure_concept_exists(slug: str, parent_unit: str | None,
     if not slug:
         return False
     concepts_root = ROOT / 'docs' / 'concepts'
-    # 개념트리는 중첩(docs/concepts/<도메인>/<학년>/<단원>.md). flat 경로만 보면
-    # 이미 존재하는 표준 단원·스포크를 못 찾아 flat 중복 stub을 양산한다 →
-    # 재귀(rglob)로 트리 어디든 있으면 새로 만들지 않는다.
-    if next(concepts_root.rglob(f'{slug}.md'), None) is not None:
+    # 개념트리는 중첩(docs/concepts/<도메인>/<학년>/<단원>.md). 정규화 매칭으로
+    # 표기차(언더스코어 등)까지 흡수 — flat 중복 stub 양산 방지(과거 490종 사고).
+    if _norm_concept(slug) in _concept_norm_index():
         return False
     path = concepts_root / f'{slug}.md'
     prereq_line = f'prerequisites: [docs/concepts/{parent_unit}.md]' if parent_unit else 'prerequisites: []'
@@ -161,6 +187,7 @@ def _ensure_concept_exists(slug: str, parent_unit: str | None,
     )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(fm, encoding='utf-8')
+    _concept_norm_index().setdefault(_norm_concept(slug), slug)   # 같은 런 내 재생성 방지
     return True
 
 
@@ -558,11 +585,16 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         # don't dangle. Haiku occasionally invents spoke names not in our
         # concept tree; create a stub linked under the parent unit and
         # let later study/tutor sessions fill in the body.
+        # LLM 슬러그를 기존 정규 개념으로 정규화 매칭 → md 가 정규 slug 를 참조(중복 stub 방지).
         unit_slug = meta.get('unit') if isinstance(meta, dict) else None
         if unit_slug:
+            unit_slug = _canonical_concept(unit_slug)
+            meta['unit'] = unit_slug
             _ensure_concept_exists(unit_slug, parent_unit=None, concept_type='unit')
-        for spoke in (meta.get('concepts') or []) if isinstance(meta, dict) else []:
-            _ensure_concept_exists(spoke, parent_unit=unit_slug, concept_type='definition')
+        if isinstance(meta, dict) and meta.get('concepts'):
+            meta['concepts'] = [_canonical_concept(s) for s in meta['concepts']]
+            for spoke in meta['concepts']:
+                _ensure_concept_exists(spoke, parent_unit=unit_slug, concept_type='definition')
         write_markdown_v2(prob_for_write, meta, ans,
                           entry['image_url'], entry['image_fs'],
                           round_slug, year, exam_type, session, grade=grade, agency=agency)
