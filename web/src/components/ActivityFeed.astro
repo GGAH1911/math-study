@@ -7,7 +7,7 @@ const isAdmin = !!Astro.locals.user?.is_admin;
 const all = readLog(isAdmin ? 8 : 40);
 const entries = (isAdmin ? all : all.filter((e) => USER_ACTIVITY_OPS.some((op) => e.operation.startsWith(op)))).slice(0, 8);
 
-const heading = isAdmin ? 'Recent Activity' : '최근 학습 활동';
+const heading = isAdmin ? '최근 활동' : '최근 학습 활동';
 const subtitle = isAdmin ? '최근 작업 기록 (docs/log.md)' : '내가 정리한 학습 노트 활동';
 const moreHref = isAdmin ? '/log' : '/syntheses';
 const moreLabel = isAdmin ? '전체 기록 보기 →' : '학습 노트 전체 →';
