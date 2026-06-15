@@ -107,9 +107,26 @@ export function readConceptGraph(): ConceptGraph {
   return JSON.parse(readFileSync(p, 'utf-8'));
 }
 
+// 개념별 문제참조 수 — 진행도 "핵심개념(core)" 판정에 쓰는 중요도 신호.
+// build-problem-index 가 만드는 정적 JSON(byConcept[id] = 그 개념을 다루는 문제 엔트리 배열).
+// 모듈 1회 캐시: 빌드 산출물이라 런타임 불변 → SSR 매 요청·멤버마다 재파싱 방지(content 변경 시 server restart 로 갱신).
+let _problemRefByConcept: Record<string, unknown[]> | null = null;
+function problemRefCount(conceptId: string): number {
+  if (_problemRefByConcept === null) {
+    const p = resolve(WEB_ROOT, 'src', 'data', 'problems-by-concept.json');
+    _problemRefByConcept = existsSync(p)
+      ? ((JSON.parse(readFileSync(p, 'utf-8')).byConcept as Record<string, unknown[]>) ?? {})
+      : {};
+  }
+  const v = _problemRefByConcept[conceptId];
+  return Array.isArray(v) ? v.length : 0;
+}
+
 // ---- 단원(unit) 중심 진행도 ------------------------------------------------
-// 스포크(정의/정리/예제) mastery 를 home_unit 기준으로 51개 단원에 롤업한다.
-// 노드 단위(2789)는 달성 불가능한 분모라 진행도로 무의미 → 단원(51) 단위로.
+// 스포크(정의/정리/예제) mastery 를 home_unit 기준으로 49개 단원에 롤업한다.
+// 진행도 분모는 전체 스포크(최대 175)가 아니라 단원의 "핵심개념"만 — 인제스트가 양산한
+// 문제참조 0 근사중복 정의를 빼서, 기출 핵심을 익히면 100% 도달이 실제로 가능하게 한다.
+// (computeUnitProgress 의 Core-Coverage-at-Threshold 산식 참고.)
 type GNode = ConceptGraph['nodes'][number];
 
 export type UnitStatus = 'unknown' | 'learning' | 'proficient' | 'mastered';
@@ -122,6 +139,9 @@ export type UnitProgress = {
   spokeCount: number;
   mastery: { unknown: number; learning: number; proficient: number; mastered: number };
   progressPercent: number;
+  // 심화축(stretch goal) — 단원의 *모든* 멤버를 mastered 까지 올린 비율(구 진행율 산식값).
+  // 메인 progressPercent 가 '핵심 이수율'로 바뀌면서, '전부 제패'는 이 보조축으로 보존.
+  depthPercent?: number;
   status: UnitStatus;
 };
 
@@ -135,7 +155,7 @@ function progressToStatus(pct: number): UnitStatus {
   return 'unknown';
 }
 
-// 51개 단원 각각의 진행도. 멤버 = 그 단원의 스포크 + 단원 노드 자신.
+// 49개 단원 각각의 진행도. 멤버 = 그 단원의 스포크 + 단원 노드 자신.
 // masteryOf: 멀티유저에서 사용자별 mastery 를 주입하는 resolver(없으면 그래프 전역값).
 export function computeUnitProgress(masteryOf?: (conceptId: string) => UnitStatus): UnitProgress[] {
   const graph = readConceptGraph();
@@ -157,8 +177,27 @@ export function computeUnitProgress(masteryOf?: (conceptId: string) => UnitStatu
       if (lvl in mastery) mastery[lvl]++;
       points += MASTERY_POINTS[lvl] ?? 0;
     }
-    const max = members.length * 3;
-    const progressPercent = max > 0 ? Math.round((points / max) * 100) : 0;
+    // ── 진행도 = 단원의 "핵심개념" 중 proficient 이상 이수 비율(Core-Coverage-at-Threshold).
+    // 핵심(core) = 단원 노드 + 문제참조≥1 spoke + 모든 정리(theorem). 인제스트가 양산한
+    // 문제참조 0 근사중복 정의(전체 spoke 의 28%)는 분모에서 빠져 100% 천장을 막지 않는다.
+    // 100% = "기출에 나오는 핵심개념을 모두 proficient 이상으로 이수". (모든 미세 정의까지
+    // mastered 요구하던 구 모델은 아래 depthPercent 심화축으로 보존.)
+    const isCore = (m: GNode) =>
+      m.concept_type === 'unit' || m.concept_type === 'theorem' || problemRefCount(m.id) >= 1;
+    // degrade: 문제참조 spoke 가 하나도 없는 단원(중등 일부 미태깅)은 핵심집합이 단원노드뿐이라
+    // 단원만 찍어도 100% 되는 trivial-100 위험 → core=members 전체로 강등해 정직하게 만든다.
+    const hasRefSpoke = members.some((m) => m.concept_type !== 'unit' && problemRefCount(m.id) >= 1);
+    const core = hasRefSpoke ? members.filter(isCore) : members; // 단원 노드 항상 포함 → core.length≥1
+    const covered = core.filter((m) => (MASTERY_POINTS[lvlOf(m)] ?? 0) >= 2).length; // proficient+ = 이수
+    let progressPercent = core.length > 0 ? Math.round((covered / core.length) * 100) : 0;
+    // started-floor: 어떤 멤버든 learning+ 면 round 결과가 0이어도 1%로 띄운다. all-unknown ⟺ pct=0
+    // 등가를 보장 — 거대단원(최대 175 멤버)에서 단일 학습이 round→0으로 묻혀 started(pct>0)·atlas
+    // locked·continuing 분기가 깨지는 회귀를 차단.
+    const anyActive = members.some((m) => (MASTERY_POINTS[lvlOf(m)] ?? 0) >= 1);
+    if (anyActive && progressPercent === 0) progressPercent = 1;
+    if (!anyActive) progressPercent = 0;
+    // 심화축(전부 mastered stretch goal) — 구 진행율 산식값. 카드 툴팁 등 옵셔널 표시용.
+    const depthPercent = members.length > 0 ? Math.round((points / (members.length * 3)) * 100) : 0;
     // 단원 status = 단원 노드 자신의 mastery 와 spoke 평균 status 중 **높은 쪽**.
     // 사용자가 단원을 직접 능숙/숙달로 표시(튜터 promote)해도 spoke 평균만 쓰면,
     // 미학습 하위개념 수십 개에 묻혀 progressPercent≈1% → unknown 으로 떨어진다.
@@ -176,6 +215,7 @@ export function computeUnitProgress(masteryOf?: (conceptId: string) => UnitStatu
       spokeCount: members.length - 1,
       mastery,
       progressPercent,
+      depthPercent,
       status,
     };
   });
