@@ -2,10 +2,11 @@
 export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PathPicker from '../components/PathPicker.tsx';
+import MetroLine from '../components/MetroLine.tsx';
+import type { PathStepVM } from '../components/MetroLine';
 import { readConceptGraph, recommendUnits } from '../lib/health.ts';
 import { getMasteryMap } from '../lib/mastery.ts';
 import { buildLearningPath } from '../lib/learning-path.ts';
-import { MASTERY_LABEL_KO } from '../lib/concept-meta';
 
 const graph = readConceptGraph();
 // 멀티유저: 로그인 사용자의 mastery 로 "미숙 선행"을 판정(전역 frontmatter 아님).
@@ -28,6 +29,11 @@ const rec = recommendUnits(mof);
 const quickGoals = [...rec.continuing, ...rec.ready].slice(0, 6).map((u) => ({ id: u.unitId, label: u.label }));
 
 const todoCount = path ? path.steps.filter((s) => !s.isGoal).length : 0;
+// React 아일랜드로 넘길 VM — mastery 를 4값 유니온으로 cast(PathStep.mastery 는 string).
+const stepsVM: PathStepVM[] = (path?.steps ?? []).map((s) => ({
+  id: s.id, label: s.label, domain: s.domain, grade: s.grade,
+  mastery: s.mastery as PathStepVM['mastery'], isGoal: s.isGoal,
+}));
 ---
 <BaseLayout title="Learning Paths">
   <div class="max-w-4xl mx-auto px-6 py-8 space-y-6">
@@ -73,21 +79,14 @@ const todoCount = path ? path.steps.filter((s) => !s.isGoal).length : 0;
             <a href={`/concepts/${path.goal.id}`} class="text-[color:var(--color-accent)] hover:underline"> 목표 개념</a>을 학습하세요.
           </p>
         ) : (
-          <ol class="space-y-2">
-            {path.steps.map((s, i) => (
-              <li class={`card flex items-center gap-3 ${s.isGoal ? 'border-[color:var(--color-accent)]' : ''}`}>
-                <span class="grid place-items-center size-7 rounded-full bg-[color:var(--color-surface-2)] text-xs font-semibold tabular-nums shrink-0">{i + 1}</span>
-                <div class="min-w-0 flex-1">
-                  <a href={`/concepts/${s.id}`} class="text-sm font-medium hover:text-[color:var(--color-accent)] truncate block">
-                    {s.label}{s.isGoal && <span class="text-[color:var(--color-accent)]"> · 목표</span>}
-                  </a>
-                  <span class="text-[11px] text-[color:var(--color-subtle)]">{[s.grade, s.domain].filter(Boolean).join(' · ')}</span>
-                </div>
-                <span class={`chip chip-mastery-${s.mastery} shrink-0 text-[10px]`}>{MASTERY_LABEL_KO[s.mastery] ?? s.mastery}</span>
-                <a href={`/concepts/${s.id}`} class="chip shrink-0 text-[10px] hover:border-[color:var(--color-accent)]">학습 →</a>
-              </li>
-            ))}
-          </ol>
+          <MetroLine
+            client:load
+            steps={stepsVM}
+            goal={path.goal}
+            totalPrereqs={path.totalPrereqs}
+            donePrereqs={path.donePrereqs}
+            todoCount={todoCount}
+          />
         )}
       </section>
     )}

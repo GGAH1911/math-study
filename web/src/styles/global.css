@@ -1243,3 +1243,68 @@ html[data-font="clean"] {
    세로 잔상(paint seam)을 그린다(맥 Chrome 제보). 정수 px 로 강제해 서브픽셀 페인트 제거. */
 .katex .frac-line { border-bottom-width: 1px !important; }
 .katex .overline-line, .katex .underline-line { border-bottom-width: 1px !important; }
+
+/* ── 잉크 노선도 (/paths 학습 경로) — "만년필로 그어 내려간 한 줄기" ──────────
+   MetroLine.tsx 전용. 색은 전부 var() 직바인딩(테마 추종) — raw hex 금지.
+   self-draw 는 pathLength=1 + dasharray/offset 1 정규화(2600 하드코딩 금지). */
+.metro-wrap { position: relative; margin-top: 4px; }
+.metro-head { max-width: 540px; margin-bottom: 10px; }
+.metro-cap {
+  margin-top: 4px; font-size: 17px; color: var(--pen-green);
+  transform: rotate(-1.5deg); transform-origin: left center;
+}
+.metro-svg { display: block; overflow: visible; }
+
+/* 본선: 흑연 베이스(굵고 흐리게) + 잉크선(가늘고 또렷, 작도 애니) 2겹 */
+.metro-spine-base {
+  fill: none; stroke: var(--ink-soft); stroke-width: 5; opacity: 0.26; stroke-linecap: round;
+}
+.metro-spine {
+  fill: none; stroke: var(--color-accent); stroke-width: 1.6; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: atlas-draw 1.1s ease forwards;
+}
+/* 다음 한 구간(시작→첫 역) — pen-red 행진 점선(전용 클래스: atlas-route delay/색 회피) */
+.metro-next-leg {
+  fill: none; stroke: var(--pen-red); stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 8 7; animation: atlas-ants 24s linear infinite;
+}
+/* 이수 출발 구간 — hl-green 형광펜 굵은 띠 */
+.metro-done {
+  stroke: var(--hl-green); stroke-width: 11; stroke-linecap: round;
+}
+/* 도메인 전환 */
+.metro-domain-band { stroke: var(--paper-dim); stroke-width: 2; stroke-dasharray: 2 3; }
+.metro-domain-label { font-size: 12px; fill: var(--ink-faint); }
+
+/* 역(노드) — 등장 pop(transformOrigin 인라인 필수) + 호버/포커스 */
+.metro-node { animation: atlas-pop 0.42s ease forwards; cursor: pointer; outline: none; }
+.metro-node:hover .metro-name { fill: var(--color-accent); }
+.metro-node:focus-visible .metro-name { fill: var(--color-accent); text-decoration: underline; }
+.metro-frontier-halo {
+  transform-box: fill-box; transform-origin: center;
+  animation: metro-frontier 2.4s ease-in-out infinite;
+}
+@keyframes metro-frontier {
+  0%, 100% { transform: scale(1); opacity: 0.30; }
+  50%      { transform: scale(1.35); opacity: 0.70; }
+}
+/* 목표 깃발 + 도장 클라이맥스 */
+.metro-flag { fill: var(--atlas-gold); stroke: var(--atlas-gold); stroke-width: 1; stroke-linejoin: round; }
+.metro-stamp {
+  stroke: var(--atlas-gold); stroke-width: 2; opacity: 0.7;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: stamp-draw 0.5s ease-out 1.05s forwards;
+}
+/* 라벨 — 손글씨 + 후광(선·노드 위 가독) */
+.metro-name {
+  fill: var(--ink-body);
+  paint-order: stroke; stroke: var(--paper-page); stroke-width: 3px; stroke-linejoin: round;
+}
+.metro-meta { font-family: var(--font-sans); fill: var(--ink-faint);
+  paint-order: stroke; stroke: var(--paper-page); stroke-width: 2.5px; stroke-linejoin: round; }
+.metro-here { font-family: var(--font-hand); font-size: 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .metro-spine, .metro-stamp { stroke-dashoffset: 0 !important; animation: none !important; }
+  .metro-next-leg, .metro-frontier-halo { animation: none !important; }
+  .metro-node { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
