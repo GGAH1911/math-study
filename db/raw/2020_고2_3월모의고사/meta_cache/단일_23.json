@@ -1,0 +1,16 @@
+{
+  "text_sha": "e43256fe16be",
+  "meta": {
+    "searchable_text": "23.두 집합 A, B에 대하여\nn(A)=12, n(B)=25, n(A∩B)=4\n일 때, n(A∪B)의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "합집합과_교집합",
+      "포함배제원리"
+    ],
+    "exam_intent": "포함-배제 원리로 합집합의 원소 개수를 구하는 기본 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

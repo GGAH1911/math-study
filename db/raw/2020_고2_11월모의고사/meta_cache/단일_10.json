@@ -1,0 +1,17 @@
+{
+  "text_sha": "7b6fbfbc82d7",
+  "meta": {
+    "searchable_text": "10. 수열 {a_{n}}은 a_{1}=4이고, 모든 자연수 n에 대하여\na_{n+1}=\\begin{cases}a_{n}-3 (an≥6) \\\\ (a_{n}-1)^{2} (a_{n}<6)\\end{cases}\n을 만족시킨다. a_{10}의 값은? [3점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "조건부_재귀",
+      "수열의_항_계산"
+    ],
+    "exam_intent": "조건부 점화식을 따르는 수열의 10번째 항을 순차 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

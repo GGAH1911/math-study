@@ -1,0 +1,17 @@
+{
+  "text_sha": "3d18f5174671",
+  "meta": {
+    "searchable_text": "16. 그림과 같이 한 변의 길이가 1인 정삼각형 ABC에서\n선분 AB의 연장선과 선분 AC의 연장선 위에 \\overline{AD}=\\overline{CE}가\n되도록 두 점 D, E를 잡는다.\n\\overline{DE}=\\sqrt{13}일 때, 삼각형 BDE의 넓이는? [4점]\nE\nC\nA B D\n①\\sqrt{6}② 2\\sqrt{2}③\\sqrt{10}④ 2\\sqrt{3}⑤\\sqrt{14}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "도형의_성질",
+    "concepts": [
+      "정삼각형의_성질",
+      "거리_조건",
+      "좌표를_이용한_계산"
+    ],
+    "exam_intent": "거리 조건으로 미지수를 결정하고 삼각형 넓이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

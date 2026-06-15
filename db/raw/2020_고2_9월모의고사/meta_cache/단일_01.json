@@ -1,0 +1,16 @@
+{
+  "text_sha": "57bd5ddf342d",
+  "meta": {
+    "searchable_text": "1. log4+log25의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "상용로그"
+    ],
+    "exam_intent": "로그의 덧셈 성질과 상용로그 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

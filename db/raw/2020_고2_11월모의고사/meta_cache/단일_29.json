@@ -1,0 +1,18 @@
+{
+  "text_sha": "ac6cfc20bc95",
+  "meta": {
+    "searchable_text": "29. 5 이하의 두 자연수 a, b에 대하여 두 함수 f(x), g(x)를\nf(x)=x^{2}-2ax+a^{2}-a+1\ng(x)=x+b (1<x<3) 7  -   b      ( x   ≤    1 x≥3)\n또는\n이라 하자. 함수 f(x)g(x)가 실수 전체의 집합에서 연속이 되도록\n하는 모든 순서쌍 (a,b)의 개수를 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_연속성",
+      "함수의_곱의_연속성",
+      "구간별_정의함수",
+      "연속조건과_불연속점"
+    ],
+    "exam_intent": "구간별 함수의 곱이 연속이 되기 위한 조건을 찾아 경우의 수를 구하는 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

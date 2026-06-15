@@ -1,0 +1,16 @@
+{
+  "text_sha": "b23fc0bbb28e",
+  "meta": {
+    "searchable_text": "7. 실수 전체의 집합에서 정의된 함수 f(x)가 모든 실수 x에 대하여\n부등식\n5x-1<(x^{2}+1)f(x)<5x+2\n를 만족시킬 때, \\lim_{x→∞}xf(x)의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "부등식의극한",
+      "샌드위치정리"
+    ],
+    "exam_intent": "부등식 조건의 극한값을 이용한 함수 극한 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "817721f6594a",
+  "meta": {
+    "searchable_text": "9.집합 A={1,2,3,4}에 대하여 집합 B가\nB-A={5,6}\n을 만족시킨다. 집합 B의 모든 원소의 합이 12일 때,\n집합 A-B의 모든 원소의 합은? [3점]\n① 5 ② 6 ③ 7 ④ 8 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_연산",
+      "부분집합"
+    ],
+    "exam_intent": "주어진 집합 연산 조건으로부터 미지의 집합 구성을 파악하고 원소의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

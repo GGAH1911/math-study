@@ -1,0 +1,17 @@
+{
+  "text_sha": "71707ab48bf1",
+  "meta": {
+    "searchable_text": "11. 방정식 8^{x}=18을 만족시키는 x의 값이 \\frac{1}{3}+klog_{2}3일 때,\n상수 k의 값은? [3점]\n① \\frac{2}{9}② \\frac{1}{3}③ \\frac{4}{9}④ \\frac{5}{9}⑤ \\frac{2}{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_방정식",
+      "로그의_성질",
+      "로그_계산"
+    ],
+    "exam_intent": "지수 방정식을 로그로 풀고 로그의 성질을 이용해 계수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "5cdbec511cbb",
+  "meta": {
+    "searchable_text": "16. 함수 y=log_{2}x의 그래프 위에 서로 다른 두 점 A, B가 있다.\n선분 AB의 중점이 x축 위에 있고, 선분 AB를 1:2로\n외분하는 점이 y축 위에 있을 때, 선분 AB의 길이는? [4점]\n① 1  ② \\frac{\\sqrt{6}}{2}  ③ \\sqrt{2}  ④ \\frac{\\sqrt{10}}{2}  ⑤ \\sqrt{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수",
+      "중점과_외분점",
+      "거리_계산"
+    ],
+    "exam_intent": "로그함수 위의 두 점이 주어진 좌표 조건을 만족할 때 거리를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

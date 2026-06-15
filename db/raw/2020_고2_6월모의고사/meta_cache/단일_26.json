@@ -1,0 +1,17 @@
+{
+  "text_sha": "14d04e88b81f",
+  "meta": {
+    "searchable_text": "26. 다음 조건을 만족시키는 두 실수 a, b에 대하여 a+b의 값을\n구하시오. [4점]\n(가) log_{2}(log_{4}a)=1\n(나) log_{a}5×log_{5}b=\\frac{3}{2}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의",
+      "밑변환_공식",
+      "로그_방정식"
+    ],
+    "exam_intent": "로그의 정의와 밑변환 공식을 활용한 복합 로그 방정식 풀이",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

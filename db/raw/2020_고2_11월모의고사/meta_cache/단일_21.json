@@ -1,0 +1,18 @@
+{
+  "text_sha": "a38e145a9bb4",
+  "meta": {
+    "searchable_text": "21. 그림과 같이 한 변의 길이가 1인 정삼각형 ABC가 있다.\n선분 AB 위의 점 P, 선분 BC 위의 점 Q, 선분 CA 위의\n점 R에 대하여 세 점 P, Q, R가\n\\overline{AP}+\\overline{BQ}+\\overline{CR}=1,\\overline{PQ}=\\overline{PR}\n를 만족시킬 때, <보기>에서 옳은 것만을 있는 대로 고른 것은?\n(단, 세 점 P, Q, R는 각각 점 A, 점 B, 점 C가 아니다.) [4점]\nC\nR\nQ\nA P B\n보 기\nㄱ. 3\\overline{AP}+2\\overline{BQ}=2\nㄴ.\\overline{QR}=\\sqrt{3}×\\overline{AP}\nㄷ. 삼각형 PBQ의 외접원의 넓이가 삼각형 CRQ의 외접원의\n넓이의 2배일 때,\\overline{AP}=\\frac{\\sqrt{21}-3}{6}이다.\n① ㄱ ② ㄴ ③ ㄷ\n④ ㄴ, ㄷ ⑤ ㄱ, ㄴ, ㄷ",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [
+      "점의_위치",
+      "거리_조건",
+      "좌표계_활용",
+      "외접원"
+    ],
+    "exam_intent": "거리 조건으로 정삼각형 위 점의 위치 결정 및 외접원 성질 검증",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

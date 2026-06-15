@@ -1,0 +1,17 @@
+{
+  "text_sha": "be2848c87c0a",
+  "meta": {
+    "searchable_text": "13. 자연수 n에 대하여 좌표평면 위의 점 (n, 0)을 중심으로\n하고 반지름의 길이가 1인 원을 O_{n}이라 하자.\n점 (-1, 0)을 지나고 원 O_{n}과 제1사분면에서 접하는 직선의\n기울기를 a_{n}이라 할 때, \\sum_{n=1}^{5}a_{n}^{2}의 값은? [3점]\n①\\frac{1}{2}②\\frac{23}{42}③\\frac{25}{42}④\\frac{9}{14}⑤\\frac{29}{42}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "원의_접선",
+      "거리_공식",
+      "텔레스코핑_급수"
+    ],
+    "exam_intent": "거리 공식으로 접선 조건을 표현하고 텔레스코핑으로 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

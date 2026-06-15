@@ -1,0 +1,18 @@
+{
+  "text_sha": "1a7bb7e1fe81",
+  "meta": {
+    "searchable_text": "18. 그림과 같이 두 곡선 y=2^{x-3}+1과 y=2^{x-1}-2가 만나는\n점을 A라 하자. 상수 k에 대하여 직선 y=-x+k가\n두 곡선 y=2^{x-3}+1, y=2^{x-1}-2와 만나는 점을 각각\nB, C라 할 때, 선분 BC의 길이는 \\sqrt{2}이다. 삼각형 ABC의\n넓이는? (단, 점 B의 x좌표는 점 A의 x좌표보다 크다.) [4점]\ny y=2^{x-1}-2 y=2^{x-3}+1\nC\nB\ny=-x+k\nA\nO x\n① 2 ② \\frac{9}{4}③ \\frac{5}{2}④ \\frac{11}{4}⑤ 3",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "교점",
+      "거리",
+      "삼각형의_넓이"
+    ],
+    "exam_intent": "지수함수와 직선의 교점 조건으로부터 좌표를 구하고 삼각형 넓이를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

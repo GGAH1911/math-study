@@ -1,0 +1,17 @@
+{
+  "text_sha": "2eb681d58c63",
+  "meta": {
+    "searchable_text": "4. 함수 y=f(x)의 그래프가 그림과 같다.\ny\ny=f(x)\n3\n2\n1\nO 1 3 x\nf(3)+\\lim_{x→1-}f(x)의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "일측극한",
+      "함수값",
+      "그래프_해석"
+    ],
+    "exam_intent": "그래프로부터 함수값과 일측극한값을 정확히 읽고 계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

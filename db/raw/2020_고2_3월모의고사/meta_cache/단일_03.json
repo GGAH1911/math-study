@@ -1,0 +1,16 @@
+{
+  "text_sha": "31e91591ccb4",
+  "meta": {
+    "searchable_text": "3.부등식 |x-2|<3을 만족시키는 정수 x의 개수는? [2점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "일차부등식",
+    "concepts": [
+      "절댓값_부등식",
+      "정수해의_개수"
+    ],
+    "exam_intent": "절댓값 부등식을 풀고 조건을 만족하는 정수의 개수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

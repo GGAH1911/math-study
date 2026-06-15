@@ -1,0 +1,16 @@
+{
+  "text_sha": "8be3e7b77b87",
+  "meta": {
+    "searchable_text": "13.연립방정식\n의 해를x^{2}-3xy+2y^{2}=0 x^{2}-y^{2}=9 x=α_{1}  x=α_{2} y=β_{1} y=β_{2}\n또는\\begin{cases}x=α_{2} \\\\ y=β_{2}\\end{cases}\n라 하자. α_{1}<α_{2}일 때, β_{1}-β_{2}의 값은? [3점]\n① -2\\sqrt{3}② -2\\sqrt{2}③ 2\\sqrt{2}④ 2\\sqrt{3}⑤ 4",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "방정식과_부등식",
+    "concepts": [
+      "인수분해",
+      "연립방정식"
+    ],
+    "exam_intent": "인수분해를 이용하여 비선형 연립방정식을 풀고 해의 대소관계에서 차를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

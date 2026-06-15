@@ -1,0 +1,15 @@
+{
+  "text_sha": "b87d8aebb70d",
+  "meta": {
+    "searchable_text": "5. 수열 {a_{n}}의 첫째항부터 제n항까지의 합을 S_{n}이라 하자.\nS_{n}=n^{3}+n일 때, a_{4}의 값은? [3점]\n① 32 ② 34 ③ 36 ④ 38 ⑤ 40",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "일반항과_합의_관계"
+    ],
+    "exam_intent": "$S_n - S_{n-1} = a_n$ 공식으로 일반항 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "054921a29d7c",
+  "meta": {
+    "searchable_text": "7.좌표평면 위에 두 점 A(0,a), B(6,0)이 있다. 선분 AB를\n1:2로 내분하는 점이 직선 y=-x 위에 있을 때, a의 값은?\n[3점]\n① -1 ② -2 ③ -3 ④ -4 ⑤ -5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "좌표평면과_그래프",
+    "concepts": [
+      "내분점",
+      "좌표",
+      "직선의방정식"
+    ],
+    "exam_intent": "내분점 공식과 직선 위의 점 조건으로 미지수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "f100d317110c",
+  "meta": {
+    "searchable_text": "11. 첫째항이 \\frac{1}{5}이고 공비가 양수인 등비수열 {a_{n}}에 대하여\na_{4}=4a_{2}일 때, \\sum_{k=1}^{n}a_{k}=\\frac{3}{13}\\sum_{k=1}^{n}a_{k}^{2}을 만족시키는\n자연수 n의 값은? [3점]\n① 5 ② 6 ③ 7 ④ 8 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비급수",
+      "부분합",
+      "등비수열의_합"
+    ],
+    "exam_intent": "등비수열의 조건에서 공비를 구하고 부분합 관계식을 풀이하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "364909658f6c",
+  "meta": {
+    "searchable_text": "6.다항식 x^{2}+3x+6을 x+2로 나눈 나머지는? [3점]\n① 2 ② 4 ③ 6 ④ 8 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "나머지정리를 이용하여 다항식의 나머지를 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

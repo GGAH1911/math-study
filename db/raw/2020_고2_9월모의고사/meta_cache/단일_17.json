@@ -1,0 +1,17 @@
+{
+  "text_sha": "11583db170f4",
+  "meta": {
+    "searchable_text": "17. 공차가 정수인 등차수열 {a_{n}}이 다음 조건을 만족시킨다.\n(가) a_{7}=37\n(나) 모든 자연수 n에 대하여 \\sum_{k=1}^{n}a_{k}≤\\sum_{k=1}^{13}a_{k}이다.\n\\sum_{k=1}^{21}|a_{k}|의 값은? [4점]\n① 681 ② 683 ③ 685 ④ 687 ⑤ 689",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "부분합",
+      "부등식_조건"
+    ],
+    "exam_intent": "부분합 최댓값 조건으로 공차를 결정하고 절댓값 합을 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

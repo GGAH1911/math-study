@@ -1,0 +1,13 @@
+{
+  "text_sha": "deb978e79981",
+  "meta": {
+    "searchable_text": "30.함수 f(x)=\\sqrt{ax-3}+2(a≥\\frac{3}{2})에 대하여 집합\n{x|x≥2}에서 정의된 함수\n인경우\ng(x)=\\begin{cases}f(x) (f(x)<f^{-1}(x)  ) \\\\ f^{-1}(x)(f(x)≥f^{-1}(x)  )\\end{cases}\n인경우\n가 있다. 자연수 n에 대하여 함수 y=g(x)의 그래프와 직선\ny=x-n이 만나는 서로 다른 점의 개수를 h(n)이라 하자.\nh(1)=h(3)<h(2)\n일 때, g(4)=\\frac{q}{p}이다. p+q의 값을 구하시오. (단, a는\n상수이고, p와 q는 서로소인 자연수이다.) [4점]\n* 확인 사항\n◦답안지의 해당란에 필요한 내용을 정확히 기입(표기)\n했는지 확인하시오.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [],
+    "exam_intent": "역함수와 구간별 정의함수 성질을 이용해 조건으로부터 계수를 결정하고 함숫값을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

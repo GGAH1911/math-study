@@ -1,0 +1,16 @@
+{
+  "text_sha": "8ed4d88acf46",
+  "meta": {
+    "searchable_text": "14.함수 f(x)=x^{2}-2x+a가\n(f∘f)(2)=(f∘f)(4)\n를 만족시킬 때, f(6)의 값은? (단, a는 상수이다.) [4점]\n① 21 ② 22 ③ 23 ④ 24 ⑤ 25",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차함수",
+    "concepts": [
+      "합성함수",
+      "이차방정식"
+    ],
+    "exam_intent": "합성함수 조건에서 미지수를 구하고 함수값을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

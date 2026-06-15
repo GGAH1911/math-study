@@ -1,0 +1,17 @@
+{
+  "text_sha": "1b9d28d59480",
+  "meta": {
+    "searchable_text": "3. 반지름의 길이가 8이고 호의 길이가 6π인 부채꼴의 중심각의\n크기는? [2점]\n① \\frac{π}{2}② \\frac{5}{8}π ③ \\frac{3}{4}π ④ \\frac{7}{8}π ⑤ π",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "호의_길이",
+      "중심각",
+      "부채꼴"
+    ],
+    "exam_intent": "부채꼴의 호의 길이 공식을 이용한 중심각 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "cd5b5e58d4ed",
+  "meta": {
+    "searchable_text": "15. 자연수 n에 대하여 수열 {a_{n}}의 일반항이 a_{n}=^{n+}\\sqrt[1]{√4}^{n+2} 일 때,\n\\sum_{k=1}^{10}log_{2}a_{k}의 값은? [4점]\n① \\frac{1}{6}② \\frac{1}{3}③ \\frac{1}{2}④ \\frac{2}{3}⑤ \\frac{5}{6}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수_변환",
+      "로그_계산",
+      "수열의_합"
+    ],
+    "exam_intent": "지수식을 로그로 변환하여 수열의 합을 구하는 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

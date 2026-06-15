@@ -1,0 +1,16 @@
+{
+  "text_sha": "03733d107325",
+  "meta": {
+    "searchable_text": "2x\n7. -1≤x≤2에서 함수 f(x)=2+(\\frac{1}{3}) 의 최댓값은? [3점]\n① 11 ② 13 ③ 15 ④ 17 ⑤ 19",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수의_단조성",
+      "극값"
+    ],
+    "exam_intent": "지수함수의 단조성을 이용한 정의역 내 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

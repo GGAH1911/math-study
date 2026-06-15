@@ -1,0 +1,17 @@
+{
+  "text_sha": "46cd6ebae6a1",
+  "meta": {
+    "searchable_text": "17. a_{3}=1인 등차수열 {a_{n}}이 \\sum_{k=1}^{20}a_{2k}-\\sum_{k=1}^{12}a_{2k+8}=48을\n만족시킬 때, a_{39}의 값은? [4점]\n① 11 ② 12 ③ 13 ④ 14 ⑤ 15",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "수열의_합",
+      "일반항"
+    ],
+    "exam_intent": "등차수열의 합 조건에서 공차를 결정하고 특정 항 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "df18f7af6029",
+  "meta": {
+    "searchable_text": "11. 양수 k의 세제곱근 중 실수인 것을 a라 할 때, a의 네제곱근 중\n양수인 것은 \\sqrt[3]{4}이다. k의 값은? [3점]\n① 16 ② 32 ③ 64 ④ 128 ⑤ 256",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "n제곱근",
+      "지수법칙"
+    ],
+    "exam_intent": "n제곱근과 지수의 관계를 이용한 방정식 풀이",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

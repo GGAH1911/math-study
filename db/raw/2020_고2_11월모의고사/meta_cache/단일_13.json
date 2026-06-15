@@ -1,0 +1,17 @@
+{
+  "text_sha": "403bc065ae82",
+  "meta": {
+    "searchable_text": "13. 함수 f(x)=log_{2}(x+a)+b의 역함수를 g(x)라 하자.\n곡선 y=g(x)의 점근선이 직선 y=1이고 곡선 y=g(x)가\n점 (3,2)를 지날 때, a+b의 값은? (단, a, b는 상수이다.) [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "역함수",
+      "지수함수",
+      "점근선"
+    ],
+    "exam_intent": "역함수와 지수함수의 성질을 이용해 상수값 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

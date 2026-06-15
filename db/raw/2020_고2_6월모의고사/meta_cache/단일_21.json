@@ -1,0 +1,17 @@
+{
+  "text_sha": "d23c649fcb86",
+  "meta": {
+    "searchable_text": "21. 자연수 n에 대하여 0<x<\\frac{n}{12}π일 때, 방정식\nsin^{2}(4x)-1=0\n의 실근의 개수를 f(n)이라 하자. f(n)=33이 되도록 하는 모든\nn의 값의 합은? [4점]\n① 295 ② 297 ③ 299 ④ 301 ⑤ 303",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_방정식",
+      "부등식_풀이",
+      "근의_개수_세기"
+    ],
+    "exam_intent": "삼각함수 방정식의 근 개수를 매개변수 함수로 나타내고 특정값 찾기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

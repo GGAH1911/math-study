@@ -1,0 +1,16 @@
+{
+  "text_sha": "d98386d13184",
+  "meta": {
+    "searchable_text": "19. 그림과 같이 실수 t (1<t<100)에 대하여\n점 P(0, t)를 지나고 x축에 평행한 직선이 곡선 y=2^{x}과\n만나는 점을 A, 점 A에서 x축에 내린 수선의 발을 Q라 하자.\n점 R(0, 2t)를 지나고 x축에 평행한 직선이 곡선 y=2^{x}과\n만나는 점을 B, 점 B에서 x축에 내린 수선의 발을 S라 하자.\n사각형 ABRP의 넓이를 f(t), 사각형 AQSB의 넓이를 g(t)라\n할 때, \\frac{f(t)}{g(t)}의 값이 자연수가 되도록 하는 모든 t의 값의\n곱은? [4점]\ny y=2^{x}\nR B y=2t\nP A y=t\nO Q S x\n① 2^{11} ② 2^{12} ③ 2^{13} ④ 2^{14} ⑤ 2^{15}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수",
+      "로그함수"
+    ],
+    "exam_intent": "지수함수와 도형 넓이의 함수 관계를 통해 로그 방정식을 풀기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

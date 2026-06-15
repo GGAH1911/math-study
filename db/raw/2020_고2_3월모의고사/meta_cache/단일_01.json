@@ -1,0 +1,15 @@
+{
+  "text_sha": "6f57cbd1684a",
+  "meta": {
+    "searchable_text": "1.두 다항식\nA=2x^{2}-3xy, B=x^{2}-4xy-y^{2}\n에 대하여 A-B를 간단히 하면? [2점]\n① x^{2}+xy ② x^{2}+2xy ③ x^{2}-xy+y^{2}\n④ x^{2}+xy+y^{2} ⑤ x^{2}+2xy+y^{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_덧셈과_뺄셈"
+    ],
+    "exam_intent": "다항식의 덧셈과 뺄셈 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

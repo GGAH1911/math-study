@@ -1,0 +1,16 @@
+{
+  "text_sha": "a6ad44f7d237",
+  "meta": {
+    "searchable_text": "8. 1이 아닌 두 양수 a, b에 대하여\nlog_{2}a=log_{8}b\n가 성립할 때, log_{a}b의 값은? [3점]\n①\\frac{1}{3}②\\frac{1}{2}③ 2 ④ 3 ⑤ 4",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "밑_변환"
+    ],
+    "exam_intent": "로그의 밑 변환 공식 적용 및 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

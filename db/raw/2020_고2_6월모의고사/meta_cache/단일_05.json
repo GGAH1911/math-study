@@ -1,0 +1,16 @@
+{
+  "text_sha": "926679456836",
+  "meta": {
+    "searchable_text": "5.다음은 상용로그표의 일부이다.\nlog32.4의 값을 위의 표를 이용하여 구한 것은? [3점]\n① 0.4800 ② 0.4955 ③ 1.4955\n④ 1.5105 ⑤ 2.5105",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "상용로그",
+      "로그의_성질"
+    ],
+    "exam_intent": "상용로그 표를 이용하여 로그값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

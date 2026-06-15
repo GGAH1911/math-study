@@ -1,0 +1,16 @@
+{
+  "text_sha": "03d9716d463b",
+  "meta": {
+    "searchable_text": "8.곡선 y=2x^{2}-5x+a와 직선 y=x+12가 서로 다른 두\n점에서 만나고 두 교점의 x좌표의 곱이 -4일 때, 상수 a의\n값은? [3점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "근과계수의관계",
+      "교점의조건"
+    ],
+    "exam_intent": "이차방정식의 근과계수 관계를 이용해 상수 결정",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

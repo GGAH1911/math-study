@@ -1,0 +1,16 @@
+{
+  "text_sha": "c36297f1a2e2",
+  "meta": {
+    "searchable_text": "28.전체집합 U={x|x는 5 이하의 자연수}의 두 부분집합\nA={1,2}, B={2,3,4}\n에 대하여\nX∩A≠∅, X∩B≠∅\n을 만족시키는 U의 부분집합 X의 개수를 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "여집합",
+      "포함배제_원리"
+    ],
+    "exam_intent": "여집합과 포함배제 원리를 이용하여 집합 조건을 만족하는 부분집합의 개수를 구하는 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

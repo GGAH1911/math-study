@@ -1,0 +1,16 @@
+{
+  "text_sha": "d669c17d704d",
+  "meta": {
+    "searchable_text": "15. 0≤x≤2에서 함수 y=tanπx의 그래프와\n직선 y=-\\frac{10}{3}x+n이 서로 다른 세 점에서 만나도록 하는\n자연수 n의 최댓값은? [4점]\n① 2  ② 3  ③ 4  ④ 5  ⑤ 6",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "탄젠트_함수",
+      "함수의_교점"
+    ],
+    "exam_intent": "주기성을 갖는 탄젠트 함수와 직선의 교점 개수로 절편의 최댓값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

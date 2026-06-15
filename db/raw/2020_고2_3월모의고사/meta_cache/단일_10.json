@@ -1,0 +1,17 @@
+{
+  "text_sha": "6d00101310ab",
+  "meta": {
+    "searchable_text": "10.다항식 P(x)가 모든 실수 x에 대하여 등식\nx(x+1)(x+2)=(x+1)(x-1)P(x)+ax+b\n를 만족시킬 때, P(a-b)의 값은? (단, a, b는 상수이다.)\n[3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "등식의_항등성",
+      "특수값_대입",
+      "다항식의_계산"
+    ],
+    "exam_intent": "등식의 항등성을 이용한 미지수 결정 및 함수값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

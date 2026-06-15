@@ -1,0 +1,18 @@
+{
+  "text_sha": "0c9a03f44ccf",
+  "meta": {
+    "searchable_text": "27. 그림과 같이 반지름의 길이가 2이고 중심각의 크기가 \\frac{3}{2}π인\n부채꼴 OBA가 있다. 호 BA 위에 점 P를 ∠BAP=\\frac{π}{6}가\n되도록 잡고, 점 B에서 선분 AP에 내린 수선의 발을 H라\n할 때, \\overline{OH}^{2}의 값은 m+n\\sqrt{3}이다.\nm^{2}+n^{2}의 값을 구하시오. (단, m, n은 유리수이다.) [4점]\nP\nO\nH\nA B",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "삼각함수",
+    "concepts": [
+      "부채꼴",
+      "호_위의_점",
+      "삼각함수",
+      "좌표_계산"
+    ],
+    "exam_intent": "부채꼴 내 기하학적 관계를 삼각함수와 좌표로 표현하고 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

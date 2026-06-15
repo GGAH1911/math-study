@@ -1,0 +1,17 @@
+{
+  "text_sha": "b0561b20db4c",
+  "meta": {
+    "searchable_text": "29.서로 다른 종류의 꽃 4송이와 같은 종류의 초콜릿 2개를\n5명의 학생에게 남김없이 나누어 주려고 한다. 아무것도 받지\n못하는 학생이 없도록 꽃과 초콜릿을 나누어 주는 경우의 수를\n구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "순열과_조합",
+      "중복조합",
+      "포함배제_원리"
+    ],
+    "exam_intent": "서로 다른 대상과 동일한 대상의 혼합 배분에서 제약조건 처리",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "dab96184f058",
+  "meta": {
+    "searchable_text": "10. 삼각형 ABC에서\n\\frac{2}{sinA}=\\frac{3}{sinB}=\\frac{4}{sinC}\n일 때, cosC의 값은? [3점]\n① -\\frac{1}{2}② -\\frac{1}{4}③ 0 ④\\frac{1}{4}⑤\\frac{1}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각비",
+    "concepts": [
+      "정현법칙",
+      "코사인법칙"
+    ],
+    "exam_intent": "정현법칙과 코사인법칙을 활용한 삼각형 각도 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

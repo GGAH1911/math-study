@@ -1,0 +1,15 @@
+{
+  "text_sha": "1fc512e30678",
+  "meta": {
+    "searchable_text": "12. 부등식 4^{x}-10×2^{x}+16≤0을 만족시키는 모든 자연수 x의\n값의 합은? [3점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수부등식"
+    ],
+    "exam_intent": "지수 부등식을 이차부등식으로 변환·해석하여 자연수 해를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

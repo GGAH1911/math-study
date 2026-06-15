@@ -1,0 +1,16 @@
+{
+  "text_sha": "f36ae7fd7937",
+  "meta": {
+    "searchable_text": "16.함수 f(x)=\\sqrt{3x-12}가 있다. 함수 g(x)가 2 이상의 모든\n실수 x에 대하여\nf^{-1}(g(x))=2x\n를 만족시킬 때, g(3)의 값은? [4점]\n① 2 ② \\sqrt{5}③ \\sqrt{6}④ \\sqrt{7}⑤ 2\\sqrt{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "합성함수"
+    ],
+    "exam_intent": "역함수 정의와 합성함수 조건을 이용한 함수식 도출",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

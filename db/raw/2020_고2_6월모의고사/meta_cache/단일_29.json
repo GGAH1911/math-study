@@ -1,0 +1,18 @@
+{
+  "text_sha": "99e23f8f7531",
+  "meta": {
+    "searchable_text": "29. 자연수 k(k≤39)에 대하여 함수 f(x)=2log (x-7+k)+2의\n\\frac{1}{2}\n그래프와 원 x^{2}+y^{2}=64가 만나는 서로 다른 두점의 x좌표를\na, b라 하자. 다음 조건을 만족시키는 k의 최댓값과 최솟값을 각각\nM, m이라 할 때, M+m의 값을 구하시오. [4점]\n(가) ab<0\n(나) f(a)f(b)<0",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도형의_방정식",
+    "concepts": [
+      "로그함수",
+      "원의_방정식",
+      "교점_조건",
+      "부등식"
+    ],
+    "exam_intent": "로그함수와 원의 교점 조건을 이용한 매개변수 범위 결정",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

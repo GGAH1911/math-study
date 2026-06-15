@@ -1,0 +1,17 @@
+{
+  "text_sha": "71a34c0ac472",
+  "meta": {
+    "searchable_text": "27.명제\n‘어떤 실수 x에 대하여 x^{2}+8x+2k-1≤0이다.’\n가 거짓이 되도록 하는 정수 k의 최솟값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "명제의_진위_판정",
+      "이차함수의_판별식",
+      "이차부등식의_해"
+    ],
+    "exam_intent": "명제의 역논리를 이용해 판별식 조건으로부터 정수 범위를 구하는 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

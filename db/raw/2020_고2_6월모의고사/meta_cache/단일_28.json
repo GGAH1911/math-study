@@ -1,0 +1,17 @@
+{
+  "text_sha": "224e588b4e18",
+  "meta": {
+    "searchable_text": "28. 자연수 k에 대하여 두 집합\nA={\\sqrt{a}|a는자연수, 1≤a≤k},\nB={log\\sqrt{3}b|b는자연수, 1≤b≤k}\n가 있다. 집합 C를\nC={x|x∈A∩B, x는자연수}\n라 할 때, n(C)=3이 되도록 하는 모든 자연수 k의 개수를\n구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그함수",
+      "지수함수",
+      "집합의_교집합"
+    ],
+    "exam_intent": "로그함수의 역함수와 부등식을 이용한 집합 교집합 분석 능력 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

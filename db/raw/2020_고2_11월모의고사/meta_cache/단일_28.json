@@ -1,0 +1,17 @@
+{
+  "text_sha": "c8d9887d5c76",
+  "meta": {
+    "searchable_text": "28. 그림과 같이 좌표평면에서 원 x^{2}+y^{2}=2와 곡선 y=x^{2}이\n제1사분면에서 만나는 점을 A라 하자. 실수 t(0<t<1)에\n대하여 직선 y=tx가 원 x^{2}+y^{2}=2, 곡선 y=x^{2}과\n제1사분면에서 만나는 점을 각각 P, Q라 하자. 삼각형 PAQ의\n넓이를 S(t)라 할 때, \\lim_{t→1-}\\frac{S(t)}{(1-t)^{2}}=k이다. 20k의 값을\n구하시오. [4점]\ny y=x^{2}\nx^{2}+y^{2}=2\nA\ny=tx\nP\nQ\nO x",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "극한값_계산",
+      "이차곡선",
+      "도형의_방정식"
+    ],
+    "exam_intent": "원과 포물선의 교점으로 정의되는 삼각형의 넓이 극한값을 구하기",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

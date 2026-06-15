@@ -1,0 +1,17 @@
+{
+  "text_sha": "869b9f6f4e8a",
+  "meta": {
+    "searchable_text": "25. 함수 y=ksin(x+\\frac{π}{2})+10의 그래프가\n점 (\\frac{π}{3},14)를 지날 때, 상수 k의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "함수의_평행이동",
+      "함수값_조건"
+    ],
+    "exam_intent": "삼각함수의 평행이동과 주어진 점 조건으로 상수값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}
