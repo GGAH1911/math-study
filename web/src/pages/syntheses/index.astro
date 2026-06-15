@@ -54,7 +54,7 @@ const leafOf = (p?: string): string => p ? (p.split('/').pop() ?? p).replace(/_/
               <ConceptCard
                 href={`/syntheses/${encodeURIComponent(s.id)}`}
                 title={title}
-                subtitle={originLeaf ? `from ${originLeaf}` : undefined}
+                subtitle={originLeaf ? `← ${originLeaf}` : undefined}
                 description={idx?.excerpt ?? ''}
                 chips={[
                   ...(s.data.review_state ? [{ label: s.data.review_state, class: '' }] : []),

@@ -1,15 +1,15 @@
 ---
 const { pathname } = Astro.url;
 const links: Array<{ href: string; label: string; icon: string; match?: string[] }> = [
-  { href: '/',          label: 'Dashboard',  icon: '◉' },
+  { href: '/',          label: '홈',         icon: '◉' },
   { href: '/graph',     label: '개념 지도', icon: '◈' },
-  { href: '/concepts',  label: 'Concepts',   icon: '⊕' },
+  { href: '/concepts',  label: '개념',       icon: '⊕' },
   { href: '/problems',  label: '기출',       icon: '∎', match: ['/problems', '/exam'] },
-  { href: '/mistakes',  label: 'Mistakes',   icon: '✕' },
-  { href: '/tools',     label: 'Tools',      icon: '⚒' },
-  { href: '/paths',     label: 'Paths',      icon: '↝' },
+  { href: '/mistakes',  label: '오답노트',   icon: '✕' },
+  { href: '/tools',     label: '학습 자료',  icon: '⚒' },
+  { href: '/paths',     label: '학습 경로',  icon: '↝' },
   { href: '/syntheses', label: '학습 노트', icon: '🗒' },
-  { href: '/log',       label: 'Log',        icon: '☴' },
+  { href: '/log',       label: '기록',       icon: '☴' },
   { href: '/settings',  label: '설정',       icon: '⚙' },
 ];
 function active(l: { href: string; match?: string[] }): string {
@@ -23,7 +23,7 @@ function active(l: { href: string; match?: string[] }): string {
     <span class="text-2xl">📐</span>
     <span>
       <div class="text-sm font-semibold tracking-tight">Math Study</div>
-      <div class="text-[10px] uppercase tracking-[0.18em] text-[color:var(--color-subtle)]">LWIP knowledge mesh</div>
+      <div class="text-[10px] tracking-[0.12em] text-[color:var(--color-subtle)]">수능 수학 학습</div>
     </span>
   </a>
 
@@ -37,8 +37,7 @@ function active(l: { href: string; match?: string[] }): string {
   </nav>
 
   <div class="mt-auto pt-4 border-t border-[color:var(--color-border)] text-[11px] text-[color:var(--color-subtle)]">
-    <div class="flex items-center justify-between">
-      <span>Chapter 7 D1–D16</span>
+    <div class="flex items-center justify-end">
       <span class="font-mono">v1.2</span>
     </div>
     <div class="mt-1">정답률 0%부터 다시 시작.</div>

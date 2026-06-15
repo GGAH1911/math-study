@@ -46,7 +46,9 @@ export function readHealth(): Health {
     conflicts: Number(fm.conflicts ?? 0),
     dueToday,
     mastery,
-    dagIntegrity: (graph.stats?.cycles ?? 0) === 0 ? 'ok' : `${graph.stats.cycles} cycles`,
+    // 'ok' 는 비교용 센티넬(Header/HealthCards 가 === 'ok' 로 색 분기) — 유지.
+    // 비-ok 표시 문자열만 한글화(영문 'cycles' 제거).
+    dagIntegrity: (graph.stats?.cycles ?? 0) === 0 ? 'ok' : `${graph.stats.cycles}개 순환`,
     suggestedAction: String(fm.suggested_action ?? ''),
     lastUpdated: String(fm.last_updated ?? ''),
   };

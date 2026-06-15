@@ -45,12 +45,12 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
     {/* Due 칩 — 모바일에도 상시 노출(hidden md: 제거, 계약 §8-A) */}
     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">
       <span class={`size-1.5 rounded-full ${dueCount > 0 ? 'bg-[color:var(--color-mastery-learning)]' : 'bg-[color:var(--color-subtle)]'}`}></span>
-      <span class="stat-num">Due {dueCount}</span>
+      <span class="stat-num">복습 {dueCount}</span>
     </span>
 
     <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">
       <span class={`size-1.5 rounded-full ${health.dagIntegrity === 'ok' ? 'bg-[color:var(--color-mastery-proficient)]' : 'bg-[color:var(--color-mastery-unknown)]'}`}></span>
-      <span>DAG {health.dagIntegrity}</span>
+      <span>{health.dagIntegrity === 'ok' ? '지도 정상' : health.dagIntegrity}</span>
     </span>
 
     <ThemeToggle />
@@ -86,12 +86,12 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
   <button type="button" data-dock-more aria-expanded="false" aria-controls="dock-sheet"><span class="icon">☰</span><span>더보기</span></button>
 </nav>
 <div id="dock-sheet" hidden class="dock-sheet lg:hidden" role="navigation" aria-label="더보기 메뉴">
-  <a href="/mistakes">✕ Mistakes</a>
+  <a href="/mistakes">✕ 오답노트</a>
   <a href="/syntheses">🗒 학습 노트</a>
-  <a href="/paths">↝ Paths</a>
+  <a href="/paths">↝ 학습 경로</a>
   <a href="/progress">∿ 진행</a>
-  <a href="/tools">⚒ Tools</a>
-  <a href="/log">☴ Log</a>
+  <a href="/tools">⚒ 학습 자료</a>
+  <a href="/log">☴ 기록</a>
   <a href="/settings">⚙ 설정</a>
   <button type="button" data-theme-toggle>◐ 테마 전환</button>
   <button type="button" data-logout>→ 로그아웃</button>

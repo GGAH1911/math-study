@@ -15,12 +15,12 @@ const isolated = audit?.isolatedConceptCount ?? null;
 const missingFm = audit?.missingFmCount ?? null;
 
 const cards = [
-  { label: 'Pages',       value: h.pages,       hint: 'docs/ 내 총 spoke 페이지' },
-  { label: 'LWIP entropy', value: entropy ?? '?', hint: audit ? `isolated ${isolated} · missing fm ${missingFm}` : 'audit 미실행',
+  { label: '개념 수',     value: h.pages,       hint: '전체 개념 페이지' },
+  { label: '미연결',      value: entropy ?? '?', hint: audit ? `고립 ${isolated} · 정보누락 ${missingFm}` : '점검 미실행',
     danger: entropy != null && entropy > 0 },
-  { label: 'Conflicts',   value: h.conflicts,   hint: '동기화 충돌',
+  { label: '충돌',        value: h.conflicts,   hint: '동기화 충돌',
     danger: h.conflicts > 0 },
-  { label: 'DAG',         value: h.dagIntegrity, hint: 'prerequisite ↔ enables 정합',
+  { label: '지도 정합',   value: h.dagIntegrity === 'ok' ? '정상' : h.dagIntegrity, hint: '선수↔후속 정합',
     danger: h.dagIntegrity !== 'ok' },
 ];
 ---
