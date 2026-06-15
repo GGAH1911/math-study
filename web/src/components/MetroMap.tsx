@@ -25,7 +25,25 @@ function bodyProps(m: Mastery, isGoal: boolean): Record<string, string | number>
     default: return { fill: 'var(--paper-page)', stroke: 'var(--paper-dim)', strokeWidth: 1.8, strokeDasharray: '3 3' };
   }
 }
-const cut = (s: string, n: number) => (s.length > n ? s.slice(0, n) + '…' : s);
+// 라벨 줄바꿈 — 잘라내지 않고(…금지) maxChars 폭에 맞춰 단어 단위로 최대 3줄.
+function wrapLabel(label: string, maxChars: number): string[] {
+  const words = label.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let cur = '';
+  for (const w of words) {
+    if (!cur) cur = w;
+    else if ((cur + ' ' + w).length <= maxChars) cur += ' ' + w;
+    else { lines.push(cur); cur = w; }
+  }
+  if (cur) lines.push(cur);
+  // 한 단어가 폭을 넘으면(공백 없는 긴 개념명) 글자 단위로 강제 분할.
+  const out: string[] = [];
+  for (const l of lines) {
+    if (l.length <= maxChars) out.push(l);
+    else for (let i = 0; i < l.length; i += maxChars) out.push(l.slice(i, i + maxChars));
+  }
+  return out.slice(0, 3);
+}
 
 // Catmull-Rom → cubic bezier 스무딩(결정적) — 더미 경유점들을 부드러운 곡선으로.
 function smoothPath(pts: { x: number; y: number }[]): string {
@@ -56,10 +74,12 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
   }, []);
 
   const narrow = cw < 560;
-  const R = narrow ? 10 : 13;
-  const LAYER_GAP = narrow ? 94 : 108;
-  const PAD_TOP = 44, PAD_BOTTOM = 66, PAD_X = narrow ? 24 : 36;
-  const MIN_COL = narrow ? 86 : 118;
+  const R = narrow ? 11 : 14;
+  const LAYER_GAP = narrow ? 112 : 132; // 라벨 줄바꿈(최대 3줄) + 큰 폰트 여유
+  const PAD_TOP = 46, PAD_BOTTOM = 82, PAD_X = narrow ? 26 : 40;
+  const MIN_COL = narrow ? 96 : 132;
+  const NAME_FS = narrow ? 14 : 16.5;   // 키운 라벨 폰트
+  const GOAL_FS = narrow ? 17 : 21;
 
   const layerOf = new Map(nodes.map((n) => [n.id, n.layer]));
   const maxLayer = Math.max(0, ...nodes.map((n) => n.layer));
@@ -121,15 +141,22 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
   for (const [L, arr] of items) {
     arr.forEach((k, i) => XY.set(k, { x: PAD_X + ((i + 0.5) / arr.length) * innerW, y: PAD_TOP + L * LAYER_GAP }));
   }
-  const colWidth = innerW / maxLen;
 
   const go = (id: string) => { window.location.href = `/concepts/${id}`; };
   const pct = totalPrereqs > 0 ? Math.round((donePrereqs / totalPrereqs) * 100) : 0;
 
-  // 엣지 path: chain 의 좌표열을 스무딩. 양끝(실노드)은 원 가장자리에서 시작/끝나게 R 만큼 당김.
+  // 엣지 path: chain 좌표열 스무딩. 양끝(실노드)은 *중앙을 향해* 이웃 방향으로 R 만큼 당겨
+  // 원 가장자리에서 시작/끝나게 한다 → 선이 원 중앙을 가리키는 방사형(상/하단 stub 아님).
+  const trimToward = (p: { x: number; y: number }, t: { x: number; y: number }, d: number) => {
+    const dx = t.x - p.x, dy = t.y - p.y, len = Math.hypot(dx, dy) || 1;
+    return { x: p.x + (dx / len) * d, y: p.y + (dy / len) * d };
+  };
   const chainPath = (chain: string[]) => {
     const pts = chain.map((k) => ({ ...XY.get(k)! }));
-    if (pts.length >= 2) { pts[0] = { ...pts[0], y: pts[0].y + R }; pts[pts.length - 1] = { ...pts[pts.length - 1], y: pts[pts.length - 1].y - R }; }
+    if (pts.length >= 2) {
+      pts[0] = trimToward(pts[0], pts[1], R);
+      pts[pts.length - 1] = trimToward(pts[pts.length - 1], pts[pts.length - 2], R);
+    }
     return smoothPath(pts);
   };
 
@@ -159,7 +186,10 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
           </g>
           {nodes.map((n) => {
             const p = XY.get(n.id)!;
-            const cutN = Math.max(4, Math.floor((colWidth - 8) / (narrow ? 11 : 12.5)));
+            const fs = n.isGoal ? GOAL_FS : NAME_FS;
+            const availW = innerW / (items.get(n.layer)?.length ?? 1); // 그 층의 노드 간격(더미 포함)
+            const maxChars = Math.max(5, Math.floor((availW - 6) / fs));
+            const lines = wrapLabel(n.isGoal ? `${n.label} ·목표` : n.label, maxChars);
             return (
               <g
                 key={n.id}
@@ -185,11 +215,13 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
                 <text
                   className="metro-name font-hand"
                   x={p.x}
-                  y={p.y + R + (narrow ? 14 : 16)}
+                  y={p.y + R + fs}
                   textAnchor="middle"
-                  style={{ fontSize: n.isGoal ? (narrow ? 16 : 19) : (narrow ? 13 : 14.5) }}
+                  style={{ fontSize: fs }}
                 >
-                  {n.isGoal ? n.label : cut(n.label, cutN)}{n.isGoal ? ' ·목표' : ''}
+                  {lines.map((ln, i) => (
+                    <tspan key={i} x={p.x} dy={i === 0 ? 0 : fs * 1.02}>{ln}</tspan>
+                  ))}
                 </text>
               </g>
             );
