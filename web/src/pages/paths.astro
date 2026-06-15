@@ -2,8 +2,8 @@
 export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PathPicker from '../components/PathPicker.tsx';
-import MetroLine from '../components/MetroLine.tsx';
-import type { PathStepVM } from '../components/MetroLine';
+import MetroMap from '../components/MetroMap.tsx';
+import type { PathNodeVM, PathEdgeVM } from '../components/MetroMap';
 import { readConceptGraph, recommendUnits } from '../lib/health.ts';
 import { getMasteryMap } from '../lib/mastery.ts';
 import { buildLearningPath } from '../lib/learning-path.ts';
@@ -28,12 +28,13 @@ const concepts = graph.nodes.map((n) => ({
 const rec = recommendUnits(mof);
 const quickGoals = [...rec.continuing, ...rec.ready].slice(0, 6).map((u) => ({ id: u.unitId, label: u.label }));
 
-const todoCount = path ? path.steps.filter((s) => !s.isGoal).length : 0;
-// React 아일랜드로 넘길 VM — mastery 를 4값 유니온으로 cast(PathStep.mastery 는 string).
-const stepsVM: PathStepVM[] = (path?.steps ?? []).map((s) => ({
-  id: s.id, label: s.label, domain: s.domain, grade: s.grade,
-  mastery: s.mastery as PathStepVM['mastery'], isGoal: s.isGoal,
+const todoCount = path ? path.nodes.filter((n) => !n.isGoal).length : 0;
+// React 아일랜드로 넘길 VM — mastery 를 4값 유니온으로 cast(PathNode.mastery 는 string).
+const nodesVM: PathNodeVM[] = (path?.nodes ?? []).map((n) => ({
+  id: n.id, label: n.label, domain: n.domain, grade: n.grade,
+  mastery: n.mastery as PathNodeVM['mastery'], isGoal: n.isGoal, isFrontier: n.isFrontier, layer: n.layer,
 }));
+const edgesVM: PathEdgeVM[] = path?.edges ?? [];
 ---
 <BaseLayout title="Learning Paths">
   <div class="max-w-4xl mx-auto px-6 py-8 space-y-6">
@@ -79,10 +80,10 @@ const stepsVM: PathStepVM[] = (path?.steps ?? []).map((s) => ({
             <a href={`/concepts/${path.goal.id}`} class="text-[color:var(--color-accent)] hover:underline"> 목표 개념</a>을 학습하세요.
           </p>
         ) : (
-          <MetroLine
+          <MetroMap
             client:load
-            steps={stepsVM}
-            goal={path.goal}
+            nodes={nodesVM}
+            edges={edgesVM}
             totalPrereqs={path.totalPrereqs}
             donePrereqs={path.donePrereqs}
             todoCount={todoCount}

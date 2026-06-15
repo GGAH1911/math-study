@@ -1243,8 +1243,8 @@ html[data-font="clean"] {
 .katex .frac-line { border-bottom-width: 1px !important; }
 .katex .overline-line, .katex .underline-line { border-bottom-width: 1px !important; }
 
-/* ── 잉크 노선도 (/paths 학습 경로) — "만년필로 그어 내려간 한 줄기" ──────────
-   MetroLine.tsx 전용. 색은 전부 var() 직바인딩(테마 추종) — raw hex 금지.
+/* ── 잉크 노선도/노선맵 (/paths 학습 경로) — MetroMap.tsx(세로 층상 DAG) 전용 ──────
+   색은 전부 var() 직바인딩(테마 추종) — raw hex 금지.
    self-draw 는 pathLength=1 + dasharray/offset 1 정규화(2600 하드코딩 금지). */
 .metro-wrap { position: relative; margin-top: 4px; }
 .metro-head { max-width: 540px; margin-bottom: 10px; }
@@ -1302,8 +1302,18 @@ html[data-font="clean"] {
   paint-order: stroke; stroke: var(--paper-page); stroke-width: 2.5px; stroke-linejoin: round; }
 .metro-here { font-family: var(--font-hand); font-size: 14px; }
 
+/* ── 학습경로 DAG(MetroMap) — 갈래가 합류하는 세로 노선 ── */
+/* 가로가 컨테이너보다 넓으면(좁은 화면·넓은 층) 가로 스크롤. */
+.metro-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+/* 엣지(선수→의존) — 흑연 잉크 S-커브, 작도 애니(길이 무관 pathLength=1 정규화). */
+.metro-edge {
+  fill: none; stroke: var(--ink-soft); stroke-width: 1.5; opacity: 0.5; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: atlas-draw 0.9s ease forwards;
+}
+.metro-legend { font-family: var(--font-sans); font-size: 11px; color: var(--ink-faint); }
+
 @media (prefers-reduced-motion: reduce) {
-  .metro-spine, .metro-stamp { stroke-dashoffset: 0 !important; animation: none !important; }
+  .metro-spine, .metro-stamp, .metro-edge { stroke-dashoffset: 0 !important; animation: none !important; }
   .metro-next-leg, .metro-frontier-halo { animation: none !important; }
   .metro-node { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
