@@ -1,0 +1,16 @@
+{
+  "text_sha": "522c800f1e6d",
+  "meta": {
+    "searchable_text": "11. 곡선 y=ax^{2}-2sin2x가 변곡점을 갖도록 하는 정수 a의\n개수는? [3점]\n① 4 ② 5 ③ 6 ④ 7 ⑤ 8",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "변곡점",
+      "2차도함수"
+    ],
+    "exam_intent": "변곡점 존재 조건으로 계수 범위 결정",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

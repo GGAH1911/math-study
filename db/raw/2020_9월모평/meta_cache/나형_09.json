@@ -1,0 +1,17 @@
+{
+  "text_sha": "0f992400ce7e",
+  "meta": {
+    "searchable_text": "9. 정의역이 {x|x>a}인 함수 y=\\sqrt{2x-2a}-a^{2}+4의\n그래프가 오직 하나의 사분면을 지나도록 하는 실수 a의\n최댓값은? [3점]\n① 2 ② 4 ③ 6 ④ 8 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "루트함수의_정의역",
+      "함수_그래프의_사분면_분석",
+      "매개변수에_따른_함수_거동"
+    ],
+    "exam_intent": "루트함수 그래프가 특정 사분면만 지나는 조건에서 매개변수 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

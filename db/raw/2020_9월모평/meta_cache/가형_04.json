@@ -1,0 +1,13 @@
+{
+  "text_sha": "63c4f63f4f65",
+  "meta": {
+    "searchable_text": "4. 다음 조건을 만족시키는 두 자리의 자연수의 개수는? [3점]\n(가) 2의 배수이다.\n(나)십의 자리의 수는 6의 약수이다.\n① 16 ② 20 ③ 24 ④ 28 ⑤ 32",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [],
+    "exam_intent": "2의 배수와 약수 조건을 동시에 만족하는 경우를 곱의 법칙으로 세기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

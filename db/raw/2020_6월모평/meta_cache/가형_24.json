@@ -1,0 +1,17 @@
+{
+  "text_sha": "cb47a1558b5a",
+  "meta": {
+    "searchable_text": "24. 이차함수 y=f(x)의 그래프와 직선 y=x-1이 그림과\n같을 때, 부등식\nlog_{3}f(x)+log\\frac{_{1}(}{3}x-1)≤0\n을 만족시키는 모든 자연수 x의 값의 합을 구하시오.\n(단, f(0)=f(7)=0, f(4)=3) [3점]",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "로그함수의_성질",
+      "로그_부등식",
+      "이차함수의_결정"
+    ],
+    "exam_intent": "로그함수 성질과 이차함수를 결합한 부등식 해결",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

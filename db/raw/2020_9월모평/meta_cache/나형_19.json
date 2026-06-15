@@ -1,0 +1,16 @@
+{
+  "text_sha": "437bbcfdfd4f",
+  "meta": {
+    "searchable_text": "19. 함수 f(x)=4x^{4}+4x^{3}에 대하여 \\lim_{n→∞}\\sum_{k=1}^{n}\\frac{1}{n+k}f(\\frac{k}{n})의\n값은? [4점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "리만_합의_극한",
+      "정적분의_정의"
+    ],
+    "exam_intent": "리만 합을 정적분으로 변환하여 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "d6ccf3e0ffaf",
+  "meta": {
+    "searchable_text": "13. 그림과 같이 두 점 F(0,c), F′(0,-c)를 초점으로 하는\n타원 \\frac{x^{2}}{a^{2}}+\\frac{y^{2}}{25}=1이 x축과 만나는 점 중에서 x좌표가\n양수인 점을 A라 하자. 직선 y=c가 직선 AF′과 만나는\n점을 B, 직선 y=c가 타원과 만나는 점 중 x좌표가 양수인\n점을 P라 하자. 삼각형 BPF′의 둘레의 길이와\n삼각형 BFA의 둘레의 길이의 차가 4일 때, 삼각형 AFF′의\n넓이는? (단, 0<a<5, c>0) [3점]\n① 5\\sqrt{6}②\\frac{9\\sqrt{6}}{2}③ 4\\sqrt{6}\n④\\frac{7\\sqrt{6}}{2}⑤ 3\\sqrt{6}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "타원의_초점",
+      "타원의_방정식"
+    ],
+    "exam_intent": "타원의 성질과 기하 조건으로부터 매개변수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

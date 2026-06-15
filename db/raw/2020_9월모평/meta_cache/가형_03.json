@@ -1,0 +1,17 @@
+{
+  "text_sha": "eb9ff8a29966",
+  "meta": {
+    "searchable_text": "3. 좌표공간의 두 점 A(a,4,-9), B(1,0,-3)에 대하여 선분\nAB를 3:1로 외분하는 점이 y축 위에 있을 때, a의 값은?\n[2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "외분점_공식",
+      "공간좌표",
+      "축_위의_점"
+    ],
+    "exam_intent": "3차원 공간에서 외분점 공식 적용하여 조건을 만족하는 매개변수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

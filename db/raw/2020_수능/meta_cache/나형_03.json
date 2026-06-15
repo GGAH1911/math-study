@@ -1,0 +1,16 @@
+{
+  "text_sha": "ebd3d0f9b988",
+  "meta": {
+    "searchable_text": "3.\\lim_{n→∞}\\frac{\\sqrt{9n^{2}+4}}{5n-2}의 값은? [2점]\n①\\frac{1}{5}②\\frac{2}{5}③\\frac{3}{5}④\\frac{4}{5}⑤ 1",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한극한",
+      "최고차항_비교"
+    ],
+    "exam_intent": "최고차항 비교로 무한 수열의 극한값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

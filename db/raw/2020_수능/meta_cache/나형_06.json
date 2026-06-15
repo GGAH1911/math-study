@@ -1,0 +1,16 @@
+{
+  "text_sha": "ddbcbe459264",
+  "meta": {
+    "searchable_text": "6. 실수 x에 대한 두 조건\np:x=a,\nq:3x^{2}-ax-32=0\n에 대하여 p가 q이기 위한 충분조건이 되도록 하는 양수 a의\n값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "충분조건",
+      "이차방정식의_근"
+    ],
+    "exam_intent": "충분조건의 정의를 이해하고 이차방정식에 대입·계산하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

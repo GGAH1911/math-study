@@ -1,0 +1,17 @@
+{
+  "text_sha": "e1d5e4362ebf",
+  "meta": {
+    "searchable_text": "14. (x^{2}-\\frac{1}{x})(x+\\frac{a}{x^{2}})^{4}의 전개식에서 x^{3}의 계수가 7일 때,\n상수 a의 값은? [4점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "식의_계산",
+    "concepts": [
+      "이항정리",
+      "다항식_전개",
+      "계수_구하기"
+    ],
+    "exam_intent": "이항정리를 이용한 다항식 전개에서 특정 차수의 계수 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

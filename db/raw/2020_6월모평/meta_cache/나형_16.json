@@ -1,0 +1,15 @@
+{
+  "text_sha": "459788bd35fa",
+  "meta": {
+    "searchable_text": "16. 한 개의 주사위를 네 번 던질 때 나오는 눈의 수를 차례로\na,b,c,d라 하자. 네 수 a,b,c,d의 곱 a×b×c×d가 12일\n확률은? [4점]\n① \\frac{1}{36}② \\frac{5}{72}③ \\frac{1}{9}④ \\frac{11}{72}⑤ \\frac{7}{36}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "경우의_수"
+    ],
+    "exam_intent": "곱 조건을 만족하는 경우의 수를 체계적으로 구하고 확률 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

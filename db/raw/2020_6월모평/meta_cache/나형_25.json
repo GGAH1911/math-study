@@ -1,0 +1,16 @@
+{
+  "text_sha": "a49a215417ea",
+  "meta": {
+    "searchable_text": "25. 수직선 위를 움직이는 점 P의 시각 t(t>0)에서의 위치 x가\nx=t^{3}-5t^{2}+6t\n이다. t=3에서 점 P의 가속도를 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "미분",
+    "concepts": [
+      "도함수",
+      "가속도"
+    ],
+    "exam_intent": "위치함수의 2차 도함수를 이용한 가속도 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

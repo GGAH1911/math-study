@@ -1,0 +1,16 @@
+{
+  "text_sha": "636ee5f25285",
+  "meta": {
+    "searchable_text": "2.\\lim_{x→0}\\frac{6x}{e^{4x}-e^{2x}}의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "지수함수의_극한",
+      "로피탈의_정리"
+    ],
+    "exam_intent": "지수함수 극한값을 로피탈 또는 극한 성질로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

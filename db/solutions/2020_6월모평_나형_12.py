@@ -1,0 +1,1 @@
+import sympy as sp; k = 3; x = sp.Symbol('x', real=True); y1 = 6/(x-5) + 3; y2 = sp.sqrt(x - k); eqn = sp.Eq(y1, y2); sols = sp.solve(eqn, x); valid_sols = [sol for sol in sols if sol >= k and sol <= 3 or sol > 5]; print(f'Solutions: {valid_sols}'); print('VERIFY_PASS' if len(valid_sols) == 2 else 'VERIFY_FAIL')

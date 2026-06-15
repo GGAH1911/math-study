@@ -1,0 +1,17 @@
+{
+  "text_sha": "34d0b3361d1f",
+  "meta": {
+    "searchable_text": "14. 그림과 같이 양수 k에 대하여 함수 f(x)=2\\sqrt{x}e^{kx2}의\n그래프와 x축 및 두 직선 x=\\frac{1}{\\sqrt{2k}}, x=\\frac{1}{\\sqrt{k}}로 둘러싸인\n부분을 밑면으로 하고 x축에 수직인 평면으로 자른 단면이\n모두 정삼각형인 입체도형의 부피가 \\sqrt{3}(e^{2}-e)일 때, k의\n값은? [4점]\n①\\frac{1}{12}②\\frac{1}{6}③\\frac{1}{4}④\\frac{1}{3}⑤\\frac{1}{2}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "입체도형의_부피",
+      "정삼각형_단면",
+      "지수함수_적분"
+    ],
+    "exam_intent": "정삼각형 단면 입체도형의 부피를 정적분으로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

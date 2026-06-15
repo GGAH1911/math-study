@@ -1,0 +1,17 @@
+{
+  "text_sha": "dd5be9338a20",
+  "meta": {
+    "searchable_text": "11. 함수 f(x)=xe^{x}에 대하여 곡선 y=f(x)의 변곡점의 좌표가\n(a,b)일 때, 두 수 a,b의 곱 ab의 값은? [3점]\n① 4e^{2} ② e ③ \\frac{1}{e}④ \\frac{4}{e^{2}}⑤ \\frac{9}{e^{3}}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "변곡점",
+      "이계도함수",
+      "지수함수의_미분"
+    ],
+    "exam_intent": "지수함수와 이계도함수를 이용한 변곡점 조건 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

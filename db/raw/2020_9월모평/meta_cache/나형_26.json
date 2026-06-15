@@ -1,0 +1,15 @@
+{
+  "text_sha": "6a9470d8a724",
+  "meta": {
+    "searchable_text": "26. n이 자연수일 때, x에 대한 이차방정식\nx^{2}-(2n-1)x+n(n-1)=0\n의 두 근을 αn, βn이라 하자. \\sum_{n=1}^{81}\\frac{1}{\\sqrt{α_{n}}+\\sqrt{β_{n}}}의 값을\n구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "망원급수"
+    ],
+    "exam_intent": "이차방정식의 근과 망원급수를 활용하여 수열의 합 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

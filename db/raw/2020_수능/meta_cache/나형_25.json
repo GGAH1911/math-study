@@ -1,0 +1,16 @@
+{
+  "text_sha": "2f4b490e4527",
+  "meta": {
+    "searchable_text": "25. 자연수 n에 대하여 다항식 2x^{2}-3x+1을 x-n으로\n나누었을 때의 나머지를 a_{n}이라 할 때, \\sum_{n=1}^{7}(a_{n}-n^{2}+n)의\n값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "나머지정리",
+      "다항식의_나눗셈"
+    ],
+    "exam_intent": "나머지정리 이해와 식의 단순화 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

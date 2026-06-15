@@ -1,0 +1,16 @@
+{
+  "text_sha": "4b8bcbe65594",
+  "meta": {
+    "searchable_text": "14. 상수항과 계수가 모두 정수인 두 다항함수 f(x), g(x)가\n다음 조건을 만족시킬 때, f(2)의 최댓값은? [4점]\n(가)\\lim_{x→∞}\\frac{f(x)g(x)}{x^{3}}=2\n(나)\\lim_{x→0}\\frac{f(x)g(x)}{x^{2}}=-4\n① 4 ② 6 ③ 8 ④ 10 ⑤ 12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "함수의_극한",
+      "다항함수의_구조"
+    ],
+    "exam_intent": "극한 조건으로부터 다항함수의 차수와 계수를 결정하는 추론",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

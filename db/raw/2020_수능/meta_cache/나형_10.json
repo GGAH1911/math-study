@@ -1,0 +1,17 @@
+{
+  "text_sha": "bd4cfeb7f4b0",
+  "meta": {
+    "searchable_text": "10. 함수 y=\\sqrt{4-2x}+3의 역함수의 그래프와\n직선 y=-x+k가 서로 다른 두 점에서 만나도록 하는\n실수 k의 최솟값은? [3점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "역함수",
+      "교점조건",
+      "함수의_정의역"
+    ],
+    "exam_intent": "역함수의 정의역 제약 하에서 직선과의 교점 조건을 분석하여 매개변수의 최솟값을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

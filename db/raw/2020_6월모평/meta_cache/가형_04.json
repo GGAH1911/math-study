@@ -1,0 +1,17 @@
+{
+  "text_sha": "0be406390341",
+  "meta": {
+    "searchable_text": "4. 두 사건 A, B에 대하여\nP(A∪B)=\\frac{3}{4}, P(A^{C}∩B)=\\frac{2}{3}\n일 때, P(A)의 값은? (단, A^{C}은 A의 여사건이다.) [3점]\n① \\frac{1}{12}② \\frac{1}{8}③ \\frac{1}{6}④ \\frac{5}{24}⑤ \\frac{1}{4}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "여사건",
+      "확률의_덧셈정리",
+      "교집합과_합집합"
+    ],
+    "exam_intent": "여사건과 합집합의 확률 관계를 이용한 기본 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

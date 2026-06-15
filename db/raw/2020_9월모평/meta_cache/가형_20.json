@@ -1,0 +1,17 @@
+{
+  "text_sha": "53e87f095ca7",
+  "meta": {
+    "searchable_text": "20. 그림과 같이 반지름의 길이가 1이고 중심각의 크기가 \\frac{π}{2}인\n부채꼴 OAB가 있다. 호 AB 위의 점 P에서 선분 OA에 내린\n수선의 발을 H, 점 P에서 호 AB에 접하는 직선과 직선 OA의\n교점을 Q라 하자. 점 Q를 중심으로 하고 반지름의 길이가\n\\overline{QA}인 원과 선분 PQ의 교점을 R라 하자. ∠POA=θ일 때,\n삼각형 OHP의 넓이를 f(θ), 부채꼴 QRA의 넓이를 g(θ)라\n하자. \\lim_{θ→0+}\\frac{\\sqrt{g(θ)}}{θ×f(θ)}의 값은? (단, 0<θ<\\frac{π}{2}) [4점]\n①\\frac{\\sqrt{π}}{5}②\\frac{\\sqrt{π}}{4}③\\frac{\\sqrt{π}}{3}④\\frac{\\sqrt{π}}{2}⑤\\sqrt{π}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의_부정형",
+      "기하를_이용한_극한",
+      "Taylor_근사"
+    ],
+    "exam_intent": "기하 상황에서 정의된 함수의 극한을 Taylor 전개로 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

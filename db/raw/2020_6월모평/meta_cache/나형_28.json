@@ -1,0 +1,17 @@
+{
+  "text_sha": "a32b05ed11cb",
+  "meta": {
+    "searchable_text": "28. 첫째항이 2이고 공비가 정수인 등비수열 {a_{n}}과 자연수 m이\n다음 조건을 만족시킬 때, am의 값을 구하시오. [4점]\n(가) 4<a_{2}+a_{3}≤12\n(나) \\sum_{k=1}^{m}a_{k}=122",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "수열의_합",
+      "등비급수"
+    ],
+    "exam_intent": "조건을 만족하는 등비수열의 공비를 결정하고 등비급수 합으로 항의 개수를 구해 특정 항의 값을 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

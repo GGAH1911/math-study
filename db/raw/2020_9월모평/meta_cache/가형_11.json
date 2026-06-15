@@ -1,0 +1,17 @@
+{
+  "text_sha": "7436ed6aeb78",
+  "meta": {
+    "searchable_text": "11. 함수 f(x)=(x^{2}-3)e^{-x}의 극댓값과 극솟값을 각각 a, b라\n할 때, a×b의 값은? [3점]\n① -12e^{2} ② -12e ③ -\\frac{12}{e}④ -\\frac{12}{e^{2}}⑤ -\\frac{12}{e^{3}}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "곱의_미분법",
+      "극값",
+      "지수함수의_미분"
+    ],
+    "exam_intent": "곱의 미분법으로 극값을 구하고 극댓값과 극솟값의 곱 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

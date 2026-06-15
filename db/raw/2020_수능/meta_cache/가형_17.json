@@ -1,0 +1,18 @@
+{
+  "text_sha": "1a9efc1abe10",
+  "meta": {
+    "searchable_text": "17. 평면에 한 변의 길이가 10인 정삼각형 ABC가 있다.\n\\overline{PB}-\\overline{PC}=2를 만족시키는 점 P에 대하여 선분 PA의\n길이가 최소일 때, 삼각형 PBC의 넓이는? [4점]\n① 20\\sqrt{3}② 21\\sqrt{3}③ 22\\sqrt{3}\n④ 23\\sqrt{3}⑤ 24\\sqrt{3}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "쌍곡선의_정의",
+      "쌍곡선의_성질",
+      "거리의_최소화",
+      "좌표_활용"
+    ],
+    "exam_intent": "쌍곡선의 정의를 이용한 기하학적 최솟값 문제 해결 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

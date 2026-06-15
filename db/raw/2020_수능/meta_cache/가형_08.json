@@ -1,0 +1,16 @@
+{
+  "text_sha": "26e960c71906",
+  "meta": {
+    "searchable_text": "8.\\int_{e}^{e^{2}}\\frac{lnx-1}{x^{2}}dx의 값은? [3점]\n①\\frac{e+2}{e^{2}}②\\frac{e+1}{e^{2}}③\\frac{1}{e}④\\frac{e-1}{e^{2}}⑤\\frac{e-2}{e^{2}}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분",
+      "로그함수의_미분"
+    ],
+    "exam_intent": "미분·적분 관계를 이용한 정적분 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,1 @@
+from sympy import *; x = symbols('x'); e = E; result = integrate((log(x)-1)/x**2, (x, e, e**2)); expected = (e-2)/e**2; simplified = simplify(result - expected); print('VERIFY_PASS' if abs(simplified) < 1e-10 else 'VERIFY_FAIL')

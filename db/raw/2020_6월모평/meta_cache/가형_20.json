@@ -1,0 +1,13 @@
+{
+  "text_sha": "3df13d843386",
+  "meta": {
+    "searchable_text": "20. 실수 전체의 집합에서 미분가능한 함수 f(x)가 모든 실수 x에\n대하여 다음 조건을 만족시킨다.\n(가) f(x)>0\n(나) lnf(x)+2\\int_{0}^{x}(x-t)f(t)dt=0\n<보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보 기>\nㄱ. x>0에서 함수 f(x)는 감소한다.\nㄴ. 함수 f(x)의 최댓값은 1이다.\nㄷ. 함수 F(x)를 F(x)=\\int_{0}^{x}f(t)dt라 할 때,\nf(1)+{F(1)}^{2}=1이다.\n① ㄱ ② ㄱ, ㄴ ③ ㄱ, ㄷ\n④ ㄴ, ㄷ ⑤ ㄱ, ㄴ, ㄷ",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [],
+    "exam_intent": "조건식의 미분과 적분값 계산으로 함수의 극값·감소성을 판단하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

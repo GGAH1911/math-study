@@ -1,0 +1,16 @@
+{
+  "text_sha": "fb84a6202060",
+  "meta": {
+    "searchable_text": "1. 16×2^{-3}의 값은? [2점]\n① 1 ② 2 ③ 4 ④ 8 ⑤ 16",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "음의_지수",
+      "지수_계산"
+    ],
+    "exam_intent": "음의 지수를 포함한 기본 지수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

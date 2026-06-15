@@ -1,0 +1,17 @@
+{
+  "text_sha": "8a56287dea93",
+  "meta": {
+    "searchable_text": "17. 자연수 n의 양의 약수의 개수를 f(n)이라 하고, 36의 모든\n양의 약수를 a1, a2, a3, …, a9라 하자.\n\\sum_{k=1}^{9}{(-1)^{f}(^{ak})×loga_{k}}의 값은? [4점]\n① log2+log3 ② 2log2+log3\n③ log2+2log3 ④ 2log2+2log3\n⑤ 3log2+2log3",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "약수의_개수_함수",
+      "로그의_성질",
+      "지수"
+    ],
+    "exam_intent": "약수 함수와 로그의 성질을 이용한 합 계산 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

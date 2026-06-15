@@ -1,0 +1,16 @@
+{
+  "text_sha": "e042d85bb8bd",
+  "meta": {
+    "searchable_text": "16. 다항함수 f(x)가\n\\lim_{x→∞}\\frac{f(x)}{x^{3}}=1,\\lim_{x→-1}\\frac{f(x)}{x+1}=2\n를 만족시킨다. f(1)≤12일 때, f(2)의 최댓값은? [4점]\n① 27 ② 30 ③ 33 ④ 36 ⑤ 39",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한_조건으로_함수_결정",
+      "최댓값_구하기"
+    ],
+    "exam_intent": "극한과 제약조건으로 다항함수의 계수를 결정하여 최댓값을 구한다",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

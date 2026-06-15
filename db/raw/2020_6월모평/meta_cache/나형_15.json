@@ -1,0 +1,17 @@
+{
+  "text_sha": "7d46280657e7",
+  "meta": {
+    "searchable_text": "15. 두 함수\nf(x)=\\begin{cases}-2x+3 (x<0) \\\\ -2x+2 (x≥0),\\end{cases}\ng(x)=\\begin{cases}2x (x<a) \\\\ 2x-1 (x≥a)\\end{cases}\n가 있다. 함수 f(x)g(x)가 실수 전체의 집합에서 연속이 되도록\n하는 상수 a의 값은? [4점]\n① -2 ② -1 ③ 0 ④ 1 ⑤ 2",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_연속성",
+      "연속함수의_성질",
+      "곱함수의_연속성_조건"
+    ],
+    "exam_intent": "두 함수의 곱이 연속이 되기 위한 조건을 찾고 매개변수 결정",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

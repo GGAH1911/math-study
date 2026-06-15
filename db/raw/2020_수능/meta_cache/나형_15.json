@@ -1,0 +1,17 @@
+{
+  "text_sha": "7483ad26e451",
+  "meta": {
+    "searchable_text": "15. 첫째항이 50이고 공차가 -4인 등차수열의 첫째항부터\n제n항까지의 합을 Sn이라 할 때, \\sum_{k=m}^{m+4}S_{k}의 값이 최대가\n되도록 하는 자연수 m의 값은? [4점]\n① 8 ② 9 ③ 10 ④ 11 ⑤ 12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "등차수열의_합",
+      "합의_합"
+    ],
+    "exam_intent": "등차수열의 합 공식을 이용하여 이차함수의 최댓값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "text_sha": "6035dc002911",
+  "meta": {
+    "searchable_text": "1. 9C7의 값은? [2점]\n① 32 ② 34 ③ 36 ④ 38 ⑤ 40",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "조합"
+    ],
+    "exam_intent": "조합값 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

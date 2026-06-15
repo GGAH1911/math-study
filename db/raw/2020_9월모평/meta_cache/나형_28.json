@@ -1,0 +1,17 @@
+{
+  "text_sha": "81ea77181e27",
+  "meta": {
+    "searchable_text": "28. 네 양수 a, b, c, k가 다음 조건을 만족시킬 때, k^{2}의 값을\n구하시오. [4점]\n(가) 3^{a}=5^{b}=k^{c}\n(나) logc=log(2ab)-log(2a+b)",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수방정식",
+      "로그방정식",
+      "로그의성질"
+    ],
+    "exam_intent": "지수·로그 방정식의 연립으로 미지수를 구하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

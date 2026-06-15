@@ -1,0 +1,16 @@
+{
+  "text_sha": "1ed1ae2ef3ee",
+  "meta": {
+    "searchable_text": "16. 다음 조건을 만족시키는 음이 아닌 정수 a, b, c, d의 모든\n순서쌍 (a,b,c,d)의 개수는? [4점]\n(가) a+b+c-d=9\n(나) d≤4이고 c≥d이다.\n① 265 ② 270 ③ 275 ④ 280 ⑤ 285",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "제약_조건하_경우의_수"
+    ],
+    "exam_intent": "제약 조건 하에서 음이 아닌 정수해의 개수를 경우 분석으로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

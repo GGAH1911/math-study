@@ -1,0 +1,17 @@
+{
+  "text_sha": "88847840b46e",
+  "meta": {
+    "searchable_text": "8. 함수 f(x)=\\frac{lnx}{x^{2}}에 대하여 \\lim_{h→0}\\frac{f(e+h)-f(e-2h)}{h}의 값은?\n[3점]\n① -\\frac{2}{e}② -\\frac{3}{e^{2}}③ -\\frac{1}{e}④ -\\frac{2}{e^{2}}⑤ -\\frac{3}{e^{3}}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "미분의_정의",
+      "로그함수의_미분",
+      "극한의_성질"
+    ],
+    "exam_intent": "미분의 정의와 극한 성질로 복합 극한식을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

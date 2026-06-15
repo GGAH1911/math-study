@@ -1,0 +1,17 @@
+{
+  "text_sha": "556cbedfed5b",
+  "meta": {
+    "searchable_text": "27. 두 함수\nf(x)=x^{3}+3x^{2}-k, g(x)=2x^{2}+3x-10\n에 대하여 부등식\nf(x)≥3g(x)\n가 닫힌 구간 [-1,4]에서 항상 성립하도록 하는 실수 k의\n최댓값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "함수의_최솟값",
+      "도함수",
+      "부등식"
+    ],
+    "exam_intent": "부등식의 항상 성립 조건에서 매개변수 최댓값을 도함수로 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

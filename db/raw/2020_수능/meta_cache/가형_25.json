@@ -1,0 +1,17 @@
+{
+  "text_sha": "f14640ede7af",
+  "meta": {
+    "searchable_text": "25. 한 개의 주사위를 5번 던질 때 홀수의 눈이 나오는 횟수를\na라 하고, 한 개의 동전을 4번 던질 때 앞면이 나오는 횟수를\nb라 하자. a-b의 값이 3일 확률을 \\frac{q}{p}라 할 때, p+q의 값을\n구하시오. (단, p와 q는 서로소인 자연수이다.) [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이항분포",
+      "독립시행의_확률",
+      "확률의_덧셈"
+    ],
+    "exam_intent": "두 개의 독립 이항분포에서 선형 조건을 만족할 확률을 계산하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

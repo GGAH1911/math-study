@@ -1,0 +1,17 @@
+{
+  "text_sha": "cadf9ff52437",
+  "meta": {
+    "searchable_text": "14. 다음 조건을 만족시키는 좌표평면 위의 점 (a,b) 중에서\n임의로 서로 다른 두 점을 선택할 때, 선택된 두 점 사이의\n거리가 1보다 클 확률은? [4점]\n(가) a, b는 자연수이다.\n(나) 1≤a≤4, 1≤b≤3\n①\\frac{41}{66}②\\frac{43}{66}③\\frac{15}{22}④\\frac{47}{66}⑤\\frac{49}{66}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "경우의_수",
+      "확률의_정의",
+      "거리_계산"
+    ],
+    "exam_intent": "격자점 조건에서 거리를 이용한 확률 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

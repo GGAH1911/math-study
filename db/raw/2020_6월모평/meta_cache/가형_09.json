@@ -1,0 +1,17 @@
+{
+  "text_sha": "bac60ec1321b",
+  "meta": {
+    "searchable_text": "9. 함수 f(x)=\\frac{2^{x}}{ln2}과 실수 전체의 집합에서 미분가능한 함수\ng(x)가 다음 조건을 만족시킬 때, g(2)의 값은? [3점]\n(가) \\lim_{h→0}\\frac{g(2+4h)-g(2)}{h}=8\n(나) 함수 (f∘g)(x)의 x=2에서의 미분계수는 10이다.\n① 1 ② log_{2}3 ③ 2 ④ log_{2}5 ⑤ log_{2}6",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "합성함수의_미분",
+    "concepts": [
+      "합성함수_미분법",
+      "연쇄법칙",
+      "지수함수의_미분"
+    ],
+    "exam_intent": "합성함수 미분법과 지수-로그 관계식 활용",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

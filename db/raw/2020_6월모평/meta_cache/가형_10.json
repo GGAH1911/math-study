@@ -1,0 +1,17 @@
+{
+  "text_sha": "1af966a4b525",
+  "meta": {
+    "searchable_text": "10.\\int_{1}^{e}x^{3}lnxdx의 값은? [3점]\n① \\frac{3e^{4}}{16}② \\frac{3e^{4}+1}{16}③ \\frac{3e^{4}+2}{16}\n④ \\frac{3e^{4}+3}{16}⑤ \\frac{3e^{4}+4}{16}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분",
+      "정적분",
+      "로그함수의_적분"
+    ],
+    "exam_intent": "부분적분을 이용한 정적분 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

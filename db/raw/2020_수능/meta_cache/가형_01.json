@@ -1,0 +1,16 @@
+{
+  "text_sha": "3512b74e4950",
+  "meta": {
+    "searchable_text": "1. 두 벡터 \\vec{a}=(3,1), \\vec{b}=(-2,4)에 대하여 벡터 \\vec{a}+\\frac{1}{2}\\vec{b}의\n모든 성분의 합은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_덧셈",
+      "스칼라배"
+    ],
+    "exam_intent": "벡터의 덧셈과 스칼라배를 이용한 기초 성분 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

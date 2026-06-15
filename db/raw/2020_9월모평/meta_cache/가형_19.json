@@ -1,0 +1,13 @@
+{
+  "text_sha": "f9c8a937397c",
+  "meta": {
+    "searchable_text": "19. 좌표평면 위에 두 점 A(1,0), B(0,1)이 있다. 중심각의\n크기가 \\frac{π}{2}인 부채꼴 OAB의 호 AB 위를 움직이는 점 X와\n함수 y=(x-2)^{2}+1(2≤x≤3)의 그래프 위를 움직이는\n점 Y에 대하여\n\\vec{OP}=\\vec{OY}-\\vec{OX}\n를 만족시키는 점 P가 나타내는 영역을 R라 하자. 점 O로부터\n영역 R에 있는 점까지의 거리의 최댓값을 M, 최솟값을 m이라\n할 때, M^{2}+m^{2}의 값은? (단, O는 원점이다.) [4점]\n① 16-2\\sqrt{5}② 16-\\sqrt{5}③ 16\n④ 16+\\sqrt{5}⑤ 16+2\\sqrt{5}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "평면벡터",
+    "concepts": [],
+    "exam_intent": "벡터 뺄셈으로 정의된 영역의 원점으로부터 거리의 최댓값과 최솟값을 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

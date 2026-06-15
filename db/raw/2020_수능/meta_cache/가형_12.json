@@ -1,0 +1,15 @@
+{
+  "text_sha": "644a027f1baa",
+  "meta": {
+    "searchable_text": "12. 그림과 같이 양수 k에 대하여 곡선 y=\\sqrt{\\frac{e^{x}}{e^{x}+1}}과 x축,\ny축 및 직선 x=k로 둘러싸인 부분을 밑면으로 하고 x축에\n수직인 평면으로 자른 단면이 모두 정사각형인 입체도형의\n부피가 ln7일 때, k의 값은? [3점]\n① ln11 ② ln13 ③ ln15 ④ ln17 ⑤ ln19",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "정적분의_활용",
+    "concepts": [
+      "단면적을_이용한_부피"
+    ],
+    "exam_intent": "입체도형의 단면적 조건으로부터 부피를 정적분으로 계산",
+    "killer_tier": "early",
+    "cognitive_type": "통합"
+  }
+}

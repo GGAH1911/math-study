@@ -1,0 +1,16 @@
+{
+  "text_sha": "3d36c121c215",
+  "meta": {
+    "searchable_text": "11. 함수 f(x)=4x^{3}+x에 대하여 \\lim_{n→∞}\\sum_{k=1}^{n}\\frac{1}{n}f(\\frac{2k}{n})의 값은?\n[3점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "리만_합",
+      "정적분"
+    ],
+    "exam_intent": "리만 합의 극한이 정적분임을 알고 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

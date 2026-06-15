@@ -1,0 +1,16 @@
+{
+  "text_sha": "e726197c275d",
+  "meta": {
+    "searchable_text": "11. 0이 아닌 실수 k에 대하여 함수 y=\\frac{k}{x-1}+5의 그래프가\n점 (5,3a)를 지나고 두 점근선의 교점의 좌표가 (1,2a+1)일 때,\nk의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "분수함수",
+      "점근선"
+    ],
+    "exam_intent": "분수함수의 점근선과 주어진 점의 조건으로 매개변수를 구합니다.",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

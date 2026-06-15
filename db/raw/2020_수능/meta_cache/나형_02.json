@@ -1,0 +1,16 @@
+{
+  "text_sha": "d856fee6150d",
+  "meta": {
+    "searchable_text": "2. 두 집합 A={a+2,6}, B={3,b-1}에 대하여\nA=B일 때, a+b의 값은? (단, a, b는 실수이다.) [2점]\n① 5 ② 6 ③ 7 ④ 8 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "집합과_명제",
+    "concepts": [
+      "집합의_상등",
+      "집합의_원소"
+    ],
+    "exam_intent": "집합의 같음 조건으로부터 미지수 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

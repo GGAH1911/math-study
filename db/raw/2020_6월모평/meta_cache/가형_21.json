@@ -1,0 +1,18 @@
+{
+  "text_sha": "91ad3c153489",
+  "meta": {
+    "searchable_text": "21. 함수 f(x)=\\frac{lnx}{x =f(x}와 양의 실수 t에 대하여 기울기가 t인\n직선이 곡선 y )에 접할 때 접점의 x좌표를 g(t)라 하자.\n원점에서 곡선 y=f(x)에 그은 접선의 기울기가 a일 때,\n미분가능한 함수 g(t)에 대하여 a×g′(a)의 값은? [4점]\n① -\\frac{\\sqrt{e}}{3}② -\\frac{\\sqrt{e}}{4}③ -\\frac{\\sqrt{e}}{5}\n④ -\\frac{\\sqrt{e}}{6}⑤ -\\frac{\\sqrt{e}}{7}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "로그함수_미분",
+      "접선의_방정식",
+      "음함수_미분법",
+      "원점을_지나는_접선"
+    ],
+    "exam_intent": "매개변수 조건과 음함수 미분을 활용한 함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

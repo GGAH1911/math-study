@@ -1,0 +1,16 @@
+{
+  "text_sha": "9410dcdb2775",
+  "meta": {
+    "searchable_text": "5.\\int_{0}^{ln3}e^{x+3}dx의 값은? [3점]\n① \\frac{e^{3}}{2}② e^{3} ③ \\frac{3}{2}e^{3} ④ 2e^{3} ⑤ \\frac{5}{2}e^{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "지수함수의_적분",
+      "정적분_계산"
+    ],
+    "exam_intent": "지수함수의 정적분 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

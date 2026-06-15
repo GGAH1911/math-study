@@ -1,0 +1,17 @@
+{
+  "text_sha": "cfb23d5a2ec6",
+  "meta": {
+    "searchable_text": "11. 수열 {an}이 \\sum_{n=1}^{∞}(2a_{n}-3)=2를 만족시킨다.\n\\lim_{n→∞}a_{n}=r일 때, \\lim_{n→∞}\\frac{r^{n+2}-1}{r^{n}+1}의 값은? [3점]\n① \\frac{7}{4}② 2 ③ \\frac{9}{4}④ \\frac{5}{2}⑤ \\frac{11}{4}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한급수의_수렴",
+      "수열의_극한",
+      "극한의_성질"
+    ],
+    "exam_intent": "급수 수렴에서 수열 극한을 구하고 지수극한식 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

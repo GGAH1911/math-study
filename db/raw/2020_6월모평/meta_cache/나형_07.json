@@ -1,0 +1,17 @@
+{
+  "text_sha": "2a715afcdfa8",
+  "meta": {
+    "searchable_text": "7. 닫힌 구간 [-2,2]에서 정의된 함수 y=f(x)의 그래프가\n그림과 같다.\n\\lim_{x→-1+}f(x)+\\lim_{x→1-}f(x)의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "함수의극한",
+      "단측극한",
+      "그래프해석"
+    ],
+    "exam_intent": "그래프에서 불연속점의 우극한·좌극한을 읽어 합을 구하는 문제",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

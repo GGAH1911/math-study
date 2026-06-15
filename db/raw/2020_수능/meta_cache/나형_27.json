@@ -1,0 +1,18 @@
+{
+  "text_sha": "1e3dc7d64566",
+  "meta": {
+    "searchable_text": "27. 수직선 위를 움직이는 두 점 P, Q의 시각 t(t≥0)에서의\n위치 x1, x2가\nx_{1}=t^{3}-2t^{2}+3t, x_{2}=t^{2}+12t\n이다. 두 점 P, Q의 속도가 같아지는 순간 두 점 P, Q 사이의\n거리를 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "도함수",
+      "속도",
+      "방정식_풀이",
+      "거리"
+    ],
+    "exam_intent": "도함수로 정의된 속도의 동등점에서 거리를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "f6f02a09c190",
+  "meta": {
+    "searchable_text": "3. 그림은 두 함수 f:X→Y, g:Y→X를 나타낸 것이다.\n(g∘f)(1)의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "합성함수",
+      "함수의_정의"
+    ],
+    "exam_intent": "함수의 화살표 다이어그램에서 합성함수의 함숫값을 직접 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "text_sha": "e6126cbda0d8",
+  "meta": {
+    "searchable_text": "12. 두 곡선 y=\\frac{6}{x-5}+3, y=\\sqrt{x-k}가 서로 다른 두 점에서\n만나도록 하는 실수 k의 최댓값은? [3점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "유리함수",
+      "무리함수",
+      "함수의_교점",
+      "매개변수_범위"
+    ],
+    "exam_intent": "유리함수와 무리함수 교점에서 매개변수의 최댓값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

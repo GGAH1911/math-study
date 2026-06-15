@@ -1,0 +1,16 @@
+{
+  "text_sha": "3107b4788041",
+  "meta": {
+    "searchable_text": "19. 다음 조건을 만족시키는 음이 아닌 정수 x_{1},x_{2},x_{3},x_{4}의\n모든 순서쌍 (x1,x2,x3,x4)의 개수는? [4점]\n(가) n=1,2,3일 때, x_{n+1}-x_{n}≥2이다.\n(나) x_{4}≤12\n① 210 ② 220 ③ 230 ④ 240 ⑤ 250",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "중복조합",
+      "변수치환"
+    ],
+    "exam_intent": "제약 조건 하의 음이 아닌 정수해 개수를 변수 치환으로 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

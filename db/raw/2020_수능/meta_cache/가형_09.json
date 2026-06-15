@@ -1,0 +1,18 @@
+{
+  "text_sha": "807204a00034",
+  "meta": {
+    "searchable_text": "9. 좌표평면 위를 움직이는 점 P의 시각 t(0<t<\\frac{π}{2})에서의\n위치 (x,y)가\nx=t+sintcost, y=tant\n이다. 0<t<\\frac{π}{2}에서 점 P의 속력의 최솟값은? [3점]\n① 1 ②\\sqrt{3}③ 2 ④ 2\\sqrt{2}⑤ 2\\sqrt{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_곡선",
+      "속력_계산",
+      "삼각함수_미분",
+      "극값"
+    ],
+    "exam_intent": "매개변수 곡선의 속력을 미분으로 구하고 최솟값을 찾기",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

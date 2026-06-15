@@ -1,0 +1,17 @@
+{
+  "text_sha": "3f2f7b842137",
+  "meta": {
+    "searchable_text": "20. 다음 조건을 만족시키는 모든 다항함수 f(x)에 대하여 f(1)의\n최댓값은? [4점]\n\\lim_{x→∞}\\frac{f(x)-4x^{3}+3x^{2}}{x^{n+1}+1}=6, \\lim_{x→0}\\frac{f(x)}{x^{n}}=4인 자연수 n이\n존재한다.\n① 12 ② 13 ③ 14 ④ 15 ⑤ 16",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "다항함수의_성질",
+      "극한_조건을_통한_계수_결정"
+    ],
+    "exam_intent": "극한 조건으로부터 다항함수 계수를 결정하고 함수값 최댓값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "추론"
+  }
+}

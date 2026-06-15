@@ -1,0 +1,17 @@
+{
+  "text_sha": "964d0e44ac0d",
+  "meta": {
+    "searchable_text": "10. 1부터 7까지의 자연수 중에서 임의로 서로 다른 3개의 수를\n선택한다. 선택된 3개의 수의 곱을 a, 선택되지 않은 4개의 수의\n곱을 b라 할 때, a와 b가 모두 짝수일 확률은? [3점]\n①\\frac{4}{7}②\\frac{9}{14}③\\frac{5}{7}④\\frac{11}{14}⑤\\frac{6}{7}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률의_기본_정의",
+      "경우의_수_계산",
+      "홀짝성_판별"
+    ],
+    "exam_intent": "홀짝성 분석과 조합을 이용해 조건부 사건의 확률을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

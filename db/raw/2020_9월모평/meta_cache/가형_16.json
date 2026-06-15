@@ -1,0 +1,17 @@
+{
+  "text_sha": "b08cebadf7bc",
+  "meta": {
+    "searchable_text": "16. 좌표공간에 네 점 A(3,0,0), B(0,3,0), C(0,2,1),\nD(0,-\\frac{5}{2},-2)가 있다. 선분 CD를 2:1로 내분하는 점을 E라\n할 때, 선분 AE의 평면 ABC 위로의 정사영의 길이는? [4점]\n①\\frac{\\sqrt{6}}{6}②\\frac{\\sqrt{6}}{3}③\\frac{\\sqrt{6}}{2}④\\frac{2\\sqrt{6}}{3}⑤\\frac{5\\sqrt{6}}{6}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "공간벡터",
+      "정사영",
+      "내분점"
+    ],
+    "exam_intent": "공간좌표와 벡터를 이용한 정사영 길이 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

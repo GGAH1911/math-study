@@ -1,0 +1,17 @@
+{
+  "text_sha": "49d7b03d1087",
+  "meta": {
+    "searchable_text": "10.\\overline{AB}=\\overline{AC}인 이등변삼각형 ABC에서 ∠A=α, ∠B=β라\n하자. tan(α+β)=-\\frac{3}{2}일 때, tanα의 값은? [3점]\n①\\frac{21}{10}②\\frac{11}{5}③\\frac{23}{10}④\\frac{12}{5}⑤\\frac{5}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_덧셈정리",
+      "배각공식",
+      "이등변삼각형의_성질"
+    ],
+    "exam_intent": "이등변삼각형 성질과 삼각함수 덧셈정리의 기본 이해도 평가",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

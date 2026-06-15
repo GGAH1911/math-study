@@ -25,3 +25,23 @@
 솔버 생성도 튜터처럼 **Haiku 먼저 투입**(저비용) → 솔버가 답을 재현 못 하면(`VERIFY_FAIL`)
 Sonnet → Opus 로 에스컬레이트. 킬러도 단계별+sympy 재계산이면 Haiku가 짠다 (실패는 지식부족이
 아니라 건너뛰기). [[feedback_tutor_haiku_stepwise]]
+
+## 핸드솔브 — 정의와 진입시기 (★프로토콜, 반드시 준수)
+
+auto 솔버 사다리(Haiku→Sonnet→Opus, blind/open-book)가 **풀지 못했거나 a-priori 스킵한**
+문제(도형·킬러·verify-fail)와 **need-solver**(gold-match지만 솔버 부재)는
+`db/solutions/_handsolve/<slug>.json` 큐로 핸드오프된다. 이 큐의 처리 규칙은 둘이다:
+
+1. **정의 — 오케스트레이터가 *직접* 푼다.** 핸드솔브는 정의상 *서브에이전트(auto LLM)가 못 푼*
+   문제다. 그러므로 세션의 Claude(오케스트레이터)가 **자신의 추론으로 직접** 솔버 .py(변이안전)와
+   풀이를 작성한다. **다시 서브에이전트/워크플로우에 위임하지 말 것** — 위임은 이미 실패한 auto
+   방식의 반복이라 또 실패한다. (도형은 `tile_for_vision` 타일을 직접 읽고 푼다.
+   [[feedback_tiles_for_llm]])
+
+2. **진입시기 — 실시간·병렬.** 핸드솔브/need-solver가 큐에 *감지되는 즉시*, 캐시 빌드가 끝나길
+   기다리지 말고 **캐시 빌드와 병렬로** 드레인한다. 캐시는 자동 가능분을 계속 돌리고,
+   오케스트레이터는 큐 항목을 실시간으로 가져가 직접 푼다.
+
+**완료 기준(둘 다 필수):** 모든 문제에 ① 솔버 `db/solutions/<slug>.py`
+(`VERIFY_PASS` + 변이테스트 — 틀린 CANDIDATE 면 `VERIFY_FAIL`) ② `verified: true` 풀이.
+솔버 없는 gold-match, 풀이 없는 항목은 **미완료**로 친다.

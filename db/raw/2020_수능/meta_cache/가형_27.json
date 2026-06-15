@@ -1,0 +1,17 @@
+{
+  "text_sha": "34db4f9dc543",
+  "meta": {
+    "searchable_text": "27. 그림과 같이 한 변의 길이가 4이고 ∠BAD=\\frac{π}{3}인\n마름모 ABCD 모양의 종이가 있다. 변 BC와 변 CD의\n중점을 각각 M과 N이라 할 때, 세 선분 AM, AN, MN을\n접는 선으로 하여 사면체 PAMN이 되도록 종이를 접었다.\n삼각형 AMN의 평면 PAM 위로의 정사영의 넓이는 \\frac{q}{p}\\sqrt{3}이다.\np+q의 값을 구하시오. (단, 종이의 두께는 고려하지 않으며\nP는 종이를 접었을 때 세 점 B, C, D가 합쳐지는 점이고,\np와 q는 서로소인 자연수이다.) [4점]",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "사면체",
+      "정사영",
+      "벡터"
+    ],
+    "exam_intent": "마름모 접기로 만든 사면체에서 정사영 넓이를 계산하는 공간도형 문제.",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

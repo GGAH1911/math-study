@@ -683,7 +683,9 @@ def _queue_entry(p: Path, gold, fmt, has_fig, tier, reason, best_sol, trace):
 def _defer(p: Path, best_sol, gold, fmt, has_fig, tier, reason, solved_by, trace):
     """auto 가 검증된 솔버를 못 짠 문제(도형·킬러·검증불가)를 손풀이 큐로 넘긴다.
     opus/agent/salvage 의 분 단위 낭비를 끊고 gold·잠정답·부분풀이를 _handsolve/<slug>.json 으로
-    핸드오프 → 세션의 Claude 가 직접 풀어 db/solutions/<slug>.py (파라미터 솔버) + verified:true 로 대체."""
+    핸드오프 → 세션의 Claude(오케스트레이터)가 **직접** 풀어 db/solutions/<slug>.py (파라미터 솔버)
+    + verified:true 로 대체. ★서브에이전트/워크플로우 재위임 금지(=실패한 auto 반복). 큐 감지 즉시
+    캐시 빌드와 **병렬·실시간**으로 드레인. 상세 프로토콜 scripts/CLAUDE.md '핸드솔브 — 정의와 진입시기'."""
     _queue_entry(p, gold, fmt, has_fig, tier, reason, best_sol, trace)
     steps = (best_sol or {}).get('solution_steps') or [f'auto 솔버 생성 실패({reason}) — 손풀이 대기(handsolve queue).']
     av = (best_sol or {}).get('answer_value') or (best_sol or {}).get('answer') or gold

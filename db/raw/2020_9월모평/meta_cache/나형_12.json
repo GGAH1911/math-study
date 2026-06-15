@@ -1,0 +1,16 @@
+{
+  "text_sha": "a97eac4df5fa",
+  "meta": {
+    "searchable_text": "12.\\sum_{k=1}^{9}(k+1)^{2}-\\sum_{k=1}^{10}(k-1)^{2}의 값은? [3점]\n① 91 ② 93 ③ 95 ④ 97 ⑤ 99",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "합_표기(시그마)",
+      "수열의_합"
+    ],
+    "exam_intent": "시그마 기호의 이해와 합의 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

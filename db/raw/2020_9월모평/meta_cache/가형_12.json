@@ -1,0 +1,17 @@
+{
+  "text_sha": "a2df27ad3040",
+  "meta": {
+    "searchable_text": "12. 확률변수 X가 평균이 m, 표준편차가 \\frac{m}{3}인 정규분포를 따르고\nP(X≤\\frac{9}{2})=0.9987\n\\begin{array}{cc}z & P(0≤Z≤z) \\\\ 1.5 & 0.4332 \\\\ 2.0 & 0.4772 \\\\ 2.5 & 0.4938 \\\\ 3.0 & 0.4987\\end{array}\n일 때, 오른쪽 표준정규분포표를\n이용하여 m의 값을 구한 것은? [3점]\n①\\frac{3}{2}②\\frac{7}{4}③ 2 ④\\frac{9}{4}⑤\\frac{5}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "통계",
+    "concepts": [
+      "정규분포",
+      "표준화",
+      "표준정규분포표"
+    ],
+    "exam_intent": "정규분포의 표준화와 표를 이용한 평균 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

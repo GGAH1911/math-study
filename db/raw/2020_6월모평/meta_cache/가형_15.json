@@ -1,0 +1,16 @@
+{
+  "text_sha": "b3f3395a4517",
+  "meta": {
+    "searchable_text": "15. 좌표평면 위를 움직이는 점 P의 시각 t(t>0)에서의\n위치 (x,y)가\nx=2\\sqrt{t+1}, y=t-ln(t+1)\n이다. 점 P의 속력의 최솟값은? [4점]\n① \\frac{\\sqrt{3}}{8}② \\frac{\\sqrt{6}}{8}③ \\frac{\\sqrt{3}}{4}④ \\frac{\\sqrt{6}}{4}⑤ \\frac{\\sqrt{3}}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "매개변수_함수의_미분",
+      "속력"
+    ],
+    "exam_intent": "매개변수 곡선의 속력 함수를 미분하여 최솟값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

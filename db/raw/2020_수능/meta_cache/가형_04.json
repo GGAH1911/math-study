@@ -1,0 +1,15 @@
+{
+  "text_sha": "282969499c6b",
+  "meta": {
+    "searchable_text": "4\n4. (2x+\\frac{1}{x^{2}})의 전개식에서 x의 계수는? [3점]\n① 16 ② 20 ③ 24 ④ 28 ⑤ 32",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "이항정리"
+    ],
+    "exam_intent": "이항정리를 이용하여 전개식의 x의 계수를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

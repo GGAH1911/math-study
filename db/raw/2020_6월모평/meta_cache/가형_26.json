@@ -1,0 +1,17 @@
+{
+  "text_sha": "6db5073f6b7d",
+  "meta": {
+    "searchable_text": "26. 좌표평면에서 |\\vec{OP}|=10을 만족시키는 점 P가 나타내는\n도형 위의 점 A(a,b)에서의 접선을 l, 원점을 지나고\n방향벡터가 (1,1)인 직선을 m이라 하고, 두 직선 l,m이\n이루는 예각의 크기를 θ라 하자. cosθ=\\frac{\\sqrt{2}}{10}일 때,\n두 수 a,b의 곱 ab의 값을 구하시오.\n(단, O는 원점이고, a>b>0이다.) [4점]",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "이차곡선",
+    "concepts": [
+      "원의_접선_방정식",
+      "두_직선이_이루는_각",
+      "벡터의_내적"
+    ],
+    "exam_intent": "원의 접선과 직선이 이루는 각을 벡터의 내적으로 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "응용"
+  }
+}

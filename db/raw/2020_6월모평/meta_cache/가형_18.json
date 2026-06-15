@@ -1,0 +1,16 @@
+{
+  "text_sha": "0d5ae9574f30",
+  "meta": {
+    "searchable_text": "18. 좌표평면 위에 두 점 A(3,0), B(0,3)과 직선 x=1 위의\n점 P(1,a)가 있다. 점 Q가 중심각의 크기가 \\frac{π}{2}인\n부채꼴 OAB의 호 AB 위를 움직일 때 |+|\\vec{OP}\\vec{OQ}의\n최댓값을 f(a)라 하자. f(a)=5가 되도록 하는 모든 실수 a의\n값의 곱은? (단, O는 원점이다.) [4점]\n① -5\\sqrt{3}② -4\\sqrt{3}③ -3\\sqrt{3}④ -2\\sqrt{3}⑤ -\\sqrt{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_합과_크기",
+      "매개변수와_최댓값"
+    ],
+    "exam_intent": "벡터의 합의 크기를 최댓값으로 나타내어 조건을 만족하는 매개변수를 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "7e657d227175",
+  "meta": {
+    "searchable_text": "25. 집합 X={1,2,3,4,5}에 대하여 다음 조건을 만족시키는\n함수 f:X→X의 개수를 구하시오. [3점]\n(가) 함수 f의 치역의 원소의 개수는 4이다.\n(나) f(a)=a인 X의 원소 a의 개수는 3이다.",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "함수의_치역",
+      "고정점",
+      "경우의_수"
+    ],
+    "exam_intent": "함수의 치역과 고정점 조건을 동시에 만족하는 경우의 수를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

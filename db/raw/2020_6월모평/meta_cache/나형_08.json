@@ -1,0 +1,17 @@
+{
+  "text_sha": "2cf4f3119363",
+  "meta": {
+    "searchable_text": "8. log_{2}5=a, log_{5}3=b일 때, log_{5}12를 a, b로 옳게 나타낸 것은?\n[3점]\n① \\frac{1}{a}+b ② \\frac{2}{a}+b ③ \\frac{1}{a}+2b\n④ a+\\frac{1}{b}⑤ 2a+\\frac{1}{b}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_밑_변환",
+      "로그의_거듭제곱_법칙",
+      "로그의_덧셈_분해"
+    ],
+    "exam_intent": "밑 변환과 로그 성질을 이용해 복합 로그값을 주어진 변수로 표현",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "84c3673d0ea8",
+  "meta": {
+    "searchable_text": "24. 공비가 양수인 등비수열 {a_{n}}에 대하여\na_{1}=2, \\frac{a_{5}}{a_{3}}=9\n일 때, \\sum_{k=1}^{4}a_{k}의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등비수열",
+      "등비수열의_합"
+    ],
+    "exam_intent": "등비수열의 공비를 구하고 부분합을 계산하는 기본 문제",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

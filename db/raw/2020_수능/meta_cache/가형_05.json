@@ -1,0 +1,16 @@
+{
+  "text_sha": "47a4dabf28ee",
+  "meta": {
+    "searchable_text": "5. 곡선 x^{2}-3xy+y^{2}=x 위의 점 (1,0)에서의 접선의\n기울기는? [3점]\n①\\frac{1}{12}②\\frac{1}{6}③\\frac{1}{4}④\\frac{1}{3}⑤\\frac{5}{12}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차곡선",
+    "concepts": [
+      "곡선의_접선",
+      "음함수_미분"
+    ],
+    "exam_intent": "음함수 미분으로 2차 곡선 위 점의 접선 기울기 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

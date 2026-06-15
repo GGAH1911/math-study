@@ -1,0 +1,13 @@
+{
+  "text_sha": "db0744f6b66c",
+  "meta": {
+    "searchable_text": "9. 수열 {an}은 a1=1이고, 모든 자연수 n에 대하여\na_{n+1}+(-1)^{n}×a_{n}=2^{n}\n을 만족시킨다. a_{5}의 값은? [3점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [],
+    "exam_intent": "점화식을 차례대로 계산하여 수열의 특정 항을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}
