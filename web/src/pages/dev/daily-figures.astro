@@ -1,0 +1,46 @@
+---
+// 개발용 갤러리 — '오늘의 개념' 그림(개념별 LLM 생성·캐시)을 한눈에 본다. /dev(관리자 전용).
+// 캐시(concept-illustrations.json)가 크론으로 매일 늘어나므로, 품질 검토·재생성 판단에 쓴다.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PaperHero from '../../components/PaperHero.tsx';
+import { readConceptGraph } from '../../lib/health.ts';
+import { readFileSync } from 'node:fs';
+export const prerender = false;
+
+let cache: Record<string, any> = {};
+try { cache = JSON.parse(readFileSync(new URL('../../data/concept-illustrations.json', import.meta.url), 'utf-8')); } catch {}
+const graph = readConceptGraph();
+const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+const entries = Object.entries(cache).map(([id, spec]) => {
+  const n = byId.get(id);
+  return { id, spec, label: (spec as any).label ?? n?.label ?? id, domain: n?.domain, unit: n?.unit };
+});
+---
+<BaseLayout title="오늘의 개념 그림">
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <h1 class="text-2xl font-bold tracking-tight">오늘의 개념 그림 — 갤러리</h1>
+    <p class="mt-2 text-sm text-[color:var(--color-muted)]">
+      개념별로 LLM이 생성해 캐시한 그림 <b>{entries.length}</b>개. 크론(매일 23:40 KST)이 다음 날치를 미리 만들어 점점 늘어납니다.
+      그림이 마음에 안 들면 캐시에서 그 항목을 지우고 <code class="text-xs">node web/scripts/gen_daily_illustration.mjs</code> 로 재생성하세요.
+    </p>
+
+    {entries.length === 0 ? (
+      <p class="mt-8 text-sm text-[color:var(--color-subtle)]">아직 생성된 그림이 없습니다.</p>
+    ) : (
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {entries.map((e) => (
+          <a href={`/concepts/${e.id}`} class="card block hover:border-[color:var(--color-accent)] transition">
+            <div class="h-[150px]"><PaperHero client:visible spec={e.spec} label={e.label} /></div>
+            <div class="mt-2 border-t border-[color:var(--color-border)] pt-2">
+              <div class="text-sm font-semibold truncate">{e.label}</div>
+              <div class="text-xs text-[color:var(--color-subtle)] truncate">
+                {[e.domain, e.unit].filter(Boolean).join(' · ') || '—'}
+                <span class="ml-1">· strokes {(e.spec as any).strokes?.length ?? 0}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>
