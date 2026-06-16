@@ -111,7 +111,7 @@ next_review: ${date}
 
 # ${body.title ? humanizeTitle(body.title) : body.question.slice(0, 60)}
 
-> **출처**: [${humanizeSlugLabel(body.slug)}](../concepts/${body.slug}.md) 페이지에서 진행한 LLM 튜터 대화를 영구 wiki 노드로 promote (LWIP Query & Promote, lifecycle.md §Query-Promote).
+> **출처**: [${humanizeSlugLabel(body.slug)}](../concepts/${body.slug}.md) 페이지에서 진행한 학습 대화를 정리한 노트입니다.
 
 ## 질문
 

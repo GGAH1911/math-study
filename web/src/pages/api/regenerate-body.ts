@@ -34,19 +34,24 @@ function loadSynthesesFor(slug: string): { title: string; body: string }[] {
 }
 
 const TUTOR_SYSTEM = `당신은 한국 수능을 준비하는 학생용 수학 wiki의 콘텐츠 라이터입니다.
-한 번에 spoke 페이지(정의/정리/예제) 하나의 '본문' 섹션을 작성합니다.
+개념 페이지(정의/정리/예제) 하나의 '본문' 섹션을 작성합니다.
 
 요구사항:
 1. 한국어로. 한국 고등학교 교육과정 용어 우선.
 2. 수식은 KaTeX inline \`$...$\` 또는 display \`$$...$$\`로.
 3. 200-400 단어 분량.
 4. 구조:
-   - 정의(definition): ### 정확한 진술 → ### 직관/기하적 의미 → ### 한 줄 예
-   - 정리(theorem): ### 진술 + 가정 → ### 간단한 유도/증명 스케치 → ### 의의/응용
-   - 예제(example): ### 문제 → ### 단계별 풀이 → ### 답 → ### 변형/주의
+   - 정의: ### 정확한 진술 → ### 직관/기하적 의미 → ### 한 줄 예
+   - 정리: ### 진술 + 가정 → ### 간단한 유도/증명 스케치 → ### 의의/응용
+   - 예제: ### 문제 → ### 단계별 풀이 → ### 답 → ### 변형/주의
 5. h1, h2 헤더 절대 사용 금지. h3(###) 이하만.
 6. 검산 가능한 수치 예제는 sympy 코드 한 줄 포함 가능.
-7. 출력은 본문 마크다운만. "본문:" 같은 라벨 금지. ### 헤더로 시작.`;
+7. 출력은 본문 마크다운만. "본문:" 같은 라벨 금지. ### 헤더로 시작.
+8. ★사용자에게 보이는 글이다. 자연스러운 한국어만 쓰고 개발 용어·영문 표기를 본문에 노출하지 말 것
+   (definition/theorem/example, spoke, mastery, concept_gap, Phase, LWIP 같은 단어 금지).
+9. ★절대 학생에게 되묻지 말 것. "어떤 개념인지 확인이 필요합니다", "정보가 누락되어 있습니다"
+   같은 질문·요청을 본문으로 쓰지 마라. 제목이 모호하면 제목·단원·선수개념으로 가장 합리적인
+   표준 교육과정 개념을 스스로 판단해 그 본문을 바로 작성하라.`;
 
 type RegenerateRequest = {
   slug: string;
@@ -99,9 +104,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const brief = briefMatch ? briefMatch[1].trim() : '';
   const preLabels = prereqs.map((p) => p.split('/').pop()?.replace(/\.md$/, '').replace(/_/g, ' ')).join(', ') || '없음';
 
-  let userPrompt = `다음 spoke 페이지의 본문을 작성하세요.
+  let userPrompt = `다음 개념 페이지의 본문을 작성하세요.
 
-페이지 slug: ${slug}
+페이지 제목: ${slug.replace(/_/g, ' ')}
 타입: ${ctype}
 학년: ${grade}
 소속 단원: ${unit}
