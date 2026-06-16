@@ -660,17 +660,30 @@ html.dark {
     border-left: none; border-top: 1px solid var(--color-border-strong);
     border-radius: 14px 14px 0 0;
   }
-  /* 손잡이 — 시트 상단 가장자리에서 위로 튀어나온 가로 탭(중앙). */
+  /* 손잡이 — 시트 상단 가장자리에서 위로 튀어나온 가로 탭(중앙). 모바일은 '탭'으로 열므로
+     touch-action 을 manipulation 으로(탭 지연 제거, 위로-스와이프 가로채기 안 함). */
   .ctx-drawer-handle {
     top: 0; left: 50%; right: auto;
     transform: translate(-50%, -100%);
     flex-direction: row;
-    padding: 7px 16px;
+    padding: 9px 18px;                 /* 탭 영역 살짝 키움 */
     writing-mode: horizontal-tb;
     border: 1px solid var(--color-border-strong); border-bottom: none;
     border-radius: 12px 12px 0 0;
+    touch-action: manipulation;
+    transition: color 120ms ease, background-color 120ms ease,
+                transform 280ms cubic-bezier(.22, 1, .36, 1);
   }
   .ctx-drawer-handle .ctx-drawer-handle-icon { writing-mode: horizontal-tb; }
+  /* 닫힘 상태에서만 손잡이를 시스템 제스처(홈 인디케이터/제스처 바) 영역 위로 띄운다 —
+     시각적 겹침 방지 + 탭 영역이 OS 예약 가장자리와 안 겹치게. 열리면 시트 상단에 밀착. */
+  .ctx-drawer[data-open="false"] .ctx-drawer-handle {
+    transform: translate(-50%, calc(-100% - env(safe-area-inset-bottom) - 16px));
+  }
+  /* 눌림 피드백 — 탭하면 살짝 가라앉는 느낌(translate 유지하며 압축). */
+  .ctx-drawer[data-open="false"] .ctx-drawer-handle:active {
+    transform: translate(-50%, calc(-100% - env(safe-area-inset-bottom) - 12px)) scaleY(.96);
+  }
 }
 
 /* 데스크탑(xl+): 인라인 sticky 컬럼으로 복귀 — 서랍 어포던스 전부 숨김(회귀 0) */
