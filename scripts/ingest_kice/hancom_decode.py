@@ -660,22 +660,35 @@ def _parse(chars, bars, main=None, depth=0, row_sep=None):
         cs = [it[3] for it in ln if it[2] == 'c']
         mc = [c for c in cs if c.size >= main * 0.85 and not _han(decode_str(c.get_text()))] or cs  # baseline은 본문크기 '한글 아닌' 글자 기준(한글이 1pt 낮아 첨자 오판하던 것 방지)
         base = sorted(c.y0 for c in mc)[len(mc) // 2] if mc else 0
-        buf = ''; mode = 0; px = None
+        buf = ''; mode = 0; px = None; run = []
+
+        def _flush():
+            # 첨자(mode≠0) 런은 _parse 로 재귀 렌더 → 첨자 안의 중첩 위/아래첨자(예: log_{2^{n}})
+            # 복원. 본문(mode 0) 런은 글자 그대로(기존 동작 보존). main=None 으로 클러스터 자체
+            # baseline 재계산(482/485 의 상·하한 재귀와 동일 패턴).
+            nonlocal buf, run
+            if not run:
+                return
+            if mode == 0:
+                buf += ''.join(decode_str(cc.get_text()) for cc in run)
+            else:
+                buf += ('^{' if mode == 1 else '_{') + _parse(run, bars, None, depth + 1) + '}'
+            run = []
+
         for (y, x, kind, pay) in ln:
             if kind == 'p':
-                if mode: buf += '}'; mode = 0
+                _flush(); mode = 0
                 buf += pay; px = None; continue
-            c = pay; ch = decode_str(c.get_text())
+            c = pay
             if px is not None and c.x0 - px > main * 0.5:
-                if mode: buf += '}'; mode = 0
+                _flush(); mode = 0
                 if not buf.endswith(' '): buf += ' '
             px = c.x1; small = c.size < main * 0.82
             m = 1 if (small and c.y0 > base + main * 0.22) else (-1 if (small and c.y0 + c.size < base + main * 0.55) else 0)
             if m != mode:
-                if mode: buf += '}'
-                buf += '^{' if m == 1 else ('_{' if m == -1 else ''); mode = m
-            buf += ch
-        if mode: buf += '}'
+                _flush(); mode = m
+            run.append(c)
+        _flush()
         out.append(buf.strip())
     sep = row_sep if row_sep is not None else (' ' if depth else '\n')
     return sep.join(o for o in out if o)
