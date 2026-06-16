@@ -23,12 +23,14 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
     {/* 모바일 메뉴 버튼(<lg) — 상단 단일 버튼. 누르면 전체 메뉴 시트가 헤더 아래로 펼쳐짐. */}
     <button type="button" data-dock-more aria-expanded="false" aria-controls="dock-sheet" aria-label="메뉴"
       class="inline-flex items-center justify-center size-9 -ml-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-base">☰</button>
-    {/* 브랜드 인장 — 모눈 위 빨간 곡선 한 획(작도 모티프). 한자 사용 금지(사용자 지침). */}
-    <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
-      <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
-      <path d="M6 21 Q 14 -2 22 21" fill="none" stroke="var(--pen-red)" stroke-width="2.4" stroke-linecap="round"/>
-    </svg>
-    <span class="text-sm font-serif font-bold">Math Study</span>
+    {/* 브랜드 인장 + 이름 — 누르면 홈(/)으로. 모눈 위 빨간 곡선 한 획(작도 모티프). */}
+    <a href="/" class="flex items-center gap-2" aria-label="홈으로">
+      <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
+        <path d="M6 21 Q 14 -2 22 21" fill="none" stroke="var(--pen-red)" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <span class="text-sm font-serif font-bold">Math Study</span>
+    </a>
   </div>
 
   <div class="ml-auto flex items-center gap-3 text-xs">
@@ -93,7 +95,8 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
   <a href="/tools"     class={pathname.startsWith('/tools') ? 'active' : ''}><span class="icon">⚒</span> 학습 자료</a>
   <a href="/log"       class={pathname.startsWith('/log') ? 'active' : ''}><span class="icon">☴</span> 기록</a>
   <a href="/settings"  class={pathname.startsWith('/settings') ? 'active' : ''}><span class="icon">⚙</span> 설정</a>
-  <button type="button" data-theme-toggle>◐ 테마 전환</button>
+  <button type="button" data-theme-toggle>
+    <span class="dark:hidden" aria-hidden="true">☀</span><span class="hidden dark:inline" aria-hidden="true">☾</span> 테마 전환</button>
   <button type="button" data-logout>→ 로그아웃</button>
 </div>
 <script is:inline>
