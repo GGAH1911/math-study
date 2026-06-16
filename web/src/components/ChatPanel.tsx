@@ -530,7 +530,7 @@ class GraphicErrorBoundary extends Component<{ children: ReactNode; kind: string
   }
 }
 
-function MdSegment({ content }: { content: string }) {
+export function MdSegment({ content }: { content: string }) {
   // 동기 markdown 처리 (escape + inline + 표). 이걸 첫 paint 시점에 바로 표시해서
   // KaTeX 모듈 import 완료 전에 raw content가 DOM에 들어가는 사고를 막는다.
   // (이전: `html || content` 가 fallback이라 LLM이 raw `<span>` 같은 HTML을

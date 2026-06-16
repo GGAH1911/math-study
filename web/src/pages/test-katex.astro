@@ -1,0 +1,35 @@
+---
+// 임시 KaTeX 렌더 관측 페이지 (prerender=true → 인증 우회, 공개). 실제 ChatPanel 의
+// MdSegment(=normalizeLlmMarkup→renderMarkdown→applyKatex 클라이언트 파이프라인)로
+// malformed/정상 케이스를 렌더해 헤드리스로 관측한다. 검증 끝나면 삭제.
+export const prerender = true;
+import { MdSegment } from '../components/ChatPanel.tsx';
+
+const CASES: { name: string; content: string }[] = [
+  { name: 'malformed 순열 display', content: '$$_nP_r = \\text{"$n개의 서로 다른 것 중에서 r개를 선택해서 순서대로 배열한 경우의 수"}$' },
+  { name: '순열 기호 표', content: '| 상황 | 예제 | 순열 기호 |\n|---|---|---|\n| 줄 세우기 | "5명을 일렬로" | $_5P_5$ |\n| 자리 배치 | "6명 중 3명" | $_6P_3$ |\n| 역할 배분 | "10명 중 3명" | $_10P_3$ |\n| 숫자 만들기 | "0~3 중 3개" | $_4P_3$ |' },
+  { name: 'malformed+표 한 메시지', content: '순열이란:\n$$_nP_r = \\text{"$n개의 서로 다른 것 중에서 r개를 선택해서 순서대로 배열한 경우의 수"}$\n\n| 상황 | 순열 기호 |\n|---|---|\n| 줄 세우기 | $_5P_5$ |\n| 자리 배치 | $_6P_3$ |' },
+  { name: '정상 inline', content: '값은 $_5P_5$ 이고 $_6C_2 = 15$ 이다.' },
+  { name: '정상 display', content: '$$x^2 + y^2 = r^2$$' },
+  { name: '\\text 한글', content: '$\\text{공통배수}=30$ 이다.' },
+  { name: '부등식', content: '범위는 $-2 < x < 2$ 이다.' },
+  { name: '헤딩+수식', content: '## 순열\n공식은 $_nP_r$ 이고 $_nC_r$ 이다.' },
+];
+---
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>KaTeX 렌더 관측</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <style>body { font-family: sans-serif; padding: 16px; } .case { border: 1px solid #ccc; margin: 8px 0; padding: 8px; } .name { font-weight: bold; color: #555; font-size: 13px; }</style>
+  </head>
+  <body>
+    <h1>KaTeX 렌더 관측 (test-katex)</h1>
+    {CASES.map((c) => (
+      <div class="case" data-case={c.name}>
+        <div class="name">{c.name}</div>
+        <MdSegment client:load content={c.content} />
+      </div>
+    ))}
+  </body>
+</html>
