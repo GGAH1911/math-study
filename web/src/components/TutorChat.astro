@@ -1,0 +1,51 @@
+---
+// 튜터 대화 래퍼 — 우측 하단 원형 FAB 를 누르면 큰 대화창이 뜨는 형식.
+//  fab='always' : 모든 화면에서 FAB → 오버레이(개념 노드용. 본문이 풀폭을 쓰게 됨).
+//  fab='mobile' : md+(≥768) 는 인라인 sticky 컬럼(문제풀이 현행), <md 만 FAB → 오버레이.
+// 대화가 메인이라 대화창은 크게(데스크탑 clamp 폭 + 높은 높이, 모바일 풀시트).
+// 스타일은 global.css .tutor-* (unlayered). 개폐는 vanilla(인스턴스별 data-tutor 배선).
+import ChatPanel from './ChatPanel.tsx';
+interface Props {
+  slug: string;
+  unitTitle: string;
+  collection?: 'concepts' | 'problems' | 'dashboard';
+  fab?: 'always' | 'mobile';
+  fabLabel?: string;
+}
+const { slug, unitTitle, collection = 'concepts', fab = 'always', fabLabel = '튜터와 대화' } = Astro.props;
+---
+<div class:list={['tutor-chat', `tutor-chat--${fab}`]} data-open="false" data-tutor>
+  <div class="tutor-backdrop" data-tutor-backdrop hidden></div>
+  <div class="tutor-panel" data-tutor-panel role="dialog" aria-label="튜터와의 대화">
+    {/* 닫기 바 — ChatPanel 자체 헤더(설정·지우기)와 안 겹치게 그 위에 얇게. 인라인 컬럼(md+)에선 숨김. */}
+    <div class="tutor-panel-bar">
+      <button type="button" class="tutor-close" data-tutor-close aria-label="대화창 닫기">✕</button>
+    </div>
+    <ChatPanel client:load fill slug={slug} unitTitle={unitTitle} collection={collection} />
+  </div>
+  <button type="button" class="tutor-fab" data-tutor-fab aria-label={fabLabel} aria-expanded="false" title={fabLabel}>
+    <span class="tutor-fab-icon" aria-hidden="true">🤖</span>
+  </button>
+</div>
+<script>
+  // 페이지당 하나라고 가정하되 data-tutor 단위로 안전 배선(여러 개여도 독립 동작).
+  document.querySelectorAll('[data-tutor]').forEach((root) => {
+    const el = root as HTMLElement;
+    if (el.dataset.tutorBound) return;
+    el.dataset.tutorBound = '1';
+    const fabBtn = el.querySelector<HTMLButtonElement>('[data-tutor-fab]');
+    const closeBtn = el.querySelector<HTMLButtonElement>('[data-tutor-close]');
+    const backdrop = el.querySelector<HTMLElement>('[data-tutor-backdrop]');
+    const set = (open: boolean) => {
+      el.dataset.open = String(open);
+      if (backdrop) backdrop.hidden = !open;
+      fabBtn?.setAttribute('aria-expanded', String(open));
+    };
+    fabBtn?.addEventListener('click', () => set(el.dataset.open !== 'true'));
+    closeBtn?.addEventListener('click', () => set(false));
+    backdrop?.addEventListener('click', () => set(false));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && el.dataset.open === 'true') set(false);
+    });
+  });
+</script>

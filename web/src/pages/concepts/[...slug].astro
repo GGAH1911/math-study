@@ -6,7 +6,7 @@
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
-import ChatPanel from '../../components/ChatPanel.tsx';
+import TutorChat from '../../components/TutorChat.astro';
 import ContextDrawer from '../../components/ContextDrawer.astro';
 import RegenerateBodyButton from '../../components/RegenerateBodyButton.tsx';
 import LearningNoteButton from '../../components/LearningNoteButton.tsx';
@@ -117,8 +117,11 @@ const PREVIEW_COUNT = 8;
       <div class="prose prose-invert max-w-none">
         <Content />
       </div>
-      <ChatPanel client:load slug={entry.id} unitTitle={fm.unit ?? entry.id} />
     </article>
+
+    {/* 튜터 대화 — 본문 하단 인라인 폐지. 모든 화면에서 우측 하단 FAB → 큰 대화창. */}
+    <TutorChat slug={entry.id} unitTitle={fm.unit ?? entry.id} collection="concepts" fab="always" />
+
 
     <ContextDrawer label="기출 · 개념지도 · 노트" icon="📑">
       <section class="card">

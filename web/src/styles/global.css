@@ -702,6 +702,80 @@ html.dark {
   }
 }
 
+/* ── 튜터 대화 FAB + 오버레이 ─────────────────────────────────────────────
+   우측 하단 원형 FAB → 큰 대화창. 대화가 메인이라 패널을 크게(데스크탑 clamp 폭·높은 높이,
+   모바일 풀시트). fab='always'(개념)=모든 화면 FAB / fab='mobile'(문제)=md+ 인라인 컬럼. */
+/* 래퍼는 레이아웃에 관여 안 함(grid 셀 미점유) — FAB·패널은 자체 fixed/sticky 로 배치.
+   안 그러면 개념 grid(본문+래퍼+컨텍스트)에서 빈 래퍼가 컨텍스트 컬럼을 밀어낸다. */
+.tutor-chat { display: contents; }
+.tutor-fab {
+  position: fixed;
+  right: 16px; bottom: calc(env(safe-area-inset-bottom) + 16px);
+  z-index: 48;
+  width: 56px; height: 56px; border-radius: 999px;
+  display: grid; place-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  box-shadow: var(--shadow-card-hover);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.tutor-fab:hover { transform: translateY(-1px); background: var(--color-bg); }
+.tutor-fab:active { transform: scale(.95); }
+.tutor-fab-icon { font-size: 24px; line-height: 1; }
+.tutor-chat[data-open="true"] .tutor-fab { display: none; }   /* 열리면 FAB 숨김(패널이 덮음) */
+
+.tutor-backdrop { position: fixed; inset: 0; z-index: 48; background: rgba(29, 26, 21, 0.28); }
+
+.tutor-panel {
+  position: fixed; z-index: 49;
+  right: 16px; bottom: calc(env(safe-area-inset-bottom) + 16px);
+  width: clamp(380px, 42vw, 600px);
+  height: min(84vh, 820px);
+  display: flex; flex-direction: column;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card-hover);
+  padding: 0 12px 12px;
+  transform: translateY(16px) scale(.98); opacity: 0; pointer-events: none;
+  transition: transform .22s cubic-bezier(.22, 1, .36, 1), opacity .18s ease;
+}
+.tutor-chat[data-open="true"] .tutor-panel { transform: none; opacity: 1; pointer-events: auto; }
+.tutor-panel-bar { display: flex; justify-content: flex-end; padding: 8px 0 4px; flex-shrink: 0; }
+.tutor-close {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: grid; place-items: center;
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  color: var(--color-muted); font-size: 13px; cursor: pointer;
+}
+.tutor-close:hover { color: var(--color-text); border-color: var(--color-border-strong); }
+/* ChatPanel(fill) 의 root <section.card> 가 패널 높이를 꽉 채우게 */
+.tutor-panel > section.card { flex: 1 1 auto; min-height: 0; }
+
+/* 모바일 <768: 거의 전체를 덮는 풀시트 */
+@media (max-width: 767px) {
+  .tutor-panel {
+    right: 8px; left: 8px; bottom: 8px; top: auto;
+    width: auto; height: 88vh; height: 88dvh;
+  }
+}
+
+/* fab='mobile'(문제풀이): md+(≥768) 는 인라인 sticky 컬럼(현행). FAB·백드롭·닫기바 숨김.
+   (.tutor-chat 는 이미 display:contents 라 .tutor-panel 이 grid 의 채팅 컬럼 자리에 놓인다) */
+@media (min-width: 768px) {
+  .tutor-chat--mobile .tutor-fab,
+  .tutor-chat--mobile .tutor-backdrop,
+  .tutor-chat--mobile .tutor-panel-bar { display: none !important; }
+  .tutor-chat--mobile .tutor-panel {
+    position: sticky; top: 4rem; right: auto; left: auto; bottom: auto;
+    width: auto; height: calc(100vh - 5rem); height: calc(100dvh - 5rem);
+    transform: none; opacity: 1; pointer-events: auto;
+    background: transparent; border: none; box-shadow: none; border-radius: 0;
+    padding: 0;
+  }
+}
+
 /* 데스크탑(xl+): 인라인 sticky 컬럼으로 복귀 — 서랍 어포던스 전부 숨김(회귀 0) */
 @media (min-width: 1280px) {
   .ctx-drawer {
