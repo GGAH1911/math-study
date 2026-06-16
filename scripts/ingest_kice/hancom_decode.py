@@ -11,6 +11,7 @@
 """
 from __future__ import annotations
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -694,6 +695,15 @@ def _parse(chars, bars, main=None, depth=0, row_sep=None):
     return sep.join(o for o in out if o)
 
 
+# 시험지 마지막 문제(30번)에 페이지 꼬리로 붙는 답안지 안내 푸터. 30번 bbox 가 페이지 끝까지
+# 잡혀 본문에 빨려든다 → 본문이 아니므로 제거. '※/＊/* 확인 사항 … 기입(표기) … 하시오.'
+_FOOTER = re.compile(r'\n?[ \t]*[※*＊][ \t]*확인[ \t]*사항.*$', re.S)
+
+
+def _strip_footer(t: str) -> str:
+    return _FOOTER.sub('', t).rstrip()
+
+
 def decode_problem(pdf_path, page_num, bbox_pdf):
     """문제 영역(bbox.py: 1-index page, top-left bbox_pdf)의 본문을 기하 구조복원으로 디코드."""
     from pdfminer.high_level import extract_pages
@@ -704,5 +714,5 @@ def decode_problem(pdf_path, page_num, bbox_pdf):
         inb = lambda c, x, y: bx0 - 2 <= x <= bx1 + 2 and by0 - 2 <= (H - y) <= by1 + 2
         rc = [c for c in chars if inb(c, (c.x0 + c.x1) / 2, (c.y0 + c.y1) / 2)]
         rb = [b for b in bars if bx0 - 2 <= (b[0] + b[1]) / 2 <= bx1 + 2 and by0 - 2 <= (H - b[2]) <= by1 + 2]
-        return _parse(rc, rb)
+        return _strip_footer(_parse(rc, rb))
     return ''
