@@ -111,6 +111,18 @@ function normalizeLlmMarkup(text: string): string {
   let out = text
     .replace(/<\s*\/?\s*(?:strong|b)\s*>/gi, '**')
     .replace(/<\s*\/?\s*(?:em|i)\s*>/gi, '*');
+  // ②a \text{…} 군더더기 복구 (매칭 *전*). LLM 이 `\text{"$n개의 …$"}` 처럼 감싸는 "
+  //     + math 스위치 $ 를 넣어 한글이 math 모드로 깨지고, 닫는 $ 가 하나라 delimiter 짝까지
+  //     어긋나 수식 전체가 raw 로 노출되던 것을 정리한다. (정상 `\text{$n$개}`=짝수 $ 는 보존.)
+  out = out.replace(/\\text\{([^{}]*)\}/g, (_m: string, inner: string) => {
+    let c = inner.replace(/\$([^$]*[가-힣][^$]*)\$/g, '$1');   // 한글 감싼 $…$ → 평문
+    if (((c.match(/\$/g) || []).length) % 2 === 1) c = c.replace(/\$/g, ''); // 홀수 $ = 짝 깨짐 → 제거
+    c = c.replace(/^\s*"\s*/, '').replace(/\s*"\s*$/, '');     // 감싼 " 제거
+    return `\\text{${c}}`;
+  });
+  // ②b 짝 안 맞는 display 보정: `$$…$`(내부 $ 없음 + 닫는 $ 하나) → `$$…$$`. (②a 로 \text 안 $ 가
+  //     사라진 뒤라야 내부 $ 가 없어 매칭됨. 정상 `$$…$$` 는 닫는 $ 뒤가 $ 라 (?!\$) 로 제외.)
+  out = out.replace(/\$\$([^$]+)\$(?!\$)/g, (_m: string, c: string) => `$$${c}$$`);
   // ② \text{…} 밖에 '맨' 한글이 든 $…$ / $$…$$ 는 수식이 아니라 산문 → delimiter 제거.
   //    (\text{공통배수} 처럼 정상 수식 안의 한글은 strip 후 판정해 보존.)
   const isProse = (inner: string): boolean =>
