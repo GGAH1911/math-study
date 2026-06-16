@@ -111,24 +111,22 @@ function normalizeLlmMarkup(text: string): string {
   let out = text
     .replace(/<\s*\/?\s*(?:strong|b)\s*>/gi, '**')
     .replace(/<\s*\/?\s*(?:em|i)\s*>/gi, '*');
-  // ②a \text{…} 군더더기 복구 (매칭 *전*). LLM 이 `\text{"$n개의 …$"}` 처럼 감싸는 "
-  //     + math 스위치 $ 를 넣어 한글이 math 모드로 깨지고, 닫는 $ 가 하나라 delimiter 짝까지
-  //     어긋나 수식 전체가 raw 로 노출되던 것을 정리한다. (정상 `\text{$n$개}`=짝수 $ 는 보존.)
-  out = out.replace(/\\text\{([^{}]*)\}/g, (_m: string, inner: string) => {
-    let c = inner.replace(/\$([^$]*[가-힣][^$]*)\$/g, '$1');   // 한글 감싼 $…$ → 평문
-    if (((c.match(/\$/g) || []).length) % 2 === 1) c = c.replace(/\$/g, ''); // 홀수 $ = 짝 깨짐 → 제거
-    c = c.replace(/^\s*"\s*/, '').replace(/\s*"\s*$/, '');     // 감싼 " 제거
-    return `\\text{${c}}`;
-  });
-  // ②b 짝 안 맞는 display 보정: `$$…$`(내부 $ 없음 + 닫는 $ 하나) → `$$…$$`. (②a 로 \text 안 $ 가
-  //     사라진 뒤라야 내부 $ 가 없어 매칭됨. 정상 `$$…$$` 는 닫는 $ 뒤가 $ 라 (?!\$) 로 제외.)
-  out = out.replace(/\$\$([^$]+)\$(?!\$)/g, (_m: string, c: string) => `$$${c}$$`);
   // ② \text{…} 밖에 '맨' 한글이 든 $…$ / $$…$$ 는 수식이 아니라 산문 → delimiter 제거.
   //    (\text{공통배수} 처럼 정상 수식 안의 한글은 strip 후 판정해 보존.)
   const isProse = (inner: string): boolean =>
     /[가-힣]/.test(inner.replace(/\\(?:text|mathrm|mathbf|mathsf|operatorname)\s*\{[^{}]*\}/g, ''));
+  // ★먼저 $$…$$ display 블록을 통째로 보호한다. 안 그러면 아래 inline 산문-strip 의
+  //   `\$([^$\n]+?)\$` 가 여는 `$$` 의 둘째 `$` 를 안쪽 math 섬($n$·$r$)의 `$` 와 잘못 짝지어
+  //   (한 칸 오프셋) 섬 사이 한글을 산문으로 오인·delimiter 를 떼어내 \text 수식을 통째로
+  //   깨뜨린다. display 내부는 수식이므로 산문-strip 대상이 아니다.
+  const blocks: string[] = [];
+  out = out.replace(/\$\$(?:(?!\$\$)[\s\S])*?\$\$/g, (m) => {
+    blocks.push(m);
+    return `KTXBLK${blocks.length - 1}KTXEND`;
+  });
   out = out.replace(/\$\$([^$]+?)\$\$/g, (m, inner: string) => (isProse(inner) ? inner : m));
   out = out.replace(/\$([^$\n]+?)\$/g, (m, inner: string) => (isProse(inner) ? inner : m));
+  out = out.replace(/KTXBLK(\d+)KTXEND/g, (_, i: string) => blocks[+i]);
   return out;
 }
 

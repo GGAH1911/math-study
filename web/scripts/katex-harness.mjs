@@ -9,19 +9,14 @@ function normalizeLlmMarkup(text) {
   let out = text
     .replace(/<\s*\/?\s*(?:strong|b)\s*>/gi, '**')
     .replace(/<\s*\/?\s*(?:em|i)\s*>/gi, '*');
-  // ②a \text{} 군더더기
-  out = out.replace(/\\text\{([^{}]*)\}/g, (_m, inner) => {
-    let c = inner.replace(/\$([^$]*[가-힣][^$]*)\$/g, '$1');
-    if (((c.match(/\$/g) || []).length) % 2 === 1) c = c.replace(/\$/g, '');
-    c = c.replace(/^\s*"\s*/, '').replace(/\s*"\s*$/, '');
-    return `\\text{${c}}`;
-  });
-  // ②b 불균형 display
-  out = out.replace(/\$\$([^$]+)\$(?!\$)/g, (_m, c) => `$$${c}$$`);
   const isProse = (inner) =>
     /[가-힣]/.test(inner.replace(/\\(?:text|mathrm|mathbf|mathsf|operatorname)\s*\{[^{}]*\}/g, ''));
+  // $$…$$ 블록 보호 후 산문-strip (실제 ChatPanel 과 동일)
+  const blocks = [];
+  out = out.replace(/\$\$(?:(?!\$\$)[\s\S])*?\$\$/g, (m) => { blocks.push(m); return `KTXBLK${blocks.length - 1}KTXEND`; });
   out = out.replace(/\$\$([^$]+?)\$\$/g, (m, inner) => (isProse(inner) ? inner : m));
   out = out.replace(/\$([^$\n]+?)\$/g, (m, inner) => (isProse(inner) ? inner : m));
+  out = out.replace(/KTXBLK(\d+)KTXEND/g, (_, i) => blocks[+i]);
   return out;
 }
 
@@ -135,10 +130,11 @@ function observe(name, text, expectRendered) {
 }
 
 const CASES = [
-  // [이름, 입력, 기대 렌더 수]
-  ['malformed 순열 display', '$$_nP_r = \\text{"$n개의 서로 다른 것 중에서 r개를 선택해서 순서대로 배열한 경우의 수"}$', 1],
+  // [이름, 입력, 기대 렌더 수] — DB 에서 가져온 실제 Haiku 출력 포함
+  ['DB실제 정의(다중 $섬+따옴표)', '$$_nP_r = \\text{"$n$개의 서로 다른 것 중에서 $r$개를 선택해서 일렬로(순서대로) 배열하는 경우의 수"}$$', 1],
+  ['DB실제 공식', '$$_nP_r = n \\times (n-1) \\times (n-2) \\times \\cdots \\times (n-r+1) = \\frac{n!}{(n-r)!}$$', 1],
   ['표: 순열기호 4셀', '| 상황 | 예제 | 순열 기호 |\n|---|---|---|\n| 줄 세우기 | "5명" | $_5P_5$ |\n| 자리 | "6명" | $_6P_3$ |\n| 역할 | "10명" | $_10P_3$ |\n| 숫자 | "0123" | $_4P_3$ |', 4],
-  ['malformed+표 한 메시지', '순열이란:\n$$_nP_r = \\text{"$n개의 서로 다른 것 중에서 r개를 선택해서 순서대로 배열한 경우의 수"}$\n\n| 상황 | 순열 기호 |\n|---|---|\n| 줄 세우기 | $_5P_5$ |\n| 자리 | $_6P_3$ |', 3],
+  ['실제 정의+표 한 메시지', '순열이란:\n$$_nP_r = \\text{"$n$개의 서로 다른 것 중에서 $r$개를 배열하는 경우의 수"}$$\n\n| 상황 | 순열 기호 |\n|---|---|\n| 줄 세우기 | $_5P_5$ |\n| 자리 | $_6P_3$ |', 3],
   ['정상 inline', '값은 $_5P_5$ 이고 $_6C_2 = 15$ 이다', 2],
   ['정상 display', '$$x^2 + y^2 = r^2$$', 1],
   ['정상 \\text 한글', '$\\text{공통배수}=30$ 이다', 1],

@@ -6,7 +6,10 @@ export const prerender = true;
 import { MdSegment } from '../components/ChatPanel.tsx';
 
 const CASES: { name: string; content: string }[] = [
-  { name: 'malformed 순열 display', content: '$$_nP_r = \\text{"$n개의 서로 다른 것 중에서 r개를 선택해서 순서대로 배열한 경우의 수"}$' },
+  // DB 에서 가져온 *실제* Haiku 출력 (스크린샷의 깨진 메시지) — 그라운드 트루스
+  { name: 'DB실제 정의 display', content: '$$_nP_r = \\text{"$n$개의 서로 다른 것 중에서 $r$개를 선택해서 일렬로(순서대로) 배열하는 경우의 수"}$$' },
+  { name: 'DB실제 공식 display', content: '$$_nP_r = n \\times (n-1) \\times (n-2) \\times \\cdots \\times (n-r+1) = \\frac{n!}{(n-r)!}$$' },
+  { name: 'DB실제 _3P_3', content: '$$_3P_3 = 3 \\times 2 \\times 1 = 6\\text{가지}$$' },
   { name: '순열 기호 표', content: '| 상황 | 예제 | 순열 기호 |\n|---|---|---|\n| 줄 세우기 | "5명을 일렬로" | $_5P_5$ |\n| 자리 배치 | "6명 중 3명" | $_6P_3$ |\n| 역할 배분 | "10명 중 3명" | $_10P_3$ |\n| 숫자 만들기 | "0~3 중 3개" | $_4P_3$ |' },
   { name: 'malformed+표 한 메시지', content: '순열이란:\n$$_nP_r = \\text{"$n개의 서로 다른 것 중에서 r개를 선택해서 순서대로 배열한 경우의 수"}$\n\n| 상황 | 순열 기호 |\n|---|---|\n| 줄 세우기 | $_5P_5$ |\n| 자리 배치 | $_6P_3$ |' },
   { name: '정상 inline', content: '값은 $_5P_5$ 이고 $_6C_2 = 15$ 이다.' },
