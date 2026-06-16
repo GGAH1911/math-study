@@ -731,17 +731,21 @@ html.dark {
   position: fixed;
   right: 16px; bottom: calc(env(safe-area-inset-bottom) + 16px);
   z-index: 48;
-  width: 56px; height: 56px; border-radius: 999px;
-  display: grid; place-items: center;
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 48px; padding: 0 18px;
+  border-radius: 999px;
   background: var(--color-surface);
   border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
   box-shadow: var(--shadow-card-hover);
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
   cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
 .tutor-fab:hover { transform: translateY(-1px); background: var(--color-bg); }
-.tutor-fab:active { transform: scale(.95); }
-.tutor-fab-icon { font-size: 24px; line-height: 1; }
+.tutor-fab:active { transform: scale(.97); }
+.tutor-fab-icon { flex-shrink: 0; color: var(--pen-red); }   /* 말풍선만 살짝 브랜드색 */
+.tutor-fab-text { white-space: nowrap; }
 .tutor-chat[data-open="true"] .tutor-fab { display: none; }   /* 열리면 FAB 숨김(패널이 덮음) */
 
 .tutor-backdrop { position: fixed; inset: 0; z-index: 48; background: rgba(29, 26, 21, 0.28); }
