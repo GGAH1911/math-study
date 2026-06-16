@@ -10,7 +10,7 @@ next_review: 2026-05-22
 
 # 학습 노트 - 지수와 로그: n제곱근의 정의
 
-> **출처**: [지수와 로그: n제곱근의 정의](../concepts/algebra/math-1/지수와_로그/n제곱근의_정의.md) 페이지에서 진행한 LLM 튜터 대화를 영구 wiki 노드로 promote (LWIP Query & Promote, lifecycle.md §Query-Promote).
+> **출처**: [지수와 로그: n제곱근의 정의](../concepts/algebra/math-1/지수와_로그/n제곱근의_정의.md) 페이지에서 진행한 학습 대화를 정리한 노트입니다.
 
 ## 질문
 
