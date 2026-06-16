@@ -20,6 +20,9 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
      border-b 대신 손그림 괘선 SVG(마지막 자식)가 하단 경계를 담당한다. */}
 <header class="sticky top-0 z-30 flex items-center gap-4 px-6 h-14 relative bg-[color:var(--color-bg)]/85 backdrop-blur">
   <div class="lg:hidden flex items-center gap-2">
+    {/* 모바일 메뉴 버튼(<lg) — 상단 단일 버튼. 누르면 전체 메뉴 시트가 헤더 아래로 펼쳐짐. */}
+    <button type="button" data-dock-more aria-expanded="false" aria-controls="dock-sheet" aria-label="메뉴"
+      class="inline-flex items-center justify-center size-9 -ml-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-base">☰</button>
     {/* 브랜드 인장 — 모눈 위 빨간 곡선 한 획(작도 모티프). 한자 사용 금지(사용자 지침). */}
     <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true">
       <rect x="1.5" y="1.5" width="25" height="25" rx="3" fill="none" stroke="var(--pen-red)" stroke-width="2"/>
@@ -74,25 +77,22 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
   </svg>
 </header>
 
-{/* 모바일 하단 도크(<lg 전용) — fixed 라 header 밖 형제로 렌더
+{/* 모바일 메뉴 시트(<lg 전용) — 상단 ☰ 버튼이 여는 전체 메뉴. fixed 라 header 밖 형제로 렌더
      (header 의 backdrop-blur 가 fixed 자손의 containing block 을 만들기 때문).
-     링크 9종 전부 보존: 도크 4 + 시트 6(Dashboard=홈) + /progress 신규 노출.
-     스타일(.mobile-dock/.dock-sheet)은 global.css 공급(계약 §8-B). */}
-<nav class="mobile-dock lg:hidden" aria-label="모바일 내비게이션">
-  <a href="/"         class={pathname === '/' ? 'active' : ''}><span class="icon">◉</span><span>홈</span></a>
-  <a href="/problems" class={(pathname.startsWith('/problems') || pathname.startsWith('/exam')) ? 'active' : ''}><span class="icon">∎</span><span>기출</span></a>
-  <a href="/concepts" class={pathname.startsWith('/concepts') ? 'active' : ''}><span class="icon">⊕</span><span>개념</span></a>
-  <a href="/graph"    class={pathname.startsWith('/graph') ? 'active' : ''}><span class="icon">◈</span><span>지도</span></a>
-  <button type="button" data-dock-more aria-expanded="false" aria-controls="dock-sheet"><span class="icon">☰</span><span>더보기</span></button>
-</nav>
-<div id="dock-sheet" hidden class="dock-sheet lg:hidden" role="navigation" aria-label="더보기 메뉴">
-  <a href="/mistakes">✕ 오답노트</a>
-  <a href="/syntheses">🗒 학습 노트</a>
-  <a href="/paths">↝ 학습 경로</a>
-  <a href="/progress">∿ 진행</a>
-  <a href="/tools">⚒ 학습 자료</a>
-  <a href="/log">☴ 기록</a>
-  <a href="/settings">⚙ 설정</a>
+     하단 도크 폐지(사용자 지침: 하단 비워 컨텍스트 시트가 쓰게) — 링크 전체를 이 시트에 모음.
+     스타일(.dock-sheet)은 global.css 공급. */}
+<div id="dock-sheet" hidden class="dock-sheet lg:hidden" role="navigation" aria-label="메뉴">
+  <a href="/"          class={pathname === '/' ? 'active' : ''}><span class="icon">◉</span> 홈</a>
+  <a href="/problems"  class={(pathname.startsWith('/problems') || pathname.startsWith('/exam')) ? 'active' : ''}><span class="icon">∎</span> 기출</a>
+  <a href="/concepts"  class={pathname.startsWith('/concepts') ? 'active' : ''}><span class="icon">⊕</span> 개념</a>
+  <a href="/graph"     class={pathname.startsWith('/graph') ? 'active' : ''}><span class="icon">◈</span> 개념 지도</a>
+  <a href="/mistakes"  class={pathname.startsWith('/mistakes') ? 'active' : ''}><span class="icon">✕</span> 오답노트</a>
+  <a href="/syntheses" class={pathname.startsWith('/syntheses') ? 'active' : ''}><span class="icon">🗒</span> 학습 노트</a>
+  <a href="/paths"     class={pathname.startsWith('/paths') ? 'active' : ''}><span class="icon">↝</span> 학습 경로</a>
+  <a href="/progress"  class={pathname.startsWith('/progress') ? 'active' : ''}><span class="icon">∿</span> 진행</a>
+  <a href="/tools"     class={pathname.startsWith('/tools') ? 'active' : ''}><span class="icon">⚒</span> 학습 자료</a>
+  <a href="/log"       class={pathname.startsWith('/log') ? 'active' : ''}><span class="icon">☴</span> 기록</a>
+  <a href="/settings"  class={pathname.startsWith('/settings') ? 'active' : ''}><span class="icon">⚙</span> 설정</a>
   <button type="button" data-theme-toggle>◐ 테마 전환</button>
   <button type="button" data-logout>→ 로그아웃</button>
 </div>

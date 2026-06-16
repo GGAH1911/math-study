@@ -58,9 +58,8 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
     <Sidebar />
     <div class="flex-1 min-w-0 flex flex-col">
       <Header />
-      {/* <lg 에서 모바일 하단 도크(56px + safe-area)에 본문이 가리지 않게(계약 §8-C).
-           홈 인디케이터 기기는 inset-bottom≈34px 라 고정 72px 로는 모자람 — env() 가산. */}
-      <main class={`flex-1 min-w-0 pb-[calc(72px_+_env(safe-area-inset-bottom))] lg:pb-0 ${containerClass}`}>
+      {/* 하단 도크 폐지(메뉴는 상단 ☰). 하단 패딩 불필요 — safe-area 만 약간 확보. */}
+      <main class={`flex-1 min-w-0 pb-[env(safe-area-inset-bottom)] ${containerClass}`}>
         <slot />
       </main>
     </div>

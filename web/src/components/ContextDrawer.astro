@@ -49,23 +49,30 @@ const { label = '학습 정보', icon = '📑' } = Astro.props;
     const open = () => setOpen(true);
     const close = (refocus = true) => setOpen(false, refocus);
 
-    // ── 드래그-당겨열기 ───────────────────────────────────────────────
-    // 손잡이를 잡고 왼쪽으로 끌면 서랍(wrap)이 손가락을 따라온다. 손잡이는 wrap 의
-    // 자식이라 자동으로 함께 움직인다. 놓을 때 절반 이상/빠른 플릭이면 열림 스냅.
+    // ── 드래그-당겨열기 (축 인식) ──────────────────────────────────────
+    // 태블릿(md~xl): 우측 서랍 → 가로 드래그(왼쪽으로 당기면 열림).
+    // 모바일(<md): 하단 바텀시트 → 세로 드래그(위로 당기면 열림). 손잡이는 wrap 의 자식이라
+    // 함께 움직인다. 놓을 때 절반 이상/빠른 플릭이면 열림 스냅.
+    const isBottom = () => window.matchMedia('(max-width: 767px)').matches;
     let dragging = false;
     let moved = false;
-    let startX = 0;
-    let lastX = 0;
+    let vertical = false;   // true=세로(모바일), false=가로(태블릿)
+    let start = 0;          // 드래그 시작 좌표(축에 맞는 client 좌표)
+    let last = 0;
     let lastT = 0;
     let velocity = 0;
-    let width = 300;
+    let span = 300;         // 서랍 이동 거리(가로=폭, 세로=높이)
+
+    const coord = (e: PointerEvent) => (vertical ? e.clientY : e.clientX);
 
     const onDown = (e: PointerEvent) => {
       // 데스크탑(xl+)은 손잡이 display:none → 이 경로 자체가 안 옴.
-      width = drawer.getBoundingClientRect().width || 300;
+      vertical = isBottom();
+      const r = drawer.getBoundingClientRect();
+      span = (vertical ? r.height : r.width) || 300;
       dragging = true;
       moved = false;
-      startX = lastX = e.clientX;
+      start = last = coord(e);
       lastT = e.timeStamp;
       velocity = 0;
       handle.setPointerCapture(e.pointerId);
@@ -73,15 +80,16 @@ const { label = '학습 정보', icon = '📑' } = Astro.props;
     };
     const onMove = (e: PointerEvent) => {
       if (!dragging) return;
-      const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
+      // d>0 = 닫는 방향(가로=오른쪽, 세로=아래쪽). 닫힘에서 당기면(d<0) 열림 진행.
+      const d = coord(e) - start;
+      if (Math.abs(d) > 4) moved = true;
       const startOpen = drawer.dataset.open === 'true';
-      const base = startOpen ? 0 : width;        // 닫힘=translateX(width), 열림=0
-      const tx = Math.max(0, Math.min(width, base + dx));
-      drawer.style.transform = `translateX(${tx}px)`;
-      backdrop.hidden = false;                    // 끄는 동안 진행 피드백
-      velocity = (e.clientX - lastX) / Math.max(1, e.timeStamp - lastT);
-      lastX = e.clientX;
+      const base = startOpen ? 0 : span;                 // 닫힘=translate(span), 열림=0
+      const t = Math.max(0, Math.min(span, base + d));
+      drawer.style.transform = vertical ? `translateY(${t}px)` : `translateX(${t}px)`;
+      backdrop.hidden = false;
+      velocity = (coord(e) - last) / Math.max(1, e.timeStamp - lastT);
+      last = coord(e);
       lastT = e.timeStamp;
     };
     const onUp = (e: PointerEvent) => {
@@ -91,17 +99,16 @@ const { label = '학습 정보', icon = '📑' } = Astro.props;
       drawer.style.transition = '';  // CSS 트랜지션 복원(스냅)
       drawer.style.transform = '';   // data-open 기반 CSS 값으로 환원
       if (!moved) {
-        // 탭 — 토글로 열기/닫기.
-        setOpen(drawer.dataset.open !== 'true', false);
+        setOpen(drawer.dataset.open !== 'true', false);  // 탭 → 토글
         if (drawer.dataset.open !== 'true') backdrop.hidden = true;
         return;
       }
       const startOpen = drawer.dataset.open === 'true';
-      const curTx = Math.max(0, Math.min(width, (startOpen ? 0 : width) + (e.clientX - startX)));
+      const cur = Math.max(0, Math.min(span, (startOpen ? 0 : span) + (coord(e) - start)));
       let willOpen: boolean;
-      if (velocity < -0.35) willOpen = true;       // 왼쪽 플릭 → 열림
-      else if (velocity > 0.35) willOpen = false;  // 오른쪽 플릭 → 닫힘
-      else willOpen = curTx < width / 2;           // 절반 임계
+      if (velocity < -0.35) willOpen = true;       // 당기는 플릭(왼/위) → 열림
+      else if (velocity > 0.35) willOpen = false;  // 미는 플릭(오/아래) → 닫힘
+      else willOpen = cur < span / 2;              // 절반 임계
       setOpen(willOpen, false);
       if (!willOpen) backdrop.hidden = true;
     };

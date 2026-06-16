@@ -548,47 +548,34 @@ html.dark {
   }
   html.dark .problem-image { filter: invert(0.92) hue-rotate(180deg); }
 
-  /* 모바일 하단 도크 (<lg — Header.astro가 렌더) */
-  .mobile-dock {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
-    display: flex;
-    height: calc(56px + env(safe-area-inset-bottom));
-    padding-bottom: env(safe-area-inset-bottom);
-    /* 가로 노치(landscape) 대응 — 탭이 노치 밑으로 들어가지 않게 */
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-  }
-  .mobile-dock a, .mobile-dock button {
-    position: relative; flex: 1;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-    min-height: 44px; font-size: 10px; color: var(--color-muted);
-  }
-  .mobile-dock .icon { font-size: 16px; line-height: 1; }
-  .mobile-dock .active { color: var(--color-text); }
-  .mobile-dock .active::before {
-    content: ""; position: absolute; top: 5px;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255, 213, 74, 0.85);        /* 형광펜 점 — 양 테마 공용 */
-  }
+  /* 모바일 메뉴 시트 (<lg — Header.astro 상단 ☰ 버튼이 연다). 하단 도크 폐지.
+     헤더(h-14=56px) 바로 아래에서 펼쳐지는 드롭다운. */
   .dock-sheet {
-    position: fixed; left: 0; right: 0; z-index: 50;
-    bottom: calc(56px + env(safe-area-inset-bottom));
+    position: fixed; left: 8px; right: 8px; z-index: 50;
+    top: calc(56px + 6px + env(safe-area-inset-top));
+    max-height: calc(100vh - 70px); max-height: calc(100dvh - 70px);
+    overflow-y: auto; overscroll-behavior: contain;
     background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    border-radius: 12px 12px 0 0;
-    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 12px;
+    box-shadow: var(--shadow-card-hover);
     padding: 8px;
     display: grid; gap: 2px;
   }
   .dock-sheet a, .dock-sheet button {
+    position: relative;
     display: flex; align-items: center; gap: 8px;
-    min-height: 48px; padding: 0 12px;
+    min-height: 44px; padding: 0 12px;
     border-radius: 8px; font-size: 14px; text-align: left;
     color: var(--color-text);
   }
+  .dock-sheet .icon { width: 18px; text-align: center; color: var(--color-subtle); }
   .dock-sheet a:hover, .dock-sheet button:hover { background: var(--color-surface-2); }
+  .dock-sheet a.active { background: var(--color-surface-2); font-weight: 600; }
+  .dock-sheet a.active::before {
+    content: ""; position: absolute; left: 0; top: 9px; bottom: 9px; width: 3px;
+    border-radius: 0 3px 3px 0; background: rgba(255, 213, 74, 0.9);  /* 형광펜 인덱스탭 */
+  }
 
   /* 모션 감수성 */
   @media (prefers-reduced-motion: reduce) {
@@ -657,6 +644,34 @@ html.dark {
   transition: color 120ms ease;
 }
 .ctx-drawer-close:hover { color: var(--color-text); }
+
+/* 모바일(<md): 좌우가 좁아 우측 서랍이 본문을 짓누른다 → **하단 바텀시트**로 전환.
+   본문은 좌우 풀폭 사용, 손잡이는 화면 하단 중앙에서 위로 튀어나온 가로 탭(드래그=세로). */
+@media (max-width: 767px) {
+  .ctx-drawer {
+    top: auto; bottom: 0; left: 0; right: 0;
+    width: 100%; height: auto; max-height: 82vh; max-height: 82dvh;
+    transform: translateY(100%);
+  }
+  .ctx-drawer[data-open="true"] { transform: translateY(0); }
+  .ctx-drawer-body {
+    height: auto; max-height: 82vh; max-height: 82dvh;
+    padding: 28px 16px calc(20px + env(safe-area-inset-bottom));
+    border-left: none; border-top: 1px solid var(--color-border-strong);
+    border-radius: 14px 14px 0 0;
+  }
+  /* 손잡이 — 시트 상단 가장자리에서 위로 튀어나온 가로 탭(중앙). */
+  .ctx-drawer-handle {
+    top: 0; left: 50%; right: auto;
+    transform: translate(-50%, -100%);
+    flex-direction: row;
+    padding: 7px 16px;
+    writing-mode: horizontal-tb;
+    border: 1px solid var(--color-border-strong); border-bottom: none;
+    border-radius: 12px 12px 0 0;
+  }
+  .ctx-drawer-handle .ctx-drawer-handle-icon { writing-mode: horizontal-tb; }
+}
 
 /* 데스크탑(xl+): 인라인 sticky 컬럼으로 복귀 — 서랍 어포던스 전부 숨김(회귀 0) */
 @media (min-width: 1280px) {

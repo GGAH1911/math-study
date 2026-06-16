@@ -1576,7 +1576,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       <style>{`
         /* 대화 스크롤 영역 — 스크롤바를 항상 또렷이(manila 에서 기본 thumb 가 배경과 동색이라
            안 보였음). gutter 예약으로 스크롤 생겨도 레이아웃 안 흔들림 + 스크롤 가능함을 명시. */
-        .chat-scroll { scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; }
+        .chat-scroll { scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; overscroll-behavior: contain; }
         .chat-scroll::-webkit-scrollbar { width: 10px; }
         .chat-scroll::-webkit-scrollbar-track { background: transparent; }
         .chat-scroll::-webkit-scrollbar-thumb {
