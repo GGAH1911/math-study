@@ -10,6 +10,8 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pickDailyConcept } from '../src/lib/daily-concept.mjs';
 
+// 모델 — 하루 1콜(크론)이라 비용 무시 가능. 기하 품질·개념 충실도 위해 sonnet 기본.
+const MODEL = process.env.FIGURE_MODEL || 'sonnet';
 const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const GRAPH = resolve(WEB, 'src/data/concept-graph.json');
 const CACHE = resolve(WEB, 'src/data/concept-illustrations.json');
@@ -17,19 +19,25 @@ const DAY = 86400000;
 
 const PROMPT = (c) => `You output ONLY a JSON object (no prose, no markdown fence) describing a simple hand-drawn math figure that represents the given concept, for a small decorative sketch in a study app hero.
 
-Schema: {"strokes":[{"pts":[x0,y0,x1,y1,...],"dash":false,"hover":false}],"guideCircle":null,"equalScale":true}
+Schema: {"strokes":[{"pts":[x0,y0,x1,y1,...],"dash":false,"hover":false,"smooth":false}],"guideCircle":null,"equalScale":true}
 - Coordinates: world space, x in [-3,3], y in [-2,2], origin (0,0) center, +y up. USE MOST OF THE RANGE so the figure is large and clear.
 - 1 to 5 strokes. Each stroke = polyline (flat list of x,y numbers). Close a shape by repeating its first point at the end.
+- smooth: set TRUE for any CURVED stroke (parabola, sine, exponential, circle, ellipse, arc, bell curve, converging sequence...). For a smooth stroke give 6-12 well-spaced control points — the renderer splines them into a clean smooth curve, so do NOT try to emit many tiny segments. Set FALSE for straight-edge strokes (triangles, polygons, vectors, line segments, right-angle marks).
 - equalScale: true for geometric figures (triangles, circles, polygons, angles, vectors) so they aren't squished; false for function graphs (parabola, sine, exp...).
 - guideCircle: a radius number ONLY when a faint compass circle helps (e.g., circle/arc topics); else null.
 - hover: true on ONE main function curve only; for geometric shapes use false everywhere.
-- Make it MINIMAL, CLEAN, and clearly recognizable as the concept (add small marks like a right-angle square or an arc when meaningful).
+- Make it MINIMAL, CLEAN, well-proportioned, and FAITHFUL to the concept's actual meaning (not a generic shape):
+  · vector / 벡터 operations → draw real arrows WITH arrowheads (a stroke for the shaft + 2 short strokes for the head); show the operation (e.g., scalar multiple = two arrows, one longer along the same direction).
+  · focus / 초점 of conic → a proper ellipse with two clearly placed focus dots inside.
+  · inscribed/circumscribed → the circle and polygon actually tangent/touching.
+  · sequence / limit → discrete points approaching a dashed asymptote.
+  Add meaningful marks (right-angle square, arc for an angle, tick/dot for a point).
 
 Concept: 「${c.label}」  (단원: ${c.unit || '-'}, 과목: ${c.domain || '-'})
 Output ONLY the JSON object.`;
 
 function callLLM(concept) {
-  const args = ['-p', '--model', 'haiku', '--output-format', 'json',
+  const args = ['-p', '--model', MODEL, '--output-format', 'json',
     '--disallowedTools', 'Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch',
     '--max-turns', '1', '--', PROMPT(concept)];
   const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 120000, maxBuffer: 8 * 1024 * 1024 });
@@ -52,7 +60,7 @@ function sanitize(spec) {
     const pts = s.pts.map(Number);
     if (pts.length < 4 || pts.length % 2 !== 0) continue;
     if (!pts.every((v) => Number.isFinite(v) && Math.abs(v) <= 6)) continue;
-    strokes.push({ pts: pts.slice(0, 400), dash: !!s.dash, hover: !!s.hover });
+    strokes.push({ pts: pts.slice(0, 400), dash: !!s.dash, hover: !!s.hover, smooth: !!s.smooth });
   }
   if (!strokes.length) return null;
   const out = { strokes };

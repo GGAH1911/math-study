@@ -28,10 +28,39 @@ type Stroke = { pts: number[]; dash: boolean; hover: boolean }; // pts = [x0,y0,
 type Scene = { strokes: Stroke[]; label: string; guideCircle: number | null; equalScale: boolean; wob: Float32Array };
 // 개념별 LLM 생성 figure spec(캐시) — scripts/gen_daily_illustration.mjs 가 만든 스키마.
 export type FigureSpec = {
-  strokes: Array<{ pts: number[]; dash?: boolean; hover?: boolean }>;
+  strokes: Array<{ pts: number[]; dash?: boolean; hover?: boolean; smooth?: boolean }>;
   guideCircle?: number | null;
   equalScale?: boolean;
 };
+
+// Catmull-Rom 스플라인 — 적은 제어점(LLM이 준 곡선 좌표)을 매끄러운 조밀 곡선으로.
+// 곡선 stroke(smooth)에만 적용. 첫·끝점이 같으면 닫힌 곡선으로 감싼다(원·타원).
+function smoothPolyline(pts: number[], sub = 16): number[] {
+  const P: number[][] = [];
+  for (let i = 0; i + 1 < pts.length; i += 2) P.push([pts[i], pts[i + 1]]);
+  const n = P.length;
+  if (n < 3) return pts.slice();
+  const closed = Math.abs(P[0][0] - P[n - 1][0]) < 1e-6 && Math.abs(P[0][1] - P[n - 1][1]) < 1e-6;
+  const m = closed ? n - 1 : n; // 닫힘이면 마지막=처음 중복 제외
+  const get = (i: number): number[] => {
+    if (closed) return P[((i % m) + m) % m];
+    return P[Math.max(0, Math.min(n - 1, i))];
+  };
+  const out: number[] = [];
+  const segs = closed ? m : n - 1;
+  for (let i = 0; i < segs; i++) {
+    const p0 = get(i - 1), p1 = get(i), p2 = get(i + 1), p3 = get(i + 2);
+    for (let t = 0; t < sub; t++) {
+      const s = t / sub, s2 = s * s, s3 = s2 * s;
+      const x = 0.5 * (2 * p1[0] + (-p0[0] + p2[0]) * s + (2 * p0[0] - 5 * p1[0] + 4 * p2[0] - p3[0]) * s2 + (-p0[0] + 3 * p1[0] - 3 * p2[0] + p3[0]) * s3);
+      const y = 0.5 * (2 * p1[1] + (-p0[1] + p2[1]) * s + (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * s2 + (-p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]) * s3);
+      out.push(x, y);
+    }
+  }
+  const end = get(closed ? 0 : n - 1);
+  out.push(end[0], end[1]);
+  return out;
+}
 
 // figure spec(개념별 LLM 생성·캐시) → Scene. spec 없거나 부실하면 일반 곡선으로 폴백.
 // 좌표는 그대로 두고 fit() 이 데이터 bbox 에 맞춰 프레이밍한다. seed 는 wobble 질감 전용.
@@ -47,7 +76,9 @@ function sceneFromSpec(spec: FigureSpec | null | undefined, label: string, seed:
       // 유한·범위 검증(±6 안). 이상치 stroke 는 버린다.
       const ok = s.pts.every((v) => Number.isFinite(v) && Math.abs(v) <= 6) && s.pts.length % 2 === 0;
       if (!ok) continue;
-      strokes.push({ pts: s.pts.slice(), dash: !!s.dash, hover: !!s.hover });
+      // 곡선(smooth)이면 스플라인으로 조밀화 → 점 적어도 매끈. 직선 도형은 그대로(각 유지).
+      const pts = s.smooth ? smoothPolyline(s.pts.slice(), 16) : s.pts.slice();
+      strokes.push({ pts, dash: !!s.dash, hover: !!s.hover });
     }
     if (typeof spec.guideCircle === 'number' && Number.isFinite(spec.guideCircle)) guideCircle = spec.guideCircle;
     equalScale = !!spec.equalScale;
