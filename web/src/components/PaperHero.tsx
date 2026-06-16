@@ -1,12 +1,11 @@
 // PaperHero — 홈 히어로 「오늘의 작도」 (디자인 계약 §9-B).
-// KST 날짜 시드로 고른 곡선 1종이 컴퍼스 보조선과 함께 캔버스에 스스로 작도된다.
-// 의존성 0(React 훅만) · rAF 핸들 1개 · 재생 완료 즉시 rAF 해제(idle CPU 0).
+// '오늘의 개념'을 나타내는 도형/곡선이 컴퍼스 보조선과 함께 캔버스에 스스로 작도된다.
+// 그림 데이터(stroke 좌표)는 개념별로 LLM이 미리 생성해 캐시한 figure spec 을 props 로 받는다
+// (없으면 일반 곡선 폴백). 의존성 0(React 훅만) · rAF 핸들 1개 · 재생 완료 즉시 rAF 해제.
 // 테마 추종은 getComputedStyle 1회 캐싱 + html class MutationObserver — §14-C 계약의 1호 구현.
 import { useEffect, useRef } from 'react';
-// 계열 선택은 daily-curve.mjs 와 공유(캡션과 항상 같은 계열). 파라미터는 그날 시드로 변형.
-import { curveIndexForMs, curveSeedForMs } from '../lib/daily-curve.mjs';
 
-// 날짜 시드 결정적 PRNG (계약 리터럴 mulberry32)
+// 결정적 PRNG (계약 리터럴 mulberry32) — wobble 질감 시드용.
 function mulberry32(a: number) {
   return function () {
     a |= 0;
@@ -16,83 +15,65 @@ function mulberry32(a: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
+// 라벨 → 안정 시드(개념마다 wobble 질감 고정).
+function hashStr(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
 
-const XMIN = -3.2;
-const XMAX = 3.2;
-const N = 240; // 곡선당 샘플 수
+const N = 240; // 폴백 곡선 샘플 수
 
 type Stroke = { pts: number[]; dash: boolean; hover: boolean }; // pts = [x0,y0,x1,y1,...] (월드 좌표)
-type Scene = { strokes: Stroke[]; label: string; guideCircle: number | null; wob: Float32Array };
+type Scene = { strokes: Stroke[]; label: string; guideCircle: number | null; equalScale: boolean; wob: Float32Array };
+// 개념별 LLM 생성 figure spec(캐시) — scripts/gen_daily_illustration.mjs 가 만든 스키마.
+export type FigureSpec = {
+  strokes: Array<{ pts: number[]; dash?: boolean; hover?: boolean }>;
+  guideCircle?: number | null;
+  equalScale?: boolean;
+};
 
-// 계열 6종 — 곡선 모양은 '정준(canonical)' 고정이다. 진폭·주기·표준편차를 흔들면 정규분포
-// 같은 곡선이 왜곡되므로 흔들지 않는다(사용자 지침). 그날 시드(rnd)는 오직 연필 wobble
-// (손그림 질감)에만 쓴다 — 모양은 안 바뀌고 질감만 매일 미세하게 다르다. k=계열(curveIndexForMs 공유).
-function buildScene(seed: number, k: number): Scene {
+// figure spec(개념별 LLM 생성·캐시) → Scene. spec 없거나 부실하면 일반 곡선으로 폴백.
+// 좌표는 그대로 두고 fit() 이 데이터 bbox 에 맞춰 프레이밍한다. seed 는 wobble 질감 전용.
+function sceneFromSpec(spec: FigureSpec | null | undefined, label: string, seed: number): Scene {
   const rnd = mulberry32(seed);
-  const sample = (f: (x: number) => number): number[] => {
+  let strokes: Stroke[] = [];
+  let guideCircle: number | null = null;
+  let equalScale = false;
+
+  if (spec && Array.isArray(spec.strokes)) {
+    for (const s of spec.strokes) {
+      if (!s || !Array.isArray(s.pts) || s.pts.length < 4) continue;
+      // 유한·범위 검증(±6 안). 이상치 stroke 는 버린다.
+      const ok = s.pts.every((v) => Number.isFinite(v) && Math.abs(v) <= 6) && s.pts.length % 2 === 0;
+      if (!ok) continue;
+      strokes.push({ pts: s.pts.slice(), dash: !!s.dash, hover: !!s.hover });
+    }
+    if (typeof spec.guideCircle === 'number' && Number.isFinite(spec.guideCircle)) guideCircle = spec.guideCircle;
+    equalScale = !!spec.equalScale;
+  }
+
+  // 폴백 — 부드러운 일반 곡선(특정 개념 안 뜻함, 안정적).
+  if (!strokes.length) {
     const a: number[] = [];
     for (let i = 0; i < N; i++) {
-      const x = XMIN + ((XMAX - XMIN) * i) / (N - 1);
-      a.push(x, f(x));
+      const x = -3 + (6 * i) / (N - 1);
+      a.push(x, Math.sin((Math.PI * x) / 2));
     }
-    return a;
-  };
-  let strokes: Stroke[];
-  let label: string;
-  let guideCircle: number | null = null;
-  if (k === 0) {
-    strokes = [{ pts: sample((x) => Math.sin((Math.PI * x) / 2)), dash: false, hover: true }];
-    label = 'y = sin x';
-  } else if (k === 1) {
-    const f = (x: number) => 0.35 * x * x - 1;
-    const x0 = 1; // 고정 접점
-    const m = 0.7 * x0; // f'(x0)
-    strokes = [
-      { pts: sample(f), dash: false, hover: true },
-      { pts: [x0 - 2, f(x0) - 2 * m, x0 + 2, f(x0) + 2 * m], dash: true, hover: false },
-    ];
-    label = '포물선과 접선';
-  } else if (k === 2) {
-    const R = 1.8, a0 = -Math.PI / 2; // 한 꼭짓점이 위로 오는 정삼각형
-    const circ: number[] = [];
-    for (let i = 0; i < N; i++) {
-      const t = (Math.PI * 2 * i) / (N - 1);
-      circ.push(R * Math.cos(t), R * Math.sin(t));
-    }
-    const tri: number[] = [];
-    for (let i = 0; i <= 3; i++) {
-      const t = a0 + (Math.PI * 2 * (i % 3)) / 3;
-      tri.push(R * Math.cos(t), R * Math.sin(t));
-    }
-    strokes = [
-      { pts: circ, dash: false, hover: true },
-      { pts: tri, dash: false, hover: false },
-    ];
-    label = '원과 내접삼각형';
-    guideCircle = 2.05; // 컴퍼스 보조원(보조선 단계에서 대시로)
-  } else if (k === 3) {
-    strokes = [
-      { pts: sample((x) => 0.4 * Math.exp(0.8 * x)), dash: false, hover: true },
-      { pts: sample((x) => Math.log(x + 3.3)), dash: false, hover: true },
-      { pts: [-2.6, -2.6, 2.6, 2.6], dash: true, hover: false }, // y = x 대칭축
-    ];
-    label = '지수와 로그';
-  } else if (k === 4) {
-    strokes = [{ pts: sample((x) => Math.sin(x) + 0.5 * Math.sin(2 * x)), dash: false, hover: true }];
-    label = '삼각함수의 합성';
-  } else {
-    strokes = [{ pts: sample((x) => 2.6 * Math.exp((-x * x) / 1.6) - 1), dash: false, hover: true }];
-    label = '정규분포 곡선';
+    strokes = [{ pts: a, dash: false, hover: true }];
+    guideCircle = null;
+    equalScale = false;
   }
-  // 연필 wobble 테이블 — 점당 (dx,dy) 사전계산, 매 프레임 rnd 호출 금지. (모양 아닌 질감만)
+
+  // 연필 wobble 테이블 — 점당 (dx,dy) 사전계산, 매 프레임 rnd 호출 금지(손그림 질감).
   let total = 0;
   for (const s of strokes) total += s.pts.length / 2;
   const wob = new Float32Array(total * 2);
   for (let i = 0; i < wob.length; i++) wob[i] = (rnd() * 2 - 1) * 0.7;
-  return { strokes, label, guideCircle, wob };
+  return { strokes, label, guideCircle, equalScale, wob };
 }
 
-export default function PaperHero() {
+export default function PaperHero({ spec = null, label = '' }: { spec?: FigureSpec | null; label?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cvRef = useRef<HTMLCanvasElement>(null);
 
@@ -103,29 +84,23 @@ export default function PaperHero() {
     const ctx = cv.getContext('2d');
     if (!ctx) return;
 
-    // KST 자정마다 바뀜. 계열은 daily-curve.mjs 와 공유(캡션과 일치), 파라미터는 그날 시드로 변형.
-    const k = curveIndexForMs(Date.now());
-    const seed = curveSeedForMs(Date.now());
-    const scene = buildScene(seed, k);
+    // 개념별 figure spec(props)으로 장면 구성. spec 없으면 일반 곡선 폴백. seed=라벨 해시(질감 고정).
+    const scene = sceneFromSpec(spec, label, hashStr(label || 'paper-hero'));
 
-    // y 범위: 샘플점에서 산출(폭주 구간 |y|>2.9 제외 — exp 곡선은 위로 빠져나가게 둔다)
-    let yMin = Infinity;
-    let yMax = -Infinity;
+    // 데이터 bbox 로 프레이밍(x·y 둘 다) — 도형이든 곡선이든 캔버스에 알맞게 채운다.
+    let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity;
     for (const s of scene.strokes)
-      for (let i = 1; i < s.pts.length; i += 2) {
-        const y = s.pts[i];
-        if (Number.isFinite(y) && Math.abs(y) <= 2.9) {
-          if (y < yMin) yMin = y;
-          if (y > yMax) yMax = y;
+      for (let i = 0; i + 1 < s.pts.length; i += 2) {
+        const x = s.pts[i], y = s.pts[i + 1];
+        if (Number.isFinite(x) && Number.isFinite(y) && Math.abs(y) <= 5 && Math.abs(x) <= 5) {
+          if (x < xMin) xMin = x; if (x > xMax) xMax = x;
+          if (y < yMin) yMin = y; if (y > yMax) yMax = y;
         }
       }
-    if (!Number.isFinite(yMin) || yMax - yMin < 0.5) {
-      yMin = -2;
-      yMax = 2;
-    }
-    const padY = Math.max((yMax - yMin) * 0.12, 0.25);
-    yMin -= padY;
-    yMax += padY;
+    if (!Number.isFinite(xMin) || xMax - xMin < 0.3) { xMin = -3; xMax = 3; }
+    if (!Number.isFinite(yMin) || yMax - yMin < 0.3) { yMin = -1.5; yMax = 1.5; }
+    const padX = (xMax - xMin) * 0.08, padY = (yMax - yMin) * 0.12;
+    xMin -= padX; xMax += padX; yMin -= padY; yMax += padY;
 
     // 뷰 변환(월드→스크린) — 리사이즈 때만 갱신
     const view = { w: 0, h: 0, sx: 1, sy: 1, ox: 0, oy: 0 };
@@ -138,14 +113,14 @@ export default function PaperHero() {
       cv!.width = Math.max(1, Math.round(w * dpr));
       cv!.height = Math.max(1, Math.round(h * dpr));
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      let sx = (w - 36) / (XMAX - XMIN);
-      let sy = (h - 28) / (yMax - yMin);
-      if (scene.guideCircle != null) sx = sy = Math.min(sx, sy); // 원은 찌그러뜨리지 않는다
+      let sx = (w - 40) / (xMax - xMin);
+      let sy = (h - 32) / (yMax - yMin);
+      if (scene.equalScale || scene.guideCircle != null) sx = sy = Math.min(sx, sy); // 도형은 안 찌그러뜨림
       view.w = w;
       view.h = h;
       view.sx = sx;
       view.sy = sy;
-      view.ox = w / 2 - ((XMIN + XMAX) / 2) * sx;
+      view.ox = w / 2 - ((xMin + xMax) / 2) * sx;
       view.oy = h / 2 + ((yMin + yMax) / 2) * sy;
     }
 
@@ -182,28 +157,17 @@ export default function PaperHero() {
     // 3단계 합성 렌더: p1 보조선 페이드 / p2 본 곡선 진행 / p3 라벨 페이드
     function render(p1: number, p2: number, p3: number) {
       ctx!.clearRect(0, 0, view.w, view.h);
-      if (p1 > 0) {
-        // ① 컴퍼스 보조선: 중심점 + 대시 축선 (+프리셋 2 보조원)
+      if (p1 > 0 && scene.guideCircle != null) {
+        // ① 컴퍼스 보조원만(원 관련 개념일 때). x/y 좌표축·중심점은 폐지 —
+        //    도형 그래픽(삼각형·벡터 등)엔 무의미한 노이즈라 어떤 그래픽에도 안 그린다(사용자 지침).
         ctx!.globalAlpha = p1;
         ctx!.strokeStyle = col.guide;
         ctx!.lineWidth = 1;
         ctx!.setLineDash([5, 6]);
         ctx!.beginPath();
-        ctx!.moveTo(X(XMIN), Y(0));
-        ctx!.lineTo(X(XMAX), Y(0));
-        ctx!.moveTo(X(0), 4);
-        ctx!.lineTo(X(0), view.h - 4);
+        ctx!.arc(X(0), Y(0), scene.guideCircle * view.sx, 0, Math.PI * 2);
         ctx!.stroke();
-        if (scene.guideCircle != null) {
-          ctx!.beginPath();
-          ctx!.arc(X(0), Y(0), scene.guideCircle * view.sx, 0, Math.PI * 2);
-          ctx!.stroke();
-        }
         ctx!.setLineDash([]);
-        ctx!.fillStyle = col.guide;
-        ctx!.beginPath();
-        ctx!.arc(X(0), Y(0), 2.5, 0, Math.PI * 2);
-        ctx!.fill();
         ctx!.globalAlpha = 1;
       }
       if (p2 > 0) {

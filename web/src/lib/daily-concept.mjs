@@ -1,7 +1,11 @@
 // 「오늘의 개념」 — 매일 새로운 개념 하나를 전체 개념 풀에서 고른다(곡선 6종 돌리기 아님).
 // 고정 시드로 한 번 섞은 순열을 KST 연속 일수로 하루에 하나씩 순회 → 풀 전체를 한 바퀴 돌기
 // 전엔 안 겹치고(개념 수천 개 → 수년치), 인접일은 서로 다른 주제가 나오도록 셔플돼 있다.
-import { kstEpochDay } from './daily-curve.mjs';
+
+// KST 연속 일수(자정마다 +1).
+export function kstEpochDay(nowMs) {
+  return Math.floor((nowMs + 9 * 3600 * 1000) / 86400000);
+}
 
 function mulberry32(a) {
   return function () {
