@@ -33,6 +33,13 @@
 export function normalizeKatex(tex) {
   return tex
     .replace(/(?<!\\)%/g, '\\%')
+    // 3. 한글을 감싼 나머지 `$…$` 제거. LLM 이 `\text{$n개의 …$}` 처럼 \text{} 안에서
+    //    `$…$` 로 math 모드를 켜고 한글을 넣는 오용 → math 모드의 한글은 자간이 뭉개진다.
+    //    delimiter 만 제거하면 평문(\text 안)으로 정상 렌더. `$n$`(비한글 math)은 보존.
+    .replace(/\$([^$]*[가-힣][^$]*)\$/g, '$1')
+    // 4. 다자리 아래/위첨자 brace 보정. `_10` 은 `_1` 만 첨자돼 `₁0` 으로 깨진다(₁₀P₃ 등
+    //    조합·순열 기호). `_{10}` 으로 묶어 전체를 첨자화. 숫자 2자리+ 만(단일 `_n` 불변).
+    .replace(/([_^])(\d{2,})/g, '$1{$2}')
     .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')

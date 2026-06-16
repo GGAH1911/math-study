@@ -624,9 +624,12 @@ html.dark {
   border: 1px solid var(--color-border-strong); border-right: none;
   border-radius: 10px 0 0 10px; box-shadow: var(--shadow-card);
   font-size: 12.5px; letter-spacing: 0.04em; font-weight: 500;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;        /* 가로 드래그를 브라우저 스크롤에 뺏기지 않게 */
+  user-select: none; -webkit-user-select: none;
   transition: color 120ms ease, background-color 120ms ease;
 }
+.ctx-drawer-handle:active { cursor: grabbing; }
 .ctx-drawer-handle:hover { color: var(--color-text); background: var(--color-surface-2); }
 .ctx-drawer-handle .ctx-drawer-handle-icon { writing-mode: horizontal-tb; font-size: 15px; }
 

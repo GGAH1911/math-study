@@ -168,6 +168,32 @@ function renderMarkdown(text: string): string {
           parts.push(tableHtml);
           continue;
         }
+        // ATX 헤딩(`#`~`######`) 지원 — 라인 단위. 헤딩 줄은 <h_>, 나머지 연속 줄은 <p>.
+        // LLM 튜터가 `## 제목` 을 쓰면 리터럴 `##` 로 노출되던 것을 방지. h1·h2 는 페이지
+        // 제목과 충돌하므로 모두 h4(##·#)·h5(### 이하)로 축소(채팅 본문에 맞는 크기).
+        const lines = para.split('\n');
+        const hasHeading = lines.some((l) => /^\s{0,3}#{1,6}\s+\S/.test(l));
+        if (hasHeading) {
+          let buf: string[] = [];
+          const flush = () => {
+            if (buf.length) {
+              parts.push(`<p>${inline(escape(buf.join('\n'))).replace(/\n/g, '<br/>')}</p>`);
+              buf = [];
+            }
+          };
+          for (const line of lines) {
+            const hm = line.match(/^\s{0,3}(#{1,6})\s+(.+?)\s*#*\s*$/);
+            if (hm) {
+              flush();
+              const tag = hm[1].length <= 2 ? 'h4' : 'h5';
+              parts.push(`<${tag} class="chat-md-heading">${inline(escape(hm[2]))}</${tag}>`);
+            } else {
+              buf.push(line);
+            }
+          }
+          flush();
+          continue;
+        }
         const escaped = escape(para);
         // Re-instate inline markdown after escape — but escape made angle brackets safe;
         // inline regex only touches *, _, ` so it's still safe.
@@ -1541,6 +1567,15 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         .prose-chat p { margin: 0.25rem 0; }
         .prose-chat p:first-child { margin-top: 0; }
         .prose-chat p:last-child { margin-bottom: 0; }
+        .prose-chat .chat-md-heading {
+          font-weight: 700;
+          line-height: 1.3;
+          margin: 0.7rem 0 0.3rem;
+          color: var(--color-text);
+        }
+        .prose-chat h4.chat-md-heading { font-size: 1.02em; }
+        .prose-chat h5.chat-md-heading { font-size: 0.95em; color: var(--color-muted); }
+        .prose-chat .chat-md-heading:first-child { margin-top: 0; }
         .prose-chat code {
           background: rgba(255,255,255,0.08);
           padding: 1px 5px;
