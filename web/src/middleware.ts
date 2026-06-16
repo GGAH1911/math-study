@@ -11,7 +11,6 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/api\/health\b/,
   /^\/progress\/?$/,    // 인제스트 진행 관측 — 개발용, 미인증 허용
   /^\/api\/progress\b/, // progress 폴링 API
-  /^\/test-katex\/?$/,  // 임시 KaTeX 렌더 관측 페이지 (검증 후 제거)
 ];
 
 // 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.

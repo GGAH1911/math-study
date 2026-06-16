@@ -294,11 +294,13 @@ html.dark {
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--color-bg); }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-border);
+    background: var(--color-border-strong);   /* manila 에서 --color-border 는 배경과 거의 동색 → 안 보임 */
     border-radius: 5px;
     border: 2px solid var(--color-bg);
   }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-subtle); }
+  /* Firefox */
+  * { scrollbar-color: var(--color-border-strong) transparent; }
 
   /* KaTeX — 한글 본문 속 수식 시인성 보정(1.06em) */
   .katex { color: var(--color-text); font-size: 1.06em; }

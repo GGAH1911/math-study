@@ -1416,7 +1416,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
 
       <div
         ref={scrollRef}
-        className={`${fill ? 'flex-1 min-h-0' : 'max-h-[420px]'} space-y-3 overflow-y-auto py-2 px-1 -mx-1 mb-3 scroll-smooth`}
+        className={`chat-scroll ${fill ? 'flex-1 min-h-0' : 'max-h-[420px]'} space-y-3 overflow-y-auto py-2 px-1 -mx-1 mb-3 scroll-smooth`}
       >
         {messages.length === 0 ? (
           <p className="text-sm text-[color:var(--color-subtle)] py-8 text-center">
@@ -1574,6 +1574,17 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       )}
 
       <style>{`
+        /* 대화 스크롤 영역 — 스크롤바를 항상 또렷이(manila 에서 기본 thumb 가 배경과 동색이라
+           안 보였음). gutter 예약으로 스크롤 생겨도 레이아웃 안 흔들림 + 스크롤 가능함을 명시. */
+        .chat-scroll { scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; }
+        .chat-scroll::-webkit-scrollbar { width: 10px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb {
+          background: var(--color-border-strong);
+          border-radius: 6px;
+          border: 2px solid var(--color-surface);
+        }
+        .chat-scroll::-webkit-scrollbar-thumb:hover { background: var(--color-subtle); }
         .prose-chat p { margin: 0.25rem 0; }
         .prose-chat p:first-child { margin-top: 0; }
         .prose-chat p:last-child { margin-bottom: 0; }
