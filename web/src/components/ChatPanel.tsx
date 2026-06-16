@@ -754,6 +754,122 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
   );
 });
 
+// 대화 스크롤바 — 네이티브(특히 모바일 webkit) 스크롤바는 곧 사라지고 터치로 잡을 수
+// 없어 사용자가 "손으로 컨트롤이 안 되고 금방 사라지고 너무 작다"고 호소. 그래서 항상
+// 보이고, 충분히 굵고, 포인터(마우스/터치/펜)로 드래그 가능한 커스텀 스크롤바를 직접 그린다.
+// targetRef 의 scroll 상태에 thumb 의 높이·위치를 동기화하고, thumb/track 드래그로 scrollTop 을 제어.
+function clampNum(v: number, lo: number, hi: number): number {
+  return v < lo ? lo : v > hi ? hi : v;
+}
+function ChatScrollbar({ targetRef }: { targetRef: React.RefObject<HTMLDivElement | null> }) {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const thumbRef = useRef<HTMLDivElement | null>(null);
+  const dragRef = useRef<{ startY: number; startScroll: number; maxTop: number; scrollable: number } | null>(null);
+  const [overflow, setOverflow] = useState(false);
+
+  // scroll 상태 → thumb 기하 동기화. 스트리밍으로 내용이 늘어도 항상 정확히 추종.
+  const sync = useCallback(() => {
+    const el = targetRef.current;
+    const track = trackRef.current;
+    const thumb = thumbRef.current;
+    if (!el || !track || !thumb) return;
+    const scrollable = el.scrollHeight - el.clientHeight;
+    if (scrollable <= 2) { setOverflow(false); return; }
+    setOverflow(true);
+    const trackH = track.clientHeight;
+    const thumbH = Math.max(40, (el.clientHeight / el.scrollHeight) * trackH); // 최소 40px — 손으로 잡기 쉽게
+    const maxTop = Math.max(0, trackH - thumbH);
+    const top = clampNum((el.scrollTop / scrollable) * maxTop, 0, maxTop);
+    thumb.style.height = `${thumbH}px`;
+    thumb.style.transform = `translateY(${top}px)`;
+  }, [targetRef]);
+
+  useEffect(() => {
+    const el = targetRef.current;
+    if (!el) return;
+    sync();
+    el.addEventListener('scroll', sync, { passive: true });
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    const mo = new MutationObserver(sync);
+    mo.observe(el, { childList: true, subtree: true, characterData: true });
+    window.addEventListener('resize', sync);
+    return () => {
+      el.removeEventListener('scroll', sync);
+      ro.disconnect();
+      mo.disconnect();
+      window.removeEventListener('resize', sync);
+    };
+  }, [targetRef, sync]);
+
+  // 드래그 시작 — fromTrack 이면 클릭 위치로 thumb 중심을 점프시킨 뒤 그 지점부터 드래그.
+  const beginDrag = useCallback((clientY: number, fromTrack: boolean) => {
+    const el = targetRef.current;
+    const track = trackRef.current;
+    const thumb = thumbRef.current;
+    if (!el || !track || !thumb) return;
+    const trackH = track.clientHeight;
+    const thumbH = thumb.offsetHeight;
+    const maxTop = Math.max(1, trackH - thumbH);
+    const scrollable = el.scrollHeight - el.clientHeight;
+    if (fromTrack) {
+      const rect = track.getBoundingClientRect();
+      const desiredTop = clampNum(clientY - rect.top - thumbH / 2, 0, maxTop);
+      // behavior:'instant' — 컨테이너의 scroll-behavior:smooth 가 직접 scrollTop 쓰기를
+      // 애니메이션해 드래그가 기어가는 버그(관측)를 우회. 드래그는 항상 즉시 반영.
+      el.scrollTo({ top: (desiredTop / maxTop) * scrollable, behavior: 'instant' as ScrollBehavior });
+    }
+    dragRef.current = { startY: clientY, startScroll: el.scrollTop, maxTop, scrollable };
+  }, [targetRef]);
+
+  // 전역 pointermove/up — thumb 밖으로 손가락이 벗어나도 계속 추종(setPointerCapture 대신 window).
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const drag = dragRef.current;
+      const el = targetRef.current;
+      if (!drag || !el) return;
+      e.preventDefault();
+      const dy = e.clientY - drag.startY;
+      const top = clampNum(drag.startScroll + (dy / drag.maxTop) * drag.scrollable, 0, drag.scrollable);
+      // instant — scroll-behavior:smooth 가 드래그 중 매 쓰기를 애니메이션해 멈칫대는 것 방지.
+      el.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+    };
+    const onUp = () => { dragRef.current = null; };
+    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [targetRef]);
+
+  return (
+    <div
+      ref={trackRef}
+      className="chat-scrollbar-track"
+      data-visible={overflow ? '1' : '0'}
+      aria-hidden="true"
+      onPointerDown={(e) => {
+        if (e.target === thumbRef.current) return; // thumb 가 자체 처리
+        e.preventDefault();
+        beginDrag(e.clientY, true);
+      }}
+    >
+      <div
+        ref={thumbRef}
+        className="chat-scrollbar-thumb"
+        onPointerDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          beginDrag(e.clientY, false);
+        }}
+      />
+    </div>
+  );
+}
+
 export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fill = false }: Props) {
   const placeholderHint =
     collection === 'dashboard' ? '예: 삼각함수가 헷갈리는데 어디부터 봐야 해?' :
@@ -1414,9 +1530,10 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         </div>
       )}
 
+      <div className={`chat-scroll-wrap relative ${fill ? 'flex-1 min-h-0' : ''} -mx-1 mb-3`}>
       <div
         ref={scrollRef}
-        className={`chat-scroll ${fill ? 'flex-1 min-h-0' : 'max-h-[420px]'} space-y-3 overflow-y-auto py-2 px-1 -mx-1 mb-3 scroll-smooth`}
+        className={`chat-scroll ${fill ? 'h-full' : 'max-h-[420px]'} space-y-3 overflow-y-auto py-2 pl-1 pr-4 scroll-smooth`}
       >
         {messages.length === 0 ? (
           <p className="text-sm text-[color:var(--color-subtle)] py-8 text-center">
@@ -1453,6 +1570,8 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
             <span>답변 생성 중…</span>
           </div>
         )}
+      </div>
+        <ChatScrollbar targetRef={scrollRef} />
       </div>
 
       {error && (
@@ -1574,17 +1693,42 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       )}
 
       <style>{`
-        /* 대화 스크롤 영역 — 스크롤바를 항상 또렷이(manila 에서 기본 thumb 가 배경과 동색이라
-           안 보였음). gutter 예약으로 스크롤 생겨도 레이아웃 안 흔들림 + 스크롤 가능함을 명시. */
-        .chat-scroll { scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--color-border-strong) transparent; overscroll-behavior: contain; }
-        .chat-scroll::-webkit-scrollbar { width: 10px; }
-        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
-        .chat-scroll::-webkit-scrollbar-thumb {
-          background: var(--color-border-strong);
-          border-radius: 6px;
-          border: 2px solid var(--color-surface);
+        /* 대화 스크롤 영역 — 네이티브 스크롤바는 모바일에서 곧 사라지고 터치로 못 잡으며 너무
+           얇다. 그래서 네이티브는 완전히 숨기고( ↓ ) JS 로 그리는 커스텀 스크롤바(.chat-scrollbar-*)
+           를 쓴다: 항상 보이고, 굵고, 손/터치로 드래그 가능. */
+        .chat-scroll { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .chat-scroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
+        /* 커스텀 스크롤바 트랙 — 영역 우측 가장자리에 떠 있는 굵은 레일(14px). overflow 있을 때만 노출. */
+        .chat-scrollbar-track {
+          position: absolute;
+          top: 4px; bottom: 4px; right: 1px;
+          width: 14px;
+          border-radius: 8px;
+          background: color-mix(in oklab, var(--color-border) 55%, transparent);
+          touch-action: none;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity .18s ease;
+          z-index: 6;
+          cursor: pointer;
         }
-        .chat-scroll::-webkit-scrollbar-thumb:hover { background: var(--color-subtle); }
+        .chat-scrollbar-track[data-visible="1"] { opacity: 1; pointer-events: auto; }
+        /* thumb — 손으로 잡는 손잡이. 최소 40px 보장(JS), 또렷한 잉크색. */
+        .chat-scrollbar-thumb {
+          position: absolute;
+          left: 2px; right: 2px;
+          top: 0;
+          min-height: 40px;
+          border-radius: 7px;
+          background: var(--color-border-strong);
+          border: 1px solid color-mix(in oklab, var(--color-subtle) 35%, transparent);
+          box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+          touch-action: none;
+          cursor: grab;
+          transition: background .15s ease;
+        }
+        .chat-scrollbar-thumb:hover { background: color-mix(in oklab, var(--color-border-strong) 60%, var(--color-subtle)); }
+        .chat-scrollbar-thumb:active { background: var(--color-subtle); cursor: grabbing; }
         .prose-chat p { margin: 0.25rem 0; }
         .prose-chat p:first-child { margin-top: 0; }
         .prose-chat p:last-child { margin-bottom: 0; }
