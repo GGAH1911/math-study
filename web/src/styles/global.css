@@ -700,6 +700,10 @@ html.dark {
   body:has(#ctx-drawer) main {
     padding-bottom: calc(env(safe-area-inset-bottom) + 5rem);
   }
+  /* 튜터 FAB(우측 하단)가 페이지 맨 끝 콘텐츠를 가리지 않게 — FAB 있는 페이지 본문 하단 여유. */
+  body:has(.tutor-fab) main {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 5.5rem);
+  }
 }
 
 /* ── 튜터 대화 FAB + 오버레이 ─────────────────────────────────────────────

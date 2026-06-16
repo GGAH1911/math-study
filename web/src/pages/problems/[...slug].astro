@@ -4,7 +4,7 @@
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, getCollection, render } from 'astro:content';
-import ChatPanel from '../../components/ChatPanel.tsx';
+import TutorChat from '../../components/TutorChat.astro';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
 import SolutionPanel from '../../components/SolutionPanel.tsx';
 import RoundNav from '../../components/RoundNav.astro';
@@ -109,8 +109,7 @@ if (src) {
      문제와 대화를 동시에 보면서 풀 수 있게. */}
   <div id="prob-grid" style="--chat-w: 400px"
        class="max-w-[1500px] mx-auto px-4 sm:px-6 py-8
-              lg:grid lg:grid-cols-[minmax(0,1fr)_16px_var(--chat-w,400px)] lg:gap-3 lg:items-start
-              max-lg:pb-[46vh]">
+              md:grid md:grid-cols-[minmax(0,1fr)_16px_var(--chat-w,400px)] md:gap-3 md:items-start">
 
     {/* ── 왼쪽: 문제 + 풀이 + 메타 (문서와 함께 스크롤) ── */}
     <div class="min-w-0">
@@ -205,32 +204,16 @@ if (src) {
       )}
     </div>
 
-    {/* 드래그 핸들 — 채팅 폭 조절 (lg 전용; 좁으면 grid collapse + hidden) */}
+    {/* 드래그 핸들 — 채팅 폭 조절 (md+ 컬럼 전용; 모바일은 FAB라 숨김) */}
     <div id="chat-resize" title="드래그해서 채팅 폭 조절" aria-hidden="true"
-         class="hidden lg:flex lg:sticky lg:top-16 lg:h-[calc(100vh-5rem)] items-center justify-center cursor-col-resize group touch-none select-none">
+         class="hidden md:flex md:sticky md:top-16 md:h-[calc(100vh-5rem)] items-center justify-center cursor-col-resize group touch-none select-none">
       <div class="h-16 w-1 group-hover:w-1.5 rounded-full bg-[color:var(--color-border)] group-hover:bg-[color:var(--color-accent)] transition-all"></div>
     </div>
 
     {/* ── 오른쪽: 튜터 채팅 ──
-         넓은 화면: 우측 고정 full-height 컬럼 (문제 스크롤해도 항상 보임)
-         좁은 화면: 화면 하단 dock (접기/펴기 토글) */}
-    <div id="chat-dock"
-         class="lg:sticky lg:top-16 lg:h-[calc(100vh-5rem)] lg:self-start
-                max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:z-40 max-lg:h-[44vh]
-                max-lg:flex max-lg:flex-col
-                max-lg:border-t max-lg:border-[color:var(--color-border)] max-lg:bg-zinc-950
-                max-lg:shadow-[0_-8px_24px_rgba(0,0,0,0.45)] chat-dock--collapsed">
-      {/* 좁은 화면 전용 접기/펴기 바 */}
-      <button type="button" id="dock-toggle" aria-label="튜터 대화 펴기/접기"
-              class="hidden max-lg:flex shrink-0 w-full items-center justify-center gap-2 h-11
-                     text-xs font-medium text-zinc-200 border-b border-[color:var(--color-border)] active:bg-zinc-900">
-        <span>🤖 튜터 대화</span>
-        <span id="dock-toggle-icon" class="text-[color:var(--color-accent)]">▴</span>
-      </button>
-      <div id="dock-body" class="min-h-0 lg:h-full max-lg:flex-1 max-lg:px-3 max-lg:pb-2 max-lg:pt-2">
-        <ChatPanel client:load fill slug={entry.id} unitTitle={unitTitle} collection="problems" />
-      </div>
-    </div>
+         md+(태블릿·데스크탑): 우측 고정 full-height 컬럼(현행, 폭 드래그) — TutorChat 가 인라인 배치
+         모바일(<md): 우측 하단 FAB → 큰 대화창(다크 dock 폐지, 테마 통일) */}
+    <TutorChat fab="mobile" slug={entry.id} unitTitle={unitTitle} collection="problems" />
   </div>
 
   {/* 채팅 폭 드래그 조절 — 폭은 localStorage 기억 */}
@@ -263,17 +246,7 @@ if (src) {
         const w = parseInt(grid.style.getPropertyValue('--chat-w'), 10);
         if (w) localStorage.setItem(KEY, String(w));
       });
-
-      // 좁은 화면 dock 접기/펴기
-      const dock = document.getElementById('chat-dock');
-      const dockToggle = document.getElementById('dock-toggle');
-      const dockIcon = document.getElementById('dock-toggle-icon');
-      if (dock && dockToggle) {
-        dockToggle.addEventListener('click', function () {
-          const collapsed = dock.classList.toggle('chat-dock--collapsed');
-          if (dockIcon) dockIcon.textContent = collapsed ? '▴' : '▾';
-        });
-      }
+      // (모바일 dock 접기/펴기 폐지 — 이제 우측 하단 FAB → 대화창. TutorChat 가 개폐 처리)
     })();
   </script>
 
@@ -320,10 +293,5 @@ if (src) {
     .recon-view .recon-bullet { text-align: left; padding-left: 1.3em; text-indent: -1.3em; }
     .recon-view .recon-box .recon-line:first-child { margin-top: 0; }
     .recon-view .recon-box .recon-line:last-child { margin-bottom: 0; }
-    @media (max-width: 1023px) {
-      #chat-dock.chat-dock--collapsed { height: auto; }
-      #chat-dock.chat-dock--collapsed #dock-body { display: none; }
-      #prob-grid:has(#chat-dock.chat-dock--collapsed) { padding-bottom: 3.5rem; }
-    }
   </style>
 </BaseLayout>
