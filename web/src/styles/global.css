@@ -600,23 +600,32 @@ html.dark {
    ContextDrawer.astro 가 렌더. 본문은 풀폭 유지 + 우측 가장자리에 항상 보이는 peek
    손잡이(세로 라벨 "기출·지도·노트")로 서랍 존재·내용을 알린다. 탭하면 오버레이 슬라이드 인.
    @layer 밖(unlayered)이라 Tailwind position 유틸리티와 충돌 없음. */
+/* 구조: .ctx-drawer(wrap, 고정·transform) > 손잡이(왼쪽 튀어나옴) + body(패널, 스크롤) */
 .ctx-drawer {
   position: fixed; top: 0; right: 0; z-index: 45;
   height: 100vh; height: 100dvh;
   width: min(300px, 86vw);
+  transform: translateX(100%);
+  transition: transform 240ms cubic-bezier(.4, 0, .2, 1);
+  /* overflow 는 .ctx-drawer-body 에만 둔다 — wrap 에 두면 자식 손잡이가 클립됨 */
+}
+.ctx-drawer[data-open="true"] { transform: translateX(0); }
+
+.ctx-drawer-body {
+  height: 100%;
   padding: 56px 16px calc(80px + env(safe-area-inset-bottom));
   overflow-y: auto; overscroll-behavior: contain;
   background: var(--color-bg);
   border-left: 1px solid var(--color-border-strong);
   box-shadow: var(--shadow-card-hover);
-  transform: translateX(100%);
-  transition: transform 240ms cubic-bezier(.4, 0, .2, 1);
 }
-.ctx-drawer[data-open="true"] { transform: translateX(0); }
 
+/* 손잡이 — wrap 왼쪽 가장자리에서 바깥(왼쪽)으로 튀어나온 세로 탭. wrap 의 자식이라
+   wrap 이 transform 되면(드래그·열림) 손잡이도 함께 움직인다. */
 .ctx-drawer-handle {
-  position: fixed; right: 0; top: 50%; transform: translateY(-50%);
-  z-index: 44;
+  position: absolute; top: 50%; left: 0;
+  transform: translate(-100%, -50%);
+  z-index: 1;
   display: flex; flex-direction: column-reverse; align-items: center; gap: 8px;
   padding: 16px 7px;
   writing-mode: vertical-rl;
@@ -652,9 +661,11 @@ html.dark {
   .ctx-drawer {
     position: sticky; top: 5rem; z-index: auto;
     height: auto; width: auto;
-    padding: 0; overflow: visible;
-    background: none; border: none; box-shadow: none;
     transform: none;
+  }
+  .ctx-drawer-body {
+    height: auto; padding: 0; overflow: visible;
+    background: none; border: none; box-shadow: none;
   }
   .ctx-drawer-handle, .ctx-drawer-backdrop, .ctx-drawer-close { display: none !important; }
 }
