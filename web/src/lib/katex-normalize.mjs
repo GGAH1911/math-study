@@ -38,6 +38,10 @@ export function normalizeKatex(tex) {
     //    (주의: \text{} 안 `$n$`·`$r$` 같은 다중 math 섬을 건드리는 규칙은 금물 — 짝을 깨
     //     수식 전체가 raw 로 노출됨. KaTeX 는 valid \text{$math$ 한글} 를 스스로 렌더한다.)
     .replace(/([_^])(\d{2,})/g, '$1{$2}')
+    // 4. \text{} 안 곧은 ASCII 따옴표("…") → 곱슬 따옴표(“…”). KaTeX 는 스마트따옴표가 없어
+    //    여닫이가 같은 곧은 글리프로 보인다. \text{} 안의 *짝지은* "…" 만 변환(내부 $n$·$r$
+    //    math 섬은 [^"]* 가 $ 를 통과시켜 그대로 보존). \text 밖 math 의 " 는 안 건드림.
+    .replace(/\\text\{([^{}]*)\}/g, (_m, inner) => '\\text{' + inner.replace(/"([^"]*)"/g, '“$1”') + '}')
     .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
