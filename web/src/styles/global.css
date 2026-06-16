@@ -765,6 +765,16 @@ html.dark {
   }
 }
 
+/* 데스크탑(≥1280): 넓은 화면에선 FAB·패널이 뷰포트 구석에 동떨어져 눈에 안 띈다 →
+   가운데 정렬된 본문 우측 가장자리 안쪽(8px)에 붙인다. fab='always'(개념)만 해당 —
+   문제풀이는 데스크탑에서 인라인 컬럼이라 무관.
+   ≥1280 에선 사이드바(240px=w-60)가 떠 있어 본문은 '사이드바 오른쪽 영역' 가운데 정렬됨.
+   본문 우측 가장자리의 뷰포트 우측 기준 거리 = (100vw-240-1152)/2 = 50vw-696px. +8 안쪽. */
+@media (min-width: 1280px) {
+  .tutor-chat--always .tutor-fab,
+  .tutor-chat--always .tutor-panel { right: max(16px, calc(50vw - 688px)); }
+}
+
 /* fab='mobile'(문제풀이): md+(≥768) 는 인라인 sticky 컬럼(현행). FAB·백드롭·닫기바 숨김.
    (.tutor-chat 는 이미 display:contents 라 .tutor-panel 이 grid 의 채팅 컬럼 자리에 놓인다) */
 @media (min-width: 768px) {
