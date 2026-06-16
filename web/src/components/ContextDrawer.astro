@@ -1,0 +1,59 @@
+---
+// 우측 컨텍스트 서랍 — 태블릿·모바일(<xl)에서 본문 풀폭을 확보하면서, 우측 가장자리에
+// 항상 보이는 peek 손잡이로 보조 정보(기출·개념지도·노트 등)의 존재·내용을 알린다.
+// 데스크탑(xl+)에서는 손잡이/오버레이가 사라지고 기존 인라인 sticky 컬럼으로 복귀(회귀 0).
+// 스타일은 global.css 의 .ctx-drawer* (unlayered). 페이지는 aside 내용을 이 컴포넌트로 감싼다.
+interface Props {
+  label?: string;       // 손잡이 세로 라벨 (예: '기출 · 지도 · 노트')
+  icon?: string;        // 손잡이 상단 아이콘
+  class?: string;       // aside 추가 클래스
+}
+const { label = '학습 정보', icon = '📑', class: extra = '' } = Astro.props;
+---
+<button
+  type="button"
+  class="ctx-drawer-handle"
+  data-ctx-handle
+  aria-expanded="false"
+  aria-controls="ctx-drawer"
+  aria-label={`${label} 패널 열기`}
+>
+  <span class="ctx-drawer-handle-icon" aria-hidden="true">{icon}</span>
+  <span>{label}</span>
+</button>
+
+<div class="ctx-drawer-backdrop" data-ctx-backdrop hidden></div>
+
+<aside id="ctx-drawer" class:list={["ctx-drawer self-start space-y-4", extra]} data-open="false" aria-label="학습 정보 패널">
+  <button type="button" class="ctx-drawer-close" data-ctx-close aria-label="패널 닫기">✕</button>
+  <slot />
+</aside>
+
+<script>
+  // 한 페이지에 서랍은 하나. data-* 로 요소를 찾아 개폐를 배선한다.
+  const handle = document.querySelector<HTMLButtonElement>('[data-ctx-handle]');
+  const drawer = document.getElementById('ctx-drawer');
+  const backdrop = document.querySelector<HTMLElement>('[data-ctx-backdrop]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-ctx-close]');
+
+  if (handle && drawer && backdrop) {
+    const open = () => {
+      drawer.dataset.open = 'true';
+      backdrop.hidden = false;
+      handle.setAttribute('aria-expanded', 'true');
+      closeBtn?.focus();
+    };
+    const close = (refocus = true) => {
+      drawer.dataset.open = 'false';
+      backdrop.hidden = true;
+      handle.setAttribute('aria-expanded', 'false');
+      if (refocus) handle.focus();
+    };
+    handle.addEventListener('click', open);
+    closeBtn?.addEventListener('click', () => close());
+    backdrop.addEventListener('click', () => close());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.dataset.open === 'true') close();
+    });
+  }
+</script>

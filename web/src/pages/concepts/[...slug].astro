@@ -7,6 +7,7 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import ChatPanel from '../../components/ChatPanel.tsx';
+import ContextDrawer from '../../components/ContextDrawer.astro';
 import RegenerateBodyButton from '../../components/RegenerateBodyButton.tsx';
 import LearningNoteButton from '../../components/LearningNoteButton.tsx';
 import { getMastery } from '../../lib/mastery.ts';
@@ -111,7 +112,7 @@ function problemLabel(p: ProblemBrief): string {
 const PREVIEW_COUNT = 8;
 ---
 <BaseLayout title={entry.id}>
-  <div class="max-w-6xl mx-auto px-6 lg:px-4 xl:px-6 py-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_216px] xl:grid-cols-[minmax(0,1fr)_280px] gap-8 lg:gap-6 xl:gap-8">
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="max-w-none min-w-0">
       <div class="prose prose-invert max-w-none">
         <Content />
@@ -119,7 +120,7 @@ const PREVIEW_COUNT = 8;
       <ChatPanel client:load slug={entry.id} unitTitle={fm.unit ?? entry.id} />
     </article>
 
-    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+    <ContextDrawer label="기출 · 개념지도 · 노트" icon="📑">
       <section class="card">
         <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">메타정보</h3>
         <dl class="text-sm space-y-1.5">
@@ -255,7 +256,7 @@ const PREVIEW_COUNT = 8;
           <RegenerateBodyButton client:load slug={entry.id} noteCount={linkedSyntheses.length} />
         </section>
       )}
-    </aside>
+    </ContextDrawer>
   </div>
 
   <script define:vars={{ conceptSlug: entry.id }}>

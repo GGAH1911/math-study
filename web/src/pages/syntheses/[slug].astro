@@ -7,6 +7,7 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, render } from 'astro:content';
 import SynthesisDeleteButton from '../../components/SynthesisDeleteButton.tsx';
+import ContextDrawer from '../../components/ContextDrawer.astro';
 import synthesesIndex from '../../data/syntheses-by-concept.json';
 import { REVIEW_STATE_LABEL_KO } from '../../lib/srs.ts';
 
@@ -37,12 +38,12 @@ const updated = fmt(fm.updated);
 const nextReview = fmt(fm.next_review);
 ---
 <BaseLayout title={pageTitle}>
-  <div class="max-w-6xl mx-auto px-6 lg:px-4 xl:px-6 py-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_216px] xl:grid-cols-[minmax(0,1fr)_280px] gap-8 lg:gap-6 xl:gap-8">
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="prose prose-invert max-w-none min-w-0">
       <Content />
     </article>
 
-    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+    <ContextDrawer label="노트 정보 · 출처" icon="🗒">
       <section class="card">
         <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">메타정보</h3>
         <dl class="text-sm space-y-1.5">
@@ -81,6 +82,6 @@ const nextReview = fmt(fm.next_review);
         <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">관리</h3>
         <SynthesisDeleteButton client:load slug={entry.id} />
       </section>
-    </aside>
+    </ContextDrawer>
   </div>
 </BaseLayout>

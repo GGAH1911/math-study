@@ -5,6 +5,7 @@
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, render } from 'astro:content';
+import ContextDrawer from '../../components/ContextDrawer.astro';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('mistakes', slug);
@@ -23,18 +24,18 @@ const fmtProblemPath = (p: string) => {
 const labelOf = (slug: string) => slug.split('/').pop() ?? slug;
 ---
 <BaseLayout title={entry.id}>
-  <div class="max-w-6xl mx-auto px-6 lg:px-4 xl:px-6 py-8 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_216px] xl:grid-cols-[minmax(0,1fr)_280px] gap-8 lg:gap-6 xl:gap-8">
+  <div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="prose prose-invert max-w-none min-w-0">
       <Content />
     </article>
 
-    <aside class="lg:sticky lg:top-20 self-start space-y-4">
+    <ContextDrawer label="오답 정보" icon="✕">
       <section class="card">
-        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">Mistake meta</h3>
+        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">오답 정보</h3>
         <dl class="text-sm space-y-1.5">
-          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">error</dt><dd><span class={`chip chip-error-${fm.error_type}`}>{fm.error_type}</span></dd></div>
-          {fm.revisit_date && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">revisit</dt><dd>{fm.revisit_date.toISOString().slice(0,10)}</dd></div>}
-          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">next review</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
+          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">오류 유형</dt><dd><span class={`chip chip-error-${fm.error_type}`}>{fm.error_type}</span></dd></div>
+          {fm.revisit_date && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다시 풀 날</dt><dd>{fm.revisit_date.toISOString().slice(0,10)}</dd></div>}
+          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다음 복습</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
         </dl>
         {fm.lesson && (
           <p class="text-xs text-[color:var(--color-muted)] mt-3 leading-relaxed">{fm.lesson}</p>
@@ -47,6 +48,6 @@ const labelOf = (slug: string) => slug.split('/').pop() ?? slug;
           <a class="text-sm text-[color:var(--color-accent)] hover:underline" href={`/problems/${fmtProblemPath(fm.problem)}`}>{labelOf(fmtProblemPath(fm.problem))} →</a>
         </section>
       )}
-    </aside>
+    </ContextDrawer>
   </div>
 </BaseLayout>
