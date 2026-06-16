@@ -1,6 +1,8 @@
-// 「오늘의 페이지」 히어로 곡선(날짜 시드 6종)과 각 곡선의 개념 노드·짧은 설명 매핑.
-// ★ index 는 PaperHero.tsx 의 곡선 선택과 반드시 일치해야 한다(같은 KST 날짜 → seed % 6).
-//   label 문자열도 PaperHero buildScene 의 label 과 동일하게 유지(둘 중 하나 바꾸면 같이).
+// 「오늘의 페이지」 히어로 곡선 계열과 각 계열의 개념 노드·짧은 설명 매핑.
+// ★ 계열 선택은 PaperHero.tsx 와 이 파일이 curveIndexForMs() 를 공유해 자동 일치한다.
+//   label 문자열은 PaperHero buildScene 의 label 과 동일하게 유지(캡션·캔버스 라벨 일치).
+// ★ 그림은 '매일 새롭다': 계열은 curveIndexForMs(연속 일수%N)로 돌되, curveSeedForMs(그날
+//   시드)로 진폭·위상·주기·계수를 흔들어 같은 계열이 다시 와도 그려지는 곡선이 달라진다.
 // concept = /concepts/<id> 로 이어질 실제 노드 id(언더스코어 포함, concept-graph.json 검증됨).
 
 export const DAILY_CURVES = [
@@ -48,9 +50,22 @@ export const DAILY_CURVES = [
   },
 ];
 
-// KST 날짜 시드 → 곡선 index (PaperHero 와 동일 계산). nowMs = Date.now().
+// KST 연속 일수(자정마다 +1). 계열 선택·파라미터 시드의 단일 기준.
+// 옛 YYYYMMDD 는 달 경계에서 점프해 어제와 같은 곡선이 나올 수 있었음 → 연속 일수로 교체.
+export function kstEpochDay(nowMs) {
+  return Math.floor((nowMs + 9 * 3600 * 1000) / 86400000);
+}
+
+// 그날의 곡선 '계열' index — 연속 일수 % N. 매일 한 칸씩 깔끔히 순환(달 경계 점프 없음).
+// PaperHero 와 index.astro 가 이 함수를 공유해 그림·캡션이 항상 같은 계열을 가리킨다.
 export function curveIndexForMs(nowMs) {
-  const kst = new Date(nowMs + 9 * 3600 * 1000);
-  const seed = kst.getUTCFullYear() * 10000 + (kst.getUTCMonth() + 1) * 100 + kst.getUTCDate();
-  return ((seed % 6) + 6) % 6;
+  const n = DAILY_CURVES.length;
+  return ((kstEpochDay(nowMs) % n) + n) % n;
+}
+
+// 그날의 '파라미터 시드' — 같은 계열이 다시 와도 진폭·위상·주기·계수가 달라져 그림이 매일 새롭다.
+// 연속 일수를 잘 섞어(Knuth multiplicative) mulberry32 입력으로 쓴다.
+export function curveSeedForMs(nowMs) {
+  const d = kstEpochDay(nowMs) | 0;
+  return (Math.imul(d, 2654435761) ^ 0x9e3779b9) >>> 0;
 }

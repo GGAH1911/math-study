@@ -3,6 +3,8 @@
 // 의존성 0(React 훅만) · rAF 핸들 1개 · 재생 완료 즉시 rAF 해제(idle CPU 0).
 // 테마 추종은 getComputedStyle 1회 캐싱 + html class MutationObserver — §14-C 계약의 1호 구현.
 import { useEffect, useRef } from 'react';
+// 계열 선택은 daily-curve.mjs 와 공유(캡션과 항상 같은 계열). 파라미터는 그날 시드로 변형.
+import { curveIndexForMs, curveSeedForMs } from '../lib/daily-curve.mjs';
 
 // 날짜 시드 결정적 PRNG (계약 리터럴 mulberry32)
 function mulberry32(a: number) {
@@ -22,9 +24,11 @@ const N = 240; // 곡선당 샘플 수
 type Stroke = { pts: number[]; dash: boolean; hover: boolean }; // pts = [x0,y0,x1,y1,...] (월드 좌표)
 type Scene = { strokes: Stroke[]; label: string; guideCircle: number | null; wob: Float32Array };
 
-// 프리셋 6종(seed % 6) — 점은 전부 사전계산, 라벨은 유니코드 문자열.
-function buildScene(seed: number): Scene {
+// 계열 6종 — 그날 시드(rnd)로 진폭·위상·주기·계수를 흔들어 같은 계열도 매일 다른 곡선을
+// 그린다(점은 전부 사전계산). k=계열 index(curveIndexForMs 공유), label 은 daily-curve.mjs 와 동일.
+function buildScene(seed: number, k: number): Scene {
   const rnd = mulberry32(seed);
+  const rr = (lo: number, hi: number) => lo + (hi - lo) * rnd(); // [lo,hi) 난수
   const sample = (f: (x: number) => number): number[] => {
     const a: number[] = [];
     for (let i = 0; i < N; i++) {
@@ -36,31 +40,34 @@ function buildScene(seed: number): Scene {
   let strokes: Stroke[];
   let label: string;
   let guideCircle: number | null = null;
-  const k = ((seed % 6) + 6) % 6;
   if (k === 0) {
-    const ph = rnd() * Math.PI;
-    strokes = [{ pts: sample((x) => Math.sin((Math.PI * x) / 2 + ph)), dash: false, hover: true }];
+    // 사인 — 진폭·주기·위상·세로이동 모두 매일 변형
+    const A = rr(0.7, 1.3), w = rr(0.8, 1.6), ph = rr(0, Math.PI * 2), c = rr(-0.3, 0.3);
+    strokes = [{ pts: sample((x) => A * Math.sin((w * Math.PI * x) / 2 + ph) + c), dash: false, hover: true }];
     label = 'y = sin x';
   } else if (k === 1) {
-    const x0 = -2 + 4 * rnd();
-    const f = (x: number) => 0.35 * x * x - 1;
-    const m = 0.7 * x0; // 접선 기울기 f'(x0)
+    // 포물선과 접선 — 곡률·꼭짓점높이·접점 변형
+    const a = rr(0.25, 0.5), c = rr(-1.3, -0.6), x0 = rr(-2, 2);
+    const f = (x: number) => a * x * x + c;
+    const m = 2 * a * x0; // f'(x0)
     strokes = [
       { pts: sample(f), dash: false, hover: true },
       { pts: [x0 - 2, f(x0) - 2 * m, x0 + 2, f(x0) + 2 * m], dash: true, hover: false },
     ];
     label = '포물선과 접선';
   } else if (k === 2) {
-    const a0 = rnd() * Math.PI * 2;
+    // 원과 내접삼각형 — 매일 다른 부등변 세 꼭짓점(회전+간격 변형)
+    const R = 1.8, a0 = rr(0, Math.PI * 2);
     const circ: number[] = [];
     for (let i = 0; i < N; i++) {
       const t = (Math.PI * 2 * i) / (N - 1);
-      circ.push(1.8 * Math.cos(t), 1.8 * Math.sin(t));
+      circ.push(R * Math.cos(t), R * Math.sin(t));
     }
+    const angs = [a0, a0 + rr(1.7, 2.5), a0 + rr(1.7, 2.5) + rr(1.7, 2.5)];
     const tri: number[] = [];
     for (let i = 0; i <= 3; i++) {
-      const t = a0 + (Math.PI * 2 * (i % 3)) / 3;
-      tri.push(1.8 * Math.cos(t), 1.8 * Math.sin(t));
+      const t = angs[i % 3];
+      tri.push(R * Math.cos(t), R * Math.sin(t));
     }
     strokes = [
       { pts: circ, dash: false, hover: true },
@@ -69,18 +76,23 @@ function buildScene(seed: number): Scene {
     label = '원과 내접삼각형';
     guideCircle = 2.05; // 컴퍼스 보조원(보조선 단계에서 대시로)
   } else if (k === 3) {
+    // 지수와 로그 — 밑·계수·로그 평행이동 변형(고정 → 매일 변형으로 개선)
+    const A = rr(0.3, 0.55), b = rr(0.6, 1.0), s = rr(3.0, 3.6);
     strokes = [
-      { pts: sample((x) => 0.4 * Math.exp(0.8 * x)), dash: false, hover: true },
-      { pts: sample((x) => Math.log(x + 3.3)), dash: false, hover: true },
+      { pts: sample((x) => A * Math.exp(b * x)), dash: false, hover: true },
+      { pts: sample((x) => Math.log(x + s)), dash: false, hover: true },
       { pts: [-2.6, -2.6, 2.6, 2.6], dash: true, hover: false }, // y = x 대칭축
     ];
     label = '지수와 로그';
   } else if (k === 4) {
-    const ph = rnd() * Math.PI * 2;
-    strokes = [{ pts: sample((x) => Math.sin(x) + 0.5 * Math.sin(2 * x + ph)), dash: false, hover: true }];
+    // 삼각함수의 합성 — 두 성분의 진폭·주기·위상 변형
+    const A1 = rr(0.8, 1.2), A2 = rr(0.35, 0.65), w2 = rr(1.7, 2.4), ph = rr(0, Math.PI * 2);
+    strokes = [{ pts: sample((x) => A1 * Math.sin(x) + A2 * Math.sin(w2 * x + ph)), dash: false, hover: true }];
     label = '삼각함수의 합성';
   } else {
-    strokes = [{ pts: sample((x) => 2.6 * Math.exp((-x * x) / 1.6) - 1), dash: false, hover: true }];
+    // 정규분포 — 평균·표준편차·진폭·세로이동 변형(고정 → 매일 변형으로 개선)
+    const A = rr(2.2, 3.0), sg = rr(1.0, 2.2), mu = rr(-0.6, 0.6), sh = rr(0.8, 1.2);
+    strokes = [{ pts: sample((x) => A * Math.exp(-((x - mu) * (x - mu)) / (2 * sg)) - sh), dash: false, hover: true }];
     label = '정규분포 곡선';
   }
   // 연필 wobble 테이블 — 점당 (dx,dy) 사전계산, 매 프레임 rnd 호출 금지.
@@ -102,10 +114,10 @@ export default function PaperHero() {
     const ctx = cv.getContext('2d');
     if (!ctx) return;
 
-    // KST 날짜 → 시드 (자정에 곡선이 바뀐다)
-    const kst = new Date(Date.now() + 9 * 3600 * 1000);
-    const seed = kst.getUTCFullYear() * 10000 + (kst.getUTCMonth() + 1) * 100 + kst.getUTCDate();
-    const scene = buildScene(seed);
+    // KST 자정마다 바뀜. 계열은 daily-curve.mjs 와 공유(캡션과 일치), 파라미터는 그날 시드로 변형.
+    const k = curveIndexForMs(Date.now());
+    const seed = curveSeedForMs(Date.now());
+    const scene = buildScene(seed, k);
 
     // y 범위: 샘플점에서 산출(폭주 구간 |y|>2.9 제외 — exp 곡선은 위로 빠져나가게 둔다)
     let yMin = Infinity;
