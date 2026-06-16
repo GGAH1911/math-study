@@ -1,9 +1,10 @@
-// 「오늘의 페이지」 히어로 곡선 계열과 각 계열의 개념 노드·짧은 설명 매핑.
-// ★ 계열 선택은 PaperHero.tsx 와 이 파일이 curveIndexForMs() 를 공유해 자동 일치한다.
-//   label 문자열은 PaperHero buildScene 의 label 과 동일하게 유지(캡션·캔버스 라벨 일치).
-// ★ 그림은 '매일 새롭다': 계열은 curveIndexForMs(연속 일수%N)로 돌되, curveSeedForMs(그날
-//   시드)로 진폭·위상·주기·계수를 흔들어 같은 계열이 다시 와도 그려지는 곡선이 달라진다.
-// concept = /concepts/<id> 로 이어질 실제 노드 id(언더스코어 포함, concept-graph.json 검증됨).
+// 「오늘의 페이지」 히어로 '장식' 곡선 계열(6종). 곡선은 장식일 뿐 — '오늘의 개념'은
+// 별도(daily-concept.mjs, 전체 개념 풀에서 매일 새로 고름)다.
+// ★ 곡선 모양은 정준(canonical) 고정 — 진폭·주기·표준편차를 흔들면 정규분포 등이 왜곡되므로
+//   흔들지 않는다(사용자 지침). 계열만 curveIndexForMs(연속 일수%N)로 매일 바뀐다.
+// ★ curveSeedForMs 는 이제 PaperHero 의 연필 wobble(손그림 질감)에만 쓰인다(모양 불변).
+// label 은 PaperHero buildScene 의 label 과 동일하게 유지. concept/blurb 필드는 옛 결합의
+// 잔재(현재 미사용) — 곡선↔개념 결합은 폐지됨.
 
 export const DAILY_CURVES = [
   // k=0
@@ -63,8 +64,8 @@ export function curveIndexForMs(nowMs) {
   return ((kstEpochDay(nowMs) % n) + n) % n;
 }
 
-// 그날의 '파라미터 시드' — 같은 계열이 다시 와도 진폭·위상·주기·계수가 달라져 그림이 매일 새롭다.
-// 연속 일수를 잘 섞어(Knuth multiplicative) mulberry32 입력으로 쓴다.
+// 그날의 시드 — PaperHero 의 연필 wobble(손그림 질감) 전용. 곡선 모양은 안 바뀌고 질감만
+// 미세하게 매일 달라진다. 연속 일수를 잘 섞어(Knuth multiplicative) mulberry32 입력으로 쓴다.
 export function curveSeedForMs(nowMs) {
   const d = kstEpochDay(nowMs) | 0;
   return (Math.imul(d, 2654435761) ^ 0x9e3779b9) >>> 0;

@@ -24,11 +24,11 @@ const N = 240; // 곡선당 샘플 수
 type Stroke = { pts: number[]; dash: boolean; hover: boolean }; // pts = [x0,y0,x1,y1,...] (월드 좌표)
 type Scene = { strokes: Stroke[]; label: string; guideCircle: number | null; wob: Float32Array };
 
-// 계열 6종 — 그날 시드(rnd)로 진폭·위상·주기·계수를 흔들어 같은 계열도 매일 다른 곡선을
-// 그린다(점은 전부 사전계산). k=계열 index(curveIndexForMs 공유), label 은 daily-curve.mjs 와 동일.
+// 계열 6종 — 곡선 모양은 '정준(canonical)' 고정이다. 진폭·주기·표준편차를 흔들면 정규분포
+// 같은 곡선이 왜곡되므로 흔들지 않는다(사용자 지침). 그날 시드(rnd)는 오직 연필 wobble
+// (손그림 질감)에만 쓴다 — 모양은 안 바뀌고 질감만 매일 미세하게 다르다. k=계열(curveIndexForMs 공유).
 function buildScene(seed: number, k: number): Scene {
   const rnd = mulberry32(seed);
-  const rr = (lo: number, hi: number) => lo + (hi - lo) * rnd(); // [lo,hi) 난수
   const sample = (f: (x: number) => number): number[] => {
     const a: number[] = [];
     for (let i = 0; i < N; i++) {
@@ -41,32 +41,27 @@ function buildScene(seed: number, k: number): Scene {
   let label: string;
   let guideCircle: number | null = null;
   if (k === 0) {
-    // 사인 — 진폭·주기·위상·세로이동 모두 매일 변형
-    const A = rr(0.7, 1.3), w = rr(0.8, 1.6), ph = rr(0, Math.PI * 2), c = rr(-0.3, 0.3);
-    strokes = [{ pts: sample((x) => A * Math.sin((w * Math.PI * x) / 2 + ph) + c), dash: false, hover: true }];
+    strokes = [{ pts: sample((x) => Math.sin((Math.PI * x) / 2)), dash: false, hover: true }];
     label = 'y = sin x';
   } else if (k === 1) {
-    // 포물선과 접선 — 곡률·꼭짓점높이·접점 변형
-    const a = rr(0.25, 0.5), c = rr(-1.3, -0.6), x0 = rr(-2, 2);
-    const f = (x: number) => a * x * x + c;
-    const m = 2 * a * x0; // f'(x0)
+    const f = (x: number) => 0.35 * x * x - 1;
+    const x0 = 1; // 고정 접점
+    const m = 0.7 * x0; // f'(x0)
     strokes = [
       { pts: sample(f), dash: false, hover: true },
       { pts: [x0 - 2, f(x0) - 2 * m, x0 + 2, f(x0) + 2 * m], dash: true, hover: false },
     ];
     label = '포물선과 접선';
   } else if (k === 2) {
-    // 원과 내접삼각형 — 매일 다른 부등변 세 꼭짓점(회전+간격 변형)
-    const R = 1.8, a0 = rr(0, Math.PI * 2);
+    const R = 1.8, a0 = -Math.PI / 2; // 한 꼭짓점이 위로 오는 정삼각형
     const circ: number[] = [];
     for (let i = 0; i < N; i++) {
       const t = (Math.PI * 2 * i) / (N - 1);
       circ.push(R * Math.cos(t), R * Math.sin(t));
     }
-    const angs = [a0, a0 + rr(1.7, 2.5), a0 + rr(1.7, 2.5) + rr(1.7, 2.5)];
     const tri: number[] = [];
     for (let i = 0; i <= 3; i++) {
-      const t = angs[i % 3];
+      const t = a0 + (Math.PI * 2 * (i % 3)) / 3;
       tri.push(R * Math.cos(t), R * Math.sin(t));
     }
     strokes = [
@@ -76,26 +71,20 @@ function buildScene(seed: number, k: number): Scene {
     label = '원과 내접삼각형';
     guideCircle = 2.05; // 컴퍼스 보조원(보조선 단계에서 대시로)
   } else if (k === 3) {
-    // 지수와 로그 — 밑·계수·로그 평행이동 변형(고정 → 매일 변형으로 개선)
-    const A = rr(0.3, 0.55), b = rr(0.6, 1.0), s = rr(3.0, 3.6);
     strokes = [
-      { pts: sample((x) => A * Math.exp(b * x)), dash: false, hover: true },
-      { pts: sample((x) => Math.log(x + s)), dash: false, hover: true },
+      { pts: sample((x) => 0.4 * Math.exp(0.8 * x)), dash: false, hover: true },
+      { pts: sample((x) => Math.log(x + 3.3)), dash: false, hover: true },
       { pts: [-2.6, -2.6, 2.6, 2.6], dash: true, hover: false }, // y = x 대칭축
     ];
     label = '지수와 로그';
   } else if (k === 4) {
-    // 삼각함수의 합성 — 두 성분의 진폭·주기·위상 변형
-    const A1 = rr(0.8, 1.2), A2 = rr(0.35, 0.65), w2 = rr(1.7, 2.4), ph = rr(0, Math.PI * 2);
-    strokes = [{ pts: sample((x) => A1 * Math.sin(x) + A2 * Math.sin(w2 * x + ph)), dash: false, hover: true }];
+    strokes = [{ pts: sample((x) => Math.sin(x) + 0.5 * Math.sin(2 * x)), dash: false, hover: true }];
     label = '삼각함수의 합성';
   } else {
-    // 정규분포 — 평균·표준편차·진폭·세로이동 변형(고정 → 매일 변형으로 개선)
-    const A = rr(2.2, 3.0), sg = rr(1.0, 2.2), mu = rr(-0.6, 0.6), sh = rr(0.8, 1.2);
-    strokes = [{ pts: sample((x) => A * Math.exp(-((x - mu) * (x - mu)) / (2 * sg)) - sh), dash: false, hover: true }];
+    strokes = [{ pts: sample((x) => 2.6 * Math.exp((-x * x) / 1.6) - 1), dash: false, hover: true }];
     label = '정규분포 곡선';
   }
-  // 연필 wobble 테이블 — 점당 (dx,dy) 사전계산, 매 프레임 rnd 호출 금지.
+  // 연필 wobble 테이블 — 점당 (dx,dy) 사전계산, 매 프레임 rnd 호출 금지. (모양 아닌 질감만)
   let total = 0;
   for (const s of strokes) total += s.pts.length / 2;
   const wob = new Float32Array(total * 2);
