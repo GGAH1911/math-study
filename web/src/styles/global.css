@@ -660,8 +660,8 @@ html.dark {
     border-left: none; border-top: 1px solid var(--color-border-strong);
     border-radius: 14px 14px 0 0;
   }
-  /* 손잡이 — 시트 상단 가장자리에서 위로 튀어나온 가로 탭(중앙). 모바일은 '탭'으로 열므로
-     touch-action 을 manipulation 으로(탭 지연 제거, 위로-스와이프 가로채기 안 함). */
+  /* 손잡이 — 시트 상단 가장자리에서 위로 튀어나온 가로 탭(중앙). 탭으로도, 위로 스와이프로도
+     열기에 touch-action:none(드래그를 페이지 스크롤에 뺏기지 않게 — base 규칙 상속). */
   .ctx-drawer-handle {
     top: 0; left: 50%; right: auto;
     transform: translate(-50%, -100%);
@@ -670,19 +670,37 @@ html.dark {
     writing-mode: horizontal-tb;
     border: 1px solid var(--color-border-strong); border-bottom: none;
     border-radius: 12px 12px 0 0;
-    touch-action: manipulation;
     transition: color 120ms ease, background-color 120ms ease,
                 transform 280ms cubic-bezier(.22, 1, .36, 1);
   }
   .ctx-drawer-handle .ctx-drawer-handle-icon { writing-mode: horizontal-tb; }
-  /* 닫힘 상태에서만 손잡이를 시스템 제스처(홈 인디케이터/제스처 바) 영역 위로 띄운다 —
-     시각적 겹침 방지 + 탭 영역이 OS 예약 가장자리와 안 겹치게. 열리면 시트 상단에 밀착. */
+  /* 닫힘: 손잡이를 시스템 제스처(홈 인디케이터/제스처 바) 영역 위로 띄우되, 아래로 짧은
+     '목(stem)'을 그려 화면 바닥과 연결돼 보이게 한다 — 둥둥 떠 보이던 느낌 제거. 위로
+     스와이프 시작점은 여전히 띄운 손잡이 위라 OS 제스처와 충돌하지 않는다. */
   .ctx-drawer[data-open="false"] .ctx-drawer-handle {
     transform: translate(-50%, calc(-100% - env(safe-area-inset-bottom) - 16px));
   }
-  /* 눌림 피드백 — 탭하면 살짝 가라앉는 느낌(translate 유지하며 압축). */
-  .ctx-drawer[data-open="false"] .ctx-drawer-handle:active {
-    transform: translate(-50%, calc(-100% - env(safe-area-inset-bottom) - 12px)) scaleY(.96);
+  .ctx-drawer[data-open="false"] .ctx-drawer-handle::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 100%;                                  /* 손잡이 바로 아래에서 시작 */
+    width: 76px;
+    height: calc(env(safe-area-inset-bottom) + 18px);      /* 띄운 만큼 채워 바닥까지 닿음 */
+    transform: translateX(-50%);
+    background: var(--color-surface);                      /* 손잡이와 동색 → 이어진 한 덩어리 */
+    border-left: 1px solid var(--color-border-strong);
+    border-right: 1px solid var(--color-border-strong);
+    border-radius: 0 0 5px 5px;
+    pointer-events: none;                                  /* 시각 전용 — 스와이프는 손잡이에서만 시작 */
+    z-index: -1;
+  }
+}
+
+/* 컨텍스트 서랍이 있는 페이지(모바일): 떠 있는 손잡이가 페이지 맨 끝 콘텐츠(예: 튜터 채팅
+   전송영역)를 가리지 않도록 본문 하단에 손잡이 높이만큼 스크롤 여유를 더 준다. */
+@media (max-width: 767px) {
+  body:has(#ctx-drawer) main {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 5rem);
   }
 }
 
