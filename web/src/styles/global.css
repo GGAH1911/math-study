@@ -616,7 +616,7 @@ html.dark {
   transform: translate(-100%, -50%);
   z-index: 1;
   display: flex; flex-direction: column-reverse; align-items: center; gap: 8px;
-  padding: 16px 7px;
+  padding: 16px 7px 16px 14px;       /* 왼쪽 여유 — 세로 그래버 레일 자리 */
   writing-mode: vertical-rl;
   background: var(--color-surface); color: var(--color-muted);
   border: 1px solid var(--color-border-strong); border-right: none;
@@ -630,6 +630,21 @@ html.dark {
 .ctx-drawer-handle:active { cursor: grabbing; }
 .ctx-drawer-handle:hover { color: var(--color-text); background: var(--color-surface-2); }
 .ctx-drawer-handle .ctx-drawer-handle-icon { writing-mode: horizontal-tb; font-size: 15px; }
+/* 세로 그래버 레일 — 우측 서랍(태블릿 md~xl)의 세로 손잡이가 드래그 가능함을 알린다.
+   바깥(왼쪽) 가장자리에 세로 알약. ≥1280 은 손잡이 자체가 숨김이라 자동 미노출,
+   <768 은 아래 모바일 블록이 가로 그래버로 덮어쓴다. */
+@media (min-width: 768px) {
+  .ctx-drawer-handle::before {
+    content: "";
+    position: absolute;
+    left: 5px; top: 50%;
+    transform: translateY(-50%);
+    width: 4px; height: 30px;
+    border-radius: 99px;
+    background: var(--color-border-strong);
+    opacity: .55;
+  }
+}
 
 .ctx-drawer-backdrop {
   position: fixed; inset: 0; z-index: 44;

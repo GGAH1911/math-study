@@ -7,7 +7,7 @@ import DueTodayListDb from '../components/DueTodayListDb.tsx';
 import ActivityFeed from '../components/ActivityFeed.astro';
 import MasteryDonut from '../components/MasteryDonut.tsx';
 import ConceptDAG from '../components/ConceptDAG.tsx';
-import ChatPanel from '../components/ChatPanel.tsx';
+import TutorChat from '../components/TutorChat.astro';
 import PaperHero from '../components/PaperHero.tsx';
 import { MathishText } from '../lib/mathish';
 import { readHealth, readConceptGraph, unitSummary, recommendUnits } from '../lib/health.ts';
@@ -181,9 +181,8 @@ const dc = DAILY_CURVES[curveIndexForMs(Date.now())];
       <ActivityFeed />
     </div>
 
-    <!-- 학습 길잡이 채팅 — 모바일 최하단 · 데스크톱 풀폭 -->
-    <div class="order-7 lg:order-none lg:row-start-5 lg:col-start-1 lg:col-span-6">
-      <ChatPanel client:load slug="__nav__" unitTitle="학습 길잡이" collection="dashboard" />
-    </div>
   </div>
+  {/* 학습 길잡이 채팅 — 그리드 인라인 폐지(태블릿서 안 보이던 문제 해결). 모든 화면에서
+       우측 하단 FAB → 큰 대화창. display:contents 라 그리드 자리 미점유. */}
+  <TutorChat slug="__nav__" unitTitle="학습 길잡이" collection="dashboard" fab="always" fabLabel="학습 길잡이와 대화" />
 </BaseLayout>
