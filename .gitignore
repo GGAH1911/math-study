@@ -35,3 +35,6 @@ web/public/problem-images/tiles/
 
 # 맥북/임시 스크린샷 드롭(프로젝트 콘텐츠 아님)
 capture/
+
+# 노드 다이어트 일회성 마이그레이션 산출물(디스크 보관, 커밋 제외)
+web/scripts/_*

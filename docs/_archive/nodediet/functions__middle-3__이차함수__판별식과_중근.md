@@ -1,0 +1,35 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 함수
+grade: 중3
+prerequisites: [docs/concepts/functions/middle-3/이차함수.md]
+enables: []
+mastery: unknown
+---
+
+# 판별식과 중근
+
+이차방정식의 판별식이 $0$일 때 나타나는 "서로 같은 두 근" 곧 중근에 대한 조건입니다. 중3 이차함수 단원에서 접선·접점 문제의 핵심입니다.
+
+## 정의
+
+이차방정식 $ax^2 + bx + c = 0$ ($a \neq 0$)의 판별식 $D = b^2 - 4ac$에 대해
+$$D = 0 \iff \text{서로 같은 두 실근(중근)을 가짐}.$$
+이때 중근은 $x = -\dfrac{b}{2a}$입니다.
+
+이차함수 그래프 관점에서는, 곡선 $y = ax^2 + bx + c$가 직선 $y = mx + n$과 접한다는 조건은 $ax^2 + (b - m)x + (c - n) = 0$의 판별식이 $0$인 것과 동치입니다.
+
+## 예시
+
+곡선 $y = x^2$과 직선 $y = 2x + k$가 접하도록 하는 $k$를 구해 봅니다. 연립하면 $x^2 - 2x - k = 0$. 판별식이 $0$이어야 하므로
+$$D = 4 + 4k = 0 \implies k = -1.$$
+이때 접점은 $x = 1$, $y = 1$이므로 $(1, 1)$입니다.
+
+## 관련 개념
+
+- [이차함수의 판별식](docs/concepts/functions/middle-3/이차함수/이차함수의_판별식.md)
+- [실근 존재 조건](docs/concepts/functions/middle-3/이차함수/실근의_개수.md)
+- [이차함수](docs/concepts/functions/middle-3/이차함수.md)

@@ -1,0 +1,39 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 도형
+grade: 고1
+prerequisites: [docs/concepts/geometry/high-1/도형의_방정식.md]
+enables: []
+mastery: unknown
+---
+
+# 점과 직선 사이의 거리
+
+좌표평면에서 한 점에서 직선까지의 최단거리를 식으로 계산하는 공식입니다. 고1 도형의 방정식 단원의 핵심 공식이며 원의 접선 조건에 직접 사용됩니다.
+
+## 정의
+
+좌표평면의 점 $\mathrm{P}(x_0, y_0)$와 직선 $\ell: ax + by + c = 0$ ($a^2 + b^2 \neq 0$) 사이의 거리는
+$$d = \frac{|a x_0 + b y_0 + c|}{\sqrt{a^2 + b^2}}.$$
+이는 점 $\mathrm{P}$에서 직선 $\ell$에 내린 수선의 발까지의 길이입니다.
+
+원과 직선의 위치 관계는 원의 중심으로부터 직선까지의 거리 $d$와 반지름 $r$의 대소로 결정됩니다.
+- $d > r$: 만나지 않음.
+- $d = r$: 접함.
+- $d < r$: 두 점에서 만남.
+
+## 예시
+
+점 $\mathrm{P}(1, 2)$와 직선 $3x - 4y + 5 = 0$ 사이의 거리는
+$$d = \frac{|3 \cdot 1 - 4 \cdot 2 + 5|}{\sqrt{9 + 16}} = \frac{|0|}{5} = 0.$$
+즉 점 $\mathrm{P}$가 직선 위에 있습니다.
+
+또한 점 $(0, 0)$과 직선 $4x + 3y - 10 = 0$ 사이의 거리는 $\dfrac{|-10|}{5} = 2$.
+
+## 관련 개념
+
+- [원의 중심과 반지름](docs/concepts/geometry/high-1/도형의_방정식/원의_방정식.md)
+- [도형의 방정식](docs/concepts/geometry/high-1/도형의_방정식.md)

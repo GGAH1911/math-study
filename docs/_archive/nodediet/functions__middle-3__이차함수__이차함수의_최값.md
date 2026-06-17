@@ -1,0 +1,35 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 함수
+grade: 중3
+prerequisites: [docs/concepts/functions/middle-3/이차함수.md]
+enables: []
+mastery: unknown
+---
+
+# 이차함수의 최값
+
+이차함수가 갖는 최댓값과 최솟값을 표준형을 이용해 결정하는 방법입니다. 중3 이차함수 단원의 핵심 응용입니다.
+
+## 정의
+
+이차함수를 표준형 $f(x) = a(x - p)^2 + q$ ($a \neq 0$)으로 정리하면 꼭짓점은 $(p, q)$입니다.
+- $a > 0$이면 그래프가 아래로 볼록하므로 $f$는 $x = p$에서 **최솟값 $q$**를 가지고 최댓값은 없음.
+- $a < 0$이면 그래프가 위로 볼록하므로 $f$는 $x = p$에서 **최댓값 $q$**를 가지고 최솟값은 없음.
+
+이때 $p = -\dfrac{b}{2a}$, $q = c - \dfrac{b^2}{4a}$ 이며, 일반형 $f(x) = ax^2 + bx + c$에서 직접 계산할 수도 있습니다.
+
+## 예시
+
+$f(x) = 2x^2 - 8x + 11$의 최값을 구해 봅니다. 완전제곱식으로 정리하면
+$$f(x) = 2(x^2 - 4x) + 11 = 2(x - 2)^2 + 3.$$
+$a = 2 > 0$이므로 $x = 2$에서 최솟값 $3$을 갖고 최댓값은 없습니다.
+
+## 관련 개념
+
+- [구간에서의 극값](docs/concepts/functions/middle-3/이차함수/구간별_최댓값과_최솟값.md)
+- [정점](docs/concepts/functions/middle-3/이차함수/꼭짓점_축.md)
+- [이차함수](docs/concepts/functions/middle-3/이차함수.md)

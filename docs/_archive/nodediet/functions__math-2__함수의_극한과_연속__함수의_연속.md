@@ -1,0 +1,36 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 함수
+grade: 수학2
+prerequisites: [docs/concepts/functions/math-2/함수의_극한과_연속.md]
+enables: []
+mastery: unknown
+---
+
+# 함수의 연속
+
+함수의 그래프가 끊어지지 않고 이어진다는 직관을 극한으로 엄밀화한 개념입니다. 수학2 함수의 극한과 연속 단원의 핵심 개념입니다.
+
+## 정의
+
+함수 $f(x)$가 $x = a$에서 다음 세 조건을 모두 만족할 때 $x = a$에서 **연속**이라 합니다.
+1. $f(a)$가 정의되어 있음.
+2. $\displaystyle\lim_{x \to a} f(x)$가 존재함.
+3. $\displaystyle\lim_{x \to a} f(x) = f(a).$
+
+함수 $f$가 구간 $I$의 모든 점에서 연속이면 "$f$는 구간 $I$에서 연속"이라 합니다. 다항함수는 모든 실수에서 연속, 유리함수는 분모가 $0$이 아닌 모든 점에서 연속입니다.
+
+## 예시
+
+$f(x) = x^2 + 1$은 모든 실수에서 연속입니다. $x = 2$에서 $\displaystyle\lim_{x \to 2} f(x) = 5 = f(2)$로 확인됩니다.
+
+또한 $f(x) = \begin{cases} \dfrac{x^2 - 1}{x - 1}, & x \neq 1 \\ k, & x = 1 \end{cases}$이 $x = 1$에서 연속이 되도록 하는 $k$를 정해 봅니다. 극한값이 $\displaystyle\lim_{x \to 1} \dfrac{x^2-1}{x-1} = 2$이므로 $k = 2$이어야 합니다.
+
+## 관련 개념
+
+- [함수의 불연속점](docs/concepts/functions/math-2/함수의_극한과_연속/불연속점.md)
+- [극한값의 정의](docs/concepts/functions/math-2/함수의_극한과_연속/함수의_극한.md)
+- [함수의 극한과 연속](docs/concepts/functions/math-2/함수의_극한과_연속.md)

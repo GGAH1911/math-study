@@ -1,0 +1,33 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 함수
+grade: 중3
+prerequisites: [docs/concepts/functions/middle-3/이차함수.md]
+enables: []
+mastery: unknown
+---
+
+# 폐구간에서의 함수
+
+정의역이 양쪽 끝이 모두 포함된 닫힌구간 $[\alpha, \beta]$로 주어진 함수입니다. 중3 이차함수의 최댓값·최솟값 문제의 표준 설정입니다.
+
+## 정의
+
+함수 $f(x)$의 정의역이 닫힌구간 $[\alpha, \beta]$ ($\alpha \le \beta$)로 주어진 것을 **폐구간에서의 함수**라 합니다. 폐구간 위에서 연속인 함수는 최댓값·최솟값을 반드시 가집니다(최대·최소 정리).
+
+이차함수의 경우 폐구간 위 최댓값·최솟값은 꼭짓점 $x = p$와 두 끝점 $x = \alpha, \beta$에서의 함숫값을 비교하여 결정됩니다(단, 꼭짓점이 구간에 포함될 때만 꼭짓점 값을 포함).
+
+## 예시
+
+$f(x) = -x^2 + 6x - 5 = -(x-3)^2 + 4$의 정의역이 $[0, 5]$일 때 최댓값·최솟값을 구해 봅니다. 꼭짓점 $x = 3$이 구간에 포함되며 $a < 0$이므로 꼭짓점에서 최댓값.
+
+끝점 값: $f(0) = -5$, $f(5) = -25 + 30 - 5 = 0$. 꼭짓점 값: $f(3) = 4$. 따라서 최댓값은 $4$, 최솟값은 $f(0) = -5$입니다.
+
+## 관련 개념
+
+- [구간에서의 극값](docs/concepts/functions/middle-3/이차함수/구간별_최댓값과_최솟값.md)
+- [정의역 제약](docs/concepts/functions/middle-3/이차함수/정의역_제한.md)
+- [이차함수](docs/concepts/functions/middle-3/이차함수.md)

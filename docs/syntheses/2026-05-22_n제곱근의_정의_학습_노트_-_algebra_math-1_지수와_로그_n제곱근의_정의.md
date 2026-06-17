@@ -2,7 +2,7 @@
 sources: [chat with claude-haiku-4-5 on 2026-05-22]
 created: 2026-05-22
 updated: 2026-05-22
-origin_concept: docs/concepts/algebra/math-1/지수와_로그/n제곱근의_정의.md
+origin_concept: docs/concepts/algebra/math-1/지수와_로그/거듭제곱근.md
 promoted_from: chat
 review_state: new
 next_review: 2026-05-22

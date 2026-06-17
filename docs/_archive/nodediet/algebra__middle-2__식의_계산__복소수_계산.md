@@ -1,0 +1,35 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 수와식
+grade: 중2
+prerequisites: [docs/concepts/algebra/middle-2/식의_계산.md]
+enables: []
+mastery: unknown
+---
+
+# 복소수 계산
+
+허수단위 $i$를 포함한 식의 사칙연산을 수행하는 절차입니다. 식의 계산 단원에서 실수 범위를 복소수 범위로 확장한 후 다루는 핵심 기법입니다.
+
+## 정의
+
+허수단위는 $i^2 = -1$로 정의됩니다. 복소수는 $a + bi$ ($a, b$는 실수) 꼴로 나타냅니다. 두 복소수의 사칙연산은 다음과 같이 정의됩니다.
+- 덧셈/뺄셈: $(a+bi) \pm (c+di) = (a \pm c) + (b \pm d)i.$
+- 곱셈: $(a+bi)(c+di) = (ac - bd) + (ad + bc)i.$
+- 나눗셈: 분모를 켤레로 유리화하여 $\dfrac{a+bi}{c+di} = \dfrac{(a+bi)(c-di)}{c^2 + d^2}.$
+
+## 예시
+
+$(2 + 3i)(1 - 2i)$를 계산합니다. 분배법칙으로
+$$(2)(1) + (2)(-2i) + (3i)(1) + (3i)(-2i) = 2 - 4i + 3i - 6i^2 = 2 - i + 6 = 8 - i.$$
+
+또한 $\dfrac{1}{1 - i}$는 분모를 유리화하여 $\dfrac{1 + i}{(1-i)(1+i)} = \dfrac{1 + i}{2}$입니다.
+
+## 관련 개념
+
+- [복소수 켤레](docs/concepts/algebra/middle-2/식의_계산/복소수_기본.md)
+- [복소수 상등성](docs/concepts/algebra/middle-2/식의_계산/복소수_기본.md)
+- [식의 계산](docs/concepts/algebra/middle-2/식의_계산.md)

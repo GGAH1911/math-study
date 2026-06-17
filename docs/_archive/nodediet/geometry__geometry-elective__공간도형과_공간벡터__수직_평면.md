@@ -1,0 +1,33 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 도형
+grade: 기하
+prerequisites: [docs/concepts/geometry/geometry-elective/공간도형과_공간벡터.md]
+enables: []
+mastery: unknown
+---
+
+# 수직 평면
+
+공간에서 한 직선 또는 다른 평면에 직교하는 평면을 가리킵니다. 기하 공간도형과 공간벡터 단원에서 위치 관계의 핵심 개념입니다.
+
+## 정의
+
+- **직선과 평면의 수직:** 직선 $\ell$의 방향벡터 $\vec{d}$가 평면 $\pi$의 법선벡터와 평행할 때, $\ell$과 $\pi$가 수직이라 하고 $\ell \perp \pi$로 씁니다. 동치로, $\ell$이 평면 위의 모든 직선에 수직이라는 뜻입니다.
+- **두 평면의 수직:** 두 평면의 법선벡터 $\vec{n_1}, \vec{n_2}$가 서로 수직, 즉 $\vec{n_1} \cdot \vec{n_2} = 0$일 때 두 평면이 수직입니다.
+
+법선벡터를 알면 평면의 방정식 $\vec{n} \cdot (\vec{r} - \vec{r_0}) = 0$을 직접 쓸 수 있습니다.
+
+## 예시
+
+점 $\mathrm{P}(1, 2, 3)$을 지나고 직선 $\vec{r} = (0,0,0) + t(2,1,2)$에 수직인 평면을 구해 봅니다. 직선의 방향벡터 $(2, 1, 2)$가 평면의 법선벡터가 되므로 평면의 방정식은
+$$2(x - 1) + (y - 2) + 2(z - 3) = 0 \implies 2x + y + 2z = 10.$$
+
+## 관련 개념
+
+- [공간의 각과 거리](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터/공간의_각과_거리.md)
+- [직선과 평면의 각](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터/직선과_평면이_이루는_각.md)
+- [공간도형과 공간벡터](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터.md)
