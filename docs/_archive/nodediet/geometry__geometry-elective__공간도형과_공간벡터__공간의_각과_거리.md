@@ -32,6 +32,6 @@ $$\frac{|1 + 1 + 1 - 6|}{\sqrt{3}} = \frac{3}{\sqrt{3}} = \sqrt{3}.$$
 
 ## 관련 개념
 
-- [공간각의 계산](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터/공간각의_계산.md)
+- [공간각의 계산](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터.md)
 - [수직 평면](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터/공간도형의_수직_관계.md)
 - [공간도형과 공간벡터](docs/concepts/geometry/geometry-elective/공간도형과_공간벡터.md)
