@@ -164,8 +164,14 @@ function renderMarkdown(text: string): string {
     if (tok.startsWith('```')) {
       const m = tok.match(/^```(\w*)\n?([\s\S]*?)```$/);
       const lang = m?.[1] ?? '';
-      const code = escape(m?.[2] ?? '');
-      parts.push(`<pre data-lang="${lang}"><code>${code}</code></pre>`);
+      const rawCode = m?.[2] ?? '';
+      // 언어 없는 펜스가 박스드로잉(┌─┐│├┤└┘) ASCII-아트 표면 진짜 HTML 표로 렌더한다 —
+      // LLM 이 표를 코드블록에 넣어 평문처럼 보이던 문제. python 등 언어 지정 코드는 그대로.
+      if (!lang && /[┌┐└┘├┤┬┴┼─━│┃]/.test(rawCode)) {
+        const tbl = tryParseTable(rawCode, (cell) => inline(escape(cell)));
+        if (tbl) { parts.push(tbl); continue; }
+      }
+      parts.push(`<pre data-lang="${lang}"><code>${escape(rawCode)}</code></pre>`);
     } else {
       // Split into paragraphs by blank line
       const paras = tok.split(/\n{2,}/);
