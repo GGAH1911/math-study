@@ -1,6 +1,6 @@
 # TODO — 솔버/파이프라인 백로그
 
-> 갱신: 2026-06-07 · 튜터 그래프 정확도(plot 교점·geometry 방향) + 크롭/게이트 4개 백엔드 균일화 후 잔여.
+> 갱신: 2026-06-17 · UI/UX + 오늘의 페이지(매일 개념·그림·인사이트) + 튜터 그래픽/렌더 정비 후 잔여.
 
 ## 완료 (2026-06-06)
 - [x] 백필 blind→open-book + 하드코딩 게이트(변이테스트) + 인제스트 본류 반영
@@ -24,7 +24,18 @@
 - [x] **한컴 PUA 재구성 결정론 위반 216→6 + 전수 백필(3564)** (1ca4a0d3) — 비전감사(확률·샘플)를 **결정론·전수 불변식 스캐너**(구조 `qa_invariant_scan.py` + KaTeX렌더 `qa_rawleak_scan.mjs`)로 교체. 8수정: ①분수 grab 연속밴드워크(표garble56+overline77 동시) ②`━`(U+2501) 추출제외(빈분수·구분선) ③doubled footer strip(공백허용) ④벡터 body 같은-y밴드+문장부호배제 ⑤cases 큰브레이스 E04B검출+인터리브판별(관계연산자2+)+닫는`}`가드(그룹/집합 오소비차단) ⑥행렬 분수바가드(좌표점 `(π/6,5/2)`·괄호분수 오검출, 수능엔 행렬無) ⑦backfill subject불일치(가형≠'공통') 번호폴백. 결과 위반 **216→6(0.17%)**, KaTeX 렌더실패 **0/2986**. 백필 3564처리/1626변경/0실패. 잔여6=깊은중첩분수~3+bbox crop-bleed~2+옛교육과정1(전부 렌더정상).
 - [x] **재구성 뷰 어드민 전용** (de4d0a57) — 도형 라벨(이미지에 박힌 글자)이 재구성에선 이미지 밖으로 새 사용자엔 부적합 → `[...slug].astro` `reconHTML = isAdmin ? reconFull : ''`(isAdmin=`Astro.locals.user.is_admin`). 사용자는 원본 이미지(`<Content/>`)만, 어드민만 토글/재구성. 디코더 가치는 인제스트 결정론 searchable_text에.
 
+## 완료 (2026-06-17) — UI/UX + 오늘의 페이지 + 튜터 그래픽/렌더
+- [x] **튜터 채팅 UI 전면 정비** — 채팅 스크롤바 커스텀 드래그(모바일 네이티브 한계 우회); 컨텍스트 서랍 모바일 탭열기+위/아래 스와이프+그래버 손잡이(OS 홈제스처 충돌 해소); 채팅 **FAB화**(개념=전화면 FAB, 문제=md+컬럼·모바일FAB, 홈=FAB+태블릿 미표시 버그 수정); 데스크탑 FAB 본문 우측 hug; **데스크탑·태블릿 백드롭 제거→그래프 패널 동시 조작**; 메뉴 breakpoint lg→xl(태블릿도 ☰).
+- [x] **브랜드·테마 통일** — 사이드바·헤더·favicon = 빨간 작도 인장(삼각자·점박스 폐지); 테마 토글 해/달 SVG.
+- [x] **오늘의 페이지 = 매일 새 개념 + 그림 + 인사이트** — `daily-concept.mjs`(전체 풀 ~2800 고정셔플 순회); 개념별 LLM(Sonnet) figure spec + blurb 생성→`concept-illustrations.json` 캐시→**크론(23:40 KST) 내일치 미리 생성**; `PaperHero` 손그림 렌더(Catmull-Rom 스플라인, 좌표축 제거, 폴백=일반곡선); `/dev/daily-figures` 갤러리. `gen_daily_illustration.mjs`.
+- [x] **튜터 도형 단계검증 강제** — 트리거 '문제재현'→'좌표 정확성 필요 전반(개념설명 포함)'; ★ChatPanel turn-1: python+그래픽 동시 시 미검증 그래픽 strip→sympy 검증 강제(이전 `hasGeometry break`로 검증 스킵되던 근본 차단). Haiku 비순응 대응.
+- [x] **KaTeX/표 렌더 보정** — `\text{}` 안 수학 관계 유니코드(≠→×÷±≤≥⇒≈∈)→$math$ 섬(text-mode hard-throw 방지, `katex-normalize.mjs`); 박스드로잉 ASCII 표(코드펜스 ``` 안 포함)→HTML 표(`markdown.tryParseTable`+ChatPanel 펜스 분기). katex-harness 11→12.
+
 ## 잔여 (난이도순)
+- [ ] **concept-illustrations.json 크론 dirty** — 매일 갱신돼 워킹트리 주기적 dirty(정상). 주기적 커밋 or gitignore 정책 결정.
+- [ ] **히어로 figure 품질 들쭉** — 일부 개념(조건부명제 등) 약함. 캐시 id 삭제 후 `gen_daily_illustration.mjs <offset>` 재생성. 정확도 중요해지면 sympy 좌표→손그림 하이브리드(보류).
+- [ ] **atlas(개념지도) 대시보드 채팅 인라인** — 홈만 FAB화함. 통일 검토.
+- [ ] **Haiku 단계검증 비순응 모니터** — turn-1 strip로 강제 중이나 완벽치 않음.
 - [ ] **재구성 도형 라벨 누출** (어드민 전용이라 보류) — 도형을 재구성에 넣으면 이미지에 픽셀로 박힌 라벨 글자가 이미지 밖 텍스트로 중복/누락. **재구성을 사용자에게 다시 노출하려면 선행 필요.** 현재 사용자=원본이미지라 영향 없음.
 - [ ] **재구성 결정론 잔여 6/3564(0.17%, 표시 안 됨)** — 깊은 중첩분수 `\frac{\overline{N}}{…}`~3, **bbox crop-bleed ~2**(옆 문제 글자가 크롭경계 침범 → `bbox.py` 영역, 디코더 아님), 옛교육과정 1. 전부 렌더 정상이라 우선순위 낮음. 재검증=`qa_invariant_scan.py`(decoded_all 재생성 후).
 - [x] **기존 타입부채 92건 정리 → astro check 0 errors** (03129aec) — 92건 중 59건이 단일 근본원인 `@types/node` 누락(process·node:fs·Buffer·NodeJS 등 + 그 cascade). 추가: content.config `z.record` 2인자, `source ?? {}` optional chaining, `source.number` string|number 산술 Number()·Entry 타입확장, ChatPanel KatexImpl·Graph MathEvalFn·MathField `<math-field>`(React19 react모듈 JSX)·astro.config remark 콜백 JSDoc 등. typescript+@astrojs/check devDep 고정 + `npm run check`.

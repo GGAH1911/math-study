@@ -63,3 +63,5 @@ This file is the chronological backbone of the wiki. Even when pages are deleted
 ## [2026-06-14] fix(decode) | 한컴 PUA 재구성 결정론 위반 216→6 + 전수 백필(3564). 비전감사(확률·샘플)→**결정론·전수 불변식 스캐너**(구조 `qa_invariant_scan.py`+KaTeX렌더 `qa_rawleak_scan.mjs`) 전환. 8수정: 분수 연속밴드워크(표garble56+overline77)·━추출제외(빈분수)·doubled footer strip·벡터 같은-y밴드+문장부호배제·cases E04B검출+인터리브판별+닫는}가드·행렬 분수바가드(좌표점·괄호분수)·backfill subject불일치 번호폴백(가형/나형578). KaTeX 렌더실패 **0/2986**. 백필 3564/1626변경/0실패. (1ca4a0d3)
 
 ## [2026-06-14] feat(problems) | 재구성 뷰 어드민 전용 — 도형 라벨이 이미지 밖으로 새는 엣지케이스로 사용자엔 부적합 → reconHTML=is_admin 게이팅, 사용자는 원본 이미지만. 디코더 가치는 인제스트 결정론 searchable_text에. 핸드오프 `docs/HANDOFF.md`. (de4d0a57)
+
+## [2026-06-17] promote | chat → synthesis: "아니 사인 코사인 탄젠트 모두 분모가 사실은 반지름인것이다부터 해서 탄젠트는 어떻게 반지름과 련결되는지 적어" from geometry/middle-3/삼각비/직각삼각형과_삼각비
