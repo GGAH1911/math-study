@@ -1168,6 +1168,18 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     try {
       // ===== Turn 1: 초기 응답 =====
       let assistantText = await callLLM(rawHistory);
+      // Haiku 비순응 대비: 첫 응답에 sympy(python)와 그래픽이 *같이* 오면, 그 그래픽은 아직
+      // 검증 안 된 추정 좌표다. 그대로 두면 아래 sympy 루프가 "이미 그렸다"고 보고 검증을
+      // 통째로 건너뛴다(hasGeometry break) → 틀린 도형이 나감. 그래서 미검증 그래픽을 제거하고
+      // (표시·기록 모두) sympy 검증을 거쳐 STEP C 에서 검증 좌표로 다시 그리게 한다.
+      {
+        const _follow = text.startsWith('[자동 계산 결과]') || text.startsWith('[시각 검증]');
+        const _py = /```(?:python|py|sympy)[ \t]*\n?[\s\S]*?```/.test(assistantText);
+        const _gfx = /```(?:geometry3d|geometry|plot|interactive)[ \t]*\n/.test(assistantText);
+        if (!_follow && _py && _gfx) {
+          assistantText = assistantText.replace(/```(?:geometry3d|geometry|plot|interactive)[ \t]*\n[\s\S]*?```/g, '').trim();
+        }
+      }
       finalizeAssistant(assistantText);
 
       // ===== Sympy auto-exec + VERIFY FAIL retry (1회 cap) =====

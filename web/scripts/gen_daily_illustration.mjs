@@ -19,7 +19,7 @@ const DAY = 86400000;
 
 const PROMPT = (c) => `You output ONLY a JSON object (no prose, no markdown fence) describing a simple hand-drawn math figure that represents the given concept, for a small decorative sketch in a study app hero.
 
-Schema: {"strokes":[{"pts":[x0,y0,x1,y1,...],"dash":false,"hover":false,"smooth":false}],"guideCircle":null,"equalScale":true}
+Schema: {"strokes":[{"pts":[x0,y0,x1,y1,...],"dash":false,"hover":false,"smooth":false}],"guideCircle":null,"equalScale":true,"blurb":"..."}
 - Coordinates: world space, x in [-3,3], y in [-2,2], origin (0,0) center, +y up. USE MOST OF THE RANGE so the figure is large and clear.
 - 1 to 5 strokes. Each stroke = polyline (flat list of x,y numbers). Close a shape by repeating its first point at the end.
 - smooth: set TRUE for any CURVED stroke (parabola, sine, exponential, circle, ellipse, arc, bell curve, converging sequence...). For a smooth stroke give 6-12 well-spaced control points — the renderer splines them into a clean smooth curve, so do NOT try to emit many tiny segments. Set FALSE for straight-edge strokes (triangles, polygons, vectors, line segments, right-angle marks).
@@ -32,6 +32,9 @@ Schema: {"strokes":[{"pts":[x0,y0,x1,y1,...],"dash":false,"hover":false,"smooth"
   · inscribed/circumscribed → the circle and polygon actually tangent/touching.
   · sequence / limit → discrete points approaching a dashed asymptote.
   Add meaningful marks (right-angle square, arc for an angle, tick/dot for a point).
+- blurb: ONE short Korean sentence (한 문장, 40자 안팎) — 이 개념의 핵심 직관이나 흥미를 끄는
+  한 줄. 친근한 자연어로, 기호·전문용어 남발 금지, 학생에게 말 걸듯("…랍니다" 같은 되묻기 금지,
+  평서문). 예: "직각삼각형에서는 한 각만 정해지면 세 변의 비가 전부 결정돼요."
 
 Concept: 「${c.label}」  (단원: ${c.unit || '-'}, 과목: ${c.domain || '-'})
 Output ONLY the JSON object.`;
@@ -66,6 +69,7 @@ function sanitize(spec) {
   const out = { strokes };
   if (typeof spec.guideCircle === 'number' && Number.isFinite(spec.guideCircle)) out.guideCircle = spec.guideCircle;
   if (spec.equalScale) out.equalScale = true;
+  if (typeof spec.blurb === 'string' && spec.blurb.trim()) out.blurb = spec.blurb.trim().slice(0, 120);
   return out;
 }
 
