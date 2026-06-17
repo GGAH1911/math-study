@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-04T16:51:37.332Z",
-  "entropy": 0,
+  "generatedAt": "2026-06-17T17:14:37.489Z",
+  "entropy": 3,
   "thresholds": {
     "flatWarn": 50,
     "flatHard": 1500,
@@ -9,111 +9,123 @@
   },
   "flatDirs": [
     {
-      "rel": "docs/concepts/algebra/high-1/다항식",
-      "count": 58
-    },
-    {
-      "rel": "docs/concepts/algebra/math-1/지수와_로그",
-      "count": 88
+      "rel": "docs/concepts",
+      "count": 181
     },
     {
       "rel": "docs/concepts/equations/high-1/방정식과_부등식",
-      "count": 68
+      "count": 61
     },
     {
       "rel": "docs/concepts/functions/calculus/도함수의_활용_심화",
-      "count": 175
-    },
-    {
-      "rel": "docs/concepts/functions/calculus/수열의_극한",
-      "count": 86
-    },
-    {
-      "rel": "docs/concepts/functions/calculus/정적분의_활용",
-      "count": 107
+      "count": 179
     },
     {
       "rel": "docs/concepts/functions/high-1/함수와_그래프",
-      "count": 74
+      "count": 62
     },
     {
       "rel": "docs/concepts/functions/math-1/삼각함수",
-      "count": 159
-    },
-    {
-      "rel": "docs/concepts/functions/math-1/수열",
-      "count": 112
-    },
-    {
-      "rel": "docs/concepts/functions/math-2/함수의_극한과_연속",
-      "count": 105
-    },
-    {
-      "rel": "docs/concepts/functions/middle-3/이차함수",
-      "count": 113
-    },
-    {
-      "rel": "docs/concepts/geometry/geometry-elective/공간도형과_공간벡터",
-      "count": 129
-    },
-    {
-      "rel": "docs/concepts/geometry/geometry-elective/이차곡선",
-      "count": 143
+      "count": 60
     },
     {
       "rel": "docs/concepts/geometry/geometry-elective/평면벡터",
-      "count": 88
-    },
-    {
-      "rel": "docs/concepts/geometry/high-1/도형의_방정식",
-      "count": 92
-    },
-    {
-      "rel": "docs/concepts/geometry/middle-3/원의_성질",
       "count": 104
     },
     {
-      "rel": "docs/concepts/logic/high-1/집합과_명제",
-      "count": 72
+      "rel": "docs/concepts/geometry/high-1/도형의_방정식",
+      "count": 95
     },
     {
       "rel": "docs/concepts/probability-stats/prob-stats-elective/경우의_수",
-      "count": 146
+      "count": 147
     },
     {
       "rel": "docs/concepts/probability-stats/prob-stats-elective/확률",
       "count": 95
+    },
+    {
+      "rel": "docs/problems/2019/고3_10월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2019/고3_3월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2019/고3_4월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2019/고3_7월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/6월모평",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/9월모평",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/고3_10월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/고3_3월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/고3_4월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/고3_7월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2020/수능",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2021/6월모평",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2021/9월모평",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2021/수능",
+      "count": 60
     }
   ],
   "flatHardCount": 0,
   "congestedHubs": [
     {
       "path": "hubs/concepts/functions/calculus.md",
-      "links": 464
+      "links": 280
     },
     {
       "path": "hubs/concepts/functions/math-1.md",
-      "links": 323
+      "links": 135
     },
     {
       "path": "hubs/concepts/functions/math-2.md",
-      "links": 184
-    },
-    {
-      "path": "hubs/concepts/functions/middle-3.md",
-      "links": 116
+      "links": 119
     },
     {
       "path": "hubs/concepts/geometry/geometry-elective.md",
-      "links": 365
+      "links": 196
     },
     {
-      "path": "hubs/concepts/geometry/middle-3.md",
-      "links": 157
+      "path": "hubs/concepts/geometry/middle-1.md",
+      "links": 113
     },
     {
       "path": "hubs/concepts/probability-stats/prob-stats-elective.md",
-      "links": 288
+      "links": 265
     },
     {
       "path": "hubs/concepts/uncategorized.md",
@@ -121,8 +133,12 @@
     }
   ],
   "congestedHardCount": 0,
-  "isolatedConceptCount": 0,
-  "isolatedConcepts": [],
+  "isolatedConceptCount": 3,
+  "isolatedConcepts": [
+    "다항식의_차분",
+    "부정형(∞/∞)",
+    "합_표기(시그마)"
+  ],
   "missingFmCount": 0,
   "missingFm": []
 }

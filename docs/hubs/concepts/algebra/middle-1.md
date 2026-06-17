@@ -1,41 +1,55 @@
 ---
 sources: []
-created: 2026-06-15
-updated: 2026-06-15
+created: 2026-06-17
+updated: 2026-06-17
 hub_type: concepts-grade
 domain: algebra
 grade: middle-1
 counts:
-  total: 25
+  total: 39
 ---
 
 # 수와식 · 중1 (middle-1)
 
-총 25개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
+총 39개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (2)
 
 - [문자와 식](../../../concepts/algebra/middle-1/문자와_식.md) · 문자와 식 `proficient`
 - [정수와 유리수](../../../concepts/algebra/middle-1/정수와_유리수.md) · 정수와 유리수 `proficient`
 
-## 정의 (16)
+## 정의 (30)
 
-- [계수비교법](../../../concepts/algebra/middle-1/문자와_식/계수비교법.md) · 문자와 식 `unknown`
-- [나머지](../../../concepts/algebra/middle-1/정수와_유리수/나머지.md) · 정수와 유리수 `unknown`
+- [거듭제곱](../../../concepts/algebra/middle-1/문자와_식/거듭제곱.md) · 문자와 식 `unknown`
+- [계산 순서](../../../concepts/algebra/middle-1/정수와_유리수/계산_순서.md) · 정수와 유리수 `unknown`
+- [기약분수](../../../concepts/algebra/middle-1/정수와_유리수/기약분수.md) · 정수와 유리수 `unknown`
+- [나머지 판정](../../../concepts/algebra/middle-1/정수와_유리수/나머지_판정.md) · 정수와 유리수 `unknown`
 - [동류항](../../../concepts/algebra/middle-1/문자와_식/동류항.md) · 문자와 식 `unknown`
-- [문자를 사용한 식](../../../concepts/algebra/middle-1/문자와_식/문자를_사용한_식.md) · 문자와 식 `unknown`
-- [소수](../../../concepts/algebra/middle-1/정수와_유리수/소수.md) · 정수와 유리수 `unknown`
-- [소인수분해](../../../concepts/algebra/middle-1/정수와_유리수/소인수분해.md) · 정수와 유리수 `unknown`
-- [약수 개수](../../../concepts/algebra/middle-1/정수와_유리수/약수_개수.md) · 정수와 유리수 `unknown`
+- [문자식 표현](../../../concepts/algebra/middle-1/문자와_식/문자식_표현.md) · 문자와 식 `unknown`
+- [미지수](../../../concepts/algebra/middle-1/문자와_식/미지수.md) · 문자와 식 `unknown`
+- [배수 조건](../../../concepts/algebra/middle-1/정수와_유리수/배수_조건.md) · 정수와 유리수 `unknown`
+- [배수와 약수](../../../concepts/algebra/middle-1/정수와_유리수/배수와_약수.md) · 정수와 유리수 `unknown`
+- [백분율 계산](../../../concepts/algebra/middle-1/정수와_유리수/백분율_계산.md) · 정수와 유리수 `unknown`
+- [분수](../../../concepts/algebra/middle-1/정수와_유리수/분수.md) · 정수와 유리수 `unknown`
+- [분수의 곱셈](../../../concepts/algebra/middle-1/정수와_유리수/분수의_곱셈.md) · 정수와 유리수 `unknown`
+- [비례식](../../../concepts/algebra/middle-1/문자와_식/비례식.md) · 문자와 식 `unknown`
+- [비율](../../../concepts/algebra/middle-1/정수와_유리수/비율.md) · 정수와 유리수 `unknown`
+- [비율 계산](../../../concepts/algebra/middle-1/정수와_유리수/비율_계산.md) · 정수와 유리수 `unknown`
+- [사칙연산](../../../concepts/algebra/middle-1/정수와_유리수/사칙연산.md) · 정수와 유리수 `unknown`
+- [수직선](../../../concepts/algebra/middle-1/정수와_유리수/수직선.md) · 정수와 유리수 `unknown`
+- [약수](../../../concepts/algebra/middle-1/정수와_유리수/약수.md) · 정수와 유리수 `unknown`
+- [약수 조건](../../../concepts/algebra/middle-1/정수와_유리수/약수_조건.md) · 정수와 유리수 `unknown`
+- [약수 판정](../../../concepts/algebra/middle-1/정수와_유리수/약수_판정.md) · 정수와 유리수 `unknown`
 - [약수와배수](../../../concepts/algebra/middle-1/정수와_유리수/약수와배수.md) · 정수와 유리수 `unknown`
-- [연산자의 정의](../../../concepts/algebra/middle-1/문자와_식/연산자의_정의.md) · 문자와 식 `unknown`
 - [유리수](../../../concepts/algebra/middle-1/정수와_유리수/유리수.md) · 정수와 유리수 `unknown`
 - [이항 연산](../../../concepts/algebra/middle-1/문자와_식/이항_연산.md) · 문자와 식 `unknown`
 - [일차식](../../../concepts/algebra/middle-1/문자와_식/일차식.md) · 문자와 식 `unknown`
+- [자연수](../../../concepts/algebra/middle-1/정수와_유리수/자연수.md) · 정수와 유리수 `unknown`
 - [자연수와 정수](../../../concepts/algebra/middle-1/정수와_유리수/자연수와_정수.md) · 정수와 유리수 `unknown`
 - [절댓값](../../../concepts/algebra/middle-1/정수와_유리수/절댓값.md) · 정수와 유리수 `unknown`
-- [직사각형의 넓이](../../../concepts/algebra/middle-1/문자와_식/직사각형의_넓이.md) · 문자와 식 `unknown`
-- [합동식](../../../concepts/algebra/middle-1/정수와_유리수/합동식.md) · 정수와 유리수 `unknown`
+- [정수 범위](../../../concepts/algebra/middle-1/정수와_유리수/정수_범위.md) · 정수와 유리수 `unknown`
+- [정수의 약수](../../../concepts/algebra/middle-1/정수와_유리수/정수의_약수.md) · 정수와 유리수 `unknown`
+- [최소공배수](../../../concepts/algebra/middle-1/정수와_유리수/최소공배수.md) · 정수와 유리수 `unknown`
 
 ## 정리 (3)
 

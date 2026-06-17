@@ -1,25 +1,21 @@
 ---
 sources: []
-created: 2026-06-15
-updated: 2026-06-15
+created: 2026-06-17
+updated: 2026-06-17
 hub_type: concepts-grade
 domain: probability-stats
 grade: middle-2
 counts:
-  total: 7
+  total: 6
 ---
 
 # 확률통계 · 중2 (middle-2)
 
-총 7개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
+총 6개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [확률 중2](../../../concepts/probability-stats/middle-2/확률_중2.md) · 확률 (중학) `unknown`
-
-## 정의 (1)
-
-- [사건과 경우의 수](../../../concepts/probability-stats/middle-2/확률_중2/사건과_경우의_수.md) · 확률 중2 `unknown`
 
 ## 정리 (3)
 

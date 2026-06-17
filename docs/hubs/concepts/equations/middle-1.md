@@ -1,28 +1,26 @@
 ---
 sources: []
-created: 2026-06-15
-updated: 2026-06-15
+created: 2026-06-17
+updated: 2026-06-17
 hub_type: concepts-grade
 domain: equations
 grade: middle-1
 counts:
-  total: 12
+  total: 10
 ---
 
 # 방정식 · 중1 (middle-1)
 
-총 12개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
+총 10개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [일차방정식](../../../concepts/equations/middle-1/일차방정식.md) · 일차방정식 `proficient`
 
-## 정의 (6)
+## 정의 (4)
 
 - [방정식](../../../concepts/equations/middle-1/일차방정식/방정식.md) · 일차방정식 `unknown`
-- [상대속도](../../../concepts/equations/middle-1/일차방정식/상대속도.md) · 일차방정식 `unknown`
-- [실생활 응용](../../../concepts/equations/middle-1/일차방정식/실생활_응용.md) · 일차방정식 `unknown`
-- [일차방정식 풀이](../../../concepts/equations/middle-1/일차방정식/일차방정식_풀이.md) · 일차방정식 `unknown`
+- [선형방정식](../../../concepts/equations/middle-1/일차방정식/선형방정식.md) · 일차방정식 `unknown`
 - [항등식](../../../concepts/equations/middle-1/일차방정식/항등식.md) · 일차방정식 `unknown`
 - [해 근](../../../concepts/equations/middle-1/일차방정식/해_근.md) · 일차방정식 `unknown`
 
