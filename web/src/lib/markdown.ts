@@ -58,5 +58,19 @@ export function tryParseTable(
   cellTransform: (cell: string) => string,
 ): string | null {
   const lines = paragraph.split('\n').filter((l) => l.trim().length > 0);
+  // 박스드로잉(┌─┐ │ ├┤ └─┘ 등) ASCII-아트 표 → 마크다운 표로 정규화 후 파싱.
+  // (마크다운 파이프 표는 박스문자가 없어 이 경로를 안 타고 기존 parseTableBlock 그대로 → 무회귀.)
+  if (/[┌┐└┘├┤┬┴┼─━│┃]/.test(paragraph)) {
+    const content = lines
+      .map((l) => l.replace(/[│┃]/g, '|').trim())            // 세로 박스선 → 파이프
+      .map((l) => l.replace(/\|\s+\|\s*$/, '|'))              // 박스 프레임이 만든 맨끝 빈 셀 제거
+      .filter((l) => l.includes('|') && /[0-9A-Za-z가-힣√π°∞]/.test(l)); // 셀 내용 있는 행만(테두리·구분선 제거)
+    if (content.length >= 2 && /^\|.*\|$/.test(content[0])) {
+      const cols = content[0].replace(/^\||\|$/g, '').split('|').length;
+      const align = '|' + Array(cols).fill('---').join('|') + '|';
+      const html = parseTableBlock([content[0], align, ...content.slice(1)], cellTransform);
+      if (html) return html;
+    }
+  }
   return parseTableBlock(lines, cellTransform);
 }
