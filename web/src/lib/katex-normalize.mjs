@@ -30,6 +30,18 @@
  * @param {string} tex
  * @returns {string}
  */
+// \text{} 안에서 text mode hard-throw 를 일으키는 수학 관계/연산 유니코드 → 같은 글리프의 $math$ 섬.
+const TEXT_MATH_SYM = [
+  [/≠/g, '$\\ne$'], [/≤/g, '$\\le$'], [/≥/g, '$\\ge$'], [/≪/g, '$\\ll$'], [/≫/g, '$\\gg$'],
+  [/⇔/g, '$\\Leftrightarrow$'], [/⇒/g, '$\\Rightarrow$'], [/⇐/g, '$\\Leftarrow$'],
+  [/↔/g, '$\\leftrightarrow$'], [/→/g, '$\\to$'], [/←/g, '$\\leftarrow$'], [/↦/g, '$\\mapsto$'],
+  [/×/g, '$\\times$'], [/÷/g, '$\\div$'], [/±/g, '$\\pm$'], [/∓/g, '$\\mp$'], [/⋅/g, '$\\cdot$'],
+  [/≈/g, '$\\approx$'], [/≅/g, '$\\cong$'], [/≡/g, '$\\equiv$'], [/∝/g, '$\\propto$'], [/∼/g, '$\\sim$'],
+  [/∈/g, '$\\in$'], [/∉/g, '$\\notin$'], [/∋/g, '$\\ni$'],
+  [/⊂/g, '$\\subset$'], [/⊆/g, '$\\subseteq$'], [/⊃/g, '$\\supset$'], [/⊇/g, '$\\supseteq$'],
+  [/∩/g, '$\\cap$'], [/∪/g, '$\\cup$'], [/∅/g, '$\\emptyset$'], [/∞/g, '$\\infty$'],
+];
+
 export function normalizeKatex(tex) {
   return tex
     .replace(/(?<!\\)%/g, '\\%')
@@ -41,7 +53,16 @@ export function normalizeKatex(tex) {
     // 4. \text{} 안 곧은 ASCII 따옴표("…") → 곱슬 따옴표(“…”). KaTeX 는 스마트따옴표가 없어
     //    여닫이가 같은 곧은 글리프로 보인다. \text{} 안의 *짝지은* "…" 만 변환(내부 $n$·$r$
     //    math 섬은 [^"]* 가 $ 를 통과시켜 그대로 보존). \text 밖 math 의 " 는 안 건드림.
-    .replace(/\\text\{([^{}]*)\}/g, (_m, inner) => '\\text{' + inner.replace(/"([^"]*)"/g, '“$1”') + '}')
+    // 4-b. \text{} 안의 수학 관계/연산 유니코드(≠ → × ÷ ± ≤ ≥ ⇒ ≈ ∈ …)를 $…$ 수식 섬으로.
+    //    KaTeX 는 이들을 \mathrel/\mathbin 으로 매핑하는데 text mode 에선 "Can't use \mathrel
+    //    in text mode" 로 **hard throw** → 수식 전체 raw 노출(예: \text{분자 ≠ 1인 …}). 같은
+    //    글리프를 $\ne$ 처럼 math 섬으로 감싸면 정상 렌더. (\text 밖 math 의 유니코드는 안 건드림.)
+    .replace(/\\text\{([^{}]*)\}/g, (_m, inner) => {
+      let t = inner;
+      for (const [re, rep] of TEXT_MATH_SYM) t = t.replace(re, rep);
+      t = t.replace(/"([^"]*)"/g, '“$1”'); // 곧은 따옴표 → 곱슬(KaTeX 스마트따옴표 없음)
+      return '\\text{' + t + '}';
+    })
     .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')

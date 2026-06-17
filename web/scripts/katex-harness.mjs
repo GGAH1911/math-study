@@ -142,6 +142,8 @@ const CASES = [
   ['정상 \\text 비한글 math', '$f(x) = \\text{이고 } x^2$', 1],
   ['부등식', '범위는 $-2 < x < 2$ 이다', 1],
   ['헤딩+수식', '## 순열\n공식은 $_nP_r$ 이다', 1],
+  // 회귀: \text{} 안 수학 관계 유니코드(≠ 등)는 text mode hard-throw → 통째 raw 였음.
+  ['\\text 안 ≠ 관계기호', '$$\\boxed{\\begin{align}&\\Rightarrow \\text{분자 ≠ 1인 각도} \\\\ &30°, 45° \\end{align}}$$', 1],
 ];
 
 let pass = 0;
