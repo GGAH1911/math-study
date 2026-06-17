@@ -749,6 +749,11 @@ html.dark {
 .tutor-chat[data-open="true"] .tutor-fab { display: none; }   /* 열리면 FAB 숨김(패널이 덮음) */
 
 .tutor-backdrop { position: fixed; inset: 0; z-index: 48; background: rgba(29, 26, 21, 0.28); }
+/* 데스크탑·태블릿(≥768): 채팅을 '비차단 떠있는 패널'로 — 백드롭 제거해 채팅이 열려 있어도
+   뒤의 그래프 패널을 자유롭게 조작(채팅은 ✕·Esc·FAB로 닫기). 모바일은 풀시트라 백드롭 유지. */
+@media (min-width: 768px) {
+  .tutor-backdrop { display: none !important; }
+}
 
 .tutor-panel {
   position: fixed; z-index: 49;
