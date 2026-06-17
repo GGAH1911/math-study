@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: calculus
 counts:
-  total: 278
+  total: 212
 ---
 
 # 함수 · 미적분 (calculus)
 
-총 278개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 212개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (7)
 
@@ -23,101 +23,49 @@ counts:
 - [정적분의 활용](../../../concepts/functions/calculus/정적분의_활용.md) · 정적분의 활용 `unknown`
 - [합성함수의 미분](../../../concepts/functions/calculus/합성함수의_미분.md) · 합성함수의 미분 (연쇄법칙) `unknown`
 
-## 정의 (239)
+## 정의 (173)
 
-- [2차 도함수](../../../concepts/functions/calculus/도함수의_활용_심화/2차_도함수.md) · 도함수의 활용 심화 `unknown`
-- [3차 함수의 미분](../../../concepts/functions/calculus/도함수의_활용_심화/3차_함수의_미분.md) · 도함수의 활용 심화 `unknown`
-- [3차함수](../../../concepts/functions/calculus/도함수의_활용_심화/3차함수.md) · 도함수의 활용 심화 `unknown`
 - [가속도와 이계도함수](../../../concepts/functions/calculus/도함수의_활용_심화/가속도와_이계도함수.md) · 도함수의 활용 심화 `unknown`
-- [거리 함수](../../../concepts/functions/calculus/도함수의_활용_심화/거리_함수.md) · 도함수의 활용 심화 `unknown`
-- [거리비 최적화](../../../concepts/functions/calculus/도함수의_활용_심화/거리비_최적화.md) · 도함수의 활용 심화 `unknown`
 - [거리와 변위](../../../concepts/functions/calculus/정적분의_활용/거리와_변위.md) · 정적분의 활용 `unknown`
-- [거리와 적분](../../../concepts/functions/calculus/도함수의_활용_심화/거리와_적분.md) · 도함수의 활용 심화 `unknown`
+- [거리와 적분](../../../concepts/functions/calculus/정적분의_활용/거리와_적분.md) · 정적분의 활용 `unknown`
 - [경계값 계산](../../../concepts/functions/calculus/수열의_극한/경계값_계산.md) · 수열의 극한 `unknown`
 - [경계점조건](../../../concepts/functions/calculus/여러가지함수의_극한/경계점조건.md) · 여러가지함수의 극한 `unknown`
-- [곡선과 직선의 교점](../../../concepts/functions/calculus/도함수의_활용_심화/곡선과_직선의_교점.md) · 도함수의 활용 심화 `unknown`
 - [곡선의 길이](../../../concepts/functions/calculus/정적분의_활용/곡선의_길이.md) · 정적분의 활용 `unknown`
-- [곡선의 미분](../../../concepts/functions/calculus/도함수의_활용_심화/곡선의_미분.md) · 도함수의 활용 심화 `unknown`
 - [곡선의 접촉 조건](../../../concepts/functions/calculus/도함수의_활용_심화/곡선의_접촉_조건.md) · 도함수의 활용 심화 `unknown`
 - [곱의 미분 법칙](../../../concepts/functions/calculus/여러가지함수의_미분/곱의_미분_법칙.md) · 여러가지함수의 미분 `unknown`
 - [곱의 미분법](../../../concepts/functions/calculus/여러가지함수의_미분/곱의_미분법.md) · 여러가지함수의 미분 `unknown`
 - [곱의미분법](../../../concepts/functions/calculus/여러가지함수의_미분/곱의미분법.md) · 여러가지함수의 미분 `unknown`
-- [교점 개수 분석](../../../concepts/functions/calculus/도함수의_활용_심화/교점_개수_분석.md) · 도함수의 활용 심화 `unknown`
 - [교점 개수 판정](../../../concepts/functions/calculus/도함수의_활용_심화/교점_개수_판정.md) · 도함수의 활용 심화 `unknown`
 - [교점과 극값](../../../concepts/functions/calculus/도함수의_활용_심화/교점과_극값.md) · 도함수의 활용 심화 `unknown`
 - [교점의 활용](../../../concepts/functions/calculus/정적분의_활용/교점의_활용.md) · 정적분의 활용 `unknown`
 - [구간별 최솟값 함수](../../../concepts/functions/calculus/도함수의_활용_심화/구간별_최솟값_함수.md) · 도함수의 활용 심화 `unknown`
-- [구간별 함수의 미분가능성](../../../concepts/functions/calculus/도함수의_활용_심화/구간별_함수의_미분가능성.md) · 도함수의 활용 심화 `unknown`
-- [구간별 함수의 성질](../../../concepts/functions/calculus/도함수의_활용_심화/구간별_함수의_성질.md) · 도함수의 활용 심화 `unknown`
 - [구간에서의 근의 합](../../../concepts/functions/calculus/도함수의_활용_심화/구간에서의_근의_합.md) · 도함수의 활용 심화 `unknown`
-- [구분함수](../../../concepts/functions/calculus/도함수의_활용_심화/구분함수.md) · 도함수의 활용 심화 `unknown`
-- [그래프의 교점 개수](../../../concepts/functions/calculus/도함수의_활용_심화/그래프의_교점_개수.md) · 도함수의 활용 심화 `unknown`
-- [극값](../../../concepts/functions/calculus/도함수의_활용_심화/극값.md) · 도함수의 활용 심화 `unknown`
-- [극값 구하기](../../../concepts/functions/calculus/도함수의_활용_심화/극값_구하기.md) · 도함수의 활용 심화 `unknown`
 - [극값 조건](../../../concepts/functions/calculus/도함수의_활용_심화/극값_조건.md) · 도함수의 활용 심화 `unknown`
-- [극값 판정과 활용](../../../concepts/functions/calculus/도함수의_활용_심화/극값_판정과_활용.md) · 도함수의 활용 심화 `unknown`
 - [극값과 실근의 개수](../../../concepts/functions/calculus/도함수의_활용_심화/극값과_실근의_개수.md) · 도함수의 활용 심화 `unknown`
 - [극값과 최댓값·최솟값](../../../concepts/functions/calculus/도함수의_활용_심화/극값과_최댓값·최솟값.md) · 도함수의 활용 심화 `unknown`
-- [극값의 개수](../../../concepts/functions/calculus/도함수의_활용_심화/극값의_개수.md) · 도함수의 활용 심화 `unknown`
 - [극값의 판정](../../../concepts/functions/calculus/도함수의_활용_심화/극값의_판정.md) · 도함수의 활용 심화 `unknown`
-- [극값의 판정과 존재 조건](../../../concepts/functions/calculus/도함수의_활용_심화/극값의_판정과_존재_조건.md) · 도함수의 활용 심화 `unknown`
-- [극값의 합 조건](../../../concepts/functions/calculus/도함수의_활용_심화/극값의_합_조건.md) · 도함수의 활용 심화 `unknown`
 - [극대극소](../../../concepts/functions/calculus/도함수의_활용_심화/극대극소.md) · 도함수의 활용 심화 `unknown`
-- [극댓값](../../../concepts/functions/calculus/도함수의_활용_심화/극댓값.md) · 도함수의 활용 심화 `unknown`
-- [극댓값과 극솟값](../../../concepts/functions/calculus/도함수의_활용_심화/극댓값과_극솟값.md) · 도함수의 활용 심화 `unknown`
-- [극소](../../../concepts/functions/calculus/도함수의_활용_심화/극소.md) · 도함수의 활용 심화 `unknown`
-- [극소 판정](../../../concepts/functions/calculus/도함수의_활용_심화/극소_판정.md) · 도함수의 활용 심화 `unknown`
-- [극소값](../../../concepts/functions/calculus/도함수의_활용_심화/극소값.md) · 도함수의 활용 심화 `unknown`
-- [극소값과 극댓값](../../../concepts/functions/calculus/도함수의_활용_심화/극소값과_극댓값.md) · 도함수의 활용 심화 `unknown`
-- [극소점](../../../concepts/functions/calculus/도함수의_활용_심화/극소점.md) · 도함수의 활용 심화 `unknown`
-- [극솟값](../../../concepts/functions/calculus/도함수의_활용_심화/극솟값.md) · 도함수의 활용 심화 `unknown`
-- [극한 조건을 이용한 매개변수 결정](../../../concepts/functions/calculus/도함수의_활용_심화/극한_조건을_이용한_매개변수_결정.md) · 도함수의 활용 심화 `unknown`
-- [극한과 도함수](../../../concepts/functions/calculus/도함수의_활용_심화/극한과_도함수.md) · 도함수의 활용 심화 `unknown`
-- [극한과 연속성](../../../concepts/functions/calculus/도함수의_활용_심화/극한과_연속성.md) · 도함수의 활용 심화 `unknown`
 - [극한의 기본 공식](../../../concepts/functions/calculus/여러가지함수의_극한/극한의_기본_공식.md) · 여러가지함수의 극한 `unknown`
 - [극한의 성질](../../../concepts/functions/calculus/수열의_극한/극한의_성질.md) · 수열의 극한 `unknown`
 - [극한의 유리화](../../../concepts/functions/calculus/수열의_극한/극한의_유리화.md) · 수열의 극한 `unknown`
-- [극한의 조건](../../../concepts/functions/calculus/도함수의_활용_심화/극한의_조건.md) · 도함수의 활용 심화 `unknown`
 - [근의 개수 분석](../../../concepts/functions/calculus/도함수의_활용_심화/근의_개수_분석.md) · 도함수의 활용 심화 `unknown`
-- [근의개수](../../../concepts/functions/calculus/도함수의_활용_심화/근의개수.md) · 도함수의 활용 심화 `unknown`
-- [근의합](../../../concepts/functions/calculus/도함수의_활용_심화/근의합.md) · 도함수의 활용 심화 `unknown`
 - [급수](../../../concepts/functions/calculus/수열의_극한/급수.md) · 수열의 극한 `unknown`
 - [급수의 선형성](../../../concepts/functions/calculus/수열의_극한/급수의_선형성.md) · 수열의 극한 `unknown`
-- [기울기와 각도](../../../concepts/functions/calculus/도함수의_활용_심화/기울기와_각도.md) · 도함수의 활용 심화 `unknown`
 - [기울기의 범위](../../../concepts/functions/calculus/도함수의_활용_심화/기울기의_범위.md) · 도함수의 활용 심화 `unknown`
-- [기하 조건의 함수화](../../../concepts/functions/calculus/도함수의_활용_심화/기하_조건의_함수화.md) · 도함수의 활용 심화 `unknown`
 - [기하급수](../../../concepts/functions/calculus/수열의_극한/기하급수.md) · 수열의 극한 `unknown`
 - [기하와 미분의 응용](../../../concepts/functions/calculus/도함수의_활용_심화/기하와_미분의_응용.md) · 도함수의 활용 심화 `unknown`
 - [기하학적 둘레 계산](../../../concepts/functions/calculus/정적분의_활용/기하학적_둘레_계산.md) · 정적분의 활용 `unknown`
-- [기하학적 응용](../../../concepts/functions/calculus/도함수의_활용_심화/기하학적_응용.md) · 도함수의 활용 심화 `unknown`
 - [기하학적 최적화](../../../concepts/functions/calculus/도함수의_활용_심화/기하학적_최적화.md) · 도함수의 활용 심화 `unknown`
 - [넓이 계산](../../../concepts/functions/calculus/정적분의_활용/넓이_계산.md) · 정적분의 활용 `unknown`
 - [넓이의 비](../../../concepts/functions/calculus/정적분의_활용/넓이의_비.md) · 정적분의 활용 `unknown`
 - [넓이의 이등분](../../../concepts/functions/calculus/정적분의_활용/넓이의_이등분.md) · 정적분의 활용 `unknown`
-- [넓이함수](../../../concepts/functions/calculus/도함수의_활용_심화/넓이함수.md) · 도함수의 활용 심화 `unknown`
+- [넓이함수](../../../concepts/functions/calculus/정적분의_활용/넓이함수.md) · 정적분의 활용 `unknown`
 - [단면적분](../../../concepts/functions/calculus/정적분의_활용/단면적분.md) · 정적분의 활용 `unknown`
-- [도함수 계산](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_계산.md) · 도함수의 활용 심화 `unknown`
 - [도함수 관계식](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_관계식.md) · 도함수의 활용 심화 `unknown`
-- [도함수 방정식](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_방정식.md) · 도함수의 활용 심화 `unknown`
-- [도함수 방정식의 해](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_방정식의_해.md) · 도함수의 활용 심화 `unknown`
-- [도함수 분석](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_분석.md) · 도함수의 활용 심화 `unknown`
-- [도함수 조건](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_조건.md) · 도함수의 활용 심화 `unknown`
-- [도함수 조건의 활용](../../../concepts/functions/calculus/도함수의_활용_심화/도함수_조건의_활용.md) · 도함수의 활용 심화 `unknown`
 - [도함수를 이용한 교점 개수 분석](../../../concepts/functions/calculus/도함수의_활용_심화/도함수를_이용한_교점_개수_분석.md) · 도함수의 활용 심화 `unknown`
 - [도함수를 이용한 극값 판정](../../../concepts/functions/calculus/도함수의_활용_심화/도함수를_이용한_극값_판정.md) · 도함수의 활용 심화 `unknown`
-- [도함수와 극값](../../../concepts/functions/calculus/도함수의_활용_심화/도함수와_극값.md) · 도함수의 활용 심화 `unknown`
-- [도함수와 기울기](../../../concepts/functions/calculus/도함수의_활용_심화/도함수와_기울기.md) · 도함수의 활용 심화 `unknown`
 - [도함수와 부등식](../../../concepts/functions/calculus/도함수의_활용_심화/도함수와_부등식.md) · 도함수의 활용 심화 `unknown`
-- [도함수와 실근](../../../concepts/functions/calculus/도함수의_활용_심화/도함수와_실근.md) · 도함수의 활용 심화 `unknown`
-- [도함수와 함수의 단조성](../../../concepts/functions/calculus/도함수의_활용_심화/도함수와_함수의_단조성.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 극값](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_극값.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 근](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_근.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 기하학적 의미](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_기하학적_의미.md) · 도함수의 활용 심화 `unknown`
 - [도함수의 물리적 의미](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_물리적_의미.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 부등식](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_부등식.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 부호 변화](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_부호_변화.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 부호 변화와 극값](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_부호_변화와_극값.md) · 도함수의 활용 심화 `unknown`
-- [도함수의 부호 판정](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_부호_판정.md) · 도함수의 활용 심화 `unknown`
 - [도함수의 부호와 증감](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_부호와_증감.md) · 도함수의 활용 심화 `unknown`
 - [도함수의 부호와 함수의 증감](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_부호와_함수의_증감.md) · 도함수의 활용 심화 `unknown`
 - [도함수의 영점](../../../concepts/functions/calculus/도함수의_활용_심화/도함수의_영점.md) · 도함수의 활용 심화 `unknown`
@@ -202,37 +150,23 @@ counts:
 - [음함수 미분](../../../concepts/functions/calculus/합성함수의_미분/음함수_미분.md) · 합성함수의 미분 `unknown`
 - [음함수의 미분](../../../concepts/functions/calculus/합성함수의_미분/음함수의_미분.md) · 합성함수의 미분 `unknown`
 - [이차함수의 영점](../../../concepts/functions/calculus/도함수의_활용_심화/이차함수의_영점.md) · 도함수의 활용 심화 `unknown`
-- [일대일함수](../../../concepts/functions/calculus/도함수의_활용_심화/일대일함수.md) · 도함수의 활용 심화 `unknown`
 - [자연상수 e](../../../concepts/functions/calculus/여러가지함수의_극한/자연상수_e.md) · 여러가지함수의 극한 `unknown`
 - [적분값 최적화](../../../concepts/functions/calculus/정적분의_활용/적분값_최적화.md) · 정적분의 활용 `unknown`
-- [적분과 거리 계산](../../../concepts/functions/calculus/도함수의_활용_심화/적분과_거리_계산.md) · 도함수의 활용 심화 `unknown`
+- [적분과 거리 계산](../../../concepts/functions/calculus/정적분의_활용/적분과_거리_계산.md) · 정적분의 활용 `unknown`
 - [절댓값 적분](../../../concepts/functions/calculus/정적분의_활용/절댓값_적분.md) · 정적분의 활용 `unknown`
-- [절댓값 함수의 극값](../../../concepts/functions/calculus/도함수의_활용_심화/절댓값_함수의_극값.md) · 도함수의 활용 심화 `unknown`
-- [절댓값과 경우 분석](../../../concepts/functions/calculus/도함수의_활용_심화/절댓값과_경우_분석.md) · 도함수의 활용 심화 `unknown`
-- [절댓값함수](../../../concepts/functions/calculus/도함수의_활용_심화/절댓값함수.md) · 도함수의 활용 심화 `unknown`
+- [절댓값과 경우 분석](../../../concepts/functions/calculus/여러가지함수의_미분/절댓값과_경우_분석.md) · 여러가지함수의 미분 `unknown`
 - [절댓값함수의 극값](../../../concepts/functions/calculus/도함수의_활용_심화/절댓값함수의_극값.md) · 도함수의 활용 심화 `unknown`
-- [절댓값함수의 미분](../../../concepts/functions/calculus/도함수의_활용_심화/절댓값함수의_미분.md) · 도함수의 활용 심화 `unknown`
-- [절댓값함수의 미분가능성](../../../concepts/functions/calculus/도함수의_활용_심화/절댓값함수의_미분가능성.md) · 도함수의 활용 심화 `unknown`
+- [절댓값함수의 미분](../../../concepts/functions/calculus/여러가지함수의_미분/절댓값함수의_미분.md) · 여러가지함수의 미분 `unknown`
 - [접선 및 교점](../../../concepts/functions/calculus/도함수의_활용_심화/접선_및_교점.md) · 도함수의 활용 심화 `unknown`
-- [접선과 기울기](../../../concepts/functions/calculus/도함수의_활용_심화/접선과_기울기.md) · 도함수의 활용 심화 `unknown`
-- [정수 제약 조건](../../../concepts/functions/calculus/도함수의_활용_심화/정수_제약_조건.md) · 도함수의 활용 심화 `unknown`
-- [정적분 계산](../../../concepts/functions/calculus/도함수의_활용_심화/정적분_계산.md) · 도함수의 활용 심화 `unknown`
 - [정적분과 넓이](../../../concepts/functions/calculus/정적분의_활용/정적분과_넓이.md) · 정적분의 활용 `unknown`
-- [정적분의 계산](../../../concepts/functions/calculus/도함수의_활용_심화/정적분의_계산.md) · 도함수의 활용 심화 `unknown`
 - [정적분의 극값](../../../concepts/functions/calculus/정적분의_활용/정적분의_극값.md) · 정적분의 활용 `unknown`
 - [제약 조건 하의 최적화](../../../concepts/functions/calculus/도함수의_활용_심화/제약_조건_하의_최적화.md) · 도함수의 활용 심화 `unknown`
-- [조건부 문제](../../../concepts/functions/calculus/도함수의_활용_심화/조건부_문제.md) · 도함수의 활용 심화 `unknown`
 - [조건부 미지수 결정](../../../concepts/functions/calculus/도함수의_활용_심화/조건부_미지수_결정.md) · 도함수의 활용 심화 `unknown`
 - [조건부 정의](../../../concepts/functions/calculus/수열의_극한/조건부_정의.md) · 수열의 극한 `unknown`
-- [조건부 최적화](../../../concepts/functions/calculus/도함수의_활용_심화/조건부_최적화.md) · 도함수의 활용 심화 `unknown`
-- [조건부 함수의 연속성](../../../concepts/functions/calculus/도함수의_활용_심화/조건부_함수의_연속성.md) · 도함수의 활용 심화 `unknown`
-- [중간값정리](../../../concepts/functions/calculus/도함수의_활용_심화/중간값정리.md) · 도함수의 활용 심화 `unknown`
-- [중근과 판별식](../../../concepts/functions/calculus/도함수의_활용_심화/중근과_판별식.md) · 도함수의 활용 심화 `unknown`
-- [증가함수](../../../concepts/functions/calculus/도함수의_활용_심화/증가함수.md) · 도함수의 활용 심화 `unknown`
 - [지수수열의 극한](../../../concepts/functions/calculus/수열의_극한/지수수열의_극한.md) · 수열의 극한 `unknown`
 - [지수함수 미분](../../../concepts/functions/calculus/여러가지함수의_미분/지수함수_미분.md) · 여러가지함수의 미분 `unknown`
 - [지수함수의 극한](../../../concepts/functions/calculus/여러가지함수의_극한/지수함수의_극한.md) · 여러가지함수의 극한 `unknown`
-- [지수함수의 미분](../../../concepts/functions/calculus/도함수의_활용_심화/지수함수의_미분.md) · 도함수의 활용 심화 `unknown`
+- [지수함수의 미분](../../../concepts/functions/calculus/여러가지함수의_미분/지수함수의_미분.md) · 여러가지함수의 미분 `unknown`
 - [직선과 곡선의 위치 관계](../../../concepts/functions/calculus/도함수의_활용_심화/직선과_곡선의_위치_관계.md) · 도함수의 활용 심화 `unknown`
 - [최댓값 최솟값](../../../concepts/functions/calculus/도함수의_활용_심화/최댓값_최솟값.md) · 도함수의 활용 심화 `unknown`
 - [최댓값·최솟값 판정](../../../concepts/functions/calculus/도함수의_활용_심화/최댓값·최솟값_판정.md) · 도함수의 활용 심화 `unknown`

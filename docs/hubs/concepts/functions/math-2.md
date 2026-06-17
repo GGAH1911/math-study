@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: math-2
 counts:
-  total: 117
+  total: 135
 ---
 
 # 함수 · 수학2 (math-2)
 
-총 117개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 135개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,18 +19,27 @@ counts:
 - [적분](../../../concepts/functions/math-2/적분.md) · 적분 `unknown`
 - [함수의 극한과 연속](../../../concepts/functions/math-2/함수의_극한과_연속.md) · 함수의 극한과 연속 `unknown`
 
-## 정의 (96)
+## 정의 (114)
 
+- [3차 함수의 미분](../../../concepts/functions/math-2/미분/3차_함수의_미분.md) · 미분 `unknown`
+- [3차함수](../../../concepts/functions/math-2/미분/3차함수.md) · 미분 `unknown`
 - [3차함수의 극값](../../../concepts/functions/math-2/미분/3차함수의_극값.md) · 미분 `unknown`
 - [곡선과 교점](../../../concepts/functions/math-2/적분/곡선과_교점.md) · 적분 `unknown`
 - [곡선의 접선](../../../concepts/functions/math-2/미분/곡선의_접선.md) · 미분 `unknown`
 - [구간별 적분](../../../concepts/functions/math-2/적분/구간별_적분.md) · 적분 `unknown`
+- [구간별 함수의 미분가능성](../../../concepts/functions/math-2/미분/구간별_함수의_미분가능성.md) · 미분 `unknown`
+- [구간별 함수의 성질](../../../concepts/functions/math-2/함수의_극한과_연속/구간별_함수의_성질.md) · 함수의 극한과 연속 `unknown`
 - [구간별 함수의 연속](../../../concepts/functions/math-2/함수의_극한과_연속/구간별_함수의_연속.md) · 함수의 극한과 연속 `unknown`
 - [그래프 분석](../../../concepts/functions/math-2/미분/그래프_분석.md) · 미분 `unknown`
 - [그래프 해석](../../../concepts/functions/math-2/미분/그래프_해석.md) · 미분 `unknown`
 - [그래프에서 극한값 읽기](../../../concepts/functions/math-2/함수의_극한과_연속/그래프에서_극한값_읽기.md) · 함수의 극한과 연속 `unknown`
+- [극값 구하기](../../../concepts/functions/math-2/미분/극값_구하기.md) · 미분 `unknown`
+- [극값의 개수](../../../concepts/functions/math-2/미분/극값의_개수.md) · 미분 `unknown`
 - [극값의 조건](../../../concepts/functions/math-2/미분/극값의_조건.md) · 미분 `unknown`
+- [극값의 합 조건](../../../concepts/functions/math-2/미분/극값의_합_조건.md) · 미분 `unknown`
 - [극한 계산](../../../concepts/functions/math-2/함수의_극한과_연속/극한_계산.md) · 함수의 극한과 연속 `unknown`
+- [극한과 도함수](../../../concepts/functions/math-2/미분/극한과_도함수.md) · 미분 `unknown`
+- [극한과 연속성](../../../concepts/functions/math-2/함수의_극한과_연속/극한과_연속성.md) · 함수의 극한과 연속 `unknown`
 - [극한의 계산](../../../concepts/functions/math-2/함수의_극한과_연속/극한의_계산.md) · 함수의 극한과 연속 `unknown`
 - [극한의 정의](../../../concepts/functions/math-2/함수의_극한과_연속/극한의_정의.md) · 함수의 극한과 연속 `unknown`
 - [극한의 존재 조건](../../../concepts/functions/math-2/함수의_극한과_연속/극한의_존재_조건.md) · 함수의 극한과 연속 `unknown`
@@ -48,7 +57,11 @@ counts:
 - [다항함수의 적분](../../../concepts/functions/math-2/적분/다항함수의_적분.md) · 적분 `unknown`
 - [대칭 미분](../../../concepts/functions/math-2/미분/대칭_미분.md) · 미분 `unknown`
 - [도함수](../../../concepts/functions/math-2/미분/도함수.md) · 미분 `unknown`
+- [도함수 계산](../../../concepts/functions/math-2/미분/도함수_계산.md) · 미분 `unknown`
+- [도함수 조건](../../../concepts/functions/math-2/미분/도함수_조건.md) · 미분 `unknown`
+- [도함수와 기울기](../../../concepts/functions/math-2/미분/도함수와_기울기.md) · 미분 `unknown`
 - [도함수의 계산](../../../concepts/functions/math-2/미분/도함수의_계산.md) · 미분 `unknown`
+- [도함수의 기하학적 의미](../../../concepts/functions/math-2/미분/도함수의_기하학적_의미.md) · 미분 `unknown`
 - [도함수의 성질](../../../concepts/functions/math-2/미분/도함수의_성질.md) · 미분 `unknown`
 - [도함수의 연속성](../../../concepts/functions/math-2/미분/도함수의_연속성.md) · 미분 `unknown`
 - [도함수의 정의](../../../concepts/functions/math-2/미분/도함수의_정의.md) · 미분 `unknown`
@@ -88,21 +101,26 @@ counts:
 - [이계도함수](../../../concepts/functions/math-2/미분/이계도함수.md) · 미분 `unknown`
 - [적분 계산](../../../concepts/functions/math-2/적분/적분_계산.md) · 적분 `unknown`
 - [적분의 기본정리](../../../concepts/functions/math-2/적분/적분의_기본정리.md) · 적분 `unknown`
+- [절댓값함수의 미분가능성](../../../concepts/functions/math-2/미분/절댓값함수의_미분가능성.md) · 미분 `unknown`
 - [접선과 도함수](../../../concepts/functions/math-2/미분/접선과_도함수.md) · 미분 `unknown`
 - [접선과 법선](../../../concepts/functions/math-2/미분/접선과_법선.md) · 미분 `unknown`
 - [접선의 기울기](../../../concepts/functions/math-2/미분/접선의_기울기.md) · 미분 `unknown`
 - [접선의기울기](../../../concepts/functions/math-2/미분/접선의기울기.md) · 미분 `unknown`
 - [정적분](../../../concepts/functions/math-2/적분/정적분.md) · 적분 `unknown`
+- [정적분 계산](../../../concepts/functions/math-2/적분/정적분_계산.md) · 적분 `unknown`
 - [정적분과 도함수의 관계](../../../concepts/functions/math-2/적분/정적분과_도함수의_관계.md) · 적분 `unknown`
+- [정적분의 계산](../../../concepts/functions/math-2/적분/정적분의_계산.md) · 적분 `unknown`
 - [정적분의 성질](../../../concepts/functions/math-2/적분/정적분의_성질.md) · 적분 `unknown`
 - [정적분의 정의](../../../concepts/functions/math-2/적분/정적분의_정의.md) · 적분 `unknown`
 - [제곱근식의 극한](../../../concepts/functions/math-2/함수의_극한과_연속/제곱근식의_극한.md) · 함수의 극한과 연속 `unknown`
 - [조각별정의함수](../../../concepts/functions/math-2/함수의_극한과_연속/조각별정의함수.md) · 함수의 극한과 연속 `unknown`
+- [조건부 함수의 연속성](../../../concepts/functions/math-2/함수의_극한과_연속/조건부_함수의_연속성.md) · 함수의 극한과 연속 `unknown`
 - [조건부상수결정](../../../concepts/functions/math-2/적분/조건부상수결정.md) · 적분 `unknown`
 - [좌극한](../../../concepts/functions/math-2/함수의_극한과_연속/좌극한.md) · 함수의 극한과 연속 `unknown`
 - [좌극한과 우극한](../../../concepts/functions/math-2/함수의_극한과_연속/좌극한과_우극한.md) · 함수의 극한과 연속 `unknown`
 - [좌표와 넓이](../../../concepts/functions/math-2/적분/좌표와_넓이.md) · 적분 `unknown`
 - [좌표평면 위의 도형의 넓이](../../../concepts/functions/math-2/적분/좌표평면_위의_도형의_넓이.md) · 적분 `unknown`
+- [중간값정리](../../../concepts/functions/math-2/함수의_극한과_연속/중간값정리.md) · 함수의 극한과 연속 `unknown`
 - [지배항 분석](../../../concepts/functions/math-2/함수의_극한과_연속/지배항_분석.md) · 함수의 극한과 연속 `unknown`
 - [초기값 조건](../../../concepts/functions/math-2/미분/초기값_조건.md) · 미분 `unknown`
 - [초기조건](../../../concepts/functions/math-2/적분/초기조건.md) · 적분 `unknown`

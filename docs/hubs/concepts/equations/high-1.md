@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: equations
 grade: high-1
 counts:
-  total: 62
+  total: 64
 ---
 
 # 방정식 · 고1 (high-1)
 
-총 62개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
+총 64개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [방정식과 부등식](../../../concepts/equations/high-1/방정식과_부등식.md) · 방정식과 부등식 `unknown`
 
-## 정의 (56)
+## 정의 (58)
 
 - [3차 방정식](../../../concepts/equations/high-1/방정식과_부등식/3차_방정식.md) · 방정식과 부등식 `unknown`
 - [계수와 해의 관계](../../../concepts/equations/high-1/방정식과_부등식/계수와_해의_관계.md) · 방정식과 부등식 `unknown`
@@ -26,6 +26,7 @@ counts:
 - [공통근](../../../concepts/equations/high-1/방정식과_부등식/공통근.md) · 방정식과 부등식 `unknown`
 - [근의 범위 조건](../../../concepts/equations/high-1/방정식과_부등식/근의_범위_조건.md) · 방정식과 부등식 `unknown`
 - [근의 합](../../../concepts/equations/high-1/방정식과_부등식/근의_합.md) · 방정식과 부등식 `unknown`
+- [근의합](../../../concepts/equations/high-1/방정식과_부등식/근의합.md) · 방정식과 부등식 `unknown`
 - [다항방정식의 근](../../../concepts/equations/high-1/방정식과_부등식/다항방정식의_근.md) · 방정식과 부등식 `unknown`
 - [대칭식](../../../concepts/equations/high-1/방정식과_부등식/대칭식.md) · 방정식과 부등식 `unknown`
 - [매개변수 범위](../../../concepts/equations/high-1/방정식과_부등식/매개변수_범위.md) · 방정식과 부등식 `unknown`
@@ -60,6 +61,7 @@ counts:
 - [정수해](../../../concepts/equations/high-1/방정식과_부등식/정수해.md) · 방정식과 부등식 `unknown`
 - [정수해 개수](../../../concepts/equations/high-1/방정식과_부등식/정수해_개수.md) · 방정식과 부등식 `unknown`
 - [중근과 단순근](../../../concepts/equations/high-1/방정식과_부등식/중근과_단순근.md) · 방정식과 부등식 `unknown`
+- [중근과 판별식](../../../concepts/equations/high-1/방정식과_부등식/중근과_판별식.md) · 방정식과 부등식 `unknown`
 - [집합과 방정식](../../../concepts/equations/high-1/방정식과_부등식/집합과_방정식.md) · 방정식과 부등식 `unknown`
 - [치환](../../../concepts/equations/high-1/방정식과_부등식/치환.md) · 방정식과 부등식 `unknown`
 - [켤레복소수](../../../concepts/equations/high-1/방정식과_부등식/켤레복소수.md) · 방정식과 부등식 `unknown`

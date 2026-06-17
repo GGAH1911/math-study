@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: probability-stats
 grade: prob-stats-elective
 counts:
-  total: 263
+  total: 192
 ---
 
 # 확률통계 · 확률과통계 (prob-stats-elective)
 
-총 263개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
+총 192개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [통계](../../../concepts/probability-stats/prob-stats-elective/통계.md) · 통계 `unknown`
 - [확률](../../../concepts/probability-stats/prob-stats-elective/확률.md) · 확률 `unknown`
 
-## 정의 (245)
+## 정의 (174)
 
 - [같은 것이 있는 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/같은_것이_있는_순열.md) · 경우의 수 `unknown`
 - [같은 것이 있을 때의 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/같은_것이_있을_때의_순열.md) · 경우의 수 `unknown`
@@ -96,16 +96,10 @@ counts:
 - [비인접 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/비인접_배열.md) · 경우의 수 `unknown`
 - [비전사](../../../concepts/probability-stats/prob-stats-elective/경우의_수/비전사.md) · 경우의 수 `unknown`
 - [사건의 독립](../../../concepts/probability-stats/prob-stats-elective/확률/사건의_독립.md) · 확률 `unknown`
-- [사건의 독립성](../../../concepts/probability-stats/prob-stats-elective/확률/사건의_독립성.md) · 확률 `unknown`
-- [사건의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/사건의_확률.md) · 확률 `unknown`
-- [사건의확률](../../../concepts/probability-stats/prob-stats-elective/확률/사건의확률.md) · 확률 `unknown`
 - [산점도](../../../concepts/probability-stats/prob-stats-elective/통계/산점도.md) · 통계 `unknown`
-- [상태 전이](../../../concepts/probability-stats/prob-stats-elective/확률/상태_전이.md) · 확률 `unknown`
-- [상태전이](../../../concepts/probability-stats/prob-stats-elective/확률/상태전이.md) · 확률 `unknown`
 - [색깔별 분배](../../../concepts/probability-stats/prob-stats-elective/경우의_수/색깔별_분배.md) · 경우의 수 `unknown`
 - [색깔을 이용한 분류](../../../concepts/probability-stats/prob-stats-elective/경우의_수/색깔을_이용한_분류.md) · 경우의 수 `unknown`
 - [생성함수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/생성함수.md) · 경우의 수 `unknown`
-- [서로소](../../../concepts/probability-stats/prob-stats-elective/확률/서로소.md) · 확률 `unknown`
 - [선택](../../../concepts/probability-stats/prob-stats-elective/경우의_수/선택.md) · 경우의 수 `unknown`
 - [선형 디오판토스 방정식](../../../concepts/probability-stats/prob-stats-elective/경우의_수/선형_디오판토스_방정식.md) · 경우의 수 `unknown`
 - [소인수분해를이용한조건분석](../../../concepts/probability-stats/prob-stats-elective/경우의_수/소인수분해를이용한조건분석.md) · 경우의 수 `unknown`
@@ -114,19 +108,14 @@ counts:
 - [순서쌍 경우의 수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/순서쌍_경우의_수.md) · 경우의 수 `unknown`
 - [순서쌍의 개수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/순서쌍의_개수.md) · 경우의 수 `unknown`
 - [순열과 조합](../../../concepts/probability-stats/prob-stats-elective/경우의_수/순열과_조합.md) · 경우의 수 `unknown`
-- [시행과 사건](../../../concepts/probability-stats/prob-stats-elective/확률/시행과_사건.md) · 확률 `unknown`
 - [신뢰구간](../../../concepts/probability-stats/prob-stats-elective/통계/신뢰구간.md) · 통계 `unknown`
-- [약수 관계](../../../concepts/probability-stats/prob-stats-elective/확률/약수_관계.md) · 확률 `unknown`
 - [약수의 성질](../../../concepts/probability-stats/prob-stats-elective/경우의_수/약수의_성질.md) · 경우의 수 `unknown`
 - [약증가 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/약증가_조건.md) · 경우의 수 `unknown`
 - [여사건을 이용한 포함배제](../../../concepts/probability-stats/prob-stats-elective/경우의_수/여사건을_이용한_포함배제.md) · 경우의 수 `unknown`
-- [여사건의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/여사건의_확률.md) · 확률 `unknown`
-- [여집합의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/여집합의_확률.md) · 확률 `unknown`
-- [역함수의 성질](../../../concepts/probability-stats/prob-stats-elective/확률/역함수의_성질.md) · 확률 `unknown`
-- [연속확률변수](../../../concepts/probability-stats/prob-stats-elective/확률/연속확률변수.md) · 확률 `unknown`
+- [연속확률변수](../../../concepts/probability-stats/prob-stats-elective/통계/연속확률변수.md) · 통계 `unknown`
 - [원소의 합 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원소의_합_조건.md) · 경우의 수 `unknown`
 - [원탁 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원탁_배열.md) · 경우의 수 `unknown`
-- [원탁 배치](../../../concepts/probability-stats/prob-stats-elective/확률/원탁_배치.md) · 확률 `unknown`
+- [원탁 배치](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원탁_배치.md) · 경우의 수 `unknown`
 - [원탁 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원탁_순열.md) · 경우의 수 `unknown`
 - [원탁배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원탁배열.md) · 경우의 수 `unknown`
 - [원형 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원형_배열.md) · 경우의 수 `unknown`
@@ -136,85 +125,33 @@ counts:
 - [원형순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/원형순열.md) · 경우의 수 `unknown`
 - [음이 아닌 정수해](../../../concepts/probability-stats/prob-stats-elective/경우의_수/음이_아닌_정수해.md) · 경우의 수 `unknown`
 - [음이아닌정수해](../../../concepts/probability-stats/prob-stats-elective/경우의_수/음이아닌정수해.md) · 경우의 수 `unknown`
-- [이산확률변수](../../../concepts/probability-stats/prob-stats-elective/확률/이산확률변수.md) · 확률 `unknown`
+- [이산확률변수](../../../concepts/probability-stats/prob-stats-elective/통계/이산확률변수.md) · 통계 `unknown`
 - [이항계수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/이항계수.md) · 경우의 수 `unknown`
-- [이항분포](../../../concepts/probability-stats/prob-stats-elective/확률/이항분포.md) · 확률 `unknown`
-- [이항분포의 성질](../../../concepts/probability-stats/prob-stats-elective/확률/이항분포의_성질.md) · 확률 `unknown`
+- [이항분포](../../../concepts/probability-stats/prob-stats-elective/통계/이항분포.md) · 통계 `unknown`
+- [이항분포의 성질](../../../concepts/probability-stats/prob-stats-elective/통계/이항분포의_성질.md) · 통계 `unknown`
 - [인접 제약 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/인접_제약_조건.md) · 경우의 수 `unknown`
-- [인접 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/인접_조건.md) · 경우의 수 `unknown`
-- [일대일대응과 순열](../../../concepts/probability-stats/prob-stats-elective/확률/일대일대응과_순열.md) · 확률 `unknown`
-- [자연수 해](../../../concepts/probability-stats/prob-stats-elective/경우의_수/자연수_해.md) · 경우의 수 `unknown`
+- [일대일대응과 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/일대일대응과_순열.md) · 경우의 수 `unknown`
 - [자연수 해의 개수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/자연수_해의_개수.md) · 경우의 수 `unknown`
-- [자연수해](../../../concepts/probability-stats/prob-stats-elective/경우의_수/자연수해.md) · 경우의 수 `unknown`
-- [적분을 이용한 확률계산](../../../concepts/probability-stats/prob-stats-elective/확률/적분을_이용한_확률계산.md) · 확률 `unknown`
-- [전개식의 일반항](../../../concepts/probability-stats/prob-stats-elective/경우의_수/전개식의_일반항.md) · 경우의 수 `unknown`
-- [전사함수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/전사함수.md) · 경우의 수 `unknown`
-- [전확률공식](../../../concepts/probability-stats/prob-stats-elective/확률/전확률공식.md) · 확률 `unknown`
-- [전확률의 정리](../../../concepts/probability-stats/prob-stats-elective/확률/전확률의_정리.md) · 확률 `unknown`
-- [정규근사](../../../concepts/probability-stats/prob-stats-elective/확률/정규근사.md) · 확률 `unknown`
+- [적분을 이용한 확률계산](../../../concepts/probability-stats/prob-stats-elective/통계/적분을_이용한_확률계산.md) · 통계 `unknown`
+- [정규근사](../../../concepts/probability-stats/prob-stats-elective/통계/정규근사.md) · 통계 `unknown`
 - [정규분포](../../../concepts/probability-stats/prob-stats-elective/통계/정규분포.md) · 통계 `unknown`
-- [정수의 곱셈](../../../concepts/probability-stats/prob-stats-elective/경우의_수/정수의_곱셈.md) · 경우의 수 `unknown`
-- [제약 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약_조건.md) · 경우의 수 `unknown`
-- [제약 조건 분석](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약_조건_분석.md) · 경우의 수 `unknown`
-- [제약 조건 있는 배치](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약_조건_있는_배치.md) · 경우의 수 `unknown`
-- [제약 조건이 있는 경우의 수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약_조건이_있는_경우의_수.md) · 경우의 수 `unknown`
-- [제약 조건이 있는 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약_조건이_있는_배열.md) · 경우의 수 `unknown`
-- [제약조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약조건.md) · 경우의 수 `unknown`
-- [제약조건 분석](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약조건_분석.md) · 경우의 수 `unknown`
-- [제약조건을 고려한 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약조건을_고려한_배열.md) · 경우의 수 `unknown`
-- [제약조건이 있는 경우의 수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약조건이_있는_경우의_수.md) · 경우의 수 `unknown`
-- [제약조건있는배치](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제약조건있는배치.md) · 경우의 수 `unknown`
-- [제외-포함 원리](../../../concepts/probability-stats/prob-stats-elective/경우의_수/제외-포함_원리.md) · 경우의 수 `unknown`
-- [조건 분류](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건_분류.md) · 경우의 수 `unknown`
-- [조건 분석과 경우 나누기](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건_분석과_경우_나누기.md) · 경우의 수 `unknown`
-- [조건부 경우의 수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_경우의_수.md) · 경우의 수 `unknown`
-- [조건부 경우의수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_경우의수.md) · 경우의 수 `unknown`
-- [조건부 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_배열.md) · 경우의 수 `unknown`
-- [조건부 배치](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_배치.md) · 경우의 수 `unknown`
-- [조건부 분배](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_분배.md) · 경우의 수 `unknown`
-- [조건부 사건](../../../concepts/probability-stats/prob-stats-elective/확률/조건부_사건.md) · 확률 `unknown`
-- [조건부 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_순열.md) · 경우의 수 `unknown`
-- [조건부 자연수 해](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_자연수_해.md) · 경우의 수 `unknown`
+- [조건 분류](../../../concepts/probability-stats/prob-stats-elective/확률/조건_분류.md) · 확률 `unknown`
+- [조건부 경우의수](../../../concepts/probability-stats/prob-stats-elective/확률/조건부_경우의수.md) · 확률 `unknown`
+- [조건부 분배](../../../concepts/probability-stats/prob-stats-elective/통계/조건부_분배.md) · 통계 `unknown`
 - [조건부 함수 개수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부_함수_개수.md) · 경우의 수 `unknown`
-- [조건부 확률](../../../concepts/probability-stats/prob-stats-elective/확률/조건부_확률.md) · 확률 `unknown`
-- [조건부경우](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부경우.md) · 경우의 수 `unknown`
-- [조건부경우의 수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부경우의_수.md) · 경우의 수 `unknown`
-- [조건부경우의수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건부경우의수.md) · 경우의 수 `unknown`
+- [조건부경우의 수](../../../concepts/probability-stats/prob-stats-elective/확률/조건부경우의_수.md) · 확률 `unknown`
 - [조건부확률](../../../concepts/probability-stats/prob-stats-elective/확률/조건부확률.md) · 확률 `unknown`
-- [조건을 만족하는 경우의 수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건을_만족하는_경우의_수.md) · 경우의 수 `unknown`
-- [조건의 복합 적용](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조건의_복합_적용.md) · 경우의 수 `unknown`
 - [조건최적화](../../../concepts/probability-stats/prob-stats-elective/확률/조건최적화.md) · 확률 `unknown`
 - [조합과 확률](../../../concepts/probability-stats/prob-stats-elective/확률/조합과_확률.md) · 확률 `unknown`
-- [조합론](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조합론.md) · 경우의 수 `unknown`
 - [조합을 이용한 확률](../../../concepts/probability-stats/prob-stats-elective/확률/조합을_이용한_확률.md) · 확률 `unknown`
-- [조합의 계산](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조합의_계산.md) · 경우의 수 `unknown`
-- [조합의 기본 계산](../../../concepts/probability-stats/prob-stats-elective/경우의_수/조합의_기본_계산.md) · 경우의 수 `unknown`
 - [주사위 확률](../../../concepts/probability-stats/prob-stats-elective/확률/주사위_확률.md) · 확률 `unknown`
 - [중복순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/중복순열.md) · 경우의 수 `unknown`
-- [중복원소 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/중복원소_순열.md) · 경우의 수 `unknown`
-- [중복제거](../../../concepts/probability-stats/prob-stats-elective/경우의_수/중복제거.md) · 경우의 수 `unknown`
 - [중복조합](../../../concepts/probability-stats/prob-stats-elective/경우의_수/중복조합.md) · 경우의 수 `unknown`
-- [중복조합과 배열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/중복조합과_배열.md) · 경우의 수 `unknown`
 - [중복조합과 자연수 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/중복조합과_자연수_조건.md) · 경우의 수 `unknown`
 - [중심극한정리](../../../concepts/probability-stats/prob-stats-elective/통계/중심극한정리.md) · 통계 `unknown`
-- [집합의 교집합](../../../concepts/probability-stats/prob-stats-elective/경우의_수/집합의_교집합.md) · 경우의 수 `unknown`
-- [집합의 분할](../../../concepts/probability-stats/prob-stats-elective/경우의_수/집합의_분할.md) · 경우의 수 `unknown`
-- [짝수 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/짝수_조건.md) · 경우의 수 `unknown`
-- [최단거리 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/최단거리_조건.md) · 경우의 수 `unknown`
-- [최단경로](../../../concepts/probability-stats/prob-stats-elective/경우의_수/최단경로.md) · 경우의 수 `unknown`
-- [최대공약수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/최대공약수.md) · 경우의 수 `unknown`
-- [치역](../../../concepts/probability-stats/prob-stats-elective/경우의_수/치역.md) · 경우의 수 `unknown`
-- [치역 제약](../../../concepts/probability-stats/prob-stats-elective/경우의_수/치역_제약.md) · 경우의 수 `unknown`
-- [치역의 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/치역의_조건.md) · 경우의 수 `unknown`
-- [치역의 크기 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/치역의_크기_조건.md) · 경우의 수 `unknown`
 - [케이스 분석](../../../concepts/probability-stats/prob-stats-elective/경우의_수/케이스_분석.md) · 경우의 수 `unknown`
-- [케이스분류](../../../concepts/probability-stats/prob-stats-elective/경우의_수/케이스분류.md) · 경우의 수 `unknown`
-- [패리티](../../../concepts/probability-stats/prob-stats-elective/경우의_수/패리티.md) · 경우의 수 `unknown`
-- [팩토리얼](../../../concepts/probability-stats/prob-stats-elective/경우의_수/팩토리얼.md) · 경우의 수 `unknown`
 - [포함 배제 원리](../../../concepts/probability-stats/prob-stats-elective/확률/포함_배제_원리.md) · 확률 `unknown`
 - [포함-배제 원리](../../../concepts/probability-stats/prob-stats-elective/경우의_수/포함-배제_원리.md) · 경우의 수 `unknown`
-- [포함배제](../../../concepts/probability-stats/prob-stats-elective/경우의_수/포함배제.md) · 경우의 수 `unknown`
-- [포함배제원리](../../../concepts/probability-stats/prob-stats-elective/경우의_수/포함배제원리.md) · 경우의 수 `unknown`
 - [표본공간](../../../concepts/probability-stats/prob-stats-elective/확률/표본공간.md) · 확률 `unknown`
 - [표본공간과 사건](../../../concepts/probability-stats/prob-stats-elective/확률/표본공간과_사건.md) · 확률 `unknown`
 - [표본분포](../../../concepts/probability-stats/prob-stats-elective/통계/표본분포.md) · 통계 `unknown`
@@ -225,19 +162,13 @@ counts:
 - [표준정규분포표](../../../concepts/probability-stats/prob-stats-elective/확률/표준정규분포표.md) · 확률 `unknown`
 - [표준화](../../../concepts/probability-stats/prob-stats-elective/확률/표준화.md) · 확률 `unknown`
 - [함수의 개수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/함수의_개수.md) · 경우의 수 `unknown`
-- [함수의 개수 세기](../../../concepts/probability-stats/prob-stats-elective/경우의_수/함수의_개수_세기.md) · 경우의 수 `unknown`
-- [함수의 역상](../../../concepts/probability-stats/prob-stats-elective/경우의_수/함수의_역상.md) · 경우의 수 `unknown`
-- [함수의개수](../../../concepts/probability-stats/prob-stats-elective/경우의_수/함수의개수.md) · 경우의 수 `unknown`
 - [합사건](../../../concepts/probability-stats/prob-stats-elective/확률/합사건.md) · 확률 `unknown`
 - [합사건과 교사건의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/합사건과_교사건의_확률.md) · 확률 `unknown`
 - [합사건과 교집합의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/합사건과_교집합의_확률.md) · 확률 `unknown`
 - [합사건의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/합사건의_확률.md) · 확률 `unknown`
 - [합의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/합의_확률.md) · 확률 `unknown`
-- [합의의 원리](../../../concepts/probability-stats/prob-stats-elective/경우의_수/합의의_원리.md) · 경우의 수 `unknown`
 - [합의확률공식](../../../concepts/probability-stats/prob-stats-elective/확률/합의확률공식.md) · 확률 `unknown`
-- [합이 0인 집합](../../../concepts/probability-stats/prob-stats-elective/경우의_수/합이_0인_집합.md) · 경우의 수 `unknown`
 - [합집합의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/합집합의_확률.md) · 확률 `unknown`
-- [홀짝성](../../../concepts/probability-stats/prob-stats-elective/경우의_수/홀짝성.md) · 경우의 수 `unknown`
 - [확률 계산](../../../concepts/probability-stats/prob-stats-elective/확률/확률_계산.md) · 확률 `unknown`
 - [확률계산](../../../concepts/probability-stats/prob-stats-elective/확률/확률계산.md) · 확률 `unknown`
 - [확률밀도함수](../../../concepts/probability-stats/prob-stats-elective/확률/확률밀도함수.md) · 확률 `unknown`
@@ -264,8 +195,6 @@ counts:
 - [확률의덧셈](../../../concepts/probability-stats/prob-stats-elective/확률/확률의덧셈.md) · 확률 `unknown`
 - [확률의덧셈정리](../../../concepts/probability-stats/prob-stats-elective/확률/확률의덧셈정리.md) · 확률 `unknown`
 - [확률의정의](../../../concepts/probability-stats/prob-stats-elective/확률/확률의정의.md) · 확률 `unknown`
-- [회전 대칭](../../../concepts/probability-stats/prob-stats-elective/경우의_수/회전_대칭.md) · 경우의 수 `unknown`
-- [회전대칭](../../../concepts/probability-stats/prob-stats-elective/경우의_수/회전대칭.md) · 경우의 수 `unknown`
 
 ## 정리 (6)
 

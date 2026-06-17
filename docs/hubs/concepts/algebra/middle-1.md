@@ -6,19 +6,19 @@ hub_type: concepts-grade
 domain: algebra
 grade: middle-1
 counts:
-  total: 39
+  total: 43
 ---
 
 # 수와식 · 중1 (middle-1)
 
-총 39개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
+총 43개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (2)
 
 - [문자와 식](../../../concepts/algebra/middle-1/문자와_식.md) · 문자와 식 `proficient`
 - [정수와 유리수](../../../concepts/algebra/middle-1/정수와_유리수.md) · 정수와 유리수 `proficient`
 
-## 정의 (30)
+## 정의 (34)
 
 - [거듭제곱](../../../concepts/algebra/middle-1/문자와_식/거듭제곱.md) · 문자와 식 `unknown`
 - [계산 순서](../../../concepts/algebra/middle-1/정수와_유리수/계산_순서.md) · 정수와 유리수 `unknown`
@@ -38,6 +38,7 @@ counts:
 - [사칙연산](../../../concepts/algebra/middle-1/정수와_유리수/사칙연산.md) · 정수와 유리수 `unknown`
 - [수직선](../../../concepts/algebra/middle-1/정수와_유리수/수직선.md) · 정수와 유리수 `unknown`
 - [약수](../../../concepts/algebra/middle-1/정수와_유리수/약수.md) · 정수와 유리수 `unknown`
+- [약수 관계](../../../concepts/algebra/middle-1/정수와_유리수/약수_관계.md) · 정수와 유리수 `unknown`
 - [약수 조건](../../../concepts/algebra/middle-1/정수와_유리수/약수_조건.md) · 정수와 유리수 `unknown`
 - [약수 판정](../../../concepts/algebra/middle-1/정수와_유리수/약수_판정.md) · 정수와 유리수 `unknown`
 - [약수와배수](../../../concepts/algebra/middle-1/정수와_유리수/약수와배수.md) · 정수와 유리수 `unknown`
@@ -48,8 +49,11 @@ counts:
 - [자연수와 정수](../../../concepts/algebra/middle-1/정수와_유리수/자연수와_정수.md) · 정수와 유리수 `unknown`
 - [절댓값](../../../concepts/algebra/middle-1/정수와_유리수/절댓값.md) · 정수와 유리수 `unknown`
 - [정수 범위](../../../concepts/algebra/middle-1/정수와_유리수/정수_범위.md) · 정수와 유리수 `unknown`
+- [정수의 곱셈](../../../concepts/algebra/middle-1/정수와_유리수/정수의_곱셈.md) · 정수와 유리수 `unknown`
 - [정수의 약수](../../../concepts/algebra/middle-1/정수와_유리수/정수의_약수.md) · 정수와 유리수 `unknown`
+- [최대공약수](../../../concepts/algebra/middle-1/정수와_유리수/최대공약수.md) · 정수와 유리수 `unknown`
 - [최소공배수](../../../concepts/algebra/middle-1/정수와_유리수/최소공배수.md) · 정수와 유리수 `unknown`
+- [홀짝성](../../../concepts/algebra/middle-1/정수와_유리수/홀짝성.md) · 정수와 유리수 `unknown`
 
 ## 정리 (3)
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T17:14:37.489Z",
+  "generatedAt": "2026-06-17T21:57:59.545Z",
   "entropy": 3,
   "thresholds": {
     "flatWarn": 50,
@@ -14,35 +14,39 @@
     },
     {
       "rel": "docs/concepts/equations/high-1/방정식과_부등식",
-      "count": 61
+      "count": 63
     },
     {
       "rel": "docs/concepts/functions/calculus/도함수의_활용_심화",
-      "count": 179
+      "count": 107
     },
     {
       "rel": "docs/concepts/functions/high-1/함수와_그래프",
-      "count": 62
+      "count": 72
     },
     {
       "rel": "docs/concepts/functions/math-1/삼각함수",
       "count": 60
     },
     {
+      "rel": "docs/concepts/functions/math-2/미분",
+      "count": 57
+    },
+    {
       "rel": "docs/concepts/geometry/geometry-elective/평면벡터",
-      "count": 104
+      "count": 69
     },
     {
       "rel": "docs/concepts/geometry/high-1/도형의_방정식",
-      "count": 95
+      "count": 103
     },
     {
       "rel": "docs/concepts/probability-stats/prob-stats-elective/경우의_수",
-      "count": 147
+      "count": 89
     },
     {
       "rel": "docs/concepts/probability-stats/prob-stats-elective/확률",
-      "count": 95
+      "count": 75
     },
     {
       "rel": "docs/problems/2019/고3_10월모의고사",
@@ -105,7 +109,7 @@
   "congestedHubs": [
     {
       "path": "hubs/concepts/functions/calculus.md",
-      "links": 280
+      "links": 214
     },
     {
       "path": "hubs/concepts/functions/math-1.md",
@@ -113,11 +117,15 @@
     },
     {
       "path": "hubs/concepts/functions/math-2.md",
-      "links": 119
+      "links": 137
     },
     {
       "path": "hubs/concepts/geometry/geometry-elective.md",
-      "links": 196
+      "links": 165
+    },
+    {
+      "path": "hubs/concepts/geometry/high-1.md",
+      "links": 106
     },
     {
       "path": "hubs/concepts/geometry/middle-1.md",
@@ -125,7 +133,7 @@
     },
     {
       "path": "hubs/concepts/probability-stats/prob-stats-elective.md",
-      "links": 265
+      "links": 194
     },
     {
       "path": "hubs/concepts/uncategorized.md",
