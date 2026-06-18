@@ -164,13 +164,31 @@ const PREVIEW_COUNT = 8;
   <div class="max-w-6xl mx-auto px-6 md:max-xl:pr-14 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="max-w-none min-w-0">
       {conceptFigure && (
-        <figure class="not-prose mb-6 flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
+        <figure id="conceptFigureSlot" class="not-prose my-6 flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
           <Geometry client:load spec={conceptFigure} width={620} height={460} hideCaption />
         </figure>
       )}
-      <div class="prose prose-invert max-w-none">
+      <div class="prose prose-invert max-w-none" id="conceptBody">
         <Content />
       </div>
+      {conceptFigure && (
+        // 도식을 본문 적절한 위치로 이동 — 제목/요약 다음, 상세 본문(## 본문) 직전.
+        // island 하이드레이션 전(파싱 중)에 실행돼 깜빡임/하이드레이션-이동 문제 없음.
+        // 대상 없으면 breadcrumb 다음, 그것도 없으면 상단 그대로(폴백).
+        <script is:inline>
+          (function () {
+            var fig = document.getElementById('conceptFigureSlot');
+            var body = document.getElementById('conceptBody');
+            if (!fig || !body) return;
+            var h2 = Array.prototype.find.call(body.querySelectorAll('h2'), function (h) {
+              return (h.textContent || '').trim().indexOf('본문') === 0;
+            });
+            if (h2) { body.insertBefore(fig, h2); return; }
+            var bq = body.querySelector('blockquote');
+            if (bq) { bq.parentNode.insertBefore(fig, bq.nextSibling); }
+          })();
+        </script>
+      )}
     </article>
 
     {/* 튜터 대화 — 본문 하단 인라인 폐지. 모든 화면에서 우측 하단 FAB → 큰 대화창. */}
