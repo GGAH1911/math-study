@@ -190,8 +190,8 @@ async function main() {
     while (idx < targets.length) {
       const id = targets[idx++];
       const entry = cache.figures[id];
-      const tag = `[${stat.done + 1}/${N}]`;
       if (!entry || !entry.figure) { stat.done++; continue; }
+      let line;
       try {
         const png = await renderFigure(id);
         if (!png) throw new Error('render-failed');
@@ -199,23 +199,25 @@ async function main() {
         if (verdict.ok) {
           entry.qa = { checked: true, fixed: false, note: (verdict.note || '').slice(0, 160), model: MODEL };
           stat.ok++;
-          console.log(`${tag} ✓ ${entry.label} — OK`);
+          line = `✓ ${entry.label} — OK`;
         } else {
           const fixed = sanitizeFigure(verdict.figure);
-          if (!fixed) { entry.qa = { checked: true, fixed: false, note: 'fix-invalid', model: MODEL }; stat.failed++; console.log(`${tag} ✗ ${entry.label} — 수정안 무효(원본 유지)`); }
+          if (!fixed) { entry.qa = { checked: true, fixed: false, note: 'fix-invalid', model: MODEL }; stat.failed++; line = `✗ ${entry.label} — 수정안 무효(원본 유지)`; }
           else {
             entry.figure = fixed;
             entry.qa = { checked: true, fixed: true, issues: (verdict.issues || []).slice(0, 5), model: MODEL };
             stat.fixed++;
-            console.log(`${tag} ✎ ${entry.label} — 수정: ${(verdict.issues || []).join(' / ').slice(0, 80)}`);
+            line = `✎ ${entry.label} — 수정: ${(verdict.issues || []).join(' / ').slice(0, 80)}`;
           }
         }
         writeCache();
       } catch (e) {
-        console.log(`${tag} ✗ ${entry.label} — 검수 실패: ${e.message}`);
         stat.failed++;
+        line = `✗ ${entry.label} — 검수 실패: ${e.message}`;
       }
+      // 완료 순서로 1씩 증가하는 단조 카운터 — 동시성에서도 중복/뒤섞임 없음.
       stat.done++;
+      console.log(`[${stat.done}/${N}] ${line}`);
     }
   }
   await Promise.all(Array.from({ length: conc }, () => worker()));
