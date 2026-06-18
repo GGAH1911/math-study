@@ -666,18 +666,33 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         let d = pa2 - pa1;
         while (d > Math.PI) d -= 2 * Math.PI;
         while (d <= -Math.PI) d += 2 * Math.PI;       // (-π, π] — 최소각, 부호=회전방향
-        const sx = cx + rPx * Math.cos(pa1), sy = cy + rPx * Math.sin(pa1);
-        const ex = cx + rPx * Math.cos(pa2), ey = cy + rPx * Math.sin(pa2);
-        const sweepFlag = d > 0 ? 1 : 0;              // SVG(y-down): 양의각방향=sweep 1
-        const dPath = `M ${sx} ${sy} A ${rPx} ${rPx} 0 0 ${sweepFlag} ${ex} ${ey}`;
-        els.push(<path key={`ag${i}`} d={dPath} fill="none" stroke={s.color ?? c0} strokeWidth={1.5} />);
-        if (s.label) {
-          // 라벨은 호 중앙(이등분선=pa1+d/2) 방향, 호 바깥쪽으로 살짝. 픽셀공간에서 직접.
-          const midPa = pa1 + d / 2;
-          const lr = rPx * 1.35 + labelFontPx * 0.4;
-          const lx = cx + lr * Math.cos(midPa);
-          const ly = cy + lr * Math.sin(midPa);
-          pushLabel(`agl${i}`, s.label, lx, ly - labelFontPx * 0.7, -50, undefined, true);
+        const u1x = Math.cos(pa1), u1y = Math.sin(pa1);
+        const u2x = Math.cos(pa2), u2y = Math.sin(pa2);
+        // ★직각(두 팔이 수직)은 호가 아니라 **작은 정사각형 마커**로 그린다(교과서 표기).
+        const isRight = Math.abs(Math.abs(d) - Math.PI / 2) < 0.06;   // ~3.4° 이내
+        // 라벨이 순수 각도값(90°/직각)이면 마커가 대신하므로 생략.
+        const labelIsDegree = s.label != null && /^\s*(\d{1,3}\s*°?|직각|right)\s*$/i.test(String(s.label));
+        if (isRight) {
+          const m = Math.max(8, Math.min(rPx, 16));   // 직각 표식 정사각형 한 변(px)
+          const sq = `M ${cx + u1x * m} ${cy + u1y * m} L ${cx + (u1x + u2x) * m} ${cy + (u1y + u2y) * m} L ${cx + u2x * m} ${cy + u2y * m}`;
+          els.push(<path key={`ag${i}`} d={sq} fill="none" stroke={s.color ?? c0} strokeWidth={1.5} />);
+          if (s.label && !labelIsDegree) {
+            const midPa = pa1 + d / 2;
+            const lr = m * 1.7 + labelFontPx * 0.4;
+            pushLabel(`agl${i}`, s.label, cx + lr * Math.cos(midPa), cy + lr * Math.sin(midPa) - labelFontPx * 0.7, -50, undefined, true);
+          }
+        } else {
+          const sx = cx + rPx * u1x, sy = cy + rPx * u1y;
+          const ex = cx + rPx * u2x, ey = cy + rPx * u2y;
+          const sweepFlag = d > 0 ? 1 : 0;              // SVG(y-down): 양의각방향=sweep 1
+          const dPath = `M ${sx} ${sy} A ${rPx} ${rPx} 0 0 ${sweepFlag} ${ex} ${ey}`;
+          els.push(<path key={`ag${i}`} d={dPath} fill="none" stroke={s.color ?? c0} strokeWidth={1.5} />);
+          if (s.label) {
+            // 라벨은 호 중앙(이등분선=pa1+d/2) 방향, 호 바깥쪽으로 살짝. 픽셀공간에서 직접.
+            const midPa = pa1 + d / 2;
+            const lr = rPx * 1.35 + labelFontPx * 0.4;
+            pushLabel(`agl${i}`, s.label, cx + lr * Math.cos(midPa), cy + lr * Math.sin(midPa) - labelFontPx * 0.7, -50, undefined, true);
+          }
         }
         break;
       }
