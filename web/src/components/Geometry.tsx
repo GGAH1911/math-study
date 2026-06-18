@@ -495,7 +495,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
           const [llx, lly] = outwardLabel(s.from[0], s.from[1], s.to[0], s.to[1], labelFontPx * 0.95 + 6);
-          pushLabel(`lnl${i}`, s.label, llx, lly, -50);
+          pushLabel(`lnl${i}`, s.label, llx, lly - labelFontPx * 0.7, -50); // top→세로 중앙정렬
         }
         break;
       }
@@ -632,7 +632,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
           const [vlx, vly] = outwardLabel(s.from[0], s.from[1], s.to[0], s.to[1], labelFontPx * 0.95 + 6);
-          pushLabel(`vecl${i}`, s.label, vlx, vly, -50);
+          pushLabel(`vecl${i}`, s.label, vlx, vly - labelFontPx * 0.7, -50);
         }
         break;
       }
@@ -657,11 +657,11 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
           while (dA > Math.PI) dA -= 2 * Math.PI;
           while (dA < -Math.PI) dA += 2 * Math.PI;
           const midA = a1 + dA / 2;
-          // 각 라벨은 호(arc) 바로 바깥(반지름 r*1.35)에 중앙정렬로 — 각을 또렷이 표시, 고정.
-          const lr = r * 1.35;
+          // 각 라벨은 호(arc) 위 중앙에(반지름 r*1.1, 바이섹터=호의 각도 중앙) 가로·세로 중앙정렬, 고정.
+          const lr = r * 1.1;
           const lx = s.at[0] + lr * Math.cos(midA);
           const ly = s.at[1] + lr * Math.sin(midA);
-          pushLabel(`agl${i}`, s.label, xPx(lx), yPx(ly), -50, undefined, true);
+          pushLabel(`agl${i}`, s.label, xPx(lx), yPx(ly) - labelFontPx * 0.7, -50, undefined, true);
         }
         break;
       }
