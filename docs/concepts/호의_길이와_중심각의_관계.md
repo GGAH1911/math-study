@@ -3,7 +3,7 @@ sources: []
 created: 2026-05-17
 updated: 2026-05-17
 concept_type: definition
-prerequisites: [docs/concepts/삼각함수.md]
+prerequisites: [docs/concepts/삼각함수.md, docs/concepts/functions/math-1/삼각함수.md]
 enables: []
 mastery: unknown
 ---
