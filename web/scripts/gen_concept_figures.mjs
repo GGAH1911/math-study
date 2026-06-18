@@ -129,9 +129,28 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 개념: 「${c.label}」  (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
 본문 발췌: ${body || '(본문 없음)'}`;
 
+// 쿼터 한도 자동 재개: agy 콜이 쿼터/한도 에러면 일정 간격으로 재시도(리필 대기).
+// 멱등(done 스킵)이라 안전. PROBE/MAXWAIT 는 env 로 조정. 정확한 시그니처는 첫 관측 시 정규식 튜닝.
+const _sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const QUOTA_RE = /quota|429|rate.?limit|resource.?exhaust|too many request|limit reach|usage limit|exceeded|out of/i;
+async function withQuotaRetry(fn) {
+  const PROBE_MS = (Number(process.env.QUOTA_PROBE_MIN) || 10) * 60e3;
+  const MAX_WAIT_MS = (Number(process.env.QUOTA_MAXWAIT_H) || 6) * 3600e3;
+  let waited = 0;
+  for (;;) {
+    try { return await fn(); }
+    catch (e) {
+      const msg = String((e && e.message) || e);
+      if (!QUOTA_RE.test(msg) || waited >= MAX_WAIT_MS) throw e;
+      console.log(`⏸ 쿼터 한도 추정("${msg.slice(0, 60)}") — ${Math.round(PROBE_MS / 60000)}분 후 재시도 (누적 ${Math.round(waited / 60000)}분)`);
+      await _sleep(PROBE_MS); waited += PROBE_MS;
+    }
+  }
+}
+
 function callLLM(c, body) {
   const prompt = PROMPT(c, body);
-  return BACKEND === 'agy' ? callAgy(prompt) : callClaude(prompt);
+  return BACKEND === 'agy' ? withQuotaRetry(() => callAgy(prompt)) : callClaude(prompt);
 }
 
 // Claude (Haiku) — --output-format json 래퍼에서 result 추출.

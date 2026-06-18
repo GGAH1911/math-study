@@ -106,9 +106,27 @@ ${JSON.stringify(c.figure)}
 먼저 Read 도구로 이 파일을 봐라(실제 크기 렌더): ${pngPath}`;
 }
 
+// 쿼터 한도 자동 재개: agy 콜이 쿼터/한도 에러면 일정 간격으로 재시도(리필 대기). 멱등이라 안전.
+const _sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const QUOTA_RE = /quota|429|rate.?limit|resource.?exhaust|too many request|limit reach|usage limit|exceeded|out of/i;
+async function withQuotaRetry(fn) {
+  const PROBE_MS = (Number(process.env.QUOTA_PROBE_MIN) || 10) * 60e3;
+  const MAX_WAIT_MS = (Number(process.env.QUOTA_MAXWAIT_H) || 6) * 3600e3;
+  let waited = 0;
+  for (;;) {
+    try { return await fn(); }
+    catch (e) {
+      const msg = String((e && e.message) || e);
+      if (!QUOTA_RE.test(msg) || waited >= MAX_WAIT_MS) throw e;
+      console.log(`⏸ 쿼터 한도 추정("${msg.slice(0, 60)}") — ${Math.round(PROBE_MS / 60000)}분 후 재시도 (누적 ${Math.round(waited / 60000)}분)`);
+      await _sleep(PROBE_MS); waited += PROBE_MS;
+    }
+  }
+}
+
 function callQA(c, body, pngPath) {
   const prompt = buildQAPrompt(c, body, pngPath);
-  return BACKEND === 'agy' ? callQAAgy(prompt) : callQAClaude(prompt);
+  return BACKEND === 'agy' ? withQuotaRetry(() => callQAAgy(prompt)) : callQAClaude(prompt);
 }
 
 // Sonnet — Read+Bash 허용, --output-format json 래퍼에서 result 추출.
@@ -238,7 +256,7 @@ ${blocks}`;
 function callQABatch(items) {
   const prompt = buildBatchPrompt(items);
   if (BACKEND === 'agy') {
-    return spawnParse('agy', ['-p', prompt, '--model', MODEL, '--add-dir', PNG_DIR, '--print-timeout', '6m'], parseBatchArray);
+    return withQuotaRetry(() => spawnParse('agy', ['-p', prompt, '--model', MODEL, '--add-dir', PNG_DIR, '--print-timeout', '6m'], parseBatchArray));
   }
   return spawnParse('claude', ['-p', '--model', MODEL, '--output-format', 'json',
     '--allowedTools', 'Read,Bash', '--disallowedTools', 'Write,Edit,Glob,Grep,WebFetch,WebSearch',
