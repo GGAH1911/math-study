@@ -1059,8 +1059,17 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         const _follow = text.startsWith('[자동 계산 결과]') || text.startsWith('[시각 검증]');
         const _py = /```(?:python|py|sympy)[ \t]*\n?[\s\S]*?```/.test(assistantText);
         const _gfx = /```(?:geometry3d|geometry|plot|interactive)[ \t]*\n/.test(assistantText);
-        if (!_follow && _py && _gfx) {
+        // 미검증 그래픽은 turn-1 에서 제거 → 좌표를 STEP B(sympy)로 검증한 뒤 STEP C 에서 그린다.
+        // ★ python 동반(기존)뿐 아니라 **그래픽만(원샷)** 도 잡는다 — 예제 문제를 새로 만들 때
+        //   튜터가 추정 좌표로 한 번에 그려 버리던(단계 스킵) 사고 차단. 모든 좌표 그래픽 = 단계별.
+        if (!_follow && _gfx) {
           assistantText = assistantText.replace(/```(?:geometry3d|geometry|plot|interactive)[ \t]*\n[\s\S]*?```/g, '').trim();
+          if (!_py) {
+            // STEP B(python) 없이 그래픽만 = 원샷. 좌표 계산을 먼저 하도록 강제 후 재응답.
+            finalizeAssistant(assistantText || '좌표를 정확히 계산해 다시 그리겠습니다.');
+            appendTurn({ role: 'user', content: '[단계 검증 필요]\n좌표가 있는 도형(네가 새로 만드는 예제·연습문제 도형 포함)은 추정으로 한 번에 그리지 마라. 먼저 STEP B: 필요한 점·교점·접선·각의 좌표를 sympy(```python``` 한 블록)로 계산하는 코드만 emit하고 그래픽 블록은 절대 넣지 마라. 계산 결과를 받은 다음 응답에서 그 좌표를 그대로 옮겨 그린다.' });
+            assistantText = await callLLM(rawHistory);
+          }
         }
       }
       finalizeAssistant(assistantText);
