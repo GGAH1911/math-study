@@ -338,7 +338,12 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
 
   // Build SVG elements ----------------------------------------------------
   const els: React.ReactNode[] = [];
-  const labels: React.ReactNode[] = [];   // HTML labels overlaid on top of SVG
+  // 라벨은 디스크립터로 모은 뒤(좌표·정렬 기준점) 충돌 회피(de-overlap)를 거쳐 렌더.
+  // tx: translateX(%) — 0=좌측정렬, -50=중앙, -100=우측정렬(앵커가 라벨 우상단).
+  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string };
+  const labelDescs: LabelDesc[] = [];
+  const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string) =>
+    labelDescs.push({ key, text, left, top, tx, color });
 
   // Grid
   if (showGrid) {
@@ -415,13 +420,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
             return -labelFontPx / 2 - 2;
           })();
           const tx = dir.includes('W') ? -100 : (dir.includes('E') ? 0 : -50);
-          labels.push(
-            <div key={`pl${i}`} className="geom-label"
-                 style={{ left: xPx(x) + offX, top: yPx(y) + offY,
-                          transform: `translateX(${tx}%)` }}>
-              <GeomLabel text={s.label} />
-            </div>
-          );
+          pushLabel(`pl${i}`, s.label, xPx(x) + offX, yPx(y) + offY, tx);
         }
         break;
       }
@@ -443,12 +442,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
             const key = `${v[0].toFixed(2)},${v[1].toFixed(2)}|${lab}`;
             if (claimedLabels.has(key)) return;
             claimedLabels.add(key);
-            labels.push(
-              <div key={`pgl${i}_${vi}`} className="geom-label"
-                   style={{ left: xPx(v[0]) + 6, top: yPx(v[1]) - 14 }}>
-                <GeomLabel text={lab} />
-              </div>
-            );
+            pushLabel(`pgl${i}_${vi}`, lab, xPx(v[0]) + 6, yPx(v[1]) - 14);
             els.push(<circle key={`pgv${i}_${vi}`} cx={xPx(v[0])} cy={yPx(v[1])} r={3} fill="#fafafa" />);
           });
         }
@@ -459,12 +453,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
                        stroke={s.color ?? c0} strokeWidth={1.8} strokeDasharray={s.dashed ? '6 4' : undefined} />);
         if (s.label) {
           const mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
-          labels.push(
-            <div key={`lnl${i}`} className="geom-label"
-                 style={{ left: xPx(mx) + 6, top: yPx(my) - 10 }}>
-              <GeomLabel text={s.label} />
-            </div>
-          );
+          pushLabel(`lnl${i}`, s.label, xPx(mx) + 6, yPx(my) - 10);
         }
         break;
       }
@@ -474,12 +463,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         els.push(<circle key={`ci${i}`} cx={xPx(s.center[0])} cy={yPx(s.center[1])} r={Math.abs(s.radius) * scale}
                          fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
                          stroke={s.stroke ?? c0} strokeWidth={1.8} />);
-        if (s.label) labels.push(
-          <div key={`cil${i}`} className="geom-label"
-               style={{ left: xPx(s.center[0]) + 4, top: yPx(s.center[1]) - 6 }}>
-            <GeomLabel text={s.label} />
-          </div>
-        );
+        if (s.label) pushLabel(`cil${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1]) - 6);
         break;
       }
       case 'ellipse': {
@@ -495,12 +479,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
                           fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
                           stroke={s.stroke ?? c0} strokeWidth={1.8}
                           transform={transform} />);
-        if (s.label) labels.push(
-          <div key={`ell${i}`} className="geom-label"
-               style={{ left: xPx(s.center[0]) + 4, top: yPx(s.center[1] + ryRaw) + 4 }}>
-            <GeomLabel text={s.label} />
-          </div>
-        );
+        if (s.label) pushLabel(`ell${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1] + ryRaw) + 4);
         break;
       }
       case 'hyperbola': {
@@ -530,12 +509,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
         els.push(<polyline key={`hy2${i}`} points={pts2.join(' ')} fill="none"
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
-        if (s.label) labels.push(
-          <div key={`hyl${i}`} className="geom-label"
-               style={{ left: xPx(cx0) + 4, top: yPx(cy0) + 8 }}>
-            <GeomLabel text={s.label} />
-          </div>
-        );
+        if (s.label) pushLabel(`hyl${i}`, s.label, xPx(cx0) + 4, yPx(cy0) + 8);
         break;
       }
       case 'parabola': {
@@ -557,12 +531,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         }
         els.push(<polyline key={`pa${i}`} points={pts.join(' ')} fill="none"
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
-        if (s.label) labels.push(
-          <div key={`pal${i}`} className="geom-label"
-               style={{ left: xPx(h) + 4, top: yPx(k) - 12 }}>
-            <GeomLabel text={s.label} />
-          </div>
-        );
+        if (s.label) pushLabel(`pal${i}`, s.label, xPx(h) + 4, yPx(k) - 12);
         break;
       }
       case 'parametric': {
@@ -600,12 +569,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         if (s.label && segments[0].length > 0) {
           const mid = segments[0][Math.floor(segments[0].length / 2)];
           const [mx, my] = mid.split(',').map(Number);
-          labels.push(
-            <div key={`pml${i}`} className="geom-label"
-                 style={{ left: mx + 4, top: my - 12 }}>
-              <GeomLabel text={s.label} />
-            </div>,
-          );
+          pushLabel(`pml${i}`, s.label, mx + 4, my - 12);
         }
         break;
       }
@@ -624,12 +588,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         );
         if (s.label) {
           const mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
-          labels.push(
-            <div key={`vecl${i}`} className="geom-label"
-                 style={{ left: xPx(mx) + 8, top: yPx(my) - 12 }}>
-              <GeomLabel text={s.label} />
-            </div>
-          );
+          pushLabel(`vecl${i}`, s.label, xPx(mx) + 8, yPx(my) - 12);
         }
         break;
       }
@@ -656,26 +615,19 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
           const midA = a1 + dA / 2;
           const lx = s.at[0] + (r + 0.3) * Math.cos(midA);
           const ly = s.at[1] + (r + 0.3) * Math.sin(midA);
-          labels.push(
-            <div key={`agl${i}`} className="geom-label"
-                 style={{ left: xPx(lx) - 6, top: yPx(ly) - 8 }}>
-              <GeomLabel text={s.label} />
-            </div>
-          );
+          pushLabel(`agl${i}`, s.label, xPx(lx) - 6, yPx(ly) - 8);
         }
         break;
       }
       case 'text': {
-        labels.push(
-          <div key={`tx${i}`} className="geom-label"
-               style={{ left: xPx(s.at[0]) + 4, top: yPx(s.at[1]) - 8, color: s.color }}>
-            <GeomLabel text={s.text} />
-          </div>
-        );
+        pushLabel(`tx${i}`, s.text, xPx(s.at[0]) + 4, yPx(s.at[1]) - 8, 0, s.color);
         break;
       }
     }
   });
+
+  // 라벨 충돌 회피 — 가까운 앵커의 라벨끼리 겹치던 것(단위원 1·θ·sin·cos 등) 분리.
+  const resolvedLabels = deOverlapLabels(labelDescs, labelFontPx, W, H);
 
   return (
     <div ref={wrapRef} className="graph-host bg-zinc-950 border border-zinc-700/80 rounded-lg shadow-inner max-w-full"
@@ -691,10 +643,65 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
              preserveAspectRatio="xMidYMid meet">
           {els}
         </svg>
-        {labels}
+        {resolvedLabels.map((d) => (
+          <div key={d.key} className="geom-label"
+               style={{ left: d.left, top: d.top, color: d.color,
+                        transform: d.tx ? `translateX(${d.tx}%)` : undefined }}>
+            <GeomLabel text={d.text} />
+          </div>
+        ))}
       </div>
     </div>
   );
+}
+
+// 라벨 폭 대략 추정(KaTeX 실측 전) — 명령·중괄호·달러 제거 후 가시 글자수 × 글자폭.
+function estLabelWidth(text: string, fontPx: number): number {
+  const visible = String(text).replace(/\\[a-zA-Z]+/g, 'x').replace(/[{}$^_\\]/g, '').replace(/\s+/g, '');
+  const n = Math.max(1, visible.length);
+  return Math.max(fontPx, n * fontPx * 0.62) + 6;
+}
+
+// 라벨 겹침 해소(de-overlap): 추정 박스가 겹치면 최소이동축으로 서로 밀어낸다(반복).
+// 앵커에서 과도 이탈은 클램프(라벨이 가리키는 도형과 분리되지 않게). 캔버스 경계 내 유지.
+// 노드 도식·LLM 채팅 공통(같은 Geometry 컴포넌트)이라 양쪽에 동시 적용된다.
+type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string };
+function deOverlapLabels(descs: _LD[], fontPx: number, W: number, H: number): _LD[] {
+  const h = fontPx * 1.5;
+  const MAXSHIFT = fontPx * 3.2;
+  const boxes = descs.map((d) => {
+    const w = estLabelWidth(d.text, fontPx);
+    const x0 = d.left + (d.tx / 100) * w;   // transform 반영한 시각 좌상단
+    return { d, w, h, x: x0, y: d.top, ox: x0, oy: d.top };
+  });
+  for (let iter = 0; iter < 80; iter++) {
+    let moved = false;
+    for (let a = 0; a < boxes.length; a++) {
+      for (let b = a + 1; b < boxes.length; b++) {
+        const A = boxes[a], B = boxes[b];
+        const ox = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x);
+        const oy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
+        if (ox > 0 && oy > 0) {
+          moved = true;
+          if (ox <= oy) {
+            const p = ox / 2 + 0.5;
+            if (A.x <= B.x) { A.x -= p; B.x += p; } else { A.x += p; B.x -= p; }
+          } else {
+            const p = oy / 2 + 0.5;
+            if (A.y <= B.y) { A.y -= p; B.y += p; } else { A.y += p; B.y -= p; }
+          }
+        }
+      }
+    }
+    if (!moved) break;
+  }
+  return boxes.map(({ d, w, h: bh, x, y, ox, oy }) => {
+    let nx = Math.max(ox - MAXSHIFT, Math.min(ox + MAXSHIFT, x));
+    let ny = Math.max(oy - MAXSHIFT, Math.min(oy + MAXSHIFT, y));
+    nx = Math.max(0, Math.min(W - w, nx));
+    ny = Math.max(0, Math.min(H - bh, ny));
+    return { ...d, left: d.left + (nx - ox), top: d.top + (ny - oy) };
+  });
 }
 
 // Public component used by ChatPanel; mirrors the Graph contract.
