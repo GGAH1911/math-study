@@ -5,14 +5,14 @@ updated: 2026-06-18
 hub_type: concepts-sub
 domain: logic
 counts:
-  total: 29
+  total: 27
 ---
 
 # 논리 (logic)
 
-총 29개 concept 노드. 상위: [concepts hub](../concepts.md).
+총 27개 concept 노드. 상위: [concepts hub](../concepts.md).
 
 ## 학년/과목별
 
-- [고1](../../concepts/logic/high-1/) — 29개 (sub-hub: [./logic/high-1.md](./logic/high-1.md))
+- [고1](../../concepts/logic/high-1/) — 27개 (sub-hub: [./logic/high-1.md](./logic/high-1.md))
 

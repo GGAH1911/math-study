@@ -6,24 +6,22 @@ hub_type: concepts-grade
 domain: equations
 grade: middle-3
 counts:
-  total: 16
+  total: 14
 ---
 
 # 방정식 · 중3 (middle-3)
 
-총 16개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
+총 14개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [이차방정식](../../../concepts/equations/middle-3/이차방정식.md) · 이차방정식 `unknown`
 
-## 정의 (9)
+## 정의 (7)
 
 - [계수 관계식](../../../concepts/equations/middle-3/이차방정식/계수_관계식.md) · 이차방정식 `unknown`
 - [근 중근](../../../concepts/equations/middle-3/이차방정식/근_중근.md) · 이차방정식 `unknown`
-- [근과 계수](../../../concepts/equations/middle-3/이차방정식/근과_계수.md) · 이차방정식 `unknown`
 - [근과 판별식](../../../concepts/equations/middle-3/이차방정식/근과_판별식.md) · 이차방정식 `unknown`
-- [근과계수의관계](../../../concepts/equations/middle-3/이차방정식/근과계수의관계.md) · 이차방정식 `unknown`
 - [근의공식](../../../concepts/equations/middle-3/이차방정식/근의공식.md) · 이차방정식 `unknown`
 - [이차방정식의 근과 계수의 관계](../../../concepts/equations/middle-3/이차방정식/이차방정식의_근과_계수의_관계.md) · 이차방정식 `unknown`
 - [이차방정식의 실근 조건](../../../concepts/equations/middle-3/이차방정식/이차방정식의_실근_조건.md) · 이차방정식 `unknown`

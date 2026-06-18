@@ -6,25 +6,22 @@ hub_type: concepts-grade
 domain: geometry
 grade: high-1
 counts:
-  total: 105
+  total: 85
 ---
 
 # 도형 · 고1 (high-1)
 
-총 105개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 85개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [도형의 방정식](../../../concepts/geometry/high-1/도형의_방정식.md) · 도형의 방정식 `unknown`
 
-## 정의 (98)
+## 정의 (78)
 
-- [거리 계산](../../../concepts/geometry/high-1/도형의_방정식/거리_계산.md) · 도형의 방정식 `unknown`
 - [거리 조건과 도형](../../../concepts/geometry/high-1/도형의_방정식/거리_조건과_도형.md) · 도형의 방정식 `unknown`
 - [거리 최솟값](../../../concepts/geometry/high-1/도형의_방정식/거리_최솟값.md) · 도형의 방정식 `unknown`
 - [거리공식](../../../concepts/geometry/high-1/도형의_방정식/거리공식.md) · 도형의 방정식 `unknown`
-- [거리와 궤적](../../../concepts/geometry/high-1/도형의_방정식/거리와_궤적.md) · 도형의 방정식 `unknown`
-- [거리와 넓이](../../../concepts/geometry/high-1/도형의_방정식/거리와_넓이.md) · 도형의 방정식 `unknown`
 - [거리와 도형의 넓이](../../../concepts/geometry/high-1/도형의_방정식/거리와_도형의_넓이.md) · 도형의 방정식 `unknown`
 - [거리와 비율](../../../concepts/geometry/high-1/도형의_방정식/거리와_비율.md) · 도형의 방정식 `unknown`
 - [거리와 최적화](../../../concepts/geometry/high-1/도형의_방정식/거리와_최적화.md) · 도형의 방정식 `unknown`
@@ -39,8 +36,6 @@ counts:
 - [기울기의 곱](../../../concepts/geometry/high-1/도형의_방정식/기울기의_곱.md) · 도형의 방정식 `unknown`
 - [기하학](../../../concepts/geometry/high-1/도형의_방정식/기하학.md) · 도형의 방정식 `unknown`
 - [기하학적 조건](../../../concepts/geometry/high-1/도형의_방정식/기하학적_조건.md) · 도형의 방정식 `unknown`
-- [기하학적 조건 해석](../../../concepts/geometry/high-1/도형의_방정식/기하학적_조건_해석.md) · 도형의 방정식 `unknown`
-- [내분](../../../concepts/geometry/high-1/도형의_방정식/내분.md) · 도형의 방정식 `unknown`
 - [내분점](../../../concepts/geometry/high-1/도형의_방정식/내분점.md) · 도형의 방정식 `unknown`
 - [내분점과 외분점](../../../concepts/geometry/high-1/도형의_방정식/내분점과_외분점.md) · 도형의 방정식 `unknown`
 - [내분점과 중점](../../../concepts/geometry/high-1/도형의_방정식/내분점과_중점.md) · 도형의 방정식 `unknown`
@@ -56,7 +51,6 @@ counts:
 - [무게중심](../../../concepts/geometry/high-1/도형의_방정식/무게중심.md) · 도형의 방정식 `unknown`
 - [무게중심 공식](../../../concepts/geometry/high-1/도형의_방정식/무게중심_공식.md) · 도형의 방정식 `unknown`
 - [반사 원리](../../../concepts/geometry/high-1/도형의_방정식/반사_원리.md) · 도형의 방정식 `unknown`
-- [부등식의 영역](../../../concepts/geometry/high-1/도형의_방정식/부등식의_영역.md) · 도형의 방정식 `unknown`
 - [삼각형의 내분점](../../../concepts/geometry/high-1/도형의_방정식/삼각형의_내분점.md) · 도형의 방정식 `unknown`
 - [선분 조건 해석](../../../concepts/geometry/high-1/도형의_방정식/선분_조건_해석.md) · 도형의 방정식 `unknown`
 - [선분의 길이](../../../concepts/geometry/high-1/도형의_방정식/선분의_길이.md) · 도형의 방정식 `unknown`
@@ -68,11 +62,8 @@ counts:
 - [원](../../../concepts/geometry/high-1/도형의_방정식/원.md) · 도형의 방정식 `unknown`
 - [원 위의 점에서의 접선](../../../concepts/geometry/high-1/도형의_방정식/원_위의_점에서의_접선.md) · 도형의 방정식 `unknown`
 - [원과 곡선의 교점](../../../concepts/geometry/high-1/도형의_방정식/원과_곡선의_교점.md) · 도형의 방정식 `unknown`
-- [원과 접선](../../../concepts/geometry/high-1/도형의_방정식/원과_접선.md) · 도형의 방정식 `unknown`
 - [원과 직선의 거리](../../../concepts/geometry/high-1/도형의_방정식/원과_직선의_거리.md) · 도형의 방정식 `unknown`
-- [원과 직선의 관계](../../../concepts/geometry/high-1/도형의_방정식/원과_직선의_관계.md) · 도형의 방정식 `unknown`
 - [원과 직선의 위치관계](../../../concepts/geometry/high-1/도형의_방정식/원과_직선의_위치관계.md) · 도형의 방정식 `unknown`
-- [원과의 교점](../../../concepts/geometry/high-1/도형의_방정식/원과의_교점.md) · 도형의 방정식 `unknown`
 - [원운동](../../../concepts/geometry/high-1/도형의_방정식/원운동.md) · 도형의 방정식 `unknown`
 - [원의 교점](../../../concepts/geometry/high-1/도형의_방정식/원의_교점.md) · 도형의 방정식 `unknown`
 - [원의 방정식](../../../concepts/geometry/high-1/도형의_방정식/원의_방정식.md) · 도형의 방정식 `unknown`
@@ -84,30 +75,19 @@ counts:
 - [자취](../../../concepts/geometry/high-1/도형의_방정식/자취.md) · 도형의 방정식 `unknown`
 - [자취와 궤적](../../../concepts/geometry/high-1/도형의_방정식/자취와_궤적.md) · 도형의 방정식 `unknown`
 - [자취와 응용](../../../concepts/geometry/high-1/도형의_방정식/자취와_응용.md) · 도형의 방정식 `unknown`
-- [점 기울기 형식](../../../concepts/geometry/high-1/도형의_방정식/점_기울기_형식.md) · 도형의 방정식 `unknown`
 - [점-기울기 형식](../../../concepts/geometry/high-1/도형의_방정식/점-기울기_형식.md) · 도형의 방정식 `unknown`
 - [점과 원의 관계](../../../concepts/geometry/high-1/도형의_방정식/점과_원의_관계.md) · 도형의 방정식 `unknown`
 - [점과 직선의 거리](../../../concepts/geometry/high-1/도형의_방정식/점과_직선의_거리.md) · 도형의 방정식 `unknown`
-- [점의 궤적](../../../concepts/geometry/high-1/도형의_방정식/점의_궤적.md) · 도형의 방정식 `unknown`
-- [점의 자취](../../../concepts/geometry/high-1/도형의_방정식/점의_자취.md) · 도형의 방정식 `unknown`
-- [점의 자취와 직선의 방정식](../../../concepts/geometry/high-1/도형의_방정식/점의_자취와_직선의_방정식.md) · 도형의 방정식 `unknown`
 - [점의 좌표 변환](../../../concepts/geometry/high-1/도형의_방정식/점의_좌표_변환.md) · 도형의 방정식 `unknown`
 - [점의 집합의 교집합](../../../concepts/geometry/high-1/도형의_방정식/점의_집합의_교집합.md) · 도형의 방정식 `unknown`
-- [점의 집합의 기하학적 의미](../../../concepts/geometry/high-1/도형의_방정식/점의_집합의_기하학적_의미.md) · 도형의 방정식 `unknown`
 - [점의 평행이동](../../../concepts/geometry/high-1/도형의_방정식/점의_평행이동.md) · 도형의 방정식 `unknown`
-- [좌표 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표_계산.md) · 도형의 방정식 `unknown`
 - [좌표 기하를 이용한 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표_기하를_이용한_계산.md) · 도형의 방정식 `unknown`
-- [좌표 기하학](../../../concepts/geometry/high-1/도형의_방정식/좌표_기하학.md) · 도형의 방정식 `unknown`
-- [좌표계를 이용한 기하](../../../concepts/geometry/high-1/도형의_방정식/좌표계를_이용한_기하.md) · 도형의 방정식 `unknown`
-- [좌표계를 이용한 넓이 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표계를_이용한_넓이_계산.md) · 도형의 방정식 `unknown`
 - [좌표계에서의 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표계에서의_거리.md) · 도형의 방정식 `unknown`
 - [좌표기하](../../../concepts/geometry/high-1/도형의_방정식/좌표기하.md) · 도형의 방정식 `unknown`
 - [좌표를 이용한 넓이](../../../concepts/geometry/high-1/도형의_방정식/좌표를_이용한_넓이.md) · 도형의 방정식 `unknown`
 - [좌표와 도형](../../../concepts/geometry/high-1/도형의_방정식/좌표와_도형.md) · 도형의 방정식 `unknown`
-- [좌표의 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표의_거리.md) · 도형의 방정식 `unknown`
 - [좌표평면 도형](../../../concepts/geometry/high-1/도형의_방정식/좌표평면_도형.md) · 도형의 방정식 `unknown`
 - [중점공식](../../../concepts/geometry/high-1/도형의_방정식/중점공식.md) · 도형의 방정식 `unknown`
-- [중점의 좌표](../../../concepts/geometry/high-1/도형의_방정식/중점의_좌표.md) · 도형의 방정식 `unknown`
 - [직각 조건](../../../concepts/geometry/high-1/도형의_방정식/직각_조건.md) · 도형의 방정식 `unknown`
 - [직선과 원의 위치 관계](../../../concepts/geometry/high-1/도형의_방정식/직선과_원의_위치_관계.md) · 도형의 방정식 `unknown`
 - [직선의 방정식](../../../concepts/geometry/high-1/도형의_방정식/직선의_방정식.md) · 도형의 방정식 `unknown`

@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: math-1
 counts:
-  total: 127
+  total: 121
 ---
 
 # 함수 · 수학1 (math-1)
 
-총 127개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 121개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [수열](../../../concepts/functions/math-1/수열.md) · 수열 `unknown`
 - [지수함수와 로그함수](../../../concepts/functions/math-1/지수함수와_로그함수.md) · 지수함수와 로그함수 `unknown`
 
-## 정의 (107)
+## 정의 (101)
 
 - [각의 조건](../../../concepts/functions/math-1/삼각함수/각의_조건.md) · 삼각함수 `unknown`
 - [각의 크기 결정](../../../concepts/functions/math-1/삼각함수/각의_크기_결정.md) · 삼각함수 `unknown`
@@ -28,7 +28,6 @@ counts:
 - [공차](../../../concepts/functions/math-1/수열/공차.md) · 수열 `unknown`
 - [교점 개수 조건](../../../concepts/functions/math-1/삼각함수/교점_개수_조건.md) · 삼각함수 `unknown`
 - [근의 최댓값과 최솟값](../../../concepts/functions/math-1/삼각함수/근의_최댓값과_최솟값.md) · 삼각함수 `unknown`
-- [기본 삼각함수 관계식](../../../concepts/functions/math-1/삼각함수/기본_삼각함수_관계식.md) · 삼각함수 `unknown`
 - [기본 삼각함수 항등식](../../../concepts/functions/math-1/삼각함수/기본_삼각함수_항등식.md) · 삼각함수 `unknown`
 - [기하학적 조건과 넓이](../../../concepts/functions/math-1/삼각함수/기하학적_조건과_넓이.md) · 삼각함수 `unknown`
 - [단위원 삼각함수](../../../concepts/functions/math-1/삼각함수/단위원_삼각함수.md) · 삼각함수 `unknown`
@@ -59,8 +58,6 @@ counts:
 - [사분면별 부호](../../../concepts/functions/math-1/삼각함수/사분면별_부호.md) · 삼각함수 `unknown`
 - [사인 법칙](../../../concepts/functions/math-1/삼각함수/사인_법칙.md) · 삼각함수 `unknown`
 - [삼각방정식](../../../concepts/functions/math-1/삼각함수/삼각방정식.md) · 삼각함수 `unknown`
-- [삼각함수 기하](../../../concepts/functions/math-1/삼각함수/삼각함수_기하.md) · 삼각함수 `unknown`
-- [삼각함수 방정식](../../../concepts/functions/math-1/삼각함수/삼각함수_방정식.md) · 삼각함수 `unknown`
 - [삼각함수의 계산](../../../concepts/functions/math-1/삼각함수/삼각함수의_계산.md) · 삼각함수 `unknown`
 - [삼각함수의 곱](../../../concepts/functions/math-1/삼각함수/삼각함수의_곱.md) · 삼각함수 `unknown`
 - [삼각함수의 그래프](../../../concepts/functions/math-1/삼각함수/삼각함수의_그래프.md) · 삼각함수 `unknown`
@@ -74,9 +71,7 @@ counts:
 - [삼각함수의 합성](../../../concepts/functions/math-1/삼각함수/삼각함수의_합성.md) · 삼각함수 `unknown`
 - [삼각함수의 활용](../../../concepts/functions/math-1/삼각함수/삼각함수의_활용.md) · 삼각함수 `unknown`
 - [삼각형의 변과 각의 관계](../../../concepts/functions/math-1/삼각함수/삼각형의_변과_각의_관계.md) · 삼각함수 `unknown`
-- [수열의 관계식](../../../concepts/functions/math-1/수열/수열의_관계식.md) · 수열 `unknown`
 - [수열의 성질](../../../concepts/functions/math-1/수열/수열의_성질.md) · 수열 `unknown`
-- [수열의 점화식](../../../concepts/functions/math-1/수열/수열의_점화식.md) · 수열 `unknown`
 - [수열의 최대최소](../../../concepts/functions/math-1/수열/수열의_최대최소.md) · 수열 `unknown`
 - [수열의 항](../../../concepts/functions/math-1/수열/수열의_항.md) · 수열 `unknown`
 - [시그마 합기호](../../../concepts/functions/math-1/수열/시그마_합기호.md) · 수열 `unknown`
@@ -106,7 +101,6 @@ counts:
 - [지수함수의 성질](../../../concepts/functions/math-1/지수함수와_로그함수/지수함수의_성질.md) · 지수함수와 로그함수 `unknown`
 - [지수함수의 평행이동](../../../concepts/functions/math-1/지수함수와_로그함수/지수함수의_평행이동.md) · 지수함수와 로그함수 `unknown`
 - [첫째항](../../../concepts/functions/math-1/수열/첫째항.md) · 수열 `unknown`
-- [첫째항과 공차](../../../concepts/functions/math-1/수열/첫째항과_공차.md) · 수열 `unknown`
 - [초기값 결정](../../../concepts/functions/math-1/수열/초기값_결정.md) · 수열 `unknown`
 - [초월방정식](../../../concepts/functions/math-1/삼각함수/초월방정식.md) · 삼각함수 `unknown`
 - [치환을 이용한 함수 분석](../../../concepts/functions/math-1/삼각함수/치환을_이용한_함수_분석.md) · 삼각함수 `unknown`

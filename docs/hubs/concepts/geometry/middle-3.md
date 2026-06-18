@@ -6,24 +6,22 @@ hub_type: concepts-grade
 domain: geometry
 grade: middle-3
 counts:
-  total: 46
+  total: 43
 ---
 
 # 도형 · 중3 (middle-3)
 
-총 46개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 43개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (2)
 
 - [삼각비](../../../concepts/geometry/middle-3/삼각비.md) · 삼각비 `unknown`
 - [원의 성질](../../../concepts/geometry/middle-3/원의_성질.md) · 원의 성질 `unknown`
 
-## 정의 (36)
+## 정의 (33)
 
-- [각의 삼각비](../../../concepts/geometry/middle-3/삼각비/각의_삼각비.md) · 삼각비 `unknown`
 - [각의 자취](../../../concepts/geometry/middle-3/원의_성질/각의_자취.md) · 원의 성질 `unknown`
 - [내접 외접](../../../concepts/geometry/middle-3/원의_성질/내접_외접.md) · 원의 성질 `unknown`
-- [반원의 성질](../../../concepts/geometry/middle-3/원의_성질/반원의_성질.md) · 원의 성질 `unknown`
 - [반원의 원주각](../../../concepts/geometry/middle-3/원의_성질/반원의_원주각.md) · 원의 성질 `unknown`
 - [방멱의 정리](../../../concepts/geometry/middle-3/원의_성질/방멱의_정리.md) · 원의 성질 `unknown`
 - [사인 정리](../../../concepts/geometry/middle-3/삼각비/사인_정리.md) · 삼각비 `unknown`
@@ -44,7 +42,6 @@ counts:
 - [원주각의 성질](../../../concepts/geometry/middle-3/원의_성질/원주각의_성질.md) · 원의 성질 `unknown`
 - [접선-현 정리](../../../concepts/geometry/middle-3/원의_성질/접선-현_정리.md) · 원의 성질 `unknown`
 - [접선의 성질](../../../concepts/geometry/middle-3/원의_성질/접선의_성질.md) · 원의 성질 `unknown`
-- [정현 법칙](../../../concepts/geometry/middle-3/삼각비/정현_법칙.md) · 삼각비 `unknown`
 - [중심각](../../../concepts/geometry/middle-3/원의_성질/중심각.md) · 원의 성질 `unknown`
 - [특수각](../../../concepts/geometry/middle-3/삼각비/특수각.md) · 삼각비 `unknown`
 - [평행선과 원에 내접하는 사각형](../../../concepts/geometry/middle-3/원의_성질/평행선과_원에_내접하는_사각형.md) · 원의 성질 `unknown`

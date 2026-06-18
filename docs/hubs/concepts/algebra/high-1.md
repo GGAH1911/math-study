@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: algebra
 grade: high-1
 counts:
-  total: 33
+  total: 32
 ---
 
 # 수와식 · 고1 (high-1)
 
-총 33개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
+총 32개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [다항식](../../../concepts/algebra/high-1/다항식.md) · 다항식 `unknown`
 
-## 정의 (27)
+## 정의 (26)
 
 - [계수](../../../concepts/algebra/high-1/다항식/계수.md) · 다항식 `unknown`
 - [계수 비교법](../../../concepts/algebra/high-1/다항식/계수_비교법.md) · 다항식 `unknown`
@@ -25,7 +25,6 @@ counts:
 - [나눗셈 정리](../../../concepts/algebra/high-1/다항식/나눗셈_정리.md) · 다항식 `unknown`
 - [나머지 정리](../../../concepts/algebra/high-1/다항식/나머지_정리.md) · 다항식 `unknown`
 - [다중근](../../../concepts/algebra/high-1/다항식/다중근.md) · 다항식 `unknown`
-- [다항식 계산](../../../concepts/algebra/high-1/다항식/다항식_계산.md) · 다항식 `unknown`
 - [다항식의 근](../../../concepts/algebra/high-1/다항식/다항식의_근.md) · 다항식 `unknown`
 - [다항식의 덧셈과 뺄셈](../../../concepts/algebra/high-1/다항식/다항식의_덧셈과_뺄셈.md) · 다항식 `unknown`
 - [다항식의 연산](../../../concepts/algebra/high-1/다항식/다항식의_연산.md) · 다항식 `unknown`

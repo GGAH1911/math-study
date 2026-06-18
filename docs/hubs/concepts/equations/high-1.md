@@ -6,21 +6,20 @@ hub_type: concepts-grade
 domain: equations
 grade: high-1
 counts:
-  total: 70
+  total: 66
 ---
 
 # 방정식 · 고1 (high-1)
 
-총 70개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
+총 66개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [방정식과 부등식](../../../concepts/equations/high-1/방정식과_부등식.md) · 방정식과 부등식 `unknown`
 
-## 정의 (64)
+## 정의 (60)
 
 - [3차 방정식](../../../concepts/equations/high-1/방정식과_부등식/3차_방정식.md) · 방정식과 부등식 `unknown`
-- [계수와 해의 관계](../../../concepts/equations/high-1/방정식과_부등식/계수와_해의_관계.md) · 방정식과 부등식 `unknown`
 - [고차 부등식](../../../concepts/equations/high-1/방정식과_부등식/고차_부등식.md) · 방정식과 부등식 `unknown`
 - [고차방정식](../../../concepts/equations/high-1/방정식과_부등식/고차방정식.md) · 방정식과 부등식 `unknown`
 - [곱셈과 부등식 조건](../../../concepts/equations/high-1/방정식과_부등식/곱셈과_부등식_조건.md) · 방정식과 부등식 `unknown`
@@ -37,15 +36,12 @@ counts:
 - [방정식의 근의 개수](../../../concepts/equations/high-1/방정식과_부등식/방정식의_근의_개수.md) · 방정식과 부등식 `unknown`
 - [방정식의 해](../../../concepts/equations/high-1/방정식과_부등식/방정식의_해.md) · 방정식과 부등식 `unknown`
 - [방정식의 해의 합](../../../concepts/equations/high-1/방정식과_부등식/방정식의_해의_합.md) · 방정식과 부등식 `unknown`
-- [방정식의근](../../../concepts/equations/high-1/방정식과_부등식/방정식의근.md) · 방정식과 부등식 `unknown`
 - [복소수](../../../concepts/equations/high-1/방정식과_부등식/복소수.md) · 방정식과 부등식 `unknown`
 - [복소수의 연산](../../../concepts/equations/high-1/방정식과_부등식/복소수의_연산.md) · 방정식과 부등식 `unknown`
 - [복소수의 절댓값](../../../concepts/equations/high-1/방정식과_부등식/복소수의_절댓값.md) · 방정식과 부등식 `unknown`
 - [복소수의 켤레근](../../../concepts/equations/high-1/방정식과_부등식/복소수의_켤레근.md) · 방정식과 부등식 `unknown`
-- [복소켤레 허근](../../../concepts/equations/high-1/방정식과_부등식/복소켤레_허근.md) · 방정식과 부등식 `unknown`
 - [부등식 조건](../../../concepts/equations/high-1/방정식과_부등식/부등식_조건.md) · 방정식과 부등식 `unknown`
 - [부등식과 함수](../../../concepts/equations/high-1/방정식과_부등식/부등식과_함수.md) · 방정식과 부등식 `unknown`
-- [부등식의 해](../../../concepts/equations/high-1/방정식과_부등식/부등식의_해.md) · 방정식과 부등식 `unknown`
 - [부등식의 해집합](../../../concepts/equations/high-1/방정식과_부등식/부등식의_해집합.md) · 방정식과 부등식 `unknown`
 - [비에타 정리](../../../concepts/equations/high-1/방정식과_부등식/비에타_정리.md) · 방정식과 부등식 `unknown`
 - [사차방정식](../../../concepts/equations/high-1/방정식과_부등식/사차방정식.md) · 방정식과 부등식 `unknown`

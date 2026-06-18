@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: probability-stats
 grade: prob-stats-elective
 counts:
-  total: 83
+  total: 79
 ---
 
 # 확률통계 · 확률과통계 (prob-stats-elective)
 
-총 83개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
+총 79개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [통계](../../../concepts/probability-stats/prob-stats-elective/통계.md) · 통계 `unknown`
 - [확률](../../../concepts/probability-stats/prob-stats-elective/확률.md) · 확률 `unknown`
 
-## 정의 (65)
+## 정의 (61)
 
 - [경우의 분류](../../../concepts/probability-stats/prob-stats-elective/경우의_수/경우의_분류.md) · 경우의 수 `unknown`
 - [경우의수](../../../concepts/probability-stats/prob-stats-elective/확률/경우의수.md) · 확률 `unknown`
@@ -36,7 +36,6 @@ counts:
 - [독립사건](../../../concepts/probability-stats/prob-stats-elective/확률/독립사건.md) · 확률 `unknown`
 - [독립시행](../../../concepts/probability-stats/prob-stats-elective/확률/독립시행.md) · 확률 `unknown`
 - [동일원소 포함 순열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/동일원소_포함_순열.md) · 경우의 수 `unknown`
-- [반복시행과 확률](../../../concepts/probability-stats/prob-stats-elective/확률/반복시행과_확률.md) · 확률 `unknown`
 - [배반사건](../../../concepts/probability-stats/prob-stats-elective/확률/배반사건.md) · 확률 `unknown`
 - [베이즈정리](../../../concepts/probability-stats/prob-stats-elective/확률/베이즈정리.md) · 확률 `unknown`
 - [복원추출](../../../concepts/probability-stats/prob-stats-elective/통계/복원추출.md) · 통계 `unknown`
@@ -44,7 +43,6 @@ counts:
 - [비감소 수열](../../../concepts/probability-stats/prob-stats-elective/경우의_수/비감소_수열.md) · 경우의 수 `unknown`
 - [비복원 추출](../../../concepts/probability-stats/prob-stats-elective/통계/비복원_추출.md) · 통계 `unknown`
 - [산점도](../../../concepts/probability-stats/prob-stats-elective/통계/산점도.md) · 통계 `unknown`
-- [색깔별 분배](../../../concepts/probability-stats/prob-stats-elective/경우의_수/색깔별_분배.md) · 경우의 수 `unknown`
 - [수의 곱 조건](../../../concepts/probability-stats/prob-stats-elective/경우의_수/수의_곱_조건.md) · 경우의 수 `unknown`
 - [순열과 조합](../../../concepts/probability-stats/prob-stats-elective/경우의_수/순열과_조합.md) · 경우의 수 `unknown`
 - [신뢰구간](../../../concepts/probability-stats/prob-stats-elective/통계/신뢰구간.md) · 통계 `unknown`
@@ -76,14 +74,12 @@ counts:
 - [표준정규분포](../../../concepts/probability-stats/prob-stats-elective/통계/표준정규분포.md) · 통계 `unknown`
 - [표준정규분포표](../../../concepts/probability-stats/prob-stats-elective/통계/표준정규분포표.md) · 통계 `unknown`
 - [표준화](../../../concepts/probability-stats/prob-stats-elective/통계/표준화.md) · 통계 `unknown`
-- [합사건의 확률](../../../concepts/probability-stats/prob-stats-elective/확률/합사건의_확률.md) · 확률 `unknown`
 - [확률밀도함수](../../../concepts/probability-stats/prob-stats-elective/통계/확률밀도함수.md) · 통계 `unknown`
 - [확률변수](../../../concepts/probability-stats/prob-stats-elective/통계/확률변수.md) · 통계 `unknown`
 - [확률변수의 변환](../../../concepts/probability-stats/prob-stats-elective/통계/확률변수의_변환.md) · 통계 `unknown`
 - [확률변수의 선형변환](../../../concepts/probability-stats/prob-stats-elective/통계/확률변수의_선형변환.md) · 통계 `unknown`
 - [확률분포](../../../concepts/probability-stats/prob-stats-elective/통계/확률분포.md) · 통계 `unknown`
 - [확률의 기본 성질](../../../concepts/probability-stats/prob-stats-elective/확률/확률의_기본_성질.md) · 확률 `unknown`
-- [확률의 덧셈 법칙](../../../concepts/probability-stats/prob-stats-elective/확률/확률의_덧셈_법칙.md) · 확률 `unknown`
 - [확률의 덧셈정리](../../../concepts/probability-stats/prob-stats-elective/확률/확률의_덧셈정리.md) · 확률 `unknown`
 - [확률의 정의](../../../concepts/probability-stats/prob-stats-elective/확률/확률의_정의.md) · 확률 `unknown`
 

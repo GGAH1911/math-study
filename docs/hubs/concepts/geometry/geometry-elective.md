@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: geometry
 grade: geometry-elective
 counts:
-  total: 129
+  total: 123
 ---
 
 # 도형 · 기하 (geometry-elective)
 
-총 129개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 123개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [이차곡선](../../../concepts/geometry/geometry-elective/이차곡선.md) · 이차곡선 `unknown`
 - [평면벡터](../../../concepts/geometry/geometry-elective/평면벡터.md) · 평면벡터 `unknown`
 
-## 정의 (110)
+## 정의 (104)
 
 - [각의 이등분선의 성질](../../../concepts/geometry/geometry-elective/이차곡선/각의_이등분선의_성질.md) · 이차곡선 `unknown`
 - [거리 관계](../../../concepts/geometry/geometry-elective/이차곡선/거리_관계.md) · 이차곡선 `unknown`
@@ -51,7 +51,6 @@ counts:
 - [내적의 성질](../../../concepts/geometry/geometry-elective/평면벡터/내적의_성질.md) · 평면벡터 `unknown`
 - [두 구의 교선](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/두_구의_교선.md) · 공간도형과 공간벡터 `unknown`
 - [두 직선의 각도](../../../concepts/geometry/geometry-elective/평면벡터/두_직선의_각도.md) · 평면벡터 `unknown`
-- [두 평면이 이루는 각](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/두_평면이_이루는_각.md) · 공간도형과 공간벡터 `unknown`
 - [매개변수 표현](../../../concepts/geometry/geometry-elective/이차곡선/매개변수_표현.md) · 이차곡선 `unknown`
 - [매개변수의 유일성](../../../concepts/geometry/geometry-elective/이차곡선/매개변수의_유일성.md) · 이차곡선 `unknown`
 - [무게중심의 벡터 표현](../../../concepts/geometry/geometry-elective/평면벡터/무게중심의_벡터_표현.md) · 평면벡터 `unknown`
@@ -61,14 +60,11 @@ counts:
 - [벡터의 내분과 외분](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_내분과_외분.md) · 평면벡터 `unknown`
 - [벡터의 내적과 수직](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_내적과_수직.md) · 공간도형과 공간벡터 `unknown`
 - [벡터의 성분](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_성분.md) · 평면벡터 `unknown`
-- [벡터의 성분 표현](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_성분_표현.md) · 평면벡터 `unknown`
-- [벡터의 연산](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_연산.md) · 평면벡터 `unknown`
 - [벡터의 외적](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_외적.md) · 공간도형과 공간벡터 `unknown`
 - [벡터의 일차결합](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_일차결합.md) · 평면벡터 `unknown`
 - [벡터의 정사영](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_정사영.md) · 공간도형과 공간벡터 `unknown`
 - [벡터의 정의](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_정의.md) · 평면벡터 `unknown`
 - [벡터의 조건](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_조건.md) · 평면벡터 `unknown`
-- [벡터의 좌표](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_좌표.md) · 평면벡터 `unknown`
 - [벡터의 크기](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_크기.md) · 평면벡터 `unknown`
 - [벡터의 합과 실수배](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_합과_실수배.md) · 평면벡터 `unknown`
 - [사면체와 공간벡터](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/사면체와_공간벡터.md) · 공간도형과 공간벡터 `unknown`
@@ -100,7 +96,6 @@ counts:
 - [정사영](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/정사영.md) · 공간도형과 공간벡터 `unknown`
 - [정사영의 넓이 계산](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/정사영의_넓이_계산.md) · 공간도형과 공간벡터 `unknown`
 - [조건부 최댓값과 최솟값](../../../concepts/geometry/geometry-elective/평면벡터/조건부_최댓값과_최솟값.md) · 평면벡터 `unknown`
-- [조건으로 정의된 도형](../../../concepts/geometry/geometry-elective/평면벡터/조건으로_정의된_도형.md) · 평면벡터 `unknown`
 - [주축](../../../concepts/geometry/geometry-elective/이차곡선/주축.md) · 이차곡선 `unknown`
 - [준선](../../../concepts/geometry/geometry-elective/이차곡선/준선.md) · 이차곡선 `unknown`
 - [직교](../../../concepts/geometry/geometry-elective/평면벡터/직교.md) · 평면벡터 `unknown`
@@ -114,7 +109,6 @@ counts:
 - [초점](../../../concepts/geometry/geometry-elective/이차곡선/초점.md) · 이차곡선 `unknown`
 - [초점거리](../../../concepts/geometry/geometry-elective/이차곡선/초점거리.md) · 이차곡선 `unknown`
 - [초점과 꼭짓점](../../../concepts/geometry/geometry-elective/이차곡선/초점과_꼭짓점.md) · 이차곡선 `unknown`
-- [초점과 주축](../../../concepts/geometry/geometry-elective/이차곡선/초점과_주축.md) · 이차곡선 `unknown`
 - [초점과 준선](../../../concepts/geometry/geometry-elective/이차곡선/초점과_준선.md) · 이차곡선 `unknown`
 - [초점현](../../../concepts/geometry/geometry-elective/이차곡선/초점현.md) · 이차곡선 `unknown`
 - [타원 접선](../../../concepts/geometry/geometry-elective/이차곡선/타원_접선.md) · 이차곡선 `unknown`

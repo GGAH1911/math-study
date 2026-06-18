@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: functions
 grade: middle-3
 counts:
-  total: 26
+  total: 25
 ---
 
 # 함수 · 중3 (middle-3)
 
-총 26개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 25개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [이차함수](../../../concepts/functions/middle-3/이차함수.md) · 이차함수 `unknown`
 
-## 정의 (19)
+## 정의 (18)
 
 - [구간별 최댓값과 최솟값](../../../concepts/functions/middle-3/이차함수/구간별_최댓값과_최솟값.md) · 이차함수 `unknown`
 - [꼭짓점 축](../../../concepts/functions/middle-3/이차함수/꼭짓점_축.md) · 이차함수 `unknown`
@@ -27,7 +27,6 @@ counts:
 - [실근의 개수](../../../concepts/functions/middle-3/이차함수/실근의_개수.md) · 이차함수 `unknown`
 - [양수 조건](../../../concepts/functions/middle-3/이차함수/양수_조건.md) · 이차함수 `unknown`
 - [이차함수와 직선의 교점](../../../concepts/functions/middle-3/이차함수/이차함수와_직선의_교점.md) · 이차함수 `unknown`
-- [이차함수와 축의 교점](../../../concepts/functions/middle-3/이차함수/이차함수와_축의_교점.md) · 이차함수 `unknown`
 - [이차함수의 결정](../../../concepts/functions/middle-3/이차함수/이차함수의_결정.md) · 이차함수 `unknown`
 - [이차함수의 그래프](../../../concepts/functions/middle-3/이차함수/이차함수의_그래프.md) · 이차함수 `unknown`
 - [이차함수의 근](../../../concepts/functions/middle-3/이차함수/이차함수의_근.md) · 이차함수 `unknown`

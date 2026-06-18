@@ -6,25 +6,23 @@ hub_type: concepts-grade
 domain: functions
 grade: high-1
 counts:
-  total: 73
+  total: 68
 ---
 
 # 함수 · 고1 (high-1)
 
-총 73개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 68개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [함수와 그래프](../../../concepts/functions/high-1/함수와_그래프.md) · 함수와 그래프 `unknown`
 
-## 정의 (67)
+## 정의 (62)
 
 - [고정점](../../../concepts/functions/high-1/함수와_그래프/고정점.md) · 함수와 그래프 `unknown`
 - [교점](../../../concepts/functions/high-1/함수와_그래프/교점.md) · 함수와 그래프 `unknown`
 - [교점의 개수](../../../concepts/functions/high-1/함수와_그래프/교점의_개수.md) · 함수와 그래프 `unknown`
-- [구간별 정의 함수](../../../concepts/functions/high-1/함수와_그래프/구간별_정의_함수.md) · 함수와 그래프 `unknown`
 - [구간별 함수](../../../concepts/functions/high-1/함수와_그래프/구간별_함수.md) · 함수와 그래프 `unknown`
-- [구간별 함수 정의](../../../concepts/functions/high-1/함수와_그래프/구간별_함수_정의.md) · 함수와 그래프 `unknown`
 - [구간별 함수의 비교](../../../concepts/functions/high-1/함수와_그래프/구간별_함수의_비교.md) · 함수와 그래프 `unknown`
 - [구간에서의 함수 분석](../../../concepts/functions/high-1/함수와_그래프/구간에서의_함수_분석.md) · 함수와 그래프 `unknown`
 - [기하와 함수](../../../concepts/functions/high-1/함수와_그래프/기하와_함수.md) · 함수와 그래프 `unknown`
@@ -69,17 +67,14 @@ counts:
 - [함수방정식 풀이](../../../concepts/functions/high-1/함수와_그래프/함수방정식_풀이.md) · 함수와 그래프 `unknown`
 - [함수의 그래프](../../../concepts/functions/high-1/함수와_그래프/함수의_그래프.md) · 함수와 그래프 `unknown`
 - [함수의 그래프 읽기](../../../concepts/functions/high-1/함수와_그래프/함수의_그래프_읽기.md) · 함수와 그래프 `unknown`
-- [함수의 근](../../../concepts/functions/high-1/함수와_그래프/함수의_근.md) · 함수와 그래프 `unknown`
 - [함수의 기본조건](../../../concepts/functions/high-1/함수와_그래프/함수의_기본조건.md) · 함수와 그래프 `unknown`
 - [함수의 대칭성](../../../concepts/functions/high-1/함수와_그래프/함수의_대칭성.md) · 함수와 그래프 `unknown`
-- [함수의 범위](../../../concepts/functions/high-1/함수와_그래프/함수의_범위.md) · 함수와 그래프 `unknown`
 - [함수의 변환](../../../concepts/functions/high-1/함수와_그래프/함수의_변환.md) · 함수와 그래프 `unknown`
 - [함수의 수직 이동](../../../concepts/functions/high-1/함수와_그래프/함수의_수직_이동.md) · 함수와 그래프 `unknown`
 - [함수의 역상](../../../concepts/functions/high-1/함수와_그래프/함수의_역상.md) · 함수와 그래프 `unknown`
 - [함수의 영점](../../../concepts/functions/high-1/함수와_그래프/함수의_영점.md) · 함수와 그래프 `unknown`
 - [함수의 정의](../../../concepts/functions/high-1/함수와_그래프/함수의_정의.md) · 함수와 그래프 `unknown`
 - [함수의 정의역](../../../concepts/functions/high-1/함수와_그래프/함수의_정의역.md) · 함수와 그래프 `unknown`
-- [함수의 정의역과 치역](../../../concepts/functions/high-1/함수와_그래프/함수의_정의역과_치역.md) · 함수와 그래프 `unknown`
 - [함수의 정의와 조건](../../../concepts/functions/high-1/함수와_그래프/함수의_정의와_조건.md) · 함수와 그래프 `unknown`
 - [함수의 치역](../../../concepts/functions/high-1/함수와_그래프/함수의_치역.md) · 함수와 그래프 `unknown`
 - [함수의 치역과 자연수 조건](../../../concepts/functions/high-1/함수와_그래프/함수의_치역과_자연수_조건.md) · 함수와 그래프 `unknown`

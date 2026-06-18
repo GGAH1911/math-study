@@ -6,19 +6,19 @@ hub_type: concepts-grade
 domain: geometry
 grade: middle-2
 counts:
-  total: 49
+  total: 47
 ---
 
 # 도형 · 중2 (middle-2)
 
-총 49개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 47개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (2)
 
 - [닮음과 피타고라스](../../../concepts/geometry/middle-2/닮음과_피타고라스.md) · 도형의 닮음과 피타고라스 `unknown`
 - [도형의 성질](../../../concepts/geometry/middle-2/도형의_성질.md) · 도형의 성질 `unknown`
 
-## 정의 (39)
+## 정의 (37)
 
 - [각의 이등분선 성질](../../../concepts/geometry/middle-2/도형의_성질/각의_이등분선_성질.md) · 도형의 성질 `unknown`
 - [각의 이등분선 정리](../../../concepts/geometry/middle-2/닮음과_피타고라스/각의_이등분선_정리.md) · 닮음과 피타고라스 `unknown`
@@ -28,10 +28,8 @@ counts:
 - [내접원](../../../concepts/geometry/middle-2/도형의_성질/내접원.md) · 도형의 성질 `unknown`
 - [내접원의 반지름](../../../concepts/geometry/middle-2/도형의_성질/내접원의_반지름.md) · 도형의 성질 `unknown`
 - [넓이 비](../../../concepts/geometry/middle-2/닮음과_피타고라스/넓이_비.md) · 닮음과 피타고라스 `unknown`
-- [넓이 비율](../../../concepts/geometry/middle-2/닮음과_피타고라스/넓이_비율.md) · 닮음과 피타고라스 `unknown`
 - [높이와 변의 관계](../../../concepts/geometry/middle-2/도형의_성질/높이와_변의_관계.md) · 도형의 성질 `unknown`
 - [닮음](../../../concepts/geometry/middle-2/닮음과_피타고라스/닮음.md) · 닮음과 피타고라스 `unknown`
-- [닮음 관계](../../../concepts/geometry/middle-2/닮음과_피타고라스/닮음_관계.md) · 닮음과 피타고라스 `unknown`
 - [닮음과 축소 비율](../../../concepts/geometry/middle-2/닮음과_피타고라스/닮음과_축소_비율.md) · 닮음과 피타고라스 `unknown`
 - [닮음비](../../../concepts/geometry/middle-2/닮음과_피타고라스/닮음비.md) · 닮음과 피타고라스 `unknown`
 - [대각선의 교점](../../../concepts/geometry/middle-2/도형의_성질/대각선의_교점.md) · 도형의 성질 `unknown`

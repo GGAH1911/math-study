@@ -6,19 +6,19 @@ hub_type: concepts-grade
 domain: algebra
 grade: middle-1
 counts:
-  total: 47
+  total: 45
 ---
 
 # 수와식 · 중1 (middle-1)
 
-총 47개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
+총 45개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (2)
 
 - [문자와 식](../../../concepts/algebra/middle-1/문자와_식.md) · 문자와 식 `proficient`
 - [정수와 유리수](../../../concepts/algebra/middle-1/정수와_유리수.md) · 정수와 유리수 `proficient`
 
-## 정의 (38)
+## 정의 (36)
 
 - [거듭제곱](../../../concepts/algebra/middle-1/문자와_식/거듭제곱.md) · 문자와 식 `unknown`
 - [계산 순서](../../../concepts/algebra/middle-1/정수와_유리수/계산_순서.md) · 정수와 유리수 `unknown`
@@ -30,7 +30,6 @@ counts:
 - [배수](../../../concepts/algebra/middle-1/정수와_유리수/배수.md) · 정수와 유리수 `unknown`
 - [배수 조건](../../../concepts/algebra/middle-1/정수와_유리수/배수_조건.md) · 정수와 유리수 `unknown`
 - [배수 판정법](../../../concepts/algebra/middle-1/정수와_유리수/배수_판정법.md) · 정수와 유리수 `unknown`
-- [배수와 약수](../../../concepts/algebra/middle-1/정수와_유리수/배수와_약수.md) · 정수와 유리수 `unknown`
 - [배수의 성질](../../../concepts/algebra/middle-1/정수와_유리수/배수의_성질.md) · 정수와 유리수 `unknown`
 - [백분율 계산](../../../concepts/algebra/middle-1/정수와_유리수/백분율_계산.md) · 정수와 유리수 `unknown`
 - [분수](../../../concepts/algebra/middle-1/정수와_유리수/분수.md) · 정수와 유리수 `unknown`
@@ -44,7 +43,6 @@ counts:
 - [약수 관계](../../../concepts/algebra/middle-1/정수와_유리수/약수_관계.md) · 정수와 유리수 `unknown`
 - [약수 조건](../../../concepts/algebra/middle-1/정수와_유리수/약수_조건.md) · 정수와 유리수 `unknown`
 - [약수 판정](../../../concepts/algebra/middle-1/정수와_유리수/약수_판정.md) · 정수와 유리수 `unknown`
-- [약수와배수](../../../concepts/algebra/middle-1/정수와_유리수/약수와배수.md) · 정수와 유리수 `unknown`
 - [약수의 성질](../../../concepts/algebra/middle-1/정수와_유리수/약수의_성질.md) · 정수와 유리수 `unknown`
 - [유리수](../../../concepts/algebra/middle-1/정수와_유리수/유리수.md) · 정수와 유리수 `unknown`
 - [이항 연산](../../../concepts/algebra/middle-1/문자와_식/이항_연산.md) · 문자와 식 `unknown`
