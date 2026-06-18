@@ -1,0 +1,34 @@
+---
+export const prerender = false;
+import Geometry from '../../components/Geometry.tsx';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import '../../styles/global.css';
+
+// QA 시각 검수용 단일 도식 렌더 하네스 — ?id=<concept id>&w=<px>.
+// BaseLayout(네비·튜터 island) 없이 도식만 → 헤드리스가 멈추지 않고 빠르게 로드.
+// fixedWidth 로 ResizeObserver 우회 → 헤드리스서도 실제 크기로 렌더(240 floor 회피).
+const id = Astro.url.searchParams.get('id') ?? '';
+const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 600)));
+const cachePath = fileURLToPath(new URL('../../data/concept-figures.json', import.meta.url));
+let fig: any = null;
+try {
+  const d = JSON.parse(readFileSync(cachePath, 'utf-8'));
+  fig = d.figures?.[id]?.figure ?? null;
+} catch { /* 없음 */ }
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>figrender</title>
+  </head>
+  <body style="margin:0;padding:16px;background:#0a0a0b;">
+    <div id="figbox" style={`width:${w}px;`} data-fig-id={id} data-has-fig={fig ? '1' : '0'}>
+      {fig
+        ? <Geometry client:load spec={fig} width={w} height={Math.round(w * 0.8)} hideCaption noBroadcast fixedWidth={w} />
+        : <p id="nofig" style="color:#aaa;font-family:sans-serif;">no figure for id</p>}
+    </div>
+  </body>
+</html>

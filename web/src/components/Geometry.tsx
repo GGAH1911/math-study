@@ -269,11 +269,15 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
   return { x: [xMin - padX, xMax + padX], y: [yMin - padY, yMax + padY] };
 }
 
-function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: GeomSpec; width: number; height: number; hideCaption?: boolean }) {
+function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }: { spec: GeomSpec; width: number; height: number; hideCaption?: boolean; fixedWidth?: number }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [effWidth, setEffWidth] = useState(width);
+  // fixedWidth: ResizeObserver 우회 → 부모폭 측정 없이 그 폭으로 고정 렌더.
+  // 헤드리스 스크린샷이 부모 clientWidth 를 과소측정(240 floor)해 실제보다 작게/라벨이
+  // 뭉쳐 보이던 문제를 우회 — QA 시각 검수용 결정적 실측 렌더.
+  const [effWidth, setEffWidth] = useState(fixedWidth ?? width);
 
   useEffect(() => {
+    if (fixedWidth) return;   // 고정폭이면 측정 안 함
     const el = wrapRef.current;
     if (!el) return;
     // rAF-throttle + ≥1px change guard — prevents ResizeObserver feedback
@@ -289,7 +293,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
     const ro = new ResizeObserver(() => { if (!raf) raf = requestAnimationFrame(measure); });
     if (el.parentElement) ro.observe(el.parentElement);
     return () => { if (raf) cancelAnimationFrame(raf); ro.disconnect(); };
-  }, [width]);
+  }, [width, fixedWidth]);
 
   // 문자열/수식 좌표를 유한 number 로 강제하고, 깨진 좌표 shape 는 drop.
   // autoBounds·렌더가 같은 정규화 입력을 쓰도록 한 번만 계산.
@@ -825,9 +829,10 @@ type Props = {
   interactive?: boolean;
   hideCaption?: boolean;
   noBroadcast?: boolean;   // sticky panel sets this to avoid bouncing back to latest on nav
+  fixedWidth?: number;     // ResizeObserver 우회·고정폭 렌더(QA 시각 검수 하네스용)
 };
 
-export default function Geometry({ spec, width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, onOpen, interactive, hideCaption, noBroadcast }: Props) {
+export default function Geometry({ spec, width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, onOpen, interactive, hideCaption, noBroadcast, fixedWidth }: Props) {
   const clickable = !interactive && onOpen;
   // Mirror to the sticky side panel — same contract as PlotGraph/SvgGraph.
   // Skip when interactive (modal) OR when explicitly muted (sticky panel
@@ -839,7 +844,7 @@ export default function Geometry({ spec, width = DEFAULT_WIDTH, height = DEFAULT
     // at module-init time.
     import('./Graph').then((m) => m.broadcastLatestGraph({ kind: 'geom', geomSpec: spec }));
   }, [spec, interactive, noBroadcast]);
-  const node = <GeometryCanvas spec={spec} width={width} height={height} hideCaption={hideCaption} />;
+  const node = <GeometryCanvas spec={spec} width={width} height={height} hideCaption={hideCaption} fixedWidth={fixedWidth} />;
   if (clickable) {
     return (
       <button type="button" onClick={onOpen} title="클릭하면 크게 봐요"

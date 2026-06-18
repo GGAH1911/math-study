@@ -1,0 +1,224 @@
+// 개념 도식 QA 검수기 — 생성된 도식을 Sonnet 비평가가 평가하고, 고칠 게 있으면 그 자리에서
+// 스펙을 고쳐 concept-figures.json 에 다시 쓴다. **하이브리드 검수**:
+//   (1) 고정폭 하네스(/dev/figrender)로 **실제 크기** 렌더 스샷 → Sonnet 이 눈으로 봄
+//       (헤드리스 240 floor 과소측정 회피 — fixedWidth)
+//   (2) 좌표·관계는 sympy(Bash)로 수치 검증
+// 멱등: qa.checked 표시된 건 스킵(--force 로 재검수). 캐시 단일 writer(생성배치 종료 후 실행).
+//
+// 사용:
+//   node scripts/qa_concept_figures.mjs --all [--concurrency N] [--limit N] [--force]
+//   node scripts/qa_concept_figures.mjs <id...>            # 지정 도식만
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { spawn } from 'node:child_process';
+import { resolve, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const MODEL = process.env.QA_MODEL || 'sonnet';
+const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const REPO = resolve(WEB, '..');
+const CACHE = resolve(WEB, 'src/data/concept-figures.json');
+const PNG_DIR = '/tmp/qa_figs';
+const BASE_URL = process.env.QA_BASE_URL || 'http://localhost:4323';
+const CHROME = process.env.CHROME_BIN || '/home/insung/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome';
+const RENDER_W = 600;
+
+// ---- 개념 본문 발췌(.md) ----
+function conceptBody(id) {
+  const p = resolve(REPO, 'docs/concepts', `${id}.md`);
+  if (!existsSync(p)) return '';
+  let txt = readFileSync(p, 'utf-8').replace(/^---[\s\S]*?---\n/, '').replace(/```[\s\S]*?```/g, ' ').replace(/\s+/g, ' ');
+  return txt.trim().slice(0, 700);
+}
+
+// ---- 고정폭 하네스 스샷 → png 경로(실패 시 null) ----
+function safeName(id) { return id.replace(/[^a-zA-Z0-9가-힣]/g, '_').slice(0, 120); }
+function renderFigure(id) {
+  return new Promise((res) => {
+    mkdirSync(PNG_DIR, { recursive: true });
+    const out = join(PNG_DIR, `${safeName(id)}.png`);
+    const url = `${BASE_URL}/dev/figrender?id=${encodeURIComponent(id)}&w=${RENDER_W}`;
+    const args = ['--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
+      '--window-size=680,640', '--virtual-time-budget=10000', `--screenshot=${out}`, url];
+    const child = spawn(CHROME, args, { stdio: 'ignore' });
+    const to = setTimeout(() => { try { child.kill('SIGKILL'); } catch { /* */ } res(null); }, 45000);
+    child.on('close', () => { clearTimeout(to); res(existsSync(out) ? out : null); });
+    child.on('error', () => { clearTimeout(to); res(null); });
+  });
+}
+
+// ---- Sonnet 비평 호출 (이미지 Read + sympy Bash 허용) ----
+const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의 **렌더 이미지**와 **JSON 스펙**을 받아 품질을 평가하고,
+문제가 있으면 **고친 스펙**을 출력한다. 멀쩡한 건 절대 건드리지 마라(불필요한 변경 금지).
+
+먼저 Read 도구로 이미지를 보고, 좌표·관계 검증이 필요하면 Bash 로 python3/sympy 를 실행해 확인하라.
+
+검수 기준:
+1. 충실성: 도식이 개념을 올바르게 표현하는가? (예: 닮음=닮은 두 도형, 단위원=원+점+각)
+2. 좌표 정확성: 곡선 위에 찍힌 점이 그 곡선식을 정확히 만족하는가? 직각·닮음비·접선·내분 등 관계가 성립하는가? (sympy)
+3. primitive: 함수그래프 y=f(x)(포물선·직선·사인 등)는 parametric 으로 그렸는가? conic(parabola/ellipse/hyperbola) shape 로
+   함수를 그려 곡선과 점이 어긋나지 않는가? — 어긋나면 parametric {x:"t", y:"f(t)", tRange} 로 교체.
+4. 가독성: 라벨이 서로 겹치거나 한 점에 3개+ 뭉치지 않는가? 주석 대상(점·각·반지름)이 화면에서 충분히 크고 분리됐는가?
+   (큰 곡선 위 점이 원점 근처 작은 r 에 몰려 라벨이 뭉치면 → 점을 큰 r 로 옮기거나 range 를 좁혀라.) 라벨이 도형 내부/선에 묻히지 않는가?
+   두 도형 비교는 간격 넉넉히 + 프라임(A'B'C') 표기인가?
+5. 축: 함수그래프·좌표평면 개념은 showAxes:true, 순수 기하(삼각형·원·벡터·각)는 false 가 적절한가?
+6. 직각 표시·각 호는 렌더러가 자동 처리하니(angle shape 두 팔이 수직이면 정사각형 마커) 스펙은 그대로 둬도 된다.
+
+shape 스키마(좌표=수학좌표): point{at,label?,labelDir?} polygon{vertices,labels?,closed?} segment{from,to,label?,dashed?}
+circle{center,radius,label?} ellipse{center,rx,ry} parabola{vertex,focus?,orientation?} hyperbola{center,a,b,orientation?}
+parametric{x,y,tRange} vector{from,to,label?} angle{at,from,to,label?,radius?} text{at,text}. range/yRange/showAxes/title.
+
+출력은 **JSON 객체 하나만**(산문·코드펜스 금지):
+- 문제 없음: {"ok": true, "note": "<한 줄 근거>"}
+- 고침: {"ok": false, "issues": ["<무엇이 왜 문제>", ...], "figure": {고친 전체 figure 스펙}}
+고칠 때 **최소 변경**으로 문제만 해결하고, figure 는 전체 스펙(shapes·range·showAxes·title)을 담아라.`;
+
+function callQA(c, body, pngPath) {
+  const prompt = `${RUBRIC}
+
+--- 개념 ---
+「${c.label}」 (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
+본문 발췌: ${body || '(없음)'}
+
+--- 현재 도식 스펙(JSON) ---
+${JSON.stringify(c.figure)}
+
+--- 렌더 이미지 ---
+먼저 Read 도구로 이 파일을 봐라(실제 크기 렌더): ${pngPath}`;
+  const args = ['-p', '--model', MODEL, '--output-format', 'json',
+    '--allowedTools', 'Read,Bash', '--disallowedTools', 'Write,Edit,Glob,Grep,WebFetch,WebSearch',
+    '--add-dir', PNG_DIR, '--max-turns', '24', '--no-session-persistence', '--', prompt];
+  return new Promise((res, rej) => {
+    const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    let out = '', err = '';
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
+    child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
+    child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
+    child.on('error', (e) => { clearTimeout(to); rej(e); });
+    child.on('close', (code) => {
+      clearTimeout(to);
+      if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      try {
+        const env = JSON.parse(out);
+        if (env.is_error) return rej(new Error('cli:' + (env.subtype || '')));
+        res(parseEnvelope(env.result || ''));
+      } catch (e) { rej(e); }
+    });
+  });
+}
+
+// ---- 산문/코드 섞인 결과에서 {"ok"...} 균형괄호 추출 ----
+function parseEnvelope(text) {
+  const fences = [...text.matchAll(/```(?:json)?\s*([\s\S]*?)```/g)].map((m) => m[1]);
+  for (const f of fences) { const o = tryBalanced(f); if (o) return o; }
+  const o = tryBalanced(text); if (o) return o;
+  throw new Error('no-json');
+}
+function tryBalanced(s) {
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== '{') continue;
+    let depth = 0, inStr = false, esc = false;
+    for (let j = i; j < s.length; j++) {
+      const ch = s[j];
+      if (inStr) { if (esc) esc = false; else if (ch === '\\') esc = true; else if (ch === '"') inStr = false; continue; }
+      if (ch === '"') inStr = true;
+      else if (ch === '{') depth++;
+      else if (ch === '}') { if (--depth === 0) { const cand = s.slice(i, j + 1); if (/"ok"\s*:/.test(cand)) { try { return JSON.parse(cand); } catch { /* */ } } break; } }
+    }
+  }
+  return null;
+}
+
+// ---- figure 스펙 구조 검증(생성기와 동일) ----
+const EXPR_OK = /^[-+*/(). 0-9a-zA-Z_^√π]+$/;
+function coordOK(v) { return typeof v === 'number' ? Number.isFinite(v) : (typeof v === 'string' && v.trim().length > 0 && EXPR_OK.test(v)); }
+const pairOK = (p) => Array.isArray(p) && p.length >= 2 && coordOK(p[0]) && coordOK(p[1]);
+function sanitizeFigure(fig) {
+  if (!fig || !Array.isArray(fig.shapes)) return null;
+  const shapes = [];
+  for (const s of fig.shapes.slice(0, 12)) {
+    if (!s || typeof s.type !== 'string') continue;
+    let ok = false;
+    switch (s.type) {
+      case 'point': case 'text': ok = pairOK(s.at); break;
+      case 'polygon': ok = Array.isArray(s.vertices) && s.vertices.length >= 2 && s.vertices.every(pairOK); break;
+      case 'line': case 'segment': case 'vector': ok = pairOK(s.from) && pairOK(s.to); break;
+      case 'circle': ok = pairOK(s.center) && coordOK(s.radius); break;
+      case 'ellipse': ok = pairOK(s.center) && coordOK(s.rx) && coordOK(s.ry); break;
+      case 'hyperbola': ok = pairOK(s.center) && coordOK(s.a) && coordOK(s.b); break;
+      case 'parabola': ok = pairOK(s.vertex); break;
+      case 'angle': ok = pairOK(s.at) && pairOK(s.from) && pairOK(s.to); break;
+      case 'parametric': ok = typeof s.x === 'string' && typeof s.y === 'string' && Array.isArray(s.tRange); break;
+    }
+    if (ok) shapes.push(s);
+  }
+  if (!shapes.length) return null;
+  const out = { shapes, showAxes: fig.showAxes === true };
+  const rangeOK = (r) => Array.isArray(r) && r.length === 2 && coordOK(r[0]) && coordOK(r[1]);
+  if (rangeOK(fig.range)) out.range = fig.range;
+  if (rangeOK(fig.yRange)) out.yRange = fig.yRange;
+  if (typeof fig.title === 'string' && fig.title.trim()) out.title = fig.title.trim().slice(0, 60);
+  return out;
+}
+
+function parseArgs(argv) {
+  const opts = {}, ids = [], bools = new Set();
+  const V = new Set(['--concurrency', '--limit']);
+  for (let i = 0; i < argv.length; i++) { const a = argv[i]; if (V.has(a)) opts[a.slice(2)] = argv[++i]; else if (a.startsWith('--')) bools.add(a); else ids.push(a); }
+  return { opts, ids, bools };
+}
+
+async function main() {
+  const cache = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, 'utf-8')) : { figures: {} };
+  const { opts, ids, bools } = parseArgs(process.argv.slice(2));
+  const force = bools.has('--force');
+  const conc = Math.max(1, Math.min(6, Number(opts.concurrency) || 1));
+  const limit = opts.limit != null ? Number(opts.limit) : Infinity;
+
+  let targets;
+  if (ids.length) targets = ids;
+  else { // --all: figure 있는 것 중 미검수(또는 force)
+    targets = Object.entries(cache.figures).filter(([, v]) => v.figure && (force || !v.qa?.checked)).map(([id]) => id);
+  }
+  targets = targets.slice(0, Number.isFinite(limit) ? limit : undefined);
+  const N = targets.length;
+  const stat = { ok: 0, fixed: 0, failed: 0, done: 0 };
+  console.log(`QA 검수 시작: 대상 ${N}개 · 모델 ${MODEL} · 동시성 ${conc}${force ? ' · FORCE' : ''}`);
+  const writeCache = () => writeFileSync(CACHE, JSON.stringify(cache, null, 0));
+
+  let idx = 0;
+  async function worker() {
+    while (idx < targets.length) {
+      const id = targets[idx++];
+      const entry = cache.figures[id];
+      const tag = `[${stat.done + 1}/${N}]`;
+      if (!entry || !entry.figure) { stat.done++; continue; }
+      try {
+        const png = await renderFigure(id);
+        if (!png) throw new Error('render-failed');
+        const verdict = await callQA({ ...entry, label: entry.label }, conceptBody(id), png);
+        if (verdict.ok) {
+          entry.qa = { checked: true, fixed: false, note: (verdict.note || '').slice(0, 160), model: MODEL };
+          stat.ok++;
+          console.log(`${tag} ✓ ${entry.label} — OK`);
+        } else {
+          const fixed = sanitizeFigure(verdict.figure);
+          if (!fixed) { entry.qa = { checked: true, fixed: false, note: 'fix-invalid', model: MODEL }; stat.failed++; console.log(`${tag} ✗ ${entry.label} — 수정안 무효(원본 유지)`); }
+          else {
+            entry.figure = fixed;
+            entry.qa = { checked: true, fixed: true, issues: (verdict.issues || []).slice(0, 5), model: MODEL };
+            stat.fixed++;
+            console.log(`${tag} ✎ ${entry.label} — 수정: ${(verdict.issues || []).join(' / ').slice(0, 80)}`);
+          }
+        }
+        writeCache();
+      } catch (e) {
+        console.log(`${tag} ✗ ${entry.label} — 검수 실패: ${e.message}`);
+        stat.failed++;
+      }
+      stat.done++;
+    }
+  }
+  await Promise.all(Array.from({ length: conc }, () => worker()));
+  console.log(`\n완료: OK ${stat.ok} · 수정 ${stat.fixed} · 실패 ${stat.failed} · (총 ${N})`);
+}
+main();
