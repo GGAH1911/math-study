@@ -410,11 +410,12 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   // tx: translateX(%) — 0=좌측정렬, -50=중앙, -100=우측정렬(앵커가 라벨 우상단).
   // anchor: 라벨이 가리키는 실제 도형 지점(픽셀). 드래그 시 leader 선이 여기로 향한다.
   // 미지정 시 라벨 자기 위치([left,top]) — 곡선/중심 라벨처럼 도형에 붙은 경우.
-  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean; anchor: [number, number] };
+  // soft=true: 명시 앵커 없음(자유 text). 드래그 시 가장 가까운 도형 요소(변/점)로 leader 스냅.
+  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean; anchor: [number, number]; soft?: boolean };
   const labelDescs: LabelDesc[] = [];
   // fixed=true: 위치 의미가 고정인 라벨(각 θ 는 각 안에 있어야 의미) — de-overlap 에 안 밀린다(다른 라벨이 이걸 피함).
   const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string, fixed = false, anchor?: [number, number]) =>
-    labelDescs.push({ key, text, left, top, tx, color, fixed, anchor: anchor ?? [left, top] });
+    labelDescs.push({ key, text, left, top, tx, color, fixed, anchor: anchor ?? [left, top], soft: anchor === undefined });
   // 도형 외곽선(픽셀 세그먼트) — 라벨이 선·원·다각형을 가리지 않게 밀어낼 장애물.
   const obstacles: Array<[number, number, number, number]> = [];
   const addSeg = (x1: number, y1: number, x2: number, y2: number) => obstacles.push([x1, y1, x2, y2]);
@@ -676,7 +677,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
           );
           if (s.label) {
             const m = Math.floor(top.length / 2);
-            pushLabel(`areal${i}`, s.label, xPx(top[m][0]), yPx((top[m][1] + bottom[m][1]) / 2));
+            pushLabel(`areal${i}`, s.label, xPx(top[m][0]), yPx((top[m][1] + bottom[m][1]) / 2), 0, undefined, false, [xPx(top[m][0]), yPx((top[m][1] + bottom[m][1]) / 2)]);
           }
         }
         break;
@@ -811,8 +812,9 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
           {resolvedLabels.map((d) => {
             const o = labelDrag[d.key];
             if (!o || (o.dx === 0 && o.dy === 0)) return null;
-            // leader: 실제 도형 앵커 → 드래그된 라벨 위치.
-            return <line key={`ld${d.key}`} x1={d.anchor[0]} y1={d.anchor[1]} x2={d.left + o.dx} y2={d.top + o.dy}
+            // leader 목표: 명시 앵커가 있으면 그 도형 지점, 자유 text 면 가장 가까운 변/점으로 스냅.
+            const tgt = (d.soft ? (nearestOnSegs(d.anchor[0], d.anchor[1], obstacles) ?? d.anchor) : d.anchor);
+            return <line key={`ld${d.key}`} x1={tgt[0]} y1={tgt[1]} x2={d.left + o.dx} y2={d.top + o.dy}
                          stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" pointerEvents="none" />;
           })}
         </svg>
@@ -859,7 +861,20 @@ function estLabelWidth(text: string, fontPx: number): number {
 // 라벨 겹침 해소(de-overlap): 추정 박스가 겹치면 최소이동축으로 서로 밀어낸다(반복).
 // 앵커에서 과도 이탈은 클램프(라벨이 가리키는 도형과 분리되지 않게). 캔버스 경계 내 유지.
 // 노드 도식·LLM 채팅 공통(같은 Geometry 컴포넌트)이라 양쪽에 동시 적용된다.
-type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean; anchor: [number, number] };
+type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean; anchor: [number, number]; soft?: boolean };
+// 점(px,py)에서 가장 가까운 선분 위의 점(자유 text 라벨 leader 스냅용).
+function nearestOnSegs(px: number, py: number, segs: _Seg[]): [number, number] | null {
+  let best: [number, number] | null = null, bestD = Infinity;
+  for (const [x1, y1, x2, y2] of segs) {
+    const dx = x2 - x1, dy = y2 - y1, len2 = dx * dx + dy * dy;
+    let t = len2 ? ((px - x1) * dx + (py - y1) * dy) / len2 : 0;
+    t = Math.max(0, Math.min(1, t));
+    const qx = x1 + t * dx, qy = y1 + t * dy;
+    const d = (px - qx) ** 2 + (py - qy) ** 2;
+    if (d < bestD) { bestD = d; best = [qx, qy]; }
+  }
+  return best;
+}
 type _Seg = [number, number, number, number];
 // 선분 위에서 점(px,py)에 가장 가까운 점.
 function _closestOnSeg(px: number, py: number, s: _Seg): [number, number] {
