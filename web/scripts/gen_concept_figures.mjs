@@ -77,7 +77,7 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 - {"type":"ellipse","center":[x,y],"rx":a,"ry":b,"rotation?":0}             // 이차곡선(초점·준선) 기하 전용
 - {"type":"parabola","vertex":[x,y],"focus?":f,"orientation?":"up|down|left|right"}  // 이차곡선 전용·함수그래프엔 쓰지마라(아래 규칙)
 - {"type":"hyperbola","center":[x,y],"a":a,"b":b,"orientation?":"horizontal|vertical"}  // 이차곡선 전용
-- {"type":"parametric","x":"cos(t)","y":"sin(t)","tRange":[0,"2*pi"]}      // expr 는 문자열, sqrt/pi 가능
+- {"type":"parametric","x":"cos(t)","y":"sin(t)","tRange":[0,"2*pi"]}      // expr=문자열, sqrt/pi 가능. ★거듭제곱은 ^ (t^2), Python ** 금지(곡선 소실)
 - {"type":"vector","from":[x,y],"to":[x,y],"label?":"\\\\vec{v}"}            // 화살표
 - {"type":"angle","at":[x,y],"from":[x,y],"to":[x,y],"label?":"\\\\theta","radius?":0.4}  // 각 라벨은 호 위에 렌더됨
 - {"type":"text","at":[x,y],"text":"..."}

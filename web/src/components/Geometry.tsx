@@ -38,14 +38,16 @@ import { PLOT_COLORS } from '../lib/palette';
 const _math = create(all);
 function _evalMathjs(s: string | number): number {
   if (typeof s === 'number') return s;
-  try { return _math.evaluate(s); } catch { return NaN; }
+  try { return _math.evaluate(_normalizeMathExprStr(s)); } catch { return NaN; }
 }
 
 // 좌표 정규화 — LLM 이 'sqrt(3)'·'3*sqrt(3)' 같은 raw 수학식 string 을 좌표에
 // 박는 경우 mathjs 로 evaluate. number/evaluable string → 유한 number, 아니면 null.
 // (Geometry3D 의 coerceCoord/normalizeMathExprStr 와 동일한 동작.)
 function _normalizeMathExprStr(s: string): string {
-  return s.replace(/√/g, 'sqrt').replace(/π/g, 'pi').replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+  return s
+    .replace(/\*\*/g, '^')   // Python 거듭제곱 ** → mathjs ^ (LLM 이 t**2 쓰면 파서가 거부→곡선 소실. 결정적 보정)
+    .replace(/√/g, 'sqrt').replace(/π/g, 'pi').replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
 }
 function _coerceCoord(v: unknown): number | null {
   if (typeof v === 'number') return Number.isFinite(v) ? v : null;
@@ -149,8 +151,8 @@ function sampleParametric(
   let xNode: { evaluate: (scope: { t: number }) => number };
   let yNode: { evaluate: (scope: { t: number }) => number };
   try {
-    xNode = _math.parse(s.x).compile() as typeof xNode;
-    yNode = _math.parse(s.y).compile() as typeof yNode;
+    xNode = _math.parse(_normalizeMathExprStr(s.x)).compile() as typeof xNode;
+    yNode = _math.parse(_normalizeMathExprStr(s.y)).compile() as typeof yNode;
   } catch {
     return [];
   }
