@@ -72,9 +72,9 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 - {"type":"polygon","vertices":[[x,y],...],"labels?":["A","B","C"],"closed?":true}
 - {"type":"segment","from":[x,y],"to":[x,y],"label?":"","dashed?":false}   // line=무한선 아님, 끝점-끝점
 - {"type":"circle","center":[x,y],"radius":r,"label?":""}
-- {"type":"ellipse","center":[x,y],"rx":a,"ry":b,"rotation?":0}
-- {"type":"parabola","vertex":[x,y],"focus?":f,"orientation?":"up|down|left|right"}
-- {"type":"hyperbola","center":[x,y],"a":a,"b":b,"orientation?":"horizontal|vertical"}
+- {"type":"ellipse","center":[x,y],"rx":a,"ry":b,"rotation?":0}             // 이차곡선(초점·준선) 기하 전용
+- {"type":"parabola","vertex":[x,y],"focus?":f,"orientation?":"up|down|left|right"}  // 이차곡선 전용·함수그래프엔 쓰지마라(아래 규칙)
+- {"type":"hyperbola","center":[x,y],"a":a,"b":b,"orientation?":"horizontal|vertical"}  // 이차곡선 전용
 - {"type":"parametric","x":"cos(t)","y":"sin(t)","tRange":[0,"2*pi"]}      // expr 는 문자열, sqrt/pi 가능
 - {"type":"vector","from":[x,y],"to":[x,y],"label?":"\\\\vec{v}"}            // 화살표
 - {"type":"angle","at":[x,y],"from":[x,y],"to":[x,y],"label?":"\\\\theta","radius?":0.4}  // 각 라벨은 호 위에 렌더됨
@@ -90,6 +90,13 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
   · 도형 사이에 **넉넉한 간격**을 둔다 — 두 도형이 마주보는 꼭짓점의 라벨이 가운데 좁은 틈에 겹쳐 섞이지 않도록, 도형 사이 빈 가로 간격을 **작은 도형의 가로폭 이상**으로. (예: 작은 삼각형이 x[0,3] 이면 큰 삼각형은 x[3] 바로 옆이 아니라 x[7] 이후에서 시작.)
   · 대응 꼭짓점은 **프라임 표기**로: △ABC ∼ △A'B'C' (A↔A', B↔B', C↔C'). 알파벳을 이어서(A,B,C / D,E,F) 쓰지 말 것 — 어느 도형 라벨인지 섞여 보인다.
 - 라벨이 도형 선·다른 라벨과 겹치지 않게 각 꼭짓점/요소 주위에 라벨 들어갈 여백을 남긴다.
+- ★함수 그래프(y=f(x): 포물선 y=x²+1, 직선, 사인, 지수, 로그 등)는 **반드시 parametric** 으로:
+  {"type":"parametric","x":"t","y":"<f(t)>","tRange":[xmin,xmax]} — 곡선이 함수와 **정확히 일치**해야
+  점이 곡선 위에 놓인다. (예: y=x²+1 → {"x":"t","y":"t^2+1","tRange":[-2.2,2.2]}.) 직선 y=2x-1 →
+  {"x":"t","y":"2*t-1","tRange":[...]}. parabola/ellipse/hyperbola shape 은 **초점·준선을 다루는
+  이차곡선 단원 도식에서만**(focus 등 정확히 지정). 함수그래프에 쓰면 기본 폭이 달라 점이 곡선에서 뜬다.
+- ★점을 곡선 위에 찍을 땐, 그 점의 좌표가 곡선식을 **정확히 만족**하는지 sympy 로 확인하고(이미 함),
+  곡선도 그 식을 그대로 그리는 shape(보통 parametric)인지 확인한다 — 점은 맞는데 곡선이 다른 식이면 어긋난다.
 
 개념: 「${c.label}」  (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
 본문 발췌: ${body || '(본문 없음)'}`;
