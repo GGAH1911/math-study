@@ -655,30 +655,29 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
       }
       case 'angle': {
         const r = s.radius ?? 0.5;
-        // Compute the two arm directions from `at`
-        const ang = (p: [number, number]) => Math.atan2(p[1] - s.at[1], p[0] - s.at[0]);
-        const a1 = ang(s.from), a2 = ang(s.to);
-        const startX = s.at[0] + r * Math.cos(a1);
-        const startY = s.at[1] + r * Math.sin(a1);
-        const endX = s.at[0] + r * Math.cos(a2);
-        const endY = s.at[1] + r * Math.sin(a2);
-        // SVG arc
-        const sweep = ((a2 - a1 + 2 * Math.PI) % (2 * Math.PI)) > Math.PI ? 1 : 0;
-        const d = `M ${xPx(startX)} ${yPx(startY)} A ${r * scale} ${r * scale} 0 ${sweep} 0 ${xPx(endX)} ${yPx(endY)}`;
-        els.push(<path key={`ag${i}`} d={d} fill="none" stroke={s.color ?? c0} strokeWidth={1.5} />);
+        const rPx = r * scale;
+        const cx = xPx(s.at[0]), cy = yPx(s.at[1]);
+        // ★호는 **픽셀 좌표**에서 계산한다(math 좌표는 y 가 위, SVG 는 y 가 아래라
+        // 부호가 뒤집혀 large-arc-flag 가 반대로 잡혀 *외각(반사각)* 이 그려지던 버그).
+        // 두 팔 사이의 **작은 각(=내각, ≤180°)** 호만 그린다: large-arc-flag=0 고정,
+        // sweep-flag 는 픽셀공간 부호각으로 방향만 결정.
+        const pa1 = Math.atan2(yPx(s.from[1]) - cy, xPx(s.from[0]) - cx);
+        const pa2 = Math.atan2(yPx(s.to[1]) - cy, xPx(s.to[0]) - cx);
+        let d = pa2 - pa1;
+        while (d > Math.PI) d -= 2 * Math.PI;
+        while (d <= -Math.PI) d += 2 * Math.PI;       // (-π, π] — 최소각, 부호=회전방향
+        const sx = cx + rPx * Math.cos(pa1), sy = cy + rPx * Math.sin(pa1);
+        const ex = cx + rPx * Math.cos(pa2), ey = cy + rPx * Math.sin(pa2);
+        const sweepFlag = d > 0 ? 1 : 0;              // SVG(y-down): 양의각방향=sweep 1
+        const dPath = `M ${sx} ${sy} A ${rPx} ${rPx} 0 0 ${sweepFlag} ${ex} ${ey}`;
+        els.push(<path key={`ag${i}`} d={dPath} fill="none" stroke={s.color ?? c0} strokeWidth={1.5} />);
         if (s.label) {
-          // 단순 평균 (a1+a2)/2 는 두 팔이 −x축(±π 경계)을 사이에 두면 실제
-          // 이등분선과 180° 반대를 가리킴. sweep 판정과 같은 최단호 기준으로
-          // wrap-aware 하게 계산.
-          let dA = a2 - a1;
-          while (dA > Math.PI) dA -= 2 * Math.PI;
-          while (dA < -Math.PI) dA += 2 * Math.PI;
-          const midA = a1 + dA / 2;
-          // 각 라벨은 호(arc) 위 중앙에(반지름 r*1.1, 바이섹터=호의 각도 중앙) 가로·세로 중앙정렬, 고정.
-          const lr = r * 1.1;
-          const lx = s.at[0] + lr * Math.cos(midA);
-          const ly = s.at[1] + lr * Math.sin(midA);
-          pushLabel(`agl${i}`, s.label, xPx(lx), yPx(ly) - labelFontPx * 0.7, -50, undefined, true);
+          // 라벨은 호 중앙(이등분선=pa1+d/2) 방향, 호 바깥쪽으로 살짝. 픽셀공간에서 직접.
+          const midPa = pa1 + d / 2;
+          const lr = rPx * 1.35 + labelFontPx * 0.4;
+          const lx = cx + lr * Math.cos(midPa);
+          const ly = cy + lr * Math.sin(midPa);
+          pushLabel(`agl${i}`, s.label, lx, ly - labelFontPx * 0.7, -50, undefined, true);
         }
         break;
       }
