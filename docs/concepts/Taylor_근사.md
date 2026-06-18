@@ -3,7 +3,7 @@ sources: []
 created: 2026-05-17
 updated: 2026-05-17
 concept_type: definition
-prerequisites: [docs/concepts/여러가지함수의_극한.md, docs/concepts/functions/calculus/여러가지함수의_미분.md]
+prerequisites: [docs/concepts/functions/calculus/여러가지함수의_극한.md, docs/concepts/functions/calculus/여러가지함수의_미분.md]
 enables: []
 mastery: unknown
 ---
