@@ -13,7 +13,12 @@ import { spawn } from 'node:child_process';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const MODEL = process.env.QA_MODEL || 'sonnet';
+// 백엔드: 'claude'(Sonnet, 구독 한도) | 'agy'(Antigravity CLI, Gemini vision — Google AI Pro 쿼터).
+// agy 는 로컬 PNG 를 Read 도구로 자동 판독(권한 스톨 없음). 좌표 검증은 도구 없이 추론으로.
+const BACKEND = process.env.QA_BACKEND || 'claude';
+const MODEL = process.env.QA_MODEL || (BACKEND === 'agy' ? 'Gemini 3.5 Flash (Medium)' : 'sonnet');
+// DRY=1: 수정 적용·캐시 기록 없이 첫 판정만 수집(정확도 파일럿용). 결과는 /tmp/qa_pilot_verdicts.json.
+const DRY = process.env.QA_DRY === '1';
 const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(WEB, '..');
 const CACHE = resolve(WEB, 'src/data/concept-figures.json');
@@ -50,8 +55,6 @@ function renderFigure(id) {
 const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의 **렌더 이미지**와 **JSON 스펙**을 받아 품질을 평가하고,
 문제가 있으면 **고친 스펙**을 출력한다. 멀쩡한 건 절대 건드리지 마라(불필요한 변경 금지).
 
-먼저 Read 도구로 이미지를 보고, 좌표·관계 검증이 필요하면 Bash 로 python3/sympy 를 실행해 확인하라.
-
 검수 기준:
 1. 충실성(완전성 포함): 도식이 개념을 올바르게 **그리고 완전히** 표현하는가? (예: 닮음=닮은 두 도형, 단위원=원+점+각)
    ★개념이 N개 항목을 요구하면(예: '각의 종류'=예각·직각·둔각·평각·전각 5종) **N개 전부**가 각각 **완성된 형태**(변·호·라벨 다 갖춤)로 있어야 한다.
@@ -75,8 +78,13 @@ parametric{x,y,tRange} vector{from,to,label?} angle{at,from,to,label?,radius?} t
 고칠 때 멀쩡한 부분은 건드리지 말되 **이슈는 완전히** 해결하라 — 특히 누락/불완전(충실성)이면 빠진 요소를
 **전부 완성된 형태로 추가**(점만 찍지 말고 변·호·라벨까지). figure 는 전체 스펙(shapes·range·showAxes·title)을 담아라.`;
 
-function callQA(c, body, pngPath) {
-  const prompt = `${RUBRIC}
+function buildQAPrompt(c, body, pngPath) {
+  const verify = BACKEND === 'agy'
+    ? '먼저 Read 도구로 렌더 이미지를 본 뒤, 좌표·관계는 신중히 직접 계산해 확인하라(외부 도구 없음).'
+    : '먼저 Read 도구로 이미지를 보고, 좌표·관계 검증이 필요하면 Bash 로 python3/sympy 를 실행해 확인하라.';
+  return `${RUBRIC}
+
+${verify}
 
 --- 개념 ---
 「${c.label}」 (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
@@ -87,6 +95,15 @@ ${JSON.stringify(c.figure)}
 
 --- 렌더 이미지 ---
 먼저 Read 도구로 이 파일을 봐라(실제 크기 렌더): ${pngPath}`;
+}
+
+function callQA(c, body, pngPath) {
+  const prompt = buildQAPrompt(c, body, pngPath);
+  return BACKEND === 'agy' ? callQAAgy(prompt) : callQAClaude(prompt);
+}
+
+// Sonnet — Read+Bash 허용, --output-format json 래퍼에서 result 추출.
+function callQAClaude(prompt) {
   const args = ['-p', '--model', MODEL, '--output-format', 'json',
     '--allowedTools', 'Read,Bash', '--disallowedTools', 'Write,Edit,Glob,Grep,WebFetch,WebSearch',
     '--add-dir', PNG_DIR, '--max-turns', '24', '--no-session-persistence', '--', prompt];
@@ -105,6 +122,24 @@ ${JSON.stringify(c.figure)}
         if (env.is_error) return rej(new Error('cli:' + (env.subtype || '')));
         res(parseEnvelope(env.result || ''));
       } catch (e) { rej(e); }
+    });
+  });
+}
+
+// Antigravity CLI(agy) — Gemini vision 으로 PNG 자동 Read. plain text stdout → parseEnvelope.
+function callQAAgy(prompt) {
+  const args = ['-p', prompt, '--model', MODEL, '--add-dir', PNG_DIR, '--print-timeout', '4m'];
+  return new Promise((res, rej) => {
+    const child = spawn('agy', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    let out = '', err = '';
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
+    child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
+    child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
+    child.on('error', (e) => { clearTimeout(to); rej(e); });
+    child.on('close', (code) => {
+      clearTimeout(to);
+      if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      try { res(parseEnvelope(out)); } catch (e) { rej(e); }
     });
   });
 }
@@ -191,7 +226,8 @@ async function main() {
   targets = targets.slice(0, Number.isFinite(limit) ? limit : undefined);
   const N = targets.length;
   const stat = { ok: 0, fixed: 0, failed: 0, unverified: 0, done: 0 };
-  console.log(`QA 검수 시작: 대상 ${N}개 · 모델 ${MODEL} · 동시성 ${conc}${force ? ' · FORCE' : ''}`);
+  const dryResults = [];
+  console.log(`QA 검수 시작: 대상 ${N}개 · 백엔드 ${BACKEND} · 모델 ${MODEL} · 동시성 ${conc}${DRY ? ' · DRY(검증만)' : ''}${force ? ' · FORCE' : ''}`);
   const writeCache = () => writeFileSync(CACHE, JSON.stringify(cache, null, 0));
 
   const MAX_FIX = 2;   // 수정→재검증 반복 상한
@@ -210,6 +246,13 @@ async function main() {
           return callQA({ ...entry, label: entry.label }, conceptBody(id), png);
         };
         let verdict = await evalNow();
+        if (DRY) {
+          // 첫 판정만 수집 — 수정/캐시기록 없음(정확도 파일럿).
+          dryResults.push({ id, label: entry.label, ok: !!verdict.ok, issues: (verdict.issues || []).slice(0, 6), note: (verdict.note || '').slice(0, 120) });
+          if (verdict.ok) { stat.ok++; line = `✓ ${entry.label} — OK (${(verdict.note || '').slice(0, 50)})`; }
+          else { stat.fixed++; line = `✎ ${entry.label} — 이슈: ${(verdict.issues || []).join(' / ').slice(0, 100)}`; }
+          stat.done++; console.log(`[${stat.done}/${N}] ${line}`); continue;
+        }
         const allIssues = [];
         let fixes = 0, invalidFix = false;
         // ★수정 후 반드시 재렌더+재검증 — Sonnet 이 결함은 잡고 수정은 불완전(예: 각의
@@ -248,6 +291,11 @@ async function main() {
     }
   }
   await Promise.all(Array.from({ length: conc }, () => worker()));
-  console.log(`\n완료: OK ${stat.ok} · 수정·재검증OK ${stat.fixed} · 재검증미통과 ${stat.unverified} · 실패 ${stat.failed} · (총 ${N})`);
+  if (DRY) {
+    writeFileSync('/tmp/qa_pilot_verdicts.json', JSON.stringify(dryResults, null, 2));
+    console.log(`\nDRY 완료: OK ${stat.ok} · 이슈지적 ${stat.fixed} · 실패 ${stat.failed} · (총 ${N}) → /tmp/qa_pilot_verdicts.json`);
+  } else {
+    console.log(`\n완료: OK ${stat.ok} · 수정·재검증OK ${stat.fixed} · 재검증미통과 ${stat.unverified} · 실패 ${stat.failed} · (총 ${N})`);
+  }
 }
 main();
