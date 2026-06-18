@@ -341,10 +341,11 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   const els: React.ReactNode[] = [];
   // 라벨은 디스크립터로 모은 뒤(좌표·정렬 기준점) 충돌 회피(de-overlap)를 거쳐 렌더.
   // tx: translateX(%) — 0=좌측정렬, -50=중앙, -100=우측정렬(앵커가 라벨 우상단).
-  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string };
+  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean };
   const labelDescs: LabelDesc[] = [];
-  const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string) =>
-    labelDescs.push({ key, text, left, top, tx, color });
+  // fixed=true: 위치 의미가 고정인 라벨(각 θ 는 각 안에 있어야 의미) — de-overlap 에 안 밀린다(다른 라벨이 이걸 피함).
+  const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string, fixed = false) =>
+    labelDescs.push({ key, text, left, top, tx, color, fixed });
   // 도형 외곽선(픽셀 세그먼트) — 라벨이 선·원·다각형을 가리지 않게 밀어낼 장애물.
   const obstacles: Array<[number, number, number, number]> = [];
   const addSeg = (x1: number, y1: number, x2: number, y2: number) => obstacles.push([x1, y1, x2, y2]);
@@ -633,7 +634,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
           const midA = a1 + dA / 2;
           const lx = s.at[0] + (r + 0.3) * Math.cos(midA);
           const ly = s.at[1] + (r + 0.3) * Math.sin(midA);
-          pushLabel(`agl${i}`, s.label, xPx(lx) - 6, yPx(ly) - 8);
+          pushLabel(`agl${i}`, s.label, xPx(lx) - 6, yPx(ly) - 8, 0, undefined, true); // 각 라벨 고정
         }
         break;
       }
@@ -689,7 +690,7 @@ function estLabelWidth(text: string, fontPx: number): number {
 // 라벨 겹침 해소(de-overlap): 추정 박스가 겹치면 최소이동축으로 서로 밀어낸다(반복).
 // 앵커에서 과도 이탈은 클램프(라벨이 가리키는 도형과 분리되지 않게). 캔버스 경계 내 유지.
 // 노드 도식·LLM 채팅 공통(같은 Geometry 컴포넌트)이라 양쪽에 동시 적용된다.
-type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string };
+type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean };
 type _Seg = [number, number, number, number];
 // 선분 위에서 점(px,py)에 가장 가까운 점.
 function _closestOnSeg(px: number, py: number, s: _Seg): [number, number] {
@@ -706,25 +707,29 @@ function deOverlapLabels(descs: _LD[], fontPx: number, W: number, H: number, obs
   const boxes = descs.map((d) => {
     const w = estLabelWidth(d.text, fontPx);
     const x0 = d.left + (d.tx / 100) * w;   // transform 반영한 시각 좌상단
-    return { d, w, h, x: x0, y: d.top, ox: x0, oy: d.top };
+    return { d, w, h, x: x0, y: d.top, ox: x0, oy: d.top, fixed: !!d.fixed };
   });
   for (let iter = 0; iter < 90; iter++) {
     let moved = false;
-    // 1) 라벨끼리 겹침 — 최소이동축으로 분리.
+    // 1) 라벨끼리 겹침 — 최소이동축으로 분리. fixed 라벨(각 θ 등)은 안 움직이고 상대만 밀린다.
     for (let a = 0; a < boxes.length; a++) {
       for (let b = a + 1; b < boxes.length; b++) {
         const A = boxes[a], B = boxes[b];
+        if (A.fixed && B.fixed) continue;
         const ox = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x);
         const oy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
         if (ox > 0 && oy > 0) {
           moved = true;
-          if (ox <= oy) { const p = ox / 2 + 0.5; if (A.x <= B.x) { A.x -= p; B.x += p; } else { A.x += p; B.x -= p; } }
-          else { const p = oy / 2 + 0.5; if (A.y <= B.y) { A.y -= p; B.y += p; } else { A.y += p; B.y -= p; } }
+          // fixed 쪽은 0, 자유 쪽이 전부 이동. 둘 다 자유면 반반.
+          const wa = A.fixed ? 0 : (B.fixed ? 1 : 0.5), wb = B.fixed ? 0 : (A.fixed ? 1 : 0.5);
+          if (ox <= oy) { const p = ox + 0.5, dir = A.x <= B.x ? -1 : 1; A.x += dir * p * wa; B.x -= dir * p * wb; }
+          else { const p = oy + 0.5, dir = A.y <= B.y ? -1 : 1; A.y += dir * p * wa; B.y -= dir * p * wb; }
         }
       }
     }
-    // 2) 라벨이 도형 외곽선(장애물)을 가리면 — 박스 밖으로 최소이동(MTV)으로 밀어낸다.
+    // 2) 라벨이 도형 외곽선(장애물)을 가리면 — 박스 밖으로 최소이동(MTV). fixed 는 면제.
     for (const box of boxes) {
+      if (box.fixed) continue;
       const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
       for (const seg of obstacles) {
         const [qx, qy] = _closestOnSeg(cx, cy, seg);
