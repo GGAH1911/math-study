@@ -10,6 +10,7 @@
 - [ ] **3D/공간 76개** → `Geometry3D` 생성 파이프라인 신규(현재 2D만, `--include-3d` 로 대상 잡힘).
 - [ ] **dev 라우트 재게이팅**: `middleware.ts` 의 `/dev/concept-figures`·`/dev/figrender` TEMP 공개 → 작업 끝나면 admin 으로.
 - [ ] (선택) equations·algebra·prob-stats 도메인(도식친화도 낮음, 후순위).
+- [ ] **라벨 leader 스냅 휴리스틱 개선**: 자유 `text` 라벨(변 길이 숫자 8·10 등)은 어느 도형을 가리키는지 스펙에 없어, 드래그 시 **가장 가까운 변/점**으로 leader 를 스냅한다(`nearestOnSegs`). 라벨이 의도와 다른 요소에 더 가까우면 오스냅 가능. 근본 해결 = 생성 단계에서 변 길이를 **segment 라벨**(또는 polygon 변 라벨)로 붙여 명시 앵커를 갖게 함(현재 free text → 재생성 필요). 우선순위 낮음.
 
 ## 완료 (2026-06-06)
 - [x] 백필 blind→open-book + 하드코딩 게이트(변이테스트) + 인제스트 본류 반영

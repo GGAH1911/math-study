@@ -812,9 +812,13 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
           {resolvedLabels.map((d) => {
             const o = labelDrag[d.key];
             if (!o || (o.dx === 0 && o.dy === 0)) return null;
-            // leader 목표: 명시 앵커가 있으면 그 도형 지점, 자유 text 면 가장 가까운 변/점으로 스냅.
+            // leader 시작: 명시 앵커가 있으면 그 도형 지점, 자유 text 면 가장 가까운 변/점으로 스냅.
             const tgt = (d.soft ? (nearestOnSegs(d.anchor[0], d.anchor[1], obstacles) ?? d.anchor) : d.anchor);
-            return <line key={`ld${d.key}`} x1={tgt[0]} y1={tgt[1]} x2={d.left + o.dx} y2={d.top + o.dy}
+            // leader 끝: 라벨 **정중앙**. div left 는 tx(%)로 자기폭만큼 이동하므로 중심 = left + w*(tx/100+0.5).
+            const lw = estLabelWidth(d.text, labelFontPx);
+            const lcx = (d.left + o.dx) + lw * (d.tx / 100 + 0.5);
+            const lcy = (d.top + o.dy) + (labelFontPx + 4) / 2;
+            return <line key={`ld${d.key}`} x1={tgt[0]} y1={tgt[1]} x2={lcx} y2={lcy}
                          stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" pointerEvents="none" />;
           })}
         </svg>
