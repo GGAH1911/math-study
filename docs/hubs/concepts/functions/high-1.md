@@ -1,23 +1,23 @@
 ---
 sources: []
-created: 2026-06-17
-updated: 2026-06-17
+created: 2026-06-18
+updated: 2026-06-18
 hub_type: concepts-grade
 domain: functions
 grade: high-1
 counts:
-  total: 73
+  total: 77
 ---
 
 # 함수 · 고1 (high-1)
 
-총 73개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 77개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [함수와 그래프](../../../concepts/functions/high-1/함수와_그래프.md) · 함수와 그래프 `unknown`
 
-## 정의 (67)
+## 정의 (71)
 
 - [고정점](../../../concepts/functions/high-1/함수와_그래프/고정점.md) · 함수와 그래프 `unknown`
 - [교점](../../../concepts/functions/high-1/함수와_그래프/교점.md) · 함수와 그래프 `unknown`
@@ -39,9 +39,11 @@ counts:
 - [방정식의 근과 수평선의 교점](../../../concepts/functions/high-1/함수와_그래프/방정식의_근과_수평선의_교점.md) · 함수와 그래프 `unknown`
 - [방정식의 실근 개수 조건](../../../concepts/functions/high-1/함수와_그래프/방정식의_실근_개수_조건.md) · 함수와 그래프 `unknown`
 - [범위](../../../concepts/functions/high-1/함수와_그래프/범위.md) · 함수와 그래프 `unknown`
+- [비전사](../../../concepts/functions/high-1/함수와_그래프/비전사.md) · 함수와 그래프 `unknown`
 - [상수함수](../../../concepts/functions/high-1/함수와_그래프/상수함수.md) · 함수와 그래프 `unknown`
 - [순증가함수](../../../concepts/functions/high-1/함수와_그래프/순증가함수.md) · 함수와 그래프 `unknown`
 - [역함수](../../../concepts/functions/high-1/함수와_그래프/역함수.md) · 함수와 그래프 `unknown`
+- [역함수 존재 조건](../../../concepts/functions/high-1/함수와_그래프/역함수_존재_조건.md) · 함수와 그래프 `unknown`
 - [역함수의 성질](../../../concepts/functions/high-1/함수와_그래프/역함수의_성질.md) · 함수와 그래프 `unknown`
 - [우함수 판정법](../../../concepts/functions/high-1/함수와_그래프/우함수_판정법.md) · 함수와 그래프 `unknown`
 - [유리함수](../../../concepts/functions/high-1/함수와_그래프/유리함수.md) · 함수와 그래프 `unknown`
@@ -57,6 +59,7 @@ counts:
 - [집합과 함수](../../../concepts/functions/high-1/함수와_그래프/집합과_함수.md) · 함수와 그래프 `unknown`
 - [최댓값](../../../concepts/functions/high-1/함수와_그래프/최댓값.md) · 함수와 그래프 `unknown`
 - [최댓값과 최솟값](../../../concepts/functions/high-1/함수와_그래프/최댓값과_최솟값.md) · 함수와 그래프 `unknown`
+- [축과의 교점](../../../concepts/functions/high-1/함수와_그래프/축과의_교점.md) · 함수와 그래프 `unknown`
 - [치역](../../../concepts/functions/high-1/함수와_그래프/치역.md) · 함수와 그래프 `unknown`
 - [치역 제약](../../../concepts/functions/high-1/함수와_그래프/치역_제약.md) · 함수와 그래프 `unknown`
 - [치역의 조건](../../../concepts/functions/high-1/함수와_그래프/치역의_조건.md) · 함수와 그래프 `unknown`
@@ -65,6 +68,7 @@ counts:
 - [함수 그래프와 직선의 교점](../../../concepts/functions/high-1/함수와_그래프/함수_그래프와_직선의_교점.md) · 함수와 그래프 `unknown`
 - [함수 위의 점](../../../concepts/functions/high-1/함수와_그래프/함수_위의_점.md) · 함수와 그래프 `unknown`
 - [함수값](../../../concepts/functions/high-1/함수와_그래프/함수값.md) · 함수와 그래프 `unknown`
+- [함수방정식 풀이](../../../concepts/functions/high-1/함수와_그래프/함수방정식_풀이.md) · 함수와 그래프 `unknown`
 - [함수의 그래프](../../../concepts/functions/high-1/함수와_그래프/함수의_그래프.md) · 함수와 그래프 `unknown`
 - [함수의 그래프 읽기](../../../concepts/functions/high-1/함수와_그래프/함수의_그래프_읽기.md) · 함수와 그래프 `unknown`
 - [함수의 근](../../../concepts/functions/high-1/함수와_그래프/함수의_근.md) · 함수와 그래프 `unknown`

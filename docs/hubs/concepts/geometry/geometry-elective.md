@@ -1,17 +1,17 @@
 ---
 sources: []
-created: 2026-06-17
-updated: 2026-06-17
+created: 2026-06-18
+updated: 2026-06-18
 hub_type: concepts-grade
 domain: geometry
 grade: geometry-elective
 counts:
-  total: 163
+  total: 130
 ---
 
 # 도형 · 기하 (geometry-elective)
 
-총 163개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 130개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,14 +19,10 @@ counts:
 - [이차곡선](../../../concepts/geometry/geometry-elective/이차곡선.md) · 이차곡선 `unknown`
 - [평면벡터](../../../concepts/geometry/geometry-elective/평면벡터.md) · 평면벡터 `unknown`
 
-## 정의 (144)
+## 정의 (111)
 
 - [각의 이등분선의 성질](../../../concepts/geometry/geometry-elective/이차곡선/각의_이등분선의_성질.md) · 이차곡선 `unknown`
 - [거리 관계](../../../concepts/geometry/geometry-elective/이차곡선/거리_관계.md) · 이차곡선 `unknown`
-- [거리 조건과 도형](../../../concepts/geometry/geometry-elective/평면벡터/거리_조건과_도형.md) · 평면벡터 `unknown`
-- [거리 함수의 극값](../../../concepts/geometry/geometry-elective/평면벡터/거리_함수의_극값.md) · 평면벡터 `unknown`
-- [거리와 궤적](../../../concepts/geometry/geometry-elective/평면벡터/거리와_궤적.md) · 평면벡터 `unknown`
-- [거리와 최적화](../../../concepts/geometry/geometry-elective/평면벡터/거리와_최적화.md) · 평면벡터 `unknown`
 - [거리의 곱의 최소값](../../../concepts/geometry/geometry-elective/이차곡선/거리의_곱의_최소값.md) · 이차곡선 `unknown`
 - [거리의 극값](../../../concepts/geometry/geometry-elective/평면벡터/거리의_극값.md) · 평면벡터 `unknown`
 - [거리의 최소화](../../../concepts/geometry/geometry-elective/평면벡터/거리의_최소화.md) · 평면벡터 `unknown`
@@ -46,50 +42,37 @@ counts:
 - [구의 단면원](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/구의_단면원.md) · 공간도형과 공간벡터 `unknown`
 - [구의 방정식](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/구의_방정식.md) · 공간도형과 공간벡터 `unknown`
 - [궤적](../../../concepts/geometry/geometry-elective/이차곡선/궤적.md) · 이차곡선 `unknown`
-- [극값 계산](../../../concepts/geometry/geometry-elective/평면벡터/극값_계산.md) · 평면벡터 `unknown`
 - [극값 문제](../../../concepts/geometry/geometry-elective/평면벡터/극값_문제.md) · 평면벡터 `unknown`
-- [극값 최적화](../../../concepts/geometry/geometry-elective/평면벡터/극값_최적화.md) · 평면벡터 `unknown`
 - [극곡선의 미분](../../../concepts/geometry/geometry-elective/이차곡선/극곡선의_미분.md) · 이차곡선 `unknown`
-- [극좌표](../../../concepts/geometry/geometry-elective/평면벡터/극좌표.md) · 평면벡터 `unknown`
+- [극좌표](../../../concepts/geometry/geometry-elective/이차곡선/극좌표.md) · 이차곡선 `unknown`
 - [기울기 관계](../../../concepts/geometry/geometry-elective/이차곡선/기울기_관계.md) · 이차곡선 `unknown`
-- [기하 제약 조건](../../../concepts/geometry/geometry-elective/평면벡터/기하_제약_조건.md) · 평면벡터 `unknown`
-- [기하적 응용](../../../concepts/geometry/geometry-elective/평면벡터/기하적_응용.md) · 평면벡터 `unknown`
 - [기하적 조건](../../../concepts/geometry/geometry-elective/이차곡선/기하적_조건.md) · 이차곡선 `unknown`
-- [기하학적 유일성](../../../concepts/geometry/geometry-elective/평면벡터/기하학적_유일성.md) · 평면벡터 `unknown`
 - [내적](../../../concepts/geometry/geometry-elective/평면벡터/내적.md) · 평면벡터 `unknown`
 - [내적의 성질](../../../concepts/geometry/geometry-elective/평면벡터/내적의_성질.md) · 평면벡터 `unknown`
 - [두 구의 교선](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/두_구의_교선.md) · 공간도형과 공간벡터 `unknown`
-- [두 벡터가 이루는 각](../../../concepts/geometry/geometry-elective/평면벡터/두_벡터가_이루는_각.md) · 평면벡터 `unknown`
 - [두 직선의 각도](../../../concepts/geometry/geometry-elective/평면벡터/두_직선의_각도.md) · 평면벡터 `unknown`
 - [두 평면이 이루는 각](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/두_평면이_이루는_각.md) · 공간도형과 공간벡터 `unknown`
-- [매개변수 표현](../../../concepts/geometry/geometry-elective/평면벡터/매개변수_표현.md) · 평면벡터 `unknown`
+- [매개변수 표현](../../../concepts/geometry/geometry-elective/이차곡선/매개변수_표현.md) · 이차곡선 `unknown`
 - [매개변수의 유일성](../../../concepts/geometry/geometry-elective/이차곡선/매개변수의_유일성.md) · 이차곡선 `unknown`
 - [무게중심의 벡터 표현](../../../concepts/geometry/geometry-elective/평면벡터/무게중심의_벡터_표현.md) · 평면벡터 `unknown`
-- [법선벡터](../../../concepts/geometry/geometry-elective/평면벡터/법선벡터.md) · 평면벡터 `unknown`
-- [벡터](../../../concepts/geometry/geometry-elective/평면벡터/벡터.md) · 평면벡터 `unknown`
-- [벡터 내적](../../../concepts/geometry/geometry-elective/평면벡터/벡터_내적.md) · 평면벡터 `unknown`
-- [벡터 방정식](../../../concepts/geometry/geometry-elective/평면벡터/벡터_방정식.md) · 평면벡터 `unknown`
+- [법선벡터](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/법선벡터.md) · 공간도형과 공간벡터 `unknown`
 - [벡터 방정식과 조건](../../../concepts/geometry/geometry-elective/평면벡터/벡터_방정식과_조건.md) · 평면벡터 `unknown`
 - [벡터 최적화](../../../concepts/geometry/geometry-elective/평면벡터/벡터_최적화.md) · 평면벡터 `unknown`
 - [벡터의 내분과 외분](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_내분과_외분.md) · 평면벡터 `unknown`
 - [벡터의 내적과 수직](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_내적과_수직.md) · 공간도형과 공간벡터 `unknown`
-- [벡터의 성분](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_성분.md) · 공간도형과 공간벡터 `unknown`
+- [벡터의 성분](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_성분.md) · 평면벡터 `unknown`
 - [벡터의 성분 표현](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_성분_표현.md) · 평면벡터 `unknown`
-- [벡터의 연산](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_연산.md) · 공간도형과 공간벡터 `unknown`
+- [벡터의 연산](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_연산.md) · 평면벡터 `unknown`
 - [벡터의 외적](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_외적.md) · 공간도형과 공간벡터 `unknown`
 - [벡터의 일차결합](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_일차결합.md) · 평면벡터 `unknown`
-- [벡터의 자취](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_자취.md) · 평면벡터 `unknown`
 - [벡터의 정사영](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_정사영.md) · 공간도형과 공간벡터 `unknown`
 - [벡터의 정의](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_정의.md) · 평면벡터 `unknown`
 - [벡터의 조건](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_조건.md) · 평면벡터 `unknown`
 - [벡터의 좌표](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_좌표.md) · 평면벡터 `unknown`
-- [벡터의 크기](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/벡터의_크기.md) · 공간도형과 공간벡터 `unknown`
-- [벡터의 평행](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_평행.md) · 평면벡터 `unknown`
+- [벡터의 크기](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_크기.md) · 평면벡터 `unknown`
 - [벡터의 합과 실수배](../../../concepts/geometry/geometry-elective/평면벡터/벡터의_합과_실수배.md) · 평면벡터 `unknown`
 - [사면체와 공간벡터](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/사면체와_공간벡터.md) · 공간도형과 공간벡터 `unknown`
 - [선분의 매개변수 표현](../../../concepts/geometry/geometry-elective/평면벡터/선분의_매개변수_표현.md) · 평면벡터 `unknown`
-- [선분의 분할](../../../concepts/geometry/geometry-elective/평면벡터/선분의_분할.md) · 평면벡터 `unknown`
-- [선형결합](../../../concepts/geometry/geometry-elective/평면벡터/선형결합.md) · 평면벡터 `unknown`
 - [수선과 거리](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/수선과_거리.md) · 공간도형과 공간벡터 `unknown`
 - [수선의 발과 거리](../../../concepts/geometry/geometry-elective/이차곡선/수선의_발과_거리.md) · 이차곡선 `unknown`
 - [수선의 성질](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/수선의_성질.md) · 공간도형과 공간벡터 `unknown`
@@ -98,7 +81,6 @@ counts:
 - [쌍곡선의 점근선](../../../concepts/geometry/geometry-elective/이차곡선/쌍곡선의_점근선.md) · 이차곡선 `unknown`
 - [쌍곡선의 접선](../../../concepts/geometry/geometry-elective/이차곡선/쌍곡선의_접선.md) · 이차곡선 `unknown`
 - [쌍곡선의 표준형](../../../concepts/geometry/geometry-elective/이차곡선/쌍곡선의_표준형.md) · 이차곡선 `unknown`
-- [영역과 넓이](../../../concepts/geometry/geometry-elective/평면벡터/영역과_넓이.md) · 평면벡터 `unknown`
 - [외적](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/외적.md) · 공간도형과 공간벡터 `unknown`
 - [원의 정사영](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/원의_정사영.md) · 공간도형과 공간벡터 `unknown`
 - [위치벡터](../../../concepts/geometry/geometry-elective/평면벡터/위치벡터.md) · 평면벡터 `unknown`
@@ -109,9 +91,6 @@ counts:
 - [점과 평면 사이의 거리](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/점과_평면_사이의_거리.md) · 공간도형과 공간벡터 `unknown`
 - [점과직선사이의거리](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/점과직선사이의거리.md) · 공간도형과 공간벡터 `unknown`
 - [점근선](../../../concepts/geometry/geometry-elective/이차곡선/점근선.md) · 이차곡선 `unknown`
-- [점의 자취와 직선의 방정식](../../../concepts/geometry/geometry-elective/평면벡터/점의_자취와_직선의_방정식.md) · 평면벡터 `unknown`
-- [점의 집합의 교집합](../../../concepts/geometry/geometry-elective/평면벡터/점의_집합의_교집합.md) · 평면벡터 `unknown`
-- [점의 집합의 기하학적 의미](../../../concepts/geometry/geometry-elective/평면벡터/점의_집합의_기하학적_의미.md) · 평면벡터 `unknown`
 - [점이 평면 위의 조건](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/점이_평면_위의_조건.md) · 공간도형과 공간벡터 `unknown`
 - [접기와 공간도형](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/접기와_공간도형.md) · 공간도형과 공간벡터 `unknown`
 - [접선](../../../concepts/geometry/geometry-elective/이차곡선/접선.md) · 이차곡선 `unknown`
@@ -120,18 +99,11 @@ counts:
 - [정사면체](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/정사면체.md) · 공간도형과 공간벡터 `unknown`
 - [정사영](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/정사영.md) · 공간도형과 공간벡터 `unknown`
 - [정사영의 넓이 계산](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/정사영의_넓이_계산.md) · 공간도형과 공간벡터 `unknown`
-- [제약 조건 최적화](../../../concepts/geometry/geometry-elective/평면벡터/제약_조건_최적화.md) · 평면벡터 `unknown`
-- [제약조건과 최적화](../../../concepts/geometry/geometry-elective/평면벡터/제약조건과_최적화.md) · 평면벡터 `unknown`
-- [조건 제약 최댓값](../../../concepts/geometry/geometry-elective/평면벡터/조건_제약_최댓값.md) · 평면벡터 `unknown`
-- [조건부 집합](../../../concepts/geometry/geometry-elective/평면벡터/조건부_집합.md) · 평면벡터 `unknown`
 - [조건부 최댓값과 최솟값](../../../concepts/geometry/geometry-elective/평면벡터/조건부_최댓값과_최솟값.md) · 평면벡터 `unknown`
 - [조건으로 정의된 도형](../../../concepts/geometry/geometry-elective/평면벡터/조건으로_정의된_도형.md) · 평면벡터 `unknown`
-- [좌표를 이용한 벡터 계산](../../../concepts/geometry/geometry-elective/평면벡터/좌표를_이용한_벡터_계산.md) · 평면벡터 `unknown`
-- [좌표와 벡터](../../../concepts/geometry/geometry-elective/평면벡터/좌표와_벡터.md) · 평면벡터 `unknown`
 - [주축](../../../concepts/geometry/geometry-elective/이차곡선/주축.md) · 이차곡선 `unknown`
 - [준선](../../../concepts/geometry/geometry-elective/이차곡선/준선.md) · 이차곡선 `unknown`
 - [직교](../../../concepts/geometry/geometry-elective/평면벡터/직교.md) · 평면벡터 `unknown`
-- [직교 조건](../../../concepts/geometry/geometry-elective/평면벡터/직교_조건.md) · 평면벡터 `unknown`
 - [직선 위의 점](../../../concepts/geometry/geometry-elective/평면벡터/직선_위의_점.md) · 평면벡터 `unknown`
 - [직선과 구의 접선](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/직선과_구의_접선.md) · 공간도형과 공간벡터 `unknown`
 - [직선과 직선이 이루는 각](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/직선과_직선이_이루는_각.md) · 공간도형과 공간벡터 `unknown`
@@ -146,7 +118,6 @@ counts:
 - [초점과 주축](../../../concepts/geometry/geometry-elective/이차곡선/초점과_주축.md) · 이차곡선 `unknown`
 - [초점과 준선](../../../concepts/geometry/geometry-elective/이차곡선/초점과_준선.md) · 이차곡선 `unknown`
 - [초점현](../../../concepts/geometry/geometry-elective/이차곡선/초점현.md) · 이차곡선 `unknown`
-- [최대최소](../../../concepts/geometry/geometry-elective/평면벡터/최대최소.md) · 평면벡터 `unknown`
 - [타원 접선](../../../concepts/geometry/geometry-elective/이차곡선/타원_접선.md) · 이차곡선 `unknown`
 - [타원 정의](../../../concepts/geometry/geometry-elective/이차곡선/타원_정의.md) · 이차곡선 `unknown`
 - [타원의 표준형](../../../concepts/geometry/geometry-elective/이차곡선/타원의_표준형.md) · 이차곡선 `unknown`
@@ -158,12 +129,8 @@ counts:
 - [포물선의 성질](../../../concepts/geometry/geometry-elective/이차곡선/포물선의_성질.md) · 이차곡선 `unknown`
 - [포물선의 접선](../../../concepts/geometry/geometry-elective/이차곡선/포물선의_접선.md) · 이차곡선 `unknown`
 - [포물선의 표준형](../../../concepts/geometry/geometry-elective/이차곡선/포물선의_표준형.md) · 이차곡선 `unknown`
-- [행렬](../../../concepts/geometry/geometry-elective/평면벡터/행렬.md) · 평면벡터 `unknown`
-- [행렬 조건](../../../concepts/geometry/geometry-elective/평면벡터/행렬_조건.md) · 평면벡터 `unknown`
-- [행렬 조건식](../../../concepts/geometry/geometry-elective/평면벡터/행렬_조건식.md) · 평면벡터 `unknown`
-- [행렬의 곱셈](../../../concepts/geometry/geometry-elective/평면벡터/행렬의_곱셈.md) · 평면벡터 `unknown`
-- [행렬의 성분](../../../concepts/geometry/geometry-elective/평면벡터/행렬의_성분.md) · 평면벡터 `unknown`
-- [행렬의 연산](../../../concepts/geometry/geometry-elective/평면벡터/행렬의_연산.md) · 평면벡터 `unknown`
+- [행렬](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/행렬.md) · 공간도형과 공간벡터 `unknown`
+- [행렬 조건](../../../concepts/geometry/geometry-elective/공간도형과_공간벡터/행렬_조건.md) · 공간도형과 공간벡터 `unknown`
 - [호의 넓이](../../../concepts/geometry/geometry-elective/이차곡선/호의_넓이.md) · 이차곡선 `unknown`
 
 ## 정리 (7)

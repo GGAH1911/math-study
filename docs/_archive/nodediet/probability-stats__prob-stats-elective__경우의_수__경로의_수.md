@@ -1,0 +1,34 @@
+---
+sources: []
+created: 2026-05-17
+updated: 2026-05-17
+concept_type: definition
+domain: 확률통계
+grade: 확률과통계
+prerequisites: [docs/concepts/probability-stats/prob-stats-elective/경우의_수.md]
+enables: []
+mastery: unknown
+---
+
+# 경로의 수
+
+격자 위에서 출발점에서 도착점까지 가는 최단 경로의 수를 세는 문제입니다. 확률과 통계 경우의 수 단원의 대표 응용입니다.
+
+## 정의
+
+격자형 도로망에서 한 점 $\mathrm{A}$에서 다른 점 $\mathrm{B}$까지 가로로 $m$칸, 세로로 $n$칸 이동해야 하는 최단 경로의 수는 $m + n$개의 이동 중 가로 이동 $m$개의 자리를 고르는 경우의 수와 같으므로
+$$\binom{m + n}{m} = \frac{(m + n)!}{m!\, n!}.$$
+경유점이 있는 경우는 곱의 법칙으로 $A \to P \to B$의 경로 수 = (A→P)의 경로 수 × (P→B)의 경로 수. 막힌 점이 있는 경우는 전체 경로에서 막힌 점을 지나는 경로를 뺍니다.
+
+## 예시
+
+가로 $4$칸, 세로 $3$칸인 직사각형 격자의 한 꼭짓점에서 대각선 꼭짓점까지의 최단 경로의 수는
+$$\binom{7}{3} = 35.$$
+
+또한 $A$에서 $B$까지 가는 도중 점 $P$를 반드시 거치는 경로의 수는 $A \to P$의 경로 수와 $P \to B$의 경로 수의 곱으로 구합니다.
+
+## 관련 개념
+
+- [곱셈 원리](docs/concepts/probability-stats/prob-stats-elective/경우의_수/곱의_법칙과_합의_법칙.md)
+- [조합의 기본 계산](docs/concepts/probability-stats/high-1/경우의_수_고1/조합의_기본_계산.md)
+- [경우의 수](docs/concepts/probability-stats/prob-stats-elective/경우의_수.md)

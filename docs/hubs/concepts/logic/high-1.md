@@ -1,29 +1,30 @@
 ---
 sources: []
-created: 2026-06-17
-updated: 2026-06-17
+created: 2026-06-18
+updated: 2026-06-18
 hub_type: concepts-grade
 domain: logic
 grade: high-1
 counts:
-  total: 29
+  total: 31
 ---
 
 # 논리 · 고1 (high-1)
 
-총 29개 concept 노드. 상위: [논리 hub](../logic.md) · [concepts hub](../../concepts.md).
+총 31개 concept 노드. 상위: [논리 hub](../logic.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [집합과 명제](../../../concepts/logic/high-1/집합과_명제.md) · 집합과 명제 `unknown`
 
-## 정의 (23)
+## 정의 (25)
 
 - [교집합](../../../concepts/logic/high-1/집합과_명제/교집합.md) · 집합과 명제 `unknown`
 - [대우](../../../concepts/logic/high-1/집합과_명제/대우.md) · 집합과 명제 `unknown`
 - [명제와 조건](../../../concepts/logic/high-1/집합과_명제/명제와_조건.md) · 집합과 명제 `unknown`
 - [명제의 역](../../../concepts/logic/high-1/집합과_명제/명제의_역.md) · 집합과 명제 `unknown`
 - [부분집합](../../../concepts/logic/high-1/집합과_명제/부분집합.md) · 집합과 명제 `unknown`
+- [부분집합 개수](../../../concepts/logic/high-1/집합과_명제/부분집합_개수.md) · 집합과 명제 `unknown`
 - [부분집합의 개수](../../../concepts/logic/high-1/집합과_명제/부분집합의_개수.md) · 집합과 명제 `unknown`
 - [서로소](../../../concepts/logic/high-1/집합과_명제/서로소.md) · 집합과 명제 `unknown`
 - [여집합](../../../concepts/logic/high-1/집합과_명제/여집합.md) · 집합과 명제 `unknown`
@@ -31,6 +32,7 @@ counts:
 - [원소의 개수](../../../concepts/logic/high-1/집합과_명제/원소의_개수.md) · 집합과 명제 `unknown`
 - [원소의 결정성](../../../concepts/logic/high-1/집합과_명제/원소의_결정성.md) · 집합과 명제 `unknown`
 - [조건명제](../../../concepts/logic/high-1/집합과_명제/조건명제.md) · 집합과 명제 `unknown`
+- [조건부 집합](../../../concepts/logic/high-1/집합과_명제/조건부_집합.md) · 집합과 명제 `unknown`
 - [조건판정](../../../concepts/logic/high-1/집합과_명제/조건판정.md) · 집합과 명제 `unknown`
 - [진리집합](../../../concepts/logic/high-1/집합과_명제/진리집합.md) · 집합과 명제 `unknown`
 - [집합과 원소](../../../concepts/logic/high-1/집합과_명제/집합과_원소.md) · 집합과 명제 `unknown`

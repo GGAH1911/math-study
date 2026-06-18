@@ -1,23 +1,23 @@
 ---
 sources: []
-created: 2026-06-17
-updated: 2026-06-17
+created: 2026-06-18
+updated: 2026-06-18
 hub_type: concepts-grade
 domain: equations
 grade: middle-3
 counts:
-  total: 15
+  total: 16
 ---
 
 # 방정식 · 중3 (middle-3)
 
-총 15개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
+총 16개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [이차방정식](../../../concepts/equations/middle-3/이차방정식.md) · 이차방정식 `unknown`
 
-## 정의 (8)
+## 정의 (9)
 
 - [계수 관계식](../../../concepts/equations/middle-3/이차방정식/계수_관계식.md) · 이차방정식 `unknown`
 - [근 중근](../../../concepts/equations/middle-3/이차방정식/근_중근.md) · 이차방정식 `unknown`
@@ -27,6 +27,7 @@ counts:
 - [근의공식](../../../concepts/equations/middle-3/이차방정식/근의공식.md) · 이차방정식 `unknown`
 - [이차방정식의 근과 계수의 관계](../../../concepts/equations/middle-3/이차방정식/이차방정식의_근과_계수의_관계.md) · 이차방정식 `unknown`
 - [이차방정식의 실근 조건](../../../concepts/equations/middle-3/이차방정식/이차방정식의_실근_조건.md) · 이차방정식 `unknown`
+- [이차함수의 영점](../../../concepts/equations/middle-3/이차방정식/이차함수의_영점.md) · 이차방정식 `unknown`
 
 ## 정리 (3)
 

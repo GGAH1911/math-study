@@ -1,17 +1,17 @@
 ---
 sources: []
-created: 2026-06-17
-updated: 2026-06-17
+created: 2026-06-18
+updated: 2026-06-18
 hub_type: concepts-grade
 domain: functions
 grade: math-1
 counts:
-  total: 133
+  total: 134
 ---
 
 # 함수 · 수학1 (math-1)
 
-총 133개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 134개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [수열](../../../concepts/functions/math-1/수열.md) · 수열 `unknown`
 - [지수함수와 로그함수](../../../concepts/functions/math-1/지수함수와_로그함수.md) · 지수함수와 로그함수 `unknown`
 
-## 정의 (113)
+## 정의 (114)
 
 - [각의 조건](../../../concepts/functions/math-1/삼각함수/각의_조건.md) · 삼각함수 `unknown`
 - [각의 크기 결정](../../../concepts/functions/math-1/삼각함수/각의_크기_결정.md) · 삼각함수 `unknown`
@@ -73,6 +73,7 @@ counts:
 - [삼각함수의 부호](../../../concepts/functions/math-1/삼각함수/삼각함수의_부호.md) · 삼각함수 `unknown`
 - [삼각함수의 성질](../../../concepts/functions/math-1/삼각함수/삼각함수의_성질.md) · 삼각함수 `unknown`
 - [삼각함수의 정의](../../../concepts/functions/math-1/삼각함수/삼각함수의_정의.md) · 삼각함수 `unknown`
+- [삼각함수의 주기성](../../../concepts/functions/math-1/삼각함수/삼각함수의_주기성.md) · 삼각함수 `unknown`
 - [삼각함수의 최댓값과 최솟값](../../../concepts/functions/math-1/삼각함수/삼각함수의_최댓값과_최솟값.md) · 삼각함수 `unknown`
 - [삼각함수의 합성](../../../concepts/functions/math-1/삼각함수/삼각함수의_합성.md) · 삼각함수 `unknown`
 - [삼각함수의 활용](../../../concepts/functions/math-1/삼각함수/삼각함수의_활용.md) · 삼각함수 `unknown`
