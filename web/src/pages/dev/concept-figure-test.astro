@@ -91,7 +91,9 @@ const plotSpec: any = PLOT;
         <p class="text-xs text-[color:var(--color-muted)]">{g.note}</p>
         <div class="bg-zinc-950 rounded p-2 ring-1 ring-emerald-500/30">
           <div class="text-[10px] text-emerald-400 mb-1">개념 페이지에 들어갈 크기 (축·눈금 숨김)</div>
-          <Geometry client:load spec={noAxes(g.spec)} width={700} height={520} hideCaption />
+          <div class="flex justify-center">
+            <Geometry client:load spec={noAxes(g.spec)} width={640} height={600} hideCaption />
+          </div>
         </div>
         <details class="text-xs">
           <summary class="cursor-pointer text-zinc-500">축·눈금 표시 (좌표 디버그)</summary>

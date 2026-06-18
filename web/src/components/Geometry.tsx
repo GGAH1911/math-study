@@ -310,13 +310,16 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
 
   // Map math coords → pixel coords, equal-aspect scaling so shapes
   // don't get distorted.
-  const W = effWidth, H = height;
   const PAD = 24;
   const xSpan = bounds.x[1] - bounds.x[0];
   const ySpan = bounds.y[1] - bounds.y[0];
-  const scale = Math.min((W - 2 * PAD) / xSpan, (H - 2 * PAD) / ySpan);
-  const cx = (W - scale * xSpan) / 2;
-  const cy = (H - scale * ySpan) / 2;
+  // 요청 W×H 안에서 등비 최대 스케일을 잡되, 캔버스를 콘텐츠 크기로 *크롭*한다.
+  // (이전: 캔버스를 요청 W×H 로 두고 콘텐츠를 가운데 정렬 → 정사각 도형이 가로로 긴
+  //  캔버스 안에서 작아 보이고 가로 여백만 남았다. 이제 도형이 캔버스를 꽉 채운다.)
+  const scale = Math.min((effWidth - 2 * PAD) / xSpan, (height - 2 * PAD) / ySpan);
+  const W = Math.round(scale * xSpan + 2 * PAD);
+  const H = Math.round(scale * ySpan + 2 * PAD);
+  const cx = PAD, cy = PAD;
   const xPx = (x: number) => cx + (x - bounds.x[0]) * scale;
   const yPx = (y: number) => H - cy - (y - bounds.y[0]) * scale;
 
