@@ -24,7 +24,9 @@ const MODEL = process.env.FIGURE_MODEL || 'haiku';     // 사용자 지침: 하�
 const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(WEB, '..');
 const GRAPH = resolve(WEB, 'src/data/concept-graph.json');
-const CACHE = resolve(WEB, 'src/data/concept-figures.json');
+// FIGURE_CACHE 로 출력 캐시 경로 오버라이드 가능 — QA 등 다른 프로세스가 메인 캐시를
+// 쓰는 동안 별도 파일로 생성해 충돌(클로버) 회피용. 생성 후 메인에 머지.
+const CACHE = process.env.FIGURE_CACHE ? resolve(process.env.FIGURE_CACHE) : resolve(WEB, 'src/data/concept-figures.json');
 const SCHEMA_VERSION = 1;
 
 const PILOT = [
