@@ -87,6 +87,12 @@ function groupByType(paths: string[]): { type: string; label: string; items: { s
 const prereqGroups = groupByType(fm.prerequisites);
 const enablesGroups = groupByType(fm.enables);
 
+// 개념 도식 — gen_concept_figures.mjs 가 haiku(단계별·sympy 검증)로 생성·캐시한 좌표정확
+// Geometry spec. 축·눈금 숨김으로 본문 위에 교과서 도식처럼 렌더. 없으면(미생성·도식불필요) 생략.
+import conceptFigures from '../../data/concept-figures.json';
+import Geometry from '../../components/Geometry.tsx';
+const conceptFigure = (conceptFigures as any).figures?.[entry.id]?.figure ?? null;
+
 // "이 개념의 기출 문제" — predev로 빌드된 problems-by-concept 인덱스에서 로드.
 import problemIndex from '../../data/problems-by-concept.json';
 type ProblemBrief = {
@@ -157,6 +163,11 @@ const PREVIEW_COUNT = 8;
 <BaseLayout title={entry.id}>
   <div class="max-w-6xl mx-auto px-6 md:max-xl:pr-14 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="max-w-none min-w-0">
+      {conceptFigure && (
+        <figure class="not-prose mb-6 flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
+          <Geometry client:load spec={conceptFigure} width={620} height={460} hideCaption />
+        </figure>
+      )}
       <div class="prose prose-invert max-w-none">
         <Content />
       </div>

@@ -1,0 +1,49 @@
+---
+export const prerender = false;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Geometry from '../../components/Geometry.tsx';
+import figuresData from '../../data/concept-figures.json';
+
+// gen_concept_figures.mjs 가 생성한 개념 도식 캐시 검토용 갤러리.
+// 각 figure 를 개념 페이지와 같은 방식(축은 spec 의 showAxes 따름)으로 렌더.
+const figures = (figuresData as any).figures ?? {};
+const entries = Object.entries(figures) as [string, any][];
+const withFig = entries.filter(([, v]) => v.figure);
+const nulls = entries.filter(([, v]) => !v.figure);
+---
+<BaseLayout title="개념 도식 갤러리 (검토)">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">개념 도식 갤러리 — 검토</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        하이쿠 단계별 생성 + sympy 좌표검증. figure {withFig.length}개 · 도식불필요 {nulls.length}개 · 총 {entries.length}개.
+        개념 페이지 본문 위에 이 도식이 들어갑니다.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {withFig.map(([id, v]) => (
+        <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+          <div class="flex items-baseline justify-between gap-2">
+            <h2 class="text-sm font-semibold">{v.label}</h2>
+            <span class="text-[10px] text-zinc-500">axes {String(v.figure.showAxes)} · {v.figure.shapes.length} shapes</span>
+          </div>
+          <div class="bg-zinc-950 rounded p-2 flex justify-center">
+            <Geometry client:load spec={v.figure} width={460} height={360} hideCaption noBroadcast />
+          </div>
+          {v.note && <p class="text-xs text-[color:var(--color-muted)] leading-relaxed">{v.note}</p>}
+          <div class="text-[10px] text-zinc-600 truncate">{id}</div>
+        </section>
+      ))}
+    </div>
+
+    {nulls.length > 0 && (
+      <section class="card border border-zinc-700 rounded-lg p-4">
+        <h2 class="text-sm font-semibold mb-2">도식 불필요 ({nulls.length})</h2>
+        <ul class="text-xs text-[color:var(--color-muted)] space-y-1">
+          {nulls.map(([id, v]) => <li><strong>{v.label}</strong> — {v.note} <span class="text-zinc-600">({id})</span></li>)}
+        </ul>
+      </section>
+    )}
+  </div>
+</BaseLayout>

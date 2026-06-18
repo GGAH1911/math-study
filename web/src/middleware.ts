@@ -12,6 +12,7 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/progress\/?$/,    // 인제스트 진행 관측 — 개발용, 미인증 허용
   /^\/api\/progress\b/, // progress 폴링 API
   /^\/dev\/concept-figure-test\/?$/, // figure 디자인 검증 — 정적 데모(데이터 없음), 비로그인 허용
+  /^\/dev\/concept-figures\/?$/,     // 개념 도식 갤러리 검토 — 비민감 도식, 비로그인 허용(임시)
 ];
 
 // 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.
