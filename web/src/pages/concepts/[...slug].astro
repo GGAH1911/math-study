@@ -94,7 +94,41 @@ type ProblemBrief = {
   grade: string | null; subject: string | null; number: number | null; score: number | null;
   killer_tier: string | null; format: string | null; has_image: boolean;
 };
-const linkedProblems: ProblemBrief[] = (problemIndex as any).byConcept?.[slug] ?? [];
+const linkedProblemsRaw: ProblemBrief[] = (problemIndex as any).byConcept?.[slug] ?? [];
+
+// 진도(학년 수준) 근접 정렬 — 개념 수준에 가까운 기출이 먼저, 진도 한참 앞선 문제는 뒤로.
+// (기존엔 killer 우선이라 중1 개념에도 수능 킬러가 맨 위에 떠 "너무 앞선 문제" 문제 발생.)
+// 개념 수준은 경로(.../middle-1/.., /calculus/..)에서 산출 → frontmatter grade → 기본 고1.
+function levelFromPath(id: string): number {
+  if (/\/middle-1\//.test(id)) return 1;
+  if (/\/middle-2\//.test(id)) return 2;
+  if (/\/middle-3\//.test(id)) return 3;
+  if (/\/high-1\//.test(id)) return 4;
+  if (/\/math-[12]\//.test(id)) return 5;
+  if (/\/(calculus|geometry-elective|prob-stats-elective)\//.test(id)) return 6;
+  const GL: Record<string, number> = { '중1': 1, '중2': 2, '중3': 3, '고1': 4, '수학1': 5, '수학2': 5, '미적분': 6, '기하': 6, '확률과통계': 6 };
+  return GL[fm.grade ?? ''] ?? 4;
+}
+const conceptLevel = levelFromPath(entry.id);
+function problemLevel(p: ProblemBrief): number {
+  if (p.exam_type === '수능' || p.exam_type === '평가원') return 6; // 고3 수준
+  const g = p.grade ?? '';
+  if (g.includes('고3')) return 6;
+  if (g.includes('고2')) return 5;
+  if (g.includes('고1')) return 4;
+  if (g.includes('중3')) return 3;
+  if (g.includes('중2')) return 2;
+  if (g.includes('중1')) return 1;
+  return 5;
+}
+const TIER_RANK: Record<string, number> = { early: 0, mid: 1, high: 2, killer: 3 };
+const linkedProblems: ProblemBrief[] = [...linkedProblemsRaw].sort((a, b) => {
+  const da = Math.abs(problemLevel(a) - conceptLevel), db = Math.abs(problemLevel(b) - conceptLevel);
+  if (da !== db) return da - db;                                  // 1) 학년 근접
+  const ta = TIER_RANK[a.killer_tier ?? ''] ?? 1, tb = TIER_RANK[b.killer_tier ?? ''] ?? 1;
+  if (ta !== tb) return ta - tb;                                  // 2) 쉬운 것부터
+  return (b.year ?? 0) - (a.year ?? 0);                           // 3) 최신순
+});
 
 // 이 페이지에서 promote 된 학습 노트 목록 (build-syntheses-index.mjs 산출물).
 import synthesesIndex from '../../data/syntheses-by-concept.json';
