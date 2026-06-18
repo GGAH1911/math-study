@@ -381,6 +381,14 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
     if ((mx - ctrPx[0]) * nx + (my - ctrPx[1]) * ny < 0) { nx = -nx; ny = -ny; }
     return [mx + nx * off, my + ny * off];
   };
+  // 꼭짓점(vx,vy 데이터좌표) 라벨을 도형 '바깥쪽'(기준중심 cx,cy 반대 방향)으로 off(px) 띄운다.
+  // 다각형 꼭짓점 라벨이 도형 내부에 들어가는 것 방지. tx 는 좌/우/중앙 정렬.
+  const outwardFromCenter = (vx: number, vy: number, cx: number, cy: number, off: number): [number, number, number] => {
+    let dx = xPx(vx) - xPx(cx), dy = yPx(vy) - yPx(cy);
+    const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl;
+    const tx = dx < -0.35 ? -100 : (dx > 0.35 ? 0 : -50);
+    return [xPx(vx) + dx * off, yPx(vy) + dy * off, tx];
+  };
 
   // Grid
   if (showGrid) {
@@ -446,14 +454,16 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
           // 각 방향마다 점에서 라벨 좌상단까지 offset 계산. label 폭 추정 X →
           // W/SW/NW 방향은 transform translateX(-100%) 로 우측 정렬.
           const dir = s.labelDir ?? 'NE';
+          // 라벨을 점에 바짝 붙인다(좌표에서 멀어지면 무엇을 가리키는지 안 보임).
+          // 점 반지름(4) + 약간의 여백만 띄운다.
           const offX = (() => {
-            if (dir.includes('E')) return 10;
-            if (dir.includes('W')) return -10;
+            if (dir.includes('E')) return 7;
+            if (dir.includes('W')) return -7;
             return 0;
           })();
           const offY = (() => {
-            if (dir.includes('N')) return -labelFontPx - 10;
-            if (dir.includes('S')) return 10;
+            if (dir.includes('N')) return -labelFontPx - 3;
+            if (dir.includes('S')) return 7;
             return -labelFontPx / 2 - 2;
           })();
           const tx = dir.includes('W') ? -100 : (dir.includes('E') ? 0 : -50);
@@ -476,6 +486,12 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
           if (p1 && p2) addSeg(xPx(p1[0]), yPx(p1[1]), xPx(p2[0]), yPx(p2[1]));
         }
         if (s.labels) {
+          // 이 다각형 자신의 무게중심 — 꼭짓점 라벨을 그 반대(=도형 바깥)로 밀어낸다.
+          let pcx = 0, pcy = 0, pcn = 0;
+          for (const v of s.vertices) {
+            if (typeof v?.[0] === 'number' && typeof v?.[1] === 'number') { pcx += v[0]; pcy += v[1]; pcn++; }
+          }
+          pcx = pcn ? pcx / pcn : 0; pcy = pcn ? pcy / pcn : 0;
           s.labels.forEach((lab, vi) => {
             const v = s.vertices[vi]; if (!v) return;
             if (typeof v[0] !== 'number' || typeof v[1] !== 'number') return;
@@ -483,7 +499,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
             const key = `${v[0].toFixed(2)},${v[1].toFixed(2)}|${lab}`;
             if (claimedLabels.has(key)) return;
             claimedLabels.add(key);
-            pushLabel(`pgl${i}_${vi}`, lab, xPx(v[0]) + 6, yPx(v[1]) - 14);
+            const [lax, lay, ltx] = outwardFromCenter(v[0], v[1], pcx, pcy, labelFontPx * 0.45 + 5);
+            pushLabel(`pgl${i}_${vi}`, lab, lax, lay - labelFontPx * 0.7, ltx);
             els.push(<circle key={`pgv${i}_${vi}`} cx={xPx(v[0])} cy={yPx(v[1])} r={3} fill="#fafafa" />);
           });
         }
@@ -729,7 +746,9 @@ function _closestOnSeg(px: number, py: number, s: _Seg): [number, number] {
 }
 function deOverlapLabels(descs: _LD[], fontPx: number, W: number, H: number, obstacles: _Seg[] = []): _LD[] {
   const h = fontPx * 1.5;
-  const MAXSHIFT = fontPx * 4;
+  // 앵커(좌표점)에서 라벨이 떠내려가는 최대 거리. 너무 크면 라벨이 좌표에서 멀어져
+  // 무엇을 가리키는지 안 보인다. 겹침·장애물 회피에 필요한 최소(=박스 높이 ~2배)만 허용.
+  const MAXSHIFT = fontPx * 2;
   const PAD = 2; // 라벨과 도형 사이 최소 여백
   const boxes = descs.map((d) => {
     const w = estLabelWidth(d.text, fontPx);
