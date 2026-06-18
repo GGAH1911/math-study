@@ -1,0 +1,61 @@
+---
+// 기출 인제스트 agy 테스트 — 결정론적 전사 → Gemini 교정 + Geometry 도식 재현 비교.
+// 결과는 /tmp/ingest_test_result.json (scripts 외부 /tmp/ingest_test.mjs 가 생성). 요청 시 읽음.
+export const prerender = false;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Geometry from '../../components/Geometry.tsx';
+import { readFileSync } from 'node:fs';
+
+let r: any = null;
+try { r = JSON.parse(readFileSync('/tmp/ingest_test_result.json', 'utf-8')); } catch { /* 아직 없음 */ }
+---
+<BaseLayout title="기출 인제스트 agy 테스트">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">기출 인제스트 — agy(Gemini) 교정 + 도식 재현 테스트</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        결정론적 전사(텍스트레이어/OCR) → Gemini 3.5 Flash 가 원본 이미지 보고 ①전사 교정 ②그림을 Geometry 도식으로 재현.
+        {r ? ` · 대상: ${r.problem}` : ' · 결과 없음(스크립트 먼저 실행)'}
+      </p>
+    </header>
+
+    {!r ? (
+      <div class="text-sm text-zinc-500">결과 파일 없음. <code>node /tmp/ingest_test.mjs</code> 실행 후 새로고침.</div>
+    ) : (
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+            <h2 class="text-sm font-semibold text-zinc-300">① 원본 문제 이미지 (Gemini 입력)</h2>
+            <div class="bg-white rounded p-2">
+              <img src="/ingest_test_problem.png" alt="문제 원본" class="w-full" />
+            </div>
+          </section>
+          <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+            <h2 class="text-sm font-semibold text-zinc-300">② Gemini 재현 도식 (Geometry)</h2>
+            <div class="bg-zinc-950 rounded p-2 flex justify-center">
+              {r.figure ? <Geometry client:load spec={r.figure} width={520} height={420} hideCaption noBroadcast /> : <span class="text-zinc-600">도식 없음</span>}
+            </div>
+            {r.figureNote && <p class="text-xs text-[color:var(--color-muted)]">{r.figureNote}</p>}
+          </section>
+        </div>
+
+        <section class="card border border-zinc-700 rounded-lg p-4 space-y-3">
+          <h2 class="text-sm font-semibold text-zinc-300">③ 전사 교정 (Gemini fixes {(r.fixes || []).length}건)</h2>
+          <ul class="text-xs text-amber-300/90 space-y-1 list-disc pl-5">
+            {(r.fixes || []).map((f: string) => <li>{f}</li>)}
+          </ul>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <div>
+              <div class="text-[11px] uppercase tracking-wider text-zinc-500 mb-1">결정론적 전사 (원본)</div>
+              <pre class="text-[11px] leading-relaxed whitespace-pre-wrap bg-zinc-900/60 rounded p-3 text-zinc-400 max-h-[28rem] overflow-auto">{r.det}</pre>
+            </div>
+            <div>
+              <div class="text-[11px] uppercase tracking-wider text-emerald-500 mb-1">Gemini 교정본</div>
+              <pre class="text-[11px] leading-relaxed whitespace-pre-wrap bg-zinc-900/60 rounded p-3 text-zinc-200 max-h-[28rem] overflow-auto">{r.corrected}</pre>
+            </div>
+          </div>
+        </section>
+      </div>
+    )}
+  </div>
+</BaseLayout>
