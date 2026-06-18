@@ -827,7 +827,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
                  }}
                  onPointerUp={(e) => { e.stopPropagation(); if (dragRef.current?.key === d.key) dragRef.current = null; }}
                  style={{ left: d.left + (o?.dx ?? 0), top: d.top + (o?.dy ?? 0), color: d.color,
-                          cursor: 'grab', touchAction: 'none',
+                          cursor: 'grab', touchAction: 'none', pointerEvents: 'auto', // .geom-label 의 pointer-events:none 오버라이드(드래그용)
                           transform: d.tx ? `translateX(${d.tx}%)` : undefined }}>
               <GeomLabel text={d.text} />
             </div>
