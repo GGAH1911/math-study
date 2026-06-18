@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
+import Geometry from './Geometry.tsx';
 
 type Round = { name: string; status: 'ok' | 'fail' | 'pending'; detail: string };
-type Proc = { pid: number; etime: string; cmd: string };
+type Proc = { pid: number; etime: string; cmd: string; name?: string };
+type FigureItem = { id: string; label: string; model?: string; figure: any };
 type Crop = {
   url: string; name: string; slug: string; subject: string; number: number;
   mtime: number; valid: 'ok' | 'invalid' | 'failed' | 'unknown'; reason?: string;
@@ -44,7 +46,24 @@ type Data = {
     };
   };
   crops?: Crop[];
+  figures?: FigureItem[];
 };
+
+// 도식 썸네일 — id 가 같으면 재렌더 안 함(2s 폴링 중 Geometry 깜빡임 방지).
+const FigureThumb = memo(function FigureThumb({ item }: { item: FigureItem }) {
+  const isGemini = (item.model ?? '').toLowerCase().includes('gemini');
+  return (
+    <div className="block border border-zinc-700 rounded overflow-hidden bg-zinc-900/50" title={item.id}>
+      <div className="bg-[#faf6ec] flex justify-center items-center h-32 overflow-hidden">
+        <Geometry spec={item.figure} width={240} height={180} fixedWidth={240} hideCaption noBroadcast />
+      </div>
+      <div className="px-2 py-1.5 text-[10px]">
+        <div className="text-zinc-300 truncate">{item.label}</div>
+        {isGemini && <div className="text-indigo-400">Gemini</div>}
+      </div>
+    </div>
+  );
+}, (a, b) => a.item.id === b.item.id);
 
 const STATUS_COLOR: Record<Round['status'], string> = {
   ok: 'text-emerald-400',
@@ -308,6 +327,9 @@ export default function ProgressView() {
               {procs.map((p) => (
                 <li key={p.pid} className="space-y-0.5">
                   <div className="flex items-center gap-2">
+                    <span className="text-sm text-emerald-300 font-medium">{p.name ?? '작업'}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
                     <span className="font-mono text-zinc-400">PID {p.pid}</span>
                     <span className="text-zinc-500">{p.etime}</span>
                   </div>
@@ -376,6 +398,23 @@ export default function ProgressView() {
                 </a>
               );
             })}
+          </div>
+        )}
+      </section>
+
+      {/* 최근 생성 개념 도식 — 스펙을 그자리 Geometry 로 렌더(PNG 아님) */}
+      <section className="card lg:col-span-2">
+        <header className="flex items-center justify-between mb-3">
+          <h3 className="text-xs uppercase tracking-[0.15em] text-zinc-500">
+            최근 생성 도식 {data.figures && data.figures.length > 0 ? `(${data.figures.length})` : ''}
+          </h3>
+          <a href="/dev/concept-figures" target="_blank" rel="noopener" className="text-[10px] text-indigo-400 hover:underline">갤러리 전체 →</a>
+        </header>
+        {!data.figures || data.figures.length === 0 ? (
+          <div className="text-sm text-zinc-500">아직 생성된 도식이 없습니다.</div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {data.figures.map((f) => <FigureThumb key={f.id} item={f} />)}
           </div>
         )}
       </section>

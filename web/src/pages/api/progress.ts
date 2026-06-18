@@ -78,28 +78,70 @@ function readTail(selected?: string | null): { lines: string[]; mtime: number; s
   return { lines, mtime: st.mtimeMs, size: st.size, path };
 }
 
-function aliveProcs(): { pid: number; etime: string; cmd: string }[] {
+// 실행 중인 스크립트 → 사람이 읽는 잡 이름. cmd 인자(도메인 등)도 살짝 덧붙인다.
+function procName(cmd: string): string {
+  const map: [RegExp, string][] = [
+    [/gen_concept_figures/, '개념 도식 생성'],
+    [/qa_concept_figures/, '개념 도식 QA'],
+    [/build_solution_cache/, '풀이 캐시 빌드'],
+    [/ingest_auto/, '인제스트(자동분류)'],
+    [/ingest_v2/, '인제스트 v2'],
+    [/ingest_ganah/, '인제스트(가나다)'],
+    [/ingest_gyo12/, '인제스트(고1·2)'],
+    [/fill_spoke_bodies/, '개념 본문 채우기'],
+    [/regenerate|refine_opus/, '본문 재생성'],
+    [/auto_complete_rounds/, '회차 일괄 인제스트'],
+    [/extract_all_answers/, '정답 추출'],
+  ];
+  for (const [re, name] of map) if (re.test(cmd)) {
+    const dom = cmd.match(/--domain\s+(\S+)/);
+    return dom ? `${name} · ${dom[1]}` : name;
+  }
+  const m = cmd.match(/scripts\/(?:[a-z0-9_]+\/)*([a-z0-9_]+)\.(?:py|mjs)/);
+  return m ? m[1] : '작업';
+}
+
+function aliveProcs(): { pid: number; etime: string; cmd: string; name: string }[] {
   try {
-    // 제네릭: scripts/<...>/<name>.py 를 실행하는 모든 파이썬 잡 자동 감지(retry_timeout_killers·
-    // regenerate·refine_opus 등 + ingest_kice/ 하위폴더 어댑터 ingest_v2·ingest_ganah·ingest_gyo12)
-    // — 경로에 / 포함(하위폴더)도 잡도록 char class에 / 추가. + 레거시 비-scripts 잡.
+    // 제네릭: scripts/<...>/<name>.{py,mjs} 를 실행하는 모든 잡 자동 감지(파이썬 인제스트·캐시빌드 +
+    // node .mjs 도식 생성/QA(gen_concept_figures·qa_concept_figures)) + 레거시 비-scripts 잡.
     const out = execSync(
-      `pgrep -af "scripts/[a-z0-9_/]+\\.py|auto_complete_rounds|fill_spoke_bodies|extract_all_answers|post_manifest" 2>/dev/null || true`,
+      `pgrep -af "scripts/[a-z0-9_/]+\\.(py|mjs)|auto_complete_rounds|fill_spoke_bodies|extract_all_answers|post_manifest" 2>/dev/null || true`,
       { encoding: 'utf-8' },
     );
-    const procs: { pid: number; etime: string; cmd: string }[] = [];
+    const procs: { pid: number; etime: string; cmd: string; name: string }[] = [];
     for (const line of out.split('\n')) {
       const m = line.match(/^(\d+)\s+(.+)$/);
       if (!m) continue;
       const pid = parseInt(m[1], 10);
       const cmd = m[2];
       if (cmd.includes('pgrep') || cmd.includes('progress.ts')) continue;
+      // 셸 래퍼(타이밍/리다이렉트 포함) 제외 — 실제 인터프리터(node/python) 프로세스만 표시.
+      if (/\bdate \+%s\b/.test(cmd) || /^\S*\/?(?:ba|z|d|c)?sh\b/.test(cmd)) continue;
       try {
         const et = execSync(`ps -p ${pid} -o etime= 2>/dev/null || echo ''`, { encoding: 'utf-8' }).trim();
-        procs.push({ pid, etime: et, cmd: cmd.length > 140 ? cmd.slice(0, 140) + '…' : cmd });
+        procs.push({ pid, etime: et, name: procName(cmd), cmd: cmd.length > 140 ? cmd.slice(0, 140) + '…' : cmd });
       } catch { /* ignore */ }
     }
     return procs;
+  } catch {
+    return [];
+  }
+}
+
+// 최근 생성된 개념 도식 — concept-figures.json 의 figure 있는 항목을 삽입 역순(최신 우선)으로.
+// 라이브 gen 은 신규 figure 를 끝에 append 하므로 마지막 N 개 ≈ 가장 최근.
+function recentFigures(limit = 12): Array<{ id: string; label: string; model?: string; figure: unknown }> {
+  try {
+    const p = join(process.cwd(), 'src', 'data', 'concept-figures.json');
+    if (!existsSync(p)) return [];
+    const data = JSON.parse(readFileSync(p, 'utf-8'));
+    const figs = data.figures ?? {};
+    const out: Array<{ id: string; label: string; model?: string; figure: unknown }> = [];
+    for (const [id, v] of Object.entries(figs) as [string, any][]) {
+      if (v && v.figure) out.push({ id, label: v.label ?? id, model: v.model, figure: v.figure });
+    }
+    return out.slice(-limit).reverse();
   } catch {
     return [];
   }
@@ -350,6 +392,7 @@ export const GET: APIRoute = ({ url }) => {
   const solcache = parseSolcache(lines);
   const ingest = parseIngest(lines);
   const crops = recentCrops(24);
+  const figures = recentFigures(12);
   const logs = listLogs();
   return new Response(
     JSON.stringify({
@@ -361,6 +404,7 @@ export const GET: APIRoute = ({ url }) => {
       solcache,
       ingest,
       crops,
+      figures,
     }),
     { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
   );
