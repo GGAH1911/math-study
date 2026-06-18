@@ -201,6 +201,9 @@ function callAgy(prompt) {
     child.on('close', (code) => {
       clearTimeout(to);
       if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      // ★쿼터 소진 시 agy 는 exit 0 + **빈 출력**을 낸다(에러메시지 없음). 빈 출력=쿼터/한도로
+      // 간주해 withQuotaRetry 가 재시도하도록 quota 태그 에러를 던진다.
+      if (!out.trim()) return rej(new Error('quota-empty: agy 빈 출력(쿼터/한도 추정)'));
       try { res(parseEnvelope(out)); } catch (e) { rej(e); }
     });
   });

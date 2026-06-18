@@ -168,6 +168,8 @@ function callQAAgy(prompt) {
     child.on('close', (code) => {
       clearTimeout(to);
       if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      // 쿼터 소진=exit 0+빈 출력 → quota 태그로 던져 withQuotaRetry 재시도.
+      if (!out.trim()) return rej(new Error('quota-empty: agy 빈 출력(쿼터/한도 추정)'));
       try { res(parseEnvelope(out)); } catch (e) { rej(e); }
     });
   });
@@ -226,6 +228,7 @@ function spawnParse(bin, args, parseFn, timeoutMs = 360000) {
     child.on('close', (code) => {
       clearTimeout(to);
       if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      if (bin !== 'claude' && !out.trim()) return rej(new Error('quota-empty: agy 빈 출력(쿼터/한도 추정)')); // 쿼터=빈출력
       try {
         if (bin === 'claude') { const env = JSON.parse(out); if (env.is_error) return rej(new Error('cli:' + (env.subtype || ''))); res(parseFn(env.result || '')); }
         else res(parseFn(out));
