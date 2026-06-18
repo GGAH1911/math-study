@@ -352,20 +352,26 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     return () => clearTimeout(t);
   }, [searchTerm]);
 
-  // Search auto-expands the matching spoke's home unit so it's actually
-  // visible. Computed separately from the user-toggled expansion set.
+  // 필터(검색·mastery·학년·도메인·노트) 매치 spoke 의 home unit 을 자동 펼침 →
+  // 접기뷰에서도 매치 노드가 실제로 렌더된다. (이전엔 검색만 펼쳐, mastery 등으로
+  // 필터하면 매치 spoke 가 접힌 단원 안에 숨어 "필터해도 안 보이는" 버그가 있었음.)
   const searchAutoExpanded = useMemo(() => {
-    if (!debouncedTerm) return new Set<string>();
-    const term = searchNorm(debouncedTerm);
+    const term = debouncedTerm ? searchNorm(debouncedTerm) : '';
+    const active = !!term || masteryFilter.size > 0 || gradeFilter.size > 0 || domainFilter.size > 0 || notesOnly;
+    if (!active) return new Set<string>();
     const out = new Set<string>();
     for (const n of data.nodes) {
-      if (searchNorm(n.label).includes(term)) {
-        const u = homeUnitOf.get(n.id);
-        if (u) out.add(u);
-      }
+      if (n.concept_type === 'unit') continue;
+      if (masteryFilter.size > 0 && !masteryFilter.has(n.mastery)) continue;
+      if (gradeFilter.size > 0 && n.grade && !gradeFilter.has(n.grade)) continue;
+      if (domainFilter.size > 0 && n.domain && !domainFilter.has(n.domain)) continue;
+      if (term && !searchNorm(n.label).includes(term)) continue;
+      if (notesOnly && !((n.note_count ?? 0) > 0)) continue;
+      const u = homeUnitOf.get(n.id);
+      if (u) out.add(u);
     }
     return out;
-  }, [debouncedTerm, data.nodes, homeUnitOf]);
+  }, [debouncedTerm, masteryFilter, gradeFilter, domainFilter, notesOnly, data.nodes, homeUnitOf]);
 
   const filteredIds = useMemo(() => {
     const effectiveExpanded = new Set([...expandedUnits, ...searchAutoExpanded]);
@@ -664,18 +670,29 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   // (No automatic camera fit on expand/collapse — the user explicitly
   // doesn't want the view to fly around. Press `f` to manually fit.)
 
-  // 검색어 매치 노드를 selected로만 잡아둠 (자동 zoom/pan 안 함).
-  // 다수 매치는 fitView로 한 화면에 모아주는 것까지만 (그건 길 잃지 않음).
+  // 필터(검색·mastery·학년·도메인·노트) 적용 시 매치 노드를 화면에 모아준다.
+  // 매치가 적으면 그 노드로 이동(1개면 가운데 정렬+선택) → "필터했는데 안 보임" 해소.
+  // 자동펼침(위 searchAutoExpanded) 재레이아웃 후 좌표가 잡히도록 한 프레임 뒤 이동.
   useEffect(() => {
-    if (!debouncedTerm) return;
-    const term = searchNorm(debouncedTerm);
-    const matches = data.nodes.filter((n) => searchNorm(n.label).includes(term));
-    if (matches.length === 1) {
-      setSelected(matches[0].id);
-    } else if (matches.length > 1 && matches.length <= 12) {
-      rf.fitView({ nodes: matches.map((m) => ({ id: m.id })), padding: 0.3, duration: 400 });
-    }
-  }, [debouncedTerm, data.nodes, rf]);
+    const term = debouncedTerm ? searchNorm(debouncedTerm) : '';
+    const active = !!term || masteryFilter.size > 0 || gradeFilter.size > 0 || domainFilter.size > 0 || notesOnly;
+    if (!active) return;
+    const matches = data.nodes.filter((n) => {
+      if (n.concept_type === 'unit') return false;
+      if (masteryFilter.size > 0 && !masteryFilter.has(n.mastery)) return false;
+      if (gradeFilter.size > 0 && n.grade && !gradeFilter.has(n.grade)) return false;
+      if (domainFilter.size > 0 && n.domain && !domainFilter.has(n.domain)) return false;
+      if (term && !searchNorm(n.label).includes(term)) return false;
+      if (notesOnly && !((n.note_count ?? 0) > 0)) return false;
+      return true;
+    });
+    if (matches.length === 0 || matches.length > 40) return; // 너무 많으면 화면 안 흔듦
+    const t = window.setTimeout(() => {
+      if (matches.length === 1) { setSelected(matches[0].id); flyTo(matches[0].id); }
+      else rf.fitView({ nodes: matches.map((m) => ({ id: m.id })), padding: 0.3, duration: 400, maxZoom: 1.5 });
+    }, 140);
+    return () => window.clearTimeout(t);
+  }, [debouncedTerm, masteryFilter, gradeFilter, domainFilter, notesOnly, data.nodes, rf, flyTo]);
 
   // 키보드 단축키 (입력란에 포커스 없을 때만)
   useEffect(() => {
@@ -840,7 +857,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
               <p className="mt-1 text-[10px] text-zinc-600">
                 펼쳐진 unit: <span className="text-zinc-300">{expandedUnits.size}/{allUnitIds.length}</span>
                 {searchAutoExpanded.size > 0 && (
-                  <span className="text-emerald-400"> · 검색 매치 unit {searchAutoExpanded.size}개 자동 펼침</span>
+                  <span className="text-emerald-400"> · 필터 매치 unit {searchAutoExpanded.size}개 자동 펼침</span>
                 )}
               </p>
             </div>
