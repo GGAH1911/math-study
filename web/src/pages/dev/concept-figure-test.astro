@@ -1,0 +1,113 @@
+---
+export const prerender = false;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Graph from '../../components/Graph.tsx';
+import Geometry from '../../components/Geometry.tsx';
+
+// "좌표 정확 도형 + 좌표(축·눈금) 숨김 = 깔끔한 개념 도식" 검증 페이지.
+// 각 geometry 는 좌표가 정확(닮음비·3-4-5·단위원 등)하되, 왼쪽=축 표시 / 오른쪽=축 숨김 으로
+// 나란히 렌더 → 같은 좌표 데이터가 축만 끄면 교과서 도식처럼 보임을 확인.
+type GSpec = Record<string, any>;
+
+const GEOM: { title: string; note: string; spec: GSpec }[] = [
+  {
+    title: '닮음 (두 닮은 삼각형, 0.6배)',
+    note: 'T2 는 T1 의 0.6배 — 좌표가 정확해 실제로 닮음. 축을 끄면 "닮은 두 삼각형" 도식.',
+    spec: {
+      shapes: [
+        { type: 'polygon', vertices: [[0, 0], [4, 0], [1, 2.5]], labels: ['A', 'B', 'C'], closed: true },
+        { type: 'polygon', vertices: [[5.5, 0], [7.9, 0], [6.1, 1.5]], labels: ["A'", "B'", "C'"], closed: true },
+      ],
+      range: [-1, 9], yRange: [-1, 3.5],
+    },
+  },
+  {
+    title: '단위원 삼각비 (θ, 3-4-5 → cos=0.6, sin=0.8)',
+    note: 'P=(0.6,0.8) 는 단위원 위 정확한 점. cos·sin 선분이 좌표 격자 없이도 의미를 보임.',
+    spec: {
+      shapes: [
+        { type: 'circle', center: [0, 0], radius: 1 },
+        { type: 'line', from: [0, 0], to: [0.6, 0.8], label: '1' },
+        { type: 'line', from: [0.6, 0.8], to: [0.6, 0], dashed: true, label: '\\sin\\theta' },
+        { type: 'line', from: [0, 0], to: [0.6, 0], label: '\\cos\\theta' },
+        { type: 'point', at: [0.6, 0.8], label: 'P' },
+        { type: 'angle', at: [0, 0], from: [1, 0], to: [0.6, 0.8], label: '\\theta', radius: 0.35 },
+      ],
+      range: [-1.2, 1.2], yRange: [-1.2, 1.2],
+    },
+  },
+  {
+    title: '직각삼각형 삼각비 (3-4-5)',
+    note: '변 3·4·5 정확. 직각 표식 + 빗변. 축 끄면 깔끔한 직각삼각형 도식.',
+    spec: {
+      shapes: [
+        { type: 'polygon', vertices: [[0, 0], [4, 0], [4, 3]], labels: ['A', 'B', 'C'], closed: true },
+        { type: 'polygon', vertices: [[3.6, 0], [3.6, 0.4], [4, 0.4]], closed: true },
+      ],
+      range: [-0.5, 5], yRange: [-0.5, 4],
+    },
+  },
+  {
+    title: '내분점 (선분 AB 를 2:1 로 내분하는 P)',
+    note: 'A(0,0)·B(6,3), 2:1 내분점 P=(4,2) 정확. 축 없이 "선분 위 점" 도식.',
+    spec: {
+      shapes: [
+        { type: 'line', from: [0, 0], to: [6, 3] },
+        { type: 'point', at: [0, 0], label: 'A' },
+        { type: 'point', at: [6, 3], label: 'B' },
+        { type: 'point', at: [4, 2], label: 'P' },
+      ],
+      range: [-1, 7], yRange: [-1, 4],
+    },
+  },
+];
+
+// 함수 그래프 개념은 축을 *유지*하는 대조 예 (접선).
+const PLOT: GSpec = {
+  fns: [{ fn: 'x^2' }, { fn: '2*x - 1' }],
+  points: [{ at: [1, 1], label: 'T' }],
+  range: [-1.5, 3], yRange: [-1, 5], grid: true,
+};
+
+// dev 데모 — Geometry/Graph 의 엄격 spec 타입에 맞추지 않고 any 로 통과(spec 은 런타임 검증).
+const withAxes = (s: GSpec): any => ({ ...s, showAxes: true, showGrid: true });
+const noAxes = (s: GSpec): any => ({ ...s, showAxes: false, showGrid: false });
+const plotSpec: any = PLOT;
+---
+<BaseLayout title="개념 figure — 축 숨김 테스트">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-8">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">개념 figure — 좌표 정확 + 축 숨김 테스트</h1>
+      <p class="text-sm text-[color:var(--color-muted)] leading-relaxed">
+        같은 <strong>좌표 정확</strong> 도형(sympy 검증으로 만들 대상)을 <strong>왼쪽=축·눈금 표시</strong> /
+        <strong>오른쪽=축·눈금 숨김(<code>showAxes:false</code>)</strong> 으로 렌더. 오른쪽이 개념 페이지에 넣을 깔끔한 도식.
+        함수 그래프 개념(맨 아래 접선)만 축을 유지.
+      </p>
+    </header>
+
+    {GEOM.map((g, i) => (
+      <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+        <h2 class="text-sm font-semibold">{i + 1}. {g.title}</h2>
+        <p class="text-xs text-[color:var(--color-muted)]">{g.note}</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
+          <div class="bg-zinc-950 rounded p-2">
+            <div class="text-[10px] text-zinc-500 mb-1">축·눈금 표시 (좌표 디버그용)</div>
+            <Geometry client:load spec={withAxes(g.spec)} hideCaption />
+          </div>
+          <div class="bg-zinc-950 rounded p-2 ring-1 ring-emerald-500/30">
+            <div class="text-[10px] text-emerald-400 mb-1">축·눈금 숨김 → 개념 도식 (이걸 페이지에)</div>
+            <Geometry client:load spec={noAxes(g.spec)} hideCaption />
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+      <h2 class="text-sm font-semibold">5. 함수 그래프 개념 (접선) — 축 유지</h2>
+      <p class="text-xs text-[color:var(--color-muted)]">y=x² 와 (1,1) 에서의 접선 y=2x−1. 함수 그래프는 축이 의미라 유지.</p>
+      <div class="bg-zinc-950 rounded p-2 max-w-md">
+        <Graph client:load kind="plot" spec={plotSpec} width={420} height={300} hideCaption />
+      </div>
+    </section>
+  </div>
+</BaseLayout>
