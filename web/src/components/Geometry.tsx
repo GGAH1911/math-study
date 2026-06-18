@@ -408,11 +408,13 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   const els: React.ReactNode[] = [];
   // 라벨은 디스크립터로 모은 뒤(좌표·정렬 기준점) 충돌 회피(de-overlap)를 거쳐 렌더.
   // tx: translateX(%) — 0=좌측정렬, -50=중앙, -100=우측정렬(앵커가 라벨 우상단).
-  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean };
+  // anchor: 라벨이 가리키는 실제 도형 지점(픽셀). 드래그 시 leader 선이 여기로 향한다.
+  // 미지정 시 라벨 자기 위치([left,top]) — 곡선/중심 라벨처럼 도형에 붙은 경우.
+  type LabelDesc = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean; anchor: [number, number] };
   const labelDescs: LabelDesc[] = [];
   // fixed=true: 위치 의미가 고정인 라벨(각 θ 는 각 안에 있어야 의미) — de-overlap 에 안 밀린다(다른 라벨이 이걸 피함).
-  const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string, fixed = false) =>
-    labelDescs.push({ key, text, left, top, tx, color, fixed });
+  const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string, fixed = false, anchor?: [number, number]) =>
+    labelDescs.push({ key, text, left, top, tx, color, fixed, anchor: anchor ?? [left, top] });
   // 도형 외곽선(픽셀 세그먼트) — 라벨이 선·원·다각형을 가리지 않게 밀어낼 장애물.
   const obstacles: Array<[number, number, number, number]> = [];
   const addSeg = (x1: number, y1: number, x2: number, y2: number) => obstacles.push([x1, y1, x2, y2]);
@@ -531,7 +533,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
             return -labelFontPx / 2 - 2;
           })();
           const tx = dir.includes('W') ? -100 : (dir.includes('E') ? 0 : -50);
-          pushLabel(`pl${i}`, s.label, xPx(x) + offX, yPx(y) + offY, tx);
+          pushLabel(`pl${i}`, s.label, xPx(x) + offX, yPx(y) + offY, tx, undefined, false, [xPx(x), yPx(y)]);
         }
         break;
       }
@@ -564,7 +566,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
             if (claimedLabels.has(key)) return;
             claimedLabels.add(key);
             const [lax, lay, ltx] = outwardFromCenter(v[0], v[1], pcx, pcy, labelFontPx * 0.45 + 5);
-            pushLabel(`pgl${i}_${vi}`, lab, lax, lay - labelFontPx * 0.7, ltx);
+            pushLabel(`pgl${i}_${vi}`, lab, lax, lay - labelFontPx * 0.7, ltx, undefined, false, [xPx(v[0]), yPx(v[1])]);
             els.push(<circle key={`pgv${i}_${vi}`} cx={xPx(v[0])} cy={yPx(v[1])} r={3} fill="#fafafa" />);
           });
         }
@@ -807,7 +809,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
           {resolvedLabels.map((d) => {
             const o = labelDrag[d.key];
             if (!o || (o.dx === 0 && o.dy === 0)) return null;
-            return <line key={`ld${d.key}`} x1={d.left} y1={d.top} x2={d.left + o.dx} y2={d.top + o.dy}
+            // leader: 실제 도형 앵커 → 드래그된 라벨 위치.
+            return <line key={`ld${d.key}`} x1={d.anchor[0]} y1={d.anchor[1]} x2={d.left + o.dx} y2={d.top + o.dy}
                          stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" pointerEvents="none" />;
           })}
         </svg>
