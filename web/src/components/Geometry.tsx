@@ -312,6 +312,11 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   // 헤드리스 스크린샷이 부모 clientWidth 를 과소측정(240 floor)해 실제보다 작게/라벨이
   // 뭉쳐 보이던 문제를 우회 — QA 시각 검수용 결정적 실측 렌더.
   const [effWidth, setEffWidth] = useState(fixedWidth ?? width);
+  // 라벨 드래그: 키별 픽셀 offset. 움직인 라벨엔 home→현재 leader 선을 그린다(안 움직이면 숨김).
+  const [labelDrag, setLabelDrag] = useState<Record<string, { dx: number; dy: number }>>({});
+  const dragRef = useRef<{ key: string; sx: number; sy: number; bdx: number; bdy: number } | null>(null);
+  // spec 바뀌면 드래그 초기화(라벨 키가 새 도식과 충돌하지 않도록).
+  useEffect(() => { setLabelDrag({}); }, [spec]);
 
   useEffect(() => {
     if (fixedWidth) return;   // 고정폭이면 측정 안 함
@@ -368,9 +373,17 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   // (이전: 캔버스를 요청 W×H 로 두고 콘텐츠를 가운데 정렬 → 정사각 도형이 가로로 긴
   //  캔버스 안에서 작아 보이고 가로 여백만 남았다. 이제 도형이 캔버스를 꽉 채운다.)
   const scale = Math.min((effWidth - 2 * PAD) / xSpan, (height - 2 * PAD) / ySpan);
-  const W = Math.round(scale * xSpan + 2 * PAD);
-  const H = Math.round(scale * ySpan + 2 * PAD);
-  const cx = PAD, cy = PAD;
+  const contentW = scale * xSpan, contentH = scale * ySpan;
+  // 세로로 긴 도식(콘텐츠 높이 ≫ 폭)은 캔버스가 좁아 라벨이 가장자리에 몰린다.
+  // 그런 경우 좌우에 라벨 공간용 패딩을 추가(레이아웃에 남는 가로 여백 활용). 폭은 effWidth 안에서.
+  const tall = contentH > contentW * 1.4;
+  const extraX = tall
+    ? Math.round(Math.min((contentH - contentW) * 0.25, contentW * 0.6, Math.max(0, (effWidth - contentW) / 2 - PAD)))
+    : 0;
+  const padXSide = PAD + extraX;
+  const W = Math.round(contentW + 2 * padXSide);
+  const H = Math.round(contentH + 2 * PAD);
+  const cx = padXSide, cy = PAD;
   const xPx = (x: number) => cx + (x - bounds.x[0]) * scale;
   const yPx = (y: number) => H - cy - (y - bounds.y[0]) * scale;
 
@@ -790,14 +803,36 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
              style={{ display: 'block', overflow: 'hidden' }}
              preserveAspectRatio="xMidYMid meet">
           {els}
+          {/* 드래그된 라벨 → 원래 위치(가리키는 지점) leader 선. 안 움직였으면 안 그림. */}
+          {resolvedLabels.map((d) => {
+            const o = labelDrag[d.key];
+            if (!o || (o.dx === 0 && o.dy === 0)) return null;
+            return <line key={`ld${d.key}`} x1={d.left} y1={d.top} x2={d.left + o.dx} y2={d.top + o.dy}
+                         stroke="#9ca3af" strokeWidth={1} strokeDasharray="2 2" pointerEvents="none" />;
+          })}
         </svg>
-        {resolvedLabels.map((d) => (
-          <div key={d.key} className="geom-label"
-               style={{ left: d.left, top: d.top, color: d.color,
-                        transform: d.tx ? `translateX(${d.tx}%)` : undefined }}>
-            <GeomLabel text={d.text} />
-          </div>
-        ))}
+        {resolvedLabels.map((d) => {
+          const o = labelDrag[d.key];
+          return (
+            <div key={d.key} className="geom-label"
+                 onPointerDown={(e) => {
+                   e.stopPropagation();
+                   (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+                   dragRef.current = { key: d.key, sx: e.clientX, sy: e.clientY, bdx: o?.dx ?? 0, bdy: o?.dy ?? 0 };
+                 }}
+                 onPointerMove={(e) => {
+                   const dr = dragRef.current;
+                   if (!dr || dr.key !== d.key) return;
+                   setLabelDrag((m) => ({ ...m, [d.key]: { dx: dr.bdx + (e.clientX - dr.sx), dy: dr.bdy + (e.clientY - dr.sy) } }));
+                 }}
+                 onPointerUp={(e) => { e.stopPropagation(); if (dragRef.current?.key === d.key) dragRef.current = null; }}
+                 style={{ left: d.left + (o?.dx ?? 0), top: d.top + (o?.dy ?? 0), color: d.color,
+                          cursor: 'grab', touchAction: 'none',
+                          transform: d.tx ? `translateX(${d.tx}%)` : undefined }}>
+              <GeomLabel text={d.text} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
