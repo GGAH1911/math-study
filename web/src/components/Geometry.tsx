@@ -282,18 +282,28 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
     if (fixedWidth) return;   // 고정폭이면 측정 안 함
     const el = wrapRef.current;
     if (!el) return;
+    // ★ client:load 로 단독 마운트되면 부모가 <astro-island>(display:contents, clientWidth=0)라
+    // el.parentElement.clientWidth 가 0 → 240 floor 로 고정되던 버그. display:contents/0폭 래퍼를
+    // 건너뛰고 **실제 레이아웃 폭을 가진 첫 조상**을 측정·관측한다. (ChatPanel 내부 자식일 땐
+    // 부모가 일반 박스라 그대로 동작.)
+    const layoutBox = (): HTMLElement | null => {
+      let n: HTMLElement | null = el.parentElement;
+      while (n && n.clientWidth === 0) n = n.parentElement;
+      return n;
+    };
     // rAF-throttle + ≥1px change guard — prevents ResizeObserver feedback
     // loops from pegging the main thread (see Graph.tsx PlotGraph for detail).
     let raf = 0;
     const measure = () => {
       raf = 0;
-      const pw = el.parentElement?.clientWidth ?? width;
+      const pw = layoutBox()?.clientWidth ?? width;
       const target = Math.round(Math.min(width, Math.max(240, pw - 16)));
       setEffWidth((prev) => (Math.abs(prev - target) < 1 ? prev : target));
     };
     measure();
+    const box = layoutBox();
     const ro = new ResizeObserver(() => { if (!raf) raf = requestAnimationFrame(measure); });
-    if (el.parentElement) ro.observe(el.parentElement);
+    if (box) ro.observe(box);
     return () => { if (raf) cancelAnimationFrame(raf); ro.disconnect(); };
   }, [width, fixedWidth]);
 
