@@ -12,6 +12,11 @@ interface Props {
   practice?: { count: number; href: string };
 }
 const { href, title, subtitle, graphHref, chips = [], meta = [], description, emphasized = false, progress, practice } = Astro.props;
+// 요약의 `$...$` 를 KaTeX 로 렌더(SSOT: katex-normalize 의 공유 renderMathSegments,
+// 마크다운 rehype·클라이언트 mathish 와 동일 정규화·정책). 서버라 katex 직접 주입.
+import katex from 'katex';
+import { renderMathSegments } from '../lib/katex-normalize.mjs';
+const descHtml = description ? renderMathSegments(description, katex) : '';
 ---
 <article class:list={["concept-card card relative", emphasized && "concept-card-unit"]}>
   <a href={href} class="block">
@@ -35,7 +40,7 @@ const { href, title, subtitle, graphHref, chips = [], meta = [], description, em
       </div>
     )}
     {description && (
-      <p class="text-sm text-[color:var(--color-muted)] mt-2 line-clamp-2">{description}</p>
+      <p class="text-sm text-[color:var(--color-muted)] mt-2 line-clamp-2" set:html={descHtml}></p>
     )}
     {meta.length > 0 && (
       <dl class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-[color:var(--color-subtle)]">

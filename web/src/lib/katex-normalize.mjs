@@ -92,3 +92,51 @@ export function KATEX_STRICT(code) {
 // an otherwise-readable body; amber keeps it visible without making the whole
 // note feel broken.
 export const KATEX_ERROR_COLOR = '#a16207';
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+// KaTeX 가 `$...$` 안에서 원문자를 보게 escape 역변환.
+function decodeHtml(s) {
+  return s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+}
+
+/**
+ * `$$...$$`/`$...$` 가 섞인 평문을 KaTeX HTML 로 렌더한다. 정규화·strict·errorColor
+ * 정책을 normalizeKatex/KATEX_STRICT/KATEX_ERROR_COLOR 로 통일 → 마크다운(rehype),
+ * 클라이언트(mathish), 카드(서버)가 동일 렌더를 공유하는 SSOT 진입점.
+ * katex 인스턴스를 인자로 받아(이 모듈은 katex 를 import 안 함 → 클라 번들 안 불림)
+ * 서버는 `import katex`, 클라는 `ensureKatex()` 결과를 넘긴다.
+ * @param {string} text
+ * @param {{renderToString:(t:string,o?:object)=>string}} katex
+ * @param {{display?:boolean, auto?:boolean}} [opts]
+ * @returns {string} HTML
+ */
+export function renderMathSegments(text, katex, opts = {}) {
+  if (!text) return '';
+  const { display = false, auto = false } = opts;
+  const ren = (tex, displayMode) =>
+    katex.renderToString(normalizeKatex(decodeHtml(tex)), {
+      displayMode, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR,
+    });
+  try {
+    if (display && text.includes('$$')) {
+      let out = escapeHtml(text).replace(/\$\$([^$]+?)\$\$/g, (_, t) => ren(t, true));
+      return out.replace(/\$([^\n$]+?)\$/g, (_, t) => ren(t, false));
+    }
+    if (text.includes('$')) {
+      let out = escapeHtml(text);
+      // `$$...$$` 를 먼저 소비(안 하면 인라인 정규식이 안쪽만 잡아 바깥 `$` 가 남음).
+      if (out.includes('$$')) out = out.replace(/\$\$([^$]+?)\$\$/g, (_, t) => ren(t, false));
+      return out.replace(/\$([^\n$]+?)\$/g, (_, t) => ren(t, false));
+    }
+    if (auto) {
+      // 한글/CJK 토큰은 \text{} 로 감싸 unicodeTextInMathMode 경고 회피.
+      const wrapped = text.replace(/([ㄱ-힝]+|[一-鿿]+|[가-힣]+)/g, '\\text{$1}');
+      return ren(wrapped, false);
+    }
+    return escapeHtml(text);
+  } catch {
+    return escapeHtml(text);
+  }
+}
