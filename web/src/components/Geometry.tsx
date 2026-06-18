@@ -359,6 +359,28 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
       addSeg(cxp + rp * Math.cos(a1), cyp + rp * Math.sin(a1), cxp + rp * Math.cos(a2), cyp + rp * Math.sin(a2));
     }
   };
+  // 도형 중심(px) — 선 라벨을 선의 '바깥쪽'(중심 반대편)에 두기 위함.
+  let _csx = 0, _csy = 0, _csn = 0;
+  for (const s of shapes) {
+    const ps: Array<[number, number]> = [];
+    if (s.type === 'point') ps.push(s.at);
+    else if (s.type === 'polygon') ps.push(...s.vertices);
+    else if (s.type === 'line' || s.type === 'segment' || s.type === 'vector') ps.push(s.from, s.to);
+    else if (s.type === 'circle' || s.type === 'ellipse' || s.type === 'hyperbola') ps.push(s.center);
+    else if (s.type === 'angle') ps.push(s.at);
+    for (const p of ps) if (typeof p?.[0] === 'number' && typeof p?.[1] === 'number') { _csx += p[0]; _csy += p[1]; _csn++; }
+  }
+  const ctrX = _csn ? _csx / _csn : (bounds.x[0] + bounds.x[1]) / 2;
+  const ctrY = _csn ? _csy / _csn : (bounds.y[0] + bounds.y[1]) / 2;
+  const ctrPx: [number, number] = [xPx(ctrX), yPx(ctrY)];
+  // 선분 중점에서 선의 수직 바깥쪽(중심 반대)으로 라벨 위치 계산.
+  const outwardLabel = (ax: number, ay: number, bx: number, by: number, off: number): [number, number] => {
+    const mx = (xPx(ax) + xPx(bx)) / 2, my = (yPx(ay) + yPx(by)) / 2;
+    let nx = -(yPx(by) - yPx(ay)), ny = (xPx(bx) - xPx(ax));
+    const nl = Math.hypot(nx, ny) || 1; nx /= nl; ny /= nl;
+    if ((mx - ctrPx[0]) * nx + (my - ctrPx[1]) * ny < 0) { nx = -nx; ny = -ny; }
+    return [mx + nx * off, my + ny * off];
+  };
 
   // Grid
   if (showGrid) {
@@ -472,8 +494,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
                        stroke={s.color ?? c0} strokeWidth={1.8} strokeDasharray={s.dashed ? '6 4' : undefined} />);
         addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
-          const mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
-          pushLabel(`lnl${i}`, s.label, xPx(mx) + 6, yPx(my) - 10);
+          const [llx, lly] = outwardLabel(s.from[0], s.from[1], s.to[0], s.to[1], labelFontPx * 0.95 + 6);
+          pushLabel(`lnl${i}`, s.label, llx, lly, -50);
         }
         break;
       }
@@ -609,8 +631,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         );
         addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
-          const mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
-          pushLabel(`vecl${i}`, s.label, xPx(mx) + 8, yPx(my) - 12);
+          const [vlx, vly] = outwardLabel(s.from[0], s.from[1], s.to[0], s.to[1], labelFontPx * 0.95 + 6);
+          pushLabel(`vecl${i}`, s.label, vlx, vly, -50);
         }
         break;
       }
@@ -635,9 +657,11 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
           while (dA > Math.PI) dA -= 2 * Math.PI;
           while (dA < -Math.PI) dA += 2 * Math.PI;
           const midA = a1 + dA / 2;
-          const lx = s.at[0] + (r + 0.3) * Math.cos(midA);
-          const ly = s.at[1] + (r + 0.3) * Math.sin(midA);
-          pushLabel(`agl${i}`, s.label, xPx(lx) - 6, yPx(ly) - 8, 0, undefined, true); // 각 라벨 고정
+          // 각 라벨은 호(arc) 바로 바깥(반지름 r*1.35)에 중앙정렬로 — 각을 또렷이 표시, 고정.
+          const lr = r * 1.35;
+          const lx = s.at[0] + lr * Math.cos(midA);
+          const ly = s.at[1] + lr * Math.sin(midA);
+          pushLabel(`agl${i}`, s.label, xPx(lx), yPx(ly), -50, undefined, true);
         }
         break;
       }
