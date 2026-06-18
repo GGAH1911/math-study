@@ -75,7 +75,7 @@ const noAxes = (s: GSpec): any => ({ ...s, showAxes: false, showGrid: false });
 const plotSpec: any = PLOT;
 ---
 <BaseLayout title="개념 figure — 축 숨김 테스트">
-  <div class="max-w-3xl mx-auto px-6 py-8 space-y-8">
+  <div class="max-w-4xl mx-auto px-6 py-8 space-y-8">
     <header class="space-y-1">
       <h1 class="text-2xl font-semibold tracking-tight">개념 figure — 좌표 정확 + 축 숨김 테스트</h1>
       <p class="text-sm text-[color:var(--color-muted)] leading-relaxed">
@@ -92,7 +92,7 @@ const plotSpec: any = PLOT;
         <div class="bg-zinc-950 rounded p-2 ring-1 ring-emerald-500/30">
           <div class="text-[10px] text-emerald-400 mb-1">개념 페이지에 들어갈 크기 (축·눈금 숨김)</div>
           <div class="flex justify-center">
-            <Geometry client:load spec={noAxes(g.spec)} width={640} height={600} hideCaption />
+            <Geometry client:load spec={noAxes(g.spec)} width={720} height={720} hideCaption />
           </div>
         </div>
         <details class="text-xs">
