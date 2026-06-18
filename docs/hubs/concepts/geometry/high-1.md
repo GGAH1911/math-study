@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: geometry
 grade: high-1
 counts:
-  total: 108
+  total: 105
 ---
 
 # 도형 · 고1 (high-1)
 
-총 108개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 105개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [도형의 방정식](../../../concepts/geometry/high-1/도형의_방정식.md) · 도형의 방정식 `unknown`
 
-## 정의 (101)
+## 정의 (98)
 
 - [거리 계산](../../../concepts/geometry/high-1/도형의_방정식/거리_계산.md) · 도형의 방정식 `unknown`
 - [거리 조건과 도형](../../../concepts/geometry/high-1/도형의_방정식/거리_조건과_도형.md) · 도형의 방정식 `unknown`
@@ -103,11 +103,8 @@ counts:
 - [좌표계에서의 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표계에서의_거리.md) · 도형의 방정식 `unknown`
 - [좌표기하](../../../concepts/geometry/high-1/도형의_방정식/좌표기하.md) · 도형의 방정식 `unknown`
 - [좌표를 이용한 넓이](../../../concepts/geometry/high-1/도형의_방정식/좌표를_이용한_넓이.md) · 도형의 방정식 `unknown`
-- [좌표와 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표와_거리.md) · 도형의 방정식 `unknown`
-- [좌표와 기하](../../../concepts/geometry/high-1/도형의_방정식/좌표와_기하.md) · 도형의 방정식 `unknown`
 - [좌표와 도형](../../../concepts/geometry/high-1/도형의_방정식/좌표와_도형.md) · 도형의 방정식 `unknown`
 - [좌표의 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표의_거리.md) · 도형의 방정식 `unknown`
-- [좌표의 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표의_계산.md) · 도형의 방정식 `unknown`
 - [좌표평면 도형](../../../concepts/geometry/high-1/도형의_방정식/좌표평면_도형.md) · 도형의 방정식 `unknown`
 - [중점공식](../../../concepts/geometry/high-1/도형의_방정식/중점공식.md) · 도형의 방정식 `unknown`
 - [중점의 좌표](../../../concepts/geometry/high-1/도형의_방정식/중점의_좌표.md) · 도형의 방정식 `unknown`

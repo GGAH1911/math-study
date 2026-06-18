@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: geometry
 grade: middle-1
 counts:
-  total: 111
+  total: 108
 ---
 
 # 도형 · 중1 (middle-1)
 
-총 111개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 108개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (4)
 
@@ -20,7 +20,7 @@ counts:
 - [작도와 합동](../../../concepts/geometry/middle-1/작도와_합동.md) · 작도와 합동 `unknown`
 - [평면도형](../../../concepts/geometry/middle-1/평면도형.md) · 평면도형 `unknown`
 
-## 정의 (93)
+## 정의 (90)
 
 - [각도](../../../concepts/geometry/middle-1/기본_도형/각도.md) · 기본 도형 `unknown`
 - [각의 이등분선](../../../concepts/geometry/middle-1/작도와_합동/각의_이등분선.md) · 작도와 합동 `unknown`
@@ -47,7 +47,6 @@ counts:
 - [반지름](../../../concepts/geometry/middle-1/평면도형/반지름.md) · 평면도형 `unknown`
 - [부채꼴](../../../concepts/geometry/middle-1/평면도형/부채꼴.md) · 평면도형 `unknown`
 - [부채꼴 넓이](../../../concepts/geometry/middle-1/평면도형/부채꼴_넓이.md) · 평면도형 `unknown`
-- [부채꼴의 넓이](../../../concepts/geometry/middle-1/평면도형/부채꼴의_넓이.md) · 평면도형 `unknown`
 - [부채꼴의 호의 길이](../../../concepts/geometry/middle-1/평면도형/부채꼴의_호의_길이.md) · 평면도형 `unknown`
 - [부피 동등 조건](../../../concepts/geometry/middle-1/입체도형/부피_동등_조건.md) · 입체도형 `unknown`
 - [사각뿔](../../../concepts/geometry/middle-1/입체도형/사각뿔.md) · 입체도형 `unknown`
@@ -94,7 +93,6 @@ counts:
 - [정사각형의 성질](../../../concepts/geometry/middle-1/평면도형/정사각형의_성질.md) · 평면도형 `unknown`
 - [정삼각기둥](../../../concepts/geometry/middle-1/입체도형/정삼각기둥.md) · 입체도형 `unknown`
 - [정삼각형](../../../concepts/geometry/middle-1/평면도형/정삼각형.md) · 평면도형 `unknown`
-- [정삼각형 조건](../../../concepts/geometry/middle-1/평면도형/정삼각형_조건.md) · 평면도형 `unknown`
 - [정삼각형의 성질](../../../concepts/geometry/middle-1/평면도형/정삼각형의_성질.md) · 평면도형 `unknown`
 - [정삼각형의 조건](../../../concepts/geometry/middle-1/평면도형/정삼각형의_조건.md) · 평면도형 `unknown`
 - [정육각형](../../../concepts/geometry/middle-1/평면도형/정육각형.md) · 평면도형 `unknown`
@@ -105,7 +103,6 @@ counts:
 - [직각](../../../concepts/geometry/middle-1/기본_도형/직각.md) · 기본 도형 `unknown`
 - [직사각형의 넓이](../../../concepts/geometry/middle-1/평면도형/직사각형의_넓이.md) · 평면도형 `unknown`
 - [직육면체](../../../concepts/geometry/middle-1/입체도형/직육면체.md) · 입체도형 `unknown`
-- [직육면체 부피](../../../concepts/geometry/middle-1/입체도형/직육면체_부피.md) · 입체도형 `unknown`
 - [직육면체의 겉넓이](../../../concepts/geometry/middle-1/입체도형/직육면체의_겉넓이.md) · 입체도형 `unknown`
 - [직육면체의 부피](../../../concepts/geometry/middle-1/입체도형/직육면체의_부피.md) · 입체도형 `unknown`
 - [평행 수직](../../../concepts/geometry/middle-1/기본_도형/평행_수직.md) · 기본 도형 `unknown`

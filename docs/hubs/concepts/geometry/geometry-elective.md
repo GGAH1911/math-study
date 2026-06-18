@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: geometry
 grade: geometry-elective
 counts:
-  total: 130
+  total: 129
 ---
 
 # 도형 · 기하 (geometry-elective)
 
-총 130개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 129개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [이차곡선](../../../concepts/geometry/geometry-elective/이차곡선.md) · 이차곡선 `unknown`
 - [평면벡터](../../../concepts/geometry/geometry-elective/평면벡터.md) · 평면벡터 `unknown`
 
-## 정의 (111)
+## 정의 (110)
 
 - [각의 이등분선의 성질](../../../concepts/geometry/geometry-elective/이차곡선/각의_이등분선의_성질.md) · 이차곡선 `unknown`
 - [거리 관계](../../../concepts/geometry/geometry-elective/이차곡선/거리_관계.md) · 이차곡선 `unknown`
@@ -113,7 +113,6 @@ counts:
 - [직선의 법선 벡터](../../../concepts/geometry/geometry-elective/평면벡터/직선의_법선_벡터.md) · 평면벡터 `unknown`
 - [초점](../../../concepts/geometry/geometry-elective/이차곡선/초점.md) · 이차곡선 `unknown`
 - [초점거리](../../../concepts/geometry/geometry-elective/이차곡선/초점거리.md) · 이차곡선 `unknown`
-- [초점과 거리](../../../concepts/geometry/geometry-elective/이차곡선/초점과_거리.md) · 이차곡선 `unknown`
 - [초점과 꼭짓점](../../../concepts/geometry/geometry-elective/이차곡선/초점과_꼭짓점.md) · 이차곡선 `unknown`
 - [초점과 주축](../../../concepts/geometry/geometry-elective/이차곡선/초점과_주축.md) · 이차곡선 `unknown`
 - [초점과 준선](../../../concepts/geometry/geometry-elective/이차곡선/초점과_준선.md) · 이차곡선 `unknown`

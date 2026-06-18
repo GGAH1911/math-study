@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: math-2
 counts:
-  total: 149
+  total: 145
 ---
 
 # 함수 · 수학2 (math-2)
 
-총 149개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 145개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [적분](../../../concepts/functions/math-2/적분.md) · 적분 `unknown`
 - [함수의 극한과 연속](../../../concepts/functions/math-2/함수의_극한과_연속.md) · 함수의 극한과 연속 `unknown`
 
-## 정의 (128)
+## 정의 (124)
 
 - [3차 함수의 미분](../../../concepts/functions/math-2/미분/3차_함수의_미분.md) · 미분 `unknown`
 - [3차함수](../../../concepts/functions/math-2/미분/3차함수.md) · 미분 `unknown`
@@ -42,7 +42,6 @@ counts:
 - [극한 계산](../../../concepts/functions/math-2/함수의_극한과_연속/극한_계산.md) · 함수의 극한과 연속 `unknown`
 - [극한과 도함수](../../../concepts/functions/math-2/미분/극한과_도함수.md) · 미분 `unknown`
 - [극한과 연속성](../../../concepts/functions/math-2/함수의_극한과_연속/극한과_연속성.md) · 함수의 극한과 연속 `unknown`
-- [극한의 계산](../../../concepts/functions/math-2/함수의_극한과_연속/극한의_계산.md) · 함수의 극한과 연속 `unknown`
 - [극한의 존재 조건](../../../concepts/functions/math-2/함수의_극한과_연속/극한의_존재_조건.md) · 함수의 극한과 연속 `unknown`
 - [극한의정의](../../../concepts/functions/math-2/함수의_극한과_연속/극한의정의.md) · 함수의 극한과 연속 `unknown`
 - [급수와 적분의 관계](../../../concepts/functions/math-2/적분/급수와_적분의_관계.md) · 적분 `unknown`
@@ -60,9 +59,7 @@ counts:
 - [대칭 미분](../../../concepts/functions/math-2/미분/대칭_미분.md) · 미분 `unknown`
 - [도함수](../../../concepts/functions/math-2/미분/도함수.md) · 미분 `unknown`
 - [도함수 계산](../../../concepts/functions/math-2/미분/도함수_계산.md) · 미분 `unknown`
-- [도함수 조건](../../../concepts/functions/math-2/미분/도함수_조건.md) · 미분 `unknown`
 - [도함수와 기울기](../../../concepts/functions/math-2/미분/도함수와_기울기.md) · 미분 `unknown`
-- [도함수의 계산](../../../concepts/functions/math-2/미분/도함수의_계산.md) · 미분 `unknown`
 - [도함수의 기하학적 의미](../../../concepts/functions/math-2/미분/도함수의_기하학적_의미.md) · 미분 `unknown`
 - [도함수의 성질](../../../concepts/functions/math-2/미분/도함수의_성질.md) · 미분 `unknown`
 - [도함수의 연속성](../../../concepts/functions/math-2/미분/도함수의_연속성.md) · 미분 `unknown`
@@ -120,7 +117,6 @@ counts:
 - [정적분](../../../concepts/functions/math-2/적분/정적분.md) · 적분 `unknown`
 - [정적분 계산](../../../concepts/functions/math-2/적분/정적분_계산.md) · 적분 `unknown`
 - [정적분과 도함수의 관계](../../../concepts/functions/math-2/적분/정적분과_도함수의_관계.md) · 적분 `unknown`
-- [정적분의 계산](../../../concepts/functions/math-2/적분/정적분의_계산.md) · 적분 `unknown`
 - [정적분의 성질](../../../concepts/functions/math-2/적분/정적분의_성질.md) · 적분 `unknown`
 - [정적분의 정의](../../../concepts/functions/math-2/적분/정적분의_정의.md) · 적분 `unknown`
 - [제곱근식의 극한](../../../concepts/functions/math-2/함수의_극한과_연속/제곱근식의_극한.md) · 함수의 극한과 연속 `unknown`

@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: calculus
 counts:
-  total: 146
+  total: 142
 ---
 
 # 함수 · 미적분 (calculus)
 
-총 146개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 142개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (7)
 
@@ -23,7 +23,7 @@ counts:
 - [정적분의 활용](../../../concepts/functions/calculus/정적분의_활용.md) · 정적분의 활용 `unknown`
 - [합성함수의 미분](../../../concepts/functions/calculus/합성함수의_미분.md) · 합성함수의 미분 (연쇄법칙) `unknown`
 
-## 정의 (107)
+## 정의 (103)
 
 - [거리와 변위](../../../concepts/functions/calculus/정적분의_활용/거리와_변위.md) · 정적분의 활용 `unknown`
 - [거리와 적분](../../../concepts/functions/calculus/정적분의_활용/거리와_적분.md) · 정적분의 활용 `unknown`
@@ -82,10 +82,8 @@ counts:
 - [분자분모 최고차항 비교](../../../concepts/functions/calculus/수열의_극한/분자분모_최고차항_비교.md) · 수열의 극한 `unknown`
 - [삼각함수 극한](../../../concepts/functions/calculus/여러가지함수의_극한/삼각함수_극한.md) · 여러가지함수의 극한 `unknown`
 - [삼각함수 미분](../../../concepts/functions/calculus/여러가지함수의_미분/삼각함수_미분.md) · 여러가지함수의 미분 `unknown`
-- [삼각함수의 극한](../../../concepts/functions/calculus/여러가지함수의_극한/삼각함수의_극한.md) · 여러가지함수의 극한 `unknown`
 - [삼각함수의 도함수](../../../concepts/functions/calculus/여러가지함수의_미분/삼각함수의_도함수.md) · 여러가지함수의 미분 `unknown`
 - [삼각함수의 적분](../../../concepts/functions/calculus/여러가지_적분법/삼각함수의_적분.md) · 여러가지 적분법 `unknown`
-- [삼각함수적분](../../../concepts/functions/calculus/여러가지_적분법/삼각함수적분.md) · 여러가지 적분법 `unknown`
 - [샌드위치 정리](../../../concepts/functions/calculus/여러가지함수의_극한/샌드위치_정리.md) · 여러가지함수의 극한 `unknown`
 - [속도](../../../concepts/functions/calculus/도함수의_활용_심화/속도.md) · 도함수의 활용 심화 `unknown`
 - [속도와 가속도 분석](../../../concepts/functions/calculus/정적분의_활용/속도와_가속도_분석.md) · 정적분의 활용 `unknown`
@@ -102,7 +100,6 @@ counts:
 - [위치 적분](../../../concepts/functions/calculus/여러가지_적분법/위치_적분.md) · 여러가지 적분법 `unknown`
 - [유리함수의 미분](../../../concepts/functions/calculus/여러가지함수의_미분/유리함수의_미분.md) · 여러가지함수의 미분 `unknown`
 - [음함수 미분](../../../concepts/functions/calculus/합성함수의_미분/음함수_미분.md) · 합성함수의 미분 `unknown`
-- [음함수의 미분](../../../concepts/functions/calculus/합성함수의_미분/음함수의_미분.md) · 합성함수의 미분 `unknown`
 - [자연상수 e](../../../concepts/functions/calculus/여러가지함수의_극한/자연상수_e.md) · 여러가지함수의 극한 `unknown`
 - [적분값 최적화](../../../concepts/functions/calculus/정적분의_활용/적분값_최적화.md) · 정적분의 활용 `unknown`
 - [적분과 거리 계산](../../../concepts/functions/calculus/정적분의_활용/적분과_거리_계산.md) · 정적분의 활용 `unknown`
@@ -117,7 +114,6 @@ counts:
 - [지수수열의 극한](../../../concepts/functions/calculus/수열의_극한/지수수열의_극한.md) · 수열의 극한 `unknown`
 - [지수함수 미분](../../../concepts/functions/calculus/여러가지함수의_미분/지수함수_미분.md) · 여러가지함수의 미분 `unknown`
 - [지수함수의 극한](../../../concepts/functions/calculus/여러가지함수의_극한/지수함수의_극한.md) · 여러가지함수의 극한 `unknown`
-- [지수함수의 미분](../../../concepts/functions/calculus/여러가지함수의_미분/지수함수의_미분.md) · 여러가지함수의 미분 `unknown`
 - [치환적분](../../../concepts/functions/calculus/여러가지_적분법/치환적분.md) · 여러가지 적분법 `unknown`
 - [평균값정리](../../../concepts/functions/calculus/도함수의_활용_심화/평균값정리.md) · 도함수의 활용 심화 `unknown`
 - [폐구간에서의 최댓값과 최솟값](../../../concepts/functions/calculus/도함수의_활용_심화/폐구간에서의_최댓값과_최솟값.md) · 도함수의 활용 심화 `unknown`
