@@ -344,6 +344,16 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   const labelDescs: LabelDesc[] = [];
   const pushLabel = (key: string, text: string, left: number, top: number, tx = 0, color?: string) =>
     labelDescs.push({ key, text, left, top, tx, color });
+  // 도형 외곽선(픽셀 세그먼트) — 라벨이 선·원·다각형을 가리지 않게 밀어낼 장애물.
+  const obstacles: Array<[number, number, number, number]> = [];
+  const addSeg = (x1: number, y1: number, x2: number, y2: number) => obstacles.push([x1, y1, x2, y2]);
+  const addCircleObstacle = (cxp: number, cyp: number, rp: number) => {
+    const N = 28;
+    for (let k = 0; k < N; k++) {
+      const a1 = (2 * Math.PI * k) / N, a2 = (2 * Math.PI * (k + 1)) / N;
+      addSeg(cxp + rp * Math.cos(a1), cyp + rp * Math.sin(a1), cxp + rp * Math.cos(a2), cyp + rp * Math.sin(a2));
+    }
+  };
 
   // Grid
   if (showGrid) {
@@ -434,6 +444,10 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         els.push(closed
           ? <polygon key={`pg${i}`} points={pts} fill={fillCol} fillOpacity={fillOp} stroke={s.stroke ?? c0} strokeWidth={1.8} />
           : <polyline key={`pg${i}`} points={pts} fill="none" stroke={s.stroke ?? c0} strokeWidth={1.8} />);
+        for (let vi = 0; vi < s.vertices.length - (closed ? 0 : 1); vi++) {
+          const p1 = s.vertices[vi], p2 = s.vertices[(vi + 1) % s.vertices.length];
+          if (p1 && p2) addSeg(xPx(p1[0]), yPx(p1[1]), xPx(p2[0]), yPx(p2[1]));
+        }
         if (s.labels) {
           s.labels.forEach((lab, vi) => {
             const v = s.vertices[vi]; if (!v) return;
@@ -451,6 +465,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
       case 'line': case 'segment': {
         els.push(<line key={`ln${i}`} x1={xPx(s.from[0])} y1={yPx(s.from[1])} x2={xPx(s.to[0])} y2={yPx(s.to[1])}
                        stroke={s.color ?? c0} strokeWidth={1.8} strokeDasharray={s.dashed ? '6 4' : undefined} />);
+        addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
           const mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
           pushLabel(`lnl${i}`, s.label, xPx(mx) + 6, yPx(my) - 10);
@@ -463,6 +478,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
         els.push(<circle key={`ci${i}`} cx={xPx(s.center[0])} cy={yPx(s.center[1])} r={Math.abs(s.radius) * scale}
                          fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
                          stroke={s.stroke ?? c0} strokeWidth={1.8} />);
+        addCircleObstacle(xPx(s.center[0]), yPx(s.center[1]), Math.abs(s.radius) * scale);
         if (s.label) pushLabel(`cil${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1]) - 6);
         break;
       }
@@ -586,6 +602,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
                   stroke={s.color ?? c0} strokeWidth={2} markerEnd={`url(#${arrowId})`} />
           </g>
         );
+        addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
           const mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
           pushLabel(`vecl${i}`, s.label, xPx(mx) + 8, yPx(my) - 12);
@@ -627,7 +644,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   });
 
   // 라벨 충돌 회피 — 가까운 앵커의 라벨끼리 겹치던 것(단위원 1·θ·sin·cos 등) 분리.
-  const resolvedLabels = deOverlapLabels(labelDescs, labelFontPx, W, H);
+  const resolvedLabels = deOverlapLabels(labelDescs, labelFontPx, W, H, obstacles);
 
   return (
     <div ref={wrapRef} className="graph-host bg-zinc-950 border border-zinc-700/80 rounded-lg shadow-inner max-w-full"
@@ -666,16 +683,27 @@ function estLabelWidth(text: string, fontPx: number): number {
 // 앵커에서 과도 이탈은 클램프(라벨이 가리키는 도형과 분리되지 않게). 캔버스 경계 내 유지.
 // 노드 도식·LLM 채팅 공통(같은 Geometry 컴포넌트)이라 양쪽에 동시 적용된다.
 type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string };
-function deOverlapLabels(descs: _LD[], fontPx: number, W: number, H: number): _LD[] {
+type _Seg = [number, number, number, number];
+// 선분 위에서 점(px,py)에 가장 가까운 점.
+function _closestOnSeg(px: number, py: number, s: _Seg): [number, number] {
+  const dx = s[2] - s[0], dy = s[3] - s[1];
+  const len2 = dx * dx + dy * dy || 1;
+  let t = ((px - s[0]) * dx + (py - s[1]) * dy) / len2;
+  t = Math.max(0, Math.min(1, t));
+  return [s[0] + t * dx, s[1] + t * dy];
+}
+function deOverlapLabels(descs: _LD[], fontPx: number, W: number, H: number, obstacles: _Seg[] = []): _LD[] {
   const h = fontPx * 1.5;
-  const MAXSHIFT = fontPx * 3.2;
+  const MAXSHIFT = fontPx * 4;
+  const PAD = 2; // 라벨과 도형 사이 최소 여백
   const boxes = descs.map((d) => {
     const w = estLabelWidth(d.text, fontPx);
     const x0 = d.left + (d.tx / 100) * w;   // transform 반영한 시각 좌상단
     return { d, w, h, x: x0, y: d.top, ox: x0, oy: d.top };
   });
-  for (let iter = 0; iter < 80; iter++) {
+  for (let iter = 0; iter < 90; iter++) {
     let moved = false;
+    // 1) 라벨끼리 겹침 — 최소이동축으로 분리.
     for (let a = 0; a < boxes.length; a++) {
       for (let b = a + 1; b < boxes.length; b++) {
         const A = boxes[a], B = boxes[b];
@@ -683,13 +711,25 @@ function deOverlapLabels(descs: _LD[], fontPx: number, W: number, H: number): _L
         const oy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
         if (ox > 0 && oy > 0) {
           moved = true;
-          if (ox <= oy) {
-            const p = ox / 2 + 0.5;
-            if (A.x <= B.x) { A.x -= p; B.x += p; } else { A.x += p; B.x -= p; }
-          } else {
-            const p = oy / 2 + 0.5;
-            if (A.y <= B.y) { A.y -= p; B.y += p; } else { A.y += p; B.y -= p; }
-          }
+          if (ox <= oy) { const p = ox / 2 + 0.5; if (A.x <= B.x) { A.x -= p; B.x += p; } else { A.x += p; B.x -= p; } }
+          else { const p = oy / 2 + 0.5; if (A.y <= B.y) { A.y -= p; B.y += p; } else { A.y += p; B.y -= p; } }
+        }
+      }
+    }
+    // 2) 라벨이 도형 외곽선(장애물)을 가리면 — 박스 밖으로 최소이동(MTV)으로 밀어낸다.
+    for (const box of boxes) {
+      const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
+      for (const seg of obstacles) {
+        const [qx, qy] = _closestOnSeg(cx, cy, seg);
+        const inX = qx > box.x - PAD && qx < box.x + box.w + PAD;
+        const inY = qy > box.y - PAD && qy < box.y + box.h + PAD;
+        if (inX && inY) {
+          moved = true;
+          const dl = qx - (box.x - PAD), dr = (box.x + box.w + PAD) - qx;
+          const dt = qy - (box.y - PAD), db = (box.y + box.h + PAD) - qy;
+          const m = Math.min(dl, dr, dt, db);
+          if (m === dl) box.x += dl + 1; else if (m === dr) box.x -= dr + 1;
+          else if (m === dt) box.y += dt + 1; else box.y -= db + 1;
         }
       }
     }
