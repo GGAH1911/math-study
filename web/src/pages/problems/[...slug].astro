@@ -55,6 +55,18 @@ const reconHTML = isAdmin ? reconFull : ''; // 빈 문자열=토글/재구성 �
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
+// 개념 ref 해석: exact id → 그대로, 아니면 정규화 leaf(공백·_ 제거)로 정식 노드 찾기.
+// 해석되면 정식 경로로 링크, 안 되면 평문(깨진 링크 방지). 노드 다이어트로 flat→nested 이동·병합 다수.
+const allConceptsForLink = await getCollection('concepts');
+const conceptIdSet = new Set(allConceptsForLink.map((c) => c.id.normalize('NFC')));
+const conceptLeafKey = (s: string) => (s.split('/').pop() ?? s).normalize('NFC').replace(/[\s_]/g, '').toLowerCase();
+const conceptLeafToId = new Map<string, string>();
+for (const c of allConceptsForLink) { const k = conceptLeafKey(c.id); if (!conceptLeafToId.has(k)) conceptLeafToId.set(k, c.id); }
+const resolveConcept = (ref: string): string | null => {
+  const id = fmtPath(ref).normalize('NFC');
+  if (conceptIdSet.has(id)) return id;
+  return conceptLeafToId.get(conceptLeafKey(id)) ?? null;
+};
 // '단일'(고1·고2·통합형)은 과목 표기 생략 — "2025년 모의고사 9번"처럼.
 const subjLabel = fm.source?.subject && fm.source.subject !== '단일' ? `${fm.source.subject} ` : '';
 const unitTitle = fm.source?.subject
@@ -191,8 +203,11 @@ if (src) {
             <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">매핑된 개념</h3>
             <ul class="space-y-1.5 text-sm">
               {fm.concepts.map((p) => {
-                const cslug = fmtPath(p);
-                return <li><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${cslug}`}>{labelOf(cslug)}</a></li>;
+                const resolved = resolveConcept(p);
+                const label = labelOf(fmtPath(p));
+                return <li>{resolved
+                  ? <a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${resolved}`}>{label}</a>
+                  : <span class="text-[color:var(--color-subtle)]" title="아직 개념 노드가 없는 태그">{label}</span>}</li>;
               })}
             </ul>
           </section>
