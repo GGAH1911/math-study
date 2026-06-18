@@ -2,7 +2,7 @@
 // 목적: malformed LLM 수식이 제대로 렌더되는지 + 정상 식 회귀 없는지 "관측".
 // 실행: node web/scripts/katex-harness.mjs   (cwd=repo root 또는 web/)
 import katex from 'katex';
-import { normalizeKatex, KATEX_STRICT, KATEX_ERROR_COLOR } from '../src/lib/katex-normalize.mjs';
+import { normalizeKatex, KATEX_STRICT, KATEX_ERROR_COLOR, renderMathSegments } from '../src/lib/katex-normalize.mjs';
 
 // ───────── ChatPanel 함수 충실 복제 (현재 코드 그대로) ─────────
 function normalizeLlmMarkup(text) {
@@ -149,4 +149,25 @@ const CASES = [
 let pass = 0;
 for (const [n, t, e] of CASES) if (observe(n, t, e)) pass++;
 console.log(`\n${pass}/${CASES.length} 통과`);
-process.exit(pass === CASES.length ? 0 : 1);
+
+// ───────── SSOT 회귀 게이트: 통합 renderMathSegments 가 (구) applyKatex 와 바이트 동일? ─────────
+// applyKatex(위 골든 = 구 ChatPanel 코드 충실복제) vs renderMathSegments(html,{htmlInput,recoverBare}).
+console.log('\n=== SSOT 패리티 (통합 함수 vs 골든 applyKatex, 바이트 동일) ===');
+let parityPass = 0;
+for (const [n, t] of CASES) {
+  const base = renderMarkdown(t);
+  const golden = applyKatex(base);
+  const unified = renderMathSegments(base, katex, { htmlInput: true, recoverBare: true });
+  const same = golden === unified;
+  if (same) parityPass++;
+  else {
+    console.log(`❌ ${n}: 불일치`);
+    // 첫 차이 지점만 출력
+    let i = 0; while (i < golden.length && golden[i] === unified[i]) i++;
+    console.log('   golden:', golden.slice(Math.max(0, i - 30), i + 30).replace(/\n/g, '⏎'));
+    console.log('   unified:', unified.slice(Math.max(0, i - 30), i + 30).replace(/\n/g, '⏎'));
+  }
+}
+console.log(`${parityPass === CASES.length ? '✅' : '❌'} 패리티 ${parityPass}/${CASES.length} 바이트 동일`);
+
+process.exit(pass === CASES.length && parityPass === CASES.length ? 0 : 1);

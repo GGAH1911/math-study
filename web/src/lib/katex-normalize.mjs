@@ -96,47 +96,85 @@ export const KATEX_ERROR_COLOR = '#a16207';
 function escapeHtml(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-// KaTeX 가 `$...$` 안에서 원문자를 보게 escape 역변환.
-function decodeHtml(s) {
-  return s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+// HTML entity → KaTeX 가 이해하는 원문자/LaTeX. `&le;`/`&lt;=` 등 관계기호도 복원.
+// (이전 ChatPanel.decodeEntities 와 동일 — 여기로 이전해 SSOT 화.)
+export function decodeEntities(s) {
+  return s
+    .replace(/&amp;(le|ge)=?;/g, (_, k) => (k === 'le' ? '\\le' : '\\ge'))
+    .replace(/&le;=?/g, '\\le').replace(/&ge;=?/g, '\\ge')
+    .replace(/&lt;=/g, '\\le').replace(/&gt;=/g, '\\ge')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+}
+
+// raw(마커 빠진) 부등호 chain·LaTeX 명령어 복원용 패턴 (ChatPanel 에서 이전).
+const MATH_TOKEN = String.raw`(?:[A-Za-z0-9\-+*/^=,.]+|\\[A-Za-z]+(?:\{[^}]*\})*|\||\(|\)|\{|\})`;
+const ENTITY_OP = String.raw`(?:&lt;|&gt;|&le;|&ge;|&amp;le;|&amp;ge;)=?`;
+const INEQUALITY_RUN = new RegExp(`(${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)(\\s*${ENTITY_OP}\\s*${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)+`, 'g');
+const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+(?![A-Za-z]{3,}(?![A-Za-z]))[A-Za-z0-9\-+*/^=.,()|\\{}]+)*)/g;
+
+// LLM 이 `$` 마커를 빠뜨린 raw 부등호/명령어를 수학 문맥에서만 KaTeX 로 복원.
+// 실패하면 원본 유지(throwOnError:true 고정 — 복구는 항상 안전 폴백). HTML 태그 영역은 skip.
+export function recoverBareMath(html, katex) {
+  html = html.replace(INEQUALITY_RUN, (full) => {
+    if (/[<>]/.test(full)) return full;
+    try { return katex.renderToString(decodeEntities(full), { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); } catch { return full; }
+  });
+  html = html.replace(LATEX_CMD_RUN, (full) => {
+    if (/[<>]/.test(full)) return full;
+    const tex = decodeEntities(full).trim();
+    if (tex.length < 2) return full;
+    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); } catch { return full; }
+  });
+  return html;
 }
 
 /**
- * `$$...$$`/`$...$` 가 섞인 평문을 KaTeX HTML 로 렌더한다. 정규화·strict·errorColor
- * 정책을 normalizeKatex/KATEX_STRICT/KATEX_ERROR_COLOR 로 통일 → 마크다운(rehype),
- * 클라이언트(mathish), 카드(서버)가 동일 렌더를 공유하는 SSOT 진입점.
- * katex 인스턴스를 인자로 받아(이 모듈은 katex 를 import 안 함 → 클라 번들 안 불림)
- * 서버는 `import katex`, 클라는 `ensureKatex()` 결과를 넘긴다.
- * @param {string} text
- * @param {{renderToString:(t:string,o?:object)=>string}} katex
- * @param {{display?:boolean, auto?:boolean}} [opts]
- * @returns {string} HTML
+ * `$$...$$`/`$...$` 를 KaTeX HTML 로 렌더하는 **단일 진입점(SSOT)**. normalizeKatex·
+ * KATEX_STRICT·KATEX_ERROR_COLOR·decodeEntities·recoverBareMath 정책을 공유 →
+ * 챗(ChatPanel)·클라(mathish)·카드(서버)가 동일 렌더.
+ * katex 인스턴스를 인자로 받음(이 모듈은 katex 를 import 안 함 → 클라 번들 안 불림).
+ *
+ * opts:
+ *  - htmlInput: 입력이 이미 마크다운 렌더된 HTML(태그 포함). true 면 escape 안 함.
+ *      (false=평문 → escapeHtml 선행. 카드/짧은 라벨용.)
+ *  - display:  `$$…$$` 를 display 모드로. 미지정 시 htmlInput 값을 따름
+ *      (챗=display, 평문=inline). 마크다운 멀티라인 `<br/>`→`\n` 복원 포함.
+ *  - auto:     `$` 없는 순수 LaTeX 라벨을 통째 렌더(한글 토큰 \text{} 래핑). 평문 전용.
+ *  - recoverBare: 마커 빠진 raw 수식 복원(recoverBareMath). 챗 전용.
+ *  - throwOnError: 기본 true — 실패 시 원본 `$…$` 텍스트 유지(앰버 에러 HTML 아님).
+ *
+ * 불변식: {htmlInput:true, recoverBare:true} 호출은 (구) ChatPanel.applyKatex 와
+ * 바이트 동일(scripts/katex-harness.mjs 가 매 실행 검증).
  */
 export function renderMathSegments(text, katex, opts = {}) {
   if (!text) return '';
-  const { display = false, auto = false } = opts;
-  const ren = (tex, displayMode) =>
-    katex.renderToString(normalizeKatex(decodeHtml(tex)), {
-      displayMode, throwOnError: false, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR,
-    });
-  try {
-    if (display && text.includes('$$')) {
-      let out = escapeHtml(text).replace(/\$\$([^$]+?)\$\$/g, (_, t) => ren(t, true));
-      return out.replace(/\$([^\n$]+?)\$/g, (_, t) => ren(t, false));
-    }
-    if (text.includes('$')) {
-      let out = escapeHtml(text);
-      // `$$...$$` 를 먼저 소비(안 하면 인라인 정규식이 안쪽만 잡아 바깥 `$` 가 남음).
-      if (out.includes('$$')) out = out.replace(/\$\$([^$]+?)\$\$/g, (_, t) => ren(t, false));
-      return out.replace(/\$([^\n$]+?)\$/g, (_, t) => ren(t, false));
-    }
-    if (auto) {
-      // 한글/CJK 토큰은 \text{} 로 감싸 unicodeTextInMathMode 경고 회피.
+  const { htmlInput = false, display, auto = false, recoverBare = false, throwOnError = true } = opts;
+  const ddDisplay = display === undefined ? htmlInput : display;
+
+  // auto: `$` 없는 평문을 통째 LaTeX 로(한글/CJK 토큰은 \text{} 로 감싸 경고 회피).
+  if (auto && !htmlInput && !text.includes('$')) {
+    try {
       const wrapped = text.replace(/([ㄱ-힝]+|[一-鿿]+|[가-힣]+)/g, '\\text{$1}');
-      return ren(wrapped, false);
-    }
-    return escapeHtml(text);
-  } catch {
-    return escapeHtml(text);
+      return katex.renderToString(normalizeKatex(wrapped), { displayMode: false, throwOnError, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
+    } catch { return escapeHtml(text); }
   }
+
+  let html = htmlInput ? text : escapeHtml(text);
+  // 1) $$…$$ — <br/>(마크다운 멀티라인)→\n 복원. <> 가드로 stray $ 폭주 방지.
+  html = html.replace(/\$\$((?:<br\s*\/?>|[^<>])+?)\$\$/g, (m, tex) => {
+    try {
+      const clean = decodeEntities(tex.replace(/<br\s*\/?>/g, '\n'));
+      return katex.renderToString(normalizeKatex(clean), { displayMode: ddDisplay, throwOnError, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
+    } catch { return m; }
+  });
+  // 2) $…$ — \text{} 안 중첩 $ 허용 + <> 태그 가드.
+  html = html.replace(/\$((?:\\text\{[^{}]*\}|[^\n$<>])+?)\$/g, (m, tex) => {
+    try {
+      return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: false, throwOnError, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
+    } catch { return m; }
+  });
+  // 3) 마커 빠진 raw 수식 복원(챗 전용).
+  if (recoverBare) html = recoverBareMath(html, katex);
+  return html;
 }

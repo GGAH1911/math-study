@@ -8,7 +8,7 @@ import StatsChart, { type ChartSpec } from './StatsChart.tsx';
 import Interactive from './Interactive.tsx';
 import PromotionCard from './PromotionCard.tsx';
 import type { InteractiveSpec } from '../data/interactive-samples';
-import { ensureKatex, KATEX_STRICT, KATEX_ERROR_COLOR, normalizeKatex } from '../lib/mathish';
+import { ensureKatex, renderMathSegments } from '../lib/mathish';
 import { tryParseTable } from '../lib/markdown';
 import { runSympyLocal, prewarmPyodide } from '../lib/pyodide-client';
 import { buildNoteUserPrompt, NOTE_FOLLOWUPS, isNoteRequest, type NoteFollowup } from '../lib/note-prompts';
@@ -368,132 +368,9 @@ export function parseGraphSegments(text: string): Segment[] {
   return out.length > 0 ? out : [{ type: 'md', content: text }];
 }
 
-// KaTeX rendering: process $...$ and $$...$$ in the rendered HTML after markdown.
-// Loader/cache lives in `lib/mathish` so all graphic components share one
-// KaTeX instance.
-type KatexImpl = {
-  // strict/errorColor 타입은 mathish 의 KatexOpts 와 정확히 일치시켜야 ensureKatex()
-  // 가 돌려주는 Katex 인스턴스를 이 KatexImpl 로 받을 수 있다(더 넓게 잡으면 함수
-  // 파라미터 contravariance 가 깨져 ts2345).
-  renderToString: (tex: string, opts?: {
-    displayMode?: boolean;
-    throwOnError?: boolean;
-    strict?: 'ignore' | 'warn' | 'error' | ((code: string) => 'ignore' | 'warn' | 'error');
-    errorColor?: string;
-  }) => string;
-};
-
-// Haiku 같은 작은 모델이 `$...$` 마커를 까먹고 부등식·절댓값·LaTeX 명령어를
-// raw로 출력해도 화면이 깨지지 않도록 escape된 `&lt;`/`&gt;`/`&amp;le;` 등을
-// 수학 문맥에서만 KaTeX로 복원. HTML 태그(예: `&lt;div&gt;`)와 헷갈리지
-// 않도록 양옆에 수학 토큰이 있을 때만 적용.
-//
-// MATH_TOKEN: 단일 식별자/숫자/연산자, LaTeX 백슬래시 명령어(`\frac`, `\quad`),
-// 절댓값 `|`, 괄호. 이 토큰들이 공백으로 이어진 run을 매칭.
-const MATH_TOKEN = String.raw`(?:[A-Za-z0-9\-+*/^=,.]+|\\[A-Za-z]+(?:\{[^}]*\})*|\||\(|\)|\{|\})`;
-const ENTITY_OP = String.raw`(?:&lt;|&gt;|&le;|&ge;|&amp;le;|&amp;ge;)=?`;
-// 줄 안 부등호 chain: `a < b < c < ...` 모두 한 번에 변환.
-// left → (op left)+ 구조로 chain 캡처. KaTeX가 chain 그대로 받아서 잘 렌더.
-const INEQUALITY_RUN = new RegExp(
-  `(${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)(\\s*${ENTITY_OP}\\s*${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)+`,
-  'g',
-);
-const ENTITY_TO_LATEX: Record<string, string> = {
-  '&lt;': '<', '&gt;': '>',
-  '&lt;=': '\\le', '&gt;=': '\\ge',
-  '&le;': '\\le', '&ge;': '\\ge',
-  '&amp;le;': '\\le', '&amp;ge;': '\\ge',
-};
-
-// raw `\command` 단독 (또는 sequence)를 KaTeX로. 부등호 없이도 `\quad`, `\frac{a}{b}`
-// 같이 명령어만 raw로 흘러 들어온 경우 처리. 한국어/일반 텍스트와 섞이면
-// 명령어 토큰 직접 주변만 wrap.
-// 꼬리 token run 이 `\cmd` 뒤의 영문 단어(and, the, where…)를 탐욕적으로 흡수해
-// 영문이 수식 italic 으로 오렌더되지 않도록, 3+ 글자 순수 알파벳 단어(영단어)가
-// 시작되는 지점에서 run 을 끊는다. 1~2글자 math 식별자(x, n, ab)는 그대로 둔다.
-const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+(?![A-Za-z]{3,}(?![A-Za-z]))[A-Za-z0-9\-+*/^=.,()|\\{}]+)*)/g;
-
-function decodeEntities(s: string): string {
-  return s
-    .replace(/&amp;(le|ge)=?;/g, (_, k) => k === 'le' ? '\\le' : '\\ge')
-    .replace(/&le;=?/g, '\\le')
-    .replace(/&ge;=?/g, '\\ge')
-    .replace(/&lt;=/g, '\\le')
-    .replace(/&gt;=/g, '\\ge')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&');
-}
-
-function recoverBareMath(html: string, katex: KatexImpl): string {
-  // ① 부등호 chain
-  html = html.replace(INEQUALITY_RUN, (full) => {
-    if (/[<>]/.test(full)) return full; // 실제 raw 태그 끼이면 건드리지 않음
-    const tex = decodeEntities(full);
-    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); }
-    catch { return full; }
-  });
-  // ② raw `\command` 토큰 — 부등호 없이도 KaTeX로 시도. `\command` 가 KaTeX에
-  // 모르는 명령어면 throw → 원본 반환.
-  html = html.replace(LATEX_CMD_RUN, (full) => {
-    // 이미 KaTeX SVG로 변환된 영역(<span class="katex">) 안은 건드리지 않음.
-    // 단순 휴리스틱: full 안에 `<` 가 있으면 skip (HTML 태그 영역).
-    if (/[<>]/.test(full)) return full;
-    const tex = decodeEntities(full).trim();
-    if (tex.length < 2) return full;
-    try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); }
-    catch { return full; }
-  });
-  // ENTITY_TO_LATEX는 future-proof로 유지 (현재는 decodeEntities로 통합).
-  void ENTITY_TO_LATEX;
-  return html;
-}
-
-function applyKatex(html: string, katex: KatexImpl): string {
-  // throwOnError: true 가 핵심 — false면 KaTeX가 파싱 실패 시 빨간색(#cc0000)
-  // error HTML을 부분 출력해 DOM에 raw `<span style="color:#cc0000">5 &gt; 3</span>`
-  // 같은 잔재가 들어간다 (실제 LLM이 그런 HTML을 출력한 게 아니라 KaTeX의 errorColor).
-  // true로 두면 fail 시 throw → catch → 원본 `$...$` 텍스트가 그대로 보임 (안전).
-  //
-  // tex 안에 `&lt;`/`&gt;` 같은 escape된 entity가 들어오면 KaTeX는 이해 못함.
-  // decode 후 KaTeX 호출.
-  // `[^<>]` (← 옛 `[^$<>]`): 내부 `$` 를 허용해 `\text{$y$ 표기}` 처럼 \text{} 안에
-  // 중첩된 `$` 가 들어간 display 수식도 통째로 잡는다(KaTeX 는 \text{} 안 `$...$` 를
-  // 정상 처리). 짝 안 맞는 `$$` 의 폭주는 `<>` 가드(태그를 못 건넘) + KaTeX
-  // throwOnError(유효 TeX 가 아니면 catch→원본 raw) 로 여전히 막힌다.
-  // 멀티라인 $$…$$ : renderMarkdown 이 문단 내 개행을 전부 <br/> 로 바꾸므로(line 154)
-  // `[^<>]` 만으론 <br/> 를 못 건너 닫는 $$ 까지 매칭 실패 → align 블록이 통째로 raw 노출.
-  // <br/> 만 추가 허용(다른 태그는 여전히 차단=폭주 가드 유지)해 통째로 잡은 뒤, 매칭 본문의
-  // <br/> 를 \n 으로 되돌린다(KaTeX aligned 는 \\ 로 행 구분, \n 은 무시 — 안전).
-  html = html.replace(/\$\$((?:<br\s*\/?>|[^<>])+?)\$\$/g, (_, tex: string) => {
-    try {
-      const clean = tex.replace(/<br\s*\/?>/g, '\n');
-      return katex.renderToString(normalizeKatex(decodeEntities(clean)), { displayMode: true, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
-    } catch {
-      return _;
-    }
-  });
-  // `[^\n$<>]` 의 `<>` 가드가 핵심: 이 시점엔 renderMarkdown 이 문단 내 개행을
-  // 전부 <br/> 로 바꾸고 문단을 구분자 없이 이어붙여(`\n` 가 하나도 안 남음) 정규식의
-  // `\n` 폭주 방지턱이 무력화돼 있다. 그런데 실제 수학의 부등호는 이미 `&lt;`/`&gt;`
-  // 엔티티 상태고, 남은 raw `<`/`>` 는 전부 HTML 태그(<code>·<br/>·</p>…)뿐이다.
-  // 따라서 `<`/`>` 를 매칭에서 제외하면 — 짝 안 맞는 stray `$` 하나가 태그들을 가로질러
-  // 메시지 전체를 삼키는 폭주를 막는다(태그를 만나면 매칭이 끊겨 그 `$` 는 그냥 literal).
-  // 짝 맞는 `$...$` 는 태그를 안 건너므로 영향 없이 정상 렌더된다.
-  // `\\text\{[^{}]*\}` 대안 추가: inline `$...$` 안에 `\text{$y$}` 처럼 중첩 `$` 가
-  // 들어가도 \text{} 블록을 통째로 허용해 매칭한다(그 외 위치의 `$` 는 여전히 거부해
-  // delimiter 짝을 유지).
-  html = html.replace(/\$((?:\\text\{[^{}]*\}|[^\n$<>])+?)\$/g, (_, tex) => {
-    try {
-      return katex.renderToString(normalizeKatex(decodeEntities(tex)), { displayMode: false, throwOnError: true, strict: KATEX_STRICT, errorColor: KATEX_ERROR_COLOR });
-    } catch {
-      return _;
-    }
-  });
-  // Fallback: LLM이 `$...$`를 까먹은 raw 부등식 복원.
-  html = recoverBareMath(html, katex);
-  return html;
-}
+// KaTeX 렌더는 lib/katex-normalize 의 공유 renderMathSegments 로 일원화(SSOT).
+// (구) 로컬 applyKatex/recoverBareMath/decodeEntities/상수는 그쪽으로 이전 — 챗은
+// renderMathSegments(html, k, {htmlInput:true, recoverBare:true}) 호출로 동일 동작.
 
 // Visible fallback when an LLM-emitted fenced block has invalid JSON.
 // Without this, parse failures silently render the raw fence as a code
@@ -547,7 +424,7 @@ export function MdSegment({ content }: { content: string }) {
     let cancelled = false;
     (async () => {
       const k = await ensureKatex();
-      if (k && !cancelled) setHtml(applyKatex(baseHtml, k));
+      if (k && !cancelled) setHtml(renderMathSegments(baseHtml, k, { htmlInput: true, recoverBare: true }));
     })();
     return () => { cancelled = true; };
   }, [baseHtml]);
