@@ -255,7 +255,7 @@ function buildBatchPrompt(items) {
     : '각 도식의 렌더 이미지를 Read 로 보고, 필요하면 Bash 로 python3/sympy 로 좌표를 확인하라.';
   const blocks = items.map((it, i) => `[도식 ${i + 1}] id="${it.id}" 「${it.label}」
 스펙: ${JSON.stringify(it.figure)}
-렌더 이미지(Read 로 볼 것): ${it.pngPath}`).join('\n\n');
+렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}`).join('\n\n');
   return `${RUBRIC}
 
 ${verify}
