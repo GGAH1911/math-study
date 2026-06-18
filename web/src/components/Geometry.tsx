@@ -578,7 +578,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
           const [llx, lly] = outwardLabel(s.from[0], s.from[1], s.to[0], s.to[1], labelFontPx * 0.95 + 6);
-          pushLabel(`lnl${i}`, s.label, llx, lly - labelFontPx * 0.7, -50); // top→세로 중앙정렬
+          const lmx = (xPx(s.from[0]) + xPx(s.to[0])) / 2, lmy = (yPx(s.from[1]) + yPx(s.to[1])) / 2;
+          pushLabel(`lnl${i}`, s.label, llx, lly - labelFontPx * 0.7, -50, undefined, false, [lmx, lmy]); // 앵커=선분 중점
         }
         break;
       }
@@ -589,7 +590,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
                          fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
                          stroke={s.stroke ?? c0} strokeWidth={1.8} />);
         addCircleObstacle(xPx(s.center[0]), yPx(s.center[1]), Math.abs(s.radius) * scale);
-        if (s.label) pushLabel(`cil${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1]) - 6);
+        if (s.label) pushLabel(`cil${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1]) - 6, 0, undefined, false, [xPx(s.center[0]), yPx(s.center[1])]);
         break;
       }
       case 'ellipse': {
@@ -605,7 +606,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
                           fill={s.fill ?? 'none'} fillOpacity={s.fillOpacity ?? (s.fill ? 0.18 : 1)}
                           stroke={s.stroke ?? c0} strokeWidth={1.8}
                           transform={transform} />);
-        if (s.label) pushLabel(`ell${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1] + ryRaw) + 4);
+        if (s.label) pushLabel(`ell${i}`, s.label, xPx(s.center[0]) + 4, yPx(s.center[1] + ryRaw) + 4, 0, undefined, false, [xPx(s.center[0]), yPx(s.center[1])]);
         break;
       }
       case 'hyperbola': {
@@ -635,7 +636,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
         els.push(<polyline key={`hy2${i}`} points={pts2.join(' ')} fill="none"
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
-        if (s.label) pushLabel(`hyl${i}`, s.label, xPx(cx0) + 4, yPx(cy0) + 8);
+        if (s.label) pushLabel(`hyl${i}`, s.label, xPx(cx0) + 4, yPx(cy0) + 8, 0, undefined, false, [xPx(cx0), yPx(cy0)]);
         break;
       }
       case 'parabola': {
@@ -657,7 +658,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         }
         els.push(<polyline key={`pa${i}`} points={pts.join(' ')} fill="none"
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
-        if (s.label) pushLabel(`pal${i}`, s.label, xPx(h) + 4, yPx(k) - 12);
+        if (s.label) pushLabel(`pal${i}`, s.label, xPx(h) + 4, yPx(k) - 12, 0, undefined, false, [xPx(h), yPx(k)]);
         break;
       }
       case 'area': {
@@ -715,7 +716,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         if (s.label && segments[0].length > 0) {
           const mid = segments[0][Math.floor(segments[0].length / 2)];
           const [mx, my] = mid.split(',').map(Number);
-          pushLabel(`pml${i}`, s.label, mx + 4, my - 12);
+          pushLabel(`pml${i}`, s.label, mx + 4, my - 12, 0, undefined, false, [mx, my]);
         }
         break;
       }
@@ -735,7 +736,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         addSeg(xPx(s.from[0]), yPx(s.from[1]), xPx(s.to[0]), yPx(s.to[1]));
         if (s.label) {
           const [vlx, vly] = outwardLabel(s.from[0], s.from[1], s.to[0], s.to[1], labelFontPx * 0.95 + 6);
-          pushLabel(`vecl${i}`, s.label, vlx, vly - labelFontPx * 0.7, -50);
+          const vmx = (xPx(s.from[0]) + xPx(s.to[0])) / 2, vmy = (yPx(s.from[1]) + yPx(s.to[1])) / 2;
+          pushLabel(`vecl${i}`, s.label, vlx, vly - labelFontPx * 0.7, -50, undefined, false, [vmx, vmy]);
         }
         break;
       }
@@ -765,7 +767,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
           if (s.label && !labelIsDegree) {
             const midPa = pa1 + d / 2;
             const lr = m * 1.7 + labelFontPx * 0.4;
-            pushLabel(`agl${i}`, s.label, cx + lr * Math.cos(midPa), cy + lr * Math.sin(midPa) - labelFontPx * 0.7, -50, undefined, true);
+            pushLabel(`agl${i}`, s.label, cx + lr * Math.cos(midPa), cy + lr * Math.sin(midPa) - labelFontPx * 0.7, -50, undefined, true, [cx + m * Math.cos(midPa), cy + m * Math.sin(midPa)]);
           }
         } else {
           const sx = cx + rPx * u1x, sy = cy + rPx * u1y;
@@ -777,7 +779,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
             // 라벨은 호 중앙(이등분선=pa1+d/2) 방향, 호 바깥쪽으로 살짝. 픽셀공간에서 직접.
             const midPa = pa1 + d / 2;
             const lr = rPx * 1.35 + labelFontPx * 0.4;
-            pushLabel(`agl${i}`, s.label, cx + lr * Math.cos(midPa), cy + lr * Math.sin(midPa) - labelFontPx * 0.7, -50, undefined, true);
+            pushLabel(`agl${i}`, s.label, cx + lr * Math.cos(midPa), cy + lr * Math.sin(midPa) - labelFontPx * 0.7, -50, undefined, true, [cx + rPx * Math.cos(midPa), cy + rPx * Math.sin(midPa)]);
           }
         }
         break;
@@ -857,7 +859,7 @@ function estLabelWidth(text: string, fontPx: number): number {
 // 라벨 겹침 해소(de-overlap): 추정 박스가 겹치면 최소이동축으로 서로 밀어낸다(반복).
 // 앵커에서 과도 이탈은 클램프(라벨이 가리키는 도형과 분리되지 않게). 캔버스 경계 내 유지.
 // 노드 도식·LLM 채팅 공통(같은 Geometry 컴포넌트)이라 양쪽에 동시 적용된다.
-type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean };
+type _LD = { key: string; text: string; left: number; top: number; tx: number; color?: string; fixed?: boolean; anchor: [number, number] };
 type _Seg = [number, number, number, number];
 // 선분 위에서 점(px,py)에 가장 가까운 점.
 function _closestOnSeg(px: number, py: number, s: _Seg): [number, number] {
