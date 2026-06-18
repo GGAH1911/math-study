@@ -15,6 +15,15 @@ import { getMastery } from '../../lib/mastery.ts';
 const slug = Astro.params.slug as string;
 const entry = await getEntry('concepts', slug);
 if (!entry) {
+  // flat-leaf → 정식(nested) 경로 폴백. 문제·본문 링크가 `/concepts/<leaf>` 로 걸려도
+  // 개념이 nested 경로(domain/grade/unit/<leaf>)에만 있으면 404 나던 것을, leaf 가
+  // 같은 정식 노드로 302 리다이렉트해 살린다. (노드 다이어트로 flat→nested 이동 다수.)
+  const leafKey = (s: string) => (s.split('/').pop() ?? s).normalize('NFC').replace(/[\s_]/g, '').toLowerCase();
+  const leaf = leafKey(slug);
+  const all = await getCollection('concepts');
+  const match = all.find((c) => leafKey(c.id) === leaf);
+  // Location 헤더는 ASCII만 허용 → 한글 경로 URL 인코딩(/ 는 보존).
+  if (match) return Astro.redirect(encodeURI(`/concepts/${match.id}`), 302);
   return new Response('Not found', { status: 404 });
 }
 const { Content } = await render(entry);
