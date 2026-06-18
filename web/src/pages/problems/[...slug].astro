@@ -11,6 +11,8 @@ import RoundNav from '../../components/RoundNav.astro';
 import { yearLabel, FORMAT_LABEL, TIER_BADGE } from '../../lib/problem-meta';
 import { STATUS_LABEL_KO } from '../../lib/srs.ts';
 import { renderReconstruct } from '../../lib/reconstruct';
+import Geometry from '../../components/Geometry.tsx';
+import reconData from '../../data/problem-reconstructions.json';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('problems', slug);
@@ -52,6 +54,13 @@ const reconFull = reconUnsupported
 // 사용자는 원본 이미지(<Content/>)만, 재구성 토글·뷰는 admin 만. (디코더의 가치는 인제스트용 searchable_text.)
 const isAdmin = !!Astro.locals.user?.is_admin;
 const reconHTML = isAdmin ? reconFull : ''; // 빈 문자열=토글/재구성 숨김 → 비어드민은 <Content/> 원본만
+// Gemini 비전 교정 재구성(있으면): 결정론적 reconFull 대신 교정 전사(KaTeX) + bareAxes 도식으로
+// 원본과 동일하게. fixes(교정내역)는 백엔드 보관용 — 프론트 미노출. 선행 번호("13.")는 recon-head 와
+// 중복되므로 제거.
+const gRecon = (reconData as Record<string, any>)[entry.id] ?? null;
+const reconBodyHtml = (isAdmin && gRecon)
+  ? renderReconstruct(String(gRecon.corrected || '').replace(/^\s*\d{1,2}\.\s*/, ''), {})
+  : reconFull;
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
@@ -144,7 +153,12 @@ if (src) {
               <span class="recon-num">{fm.source?.number ?? ''}.</span>
               {fm.source?.score && <span class="recon-score">[{fm.source.score}점]</span>}
             </div>
-            <div set:html={reconFull} />
+            <div set:html={reconBodyHtml} />
+            {isAdmin && gRecon?.figure && (
+              <div class="recon-fig-wrap">
+                <Geometry client:load spec={gRecon.figure} width={520} height={420} hideCaption noBroadcast />
+              </div>
+            )}
           </div>
         )}
         <div class="my-6">

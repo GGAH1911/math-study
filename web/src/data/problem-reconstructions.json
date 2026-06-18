@@ -1,0 +1,151 @@
+{
+  "2020/수능/2020_수능_가형_13": {
+    "corrected": "13. 그림과 같이 두 점 $F(0, c)$, $F'(0, -c)$를 초점으로 하는 타원 $\\frac{x^2}{a^2}+\\frac{y^2}{25}=1$이 $x$축과 만나는 점 중에서 $x$좌표가 양수인 점을 $A$라 하자. 직선 $y=c$가 직선 $AF'$과 만나는 점을 $B$, 직선 $y=c$가 타원과 만나는 점 중 $x$좌표가 양수인 점을 $P$라 하자. 삼각형 $BPF'$의 둘레의 길이와 삼각형 $BFA$의 둘레의 길이의 차가 $4$일 때, 삼각형 $AFF'$의 넓이는? (단, $0<a<5$, $c>0$) [3점]\n① $5\\sqrt{6}$\n② $\\frac{9\\sqrt{6}}{2}$\n③ $4\\sqrt{6}$\n④ $\\frac{7\\sqrt{6}}{2}$\n⑤ $3\\sqrt{6}$",
+    "fixes": [
+      "수식 부분(타원 방정식, 좌표, 변수명)을 LaTeX 문법($...$)을 적용하여 올바르게 포맷팅했습니다.",
+      "초점 기호의 유니코드 프라임(′)을 LaTeX 표준 프라임(')으로 교정했습니다.",
+      "보기 ①~⑤의 수식 기호를 LaTeX 표현식으로 변환하고 보기마다 줄바꿈을 적용했습니다."
+    ],
+    "figure": {
+      "range": [
+        -6,
+        9
+      ],
+      "yRange": [
+        -6,
+        6
+      ],
+      "showAxes": true,
+      "title": "타원과 직선의 기하학적 관계",
+      "shapes": [
+        {
+          "type": "ellipse",
+          "center": [
+            0,
+            0
+          ],
+          "rx": 3.87,
+          "ry": 5
+        },
+        {
+          "type": "segment",
+          "from": [
+            -5,
+            3.16
+          ],
+          "to": [
+            9,
+            3.16
+          ]
+        },
+        {
+          "type": "segment",
+          "from": [
+            -1.5,
+            -4.38
+          ],
+          "to": [
+            8.5,
+            3.78
+          ]
+        },
+        {
+          "type": "segment",
+          "from": [
+            0,
+            3.16
+          ],
+          "to": [
+            3.87,
+            0
+          ]
+        },
+        {
+          "type": "segment",
+          "from": [
+            0,
+            -3.16
+          ],
+          "to": [
+            3,
+            3.16
+          ]
+        },
+        {
+          "type": "point",
+          "at": [
+            0,
+            3.16
+          ],
+          "label": "F",
+          "labelDir": "nw"
+        },
+        {
+          "type": "point",
+          "at": [
+            0,
+            -3.16
+          ],
+          "label": "F'",
+          "labelDir": "sw"
+        },
+        {
+          "type": "point",
+          "at": [
+            3.87,
+            0
+          ],
+          "label": "A",
+          "labelDir": "se"
+        },
+        {
+          "type": "point",
+          "at": [
+            7.75,
+            3.16
+          ],
+          "label": "B",
+          "labelDir": "ne"
+        },
+        {
+          "type": "point",
+          "at": [
+            3,
+            3.16
+          ],
+          "label": "P",
+          "labelDir": "n"
+        },
+        {
+          "type": "point",
+          "at": [
+            0,
+            0
+          ],
+          "label": "O",
+          "labelDir": "sw"
+        },
+        {
+          "type": "text",
+          "at": [
+            8.5,
+            -0.4
+          ],
+          "text": "x"
+        },
+        {
+          "type": "text",
+          "at": [
+            -0.4,
+            5.7
+          ],
+          "text": "y"
+        }
+      ],
+      "bareAxes": true
+    },
+    "figureNote": "조건 $a=\\sqrt{15}$, $c=\\sqrt{10}$을 만족하도록 타원과 점들의 좌표를 계산하여 시각화한 도식입니다.",
+    "model": "Gemini 3.5 Flash (Medium)",
+    "source": "agy-vision ingest test"
+  }
+}
