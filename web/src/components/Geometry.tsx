@@ -171,6 +171,33 @@ function sampleParametric(
   return out;
 }
 
+// area: y=f(x) 와 baseline(상수 또는 식) 사이를 [from,to] 에서 샘플.
+// expr 변수는 x 또는 t 둘 다 허용(scope 에 둘 다 같은 값으로 넣음).
+function sampleArea(s: {
+  y: string; from: number | string; to: number | string; baseline?: number | string; samples?: number;
+}): { top: Array<[number, number]>; bottom: Array<[number, number]> } {
+  const x0 = _evalMathjs(s.from), x1 = _evalMathjs(s.to);
+  if (!Number.isFinite(x0) || !Number.isFinite(x1) || x1 <= x0) return { top: [], bottom: [] };
+  let yNode: { evaluate: (scope: { x: number; t: number }) => number };
+  let bNode: { evaluate: (scope: { x: number; t: number }) => number } | null = null;
+  try {
+    yNode = _math.parse(_normalizeMathExprStr(s.y)).compile() as typeof yNode;
+    if (typeof s.baseline === 'string') bNode = _math.parse(_normalizeMathExprStr(s.baseline)).compile() as typeof yNode;
+  } catch { return { top: [], bottom: [] }; }
+  const base0 = typeof s.baseline === 'number' ? s.baseline : 0;
+  const n = Math.max(2, Math.min(s.samples ?? 120, 2000));
+  const top: Array<[number, number]> = [], bottom: Array<[number, number]> = [];
+  for (let i = 0; i <= n; i++) {
+    const x = x0 + ((x1 - x0) * i) / n;
+    try {
+      const yv = yNode.evaluate({ x, t: x });
+      const bv = bNode ? bNode.evaluate({ x, t: x }) : base0;
+      if (Number.isFinite(yv) && Number.isFinite(bv)) { top.push([x, yv]); bottom.push([x, bv]); }
+    } catch { /* skip */ }
+  }
+  return { top, bottom };
+}
+
 export type GeomShape =
   | { type: 'point'; at: [number, number]; label?: string; color?: string; labelDir?: 'NE' | 'NW' | 'SE' | 'SW' | 'N' | 'S' | 'E' | 'W' }
   | { type: 'polygon'; vertices: Array<[number, number]>; labels?: string[]; fill?: string; fillOpacity?: number; stroke?: string; closed?: boolean }
@@ -184,7 +211,9 @@ export type GeomShape =
       stroke?: string; strokeWidth?: number; fill?: string; fillOpacity?: number }
   | { type: 'vector'; from: [number, number]; to: [number, number]; label?: string; color?: string }
   | { type: 'angle'; at: [number, number]; from: [number, number]; to: [number, number]; label?: string; radius?: number; color?: string }
-  | { type: 'text'; at: [number, number]; text: string; color?: string };
+  | { type: 'text'; at: [number, number]; text: string; color?: string }
+  | { type: 'area'; y: string; from: number | string; to: number | string;
+      baseline?: number | string; samples?: number; fill?: string; fillOpacity?: number; stroke?: string; label?: string };
 
 export type GeomSpec = {
   shapes: GeomShape[];
@@ -250,6 +279,12 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
         for (const pt of sampleParametric(s)) {
           if (pt) { xs.push(pt[0]); ys.push(pt[1]); }
         }
+        break;
+      }
+      case 'area': {
+        const { top, bottom } = sampleArea(s);
+        for (const p of top) { xs.push(p[0]); ys.push(p[1]); }
+        for (const p of bottom) { ys.push(p[1]); }
         break;
       }
       case 'angle':
@@ -608,6 +643,26 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         els.push(<polyline key={`pa${i}`} points={pts.join(' ')} fill="none"
                             stroke={s.color ?? c0} strokeWidth={1.8} />);
         if (s.label) pushLabel(`pal${i}`, s.label, xPx(h) + 4, yPx(k) - 12);
+        break;
+      }
+      case 'area': {
+        // 곡선 y=f(x) 와 baseline(기본 0) 사이 영역을 반투명 채움 — 적분·넓이·부호영역 시각화.
+        // (선 다발로 영역을 흉내내지 말 것: area 한 개로 면을 채운다.)
+        const { top, bottom } = sampleArea(s);
+        if (top.length >= 2) {
+          const fwd = top.map((p) => `${xPx(p[0])},${yPx(p[1])}`);
+          const back = bottom.slice().reverse().map((p) => `${xPx(p[0])},${yPx(p[1])}`);
+          const d = `M${fwd[0]} L${fwd.slice(1).join(' L')} L${back.join(' L')} Z`;
+          els.push(
+            <path key={`area${i}`} d={d}
+                  fill={s.fill ?? '#6366f1'} fillOpacity={s.fillOpacity ?? 0.22}
+                  stroke={s.stroke ?? 'none'} strokeWidth={s.stroke ? 1.5 : 0} />,
+          );
+          if (s.label) {
+            const m = Math.floor(top.length / 2);
+            pushLabel(`areal${i}`, s.label, xPx(top[m][0]), yPx((top[m][1] + bottom[m][1]) / 2));
+          }
+        }
         break;
       }
       case 'parametric': {

@@ -82,6 +82,7 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 - {"type":"parabola","vertex":[x,y],"focus?":f,"orientation?":"up|down|left|right"}  // 이차곡선 전용·함수그래프엔 쓰지마라(아래 규칙)
 - {"type":"hyperbola","center":[x,y],"a":a,"b":b,"orientation?":"horizontal|vertical"}  // 이차곡선 전용
 - {"type":"parametric","x":"cos(t)","y":"sin(t)","tRange":[0,"2*pi"]}      // expr=문자열, sqrt/pi 가능. ★거듭제곱은 ^ (t^2), Python ** 금지(곡선 소실)
+- {"type":"area","y":"<f(x)>","from":a,"to":b,"baseline?":0,"fill?":"#6366f1","fillOpacity?":0.22,"label?":"S"}  // 곡선과 baseline 사이 면을 **채움**(적분·넓이·부호영역). y 는 x(또는 t) 식. 두 곡선 사이는 baseline 에 아래 곡선식 문자열.
 - {"type":"vector","from":[x,y],"to":[x,y],"label?":"\\\\vec{v}"}            // 화살표
 - {"type":"angle","at":[x,y],"from":[x,y],"to":[x,y],"label?":"\\\\theta","radius?":0.4}  // 각 라벨은 호 위에 렌더됨
 - {"type":"text","at":[x,y],"text":"..."}
@@ -103,6 +104,9 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
   이차곡선 단원 도식에서만**(focus 등 정확히 지정). 함수그래프에 쓰면 기본 폭이 달라 점이 곡선에서 뜬다.
 - ★점을 곡선 위에 찍을 땐, 그 점의 좌표가 곡선식을 **정확히 만족**하는지 sympy 로 확인하고(이미 함),
   곡선도 그 식을 그대로 그리는 shape(보통 parametric)인지 확인한다 — 점은 맞는데 곡선이 다른 식이면 어긋난다.
+- ★적분·넓이·영역·부호(정적분, 곡선과 x축 사이, 두 곡선 사이 넓이, 속도-시간→변위 등)는 **area shape 로 면을 채워라**.
+  점선 세로줄을 여러 개 모아 영역을 흉내내지 마라(보기 싫다). 곡선은 parametric, 그 아래 영역만 area:
+  {"type":"area","y":"<f(x)>","from":a,"to":b} — area 의 y 식과 곡선 parametric 의 식을 **동일하게**.
 - ★**가독성(중요)**: 주석을 다는 핵심 요소(점 P·반지름 r·각 θ 등)는 화면에서 **충분히 크게·서로 떨어져** 보여야 한다.
   · 큰 곡선(나선·긴 그래프) 위의 점 P 는 원점 근처(작은 r)가 아니라 **화면 크기에 견줄 만한 위치**에 둬라.
     예: 나선 r=θ 에서 P 를 r≈1 에 두면 곡선은 r≈6 까지 뻗어 점·각·라벨이 가운데 한 점에 뭉쳐 안 보인다 →
@@ -254,6 +258,7 @@ function sanitizeFigure(fig) {
       case 'parabola': ok = pairOK(s.vertex); break;
       case 'angle': ok = pairOK(s.at) && pairOK(s.from) && pairOK(s.to); break;
       case 'parametric': ok = typeof s.x === 'string' && typeof s.y === 'string' && Array.isArray(s.tRange); break;
+      case 'area': ok = typeof s.y === 'string' && coordOK(s.from) && coordOK(s.to); break;
       default: ok = false;
     }
     if (ok) shapes.push(s);

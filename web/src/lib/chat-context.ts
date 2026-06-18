@@ -104,6 +104,7 @@ const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
    지원 shape 카탈로그:
    - \`point\` (\`{type:"point",at:[x,y],label:"P",labelDir?:"NE|NW|SE|SW|N|S|E|W"}\`) — labelDir 로 점 주위 라벨 위치 지정. 인접한 점들끼리 다른 방향 선택.
    - \`polygon\` (\`{type:"polygon",vertices:[[x,y]...],fill:"#hex",fillOpacity:0.18}\`) — 영역 음영용. fillOpacity 는 안쪽 도형/라벨이 비쳐 보이도록 0.12~0.25 권장. 강조 영역만 0.4 이상.
+   - \`area\` (\`{type:"area","y":"<f(x)>","from":a,"to":b,"baseline?":0,"fill?":"#6366f1","fillOpacity?":0.22,"label?":"S"}\`) — **곡선 아래/사이 면을 채움**. ★정적분·넓이·부호영역은 세로 점선 다발 말고 **반드시 이걸로**. y 는 x(또는 t) 식, 두 곡선 사이는 baseline 에 아래 곡선식 문자열. 곡선은 parametric 으로 따로.
    - \`circle\` / \`ellipse\` 의 fill 도 동일 — fillOpacity 명시 (생략 시 0.18)
    - \`segment\` / \`line\` / \`vector\`
    - \`ellipse\` (\`{type:"ellipse",center:[h,k],rx:a,ry:b,rotation?:deg}\`)

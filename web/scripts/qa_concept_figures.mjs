@@ -65,6 +65,8 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
 2. 좌표 정확성: 곡선 위에 찍힌 점이 그 곡선식을 정확히 만족하는가? 직각·닮음비·접선·내분 등 관계가 성립하는가? (sympy)
 3. primitive: 함수그래프 y=f(x)(포물선·직선·사인 등)는 parametric 으로 그렸는가? conic(parabola/ellipse/hyperbola) shape 로
    함수를 그려 곡선과 점이 어긋나지 않는가? — 어긋나면 parametric {x:"t", y:"f(t)", tRange} 로 교체.
+   ★적분·넓이·영역(정적분, 곡선-x축 사이, 두 곡선 사이)을 **점선 세로줄 다발**로 흉내냈으면 → area shape 로 교체:
+   {"type":"area","y":"<f(x)>","from":a,"to":b}(두 곡선 사이는 baseline 에 아래 곡선식). 면을 색으로 채워야 한다.
 4. 가독성: 라벨이 서로 겹치거나 한 점에 3개+ 뭉치지 않는가? 주석 대상(점·각·반지름)이 화면에서 충분히 크고 분리됐는가?
    (큰 곡선 위 점이 원점 근처 작은 r 에 몰려 라벨이 뭉치면 → 점을 큰 r 로 옮기거나 range 를 좁혀라.) 라벨이 도형 내부/선에 묻히지 않는가?
    두 도형 비교는 간격 넉넉히 + 프라임(A'B'C') 표기인가?
@@ -77,7 +79,7 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
 
 shape 스키마(좌표=수학좌표): point{at,label?,labelDir?} polygon{vertices,labels?,closed?} segment{from,to,label?,dashed?}
 circle{center,radius,label?} ellipse{center,rx,ry} parabola{vertex,focus?,orientation?} hyperbola{center,a,b,orientation?}
-parametric{x,y,tRange} vector{from,to,label?} angle{at,from,to,label?,radius?} text{at,text}. range/yRange/showAxes/title.
+parametric{x,y,tRange} area{y,from,to,baseline?,fill?,fillOpacity?,label?} vector{from,to,label?} angle{at,from,to,label?,radius?} text{at,text}. range/yRange/showAxes/title.
 
 출력은 **JSON 객체 하나만**(산문·코드펜스 금지):
 - 문제 없음: {"ok": true, "note": "<한 줄 근거>"}
@@ -263,6 +265,7 @@ function sanitizeFigure(fig) {
       case 'parabola': ok = pairOK(s.vertex); break;
       case 'angle': ok = pairOK(s.at) && pairOK(s.from) && pairOK(s.to); break;
       case 'parametric': ok = typeof s.x === 'string' && typeof s.y === 'string' && Array.isArray(s.tRange); break;
+      case 'area': ok = typeof s.y === 'string' && coordOK(s.from) && coordOK(s.to); break;
     }
     if (ok) shapes.push(s);
   }
