@@ -262,9 +262,10 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
   if (fxs.length === 0 || fys.length === 0) return { x: [-5, 5], y: [-5, 5] };
   const xMin = Math.min(...fxs), xMax = Math.max(...fxs);
   const yMin = Math.min(...fys), yMax = Math.max(...fys);
-  // padding 25% — 점이 viewport 끝에 안 붙도록. min 0.5 라 한 점만 있는 케이스도 보임.
-  const padX = Math.max((xMax - xMin) * 0.25, 0.5);
-  const padY = Math.max((yMax - yMin) * 0.25, 0.5);
+  // padding 15% — 점이 viewport 끝에 안 붙도록. (25%→15%: 도형이 너무 작게 렌더돼
+  // 내부 라벨이 비좁던 문제 완화 — 그림을 키워 라벨이 퍼질 공간 확보.) min 0.4.
+  const padX = Math.max((xMax - xMin) * 0.15, 0.4);
+  const padY = Math.max((yMax - yMin) * 0.15, 0.4);
   return { x: [xMin - padX, xMax + padX], y: [yMin - padY, yMax + padY] };
 }
 
@@ -672,11 +673,17 @@ function GeometryCanvas({ spec, width, height, hideCaption = false }: { spec: Ge
   );
 }
 
-// 라벨 폭 대략 추정(KaTeX 실측 전) — 명령·중괄호·달러 제거 후 가시 글자수 × 글자폭.
+// 라벨 폭 대략 추정(KaTeX 실측 전). LaTeX 명령을 렌더 글자수로 환산해야 정확:
+// \cos·\sin·\log 등 함수명은 글자수만큼(cos=3), 그리스·기호(\theta·\pi)는 1글자.
+// (이전엔 모든 \command 를 1글자로 봐서 "cos θ"·"sin θ" 박스가 너무 좁아 겹침 미검출.)
 function estLabelWidth(text: string, fontPx: number): number {
-  const visible = String(text).replace(/\\[a-zA-Z]+/g, 'x').replace(/[{}$^_\\]/g, '').replace(/\s+/g, '');
-  const n = Math.max(1, visible.length);
-  return Math.max(fontPx, n * fontPx * 0.62) + 6;
+  let t = String(text);
+  t = t.replace(/\\(cos|sin|tan|sec|csc|cot|log|ln|lim|exp|max|min|sqrt|sup|inf|deg|arg|det|dim|gcd|lcm)\b/g,
+                (_, w: string) => 'x'.repeat(w.length));   // 함수명 → 글자수
+  t = t.replace(/\\[a-zA-Z]+/g, 'x');                       // 그리스·기타 명령 → 1글자
+  t = t.replace(/[{}$^_\\\s]/g, '');                        // 구조문자 제거
+  const n = Math.max(1, t.length);
+  return Math.max(fontPx, n * fontPx * 0.6) + 8;
 }
 
 // 라벨 겹침 해소(de-overlap): 추정 박스가 겹치면 최소이동축으로 서로 밀어낸다(반복).
