@@ -1,6 +1,15 @@
 # TODO — 솔버/파이프라인 백로그
 
-> 갱신: 2026-06-17 · UI/UX + 오늘의 페이지(매일 개념·그림·인사이트) + 튜터 그래픽/렌더 정비 후 잔여.
+> 갱신: 2026-06-18 · 개념 도식 생성 파이프라인 + Sonnet QA + 렌더러 정비 후 잔여 (상세: `docs/HANDOFF.md`).
+
+## 개념 도식 (2026-06-18) — 상세·함정은 `docs/HANDOFF.md`
+- [x] 생성 파이프라인(`gen_concept_figures.mjs`, haiku 단계별+sympy) + 개념페이지 배치(요약 다음·본문 직전) + 갤러리/하네스(`dev/concept-figures`·`dev/figrender`).
+- [x] Sonnet QA(`qa_concept_figures.mjs`, 고정폭 실제크기 렌더+sympy, 그자리 수정·멱등). 도형 도메인 전수(168 수정).
+- [x] 렌더러 수정(Geometry.tsx): 각호=내각·직각=정사각형·라벨 도형밖·`**`→`^` 결정적 보정. QA 교훈 top5+`**` 를 생성프롬프트·튜터 GRAPHICS_GUIDE 양쪽 환류.
+- [ ] **함수 도메인 도식 재개** (7/502 일시정지, 한도 보류 중). `node scripts/gen_concept_figures.mjs --domain functions --concurrency 4` → 스팟체크 QA. ⚠️한도 부담 큼.
+- [ ] **3D/공간 76개** → `Geometry3D` 생성 파이프라인 신규(현재 2D만, `--include-3d` 로 대상 잡힘).
+- [ ] **dev 라우트 재게이팅**: `middleware.ts` 의 `/dev/concept-figures`·`/dev/figrender` TEMP 공개 → 작업 끝나면 admin 으로.
+- [ ] (선택) equations·algebra·prob-stats 도메인(도식친화도 낮음, 후순위).
 
 ## 완료 (2026-06-06)
 - [x] 백필 blind→open-book + 하드코딩 게이트(변이테스트) + 인제스트 본류 반영
