@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-18T02:08:14.563Z",
-  "entropy": 3,
+  "generatedAt": "2026-06-18T03:24:54.810Z",
+  "entropy": 2,
   "thresholds": {
     "flatWarn": 50,
     "flatHard": 1500,
@@ -10,7 +10,7 @@
   "flatDirs": [
     {
       "rel": "docs/concepts",
-      "count": 150
+      "count": 128
     },
     {
       "rel": "docs/concepts/equations/high-1/방정식과_부등식",
@@ -117,10 +117,9 @@
     }
   ],
   "congestedHardCount": 0,
-  "isolatedConceptCount": 3,
+  "isolatedConceptCount": 2,
   "isolatedConcepts": [
     "다항식의_차분",
-    "부정형(∞/∞)",
     "합_표기(시그마)"
   ],
   "missingFmCount": 0,
