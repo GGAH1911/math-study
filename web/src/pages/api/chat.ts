@@ -7,6 +7,7 @@ import { randomUUID } from 'node:crypto';
 import { buildTutorPrompt, searchConcepts } from '../../lib/chat-context.ts';
 import { buildLearnerContext } from '../../lib/learner.ts';
 import { getMastery } from '../../lib/mastery.ts';
+import problemIndex from '../../data/problems-by-concept.json';
 
 export const prerender = false;
 
@@ -71,6 +72,62 @@ function formatHistory(messages: ChatMessage[]): string {
     '',
     '--- 학생의 새 질문 ---',
   ].join('\n');
+}
+
+// --- 연결된 기출 주입 -------------------------------------------------------
+// 개념 노드의 튜터가 "이 개념에 연결된 기출이 뭔지" 몰라 "DB 접근 못 한다"고 답하던 문제 수정.
+// 보안 설계: LLM CLI 는 여전히 DB·도구 접근이 전혀 없다(--tools ""). **서버**가 predev 로 빌드된
+// 정적 인덱스(problems-by-concept.json)에서 비민감 메타(연도·번호·배점·난이도·링크)만 조회해
+// 프롬프트에 텍스트로 주입한다. 정답·풀이는 넣지 않는다(답 유출 방지). 프롬프트·비용 한도 위해
+// 상위 N개만 주입하고 총 개수는 명시. 조회는 미들웨어 인증 게이팅 하에서만 도달한다(신규 표면 0).
+type ProblemBrief = {
+  slug: string; year: number | null; exam_type: string | null; session: string | null;
+  grade: string | null; subject: string | null; number: number | null; score: number | null;
+  killer_tier: string | null; format: string | null; has_image: boolean;
+};
+const LINKED_PROBLEM_CAP = 12;
+function linkedProblemLabel(p: ProblemBrief): string {
+  const yearShort = p.year ? String(p.year).slice(2) : '';
+  const subj = p.subject && p.subject !== '단일' && p.subject !== '공통' ? ` ${p.subject}` : '';
+  const session = p.session ? ` ${p.session}` : '';
+  const exam = p.exam_type ?? '';
+  const grade = p.grade && p.exam_type !== '수능' ? ` ${p.grade}` : '';
+  return `${yearShort}${grade}${session} ${exam}${subj} ${p.number ?? '?'}번`.replace(/\s+/g, ' ').trim();
+}
+function linkedProblemsBlock(slug: string): string {
+  const by = (problemIndex as { byConcept?: Record<string, ProblemBrief[]> }).byConcept ?? {};
+  let list = by[slug];
+  if (!Array.isArray(list) || list.length === 0) {
+    // byConcept 키는 정식(중첩)경로 + flat leaf 혼재 → leaf 폴백(개념 페이지와 동일 보정).
+    const leaf = (slug.split('/').pop() ?? slug).normalize('NFC');
+    list = by[leaf] ?? [];
+  }
+  if (!Array.isArray(list) || list.length === 0) return '';
+  const TIER: Record<string, number> = { early: 0, mid: 1, high: 2, killer: 3 };
+  const sorted = [...list].sort((a, b) => {
+    const ta = TIER[a.killer_tier ?? ''] ?? 1, tb = TIER[b.killer_tier ?? ''] ?? 1;
+    if (ta !== tb) return ta - tb;            // 쉬운 것부터(학생 부담 적게)
+    return (b.year ?? 0) - (a.year ?? 0);     // 그 안에서 최신순
+  });
+  const total = list.length;
+  const lines = sorted.slice(0, LINKED_PROBLEM_CAP).map((p) => {
+    const tier = p.killer_tier && p.killer_tier !== 'early' ? ` [${p.killer_tier}]` : '';
+    const sc = p.score != null ? ` ${p.score}점` : '';
+    return `  - ${linkedProblemLabel(p)}${sc}${tier}:  /problems/${p.slug}`;
+  }).join('\n');
+  const more = total > LINKED_PROBLEM_CAP
+    ? `\n  …외 ${total - LINKED_PROBLEM_CAP}개 (총 ${total}개 — 이 페이지 '이 개념의 기출' 섹션에 전체 목록)`
+    : '';
+  return `
+
+--- 이 개념에 연결된 기출 문제 (서버가 DB 인덱스에서 주입 · 총 ${total}개) ---
+이 개념 노드에 실제로 연결된 기출 목록이다. 학생이 "이 개념 기출 뭐 있어?"처럼 물으면
+**반드시 이 목록에서** 안내한다 — "DB 접근을 못 한다"는 식으로 답하지 말 것. 링크는 아래
+\`/problems/...\` 경로를 **글자 그대로** 제시한다(경로를 줄이거나 바꾸면 404). 다만 너는 지금
+문제 **본문은 볼 수 없고** 메타데이터(연도·번호·배점·난이도)만 안다 — 특정 문제를 같이 풀고
+싶으면 그 문제 페이지로 가도록 안내하라(거기선 튜터가 문제를 직접 본다). 목록에 없는 문제나
+정답은 지어내지 말 것.
+${lines}${more}`;
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -192,6 +249,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
 "개념지도에 아직 해당 노드가 없다"고 솔직히 말한다.
 ${lines}`;
     }
+  }
+  // 이 개념에 연결된 기출(메타데이터)을 서버가 인덱스에서 조회해 주입 — 튜터가 "DB 접근 못 함"
+  // 으로 답하던 문제 해결. LLM 은 여전히 DB·도구 접근 0(--tools ""), 비민감 메타만 텍스트로 받음.
+  if (collection === 'concepts') {
+    systemPrompt += linkedProblemsBlock(slug);
   }
   // 학습자 모델: 이 학생의 정량 수준 + 정성 프로필을 프롬프트에 주입(per-user, 하드코딩 0).
   const learnerUserId = locals.user?.id;
