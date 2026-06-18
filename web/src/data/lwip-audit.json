@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-18T00:09:26.670Z",
+  "generatedAt": "2026-06-18T00:17:43.316Z",
   "entropy": 3,
   "thresholds": {
     "flatWarn": 50,
@@ -14,23 +14,23 @@
     },
     {
       "rel": "docs/concepts/equations/high-1/방정식과_부등식",
-      "count": 74
+      "count": 71
     },
     {
       "rel": "docs/concepts/functions/high-1/함수와_그래프",
-      "count": 76
+      "count": 72
     },
     {
       "rel": "docs/concepts/functions/math-1/삼각함수",
-      "count": 61
+      "count": 59
     },
     {
       "rel": "docs/concepts/functions/math-2/미분",
-      "count": 74
+      "count": 73
     },
     {
       "rel": "docs/concepts/geometry/high-1/도형의_방정식",
-      "count": 110
+      "count": 107
     },
     {
       "rel": "docs/problems/2019/고3_10월모의고사",
@@ -93,15 +93,15 @@
   "congestedHubs": [
     {
       "path": "hubs/concepts/functions/calculus.md",
-      "links": 150
+      "links": 148
     },
     {
       "path": "hubs/concepts/functions/math-1.md",
-      "links": 136
+      "links": 129
     },
     {
       "path": "hubs/concepts/functions/math-2.md",
-      "links": 156
+      "links": 151
     },
     {
       "path": "hubs/concepts/geometry/geometry-elective.md",
@@ -109,7 +109,7 @@
     },
     {
       "path": "hubs/concepts/geometry/high-1.md",
-      "links": 113
+      "links": 110
     },
     {
       "path": "hubs/concepts/geometry/middle-1.md",

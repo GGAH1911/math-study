@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: equations
 grade: high-1
 counts:
-  total: 75
+  total: 72
 ---
 
 # 방정식 · 고1 (high-1)
 
-총 75개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
+총 72개 concept 노드. 상위: [방정식 hub](../equations.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [방정식과 부등식](../../../concepts/equations/high-1/방정식과_부등식.md) · 방정식과 부등식 `unknown`
 
-## 정의 (69)
+## 정의 (66)
 
 - [3차 방정식](../../../concepts/equations/high-1/방정식과_부등식/3차_방정식.md) · 방정식과 부등식 `unknown`
 - [계수와 해의 관계](../../../concepts/equations/high-1/방정식과_부등식/계수와_해의_관계.md) · 방정식과 부등식 `unknown`
@@ -26,7 +26,6 @@ counts:
 - [곱셈과 부등식 조건](../../../concepts/equations/high-1/방정식과_부등식/곱셈과_부등식_조건.md) · 방정식과 부등식 `unknown`
 - [공통근](../../../concepts/equations/high-1/방정식과_부등식/공통근.md) · 방정식과 부등식 `unknown`
 - [근의 범위 조건](../../../concepts/equations/high-1/방정식과_부등식/근의_범위_조건.md) · 방정식과 부등식 `unknown`
-- [근의 합](../../../concepts/equations/high-1/방정식과_부등식/근의_합.md) · 방정식과 부등식 `unknown`
 - [근의합](../../../concepts/equations/high-1/방정식과_부등식/근의합.md) · 방정식과 부등식 `unknown`
 - [다항방정식의 근](../../../concepts/equations/high-1/방정식과_부등식/다항방정식의_근.md) · 방정식과 부등식 `unknown`
 - [대칭식](../../../concepts/equations/high-1/방정식과_부등식/대칭식.md) · 방정식과 부등식 `unknown`
@@ -39,7 +38,6 @@ counts:
 - [방정식의 해](../../../concepts/equations/high-1/방정식과_부등식/방정식의_해.md) · 방정식과 부등식 `unknown`
 - [방정식의 해의 합](../../../concepts/equations/high-1/방정식과_부등식/방정식의_해의_합.md) · 방정식과 부등식 `unknown`
 - [방정식의근](../../../concepts/equations/high-1/방정식과_부등식/방정식의근.md) · 방정식과 부등식 `unknown`
-- [방정식풀이](../../../concepts/equations/high-1/방정식과_부등식/방정식풀이.md) · 방정식과 부등식 `unknown`
 - [복소수](../../../concepts/equations/high-1/방정식과_부등식/복소수.md) · 방정식과 부등식 `unknown`
 - [복소수의 연산](../../../concepts/equations/high-1/방정식과_부등식/복소수의_연산.md) · 방정식과 부등식 `unknown`
 - [복소수의 절댓값](../../../concepts/equations/high-1/방정식과_부등식/복소수의_절댓값.md) · 방정식과 부등식 `unknown`
@@ -62,7 +60,6 @@ counts:
 - [이차부등식](../../../concepts/equations/high-1/방정식과_부등식/이차부등식.md) · 방정식과 부등식 `unknown`
 - [자연수해 조건](../../../concepts/equations/high-1/방정식과_부등식/자연수해_조건.md) · 방정식과 부등식 `unknown`
 - [절댓값 부등식](../../../concepts/equations/high-1/방정식과_부등식/절댓값_부등식.md) · 방정식과 부등식 `unknown`
-- [절댓값부등식](../../../concepts/equations/high-1/방정식과_부등식/절댓값부등식.md) · 방정식과 부등식 `unknown`
 - [정수해](../../../concepts/equations/high-1/방정식과_부등식/정수해.md) · 방정식과 부등식 `unknown`
 - [정수해 개수](../../../concepts/equations/high-1/방정식과_부등식/정수해_개수.md) · 방정식과 부등식 `unknown`
 - [제약 조건 최적화](../../../concepts/equations/high-1/방정식과_부등식/제약_조건_최적화.md) · 방정식과 부등식 `unknown`

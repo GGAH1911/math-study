@@ -5,18 +5,18 @@ updated: 2026-06-18
 hub_type: concepts-sub
 domain: geometry
 counts:
-  total: 447
+  total: 444
 ---
 
 # 도형 (geometry)
 
-총 447개 concept 노드. 상위: [concepts hub](../concepts.md).
+총 444개 concept 노드. 상위: [concepts hub](../concepts.md).
 
 ## 학년/과목별
 
 - [중1](../../concepts/geometry/middle-1/) — 111개 (sub-hub: [./geometry/middle-1.md](./geometry/middle-1.md))
 - [중2](../../concepts/geometry/middle-2/) — 49개 (sub-hub: [./geometry/middle-2.md](./geometry/middle-2.md))
 - [중3](../../concepts/geometry/middle-3/) — 46개 (sub-hub: [./geometry/middle-3.md](./geometry/middle-3.md))
-- [고1](../../concepts/geometry/high-1/) — 111개 (sub-hub: [./geometry/high-1.md](./geometry/high-1.md))
+- [고1](../../concepts/geometry/high-1/) — 108개 (sub-hub: [./geometry/high-1.md](./geometry/high-1.md))
 - [기하](../../concepts/geometry/geometry-elective/) — 130개 (sub-hub: [./geometry/geometry-elective.md](./geometry/geometry-elective.md))
 

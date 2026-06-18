@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: logic
 grade: high-1
 counts:
-  total: 31
+  total: 30
 ---
 
 # 논리 · 고1 (high-1)
 
-총 31개 concept 노드. 상위: [논리 hub](../logic.md) · [concepts hub](../../concepts.md).
+총 30개 concept 노드. 상위: [논리 hub](../logic.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [집합과 명제](../../../concepts/logic/high-1/집합과_명제.md) · 집합과 명제 `unknown`
 
-## 정의 (25)
+## 정의 (24)
 
 - [교집합](../../../concepts/logic/high-1/집합과_명제/교집합.md) · 집합과 명제 `unknown`
 - [대우](../../../concepts/logic/high-1/집합과_명제/대우.md) · 집합과 명제 `unknown`
@@ -36,7 +36,6 @@ counts:
 - [조건판정](../../../concepts/logic/high-1/집합과_명제/조건판정.md) · 집합과 명제 `unknown`
 - [진리집합](../../../concepts/logic/high-1/집합과_명제/진리집합.md) · 집합과 명제 `unknown`
 - [집합과 원소](../../../concepts/logic/high-1/집합과_명제/집합과_원소.md) · 집합과 명제 `unknown`
-- [집합의 교집합](../../../concepts/logic/high-1/집합과_명제/집합의_교집합.md) · 집합과 명제 `unknown`
 - [집합의 연산](../../../concepts/logic/high-1/집합과_명제/집합의_연산.md) · 집합과 명제 `unknown`
 - [집합의 합집합](../../../concepts/logic/high-1/집합과_명제/집합의_합집합.md) · 집합과 명제 `unknown`
 - [집합의교집합](../../../concepts/logic/high-1/집합과_명제/집합의교집합.md) · 집합과 명제 `unknown`

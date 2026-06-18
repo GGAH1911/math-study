@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: probability-stats
 grade: high-1
 counts:
-  total: 32
+  total: 31
 ---
 
 # 확률통계 · 고1 (high-1)
 
-총 32개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
+총 31개 concept 노드. 상위: [확률통계 hub](../probability-stats.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [경우의 수 고1](../../../concepts/probability-stats/high-1/경우의_수_고1.md) · 경우의 수 (고1) `unknown`
 
-## 정의 (26)
+## 정의 (25)
 
 - [같은 것이 있을 때의 순열](../../../concepts/probability-stats/high-1/경우의_수_고1/같은_것이_있을_때의_순열.md) · 경우의 수 고1 `unknown`
 - [격자경로](../../../concepts/probability-stats/high-1/경우의_수_고1/격자경로.md) · 경우의 수 고1 `unknown`
@@ -44,7 +44,6 @@ counts:
 - [포함-배제 원리](../../../concepts/probability-stats/high-1/경우의_수_고1/포함-배제_원리.md) · 경우의 수 고1 `unknown`
 - [합의의 원리](../../../concepts/probability-stats/high-1/경우의_수_고1/합의의_원리.md) · 경우의 수 고1 `unknown`
 - [회전 대칭](../../../concepts/probability-stats/high-1/경우의_수_고1/회전_대칭.md) · 경우의 수 고1 `unknown`
-- [회전대칭](../../../concepts/probability-stats/high-1/경우의_수_고1/회전대칭.md) · 경우의 수 고1 `unknown`
 
 ## 정리 (2)
 

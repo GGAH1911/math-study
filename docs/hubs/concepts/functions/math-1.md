@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: math-1
 counts:
-  total: 134
+  total: 127
 ---
 
 # 함수 · 수학1 (math-1)
 
-총 134개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 127개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [수열](../../../concepts/functions/math-1/수열.md) · 수열 `unknown`
 - [지수함수와 로그함수](../../../concepts/functions/math-1/지수함수와_로그함수.md) · 지수함수와 로그함수 `unknown`
 
-## 정의 (114)
+## 정의 (107)
 
 - [각의 조건](../../../concepts/functions/math-1/삼각함수/각의_조건.md) · 삼각함수 `unknown`
 - [각의 크기 결정](../../../concepts/functions/math-1/삼각함수/각의_크기_결정.md) · 삼각함수 `unknown`
@@ -40,13 +40,10 @@ counts:
 - [등차수열](../../../concepts/functions/math-1/수열/등차수열.md) · 수열 `unknown`
 - [등차수열 합](../../../concepts/functions/math-1/수열/등차수열_합.md) · 수열 `unknown`
 - [등차수열의 일반항](../../../concepts/functions/math-1/수열/등차수열의_일반항.md) · 수열 `unknown`
-- [로그 방정식](../../../concepts/functions/math-1/지수함수와_로그함수/로그_방정식.md) · 지수함수와 로그함수 `unknown`
 - [로그 부등식](../../../concepts/functions/math-1/지수함수와_로그함수/로그_부등식.md) · 지수함수와 로그함수 `unknown`
 - [로그 함수](../../../concepts/functions/math-1/지수함수와_로그함수/로그_함수.md) · 지수함수와 로그함수 `unknown`
 - [로그방정식](../../../concepts/functions/math-1/지수함수와_로그함수/로그방정식.md) · 지수함수와 로그함수 `unknown`
-- [로그부등식](../../../concepts/functions/math-1/지수함수와_로그함수/로그부등식.md) · 지수함수와 로그함수 `unknown`
 - [로그의 정의역](../../../concepts/functions/math-1/지수함수와_로그함수/로그의_정의역.md) · 지수함수와 로그함수 `unknown`
-- [로그함수](../../../concepts/functions/math-1/지수함수와_로그함수/로그함수.md) · 지수함수와 로그함수 `unknown`
 - [로그함수의 그래프](../../../concepts/functions/math-1/지수함수와_로그함수/로그함수의_그래프.md) · 지수함수와 로그함수 `unknown`
 - [로그함수의 단조성](../../../concepts/functions/math-1/지수함수와_로그함수/로그함수의_단조성.md) · 지수함수와 로그함수 `unknown`
 - [로그함수의 성질](../../../concepts/functions/math-1/지수함수와_로그함수/로그함수의_성질.md) · 지수함수와 로그함수 `unknown`
@@ -61,7 +58,6 @@ counts:
 - [부분합](../../../concepts/functions/math-1/수열/부분합.md) · 수열 `unknown`
 - [사분면별 부호](../../../concepts/functions/math-1/삼각함수/사분면별_부호.md) · 삼각함수 `unknown`
 - [사인 법칙](../../../concepts/functions/math-1/삼각함수/사인_법칙.md) · 삼각함수 `unknown`
-- [사인법칙](../../../concepts/functions/math-1/삼각함수/사인법칙.md) · 삼각함수 `unknown`
 - [삼각방정식](../../../concepts/functions/math-1/삼각함수/삼각방정식.md) · 삼각함수 `unknown`
 - [삼각함수 기하](../../../concepts/functions/math-1/삼각함수/삼각함수_기하.md) · 삼각함수 `unknown`
 - [삼각함수 방정식](../../../concepts/functions/math-1/삼각함수/삼각함수_방정식.md) · 삼각함수 `unknown`
@@ -77,7 +73,6 @@ counts:
 - [삼각함수의 최댓값과 최솟값](../../../concepts/functions/math-1/삼각함수/삼각함수의_최댓값과_최솟값.md) · 삼각함수 `unknown`
 - [삼각함수의 합성](../../../concepts/functions/math-1/삼각함수/삼각함수의_합성.md) · 삼각함수 `unknown`
 - [삼각함수의 활용](../../../concepts/functions/math-1/삼각함수/삼각함수의_활용.md) · 삼각함수 `unknown`
-- [삼각함수의곱](../../../concepts/functions/math-1/삼각함수/삼각함수의곱.md) · 삼각함수 `unknown`
 - [삼각형의 변과 각의 관계](../../../concepts/functions/math-1/삼각함수/삼각형의_변과_각의_관계.md) · 삼각함수 `unknown`
 - [수열의 관계식](../../../concepts/functions/math-1/수열/수열의_관계식.md) · 수열 `unknown`
 - [수열의 성질](../../../concepts/functions/math-1/수열/수열의_성질.md) · 수열 `unknown`
@@ -102,10 +97,8 @@ counts:
 - [조건부 최댓값·최솟값](../../../concepts/functions/math-1/지수함수와_로그함수/조건부_최댓값·최솟값.md) · 지수함수와 로그함수 `unknown`
 - [주기 진폭 위상](../../../concepts/functions/math-1/삼각함수/주기_진폭_위상.md) · 삼각함수 `unknown`
 - [주기함수](../../../concepts/functions/math-1/삼각함수/주기함수.md) · 삼각함수 `unknown`
-- [지수 방정식](../../../concepts/functions/math-1/지수함수와_로그함수/지수_방정식.md) · 지수함수와 로그함수 `unknown`
 - [지수 부등식](../../../concepts/functions/math-1/지수함수와_로그함수/지수_부등식.md) · 지수함수와 로그함수 `unknown`
 - [지수방정식](../../../concepts/functions/math-1/지수함수와_로그함수/지수방정식.md) · 지수함수와 로그함수 `unknown`
-- [지수부등식](../../../concepts/functions/math-1/지수함수와_로그함수/지수부등식.md) · 지수함수와 로그함수 `unknown`
 - [지수수열](../../../concepts/functions/math-1/수열/지수수열.md) · 수열 `unknown`
 - [지수함수](../../../concepts/functions/math-1/지수함수와_로그함수/지수함수.md) · 지수함수와 로그함수 `unknown`
 - [지수함수와 로그함수의 교점](../../../concepts/functions/math-1/지수함수와_로그함수/지수함수와_로그함수의_교점.md) · 지수함수와 로그함수 `unknown`

@@ -6,22 +6,21 @@ hub_type: concepts-grade
 domain: algebra
 grade: high-1
 counts:
-  total: 34
+  total: 33
 ---
 
 # 수와식 · 고1 (high-1)
 
-총 34개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
+총 33개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [다항식](../../../concepts/algebra/high-1/다항식.md) · 다항식 `unknown`
 
-## 정의 (28)
+## 정의 (27)
 
 - [계수](../../../concepts/algebra/high-1/다항식/계수.md) · 다항식 `unknown`
 - [계수 비교법](../../../concepts/algebra/high-1/다항식/계수_비교법.md) · 다항식 `unknown`
-- [계수비교법](../../../concepts/algebra/high-1/다항식/계수비교법.md) · 다항식 `unknown`
 - [곱셈 공식](../../../concepts/algebra/high-1/다항식/곱셈_공식.md) · 다항식 `unknown`
 - [나눗셈 정리](../../../concepts/algebra/high-1/다항식/나눗셈_정리.md) · 다항식 `unknown`
 - [나머지 정리](../../../concepts/algebra/high-1/다항식/나머지_정리.md) · 다항식 `unknown`

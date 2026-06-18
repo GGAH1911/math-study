@@ -6,12 +6,12 @@ hub_type: concepts-grade
 domain: functions
 grade: calculus
 counts:
-  total: 148
+  total: 146
 ---
 
 # 함수 · 미적분 (calculus)
 
-총 148개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 146개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (7)
 
@@ -23,7 +23,7 @@ counts:
 - [정적분의 활용](../../../concepts/functions/calculus/정적분의_활용.md) · 정적분의 활용 `unknown`
 - [합성함수의 미분](../../../concepts/functions/calculus/합성함수의_미분.md) · 합성함수의 미분 (연쇄법칙) `unknown`
 
-## 정의 (109)
+## 정의 (107)
 
 - [거리와 변위](../../../concepts/functions/calculus/정적분의_활용/거리와_변위.md) · 정적분의 활용 `unknown`
 - [거리와 적분](../../../concepts/functions/calculus/정적분의_활용/거리와_적분.md) · 정적분의 활용 `unknown`
@@ -32,7 +32,6 @@ counts:
 - [곡선의 길이](../../../concepts/functions/calculus/정적분의_활용/곡선의_길이.md) · 정적분의 활용 `unknown`
 - [곡선의 접촉 조건](../../../concepts/functions/calculus/도함수의_활용_심화/곡선의_접촉_조건.md) · 도함수의 활용 심화 `unknown`
 - [곱의 미분 법칙](../../../concepts/functions/calculus/여러가지함수의_미분/곱의_미분_법칙.md) · 여러가지함수의 미분 `unknown`
-- [곱의 미분법](../../../concepts/functions/calculus/여러가지함수의_미분/곱의_미분법.md) · 여러가지함수의 미분 `unknown`
 - [곱의미분법](../../../concepts/functions/calculus/여러가지함수의_미분/곱의미분법.md) · 여러가지함수의 미분 `unknown`
 - [교점의 활용](../../../concepts/functions/calculus/정적분의_활용/교점의_활용.md) · 정적분의 활용 `unknown`
 - [구간별 최솟값 함수](../../../concepts/functions/calculus/도함수의_활용_심화/구간별_최솟값_함수.md) · 도함수의 활용 심화 `unknown`
@@ -83,7 +82,6 @@ counts:
 - [분자분모 최고차항 비교](../../../concepts/functions/calculus/수열의_극한/분자분모_최고차항_비교.md) · 수열의 극한 `unknown`
 - [삼각함수 극한](../../../concepts/functions/calculus/여러가지함수의_극한/삼각함수_극한.md) · 여러가지함수의 극한 `unknown`
 - [삼각함수 미분](../../../concepts/functions/calculus/여러가지함수의_미분/삼각함수_미분.md) · 여러가지함수의 미분 `unknown`
-- [삼각함수 적분](../../../concepts/functions/calculus/여러가지_적분법/삼각함수_적분.md) · 여러가지 적분법 `unknown`
 - [삼각함수의 극한](../../../concepts/functions/calculus/여러가지함수의_극한/삼각함수의_극한.md) · 여러가지함수의 극한 `unknown`
 - [삼각함수의 도함수](../../../concepts/functions/calculus/여러가지함수의_미분/삼각함수의_도함수.md) · 여러가지함수의 미분 `unknown`
 - [삼각함수의 적분](../../../concepts/functions/calculus/여러가지_적분법/삼각함수의_적분.md) · 여러가지 적분법 `unknown`

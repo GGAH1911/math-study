@@ -6,18 +6,18 @@ hub_type: concepts-grade
 domain: geometry
 grade: high-1
 counts:
-  total: 111
+  total: 108
 ---
 
 # 도형 · 고1 (high-1)
 
-총 111개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
+총 108개 concept 노드. 상위: [도형 hub](../geometry.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (1)
 
 - [도형의 방정식](../../../concepts/geometry/high-1/도형의_방정식.md) · 도형의 방정식 `unknown`
 
-## 정의 (104)
+## 정의 (101)
 
 - [거리 계산](../../../concepts/geometry/high-1/도형의_방정식/거리_계산.md) · 도형의 방정식 `unknown`
 - [거리 조건과 도형](../../../concepts/geometry/high-1/도형의_방정식/거리_조건과_도형.md) · 도형의 방정식 `unknown`
@@ -63,7 +63,6 @@ counts:
 - [선형 제약 조건](../../../concepts/geometry/high-1/도형의_방정식/선형_제약_조건.md) · 도형의 방정식 `unknown`
 - [세 점의 일직선 조건](../../../concepts/geometry/high-1/도형의_방정식/세_점의_일직선_조건.md) · 도형의 방정식 `unknown`
 - [수직 조건](../../../concepts/geometry/high-1/도형의_방정식/수직_조건.md) · 도형의 방정식 `unknown`
-- [수직조건](../../../concepts/geometry/high-1/도형의_방정식/수직조건.md) · 도형의 방정식 `unknown`
 - [아폴로니우스 원](../../../concepts/geometry/high-1/도형의_방정식/아폴로니우스_원.md) · 도형의 방정식 `unknown`
 - [영역](../../../concepts/geometry/high-1/도형의_방정식/영역.md) · 도형의 방정식 `unknown`
 - [원](../../../concepts/geometry/high-1/도형의_방정식/원.md) · 도형의 방정식 `unknown`
@@ -97,14 +96,12 @@ counts:
 - [점의 집합의 기하학적 의미](../../../concepts/geometry/high-1/도형의_방정식/점의_집합의_기하학적_의미.md) · 도형의 방정식 `unknown`
 - [점의 평행이동](../../../concepts/geometry/high-1/도형의_방정식/점의_평행이동.md) · 도형의 방정식 `unknown`
 - [좌표 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표_계산.md) · 도형의 방정식 `unknown`
-- [좌표 기하](../../../concepts/geometry/high-1/도형의_방정식/좌표_기하.md) · 도형의 방정식 `unknown`
 - [좌표 기하를 이용한 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표_기하를_이용한_계산.md) · 도형의 방정식 `unknown`
 - [좌표 기하학](../../../concepts/geometry/high-1/도형의_방정식/좌표_기하학.md) · 도형의 방정식 `unknown`
 - [좌표계를 이용한 기하](../../../concepts/geometry/high-1/도형의_방정식/좌표계를_이용한_기하.md) · 도형의 방정식 `unknown`
 - [좌표계를 이용한 넓이 계산](../../../concepts/geometry/high-1/도형의_방정식/좌표계를_이용한_넓이_계산.md) · 도형의 방정식 `unknown`
 - [좌표계에서의 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표계에서의_거리.md) · 도형의 방정식 `unknown`
 - [좌표기하](../../../concepts/geometry/high-1/도형의_방정식/좌표기하.md) · 도형의 방정식 `unknown`
-- [좌표기하학](../../../concepts/geometry/high-1/도형의_방정식/좌표기하학.md) · 도형의 방정식 `unknown`
 - [좌표를 이용한 넓이](../../../concepts/geometry/high-1/도형의_방정식/좌표를_이용한_넓이.md) · 도형의 방정식 `unknown`
 - [좌표와 거리](../../../concepts/geometry/high-1/도형의_방정식/좌표와_거리.md) · 도형의 방정식 `unknown`
 - [좌표와 기하](../../../concepts/geometry/high-1/도형의_방정식/좌표와_기하.md) · 도형의 방정식 `unknown`

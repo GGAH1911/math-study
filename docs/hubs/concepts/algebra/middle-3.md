@@ -6,22 +6,21 @@ hub_type: concepts-grade
 domain: algebra
 grade: middle-3
 counts:
-  total: 35
+  total: 34
 ---
 
 # 수와식 · 중3 (middle-3)
 
-총 35개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
+총 34개 concept 노드. 상위: [수와식 hub](../algebra.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (2)
 
 - [실수와 그 계산](../../../concepts/algebra/middle-3/실수와_그_계산.md) · 실수와 그 계산 `unknown`
 - [인수분해](../../../concepts/algebra/middle-3/인수분해.md) · 다항식의 곱셈과 인수분해 `unknown`
 
-## 정의 (24)
+## 정의 (23)
 
 - [공통 인수](../../../concepts/algebra/middle-3/인수분해/공통_인수.md) · 인수분해 `unknown`
-- [공통인수](../../../concepts/algebra/middle-3/인수분해/공통인수.md) · 인수분해 `unknown`
 - [근호의 성질](../../../concepts/algebra/middle-3/실수와_그_계산/근호의_성질.md) · 실수와 그 계산 `unknown`
 - [다항식의 인수분해](../../../concepts/algebra/middle-3/인수분해/다항식의_인수분해.md) · 인수분해 `unknown`
 - [동류 무리항의 덧셈](../../../concepts/algebra/middle-3/실수와_그_계산/동류_무리항의_덧셈.md) · 실수와 그 계산 `unknown`
