@@ -53,7 +53,9 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
 먼저 Read 도구로 이미지를 보고, 좌표·관계 검증이 필요하면 Bash 로 python3/sympy 를 실행해 확인하라.
 
 검수 기준:
-1. 충실성: 도식이 개념을 올바르게 표현하는가? (예: 닮음=닮은 두 도형, 단위원=원+점+각)
+1. 충실성(완전성 포함): 도식이 개념을 올바르게 **그리고 완전히** 표현하는가? (예: 닮음=닮은 두 도형, 단위원=원+점+각)
+   ★개념이 N개 항목을 요구하면(예: '각의 종류'=예각·직각·둔각·평각·전각 5종) **N개 전부**가 각각 **완성된 형태**(변·호·라벨 다 갖춤)로 있어야 한다.
+   변 없는 외톨이 점, 라벨 없는 핵심 요소, branch 한쪽만 그린 쌍곡선/그래프 = 불완전 → 반드시 전부 채워라.
 2. 좌표 정확성: 곡선 위에 찍힌 점이 그 곡선식을 정확히 만족하는가? 직각·닮음비·접선·내분 등 관계가 성립하는가? (sympy)
 3. primitive: 함수그래프 y=f(x)(포물선·직선·사인 등)는 parametric 으로 그렸는가? conic(parabola/ellipse/hyperbola) shape 로
    함수를 그려 곡선과 점이 어긋나지 않는가? — 어긋나면 parametric {x:"t", y:"f(t)", tRange} 로 교체.
@@ -70,7 +72,8 @@ parametric{x,y,tRange} vector{from,to,label?} angle{at,from,to,label?,radius?} t
 출력은 **JSON 객체 하나만**(산문·코드펜스 금지):
 - 문제 없음: {"ok": true, "note": "<한 줄 근거>"}
 - 고침: {"ok": false, "issues": ["<무엇이 왜 문제>", ...], "figure": {고친 전체 figure 스펙}}
-고칠 때 **최소 변경**으로 문제만 해결하고, figure 는 전체 스펙(shapes·range·showAxes·title)을 담아라.`;
+고칠 때 멀쩡한 부분은 건드리지 말되 **이슈는 완전히** 해결하라 — 특히 누락/불완전(충실성)이면 빠진 요소를
+**전부 완성된 형태로 추가**(점만 찍지 말고 변·호·라벨까지). figure 는 전체 스펙(shapes·range·showAxes·title)을 담아라.`;
 
 function callQA(c, body, pngPath) {
   const prompt = `${RUBRIC}
@@ -176,15 +179,22 @@ async function main() {
 
   let targets;
   if (ids.length) targets = ids;
-  else { // --all: figure 있는 것 중 미검수(또는 force)
+  else if (bools.has('--suspect')) {
+    // 불완전 수정 의심: fixed 인데 충실성/누락류 이슈가 기록된 도식 → 강화된 QA(재검증 루프)로 재검수.
+    const SUS = /누락|충실|모두|전부|없[음어]|missing|일부만|만 (존재|있)|불완전|추가|branch|가지/;
+    targets = Object.entries(cache.figures)
+      .filter(([, v]) => v.figure && v.qa?.fixed && (v.qa.issues || []).some((s) => SUS.test(s)))
+      .map(([id]) => id);
+  } else { // --all: figure 있는 것 중 미검수(또는 force)
     targets = Object.entries(cache.figures).filter(([, v]) => v.figure && (force || !v.qa?.checked)).map(([id]) => id);
   }
   targets = targets.slice(0, Number.isFinite(limit) ? limit : undefined);
   const N = targets.length;
-  const stat = { ok: 0, fixed: 0, failed: 0, done: 0 };
+  const stat = { ok: 0, fixed: 0, failed: 0, unverified: 0, done: 0 };
   console.log(`QA 검수 시작: 대상 ${N}개 · 모델 ${MODEL} · 동시성 ${conc}${force ? ' · FORCE' : ''}`);
   const writeCache = () => writeFileSync(CACHE, JSON.stringify(cache, null, 0));
 
+  const MAX_FIX = 2;   // 수정→재검증 반복 상한
   let idx = 0;
   async function worker() {
     while (idx < targets.length) {
@@ -193,22 +203,39 @@ async function main() {
       if (!entry || !entry.figure) { stat.done++; continue; }
       let line;
       try {
-        const png = await renderFigure(id);
-        if (!png) throw new Error('render-failed');
-        const verdict = await callQA({ ...entry, label: entry.label }, conceptBody(id), png);
-        if (verdict.ok) {
-          entry.qa = { checked: true, fixed: false, note: (verdict.note || '').slice(0, 160), model: MODEL };
-          stat.ok++;
-          line = `✓ ${entry.label} — OK`;
-        } else {
+        // 현재 캐시 스펙을 렌더해 평가(재검수면 직전 수정본이 대상).
+        const evalNow = async () => {
+          const png = await renderFigure(id);
+          if (!png) throw new Error('render-failed');
+          return callQA({ ...entry, label: entry.label }, conceptBody(id), png);
+        };
+        let verdict = await evalNow();
+        const allIssues = [];
+        let fixes = 0, invalidFix = false;
+        // ★수정 후 반드시 재렌더+재검증 — Sonnet 이 결함은 잡고 수정은 불완전(예: 각의
+        // 종류 5종 중 일부만)했던 사례 방지. 통과(ok) 하거나 상한까지 반복.
+        while (!verdict.ok && fixes < MAX_FIX) {
           const fixed = sanitizeFigure(verdict.figure);
-          if (!fixed) { entry.qa = { checked: true, fixed: false, note: 'fix-invalid', model: MODEL }; stat.failed++; line = `✗ ${entry.label} — 수정안 무효(원본 유지)`; }
-          else {
-            entry.figure = fixed;
-            entry.qa = { checked: true, fixed: true, issues: (verdict.issues || []).slice(0, 5), model: MODEL };
-            stat.fixed++;
-            line = `✎ ${entry.label} — 수정: ${(verdict.issues || []).join(' / ').slice(0, 80)}`;
-          }
+          if (!fixed) { invalidFix = true; break; }
+          entry.figure = fixed;               // 적용
+          allIssues.push(...(verdict.issues || []));
+          writeCache();                        // 재렌더가 새 스펙 보도록 먼저 기록
+          fixes++;
+          verdict = await evalNow();           // 수정본 재검증
+        }
+        if (fixes === 0 && verdict.ok) {
+          entry.qa = { checked: true, fixed: false, verified: true, note: (verdict.note || '').slice(0, 160), model: MODEL };
+          stat.ok++; line = `✓ ${entry.label} — OK`;
+        } else if (verdict.ok) {
+          entry.qa = { checked: true, fixed: true, verified: true, issues: allIssues.slice(0, 6), model: MODEL };
+          stat.fixed++; line = `✎ ${entry.label} — 수정·재검증OK(${fixes}회): ${allIssues.join(' / ').slice(0, 70)}`;
+        } else if (invalidFix && fixes === 0) {
+          entry.qa = { checked: true, fixed: false, verified: false, note: 'fix-invalid', model: MODEL };
+          stat.failed++; line = `✗ ${entry.label} — 수정안 무효(원본 유지)`;
+        } else {
+          // 수정은 적용했으나 재검증서 여전히 이슈 — 미해결 플래그.
+          entry.qa = { checked: true, fixed: true, verified: false, issues: allIssues.slice(0, 6), note: '재검증 미통과', model: MODEL };
+          stat.unverified++; line = `⚠ ${entry.label} — ${fixes}회 수정했으나 재검증 미통과(플래그)`;
         }
         writeCache();
       } catch (e) {
@@ -221,6 +248,6 @@ async function main() {
     }
   }
   await Promise.all(Array.from({ length: conc }, () => worker()));
-  console.log(`\n완료: OK ${stat.ok} · 수정 ${stat.fixed} · 실패 ${stat.failed} · (총 ${N})`);
+  console.log(`\n완료: OK ${stat.ok} · 수정·재검증OK ${stat.fixed} · 재검증미통과 ${stat.unverified} · 실패 ${stat.failed} · (총 ${N})`);
 }
 main();
