@@ -1,14 +1,19 @@
 # TODO — 솔버/파이프라인 백로그
 
-> 갱신: 2026-06-18 · 개념 도식 생성 파이프라인 + Sonnet QA + 렌더러 정비 후 잔여 (상세: `docs/HANDOFF.md`).
+> 갱신: 2026-06-19 · agy(Gemini) 도식 파이프라인 + 자율 운영. **부팅·진행상태는 `docs/HANDOFF.md`**.
 
-## 개념 도식 (2026-06-18) — 상세·함정은 `docs/HANDOFF.md`
-- [x] 생성 파이프라인(`gen_concept_figures.mjs`, haiku 단계별+sympy) + 개념페이지 배치(요약 다음·본문 직전) + 갤러리/하네스(`dev/concept-figures`·`dev/figrender`).
-- [x] Sonnet QA(`qa_concept_figures.mjs`, 고정폭 실제크기 렌더+sympy, 그자리 수정·멱등). 도형 도메인 전수(168 수정).
-- [x] 렌더러 수정(Geometry.tsx): 각호=내각·직각=정사각형·라벨 도형밖·`**`→`^` 결정적 보정. QA 교훈 top5+`**` 를 생성프롬프트·튜터 GRAPHICS_GUIDE 양쪽 환류.
-- [ ] **함수 도메인 도식 재개** (7/502 일시정지, 한도 보류 중). `node scripts/gen_concept_figures.mjs --domain functions --concurrency 4` → 스팟체크 QA. ⚠️한도 부담 큼.
-- [ ] **3D/공간 76개** → `Geometry3D` 생성 파이프라인 신규(현재 2D만, `--include-3d` 로 대상 잡힘).
-- [ ] **dev 라우트 재게이팅**: `middleware.ts` 의 `/dev/concept-figures`·`/dev/figrender` TEMP 공개 → 작업 끝나면 admin 으로.
+## 자율 도식 파이프라인 (2026-06-19) — 부팅·함정은 `docs/HANDOFF.md`
+순서: 함수 gen → QA(area전수점검) → 3D(`Geometry3D`) → 기출 교정기. 하트비트 cron(세션전용, 부팅 시 재생성).
+- [x] agy(Gemini Flash) gen·qa 백엔드 + 쿼터 자동재개(`withQuotaRetry`, 빈출력=쿼터) + setsid 분리.
+- [x] area primitive·bareAxes·parametric dashed·드래그 라벨(앵커/leader)·세로패딩 (Geometry.tsx).
+- [x] QA area 전수점검(RUBRIC+areaHint+PASS1 verdict 로깅).
+- [x] 문제 재구성 탭(Gemini 교정 KaTeX+bareAxes, 문제→그림→선택지, fixes 백엔드보관) + `/dev/ingest-test`.
+- [x] **함수 도메인 gen 완료**(figure 450·null 50·실패 2). 전체 캐시 839.
+- [~] **QA --all 진행중**(agy·배치6, 839중 439 QA됨·334 미검수, 쿼터대기 자동재개). 완료 시 `concept-figures.json` 커밋.
+- [ ] **3D/공간 76개** → `Geometry3D` 신규. ★렌더러 설계 결정 필요(사용자 보고 후). 현재 2D만(`--include-3d` 대상).
+- [ ] **기출 Gemini 교정기**(전수 5h): 독립검증(블라인드재전사 diff+솔버게이트)→쿼터멱등→전수. 모듈(`geminiExtract`+`independentVerify`) → Gemini 인제스트 엔진 코어 재사용. [[project_gemini_corrector]].
+- [ ] gen 실패 2개 재생성 + 라벨 leader 스냅 휴리스틱(아래).
+- [ ] **dev 라우트 재게이팅**: `middleware.ts` 의 `/dev/concept-figures`·`/dev/figrender`·`/dev/ingest-test` TEMP 공개 → 작업 끝나면 admin 으로.
 - [ ] (선택) equations·algebra·prob-stats 도메인(도식친화도 낮음, 후순위).
 - [ ] **라벨 leader 스냅 휴리스틱 개선**: 자유 `text` 라벨(변 길이 숫자 8·10 등)은 어느 도형을 가리키는지 스펙에 없어, 드래그 시 **가장 가까운 변/점**으로 leader 를 스냅한다(`nearestOnSegs`). 라벨이 의도와 다른 요소에 더 가까우면 오스냅 가능. 근본 해결 = 생성 단계에서 변 길이를 **segment 라벨**(또는 polygon 변 라벨)로 붙여 명시 앵커를 갖게 함(현재 free text → 재생성 필요). 우선순위 낮음.
 

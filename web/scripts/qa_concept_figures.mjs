@@ -349,6 +349,7 @@ async function main() {
     const chunks = [];
     for (let i = 0; i < targets.length; i += BATCH) chunks.push(targets.slice(i, i + BATCH));
     const flagged = [];
+    const p1verdicts = []; // PASS1 평가 verdict(ok·issues) 수집 → 수정대상 패턴 분석용(쿼터 절감 카운트만 로깅하던 한계 보완)
     let ci = 0, p1done = 0, p1ok = 0;
     async function batchWorker() {
       while (ci < chunks.length) {
@@ -367,6 +368,7 @@ async function main() {
         const vById = new Map((verdicts || []).map((v) => [v.id, v]));
         for (const it of items) {
           const v = vById.get(it.id);
+          p1verdicts.push({ id: it.id, label: it.label, ok: !!(v && v.ok), issues: (v && v.issues) || [] });
           if (v && v.ok) {
             cache.figures[it.id].qa = { checked: true, fixed: false, verified: true, note: 'batch-ok', model: MODEL };
             p1ok++;
@@ -375,6 +377,7 @@ async function main() {
           }
         }
         writeCache();
+        try { writeFileSync('/tmp/ingest_logs/qa_pass1_verdicts.json', JSON.stringify(p1verdicts, null, 1)); } catch { /* */ }
         p1done += chunk.length;
         console.log(`PASS1 [${p1done}/${targets.length}] 통과 ${p1ok} · PASS2대상 ${flagged.length}`);
       }
