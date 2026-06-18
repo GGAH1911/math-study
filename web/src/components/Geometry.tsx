@@ -221,6 +221,7 @@ export type GeomSpec = {
   yRange?: [number, number];
   showAxes?: boolean;
   showGrid?: boolean;
+  bareAxes?: boolean;   // 기출 스타일: 격자·눈금숫자 끄고 축선만(화살표+x/y/O 라벨). showGrid/눈금 무시.
   title?: string;
   width?: number;
   height?: number;
@@ -387,8 +388,10 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   const xPx = (x: number) => cx + (x - bounds.x[0]) * scale;
   const yPx = (y: number) => H - cy - (y - bounds.y[0]) * scale;
 
-  const showAxes = spec.showAxes !== false;
-  const showGrid = spec.showGrid !== false;
+  // bareAxes(기출 스타일): 축선만(화살표+x/y/O), 격자·눈금숫자 끔.
+  const bare = spec.bareAxes === true;
+  const showAxes = bare ? true : spec.showAxes !== false;
+  const showGrid = bare ? false : spec.showGrid !== false;
 
   // Choose tick step
   const tickStep = (() => {
@@ -475,24 +478,42 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
 
   // Axes (only draw if origin is inside visible domain)
   if (showAxes) {
-    if (bounds.y[0] <= 0 && bounds.y[1] >= 0) {
+    const xVisible = bounds.y[0] <= 0 && bounds.y[1] >= 0;
+    const yVisible = bounds.x[0] <= 0 && bounds.x[1] >= 0;
+    if (bare) {
+      els.push(
+        <defs key="axdefs">
+          <marker id="axarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="#52525b" />
+          </marker>
+        </defs>,
+      );
+    }
+    if (xVisible) {
       els.push(<line key="xax" x1={xPx(bounds.x[0])} y1={yPx(0)} x2={xPx(bounds.x[1])} y2={yPx(0)}
-                     stroke="#fafafa" strokeWidth={1.4} />);
+                     stroke={bare ? '#52525b' : '#fafafa'} strokeWidth={1.4} markerEnd={bare ? 'url(#axarrow)' : undefined} />);
     }
-    if (bounds.x[0] <= 0 && bounds.x[1] >= 0) {
+    if (yVisible) {
       els.push(<line key="yax" x1={xPx(0)} y1={yPx(bounds.y[0])} x2={xPx(0)} y2={yPx(bounds.y[1])}
-                     stroke="#fafafa" strokeWidth={1.4} />);
+                     stroke={bare ? '#52525b' : '#fafafa'} strokeWidth={1.4} markerEnd={bare ? 'url(#axarrow)' : undefined} />);
     }
-    // Tick labels along the bottom + left edges
-    const minX = Math.ceil(bounds.x[0] / tickStep) * tickStep;
-    for (let v = minX; v <= bounds.x[1] + 1e-9; v += tickStep) {
-      if (Math.abs(v) < 1e-9) continue;
-      els.push(<text key={`tx${v}`} x={xPx(v)} y={H - 6} fill="#a1a1aa" fontSize={tickFontPx} textAnchor="middle">{fmtNum(v)}</text>);
-    }
-    const minY = Math.ceil(bounds.y[0] / tickStep) * tickStep;
-    for (let v = minY; v <= bounds.y[1] + 1e-9; v += tickStep) {
-      if (Math.abs(v) < 1e-9) continue;
-      els.push(<text key={`ty${v}`} x={4} y={yPx(v) + 4} fill="#a1a1aa" fontSize={tickFontPx}>{fmtNum(v)}</text>);
+    if (bare) {
+      // 기출 스타일 라벨: x(우단)·y(상단)·O(원점). 눈금숫자는 그리지 않음.
+      if (xVisible) pushLabel('axX', 'x', xPx(bounds.x[1]) - 2, yPx(0) + 12, -100, '#71717a');
+      if (yVisible) pushLabel('axY', 'y', xPx(0) + 10, yPx(bounds.y[1]) + 2, 0, '#71717a');
+      if (xVisible && yVisible) pushLabel('axO', 'O', xPx(0) - 13, yPx(0) + 13, -50, '#71717a');
+    } else {
+      // Tick labels along the bottom + left edges
+      const minX = Math.ceil(bounds.x[0] / tickStep) * tickStep;
+      for (let v = minX; v <= bounds.x[1] + 1e-9; v += tickStep) {
+        if (Math.abs(v) < 1e-9) continue;
+        els.push(<text key={`tx${v}`} x={xPx(v)} y={H - 6} fill="#a1a1aa" fontSize={tickFontPx} textAnchor="middle">{fmtNum(v)}</text>);
+      }
+      const minY = Math.ceil(bounds.y[0] / tickStep) * tickStep;
+      for (let v = minY; v <= bounds.y[1] + 1e-9; v += tickStep) {
+        if (Math.abs(v) < 1e-9) continue;
+        els.push(<text key={`ty${v}`} x={4} y={yPx(v) + 4} fill="#a1a1aa" fontSize={tickFontPx}>{fmtNum(v)}</text>);
+      }
     }
   }
 
