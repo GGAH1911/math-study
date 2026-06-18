@@ -20,7 +20,11 @@ import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const MODEL = process.env.FIGURE_MODEL || 'haiku';     // 사용자 지침: 하이쿠
+// 백엔드: 'claude'(Haiku, 구독 한도) | 'agy'(Antigravity CLI, Google AI Pro 쿼터 — 별도 풀).
+// agy 는 --output-format json 이 없어 plain text 를 내므로 parseEnvelope 로 직접 추출한다.
+const BACKEND = process.env.LLM_BACKEND || 'claude';
+const MODEL = process.env.FIGURE_MODEL ||
+  (BACKEND === 'agy' ? 'Gemini 3.5 Flash (Medium)' : 'haiku'); // 사용자 지침: 하이쿠
 const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(WEB, '..');
 const GRAPH = resolve(WEB, 'src/data/concept-graph.json');
@@ -122,13 +126,19 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 본문 발췌: ${body || '(본문 없음)'}`;
 
 function callLLM(c, body) {
+  const prompt = PROMPT(c, body);
+  return BACKEND === 'agy' ? callAgy(prompt) : callClaude(prompt);
+}
+
+// Claude (Haiku) — --output-format json 래퍼에서 result 추출.
+function callClaude(prompt) {
   const args = ['-p', '--model', MODEL,
     '--output-format', 'json',
     '--allowedTools', 'Bash',
     '--disallowedTools', 'Read,Write,Edit,Glob,Grep,WebFetch,WebSearch',
     '--max-turns', '20',
     '--no-session-persistence',
-    '--', PROMPT(c, body)];
+    '--', prompt];
   return new Promise((res, rej) => {
     const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '', err = '';
@@ -144,6 +154,29 @@ function callLLM(c, body) {
         if (env.is_error) return rej(new Error('cli:' + (env.subtype || '')));
         res(parseEnvelope(env.result || ''));
       } catch (e) { rej(e); }
+    });
+  });
+}
+
+// Antigravity CLI(agy) — plain text stdout. 도구(Bash) 미부여: 순수 추론으로 figure JSON 만 생성하고
+// 좌표 검증은 모델 밖(우리 sympy/완전성 게이트 + Sonnet QA)에서 결정적으로 한다(권한 게이트 해제 불필요).
+// 도구 트레이스가 섞여도 parseEnvelope 가 figure 객체만 추출한다.
+function callAgy(prompt) {
+  // -p/--print 는 프롬프트 텍스트를 값으로 받는다(불리언 아님) → 프롬프트는 -p 바로 뒤.
+  const args = ['-p', prompt,
+    '--model', MODEL,
+    '--print-timeout', '4m'];
+  return new Promise((res, rej) => {
+    const child = spawn('agy', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    let out = '', err = '';
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
+    child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
+    child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
+    child.on('error', (e) => { clearTimeout(to); rej(e); });
+    child.on('close', (code) => {
+      clearTimeout(to);
+      if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      try { res(parseEnvelope(out)); } catch (e) { rej(e); }
     });
   });
 }
@@ -286,7 +319,7 @@ async function main() {
   if (!cache.figures) cache.figures = {};
   const stat = { made: 0, nullFig: 0, skipped: 0, failed: 0, done: 0 };
   const N = targets.length;
-  console.log(`figure 생성 시작: 대상 ${N}개 · 모델 ${MODEL} · 동시성 ${concurrency}${force ? ' · FORCE' : ''}`);
+  console.log(`figure 생성 시작: 대상 ${N}개 · 백엔드 ${BACKEND} · 모델 ${MODEL} · 동시성 ${concurrency}${force ? ' · FORCE' : ''}`);
   // 캐시 쓰기는 메인 스레드의 동기 블록에서만(워커 await 사이) — 동시 clobber 없음.
   const writeCache = () => writeFileSync(CACHE, JSON.stringify(cache, null, 0));
 

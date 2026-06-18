@@ -13,17 +13,27 @@ let figuresData: any = { figures: {} };
 try { figuresData = JSON.parse(readFileSync(cachePath, 'utf-8')); } catch { /* 아직 없음 */ }
 const figures = figuresData.figures ?? {};
 const entries = Object.entries(figures) as [string, any][];
-const withFig = entries.filter(([, v]) => v.figure);
-const nulls = entries.filter(([, v]) => !v.figure);
+// 검색 필터(id·라벨·생성모델 부분일치). 예: ?q=도함수의_활용_심화, ?q=gemini
+const q = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
+const match = ([id, v]: [string, any]) =>
+  !q || id.toLowerCase().includes(q) || (v.label ?? '').toLowerCase().includes(q) || (v.model ?? '').toLowerCase().includes(q);
+const withFig = entries.filter(([, v]) => v.figure).filter(match);
+const nulls = entries.filter(([, v]) => !v.figure).filter(match);
 ---
 <BaseLayout title="개념 도식 갤러리 (검토)">
   <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
     <header class="space-y-1">
       <h1 class="text-2xl font-semibold tracking-tight">개념 도식 갤러리 — 검토</h1>
       <p class="text-sm text-[color:var(--color-muted)]">
-        하이쿠 단계별 생성 + sympy 좌표검증. figure {withFig.length}개 · 도식불필요 {nulls.length}개 · 총 {entries.length}개.
+        단계별 생성 + 좌표검증. figure {withFig.length}개 · 도식불필요 {nulls.length}개{q && ` · 필터 "${q}"`} · 총 {entries.length}개.
         개념 페이지 본문 위에 이 도식이 들어갑니다.
       </p>
+      <form method="get" class="flex gap-2 pt-1">
+        <input type="text" name="q" value={q} placeholder="검색: 라벨·id·모델 (예: 도함수의_활용_심화, gemini)"
+          class="flex-1 max-w-md text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-900" />
+        <button type="submit" class="text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-800">검색</button>
+        {q && <a href="/dev/concept-figures" class="text-sm px-3 py-1.5 rounded border border-zinc-700 self-center">전체</a>}
+      </form>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -31,7 +41,7 @@ const nulls = entries.filter(([, v]) => !v.figure);
         <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
           <div class="flex items-baseline justify-between gap-2">
             <h2 class="text-sm font-semibold">{v.label}</h2>
-            <span class="text-[10px] text-zinc-500">axes {String(v.figure.showAxes)} · {v.figure.shapes.length} shapes</span>
+            <span class="text-[10px] text-zinc-500">axes {String(v.figure.showAxes)} · {v.figure.shapes.length} shapes{v.model && ` · ${v.model}`}</span>
           </div>
           <div class="bg-zinc-950 rounded p-2 flex justify-center">
             <Geometry client:load spec={v.figure} width={460} height={360} hideCaption noBroadcast />
