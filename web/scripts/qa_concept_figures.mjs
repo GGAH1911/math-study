@@ -19,6 +19,9 @@ const BACKEND = process.env.QA_BACKEND || 'claude';
 const MODEL = process.env.QA_MODEL || (BACKEND === 'agy' ? 'Gemini 3.5 Flash (Medium)' : 'sonnet');
 // DRY=1: 수정 적용·캐시 기록 없이 첫 판정만 수집(정확도 파일럿용). 결과는 /tmp/qa_pilot_verdicts.json.
 const DRY = process.env.QA_DRY === '1';
+// QA_BATCH=N(>1): PASS 1 에서 N개씩 한 콜로 평가만(루브릭 1회만 전송 → 쿼터 절감).
+// ok 는 그대로 통과, 결함난 것만 PASS 2(개별 수정→재검증 루프)로. 1=비활성(전부 개별).
+const BATCH = Math.max(1, Number(process.env.QA_BATCH) || 1);
 const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(WEB, '..');
 const CACHE = resolve(WEB, 'src/data/concept-figures.json');
@@ -67,6 +70,10 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
    두 도형 비교는 간격 넉넉히 + 프라임(A'B'C') 표기인가?
 5. 축: 함수그래프·좌표평면 개념은 showAxes:true, 순수 기하(삼각형·원·벡터·각)는 false 가 적절한가?
 6. 직각 표시·각 호는 렌더러가 자동 처리하니(angle shape 두 팔이 수직이면 정사각형 마커) 스펙은 그대로 둬도 된다.
+
+★판정 기준(중요): **명백한 결함만** ok:false 로 지적하라 — 좌표/관계 오류, 핵심 요소·항목 누락(불완전),
+좌표개념인데 축 누락, range 과대/과소로 도식이 미니거나 잘림, 라벨이 심하게 겹쳐 못 읽음. 이런 게 없으면
+사소한 라벨 위치·눈금 라벨 부재 등은 **ok:true 로 통과**시켜라(가독성에 큰 지장 없으면 불필요한 수정 금지).
 
 shape 스키마(좌표=수학좌표): point{at,label?,labelDir?} polygon{vertices,labels?,closed?} segment{from,to,label?,dashed?}
 circle{center,radius,label?} ellipse{center,rx,ry} parabola{vertex,focus?,orientation?} hyperbola{center,a,b,orientation?}
@@ -165,6 +172,73 @@ function tryBalanced(s) {
   }
   return null;
 }
+// 배치 평가 결과 = JSON 배열 [{"id","ok","issues"}]. 균형 [] 추출.
+function parseBatchArray(text) {
+  const fences = [...text.matchAll(/```(?:json)?\s*([\s\S]*?)```/g)].map((m) => m[1]);
+  for (const f of [...fences, text]) {
+    for (let i = 0; i < f.length; i++) {
+      if (f[i] !== '[') continue;
+      let depth = 0, inStr = false, esc = false;
+      for (let j = i; j < f.length; j++) {
+        const ch = f[j];
+        if (inStr) { if (esc) esc = false; else if (ch === '\\') esc = true; else if (ch === '"') inStr = false; continue; }
+        if (ch === '"') inStr = true;
+        else if (ch === '[') depth++;
+        else if (ch === ']') { if (--depth === 0) { const cand = f.slice(i, j + 1); if (/"ok"\s*:/.test(cand) && /"id"\s*:/.test(cand)) { try { return JSON.parse(cand); } catch { /* */ } } break; } }
+      }
+    }
+  }
+  return null;
+}
+
+// 공용 spawn — bin 별로 출력 파싱(claude=json 래퍼, agy=plain text).
+function spawnParse(bin, args, parseFn, timeoutMs = 360000) {
+  return new Promise((res, rej) => {
+    const child = spawn(bin, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    let out = '', err = '';
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, timeoutMs);
+    child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
+    child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
+    child.on('error', (e) => { clearTimeout(to); rej(e); });
+    child.on('close', (code) => {
+      clearTimeout(to);
+      if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      try {
+        if (bin === 'claude') { const env = JSON.parse(out); if (env.is_error) return rej(new Error('cli:' + (env.subtype || ''))); res(parseFn(env.result || '')); }
+        else res(parseFn(out));
+      } catch (e) { rej(e); }
+    });
+  });
+}
+
+// PASS 1 배치 평가 프롬프트 — 루브릭 1회 + N개 도식(라벨·스펙·이미지경로). 수정 스펙 없이 평가만.
+function buildBatchPrompt(items) {
+  const verify = BACKEND === 'agy'
+    ? '각 도식의 렌더 이미지를 Read 로 본 뒤, 좌표·관계를 신중히 직접 따져라(외부 도구 없음).'
+    : '각 도식의 렌더 이미지를 Read 로 보고, 필요하면 Bash 로 python3/sympy 로 좌표를 확인하라.';
+  const blocks = items.map((it, i) => `[도식 ${i + 1}] id="${it.id}" 「${it.label}」
+스펙: ${JSON.stringify(it.figure)}
+렌더 이미지(Read 로 볼 것): ${it.pngPath}`).join('\n\n');
+  return `${RUBRIC}
+
+${verify}
+
+★이건 **평가 패스**다 — 고친 스펙은 내지 말고, 아래 ${items.length}개 도식을 각각 위 '명백한 결함' 기준으로 평가만 하라.
+출력은 **JSON 배열 하나만**(산문·코드펜스 금지): [{"id":"<그대로>","ok":true|false,"issues":["<결함 한줄>",...]}]
+ok:true 면 issues 는 [] 로. id 는 위에 준 값을 글자 그대로 적어라.
+
+${blocks}`;
+}
+
+function callQABatch(items) {
+  const prompt = buildBatchPrompt(items);
+  if (BACKEND === 'agy') {
+    return spawnParse('agy', ['-p', prompt, '--model', MODEL, '--add-dir', PNG_DIR, '--print-timeout', '6m'], parseBatchArray);
+  }
+  return spawnParse('claude', ['-p', '--model', MODEL, '--output-format', 'json',
+    '--allowedTools', 'Read,Bash', '--disallowedTools', 'Write,Edit,Glob,Grep,WebFetch,WebSearch',
+    '--add-dir', PNG_DIR, '--max-turns', '30', '--no-session-persistence', '--', prompt], parseBatchArray);
+}
 
 // ---- figure 스펙 구조 검증(생성기와 동일) ----
 const EXPR_OK = /^[-+*/(). 0-9a-zA-Z_^√π]+$/;
@@ -227,14 +301,58 @@ async function main() {
   const N = targets.length;
   const stat = { ok: 0, fixed: 0, failed: 0, unverified: 0, done: 0 };
   const dryResults = [];
-  console.log(`QA 검수 시작: 대상 ${N}개 · 백엔드 ${BACKEND} · 모델 ${MODEL} · 동시성 ${conc}${DRY ? ' · DRY(검증만)' : ''}${force ? ' · FORCE' : ''}`);
+  console.log(`QA 검수 시작: 대상 ${N}개 · 백엔드 ${BACKEND} · 모델 ${MODEL} · 동시성 ${conc}${BATCH > 1 ? ` · 배치 ${BATCH}` : ''}${DRY ? ' · DRY(검증만)' : ''}${force ? ' · FORCE' : ''}`);
   const writeCache = () => writeFileSync(CACHE, JSON.stringify(cache, null, 0));
 
+  // ── PASS 1: 배치 평가(루브릭 1회/배치 → 쿼터 절감). ok 는 통과 기록, 결함만 PASS 2 로. ──
+  // DRY 는 정확도 파일럿이라 배치 안 함(개별 첫판정 수집).
+  let pass2List = targets;
+  if (BATCH > 1 && !DRY && targets.length) {
+    const chunks = [];
+    for (let i = 0; i < targets.length; i += BATCH) chunks.push(targets.slice(i, i + BATCH));
+    const flagged = [];
+    let ci = 0, p1done = 0, p1ok = 0;
+    async function batchWorker() {
+      while (ci < chunks.length) {
+        const chunk = chunks[ci++];
+        const items = [];
+        for (const id of chunk) {
+          const entry = cache.figures[id];
+          if (!entry || !entry.figure) continue;
+          const png = await renderFigure(id);
+          if (!png) { flagged.push(id); continue; } // 렌더 실패 → 개별에서 처리
+          items.push({ id, label: entry.label, figure: entry.figure, pngPath: png });
+        }
+        if (!items.length) { p1done += chunk.length; continue; }
+        let verdicts = null;
+        try { verdicts = await callQABatch(items); } catch (e) { console.log(`  PASS1 배치 실패→개별: ${e.message}`); }
+        const vById = new Map((verdicts || []).map((v) => [v.id, v]));
+        for (const it of items) {
+          const v = vById.get(it.id);
+          if (v && v.ok) {
+            cache.figures[it.id].qa = { checked: true, fixed: false, verified: true, note: 'batch-ok', model: MODEL };
+            p1ok++;
+          } else {
+            flagged.push(it.id); // 결함 or 미파싱 → PASS 2
+          }
+        }
+        writeCache();
+        p1done += chunk.length;
+        console.log(`PASS1 [${p1done}/${targets.length}] 통과 ${p1ok} · PASS2대상 ${flagged.length}`);
+      }
+    }
+    await Promise.all(Array.from({ length: conc }, () => batchWorker()));
+    stat.ok += p1ok;
+    console.log(`PASS 1 완료: 통과 ${p1ok} · PASS 2(개별 수정) 대상 ${flagged.length}`);
+    pass2List = flagged;
+  }
+
   const MAX_FIX = 2;   // 수정→재검증 반복 상한
+  const N2 = pass2List.length;
   let idx = 0;
   async function worker() {
-    while (idx < targets.length) {
-      const id = targets[idx++];
+    while (idx < pass2List.length) {
+      const id = pass2List[idx++];
       const entry = cache.figures[id];
       if (!entry || !entry.figure) { stat.done++; continue; }
       let line;
@@ -251,7 +369,7 @@ async function main() {
           dryResults.push({ id, label: entry.label, ok: !!verdict.ok, issues: (verdict.issues || []).slice(0, 6), note: (verdict.note || '').slice(0, 120) });
           if (verdict.ok) { stat.ok++; line = `✓ ${entry.label} — OK (${(verdict.note || '').slice(0, 50)})`; }
           else { stat.fixed++; line = `✎ ${entry.label} — 이슈: ${(verdict.issues || []).join(' / ').slice(0, 100)}`; }
-          stat.done++; console.log(`[${stat.done}/${N}] ${line}`); continue;
+          stat.done++; console.log(`[${stat.done}/${N2}] ${line}`); continue;
         }
         const allIssues = [];
         let fixes = 0, invalidFix = false;
@@ -287,10 +405,10 @@ async function main() {
       }
       // 완료 순서로 1씩 증가하는 단조 카운터 — 동시성에서도 중복/뒤섞임 없음.
       stat.done++;
-      console.log(`[${stat.done}/${N}] ${line}`);
+      console.log(`[${stat.done}/${N2}] ${line}`);
     }
   }
-  await Promise.all(Array.from({ length: conc }, () => worker()));
+  if (N2 > 0) await Promise.all(Array.from({ length: conc }, () => worker()));
   if (DRY) {
     writeFileSync('/tmp/qa_pilot_verdicts.json', JSON.stringify(dryResults, null, 2));
     console.log(`\nDRY 완료: OK ${stat.ok} · 이슈지적 ${stat.fixed} · 실패 ${stat.failed} · (총 ${N}) → /tmp/qa_pilot_verdicts.json`);
