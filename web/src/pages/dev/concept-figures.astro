@@ -2,11 +2,16 @@
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Geometry from '../../components/Geometry.tsx';
-import figuresData from '../../data/concept-figures.json';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 // gen_concept_figures.mjs 가 생성한 개념 도식 캐시 검토용 갤러리.
-// 각 figure 를 개념 페이지와 같은 방식(축은 spec 의 showAxes 따름)으로 렌더.
-const figures = (figuresData as any).figures ?? {};
+// 캐시는 배치가 라이브로 추가하므로 **요청 시 파일을 새로 읽는다**(정적 import 는 빌드시
+// 고정돼 진행 중 신규 figure 가 안 보임). 각 figure 를 개념 페이지와 같은 방식으로 렌더.
+const cachePath = fileURLToPath(new URL('../../data/concept-figures.json', import.meta.url));
+let figuresData: any = { figures: {} };
+try { figuresData = JSON.parse(readFileSync(cachePath, 'utf-8')); } catch { /* 아직 없음 */ }
+const figures = figuresData.figures ?? {};
 const entries = Object.entries(figures) as [string, any][];
 const withFig = entries.filter(([, v]) => v.figure);
 const nulls = entries.filter(([, v]) => !v.figure);

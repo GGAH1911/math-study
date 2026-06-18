@@ -224,14 +224,28 @@ function resolveTargets(graph) {
   if (ids.length) targets = ids;
   else if (bools.has('--pilot')) targets = PILOT;
   else if (bools.has('--all') || domain) {
-    targets = graph.nodes
-      .filter((n) => !domain || n.id.startsWith(`${domain}/`) || n.domain === domain)
-      .map((n) => n.id);
+    let nodes = graph.nodes.filter((n) => !domain || n.id.startsWith(`${domain}/`) || n.domain === domain);
+    // 3D/공간 개념은 2D Geometry 로 표현 불가 → 전부 null 로 낭비. 기본 제외(--include-3d 로 포함).
+    // (추후 Geometry3D 로 별도 파동.) 명시 ids 모드에선 필터 안 함.
+    if (!bools.has('--include-3d')) {
+      const before = nodes.length;
+      nodes = nodes.filter((n) => !is3D(n));
+      const skipped = before - nodes.length;
+      if (skipped) console.log(`(3D/공간 ${skipped}개 제외 — Geometry3D 별도 파동. --include-3d 로 포함)`);
+    }
+    targets = nodes.map((n) => n.id);
   } else {
-    console.error('대상 없음. <id...> 또는 --pilot / --all / --domain <d> [--limit N] [--concurrency N] 지정.');
+    console.error('대상 없음. <id...> 또는 --pilot / --all / --domain <d> [--limit N] [--concurrency N] [--include-3d] 지정.');
     process.exit(1);
   }
   return { byId, targets: targets.slice(0, Number.isFinite(limit) ? limit : undefined), force: bools.has('--force'), concurrency };
+}
+
+// 명백한 3D/공간 개념 판별 — 2D Geometry 로는 정확히 못 그려 항상 null. 호출 자체를 건너뛴다.
+const UNIT_3D = new Set(['입체도형', '공간도형과 공간벡터']);
+const KW_3D = /공간|입체|사면체|정사면체|다면체|정육면체|직육면체|원기둥|원뿔|구면|구의\s|이면각|삼수선|정사영|평면의\s*방정식|공간벡터|교선|겉넓이|부피/;
+function is3D(n) {
+  return UNIT_3D.has(n.unit) || KW_3D.test(n.label || '') || KW_3D.test(n.id || '');
 }
 
 async function main() {
