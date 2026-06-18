@@ -116,6 +116,7 @@ function callQAClaude(prompt) {
     '--add-dir', PNG_DIR, '--max-turns', '24', '--no-session-persistence', '--', prompt];
   return new Promise((res, rej) => {
     const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
@@ -138,6 +139,7 @@ function callQAAgy(prompt) {
   const args = ['-p', prompt, '--model', MODEL, '--add-dir', PNG_DIR, '--print-timeout', '4m'];
   return new Promise((res, rej) => {
     const child = spawn('agy', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
@@ -195,6 +197,7 @@ function parseBatchArray(text) {
 function spawnParse(bin, args, parseFn, timeoutMs = 360000) {
   return new Promise((res, rej) => {
     const child = spawn(bin, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, timeoutMs);
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });

@@ -141,6 +141,7 @@ function callClaude(prompt) {
     '--', prompt];
   return new Promise((res, rej) => {
     const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 240000);
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
@@ -168,6 +169,7 @@ function callAgy(prompt) {
     '--print-timeout', '4m'];
   return new Promise((res, rej) => {
     const child = spawn('agy', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
