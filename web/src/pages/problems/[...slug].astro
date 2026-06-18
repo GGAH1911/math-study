@@ -58,9 +58,20 @@ const reconHTML = isAdmin ? reconFull : ''; // 빈 문자열=토글/재구성 �
 // 원본과 동일하게. fixes(교정내역)는 백엔드 보관용 — 프론트 미노출. 선행 번호("13.")는 recon-head 와
 // 중복되므로 제거.
 const gRecon = (reconData as Record<string, any>)[entry.id] ?? null;
-const reconBodyHtml = (isAdmin && gRecon)
-  ? renderReconstruct(String(gRecon.corrected || '').replace(/^\s*\d{1,2}\.\s*/, ''), {})
-  : reconFull;
+// Gemini 교정본 정리: 선행 번호("13.")·본문 끝 점수([3점], recon-head 에 이미 있음) 제거,
+// $...$ 구분자 제거(renderReconstruct=katex SSOT 는 구분자 없는 형식 기대 — 안 그러면 raw 노출).
+const gClean = gRecon
+  ? String(gRecon.corrected || '')
+      .replace(/^\s*\d{1,2}\.\s*/, '')
+      .replace(/\[\s*\d+\s*점\s*\]/g, '')
+      .replace(/\$/g, '')
+      .trim()
+  : '';
+// 그림 위치를 원본과 동일하게: 수능 객관식은 [문제]→[그림]→[선택지]. 선택지(①~⑤) 경계에서
+// 분리해 그림을 그 사이에 둔다(선택지 없으면 그림이 본문 끝 — 그대로 맞음).
+const _ci = gClean.search(/[①②③④⑤⑥⑦⑧⑨⑩]/);
+const gStmtHtml = (isAdmin && gRecon) ? renderReconstruct(_ci > 0 ? gClean.slice(0, _ci) : gClean, {}) : '';
+const gChoiceHtml = (isAdmin && gRecon && _ci > 0) ? renderReconstruct(gClean.slice(_ci), {}) : '';
 // 'docs/concepts/algebra/근의_공식.md' → 'algebra/근의_공식'
 const fmtPath = (p: string) => p.replace(/^docs\/concepts\//, '').replace(/\.md$/, '');
 const labelOf = (slug: string) => (slug.split('/').pop() ?? slug);
@@ -153,11 +164,18 @@ if (src) {
               <span class="recon-num">{fm.source?.number ?? ''}.</span>
               {fm.source?.score && <span class="recon-score">[{fm.source.score}점]</span>}
             </div>
-            <div set:html={reconBodyHtml} />
-            {isAdmin && gRecon?.figure && (
-              <div class="recon-fig-wrap">
-                <Geometry client:load spec={gRecon.figure} width={520} height={420} hideCaption noBroadcast />
-              </div>
+            {isAdmin && gRecon ? (
+              <>
+                <div set:html={gStmtHtml} />
+                {gRecon.figure && (
+                  <div class="recon-fig-wrap">
+                    <Geometry client:load spec={gRecon.figure} width={520} height={420} hideCaption noBroadcast />
+                  </div>
+                )}
+                {gChoiceHtml && <div set:html={gChoiceHtml} />}
+              </>
+            ) : (
+              <div set:html={reconFull} />
             )}
           </div>
         )}

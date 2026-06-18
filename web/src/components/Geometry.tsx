@@ -207,7 +207,7 @@ export type GeomShape =
   | { type: 'hyperbola'; center: [number, number]; a: number; b: number; orientation?: 'horizontal' | 'vertical'; label?: string; color?: string }
   | { type: 'parabola'; vertex: [number, number]; focus?: number; orientation?: 'up' | 'down' | 'left' | 'right'; label?: string; color?: string }
   | { type: 'parametric'; x: string; y: string; tRange: [number | string, number | string];
-      samples?: number; closed?: boolean; label?: string; color?: string;
+      samples?: number; closed?: boolean; dashed?: boolean; label?: string; color?: string;
       stroke?: string; strokeWidth?: number; fill?: string; fillOpacity?: number }
   | { type: 'vector'; from: [number, number]; to: [number, number]; label?: string; color?: string }
   | { type: 'angle'; at: [number, number]; from: [number, number]; to: [number, number]; label?: string; radius?: number; color?: string }
@@ -499,9 +499,11 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
     }
     if (bare) {
       // 기출 스타일 라벨: x(우단)·y(상단)·O(원점). 눈금숫자는 그리지 않음.
-      if (xVisible) pushLabel('axX', 'x', xPx(bounds.x[1]) - 2, yPx(0) + 12, -100, '#71717a');
-      if (yVisible) pushLabel('axY', 'y', xPx(0) + 10, yPx(bounds.y[1]) + 2, 0, '#71717a');
-      if (xVisible && yVisible) pushLabel('axO', 'O', xPx(0) - 13, yPx(0) + 13, -50, '#71717a');
+      // 축 라벨: 명시 앵커(축 위치) + fixed=true. soft 면 드래그 leader 가 엉뚱한 기하선분으로 스냅하고
+      // (축선은 obstacles 가 아님) de-overlap 이 밀어낸다 → 축 위치로 고정 앵커링.
+      if (xVisible) pushLabel('axX', 'x', xPx(bounds.x[1]) - 2, yPx(0) + 12, -100, '#71717a', true, [xPx(bounds.x[1]), yPx(0)]);
+      if (yVisible) pushLabel('axY', 'y', xPx(0) + 10, yPx(bounds.y[1]) + 2, 0, '#71717a', true, [xPx(0), yPx(bounds.y[1])]);
+      if (xVisible && yVisible) pushLabel('axO', 'O', xPx(0) - 13, yPx(0) + 13, -50, '#71717a', true, [xPx(0), yPx(0)]);
     } else {
       // Tick labels along the bottom + left edges
       const minX = Math.ceil(bounds.x[0] / tickStep) * tickStep;
@@ -720,17 +722,19 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         for (let si = 0; si < segments.length; si++) {
           const seg = segments[si];
           if (seg.length < 2) continue;
+          // dashed: 부등식 영역의 엄격(>,<) 경계 등 점선 곡선. (이전엔 parametric 에서 무시됨.)
+          const pmDash = s.dashed ? '6 4' : undefined;
           if (s.closed && si === 0 && s.fill) {
             // 첫 segment + closed → polygon (fill 포함). 끊긴 segment 는 fill X.
             els.push(
               <polygon key={`pmF${i}-${si}`} points={seg.join(' ')}
                        fill={s.fill} fillOpacity={s.fillOpacity ?? 0.18}
-                       stroke={strokeColor} strokeWidth={sw} />,
+                       stroke={strokeColor} strokeWidth={sw} strokeDasharray={pmDash} />,
             );
           } else {
             els.push(
               <polyline key={`pm${i}-${si}`} points={seg.join(' ')}
-                        fill="none" stroke={strokeColor} strokeWidth={sw} />,
+                        fill="none" stroke={strokeColor} strokeWidth={sw} strokeDasharray={pmDash} />,
             );
           }
         }

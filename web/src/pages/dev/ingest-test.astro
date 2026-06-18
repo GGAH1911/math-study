@@ -4,10 +4,23 @@
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Geometry from '../../components/Geometry.tsx';
+import { renderReconstruct } from '../../lib/reconstruct';
 import { readFileSync } from 'node:fs';
 
 let r: any = null;
 try { r = JSON.parse(readFileSync('/tmp/ingest_test_result.json', 'utf-8')); } catch { /* 아직 없음 */ }
+// 문제페이지 reconview 와 동일 경로: 번호·[N점]·$ 제거 후 선택지(①) 경계로 분리 → 문제→그림→선택지.
+let gStmtHtml = '', gChoiceHtml = '', reconErr = '';
+if (r?.corrected) {
+  try {
+    const clean = String(r.corrected).replace(/^\s*\d{1,2}\.\s*/, '').replace(/\[\s*\d+\s*점\s*\]/g, '').replace(/\$/g, '').trim();
+    const ci = clean.search(/[①②③④⑤⑥⑦⑧⑨⑩]/);
+    gStmtHtml = renderReconstruct(ci > 0 ? clean.slice(0, ci) : clean, {});
+    gChoiceHtml = ci > 0 ? renderReconstruct(clean.slice(ci), {}) : '';
+  } catch (e: any) {
+    reconErr = `${e?.message ?? e}\n${(e?.stack ?? '').split('\n').slice(0, 4).join('\n')}`;
+  }
+}
 ---
 <BaseLayout title="기출 인제스트 agy 테스트">
   <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
@@ -31,13 +44,26 @@ try { r = JSON.parse(readFileSync('/tmp/ingest_test_result.json', 'utf-8')); } c
             </div>
           </section>
           <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
-            <h2 class="text-sm font-semibold text-zinc-300">② Gemini 재현 도식 (Geometry)</h2>
+            <h2 class="text-sm font-semibold text-zinc-300">② Gemini 재현 도식 (Geometry · bareAxes)</h2>
             <div class="bg-zinc-950 rounded p-2 flex justify-center">
               {r.figure ? <Geometry client:load spec={r.figure} width={520} height={420} hideCaption noBroadcast /> : <span class="text-zinc-600">도식 없음</span>}
             </div>
             {r.figureNote && <p class="text-xs text-[color:var(--color-muted)]">{r.figureNote}</p>}
           </section>
         </div>
+
+        <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
+          <h2 class="text-sm font-semibold text-zinc-300">②-b 재구성 레이아웃 (문제→그림→선택지, 문제페이지 동일)</h2>
+          {reconErr ? (
+            <pre class="text-xs text-rose-400 whitespace-pre-wrap">renderReconstruct 에러:{reconErr}</pre>
+          ) : (
+            <div class="recon-view">
+              <div class="prose prose-invert max-w-none" set:html={gStmtHtml} />
+              {r.figure && <div class="recon-fig-wrap my-3"><Geometry client:load spec={r.figure} width={460} height={380} hideCaption noBroadcast /></div>}
+              {gChoiceHtml && <div class="prose prose-invert max-w-none" set:html={gChoiceHtml} />}
+            </div>
+          )}
+        </section>
 
         <section class="card border border-zinc-700 rounded-lg p-4 space-y-3">
           <h2 class="text-sm font-semibold text-zinc-300">③ 전사 교정 (Gemini fixes {(r.fixes || []).length}건)</h2>

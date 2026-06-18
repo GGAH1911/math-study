@@ -65,8 +65,9 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
 2. 좌표 정확성: 곡선 위에 찍힌 점이 그 곡선식을 정확히 만족하는가? 직각·닮음비·접선·내분 등 관계가 성립하는가? (sympy)
 3. primitive: 함수그래프 y=f(x)(포물선·직선·사인 등)는 parametric 으로 그렸는가? conic(parabola/ellipse/hyperbola) shape 로
    함수를 그려 곡선과 점이 어긋나지 않는가? — 어긋나면 parametric {x:"t", y:"f(t)", tRange} 로 교체.
-   ★적분·넓이·영역(정적분, 곡선-x축 사이, 두 곡선 사이)을 **점선 세로줄 다발**로 흉내냈으면 → area shape 로 교체:
-   {"type":"area","y":"<f(x)>","from":a,"to":b}(두 곡선 사이는 baseline 에 아래 곡선식). 면을 색으로 채워야 한다.
+   ★★area 전수점검: 도식이 **영역/넓이/적분/부등식영역/부호**를 표현하는데 **area shape 로 면을 안 칠했으면**(점선 세로줄 다발·점 흩뿌리기·경계선만·아예 미표시 등 **어떤 방식이든**) → 반드시 area 로 교체해 면을 색으로 채워라:
+   {"type":"area","y":"<위 경계 f(x)>","from":a,"to":b,"baseline":<아래 경계: 수 또는 "g(x)">}. (예: y>(x-1)² 영역 → area y=상단값, baseline="(x-1)^2"; 곡선-x축 사이 → baseline 0.)
+   부등식 영역의 **경계곡선**은 엄격(>,<)=dashed:true(점선), 등호포함(≥,≤)=실선. (경계는 parametric 으로 따로 그림 — area 는 채움만.)
 4. 가독성: 라벨이 서로 겹치거나 한 점에 3개+ 뭉치지 않는가? 주석 대상(점·각·반지름)이 화면에서 충분히 크고 분리됐는가?
    (큰 곡선 위 점이 원점 근처 작은 r 에 몰려 라벨이 뭉치면 → 점을 큰 r 로 옮기거나 range 를 좁혀라.) 라벨이 도형 내부/선에 묻히지 않는가?
    두 도형 비교는 간격 넉넉히 + 프라임(A'B'C') 표기인가?
@@ -87,13 +88,23 @@ parametric{x,y,tRange} area{y,from,to,baseline?,fill?,fillOpacity?,label?} vecto
 고칠 때 멀쩡한 부분은 건드리지 말되 **이슈는 완전히** 해결하라 — 특히 누락/불완전(충실성)이면 빠진 요소를
 **전부 완성된 형태로 추가**(점만 찍지 말고 변·호·라벨까지). figure 는 전체 스펙(shapes·range·showAxes·title)을 담아라.`;
 
+// area 전수점검 후보: 영역/넓이/적분/부등식 키워드가 있는데 area shape 가 없는 도식 → QA 에 힌트 주입.
+const AREA_KW = /영역|부등식|넓이|적분|부호|이상|이하|미만|초과|사이|이등분|색칠/;
+function areaHint(c) {
+  const sh = (c.figure && c.figure.shapes) || [];
+  if (sh.some((s) => s.type === 'area')) return '';
+  const txt = (c.label || '') + ' ' + JSON.stringify(sh);
+  if (!AREA_KW.test(txt)) return '';
+  return '\n⚠️[area 점검] 이 도식은 영역/넓이/부등식 관련인데 area shape 가 없다. 면을 색으로 칠해야 하는 도식이면 area 로 교체하라(점·선다발·미표시 금지). 단순 곡선/도형이라 면이 필요 없으면 그대로 둬라.';
+}
+
 function buildQAPrompt(c, body, pngPath) {
   const verify = BACKEND === 'agy'
     ? '먼저 Read 도구로 렌더 이미지를 본 뒤, 좌표·관계는 신중히 직접 계산해 확인하라(외부 도구 없음).'
     : '먼저 Read 도구로 이미지를 보고, 좌표·관계 검증이 필요하면 Bash 로 python3/sympy 를 실행해 확인하라.';
   return `${RUBRIC}
 
-${verify}
+${verify}${areaHint(c)}
 
 --- 개념 ---
 「${c.label}」 (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})

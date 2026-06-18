@@ -115,31 +115,6 @@
           ],
           "label": "P",
           "labelDir": "n"
-        },
-        {
-          "type": "point",
-          "at": [
-            0,
-            0
-          ],
-          "label": "O",
-          "labelDir": "sw"
-        },
-        {
-          "type": "text",
-          "at": [
-            8.5,
-            -0.4
-          ],
-          "text": "x"
-        },
-        {
-          "type": "text",
-          "at": [
-            -0.4,
-            5.7
-          ],
-          "text": "y"
         }
       ],
       "bareAxes": true
