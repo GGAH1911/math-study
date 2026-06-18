@@ -16,7 +16,7 @@
 //   node scripts/gen_concept_figures.mjs --all [--limit N]    # 미캐시 전체
 //   옵션: --force(이미 캐시여도 재생성)  FIGURE_MODEL=sonnet(모델 오버라이드)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -98,10 +98,23 @@ function callLLM(c, body) {
     '--max-turns', '20',
     '--no-session-persistence',
     '--', PROMPT(c, body)];
-  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 240000, maxBuffer: 16 * 1024 * 1024 });
-  const env = JSON.parse(out);
-  if (env.is_error) throw new Error('cli:' + (env.subtype || ''));
-  return parseEnvelope(env.result || '');
+  return new Promise((res, rej) => {
+    const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    let out = '', err = '';
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 240000);
+    child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
+    child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
+    child.on('error', (e) => { clearTimeout(to); rej(e); });
+    child.on('close', (code) => {
+      clearTimeout(to);
+      if (code !== 0) return rej(new Error(`exit ${code} ${err.slice(-160)}`));
+      try {
+        const env = JSON.parse(out);
+        if (env.is_error) return rej(new Error('cli:' + (env.subtype || '')));
+        res(parseEnvelope(env.result || ''));
+      } catch (e) { rej(e); }
+    });
+  });
 }
 
 // haiku 가 산문/sympy 코드 + JSON 을 섞어 내도 우리 envelope({"figure":...})만 안전 추출.
@@ -188,61 +201,81 @@ function sanitizeFigure(fig) {
   return out;
 }
 
+// 값을 받는 플래그(--k v)와 불리언 플래그(--force 등)를 분리 파싱. 값플래그의 값은 ids 에서 제외.
+const VALUE_FLAGS = new Set(['--limit', '--domain', '--concurrency']);
+function parseArgs(argv) {
+  const opts = {}; const ids = []; const bools = new Set();
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (VALUE_FLAGS.has(a)) { opts[a.slice(2)] = argv[++i]; }
+    else if (a.startsWith('--')) { bools.add(a); }
+    else ids.push(a);
+  }
+  return { opts, ids, bools };
+}
 function resolveTargets(graph) {
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
-  const args = process.argv.slice(2);
-  const flags = new Set(args.filter((a) => a.startsWith('--')));
-  const limIdx = args.indexOf('--limit');
-  const limit = limIdx >= 0 ? Number(args[limIdx + 1]) : Infinity;
-  const domIdx = args.indexOf('--domain');
-  const domain = domIdx >= 0 ? args[domIdx + 1] : null;
-  const ids = args.filter((a) => !a.startsWith('--') && a !== String(limit) && a !== domain);
+  const { opts, ids, bools } = parseArgs(process.argv.slice(2));
+  const limit = opts.limit != null ? Number(opts.limit) : Infinity;
+  const domain = opts.domain ?? null;
+  const concurrency = opts.concurrency != null ? Math.max(1, Math.min(8, Number(opts.concurrency) || 1)) : 1;
 
   let targets;
   if (ids.length) targets = ids;
-  else if (flags.has('--pilot')) targets = PILOT;
-  else if (flags.has('--all') || domain) {
+  else if (bools.has('--pilot')) targets = PILOT;
+  else if (bools.has('--all') || domain) {
     targets = graph.nodes
       .filter((n) => !domain || n.id.startsWith(`${domain}/`) || n.domain === domain)
       .map((n) => n.id);
   } else {
-    console.error('대상 없음. <id...> 또는 --pilot / --all / --domain <d> [--limit N] 지정.');
+    console.error('대상 없음. <id...> 또는 --pilot / --all / --domain <d> [--limit N] [--concurrency N] 지정.');
     process.exit(1);
   }
-  return { byId, targets: targets.slice(0, Number.isFinite(limit) ? limit : undefined), force: flags.has('--force') };
+  return { byId, targets: targets.slice(0, Number.isFinite(limit) ? limit : undefined), force: bools.has('--force'), concurrency };
 }
 
-function main() {
+async function main() {
   const graph = JSON.parse(readFileSync(GRAPH, 'utf-8'));
-  const { byId, targets, force } = resolveTargets(graph);
+  const { byId, targets, force, concurrency } = resolveTargets(graph);
   const cache = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, 'utf-8')) : { v: SCHEMA_VERSION, figures: {} };
   if (!cache.figures) cache.figures = {};
-  let made = 0, nullFig = 0, skipped = 0, failed = 0;
-  console.log(`figure 생성 시작: 대상 ${targets.length}개 · 모델 ${MODEL}${force ? ' · FORCE' : ''}`);
-  for (const id of targets) {
-    const c = byId.get(id);
-    if (!c) { console.log(`✗ ${id} — 그래프에 없음`); failed++; continue; }
-    if (!force && cache.figures[id]) { console.log(`· ${c.label} — 이미 캐시(스킵)`); skipped++; continue; }
-    try {
-      const env = callLLM(c, conceptBody(id));
-      if (!env || !('figure' in env)) throw new Error('no-figure-field');
-      if (env.figure === null) {
-        cache.figures[id] = { figure: null, label: c.label, note: (env.note || '').slice(0, 200), model: MODEL, v: SCHEMA_VERSION };
-        nullFig++;
-        console.log(`○ ${c.label} — 도식 불필요 (${(env.note || '').slice(0, 50)})`);
-      } else {
-        const fig = sanitizeFigure(env.figure);
-        if (!fig) { console.log(`✗ ${c.label} — 무효 spec(폴백, 캐시 안 함)`); failed++; continue; }
-        cache.figures[id] = { figure: fig, label: c.label, note: (env.note || '').slice(0, 200), model: MODEL, v: SCHEMA_VERSION };
-        made++;
-        console.log(`✓ ${c.label} — figure OK (shapes ${fig.shapes.length}, axes ${fig.showAxes})`);
+  const stat = { made: 0, nullFig: 0, skipped: 0, failed: 0, done: 0 };
+  const N = targets.length;
+  console.log(`figure 생성 시작: 대상 ${N}개 · 모델 ${MODEL} · 동시성 ${concurrency}${force ? ' · FORCE' : ''}`);
+  // 캐시 쓰기는 메인 스레드의 동기 블록에서만(워커 await 사이) — 동시 clobber 없음.
+  const writeCache = () => writeFileSync(CACHE, JSON.stringify(cache, null, 0));
+
+  let idx = 0;
+  async function worker() {
+    while (idx < targets.length) {
+      const id = targets[idx++];
+      const c = byId.get(id);
+      const tag = () => `[${stat.done + 1}/${N}]`;
+      if (!c) { console.log(`✗ ${id} — 그래프에 없음`); stat.failed++; stat.done++; continue; }
+      if (!force && cache.figures[id]) { console.log(`· ${c.label} — 이미 캐시(스킵)`); stat.skipped++; stat.done++; continue; }
+      try {
+        const env = await callLLM(c, conceptBody(id));
+        if (!env || !('figure' in env)) throw new Error('no-figure-field');
+        if (env.figure === null) {
+          cache.figures[id] = { figure: null, label: c.label, note: (env.note || '').slice(0, 200), model: MODEL, v: SCHEMA_VERSION };
+          stat.nullFig++;
+          console.log(`${tag()} ○ ${c.label} — 도식 불필요 (${(env.note || '').slice(0, 40)})`);
+        } else {
+          const fig = sanitizeFigure(env.figure);
+          if (!fig) { console.log(`${tag()} ✗ ${c.label} — 무효 spec(폴백)`); stat.failed++; stat.done++; continue; }
+          cache.figures[id] = { figure: fig, label: c.label, note: (env.note || '').slice(0, 200), model: MODEL, v: SCHEMA_VERSION };
+          stat.made++;
+          console.log(`${tag()} ✓ ${c.label} — figure OK (shapes ${fig.shapes.length}, axes ${fig.showAxes})`);
+        }
+        writeCache();
+      } catch (e) {
+        console.log(`${tag()} ✗ ${c.label} — 생성 실패: ${e.message}`);
+        stat.failed++;
       }
-      writeFileSync(CACHE, JSON.stringify(cache, null, 0));
-    } catch (e) {
-      console.log(`✗ ${c.label} — 생성 실패: ${e.message}`);
-      failed++;
+      stat.done++;
     }
   }
-  console.log(`\n완료: figure ${made} · null ${nullFig} · 스킵 ${skipped} · 실패 ${failed} · 캐시 총 ${Object.keys(cache.figures).length}`);
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  console.log(`\n완료: figure ${stat.made} · null ${stat.nullFig} · 스킵 ${stat.skipped} · 실패 ${stat.failed} · 캐시 총 ${Object.keys(cache.figures).length}`);
 }
 main();
