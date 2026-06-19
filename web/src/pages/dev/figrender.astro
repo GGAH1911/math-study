@@ -10,12 +10,21 @@ import '../../styles/global.css';
 // fixedWidth 로 ResizeObserver 우회 → 헤드리스서도 실제 크기로 렌더(240 floor 회피).
 const id = Astro.url.searchParams.get('id') ?? '';
 const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 600)));
+const src = Astro.url.searchParams.get('src') ?? 'concept'; // concept | corrector(교정기 figure 검증용)
 const cachePath = fileURLToPath(new URL('../../data/concept-figures.json', import.meta.url));
+const SHAPE_KEYS = ['point', 'segment', 'line', 'circle', 'ellipse', 'parabola', 'hyperbola', 'parametric', 'angle', 'text', 'area', 'polygon', 'sequence', 'vector'];
+const normShape = (sh: any) => { if (!sh || sh.type) return sh; const k = Object.keys(sh).find((kk) => SHAPE_KEYS.includes(kk) && sh[kk] && typeof sh[kk] === 'object'); return k ? { type: k, ...sh[k] } : sh; };
+const normFig = (f: any) => { if (!f) return f; if (!Array.isArray(f.shapes) && Array.isArray(f.elements)) f.shapes = f.elements; if (f.showAxes === true) { f.bareAxes = true; f.showAxes = false; } if (Array.isArray(f.shapes)) f.shapes = f.shapes.map(normShape); return f; };
 let fig: any = null;
-try {
-  const d = JSON.parse(readFileSync(cachePath, 'utf-8'));
-  fig = d.figures?.[id]?.figure ?? null;
-} catch { /* 없음 */ }
+let figs: any[] | null = null;
+if (src === 'corrector') {
+  try {
+    const s = JSON.parse(readFileSync('/tmp/corrector_full/' + id.replace(/\//g, '_') + '.json', 'utf-8'));
+    if (Array.isArray(s.figures)) figs = s.figures.map(normFig); else fig = normFig(s.figure);
+  } catch { /* 없음 */ }
+} else {
+  try { const d = JSON.parse(readFileSync(cachePath, 'utf-8')); fig = d.figures?.[id]?.figure ?? null; } catch { /* 없음 */ }
+}
 ---
 <!doctype html>
 <html lang="ko">
@@ -25,8 +34,10 @@ try {
     <title>figrender</title>
   </head>
   <body style="margin:0;padding:16px;background:#0a0a0b;">
-    <div id="figbox" style={`width:${w}px;`} data-fig-id={id} data-has-fig={fig ? '1' : '0'}>
-      {fig
+    <div id="figbox" style={`width:${w}px;`} data-fig-id={id} data-has-fig={(fig || figs) ? '1' : '0'}>
+      {figs
+        ? <div style="display:flex;flex-wrap:wrap;gap:8px;">{figs.map((f) => <Geometry client:load spec={f} width={Math.round(w / Math.min(figs!.length, 2))} height={Math.round((w / Math.min(figs!.length, 2)) * 0.85)} hideCaption noBroadcast fixedWidth={Math.round(w / Math.min(figs!.length, 2))} />)}</div>
+        : fig
         ? <Geometry client:load spec={fig} width={w} height={Math.round(w * 0.8)} hideCaption noBroadcast fixedWidth={w} />
         : <p id="nofig" style="color:#aaa;font-family:sans-serif;">no figure for id</p>}
     </div>

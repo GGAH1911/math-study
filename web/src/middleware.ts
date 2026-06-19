@@ -15,6 +15,8 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/dev\/concept-figures\/?$/,     // 개념 도식 갤러리 검토 — 비민감 도식, 비로그인 허용(임시)
   /^\/dev\/figrender\/?$/,           // QA 단일 도식 렌더 하네스(고정폭) — 헤드리스 스샷용
   /^\/dev\/ingest-test\/?$/,         // 기출 인제스트 agy 교정+도식 테스트(임시) — 비로그인 열람
+  /^\/dev\/figextract\/?$/,          // 그림 추출 프로토타입 뷰어(임시) — 비로그인 열람
+  /^\/dev\/corrector-gallery\/?$/,   // 교정기 결과 갤러리(임시) — 비로그인 열람
 ];
 
 // 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.

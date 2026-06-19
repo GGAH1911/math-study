@@ -72,6 +72,7 @@ const problems = defineCollection({
     has_figure: z.boolean().optional(),
     figure_image: z.string().optional(),  // 추출·stitch 한 도형만 잘라낸 PNG (재구성 뷰용)
     figure_after_line: z.number().optional(),  // 재구성 본문 몇 번째 줄 뒤에 도형 삽입 (백필이 PDF 위치로 계산)
+    figures: z.array(z.object({ image: z.string(), after_line: z.number().optional() })).optional(),  // 다중 그림: 각 추출 PNG + 삽입 위치(줄). figure_image보다 우선.
     searchable_text: z.string().optional(),
     // Stage C — vision LLM이 ingest 시 추출한 도형 spec (geometry/plot/numberline/chart).
     // 채워져 있으면 problem 페이지가 raw PNG 외에 spec 기반 SVG 도 함께 렌더 가능.

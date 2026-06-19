@@ -26,13 +26,17 @@ const fm = entry.data;
 // 도형: 추출 PNG(figure_image) 우선. 없으면(선택과목 등 추출불가) 원본 전체이미지 폴백 —
 // /problem-images/<stem>.png 은 db/raw 이미지의 public 심링크(도형 포함 전체 문제, 과목별 정상).
 const figFull =
-  !fm.figure_image && fm.has_figure && fm.image_paths && fm.image_paths[0]
+  !fm.figure_image && !(fm.figures && fm.figures.length) && fm.has_figure && fm.image_paths && fm.image_paths[0]
     ? `/problem-images/${String(fm.image_paths[0]).split('/').pop()}`
     : null;
 const figSrc = fm.figure_image || figFull;
-const figDiv = figSrc
-  ? `<div class="recon-fig-wrap"><img src="${figSrc}" alt="도형" class="recon-fig${figFull ? ' recon-fig-full' : ''}" loading="lazy" />${figFull ? '<span class="recon-fig-note">원본 전체 이미지 (도형만 추출 불가)</span>' : ''}</div>`
-  : '';
+const figDivOf = (src: string, full = false) =>
+  `<div class="recon-fig-wrap"><img src="${src}" alt="도형" class="recon-fig${full ? ' recon-fig-full' : ''}" loading="lazy" />${full ? '<span class="recon-fig-note">원본 전체 이미지 (도형만 추출 불가)</span>' : ''}</div>`;
+// 다중 그림(figures: [{image, after_line}]) 우선 → 각자 위치에 삽입. 없으면 단일 figure_image/전체이미지 폴백.
+const figureList = Array.isArray(fm.figures) && fm.figures.length
+  ? (fm.figures as any[]).map((f) => ({ html: figDivOf(String(f.image)), afterLine: f.after_line }))
+  : (figSrc ? [{ html: figDivOf(figSrc, !!figFull), afterLine: fm.figure_after_line }] : []);
+const figDiv = figSrc ? figDivOf(figSrc, !!figFull) : '';
 // 표·연립 등 복잡한 2D 구조는 텍스트 재구성이 근본적으로 깨진다(표준정규분포표→분수, 연립 2식
 // 뒤섞임) → 재구성 대신 원본 전체이미지로 표시(해당 문제들은 전부 image_paths 보유).
 const _sText = fm.searchable_text ?? '';
@@ -46,10 +50,7 @@ const reconUnsupported =
     (/연립방정식/.test(_sText) && !/\\begin\{cases\}/.test(_sText)));
 const reconFull = reconUnsupported
   ? `<div class="recon-fig-wrap"><img src="/problem-images/${_wholeStem}" alt="문제" class="recon-fig recon-fig-full" loading="lazy" /><span class="recon-fig-note">표·연립 등 복잡한 구조 — 원본 이미지로 표시 (텍스트 재구성 미지원)</span></div>`
-  : renderReconstruct(_sText, {
-      figureHtml: figDiv,
-      figureAfterLine: fm.figure_after_line,
-    });
+  : renderReconstruct(_sText, { figures: figureList });
 // 재구성은 어드민 전용: 도형 라벨이 이미지 밖으로 새는 등 엣지케이스가 있어 사용자에겐 부적합 →
 // 사용자는 원본 이미지(<Content/>)만, 재구성 토글·뷰는 admin 만. (디코더의 가치는 인제스트용 searchable_text.)
 const isAdmin = !!Astro.locals.user?.is_admin;

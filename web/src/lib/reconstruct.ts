@@ -142,12 +142,16 @@ function renderInline(s: string): string {
 
 export interface ReconOpts {
   figureHtml?: string;
-  /** 도형을 본문 몇 번째 줄 뒤에 넣을지 (0 = 맨 위). 미지정/범위밖이면 1(첫 줄 뒤). */
+  /** 도형을 본문 몇 번째 줄 뒤에 넣을지 (0 = 맨 위). 미지정이면 본문 끝(선택지 앞). */
   figureAfterLine?: number;
+  /** 다중 그림: 각 {html, afterLine}. 있으면 figureHtml/figureAfterLine 대신 사용(여러 그림 각 위치). */
+  figures?: Array<{ html: string; afterLine?: number }>;
 }
 
 export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   if (!text || !text.trim()) return '';
+  // 번호·배점은 recon-head(헤더)에 이미 있으니 본문서 제거(중복 방지): 선행 "11." + "[3점]".
+  text = text.replace(/^\s*\d{1,2}\.\s*/, '').replace(/\[\s*\d+\s*점\s*\]/g, '');
   // 파이프(|)만 있는 줄 = cases 중괄호 연장선/HWP 레이아웃 잔재(예: 27번 cases 위 '| |')라 제외.
   // 절댓값 |x| 등 의미있는 파이프는 내용이 같이 있어 이 필터(공백+파이프만)에 안 걸린다.
   const lines = text.split('\n').filter((l) => l.trim() && !/^[\s|‖∣｜]+$/.test(l));
@@ -208,19 +212,28 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
       : `<div class="recon-line recon-disp">${km(line, true)}</div>`;
   };
 
-  // 도형 삽입 위치: figureAfterLine(0..body.length), 미지정/범위밖이면 1(첫 줄 뒤·기존 동작).
-  const figHtml = opts.figureHtml || '';
-  const figAt = figHtml
-    ? Math.max(0, Math.min(body.length, typeof opts.figureAfterLine === 'number' ? opts.figureAfterLine : 1))
-    : -1;
+  // 도형 삽입: figures 배열 우선, 없으면 figureHtml(단일) 호환.
+  const figList = (opts.figures && opts.figures.length)
+    ? opts.figures
+    : (opts.figureHtml ? [{ html: opts.figureHtml, afterLine: opts.figureAfterLine }] : []);
+  // placeholder 모드: 본문에 {{FIGn}} 마커가 있으면 그 자리에 figList[n] 삽입(위치=추출 시 PDF 레이아웃으로 결정).
+  const PH_RE = /^\s*\{\{FIG(\d+)\}\}\s*$/;
+  const placeholderIdx = new Set<number>();
+  for (const l of body) { const m = l.match(PH_RE); if (m) placeholderIdx.add(+m[1]); }
+  // placeholder 안 쓰인 도형만 afterLine(미지정=본문 끝)으로 배치.
+  const clampLine = (n?: number) => Math.max(0, Math.min(body.length, typeof n === 'number' ? n : body.length));
+  const figByLine = new Map<number, string[]>();
+  figList.forEach((f, idx) => { if (placeholderIdx.has(idx)) return; const a = clampLine(f.afterLine); if (!figByLine.has(a)) figByLine.set(a, []); figByLine.get(a)!.push(f.html); });
 
   let html = '';
-  if (figAt === 0) html += figHtml;
+  if (figByLine.has(0)) html += figByLine.get(0)!.join('');
   for (let i = 0; i < body.length; i++) {
+    const pm = body[i].match(PH_RE);
+    if (pm) { const fi = +pm[1]; if (figList[fi]) html += figList[fi].html; continue; }  // placeholder → 그 자리에 도형
     if (boxOpen.has(i)) html += '<div class="recon-box">';
     html += renderLine(body[i]);
     if (boxClose.has(i + 1)) html += '</div>';
-    if (figAt === i + 1) html += figHtml;
+    if (figByLine.has(i + 1)) html += figByLine.get(i + 1)!.join('');
   }
 
   if (choiceLines.length) {
