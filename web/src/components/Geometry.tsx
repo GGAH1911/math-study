@@ -84,6 +84,7 @@ function normalizeShapes(shapes: GeomShape[]): GeomShape[] {
         break;
       }
       case 'polygon': {
+        if (!Array.isArray(s.vertices)) break; // vertices 누락 polygon(예: 교정기 미완 출력) drop — 크래시 방지
         const vertices = s.vertices.map((v) => _coercePair(v));
         if (vertices.every((v): v is [number, number] => v !== null)) {
           out.push({ ...s, vertices });
@@ -424,7 +425,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   // bareAxes(기출 스타일): 축선만(화살표+x/y/O), 격자·눈금숫자 끔.
   const bare = spec.bareAxes === true;
   const showAxes = bare ? true : spec.showAxes !== false;
-  const showGrid = bare ? false : spec.showGrid !== false;
+  const showGrid = (bare || !showAxes) ? false : spec.showGrid !== false; // 축 없는 순수 도형/입체(showAxes:false)는 격자도 끔 — 기출 그림엔 격자 없음
 
   // Choose tick step
   const tickStep = (() => {
@@ -570,8 +571,8 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
     switch (s.type) {
       case 'point': {
         const [x, y] = s.at;
-        els.push(<circle key={`pt${i}`} cx={xPx(x)} cy={yPx(y)} r={4} fill={s.color ?? '#fb7185'}
-                         stroke="#fafafa" strokeWidth={1.5} />);
+        if (s.color !== 'transparent') els.push(<circle key={`pt${i}`} cx={xPx(x)} cy={yPx(y)} r={4} fill={s.color ?? '#fb7185'}
+                         stroke="#fafafa" strokeWidth={1.5} />); // color:'transparent' = 보이지 않는 anchor 점(라벨 leader 만 남음)
         if (s.label) {
           // labelDir: NE(default) / NW / SE / SW / N / S / E / W
           // 각 방향마다 점에서 라벨 좌상단까지 offset 계산. label 폭 추정 X →

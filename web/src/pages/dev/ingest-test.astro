@@ -14,7 +14,14 @@ try {
   const raw = JSON.parse(readFileSync('/tmp/corrector_sample.json', 'utf-8'));
   samples = Array.isArray(raw) ? raw : [raw];
   // 모델이 'shapes' 대신 'elements' 키로 도형 배열을 내는 변이 흡수(교정기 정규화 반영 전까지의 임시 보정).
-  for (const s of samples) { if (s?.figure && !Array.isArray(s.figure.shapes) && Array.isArray(s.figure.elements)) s.figure.shapes = s.figure.elements; }
+  const SHAPE_KEYS = ['point', 'segment', 'line', 'circle', 'ellipse', 'parabola', 'hyperbola', 'parametric', 'angle', 'text', 'area', 'polygon', 'sequence', 'vector'];
+  const normShape = (sh: any) => { // {polygon:{...}} (타입=키) → {type:'polygon',...}
+    if (!sh || sh.type) return sh;
+    const k = Object.keys(sh).find((kk) => SHAPE_KEYS.includes(kk) && sh[kk] && typeof sh[kk] === 'object');
+    return k ? { type: k, ...sh[k] } : sh;
+  };
+  const normFig = (fig: any) => { if (!fig) return; if (!Array.isArray(fig.shapes) && Array.isArray(fig.elements)) fig.shapes = fig.elements; if (fig.showAxes === true) { fig.bareAxes = true; fig.showAxes = false; } if (Array.isArray(fig.shapes)) fig.shapes = fig.shapes.map(normShape); };
+  for (const s of samples) { if (s?.figure) normFig(s.figure); if (Array.isArray(s?.figures)) s.figures.forEach(normFig); } // 단일 figure + 다중 figures(subs) 정규화
 } catch { /* 아직 없음 */ }
 
 function imgB64(id: string) {
@@ -66,7 +73,7 @@ const fail = samples.filter((s) => s.error);
                 <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">
                   <h3 class="text-xs font-semibold text-zinc-400">② Gemini 재현 도식</h3>
                   <div class="bg-zinc-950 rounded p-2 flex justify-center">
-                    {s.figure ? <Geometry client:load spec={s.figure} width={480} height={380} hideCaption noBroadcast /> : <span class="text-zinc-600 text-xs">도식 없음</span>}
+                    {s.figures ? <div class="flex flex-wrap gap-2 justify-center">{s.figures.map((f: any, i: number) => <div class="text-center"><div class="text-[10px] text-zinc-500">그림{i + 1}</div><Geometry client:load spec={f} width={230} height={200} hideCaption noBroadcast /></div>)}</div> : s.figure ? <Geometry client:load spec={s.figure} width={480} height={380} hideCaption noBroadcast /> : <span class="text-zinc-600 text-xs">도식 없음</span>}
                   </div>
                   {s.figureNote && <p class="text-[11px] text-[color:var(--color-muted)]">{s.figureNote}</p>}
                 </section>
@@ -76,9 +83,15 @@ const fail = samples.filter((s) => s.error);
                   <h3 class="text-xs font-semibold text-zinc-400">②-b 재구성 (문제→그림→선택지)</h3>
                   <div class="recon-view">
                     <div class="prose prose-invert max-w-none" set:html={rc.stmt} />
-                    {s.figure && <div class="recon-fig-wrap my-3"><Geometry client:load spec={s.figure} width={440} height={360} hideCaption noBroadcast /></div>}
+                    {s.figures ? <div class="recon-fig-wrap my-3 flex flex-wrap gap-2 justify-center">{s.figures.map((f: any) => <Geometry client:load spec={f} width={220} height={190} hideCaption noBroadcast />)}</div> : s.figure && <div class="recon-fig-wrap my-3"><Geometry client:load spec={s.figure} width={440} height={360} hideCaption noBroadcast /></div>}
                     {rc.choice && <div class="prose prose-invert max-w-none" set:html={rc.choice} />}
                   </div>
+                </section>
+              )}
+              {s.measure && (
+                <section class="card border border-sky-800/60 rounded-lg p-4 space-y-2">
+                  <h3 class="text-xs font-semibold text-sky-400">⓪ 측정 명세 — Gemini가 그리기 전에 잰 요소(과정)</h3>
+                  <pre class="text-[11px] leading-relaxed whitespace-pre-wrap bg-zinc-900/60 rounded p-3 text-sky-200/90 max-h-96 overflow-auto">{JSON.stringify(s.measure, null, 2)}</pre>
                 </section>
               )}
               <section class="card border border-zinc-700 rounded-lg p-4 space-y-2">

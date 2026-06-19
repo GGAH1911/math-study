@@ -1,0 +1,95 @@
+---
+// 교정기 measure-then-build 결과 갤러리 — /tmp/corrector_full/*.json 건별 결과를 원본↔재현 비교 + 필터.
+// 풀 실행: CORR_FULL=1 node /tmp/corrector_measure.mjs (건별 저장). 요청 시 새로 읽음(진행 중 신규 반영).
+export const prerender = false;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Geometry from '../../components/Geometry.tsx';
+import { readFileSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const REPO = fileURLToPath(new URL('../../../../', import.meta.url));
+const DIR = '/tmp/corrector_full';
+let items: any[] = [];
+try { for (const f of readdirSync(DIR)) { if (f.endsWith('.json')) { try { items.push(JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8'))); } catch { /* */ } } } } catch { /* 아직 없음 */ }
+
+const SHAPE_KEYS = ['point', 'segment', 'line', 'circle', 'ellipse', 'parabola', 'hyperbola', 'parametric', 'angle', 'text', 'area', 'polygon', 'sequence', 'vector'];
+const normShape = (sh: any) => { if (!sh || sh.type) return sh; const k = Object.keys(sh).find((kk) => SHAPE_KEYS.includes(kk) && sh[kk] && typeof sh[kk] === 'object'); return k ? { type: k, ...sh[k] } : sh; };
+const normFig = (fig: any) => { if (!fig) return; if (!Array.isArray(fig.shapes) && Array.isArray(fig.elements)) fig.shapes = fig.elements; if (fig.showAxes === true) { fig.bareAxes = true; fig.showAxes = false; } if (Array.isArray(fig.shapes)) fig.shapes = fig.shapes.map(normShape); };
+for (const s of items) { if (s?.figure) normFig(s.figure); if (Array.isArray(s?.figures)) s.figures.forEach(normFig); } // 단일 figure + 다중 figures 정규화
+
+const sc = (s: any) => s.figures ? s.figures.reduce((n: number, f: any) => n + (f.shapes?.length || 0), 0) : (s.figure?.shapes?.length ?? 0);
+const q = (Astro.url.searchParams.get('q') ?? '').toLowerCase();
+const fig = Astro.url.searchParams.get('fig') ?? '';   // yes|no
+const min = Number(Astro.url.searchParams.get('min')) || 0;
+const d3 = Astro.url.searchParams.get('d3') ?? '';     // 3d
+let list = items.filter((s) => !s.error);
+if (q) list = list.filter((s) => s.id.toLowerCase().includes(q));
+if (fig === 'yes') list = list.filter((s) => sc(s) > 0);
+if (fig === 'no') list = list.filter((s) => sc(s) === 0);
+if (min) list = list.filter((s) => sc(s) >= min);
+if (d3 === 'yes') list = list.filter((s) => s.measure?.projection?.is3D);
+list.sort((a, b) => sc(b) - sc(a));
+
+function imgB64(id: string) {
+  const [round, sn] = id.split('/');
+  try { return 'data:image/png;base64,' + readFileSync(`${REPO}db/raw/${round}/images/${round}_${sn}.png`).toString('base64'); }
+  catch { return ''; }
+}
+const withFig = items.filter((s) => !s.error && sc(s) > 0).length;
+const err = items.filter((s) => s.error);
+---
+<BaseLayout title="교정기 갤러리">
+  <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <header class="space-y-1">
+      <h1 class="text-2xl font-semibold tracking-tight">교정기 갤러리 — measure-then-build</h1>
+      <p class="text-sm text-[color:var(--color-muted)]">
+        /tmp/corrector_full/ · 총 {items.length} · figure {withFig}개 · 실패 {err.length} · 표시 {list.length}
+      </p>
+      <form method="get" class="flex gap-2 flex-wrap pt-1">
+        <input type="text" name="q" value={q} placeholder="검색: id (예: 가형, 수능)" class="flex-1 max-w-xs text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-900" />
+        <select name="fig" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">figure: 전체</option>
+          <option value="yes" selected={fig === 'yes'}>있음</option>
+          <option value="no" selected={fig === 'no'}>없음</option>
+        </select>
+        <input type="number" name="min" value={min || ''} min="0" placeholder="≥shapes" class="w-24 text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-900" />
+        <select name="d3" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">3D: 전체</option>
+          <option value="yes" selected={d3 === 'yes'}>입체만</option>
+        </select>
+        <button type="submit" class="text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-800">적용</button>
+        {(q || fig || min || d3) && <a href="/dev/corrector-gallery" class="text-sm px-3 py-1.5 rounded border border-zinc-700 self-center">전체</a>}
+      </form>
+    </header>
+
+    {list.length === 0 ? (
+      <div class="text-sm text-zinc-500">결과 없음. <code>CORR_FULL=1 node /tmp/corrector_measure.mjs</code> 실행 후 새로고침.</div>
+    ) : (
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {list.map((s) => {
+          const img = imgB64(s.id);
+          const has = sc(s) > 0;
+          return (
+            <section class="card border border-zinc-700 rounded-lg p-3 space-y-2">
+              <div class="flex items-baseline justify-between gap-2">
+                <h2 class="text-sm font-semibold text-zinc-200 truncate">{s.id}</h2>
+                <span class="text-[10px] text-zinc-500 shrink-0">{sc(s)} shapes{s.measure?.projection?.is3D ? ' · 3D' : ''}</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white rounded p-1 flex items-center justify-center min-h-[180px]">{img ? <img src={img} alt={s.id} class="w-full" /> : <span class="text-[10px] text-zinc-400">이미지 없음</span>}</div>
+                <div class="bg-zinc-950 rounded p-1 flex items-center justify-center min-h-[180px]">{s.figures ? <div class="flex flex-wrap gap-1 justify-center">{s.figures.map((f: any) => <Geometry client:load spec={f} width={170} height={150} hideCaption noBroadcast />)}</div> : has ? <Geometry client:load spec={s.figure} width={300} height={240} hideCaption noBroadcast /> : <span class="text-[11px] text-zinc-600">그림 없는 문제</span>}</div>
+              </div>
+              {s.figureNote && <p class="text-[10px] text-[color:var(--color-muted)] truncate">{s.figureNote}</p>}
+            </section>
+          );
+        })}
+      </div>
+    )}
+    {err.length > 0 && (
+      <section class="card border border-rose-900/50 rounded-lg p-4">
+        <h2 class="text-sm font-semibold text-rose-400 mb-1">실패 {err.length}</h2>
+        <ul class="text-[11px] text-rose-300/80 space-y-0.5">{err.map((s) => <li>{s.id} — {s.error}</li>)}</ul>
+      </section>
+    )}
+  </div>
+</BaseLayout>
