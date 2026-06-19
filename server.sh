@@ -20,8 +20,8 @@ WEB_DIR="${MATH_STUDY_WEB:-$SCRIPT_DIR/web}"
 
 HOST="0.0.0.0"                              # Tailscale/LAN 접속용 전체 바인드
 PORT="${MATH_STUDY_PORT:-4323}"
-PID_FILE="/tmp/math-study-server.pid"
-LOG_FILE="/tmp/math-study-server.log"
+PID_FILE="${MATH_STUDY_PID:-/tmp/math-study-server.pid}"
+LOG_FILE="${MATH_STUDY_LOG:-/tmp/math-study-server.log}"
 TS_HOST="${MATH_STUDY_TSHOST:-tme-laptop.tailf47aa4.ts.net}"  # 풀 MagicDNS 이름 (짧은 .ts.net 은 resolve 안 됨)
 
 g=$'\e[32m'; r=$'\e[31m'; y=$'\e[33m'; d=$'\e[2m'; x=$'\e[0m'

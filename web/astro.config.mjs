@@ -167,8 +167,11 @@ export default defineConfig({
       rehypePlugins: [[rehypeKatex, katexOptions]],
     }),
   ],
+  // STABLE(학습용 안정 서버, 포트 4324): content/빌드 캐시를 메인(4323)과 분리해 두 dev 서버 동시 구동 시 충돌 방지.
+  cacheDir: process.env.STABLE ? './.astro-stable' : undefined,
   vite: {
     plugins: [tailwindcss()],
+    cacheDir: process.env.STABLE ? './node_modules/.vite-stable' : undefined,
     server: {
       allowedHosts: [
         'localhost',
@@ -182,6 +185,8 @@ export default defineConfig({
       fs: {
         allow: ['..', '/home/insung/Projects/math-study'],
       },
+      // STABLE=1(학습용 안정 서버): docs/problems watch 제외 → 교정 배치가 md를 고쳐도 HMR full-reload가 안 일어나 학습 중 안 깜박. 새 교정본은 restart 때 반영.
+      ...(process.env.STABLE ? { watch: { ignored: ['**/docs/problems/**'] } } : {}),
     },
     // mathlive 는 ChatPanel 의 '∑ 수식' 버튼을 처음 누를 때 동적 import
     // 된다. dev 서버 startup 시 vite가 정적 import 만 스캔하므로 mathlive
