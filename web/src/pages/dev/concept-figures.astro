@@ -15,9 +15,34 @@ const figures = figuresData.figures ?? {};
 const entries = Object.entries(figures) as [string, any][];
 // 검색 필터(id·라벨·생성모델 부분일치). 예: ?q=도함수의_활용_심화, ?q=gemini
 const q = (Astro.url.searchParams.get('q') ?? '').trim().toLowerCase();
+const sort = Astro.url.searchParams.get('sort') ?? '';        // 'shapes' = shapes 많은순
+const min = Number(Astro.url.searchParams.get('min')) || 0;   // shapes 최소 개수 필터
+const state = Astro.url.searchParams.get('state') ?? '';      // verified|pending2|flagged|unchecked
+const has = Astro.url.searchParams.get('has') ?? '';          // shape type 포함
+const axes = Astro.url.searchParams.get('axes') ?? '';        // grid|bare|none
+const domain = Astro.url.searchParams.get('domain') ?? '';    // geometry|functions|equations
+const model = (Astro.url.searchParams.get('model') ?? '').toLowerCase();
+const SHAPE_TYPES = ['point', 'segment', 'polygon', 'circle', 'ellipse', 'parabola', 'hyperbola', 'parametric', 'area', 'sequence', 'vector', 'angle', 'text'];
+const shapeCount = (v: any) => v.figure?.shapes?.length ?? 0;
+const stateOf = (v: any) => {                                  // QA 상태 분류
+  const a = v.qa;
+  if (!a || (!a.checked && !a.pending2)) return 'unchecked';
+  if (a.pending2) return 'pending2';
+  if (a.verified === false) return 'flagged';
+  if (a.verified === true) return 'verified';
+  return 'unchecked';
+};
+const axesOf = (v: any) => v.figure?.bareAxes ? 'bare' : (v.figure?.showAxes ? 'grid' : 'none');
 const match = ([id, v]: [string, any]) =>
   !q || id.toLowerCase().includes(q) || (v.label ?? '').toLowerCase().includes(q) || (v.model ?? '').toLowerCase().includes(q);
-const withFig = entries.filter(([, v]) => v.figure).filter(match);
+let withFig = entries.filter(([, v]) => v.figure).filter(match);
+if (min > 0) withFig = withFig.filter(([, v]) => shapeCount(v) >= min);
+if (state) withFig = withFig.filter(([, v]) => stateOf(v) === state);
+if (has) withFig = withFig.filter(([, v]) => (v.figure?.shapes ?? []).some((s: any) => s.type === has));
+if (axes) withFig = withFig.filter(([, v]) => axesOf(v) === axes);
+if (domain) withFig = withFig.filter(([id]) => id.split('/')[0] === domain);
+if (model) withFig = withFig.filter(([, v]) => (v.model ?? '').toLowerCase().includes(model));
+if (sort === 'shapes') withFig = withFig.sort((a, b) => shapeCount(b[1]) - shapeCount(a[1]));
 const nulls = entries.filter(([, v]) => !v.figure).filter(match);
 ---
 <BaseLayout title="개념 도식 갤러리 (검토)">
@@ -28,11 +53,45 @@ const nulls = entries.filter(([, v]) => !v.figure).filter(match);
         단계별 생성 + 좌표검증. figure {withFig.length}개 · 도식불필요 {nulls.length}개{q && ` · 필터 "${q}"`} · 총 {entries.length}개.
         개념 페이지 본문 위에 이 도식이 들어갑니다.
       </p>
-      <form method="get" class="flex gap-2 pt-1">
+      <form method="get" class="flex gap-2 pt-1 flex-wrap">
         <input type="text" name="q" value={q} placeholder="검색: 라벨·id·모델 (예: 도함수의_활용_심화, gemini)"
           class="flex-1 max-w-md text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-900" />
-        <button type="submit" class="text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-800">검색</button>
-        {q && <a href="/dev/concept-figures" class="text-sm px-3 py-1.5 rounded border border-zinc-700 self-center">전체</a>}
+        <input type="number" name="min" value={min || ''} min="0" placeholder="≥shapes"
+          class="w-28 text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-900" />
+        <select name="sort" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">기본순</option>
+          <option value="shapes" selected={sort === 'shapes'}>shapes 많은순</option>
+        </select>
+        <select name="state" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">QA: 전체</option>
+          <option value="verified" selected={state === 'verified'}>통과</option>
+          <option value="pending2" selected={state === 'pending2'}>PASS2대기</option>
+          <option value="flagged" selected={state === 'flagged'}>미통과</option>
+          <option value="unchecked" selected={state === 'unchecked'}>미검수</option>
+        </select>
+        <select name="has" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">shape: 전체</option>
+          {SHAPE_TYPES.map((t) => <option value={t} selected={has === t}>{t}</option>)}
+        </select>
+        <select name="axes" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">축: 전체</option>
+          <option value="grid" selected={axes === 'grid'}>격자</option>
+          <option value="bare" selected={axes === 'bare'}>축선만</option>
+          <option value="none" selected={axes === 'none'}>없음</option>
+        </select>
+        <select name="domain" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">과목: 전체</option>
+          <option value="functions" selected={domain === 'functions'}>functions</option>
+          <option value="geometry" selected={domain === 'geometry'}>geometry</option>
+          <option value="equations" selected={domain === 'equations'}>equations</option>
+        </select>
+        <select name="model" class="text-sm px-2 py-1.5 rounded border border-zinc-700 bg-zinc-900">
+          <option value="">모델: 전체</option>
+          <option value="haiku" selected={model === 'haiku'}>haiku</option>
+          <option value="gemini" selected={model === 'gemini'}>gemini</option>
+        </select>
+        <button type="submit" class="text-sm px-3 py-1.5 rounded border border-zinc-700 bg-zinc-800">적용</button>
+        {(q || min || sort || state || has || axes || domain || model) && <a href="/dev/concept-figures" class="text-sm px-3 py-1.5 rounded border border-zinc-700 self-center">전체</a>}
       </form>
     </header>
 

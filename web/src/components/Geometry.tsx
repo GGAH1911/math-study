@@ -75,6 +75,7 @@ function _coercePair(p: unknown): [number, number] | null {
 // 오염(±Infinity → scale=NaN → 빈 캔버스)시키는 사고를 막는다.
 function normalizeShapes(shapes: GeomShape[]): GeomShape[] {
   const out: GeomShape[] = [];
+  if (!Array.isArray(shapes)) return out; // figure.shapes 누락/비배열(예: 교정기 미생성) → 빈 렌더(크래시 방지)
   for (const s of shapes) {
     switch (s.type) {
       case 'point': {

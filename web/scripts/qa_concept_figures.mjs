@@ -374,6 +374,7 @@ async function main() {
   const limit = opts.limit != null ? Number(opts.limit) : Infinity;
 
   let targets;
+  let pending2List = []; // PASS1 에서 결함분류돼 캐시에 pending2 박힌 것 — PASS1 스킵, PASS2 직행
   if (ids.length) targets = ids;
   else if (bools.has('--suspect')) {
     // 불완전 수정 의심: fixed 인데 충실성/누락류 이슈가 기록된 도식 → 강화된 QA(재검증 루프)로 재검수.
@@ -385,8 +386,9 @@ async function main() {
     targets = Object.entries(cache.figures)
       .filter(([, v]) => v.figure && v.qa?.checked && v.qa.verified === false)
       .map(([id]) => id);
-  } else { // --all: figure 있는 것 중 미검수(또는 force)
-    targets = Object.entries(cache.figures).filter(([, v]) => v.figure && (force || !v.qa?.checked)).map(([id]) => id);
+  } else { // --all: figure 있는 것 중 미검수(또는 force). pending2(PASS1 이미 결함분류)는 PASS1 스킵·PASS2 직행.
+    targets = Object.entries(cache.figures).filter(([, v]) => v.figure && (force || (!v.qa?.checked && !v.qa?.pending2))).map(([id]) => id);
+    if (!force) pending2List = Object.entries(cache.figures).filter(([, v]) => v.figure && v.qa?.pending2).map(([id]) => id);
   }
   targets = targets.slice(0, Number.isFinite(limit) ? limit : undefined);
   const N = targets.length;
@@ -397,7 +399,7 @@ async function main() {
 
   // ── PASS 1: 배치 평가(루브릭 1회/배치 → 쿼터 절감). ok 는 통과 기록, 결함만 PASS 2 로. ──
   // DRY 는 정확도 파일럿이라 배치 안 함(개별 첫판정 수집).
-  let pass2List = targets;
+  let pass2List = targets.concat(pending2List); // BATCH=1 경로: 미검수+pending2 모두 PASS2 로
   if (BATCH > 1 && !DRY && !RETRY && targets.length) {
     const chunks = [];
     for (let i = 0; i < targets.length; i += BATCH) chunks.push(targets.slice(i, i + BATCH));
@@ -427,6 +429,8 @@ async function main() {
             p1ok++;
           } else {
             flagged.push(it.id); // 결함 or 미파싱 → PASS 2
+            // ★PASS2 대상도 캐시에 영속(pending2): 끊겨도 재실행 시 PASS1 재평가 없이 바로 PASS2 로(issues 시드). 이전엔 메모리 flagged 뿐이라 끊기면 증발→재PASS1.
+            cache.figures[it.id].qa = { checked: false, pending2: true, issues: (v && v.issues) || [], model: MODEL };
           }
         }
         writeCache();
@@ -438,7 +442,7 @@ async function main() {
     await Promise.all(Array.from({ length: conc }, () => batchWorker()));
     stat.ok += p1ok;
     console.log(`PASS 1 완료: 통과 ${p1ok} · PASS 2(개별 수정) 대상 ${flagged.length}`);
-    pass2List = flagged;
+    pass2List = flagged.concat(pending2List); // 이번 PASS1 결함 + 이전 실행에서 영속된 pending2
   }
 
   const MAX_FIX = 4;   // 수정→재검증 반복 상한(복잡 도식은 조합 마무리에 더 필요)
@@ -453,7 +457,7 @@ async function main() {
       try {
         // 현재 캐시 스펙을 렌더해 평가(재검수면 직전 수정본이 대상).
         // 분석적 리트라이: 이전 시도 이슈를 누적 주입 → 같은 실수 반복 방지(retry-flagged 면 기존 플래그 이슈가 시드).
-        const priorIssues = (RETRY && entry.qa && Array.isArray(entry.qa.issues)) ? entry.qa.issues.slice() : [];
+        const priorIssues = ((RETRY || entry.qa?.pending2) && entry.qa && Array.isArray(entry.qa.issues)) ? entry.qa.issues.slice() : [];
         const evalNow = async (hist) => {
           const png = await renderFigure(id);
           if (!png) throw new Error('render-failed');
