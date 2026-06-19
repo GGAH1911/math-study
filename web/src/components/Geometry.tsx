@@ -811,11 +811,19 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         break;
       }
       case 'text': {
-        // 자유 text(축 이름 v/t·곡선 이름·영역 이름 S 등)는 명시 좌표가 곧 의도다.
-        // fixed=true + 자기위치 anchor → de-overlap 에 안 밀리고(다른 라벨이 피함),
-        // soft 스냅 leader 도 안 그려진다(움직임 0). soft 로 두면 leader 가 가까운 곡선/점으로 오스냅됨.
         const lx = xPx(s.at[0]) + 4, ly = yPx(s.at[1]) - 8;
-        pushLabel(`tx${i}`, s.text, lx, ly, 0, s.color, true, [lx, ly]);
+        // 축 근처 자유 text = 축 이름(v/t 등): 앵커를 해당 축 위로 고정 → 드래그하면 leader 가
+        // 축을 가리킨다(bareAxes 의 x/y/O 축라벨과 동일 원리). 축에서 먼 text(곡선·영역 이름 S)는
+        // 자유 라벨 유지(soft: 드래그 시 가장 가까운 곡선/점으로 스냅).
+        const xAxisVis = showAxes && bounds.y[0] <= 0 && bounds.y[1] >= 0;
+        const yAxisVis = showAxes && bounds.x[0] <= 0 && bounds.x[1] >= 0;
+        const nearXax = xAxisVis && Math.abs(s.at[1]) < (bounds.y[1] - bounds.y[0]) * 0.1; // x축(y=0) 근접
+        const nearYax = yAxisVis && Math.abs(s.at[0]) < (bounds.x[1] - bounds.x[0]) * 0.1; // y축(x=0) 근접
+        let anchor: [number, number] | undefined;
+        let fixed = false;
+        if (nearXax && !nearYax) { anchor = [xPx(s.at[0]), yPx(0)]; fixed = true; }      // x축 이름 → x축 위
+        else if (nearYax && !nearXax) { anchor = [xPx(0), yPx(s.at[1])]; fixed = true; } // y축 이름 → y축 위
+        pushLabel(`tx${i}`, s.text, lx, ly, 0, s.color, fixed, anchor);
         break;
       }
     }
