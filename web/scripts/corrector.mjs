@@ -16,12 +16,19 @@ const GEMINI = process.env.CORR_MODEL || 'Gemini 3.5 Flash (Medium)';
 const QLOG = '/tmp/ingest_logs/corrector_quarantine.log';
 
 // agy(Gemini) = plain text. 쿼터 소진 = 빈 출력.
-function agyCall(prompt, imgDir) {
+function agyCall(prompt, imgDir, retries = 2) {
   return new Promise((res) => {
-    const c = spawn('agy', ['-p', prompt, '--model', GEMINI, '--add-dir', imgDir, '--print-timeout', '6m'], { stdio: ['ignore', 'pipe', 'pipe'] });
-    c.stdout.setEncoding('utf8'); let out = '';
-    c.stdout.on('data', (d) => (out += d));
-    c.on('close', () => res(out));
+    const run = (n) => {
+      const c = spawn('agy', ['-p', prompt, '--model', GEMINI, '--add-dir', imgDir, '--print-timeout', '6m'], { stdio: ['ignore', 'pipe', 'pipe'] });
+      c.stdout.setEncoding('utf8'); let out = '';
+      c.stdout.on('data', (d) => (out += d));
+      c.on('close', () => {
+        // 빈출력=레이트리밋/부하/타임아웃일 수 있음 → 8s 후 재시도. 진짜 쿼터 소진은 재시도해도 계속 빈출력.
+        if (!out.trim() && n > 0) setTimeout(() => run(n - 1), 8000);
+        else res(out);
+      });
+    };
+    run(retries);
   });
 }
 // claude(Sonnet) = --output-format json → {result:"..."} 래퍼. 자가치유용(별도 백엔드·쿼터).

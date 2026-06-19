@@ -36,7 +36,7 @@ ROUND=0
 while true; do
   ROUND=$((ROUND+1))
   echo "[$(date)] === corrector 회차 $ROUND 시작 ==="
-  CORR_CONC=6 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
+  CORR_CONC=4 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
   tail -3 /tmp/ingest_logs/corrector_run.log
   REMAIN=$(grep -oP '남은대상 \K\d+' /tmp/ingest_logs/corrector_run.log | tail -1)
 
@@ -56,8 +56,14 @@ $SESS"
   fi
   # 완료
   if [ "${REMAIN:-1}" = "0" ]; then echo "[$(date)] ✅ 전부 교정 완료"; break; fi
-  # 쿼터 소진 → 5h 대기 후 재개
-  echo "[$(date)] 쿼터 소진(남은 ${REMAIN:-?}) — 5h 대기 후 재개"
-  sleep 18000
+  # 쿼터 소진 추정 → 10분마다 agy 헬스체크 → 응답 있으면 즉시 재개 (무작정 5h 대기 X)
+  echo "[$(date)] 쿼터 소진 추정(남은 ${REMAIN:-?}) — 10분마다 헬스체크"
+  while true; do
+    sleep 600
+    if timeout 60 agy -p "2+3 숫자만 답해." --model "Gemini 3.5 Flash (Medium)" 2>/dev/null | grep -q '[0-9]'; then
+      echo "[$(date)] agy 응답 확인 — 재개"; break
+    fi
+    echo "[$(date)] agy 아직 빈출력 — 10분 더 대기"
+  done
 done
 echo "===== [$(date)] auto_pipeline 종료 ====="
