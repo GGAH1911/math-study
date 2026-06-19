@@ -811,7 +811,11 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         break;
       }
       case 'text': {
-        pushLabel(`tx${i}`, s.text, xPx(s.at[0]) + 4, yPx(s.at[1]) - 8, 0, s.color);
+        // 자유 text(축 이름 v/t·곡선 이름·영역 이름 S 등)는 명시 좌표가 곧 의도다.
+        // fixed=true + 자기위치 anchor → de-overlap 에 안 밀리고(다른 라벨이 피함),
+        // soft 스냅 leader 도 안 그려진다(움직임 0). soft 로 두면 leader 가 가까운 곡선/점으로 오스냅됨.
+        const lx = xPx(s.at[0]) + 4, ly = yPx(s.at[1]) - 8;
+        pushLabel(`tx${i}`, s.text, lx, ly, 0, s.color, true, [lx, ly]);
         break;
       }
     }
