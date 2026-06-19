@@ -73,7 +73,11 @@ const problems = defineCollection({
     figure_image: z.string().optional(),  // 추출·stitch 한 도형만 잘라낸 PNG (재구성 뷰용)
     figure_after_line: z.number().optional(),  // 재구성 본문 몇 번째 줄 뒤에 도형 삽입 (백필이 PDF 위치로 계산)
     figures: z.array(z.object({ image: z.string(), after_line: z.number().optional() })).optional(),  // 다중 그림: 각 추출 PNG + 삽입 위치(줄). figure_image보다 우선.
+    tables: z.array(z.array(z.array(z.string()))).optional(),  // 표(셀 2D 배열들) — searchable_text {{TABLEn}} 자리에 HTML <table> 렌더
     searchable_text: z.string().optional(),
+    corrector_done: z.boolean().optional(),  // Gemini 텍스트 교정 완료(멱등 플래그)
+    corrector_fixes: z.array(z.string()).optional(),  // 교정 메모(무엇을 왜 고쳤는지)
+    corrector_by: z.enum(['gemini', 'sonnet']).optional(),  // 교정 백엔드(검증 실패 자가치유 시 sonnet)
     // Stage C — vision LLM이 ingest 시 추출한 도형 spec (geometry/plot/numberline/chart).
     // 채워져 있으면 problem 페이지가 raw PNG 외에 spec 기반 SVG 도 함께 렌더 가능.
     // 모든 수능 도형이 이 spec으로 표현 가능한 건 아님 — fallback은 PNG.

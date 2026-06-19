@@ -76,7 +76,7 @@ const isKo = (ch: string) => /[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(ch);
 // 집합 {x|x는 자연수}·\begin{cases}…경우…\end{cases} 처럼 중괄호/환경 안에 한글이 있어도
 // 구성이 안 깨지고 KaTeX 가 렌더한다. depth 0의 한글은 평문(text)으로 분리.
 function renderInline(s: string): string {
-  const segs: Array<[boolean | 'sp', string]> = [];
+  const segs: Array<[boolean | 'sp' | 'blank', string]> = [];
   let cur = '';
   let curType: boolean | null = null; // true=text, false=math
   let textRun = ''; // 수식 안에서 모으는 한글(+공백) → \text{}
@@ -121,6 +121,14 @@ function renderInline(s: string): string {
       bump();
       continue;
     }
+    // depth 0: (가)~(하) = 빈칸추론 답칸 → 네모 박스(빈칸). 인라인("f(15) = (가)")도 박스로.
+    const blank = s.slice(i).match(/^[(（]\s*([가-하])\s*[)）]/);
+    if (blank) {
+      flush();
+      segs.push(['blank', blank[1]]);
+      i += blank[0].length - 1;
+      continue;
+    }
     // depth 0: 한글=text, 공백=리터럴 보존, 그 외=math.
     if (ch === ' ') {
       flush();
@@ -137,7 +145,9 @@ function renderInline(s: string): string {
     if (!t) bump();
   }
   flush();
-  return segs.map(([t, x]) => (t === 'sp' ? ' ' : t ? esc(x) : km(x))).join('');
+  return segs
+    .map(([t, x]) => (t === 'sp' ? ' ' : t === 'blank' ? `<span class="recon-blank">(${esc(x)})</span>` : t ? esc(x) : km(x)))
+    .join('');
 }
 
 export interface ReconOpts {
@@ -146,15 +156,34 @@ export interface ReconOpts {
   figureAfterLine?: number;
   /** 다중 그림: 각 {html, afterLine}. 있으면 figureHtml/figureAfterLine 대신 사용(여러 그림 각 위치). */
   figures?: Array<{ html: string; afterLine?: number }>;
+  /** 표(셀 2D 배열들) — 본문 {{TABLEn}} 자리에 HTML <table>로 렌더. */
+  tables?: string[][][];
+}
+
+// 표(셀 2D 배열) → HTML <table>. 첫 행=헤더, 셀 값은 renderInline(수식/한글 혼합).
+function renderTable(rows: string[][]): string {
+  if (!rows || !rows.length) return '';
+  const cell = (s: string, tag: string) => `<${tag}>${renderInline(s ?? '')}</${tag}>`;
+  const head = `<tr>${rows[0].map((c) => cell(c, 'th')).join('')}</tr>`;
+  const bodyR = rows.slice(1).map((r) => `<tr>${r.map((c) => cell(c, 'td')).join('')}</tr>`).join('');
+  return `<table class="recon-table"><thead>${head}</thead><tbody>${bodyR}</tbody></table>`;
 }
 
 export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   if (!text || !text.trim()) return '';
   // 번호·배점은 recon-head(헤더)에 이미 있으니 본문서 제거(중복 방지): 선행 "11." + "[3점]".
   text = text.replace(/^\s*\d{1,2}\.\s*/, '').replace(/\[\s*\d+\s*점\s*\]/g, '');
+  // 방향A: 이 렌더러는 구분자($) 없는 형식(한글=텍스트·수식=math 자동 분리)이 SSOT다.
+  // Gemini 교정이 LaTeX 관례로 $...$ 델리미터를 넣어도 여기서 제거해 무해화(아무리 새도 안 깨짐).
+  text = text.replace(/\$/g, '');
   // 파이프(|)만 있는 줄 = cases 중괄호 연장선/HWP 레이아웃 잔재(예: 27번 cases 위 '| |')라 제외.
   // 절댓값 |x| 등 의미있는 파이프는 내용이 같이 있어 이 필터(공백+파이프만)에 안 걸린다.
-  const lines = text.split('\n').filter((l) => l.trim() && !/^[\s|‖∣｜]+$/.test(l));
+  const lines = text.split('\n').filter((l) => l.trim() && !/^[\s|‖∣｜]+$/.test(l))
+    .flatMap((l) => l.split(/\s+(?=\([가-하]\)\s)/))  // 한 줄에 붙은 (가)(나)(다) 조건을 각 줄로
+    .flatMap((l) => {  // 조건 줄 끝에 붙은 질문("…의 값은?")은 박스 밖으로 떼어냄
+      const m = l.match(/^(\([가-하]\)\s.*?다\.)\s+(.+(?:값은|값을|구하|얼마|\?).*)$/);
+      return m ? [m[1], m[2]] : [l];
+    });
   const body: string[] = [];
   const choiceLines: string[] = [];
   for (const l of lines) {
@@ -229,7 +258,9 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   if (figByLine.has(0)) html += figByLine.get(0)!.join('');
   for (let i = 0; i < body.length; i++) {
     const pm = body[i].match(PH_RE);
-    if (pm) { const fi = +pm[1]; if (figList[fi]) html += figList[fi].html; continue; }  // placeholder → 그 자리에 도형
+    if (pm) { const fi = +pm[1]; if (figList[fi]) html += figList[fi].html; continue; }  // {{FIGn}} → 그 자리에 도형
+    const tm = body[i].match(/^\s*\{\{TABLE(\d+)\}\}\s*$/);
+    if (tm) { const ti = +tm[1]; if (opts.tables?.[ti]) html += renderTable(opts.tables[ti]); continue; }  // {{TABLEn}} → 표
     if (boxOpen.has(i)) html += '<div class="recon-box">';
     html += renderLine(body[i]);
     if (boxClose.has(i + 1)) html += '</div>';

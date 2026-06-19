@@ -45,12 +45,13 @@ const _wholeStem =
 // 표: 표준정규분포표(셀이 분수로 깨짐)·P(0≤Z 헤더·소수격자 분수. 연립: '연립방정식'이되 정상
 // \begin{cases}로 디코드된 건 제외(텍스트 재구성 양호). 해당 문제는 전부 image_paths 보유.
 const reconUnsupported =
+  !(fm.tables && fm.tables.length) &&  // 표가 table JSON으로 추출됐으면 HTML <table> 재구성 지원(폴백 해제)
   !!_wholeStem &&
   (/표준정규분포표|P\(\s*0\s*[≤<]\s*Z|\\frac\{[\d.]+\s+[\d.]+/.test(_sText) ||
     (/연립방정식/.test(_sText) && !/\\begin\{cases\}/.test(_sText)));
 const reconFull = reconUnsupported
   ? `<div class="recon-fig-wrap"><img src="/problem-images/${_wholeStem}" alt="문제" class="recon-fig recon-fig-full" loading="lazy" /><span class="recon-fig-note">표·연립 등 복잡한 구조 — 원본 이미지로 표시 (텍스트 재구성 미지원)</span></div>`
-  : renderReconstruct(_sText, { figures: figureList });
+  : renderReconstruct(_sText, { figures: figureList, tables: fm.tables });
 // 재구성은 어드민 전용: 도형 라벨이 이미지 밖으로 새는 등 엣지케이스가 있어 사용자에겐 부적합 →
 // 사용자는 원본 이미지(<Content/>)만, 재구성 토글·뷰는 admin 만. (디코더의 가치는 인제스트용 searchable_text.)
 const isAdmin = !!Astro.locals.user?.is_admin;
@@ -338,6 +339,12 @@ if (src) {
     .recon-view .recon-choice { white-space: nowrap; display: inline-flex; align-items: baseline; gap: 0.3em; }
     .recon-view .recon-cnum { font-weight: 500; }
     .recon-view .recon-box { border: 1px solid var(--color-border, #555); border-radius: 8px; padding: 0.6em 1.1em; margin: 1.1em 0; }
+    .recon-view .recon-blank { display: inline-block; border: 1px solid var(--color-border, #555); border-radius: 4px; padding: 0.05em 0.9em; margin: 0 0.15em; text-align: center; }
+    /* 인라인 KaTeX 수식은 줄 끝에서 중간이 쪼개지지 않고 통째로 다음 줄로 */
+    .recon-view .recon-line .katex { display: inline-block; white-space: nowrap; }
+    .recon-view .recon-table { border-collapse: collapse; margin: 1.1em auto; }
+    .recon-view .recon-table th, .recon-view .recon-table td { border: 1px solid var(--color-border, #555); padding: 0.3em 0.9em; text-align: center; }
+    .recon-view .recon-table th { font-weight: 600; }
     .recon-view .recon-bullet { text-align: left; padding-left: 1.3em; text-indent: -1.3em; }
     .recon-view .recon-box .recon-line:first-child { margin-top: 0; }
     .recon-view .recon-box .recon-line:last-child { margin-bottom: 0; }
