@@ -82,10 +82,11 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 - {"type":"parabola","vertex":[x,y],"focus?":f,"orientation?":"up|down|left|right"}  // 이차곡선 전용·함수그래프엔 쓰지마라(아래 규칙)
 - {"type":"hyperbola","center":[x,y],"a":a,"b":b,"orientation?":"horizontal|vertical"}  // 이차곡선 전용
 - {"type":"parametric","x":"cos(t)","y":"sin(t)","tRange":[0,"2*pi"]}      // expr=문자열, sqrt/pi 가능. ★거듭제곱은 ^ (t^2), Python ** 금지(곡선 소실)
-- {"type":"area","y":"<f(x)>","from":a,"to":b,"baseline?":0,"fill?":"#6366f1","fillOpacity?":0.22,"label?":"S"}  // 곡선과 baseline 사이 면을 **채움**(적분·넓이·부호영역). y 는 x(또는 t) 식. 두 곡선 사이는 baseline 에 아래 곡선식 문자열.
+- {"type":"area","y":"<f(x)>","from":a,"to":b,"baseline?":0,"fill?":"#6366f1","fillOpacity?":0.22,"label?":"S"}  // 곡선과 baseline 사이 면을 **채움**(적분·넓이·부호영역). y 는 x(또는 t) 식. 두 곡선 사이는 baseline 에 아래 곡선식 문자열. ★면 설명 라벨(S, f(x)>0, 넓이 등)은 이 **label 속성**으로 — 별도 text 로 면 위에 띄우지 마라(text 는 면 중앙이 아니라 가까운 곡선에 붙어 어느 면인지 안 보인다).
 - {"type":"vector","from":[x,y],"to":[x,y],"label?":"\\\\vec{v}"}            // 화살표
 - {"type":"angle","at":[x,y],"from":[x,y],"to":[x,y],"label?":"\\\\theta","radius?":0.4}  // 각 라벨은 호 위에 렌더됨
 - {"type":"text","at":[x,y],"text":"..."}
+- {"type":"sequence","expr":"<a_n 식(변수 n)>","nRange":[1,10],"limit?":L,"labelBase?":"a","connect?":false}  // 수열/급수: n=1..N 의 점 (n,a_n) 을 **자동 생성**(점 일일이 찍지 마라). limit=수렴값(y=L 점선+라벨), labelBase=첨자(a_1,a_2.. 앞3개), connect=점 잇기. 예 a_n=2-1.8/n → expr="2-1.8/n". 부분합 S_n 도 expr 에 식.
 
 규칙:
 - showAxes: 순수 기하(삼각형·원·벡터·각)는 **false**. 함수그래프/좌표평면 개념(포물선 y=x², 그래프 위의 점, 원의 방정식)처럼 **축이 의미를 갖는 경우에만 true**.
@@ -107,6 +108,9 @@ shapes 종류(좌표는 모두 수학 좌표, 픽셀 아님):
 - ★적분·넓이·영역·부호(정적분, 곡선과 x축 사이, 두 곡선 사이 넓이, 속도-시간→변위 등)는 **area shape 로 면을 채워라**.
   점선 세로줄을 여러 개 모아 영역을 흉내내지 마라(보기 싫다). 곡선은 parametric, 그 아래 영역만 area:
   {"type":"area","y":"<f(x)>","from":a,"to":b} — area 의 y 식과 곡선 parametric 의 식을 **동일하게**.
+- ★수열·급수(수렴/발산, a_n→L, 부분합 S_n 의 거동)은 점을 하나씩 찍지 말고 **반드시 sequence shape** 로:
+  {"type":"sequence","expr":"<a_n 또는 S_n 식(n)>","nRange":[1,10],"limit":L} — 렌더러가 (n,a_n) 점들을 자동 생성한다.
+  점(point) 1~2개로 수열을 흉내내면 '수렴해 가는 모습'이 안 보여 불완전(QA 탈락). 수렴값 있으면 limit 로 점선 표시.
 - ★**가독성(중요)**: 주석을 다는 핵심 요소(점 P·반지름 r·각 θ 등)는 화면에서 **충분히 크게·서로 떨어져** 보여야 한다.
   · 큰 곡선(나선·긴 그래프) 위의 점 P 는 원점 근처(작은 r)가 아니라 **화면 크기에 견줄 만한 위치**에 둬라.
     예: 나선 r=θ 에서 P 를 r≈1 에 두면 곡선은 r≈6 까지 뻗어 점·각·라벨이 가운데 한 점에 뭉쳐 안 보인다 →
@@ -281,6 +285,7 @@ function sanitizeFigure(fig) {
       case 'angle': ok = pairOK(s.at) && pairOK(s.from) && pairOK(s.to); break;
       case 'parametric': ok = typeof s.x === 'string' && typeof s.y === 'string' && Array.isArray(s.tRange); break;
       case 'area': ok = typeof s.y === 'string' && coordOK(s.from) && coordOK(s.to); break;
+      case 'sequence': ok = typeof s.expr === 'string' && Array.isArray(s.nRange) && s.nRange.length === 2; break;
       default: ok = false;
     }
     if (ok) shapes.push(s);

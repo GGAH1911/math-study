@@ -171,6 +171,23 @@ function sampleParametric(
   return out;
 }
 
+// sequence: a_n = expr(n) 을 정수 n=[n0..n1] 에서 평가 → (n, a_n) 점들.
+// 수열/급수 수렴 도식용 — 모델이 점 다수를 일일이 안 만들어도 규칙(expr)만 주면 자동 생성(shape 1개라 개수 제한 우회).
+function sampleSequence(s: { expr: string; nRange: [number | string, number | string]; var?: string }): Array<[number, number]> {
+  const n0 = Math.round(_evalMathjs(s.nRange[0]));
+  const n1 = Math.round(_evalMathjs(s.nRange[1]));
+  if (!Number.isFinite(n0) || !Number.isFinite(n1) || n1 < n0) return [];
+  const cap = Math.min(n1, n0 + 200); // 폭주 방지
+  const v = s.var || 'n';
+  let node: { evaluate: (scope: Record<string, number>) => number };
+  try { node = _math.parse(_normalizeMathExprStr(s.expr)).compile() as typeof node; } catch { return []; }
+  const out: Array<[number, number]> = [];
+  for (let nn = n0; nn <= cap; nn++) {
+    try { const y = node.evaluate({ [v]: nn }); if (Number.isFinite(y)) out.push([nn, y]); } catch { /* skip */ }
+  }
+  return out;
+}
+
 // area: y=f(x) 와 baseline(상수 또는 식) 사이를 [from,to] 에서 샘플.
 // expr 변수는 x 또는 t 둘 다 허용(scope 에 둘 다 같은 값으로 넣음).
 function sampleArea(s: {
@@ -213,7 +230,9 @@ export type GeomShape =
   | { type: 'angle'; at: [number, number]; from: [number, number]; to: [number, number]; label?: string; radius?: number; color?: string }
   | { type: 'text'; at: [number, number]; text: string; color?: string }
   | { type: 'area'; y: string; from: number | string; to: number | string;
-      baseline?: number | string; samples?: number; fill?: string; fillOpacity?: number; stroke?: string; label?: string };
+      baseline?: number | string; samples?: number; fill?: string; fillOpacity?: number; stroke?: string; label?: string }
+  | { type: 'sequence'; expr: string; nRange: [number | string, number | string]; var?: string;
+      limit?: number; limitLabel?: string; labelBase?: string; connect?: boolean; color?: string };
 
 export type GeomSpec = {
   shapes: GeomShape[];
@@ -280,6 +299,11 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
         for (const pt of sampleParametric(s)) {
           if (pt) { xs.push(pt[0]); ys.push(pt[1]); }
         }
+        break;
+      }
+      case 'sequence': {
+        for (const pt of sampleSequence(s)) { xs.push(pt[0]); ys.push(pt[1]); }
+        if (typeof s.limit === 'number') ys.push(s.limit);
         break;
       }
       case 'area': {
@@ -744,6 +768,33 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
           const [mx, my] = mid.split(',').map(Number);
           pushLabel(`pml${i}`, s.label, mx + 4, my - 12, 0, undefined, false, [mx, my]);
         }
+        // 곡선도 leader 스냅 대상(obstacles)에 등록 — 자유 라벨(곡선 이름 등)이 축·허공 대신 곡선을 가리키게.
+        for (let pi = 1; pi < samples.length; pi++) {
+          const a = samples[pi - 1], b = samples[pi];
+          if (a && b) addSeg(xPx(a[0]), yPx(a[1]), xPx(b[0]), yPx(b[1]));
+        }
+        break;
+      }
+      case 'sequence': {
+        // a_n = expr(n) 점들을 자동 생성해 렌더. limit(수렴값) 점선 + connect(꺾은선) + 앞 몇 개 첨자 라벨.
+        const pts = sampleSequence(s);
+        const col = s.color ?? c0;
+        if (typeof s.limit === 'number' && pts.length) {
+          const ly = yPx(s.limit);
+          els.push(<line key={`seqL${i}`} x1={xPx(bounds.x[0])} y1={ly} x2={xPx(bounds.x[1])} y2={ly}
+                         stroke={col} strokeWidth={1.2} strokeDasharray="5 4" opacity={0.65} />);
+          pushLabel(`seqLl${i}`, s.limitLabel || 'L', xPx(bounds.x[1]) - 14, ly - 12, 0, col, true, [xPx(bounds.x[1]) - 4, ly]);
+        }
+        if (s.connect && pts.length > 1) {
+          els.push(<polyline key={`seqC${i}`} points={pts.map((p) => `${xPx(p[0])},${yPx(p[1])}`).join(' ')}
+                             fill="none" stroke={col} strokeWidth={1.2} opacity={0.5} />);
+        }
+        pts.forEach((p, k) => {
+          els.push(<circle key={`seq${i}-${k}`} cx={xPx(p[0])} cy={yPx(p[1])} r={3} fill={col} />);
+          if (s.labelBase && k < 3) {
+            pushLabel(`seqp${i}-${k}`, `${s.labelBase}_{${p[0]}}`, xPx(p[0]) + 5, yPx(p[1]) - 13, 0, col, false, [xPx(p[0]), yPx(p[1])]);
+          }
+        });
         break;
       }
       case 'vector': {
@@ -817,8 +868,13 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
         // 자유 라벨 유지(soft: 드래그 시 가장 가까운 곡선/점으로 스냅).
         const xAxisVis = showAxes && bounds.y[0] <= 0 && bounds.y[1] >= 0;
         const yAxisVis = showAxes && bounds.x[0] <= 0 && bounds.x[1] >= 0;
-        const nearXax = xAxisVis && Math.abs(s.at[1]) < (bounds.y[1] - bounds.y[0]) * 0.1; // x축(y=0) 근접
-        const nearYax = yAxisVis && Math.abs(s.at[0]) < (bounds.x[1] - bounds.x[0]) * 0.1; // y축(x=0) 근접
+        // 축 이름은 짧은 단일 심볼(v·t·x·y·n·\theta 등)뿐. "y = f(x)"·"f(x)>0(+)" 같은 식/문장은
+        // 축 이름이 아니라 곡선·면 라벨 → 축에서 멀게 두고 soft 로(곡선/면에 스냅되게). 식이 y축 근처에
+        // 있다고 축이름으로 오판하면 곡선 라벨이 y축에 붙어버린다.
+        const _t = (s.text || '').trim();
+        const looksAxisName = _t.length <= 7 && !/[=<>(){}]/.test(_t) && !/\s/.test(_t);
+        const nearXax = looksAxisName && xAxisVis && Math.abs(s.at[1]) < (bounds.y[1] - bounds.y[0]) * 0.1; // x축(y=0) 근접
+        const nearYax = looksAxisName && yAxisVis && Math.abs(s.at[0]) < (bounds.x[1] - bounds.x[0]) * 0.1; // y축(x=0) 근접
         let anchor: [number, number] | undefined;
         let fixed = false;
         if (nearXax && !nearYax) { anchor = [xPx(s.at[0]), yPx(0)]; fixed = true; }      // x축 이름 → x축 위

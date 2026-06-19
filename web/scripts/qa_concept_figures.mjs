@@ -68,6 +68,9 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
    ★★area 전수점검: 도식이 **영역/넓이/적분/부등식영역/부호**를 표현하는데 **area shape 로 면을 안 칠했으면**(점선 세로줄 다발·점 흩뿌리기·경계선만·아예 미표시 등 **어떤 방식이든**) → 반드시 area 로 교체해 면을 색으로 채워라:
    {"type":"area","y":"<위 경계 f(x)>","from":a,"to":b,"baseline":<아래 경계: 수 또는 "g(x)">}. (예: y>(x-1)² 영역 → area y=상단값, baseline="(x-1)^2"; 곡선-x축 사이 → baseline 0.)
    부등식 영역의 **경계곡선**은 엄격(>,<)=dashed:true(점선), 등호포함(≥,≤)=실선. (경계는 parametric 으로 따로 그림 — area 는 채움만.)
+   ★면 설명 라벨(f(x)>0, S, 넓이 등)은 **area 의 label 속성**으로 넣어라(렌더러가 면 중앙에 앵커). 별도 text 로 면 위에 띄우면 곡선에 스냅돼 어느 면인지 안 보인다 → text 면라벨 발견 시 해당 area 의 label 로 옮기고 그 text 는 제거하라.
+   ★★수열/급수 전수점검: **수열·급수(수렴/발산·a_n→L·부분합 S_n)** 도식인데 항을 점(point) 1~2개로 흉내냈거나 항이 아예 없으면 → 반드시 **sequence shape** 로 교체하라(점을 일일이 추가하지 마라 — 렌더러가 자동 생성):
+   {"type":"sequence","expr":"<a_n 또는 S_n 식(변수 n)>","nRange":[1,10],"limit":<수렴값>}. (예: a_n=2-1.8/n → expr "2-1.8/n", limit 2. 수렴=점들이 limit 선으로 몰림.) point 다발/누락은 sequence 로 근본 해결.
 4. 가독성: 라벨이 서로 겹치거나 한 점에 3개+ 뭉치지 않는가? 주석 대상(점·각·반지름)이 화면에서 충분히 크고 분리됐는가?
    (큰 곡선 위 점이 원점 근처 작은 r 에 몰려 라벨이 뭉치면 → 점을 큰 r 로 옮기거나 range 를 좁혀라.) 라벨이 도형 내부/선에 묻히지 않는가?
    두 도형 비교는 간격 넉넉히 + 프라임(A'B'C') 표기인가?
@@ -80,7 +83,7 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
 
 shape 스키마(좌표=수학좌표): point{at,label?,labelDir?} polygon{vertices,labels?,closed?} segment{from,to,label?,dashed?}
 circle{center,radius,label?} ellipse{center,rx,ry} parabola{vertex,focus?,orientation?} hyperbola{center,a,b,orientation?}
-parametric{x,y,tRange} area{y,from,to,baseline?,fill?,fillOpacity?,label?} vector{from,to,label?} angle{at,from,to,label?,radius?} text{at,text}. range/yRange/showAxes/title.
+parametric{x,y,tRange} area{y,from,to,baseline?,fill?,fillOpacity?,label?} sequence{expr,nRange,limit?,labelBase?,connect?,var?} vector{from,to,label?} angle{at,from,to,label?,radius?} text{at,text}. range/yRange/showAxes/title.
 
 출력은 **JSON 객체 하나만**(산문·코드펜스 금지):
 - 문제 없음: {"ok": true, "note": "<한 줄 근거>"}
@@ -98,13 +101,31 @@ function areaHint(c) {
   return '\n⚠️[area 점검] 이 도식은 영역/넓이/부등식 관련인데 area shape 가 없다. 면을 색으로 칠해야 하는 도식이면 area 로 교체하라(점·선다발·미표시 금지). 단순 곡선/도형이라 면이 필요 없으면 그대로 둬라.';
 }
 
-function buildQAPrompt(c, body, pngPath) {
+// 수열/급수 전수점검: 수열·급수 키워드 있는데 sequence shape 가 없는 도식 → QA 에 힌트 주입(area 와 동일 원리).
+const SEQ_KW = /수열|급수|수렴|발산|부분합|일반항|점화|등비|등차/;
+function seqHint(c) {
+  const sh = (c.figure && c.figure.shapes) || [];
+  if (sh.some((s) => s.type === 'sequence')) return '';
+  const txt = (c.label || '') + ' ' + JSON.stringify(sh);
+  if (!SEQ_KW.test(txt)) return '';
+  return '\n⚠️[sequence 점검] 이 도식은 수열/급수(수렴·발산·부분합 S_n) 관련인데 sequence shape 가 없다. 항을 point/segment 다발로 흉내냈거나 항 수가 적으면 → 반드시 sequence 로 교체하라: {"type":"sequence","expr":"<a_n 또는 S_n 식(변수 n)>","nRange":[1,10],"limit":<수렴값(있으면)>}. 점을 일일이 찍지 말 것 — 렌더러가 (n,a_n) 점들을 자동 생성한다.';
+}
+
+function buildQAPrompt(c, body, pngPath, history) {
   const verify = BACKEND === 'agy'
     ? '먼저 Read 도구로 렌더 이미지를 본 뒤, 좌표·관계는 신중히 직접 계산해 확인하라(외부 도구 없음).'
     : '먼저 Read 도구로 이미지를 보고, 좌표·관계 검증이 필요하면 Bash 로 python3/sympy 를 실행해 확인하라.';
+  // 분석적 리트라이: 이전 시도에서 반복 지적된 결함을 주입 → 같은 실수 반복 대신 근본 재설계 유도.
+  const histBlock = (history && history.length) ? `
+
+--- ★이전 수정 시도 이력(반드시 반영) ---
+이 도식은 앞서 수정을 시도했으나 아래 결함이 **반복 지적**되어 통과하지 못했다:
+${history.map((h, i) => `  [${i + 1}] ${h}`).join('\n')}
+→ **같은 방식의 수정을 반복하지 마라.** 왜 이 결함이 계속 남는지 원인을 먼저 분석한 뒤,
+스펙을 근본부터 다시 설계하라(필요하면 shape 종류·좌표·구성 자체를 바꿔서 완전히 해결).` : '';
   return `${RUBRIC}
 
-${verify}${areaHint(c)}
+${verify}${areaHint(c)}${seqHint(c)}${histBlock}
 
 --- 개념 ---
 「${c.label}」 (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
@@ -135,8 +156,8 @@ async function withQuotaRetry(fn) {
   }
 }
 
-function callQA(c, body, pngPath) {
-  const prompt = buildQAPrompt(c, body, pngPath);
+function callQA(c, body, pngPath, history) {
+  const prompt = buildQAPrompt(c, body, pngPath, history);
   return BACKEND === 'agy' ? withQuotaRetry(() => callQAAgy(prompt)) : callQAClaude(prompt);
 }
 
@@ -255,7 +276,7 @@ function buildBatchPrompt(items) {
     : '각 도식의 렌더 이미지를 Read 로 보고, 필요하면 Bash 로 python3/sympy 로 좌표를 확인하라.';
   const blocks = items.map((it, i) => `[도식 ${i + 1}] id="${it.id}" 「${it.label}」
 스펙: ${JSON.stringify(it.figure)}
-렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}`).join('\n\n');
+렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}${seqHint(it)}`).join('\n\n');
   return `${RUBRIC}
 
 ${verify}
@@ -298,6 +319,7 @@ function sanitizeFigure(fig) {
       case 'angle': ok = pairOK(s.at) && pairOK(s.from) && pairOK(s.to); break;
       case 'parametric': ok = typeof s.x === 'string' && typeof s.y === 'string' && Array.isArray(s.tRange); break;
       case 'area': ok = typeof s.y === 'string' && coordOK(s.from) && coordOK(s.to); break;
+      case 'sequence': ok = typeof s.expr === 'string' && Array.isArray(s.nRange) && s.nRange.length === 2; break;
     }
     if (ok) shapes.push(s);
   }
@@ -321,7 +343,8 @@ async function main() {
   const cache = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, 'utf-8')) : { figures: {} };
   const { opts, ids, bools } = parseArgs(process.argv.slice(2));
   const force = bools.has('--force');
-  const conc = Math.max(1, Math.min(6, Number(opts.concurrency) || 1));
+  const RETRY = bools.has('--retry-flagged'); // 2회수정 실패 플래그(verified:false) 재처리 — 이력주입+강모델
+  const conc = Math.max(1, Math.min(16, Number(opts.concurrency) || 1));
   const limit = opts.limit != null ? Number(opts.limit) : Infinity;
 
   let targets;
@@ -331,6 +354,10 @@ async function main() {
     const SUS = /누락|충실|모두|전부|없[음어]|missing|일부만|만 (존재|있)|불완전|추가|branch|가지/;
     targets = Object.entries(cache.figures)
       .filter(([, v]) => v.figure && v.qa?.fixed && (v.qa.issues || []).some((s) => SUS.test(s)))
+      .map(([id]) => id);
+  } else if (RETRY) { // --retry-flagged: 2회 수정 실패로 플래그된(verified:false) 도식만 재처리
+    targets = Object.entries(cache.figures)
+      .filter(([, v]) => v.figure && v.qa?.checked && v.qa.verified === false)
       .map(([id]) => id);
   } else { // --all: figure 있는 것 중 미검수(또는 force)
     targets = Object.entries(cache.figures).filter(([, v]) => v.figure && (force || !v.qa?.checked)).map(([id]) => id);
@@ -345,7 +372,7 @@ async function main() {
   // ── PASS 1: 배치 평가(루브릭 1회/배치 → 쿼터 절감). ok 는 통과 기록, 결함만 PASS 2 로. ──
   // DRY 는 정확도 파일럿이라 배치 안 함(개별 첫판정 수집).
   let pass2List = targets;
-  if (BATCH > 1 && !DRY && targets.length) {
+  if (BATCH > 1 && !DRY && !RETRY && targets.length) {
     const chunks = [];
     for (let i = 0; i < targets.length; i += BATCH) chunks.push(targets.slice(i, i + BATCH));
     const flagged = [];
@@ -388,7 +415,7 @@ async function main() {
     pass2List = flagged;
   }
 
-  const MAX_FIX = 2;   // 수정→재검증 반복 상한
+  const MAX_FIX = 4;   // 수정→재검증 반복 상한(복잡 도식은 조합 마무리에 더 필요)
   const N2 = pass2List.length;
   let idx = 0;
   async function worker() {
@@ -399,12 +426,14 @@ async function main() {
       let line;
       try {
         // 현재 캐시 스펙을 렌더해 평가(재검수면 직전 수정본이 대상).
-        const evalNow = async () => {
+        // 분석적 리트라이: 이전 시도 이슈를 누적 주입 → 같은 실수 반복 방지(retry-flagged 면 기존 플래그 이슈가 시드).
+        const priorIssues = (RETRY && entry.qa && Array.isArray(entry.qa.issues)) ? entry.qa.issues.slice() : [];
+        const evalNow = async (hist) => {
           const png = await renderFigure(id);
           if (!png) throw new Error('render-failed');
-          return callQA({ ...entry, label: entry.label }, conceptBody(id), png);
+          return callQA({ ...entry, label: entry.label }, conceptBody(id), png, hist);
         };
-        let verdict = await evalNow();
+        let verdict = await evalNow(priorIssues);
         if (DRY) {
           // 첫 판정만 수집 — 수정/캐시기록 없음(정확도 파일럿).
           dryResults.push({ id, label: entry.label, ok: !!verdict.ok, issues: (verdict.issues || []).slice(0, 6), note: (verdict.note || '').slice(0, 120) });
@@ -423,7 +452,7 @@ async function main() {
           allIssues.push(...(verdict.issues || []));
           writeCache();                        // 재렌더가 새 스펙 보도록 먼저 기록
           fixes++;
-          verdict = await evalNow();           // 수정본 재검증
+          verdict = await evalNow([...priorIssues, ...allIssues]); // 수정본 재검증(누적 이력 주입)
         }
         if (fixes === 0 && verdict.ok) {
           entry.qa = { checked: true, fixed: false, verified: true, note: (verdict.note || '').slice(0, 160), model: MODEL };
