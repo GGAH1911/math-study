@@ -173,7 +173,7 @@ function sampleParametric(
 
 // sequence: a_n = expr(n) 을 정수 n=[n0..n1] 에서 평가 → (n, a_n) 점들.
 // 수열/급수 수렴 도식용 — 모델이 점 다수를 일일이 안 만들어도 규칙(expr)만 주면 자동 생성(shape 1개라 개수 제한 우회).
-function sampleSequence(s: { expr: string; nRange: [number | string, number | string]; var?: string }): Array<[number, number]> {
+function sampleSequence(s: { expr: string; nRange: [number | string, number | string]; var?: string; partialSum?: boolean }): Array<[number, number]> {
   const n0 = Math.round(_evalMathjs(s.nRange[0]));
   const n1 = Math.round(_evalMathjs(s.nRange[1]));
   if (!Number.isFinite(n0) || !Number.isFinite(n1) || n1 < n0) return [];
@@ -182,8 +182,16 @@ function sampleSequence(s: { expr: string; nRange: [number | string, number | st
   let node: { evaluate: (scope: Record<string, number>) => number };
   try { node = _math.parse(_normalizeMathExprStr(s.expr)).compile() as typeof node; } catch { return []; }
   const out: Array<[number, number]> = [];
+  // partialSum: expr 를 일반항 a_k 로 보고 S_n=Σ_{k=n0}^{n} a_k 를 누적 → (n, S_n) 점.
+  // 닫힌형 없는 급수(교대조화급수 등)를 sequence 로 표현(닫힌형 한계 메움).
+  let acc = 0;
   for (let nn = n0; nn <= cap; nn++) {
-    try { const y = node.evaluate({ [v]: nn }); if (Number.isFinite(y)) out.push([nn, y]); } catch { /* skip */ }
+    try {
+      const term = node.evaluate({ [v]: nn });
+      if (!Number.isFinite(term)) continue;
+      if (s.partialSum) { acc += term; out.push([nn, acc]); }
+      else out.push([nn, term]);
+    } catch { /* skip */ }
   }
   return out;
 }
@@ -232,7 +240,7 @@ export type GeomShape =
   | { type: 'area'; y: string; from: number | string; to: number | string;
       baseline?: number | string; samples?: number; fill?: string; fillOpacity?: number; stroke?: string; label?: string }
   | { type: 'sequence'; expr: string; nRange: [number | string, number | string]; var?: string;
-      limit?: number; limitLabel?: string; labelBase?: string; connect?: boolean; color?: string };
+      partialSum?: boolean; limit?: number; limitLabel?: string; labelBase?: string; connect?: boolean; color?: string };
 
 export type GeomSpec = {
   shapes: GeomShape[];

@@ -109,7 +109,7 @@ function seqHint(c) {
   if (sh.some((s) => s.type === 'sequence')) return '';
   const txt = (c.label || '') + ' ' + JSON.stringify(sh);
   if (!SEQ_KW.test(txt)) return '';
-  return '\n⚠️[sequence 점검] 이 도식은 수열/급수(수렴·발산·부분합 S_n) 관련인데 sequence shape 가 없다. 항을 point/segment 다발로 흉내냈거나 항 수가 적으면 → 반드시 sequence 로 교체하라: {"type":"sequence","expr":"<a_n 또는 S_n 식(변수 n)>","nRange":[1,10],"limit":<수렴값(있으면)>}. 점을 일일이 찍지 말 것 — 렌더러가 (n,a_n) 점들을 자동 생성한다.';
+  return '\n⚠️[sequence 점검] 이 도식은 수열/급수(수렴·발산·부분합 S_n) 관련인데 sequence shape 가 없다. 항을 point/segment 다발로 흉내냈거나 항 수가 적으면 → 반드시 sequence 로 교체하라: {"type":"sequence","expr":"<a_n 또는 S_n 식(변수 n)>","nRange":[1,10],"limit":<수렴값(있으면)>}. 점을 일일이 찍지 말 것 — 렌더러가 (n,a_n) 점들을 자동 생성한다. ★닫힌형 S_n 식이 없는 급수(교대조화급수 S_n=Σ(-1)^(k+1)/k 등)는 expr 에 **일반항만**(예: "(-1)^(n+1)/n") 쓰고 "partialSum":true 추가 → 렌더러가 S_n 을 누적해 점 생성(닫힌형 불필요).';
 }
 
 // 기하증명 전수점검: 점(O·A·P·교점·접점)이 핵심인 도식인데 라벨 붙은 point 가 부족하면 강제.
@@ -126,6 +126,17 @@ function pointHint(c) {
   return '\n⚠️[point 점검] 이 도식은 점(O·A·P·교점·접점 등)이 핵심인 기하 도식인데 라벨 붙은 point shape 가 부족하다. area/segment 로 점을 흉내내지 말고 핵심 점마다 {"type":"point","at":[x,y],"label":"P"} 로 마커+라벨을 명시하라 — 점이 무엇인지 식별돼야 선·면·각의 의미가 드러난다.';
 }
 
+// 함수 대응/합성/연쇄법칙 전수점검: 집합 간 대응 화살표(vector)가 부족하면 강제.
+const MAP_KW = /합성함수|연쇄법칙|대응|일대일|역함수|함수.?의?\s?정의|매핑|치역|정의역|공역/;
+function mappingHint(c) {
+  const sh = (c.figure && c.figure.shapes) || [];
+  const vecs = sh.filter((s) => s.type === 'vector').length;
+  if (vecs >= 2) return ''; // 대응 화살표 충분
+  const txt = (c.label || '') + ' ' + JSON.stringify(sh);
+  if (!MAP_KW.test(txt)) return '';
+  return '\n⚠️[mapping 점검] 이 도식은 함수 대응/합성/연쇄법칙인데 집합 간 대응 화살표가 부족하다. 집합은 수직선(segment) 또는 닫힌영역, 원소는 point(+label), **각 대응(예 g:X→U, f:U→Y)은 vector(화살표)** 로 명시하라 — 집합·원소·대응화살표 세 요소가 다 있어야 합성/연쇄 구조가 드러난다(화살표 없이 선·점만 두면 무엇이 어디로 대응하는지 안 보인다).';
+}
+
 function buildQAPrompt(c, body, pngPath, history) {
   const verify = BACKEND === 'agy'
     ? '먼저 Read 도구로 렌더 이미지를 본 뒤, 좌표·관계는 신중히 직접 계산해 확인하라(외부 도구 없음).'
@@ -140,7 +151,7 @@ ${history.map((h, i) => `  [${i + 1}] ${h}`).join('\n')}
 스펙을 근본부터 다시 설계하라(필요하면 shape 종류·좌표·구성 자체를 바꿔서 완전히 해결).` : '';
   return `${RUBRIC}
 
-${verify}${areaHint(c)}${seqHint(c)}${pointHint(c)}${histBlock}
+${verify}${areaHint(c)}${seqHint(c)}${pointHint(c)}${mappingHint(c)}${histBlock}
 
 --- 개념 ---
 「${c.label}」 (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
@@ -291,7 +302,7 @@ function buildBatchPrompt(items) {
     : '각 도식의 렌더 이미지를 Read 로 보고, 필요하면 Bash 로 python3/sympy 로 좌표를 확인하라.';
   const blocks = items.map((it, i) => `[도식 ${i + 1}] id="${it.id}" 「${it.label}」
 스펙: ${JSON.stringify(it.figure)}
-렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}${seqHint(it)}${pointHint(it)}`).join('\n\n');
+렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}${seqHint(it)}${pointHint(it)}${mappingHint(it)}`).join('\n\n');
   return `${RUBRIC}
 
 ${verify}
@@ -320,7 +331,7 @@ const pairOK = (p) => Array.isArray(p) && p.length >= 2 && coordOK(p[0]) && coor
 function sanitizeFigure(fig) {
   if (!fig || !Array.isArray(fig.shapes)) return null;
   const shapes = [];
-  for (const s of fig.shapes.slice(0, 24)) {
+  for (const s of fig.shapes.slice(0, 36)) {
     if (!s || typeof s.type !== 'string') continue;
     let ok = false;
     switch (s.type) {
