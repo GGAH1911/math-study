@@ -62,6 +62,7 @@ const RUBRIC = `너는 한국 수학 개념 도식의 QA 검수자다. 도식의
 1. 충실성(완전성 포함): 도식이 개념을 올바르게 **그리고 완전히** 표현하는가? (예: 닮음=닮은 두 도형, 단위원=원+점+각)
    ★개념이 N개 항목을 요구하면(예: '각의 종류'=예각·직각·둔각·평각·전각 5종) **N개 전부**가 각각 **완성된 형태**(변·호·라벨 다 갖춤)로 있어야 한다.
    변 없는 외톨이 점, 라벨 없는 핵심 요소, branch 한쪽만 그린 쌍곡선/그래프 = 불완전 → 반드시 전부 채워라.
+   ★요소는 **전용 shape** 으로 명시하라: 점=point(+label), 화살표/대응=vector, 각=angle. area/segment 로 점·화살표를 흉내내지 마라(흉내내면 무엇인지 식별 불가 — 핵심 점이 area/segment 만으로 표현돼 있으면 point shape 로 교체).
 2. 좌표 정확성: 곡선 위에 찍힌 점이 그 곡선식을 정확히 만족하는가? 직각·닮음비·접선·내분 등 관계가 성립하는가? (sympy)
 3. primitive: 함수그래프 y=f(x)(포물선·직선·사인 등)는 parametric 으로 그렸는가? conic(parabola/ellipse/hyperbola) shape 로
    함수를 그려 곡선과 점이 어긋나지 않는가? — 어긋나면 parametric {x:"t", y:"f(t)", tRange} 로 교체.
@@ -111,6 +112,20 @@ function seqHint(c) {
   return '\n⚠️[sequence 점검] 이 도식은 수열/급수(수렴·발산·부분합 S_n) 관련인데 sequence shape 가 없다. 항을 point/segment 다발로 흉내냈거나 항 수가 적으면 → 반드시 sequence 로 교체하라: {"type":"sequence","expr":"<a_n 또는 S_n 식(변수 n)>","nRange":[1,10],"limit":<수렴값(있으면)>}. 점을 일일이 찍지 말 것 — 렌더러가 (n,a_n) 점들을 자동 생성한다.';
 }
 
+// 기하증명 전수점검: 점(O·A·P·교점·접점)이 핵심인 도식인데 라벨 붙은 point 가 부족하면 강제.
+// 모델이 area/segment 만 반복 수정하고 point shape 를 한 개도 안 넣는 고착(예: sinx/x 9회 연속) 차단.
+const POINT_KW = /단위원|삼각비|접선|할선|교점|접점|수선의?\s?발|외접|내접|외심|내심|무게중심|중점|부채꼴|증명/;
+function pointHint(c) {
+  const sh = (c.figure && c.figure.shapes) || [];
+  const labeledPts = sh.filter((s) => s.type === 'point' && s.label).length;
+  if (labeledPts >= 2) return ''; // 이미 핵심 점들이 라벨까지 갖춤
+  const txt = (c.label || '') + ' ' + JSON.stringify(sh);
+  const segs = sh.filter((s) => s.type === 'segment').length;
+  const complexGeom = sh.some((s) => s.type === 'angle' || s.type === 'circle') && segs >= 3; // 각·원 + 변 다수 = 복잡 기하구성
+  if (!POINT_KW.test(txt) && !complexGeom) return '';
+  return '\n⚠️[point 점검] 이 도식은 점(O·A·P·교점·접점 등)이 핵심인 기하 도식인데 라벨 붙은 point shape 가 부족하다. area/segment 로 점을 흉내내지 말고 핵심 점마다 {"type":"point","at":[x,y],"label":"P"} 로 마커+라벨을 명시하라 — 점이 무엇인지 식별돼야 선·면·각의 의미가 드러난다.';
+}
+
 function buildQAPrompt(c, body, pngPath, history) {
   const verify = BACKEND === 'agy'
     ? '먼저 Read 도구로 렌더 이미지를 본 뒤, 좌표·관계는 신중히 직접 계산해 확인하라(외부 도구 없음).'
@@ -125,7 +140,7 @@ ${history.map((h, i) => `  [${i + 1}] ${h}`).join('\n')}
 스펙을 근본부터 다시 설계하라(필요하면 shape 종류·좌표·구성 자체를 바꿔서 완전히 해결).` : '';
   return `${RUBRIC}
 
-${verify}${areaHint(c)}${seqHint(c)}${histBlock}
+${verify}${areaHint(c)}${seqHint(c)}${pointHint(c)}${histBlock}
 
 --- 개념 ---
 「${c.label}」 (단원 ${c.unit || '-'}, 과목 ${c.domain || '-'}, 학년 ${c.grade || '-'}, type ${c.concept_type})
@@ -170,7 +185,7 @@ function callQAClaude(prompt) {
     const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
-    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 600000); // 10분(복잡 도식 area·segment 다수는 5분 초과)
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
     child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
     child.on('error', (e) => { clearTimeout(to); rej(e); });
@@ -193,7 +208,7 @@ function callQAAgy(prompt) {
     const child = spawn('agy', args, { stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
-    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 300000);
+    const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 600000); // 10분(복잡 도식 area·segment 다수는 5분 초과)
     child.stdout.on('data', (d) => { out += d; if (out.length > 24e6) out = out.slice(-24e6); });
     child.stderr.on('data', (d) => { err += d; if (err.length > 4096) err = err.slice(-4096); });
     child.on('error', (e) => { clearTimeout(to); rej(e); });
@@ -276,7 +291,7 @@ function buildBatchPrompt(items) {
     : '각 도식의 렌더 이미지를 Read 로 보고, 필요하면 Bash 로 python3/sympy 로 좌표를 확인하라.';
   const blocks = items.map((it, i) => `[도식 ${i + 1}] id="${it.id}" 「${it.label}」
 스펙: ${JSON.stringify(it.figure)}
-렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}${seqHint(it)}`).join('\n\n');
+렌더 이미지(Read 로 볼 것): ${it.pngPath}${areaHint(it)}${seqHint(it)}${pointHint(it)}`).join('\n\n');
   return `${RUBRIC}
 
 ${verify}
@@ -305,7 +320,7 @@ const pairOK = (p) => Array.isArray(p) && p.length >= 2 && coordOK(p[0]) && coor
 function sanitizeFigure(fig) {
   if (!fig || !Array.isArray(fig.shapes)) return null;
   const shapes = [];
-  for (const s of fig.shapes.slice(0, 12)) {
+  for (const s of fig.shapes.slice(0, 24)) {
     if (!s || typeof s.type !== 'string') continue;
     let ok = false;
     switch (s.type) {

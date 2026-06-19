@@ -271,7 +271,7 @@ const pairOK = (p) => Array.isArray(p) && p.length >= 2 && coordOK(p[0]) && coor
 function sanitizeFigure(fig) {
   if (!fig || !Array.isArray(fig.shapes)) return null;
   const shapes = [];
-  for (const s of fig.shapes.slice(0, 10)) {
+  for (const s of fig.shapes.slice(0, 24)) {
     if (!s || typeof s.type !== 'string') continue;
     let ok = false;
     switch (s.type) {
