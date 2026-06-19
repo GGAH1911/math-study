@@ -23,8 +23,9 @@ function agyCall(prompt, imgDir, retries = 2) {
       c.stdout.setEncoding('utf8'); let out = '';
       c.stdout.on('data', (d) => (out += d));
       c.on('close', () => {
-        // 빈출력=레이트리밋/부하/타임아웃일 수 있음 → 8s 후 재시도. 진짜 쿼터 소진은 재시도해도 계속 빈출력.
-        if (!out.trim() && n > 0) setTimeout(() => run(n - 1), 8000);
+        // 빈출력(쿼터/부하) 또는 마커 없음(agy 단일 인스턴스 큐 충돌 "백그라운드 태스크 대기") → 8s 후 재시도.
+        // 진짜 쿼터 소진은 재시도해도 계속 빈출력 → 결국 res(빈문자열) → exit 3.
+        if ((!out.trim() || !/===CORRECTED===/.test(out)) && n > 0) setTimeout(() => run(n - 1), 8000);
         else res(out);
       });
     };
@@ -96,7 +97,7 @@ const img = `${imgDir}/${round}_${subj}_${num}.png`;
 const prompt = `너는 한국 수능 기출의 전사 텍스트를 원본 이미지와 한 글자씩 대조해 교정한다.
 아래 "추출 전사"는 PDF 텍스트레이어에서 뽑아 깨진 기호·오타·누락이 있을 수 있다. 이미지대로 정확히 교정하라(수식 기호·보기 ①~⑤·숫자 정확히). 환각 금지 — 이미지에 있는 그대로.
 ★수식: LaTeX 명령(\\frac, \\overline, \\sqrt 등)은 쓰되 **$...$ 델리미터로 감싸지 마라**. 렌더러가 한글/수식을 자동 분리한다 — $ 를 넣으면 KaTeX가 깨진다.
-★★{{FIG0}}·{{TABLE0}} 같은 placeholder 토큰은 그림/표가 들어갈 자리다. 개수·위치를 그대로 두고 절대 내용으로 바꾸거나 지우지 마라.
+★★전사에 {{FIG0}}·{{TABLE0}} 형태의 placeholder가 **이미 있으면** 그 자리·개수 그대로 두라(그림/표 자리). ★단, 전사에 없는 placeholder를 **새로 만들지 마라** — 이미지에 그림/표가 보여도 placeholder를 추가하지 말고, 전사에 있는 텍스트만 교정하라.
 ★★★출력은 아래 형식 그대로(JSON 절대 금지 — LaTeX 백슬래시가 JSON escape로 깨진다). 마커 줄은 정확히 이 글자로:
 ===FIXES===
 - <무엇을 왜 고쳤는지 한 줄>
@@ -114,6 +115,7 @@ console.log('② Gemini 교정…');
 const out = await agyCall(prompt, imgDir);
 if (!out.trim()) { console.log('Gemini 빈출력(쿼터 소진) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 쿼터(배치 멈춤)
 let parsed = parseCorrected(out);
+if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] agy 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
 let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
 let by = 'gemini';
 
@@ -127,7 +129,9 @@ if (fails.length) {
   else {
     mkdirSync(dirname(QLOG), { recursive: true });
     appendFileSync(QLOG, `${round}_${subj}_${num}\tgemini:${fails.join('|')}\tsonnet:${fails2.join('|')}\n`);
-    console.log(`④ Sonnet도 실패(${fails2.join(', ')}) — 격리(원본 유지), corrector_done 안 찍음`);
+    // 영구 격리 마커(반복 재시도·쿼터 낭비 차단) — 원인 수정 후 수동으로 corrector_quarantine 제거하면 재교정됨.
+    if (!/^corrector_quarantine:/m.test(txt)) { txt = txt.replace(/\nsearchable_text:/, '\ncorrector_quarantine: true\nsearchable_text:'); writeFileSync(md, txt); }
+    console.log(`④ Sonnet도 실패(${fails2.join(', ')}) — 격리(원본 유지 + corrector_quarantine 마커)`);
     process.exit(0);
   }
 }

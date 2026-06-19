@@ -24,7 +24,7 @@ const probs = [];
 let alreadyDone = 0;
 for (const md of walk(PROB)) {
   const txt = readFileSync(md, 'utf8');
-  if (/^corrector_done:\s*true/m.test(txt)) { alreadyDone++; continue; }  // 멱등 skip
+  if (/^corrector_done:\s*true/m.test(txt) || /^corrector_quarantine:\s*true/m.test(txt)) { alreadyDone++; continue; }  // 멱등·격리 skip(반복 방지)
   const base = md.split('/').pop().replace(/\.md$/, '');
   const mm = base.match(/^(.+)_([가-힣A-Za-z]+)_(\d+)$/);  // {round}_{subj}_{num}
   if (!mm) continue;

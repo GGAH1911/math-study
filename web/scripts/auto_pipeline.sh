@@ -36,7 +36,7 @@ ROUND=0
 while true; do
   ROUND=$((ROUND+1))
   echo "[$(date)] === corrector 회차 $ROUND 시작 ==="
-  CORR_CONC=4 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
+  CORR_CONC=1 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
   tail -3 /tmp/ingest_logs/corrector_run.log
   REMAIN=$(grep -oP '남은대상 \K\d+' /tmp/ingest_logs/corrector_run.log | tail -1)
 

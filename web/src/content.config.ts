@@ -78,6 +78,7 @@ const problems = defineCollection({
     corrector_done: z.boolean().optional(),  // Gemini 텍스트 교정 완료(멱등 플래그)
     corrector_fixes: z.array(z.string()).optional(),  // 교정 메모(무엇을 왜 고쳤는지)
     corrector_by: z.enum(['gemini', 'sonnet']).optional(),  // 교정 백엔드(검증 실패 자가치유 시 sonnet)
+    corrector_quarantine: z.boolean().optional(),  // 격리(Gemini·Sonnet 둘 다 검증 실패) — 수동 검토 대상
     // Stage C — vision LLM이 ingest 시 추출한 도형 spec (geometry/plot/numberline/chart).
     // 채워져 있으면 problem 페이지가 raw PNG 외에 spec 기반 SVG 도 함께 렌더 가능.
     // 모든 수능 도형이 이 spec으로 표현 가능한 건 아님 — fallback은 PNG.
