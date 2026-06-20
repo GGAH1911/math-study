@@ -110,22 +110,22 @@ ${st}
 --- 원본 이미지 ---
 Read 로 볼 것: ${img}`;
 
-// ② Gemini 교정 → ③ 검증
-console.log('② Gemini 교정…');
-const out = await agyCall(prompt, imgDir);
-if (!out.trim()) { console.log('Gemini 빈출력(쿼터 소진) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 쿼터(배치 멈춤)
+// ② claude(Sonnet) 교정 → ③ 검증. (agy는 토큰 쿼터 한계로 1차에서 폐기 — 25콜에 소진.)
+console.log('② claude(Sonnet) 교정…');
+const out = await claudeCall(prompt, imgDir);
+if (!out.trim()) { console.log('claude 빈출력(한도/에러) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 한도(배치 멈춤)
 let parsed = parseCorrected(out);
-if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] agy 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
+if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] claude 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
 let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
-let by = 'gemini';
+let by = 'sonnet';
 
-// ④ 자가치유: 검증 실패 → Sonnet 재교정 → 재검증
+// ④ 자가치유: 검증 실패 → claude 재교정 → 재검증 (1차와 동일 백엔드지만 재시도로 일시 오류 흡수)
 if (fails.length) {
-  console.log(`③ Gemini 검증 실패(${fails.join(', ')}) → ④ Sonnet 자가치유…`);
+  console.log(`③ claude 검증 실패(${fails.join(', ')}) → ④ claude 자가치유 재시도…`);
   const out2 = await claudeCall(prompt, imgDir);
   const parsed2 = parseCorrected(out2);
   const fails2 = parsed2 ? validate(parsed2.corrected, st) : ['파싱실패'];
-  if (!fails2.length) { parsed = parsed2; fails = []; by = 'sonnet'; console.log('④ Sonnet 자가치유 통과'); }
+  if (!fails2.length) { parsed = parsed2; fails = []; by = 'sonnet'; console.log('④ claude 자가치유 통과'); }
   else {
     mkdirSync(dirname(QLOG), { recursive: true });
     appendFileSync(QLOG, `${round}_${subj}_${num}\tgemini:${fails.join('|')}\tsonnet:${fails2.join('|')}\n`);

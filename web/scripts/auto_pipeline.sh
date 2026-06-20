@@ -36,7 +36,7 @@ ROUND=0
 while true; do
   ROUND=$((ROUND+1))
   echo "[$(date)] === corrector 회차 $ROUND 시작 ==="
-  CORR_CONC=1 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
+  CORR_CONC=10 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
   tail -3 /tmp/ingest_logs/corrector_run.log
   REMAIN=$(grep -oP '남은대상 \K\d+' /tmp/ingest_logs/corrector_run.log | tail -1)
 
@@ -60,7 +60,7 @@ $SESS"
   echo "[$(date)] 쿼터 소진 추정(남은 ${REMAIN:-?}) — 10분마다 헬스체크"
   while true; do
     sleep 600
-    if timeout 60 agy -p "2+3 숫자만 답해." --model "Gemini 3.5 Flash (Medium)" 2>/dev/null | grep -q '[0-9]'; then
+    if timeout 60 claude -p "2+3 숫자만 답해." --model sonnet --output-format json 2>/dev/null | grep -q '[0-9]'; then
       echo "[$(date)] agy 응답 확인 — 재개"; break
     fi
     echo "[$(date)] agy 아직 빈출력 — 10분 더 대기"
