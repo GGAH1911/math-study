@@ -65,8 +65,29 @@ def trim(path):
     if bb: im.crop(bb).save(path)
 
 
+BOX_NOISE = re.compile(r'선택과목.{0,8}제시|제시되오니|확인하시오|확인\s*사항|답안지')
+def classify_box(rows):
+    """벡터 격자의 셀 내용으로 박스 종류 판별(339건 measure 기반). placeholder/렌더 타입을 가른다.
+       table=데이터표(숫자격자) · proposition=ㄱㄴㄷ보기 · choicebox=(가)(나)빈칸 ·
+       condition=조건(•·단일명제) · choices=①~⑤박스 · noise=시험안내문(제거) · passage=본문오인(제거)."""
+    cells = [str(c) for row in rows for c in row]
+    ne = [c for c in cells if c.strip()]
+    if not ne: return 'noise'
+    flat = ' '.join(ne)
+    fill = len(ne) / max(1, len(cells))
+    maxlen = max(len(c) for c in ne)
+    if BOX_NOISE.search(flat): return 'noise'                                  # 시험지 안내문/푸터(선택과목 안내)
+    if maxlen <= 15 and fill >= 0.55 and re.search(r'\d', flat): return 'table'  # 짧은셀+채움+숫자 = 진짜 데이터표
+    if re.search(r'(^|[^가-힣])ㄱ[.\s]', flat) and re.search(r'ㄴ[.\s]', flat): return 'proposition'  # ㄱㄴㄷ 참거짓
+    if re.search(r'\((가|나|다|라|마)\)', flat): return 'choicebox'              # (가)(나) 빈칸 채우기
+    if re.search(r'[•∙]', flat): return 'condition'                            # 조건 불릿
+    if re.search(r'[①②③④⑤]', flat) and maxlen <= 30: return 'choices'          # 선택지 박스
+    if maxlen > 25: return 'passage'                                           # 긴 문장 = 본문 격자 오인
+    return 'condition'                                                         # 짧은 단일셀 명제류
+
+
 def extract_table(page, REG):
-    """벡터 격자 표 → {rows:[[...]], bbox}. 셀 값은 hancom_decode(PUA). 표 아니면 None."""
+    """벡터 격자 → {type, rows, bbox}. type=classify_box(rows). 셀 값은 hancom_decode(PUA). 격자 없으면 None."""
     PH = page.rect.height
     grid = [d['rect'] for d in page.get_drawings()
             if REG.x0 - 5 <= d['rect'].x0 and d['rect'].x1 <= REG.x1 + 5
@@ -88,7 +109,7 @@ def extract_table(page, REG):
     # 시험지 푸터("확인 사항 / 답안지 기입")는 문제 표가 아니므로 제외(마지막 문항에 격자로 붙어옴)
     rows = [r for r in rows if not any('확인사항' in c.replace(' ', '') or '답안지' in c for c in r)]
     if not rows: return None
-    return {'rows': rows, 'bbox': [round(v) for v in tb]}
+    return {'type': classify_box(rows), 'rows': rows, 'bbox': [round(v) for v in tb]}
 
 
 def extract(round_, subj, num):
@@ -107,8 +128,12 @@ def extract(round_, subj, num):
             if k in seen: continue
             seen.add(k); rects.append(+r)
     cl = merge(rects)
-    tbl = extract_table(page, REG)  # 표(벡터 격자) → table JSON (이미지 크롭 대신 데이터)
-    tables = [tbl] if tbl else []
+    tbl = extract_table(page, REG)  # 벡터 격자 → {type,rows,bbox}
+    # 1단계: 진짜 데이터 표(type=table)만 {{TABLE}} 로 유지. 본문·조건·(가)(나)·보기·시험안내문이
+    #   테두리 격자로 오인된 것(classify_box 가 noise/passage/choicebox/… 로 판정)은 placeholder 를
+    #   만들지 않는다 — 그 내용은 searchable_text 에 이미 텍스트로 있으므로 본문으로 둔다(박스 렌더는 후속).
+    tables = [tbl] if (tbl and tbl.get('type') == 'table') else []
+    _box_skip = tbl['type'] if (tbl and tbl.get('type') != 'table') else None
     if not cl and not tables: return None, [], '이미지·표 없음'
     cl = sorted(cl, key=lambda r: (r.y0, r.x0))
     # 캡션 [그림N] 단독을 클러스터에 합집합 (라벨 통째 캡처)

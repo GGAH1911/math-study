@@ -257,12 +257,15 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   let html = '';
   if (figByLine.has(0)) html += figByLine.get(0)!.join('');
   for (let i = 0; i < body.length; i++) {
-    const pm = body[i].match(PH_RE);
-    if (pm) { const fi = +pm[1]; if (figList[fi]) html += figList[fi].html; continue; }  // {{FIGn}} → 그 자리에 도형
-    const tm = body[i].match(/^\s*\{\{TABLE(\d+)\}\}\s*$/);
-    if (tm) { const ti = +tm[1]; if (opts.tables?.[ti]) html += renderTable(opts.tables[ti]); continue; }  // {{TABLEn}} → 표
+    // ★ box open/close 는 placeholder 줄에도 적용해야 div 균형이 맞는다. 빈칸추론 박스의 open 인덱스가
+    //   {{FIGn}} 줄("과정이다" 바로 다음이 도형)이면, continue 로 건너뛸 경우 open <div> 만 누락되고
+    //   close </div> 는 실행돼 </div> 가 1개 과다 → 부모 article 조기 종료 → 레이아웃 붕괴(16번 사례).
     if (boxOpen.has(i)) html += '<div class="recon-box">';
-    html += renderLine(body[i]);
+    const pm = body[i].match(PH_RE);
+    const tm = body[i].match(/^\s*\{\{TABLE(\d+)\}\}\s*$/);
+    if (pm) { const fi = +pm[1]; if (figList[fi]) html += figList[fi].html; }          // {{FIGn}} → 그 자리에 도형
+    else if (tm) { const ti = +tm[1]; if (opts.tables?.[ti]) html += renderTable(opts.tables[ti]); }  // {{TABLEn}} → 표
+    else html += renderLine(body[i]);
     if (boxClose.has(i + 1)) html += '</div>';
     if (figByLine.has(i + 1)) html += figByLine.get(i + 1)!.join('');
   }
