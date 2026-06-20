@@ -36,13 +36,14 @@ ROUND=0
 while true; do
   ROUND=$((ROUND+1))
   echo "[$(date)] === corrector 회차 $ROUND 시작 ==="
-  # ★동시성 낮게(2): claude -p 시스템 프롬프트(~17.5k)는 첫 호출만 cache_creation(비쌈),
-  #   이후 cache_read(1/10 가격)로 재사용된다. 동시10은 캐시 워밍 전에 동시 시작 → 각자
-  #   cache_creation 14991를 새로 만들어 토큰 폭증(agy 400→30·claude 쿼터 급증의 주범).
-  #   2로 낮추면 첫 워밍 후 거의 다 캐시 적중 → 토큰 ~1/10.
-  CORR_CONC=2 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
-  tail -3 /tmp/ingest_logs/corrector_run.log
-  REMAIN=$(grep -oP '남은대상 \K\d+' /tmp/ingest_logs/corrector_run.log | tail -1)
+  # 동시성은 토큰과 무관(실측: cache_creation이 프롬프트별이라 매 콜 발생, 동시성 영향 0).
+  #   속도만 좌우 → 10. (이전 "동시2=캐시적중으로 토큰 1/10" 주석은 헛다리라 제거.)
+  # 로그는 회차별 파일로 보존 — corrector_run.log를 `>`로 덮어써 이전 회차 디버그 자료가
+  #   날아가던 결함 수정(사라지면 로그가 아니다).
+  RUNLOG=/tmp/ingest_logs/corrector_run_$ROUND.log
+  CORR_CONC=10 node web/scripts/corrector_batch.mjs > "$RUNLOG" 2>&1
+  tail -3 "$RUNLOG"
+  REMAIN=$(grep -oP '남은대상 \K\d+' "$RUNLOG" | tail -1)
 
   # 회차 corrected 커밋·푸시
   git add -A docs/problems
@@ -55,7 +56,7 @@ $SESS"
   fi
 
   # 안전: 빌드체크 실패 → 즉시 중단
-  if grep -q '빌드체크 실패' /tmp/ingest_logs/corrector_run.log; then
+  if grep -q '빌드체크 실패' "$RUNLOG"; then
     echo "[$(date)] ⛔ 빌드체크 실패 — 파이프라인 중단(서버 보호)"; break
   fi
   # 완료
