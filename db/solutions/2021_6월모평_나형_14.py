@@ -1,33 +1,27 @@
-# 수열 계산
-a = {1: 1}
+from sympy import Rational
 
-def compute_term(n):
-    if n in a:
-        return a[n]
-    # n = 3m-1 형태인지 확인
-    if (n + 1) % 3 == 0:
-        m = (n + 1) // 3
-        a[n] = 2 * compute_term(m) + 1
-    # n = 3m 형태인지 확인
-    elif n % 3 == 0:
-        m = n // 3
-        a[n] = -compute_term(m) + 2
-    # n = 3m+1 형태인지 확인
-    else:  # n % 3 == 1
-        m = (n - 1) // 3
-        a[n] = compute_term(m) + 1
-    return a[n]
+# memoized recursion using the original defining relations
+memo = {1: Rational(1)}
 
-# a_11, a_12, a_13 계산
-a11 = compute_term(11)
-a12 = compute_term(12)
-a13 = compute_term(13)
+def a(k):
+    if k in memo:
+        return memo[k]
+    # determine which form k matches: 3n-1, 3n, 3n+1
+    if (k + 1) % 3 == 0:        # k = 3n-1
+        n = (k + 1) // 3
+        val = 2 * a(n) + 1
+    elif k % 3 == 0:            # k = 3n
+        n = k // 3
+        val = -a(n) + 2
+    elif (k - 1) % 3 == 0:      # k = 3n+1
+        n = (k - 1) // 3
+        val = a(n) + 1
+    else:
+        raise ValueError('no form')
+    memo[k] = val
+    return val
 
-result = a11 + a12 + a13
-print(f'a_11 = {a11}, a_12 = {a12}, a_13 = {a13}')
-print(f'a_11 + a_12 + a_13 = {result}')
-
-if result == 8:
-    print('VERIFY_PASS')
-else:
-    print('VERIFY_FAIL')
+result = a(11) + a(12) + a(13)
+print('a11,a12,a13 =', a(11), a(12), a(13))
+print('sum =', result)
+print('VERIFY_PASS' if result == 8 else 'VERIFY_FAIL')

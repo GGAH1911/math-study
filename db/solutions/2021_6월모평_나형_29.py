@@ -1,18 +1,28 @@
 from itertools import product
 
-count = 0
-for f1 in range(1, 5):
-    for f2 in range(1, 5):
-        if f1 * f2 < 9:
-            continue
-        for f3 in range(1, 5):
-            for f4 in range(1, 5):
-                image = set([f1, f2, f3, f4])
-                if len(image) == 3:
-                    count += 1
+CANDIDATE = 15
 
-if count == 32:
+A = [1, 2, 3, 4]
+count = 0
+total = 0
+
+for f_vals in product(A, repeat=4):
+    total += 1
+    
+    # 조건 (가): f(1) × f(2) ≥ 9
+    if f_vals[0] * f_vals[1] < 9:
+        continue
+    
+    # 조건 (나): 함수 f의 치역의 원소 개수는 3
+    if len(set(f_vals)) != 3:
+        continue
+    
+    count += 1
+
+p = count / total
+computed_answer = int(120 * p)
+
+if computed_answer == CANDIDATE:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')
-    print(f'Expected 32, got {count}')

@@ -1,15 +1,15 @@
 {
-  "text_sha": "d88eb20e041c",
+  "text_sha": "4e4dee686fd1",
   "meta": {
-    "searchable_text": "\\lim_{n \\to \\infty} \\frac{4n^2 + 2n + 2}{n^2 + 1} 의 값은?",
+    "searchable_text": "2.\\lim_{n→∞}\\frac{1}{\\sqrt{4n^{2}+2n+1}-2n}의 값은?[2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
     "format": "choice",
     "has_figure": false,
     "unit": "수열의_극한",
     "concepts": [
-      "극한값",
-      "최고차항"
+      "극한",
+      "유리화"
     ],
-    "exam_intent": "분자·분모의 최고차항 비로 극한값 계산",
+    "exam_intent": "무리식 분모를 유리화하여 극한값 계산",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

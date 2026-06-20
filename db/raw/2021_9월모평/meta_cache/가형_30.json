@@ -1,15 +1,16 @@
 {
-  "text_sha": "4300823a48a2",
+  "text_sha": "12f9f2230875",
   "meta": {
-    "searchable_text": "다음 조건을 만족하는 실수 $a, b$에 대하여 $f(x)$의 최댓값을 $M$, 최솟값을 $m$이라 하자. 모든 실수 $x$에 대하여 부등식 $m \\leq f(x) \\leq M$이 성립한다. $M \\times m = \\dfrac{3M}{a}$일 때, $\\dfrac{a}{b}$의 값을 구하시오. (단, $a$와 $b$는 서로소인 자연수이다.)",
+    "searchable_text": "30. 다음 조건을 만족시키는 실수 a, b에 대하여\nab의 최댓값을 M, 최솟값을 m이라 하자.\n모든 실수 x에 대하여 부등식\n-e^{-x+1}≤ax+b≤e^{x-2}\n이 성립한다.\n|M×m^{3}|=\\frac{q}{p}일 때, p+q의 값을 구하시오. (단, p와 q는\n서로소인 자연수이다.) [4점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "도함수의_활용_심화",
     "concepts": [
-      "극값",
-      "최댓값과_최솟값"
+      "함수의_최댓값과_최솟값",
+      "부등식",
+      "지수함수"
     ],
-    "exam_intent": "극값과 부등식 조건을 이용한 미분 종합 능력 평가",
+    "exam_intent": "부등식 조건을 만족하는 매개변수에서 곱의 극값을 구하는 능력",
     "killer_tier": "killer",
     "cognitive_type": "통합"
   }

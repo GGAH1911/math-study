@@ -1,17 +1,17 @@
 {
-  "text_sha": "61b8d9dfce7c",
+  "text_sha": "bbe539487a60",
   "meta": {
-    "searchable_text": "집합 {1, 2, 3, 4}의 공집합이 아닌 모든 부분집합 15개 중에서 임의로 서로 다른 세 부분집합을 뽑아 임의로 일렬로 나열하고, 나열된 순서대로 A, B, C라 할 때, A ⊂ B ⊂ C일 확률",
+    "searchable_text": "19. 집합 X={1,2,3,4}의 공집합이 아닌 모든 부분집합 15개\n중에서 임의로 서로 다른 세 부분집합을 뽑아 임의로 일렬로\n나열하고, 나열된 순서대로 A, B, C라 할 때, A⊂B⊂C일\n확률은? [4점]\n①\\frac{1}{91}②\\frac{2}{91}③\\frac{3}{91}④\\frac{4}{91}⑤\\frac{5}{91}",
     "format": "choice",
     "has_figure": false,
     "unit": "확률",
     "concepts": [
-      "포함관계",
-      "순열",
+      "집합과_명제",
+      "경우의_수",
       "확률"
     ],
-    "exam_intent": "집합의 포함관계와 경우의 수를 이용한 확률 계산",
+    "exam_intent": "부분집합 관계를 만족하는 순서쌍의 경우의 수 계산",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "계산"
   }
 }

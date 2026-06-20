@@ -1,16 +1,17 @@
 {
-  "text_sha": "d06dd6d48c0b",
+  "text_sha": "0c34c210b6c5",
   "meta": {
-    "searchable_text": "함수 $f(x)=\\sin(2x)$에 대하여 정의역이 실수 전체의 집합이고 치역이 $[0, 1]$인 함수 $g$와 자연수 $n$이 다음 조건을 만족시킬 때, $n$의 값은? [4점] 함수 $g$는 실수 전체의 집합에서 연속이고, [적분 조건 1] $= \\frac{1}{2}$, [적분 조건 2] $= \\frac{1}{32}$이다.",
+    "searchable_text": "20. 함수 f(x)=πsin2πx에 대하여 정의역이 실수 전체의\n집합이고 치역이 집합 {0,1}인 함수 g(x)와 자연수 n이\n다음 조건을 만족시킬 때, n의 값은?[4점]\n함수 h(x)=f(nx)g(x)는 실수 전체의 집합에서 연속이고\n\\int_{-1}^{1}h(x)dx=2, \\int_{-1}^{1}xh(x)dx=-\\frac{1}{32}\n이다.\n① 8 ② 10 ③ 12 ④ 14 ⑤ 16",
     "format": "choice",
     "has_figure": false,
-    "unit": "적분",
+    "unit": "삼각함수",
     "concepts": [
-      "정적분",
-      "삼각함수"
+      "삼각함수의_값과_그래프",
+      "함수의_연속성",
+      "정적분의_계산"
     ],
-    "exam_intent": "삼각함수와 정적분 조건에서 자연수 매개변수값 결정",
-    "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "exam_intent": "함수의 연속성 조건과 정적분 조건을 활용하여 매개변수를 결정하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
   }
 }

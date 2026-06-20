@@ -1,23 +1,35 @@
 from itertools import combinations
 
-white = [1,2,3,4]
-black = [3,4,5,6]
+balls = [
+    ('W', 1), ('W', 2), ('W', 3), ('W', 4),
+    ('B', 3), ('B', 4), ('B', 5), ('B', 6)
+]
 
-total = 0
-same_num = 0
-black_2_same = 0
+all_draws = list(combinations(range(8), 4))
 
-for wc in range(5):
-    bc = 4 - wc
-    for w_comb in combinations(white, wc):
-        for b_comb in combinations(black, bc):
-            nums = list(w_comb) + list(b_comb)
-            if len(nums) != len(set(nums)):
-                same_num += 1
-                if bc == 2:
-                    black_2_same += 1
+same_number_exists = []
+for draw in all_draws:
+    numbers_white = set()
+    numbers_black = set()
+    for idx in draw:
+        color, num = balls[idx]
+        if color == 'W':
+            numbers_white.add(num)
+        else:
+            numbers_black.add(num)
+    if numbers_white & numbers_black:
+        same_number_exists.append(draw)
 
-if black_2_same == 17 and same_num == 29:
+exactly_2_black = 0
+for draw in same_number_exists:
+    black_count = sum(1 for idx in draw if balls[idx][0] == 'B')
+    if black_count == 2:
+        exactly_2_black += 1
+
+probability = exactly_2_black / len(same_number_exists)
+expected = 17/29
+
+if abs(probability - expected) < 1e-9:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

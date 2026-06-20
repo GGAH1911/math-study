@@ -1,16 +1,16 @@
 {
-  "text_sha": "2129fe32828b",
+  "text_sha": "35cf2b479bb0",
   "meta": {
-    "searchable_text": "두 사건 A, B에 대하여 P(A) = 2/5, P(B) = 4/5, P(A∪B) = 9/10일 때, P(A∩B)의 값은?",
+    "searchable_text": "5. 두 사건 A, B에 대하여\nP(A)=\\frac{2}{5}, P(B)=\\frac{4}{5}, P(A∪B)=\\frac{9}{10}\n일 때, P(B|A)의 값은? [3점]\n①\\frac{5}{12}②\\frac{1}{2}③\\frac{7}{12}④\\frac{2}{3}⑤ \\frac{3}{4}",
     "format": "choice",
     "has_figure": false,
     "unit": "확률",
     "concepts": [
-      "합의법칙",
-      "교집합과_합집합"
+      "조건부확률",
+      "확률의_덧셈정리"
     ],
-    "exam_intent": "확률의 합의 법칙 P(A∪B) = P(A) + P(B) - P(A∩B)을 이용한 교집합 확률 계산",
+    "exam_intent": "확률의 덧셈정리와 조건부확률의 정의를 적용하는 능력 평가",
     "killer_tier": "early",
-    "cognitive_type": "계산"
+    "cognitive_type": "개념"
   }
 }

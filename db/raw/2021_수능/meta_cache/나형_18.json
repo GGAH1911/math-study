@@ -1,18 +1,18 @@
 {
-  "text_sha": "ab0fe5a65d99",
+  "text_sha": "fafb939fab88",
   "meta": {
-    "searchable_text": "$0 < a \\neq 1$인 실수 $a$에 대하여 직선 $y = 1$이 두 곡선 $y = \\log_a x$, $y = \\log_4 x$와 만나는 점을 각각 A, B라 하고, 직선이 두 곡선과 만나는 점을 각각 C, D라 하자. 선분 AB를 특정 비로 외분하는 점의 좌표, 사각형 ABCD가 직사각형일 조건, 그리고 선분의 길이 관계에 대한 명제들을 판단하는 문제.",
+    "searchable_text": "18.\\frac{1}{4}<a<1인 실수 a에 대하여 직선 y=1이 두 곡선\ny=log_{a}x, y=log_{4a}x와 만나는 점을 각각 A, B라 하고,\n직선 y=-1이 두 곡선 y=log_{a}x, y=log_{4a}x와 만나는 점을\n각각 C, D라 하자. <보기>에서 옳은 것만을 있는 대로 고른\n것은?[4점]\n<보 기>\nㄱ.선분 AB를 1:4로 외분하는 점의 좌표는 (0,1)이다.\nㄴ.사각형 ABCD가 직사각형이면 a=\\frac{1}{2}이다.\nㄷ.\\overline{AB}<\\overline{CD}이면 \\frac{1}{2}<a<1이다.\n①ㄱ ②ㄷ ③ㄱ, ㄴ\n④ㄴ, ㄷ ⑤ㄱ, ㄴ, ㄷ",
     "format": "choice",
     "has_figure": false,
     "unit": "지수함수와_로그함수",
     "concepts": [
-      "로그함수",
-      "교점의_좌표",
+      "로그함수의_그래프",
+      "로그함수의_교점",
       "외분점",
       "도형의_성질"
     ],
-    "exam_intent": "로그함수의 교점과 기하학적 조건을 종합하여 판단하는 능력 평가",
+    "exam_intent": "로그함수 그래프의 교점과 기하학적 성질을 종합적으로 분석하는 능력",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "통합"
   }
 }

@@ -1,14 +1,14 @@
 {
-  "text_sha": "81fe21daa769",
+  "text_sha": "24b079e458f6",
   "meta": {
-    "searchable_text": "함수의 최댓값을 구하는 문제. 삼각함수 $y = a + 4\\cos(3x)$ 형태로 추정 (PDF 글리프 손실로 정확한 함수식 불완전)",
+    "searchable_text": "4. 함수 f(x)=4cosx+3의 최댓값은?[3점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
     "format": "choice",
     "has_figure": false,
     "unit": "삼각함수",
     "concepts": [
-      "삼각함수의_최댓값"
+      "삼각함수의_최댓값과_최솟값"
     ],
-    "exam_intent": "기본 삼각함수의 최댓값 계산",
+    "exam_intent": "삼각함수의 최댓값을 코사인 함수의 범위로부터 구하기",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

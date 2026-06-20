@@ -1,15 +1,16 @@
 {
-  "text_sha": "c6dd48a77e24",
+  "text_sha": "4113468ea5a5",
   "meta": {
-    "searchable_text": "다항식 전개식에서 특정 항의 계수를 구하시오",
+    "searchable_text": "22. 다항식 (1+2x)^{4}의 전개식에서 x^{2}의 계수를 구하시오. [3점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "다항식",
     "concepts": [
       "이항정리",
-      "다항정리"
+      "이항계수",
+      "다항식_전개"
     ],
-    "exam_intent": "다항식 전개에서 특정 항의 계수 계산",
+    "exam_intent": "이항정리와 이항계수로 다항식 전개식의 특정 항 계수 구하기",
     "killer_tier": "mid",
     "cognitive_type": "계산"
   }

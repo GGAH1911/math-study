@@ -1,17 +1,17 @@
 {
-  "text_sha": "908d81eac49e",
+  "text_sha": "6af3c76e3c16",
   "meta": {
-    "searchable_text": "∠A = 90°인 직각삼각형 ABC에서 AB = 2log₂a, AC = log₄(16-a) (1 ≤ a ≤ 16)일 때 삼각형 ABC의 넓이의 최댓값을 가지는 a의 값",
+    "searchable_text": "17. ∠A=90°이고 \\overline{AB}=2log_{2}x, \\overline{AC}=log_{4}\\frac{16}{x}인 삼각형\nABC의 넓이를 S(x)라 하자. S(x)가 x=a에서 최댓값 M을\n가질 때, a+M의 값은? (단, 1<x<16) [4점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
     "format": "choice",
     "has_figure": false,
     "unit": "지수함수와_로그함수",
     "concepts": [
-      "로그함수",
+      "로그의_성질",
       "함수의_최댓값",
-      "미분"
+      "미분을_이용한_최적화"
     ],
-    "exam_intent": "로그함수로 표현된 삼각형 넓이의 최댓값을 구하는 문제",
+    "exam_intent": "로그식으로 표현된 직각삼각형 변의 길이에서 넓이 함수의 최댓값을 미분으로 구하기",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "계산"
   }
 }

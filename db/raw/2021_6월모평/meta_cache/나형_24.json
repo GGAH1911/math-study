@@ -1,16 +1,13 @@
 {
-  "text_sha": "1ac3ddb7da2f",
+  "text_sha": "5825e6c78e5d",
   "meta": {
-    "searchable_text": "곡선 위의 점에서의 접선이 원점을 지날 때, 미지수의 값을 구하시오.",
+    "searchable_text": "24. 곡선 y=x^{3}-6x^{2}+6 위의 점 (1,1)에서의 접선이\n점 (0,a)를 지날 때, a의 값을 구하시오. [3점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "미분",
-    "concepts": [
-      "접선의_방정식",
-      "도함수"
-    ],
-    "exam_intent": "곡선 위 점에서 원점을 지나는 접선 조건으로부터 계수 결정",
-    "killer_tier": "mid",
+    "concepts": [],
+    "exam_intent": "곡선 위의 점에서 도함수를 이용해 접선을 구하고 조건을 적용",
+    "killer_tier": "early",
     "cognitive_type": "계산"
   }
 }

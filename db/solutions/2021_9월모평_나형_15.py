@@ -1,22 +1,22 @@
-import sympy as sp
-from sympy import symbols, solve, log, simplify
+from sympy import symbols, sqrt, Rational
 
-# 정의
-x1, x2, a, b = 2, 8, sp.Rational(1,3), sp.Rational(1,3)
+# 주어진 해답: a = 1/3, b = 1/3
+a_val = Rational(1, 3)
+b_val = Rational(1, 3)
 
-# 조건 1: AB = 6√2
-AB = sp.sqrt((x2 - x1)**2 + (x2 - x1)**2)
-check1 = sp.simplify(AB - 6*sp.sqrt(2))
+x1, x2 = 2, 8
 
-# 조건 2: 사각형 ACDB 넓이 = 30
-area = sp.Rational(1,2) * (x2**2 - x1**2)
-check2 = area - 30
+# 검증: x1 = 2^(ax1+b)
+check1 = 2**(a_val * x1 + b_val)
+check2 = 2**(a_val * x2 + b_val)
 
-# 조건 3: 교점 조건
-check3a = 2**(a*x1 + b) - x1
-check3b = 2**(a*x2 + b) - x2
+# AB 거리
+ab_dist = abs(x2 - x1) * sqrt(2)
 
-if check1 == 0 and check2 == 0 and abs(float(check3a)) < 1e-10 and abs(float(check3b)) < 1e-10:
+# 넓이
+area = Rational(1, 2) * (x1 + x2) * (x2 - x1)
+
+if check1 == 2 and check2 == 8 and ab_dist == 6*sqrt(2) and area == 30:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

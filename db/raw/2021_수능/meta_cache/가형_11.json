@@ -1,16 +1,17 @@
 {
-  "text_sha": "76c97c2af48f",
+  "text_sha": "aeed85b07153",
   "meta": {
-    "searchable_text": "극한값 계산: $\\lim_{n\\to\\infty}$ 형태의 분수식 극한",
+    "searchable_text": "11.\\lim_{n→∞}\\frac{1}{n}\\sum_{k=1}^{n}\\sqrt{\\frac{3n}{3n+k}}의 값은?[3점]\n① 4\\sqrt{3}-6 ②\\sqrt{3}-1 ③ 5\\sqrt{3}-8\n④ 2\\sqrt{3}-3 ⑤ 3\\sqrt{3}-5",
     "format": "choice",
     "has_figure": false,
-    "unit": "함수의_극한과_연속",
+    "unit": "수열의_극한",
     "concepts": [
-      "극한값",
-      "부정형"
+      "리만합",
+      "정적분",
+      "급수의_극한"
     ],
-    "exam_intent": "부정형 극한식의 극한값 계산",
+    "exam_intent": "리만합 개념으로 급수를 정적분으로 변환하여 계산하기",
     "killer_tier": "early",
-    "cognitive_type": "계산"
+    "cognitive_type": "응용"
   }
 }

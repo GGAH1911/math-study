@@ -1,17 +1,17 @@
 {
-  "text_sha": "fb0d6016e07b",
+  "text_sha": "1aa69f18ceda",
   "meta": {
-    "searchable_text": "두 다항함수 $f(x)$, $g(x)$가 $\\lim_{x \\to 0} \\frac{f(x)}{x^3} = 3$, $\\lim_{x \\to 0} \\frac{g(x)}{x^3 - 2x^2} = $ (상수)를 만족시킨다. 함수의 도함수값을 구하는 문제.",
+    "searchable_text": "17. 두 다항함수 f(x), g(x)가\n\\lim_{x→0}\\frac{f(x)+g(x)}{x}=3,\\lim_{x→0}\\frac{f(x)+3}{xg(x)}=2\n를 만족시킨다. 함수 h(x)=f(x)g(x)에 대하여 h′(0)의 값은?\n[4점]\n① 27 ② 30 ③ 33 ④ 36 ⑤ 39",
     "format": "choice",
     "has_figure": false,
-    "unit": "여러가지함수의_미분",
+    "unit": "미분",
     "concepts": [
-      "극한",
+      "극한의_정의",
       "도함수",
-      "다항함수"
+      "곱의_미분"
     ],
-    "exam_intent": "극한조건으로 다항함수를 결정하고 도함수값 계산",
+    "exam_intent": "극한 조건으로부터 함수값·도함수를 추론하고 곱의 미분 적용",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "추론"
   }
 }

@@ -38,8 +38,33 @@ function claudeCall(prompt, imgDir, model = 'sonnet') {
     const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
-    c.on('close', () => { try { res(JSON.parse(out).result || ''); } catch { res(''); } });
+    c.on('close', () => {
+      try {
+        const j = JSON.parse(out); const u = j.usage || {};
+        appendFileSync('/tmp/corr_usage.log', `${model}\tcreate=${u.cache_creation_input_tokens ?? '?'}\tread=${u.cache_read_input_tokens ?? '?'}\tin=${u.input_tokens ?? '?'}\tout=${u.output_tokens ?? '?'}\n`);
+        res(j.result || '');
+      } catch { res(''); }
+    });
   });
+}
+// gemma4 (맥북 mlx_vlm.server, OpenAI 호환 /v1/chat/completions) — 이미지 base64 첨부. 로컬이라 토큰·쿼터 0.
+const GEMMA_URL = process.env.GEMMA_URL || 'http://100.79.230.49:8080/v1/chat/completions';
+async function gemmaCall(prompt, imgPath) {
+  try {
+    const b64 = readFileSync(imgPath).toString('base64');
+    const res = await fetch(GEMMA_URL, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        model: 'mlx-community/gemma-4-12B-it-qat-4bit', max_tokens: 1400, temperature: 0,
+        messages: [{ role: 'user', content: [
+          { type: 'text', text: prompt },
+          { type: 'image_url', image_url: { url: `data:image/png;base64,${b64}` } },
+        ] }],
+      }),
+    });
+    const j = await res.json();
+    return j.choices?.[0]?.message?.content || '';
+  } catch (e) { console.error('[gemma 에러]', e?.message || e); return ''; }
 }
 // 마커 파싱 + sanitize($ 델리미터·제어문자 제거).
 function parseCorrected(out) {
@@ -47,7 +72,8 @@ function parseCorrected(out) {
   if (!cm) return null;
   const corrected = cm[1].replace(/\$/g, '').replace(/[\x00-\x09\x0b-\x1f]/g, '').replace(/[ \t]+$/gm, '');
   const fmFix = out.match(/===FIXES===\r?\n([\s\S]*?)\r?\n===CORRECTED===/);
-  const fixes = fmFix ? fmFix[1].split('\n').map((l) => l.replace(/^\s*-\s*/, '').trim()).filter(Boolean) : [];
+  const NOFIX = /^(없음|없습니다|none|n\/a|해당\s*없음|(수정|변경|교정|고친\s*것|고칠\s*것)\s*(사항\s*)?(은\s*)?없음)\.?$/i;
+  const fixes = fmFix ? fmFix[1].split('\n').map((l) => l.replace(/^\s*-\s*/, '').trim()).filter((x) => x && !NOFIX.test(x)) : [];
   return { corrected, fixes };
 }
 // 검증 게이트 — 실패 사유 배열(빈 배열=통과).
@@ -93,8 +119,18 @@ if (!m) { console.log('searchable_text 없음'); process.exit(1); }
 const st = m[1].split('\n').map((l) => l.replace(/^ {2}/, '')).join('\n').trim();
 
 const imgDir = `${REPO}/db/raw/${round}/images`;
-const img = `${imgDir}/${round}_${subj}_${num}.png`;
-const prompt = `너는 한국 수능 기출의 전사 텍스트를 원본 이미지와 한 글자씩 대조해 교정한다.
+const img = `${imgDir}/${round}_${subj}_${String(num).padStart(2, '0')}.png`;
+const _back = process.env.CORR_BACKEND || 'haiku';
+const prompt = _back === 'gemma'
+  ? `이미지의 수능 수학 문제를 전사·교정하라. 수식은 LaTeX로 쓰되 $ 기호 없이(렌더러가 한글/수식 자동 분리). 객관식이면 보기 ①~⑤를 값과 함께 포함. 전사에 {{FIG0}}·{{TABLE0}}가 있으면 그 자리에 그대로 두고, 없으면 새로 만들지 마라. 그림/표 내용을 본문에 풀어쓰지 마라. 아래 형식 그대로만 출력:
+===FIXES===
+- 고친 항목을 하나씩 모두 나열(고친 곳마다 한 줄, 없으면 이 줄 비움)
+===CORRECTED===
+교정 전사 전문($ 없이, placeholder 유지)
+===END===
+--- 추출 전사 ---
+${st}`
+  : `너는 한국 수능 기출의 전사 텍스트를 원본 이미지와 한 글자씩 대조해 교정한다.
 아래 "추출 전사"는 PDF 텍스트레이어에서 뽑아 깨진 기호·오타·누락이 있을 수 있다. 이미지대로 정확히 교정하라(수식 기호·보기 ①~⑤·숫자 정확히). 환각 금지 — 이미지에 있는 그대로.
 ★수식: LaTeX 명령(\\frac, \\overline, \\sqrt 등)은 쓰되 **$...$ 델리미터로 감싸지 마라**. 렌더러가 한글/수식을 자동 분리한다 — $ 를 넣으면 KaTeX가 깨진다.
 ★★전사에 {{FIG0}}·{{TABLE0}} 형태의 placeholder가 **이미 있으면** 그 자리·개수 그대로 두라(그림/표 자리). ★단, 전사에 없는 placeholder를 **새로 만들지 마라** — 이미지에 그림/표가 보여도 placeholder를 추가하지 말고, 전사에 있는 텍스트만 교정하라.
@@ -111,28 +147,39 @@ ${st}
 --- 원본 이미지 ---
 Read 로 볼 것: ${img}`;
 
-// ② claude(Sonnet) 교정 → ③ 검증. (agy는 토큰 쿼터 한계로 1차에서 폐기 — 25콜에 소진.)
-console.log('② claude(Haiku) 교정…');
-const out = await claudeCall(prompt, imgDir, 'haiku');  // 1차 = haiku(쿼터 절약). 검증 실패 시만 sonnet 자가치유.
-if (!out.trim()) { console.log('claude 빈출력(한도/에러) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 한도(배치 멈춤)
-let parsed = parseCorrected(out);
-if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] claude 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
-let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
-let by = 'haiku';
+// 앞선 sonnet 검증(verify_corrected)이 지적한 사항이 있으면 재교정 프롬프트에 주입(반드시 반영).
+const _vi = txt.match(/\ncorrector_verify_issues:\n((?:  - .*\n?)+)/);
+const promptF = _vi ? prompt + '\n\n★앞선 검증이 지적한 교정 필요 사항(반드시 반영):\n' + _vi[1].replace(/^  - /gm, '- ') : prompt;
 
-// ④ 자가치유: 검증 실패 → claude 재교정 → 재검증 (1차와 동일 백엔드지만 재시도로 일시 오류 흡수)
+// ② 교정 → ③ 검증. CORR_BACKEND=gemma(로컬 맥북, 토큰0) / 기본 claude(haiku).
+const t0 = Date.now();
+const BACKEND = process.env.CORR_BACKEND || 'haiku';
+let out, by;
+if (BACKEND === 'gemma') {
+  console.log('② gemma4(로컬 맥북) 교정…');
+  out = await gemmaCall(promptF, img); by = 'gemma4';
+} else {
+  console.log('② claude(Haiku) 교정…');
+  out = await claudeCall(promptF, imgDir, 'haiku'); by = 'haiku';
+}
+if (!out.trim()) { console.log('빈출력(한도/에러) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 한도(배치 멈춤)
+let parsed = parseCorrected(out);
+if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
+let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
+
+// ④ 자가치유: 검증 실패 → 재교정 → 재검증 (gemma는 재시도, claude는 sonnet 승격)
 if (fails.length) {
-  console.log(`③ claude 검증 실패(${fails.join(', ')}) → ④ claude 자가치유 재시도…`);
-  const out2 = await claudeCall(prompt, imgDir);
+  console.log(`③ 검증 실패(${fails.join(', ')}) → ④ 자가치유 재시도…`);
+  const out2 = BACKEND === 'gemma' ? await gemmaCall(promptF, img) : await claudeCall(promptF, imgDir);
   const parsed2 = parseCorrected(out2);
   const fails2 = parsed2 ? validate(parsed2.corrected, st) : ['파싱실패'];
-  if (!fails2.length) { parsed = parsed2; fails = []; by = 'sonnet'; console.log('④ claude 자가치유 통과'); }
+  if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma') by = 'sonnet'; console.log('④ 자가치유 통과'); }
   else {
     mkdirSync(dirname(QLOG), { recursive: true });
     appendFileSync(QLOG, `${round}_${subj}_${num}\t1차:${fails.join('|')}\t재시도:${fails2.join('|')}\n`);
     // 영구 격리 마커(반복 재시도·쿼터 낭비 차단) — 원인 수정 후 수동으로 corrector_quarantine 제거하면 재교정됨.
     if (!/^corrector_quarantine:/m.test(txt)) { txt = txt.replace(/\nsearchable_text:/, '\ncorrector_quarantine: true\nsearchable_text:'); writeFileSync(md, txt); }
-    console.log(`④ Sonnet도 실패(${fails2.join(', ')}) — 격리(원본 유지 + corrector_quarantine 마커)`);
+    console.log(`④ ${by} 재시도도 실패(${fails2.join(', ')}) — 격리(원본 유지 + corrector_quarantine 마커)`);
     process.exit(0);
   }
 }
@@ -149,4 +196,5 @@ if (parsed.fixes.length) {
 if (!/^corrector_by:/m.test(txt)) txt = txt.replace(/\nsearchable_text:/, `\ncorrector_by: ${by}\nsearchable_text:`);
 if (!/^corrector_done:/m.test(txt)) txt = txt.replace(/\nsearchable_text:/, '\ncorrector_done: true\nsearchable_text:');
 writeFileSync(md, txt);
-console.log(`⑤ 교정 적용(${by}) — 검증 통과 · fixes ${parsed.fixes.length}건`);
+const _sec = ((Date.now() - t0) / 1000).toFixed(1);
+console.log(`⑤ 교정 적용(${by}, ${_sec}s) — fixes ${parsed.fixes.length}건${parsed.fixes.length ? ': ' + parsed.fixes.join(' / ') : ' (변경 없음)'}`);

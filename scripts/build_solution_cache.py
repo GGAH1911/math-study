@@ -799,11 +799,12 @@ def build_one(p: Path) -> str:
                 return 'CACHED@T'
         trace.append(('haiku-text', 'text-fail'))  # 텍스트 실패 → 이미지 사다리 폴백
 
-    # ── 사전 defer: 도형·킬러는 blind 검증기 사다리가 거의 항상 헛돔(분 단위 → 미검증 salvage) ──
-    #    싼 텍스트 패스로 못 풀면 opus/agent 안 태우고 바로 손풀이 큐로. (HANDSOLVE=0 으로 끔)
-    if HANDSOLVE_MODE and (has_fig or tier == 'killer'):
-        return _defer(p, None, gold, fmt, has_fig, tier,
-                      f'apriori:{"figure" if has_fig else "killer"}', solved_by, trace)
+    # ── 사전 defer: 킬러는 blind 검증기 사다리가 거의 항상 헛돔(분 단위 → 미검증 salvage) → a priori 손풀이.
+    #    figure(도형)는 교정기가 텍스트+그래픽 대조를 끝냈으므로 이미지 사다리를 한 번은 태운다:
+    #    도형 계산(좌표·각도·넓이)은 검증기가 짜이면 자동, 그래프 판독류는 gold-match로 떨어져 아래 840에서
+    #    손풀이 큐로 간다(풀이 steps 는 vision 으로 자동 확보). (HANDSOLVE=0 으로 전체 끔)
+    if HANDSOLVE_MODE and tier == 'killer':
+        return _defer(p, None, gold, fmt, has_fig, tier, 'apriori:killer', solved_by, trace)
 
     for model, effort in ladder:                  # 모델별 1회 (blind)
         sol = call_model(tiles, fmt, meta, model, effort, img_dir)

@@ -1,15 +1,16 @@
 {
-  "text_sha": "6686b975e5f6",
+  "text_sha": "260c1ae70552",
   "meta": {
-    "searchable_text": "$\\lim_{x \\to 2} \\frac{x^2-4}{x-2}$ 의 값은?",
+    "searchable_text": "3.\\lim_{x→2}\\frac{x^{2}+2x-8}{x-2}의 값은?[2점]\n① 2 ② 4 ③ 6 ④ 8 ⑤ 10",
     "format": "choice",
     "has_figure": false,
     "unit": "함수의_극한과_연속",
     "concepts": [
-      "극한의_정의",
-      "인수분해를_이용한_극한값_계산"
+      "함수의_극한",
+      "부정형_극한_(0/0_꼴)",
+      "인수분해를_이용한_극한_계산"
     ],
-    "exam_intent": "인수분해를 이용한 기본 극한값 계산",
+    "exam_intent": "부정형 극한을 인수분해로 해결하는 기본 능력 평가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

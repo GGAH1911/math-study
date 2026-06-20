@@ -77,7 +77,7 @@ const problems = defineCollection({
     searchable_text: z.string().optional(),
     corrector_done: z.boolean().optional(),  // Gemini 텍스트 교정 완료(멱등 플래그)
     corrector_fixes: z.array(z.string()).optional(),  // 교정 메모(무엇을 왜 고쳤는지)
-    corrector_by: z.enum(['gemini', 'haiku', 'sonnet']).optional(),  // 교정 백엔드(1차 haiku, 검증 실패 자가치유 시 sonnet)
+    corrector_by: z.enum(['gemini', 'haiku', 'sonnet', 'gemma4']).optional(),  // 교정 백엔드(1차 haiku, 검증 실패 자가치유 시 sonnet, 로컬 맥북 gemma4)
     corrector_quarantine: z.boolean().optional(),  // 격리(Gemini·Sonnet 둘 다 검증 실패) — 수동 검토 대상
     // Stage C — vision LLM이 ingest 시 추출한 도형 spec (geometry/plot/numberline/chart).
     // 채워져 있으면 problem 페이지가 raw PNG 외에 spec 기반 SVG 도 함께 렌더 가능.

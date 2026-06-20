@@ -1,10 +1,13 @@
-from sympy import symbols, integrate, Abs
-x = symbols('x')
+import sympy as sp
+x = sp.Symbol('x')
 f = x**3 - 2*x**2
-area = Abs(integrate(f, (x, 0, 2)))
-result = float(area)
-expected = 4/3
-if abs(result - expected) < 1e-10:
+roots = sp.solve(f, x)
+print('Roots:', roots)
+integral = sp.integrate(f, (x, 0, 2))
+area = sp.Abs(integral)
+print('Integral value:', integral)
+print('Area:', area)
+if area == sp.Rational(4, 3):
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

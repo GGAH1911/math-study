@@ -1,16 +1,17 @@
 {
-  "text_sha": "e61f57b2db76",
+  "text_sha": "f50f8cf39ad0",
   "meta": {
-    "searchable_text": "수열 $\\{a_n\\}$의 일반항은 $a_n = \\frac{\\log_2 n}{2^{n+1}}$이다. $S_n = \\sum_{k=1}^{n} a_k$의 값이 100 이하의 자연수가 되도록 하는 모든 자연수 $n$의 값의 합은?",
+    "searchable_text": "21. 수열 {an}의 일반항은\na_{n}=log_{2}\\sqrt{\\frac{2(n+1)}{n+2}}\n이다. \\sum_{k=1}^{m}a_{k}의 값이 100이하의 자연수가 되도록 하는\n모든 자연수 m의 값의 합은? [4점]\n① 150 ② 154 ③ 158 ④ 162 ⑤ 166",
     "format": "choice",
     "has_figure": false,
     "unit": "수열",
     "concepts": [
-      "수열의_합",
-      "일반항"
+      "망원급수",
+      "로그의_성질",
+      "부분합"
     ],
-    "exam_intent": "로그와 지수 수열의 부분합이 자연수 되는 조건 활용",
+    "exam_intent": "망원급수를 이용한 부분합 정리와 자연수 조건 활용",
     "killer_tier": "mid",
-    "cognitive_type": "계산"
+    "cognitive_type": "통합"
   }
 }

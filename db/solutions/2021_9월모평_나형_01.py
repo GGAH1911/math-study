@@ -1,14 +1,10 @@
-from sympy import *
-import numpy as np
+from sympy import S, simplify
 
-# 원래 문제: $\sqrt[3]{2} \times 2^{2/3}$의 값
-result = 2**(Rational(1,3)) * 2**(Rational(2,3))
-result_simplified = simplify(result)
+# 원식: ∛2 × 2^(2/3) = 2^(1/3) × 2^(2/3)
+expr = S(2)**(S(1)/3) * S(2)**(S(2)/3)
+result = simplify(expr)
 
-print(f'Result: {result_simplified}')
-print(f'Numerical: {float(result_simplified)}')
-
-if result_simplified == 2:
+if result == 2:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

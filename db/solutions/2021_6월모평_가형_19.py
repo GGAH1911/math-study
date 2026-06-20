@@ -1,25 +1,22 @@
 from itertools import product
+from math import gcd
 
-A = {1, 2, 3, 4}
-B = {1, 2, 3}
-
-count_total = 0
-count_condition = 0
+B = [1, 2, 3]
+count_satisfied = 0
 
 for f_values in product(B, repeat=4):
-    f = {i+1: f_values[i] for i in range(4)}
-    count_total += 1
-    
-    cond1 = f[1] >= 2
-    cond2 = set(f.values()) == B
-    
+    f_1, f_2, f_3, f_4 = f_values
+    cond1 = f_1 >= 2
+    cond2 = set(f_values) == {1, 2, 3}
     if cond1 or cond2:
-        count_condition += 1
+        count_satisfied += 1
 
-prob = count_condition / count_total
-expected = 22/27
+total = 81
+g = gcd(count_satisfied, total)
+numerator = count_satisfied // g
+denominator = total // g
 
-if abs(prob - expected) < 1e-9:
+if numerator == 22 and denominator == 27:
     print('VERIFY_PASS')
 else:
-    print(f'VERIFY_FAIL: got {prob}, expected {expected}')
+    print('VERIFY_FAIL')

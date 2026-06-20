@@ -1,21 +1,43 @@
-import sympy as sp
+from sympy import symbols, Rational, solve, Eq
 
-# 정의: P(A)를 변수로
-PA = sp.Rational(1, 3)
-PB = sp.Rational(1, 3)
-P_A_and_B = sp.Rational(1, 9)
+# P(A)를 구하는 문제
+# 조건: A, B 독립, P(A|B) = P(B), P(A∩B) = 1/9
 
-# 검증 1: 독립성 확인
-independence_check = (PA * PB == P_A_and_B)
+pa, pb = symbols('pa pb', positive=True, real=True)
 
-# 검증 2: P(A|B) = P(B) 확인
-if PB != 0:
-    P_A_given_B = P_A_and_B / PB
-    condition_check = (P_A_given_B == PB)
-else:
-    condition_check = False
+# 조건 1: A, B 독립 → P(A∩B) = P(A)·P(B)
+# 조건 2: P(A|B) = P(B) → P(A∩B)/P(B) = P(B) → P(A∩B) = [P(B)]²
+# 조건 3: P(A∩B) = 1/9
 
-if independence_check and condition_check:
+# 독립 조건과 조건2 결합
+eq1 = Eq(pa * pb, pb**2)  # P(A)·P(B) = [P(B)]²
+eq2 = Eq(pa * pb, Rational(1, 9))  # P(A∩B) = 1/9
+
+# eq1에서 P(A) = P(B)
+pa_value = pb  # pa = pb
+
+# eq2에 대입
+eq3 = Eq(pa_value * pb, Rational(1, 9))
+eq3_substituted = eq3.subs(pa, pb)
+# pb² = 1/9
+
+sol = solve(pb**2 - Rational(1, 9), pb)
+print(f"P(B) solutions: {sol}")
+
+pb_val = Rational(1, 3)  # positive solution
+pa_val = pb_val
+
+print(f"P(A) = {pa_val}")
+print(f"P(B) = {pb_val}")
+
+# 검증
+pa_times_pb = pa_val * pb_val
+print(f"P(A)·P(B) = {pa_times_pb}")
+
+cond_prob = pa_times_pb / pb_val
+print(f"P(A|B) = P(A∩B)/P(B) = {cond_prob}")
+
+if cond_prob == pb_val and pa_times_pb == Rational(1, 9):
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

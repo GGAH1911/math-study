@@ -1,34 +1,30 @@
 import math
-from sympy import sqrt, symbols, solve, simplify
+from sympy import *
 
-# 좌표 설정
-# A = (0, 0), B = (6, 0)
-# C = (95/12, 5√215/12)
-# D = (19/4, √215/4)
+CANDIDATE = 41
 
-x_c = 95/12
-y_c_sq = 5375/144
-y_c = math.sqrt(y_c_sq)
-
-# 검증
-AC = math.sqrt(x_c**2 + y_c**2)
+# 주어진 조건
 AB = 6
+AC = 10
+AD = 6  # AB = AD
+BD = sqrt(15)
+DC = AC - AD  # D는 AC 위의 점
+assert DC == 4
 
-D_x = 3 * x_c / 5
-D_y = 3 * y_c / 5
+# 삼각형 ABD에서 코사인 법칙으로 cos(∠BAD) 구하기
+# BD² = AB² + AD² - 2·AB·AD·cos(∠BAD)
+cos_BAD = (AB**2 + AD**2 - BD**2) / (2 * AB * AD)
+cos_BAD_simplified = simplify(cos_BAD)
+assert cos_BAD_simplified == Rational(19, 24)
 
-AD = math.sqrt(D_x**2 + D_y**2)
-BD = math.sqrt((D_x - 6)**2 + D_y**2)
+# 삼각형 ABC에서 코사인 법칙으로 BC² 구하기
+# BC² = AB² + AC² - 2·AB·AC·cos(∠BAC)
+# ∠BAC = ∠BAD이므로
+BC_squared = AB**2 + AC**2 - 2 * AB * AC * cos_BAD_simplified
+BC_squared_simplified = simplify(BC_squared)
 
-B_x, B_y = 6, 0
-BC = math.sqrt((x_c - B_x)**2 + (y_c - B_y)**2)
-BC_sq = (x_c - B_x)**2 + y_c**2
-
-# 검증
-assert abs(AB - 6) < 1e-10, f'AB 오류: {AB}'
-assert abs(AC - 10) < 1e-10, f'AC 오류: {AC}'
-assert abs(AD - 6) < 1e-10, f'AD 오류: {AD}'
-assert abs(BD - math.sqrt(15)) < 1e-10, f'BD 오류: {BD}'
-assert abs(BC_sq - 41) < 1e-10, f'BC² 오류: {BC_sq}'
-
-print('VERIFY_PASS')
+if BC_squared_simplified == CANDIDATE:
+    print('VERIFY_PASS')
+else:
+    print('VERIFY_FAIL')
+    print(f'Expected: {CANDIDATE}, Got: {BC_squared_simplified}')

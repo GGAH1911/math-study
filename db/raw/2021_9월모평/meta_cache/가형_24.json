@@ -1,16 +1,15 @@
 {
-  "text_sha": "30337d059060",
+  "text_sha": "57bf65029661",
   "meta": {
-    "searchable_text": "방정식 $\\log_2|x+1| = \\log_4|2x+3|$을 만족시키는 모든 실수 $x$의 값의 곱을 구하시오.",
+    "searchable_text": "24. 방정식\nlog_{2}x=1+log_{4}(2x-3)\n을 만족시키는 모든 실수 x의 값의 곱을 구하시오. [3점]\nn 4",
     "format": "numeric",
     "has_figure": false,
     "unit": "지수와_로그",
     "concepts": [
-      "로그방정식",
-      "밑의_변환",
-      "절댓값"
+      "로그의_성질",
+      "로그_방정식"
     ],
-    "exam_intent": "절댓값이 포함된 로그방정식을 경우를 나누어 풀고 근의 곱을 구하기",
+    "exam_intent": "로그 방정식을 풀이하고 해의 곱을 구하는 능력 평가",
     "killer_tier": "mid",
     "cognitive_type": "계산"
   }

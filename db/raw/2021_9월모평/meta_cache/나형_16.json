@@ -1,16 +1,17 @@
 {
-  "text_sha": "28d7a4756674",
+  "text_sha": "7a6af7a0e0bf",
   "meta": {
-    "searchable_text": "모든 자연수 $n$에 대하여 다음 조건을 만족하는 $x$축 위의 점 $P_n$과 곡선 $y = 3x^2$ 위의 점 $Q_n$이 있다. 선분 $OP_n$과 선분 $P_n Q_n$이 서로 수직이다. 선분 $OQ_n$과 선분 $Q_n P_{n+1}$이 서로 수직이다. 점 $P_1$의 좌표가 $(1, 0)$일 때, 삼각형 $OP_{n+1}Q_n$의 넓이를 구하는 과정이다. ($O$는 원점) 모든 자연수 $n$에 대하여 점 $P_n$의 좌표를 $(a_n, 0)$이라 하자. 닮음 조건으로부터 $\\frac{OP_n}{P_n Q_n} = \\frac{P_n Q_n}{P_n P_{n+1}}$이다. 삼각형 $OP_n Q_n$과 삼각형 $Q_n P_n P_{n+1}$이 닮음이므로 점 $Q_n$의 좌표는 $(a_n, 3a_n^2)$이고 $P_n P_{n+1} = (가)$이다. 따라서 삼각형 $OP_{n+1}Q_n$의 넓이 $S_n$은 $S_n = \\frac{1}{2} \\times a_{n+1} \\times 3a_n^2 = (나)$이다.",
+    "searchable_text": "16. 모든 자연수 n에 대하여 다음 조건을 만족시키는\nx축 위의 점 Pn과 곡선 y=\\sqrt{3x}위의 점 Qn이 있다.\n∙선분 OPn과 선분 PnQn이 서로 수직이다.\n∙선분 OQn과 선분 QnPn+1이 서로 수직이다.\n다음은 점 P_{1}의 좌표가 (1,0)일 때, 삼각형 OP_{n+1}Q_{n}의\n넓이 An을 구하는 과정이다. (단, O는 원점이다.)\n모든 자연수 n에 대하여 점 Pn의 좌표를 (an,0)이라 하자.\n\\overline{OP_{n+1}}=\\overline{OP_{n}}+\\overline{P_{n}P_{n+1}}이므로\na_{n+1}=a_{n}+\\overline{P_{n}P_{n+1}}\n이다. 삼각형 OP_{n}Q_{n}과 삼각형 Q_{n}P_{n}P_{n+1}이 닮음이므로\n\\overline{OP_{n}}:\\overline{P_{n}Q_{n}}=\\overline{P_{n}Q_{n}}:\\overline{P_{n}P_{n+1}}\n이고, 점 Q_{n}의 좌표는 (a_{n},\\sqrt{3a_{n}})이므로\n\\overline{P_{n}P_{n+1}}= (가)\n이다. 따라서 삼각형 OPn+1Qn의 넓이 An은\nA_{n}=\\frac{1}{2}×( (나) )×\\sqrt{9n-6}\n이다.\n위의 (가)에 알맞은 수를 p, (나)에 알맞은 식을 f(n)이라 할 때,\np+f(8)의 값은? [4점]\n① 20 ② 22 ③ 24 ④ 26 ⑤ 28",
     "format": "choice",
     "has_figure": true,
     "unit": "수열",
     "concepts": [
-      "재귀_관계식",
-      "닮음과_비"
+      "닮음",
+      "등차수열",
+      "도형의_넓이"
     ],
-    "exam_intent": "기하학적 수직 조건으로부터 수열의 재귀식을 도출하고 넓이 계산",
+    "exam_intent": "기하학적 닮음 조건으로부터 등차수열을 발견하고 일반항을 도출하여 도형의 넓이를 계산하는 능력 평가",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "통합"
   }
 }

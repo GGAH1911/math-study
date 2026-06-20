@@ -1,54 +1,47 @@
 import sympy as sp
-from sympy import sqrt, symbols, solve, simplify
+from sympy import sqrt, simplify
 
-x = symbols('x', real=True)
-a = 3
-c = sp.Rational(2, 3)
-d = -6
-b = symbols('b', real=True)
+CANDIDATE = 38
 
-f = -a*(x+1)**2 + b
-g = c*x**3 + d*x + (-a + b)
+# 파라미터 정의
+a = -3
+c = -2*a/9  # = 2/3
+b = sp.Symbol('b', real=True)
 
-# 검증 1: h(x) = h(0) 실근의 합 = 1
-root_left = solve(f - (-a + b), x)
-root_right = solve(g - (-a + b), x)
-root_right = [r for r in root_right if r > 0]
-all_roots = root_left + root_right
-sum_roots = sum(all_roots)
-if simplify(sum_roots - 1) == 0:
-    check1 = True
-else:
-    check1 = False
+# 함수 정의
+def f(x):
+    return a*(x+1)**2 + b
 
-# 검증 2: 최댓값과 최솟값의 차
-f_prime = sp.diff(f, x)
-g_prime = sp.diff(g, x)
-crit_x1 = -1  # f 극값
-crit_x2 = sqrt(3)  # g 극값
+def g(x):
+    return c*x**3 + 2*a*x + (a+b)
 
-f_at_1 = f.subs(x, -1)
-f_at_m2 = f.subs(x, -2)
-f_at_0 = f.subs(x, 0)
-g_at_sqrt3 = g.subs(x, sqrt(3))
-g_at_3 = g.subs(x, 3)
+def f_prime(x):
+    return 2*a*(x+1)
 
-max_val = f_at_1
-min_val = g_at_sqrt3
-diff = simplify(max_val - min_val)
+def g_prime(x):
+    return 3*c*x**2 + 2*a
+
+# 조건 (가) 검증: h(x) = h(0)의 근들
+# x <= 0: f(x) = a+b => (x+1)^2 = 1 => x = -2, 0
+# x > 0: g(x) = a+b => x(cx^2 + 2a) = 0 => x = sqrt(-2a/c) = 3
+roots = [-2, 0, 3]
+sum_roots = sum(roots)
+assert sum_roots == 1, f"조건 (가) 실패: {sum_roots}"
+
+# 조건 (나) 검증
+# 극값: x=-1에서 극대, x=sqrt(3)에서 극소
+# 최댓값: f(-1) = b
+# 최솟값: g(sqrt(3)) = 2*sqrt(3) - 6*sqrt(3) + (b-3) = -4*sqrt(3) + b - 3
+max_val = f(-1)
+min_val = g(sqrt(3))
+difference = simplify(max_val - min_val)
 expected_diff = 3 + 4*sqrt(3)
+assert simplify(difference - expected_diff) == 0, f"조건 (나) 실패: {difference}"
 
-if simplify(diff - expected_diff) == 0:
-    check2 = True
-else:
-    check2 = False
+# h'(-3) + h'(4) 계산
+h_prime_neg3 = f_prime(-3)  # x <= 0이므로 f'(-3) 사용
+h_prime_4 = g_prime(4)      # x > 0이므로 g'(4) 사용
+result = h_prime_neg3 + h_prime_4
 
-# 검증 3: 답
-h_prime_m3 = f_prime.subs(x, -3)
-h_prime_4 = g_prime.subs(x, 4)
-answer = h_prime_m3 + h_prime_4
-
-if answer == 38 and check1 and check2:
-    print('VERIFY_PASS')
-else:
-    print('VERIFY_FAIL')
+assert result == CANDIDATE, f"계산 오류: {result} != {CANDIDATE}"
+print('VERIFY_PASS')

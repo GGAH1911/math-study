@@ -1,15 +1,15 @@
 {
-  "text_sha": "71efea602a0e",
+  "text_sha": "f1c6a45913f1",
   "meta": {
-    "searchable_text": "곡선과 직선이 만나는 점의 개수가 2가 되도록 하는 양수 값을 구하시오",
+    "searchable_text": "25. 곡선 y=4x^{3}-12x+7과 직선 y=k가 만나는 점의 개수가\n2가 되도록 하는 양수 k의 값을 구하시오.[3점]",
     "format": "numeric",
-    "has_figure": true,
-    "unit": "함수와_그래프",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
     "concepts": [
-      "교점",
-      "극값"
+      "극댓값과_극솟값",
+      "방정식의_해의_개수"
     ],
-    "exam_intent": "곡선과 직선의 교점 개수 조건으로부터 매개변수값 결정",
+    "exam_intent": "3차함수와 직선의 교점 개수가 2개인 조건에서 매개변수 값 구하기",
     "killer_tier": "mid",
     "cognitive_type": "응용"
   }

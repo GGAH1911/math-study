@@ -1,15 +1,17 @@
 {
-  "text_sha": "f7eea15f0e4b",
+  "text_sha": "5b290d43675a",
   "meta": {
-    "searchable_text": "방정식이 $-2 \\leq x \\leq 2$ 범위에서 서로 다른 두 실근을 갖도록 하는 정수의 개수를 구하는 문제",
+    "searchable_text": "19. 방정식 2x^{3}+6x^{2}+a=0이 -2≤x≤2에서 서로 다른\n두 실근을 갖도록 하는 정수 a의 개수는? [4점]\n① 4 ② 6 ③ 8 ④ 10 ⑤ 12",
     "format": "choice",
     "has_figure": false,
-    "unit": "이차함수",
+    "unit": "도함수의_활용_심화",
     "concepts": [
-      "실근의_개수",
-      "판별식"
+      "극값",
+      "도함수",
+      "함수의_개형",
+      "근의_개수"
     ],
-    "exam_intent": "주어진 범위에서 방정식의 실근 개수 조건을 만족하는 정수의 개수 결정",
+    "exam_intent": "도함수를 이용한 함수의 극값 분석으로 방정식의 실근 개수 판정",
     "killer_tier": "mid",
     "cognitive_type": "응용"
   }

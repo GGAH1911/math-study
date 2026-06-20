@@ -1,30 +1,34 @@
-# 직접 세기로 검증
-# 6명을 0~5로 표시: A=0, B=1, C=2, D=3, E=4, F=5
 from itertools import permutations
 
-def is_neighbor(perm, i, j):
-    """원탁에서 i와 j가 이웃하는지 확인"""
-    pos_i = perm.index(i)
-    pos_j = perm.index(j)
-    return abs(pos_i - pos_j) == 1 or abs(pos_i - pos_j) == 5
+CANDIDATE = 36
 
-# 회전을 제거한 대표원소만 세기
-# 0번(A)을 항상 0번 위치에 고정
+# 6명을 원탁에 앉히는 모든 경우
+# 회전 동등성: 학생을 0~5로 인덱싱, 0번(또는 한 명 고정)으로 정규화
+students = list(range(6))
 count = 0
-for perm in permutations(range(1, 6)):
-    full_perm = (0,) + perm  # A를 0번 위치에 고정
-    
-    # 조건 (가): A(0)과 B(1)이 이웃
-    if not is_neighbor(full_perm, 0, 1):
-        continue
-    
-    # 조건 (나): B(1)과 C(2)가 이웃하지 않음
-    if is_neighbor(full_perm, 1, 2):
-        continue
-    
-    count += 1
 
-if count == 36:
+# 모든 배열 생성
+for perm in permutations(students):
+    # A=0, B=1, C=2로 맵핑 (학생 이름)
+    # perm[i]는 위치 i의 학생
+    pos = {s: i for i, s in enumerate(perm)}
+    a_pos, b_pos, c_pos = pos[0], pos[1], pos[2]
+    
+    # 원탁에서 이웃 관계 (6개 위치)
+    def are_neighbors(pos1, pos2):
+        return abs(pos1 - pos2) == 1 or abs(pos1 - pos2) == 5
+    
+    # 조건 검증
+    cond_a = are_neighbors(a_pos, b_pos)  # A와 B 이웃
+    cond_b = not are_neighbors(b_pos, c_pos)  # B와 C 이웃하지 않음
+    
+    if cond_a and cond_b:
+        count += 1
+
+# 회전 동등성 처리: 모든 배열을 생성했으므로 6으로 나눔
+count_normalized = count // 6
+
+if count_normalized == CANDIDATE:
     print('VERIFY_PASS')
 else:
-    print(f'VERIFY_FAIL: got {count}, expected 36')
+    print(f'VERIFY_FAIL: got {count_normalized}, expected {CANDIDATE}')

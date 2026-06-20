@@ -1,16 +1,16 @@
 {
-  "text_sha": "d57f8da5e6d2",
+  "text_sha": "b035c4a1bff7",
   "meta": {
-    "searchable_text": "수열 {a_n}은 a_0=0, a_1=1로 정의되고, 모든 자연수 n에 대하여 다음 조건을 만족한다. (가) $a_{2n} = 2a_n + 1$ (나) $a_{2n+1} = 2a_n + 2$ $a_7 = 2$일 때, $a_{25}$의 값은?",
+    "searchable_text": "21. 수열 {a_{n}}은 0<a_{1}<1이고, 모든 자연수 n에 대하여\n다음 조건을 만족시킨다.\n(가) a_{2n}=a_{2}×a_{n}+1\n(나) a_{2n+1}=a_{2}×a_{n}-2\na7=2일 때, a25의 값은?[4점]\n① 78 ② 80 ③ 82 ④ 84 ⑤ 86",
     "format": "choice",
     "has_figure": false,
     "unit": "수열",
     "concepts": [
       "점화식",
-      "수열의_계산"
+      "일반항"
     ],
-    "exam_intent": "초기조건과 점화식으로 정의된 수열에서 제약조건을 이용하여 특정 항의 값을 구하는 계산능력",
-    "killer_tier": "mid",
-    "cognitive_type": "계산"
+    "exam_intent": "점화식 조건에서 초기값을 결정하고 특정항을 계산하는 능력",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
   }
 }

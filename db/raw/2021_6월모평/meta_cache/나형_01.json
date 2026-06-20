@@ -1,12 +1,15 @@
 {
-  "text_sha": "52d09e8aee2c",
+  "text_sha": "4fe6b74c871b",
   "meta": {
-    "searchable_text": "\\frac{3\\sqrt{8} \\times 4\\sqrt{2}}{3}의 값은?",
+    "searchable_text": "1.\\sqrt[3]{8}×4\\frac{3}{2}의 값은? [2점]\n① 1 ② 2 ③ 4 ④ 8 ⑤ 16",
     "format": "choice",
     "has_figure": false,
-    "unit": "식의_계산",
-    "concepts": [],
-    "exam_intent": "근호를 포함한 식의 간단히 하기",
+    "unit": "지수와_로그",
+    "concepts": [
+      "근호의_계산",
+      "지수법칙"
+    ],
+    "exam_intent": "지수와 근호의 기본 계산 능력",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

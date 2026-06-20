@@ -1,18 +1,17 @@
 {
-  "text_sha": "b8b4995c73bd",
+  "text_sha": "2018e520fa92",
   "meta": {
-    "searchable_text": "두 이산확률변수 $X$, $Y$의 확률분포를 표로 나타내면 각각 다음과 같다. $X$의 확률분포: $X$ 값 1, 2, 3, 4, 합계 / $P(X)$ 값 $p_1$, $p_2$, $p_3$, $p_4$, 1. $Y$의 확률분포: $Y$ 값 1, 2, 3, 4, 합계 / $P(Y)$ 값 $q_1$, $q_2$, $q_3$, $q_4$, 1. $E[X] = 2$, $E[Y^2] = 5$일 때, $E[XY] + V(Y)$의 값을 구하시오.",
+    "searchable_text": "27. 두 이산확률변수 X, Y의 확률분포를 표로 나타내면 각각\n다음과 같다.\n합계\n\\begin{array}{cccccc}X & 1 & 2 & 3 & 4 \\\\ P(X=x) & a & b & c & d & 1 \\\\ Y & 11 & 21 & 31 & 41 \\\\ P(Y=y) & a & b & c & d & 1\\end{array}\n합계\nE(X)=2, E(X^{2})=5일 때, E(Y)+V(Y)의 값을 구하시오.\n[4점]",
     "format": "numeric",
-    "has_figure": true,
+    "has_figure": false,
     "unit": "확률",
     "concepts": [
       "이산확률변수",
       "기댓값",
-      "분산",
-      "확률분포"
+      "분산"
     ],
-    "exam_intent": "이산확률변수의 기댓값과 분산을 이용한 통합 계산 능력 평가",
-    "killer_tier": "killer",
+    "exam_intent": "확률분포가 같은 두 확률변수의 기댓값과 분산 관계 파악",
+    "killer_tier": "mid",
     "cognitive_type": "계산"
   }
 }

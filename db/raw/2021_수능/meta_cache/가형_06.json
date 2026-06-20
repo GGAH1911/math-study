@@ -1,15 +1,17 @@
 {
-  "text_sha": "77549c9928fe",
+  "text_sha": "002660c4d6b7",
   "meta": {
-    "searchable_text": "정규분포 N(20, 5²)을 따르는 모집단에서 크기가 16인 표본을 임의추출하여 구한 표본평균을 $\\bar{X}$라 할 때, $E[\\bar{X}]$의 값은?",
+    "searchable_text": "6. 정규분포 N(20,5^{2})을 따르는 모집단에서 크기가 16인\n표본을 임의추출하여 구한 표본평균을 \\overline{X}라 할 때,\nE(\\overline{X)}+σ(\\overline{X)}의 값은? [3점]\n①\\frac{83}{4}②\\frac{85}{4}③\\frac{87}{4}④\\frac{89}{4}⑤\\frac{91}{4}",
     "format": "choice",
     "has_figure": false,
     "unit": "통계",
     "concepts": [
-      "표본평균의_분포"
+      "표본평균의_기댓값",
+      "표본평균의_표준편차",
+      "표준오차"
     ],
-    "exam_intent": "표본평균의 기댓값이 모평균과 같음을 이해하는가",
+    "exam_intent": "표본평균의 기댓값과 표준오차 공식을 적용할 수 있는지 평가",
     "killer_tier": "early",
-    "cognitive_type": "개념"
+    "cognitive_type": "계산"
   }
 }

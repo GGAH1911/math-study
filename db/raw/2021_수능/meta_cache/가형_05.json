@@ -1,12 +1,16 @@
 {
-  "text_sha": "afa2d28fdc78",
+  "text_sha": "237edae9ba7d",
   "meta": {
-    "searchable_text": "부등식을 만족시키는 자연수의 개수 구하기 (정확한 부등식은 PDF 글리프 오류로 인해 불명확)",
+    "searchable_text": "5. 부등식 (\\frac{1}{9})^{x}<3^{21-4x}을 만족시키는 자연수 x의 개수는?[3점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
     "format": "choice",
     "has_figure": false,
-    "unit": "방정식과_부등식",
-    "concepts": [],
-    "exam_intent": "부등식을 풀어 주어진 범위 내 자연수 개수를 세는 기초 계산 능력 평가",
+    "unit": "지수와_로그",
+    "concepts": [
+      "지수의_성질",
+      "지수부등식",
+      "같은_밑으로_통일"
+    ],
+    "exam_intent": "지수를 같은 밑으로 표현하여 지수부등식을 푸는 계산 능력 평가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

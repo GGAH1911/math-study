@@ -1,18 +1,17 @@
 {
-  "text_sha": "fb5789be962b",
+  "text_sha": "983e2c5f637a",
   "meta": {
-    "searchable_text": "양수 $a$에 대하여 다음 조건을 만족시키는 실수 $m$의 값을 $f(a)$라 하자. 직선 $y = mx$와 두 곡선 $y = 2^x$, $y = 2^{3x}$이 만나는 점을 각각 P, Q라 하고, 점 Q를 지나고 x축에 수직인 직선이 곡선 $y = 2^x$과 만나는 점을 R이라 할 때, $|PQ| = |QR|$이다. 함수 f에 대하여 $\\lim_{a \\to 0^+} \\frac{f(a)}{a}$의 값은?",
+    "searchable_text": "16. 양수 t에 대하여 다음 조건을 만족시키는 실수 k의 값을\nf(t)라 하자.\n직선 x=k와 두 곡선 y=e\\frac{x}{2}, y=e\\frac{x}{2}^{+3t}이 만나는 점을\n각각 P, Q라 하고, 점 Q를 지나고 y축에 수직인 직선이\n곡선 y=e\\frac{x}{2}과 만나는 점을 R라 할 때, \\overline{PQ}=\\overline{QR}이다.\n함수 f(t)에 대하여 \\lim_{t→0+}f(t)의 값은? [4점]\n① ln2 ② ln3 ③ ln4 ④ ln5 ⑤ ln6",
     "format": "choice",
     "has_figure": false,
     "unit": "지수함수와_로그함수",
     "concepts": [
       "지수함수",
-      "함수의극한",
-      "곡선의교점",
-      "거리"
+      "로그함수",
+      "함수의_극한"
     ],
-    "exam_intent": "지수함수의 교점과 거리 조건을 이용한 함수의 극한값 계산",
+    "exam_intent": "지수곡선의 거리 조건으로부터 함수를 설정하고 극한값을 계산",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "통합"
   }
 }

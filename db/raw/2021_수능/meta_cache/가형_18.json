@@ -1,16 +1,16 @@
 {
-  "text_sha": "12c10a431bd7",
+  "text_sha": "bcc0e0a3acf0",
   "meta": {
-    "searchable_text": "실수 $a$에 대하여 함수 $f$를 $f(x) = \\lim_{x \\to \\infty} \\frac{3ax^2 + bx + 1}{x^2 + 2x + 1 + 2a}$으로 정의한다. $f \\circ f^{-1}\\left(\\frac{4}{5}\\right)$를 만족하는 모든 $a$의 값의 합은?",
+    "searchable_text": "18. 실수 a에 대하여 함수 f(x)를\nf(x)=\\lim_{n→∞}\\frac{(a-2)x^{2n+1}+2x}{3x^{2n}+1}\n라 하자. (f∘f)(1)=\\frac{5}{4}가 되도록 하는 모든 a의 값의 합은?\n[4점]\n①\\frac{11}{2}②\\frac{13}{2}③\\frac{15}{2}④\\frac{17}{2}⑤\\frac{19}{2}",
     "format": "choice",
     "has_figure": false,
-    "unit": "함수의_극한과_연속",
+    "unit": "여러가지함수의_극한",
     "concepts": [
-      "함수의_극한",
-      "합성함수",
-      "역함수"
+      "극한",
+      "함수의조건",
+      "합성함수"
     ],
-    "exam_intent": "극한함수의 성질과 역함수 개념을 이용한 매개변수 합 구하기",
+    "exam_intent": "극한으로 정의된 함수를 구간별로 파악하고 합성함수 조건에서 매개변수 결정",
     "killer_tier": "mid",
     "cognitive_type": "응용"
   }

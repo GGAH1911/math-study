@@ -1,15 +1,15 @@
 {
-  "text_sha": "6b8c561a1ded",
+  "text_sha": "0c268ca09072",
   "meta": {
-    "searchable_text": "두 사건 $A$, $B$에 대하여 $P(A) = \\frac{2}{5}$, $P(B) = \\frac{4}{5}$, $P(A \\cup B) = \\frac{9}{10}$일 때, $P(B|A)$의 값은?",
+    "searchable_text": "3. 두 사건 A, B에 대하여\nP(A)=\\frac{2}{5}, P(B)=\\frac{4}{5}, P(A∪B)=\\frac{9}{10}\n일 때, P(B|A)의 값은? [2점]\n①\\frac{5}{12}②\\frac{1}{2}③\\frac{7}{12}④\\frac{2}{3}⑤ \\frac{3}{4}",
     "format": "choice",
     "has_figure": false,
     "unit": "확률",
     "concepts": [
-      "조건부확률",
-      "확률의덧셈정리"
+      "조건부_확률",
+      "합사건의_확률"
     ],
-    "exam_intent": "확률의 덧셈정리로 교집합을 구한 후 조건부확률 계산",
+    "exam_intent": "합사건 공식으로 교집합을 구해 조건부 확률을 계산하는 기본 문제",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

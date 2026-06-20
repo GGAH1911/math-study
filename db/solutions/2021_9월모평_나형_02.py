@@ -1,7 +1,7 @@
-from sympy import symbols, diff
-x = symbols('x')
+import sympy as sp
+x = sp.Symbol('x')
 f = x**3 - 2*x - 7
-f_prime = diff(f, x)
+f_prime = sp.diff(f, x)
 result = f_prime.subs(x, 1)
 if result == 1:
     print('VERIFY_PASS')

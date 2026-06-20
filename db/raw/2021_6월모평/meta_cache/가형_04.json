@@ -1,14 +1,15 @@
 {
-  "text_sha": "cfd717d025ae",
+  "text_sha": "79951e3aae2f",
   "meta": {
-    "searchable_text": "6개의 문자를 모두 일렬로 나열하는 경우의 수",
+    "searchable_text": "4. 6개의 문자 a, a, a, b, b, c를 모두 일렬로 나열하는\n경우의 수는? [3점]\n① 52 ② 56 ③ 60 ④ 64 ⑤ 68",
     "format": "choice",
     "has_figure": false,
     "unit": "경우의_수",
     "concepts": [
-      "같은_것이_있는_순열"
+      "같은_것이_있는_순열",
+      "조합론"
     ],
-    "exam_intent": "같은 것이 있는 순열의 계산 능력 평가",
+    "exam_intent": "같은 것이 있는 순열의 개수를 계산한다.",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

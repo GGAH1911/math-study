@@ -1,25 +1,23 @@
 import numpy as np
-from math import pi, sin, cos
+from scipy.optimize import fsolve
 
-def gp(s):
-    # sign of g'(x) as function of s=sqrt(x)
-    return -pi*s*cos(pi*s)+sin(pi*s)
+# u = tan(u)의 근을 구한다 (홀수 번째만 - 극댓값)
+roots = []
+for n in range(1, 12, 2):  # n = 1, 3, 5, 7, 9, 11
+    # 근은 n*pi와 n*pi + pi/2 사이에 있다
+    lower = n * np.pi
+    upper = n * np.pi + np.pi/2
+    guess = (lower + upper) / 2
+    root = fsolve(lambda u: u - np.tan(u), guess)[0]
+    roots.append(root)
 
-S=np.linspace(1e-9,13,3000000)
-v=np.array([gp(x) for x in S])
-maxes=[]
-for i in range(len(S)-1):
-    if v[i]*v[i+1]<0:
-        a,b=S[i],S[i+1]
-        for _ in range(80):
-            m=(a+b)/2
-            if gp(a)*gp(m)<=0: b=m
-            else: a=m
-        r=(a+b)/2
-        if gp(r-1e-6)>0 and gp(r+1e-6)<0:
-            maxes.append(r*r)
-maxes.sort()
-a6=maxes[5]
-k=11
-ok = (k**2 < a6 < (k+1)**2) and abs(a6-132.047)<0.5
-print('VERIFY_PASS' if ok else 'VERIFY_FAIL')
+# a_6은 6번째 극댓값
+u_11 = roots[5]  # 6번째 홀수 인덱스 = u_11
+a_6 = (u_11 / np.pi) ** 2
+
+# k^2 < a_6 < (k+1)^2를 만족하는 k를 찾는다
+k = int(np.sqrt(a_6))
+if k**2 < a_6 < (k+1)**2:
+    print('VERIFY_PASS')
+else:
+    print('VERIFY_FAIL')

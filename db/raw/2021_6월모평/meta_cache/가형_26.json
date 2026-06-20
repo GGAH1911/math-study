@@ -1,16 +1,16 @@
 {
-  "text_sha": "4171352a1423",
+  "text_sha": "450f3f0be0f7",
   "meta": {
-    "searchable_text": "공차가 2인 등차수열 $\\{a_n\\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. 주어진 조건을 만족시키는 자연수 $n$에 대하여 $S_{2n}$의 값을 구하시오.",
+    "searchable_text": "26. 공차가 2인 등차수열 {a_{n}}의 첫째항부터 제n항까지의\n합을 S_{n}이라 하자. S_{k}=-16, S_{k+2}=-12를 만족시키는\n자연수 k에 대하여 a_{2k}의 값을 구하시오. [4점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "수열",
     "concepts": [
       "등차수열",
-      "수열의_합"
+      "등차수열의_합"
     ],
-    "exam_intent": "등차수열의 합 공식으로 조건을 세워 자연수를 찾고 특정값을 계산하는 능력 평가",
-    "killer_tier": "killer",
-    "cognitive_type": "응용"
+    "exam_intent": "등차수열의 합 공식을 이용하여 조건으로부터 첫째항과 공차를 구하고 특정 항을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
   }
 }

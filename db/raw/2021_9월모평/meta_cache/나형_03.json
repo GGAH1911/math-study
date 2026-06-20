@@ -1,12 +1,15 @@
 {
-  "text_sha": "f0a33da5478b",
+  "text_sha": "dda9c41774a0",
   "meta": {
-    "searchable_text": "$\\frac{\\cos 2\\theta}{6} - \\frac{\\tan 2\\theta}{3} \\div 2\\theta$의 값은?",
+    "searchable_text": "3. cos^{2}(\\frac{π}{6})+tan^{2}(\\frac{2π}{3})의 값은? [2점]\n①\\frac{3}{2}②\\frac{9}{4}③ 3 ④\\frac{15}{4}⑤\\frac{9}{2}\n2",
     "format": "choice",
     "has_figure": false,
     "unit": "삼각함수",
-    "concepts": [],
-    "exam_intent": "삼각함수의 기본값을 이용한 기본 계산",
+    "concepts": [
+      "삼각함수의_기본값",
+      "삼각함수_항등식"
+    ],
+    "exam_intent": "특수각의 삼각함수 값을 이용한 제곱의 합 계산 능력",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

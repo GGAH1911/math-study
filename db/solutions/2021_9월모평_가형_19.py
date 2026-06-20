@@ -1,30 +1,31 @@
 from itertools import combinations
+from fractions import Fraction
 
-# X의 공집합이 아닌 모든 부분집합 생성
+# X의 공집합이 아닌 부분집합
 X = {1, 2, 3, 4}
-subsets = []
-for i in range(1, 5):
-    for combo in combinations(X, i):
-        subsets.append(frozenset(combo))
+subsets = [s for s in (frozenset(combo) for r in range(1, 5) for combo in combinations(X, r))]
+print(f'Non-empty subsets: {len(subsets)}')
 
-# A ⊂ B ⊂ C를 만족하는 순서쌍 (A, B, C) 개수 세기
-count_valid = 0
-total_count = 0
-
+# A ⊊ B ⊊ C인 순서쌍의 개수
+count_favorable = 0
 for A in subsets:
     for B in subsets:
-        if A == B:  # A와 B가 다른 경우만
-            continue
-        for C in subsets:
-            if C == A or C == B:  # C는 A, B와 달라야 함
-                continue
-            total_count += 1
-            # A ⊂ B ⊂ C 확인
-            if A.issubset(B) and B.issubset(C):
-                count_valid += 1
+        if A < B:  # A ⊊ B
+            for C in subsets:
+                if B < C:  # B ⊊ C
+                    count_favorable += 1
 
+print(f'A ⊊ B ⊊ C cases: {count_favorable}')
+
+# 전체 경우의 수 (순서쌍)
 total = 15 * 14 * 13
-if count_valid == 60 and total == 2730:
+print(f'Total ordered selections: {total}')
+
+# 확률
+prob = Fraction(count_favorable, total)
+print(f'Probability: {prob}')
+
+if prob == Fraction(2, 91):
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

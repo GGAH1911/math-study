@@ -1,15 +1,15 @@
 {
-  "text_sha": "07c12fd1f02e",
+  "text_sha": "b447efce68d6",
   "meta": {
-    "searchable_text": "두 사건 A, B에 대하여 $P(A\\cup B)=\\frac{1}{2}$, $P(B)=\\frac{1}{3}$, $P(A\\cap B)=\\frac{1}{6}$일 때, $P(A)$의 값은? (단, $\\bar{A}$는 A의 여사건이다.)",
+    "searchable_text": "6. 두 사건 A, B에 대하여\nP(A∪B)=1, P(B)=\\frac{1}{3}, P(A∩B)=\\frac{1}{6}\n일 때, P(A^{C})의 값은? (단, A^{C}은 A의 여사건이다.) [3점]\n①\\frac{1}{3}②\\frac{1}{4}③\\frac{1}{5}④\\frac{1}{6}⑤\\frac{1}{7}",
     "format": "choice",
     "has_figure": false,
     "unit": "확률",
     "concepts": [
-      "확률의_덧셈법칙",
+      "확률의_뜻과_성질",
       "여사건"
     ],
-    "exam_intent": "확률의 덧셈 법칙을 이용한 사건의 확률 계산",
+    "exam_intent": "합집합 공식과 여사건을 이용한 기본 확률 계산",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

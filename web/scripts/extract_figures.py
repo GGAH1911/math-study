@@ -85,6 +85,9 @@ def extract_table(page, REG):
     nr, nc = len(hy) - 1, len(vx) - 1
     if nr < 2 or nc < 2: return None  # 1행·1열·단일 셀 = (가)(나) 조건 박스 등 → 데이터 표 아님(표 오인 방지)
     rows = [[decode_str(cells.get((j, i), ''), _ROSETTA) for i in range(nc)] for j in range(nr)]
+    # 시험지 푸터("확인 사항 / 답안지 기입")는 문제 표가 아니므로 제외(마지막 문항에 격자로 붙어옴)
+    rows = [r for r in rows if not any('확인사항' in c.replace(' ', '') or '답안지' in c for c in r)]
+    if not rows: return None
     return {'rows': rows, 'bbox': [round(v) for v in tb]}
 
 

@@ -1,14 +1,15 @@
-# 주어진 조건
-sum_a = 8
-sum_b = 9
-num_terms = 5
-
-# 계산
-result = 2 * sum_a - sum_b + 4 * num_terms
-print(f'Result: {result}')
-
-# 검증
-if result == 27:
+from sympy import symbols, summation, Eq, solve, Symbol
+# Use symbolic sums consistent with the given constraints.
+Sa = Symbol('Sa')  # sum a_k
+Sb = Symbol('Sb')  # sum b_k
+Sa_val = 8
+Sb_val = 9
+n = 5
+# target expression: sum(2 a_k - b_k + 4) = 2*Sa - Sb + 4*n
+expr = 2*Sa - Sb + 4*n
+result = expr.subs({Sa: Sa_val, Sb: Sb_val})
+CANDIDATE = 27
+if Eq(result, CANDIDATE):
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

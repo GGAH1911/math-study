@@ -1,15 +1,12 @@
 {
-  "text_sha": "243703f1217b",
+  "text_sha": "e5775c13c1d2",
   "meta": {
-    "searchable_text": "함수 $f(x) = 3x^2 + 7x + 1$에 대하여 $f'(0)$의 값은?",
+    "searchable_text": "2. 함수 f(x)=x^{3}+7x+1에 대하여 f′(0)의 값은? [2점]\n① 1 ② 3 ③ 5 ④ 7 ⑤ 9",
     "format": "choice",
     "has_figure": false,
     "unit": "미분",
-    "concepts": [
-      "도함수",
-      "다항식의_미분"
-    ],
-    "exam_intent": "다항함수의 기본 미분 계산 능력 평가",
+    "concepts": [],
+    "exam_intent": "다항함수의 도함수를 구하고 주어진 점에서의 값 계산",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

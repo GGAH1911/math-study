@@ -1,16 +1,16 @@
 {
-  "text_sha": "68183a064feb",
+  "text_sha": "696e80ef2236",
   "meta": {
-    "searchable_text": "수열 $\\{a_n\\}$은 $a_1 = 1$이고, 모든 자연수 $n$에 대하여 주어진 점화식을 만족한다. $a_{11} + a_{12} + a_{13}$의 값은?",
+    "searchable_text": "14. 수열 {an}은 a1=1이고, 모든 자연수 n에 대하여\n\\begin{cases}a_{3n-1}=2a_{n}+1 \\\\ a_{3n}=-a_{n}+2 \\\\ a_{3n+1}=a_{n}+1\\end{cases}\n을 만족시킨다. a11+a12+a13의 값은? [4점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
     "format": "choice",
     "has_figure": false,
     "unit": "수열",
     "concepts": [
       "점화식",
-      "수열의_합"
+      "귀납적_정의"
     ],
-    "exam_intent": "점화식 조건에서 수열의 특정 항들의 합 계산",
+    "exam_intent": "재귀 점화식으로 정의된 수열에서 주어진 항을 역추적 계산",
     "killer_tier": "mid",
-    "cognitive_type": "개념"
+    "cognitive_type": "계산"
   }
 }

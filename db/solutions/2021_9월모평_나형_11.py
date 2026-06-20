@@ -1,20 +1,26 @@
-from sympy import symbols, solve, summation
+from sympy import symbols, solve, summation, simplify
 
-n = symbols('n', integer=True, positive=True)
-x = symbols('x')
+n, x = symbols('n x')
 
-# 원래 이차방정식
-eq = (n**2 + 6*n + 5)*x**2 - (n+5)*x - 1
+# 이차방정식 계수
+A = n**2 + 6*n + 5
+B = -(n+5)
+C = -1
 
-# 각 n값에 대해 두 근의 합 계산
-result_sum = 0
-for k in range(1, 11):
-    coeff_x2 = k**2 + 6*k + 5
-    coeff_x = -(k + 5)
-    a_k = -coeff_x / coeff_x2  # 근과 계수의 관계
-    result_sum += 1 / a_k
+# 비에타 공식으로 두 근의 합
+a_n = -B / A
+a_n_simplified = simplify(a_n)
+print(f'a_n = {a_n_simplified}')
 
-if result_sum == 65:
+# 1/a_n 계산
+inverse_a_n = simplify(1 / a_n_simplified)
+print(f'1/a_n = {inverse_a_n}')
+
+# k=1부터 10까지 합 계산
+total = sum(k+1 for k in range(1, 11))
+print(f'Sum = {total}')
+
+if total == 65:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

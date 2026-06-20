@@ -1,15 +1,17 @@
 {
-  "text_sha": "c2b75f7128eb",
+  "text_sha": "095196a843f9",
   "meta": {
-    "searchable_text": "다항식의 전개식에서 특정 항의 계수를 구하는 이항정리 관련 문제",
+    "searchable_text": "22. 다항식 (3x+1)^{8}의 전개식에서 x의 계수를 구하시오.[3점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "다항식",
     "concepts": [
-      "이항정리"
+      "이항정리",
+      "조합",
+      "전개식"
     ],
-    "exam_intent": "이항정리를 이용한 계수 계산 능력 평가",
-    "killer_tier": "killer",
+    "exam_intent": "이항정리를 이용하여 특정 항의 계수를 구할 수 있는가",
+    "killer_tier": "early",
     "cognitive_type": "계산"
   }
 }

@@ -1,14 +1,15 @@
 {
-  "text_sha": "446661c51809",
+  "text_sha": "1e965ae847a1",
   "meta": {
-    "searchable_text": "⋄를 포함한 식의 전개식에서 ⋄²의 계수를 구하시오.",
+    "searchable_text": "22. (x+\\frac{3}{x^{2}})^{5}의 전개식에서 x^{2}의 계수를 구하시오.[3점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "다항식",
     "concepts": [
-      "이항정리"
+      "이항정리",
+      "조합"
     ],
-    "exam_intent": "이항정리를 이용한 특정 항의 계수 계산",
+    "exam_intent": "이항정리를 이용해 특정 차수 항의 계수를 구하는 기본 문제",
     "killer_tier": "mid",
     "cognitive_type": "계산"
   }

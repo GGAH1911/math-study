@@ -1,16 +1,17 @@
 {
-  "text_sha": "61be0113d007",
+  "text_sha": "61bacf45d2cc",
   "meta": {
-    "searchable_text": "두 곡선이 만나는 두 점 $P_1(x_1, y_1)$, $P_2(x_2, y_2)$의 성질에 관한 보기 검증 문제",
+    "searchable_text": "21. 두 곡선 y=2^{x}과 y=-2x^{2}+2가 만나는 두 점을 (x_{1},y_{1}),\n(x2,y2)라 하자. x1<x2일 때, <보기>에서 옳은 것만을 있는\n대로 고른 것은? [4점]\n<보 기>\nㄱ. x_{2}>\\frac{1}{2}\nㄴ. y_{2}-y_{1}<x_{2}-x_{1}\nㄷ.\\frac{\\sqrt{2}}{2}<y_{1}y_{2}<1\n①ㄱ ②ㄱ, ㄴ ③ㄱ, ㄷ\n④ㄴ, ㄷ ⑤ㄱ, ㄴ, ㄷ",
     "format": "choice",
     "has_figure": false,
-    "unit": "이차곡선",
+    "unit": "지수함수와_로그함수",
     "concepts": [
-      "곡선의_교점",
-      "방정식의_해"
+      "지수함수",
+      "교점",
+      "부등식"
     ],
-    "exam_intent": "두 곡선의 교점 성질을 판단하는 능력",
-    "killer_tier": "mid",
+    "exam_intent": "지수함수와 이차함수의 교점 조건을 여러 부등식으로 판정",
+    "killer_tier": "killer",
     "cognitive_type": "응용"
   }
 }

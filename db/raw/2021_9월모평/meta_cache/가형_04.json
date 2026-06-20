@@ -1,16 +1,16 @@
 {
-  "text_sha": "7c1a16c920f8",
+  "text_sha": "37a80b8fa224",
   "meta": {
-    "searchable_text": "$\\sum_{n=1}^{\\infty}$ (급수식)의 값은?",
+    "searchable_text": "4.\\sum_{n=1}^{∞}\\frac{2}{n(n+2)}의 값은? [3점]\n① 1 ②\\frac{3}{2}③ 2 ④\\frac{5}{2}⑤ 3",
     "format": "choice",
     "has_figure": false,
     "unit": "수열의_극한",
     "concepts": [
       "무한급수",
-      "급수의_수렴",
-      "부분분수_분해"
+      "부분분수분해",
+      "텔레스코핑급수"
     ],
-    "exam_intent": "무한급수의 수렴값을 계산하기",
+    "exam_intent": "부분분수 분해와 텔레스코핑으로 무한급수의 수렴값을 구할 수 있는가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

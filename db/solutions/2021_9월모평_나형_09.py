@@ -1,20 +1,18 @@
 import math
-from math import sin, cos, pi, sqrt
 
-# 주어진 값
+# 정현법칙으로 BC 계산
+# BC/sin(A) = AB/sin(C)
+A_rad = math.radians(45)
+B_rad = math.radians(15)
+C_rad = math.radians(120)
 AB = 8
-angle_A = 45 * pi / 180
-angle_B = 15 * pi / 180
-angle_C = 120 * pi / 180
 
-# 정현법칙: BC/sin(A) = AB/sin(C)
-BC = AB * sin(angle_A) / sin(angle_C)
+BC = AB * math.sin(A_rad) / math.sin(C_rad)
 
-# 예상 답
-expected = 8 * sqrt(6) / 3
+# 정확한 값: 8√6/3
+expected = 8 * math.sqrt(6) / 3
 
-# 검증
-if abs(BC - expected) < 1e-10:
+if math.isclose(BC, expected, rel_tol=1e-9):
     print('VERIFY_PASS')
 else:
-    print('VERIFY_FAIL')
+    print(f'VERIFY_FAIL: BC={BC}, expected={expected}')

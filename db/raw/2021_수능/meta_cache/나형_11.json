@@ -1,16 +1,16 @@
 {
-  "text_sha": "c66275975113",
+  "text_sha": "6e68a250680e",
   "meta": {
-    "searchable_text": "정규분포 N(20, 5²)을 따르는 모집단에서 크기가 16인 표본을 임의추출하여 구한 표본평균의 기댓값을 계산",
+    "searchable_text": "11. 정규분포 N(20,5^{2})을 따르는 모집단에서 크기가 16인\n표본을 임의추출하여 구한 표본평균을 \\overline{X}라 할 때,\nE(\\overline{X)}+σ(\\overline{X)}의 값은? [3점]\n①\\frac{91}{4}②\\frac{89}{4}③\\frac{87}{4}④\\frac{85}{4}⑤\\frac{83}{4}",
     "format": "choice",
     "has_figure": false,
     "unit": "통계",
     "concepts": [
-      "표본분포",
-      "표본평균",
-      "정규분포"
+      "표본평균의_분포",
+      "정규분포",
+      "표준편차"
     ],
-    "exam_intent": "표본평균의 확률분포와 기댓값을 계산하는 능력 평가",
+    "exam_intent": "표본평균의 기댓값과 표준오차 계산 능력 평가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

@@ -1,17 +1,15 @@
 {
-  "text_sha": "28d7a4756674",
+  "text_sha": "f6b14cf652d1",
   "meta": {
-    "searchable_text": "모든 자연수 $n$에 대하여 $x$축 위의 점 $P_n$과 곡선 $y=x^3$ 위의 점 $Q_n$이 있다. 선분 $OP_n$과 선분 $P_nQ_n$이 서로 수직, 선분 $OQ_n$과 선분 $Q_nP_{n+1}$이 서로 수직이다. 점 $P_1$의 좌표가 $(a_1, 0)$일 때 삼각형 $OP_{n+1}Q_n$의 넓이 $S$를 구하는 과정. 점 $P_n$의 좌표를 $(a_n, 0)$이라 하자. 삼각형 $OP_nQ_n$과 삼각형 $Q_nP_nP_{n+1}$이 닮음이므로 $\\frac{OP_n}{P_nQ_n} = \\frac{P_nQ_n}{P_nP_{n+1}}$. 점 $Q_n$의 좌표 조건으로부터 $P_nP_{n+1}$ = (가). 삼각형 $OP_{n+1}Q_n$의 넓이 $S$ = (나). (가)의 수를 $a$, (나)의 식을 $b$라 할 때 $a^{8b}$의 값을 구하시오.",
+    "searchable_text": "16. 모든 자연수 n에 대하여 다음 조건을 만족시키는\nx축 위의 점 Pn과 곡선 y=\\sqrt{3x}위의 점 Qn이 있다.\n∙선분 OPn과 선분 PnQn이 서로 수직이다.\n∙선분 OQn과 선분 QnPn+1이 서로 수직이다.\n다음은 점 P_{1}의 좌표가 (1,0)일 때, 삼각형 OP_{n+1}Q_{n}의\n넓이 An을 구하는 과정이다. (단, O는 원점이다.)\n모든 자연수 n에 대하여 점 Pn의 좌표를 (an,0)이라 하자.\n\\overline{OP_{n+1}}=\\overline{OP_{n}}+\\overline{P_{n}P_{n+1}}이므로\na_{n+1}=a_{n}+\\overline{P_{n}P_{n+1}}\n이다. 삼각형 OP_{n}Q_{n}과 삼각형 Q_{n}P_{n}P_{n+1}이 닮음이므로\n\\overline{OP_{n}}:\\overline{P_{n}Q_{n}}=\\overline{P_{n}Q_{n}}:\\overline{P_{n}P_{n+1}}\n이고, 점 Qn의 좌표는 (a_{n},\\sqrt{3a_{n}})이므로\n\\overline{P_{n}P_{n+1}}= (가)\n이다. 따라서 삼각형 OPn+1Qn의 넓이 An은\nA_{n}=\\frac{1}{2}×( (나) )×\\sqrt{9n-6}\n이다.\n위의 (가)에 알맞은 수를 p, (나)에 알맞은 식을 f(n)이라 할 때,\np+f(8)의 값은? [4점]\n① 20 ② 22 ③ 24 ④ 26 ⑤ 28",
     "format": "choice",
-    "has_figure": false,
-    "unit": "도형의_성질",
+    "has_figure": true,
+    "unit": "닮음과_피타고라스",
     "concepts": [
-      "수직과_수선의_성질",
-      "도형의_닮음",
-      "좌표평면의_거리",
-      "반복_관계식"
+      "닮음",
+      "닮음비"
     ],
-    "exam_intent": "기하 조건으로부터 점의 반복 관계식을 유도하고 최종값을 계산",
+    "exam_intent": "닮음 조건으로 좌표 수열을 파악하고 도형 넓이를 계산하는 능력",
     "killer_tier": "mid",
     "cognitive_type": "응용"
   }

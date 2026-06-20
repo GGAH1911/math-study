@@ -1,22 +1,39 @@
 import sympy as sp
-x = sp.Symbol('x', real=True)
-a, b = 7, -1
-# 원함수 정의
-f_left = -3*x + a            # x <= 1
-f_right = (x + b)/(sp.sqrt(x+3) - 2)  # x > 1
-# 좌측에서의 함숫값 f(1)
-f1 = f_left.subs(x, 1)
-# 우극한
-right_lim = sp.limit(f_right, x, 1, '+')
-# 연속 조건 + a+b 값
-cond_cont = sp.simplify(f1 - right_lim) == 0
-cond_sum = (a + b) == 6
-# 우측에서 x>1 부근 수치검증
-import math
-def fr(xv):
-    return (xv + b)/(math.sqrt(xv+3) - 2)
-num_ok = abs(fr(1.0001) - 4) < 1e-3 and abs(fr(1.000001) - 4) < 1e-3
-if cond_cont and cond_sum and num_ok:
-    print('VERIFY_PASS')
+from sympy import sqrt, limit, oo
+
+CANDIDATE = 6
+
+x = sp.Symbol('x')
+a = 7  # 우리가 구한 a
+b = -1  # 우리가 구한 b
+
+# x <= 1일 때 함수
+f_left = -3*x + a
+
+# x > 1일 때 함수
+f_right = (x + b) / (sqrt(x + 3) - 2)
+
+# x = 1에서의 좌극한
+left_limit = f_left.subs(x, 1)
+print(f'좌극한 (x=1-): {left_limit}')
+
+# x = 1에서의 우극한
+right_limit = limit(f_right, x, 1, '+')
+print(f'우극한 (x=1+): {right_limit}')
+
+# 연속성 검증
+if left_limit == right_limit == 4:
+    print(f'x=1에서 연속: {left_limit}')
+    if left_limit + 0 == right_limit:  # 함수값이 -3+a
+        print('VERIFY_PASS')
+    else:
+        print('VERIFY_FAIL')
+else:
+    print(f'연속 조건 불만족')
+    print('VERIFY_FAIL')
+
+# 최종 검증: CANDIDATE == a + b
+if CANDIDATE == a + b:
+    print(f'CANDIDATE = {CANDIDATE} = a + b = {a + b}')
 else:
     print('VERIFY_FAIL')

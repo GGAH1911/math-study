@@ -186,7 +186,9 @@ export default defineConfig({
         allow: ['..', '/home/insung/Projects/math-study'],
       },
       // STABLE=1(학습용 안정 서버): docs/problems watch 제외 → 교정 배치가 md를 고쳐도 HMR full-reload가 안 일어나 학습 중 안 깜박. 새 교정본은 restart 때 반영.
-      ...(process.env.STABLE ? { watch: { ignored: ['**/docs/problems/**'] } } : {}),
+      // ★ docs/problems 는 vite root(web/) 밖(../docs/problems)이라 상대 glob 만으론 chokidar 가
+      //   절대경로 watch 를 못 잡는다 → 절대경로 glob 도 함께 줘서 확실히 제외(2026-06-20 4324 깜박 수정).
+      ...(process.env.STABLE ? { watch: { ignored: ['**/docs/problems/**', fileURLToPath(new URL('../docs/problems/**', import.meta.url))] } } : {}),
     },
     // mathlive 는 ChatPanel 의 '∑ 수식' 버튼을 처음 누를 때 동적 import
     // 된다. dev 서버 startup 시 vite가 정적 import 만 스캔하므로 mathlive

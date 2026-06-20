@@ -1,15 +1,15 @@
 {
-  "text_sha": "5d4c2daccdc7",
+  "text_sha": "1bcd8caedd24",
   "meta": {
-    "searchable_text": "⋄²/(4⋄⁶) 형태의 식이 포함된 전개식에서 ⋄³의 계수를 구하시오.",
+    "searchable_text": "22. (x+\\frac{4}{x^{2}})^{6}의 전개식에서 x^{3}의 계수를 구하시오. [3점]",
     "format": "numeric",
     "has_figure": false,
-    "unit": "식의_계산",
+    "unit": "다항식",
     "concepts": [
       "이항정리",
-      "전개식"
+      "계수_구하기"
     ],
-    "exam_intent": "이항식 전개에서 특정 항의 계수 계산",
+    "exam_intent": "이항정리를 이용한 다항식 전개식에서 특정 차수항의 계수 계산",
     "killer_tier": "mid",
     "cognitive_type": "계산"
   }

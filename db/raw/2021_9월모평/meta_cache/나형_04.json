@@ -1,16 +1,15 @@
 {
-  "text_sha": "5d4ae3876c95",
+  "text_sha": "ad6f7dff17e4",
   "meta": {
-    "searchable_text": "lim_{x→-1} \\frac{x^2 + 9x + 8}{x + 1}의 값은?",
+    "searchable_text": "4.\\lim_{x→-1}\\frac{x^{2}+9x+8}{x+1}의 값은? [3점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
     "format": "choice",
     "has_figure": false,
     "unit": "함수의_극한과_연속",
     "concepts": [
-      "함수의_극한",
-      "인수분해",
-      "약분"
+      "함수의극한",
+      "인수분해"
     ],
-    "exam_intent": "다항식 인수분해를 이용한 극한값 계산",
+    "exam_intent": "인수분해를 이용한 유리함수의 극한 계산",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

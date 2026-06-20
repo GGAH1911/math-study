@@ -1,15 +1,15 @@
 {
-  "text_sha": "9726aa826279",
+  "text_sha": "134bd34006fb",
   "meta": {
-    "searchable_text": "$AB = 6$, $AC = 10$인 삼각형 $ABC$가 있다. 선분 $AC$ 위에 점 $D$를 $AB = AD$가 되도록 잡는다. $BD = \\sqrt{15}$일 때, 선분 $BC$의 길이는?",
+    "searchable_text": "12.\\overline{AB}=6, \\overline{AC}=10인 삼각형 ABC가 있다. 선분 AC 위에\n점 D를 \\overline{AB}=\\overline{AD}가 되도록 잡는다. \\overline{BD}=\\sqrt{15}일 때,\n선분 BC의 길이는? [3점]\n①\\sqrt{37}②\\sqrt{38}③\\sqrt{39}④ 2\\sqrt{10}⑤\\sqrt{41}",
     "format": "choice",
     "has_figure": false,
-    "unit": "평면도형",
+    "unit": "삼각비",
     "concepts": [
       "코사인_법칙",
-      "삼각형의_변과_각"
+      "삼각형의_변"
     ],
-    "exam_intent": "코사인 법칙을 이용하여 주어진 조건의 삼각형 변의 길이를 구하기",
+    "exam_intent": "코사인 법칙으로 삼각형의 미지 변의 길이를 구하기",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

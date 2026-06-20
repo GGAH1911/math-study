@@ -1,9 +1,1 @@
-from sympy import symbols, diff
-x = symbols('x')
-f = x**3 + 7*x + 1
-f_prime = diff(f, x)
-result = f_prime.subs(x, 0)
-if result == 7:
-    print('VERIFY_PASS')
-else:
-    print('VERIFY_FAIL')
+import sympy as sp; x = sp.Symbol('x'); f = x**3 + 7*x + 1; f_prime = sp.diff(f, x); result = f_prime.subs(x, 0); print('VERIFY_PASS' if result == 7 else 'VERIFY_FAIL')

@@ -1,16 +1,17 @@
 {
-  "text_sha": "608da626ff3e",
+  "text_sha": "01e61b2552d5",
   "meta": {
-    "searchable_text": "수열 {a_n}이 모든 자연수 n에 대하여 점화식을 만족시킨다. a_3 = 2, a_6 = 19가 되도록 하는 모든 a_1의 값의 합은?",
+    "searchable_text": "21. 수열 {an}은 모든 자연수 n에 대하여\na_{n+2}=\\begin{cases}2a_{n}+a_{n+1} (a_{n}≤a_{n+1}) \\\\ a_{n}+a_{n+1} (a_{n}>a_{n+1})\\end{cases}\n을 만족시킨다. a3=2, a6=19가 되도록 하는 모든 a1의\n값의 합은? [4점]\n① -\\frac{1}{2}② -\\frac{1}{4}③ 0 ④\\frac{1}{4}⑤\\frac{1}{2}",
     "format": "choice",
     "has_figure": false,
     "unit": "수열",
     "concepts": [
-      "점화식",
-      "초기값_결정"
+      "조건부_점화식",
+      "역추적",
+      "경우의_수_분석"
     ],
-    "exam_intent": "점화식 조건으로부터 수열의 초기값 결정",
-    "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "exam_intent": "조건부 점화식에서 역추적으로 초기항 구하고 합 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
   }
 }

@@ -1,32 +1,31 @@
-from sympy import symbols, limit, diff, Function, oo
+from sympy import symbols, limit, diff, Function, Eq, solve
+
 x = symbols('x')
+a0, a1, b0, b1 = symbols('a0 a1 b0 b1', real=True)
 
-# 조건을 만족하는 함수 설정
-# f(x) = -3 + 6x + ax^2, g(x) = 3 - 3x + bx^2 (일반 형태)
-# 단순화를 위해: f(x) = -3 + 6x, g(x) = 3 - 3x
-f = lambda t: -3 + 6*t
-g = lambda t: 3 - 3*t
+# f(x) = a0 + a1*x + ..., g(x) = b0 + b1*x + ...
+# 조건: f(0) + g(0) = 0 → a0 + b0 = 0
+# 조건: f(0) = -3 → a0 = -3
+# 따라서 b0 = 3
 
-# 조건 검증
-lim1_num = f(x) + g(x)
-lim1 = limit(lim1_num / x, x, 0)
-print(f'조건 1 검증 (기댓값 3): {lim1}')
+a0_val = -3
+b0_val = 3
 
-lim2_num = f(x) + 3
-lim2_den = x * g(x)
-lim2 = limit(lim2_num / lim2_den, x, 0)
-print(f'조건 2 검증 (기댓값 2): {lim2}')
+# 첫 번째 조건: f'(0) + g'(0) = 3
+eq1 = Eq(a1 + b1, 3)
 
-# h'(0) 계산
-f0 = float(f(0))
-g0 = float(g(0))
-f_prime_0 = 6
-g_prime_0 = -3
+# 두 번째 조건: f'(0) / g(0) = 2
+eq2 = Eq(a1 / b0_val, 2)
 
-h_prime_0 = f_prime_0 * g0 + f0 * g_prime_0
-print(f'h\'(0) = {f_prime_0} * {g0} + {f0} * {g_prime_0} = {h_prime_0}')
+sol = solve([eq1, eq2], [a1, b1])
+a1_val = sol[a1]
+b1_val = sol[b1]
 
+# h'(0) = f'(0)*g(0) + f(0)*g'(0)
+h_prime_0 = a1_val * b0_val + a0_val * b1_val
+
+# 검증
 if h_prime_0 == 27:
     print('VERIFY_PASS')
 else:
-    print('VERIFY_FAIL')
+    print(f'VERIFY_FAIL: got {h_prime_0}')

@@ -1,17 +1,17 @@
 {
-  "text_sha": "f1106c065f31",
+  "text_sha": "0c47568d4f55",
   "meta": {
-    "searchable_text": "수열 $\\{a_n\\}$에 대하여 급수의 합이 10일 때, $\\lim_{n \\to \\infty} \\frac{2a_n^2 + \\cdots}{2a_n^3 + \\cdots}$의 값은?",
+    "searchable_text": "5. 수열 {an}에 대하여 \\sum_{n=1}^{∞}\\frac{a_{n}}{n}=10일 때, \\lim_{n→∞}\\frac{a_{n}+2a_{n}^{2}+3n^{2}}{a_{n}^{2}+n^{2}}의\n값은? [3점]\n① 3 ②\\frac{7}{2}③ 4 ④\\frac{9}{2}⑤ 5",
     "format": "choice",
     "has_figure": false,
     "unit": "수열의_극한",
     "concepts": [
       "급수의_수렴",
-      "수열의_극한",
-      "무한급수"
+      "극한의_계산",
+      "점근적_행동"
     ],
-    "exam_intent": "급수 수렴 조건으로부터 수열의 극한값을 구할 수 있는지 평가",
+    "exam_intent": "급수 수렴 조건에서 수열 극한값 구하기",
     "killer_tier": "early",
-    "cognitive_type": "계산"
+    "cognitive_type": "응용"
   }
 }

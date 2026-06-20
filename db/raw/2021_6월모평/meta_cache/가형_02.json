@@ -1,15 +1,15 @@
 {
-  "text_sha": "aa498c1736b0",
+  "text_sha": "2f4b58e09697",
   "meta": {
-    "searchable_text": "극한값 $\\lim_{n\\to\\infty} \\frac{n}{\\sqrt{9n} + \\sqrt{2n} + \\sqrt{12n} + \\sqrt{3n}}$의 값은?",
+    "searchable_text": "2.\\lim_{n→∞}(\\sqrt{9n^{2}+12n}-3n)의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
     "format": "choice",
     "has_figure": false,
     "unit": "수열의_극한",
     "concepts": [
-      "극한의_계산",
-      "무한대로의_수렴"
+      "무리식_극한",
+      "분자의_유리화"
     ],
-    "exam_intent": "극한 기본 계산: 무리식을 포함한 극한값 구하기",
+    "exam_intent": "무리식이 포함된 수열의 극한을 분자 유리화로 계산하는 능력",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

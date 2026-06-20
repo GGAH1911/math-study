@@ -1,16 +1,15 @@
 {
-  "text_sha": "6c226197d13e",
+  "text_sha": "de565667e5b4",
   "meta": {
-    "searchable_text": "곡선 $y = x^2$과 직선이 서로 다른 두 점 A, B에서 만날 때, 두 점 A, B에서 x축에 내린 수선의 발을 각각 C, D라 하자. $|AB| = 6\\sqrt{2}$이고 사각형 ACDB의 넓이가 30일 때, 직선의 상수값은?",
+    "searchable_text": "13. 곡선 y=2^{ax+b}과 직선 y=x가 서로 다른 두 점 A, B에서\n만날 때, 두 점 A, B에서 x축에 내린 수선의 발을 각각 C, D라\n하자. \\overline{AB}=6\\sqrt{2}이고 사각형 ACDB의 넓이가 30일 때, a+b의\n값은? (단, a, b는 상수이다.) [3점]\n①\\frac{1}{6}②\\frac{1}{3}③\\frac{1}{2}④\\frac{2}{3}⑤\\frac{5}{6}",
     "format": "choice",
-    "has_figure": true,
-    "unit": "이차곡선",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
     "concepts": [
-      "포물선",
-      "교점",
-      "현의길이"
+      "지수함수",
+      "지수방정식"
     ],
-    "exam_intent": "포물선의 현의 길이와 사각형 넓이로 매개변수 결정",
+    "exam_intent": "기하학적 조건으로부터 지수함수의 상수 결정",
     "killer_tier": "early",
     "cognitive_type": "응용"
   }

@@ -1,17 +1,17 @@
 {
-  "text_sha": "47f031625756",
+  "text_sha": "e25add8e6b1a",
   "meta": {
-    "searchable_text": "$\\angle A$가 주어진 각이고 $AB : AC = 3 : 1$인 삼각형 $ABC$가 있다. 삼각형 $ABC$의 외접원의 반지름의 길이가 7일 때, 선분 $AC$의 길이를 $x$라 하자. $x^2$의 값을 구하시오.",
+    "searchable_text": "28. ∠A=\\frac{π}{3}이고 \\overline{AB}:\\overline{AC}=3:1인 삼각형 ABC가 있다.\n삼각형 ABC의 외접원의 반지름의 길이가 7일 때,\n선분 AC의 길이를 k라 하자. k^{2}의 값을 구하시오.[4점]",
     "format": "numeric",
-    "has_figure": false,
-    "unit": "삼각비",
+    "has_figure": true,
+    "unit": "삼각함수",
     "concepts": [
       "정현법칙",
-      "외접원",
-      "코사인법칙"
+      "코사인법칙",
+      "외접원"
     ],
-    "exam_intent": "정현법칙과 외접원을 이용한 삼각형 변의 길이 계산",
+    "exam_intent": "정현·코사인 법칙을 활용한 삼각형 변의 길이 계산",
     "killer_tier": "killer",
-    "cognitive_type": "계산"
+    "cognitive_type": "응용"
   }
 }

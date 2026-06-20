@@ -1,17 +1,34 @@
-from sympy import symbols, erf, sqrt, N
+import math
 
-def phi(z):
-    '''표준정규분포의 누적분포함수: Φ(z) = (1 + erf(z/√2))/2'''
-    return (1 + erf(z/sqrt(2)))/2
+def Phi(x, mu=0.0, sigma=1.0):
+    return 0.5 * (1 + math.erf((x - mu) / (sigma * math.sqrt(2))))
 
-# P(Z ≤ 2) 계산
-z_target = 2
-result = float(N(phi(z_target), 15))
+# X ~ N(8, 3^2)
+P_X = Phi(8, 8, 3) - Phi(4, 8, 3)  # P(4<=X<=8)
 
-# 표에서 주어진 P(0 ≤ Z ≤ 2.0) = 0.4772이므로 P(Z ≤ 2) = 0.9772
-expected = 0.9772
+# Y ~ N(m, sigma^2): pick arbitrary positive sigma, solve m from the condition
+sigma = 3.0
 
-if abs(result - expected) < 0.0001:
+def cond(m):
+    # P(4<=X<=8) + P(Y>=8) - 1/2
+    P_Y_ge8 = 1 - Phi(8, m, sigma)
+    return P_X + P_Y_ge8 - 0.5
+
+# bisection for m on [-100,100] (cond increases in m)
+lo, hi = -100.0, 100.0
+for _ in range(300):
+    mid = (lo + hi) / 2
+    if cond(lo) * cond(mid) <= 0:
+        hi = mid
+    else:
+        lo = mid
+m = (lo + hi) / 2
+
+# target probability P(Y <= 8 + 2*sigma/3)
+target = Phi(8 + 2*sigma/3, m, sigma)
+
+CANDIDATE = 0.9772  # = 0.5 + 0.4772 (table z=2.0)
+if abs(target - CANDIDATE) < 1e-3:
     print('VERIFY_PASS')
 else:
-    print(f'VERIFY_FAIL: {result} vs {expected}')
+    print('VERIFY_FAIL')

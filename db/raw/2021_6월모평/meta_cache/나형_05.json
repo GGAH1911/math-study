@@ -1,16 +1,16 @@
 {
-  "text_sha": "33024a6e3892",
+  "text_sha": "066c25d25bfd",
   "meta": {
-    "searchable_text": "반지름의 길이가 15인 원에 내접하는 삼각형 ABC에서 $\\sin B = \\frac{7}{10}$일 때, 선분 AC의 길이는?",
+    "searchable_text": "5. 반지름의 길이가 15인 원에 내접하는 삼각형 ABC에서\nsinB=\\frac{7}{10}일 때, 선분 AC의 길이는? [3점]\n① 15 ② 18 ③ 21 ④ 24 ⑤ 27",
     "format": "choice",
-    "has_figure": true,
-    "unit": "삼각함수",
+    "has_figure": false,
+    "unit": "삼각비",
     "concepts": [
       "정현법칙",
       "원에_내접하는_삼각형"
     ],
-    "exam_intent": "정현법칙을 이용해 원에 내접하는 삼각형의 변의 길이를 구하기",
+    "exam_intent": "원에 내접하는 삼각형에서 정현법칙을 이용해 변의 길이를 구할 수 있는가",
     "killer_tier": "early",
-    "cognitive_type": "응용"
+    "cognitive_type": "계산"
   }
 }

@@ -1,16 +1,16 @@
 {
-  "text_sha": "c2a6cccb3616",
+  "text_sha": "92e7b7757e12",
   "meta": {
-    "searchable_text": "그림과 같이 $AB = 2$, $\\angle B = 90°$인 직각삼각형 $ABC$에서 중심이 $A$, 반지름의 길이가 $1$인 원이 두 선분 $AB$, $AC$와 만나는 점을 각각 $D$, $E$라 하자. 호 $DE$의 삼등분점 중 점 $D$에 가까운 점을 $F$라 하고, 직선 $AF$가 선분 $BC$와 만나는 점을 $G$라 하자. $\\angle BAG = \\theta$라 할 때, 삼각형 $ABG$의 내부와 부채꼴 $ADF$의 외부의 공통부분의 넓이를 $S$, 부채꼴 $AFE$의 넓이를 $T$라 하자. $40 \\times \\lim_{\\theta \\to 0} \\frac{S}{T}$의 값을 구하시오. (단, $0 < \\theta < \\frac{\\pi}{6}$)",
+    "searchable_text": "24. 그림과 같이 \\overline{AB}=2, ∠B=\\frac{π}{2}인 직각삼각형 ABC에서\n중심이 A, 반지름의 길이가 1인 원이 두 선분 AB, AC와\n만나는 점을 각각 D, E라 하자.\n호 DE의 삼등분점 중 점 D에 가까운 점을 F라 하고,\n직선 AF가 선분 BC와 만나는 점을 G라 하자.\n∠BAG=θ라 할 때, 삼각형 ABG의 내부와 부채꼴 ADF의\n외부의 공통부분의 넓이를 f(θ), 부채꼴 AFE의 넓이를 g(θ)라\n하자. 40×\\lim_{θ→0+}\\frac{f(θ)}{g(θ)}의 값을 구하시오. (단, 0<θ<\\frac{π}{6})[3점]",
     "format": "numeric",
     "has_figure": true,
-    "unit": "여러가지함수의_극한",
+    "unit": "함수의_극한과_연속",
     "concepts": [
-      "극한",
-      "부채꼴",
-      "삼각형"
+      "함수의_극한",
+      "부채꼴_넓이",
+      "기하학적_도형"
     ],
-    "exam_intent": "기하학적 상황에서 극한을 이용해 넓이 비의 극한값을 구하는 문제",
+    "exam_intent": "기하학적 도형의 극한값을 이용한 넓이 비 계산",
     "killer_tier": "mid",
     "cognitive_type": "응용"
   }

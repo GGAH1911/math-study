@@ -1,15 +1,17 @@
 {
-  "text_sha": "cef5b09bb523",
+  "text_sha": "cf8906c2104d",
   "meta": {
-    "searchable_text": "삼각형 ABC에서 각 A, 변 AB, AC가 주어진 조건을 만족할 때, 외접원의 반지름이 7이면 선분 AC의 길이는?",
+    "searchable_text": "10. ∠A=\\frac{π}{3}이고 \\overline{AB}:\\overline{AC}=3:1인 삼각형 ABC가 있다.\n삼각형 ABC의 외접원의 반지름의 길이가 7일 때,\n선분 AC의 길이는?[3점]\n① 2\\sqrt{5}②\\sqrt{21}③\\sqrt{22}④\\sqrt{23}⑤ 2\\sqrt{6}",
     "format": "choice",
     "has_figure": true,
-    "unit": "삼각함수",
+    "unit": "삼각비",
     "concepts": [
-      "정현법칙"
+      "정현법칙",
+      "코사인법칙",
+      "외접원"
     ],
-    "exam_intent": "정현법칙을 이용하여 외접원 반지름과 변의 길이 관계를 파악하는가",
+    "exam_intent": "정현법칙과 코사인 법칙을 이용하여 주어진 조건에서 삼각형의 변의 길이를 구할 수 있는지 평가한다.",
     "killer_tier": "early",
-    "cognitive_type": "계산"
+    "cognitive_type": "응용"
   }
 }

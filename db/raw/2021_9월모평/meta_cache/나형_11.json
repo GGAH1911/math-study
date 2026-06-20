@@ -1,16 +1,17 @@
 {
-  "text_sha": "eb8000fece81",
+  "text_sha": "92e71a8ba107",
   "meta": {
-    "searchable_text": "n이 자연수일 때, n에 대한 이차방정식의 두 근의 합을 S(n)이라 하자. $\\sum_{n=1}^{10} S(n)$의 값은?",
+    "searchable_text": "11. n이 자연수일 때, x에 대한 이차방정식\n(n^{2}+6n+5)x^{2}-(n+5)x-1=0\n의 두 근의 합을 an이라 하자. \\sum_{k=1}^{10}\\frac{1}{a_{k}}의 값은? [3점]\n① 65 ② 70 ③ 75 ④ 80 ⑤ 85",
     "format": "choice",
     "has_figure": false,
-    "unit": "수열",
+    "unit": "이차방정식",
     "concepts": [
-      "이차방정식의_근과_계수의_관계",
-      "수열의_합"
+      "근과_계수의_관계",
+      "이차방정식_근의_합",
+      "부분분수분해"
     ],
-    "exam_intent": "매개변수가 포함된 이차방정식의 근의 합을 수열로 보고 그 합을 계산",
-    "killer_tier": "mid",
+    "exam_intent": "이차방정식의 근과 계수의 관계를 이용해 수열의 합을 구하는 능력",
+    "killer_tier": "early",
     "cognitive_type": "계산"
   }
 }

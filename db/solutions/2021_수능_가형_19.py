@@ -1,28 +1,26 @@
 from itertools import product
 from fractions import Fraction
 
-# 주사위 3번 합이 10인 경우
-count_3dice_10 = 0
-for rolls in product(range(1, 7), repeat=3):
-    if sum(rolls) == 10:
-        count_3dice_10 += 1
+# 공이 3인 경우: 주사위 3번의 합이 10
+count_3 = 0
+for roll in product(range(1, 7), repeat=3):
+    if sum(roll) == 10:
+        count_3 += 1
 
-# 주사위 4번 합이 10인 경우
-count_4dice_10 = 0
-for rolls in product(range(1, 7), repeat=4):
-    if sum(rolls) == 10:
-        count_4dice_10 += 1
+prob_3_case = Fraction(2, 5) * Fraction(count_3, 216)
 
-# 확률 계산
-prob_3dice = Fraction(count_3dice_10, 216)
-prob_4dice = Fraction(count_4dice_10, 1296)
+# 공이 4인 경우: 주사위 4번의 합이 10
+count_4 = 0
+for roll in product(range(1, 7), repeat=4):
+    if sum(roll) == 10:
+        count_4 += 1
 
-prob_ball_3 = Fraction(2, 5)
-prob_ball_4 = Fraction(3, 5)
+prob_4_case = Fraction(3, 5) * Fraction(count_4, 1296)
 
-total_prob = prob_ball_3 * prob_3dice + prob_ball_4 * prob_4dice
+# 전체 확률
+total_prob = prob_3_case + prob_4_case
 
 if total_prob == Fraction(47, 540):
     print('VERIFY_PASS')
 else:
-    print('VERIFY_FAIL')
+    print(f'VERIFY_FAIL: got {total_prob}, expected 47/540')

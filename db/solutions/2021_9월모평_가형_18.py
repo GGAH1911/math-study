@@ -1,27 +1,27 @@
-import math
-from math import log
+import numpy as np
+from scipy import integrate
 
 def f(x):
-    return 0.0 if x<=0 else (log(1+x**4))**10
+    if x <= 0:
+        return 0
+    return np.log(1 + x**4)**10
 
-def h(t):
-    return f(t)*f(1-t)
+def g_value(x):
+    if x <= 0:
+        return 0
+    result, _ = integrate.quad(lambda t: f(t) * f(1 - t), 0, min(x, 1))
+    return result
 
-def integ(a,b,n=200000):
-    s=0.0; dx=(b-a)/n
-    for i in range(n):
-        t=a+(i+0.5)*dx
-        s+=h(t)*dx
-    return s
+# ㄱ 검증
+assert abs(g_value(-1)) < 1e-10
+assert abs(g_value(0)) < 1e-10
 
-# the=g over [0,1]; g for x<=0 is 0 since f(t)=0 there
-# ㄱ: g(-3)=0
-g_neg=integ(0,-3,200000)
-# ㄴ: g(1)=2 g(1/2)
-g1=integ(0,1)
-ghalf=integ(0,0.5)
-# ㄷ: max g = g(1) < 1
-okA = abs(g_neg)<1e-30
-okB = abs(g1-2*ghalf)<1e-30 or abs(g1-2*ghalf)<1e-12*max(1,abs(g1))
-okC = g1<1
-print('VERIFY_PASS' if (okA and okB and okC) else 'VERIFY_FAIL')
+# ㄴ 검증
+g_half = integrate.quad(lambda t: f(t) * f(1 - t), 0, 0.5)[0]
+g_1 = integrate.quad(lambda t: f(t) * f(1 - t), 0, 1)[0]
+assert np.isclose(g_1, 2 * g_half)
+
+# ㄷ 검증
+assert g_1 < 1
+
+print('VERIFY_PASS')

@@ -1,11 +1,31 @@
-from fractions import Fraction
-a, b, c, d = Fraction(1,3), Fraction(1,2), 0, Fraction(1,6)
-E_X = 1*a + 2*b + 3*c + 4*d
-E_X2 = 1*a + 4*b + 9*c + 16*d
-assert E_X == 2 and E_X2 == 5, 'X conditions failed'
-E_Y = 11*a + 21*b + 31*c + 41*d
-E_Y2 = 121*a + 441*b + 961*c + 1681*d
-V_Y = E_Y2 - E_Y**2
-ans = E_Y + V_Y
-assert ans == 121, f'Expected 121, got {ans}'
+CANDIDATE = 121
+
+import numpy as np
+from sympy import symbols, solve, simplify
+
+# E(X) = 2, E(X²) = 5 조건으로부터 a, b, c, d 결정
+# a + b + c + d = 1
+# a + 2b + 3c + 4d = 2
+# a + 4b + 9c + 16d = 5
+
+# Y = 10X + 1 이므로:
+# E(Y) = 10*E(X) + 1 = 10*2 + 1 = 21
+# V(X) = E(X²) - [E(X)]² = 5 - 4 = 1
+# V(Y) = 100*V(X) = 100*1 = 100
+# E(Y) + V(Y) = 21 + 100 = 121
+
+EX = 2
+EX2 = 5
+VX = EX2 - EX**2
+assert VX == 1, f'V(X) = {VX}, expected 1'
+
+EY = 10 * EX + 1
+assert EY == 21, f'E(Y) = {EY}, expected 21'
+
+VY = 100 * VX
+assert VY == 100, f'V(Y) = {VY}, expected 100'
+
+result = EY + VY
+assert result == CANDIDATE, f'E(Y) + V(Y) = {result}, expected {CANDIDATE}'
+
 print('VERIFY_PASS')

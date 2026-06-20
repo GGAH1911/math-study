@@ -1,18 +1,17 @@
 {
-  "text_sha": "888e0e136f1c",
+  "text_sha": "7b7427da5db4",
   "meta": {
-    "searchable_text": "곡선 $y = x^3 - 3x^2 + 2x + 2$ 위의 점 $A(0, 2)$에서의 접선과 수직이고 점 $A$를 지나는 직선의 절편은?",
+    "searchable_text": "9. 곡선 y=x^{3}-3x^{2}+2x+2 위의 점 A(0,2)에서의 접선과\n수직이고 점 A를 지나는 직선의 x절편은?[3점]\n① 4 ② 6 ③ 8 ④ 10 ⑤ 12",
     "format": "choice",
     "has_figure": false,
-    "unit": "도함수의_활용_심화",
+    "unit": "미분",
     "concepts": [
+      "도함수의_계산",
       "접선의_기울기",
-      "법선(수직선)",
-      "절편",
-      "미분"
+      "직선의_방정식"
     ],
-    "exam_intent": "주어진 점에서 접선과 법선의 관계를 이용하여 직선의 절편을 구하는 능력 평가",
+    "exam_intent": "도함수를 이용한 접선의 기울기 계산과 수직 기울기 관계 활용",
     "killer_tier": "early",
-    "cognitive_type": "개념"
+    "cognitive_type": "계산"
   }
 }

@@ -1,31 +1,34 @@
-from sympy import Rational, sqrt
+from fractions import Fraction
+import math
 
-a1 = Rational(3, 4)
-a2 = 1 / (1 - a1)
+x = Fraction(3, 4)
+a1 = x
+a2 = 1 / (1 - x)
 
-# Build terms step by step using the recurrences
-a = {1: a1, 2: a2}
+a = {1: float(a1)}
 
-def get(n):
-    if n in a:
-        return a[n]
-    # Use (가) or (나)
-    if n % 2 == 0:  # n = 2k -> a2*a_k + 1
-        k = n // 2
-        val = a2 * get(k) + 1
-    else:           # n = 2k+1 -> a2*a_k - 2
-        k = (n - 1) // 2
-        val = a2 * get(k) - 2
-    a[n] = val
-    return val
+def compute(n, memo=a):
+    if n in memo:
+        return memo[n]
+    if n % 2 == 0:
+        result = float(a2) * compute(n // 2, memo) + 1
+    else:
+        result = float(a2) * compute((n - 1) // 2, memo) - 2
+    memo[n] = result
+    return result
 
-a8 = get(8)
-a15 = get(15)
+for i in range(1, 16):
+    compute(i)
 
+a8 = compute(8)
+a15 = compute(15)
 diff = a8 - a15
-ratio = a8 / a1
 
-if diff == 63 and ratio == 92:
-    print('VERIFY_PASS')
+if abs(diff - 63) < 1e-9:
+    ratio = a8 / float(a1)
+    if abs(ratio - 92) < 1e-9:
+        print('VERIFY_PASS')
+    else:
+        print('VERIFY_FAIL')
 else:
-    print(f'VERIFY_FAIL: diff={diff}, ratio={ratio}')
+    print('VERIFY_FAIL')

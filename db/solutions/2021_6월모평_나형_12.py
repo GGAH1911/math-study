@@ -1,24 +1,30 @@
-import math
 from itertools import permutations
 
-# 블록 배치: 5개 단위를 원탁에 배치 (회전 동치)
-circular_arrangements = math.factorial(4)  # (5-1)!
+def are_neighbors_circular(arr, i, j):
+    """원형 배열에서 위치 i와 j가 이웃하는지 확인"""
+    n = len(arr)
+    return (i - j) % n == 1 or (j - i) % n == 1
 
-# 1학년 2명 블록 내 순열
-group1_perm = math.factorial(2)
+# 학생: (학년, 번호) 형태
+students = [('1', 1), ('1', 2), ('2', 1), ('2', 2), ('3', 1), ('3', 2), ('3', 3)]
 
-# 2학년 2명 블록 내 순열
-group2_perm = math.factorial(2)
+# 회전 고정: ('3', 1)을 위치 0에 고정
+fixed = ('3', 1)
+others = [s for s in students if s != fixed]
 
-# 전체 경우의 수
-total = circular_arrangements * group1_perm * group2_perm
+count = 0
+for perm in permutations(others):
+    arr = [fixed] + list(perm)
+    
+    # 1학년 학생의 위치
+    a_pos = [i for i, s in enumerate(arr) if s[0] == '1']
+    # 2학년 학생의 위치
+    b_pos = [i for i, s in enumerate(arr) if s[0] == '2']
+    
+    # 1학년이 이웃하고, 2학년도 이웃하는지 확인
+    if are_neighbors_circular(arr, a_pos[0], a_pos[1]):
+        if are_neighbors_circular(arr, b_pos[0], b_pos[1]):
+            count += 1
 
-print(f'원탁 배치 (5개 단위): {circular_arrangements}')
-print(f'1학년 블록 내 순열: {group1_perm}')
-print(f'2학년 블록 내 순열: {group2_perm}')
-print(f'전체 경우의 수: {total}')
-
-if total == 96:
-    print('VERIFY_PASS')
-else:
-    print('VERIFY_FAIL')
+assert count == 96, f"Expected 96, got {count}"
+print('VERIFY_PASS')

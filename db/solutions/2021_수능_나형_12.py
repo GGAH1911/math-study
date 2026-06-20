@@ -1,22 +1,22 @@
-from sympy import symbols, summation, expand
-
-n, k = symbols('n k', integer=True, positive=True)
+from sympy import symbols, summation, simplify
+n = symbols('n', integer=True, positive=True)
+k = symbols('k', integer=True, positive=True)
 
 # 일반항: a_n = n^2 - 3n + 3
-def a(n_val):
-    return n_val**2 - 3*n_val + 3
-
-# 검증: sum_{k=1}^{n}(a_k - a_{k+1}) = -n^2 + n
-for n_val in [1, 2, 3, 4, 5]:
-    telescope_sum = sum(a(k_val) - a(k_val + 1) for k_val in range(1, n_val + 1))
-    expected = -n_val**2 + n_val
-    assert telescope_sum == expected, f'Mismatch at n={n_val}'
+def a(m):
+    return m**2 - 3*m + 3
 
 # a_1 = 1 확인
-assert a(1) == 1, 'a_1 must equal 1'
+assert a(1) == 1, 'a_1 must be 1'
+
+# 조건 검증: sum(a_k - a_{k+1}) = -n^2 + n
+for test_n in range(1, 12):
+    total = sum(a(i) - a(i+1) for i in range(1, test_n+1))
+    expected = -test_n**2 + test_n
+    assert total == expected, f'Condition fails at n={test_n}'
 
 # a_11 계산
 result = a(11)
-assert result == 91, f'Expected 91, got {result}'
+assert result == 91, f'a_11 should be 91, got {result}'
 
 print('VERIFY_PASS')

@@ -1,7 +1,7 @@
 {
-  "text_sha": "5cdea31005f7",
+  "text_sha": "c06576485233",
   "meta": {
-    "searchable_text": "공차가 3인 등차수열 $\\{a_n\\}$에 대하여 $a_3 + a_7 = 64$일 때, $a_2$의 값은?",
+    "searchable_text": "7. 공차가 -3인 등차수열 {a_{n}}에 대하여\na_{3}a_{7}=64, a_{8}>0\n일 때, a2의 값은? [3점]\n① 17 ② 18 ③ 19 ④ 20 ⑤ 21",
     "format": "choice",
     "has_figure": false,
     "unit": "수열",
@@ -9,7 +9,7 @@
       "등차수열",
       "등차수열의_일반항"
     ],
-    "exam_intent": "등차수열의 조건으로부터 첫째항을 구하여 특정 항의 값 계산",
+    "exam_intent": "등차수열의 일반항과 조건을 이용한 첫째항 결정",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

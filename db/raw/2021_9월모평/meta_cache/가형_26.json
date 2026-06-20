@@ -1,17 +1,18 @@
 {
-  "text_sha": "953ab32979c2",
+  "text_sha": "47ab3980b0ff",
   "meta": {
-    "searchable_text": "두 이산확률변수 $X$, $Y$의 확률분포를 표로 나타낸다. $X$는 1, 2, 3, 4, $Y$는 11, 21, 31, 41의 값을 가진다. 조건: $E[X]=2$, $E[Y^2]=5$. $E[XY]$의 값을 구하시오.",
+    "searchable_text": "26. 두 이산확률변수 X, Y의 확률분포를 표로 나타내면 각각\n다음과 같다.\n합계\n\\begin{array}{cccccc}X & 1 & 2 & 3 & 4 \\\\ P(X=x) & a & b & c & d & 1 \\\\ Y & 11 & 21 & 31 & 41 \\\\ P(Y=y) & a & b & c & d & 1\\end{array}\n합계\nE(X)=2, E(X^{2})=5일 때, E(Y)+V(Y)의 값을 구하시오.\n[4점]",
     "format": "numeric",
     "has_figure": false,
     "unit": "확률",
     "concepts": [
-      "확률변수",
       "기댓값",
-      "결합확률분포"
+      "분산",
+      "확률분포",
+      "선형변환"
     ],
-    "exam_intent": "이산확률변수의 결합분포에서 기댓값 계산 능력 평가",
+    "exam_intent": "확률변수의 선형변환을 이용한 기댓값과 분산의 계산",
     "killer_tier": "mid",
-    "cognitive_type": "응용"
+    "cognitive_type": "계산"
   }
 }

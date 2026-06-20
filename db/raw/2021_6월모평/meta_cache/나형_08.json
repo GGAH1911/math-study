@@ -1,16 +1,16 @@
 {
-  "text_sha": "af1ac15626b7",
+  "text_sha": "bc23cb1201ec",
   "meta": {
-    "searchable_text": "다항식 $(x+y+z)^4$의 전개식에서 $y^2$의 계수는?",
+    "searchable_text": "8. 다항식 (1+2x)^{4}의 전개식에서 x^{2}의 계수는? [3점]\n① 12 ② 16 ③ 20 ④ 24 ⑤ 28",
     "format": "choice",
     "has_figure": false,
     "unit": "다항식",
     "concepts": [
       "이항정리",
-      "다항식의_전개"
+      "이항계수"
     ],
-    "exam_intent": "다항식 전개에서 특정 항의 계수 계산",
+    "exam_intent": "이항정리로 다항식 전개식의 특정 항 계수를 구하는 능력 평가",
     "killer_tier": "early",
-    "cognitive_type": "계산"
+    "cognitive_type": "응용"
   }
 }

@@ -1,17 +1,16 @@
 {
-  "text_sha": "7a61aea5c1b0",
+  "text_sha": "97dc61728943",
   "meta": {
-    "searchable_text": "자연수 $n$이 $2 \\leq n \\leq 11$일 때, $2^n \\cdot 9^n \\cdot 18$의 $n$제곱근 중에서 음의 실수가 존재하도록 하는 모든 $n$의 값의 합은?",
+    "searchable_text": "12. 자연수 n이 2≤n≤11일 때, -n^{2}+9n-18의 n제곱근\n중에서 음의 실수가 존재하도록 하는 모든 n의 값의 합은?\n[3점]\n① 31 ② 33 ③ 35 ④ 37 ⑤ 39",
     "format": "choice",
     "has_figure": false,
-    "unit": "지수와_로그",
+    "unit": "방정식과_부등식",
     "concepts": [
-      "복소수의_거듭제곱근",
-      "n제곱근의_개수와_성질",
-      "실근_조건"
+      "이차부등식",
+      "n제곱근의_정의"
     ],
-    "exam_intent": "n제곱근 중 음의 실수 존재 조건을 판단",
+    "exam_intent": "이차식의 부호와 n제곱근의 정의를 이용한 조건 판정",
     "killer_tier": "early",
-    "cognitive_type": "개념"
+    "cognitive_type": "응용"
   }
 }

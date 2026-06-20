@@ -1,25 +1,17 @@
-from fractions import Fraction
-import math
+from sympy import symbols, Eq, solve, Rational
 
-# 등비수열 정의
-a1 = Fraction(1, 8)
-r = 2
+a1 = Rational(1, 8)
+r = symbols('r')
 
-# 일반항
-def a_n(n):
-    return a1 * (r ** (n - 1))
+# a3/a2 = r = 2 조건
+a2 = a1 * r
+a3 = a1 * r**2
+sol = solve(Eq(a3 / a2, 2), r)
+r_val = sol[0]  # r = 2
 
-# 주어진 조건 검증
-a2 = a_n(2)
-a3 = a_n(3)
-ratio = a3 / a2
+a5 = a1 * r_val**4
 
-if ratio == 2:
-    # a5 계산
-    a5 = a_n(5)
-    if a5 == 2:
-        print('VERIFY_PASS')
-    else:
-        print('VERIFY_FAIL')
-else:
-    print('VERIFY_FAIL')
+# 검증
+assert a3.subs(r, r_val) / a2.subs(r, r_val) == 2, 'ratio check failed'
+assert a5 == 2, f'a5 expected 2, got {a5}'
+print('VERIFY_PASS')

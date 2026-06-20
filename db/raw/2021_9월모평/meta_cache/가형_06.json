@@ -1,12 +1,15 @@
 {
-  "text_sha": "3c022fde0d5f",
+  "text_sha": "2179dbd3441c",
   "meta": {
-    "searchable_text": "어떤 식의 값을 구하시오. [3점]",
+    "searchable_text": "6.\\int_{1}^{2}(x-1)e^{-x}dx의 값은? [3점]\n①\\frac{1}{e}-\\frac{2}{e^{2}}②\\frac{1}{e}-\\frac{1}{e^{2}}③\\frac{1}{e}\n④\\frac{2}{e}-\\frac{2}{e^{2}}⑤\\frac{2}{e}-\\frac{1}{e^{2}}",
     "format": "choice",
     "has_figure": false,
-    "unit": "식의_계산",
-    "concepts": [],
-    "exam_intent": "기본 수식 계산(분수/무리수) 능력 평가",
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분",
+      "정적분"
+    ],
+    "exam_intent": "부분적분을 이용한 정적분 계산",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

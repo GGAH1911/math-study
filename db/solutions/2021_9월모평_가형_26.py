@@ -1,26 +1,41 @@
-import sympy as sp
-from sympy import symbols, E, simplify
+CANDIDATE = 121
 
-# X와 Y의 확률 계산
-# Y = 10X + 1 관계를 확인하고
-# E(X) = 2, V(X) = 1임을 이용
+# 주어진 조건들을 확인
+from sympy import symbols, solve, Eq
 
-# E(X) = 2, E(X²) = 5 조건 확인
-E_X = 2
-E_X2 = 5
-V_X = E_X2 - E_X**2
+a, b, c, d = symbols('a b c d', real=True, positive=True)
 
-assert V_X == 1, f'V(X) should be 1, got {V_X}'
-assert E_X == 2, f'E(X) should be 2, got {E_X}'
+# 조건식들
+eq1 = Eq(a + b + c + d, 1)  # 확률의 합
+eq2 = Eq(1*a + 2*b + 3*c + 4*d, 2)  # E(X) = 2
+eq3 = Eq(1**2*a + 2**2*b + 3**2*c + 4**2*d, 5)  # E(X^2) = 5
 
-# Y = 10X + 1의 기댓값과 분산
-E_Y = 10 * E_X + 1
-V_Y = 100 * V_X
+# 조건을 만족하는 한 조해: a=1/2, b=0, c=1/2, d=0
+probs = {a: 0.5, b: 0, c: 0.5, d: 0}
 
-assert E_Y == 21, f'E(Y) should be 21, got {E_Y}'
-assert V_Y == 100, f'V(Y) should be 100, got {V_Y}'
+# E(X) 확인
+EX = sum([x_val * probs[prob] for x_val, prob in [(1,a), (2,b), (3,c), (4,d)]])
+assert abs(EX - 2) < 1e-10, f'E(X) check failed: {EX}'
 
-result = E_Y + V_Y
-assert result == 121, f'E(Y) + V(Y) should be 121, got {result}'
+# E(X^2) 확인
+EX2 = sum([x_val**2 * probs[prob] for x_val, prob in [(1,a), (2,b), (3,c), (4,d)]])
+assert abs(EX2 - 5) < 1e-10, f'E(X^2) check failed: {EX2}'
+
+# V(X) 계산
+VX = EX2 - EX**2
+assert abs(VX - 1) < 1e-10, f'V(X) check failed: {VX}'
+
+# Y = 10X + 1 의 관계에서
+# E(Y) = 10*E(X) + 1
+EY = 10 * EX + 1
+assert abs(EY - 21) < 1e-10, f'E(Y) calculation error'
+
+# V(Y) = 100 * V(X)
+VY = 100 * VX
+assert abs(VY - 100) < 1e-10, f'V(Y) calculation error'
+
+# 최종 답
+result = EY + VY
+assert abs(result - CANDIDATE) < 1e-10, f'Final answer mismatch: {result} != {CANDIDATE}'
 
 print('VERIFY_PASS')

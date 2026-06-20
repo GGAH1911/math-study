@@ -1,5 +1,6 @@
-import sympy as sp
-result = sp.Rational(8)**sp.Rational(1,3) * sp.Rational(4)**sp.Rational(3,2)
+from sympy import cbrt, simplify, Rational
+expr = cbrt(8) * 4**Rational(3,2)
+result = simplify(expr)
 if result == 16:
     print('VERIFY_PASS')
 else:

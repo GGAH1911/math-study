@@ -1,17 +1,16 @@
 {
-  "text_sha": "0e35fcbe0738",
+  "text_sha": "fc1d16173725",
   "meta": {
-    "searchable_text": "함수 $f(x) = x^2 - 4x + a$에 대하여 함수 $g(x) = \\int_0^x f(t)dt$가 닫힌구간 $[0, 1]$에서 증가하도록 하는 실수 $a$의 최솟값을 구하시오.",
+    "searchable_text": "28. 함수 f(x)=-x^{2}-4x+a에 대하여 함수\ng(x)=\\int_{0}^{x}f(t)dt\n가 닫힌구간 [0,1]에서 증가하도록 하는 실수 a의 최솟값을\n구하시오. [4점]",
     "format": "numeric",
     "has_figure": false,
-    "unit": "도함수의_활용_심화",
+    "unit": "정적분의_활용",
     "concepts": [
-      "단조성_증가조건",
-      "도함수_판정",
-      "매개변수_최적화"
+      "미적분_기본정리",
+      "함수의_증감"
     ],
-    "exam_intent": "매개변수 조건에서 함수의 단조증가 구간 판정과 최솟값 계산",
+    "exam_intent": "정적분의 기본정리로 적분함수의 증감을 도함수로 판정하는 능력 평가",
     "killer_tier": "killer",
-    "cognitive_type": "응용"
+    "cognitive_type": "개념"
   }
 }
