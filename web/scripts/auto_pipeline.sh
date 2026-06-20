@@ -36,7 +36,11 @@ ROUND=0
 while true; do
   ROUND=$((ROUND+1))
   echo "[$(date)] === corrector 회차 $ROUND 시작 ==="
-  CORR_CONC=10 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
+  # ★동시성 낮게(2): claude -p 시스템 프롬프트(~17.5k)는 첫 호출만 cache_creation(비쌈),
+  #   이후 cache_read(1/10 가격)로 재사용된다. 동시10은 캐시 워밍 전에 동시 시작 → 각자
+  #   cache_creation 14991를 새로 만들어 토큰 폭증(agy 400→30·claude 쿼터 급증의 주범).
+  #   2로 낮추면 첫 워밍 후 거의 다 캐시 적중 → 토큰 ~1/10.
+  CORR_CONC=2 node web/scripts/corrector_batch.mjs > /tmp/ingest_logs/corrector_run.log 2>&1
   tail -3 /tmp/ingest_logs/corrector_run.log
   REMAIN=$(grep -oP '남은대상 \K\d+' /tmp/ingest_logs/corrector_run.log | tail -1)
 
@@ -60,7 +64,7 @@ $SESS"
   echo "[$(date)] 쿼터 소진 추정(남은 ${REMAIN:-?}) — 10분마다 헬스체크"
   while true; do
     sleep 600
-    if timeout 60 claude -p "2+3 숫자만 답해." --model sonnet --output-format json 2>/dev/null | grep -q '[0-9]'; then
+    if timeout 60 claude -p "2+3 숫자만 답해." --model haiku --output-format json 2>/dev/null | grep -q '[0-9]'; then
       echo "[$(date)] agy 응답 확인 — 재개"; break
     fi
     echo "[$(date)] agy 아직 빈출력 — 10분 더 대기"
