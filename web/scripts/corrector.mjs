@@ -33,9 +33,9 @@ function agyCall(prompt, imgDir, retries = 2) {
   });
 }
 // claude(Sonnet) = --output-format json → {result:"..."} 래퍼. 자가치유용(별도 백엔드·쿼터).
-function claudeCall(prompt, imgDir) {
+function claudeCall(prompt, imgDir, model = 'sonnet') {
   return new Promise((res) => {
-    const c = spawn('claude', ['-p', prompt, '--model', 'sonnet', '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
     c.on('close', () => { try { res(JSON.parse(out).result || ''); } catch { res(''); } });
@@ -60,7 +60,7 @@ function validate(corrected, st) {
   const o = (corrected.match(/\{/g) || []).length, c = (corrected.match(/\}/g) || []).length;
   if (o !== c) f.push(`중괄호(${o}/${c})`);                              // LaTeX 균형
   const ratio = corrected.length / Math.max(1, st.length);
-  if (ratio < 0.5 || ratio > 2.0) f.push(`길이비(${ratio.toFixed(2)})`);  // 환각·누락
+  if (ratio < 0.4 || ratio > 3.0) f.push(`길이비(${ratio.toFixed(2)})`);  // 환각·누락. 상한 완화: 원본 텍스트레이어가 깨져 짧은 경우 corrected가 정상이어도 비율이 커짐(false positive 방지)
   if (/①/.test(st) && !/①/.test(corrected)) f.push('선택지누락');
   if (/\$/.test(corrected)) f.push('잔여$');                             // 방향A 위반
   return f;
@@ -98,6 +98,7 @@ const prompt = `너는 한국 수능 기출의 전사 텍스트를 원본 이미
 아래 "추출 전사"는 PDF 텍스트레이어에서 뽑아 깨진 기호·오타·누락이 있을 수 있다. 이미지대로 정확히 교정하라(수식 기호·보기 ①~⑤·숫자 정확히). 환각 금지 — 이미지에 있는 그대로.
 ★수식: LaTeX 명령(\\frac, \\overline, \\sqrt 등)은 쓰되 **$...$ 델리미터로 감싸지 마라**. 렌더러가 한글/수식을 자동 분리한다 — $ 를 넣으면 KaTeX가 깨진다.
 ★★전사에 {{FIG0}}·{{TABLE0}} 형태의 placeholder가 **이미 있으면** 그 자리·개수 그대로 두라(그림/표 자리). ★단, 전사에 없는 placeholder를 **새로 만들지 마라** — 이미지에 그림/표가 보여도 placeholder를 추가하지 말고, 전사에 있는 텍스트만 교정하라.
+★★placeholder가 가리키는 그림·표·(가)(나) 박스의 **내용을 본문 텍스트로 다시 쓰지 마라**. placeholder 토큰만 남기고 그 내용은 중복 서술 금지(렌더 시 그림/표로 대체되므로 본문에 또 있으면 이중 노출됨).
 ★★★출력은 아래 형식 그대로(JSON 절대 금지 — LaTeX 백슬래시가 JSON escape로 깨진다). 마커 줄은 정확히 이 글자로:
 ===FIXES===
 - <무엇을 왜 고쳤는지 한 줄>
@@ -111,13 +112,13 @@ ${st}
 Read 로 볼 것: ${img}`;
 
 // ② claude(Sonnet) 교정 → ③ 검증. (agy는 토큰 쿼터 한계로 1차에서 폐기 — 25콜에 소진.)
-console.log('② claude(Sonnet) 교정…');
-const out = await claudeCall(prompt, imgDir);
+console.log('② claude(Haiku) 교정…');
+const out = await claudeCall(prompt, imgDir, 'haiku');  // 1차 = haiku(쿼터 절약). 검증 실패 시만 sonnet 자가치유.
 if (!out.trim()) { console.log('claude 빈출력(한도/에러) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 한도(배치 멈춤)
 let parsed = parseCorrected(out);
 if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] claude 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
 let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
-let by = 'sonnet';
+let by = 'haiku';
 
 // ④ 자가치유: 검증 실패 → claude 재교정 → 재검증 (1차와 동일 백엔드지만 재시도로 일시 오류 흡수)
 if (fails.length) {
@@ -128,7 +129,7 @@ if (fails.length) {
   if (!fails2.length) { parsed = parsed2; fails = []; by = 'sonnet'; console.log('④ claude 자가치유 통과'); }
   else {
     mkdirSync(dirname(QLOG), { recursive: true });
-    appendFileSync(QLOG, `${round}_${subj}_${num}\tgemini:${fails.join('|')}\tsonnet:${fails2.join('|')}\n`);
+    appendFileSync(QLOG, `${round}_${subj}_${num}\t1차:${fails.join('|')}\t재시도:${fails2.join('|')}\n`);
     // 영구 격리 마커(반복 재시도·쿼터 낭비 차단) — 원인 수정 후 수동으로 corrector_quarantine 제거하면 재교정됨.
     if (!/^corrector_quarantine:/m.test(txt)) { txt = txt.replace(/\nsearchable_text:/, '\ncorrector_quarantine: true\nsearchable_text:'); writeFileSync(md, txt); }
     console.log(`④ Sonnet도 실패(${fails2.join(', ')}) — 격리(원본 유지 + corrector_quarantine 마커)`);
