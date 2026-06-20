@@ -55,10 +55,11 @@ const out = await claudeCall(prompt, imgDir, process.env.VERIFY_MODEL || 'sonnet
 const sec = ((Date.now() - t0) / 1000).toFixed(1);
 let res;
 try {
-  // issues 안에 LaTeX 백슬래시(\lim, \frac 등)가 들어오면 invalid escape 로 JSON.parse 가 깨진다
-  // (corrector 가 JSON 금지하고 마커 쓰는 이유와 동일). 유효 escape 외 백슬래시를 이스케이프 보정.
-  let _j = (out.match(/\{[\s\S]*\}/) || [''])[0].replace(/\\(?!["\\/bfnrtu])/g, '\\\\');
-  res = JSON.parse(_j);
+  // sonnet 은 대개 유효 JSON(\\lim 처럼 이미 이스케이프됨)을 준다 → raw parse 먼저.
+  //   무효 백슬래시 보정 replace 를 무조건 돌리면 정상 \\ 까지 \\\ 로 깨뜨려 parsefail 된다(verify_batch 와 동일 버그).
+  const _jraw = (out.match(/\{[\s\S]*\}/) || [''])[0];
+  try { res = JSON.parse(_jraw); }
+  catch { res = JSON.parse(_jraw.replace(/\\(?!["\\/bfnrtu])/g, '\\\\')); }
 } catch { res = { ok: null, issues: ['파싱실패:' + out.slice(0, 120)] }; }
 const issues = Array.isArray(res.issues) ? res.issues : [];
 
