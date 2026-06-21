@@ -382,9 +382,9 @@ def apply_md(round_, subj, num, figs, inls, tables, boxes=None):
         if pos < 0: pos = len(st)
         ins.append((pos, f'INL{i}'))
         _cur = pos
-    for i, b in enumerate(boxes):  # 박스: START=위 줄 끝 뒤, END=아래 줄 머리 앞(자기 줄). reconstruct 가 둘 사이를 recon-box.
-        ins.append((find_anchor(b['start']), f'BOX{i}_START'))
-        ins.append((find_anchor_before(b['end']), f'BOX{i}_END'))
+    # 박스 마커는 여기(교정 '전' raw 텍스트, 단순 앵커)서 넣지 않는다 — 교정 '후' 깨끗한 텍스트에 box_backfill.py
+    #   의 견고한 매핑(box_range: 경계·마커run·split_crammed·한글완화)으로 결정적 삽입한다. (find_anchor_before/boxes 미사용)
+    _ = (boxes, find_anchor_before)
     for pos, tag in sorted(ins, key=lambda x: x[0], reverse=True):  # 뒤에서부터(인덱스 안밀림)
         st = st[:pos] + f' {{{{{tag}}}}} ' + st[pos:]
     # 블록(FIG/TABLE/BOX)만 자기 줄로 분리. INL 은 본문 줄 중간에 그대로 둠(인라인 렌더).
