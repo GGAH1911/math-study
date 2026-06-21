@@ -55,7 +55,7 @@ async function gemmaCall(prompt, imgPath) {
     const res = await fetch(GEMMA_URL, {
       method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        model: 'mlx-community/gemma-4-12B-it-qat-4bit', max_tokens: 3000, temperature: 0,  // 1400→3000: 긴 킬러 출력이 ===END=== 전 잘려 파싱실패하던 주원인 차단
+        model: process.env.GEMMA_MODEL || 'mlx-community/gemma-4-26B-A4B-it-qat-4bit', max_tokens: 3000, temperature: 0,  // 26B-A4B(MoE) 기본·env로 토글. 1400→3000: 긴 킬러 출력 잘림 방지
         messages: [{ role: 'user', content: [
           { type: 'text', text: prompt },
           { type: 'image_url', image_url: { url: `data:image/png;base64,${b64}` } },
@@ -213,6 +213,7 @@ if (BACKEND === 'gemma') {
 } else if (BACKEND === 'agy') {
   console.log('② agy(Gemini) 재교정…');                 // 재교정 전용(gemma는 본교정에 전념 → 별 백엔드라 병렬)
   out = await agyCall(promptF, imgDir); by = 'gemini';
+  if (!out.trim()) { out = await claudeCall(promptF, imgDir, 'sonnet'); if (out.trim()) { by = 'sonnet'; console.log('   agy 쿼터소진 → sonnet 재교정 폴백'); } }  // agy 빈출력(쿼터소진) → sonnet 재교정(사용자 지정)
 } else if (BACKEND === 'or') {
   console.log('② OpenRouter gemma-4-26b:free 교정…');   // 3번째 병렬 레인(별도 무료풀, 429는 빈출력→재시도)
   out = await orCall(promptF, img); by = 'or-gemma26b';
