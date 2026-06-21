@@ -20,6 +20,7 @@ const RECORRECT_BACKEND = process.env.RECORRECT_BACKEND || 'agy';    // 재교�
 const DUAL = process.env.DUAL === '1';   // gemma+agy 1차 병렬 + agy 공유 재교정레인. agy 단일인스턴스(동시호출 충돌)라 재교정·1차를 agy 워커 1개가 번갈아.
 const OR_AVAILABLE = existsSync((process.env.HOME || '') + '/.config/math-study/openrouter.key');  // OpenRouter gemma-4-26b:free 레인(기본 off — 무료풀 429. OR_LANE=1로 켬)
 const GEMMA_PAR = Math.max(1, parseInt(process.env.GEMMA_PAR || '2', 10));  // 로컬 26b 동시 워커수(mlx continuous batching → ~N배). 32GB라 2 안전(검증)
+const CORRECT_ONLY = process.env.CORRECT_ONLY === '1';  // 1차(gemma 로컬·무료)만 — verify·재교정(sonnet=Claude)은 보류·나중 별도 배치(쿼터 분리)
 const MAXATT = Math.max(1, parseInt(process.env.MAXATT || '3', 10));
 const SKIP_TABLE = process.env.SKIP_TABLE === '1' || process.env.CLEAN_ONLY === '1';  // {{TABLE}} 보유 교정완료분 제외(재추출 배치 B용)
 const CHUNK = 5;
@@ -78,7 +79,7 @@ let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
 const orOn = process.env.OR_LANE === '1' && OR_AVAILABLE;
 const modeStr = DUAL
-  ? `교정 gemma×${GEMMA_PAR}(로컬26b)${orOn ? '+OR' : ''} ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(쿼터소진→sonnet)${orOn ? '+OR' : ''}`
+  ? (CORRECT_ONLY ? `교정 gemma×${GEMMA_PAR}(로컬26b·무료) — 검증·재교정(Claude) 보류` : `교정 gemma×${GEMMA_PAR}(로컬26b)${orOn ? '+OR' : ''} ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(쿼터소진→sonnet)${orOn ? '+OR' : ''}`)
   : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
 log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
@@ -92,7 +93,7 @@ function beat() {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // 전 시스템 유휴(3큐 비고 in-flight 0)일 때만 종료 — enqueue 는 항상 active-- 전이라 항목 유실 없음.
-const idle = () => correctQ.length === 0 && verifyQ.length === 0 && recorrectQ.length === 0 && cActive === 0 && vActive === 0 && gActive === 0;
+const idle = () => correctQ.length === 0 && cActive === 0 && (CORRECT_ONLY || (verifyQ.length === 0 && recorrectQ.length === 0 && vActive === 0 && gActive === 0));
 
 // ① 교정 워커(gemma): 미교정 → corrector.mjs(gemma) → 검증큐
 async function correctWorker() {
@@ -103,6 +104,7 @@ async function correctWorker() {
     const r = await run('node', ['scripts/corrector.mjs', p.round, p.subj, p.num], { CORR_BACKEND: CORRECT_BACKEND });
     if (stateOf(it.md) === 'quarantine') { failed++; log(`  ⚠ ${slug} 교정 격리`); }
     else if (r.code === 3) { correctQ.push(slug); await sleep(2000); }   // gemma 빈출력(부하) → 재시도
+    else if (CORRECT_ONLY) done++;                                       // 1차만 — verify 보류(corrector_done만, 검증은 나중 별도)
     else verifyQ.push(slug);                                             // 교정 완료 → 검증큐
     cActive--; beat();
   }
@@ -182,9 +184,11 @@ async function orLaneWorker() {
 
 await Promise.all(DUAL ? [
   ...Array.from({ length: GEMMA_PAR }, correctWorker),   // 로컬 26b ×GEMMA_PAR (mlx continuous batching → ~N배)
-  agyLaneWorker(),                                       // agy(쿼터소진→sonnet) 재교정 전용(1차는 gemma×2)
-  ...(orOn ? [orLaneWorker()] : []),                     // OR 레인 기본 off(무료풀 429), OR_LANE=1로 켬
-  ...Array.from({ length: PAR_V }, verifyWorker),
+  ...(CORRECT_ONLY ? [] : [                              // CORRECT_ONLY=1: 1차(gemma)만, verify·재교정(Claude) 보류
+    agyLaneWorker(),                                     // agy(쿼터소진→sonnet) 재교정 전용(1차는 gemma×2)
+    ...(orOn ? [orLaneWorker()] : []),                   // OR 레인 기본 off(무료풀 429), OR_LANE=1로 켬
+    ...Array.from({ length: PAR_V }, verifyWorker),
+  ]),
 ] : [
   ...Array.from({ length: PAR_C }, correctWorker),
   ...Array.from({ length: PAR_V }, verifyWorker),
