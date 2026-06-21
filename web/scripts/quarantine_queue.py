@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+# quarantine_queue.py — 격리(corrector_quarantine: true) 문제를 오케스트레이터(opus)가 직접 손교정하기 위한 큐 뷰.
+#   각 문제의 slug·타일이미지경로·격리사유·현재 searchable_text 를 출력. opus 가 이미지 보고 정확히 교정.
+import re, glob, os, sys, json
+REPO = '/home/insung/Projects/math-study'
+
+def tile_path(round_, subj, num):
+    # LLM 이미지 소비는 타일만 — tile_for_vision 우선, 없으면 images 통이미지(작은 문제는 동일).
+    for base in (f'{REPO}/db/raw/{round_}/tile_for_vision', f'{REPO}/db/raw/{round_}/images'):
+        for n in (f'{round_}_{subj}_{int(num):02d}', f'{round_}_{subj}_{num}'):
+            p = f'{base}/{n}.png'
+            if os.path.exists(p):
+                return p
+    return None
+
+def main():
+    qlog = {}
+    qf = '/tmp/ingest_logs/corrector_quarantine.log'
+    if os.path.exists(qf):
+        for line in open(qf, encoding='utf-8'):
+            parts = line.split('\t')
+            if parts: qlog[parts[0]] = line.strip()
+    out = []
+    for md in sorted(glob.glob(f'{REPO}/docs/problems/**/*.md', recursive=True)):
+        t = open(md, encoding='utf-8').read()
+        if not re.search(r'^corrector_quarantine:\s*true', t, re.M): continue
+        slug = os.path.basename(md)[:-3]
+        m = re.match(r'^(.+)_([가-힣A-Za-z]+)_(\d+)$', slug)
+        if not m: continue
+        round_, subj, num = m.group(1), m.group(2), m.group(3)
+        st = re.search(r'\nsearchable_text: \|\n((?:  .*\n?)*)', t)
+        out.append({
+            'slug': slug, 'md': md, 'tile': tile_path(round_, subj, num),
+            'reason': qlog.get(slug, '(사유 미기록)'),
+            'searchable_text': (st.group(1) if st else '').rstrip(),
+        })
+    if '--json' in sys.argv:
+        print(json.dumps(out, ensure_ascii=False, indent=2))
+    else:
+        print(f'격리 큐: {len(out)}건')
+        for o in out:
+            print(f"\n■ {o['slug']}\n  타일: {o['tile']}\n  사유: {o['reason']}")
+
+if __name__ == '__main__':
+    main()

@@ -80,6 +80,19 @@ function parseCorrected(out) {
 }
 // 검증 게이트 — 실패 사유 배열(빈 배열=통과).
 const PH = (s) => (s.match(/\{\{(?:(?:FIG|INL|TABLE)\d+|BOX\d+_(?:START|END))\}\}/g) || []).sort().join(',');
+// placeholder 화해: extract(st)의 placeholder 집합에 corrected 를 맞춘다 — gemma 가 추가한 backing 없는
+//   {{FIG/TABLE/BOX}}(extract 미감지·벡터 그래프 등)는 제거, gemma 가 누락한 건 끝에 복원. PH 게이트 노이즈 격리 차단.
+function reconcilePH(corrected, st) {
+  const RE = /\{\{(?:(?:FIG|INL|TABLE)\d+|BOX\d+_(?:START|END))\}\}/g;
+  const stSet = new Set(st.match(RE) || []), corrArr = corrected.match(RE) || [];
+  const corrSet = new Set(corrArr);
+  let out = corrected; const changed = [];
+  for (const ph of new Set(corrArr)) if (!stSet.has(ph)) { out = out.split(ph).join(''); changed.push('-' + ph); }   // 추가분 제거
+  for (const ph of stSet) if (!corrSet.has(ph)) { out = out.replace(/\s*$/, '') + '\n' + ph; changed.push('+' + ph); } // 누락분 복원
+  out = out.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  if (changed.length) console.log(`   placeholder 화해: ${changed.join(' ')}`);
+  return out;
+}
 function validate(corrected, st) {
   const f = [];
   if (!corrected || !corrected.trim()) return ['빈출력'];
@@ -173,6 +186,7 @@ if (BACKEND === 'gemma') {
 if (!out.trim()) { console.log('빈출력(한도/에러) — ①결정론만 반영'); process.exit(3); }  // exit 3 = 한도(배치 멈춤)
 let parsed = parseCorrected(out);
 if (!parsed && process.env.CORR_DEBUG) console.error('[DEBUG] 마커 파싱 실패. out 앞 600자:\n' + out.slice(0, 600) + '\n---끝---');
+if (parsed) parsed.corrected = reconcilePH(parsed.corrected, st);   // placeholder 노이즈 화해(격리 방지)
 let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
 
 // ④ 자가치유: 검증 실패 → 재교정 → 재검증 (gemma는 재시도, claude는 sonnet 승격)
@@ -182,6 +196,7 @@ if (fails.length) {
     : BACKEND === 'agy' ? await agyCall(promptF, imgDir)
     : await claudeCall(promptF, imgDir);
   const parsed2 = parseCorrected(out2);
+  if (parsed2) parsed2.corrected = reconcilePH(parsed2.corrected, st);   // 자가치유분도 화해
   const fails2 = parsed2 ? validate(parsed2.corrected, st) : ['파싱실패'];
   if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma') by = 'sonnet'; console.log('④ 자가치유 통과'); }
   else {
