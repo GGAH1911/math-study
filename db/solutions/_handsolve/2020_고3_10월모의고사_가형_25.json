@@ -1,0 +1,22 @@
+{
+  "slug": "2020_고3_10월모의고사_가형_25",
+  "round": "2020_고3_10월모의고사",
+  "subject": "가형",
+  "number": "25",
+  "gold": "64",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "64",
+  "best_steps": [
+    "신뢰구간 폭: $b - a = 2 \times 1.96 \times \\frac{\\sigma}{\\sqrt{n}}$",
+    "표준편차 $\\sigma = 1$을 대입: $b - a = \\frac{3.92}{\\sqrt{n}}$",
+    "조건 $100(b-a) = 49$에서: $\\frac{392}{\\sqrt{n}} = 49$",
+    "$\\sqrt{n} = 8$이므로 $n = 64$"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_가형_25.png"
+}

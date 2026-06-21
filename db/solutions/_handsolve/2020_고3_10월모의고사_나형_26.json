@@ -1,0 +1,23 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_26",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "26",
+  "gold": "10",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "10",
+  "best_steps": [
+    "$\\tan(nx - \\frac{\\pi}{2}) = -\\cot(nx)$이므로 교점 조건은 $\\cot(nx) = x$",
+    "$n=2$일 때: $\\cot(2x) = x$는 $x \\in (-\\pi, -\\frac{\\pi}{2})$, $(-\\frac{\\pi}{2}, 0)$, $(0, \\frac{\\pi}{2})$, $(\\frac{\\pi}{2}, \\pi)$에서 각각 1개씩 총 4개의 해를 가짐",
+    "$n=3$일 때: $\\cot(3x) = x$는 6개의 부분구간에서 각각 1개씩 총 6개의 해를 가짐",
+    "$a_2 + a_3 = 4 + 6 = 10$"
+  ],
+  "trace": [
+    "haiku-text:text-fail",
+    "haiku:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_26.png"
+}

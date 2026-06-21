@@ -1,17 +1,14 @@
-"""2020 고3 10월 학력평가 나형 2번 — 중복순열 + 중복조합 (직접 검증기).
-
-문제: ₄Π₂ + ₄H₂ 의 값은?  (보기 ① 22 ② 24 ③ 26 ④ 28 ⑤ 30)  답: 26 (보기③)
-  · ₄Π₂ (중복순열) = 4² = 16
-  · ₄H₂ (중복조합) = C(4+2-1, 2) = C(5, 2) = 10
-  · 합 = 16 + 10 = 26
-
-주의: searchable_text 가 ₄Π₂(중복순열 Π)를 ₄P₂(순열 P)로 오전사했던 문항.
-      이미지 기준 ₄Π₂ 가 정답이며, ₄P₂(=12)로 풀면 22(보기①)가 나와 틀린다.
-"""
 from sympy import binomial
 
-P = 4**2            # ₄Π₂ 중복순열: 4개에서 중복 허용 2개 순서 = 4²
-H = binomial(5, 2)  # ₄H₂ 중복조합: C(4+2-1, 2) = C(5, 2)
-result = P + H      # 16 + 10 = 26
-
-print('VERIFY_PASS' if result == 26 else f'VERIFY_FAIL ({result})')
+n, r = 4, 2
+# 중복순열 nПr = n^r
+Pi = n**r
+# 중복조합 nHr = C(n+r-1, r)
+H = binomial(n + r - 1, r)
+result = Pi + H
+expected = 26
+print('Pi =', Pi, 'H =', H, 'sum =', result)
+if result == expected:
+    print('VERIFY_PASS')
+else:
+    print('VERIFY_FAIL')

@@ -1,0 +1,25 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_27",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "27",
+  "gold": "84",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "84",
+  "best_steps": [
+    "조건 (가) $a+b+c=14$ 만 만족하는 음이 아닌 정수 해의 개수: $\\binom{16}{2}=120$",
+    "포함-배제 원리 적용: $A = \\{a=2\\}$, $B = \\{b=2\\}$, $C = \\{c=2\\}$",
+    "$|A| = |B| = |C| = 13$ (각각 다른 두 변수의 합이 12)",
+    "$|A \\cap B| = |A \\cap C| = |B \\cap C| = 1$ (세 번째 변수 결정)",
+    "$|A \\cap B \\cap C| = 0$ (합이 6 ≠ 14)",
+    "$|A \\cup B \\cup C| = 13+13+13-1-1-1+0 = 36$",
+    "조건 (나) 만족 경우의 수: $120 - 36 = 84$"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_27.png"
+}

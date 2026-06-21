@@ -1,31 +1,34 @@
 import numpy as np
-from sympy import *
+from scipy.optimize import fsolve
 
-CANDIDATE = pi
+def f1(x):
+    return np.sin(x)
 
-# 주어진 범위
-x_vals = np.linspace(0, 2*np.pi - 0.001, 10000)
+def f2(x):
+    return np.cos(x + np.pi/2) + 1
 
-# 두 함수 정의
-y1 = np.sin(x_vals)
-y2 = np.cos(x_vals + np.pi/2) + 1
+def equation(x):
+    return f1(x) - f2(x)
 
-# 교점 찾기: sin(x) = -sin(x) + 1 => sin(x) = 0.5
-x_sym = symbols('x', real=True)
-eq = Eq(sin(x_sym), Rational(1,2))
+# 0 <= x < 2π 범위에서 교점 찾기
+x_range = np.linspace(0, 2*np.pi - 0.001, 100)
+y1 = f1(x_range)
+y2 = f2(x_range)
 
-# [0, 2π) 범위에서의 해
-sol1 = pi/6
-sol2 = 5*pi/6
+# 부호 변화를 찾아서 정확한 근 구하기
+roots = []
+for i in range(len(x_range) - 1):
+    if equation(x_range[i]) * equation(x_range[i+1]) < 0:
+        root = fsolve(equation, x_range[i])[0]
+        if 0 <= root < 2*np.pi and not any(abs(root - r) < 1e-6 for r in roots):
+            roots.append(root)
 
-# 교점 검증
-for x_val in [sol1, sol2]:
-    y_sin = sin(x_val)
-    y_cos = cos(x_val + pi/2) + 1
-    assert abs(float(y_sin - y_cos)) < 1e-10, f'교점 불일치: x={x_val}'
+roots.sort()
+sum_x = sum(roots)
 
-# 합 계산
-sum_x = sol1 + sol2
-assert sum_x == CANDIDATE, f'합이 맞지 않음: {sum_x} != {CANDIDATE}'
-
-print('VERIFY_PASS')
+# π와의 비교
+pi = np.pi
+if abs(sum_x - pi) < 1e-9:
+    print('VERIFY_PASS')
+else:
+    print('VERIFY_FAIL')

@@ -1,24 +1,19 @@
-from sympy import *
+from fractions import Fraction
+import math
 
 def f(m):
-    """(가): (-1)^m / (m+1)"""
-    return Rational((-1)**m, m + 1)
+    return Fraction((-1)**m, m+1)
 
 def g(m):
-    """(나): m!"""
-    return factorial(m)
+    return math.factorial(m)
 
 def h(m):
-    """(다): m+1"""
     return m + 1
 
-numerator = g(3) + h(3)
-denominator = f(4)
-expression = numerator / denominator
-CANDIDATE = 50
-result = simplify(expression)
+result = (g(3) + h(3)) / f(4)
+expected = 50
 
-if result == CANDIDATE:
-    print("VERIFY_PASS")
+if result == expected:
+    print('VERIFY_PASS')
 else:
-    print("VERIFY_FAIL")
+    print(f'VERIFY_FAIL: got {result}, expected {expected}')

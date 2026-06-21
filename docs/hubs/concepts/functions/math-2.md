@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-06-18
-updated: 2026-06-18
+created: 2026-06-20
+updated: 2026-06-20
 hub_type: concepts-grade
 domain: functions
 grade: math-2

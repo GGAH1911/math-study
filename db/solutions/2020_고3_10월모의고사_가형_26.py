@@ -1,41 +1,31 @@
+import sympy as sp
+from sympy import sqrt, limit, oo
+
 CANDIDATE = 5
-from sympy import *
 
-n = symbols('n', positive=True)
+n = sp.Symbol('n', positive=True, integer=True)
 
-# Points
-An = Matrix([n, 0])
-Bn = Matrix([n, 3])
-P = Matrix([1, 0])
-O = Matrix([0, 0])
+# 거리 계산
+PC_n = 3/n
+OB_n = sqrt(n**2 + 9)
+OA_n = n
 
-# Distances
-OAn = sqrt((An - O).dot(An - O))  # = n
-OBn = sqrt((Bn - O).dot(Bn - O))  # = sqrt(n^2+9)
+# 극한 계산
+numerator = PC_n
+denominator = OB_n - OA_n
 
-# Line OBn: y = (3/n)*x
-# Intersection with x=1
-Cn_y = Rational(3, 1) / n * 1
-Cn = Matrix([1, Cn_y])
+limit_value = limit(numerator / denominator, n, oo)
 
-# PCn length
-PCn = sqrt((Cn - P).dot(Cn - P))  # = 3/n
+# 극한값이 2/3인지 확인
+expected = sp.Rational(2, 3)
 
-# Numerator and denominator
-numerator = PCn
-denominator = OBn - OAn
-
-# Compute limit
-ratio = simplify(numerator / denominator)
-lim_val = limit(ratio, n, oo)
-print('limit =', lim_val)
-
-# Check p+q
-q_val = Rational(2)
-p_val = Rational(3)
-pq_sum = p_val + q_val
-
-if lim_val == Rational(2, 3) and pq_sum == CANDIDATE:
-    print('VERIFY_PASS')
+if limit_value == expected:
+    p = 3
+    q = 2
+    result = p + q
+    if result == CANDIDATE:
+        print('VERIFY_PASS')
+    else:
+        print('VERIFY_FAIL')
 else:
     print('VERIFY_FAIL')

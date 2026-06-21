@@ -1,0 +1,22 @@
+{
+  "slug": "2020_고3_10월모의고사_가형_23",
+  "round": "2020_고3_10월모의고사",
+  "subject": "가형",
+  "number": "23",
+  "gold": "300",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "300",
+  "best_steps": [
+    "이항분포 $B(n, p)$의 분산 공식: $V(X) = np(1-p)$",
+    "$p = \\frac{1}{3}$을 분산 공식에 대입: $n \\cdot \\frac{1}{3} \\cdot \\frac{2}{3} = 200$",
+    "$n \\cdot \\frac{2}{9} = 200$에서 $n = 900$",
+    "기댓값: $E(X) = np = 900 \\cdot \\frac{1}{3} = 300$"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_가형_23.png"
+}

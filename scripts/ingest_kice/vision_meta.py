@@ -26,10 +26,12 @@ from pathlib import Path
 
 _SCRIPTS = Path(__file__).parent.parent
 sys.path.insert(0, str(_SCRIPTS / 'ingest_kice'))
+sys.path.insert(0, str(_SCRIPTS))
 try:
     from ingest_round import claude_p, load_concept_index  # type: ignore
+    from tiling import vision_paths  # 큰 문제는 타일로 분할해 vision 입력(통PNG는 vision 다운스케일로 글자 뭉개짐 → 빈응답/타임아웃)
 except Exception as e:
-    print(f'failed to import claude_p / load_concept_index: {e}', file=sys.stderr)
+    print(f'failed to import claude_p / load_concept_index / vision_paths: {e}', file=sys.stderr)
     raise
 
 
@@ -178,15 +180,22 @@ def extract_metadata(image_path: Path, units_index: dict[str, list[str]],
                 pass
 
     units_str = _format_units_for_prompt(units_index)
-    abs_path = image_path.absolute()
-    base_user = f"""이미지: {abs_path}
+    tiles, is_tiled = vision_paths(image_path)   # 큰 문제는 타일로 분할(통PNG 다운스케일 방지)
+    if is_tiled:
+        listing = '\n'.join(f'  {i + 1}. {t.absolute()}' for i, t in enumerate(tiles))
+        img_ref = (f"이 문제는 세로로 긴 이미지라 {len(tiles)}개 타일로 분할돼 있다. 아래 타일을 "
+                   f"위→아래 순서로 **모두** Read 해 하나의 연속된 문제로 이어붙여 읽어라"
+                   f"(타일 경계는 약간 겹쳐 있으니 중복 내용은 무시):\n{listing}")
+        add_dir = str(tiles[0].absolute().parent)
+    else:
+        img_ref = f'이미지: {image_path.absolute()}'
+        add_dir = str(image_path.absolute().parent)
+    base_user = f"""{img_ref}
 
 사용 가능한 unit (이 중 하나를 선택):
 {units_str}
 
 위 JSON을 출력하라."""
-
-    add_dir = str(abs_path.parent)
     last_err = None
     for attempt in range(3):
         user = base_user

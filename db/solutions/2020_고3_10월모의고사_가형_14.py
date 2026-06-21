@@ -1,18 +1,27 @@
 import numpy as np
 from scipy import integrate
-from sympy import *
 
-CANDIDATE = -1
+def f(x):
+    return np.cos(np.pi/2 + x)
 
-# 정적분 계산: ∫₀^π (x/π)sin(x) dx
-x = symbols('x')
-integrand = (x / pi) * sin(x)
-result = integrate(integrand, (x, 0, pi))
+def integrand(x):
+    return x * np.sin(x)
 
-# 극한값: -∫₀^π (x/π)sin(x) dx
-limit_value = -float(result)
+# 직접 적분 계산
+integral_value, _ = integrate.quad(integrand, 0, np.pi)
+result = -integral_value / np.pi
 
-if abs(limit_value - CANDIDATE) < 1e-10:
+print(f'Integral of x*sin(x) from 0 to pi: {integral_value}')
+print(f'Result: {result}')
+print(f'Expected: -1')
+print(f'Match: {np.isclose(result, -1)}')
+
+# 수치적 리만 합 검증
+for n in [100, 1000, 10000, 100000]:
+    riemann_sum = sum((k * np.pi / n**2) * np.cos(np.pi/2 + k*np.pi/n) for k in range(1, n+1))
+    print(f'n={n}: Riemann sum = {riemann_sum:.8f}')
+
+if np.isclose(result, -1):
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

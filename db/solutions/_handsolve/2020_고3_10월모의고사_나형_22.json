@@ -1,0 +1,23 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_22",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "22",
+  "gold": "9",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "9",
+  "best_steps": [
+    "부정적분 공식 적용: $\\int x^2 dx = \\frac{x^3}{3} + C$",
+    "미적분학 기본정리 적용: $\\int_0^3 x^2 dx = \\left[\\frac{x^3}{3}\\right]_0^3$",
+    "상한 대입: $\\frac{3^3}{3} = \\frac{27}{3} = 9$",
+    "하한 대입: $\\frac{0^3}{3} = 0$",
+    "최종 계산: $9 - 0 = 9$"
+  ],
+  "trace": [
+    "haiku:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_22.png"
+}

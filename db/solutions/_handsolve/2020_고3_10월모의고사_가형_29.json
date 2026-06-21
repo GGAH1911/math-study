@@ -1,0 +1,23 @@
+{
+  "slug": "2020_고3_10월모의고사_가형_29",
+  "round": "2020_고3_10월모의고사",
+  "subject": "가형",
+  "number": "29",
+  "gold": "525",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "killer",
+  "reason": "no-solver:gold-match",
+  "best_answer": "525",
+  "best_steps": [
+    "삼각형 부등식 조건: a + b > c (다른 부등식은 a < b < c로 자동만족)",
+    "c를 고정하고 각 c에 대해 (a,b) 개수를 계산",
+    "a < c/2일 때 b의 개수: a-1, a ≥ c/2일 때 b의 개수: c-a-1",
+    "c=2k(짝수)일 때 개수: (k-1)², c=2k+1(홀수)일 때 개수: k(k-1)",
+    "c=3~20에서 Σ개수 = (1²+2²+...+9²) + (0+2+6+...+72) = 285 + 240 = 525"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_가형_29.png"
+}

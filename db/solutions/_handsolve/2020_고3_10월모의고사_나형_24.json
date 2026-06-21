@@ -1,0 +1,25 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_24",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "24",
+  "gold": "24",
+  "format": "numeric",
+  "has_figure": true,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "24",
+  "best_steps": [
+    "그래프에서 $f(x)$의 불연속점: $x = -1$에서 $f(-1) = -1$이지만 $\\lim_{x \\to -1^+} f(x) = 1$",
+    "그래프에서 $f(x)$의 불연속점: $x = 1$에서 $\\lim_{x \\to 1^-} f(x) = 1$이지만 $f(1) = 2$",
+    "$h(x) = f(x)g(x)$가 $x = -1$에서 연속이려면, 서로 다른 극한값을 가진 $f(x)$의 곱이 같아야 하므로 $g(-1) = 0$",
+    "$h(x) = f(x)g(x)$가 $x = 1$에서 연속이려면, 마찬가지로 $g(1) = 0$",
+    "최고차항의 계수가 1인 이차함수이고 $g(-1) = 0, g(1) = 0$이므로 $g(x) = (x+1)(x-1) = x^2 - 1$",
+    "$g(5) = 25 - 1 = 24$"
+  ],
+  "trace": [
+    "haiku-text:text-fail",
+    "haiku:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_24.png"
+}

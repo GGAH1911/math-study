@@ -1,0 +1,25 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_29",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "29",
+  "gold": "135",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "mid",
+  "reason": "no-solver:gold-match",
+  "best_answer": "135",
+  "best_steps": [
+    "각 시행에서 P(+1)=1/4, P(-1)=1/4, P(0)=1/2",
+    "4→6으로 가려면 순증가 +2 필요",
+    "$a - b = 2$, $a + b + c = 4$에서 (a,b,c) = (2,0,2) 또는 (3,1,0)",
+    "Case 1: +1이 2번, 0이 2번 → 유효 수열 3가지",
+    "Case 2: +1이 3번, -1이 1번 → 유효 수열 2가지",
+    "전체 확률 = 3×(1/64) + 2×(1/256) = 7/128",
+    "p=128, q=7 ⟹ p+q=135"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_29.png"
+}

@@ -1,0 +1,27 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_28",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "28",
+  "gold": "160",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "killer",
+  "reason": "no-solver:gold-match",
+  "best_answer": "160",
+  "best_steps": [
+    "함수를 인수분해: $f(x) = x(2x^2 - 3(a+1)x + 6a)$",
+    "이차식의 판별식: $\\Delta = 3(3a-1)(a-3)$",
+    "서로 다른 세 실근 조건: $(3a-1)(a-3) > 0$ ⟹ 자연수 a에서 $a \\geq 4$",
+    "따라서 $a_n = n + 3$ (n = 1, 2, 3, ...)",
+    "도함수: $f'(x) = 6(x-1)(x-a)$에서 극값은 x=1, x=a",
+    "$f(1) = 3a-1$ (극댓값), $f(a) = a^2(3-a) < 0$ (a > 3일 때)",
+    "$a_n = n+3$일 때, $b_n = 3(n+3) - 1 = 3n + 8$",
+    "$b_n - a_n = 3n + 8 - n - 3 = 2n + 5$",
+    "$\\sum_{n=1}^{10}(2n+5) = 2\\sum_{n=1}^{10}n + 50 = 110 + 50 = 160$"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_28.png"
+}

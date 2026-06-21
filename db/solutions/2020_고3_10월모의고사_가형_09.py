@@ -1,36 +1,27 @@
 import sympy as sp
-import numpy as np
+from sympy import exp, ln, diff, solve
 
-CANDIDATE = -8
-
-# f(x) = 1/(e^x + 2) 정의
+# 함수 f(x) 정의
 x = sp.Symbol('x')
-f = 1 / (sp.exp(x) + 2)
+f = 1 / (exp(x) + 2)
 
 # f'(x) 계산
-f_prime = sp.diff(f, x)
+f_prime = diff(f, x)
 
-# g'(1/4)를 구하기 위해 먼저 g(1/4) 구하기
-# f(a) = 1/4인 a를 찾아야 함
-# 1/(e^a + 2) = 1/4
-# e^a + 2 = 4
-# e^a = 2
-# a = ln(2)
-
-a = sp.ln(2)
+# g(1/4)를 구하기: f(a) = 1/4인 a를 찾기
+eq = f - sp.Rational(1, 4)
+a_val = solve(eq, x)[0]  # ln(2)
 
 # f'(ln(2)) 계산
-f_prime_at_a = f_prime.subs(x, a)
-f_prime_at_a_simplified = sp.simplify(f_prime_at_a)
+f_prime_at_ln2 = f_prime.subs(x, a_val)
 
-# g'(1/4) = 1 / f'(g(1/4)) = 1 / f'(ln(2))
-g_prime_at_quarter = 1 / f_prime_at_a_simplified
-g_prime_at_quarter_simplified = sp.simplify(g_prime_at_quarter)
+# g'(1/4) = 1/f'(g(1/4)) = 1/f'(ln(2))
+g_prime_at_quarter = 1 / f_prime_at_ln2
 
-# 수치 계산으로 검증
-g_prime_value = float(g_prime_at_quarter_simplified)
+# 최종 답
+result = float(g_prime_at_quarter)
 
-if abs(g_prime_value - CANDIDATE) < 1e-10:
+if result == -8:
     print('VERIFY_PASS')
 else:
-    print('VERIFY_FAIL')
+    print(f'VERIFY_FAIL: got {result}')

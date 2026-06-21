@@ -1,70 +1,28 @@
 import sympy as sp
-from sympy import pi, sqrt, simplify, integrate, Rational
 
-# 좌표계 설정
-A1 = (0, 0)
-B1 = (4, 0)
-center = (2, 0)
-radius = 2
+r = 2
+area_semi = sp.Rational(1,2)*sp.pi*r**2          # 2*pi
+s2 = sp.sqrt(2)
+area_rect = (2*s2)*s2                            # rectangle width 2*sqrt2, height sqrt2 = 4
+area_tri = sp.Rational(1,2)*4*2                  # triangle base 4, height 2 = 4
 
-# 반원의 호를 4등분한 점들 (A1에서 가까운 순서)
-# A1(180°) -> C1(135°) -> D1(90°) -> E1(45°) -> B1(0°)
-C1 = (2 - sqrt(2), sqrt(2))
-D1 = (2, 2)
-E1 = (2 + sqrt(2), sqrt(2))
+# rectangle in -s2<=x<=s2, 0<=y<=s2 ; triangle: 0<=y<=2-|x|
+# intersection area = integral over x of min(s2, 2-|x|)
+x = sp.symbols('x', real=True)
+xb = 2 - s2                                       # breakpoint where 2-x = sqrt2
+I1 = sp.integrate(s2, (x, 0, xb))
+I2 = sp.integrate(2 - x, (x, xb, s2))
+area_rt = sp.simplify(2*(I1 + I2))               # = 8*sqrt2 - 8
 
-# C1, E1에서 A1B1에 내린 수선의 발
-A2 = (2 - sqrt(2), 0)
-B2 = (2 + sqrt(2), 0)
+area_union = area_rect + area_tri - area_rt       # 16 - 8*sqrt2
+S1 = sp.simplify(area_semi - area_union)         # 2*pi + 8*sqrt2 - 16
 
-# 직사각형 C1A2B2E1의 넓이
-rect_area = simplify((B2[0] - A2[0]) * (C1[1] - 0))
+# new diameter A2B2 = 2*sqrt2, original 4 -> area ratio = (2*sqrt2/4)^2 = 1/2
+ratio = (2*s2/4)**2
+S_inf = sp.simplify(S1/(1 - ratio))
 
-# 삼각형 A1D1B1의 넓이
-tri_area = Rational(1, 2) * 4 * 2
-
-# 직사각형과 삼각형의 교집합 넓이 (적분으로 계산)
-x = sp.symbols('x')
-
-# 구간 1: [2-sqrt(2), sqrt(2)]에서 y ∈ [0, x]
-int1 = integrate(x, (x, 2 - sqrt(2), sqrt(2)))
-
-# 구간 2: [sqrt(2), 4-sqrt(2)]에서 y ∈ [0, sqrt(2)]
-int2 = integrate(sqrt(2), (x, sqrt(2), 4 - sqrt(2)))
-
-# 구간 3: [4-sqrt(2), 2+sqrt(2)]에서 y ∈ [0, -x+4]
-int3 = integrate(-x + 4, (x, 4 - sqrt(2), 2 + sqrt(2)))
-
-intersection_area = simplify(int1 + int2 + int3)
-
-# 직사각형과 삼각형의 합집합 넓이
-union_area = simplify(rect_area + tri_area - intersection_area)
-
-# 반원의 넓이
-semicircle_area = pi * radius**2 / 2
-
-# 첫 번째 색칠 영역의 넓이
-S1 = simplify(semicircle_area - union_area)
-
-# 다음 반원의 지름
-next_diameter = B2[0] - A2[0]
-next_diameter = simplify(next_diameter)
-
-# 넓이 비율 계산
-length_ratio = simplify(next_diameter / 4)
-area_ratio = simplify(length_ratio**2)
-
-# 무한급수의 합
-# S_n = S1 * (area_ratio)^(n-1)
-# lim sum(S_n) = S1 / (1 - area_ratio)
-infinite_sum = simplify(S1 / (1 - area_ratio))
-
-# 예상 답
-expected_answer = 4*pi + 16*sqrt(2) - 32
-
-# 검증
-difference = simplify(infinite_sum - expected_answer)
-if difference == 0:
-    print("VERIFY_PASS")
+claimed = 4*sp.pi + 16*sp.sqrt(2) - 32
+if sp.simplify(ratio - sp.Rational(1,2)) == 0 and sp.simplify(S_inf - claimed) == 0 and S1 > 0:
+    print('VERIFY_PASS')
 else:
-    print("VERIFY_FAIL")
+    print('VERIFY_FAIL')

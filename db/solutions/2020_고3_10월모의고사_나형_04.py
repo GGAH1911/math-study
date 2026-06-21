@@ -1,26 +1,26 @@
-import sympy as sp
-from sympy import symbols, diff, limit, simplify
+from sympy import symbols, limit, diff, Function, oo
 
-CANDIDATE = 6
+# 검증용 구체적 함수: f(x) = 3x를 사용 (f'(2)=3 만족)
+# 일반적으로는 어떤 함수든 f'(2)=3이면 답은 6
 
-# 조건: f'(2) = 3을 만족하는 함수 예시
-# f(x) = 3x + c 형태의 1차 함수를 사용
-# f'(x) = 3이므로 f'(2) = 3 만족
+h = symbols('h')
+x = symbols('x')
 
-x, h, c = symbols('x h c')
-f = lambda x_val: 3*x_val + c
+# f(x) = 3x 예시
+def f(val):
+    return 3*val
 
-# 주어진 조건 확인: lim_{x->2} (f(x)-f(2))/(x-2) = 3
-numerator_cond = f(x) - f(2)
-denominator_cond = x - 2
-limit_cond = limit(numerator_cond / denominator_cond, x, 2)
+# 주어진 조건 확인: f'(2) = 3
+# f(x) = 3x에서 f'(x) = 3이므로 f'(2) = 3 ✓
 
-# 구하려는 극한: lim_{h->0} (f(2+h) - f(2-h))/h
-numerator_target = f(2+h) - f(2-h)
-denominator_target = h
-limit_target = limit(numerator_target / denominator_target, h, 0)
+# 구하는 극한 계산
+# lim_{h->0} [f(2+h)-f(2-h)]/h
+numerator = f(2+h) - f(2-h)
+expression = numerator / h
 
-if limit_target == CANDIDATE:
+result = limit(expression, h, 0)
+
+if result == 6:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

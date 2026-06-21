@@ -1,27 +1,28 @@
-from sympy import *
-from math import comb
+from itertools import combinations
 
-CANDIDATE = 1
+# 1부터 10까지의 수를 mod 3으로 분류
+mask = [1 % 3, 2 % 3, 3 % 3, 4 % 3, 5 % 3, 6 % 3, 7 % 3, 8 % 3, 9 % 3, 10 % 3]
 
-# 핵심 관계식: 조건을 만족하는 경우의 수 / 전체 경우의 수 = 3/14
+# 조건을 만족하는 4원소 부분집합의 개수
+valid_count = 0
+total_count = 0
 
-# 조건을 만족하는 (a,b,c) 분포의 경우의 수
-case_0_2_2 = comb(3, 0) * comb(4, 2) * comb(3, 2)  # 18
-case_2_0_2 = comb(3, 2) * comb(4, 0) * comb(3, 2)  # 9
-case_2_2_0 = comb(3, 2) * comb(4, 2) * comb(3, 0)  # 18
+for subset in combinations(range(10), 4):
+    total_count += 1
+    # 이 부분집합의 세 원소 조합을 모두 확인
+    is_valid = True
+    for three_subset in combinations(subset, 3):
+        sum_mod3 = sum(mask[i] for i in three_subset) % 3
+        if sum_mod3 == 0:
+            is_valid = False
+            break
+    if is_valid:
+        valid_count += 1
 
-favorable = case_0_2_2 + case_2_0_2 + case_2_2_0
+probability = valid_count / total_count
+target = 3 / 14
 
-# 전체 4-부분집합의 개수
-total = comb(10, 4)
-
-# 확률 (기약분수)
-prob = Rational(favorable, total)
-
-# 검증: 확률이 3/14와 일치하는지
-expected = Rational(3, 14)
-
-if prob == expected:
-    print("VERIFY_PASS")
+if abs(probability - target) < 1e-9:
+    print('VERIFY_PASS')
 else:
-    print("VERIFY_FAIL")
+    print(f'VERIFY_FAIL: {probability} != {target}')

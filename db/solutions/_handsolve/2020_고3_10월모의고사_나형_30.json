@@ -1,0 +1,25 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_30",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "30",
+  "gold": "80",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "killer",
+  "reason": "no-solver:gold-match",
+  "best_answer": "80",
+  "best_steps": [
+    "$g(x) = \\int_0^x (t-1)f(t)dt$를 구간별로 적분하여 $g(x)$를 구한다",
+    "$g'(x) = (x-1)f(x)$에서 임계점은 $x=1$ (극대), $x=3$ (극소)",
+    "$g(1) = \\frac{1}{4}$, $g(3) = -\\frac{29}{12}$",
+    "각 구간에서 $g(x)$의 치역을 이용하여 $h(t)$ 계산",
+    "$|\\lim_{t \\to a^+} h(t) - \\lim_{t \\to a^-} h(t)| = 2$를 만족하는 $a$는 $-\\frac{29}{12}, \\frac{1}{4}$",
+    "$S = \\frac{29}{12} + \\frac{1}{4} = \\frac{8}{3}$",
+    "$30S = 80$"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_30.png"
+}

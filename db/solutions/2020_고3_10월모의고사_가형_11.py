@@ -1,20 +1,21 @@
-import math
-from sympy import *
+import sympy as sp
+import numpy as np
+from sympy import sin, cos, pi, sqrt, solve, simplify
 
-CANDIDATE = 5*pi/3
+x = sp.Symbol('x')
+eq = sp.Eq(sin(x), sqrt(3)*(1 + cos(x)))
 
-x_values = [2*pi/3, pi]
-total = 0
+solutions = []
+for x_val in [pi, 2*pi/3, 4*pi/3]:
+    lhs = sin(x_val)
+    rhs = sqrt(3)*(1 + cos(x_val))
+    if simplify(lhs - rhs) == 0:
+        solutions.append(x_val)
 
-for x_val in x_values:
-    sin_x = sin(x_val)
-    rhs = sqrt(3) * (1 + cos(x_val))
-    total += x_val
-    assert simplify(sin_x - rhs) == 0, f'Solution x={x_val} does not satisfy the equation'
+total = sum(solutions)
+expected = 5*pi/3
 
-verification_sum = total
-
-if simplify(verification_sum - CANDIDATE) == 0:
+if simplify(total - expected) == 0:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

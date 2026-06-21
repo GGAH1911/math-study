@@ -1,31 +1,28 @@
-CANDIDATE = 4
+from sympy import symbols, solve, Eq
 
-# 등차수열 조건
-# a_1 + d = 5
-# a_1 + 3d = 13
+# 공차 d와 첫째항 a1을 변수로 정의
+a1, d = symbols('a1 d', real=True)
 
-from sympy import symbols, Eq, solve
+# 등차수열: a_n = a1 + (n-1)*d
+# 조건 1: a1 + a2 + a3 = 15
+cond1 = Eq(a1 + (a1 + d) + (a1 + 2*d), 15)
 
-a1, d = symbols('a1 d')
-eq1 = Eq(a1 + d, 5)
-eq2 = Eq(a1 + 3*d, 13)
+# 조건 2: a3 + a4 + a5 = 39
+cond2 = Eq((a1 + 2*d) + (a1 + 3*d) + (a1 + 4*d), 39)
 
-sol = solve([eq1, eq2], [a1, d])
-found_d = sol[d]
+# 연립방정식 풀기
+sol = solve([cond1, cond2], [a1, d])
 
-# 원래 조건들을 만족하는지 확인
+# 공차 d 확인
+public_d = sol[d]
+
+# 검증: 조건을 만족하는지 확인
 a1_val = sol[a1]
-print(f'공차: {found_d}')
+seq = [a1_val + (n-1)*public_d for n in range(1, 6)]
+sum123 = seq[0] + seq[1] + seq[2]
+sum345 = seq[2] + seq[3] + seq[4]
 
-# 첫 번째 조건 검증
-sum1 = a1_val + (a1_val + found_d) + (a1_val + 2*found_d)
-print(f'a1+a2+a3 = {sum1} (기대값: 15)')
-
-# 두 번째 조건 검증
-sum2 = (a1_val + 2*found_d) + (a1_val + 3*found_d) + (a1_val + 4*found_d)
-print(f'a3+a4+a5 = {sum2} (기대값: 39)')
-
-if found_d == CANDIDATE and sum1 == 15 and sum2 == 39:
+if sum123 == 15 and sum345 == 39 and public_d == 4:
     print('VERIFY_PASS')
 else:
     print('VERIFY_FAIL')

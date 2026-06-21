@@ -1,0 +1,22 @@
+{
+  "slug": "2020_고3_10월모의고사_나형_23",
+  "round": "2020_고3_10월모의고사",
+  "subject": "나형",
+  "number": "23",
+  "gold": "15",
+  "format": "numeric",
+  "has_figure": false,
+  "tier": "early",
+  "reason": "no-solver:gold-match",
+  "best_answer": "15",
+  "best_steps": [
+    "이항분포 B(n, 1/2)의 분산: $V(X) = n \\cdot \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{n}{4}$",
+    "분산의 성질에 의해: $V(2X+1) = 2^2 \\cdot V(X) = 4V(X)$",
+    "주어진 조건 $V(2X+1) = 15$에서: $4V(X) = 15$ → $V(X) = \\frac{15}{4}$",
+    "따라서 $\\frac{n}{4} = \\frac{15}{4}$ → $n = 15$"
+  ],
+  "trace": [
+    "haiku-text:pass"
+  ],
+  "image": "/problem-images/2020_고3_10월모의고사_나형_23.png"
+}
