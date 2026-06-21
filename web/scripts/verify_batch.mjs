@@ -81,51 +81,37 @@ async function verifyChunk(items) {
   items = items.filter((it) => (readSt(it.md) || '').trim().length >= EMPTY_MIN);
   if (!items.length) return;
   const imgDir = `${REPO}/db/raw/${items[0].round}/images`;
-  let prompt = `다음 ${items.length}개 수능 수학 문제를 각각 이미지와 "전사 텍스트"를 한 글자씩 대조해 교정 정확도를 검증하라.
-★★문제를 절대 풀지 마라(답 계산·풀이·증명 금지). 오직 전사와 이미지의 글자·수식·기호가 일치하는지 시각 대조만 하라 — 푸는 추론은 시간·토큰 낭비다(한 문제라도 길게 추론 금지).
-- 놓침: 이미지엔 있는데 전사에서 빠지거나 틀린 것(수식 기호·숫자·보기 ①~⑤·첨자·한글 오타).
-- 환각: 전사엔 있는데 이미지엔 없는 것.
-{{FIG0}}·{{INL0}}·{{TABLE0}} placeholder 는 그림/표 자리표시라 내용은 평가 대상이 아니나({{INL}}은 본문 문장 중간의 인라인 도형 마커), 위치(선택지 앞뒤·문장 내 등)가 이미지와 다르면 issue.
-추론 길게 말고 JSON 배열만 출력(설명·코드펜스 없이): [{"id":번호,"ok":참거짓,"issues":["문제 한 줄",...]}]
-※ id 는 아래 각 항목의 [문제 N] 의 N(1부터)을 그대로 쓴다.`;
+  let prompt = `다음 ${items.length}개 수능 수학 문제를 각각 이미지와 "전사 텍스트"를 한 글자씩 시각 대조해 교정 정확도를 검증하라.
+★★문제를 절대 풀지 마라(답 계산·풀이·증명·추론 전부 금지). 오직 전사의 글자·수식·기호가 이미지와 같은지 눈으로 대조만.
+- 놓침(이미지엔 있는데 전사 누락/오기) 또는 환각(전사엔 있는데 이미지에 없음)만 본다. {{FIG/INL/TABLE}} placeholder는 자리표시라 내용 평가 안 함(위치 어긋나면 issue).
+★★출력은 각 문제당 **정확히 한 줄**, 아래 형식만(JSON·설명·코드펜스·다른 텍스트 전부 금지):
+1|ok
+2|issues|짧은 이유(20자 이내, 1개만)
+3|ok
+줄 맨 앞 숫자는 아래 [문제 N]의 N(1,2,3,… 순서 — 전사 속 문제번호가 아님). 총 ${items.length}줄만 출력.`;
   // ★ id = 청크 내 1-based 인덱스(문항번호 X). 한 자리 문항("01"→정수 1 반환)·과목혼재(가형/나형 동일 num) 매칭 실패 방지.
   items.forEach((it, i) =>
     prompt += `\n\n[문제 ${i + 1}] 이미지: ${imgDir}/${it.round}_${it.subj}_${String(it.num).padStart(2, '0')}.png\n전사: ${readSt(it.md)}`);
   const t0 = Date.now();
   const out = await claudeCall(prompt, imgDir);
   const sec = ((Date.now() - t0) / 1000).toFixed(0);
-  let arr;
-  const jraw = (out.match(/\[[\s\S]*\]/) || [''])[0];
-  // ★ sonnet 은 대개 유효 JSON(\\sqrt 처럼 백슬래시 이미 이스케이프됨)을 준다 → raw parse 먼저.
-  //   무효 백슬래시 보정 replace 를 무조건 돌리면 정상 \\ 까지 \\\ 로 깨뜨려 parsefail 됐다(이 버그 수정).
-  try { arr = JSON.parse(jraw); }
-  catch { try { arr = JSON.parse(jraw.replace(/\\(?!["\\/bfnrtu])/g, '\\\\')); } catch { arr = null; } }
-  if (!Array.isArray(arr)) {
-    // #3 배치 파싱실패 → 단건 폴백: 청크>1 이면 1개씩 재검증(sonnet 은 단건이면 파싱가능 응답률 높다 —
-    //    배치가 한 문제의 깨진 수식 때문에 전체 JSON 을 망가뜨려 멀쩡한 나머지까지 parsefail 시키던 낭비 차단).
-    if (items.length > 1) {
-      log(`  ↻ 청크[${items.map((i) => i.num).join(',')}] 배치 파싱실패 — ${sec}s → 단건 폴백 ${items.length}개`);
-      for (const it of items) await verifyChunk([it]);
-      return;
-    }
-    const dbg = `${LOGDIR}/verify_batch_parsefail_${items[0].round}_${items[0].num}.txt`;
-    appendFileSync(dbg, `=== ${new Date().toISOString()} (${sec}s) ===\n${out}\n`);  // catch 삼킴 방지: 실제 out 보존
-    log(`  ⚠ 단건[${items[0].num}] 파싱실패 — ${sec}s (raw → ${dbg})`);
-    writeVerify(items[0].md, 'parsefail', ['단건 파싱실패']);
-    return;
+  // ★라인 파싱(JSON.parse 없음 → 장문·LaTeX·따옴표로 안 깨짐 = parsefail 루프 원천차단). 인덱스(1..N) 우선, 전사번호(num) 폴백.
+  //   ★single-fallback 제거: parsefail은 그 문제만 표시(재시도·재귀 없음) → 콜 폭증·쿼터 burn 차단.
+  const vmap = new Map();
+  for (const line of out.split('\n')) {
+    const m = line.trim().match(/^(\d+)\s*\|\s*(ok|issues)\b\s*(?:\|\s*(.*))?$/i);
+    if (m) vmap.set(parseInt(m[1], 10), { ok: m[2].toLowerCase() === 'ok', issue: (m[3] || '').trim() });
   }
-  const byId = new Map(arr.map((r) => [String(parseInt(r.id, 10)), r]));   // 1-based 인덱스 매칭(정수화)
-  let ok = 0, iss = 0;
+  let ok = 0, iss = 0, pf = 0;
   for (let i = 0; i < items.length; i++) {
     const it = items[i];
-    const r = byId.get(String(i + 1));
-    if (!r) { writeVerify(it.md, 'parsefail', ['배치 응답 누락']); continue; }
-    const issues = Array.isArray(r.issues) ? r.issues : [];
-    const status = r.ok === true ? 'ok' : r.ok === false ? 'issues' : 'parsefail';
-    writeVerify(it.md, status, issues);
-    if (status === 'ok') ok++; else if (status === 'issues') iss++;
+    const r = vmap.get(i + 1) || vmap.get(parseInt(it.num, 10));
+    if (!r) { writeVerify(it.md, 'parsefail', ['검증 라인 누락']); pf++; continue; }  // 그 문제만 parsefail → opus 처리(재시도 0)
+    writeVerify(it.md, r.ok ? 'ok' : 'issues', r.ok ? [] : [r.issue || '불일치']);
+    if (r.ok) ok++; else iss++;
   }
-  log(`  청크[${items.map((i) => i.num).join(',')}] ${sec}s → ok ${ok} / issues ${iss}`);
+  if (pf) appendFileSync(`${LOGDIR}/verify_parsefail_${TS}.txt`, `=== ${new Date().toISOString()} 청크[${items.map((i) => i.num).join(',')}] pf${pf} ===\n${out.slice(0, 800)}\n`);
+  log(`  청크[${items.map((i) => i.num).join(',')}] ${sec}s → ok ${ok} / issues ${iss}${pf ? ` / parsefail ${pf}` : ''}`);
 }
 
 (async () => {

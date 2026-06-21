@@ -21,6 +21,8 @@ const DUAL = process.env.DUAL === '1';   // gemma+agy 1차 병렬 + agy 공유 �
 const OR_AVAILABLE = existsSync((process.env.HOME || '') + '/.config/math-study/openrouter.key');  // OpenRouter gemma-4-26b:free 레인(기본 off — 무료풀 429. OR_LANE=1로 켬)
 const GEMMA_PAR = Math.max(1, parseInt(process.env.GEMMA_PAR || '2', 10));  // 로컬 26b 동시 워커수(mlx continuous batching → ~N배). 32GB라 2 안전(검증)
 const CORRECT_ONLY = process.env.CORRECT_ONLY === '1';  // 1차(gemma 로컬·무료)만 — verify·재교정(sonnet=Claude)은 보류·나중 별도 배치(쿼터 분리)
+const VERIFY_MODEL = process.env.VERIFY_MODEL || 'sonnet';  // 검증 모델. haiku 전환 시 Claude 5h burn 급감(verify가 주범 — cache_read 50K/콜×다수). 재교정·1차는 무관(agy·gemma 무료)
+const NO_RECORRECT = process.env.NO_RECORRECT === '1';  // 파이프라인은 1차+verify만, 재교정은 별도 러너(recorrect_issues.py)가 agy로 — verify pause/halt와 독립(사용자 지정). agy 더블 방지.
 const MAXATT = Math.max(1, parseInt(process.env.MAXATT || '3', 10));
 const SKIP_TABLE = process.env.SKIP_TABLE === '1' || process.env.CLEAN_ONLY === '1';  // {{TABLE}} 보유 교정완료분 제외(재추출 배치 B용)
 const CHUNK = 5;
@@ -79,7 +81,7 @@ let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
 const orOn = process.env.OR_LANE === '1' && OR_AVAILABLE;
 const modeStr = DUAL
-  ? (CORRECT_ONLY ? `교정 gemma×${GEMMA_PAR}(로컬26b·무료) — 검증·재교정(Claude) 보류` : `교정 gemma×${GEMMA_PAR}(로컬26b) ∥ 검증 ${PAR_V}(sonnet·배치) ∥ 재교정 agy(무료, 쿼터소진시 대기)`)
+  ? (CORRECT_ONLY ? `교정 gemma×${GEMMA_PAR}(로컬26b·무료) — 검증·재교정(Claude) 보류` : `교정 gemma×${GEMMA_PAR}(로컬26b) ∥ 검증 ${PAR_V}(${VERIFY_MODEL}·라인배치+circuit-breaker) ${NO_RECORRECT ? '∥ 재교정=별도러너(agy)' : '∥ 재교정 agy(무료)'}`)
   : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
 log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
@@ -93,7 +95,9 @@ function beat() {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // 전 시스템 유휴(3큐 비고 in-flight 0)일 때만 종료 — enqueue 는 항상 active-- 전이라 항목 유실 없음.
-const idle = () => correctQ.length === 0 && cActive === 0 && (CORRECT_ONLY || (verifyQ.length === 0 && recorrectQ.length === 0 && vActive === 0 && gActive === 0));
+let verifyHalt = false; const vWin = []; let vTokEst = 0;  // ★circuit-breaker(parsefail율 급증) + 토큰예산(통제된 양) — 둘 중 하나라도 걸리면 verify 자동중단(1차·재교정은 계속)
+const VERIFY_BUDGET = parseInt(process.env.VERIFY_BUDGET || '2500000', 10);  // verify 토큰 예산/run(초과 시 중단, 5h 통제). 라인배치 ~72K/청크
+const idle = () => correctQ.length === 0 && cActive === 0 && (CORRECT_ONLY || ((verifyHalt || (verifyQ.length === 0 && vActive === 0)) && recorrectQ.length === 0 && gActive === 0));
 
 // ① 교정 워커(gemma): 미교정 → corrector.mjs(gemma) → 검증큐
 async function correctWorker() {
@@ -112,6 +116,7 @@ async function correctWorker() {
 // ② 검증 워커(sonnet): 같은-라운드 CHUNK개 verify_batch 1콜 → ok 완료 / issues 재교정큐 / 기타 재투입(상한)
 async function verifyWorker() {
   while (true) {
+    if (verifyHalt) break;   // ★circuit-breaker 발동 → verify 중단(1차·재교정은 계속)
     if (!verifyQ.length) { if (idle()) break; await sleep(300); continue; }
     const r0 = parseSlug(verifyQ[0]).round;
     // ★받는 대로 1건씩 돌리면 배치(CHUNK/콜)가 무의미 → 문제당 ~4배 비쌈. 큐가 CHUNK 미만(트리클)일 때만 대기(쌓아서 배치).
@@ -122,12 +127,20 @@ async function verifyWorker() {
     while (chunk.length < CHUNK && verifyQ.length && parseSlug(verifyQ[0]).round === r0) chunk.push(verifyQ.shift());
     if (!chunk.length) { await sleep(300); continue; }
     vActive++;
-    await run('node', ['scripts/verify_batch.mjs', '--list', chunk.join(','), '--chunk', String(CHUNK), '--par', '1', '--force'], { RUN_TS: TS });
+    await run('node', ['scripts/verify_batch.mjs', '--list', chunk.join(','), '--chunk', String(CHUNK), '--par', '1', '--force', '--model', VERIFY_MODEL], { RUN_TS: TS });
     for (const slug of chunk) {
       const it = items.get(slug); const st = stateOf(it.md);
-      if (st === 'ok') { done++; }
-      else if (st === 'issues') { recorrectQ.push(slug); }
-      else { it.att++; if (it.att < MAXATT) verifyQ.push(slug); else { failed++; log(`  ✗ ${slug} 검증실패 상한(${st})`); } }
+      if (st === 'ok') { done++; vWin.push(0); }
+      else if (st === 'issues') { if (!NO_RECORRECT) recorrectQ.push(slug); vWin.push(0); }   // NO_RECORRECT: md에 issues 마커만(별도 러너가 agy로 처리)
+      else { failed++; vWin.push(1); log(`  ✗ ${slug} parsefail → opus(재시도0)`); }   // ★parsefail 재큐 안 함 = 루프·폭주 차단
+    }
+    vTokEst += 72000;                                                                     // 라인배치 ~72K/청크 추정
+    if (vTokEst > VERIFY_BUDGET && !verifyHalt) { verifyHalt = true; log(`★verify 토큰예산 ${(VERIFY_BUDGET / 1e6).toFixed(1)}M 도달 — 자동중단(5h 통제). 1차·재교정 계속, 5h 리셋 후 재개.`); }
+    if (vWin.length > 40) vWin.splice(0, vWin.length - 40);                                // 슬라이딩 윈도우
+    const recent = vWin.slice(-20);
+    if (recent.length >= 20 && recent.reduce((a, b) => a + b, 0) / 20 > 0.4) {
+      verifyHalt = true;
+      log(`★★폭주 차단(circuit-breaker): 최근 20건 parsefail ${Math.round(recent.reduce((a, b) => a + b, 0) / 20 * 100)}% — verify 자동중단. 1차·재교정 계속. 사용자 확인 필요.`);
     }
     vActive--; beat();
   }
@@ -189,7 +202,7 @@ async function orLaneWorker() {
 await Promise.all(DUAL ? [
   ...Array.from({ length: GEMMA_PAR }, correctWorker),   // 로컬 26b ×GEMMA_PAR (mlx continuous batching → ~N배)
   ...(CORRECT_ONLY ? [] : [                              // CORRECT_ONLY=1: 1차(gemma)만, verify·재교정(Claude) 보류
-    agyLaneWorker(),                                     // agy(쿼터소진→sonnet) 재교정 전용(1차는 gemma×2)
+    ...(NO_RECORRECT ? [] : [agyLaneWorker()]),          // NO_RECORRECT=1: 재교정 레인 빼고 별도 러너가 처리(agy 더블 방지)
     ...(orOn ? [orLaneWorker()] : []),                   // OR 레인 기본 off(무료풀 429), OR_LANE=1로 켬
     ...Array.from({ length: PAR_V }, verifyWorker),
   ]),
