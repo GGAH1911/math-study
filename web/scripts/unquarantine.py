@@ -20,7 +20,7 @@ def main():
     if st_file:
         new_st = open(st_file, encoding='utf-8').read().rstrip('\n')
         block = 'searchable_text: |\n' + '\n'.join('  ' + l for l in new_st.split('\n')) + '\n'
-        m = re.search(r'\nsearchable_text: \|\n((?:  .*\n?)*)', t)
+        m = re.search(r'\nsearchable_text: [|>]\n((?:  .*\n?)*)', t)  # | (literal) 와 > (folded) 둘 다
         t = t[:m.start() + 1] + block + t[m.end():]
     # 격리 해제 + 상태 갱신
     t = re.sub(r'\ncorrector_quarantine:\s*true', '', t)
