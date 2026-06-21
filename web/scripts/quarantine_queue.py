@@ -23,7 +23,9 @@ def main():
     out = []
     for md in sorted(glob.glob(f'{REPO}/docs/problems/**/*.md', recursive=True)):
         t = open(md, encoding='utf-8').read()
-        if not re.search(r'^corrector_quarantine:\s*true', t, re.M): continue
+        is_quar = bool(re.search(r'^corrector_quarantine:\s*true', t, re.M))
+        iss = re.search(r'\ncorrector_verify_issues:\n((?:  - .*\n?)+)', t)   # MAXATT 상한(격리 안 됨, issues 잔존)도 포함
+        if not (is_quar or iss): continue
         slug = os.path.basename(md)[:-3]
         m = re.match(r'^(.+)_([가-힣A-Za-z]+)_(\d+)$', slug)
         if not m: continue
@@ -31,15 +33,17 @@ def main():
         st = re.search(r'\nsearchable_text: \|\n((?:  .*\n?)*)', t)
         out.append({
             'slug': slug, 'md': md, 'tile': tile_path(round_, subj, num),
-            'reason': qlog.get(slug, '(사유 미기록)'),
+            'kind': '격리' if is_quar else 'MAXATT상한',
+            'reason': qlog.get(slug, '(사유 미기록)') if is_quar else (iss.group(1).strip() if iss else ''),
             'searchable_text': (st.group(1) if st else '').rstrip(),
         })
     if '--json' in sys.argv:
         print(json.dumps(out, ensure_ascii=False, indent=2))
     else:
-        print(f'격리 큐: {len(out)}건')
+        nq = sum(1 for o in out if o['kind'] == '격리'); nm = len(out) - nq
+        print(f'큐: {len(out)}건 (격리 {nq} · MAXATT상한 {nm})')
         for o in out:
-            print(f"\n■ {o['slug']}\n  타일: {o['tile']}\n  사유: {o['reason']}")
+            print(f"\n■ {o['slug']} [{o['kind']}]\n  타일: {o['tile']}\n  사유: {o['reason'][:160]}")
 
 if __name__ == '__main__':
     main()
