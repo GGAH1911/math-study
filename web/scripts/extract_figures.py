@@ -117,13 +117,57 @@ def extract_table(page, REG):
     return {'type': classify_box(rows), 'rows': rows, 'bbox': [round(v) for v in tb]}
 
 
+def detect_boxes(page, REG):
+    """PDF 벡터 테두리(상하 가로선 + 좌우 세로선)로 그려진 내용 박스를 감지. 텍스트 휴리스틱(과정이다/조건…)이
+    아니라 소스의 실제 사각형으로 잡으므로 박스 종류(빈칸추론·조건·보기·증명·정의…) 무관하게 동작.
+    컬럼 divider(전높이 세로선)·도형 사각형(안에 본문 한글 없는 것) 제외. 반환 [(xl,yt,xr,yb)] (바깥 박스만)."""
+    H, V = [], []
+    for d in page.get_drawings():
+        r = d['rect']
+        if not (REG.x0 - 15 <= r.x0 and r.x1 <= REG.x1 + 15 and r.y0 >= REG.y0 - 15 and r.y1 <= REG.y1 + 15): continue
+        w, h = r.width, r.height
+        if w > 55 and h < 4: H.append((r.x0, r.x1, (r.y0 + r.y1) / 2))        # 가로선(분할 세그먼트 포함, 짧게 잡고 병합)
+        elif h > 40 and w < 4: V.append(((r.x0 + r.x1) / 2, r.y0, r.y1))      # 세로선
+    regH = REG.y1 - REG.y0
+    V = [v for v in V if (v[2] - v[1]) < regH * 0.8]                          # 컬럼 divider(거의 전높이) 제외
+
+    def cluster_h(segs):  # 같은 y(±3) 가로선 세그먼트 병합 — <보기> 박스 상단이 라벨로 2분할(5선)된 것 등을 한 선으로
+        out = []
+        for x0, x1, y in sorted(segs, key=lambda s: s[2]):
+            if out and abs(out[-1][2] - y) <= 3:
+                o = out[-1]; out[-1] = (min(o[0], x0), max(o[1], x1), o[2])
+            else: out.append((x0, x1, y))
+        return out
+
+    # 세로선은 병합 안 함 — 같은 x에 스택된 두 박스의 좌/우 변을 합치면 두 박스가 한 큰 박스로 오합쳐짐(가형_30).
+    #   분할되는 건 라벨에 의한 상단 가로선뿐이라 cluster_h 만 적용.
+    Hs = sorted((round(x0), round(x1), round(y)) for x0, x1, y in cluster_h(H) if x1 - x0 > 150)  # 병합 후 박스폭
+    cand = []
+    for i in range(len(Hs)):
+        for j in range(i + 1, len(Hs)):
+            x0a, x1a, yt = Hs[i]; x0b, x1b, yb = Hs[j]
+            if abs(x0a - x0b) > 15 or abs(x1a - x1b) > 15 or yb - yt < 40: continue   # 상/하 가로선 정렬 + 최소높이
+            xl, xr = (x0a + x0b) / 2, (x1a + x1b) / 2
+            if (any(abs(v[0] - xl) < 8 and v[1] <= yt + 10 and v[2] >= yb - 10 for v in V)
+                    and any(abs(v[0] - xr) < 8 and v[1] <= yt + 10 and v[2] >= yb - 10 for v in V)):
+                cand.append((round(xl), round(yt), round(xr), round(yb)))
+    cand = sorted(set(cand), key=lambda b: (b[1], -(b[3] - b[1])))
+    boxes = []
+    for b in cand:
+        if any(o[1] <= b[1] and o[3] >= b[3] and o[0] <= b[0] and o[2] >= b[2] for o in boxes): continue  # 중첩=바깥만
+        ko = sum(1 for t, r in spans_of(page) if re.search(r'[가-힣]', t)
+                 and b[0] <= (r.x0 + r.x1) / 2 <= b[2] and b[1] <= (r.y0 + r.y1) / 2 <= b[3])
+        if ko >= 2: boxes.append(b)                                          # 본문 한글 박스만(도형 사각형 제외)
+    return boxes
+
+
 def extract(round_, subj, num):
     num = int(num)
     pdf = f'{REPO}/db/raw/{round_}/{subj}_문제.pdf'
     if not os.path.exists(pdf): pdf = f'{REPO}/db/raw/{round_}/문제.pdf'
     doc = fitz.open(pdf)
     pi, REG = find_region(doc, num)
-    if REG is None: return None, [], [], '영역 못찾음'
+    if REG is None: return None, [], [], [], '영역 못찾음'
     page = doc[pi]
     seen = set(); objs = []
     for img in page.get_images(full=True):
@@ -156,7 +200,8 @@ def extract(round_, subj, num):
     #   만들지 않는다 — 그 내용은 searchable_text 에 이미 텍스트로 있으므로 본문으로 둔다(박스 렌더는 후속).
     tables = [tbl] if (tbl and tbl.get('type') == 'table') else []
     _box_skip = tbl['type'] if (tbl and tbl.get('type') != 'table') else None
-    if not cl and not tables and not inline_objs: return None, [], [], '이미지·표 없음'
+    box_rects = detect_boxes(page, REG)   # 그려진 테두리 박스(도형 없는 증명/조건 문제도 박스만 있을 수 있음)
+    if not cl and not tables and not inline_objs and not box_rects: return None, [], [], [], '이미지·표 없음'
     cl = sorted(cl, key=lambda r: (r.y0, r.x0))
     # 캡션 [그림N] 단독을 클러스터에 합집합 (라벨 통째 캡처)
     caps = [(t, r) for t, r in spans_of(page) if re.match(r'^\[그림\s*\d+\]$', t) and REG.x0 - 5 <= r.x0 < REG.x1]
@@ -261,7 +306,17 @@ def extract(round_, subj, num):
             pass   # 객체 추출 실패 → 인라인 도형 생략(본문 텍스트 묘사로 폴백)
     for tbl in tables:
         tbl['anchor'] = anchor_for(fitz.Rect(tbl['bbox']))
-    return figs, inls, tables, None
+    # 박스: 그려진 테두리 사각형 → START 앵커(박스 바로 위 본문 끝)·END 앵커(박스 안 마지막 본문 끝).
+    boxes = []
+    for b in box_rects:
+        above = sorted([bl for bl in blocks if bl[3] <= b[1] + 5 and is_body(bl)], key=lambda bl: bl[3])
+        below = sorted([bl for bl in blocks if bl[1] >= b[3] - 5 and is_body(bl)], key=lambda bl: bl[1])
+        # START = 박스 바로 위 줄 끝(이 뒤에 마커) / END = 박스 바로 아래 줄 머리(이 앞에 마커).
+        #   박스 안 마지막 줄은 PDF 블록이 "…성립한"+"다." 식으로 분절돼 앵커가 너무 짧음 → 아래 줄(질문 "위의…")로 앵커(고유·1회).
+        boxes.append({'start': re.sub(r'\s+', ' ', above[-1][4]).strip()[-14:] if above else '',
+                      'end': re.sub(r'\s+', ' ', below[0][4]).strip()[:14] if below else '',
+                      'bbox': list(b)})
+    return figs, inls, tables, boxes, None
 
 
 import glob as _glob
@@ -276,15 +331,16 @@ def find_md(round_, subj, num):
     return None
 
 
-def apply_md(round_, subj, num, figs, inls, tables):
-    """기존 searchable_text에 앵커로 {{FIGn}}(블록)·{{INLn}}(인라인)·{{TABLEn}} 삽입 + frontmatter 갱신."""
+def apply_md(round_, subj, num, figs, inls, tables, boxes=None):
+    """기존 searchable_text에 앵커로 {{FIGn}}·{{INLn}}·{{TABLEn}}·{{BOXn_START/END}} 삽입 + frontmatter 갱신."""
+    boxes = boxes or []
     md = find_md(round_, subj, num)
     if not md: return 'md 못찾음'
     txt = open(md, encoding='utf-8').read()
     m = re.search(r'\nsearchable_text: \|\n((?:  .*\n?)*)', txt)
     if not m: return 'searchable_text 없음'
     st = ' '.join(l.strip() for l in m.group(1).splitlines())
-    st = re.sub(r'\{\{(?:FIG|INL|TABLE)\d+\}\}', '', st)  # 기존 placeholder 제거
+    st = re.sub(r'\{\{(?:(?:FIG|INL|TABLE)\d+|BOX\d+_(?:START|END))\}\}', '', st)  # 기존 placeholder 제거
     st = re.sub(r'\\begin\{array\}.*?\\end\{array\}', ' ', st)  # 기존 표 텍스트(array)→{{TABLEn}}로 대체되므로 제거
     st = re.sub(r'\s+', ' ', st).strip()
     def find_anchor(a):  # 앞에서 한 글자씩 떼며 매칭(anchor 앞부분 PUA·불일치 대응), 못 찾으면 본문 끝
@@ -293,6 +349,13 @@ def apply_md(round_, subj, num, figs, inls, tables):
             idx = st.find(a)
             if idx >= 0: return idx + len(a)
             a = a[1:]
+        return len(st)
+    def find_anchor_before(a):  # 머리 앵커(아래 줄) 매칭 → 그 '앞'(idx)에 삽입(BOX_END). 뒤에서 한 글자씩 떼며(head 매칭).
+        a = a.strip()
+        while len(a) >= 4:
+            idx = st.find(a)
+            if idx >= 0: return idx
+            a = a[:-1]
         return len(st)
     ins = [(find_anchor(f['anchor']), f'FIG{i}') for i, f in enumerate(figs)]
     ins += [(find_anchor(t.get('anchor', '')), f'TABLE{i}') for i, t in enumerate(tables)]
@@ -308,10 +371,13 @@ def apply_md(round_, subj, num, figs, inls, tables):
         if pos < 0: pos = len(st)
         ins.append((pos, f'INL{i}'))
         _cur = pos
+    for i, b in enumerate(boxes):  # 박스: START=위 줄 끝 뒤, END=아래 줄 머리 앞(자기 줄). reconstruct 가 둘 사이를 recon-box.
+        ins.append((find_anchor(b['start']), f'BOX{i}_START'))
+        ins.append((find_anchor_before(b['end']), f'BOX{i}_END'))
     for pos, tag in sorted(ins, key=lambda x: x[0], reverse=True):  # 뒤에서부터(인덱스 안밀림)
         st = st[:pos] + f' {{{{{tag}}}}} ' + st[pos:]
-    # 블록(FIG/TABLE)만 자기 줄로 분리. INL 은 본문 줄 중간에 그대로 둠(인라인 렌더).
-    st = re.sub(r'\s*\{\{((?:FIG|TABLE)\d+)\}\}\s*', r'\n{{\1}}\n', re.sub(r'\s+', ' ', st).strip())
+    # 블록(FIG/TABLE/BOX)만 자기 줄로 분리. INL 은 본문 줄 중간에 그대로 둠(인라인 렌더).
+    st = re.sub(r'\s*\{\{((?:FIG|TABLE)\d+|BOX\d+_(?:START|END))\}\}\s*', r'\n{{\1}}\n', re.sub(r'\s+', ' ', st).strip())
     st = re.sub(r' *(\{\{INL\d+\}\}) *', r' \1 ', st)   # INL 주변 공백 정규화(줄 유지)
     block = 'searchable_text: |\n' + '\n'.join('  ' + l for l in st.splitlines()) + '\n'
     txt = txt[:m.start() + 1] + block + txt[m.end():]
@@ -334,8 +400,8 @@ def apply_md(round_, subj, num, figs, inls, tables):
 if __name__ == '__main__':
     args = [a for a in sys.argv[1:] if a != '--apply']
     do_apply = '--apply' in sys.argv
-    figs, inls, tables, err = extract(*args[:3])
+    figs, inls, tables, boxes, err = extract(*args[:3])
     if err: print('FAIL:', err); sys.exit(1)
-    print(json.dumps({'figs': figs, 'inls': inls, 'tables': [t['rows'] for t in tables]}, ensure_ascii=False, indent=2))
+    print(json.dumps({'figs': figs, 'inls': inls, 'tables': [t['rows'] for t in tables], 'boxes': boxes}, ensure_ascii=False, indent=2))
     if do_apply:
-        print('APPLY:', apply_md(*args[:3], figs, inls, tables) or 'OK')
+        print('APPLY:', apply_md(*args[:3], figs, inls, tables, boxes) or 'OK')

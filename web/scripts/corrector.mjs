@@ -79,7 +79,7 @@ function parseCorrected(out) {
   return { corrected, fixes };
 }
 // 검증 게이트 — 실패 사유 배열(빈 배열=통과).
-const PH = (s) => (s.match(/\{\{(?:FIG|INL|TABLE)\d+\}\}/g) || []).sort().join(',');
+const PH = (s) => (s.match(/\{\{(?:(?:FIG|INL|TABLE)\d+|BOX\d+_(?:START|END))\}\}/g) || []).sort().join(',');
 function validate(corrected, st) {
   const f = [];
   if (!corrected || !corrected.trim()) return ['빈출력'];
@@ -139,7 +139,7 @@ ${st}`
 ★수식: LaTeX 명령(\\frac, \\overline, \\sqrt 등)은 쓰되 **$...$ 델리미터로 감싸지 마라**. 렌더러가 한글/수식을 자동 분리한다 — $ 를 넣으면 KaTeX가 깨진다.
 ★★줄바꿈 보존: 이미지에 줄이 나뉜 대로 **한 줄씩** 전사하라(절대 한 줄로 합치지 마라). 특히 조건 (가)(나)(다)·불릿(◦·•)·유도단계 (ⅰ)(ⅱ)(ⅲ)·결론식·질문("…값은?"/"…구하시오")을 이미지처럼 **각각 별도 줄로 개행**. 렌더러가 줄 구조로 박스를 판정하므로 줄바꿈이 곧 레이아웃이다. ★연속/반복 생략 기호가 이미지에 있으면 **방향·위치 그대로** 전사하라 — 누락 금지. 세로 생략(도형/수식이 위→아래 반복, 보통 도형들 아래·선택지 위)이면 **⋮**, 가로 생략(좌→우 반복, 예: a_1, a_2, ⋯, a_n)이면 **⋯**(또는 …)로, 이미지의 방향대로 옮겨라.
 ★★전사에 {{FIG0}}·{{INL0}}·{{TABLE0}} 형태의 placeholder가 **이미 있으면** 그 자리·개수 그대로 두라(그림/표 자리). {{INLn}}은 본문 문장 중간의 인라인 도형 마커이니 **그 문장 안 제자리에 그대로** 두라(별도 줄로 빼지 마라 — {{FIG}}/{{TABLE}}만 자기 줄). {{INLn}} 은 도형 자체이니 그 **옆에 같은 도형을 글자(⌒·◠·△ 등)로 중복 표기하지 마라**(마커만 남기고 중복 기호 제거). ★여러 {{FIGn}}이 있으면 **번호 오름차순**(작은 번호가 위/앞 — {{FIG0}}이 {{FIG1}}보다 먼저)으로 배치하라(이미지 위→아래 순서 = 번호 순서). ★단, 전사에 없는 placeholder를 **새로 만들지 마라** — 이미지에 그림/표가 보여도 placeholder를 추가하지 말고, 전사에 있는 텍스트만 교정하라.
-★★placeholder 토큰({{FIG0}}·{{INL0}}·{{TABLE0}})은 **그 자리에 반드시 그대로 남겨라 — 절대 지우지 마라**(개수·위치 보존). 다만 그 그림/표/(가)(나) 박스의 **내용(표 셀 값·그림 설명)을 본문 텍스트로 풀어쓰지는 마라**. 즉 "토큰은 유지, 그 내용 중복 서술만 금지"(렌더 시 토큰이 그림/표로 대체됨).
+★★placeholder 토큰({{FIG0}}·{{INL0}}·{{TABLE0}}·{{BOX0_START}}·{{BOX0_END}})은 **그 자리에 반드시 그대로 남겨라 — 절대 지우지 마라**(개수·위치 보존). 다만 그 그림/표/(가)(나) 박스의 **내용(표 셀 값·그림 설명)을 본문 텍스트로 풀어쓰지는 마라**. 즉 "토큰은 유지, 그 내용 중복 서술만 금지"(렌더 시 토큰이 그림/표로 대체됨). {{BOXn_START}}·{{BOXn_END}}는 테두리 박스의 시작/끝 경계 마커이니 각자 그 줄에 그대로 두라(둘 사이 줄들이 박스로 감싸짐).
 ★★★출력은 아래 형식 그대로(JSON 절대 금지 — LaTeX 백슬래시가 JSON escape로 깨진다). 마커 줄은 정확히 이 글자로:
 ===FIXES===
 - <무엇을 왜 고쳤는지 한 줄>
@@ -198,8 +198,8 @@ if (fails.length) {
 // 결정적 SSOT 보정: 리터럴 집합 중괄호 {1,2,3} → \{1,2,3\} (KaTeX 에서 { } 는 그룹화라 안 보임).
 //   그룹화 중괄호(_{2n}·^{}·\frac{}{}·\begin{cases}·]{})는 보존. LLM 의존 없이 코드로 SSOT 를 KaTeX-correct 하게.
 function escSetBraces(t) {
-  // {{FIGn}}·{{INLn}}·{{TABLEn}} placeholder 보호(escape 금지 — reconstruct.ts 의 매칭이 깨진다)
-  const ph = []; t = t.replace(/\{\{(?:FIG|INL|TABLE)\d+\}\}/g, (m) => { ph.push(m); return `@@PH${ph.length - 1}@@`; });
+  // {{FIGn}}·{{INLn}}·{{TABLEn}}·{{BOXn_START/END}} placeholder 보호(escape 금지 — reconstruct.ts 매칭이 깨진다)
+  const ph = []; t = t.replace(/\{\{(?:(?:FIG|INL|TABLE)\d+|BOX\d+_(?:START|END))\}\}/g, (m) => { ph.push(m); return `@@PH${ph.length - 1}@@`; });
   const out = []; const stack = []; let lastGroupClose = false;
   for (let i = 0; i < t.length; i++) {
     const ch = t[i];
