@@ -70,7 +70,9 @@ async function gemmaCall(prompt, imgPath) {
 function parseCorrected(out) {
   const cm = out.match(/===CORRECTED===\r?\n([\s\S]*?)\r?\n===END===/);
   if (!cm) return null;
-  const corrected = cm[1].replace(/\$/g, '').replace(/[\x00-\x09\x0b-\x1f]/g, '').replace(/[ \t]+$/gm, '');
+  const corrected = cm[1].replace(/\$/g, '').replace(/[\x00-\x09\x0b-\x1f]/g, '').replace(/[ \t]+$/gm, '')
+    // 선택지 연속중복 제거(corrector가 보기 두 줄 분할 시 첫 보기를 복제하는 글리치): "① X ① X" → "① X".
+    .replace(/([①②③④⑤])[ \t]*([^\n①②③④⑤]+?)[ \t]+\1[ \t]*\2(?=[ \t]|\n|$|[①②③④⑤])/g, '$1 $2');
   const fmFix = out.match(/===FIXES===\r?\n([\s\S]*?)\r?\n===CORRECTED===/);
   const NOFIX = /^(없음|없습니다|none|n\/a|해당\s*없음|(수정|변경|교정|고친\s*것|고칠\s*것)\s*(사항\s*)?(은\s*)?없음)\.?$/i;
   const fixes = fmFix ? fmFix[1].split('\n').map((l) => l.replace(/^\s*-\s*/, '').trim()).filter((x) => x && !NOFIX.test(x)) : [];
@@ -122,7 +124,7 @@ const imgDir = `${REPO}/db/raw/${round}/images`;
 const img = `${imgDir}/${round}_${subj}_${String(num).padStart(2, '0')}.png`;
 const _back = process.env.CORR_BACKEND || 'haiku';
 const prompt = _back === 'gemma'
-  ? `이미지의 수능 수학 문제를 전사·교정하라. 수식은 LaTeX로 쓰되 $ 기호 없이(렌더러가 한글/수식 자동 분리). 객관식이면 보기 ①~⑤를 값과 함께 포함. 전사에 {{FIG0}}·{{INL0}}·{{TABLE0}}가 있으면 그 자리에 그대로 두고({{INLn}}은 문장 중간 인라인 도형이니 별도 줄로 빼지 말 것), 없으면 새로 만들지 마라. 그림/표 내용을 본문에 풀어쓰지 마라. ★도형 라벨 제거: 도형 안의 점 라벨(O·A·B·P·Q·A_n 같은 낱글자/기호)이나 각도(π/3 등)가 본문(특히 {{FIG}} 근처·선택지 앞)에 낱개로 나열돼 있으면 제거하라 — 그건 도형의 일부지 문제 문장이 아니다.
+  ? `이미지의 수능 수학 문제를 전사·교정하라. 수식은 LaTeX로 쓰되 $ 기호 없이(렌더러가 한글/수식 자동 분리). 객관식이면 보기 ①~⑤를 값과 함께 포함(★각 ①~⑤는 한 번씩만 — 두 줄로 나눠 배치해도 보기를 복제하지 마라). 전사에 {{FIG0}}·{{INL0}}·{{TABLE0}}가 있으면 그 자리에 그대로 두고({{INLn}}은 문장 중간 인라인 도형이니 별도 줄로 빼지 말 것), 없으면 새로 만들지 마라. 그림/표 내용을 본문에 풀어쓰지 마라. ★도형 라벨 제거: 도형 안의 점 라벨(O·A·B·P·Q·A_n 같은 낱글자/기호)이나 각도(π/3 등)가 본문(특히 {{FIG}} 근처·선택지 앞)에 낱개로 나열돼 있으면 제거하라 — 그건 도형의 일부지 문제 문장이 아니다.
 ★★줄바꿈 보존: 이미지에 줄이 나뉜 대로 한 줄씩 전사하라(절대 한 줄로 합치지 마라). 특히 조건 (가)(나)(다)·불릿(◦·•)·유도단계 (ⅰ)(ⅱ)(ⅲ)·결론식·질문("…값은?"/"…구하시오")을 이미지처럼 각각 별도 줄로 개행. 렌더러가 줄 구조로 박스를 판정하므로 줄바꿈이 곧 레이아웃이다.
 아래 형식 그대로만 출력:
 ===FIXES===
