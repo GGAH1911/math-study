@@ -158,6 +158,8 @@ export interface ReconOpts {
   figures?: Array<{ html: string; afterLine?: number }>;
   /** 표(셀 2D 배열들) — 본문 {{TABLEn}} 자리에 HTML <table>로 렌더. */
   tables?: string[][][];
+  /** 인라인 도형(임베드 객체 src) — 본문 줄 중간 {{INLn}} 자리에 인라인 <img>로 렌더(블록 {{FIGn}}과 별개). */
+  inlineFigures?: string[];
 }
 
 // 표(셀 2D 배열) → HTML <table>. 첫 행=헤더, 셀 값은 renderInline(수식/한글 혼합).
@@ -179,7 +181,7 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   // 파이프(|)만 있는 줄 = cases 중괄호 연장선/HWP 레이아웃 잔재(예: 27번 cases 위 '| |')라 제외.
   // 절댓값 |x| 등 의미있는 파이프는 내용이 같이 있어 이 필터(공백+파이프만)에 안 걸린다.
   const lines = text.split('\n').filter((l) => l.trim() && !/^[\s|‖∣｜]+$/.test(l))
-    .flatMap((l) => l.split(/\s+(?=\([가-하]\)\s)/))  // 한 줄에 붙은 (가)(나)(다) 조건을 각 줄로
+    .flatMap((l) => l.split(/(?<=\.)\s+(?=\([가-하]\)\s)/))  // ★원본 줄바꿈 SSOT: 문장끝(.) 다음의 조건 "(나)"만 분리(레거시 한줄-cram 보조). 인라인/수식 빈칸("개수는 (가) 이고","×(가)")은 분리X — 줄바꿈 보존된 콘텐츠엔 no-op
     .flatMap((l) => {  // 조건 줄 끝에 붙은 질문("…의 값은?")은 박스 밖으로 떼어냄
       const m = l.match(/^(\([가-하]\)\s.*?다\.)\s+(.+(?:값은|값을|구하|얼마|\?).*)$/);
       return m ? [m[1], m[2]] : [l];
@@ -231,13 +233,29 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   // 불렛(•/∙) 항목은 좌측정렬 + 불렛 뒤 공백 보장 (decode가 공백 누락하고 순수수식이면
   // recon-disp 로 가운데정렬되던 것 교정 — 불렛은 목록이라 좌측정렬이 맞음).
   const BULLET_RE = /^\s*([•∙·▪◦●])\s*/;
+  const inlFigs = opts.inlineFigures ?? [];
+  // 본문 줄 중간 {{INLn}} → 인라인 도형 <img>(텍스트 흐름 안). {{INLn}} 기준으로 쪼개 사이사이 renderInline.
+  const renderInlineWithFig = (s: string): string => {
+    if (!/\{\{INL\d+\}\}/.test(s)) return renderInline(s);
+    return s
+      .split(/(\{\{INL\d+\}\})/)
+      .map((p) => {
+        const m = p.match(/^\{\{INL(\d+)\}\}$/);
+        if (m) {
+          const src = inlFigs[+m[1]];
+          return src ? `<img src="${src}" alt="도형" class="recon-inl" style="height:1.3em;vertical-align:-0.28em;display:inline" />` : '';
+        }
+        return p ? renderInline(p) : '';
+      })
+      .join('');
+  };
   const renderLine = (line: string) => {
     const bm = line.match(BULLET_RE);
     if (bm) {
-      return `<div class="recon-line recon-bullet">${esc(bm[1])} ${renderInline(line.replace(BULLET_RE, ''))}</div>`;
+      return `<div class="recon-line recon-bullet">${esc(bm[1])} ${renderInlineWithFig(line.replace(BULLET_RE, ''))}</div>`;
     }
     return hasHangul(line)
-      ? `<div class="recon-line">${renderInline(line)}</div>`
+      ? `<div class="recon-line">${renderInlineWithFig(line)}</div>`
       : `<div class="recon-line recon-disp">${km(line, true)}</div>`;
   };
 

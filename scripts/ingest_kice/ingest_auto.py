@@ -258,32 +258,18 @@ def main():
                        env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # 손상 자동 재전사 (캐시 전)
         subprocess.run([PY, 'scripts/consistency_gate.py', '--list', ','.join(slugs), '--fix'],
                        env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # format 오분류 자동교정
-        if not a.no_correct:                          # 교정(corrector_batch, gemma 직렬)+검증(verify_batch, sonnet 1콜 N문제) — 풀이캐시 前
-            rounds_set = sorted({s.rsplit('_', 2)[0] for s in slugs})   # corrector_batch 는 round 필터(슬러그 X)
-            for rd in rounds_set:                     # 교정: gemma(맥북 1대) → CONC=1 직렬
-                print(f'\n══════ 교정 {rd} (gemma 직렬) ══════', flush=True)
-                subprocess.run(['node', 'web/scripts/corrector_batch.mjs', rd],
-                               env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'CORR_BACKEND': 'gemma', 'CORR_CONC': '1'})
-            if not a.no_verify:                       # 검증(sonnet 1콜 N문제 배치, 병렬 X) + 재교정 루프(최대 2회)
-                def _issue_slugs():                   # corrector_verify: issues 인 슬러그만
-                    out = []
-                    for s in slugs:
-                        mds = glob.glob(str(ROOT / 'docs' / 'problems' / s.split('_')[0] / '*' / f'{s}.md'))
-                        if mds and re.search(r'^corrector_verify:\s*issues', Path(mds[0]).read_text(encoding='utf-8'), re.M):
-                            out.append(s)
-                    return out
-                for attempt in range(2):
-                    print(f'\n══════ 검증 {len(slugs)}문제 (sonnet 1콜 N문제, 라운드 {attempt + 1}) ══════', flush=True)
-                    subprocess.run(['node', 'web/scripts/verify_batch.mjs', '--list', ','.join(slugs), '--force'],
-                                   env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
-                    bad = _issue_slugs()
-                    if not bad:
-                        break
-                    print(f'   issue {len(bad)}건 재교정(gemma, issue 자동 주입): {bad}', flush=True)
-                    for bs in bad:                     # corrector 가 corrector_verify_issues 를 프롬프트에 주입해 재교정
-                        r, sj, nm = bs.rsplit('_', 2)
-                        subprocess.run(['node', 'web/scripts/corrector.mjs', r, sj, nm],
-                                       env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'CORR_BACKEND': 'gemma'})
+        if not a.no_correct:                          # 교정∥검증∥재교정 완전 스트리밍(3큐 동시) — 풀이캐시 前
+            rounds_set = sorted({s.rsplit('_', 2)[0] for s in slugs})
+            for rd in rounds_set:
+                if a.no_verify:                       # 검증 생략 → 교정만(gemma 직렬)
+                    print(f'\n══════ 교정만 {rd} (gemma 직렬) ══════', flush=True)
+                    subprocess.run(['node', 'web/scripts/corrector_batch.mjs', rd],
+                                   env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'CORR_BACKEND': 'gemma', 'CORR_CONC': '1'})
+                else:                                 # 완전 스트리밍: gemma 교정 ∥ sonnet 검증 ∥ agy 재교정
+                    print(f'\n══════ 교정∥검증∥재교정 스트리밍 {rd} (gemma ∥ sonnet ∥ agy) ══════', flush=True)
+                    subprocess.run(['node', 'web/scripts/correct_verify_pipeline.mjs', rd],
+                                   env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'PAR_C': '1', 'PAR_V': '4',
+                                        'PAR_G': '1', 'CORRECT_BACKEND': 'gemma', 'RECORRECT_BACKEND': 'agy', 'MAXATT': '3'})
         if not a.no_cache:
             print(f'\n══════ 풀이캐시 {len(slugs)}문제 --parallel {a.parallel} ══════', flush=True)
             subprocess.run([PY, 'scripts/build_solution_cache.py', '--list', ','.join(slugs),

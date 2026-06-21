@@ -77,7 +77,7 @@ function parseCorrected(out) {
   return { corrected, fixes };
 }
 // 검증 게이트 — 실패 사유 배열(빈 배열=통과).
-const PH = (s) => (s.match(/\{\{(?:FIG|TABLE)\d+\}\}/g) || []).sort().join(',');
+const PH = (s) => (s.match(/\{\{(?:FIG|INL|TABLE)\d+\}\}/g) || []).sort().join(',');
 function validate(corrected, st) {
   const f = [];
   if (!corrected || !corrected.trim()) return ['빈출력'];
@@ -122,7 +122,9 @@ const imgDir = `${REPO}/db/raw/${round}/images`;
 const img = `${imgDir}/${round}_${subj}_${String(num).padStart(2, '0')}.png`;
 const _back = process.env.CORR_BACKEND || 'haiku';
 const prompt = _back === 'gemma'
-  ? `이미지의 수능 수학 문제를 전사·교정하라. 수식은 LaTeX로 쓰되 $ 기호 없이(렌더러가 한글/수식 자동 분리). 객관식이면 보기 ①~⑤를 값과 함께 포함. 전사에 {{FIG0}}·{{TABLE0}}가 있으면 그 자리에 그대로 두고, 없으면 새로 만들지 마라. 그림/표 내용을 본문에 풀어쓰지 마라. 아래 형식 그대로만 출력:
+  ? `이미지의 수능 수학 문제를 전사·교정하라. 수식은 LaTeX로 쓰되 $ 기호 없이(렌더러가 한글/수식 자동 분리). 객관식이면 보기 ①~⑤를 값과 함께 포함. 전사에 {{FIG0}}·{{INL0}}·{{TABLE0}}가 있으면 그 자리에 그대로 두고({{INLn}}은 문장 중간 인라인 도형이니 별도 줄로 빼지 말 것), 없으면 새로 만들지 마라. 그림/표 내용을 본문에 풀어쓰지 마라. ★도형 라벨 제거: 도형 안의 점 라벨(O·A·B·P·Q·A_n 같은 낱글자/기호)이나 각도(π/3 등)가 본문(특히 {{FIG}} 근처·선택지 앞)에 낱개로 나열돼 있으면 제거하라 — 그건 도형의 일부지 문제 문장이 아니다.
+★★줄바꿈 보존: 이미지에 줄이 나뉜 대로 한 줄씩 전사하라(절대 한 줄로 합치지 마라). 특히 조건 (가)(나)(다)·불릿(◦·•)·유도단계 (ⅰ)(ⅱ)(ⅲ)·결론식·질문("…값은?"/"…구하시오")을 이미지처럼 각각 별도 줄로 개행. 렌더러가 줄 구조로 박스를 판정하므로 줄바꿈이 곧 레이아웃이다.
+아래 형식 그대로만 출력:
 ===FIXES===
 - 고친 항목을 하나씩 모두 나열(고친 곳마다 한 줄, 없으면 이 줄 비움)
 ===CORRECTED===
@@ -133,8 +135,9 @@ ${st}`
   : `너는 한국 수능 기출의 전사 텍스트를 원본 이미지와 한 글자씩 대조해 교정한다.
 아래 "추출 전사"는 PDF 텍스트레이어에서 뽑아 깨진 기호·오타·누락이 있을 수 있다. 이미지대로 정확히 교정하라(수식 기호·보기 ①~⑤·숫자 정확히). 환각 금지 — 이미지에 있는 그대로.
 ★수식: LaTeX 명령(\\frac, \\overline, \\sqrt 등)은 쓰되 **$...$ 델리미터로 감싸지 마라**. 렌더러가 한글/수식을 자동 분리한다 — $ 를 넣으면 KaTeX가 깨진다.
-★★전사에 {{FIG0}}·{{TABLE0}} 형태의 placeholder가 **이미 있으면** 그 자리·개수 그대로 두라(그림/표 자리). ★단, 전사에 없는 placeholder를 **새로 만들지 마라** — 이미지에 그림/표가 보여도 placeholder를 추가하지 말고, 전사에 있는 텍스트만 교정하라.
-★★placeholder 토큰({{FIG0}}·{{TABLE0}})은 **그 자리에 반드시 그대로 남겨라 — 절대 지우지 마라**(개수·위치 보존). 다만 그 그림/표/(가)(나) 박스의 **내용(표 셀 값·그림 설명)을 본문 텍스트로 풀어쓰지는 마라**. 즉 "토큰은 유지, 그 내용 중복 서술만 금지"(렌더 시 토큰이 그림/표로 대체됨).
+★★줄바꿈 보존: 이미지에 줄이 나뉜 대로 **한 줄씩** 전사하라(절대 한 줄로 합치지 마라). 특히 조건 (가)(나)(다)·불릿(◦·•)·유도단계 (ⅰ)(ⅱ)(ⅲ)·결론식·질문("…값은?"/"…구하시오")을 이미지처럼 **각각 별도 줄로 개행**. 렌더러가 줄 구조로 박스를 판정하므로 줄바꿈이 곧 레이아웃이다.
+★★전사에 {{FIG0}}·{{INL0}}·{{TABLE0}} 형태의 placeholder가 **이미 있으면** 그 자리·개수 그대로 두라(그림/표 자리). {{INLn}}은 본문 문장 중간의 인라인 도형 마커이니 **그 문장 안 제자리에 그대로** 두라(별도 줄로 빼지 마라 — {{FIG}}/{{TABLE}}만 자기 줄). {{INLn}} 은 도형 자체이니 그 **옆에 같은 도형을 글자(⌒·◠·△ 등)로 중복 표기하지 마라**(마커만 남기고 중복 기호 제거). ★여러 {{FIGn}}이 있으면 **번호 오름차순**(작은 번호가 위/앞 — {{FIG0}}이 {{FIG1}}보다 먼저)으로 배치하라(이미지 위→아래 순서 = 번호 순서). ★단, 전사에 없는 placeholder를 **새로 만들지 마라** — 이미지에 그림/표가 보여도 placeholder를 추가하지 말고, 전사에 있는 텍스트만 교정하라.
+★★placeholder 토큰({{FIG0}}·{{INL0}}·{{TABLE0}})은 **그 자리에 반드시 그대로 남겨라 — 절대 지우지 마라**(개수·위치 보존). 다만 그 그림/표/(가)(나) 박스의 **내용(표 셀 값·그림 설명)을 본문 텍스트로 풀어쓰지는 마라**. 즉 "토큰은 유지, 그 내용 중복 서술만 금지"(렌더 시 토큰이 그림/표로 대체됨).
 ★★★출력은 아래 형식 그대로(JSON 절대 금지 — LaTeX 백슬래시가 JSON escape로 깨진다). 마커 줄은 정확히 이 글자로:
 ===FIXES===
 - <무엇을 왜 고쳤는지 한 줄>
@@ -158,6 +161,9 @@ let out, by;
 if (BACKEND === 'gemma') {
   console.log('② gemma4(로컬 맥북) 교정…');
   out = await gemmaCall(promptF, img); by = 'gemma4';
+} else if (BACKEND === 'agy') {
+  console.log('② agy(Gemini) 재교정…');                 // 재교정 전용(gemma는 본교정에 전념 → 별 백엔드라 병렬)
+  out = await agyCall(promptF, imgDir); by = 'gemini';
 } else {
   console.log('② claude(Haiku) 교정…');
   out = await claudeCall(promptF, imgDir, 'haiku'); by = 'haiku';
@@ -170,7 +176,9 @@ let fails = parsed ? validate(parsed.corrected, st) : ['파싱실패'];
 // ④ 자가치유: 검증 실패 → 재교정 → 재검증 (gemma는 재시도, claude는 sonnet 승격)
 if (fails.length) {
   console.log(`③ 검증 실패(${fails.join(', ')}) → ④ 자가치유 재시도…`);
-  const out2 = BACKEND === 'gemma' ? await gemmaCall(promptF, img) : await claudeCall(promptF, imgDir);
+  const out2 = BACKEND === 'gemma' ? await gemmaCall(promptF, img)
+    : BACKEND === 'agy' ? await agyCall(promptF, imgDir)
+    : await claudeCall(promptF, imgDir);
   const parsed2 = parseCorrected(out2);
   const fails2 = parsed2 ? validate(parsed2.corrected, st) : ['파싱실패'];
   if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma') by = 'sonnet'; console.log('④ 자가치유 통과'); }
@@ -185,6 +193,25 @@ if (fails.length) {
 }
 
 // ⑤ 적용 (검증 통과분만)
+// 결정적 SSOT 보정: 리터럴 집합 중괄호 {1,2,3} → \{1,2,3\} (KaTeX 에서 { } 는 그룹화라 안 보임).
+//   그룹화 중괄호(_{2n}·^{}·\frac{}{}·\begin{cases}·]{})는 보존. LLM 의존 없이 코드로 SSOT 를 KaTeX-correct 하게.
+function escSetBraces(t) {
+  // {{FIGn}}·{{INLn}}·{{TABLEn}} placeholder 보호(escape 금지 — reconstruct.ts 의 매칭이 깨진다)
+  const ph = []; t = t.replace(/\{\{(?:FIG|INL|TABLE)\d+\}\}/g, (m) => { ph.push(m); return `@@PH${ph.length - 1}@@`; });
+  const out = []; const stack = []; let lastGroupClose = false;
+  for (let i = 0; i < t.length; i++) {
+    const ch = t[i];
+    if (ch === '{' && t[i - 1] !== '\\') {
+      const prev = (t.slice(0, i).match(/(\S)\s*$/) || [, ''])[1];
+      const grouping = /[_^a-zA-Z\]]/.test(prev) || (prev === '}' && lastGroupClose);
+      stack.push(!grouping); out.push(grouping ? '{' : '\\{');
+    } else if (ch === '}' && t[i - 1] !== '\\') {
+      const lit = stack.length ? stack.pop() : false; lastGroupClose = !lit; out.push(lit ? '\\}' : '}');
+    } else out.push(ch);
+  }
+  return out.join('').replace(/@@PH(\d+)@@/g, (_, i) => ph[+i]);
+}
+parsed.corrected = escSetBraces(parsed.corrected);
 const block = 'searchable_text: |\n' + parsed.corrected.split('\n').map((l) => '  ' + l).join('\n') + '\n';
 txt = txt.slice(0, m.index + 1) + block + txt.slice(m.index + m[0].length);
 txt = txt.replace(/\ncorrector_fixes:(?:\n  - .*)*(?=\n)/, '');

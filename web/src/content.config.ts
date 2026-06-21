@@ -73,6 +73,7 @@ const problems = defineCollection({
     figure_image: z.string().optional(),  // 추출·stitch 한 도형만 잘라낸 PNG (재구성 뷰용)
     figure_after_line: z.number().optional(),  // 재구성 본문 몇 번째 줄 뒤에 도형 삽입 (백필이 PDF 위치로 계산)
     figures: z.array(z.object({ image: z.string(), after_line: z.number().optional() })).optional(),  // 다중 그림: 각 추출 PNG + 삽입 위치(줄). figure_image보다 우선.
+    inline_figures: z.array(z.object({ image: z.string() })).optional(),  // 인라인 도형(임베드 객체): 본문 {{INLn}} 자리에 인라인 <img>. 블록 figures와 별개.
     tables: z.array(z.array(z.array(z.string()))).optional(),  // 표(셀 2D 배열들) — searchable_text {{TABLEn}} 자리에 HTML <table> 렌더
     searchable_text: z.string().optional(),
     corrector_done: z.boolean().optional(),  // Gemini 텍스트 교정 완료(멱등 플래그)
