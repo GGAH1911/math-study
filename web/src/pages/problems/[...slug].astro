@@ -337,6 +337,8 @@ if (src) {
     .recon-view .recon-score { font-size: 0.9rem; color: var(--color-muted, #9ca3af); }
     .recon-view .recon-line { margin: 0.5em 0; }
     .recon-view .recon-disp { text-align: center; margin: 1.1em 0; overflow-x: auto; }
+    .recon-view .recon-deriv { text-align: left; margin: 0.35em 0; }  /* 도출(= 체인) 줄: 좌측정렬·간격축소로 통일 */
+    .recon-view .recon-deriv .katex-display { text-align: left; margin: 0; }  /* KaTeX display 자체 가운데정렬 무시(= 체인 좌측 통일) */
     .recon-view .recon-fig-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 1.3em 0; gap: 0.3em; }
     .recon-view .recon-fig { max-width: 380px; width: 100%; height: auto; background: #fff; border-radius: 8px; padding: 10px; box-sizing: border-box; }
     .recon-view .recon-fig-full { max-width: 560px; }

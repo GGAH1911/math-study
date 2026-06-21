@@ -265,6 +265,14 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
     if (bm) {
       return `<div class="recon-line recon-bullet">${esc(bm[1])} ${renderInlineWithFig(line.replace(BULLET_RE, ''))}</div>`;
     }
+    // 도출 줄(= < > ≤ ≥ 로 시작 + 빈칸 외 한글 없음): display 수식 + 빈칸 \boxed + 좌측정렬(recon-deriv)로 통일.
+    //   빈칸 든 줄(인라인·소형 좌측)과 순수식 줄(가운데·대형)이 따로 놀던 = 체인 정렬·크기 불일치 해결.
+    //   독립 식·(*) 같은 비-관계 시작 줄은 가운데(recon-disp) 유지.
+    const noBlank = line.replace(/[(（]\s*[가-하]\s*[)）]/g, '');
+    if (/^\s*[=<>≤≥≠]/.test(line.trim()) && !hasHangul(noBlank)) {
+      const boxed = line.replace(/[(（]\s*([가-하])\s*[)）]/g, '\\boxed{\\text{($1)}}');
+      return `<div class="recon-line recon-disp recon-deriv">${km(boxed, true)}</div>`;
+    }
     return hasHangul(line)
       ? `<div class="recon-line">${renderInlineWithFig(line)}</div>`
       : `<div class="recon-line recon-disp">${km(line, true)}</div>`;
