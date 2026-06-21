@@ -60,6 +60,17 @@ function claudeCall(prompt, imgDir) {
   });
 }
 
+// ★gemma 검증(로컬 mlx HTTP) — 무료·CLI오버헤드0. 문제별 1콜(mlx 멀티이미지 배치 비신뢰). 라인 한 줄(ok / issues|이유).
+const GEMMA_URL = process.env.GEMMA_URL || 'http://100.79.230.49:8080/v1/chat/completions';
+async function gemmaVerify(st, imgPath) {
+  try {
+    const b64 = readFileSync(imgPath).toString('base64');
+    const prompt = `이 수능 수학 문제를 이미지와 아래 "전사"를 글자·수식·기호 한 글자씩 시각 대조해 검증하라. ★문제를 절대 풀지 마라(답·풀이·추론 금지). 출력은 정확히 한 줄만: "ok"(이미지와 일치) 또는 "issues|짧은이유(20자 이내, 1개)"(불일치). 다른 텍스트 절대 금지.\n전사: ${st}`;
+    const r = await fetch(GEMMA_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ model: process.env.GEMMA_MODEL || 'mlx-community/gemma-4-26B-A4B-it-qat-4bit', max_tokens: 120, temperature: 0, messages: [{ role: 'user', content: [{ type: 'text', text: prompt }, { type: 'image_url', image_url: { url: `data:image/png;base64,${b64}` } }] }] }) });
+    const j = await r.json();
+    return j.choices?.[0]?.message?.content || '';
+  } catch { return ''; }
+}
 function writeVerify(md, status, issues) {
   let t = readFileSync(md, 'utf8');
   t = t.replace(/\ncorrector_verify:.*(?=\n)/, '');
@@ -81,6 +92,21 @@ async function verifyChunk(items) {
   items = items.filter((it) => (readSt(it.md) || '').trim().length >= EMPTY_MIN);
   if (!items.length) return;
   const imgDir = `${REPO}/db/raw/${items[0].round}/images`;
+  // ★MODEL=gemma: 로컬 무료 검증(문제별 1콜, Claude 0·CLI오버헤드0). 다른 모델(sonnet/haiku)은 아래 배치 1콜.
+  if (MODEL === 'gemma') {
+    let ok = 0, iss = 0, pf = 0;
+    for (const it of items) {
+      const imgPath = `${imgDir}/${it.round}_${it.subj}_${String(it.num).padStart(2, '0')}.png`;
+      const out = await gemmaVerify(readSt(it.md), imgPath);
+      const m = out.match(/\b(ok|issues)\b/i);
+      if (!m) { writeVerify(it.md, 'parsefail', ['gemma 검증 무응답']); pf++; continue; }
+      const isOk = m[1].toLowerCase() === 'ok';
+      writeVerify(it.md, isOk ? 'ok' : 'issues', isOk ? [] : [(out.split('|')[1] || '').trim() || '불일치']);
+      if (isOk) ok++; else iss++;
+    }
+    log(`  청크[${items.map((i) => i.num).join(',')}] gemma검증 → ok ${ok} / issues ${iss}${pf ? ` / pf ${pf}` : ''}`);
+    return;
+  }
   let prompt = `다음 ${items.length}개 수능 수학 문제를 각각 이미지와 "전사 텍스트"를 한 글자씩 시각 대조해 교정 정확도를 검증하라.
 ★★문제를 절대 풀지 마라(답 계산·풀이·증명·추론 전부 금지). 오직 전사의 글자·수식·기호가 이미지와 같은지 눈으로 대조만.
 - 놓침(이미지엔 있는데 전사 누락/오기) 또는 환각(전사엔 있는데 이미지에 없음)만 본다. {{FIG/INL/TABLE}} placeholder는 자리표시라 내용 평가 안 함(위치 어긋나면 issue).
