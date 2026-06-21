@@ -89,7 +89,18 @@ function reconcilePH(corrected, st) {
   let out = corrected; const changed = [];
   // gemma 추가분은 '제거 안 함' — 비전이 extract보다 정확(extract가 못 잡은 벡터그래프·도식을 gemma가 봄).
   //   strip 하면 verify가 '도형 누락' 지적 → 재교정 → agy 재추가 → strip 무한루프(느려짐의 주범). 그래서 보존.
-  for (const ph of stSet) if (!corrSet.has(ph)) { out = out.replace(/\s*$/, '') + '\n' + ph; changed.push('+' + ph); } // 누락분만 복원
+  for (const ph of stSet) {
+    if (corrSet.has(ph)) continue;                                   // 누락분만 복원
+    if (ph.includes('INL')) {
+      // ★INL 은 인라인(줄 중간) — 끝에 append 하면 위치 깨짐. st 의 ph 앞 컨텍스트를 corrected 에서 찾아 그 자리에 삽입.
+      const before = (st.split(ph)[0] || '').replace(/\s+$/, '').slice(-14).trim();
+      const i = before ? out.indexOf(before) : -1;
+      if (i >= 0) { const at = i + before.length; out = out.slice(0, at) + ' ' + ph + ' ' + out.slice(at); changed.push('+' + ph + '@인라인'); }
+      else changed.push('?' + ph + '@위치불명(복원skip→재교정에 맡김)');   // 끝 append 안 함
+    } else {
+      out = out.replace(/\s*$/, '') + '\n' + ph; changed.push('+' + ph);   // 블록(FIG/TABLE/BOX)은 끝줄에 복원
+    }
+  }
   out = out.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
   if (changed.length) console.log(`   placeholder 누락복원: ${changed.join(' ')}`);
   return out;
@@ -183,6 +194,9 @@ if (BACKEND === 'gemma') {
 } else if (BACKEND === 'agy') {
   console.log('② agy(Gemini) 재교정…');                 // 재교정 전용(gemma는 본교정에 전념 → 별 백엔드라 병렬)
   out = await agyCall(promptF, imgDir); by = 'gemini';
+} else if (BACKEND === 'sonnet') {
+  console.log('② claude(Sonnet) 재교정…');               // 병렬 가능(PAR_G>1) — gemma4 실패분 빠르게 재교정
+  out = await claudeCall(promptF, imgDir, 'sonnet'); by = 'sonnet';
 } else {
   console.log('② claude(Haiku) 교정…');
   out = await claudeCall(promptF, imgDir, 'haiku'); by = 'haiku';
@@ -198,6 +212,7 @@ if (fails.length) {
   console.log(`③ 검증 실패(${fails.join(', ')}) → ④ 자가치유 재시도…`);
   const out2 = BACKEND === 'gemma' ? await gemmaCall(promptF, img)
     : BACKEND === 'agy' ? await agyCall(promptF, imgDir)
+    : BACKEND === 'sonnet' ? await claudeCall(promptF, imgDir, 'sonnet')
     : await claudeCall(promptF, imgDir);
   const parsed2 = parseCorrected(out2);
   if (parsed2) parsed2.corrected = reconcilePH(parsed2.corrected, st);   // 자가치유분도 화해
