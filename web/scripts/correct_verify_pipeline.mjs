@@ -18,7 +18,8 @@ const PAR_G = Math.max(1, parseInt(process.env.PAR_G || '1', 10));   // 재교�
 const CORRECT_BACKEND = process.env.CORRECT_BACKEND || 'gemma';      // 초기 교정 백엔드(로컬·토큰0)
 const RECORRECT_BACKEND = process.env.RECORRECT_BACKEND || 'agy';    // 재교정 백엔드(gemma와 별도라 병렬)
 const DUAL = process.env.DUAL === '1';   // gemma+agy 1차 병렬 + agy 공유 재교정레인. agy 단일인스턴스(동시호출 충돌)라 재교정·1차를 agy 워커 1개가 번갈아.
-const OR_AVAILABLE = existsSync((process.env.HOME || '') + '/.config/math-study/openrouter.key');  // OpenRouter gemma-4-26b:free 3번째 병렬 레인(키 있으면)
+const OR_AVAILABLE = existsSync((process.env.HOME || '') + '/.config/math-study/openrouter.key');  // OpenRouter gemma-4-26b:free 레인(기본 off — 무료풀 429. OR_LANE=1로 켬)
+const GEMMA_PAR = Math.max(1, parseInt(process.env.GEMMA_PAR || '2', 10));  // 로컬 26b 동시 워커수(mlx continuous batching → ~N배). 32GB라 2 안전(검증)
 const MAXATT = Math.max(1, parseInt(process.env.MAXATT || '3', 10));
 const SKIP_TABLE = process.env.SKIP_TABLE === '1' || process.env.CLEAN_ONLY === '1';  // {{TABLE}} 보유 교정완료분 제외(재추출 배치 B용)
 const CHUNK = 5;
@@ -75,8 +76,9 @@ for (const md of walk(PROB)) {
 }
 let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
+const orOn = process.env.OR_LANE === '1' && OR_AVAILABLE;
 const modeStr = DUAL
-  ? `교정 gemma+agy${OR_AVAILABLE ? '+OR' : ''}(병렬${OR_AVAILABLE ? 3 : 2}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy${OR_AVAILABLE ? '+OR' : ''}(공유레인)`
+  ? `교정 gemma×${GEMMA_PAR}(로컬26b)+agy${orOn ? '+OR' : ''} ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(쿼터소진→sonnet)${orOn ? '+OR' : ''}`
   : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
 log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
@@ -180,9 +182,9 @@ async function orLaneWorker() {
 }
 
 await Promise.all(DUAL ? [
-  correctWorker(),                                       // gemma 1차 전담(맥북 1대)
-  agyLaneWorker(),                                       // agy: 재교정 우선 + 1차 여유분(단일인스턴스 1개)
-  ...(OR_AVAILABLE ? [orLaneWorker()] : []),             // OpenRouter gemma-4-26b:free 3번째 병렬 레인
+  ...Array.from({ length: GEMMA_PAR }, correctWorker),   // 로컬 26b ×GEMMA_PAR (mlx continuous batching → ~N배)
+  agyLaneWorker(),                                       // agy(쿼터소진→sonnet) 재교정 우선 + 1차 여유분
+  ...(orOn ? [orLaneWorker()] : []),                     // OR 레인 기본 off(무료풀 429), OR_LANE=1로 켬
   ...Array.from({ length: PAR_V }, verifyWorker),
 ] : [
   ...Array.from({ length: PAR_C }, correctWorker),
