@@ -216,8 +216,8 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
 
   // 테두리 박스 영역들 — 빈칸추론·<보기>·(가)(나)(다) 조건. [start, end) 범위 목록.
   const boxes: Array<[number, number]> = [];
-  // 1) 빈칸추론: "다음은 … 과정이다" 다음 줄 ~ "위의 … 알맞은/값은" 전.
-  const introIdx = body.findIndex((l) => /과정이다|구하는 과정/.test(l));
+  // 1) 빈칸추론: "다음은 … 과정이다/증명한 것이다" 다음 줄 ~ "위의 … 알맞은/값은" 전.
+  const introIdx = body.findIndex((l) => /과정이다|구하는 과정|증명한 것이다|증명한 과정|증명하는 과정|보이는 과정/.test(l));
   if (introIdx >= 0) {
     const s = introIdx + 1;
     const ci = body.findIndex((l, i) => i >= s && /^\s*위의|알맞은\s*(수|값|식|것)|에 알맞은/.test(l));
