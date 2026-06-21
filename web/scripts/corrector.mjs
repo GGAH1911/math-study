@@ -87,17 +87,21 @@ function reconcilePH(corrected, st) {
   const stSet = new Set(st.match(RE) || []), corrArr = corrected.match(RE) || [];
   const corrSet = new Set(corrArr);
   let out = corrected; const changed = [];
-  for (const ph of new Set(corrArr)) if (!stSet.has(ph)) { out = out.split(ph).join(''); changed.push('-' + ph); }   // 추가분 제거
-  for (const ph of stSet) if (!corrSet.has(ph)) { out = out.replace(/\s*$/, '') + '\n' + ph; changed.push('+' + ph); } // 누락분 복원
+  // gemma 추가분은 '제거 안 함' — 비전이 extract보다 정확(extract가 못 잡은 벡터그래프·도식을 gemma가 봄).
+  //   strip 하면 verify가 '도형 누락' 지적 → 재교정 → agy 재추가 → strip 무한루프(느려짐의 주범). 그래서 보존.
+  for (const ph of stSet) if (!corrSet.has(ph)) { out = out.replace(/\s*$/, '') + '\n' + ph; changed.push('+' + ph); } // 누락분만 복원
   out = out.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
-  if (changed.length) console.log(`   placeholder 화해: ${changed.join(' ')}`);
+  if (changed.length) console.log(`   placeholder 누락복원: ${changed.join(' ')}`);
   return out;
 }
 function validate(corrected, st) {
   const f = [];
   if (!corrected || !corrected.trim()) return ['빈출력'];
   if (/[\x00-\x09\x0b-\x1f]/.test(corrected)) f.push('제어문자');       // YAML/서버 다운 차단
-  if (PH(st) !== PH(corrected)) f.push(`placeholder(${PH(st)}→${PH(corrected)})`);
+  const _re = /\{\{(?:(?:FIG|INL|TABLE)\d+|BOX\d+_(?:START|END))\}\}/g;
+  const _corrP = new Set(corrected.match(_re) || []);
+  const _miss = [...new Set(st.match(_re) || [])].filter((p) => !_corrP.has(p));
+  if (_miss.length) f.push(`placeholder누락(${_miss.join(',')})`);   // gemma 추가분 허용(비전 우선) · 누락만 실패
   const o = (corrected.match(/\{/g) || []).length, c = (corrected.match(/\}/g) || []).length;
   if (o !== c) f.push(`중괄호(${o}/${c})`);                              // LaTeX 균형
   const ratio = corrected.length / Math.max(1, st.length);
