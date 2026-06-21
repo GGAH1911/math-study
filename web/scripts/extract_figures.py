@@ -44,17 +44,22 @@ def spans_of(page):
 
 
 def find_region(doc, num):
-    """번호 'num.' 텍스트 위치로 문제 영역(단 경계 + 다음 번호까지) 탐지."""
-    for pi, page in enumerate(doc):
-        sp = spans_of(page); PW = page.rect.width
-        tgt = next((r for t, r in sp if re.match(rf'^{num}\.?$', t)), None)
-        if not tgt: continue
-        x0, x1 = (0, PW / 2) if tgt.x0 < PW / 2 else (PW / 2, PW)  # 좌/우 단
-        # 같은 단의 아래쪽 다음 번호(어떤 번호든, num+1이 옆 단일 수 있음) = 영역 끝. 없으면 page 끝.
-        cands = [r.y0 for t, r in sp if re.match(r'^\d+\.?$', t)
-                 and x0 - 5 <= r.x0 < x1 and r.y0 > tgt.y1 + 5]
-        y1 = min(cands) if cands else page.rect.y1
-        return pi, fitz.Rect(x0, tgt.y0 - 3, x1, y1)
+    """번호 'num.' 위치로 문제 영역(단 경계 + 다음 번호까지) 탐지. 문제 마커 = 마침표 'N.' + 컬럼 좌측 edge
+    (x0≈88 좌단 / 429 우단). 페이지 헤더 '10월'·본문 중간 stray 숫자(마침표X·비edge)에 오매치해 엉뚱한 페이지
+    잡던 버그 수정. 1차 마침표 필수(엄격), 못 찾으면 2차 마침표 옵션 폴백(마커에 마침표 없는 회차 대비). 둘 다 edge."""
+    def edge(r, PW): return r.x0 < 110 or PW / 2 - 5 <= r.x0 < PW / 2 + 110
+    for require_dot in (True, False):
+        for pi, page in enumerate(doc):
+            sp = spans_of(page); PW = page.rect.width
+            pat = rf'^{num}\.$' if require_dot else rf'^{num}\.?$'
+            tgt = next((r for t, r in sp if re.match(pat, t.strip()) and edge(r, PW)), None)
+            if not tgt: continue
+            x0, x1 = (0, PW / 2) if tgt.x0 < PW / 2 else (PW / 2, PW)  # 좌/우 단
+            # 같은 단 아래쪽 다음 마커(마침표+edge) = 영역 끝. 없으면 page 끝.
+            cands = [r.y0 for t, r in sp if re.match(r'^\d+\.$', t.strip())
+                     and x0 - 5 <= r.x0 < x1 and edge(r, PW) and r.y0 > tgt.y1 + 5]
+            y1 = min(cands) if cands else page.rect.y1
+            return pi, fitz.Rect(x0, tgt.y0 - 3, x1, y1)
     return None, None
 
 
