@@ -227,3 +227,19 @@ if (!/^corrector_done:/m.test(txt)) txt = txt.replace(/\nsearchable_text:/, '\nc
 writeFileSync(md, txt);
 const _sec = ((Date.now() - t0) / 1000).toFixed(1);
 console.log(`⑤ 교정 적용(${by}, ${_sec}s) — fixes ${parsed.fixes.length}건${parsed.fixes.length ? ': ' + parsed.fixes.join(' / ') : ' (변경 없음)'}`);
+// ★변경내역 로깅: 교정 전(st) ↔ 후 객관적 line diff 를 전용 로그에 — LLM 자기보고(fixes)와 별개로 '실제 무엇이 바뀌었나' 가시화.
+try {
+  const DLOG = '/tmp/ingest_logs/corrector_diff.log';
+  const oldL = st.split('\n').map((s) => s.trim()).filter(Boolean);
+  const newL = parsed.corrected.split('\n').map((s) => s.trim()).filter(Boolean);
+  const oldS = new Set(oldL), newS = new Set(newL);
+  const removed = oldL.filter((l) => !newS.has(l)), added = newL.filter((l) => !oldS.has(l));
+  const hdr = `\n=== ${round}_${subj}_${num} [${by}, ${_sec}s] ${new Date().toISOString()} ===`;
+  if (removed.length || added.length) {
+    const d = [hdr, ...removed.slice(0, 15).map((l) => '- ' + l.slice(0, 160)), ...added.slice(0, 15).map((l) => '+ ' + l.slice(0, 160))];
+    appendFileSync(DLOG, d.join('\n') + '\n');
+    console.log(`   변경: -${removed.length}/+${added.length} 줄 (→ ${DLOG})`);
+  } else {
+    appendFileSync(DLOG, hdr + '\n(텍스트 변경 없음 — 이미 동일)\n');
+  }
+} catch (e) { /* 로깅 실패는 교정에 영향 없음 */ }
