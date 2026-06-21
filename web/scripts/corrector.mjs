@@ -213,7 +213,7 @@ if (BACKEND === 'gemma') {
 } else if (BACKEND === 'agy') {
   console.log('② agy(Gemini) 재교정…');                 // 재교정 전용(gemma는 본교정에 전념 → 별 백엔드라 병렬)
   out = await agyCall(promptF, imgDir); by = 'gemini';
-  if (!out.trim()) { out = await claudeCall(promptF, imgDir, 'sonnet'); if (out.trim()) { by = 'sonnet'; console.log('   agy 쿼터소진 → sonnet 재교정 폴백'); } }  // agy 빈출력(쿼터소진) → sonnet 재교정(사용자 지정)
+  // ★agy 쿼터소진(빈출력)이어도 sonnet 폴백 안 함 — agy만 사용(무료). 빈출력→아래 exit 3→파이프라인이 재큐+대기 후 agy 재시도(사용자 지정).
 } else if (BACKEND === 'or') {
   console.log('② OpenRouter gemma-4-26b:free 교정…');   // 3번째 병렬 레인(별도 무료풀, 429는 빈출력→재시도)
   out = await orCall(promptF, img); by = 'or-gemma26b';
@@ -241,7 +241,7 @@ if (fails.length) {
   const parsed2 = parseCorrected(out2);
   if (parsed2) parsed2.corrected = reconcilePH(parsed2.corrected, st);   // 자가치유분도 화해
   const fails2 = parsed2 ? validate(parsed2.corrected, st) : ['파싱실패'];
-  if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma') by = 'sonnet'; console.log('④ 자가치유 통과'); }
+  if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma' && BACKEND !== 'agy' && BACKEND !== 'or' && BACKEND !== 'sonnet') by = 'sonnet'; console.log('④ 자가치유 통과'); }  // 자가치유는 같은 백엔드 재시도 → by 유지(haiku만 sonnet 승격)
   else {
     mkdirSync(dirname(QLOG), { recursive: true });
     appendFileSync(QLOG, `${round}_${subj}_${num}\t1차:${fails.join('|')}\t재시도:${fails2.join('|')}\n`);

@@ -79,7 +79,7 @@ let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
 const orOn = process.env.OR_LANE === '1' && OR_AVAILABLE;
 const modeStr = DUAL
-  ? (CORRECT_ONLY ? `교정 gemma×${GEMMA_PAR}(로컬26b·무료) — 검증·재교정(Claude) 보류` : `교정 gemma×${GEMMA_PAR}(로컬26b)${orOn ? '+OR' : ''} ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(쿼터소진→sonnet)${orOn ? '+OR' : ''}`)
+  ? (CORRECT_ONLY ? `교정 gemma×${GEMMA_PAR}(로컬26b·무료) — 검증·재교정(Claude) 보류` : `교정 gemma×${GEMMA_PAR}(로컬26b) ∥ 검증 ${PAR_V}(sonnet·배치) ∥ 재교정 agy(무료, 쿼터소진시 대기)`)
   : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
 log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
@@ -156,14 +156,12 @@ async function agyLaneWorker() {
     if (recorrectQ.length) { slug = recorrectQ.shift(); mode = 're'; }     // 재교정 전용(1차는 gemma×2 전담, agy는 재교정만 — 사용자 지정)
     else { if (idle()) break; await sleep(300); continue; }
     const it = items.get(slug); const p = parseSlug(slug);
+    if (mode === 're' && it.att >= MAXATT) { failed++; log(`  ✗ ${slug} 재교정 상한(${MAXATT}) — issues 잔존 → 오케스트레이터(opus) 손교정 대상`); continue; }
     gActive++;
-    if (mode === 're') {
-      if (it.att >= MAXATT) { failed++; gActive--; log(`  ✗ ${slug} 재교정 상한 — issues 잔존`); continue; }
-      it.att++;
-    }
     const r = await run('node', ['scripts/corrector.mjs', p.round, p.subj, p.num], { CORR_BACKEND: 'agy' });
-    if (stateOf(it.md) === 'quarantine') { failed++; log(`  ⚠ ${slug} 격리(agy ${mode})`); }
-    else if (r.code === 3) { (mode === 're' ? recorrectQ : correctQ).push(slug); await sleep(2000); }
+    if (r.code === 3) { recorrectQ.push(slug); gActive--; await sleep(30000); continue; }  // ★agy 쿼터소진(빈출력) → 시도횟수 안 셈 + 30s 대기 후 agy 재시도(sonnet 폴백 없음 — agy만 지속, 사용자 지정)
+    if (mode === 're') it.att++;                                                            // 실제 재교정 시도만 카운트(agy 죽은 건 제외)
+    if (stateOf(it.md) === 'quarantine') { failed++; log(`  ⚠ ${slug} 격리(agy) — 오케스트레이터 손교정 대상`); }
     else verifyQ.push(slug);
     gActive--; beat();
   }

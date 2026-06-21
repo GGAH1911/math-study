@@ -56,7 +56,7 @@ function claudeCall(prompt, imgDir) {
   return new Promise((res) => {
     const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
     let out = ''; c.stdout.on('data', (d) => (out += d));
-    c.on('close', () => { try { res(JSON.parse(out).result || ''); } catch { res(''); } });
+    c.on('close', () => { try { const j = JSON.parse(out); const u = j.usage || {}; appendFileSync(`${LOGDIR}/verify_usage.log`, `${MODEL}\tcr=${u.cache_read_input_tokens ?? '?'}\tcc=${u.cache_creation_input_tokens ?? '?'}\tin=${u.input_tokens ?? '?'}\tout=${u.output_tokens ?? '?'}\n`); res(j.result || ''); } catch { res(''); } });
   });
 }
 
@@ -82,6 +82,7 @@ async function verifyChunk(items) {
   if (!items.length) return;
   const imgDir = `${REPO}/db/raw/${items[0].round}/images`;
   let prompt = `다음 ${items.length}개 수능 수학 문제를 각각 이미지와 "전사 텍스트"를 한 글자씩 대조해 교정 정확도를 검증하라.
+★★문제를 절대 풀지 마라(답 계산·풀이·증명 금지). 오직 전사와 이미지의 글자·수식·기호가 일치하는지 시각 대조만 하라 — 푸는 추론은 시간·토큰 낭비다(한 문제라도 길게 추론 금지).
 - 놓침: 이미지엔 있는데 전사에서 빠지거나 틀린 것(수식 기호·숫자·보기 ①~⑤·첨자·한글 오타).
 - 환각: 전사엔 있는데 이미지엔 없는 것.
 {{FIG0}}·{{INL0}}·{{TABLE0}} placeholder 는 그림/표 자리표시라 내용은 평가 대상이 아니나({{INL}}은 본문 문장 중간의 인라인 도형 마커), 위치(선택지 앞뒤·문장 내 등)가 이미지와 다르면 issue.
