@@ -112,6 +112,14 @@ function renderInline(s: string): string {
         flush();
         curType = false;
       }
+      // 수식 안 빈칸 (가)~(하)도 \boxed 로 박스 처리 — d=0 의 recon-blank 와 시각 통일(\frac{(나)}{…} 같은 수식 내부 답칸).
+      const bmIn = s.slice(i).match(/^[(（]\s*([가-하])\s*[)）]/);
+      if (bmIn) {
+        flushTR();
+        cur += `\\boxed{\\text{(${bmIn[1]})}}`;
+        i += bmIn[0].length - 1;
+        continue;
+      }
       if (isKo(ch) || (textRun && ch === ' ')) {
         textRun += ch;
         continue;
@@ -129,8 +137,11 @@ function renderInline(s: string): string {
       i += blank[0].length - 1;
       continue;
     }
-    // depth 0: 한글=text, 공백=리터럴 보존, 그 외=math.
+    // depth 0: 한글=text, 그 외=math.
     if (ch === ' ') {
+      // 수식 세그먼트 중 공백은 수식에 그대로 유지 — \left\{ … \right\} 처럼 공백 포함 수식이 공백마다
+      // 쪼개져 단독 \left/\right 가 짝 없이 KaTeX 깨지던 것 방지. 텍스트 사이 공백만 리터럴 보존.
+      if (curType === false) { cur += ' '; continue; }
       flush();
       segs.push(['sp', ' ']);
       continue;
