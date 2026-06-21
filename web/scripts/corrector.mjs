@@ -66,6 +66,25 @@ async function gemmaCall(prompt, imgPath) {
     return j.choices?.[0]?.message?.content || '';
   } catch (e) { console.error('[gemma 에러]', e?.message || e); return ''; }
 }
+// OpenRouter 무료 비전 폴백(gemma-4-26b:free — Google AI Studio, agy와 별도 쿼터풀). agy 쿼터 소진 시 사용. 키=레포밖 파일.
+const OR_KEY = (() => { try { return readFileSync((process.env.HOME || '') + '/.config/math-study/openrouter.key', 'utf8').trim(); } catch { return ''; } })();
+async function orCall(prompt, imgPath, retries = 2) {
+  if (!OR_KEY) return '';
+  const b64 = readFileSync(imgPath).toString('base64');
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST', headers: { Authorization: 'Bearer ' + OR_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'google/gemma-4-26b-a4b-it:free', max_tokens: 3000, temperature: 0,
+          messages: [{ role: 'user', content: [{ type: 'text', text: prompt }, { type: 'image_url', image_url: { url: `data:image/png;base64,${b64}` } }] }] }),
+      });
+      const j = await res.json();
+      if (j.error) { if (String(j.error.code) === '429' && i < retries) { await new Promise((r) => setTimeout(r, 8000)); continue; } return ''; }
+      return j.choices?.[0]?.message?.content || '';
+    } catch { if (i < retries) { await new Promise((r) => setTimeout(r, 8000)); continue; } return ''; }
+  }
+  return '';
+}
 // 마커 파싱 + sanitize($ 델리미터·제어문자 제거).
 function parseCorrected(out) {
   const cm = out.match(/===CORRECTED===\r?\n([\s\S]*?)\r?\n===END===/);
@@ -194,6 +213,10 @@ if (BACKEND === 'gemma') {
 } else if (BACKEND === 'agy') {
   console.log('② agy(Gemini) 재교정…');                 // 재교정 전용(gemma는 본교정에 전념 → 별 백엔드라 병렬)
   out = await agyCall(promptF, imgDir); by = 'gemini';
+  if (!out.trim() && OR_KEY) {                          // agy 빈출력(쿼터 소진 시그니처) → OpenRouter gemma-4-26b:free 폴백(별도 쿼터풀)
+    const o = await orCall(promptF, img);
+    if (o.trim()) { out = o; by = 'or-gemma26b'; console.log('   agy 빈출력(쿼터?) → OpenRouter gemma-4-26b:free 폴백 성공'); }
+  }
 } else if (BACKEND === 'sonnet') {
   console.log('② claude(Sonnet) 재교정…');               // 병렬 가능(PAR_G>1) — gemma4 실패분 빠르게 재교정
   out = await claudeCall(promptF, imgDir, 'sonnet'); by = 'sonnet';
