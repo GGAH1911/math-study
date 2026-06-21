@@ -1,0 +1,17 @@
+{
+  "text_sha": "f6f24505e5b1",
+  "meta": {
+    "searchable_text": "11.수직선 위를 움직이는 점 P의 시각 t(t≥0)에서의 위치 x가\nx=t^{3}+kt^{2}+kt (k는 상수)\n이다. 시각 t=1에서 점 P가 운동 방향을 바꿀 때, 시각\nt=2에서 점 P의 가속도는? [3점]\n① 4 ② 6 ③ 8 ④ 10 ⑤ 12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "속도와_가속도",
+      "극값의_정의",
+      "도함수_계산"
+    ],
+    "exam_intent": "속도 조건으로 상수를 결정하고 가속도를 계산하는 미분 응용",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "d47c17b5a0be",
+  "meta": {
+    "searchable_text": "24.sin(\\frac{π}{2}+θ)tan(π-θ)=\\frac{3}{5}일 때, 30(1-sinθ)의 값을 구하시오.\n[3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수_항등식",
+      "삼각함수_값_계산"
+    ],
+    "exam_intent": "삼각함수 항등식을 이용해 주어진 조건으로부터 삼각함수값을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "0c74d442c4cd",
+  "meta": {
+    "searchable_text": "27.실수 전체의 집합에서 도함수가 연속인 함수 f(x)에 대하여\nf(0)=0, f(2)=1이다. 그림과 같이 0≤x≤2에서 곡선\ny=f(x)와 x축 및 직선 x=2로 둘러싸인 두 부분의 넓이를\n각각 A, B라 하자. A=B일 때, \\int_{0}^{2}(2x+3)f′(x)dx의 값을\n구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": true,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "부분적분",
+      "정적분의_기하학적_의미"
+    ],
+    "exam_intent": "부분적분과 정적분의 기하 조건을 결합한 적분값 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

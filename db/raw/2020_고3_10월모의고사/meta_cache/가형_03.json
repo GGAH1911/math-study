@@ -1,0 +1,17 @@
+{
+  "text_sha": "07b700d5ef21",
+  "meta": {
+    "searchable_text": "3.등차수열 {a_{n}}에 대하여 a_{3}=2, a_{7}=62일 때, a_{5}의 값은?\n[2점]\n① 30 ② 32 ③ 34 ④ 36 ⑤ 38",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열",
+      "공차",
+      "등차수열의_일반항"
+    ],
+    "exam_intent": "등차수열의 공차를 구하여 특정 항을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

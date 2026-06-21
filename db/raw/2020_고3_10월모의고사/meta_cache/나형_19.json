@@ -1,0 +1,17 @@
+{
+  "text_sha": "1b3b09afe3cf",
+  "meta": {
+    "searchable_text": "19.정삼각형 ABC가 반지름의 길이가 r인 원에 내접하고 있다.\n선분 AC와 선분 BD가 만나고 \\overline{BD}=\\sqrt{2}가 되도록 원 위에서\n점 D를 잡는다. ∠DBC=θ라 할 때, sinθ=\\frac{\\sqrt{3}}{3}이다.\n반지름의 길이 r의 값은? [4점]\n① \\frac{6-\\sqrt{6}}{5}② \\frac{6-\\sqrt{5}}{5}③ \\frac{4}{5}\n④ \\frac{6-\\sqrt{3}}{5}⑤ \\frac{6-\\sqrt{2}}{5}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "원주각과_중심각",
+      "현의_성질",
+      "내접_도형"
+    ],
+    "exam_intent": "원에 내접하는 정삼각형과 현의 조건으로부터 반지름 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

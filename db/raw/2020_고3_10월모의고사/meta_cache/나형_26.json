@@ -1,0 +1,16 @@
+{
+  "text_sha": "da5d98a39937",
+  "meta": {
+    "searchable_text": "26.함수 y=tan(nx-\\frac{π}{2})의 그래프가 직선 y=-x와 만나는\n점의 x좌표가 구간 (-π,π)에 속하는 점의 개수를 a_{n}이라\n할 때, a_{2}+a_{3}의 값을 구하시오. [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_그래프",
+      "방정식의_해"
+    ],
+    "exam_intent": "탄젠트 함수의 주기성과 변형을 이용해 직선과의 교점 개수를 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

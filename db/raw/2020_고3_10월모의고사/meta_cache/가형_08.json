@@ -1,0 +1,17 @@
+{
+  "text_sha": "601538eaf296",
+  "meta": {
+    "searchable_text": "8.부등식 log_{2}(x^{2}-7x)-log_{2}(x+5)≤1을 만족시키는 모든 정수\nx의 값의 합은? [3점]\n① 22 ② 24 ③ 26 ④ 28 ⑤ 30",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "로그_부등식",
+      "정의역_조건"
+    ],
+    "exam_intent": "로그 부등식을 풀고 정의역 조건을 고려하여 정수해를 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

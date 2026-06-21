@@ -1,0 +1,16 @@
+{
+  "text_sha": "3dd93e6f9d9a",
+  "meta": {
+    "searchable_text": "25.함수 f(x)=(1+x^{4}+x^{8}+x^{12})(1+x+x^{2}+x^{3})일 때,\n\\frac{f(2)}{{f(1)-1}{f(1)+1}}의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "다항식",
+    "concepts": [
+      "다항식의_계산",
+      "등비급수"
+    ],
+    "exam_intent": "다항식 함수값 계산 및 대수식 정리 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

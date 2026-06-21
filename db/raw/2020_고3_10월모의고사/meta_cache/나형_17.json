@@ -1,0 +1,17 @@
+{
+  "text_sha": "a28393aac674",
+  "meta": {
+    "searchable_text": "17.f(1)=-2인 다항함수 f(x)에 대하여 일차함수 g(x)가 다음\n조건을 만족시킨다.\n(가)\\lim_{x→1}\\frac{f(x)g(x)+4}{x-1}=8\n(나) g(0)=g′(0)\nf′(1)의 값은? [4점]\n① 5 ② 6 ③ 7 ④ 8 ⑤ 9",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_극한",
+    "concepts": [
+      "극한의수렴조건",
+      "미분계수",
+      "일차함수"
+    ],
+    "exam_intent": "극한조건과 미분계수를 이용하여 도함수값 구하기",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

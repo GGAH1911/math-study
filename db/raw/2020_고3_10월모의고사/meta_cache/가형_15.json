@@ -1,0 +1,17 @@
+{
+  "text_sha": "9f67b2e33633",
+  "meta": {
+    "searchable_text": "15.그림과 같이 좌표평면에서 곡선 y=a^{x}(0<a<1) 위의\n점 P가 제2사분면에 있다. 점 P를 직선 y=x에 대하여\n대칭이동시킨 점 Q와 곡선 y=-log_{a}x 위의 점 R에 대하여\n∠PQR=45°이다. \\overline{PR}=\\frac{5\\sqrt{2}}{2}이고 직선 PR의 기울기가 \\frac{1}{7}일\n때, 상수 a의 값은? [4점]\n① \\frac{\\sqrt{2}}{3}② \\frac{\\sqrt{3}}{3}③ \\frac{2}{3}④ \\frac{\\sqrt{5}}{3}⑤ \\frac{\\sqrt{6}}{3}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수의_성질",
+      "로그함수의_성질",
+      "역함수_관계"
+    ],
+    "exam_intent": "지수·로그함수의 역함수 관계와 기하학적 조건을 종합적으로 활용",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

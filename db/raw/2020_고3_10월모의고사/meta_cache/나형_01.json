@@ -1,0 +1,15 @@
+{
+  "text_sha": "d165edb6230f",
+  "meta": {
+    "searchable_text": "1.log_{2}\\sqrt{8}의 값은? [2점]\n① 1 ② \\frac{3}{2}③ 2 ④ \\frac{5}{2}⑤ 3",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_정의_와_계산"
+    ],
+    "exam_intent": "로그의 정의와 기본 계산 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

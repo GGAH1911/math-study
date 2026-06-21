@@ -1,0 +1,17 @@
+{
+  "text_sha": "9293ca2776df",
+  "meta": {
+    "searchable_text": "16.다항함수 f(x)의 한 부정적분 g(x)가 다음 조건을\n만족시킨다.\n(가) f(x)=2x+2\\int_{0}^{1}g(t)dt\n(나) g(0)-\\int_{0}^{1}g(t)dt=\\frac{2}{3}\ng(1)의 값은? [4점]\n① -2 ② -\\frac{5}{3}③ -\\frac{4}{3}④ -1 ⑤ -\\frac{2}{3}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "적분",
+    "concepts": [
+      "부정적분",
+      "정적분",
+      "적분_조건식"
+    ],
+    "exam_intent": "부정적분과 정적분의 관계식으로부터 함수를 결정하고 값을 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

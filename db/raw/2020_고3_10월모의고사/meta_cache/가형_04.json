@@ -1,0 +1,17 @@
+{
+  "text_sha": "8d3a9def1448",
+  "meta": {
+    "searchable_text": "4.두 사건 A와 B는 서로 독립이고\nP(A^{C})=\\frac{2}{5}, P(B)=\\frac{1}{6}\n일 때, P(A^{C}∪B^{C})의 값은? (단, A^{C}은 A의 여사건이다.)\n[3점]\n① \\frac{1}{2}② \\frac{3}{5}③ \\frac{7}{10}④ \\frac{4}{5}⑤ \\frac{9}{10}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "독립사건",
+      "여사건",
+      "확률의덧셈정리"
+    ],
+    "exam_intent": "여사건과 독립사건의 성질을 이용해 합사건의 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

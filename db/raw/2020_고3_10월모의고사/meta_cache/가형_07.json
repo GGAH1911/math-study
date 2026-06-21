@@ -1,0 +1,16 @@
+{
+  "text_sha": "87d75067ffee",
+  "meta": {
+    "searchable_text": "7.표와 같이 두 주머니 A, B에 흰 공과 검은 공이 섞여서 각각\n50개씩 들어 있다.\n(단위:개)\n주머니 A 주머니 B\n흰 공 21 14\n검은 공 29 36\n합계 50 50\n두 주머니 A, B 중 임의로 택한 1개의 주머니에서 임의로\n1개의 공을 꺼내는 시행을 한다. 이 시행에서 꺼낸 공이 흰\n공일 때, 이 공이 주머니 A에서 꺼낸 공일 확률은? [3점]\n① \\frac{3}{10}② \\frac{2}{5}③ \\frac{1}{2}④ \\frac{3}{5}⑤ \\frac{7}{10}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부_확률",
+      "베이즈_정리"
+    ],
+    "exam_intent": "조건부 확률과 베이즈 정리를 이용한 역확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

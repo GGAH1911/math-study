@@ -1,0 +1,16 @@
+{
+  "text_sha": "39460661b01d",
+  "meta": {
+    "searchable_text": "17.그림과 같이 ∠ABC=\\frac{π}{2}인 삼각형 ABC에 내접하고\n반지름의 길이가 3인 원의 중심을 O라 하자. 직선 AO가 선분\nBC와 만나는 점을 D라 할 때, \\overline{DB}=4이다. 삼각형 ADC의\n외접원의 넓이는? [4점]\n① \\frac{125}{2}π ② 63π ③ \\frac{127}{2}π\n④ 64π ⑤ \\frac{129}{2}π",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "원의_성질",
+    "concepts": [
+      "내접원",
+      "외접원"
+    ],
+    "exam_intent": "직각삼각형의 내접원 성질을 이용한 외접원 반지름 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

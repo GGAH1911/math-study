@@ -1,0 +1,16 @@
+{
+  "text_sha": "5e1e8c074daf",
+  "meta": {
+    "searchable_text": "1.\\lim_{n→∞}\\frac{n(9n-5)}{3n^{2}+1}의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한수열의_극한",
+      "극한값_계산"
+    ],
+    "exam_intent": "분수꼴 수열의 극한에서 최고차항으로 극한값을 구하는 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

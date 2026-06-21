@@ -1,0 +1,17 @@
+{
+  "text_sha": "d94f06e14c7d",
+  "meta": {
+    "searchable_text": "23.확률변수 X가 이항분포 B(n,\\frac{1}{3})을 따르고 V(X)=200일 때,\nE(X)의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이항분포",
+      "기댓값",
+      "분산"
+    ],
+    "exam_intent": "이항분포의 기댓값과 분산 공식을 정확히 적용하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

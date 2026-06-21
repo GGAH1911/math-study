@@ -1,0 +1,16 @@
+{
+  "text_sha": "bcec3548b103",
+  "meta": {
+    "searchable_text": "5.등차수열 {a_{n}}에 대하여\na_{1}+a_{2}+a_{3}=15, a_{3}+a_{4}+a_{5}=39\n일 때, 수열 {a_{n}}의 공차는? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "등차수열의_정의와_공차",
+      "등차수열의_합"
+    ],
+    "exam_intent": "등차수열의 항들의 합 조건으로부터 공차를 구할 수 있는가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

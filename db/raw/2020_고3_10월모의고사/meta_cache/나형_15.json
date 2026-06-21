@@ -1,0 +1,17 @@
+{
+  "text_sha": "e55e8ceaca12",
+  "meta": {
+    "searchable_text": "15.이산확률변수 X가 가지는 값은 1, 2, 3, 4이고\n이산확률변수 Y가 가지는 값은 1, 4, 9, 16이고\nP(X=k)=P(Y=k^{2}) (k=1, 2, 3, 4)\n이다. E(X)=6, V(X)=1일 때, E(Y)의 값은? [4점]\n① 33 ② 34 ③ 35 ④ 36 ⑤ 37",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "확률변수와_확률분포",
+      "기댓값",
+      "분산"
+    ],
+    "exam_intent": "확률변수의 변환 관계에서 기댓값과 분산을 이용해 새 확률변수의 기댓값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

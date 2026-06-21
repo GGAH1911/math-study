@@ -1,0 +1,16 @@
+{
+  "text_sha": "40d7dca75555",
+  "meta": {
+    "searchable_text": "2.log_{3}54+log_{9}\\frac{1}{36}의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_성질",
+      "밑변환_공식"
+    ],
+    "exam_intent": "로그의 성질과 밑변환 공식을 활용한 기본 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

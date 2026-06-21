@@ -1,0 +1,16 @@
+{
+  "text_sha": "71a9ca2e77c7",
+  "meta": {
+    "searchable_text": "7.0≤x<2π일 때, 두 함수 y=sinx와 y=cos(x+\\frac{π}{2})+1의\n그래프가 만나는 모든 점의 x좌표의 합은? [3점]\n① \\frac{π}{2}② π ③ \\frac{3}{2}π ④ 2π ⑤ \\frac{5}{2}π",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [
+      "삼각함수의_성질",
+      "삼각방정식"
+    ],
+    "exam_intent": "삼각함수 성질을 이용해 교점을 찾고 x좌표의 합을 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

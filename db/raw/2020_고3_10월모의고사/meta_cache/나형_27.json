@@ -1,0 +1,16 @@
+{
+  "text_sha": "0900bca1fc42",
+  "meta": {
+    "searchable_text": "27.다음 조건을 만족시키는 음이 아닌 정수 a, b, c의 모든\n순서쌍 (a,b,c)의 개수를 구하시오. [4점]\n(가) a+b+c=14\n(나) (a-2)(b-2)(c-2)≠0",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "경우의_수",
+    "concepts": [
+      "포함배제원리",
+      "중복조합"
+    ],
+    "exam_intent": "포함-배제 원리로 조건부 경우의 수를 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

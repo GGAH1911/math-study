@@ -1,0 +1,17 @@
+{
+  "text_sha": "c3f9fb98a926",
+  "meta": {
+    "searchable_text": "8.함수 y=f(x)의 그래프가 그림과 같다.\n\\lim_{x→1+}f(x)-\\lim_{x→0-}\\frac{f(x)}{x-1}의 값은? [3점]\n① -6 ② -3 ③ 0 ④ 3 ⑤ 6",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "우극한과_좌극한",
+      "극한값_읽기",
+      "함수의_극한"
+    ],
+    "exam_intent": "그래프에서 극한값을 읽고 극한의 정의를 적용하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

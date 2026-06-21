@@ -1,0 +1,17 @@
+{
+  "text_sha": "f215b787c1ab",
+  "meta": {
+    "searchable_text": "20.최고차항의 계수가 4인 삼차함수 f(x)에 대하여 함수 g(x)를\ng(x)=\\int_{0}^{x}f(t)dt-xf(x)\n라 하자. 모든 실수 x에 대하여 g(x)≤g(3)이고 함수 g(x)는\n오직 1개의 극값만 가진다. \\int_{0}^{1}g′(x)dx의 값은? [4점]\n① 8 ② 9 ③ 10 ④ 11 ⑤ 12",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "도함수의_활용_심화",
+    "concepts": [
+      "극값의_정의와_판정",
+      "극값_존재_조건",
+      "정적분_계산"
+    ],
+    "exam_intent": "조건으로부터 함수 형태를 파악하고 극값 개념을 정확히 이해하는지 평가",
+    "killer_tier": "killer",
+    "cognitive_type": "추론"
+  }
+}

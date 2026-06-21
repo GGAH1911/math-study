@@ -1,0 +1,16 @@
+{
+  "text_sha": "395f73a8f985",
+  "meta": {
+    "searchable_text": "3.두 사건 A, B에 대하여\nP(A|B)=\\frac{2}{3}, P(A∩B)=\\frac{2}{15}\n일 때, P(B)의 값은? [2점]\n① \\frac{1}{5}② \\frac{4}{15}③ \\frac{1}{3}④ \\frac{2}{5}⑤ \\frac{7}{15}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "조건부확률",
+      "확률의_곱셈법칙"
+    ],
+    "exam_intent": "조건부확률의 정의를 이용하여 표본공간의 확률 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}
