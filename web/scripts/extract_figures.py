@@ -165,6 +165,9 @@ def detect_boxes(page, REG):
         joined = ''.join(spans_in).replace(' ', '')
         if ko < 2: continue                                                  # 도형 사각형(본문 한글 없음) 제외
         if '확인사항' in joined or '답안지' in joined: continue                 # 시험지 푸터(답안지 기입 확인) 박스 제외
+        internal_h = sum(1 for x0, x1, y in Hs                               # 박스 내부의 가로 행구분선 = 표 신호
+                         if b[1] + 8 < y < b[3] - 8 and x0 <= b[0] + 15 and x1 >= b[2] - 15)
+        if internal_h >= 1: continue                                         # 표(격자) → {{TABLE}} 가 테두리째 렌더, recon-box 중복 금지
         boxes.append(b)
     return boxes
 

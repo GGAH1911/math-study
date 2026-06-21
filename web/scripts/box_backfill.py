@@ -16,6 +16,16 @@ def norm(s):
     return re.sub(r'[^가-힣A-Za-z0-9]', '', s or '')
 
 
+def split_crammed(lines):
+    """crammed 조건 분리(알고리즘): 한 줄에 '… (가) … (나) …' 식으로 붙은 조건을 각 (가)(나)(다) 마커 앞에서 분리.
+    문장끝(. 다 요)·']' 뒤 + (가-하) 패턴만 쪼갬 — 질문참조 '위의 (가), (나), (다)에'(앞=의/쉼표)는 안 쪼갬.
+    haiku 교정이 줄바꿈 보존 못 해 조건을 stem 줄에 합쳐버린 레거시 케이스 결정적 복구(2021수능 나형15 류)."""
+    out = []
+    for l in lines:
+        out.extend(re.split(r'(?<=[.\]다요])\s+(?=[(（][가-하][)）]\s)', l))
+    return out
+
+
 def _scan(lines, key_src, head, normfn):
     base = normfn(key_src)
     if len(base) < 4:
@@ -102,13 +112,13 @@ def open_doc(round_, subj):
 
 def process(md):
     txt = open(md, encoding='utf-8').read()
-    if '{{BOX' in txt:
-        return ('skip-already', 0, None)
     if 'corrector_done: true' not in txt:
         return ('skip-uncorrected', 0, None)
     m = re.search(r'\nsearchable_text: \|\n((?:  .*\n?)*)', txt)
     if not m:
         return ('no-searchable', 0, None)
+    if '{{BOX' in m.group(1):                                                # 멱등: searchable_text 에만(corrector_fixes 노트의 {{BOX}} 멘션 오탐 방지)
+        return ('skip-already', 0, None)
     base = os.path.basename(md)[:-3]
     mm = re.match(r'^(.+)_([^_]+)_(\d+)$', base)
     if not mm:
@@ -129,6 +139,7 @@ def process(md):
         return ('no-box', 0, None)
     raw = m.group(1).rstrip('\n')
     lines = [l[2:] if l.startswith('  ') else l for l in raw.split('\n')]
+    lines = split_crammed(lines)                                            # crammed 조건을 별도 줄로(알고리즘) → 박스 매핑 가능
     detail = [f'{len(boxes)}박스{boxes}']
     inserts = []
     single = len(boxes) == 1

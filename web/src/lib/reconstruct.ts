@@ -214,44 +214,20 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
     }
   }
 
-  // 테두리 박스 영역들 [start, end). ★우선: extract_figures 가 PDF 실제 테두리(벡터 선)로 삽입한
-  //   {{BOXn_START}}/{{BOXn_END}} 마커(결정적·박스종류 무관). 마커 없으면(미재추출 레거시) 텍스트 휴리스틱 폴백.
+  // 테두리 박스 영역들 [start, end). 박스는 오직 {{BOXn_START}}/{{BOXn_END}} 마커로만 판정한다
+  //   (extract_figures.detect_boxes 가 PDF 실제 테두리=벡터선으로 삽입·box_backfill 가 기존 코퍼스 백필).
+  //   ★텍스트 휴리스틱(과정이다/조건 (가)/보기 헤더 추론) 폐기 — 문구 열거 유지보수 불가 + 오탐. 교정 시 마커가 결정적으로 붙는다.
   const boxes: Array<[number, number]> = [];
   const skipLines = new Set<number>();   // 마커 줄 자체는 렌더 제외
   const boxStartRe = /^\s*\{\{BOX(\d+)_START\}\}\s*$/;
   const boxEndRe = /^\s*\{\{BOX(\d+)_END\}\}\s*$/;
-  if (body.some((l) => boxStartRe.test(l) || boxEndRe.test(l))) {
-    const starts = new Map<string, number>();
-    body.forEach((l, i) => {
-      const ms = l.match(boxStartRe);
-      if (ms) { starts.set(ms[1], i); skipLines.add(i); return; }
-      const me = l.match(boxEndRe);
-      if (me) { skipLines.add(i); const s = starts.get(me[1]); if (s !== undefined) boxes.push([s + 1, i]); }
-    });
-  } else {
-    // 1) 빈칸추론: "다음은 … 과정이다/증명한 것이다" 다음 줄 ~ "위의 … 알맞은/값은" 전.
-    const introIdx = body.findIndex((l) => /과정이다|구하는 과정|증명한 것이다|증명한 과정|증명하는 과정|보이는 과정/.test(l));
-    if (introIdx >= 0) {
-      const s = introIdx + 1;
-      const ci = body.findIndex((l, i) => i >= s && /^\s*위의|알맞은\s*(수|값|식|것)|에 알맞은/.test(l));
-      const e = ci > s ? ci : body.length;
-      if (s < e) boxes.push([s, e]);
-    }
-    // 2) <보기>: 독립된 "보 기" 헤더 줄 ~ 본문 끝(선택지는 이미 분리됨).
-    const bogiIdx = body.findIndex((l) => /^\s*[<〈\[]?\s*보\s*기\s*[>〉\]]?\s*$/.test(l));
-    if (bogiIdx >= 0) boxes.push([bogiIdx, body.length]);
-    // 3) 조건 (가)(나)(다)… 또는 불렛(•/∙) 목록: 첫 마커 ~ 질문/결론/새 섹션("다음은/과정이다/위의") 전.
-    const condStart = body.findIndex((l) => /^\s*[(（]\s*가\s*[)）]/.test(l) || /^\s*[•∙·▪◦●]/.test(l));
-    if (condStart >= 0) {
-      let e = condStart + 1;
-      while (
-        e < body.length &&
-        !/구하시오|값은|개수는|경우의 수는|얼마|\[\s*\d+\s*점\s*\]|\?|다음은|과정이다|^\s*위의/.test(body[e])
-      )
-        e++;
-      if (e > condStart) boxes.push([condStart, e]);
-    }
-  }
+  const starts = new Map<string, number>();
+  body.forEach((l, i) => {
+    const ms = l.match(boxStartRe);
+    if (ms) { starts.set(ms[1], i); skipLines.add(i); return; }
+    const me = l.match(boxEndRe);
+    if (me) { skipLines.add(i); const s = starts.get(me[1]); if (s !== undefined) boxes.push([s + 1, i]); }
+  });
   const boxOpen = new Set(boxes.map((b) => b[0]));
   const boxClose = new Set(boxes.map((b) => b[1]));
 
