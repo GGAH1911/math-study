@@ -85,3 +85,6 @@ corrector 프롬프트/게이트 개선분을 기존 교정본에 소급. **B와
 - **2026-06-21** — **★교정기 전수 배치 시작**(사용자 지시 "깨끗하지 않아"): ok도 안 깨끗(검증은 줄구조·박스 사각지대) → corrector_done 리셋(930) + 미교정 3160 = **4090 전수**. 파이프라인 = gemma 교정 ∥ sonnet 검증 ∥ agy 재교정(setsid, ~1일, `/tmp/ingest_logs/pipeline_*.log`). **B(figure 재추출)+C(재교정) 동시 수행**(corrector ①단계가 extract --apply).
   - ★감사: corrector 에 우리 수정 반영확인 — 프롬프트(BOX/INL보존·줄바꿈·생략기호·dedup)·extract 감지(박스·표/푸터제외) ✓. **단 박스 견고매핑은 apply_md(단순앵커)에 없어** → apply_md 박스삽입 제거하고 **교정 후 box_backfill(box_range·split_crammed)로** 일괄(전수 완료 후 실행 예정).
   - 전수 완료 후 할 일: ① box_backfill 재실행(견고 박스) ② 결과 커밋 ③ 격리 14 수동검토.
+- **2026-06-21** — **★전수 전략 정제**(전후 diff 검증 결과): 이미-ok(gemini/sonnet/gemma4)를 gemma4로 재교정 = **코스메틱 churn + 격리 위험·개선 0**(가형_12 격리 사례, 선택지 줄분리 등 렌더동일). → **대상 축소 3219**(미교정 3160 + haiku-ok 40 + not-ok 19), **이미-ok 884 보존**(HEAD 복원). 구조(cram·박스)는 알고리즘(split_crammed·box_backfill).
+  - **변경내역 로깅 추가**: corrector.mjs 가 교정 전후 객관적 line diff 를 `/tmp/ingest_logs/corrector_diff.log` 에 기록(사용자 지적 — 뭘 고쳤는지 가시화).
+  - 재시작 파이프라인 ETA ~18h. 완료 후 box_backfill + 커밋.
