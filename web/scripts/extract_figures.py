@@ -203,6 +203,13 @@ def extract(round_, subj, num):
             if re.match(r'^\[?\s*그림\s*\d', ts):                              # 그림N 캡션
                 if near: caps.append(sp)
                 continue
+            # 도형명 side-caption(R₁·R₂ 등, PUA 인코딩 포함): 도형 좌/우 바깥 + 세로범위 mid + 짧음 → 위치기반
+            #   감지(텍스트패턴 무관). lim·n→∞(도형 위쪽)은 세로 mid 아니라 제외. 객체추출해도 캡션은 별도라 잃으니 캡쳐로.
+            side = ((c.x0 - 60 <= sp.x1 <= c.x0 + 5) or (c.x1 - 5 <= sp.x0 <= c.x1 + 60)) and c.y0 + 5 <= cy <= c.y1 - 5
+            if side and len(ts) <= 5 and not re.search(r'[가-힣]', ts) \
+               and not any(re.search(r'[가-힣]', kt) and not (ksp.y1 <= sp.y0 or ksp.y0 >= sp.y1)
+                           and ksp.x1 >= c.x0 - 20 and ksp.x0 <= c.x1 + 20 for kt, ksp in allsp):
+                caps.append(sp); continue
             if re.search(r'[가-힣]', ts): continue
             if inside and len(ts) <= 4:                                       # 내부 짧은 비한글 = 다이어그램 위 라벨(확실)
                 internal.append(sp)
