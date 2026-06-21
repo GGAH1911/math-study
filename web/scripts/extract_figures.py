@@ -159,9 +159,13 @@ def detect_boxes(page, REG):
     boxes = []
     for b in cand:
         if any(o[1] <= b[1] and o[3] >= b[3] and o[0] <= b[0] and o[2] >= b[2] for o in boxes): continue  # 중첩=바깥만
-        ko = sum(1 for t, r in spans_of(page) if re.search(r'[가-힣]', t)
-                 and b[0] <= (r.x0 + r.x1) / 2 <= b[2] and b[1] <= (r.y0 + r.y1) / 2 <= b[3])
-        if ko >= 2: boxes.append(b)                                          # 본문 한글 박스만(도형 사각형 제외)
+        spans_in = [t for t, r in spans_of(page)
+                    if b[0] <= (r.x0 + r.x1) / 2 <= b[2] and b[1] <= (r.y0 + r.y1) / 2 <= b[3]]
+        ko = sum(1 for t in spans_in if re.search(r'[가-힣]', t))
+        joined = ''.join(spans_in).replace(' ', '')
+        if ko < 2: continue                                                  # 도형 사각형(본문 한글 없음) 제외
+        if '확인사항' in joined or '답안지' in joined: continue                 # 시험지 푸터(답안지 기입 확인) 박스 제외
+        boxes.append(b)
     return boxes
 
 
