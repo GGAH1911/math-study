@@ -213,10 +213,9 @@ if (BACKEND === 'gemma') {
 } else if (BACKEND === 'agy') {
   console.log('② agy(Gemini) 재교정…');                 // 재교정 전용(gemma는 본교정에 전념 → 별 백엔드라 병렬)
   out = await agyCall(promptF, imgDir); by = 'gemini';
-  if (!out.trim() && OR_KEY) {                          // agy 빈출력(쿼터 소진 시그니처) → OpenRouter gemma-4-26b:free 폴백(별도 쿼터풀)
-    const o = await orCall(promptF, img);
-    if (o.trim()) { out = o; by = 'or-gemma26b'; console.log('   agy 빈출력(쿼터?) → OpenRouter gemma-4-26b:free 폴백 성공'); }
-  }
+} else if (BACKEND === 'or') {
+  console.log('② OpenRouter gemma-4-26b:free 교정…');   // 3번째 병렬 레인(별도 무료풀, 429는 빈출력→재시도)
+  out = await orCall(promptF, img); by = 'or-gemma26b';
 } else if (BACKEND === 'sonnet') {
   console.log('② claude(Sonnet) 재교정…');               // 병렬 가능(PAR_G>1) — gemma4 실패분 빠르게 재교정
   out = await claudeCall(promptF, imgDir, 'sonnet'); by = 'sonnet';
@@ -235,6 +234,7 @@ if (fails.length) {
   console.log(`③ 검증 실패(${fails.join(', ')}) → ④ 자가치유 재시도…`);
   const out2 = BACKEND === 'gemma' ? await gemmaCall(promptF, img)
     : BACKEND === 'agy' ? await agyCall(promptF, imgDir)
+    : BACKEND === 'or' ? await orCall(promptF, img)
     : BACKEND === 'sonnet' ? await claudeCall(promptF, imgDir, 'sonnet')
     : await claudeCall(promptF, imgDir);
   const parsed2 = parseCorrected(out2);

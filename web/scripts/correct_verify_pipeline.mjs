@@ -18,6 +18,7 @@ const PAR_G = Math.max(1, parseInt(process.env.PAR_G || '1', 10));   // 재교�
 const CORRECT_BACKEND = process.env.CORRECT_BACKEND || 'gemma';      // 초기 교정 백엔드(로컬·토큰0)
 const RECORRECT_BACKEND = process.env.RECORRECT_BACKEND || 'agy';    // 재교정 백엔드(gemma와 별도라 병렬)
 const DUAL = process.env.DUAL === '1';   // gemma+agy 1차 병렬 + agy 공유 재교정레인. agy 단일인스턴스(동시호출 충돌)라 재교정·1차를 agy 워커 1개가 번갈아.
+const OR_AVAILABLE = existsSync((process.env.HOME || '') + '/.config/math-study/openrouter.key');  // OpenRouter gemma-4-26b:free 3번째 병렬 레인(키 있으면)
 const MAXATT = Math.max(1, parseInt(process.env.MAXATT || '3', 10));
 const SKIP_TABLE = process.env.SKIP_TABLE === '1' || process.env.CLEAN_ONLY === '1';  // {{TABLE}} 보유 교정완료분 제외(재추출 배치 B용)
 const CHUNK = 5;
@@ -75,7 +76,7 @@ for (const md of walk(PROB)) {
 let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
 const modeStr = DUAL
-  ? `교정 gemma+agy(병렬2) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(공유레인)`
+  ? `교정 gemma+agy${OR_AVAILABLE ? '+OR' : ''}(병렬${OR_AVAILABLE ? 3 : 2}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy${OR_AVAILABLE ? '+OR' : ''}(공유레인)`
   : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
 log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
@@ -157,10 +158,31 @@ async function agyLaneWorker() {
     gActive--; beat();
   }
 }
+// ③'' OpenRouter gemma-4-26b:free 3번째 병렬 레인(agy 미러: 재교정 우선 + 1차 여유분). 별도 무료풀이라 agy와 동시. 429=빈출력→재투입(긴 sleep).
+async function orLaneWorker() {
+  while (true) {
+    let slug, mode;
+    if (recorrectQ.length) { slug = recorrectQ.shift(); mode = 're'; }
+    else if (correctQ.length) { slug = correctQ.shift(); mode = 'co'; }
+    else { if (idle()) break; await sleep(300); continue; }
+    const it = items.get(slug); const p = parseSlug(slug);
+    gActive++;
+    if (mode === 're') {
+      if (it.att >= MAXATT) { failed++; gActive--; log(`  ✗ ${slug} 재교정 상한 — issues 잔존`); continue; }
+      it.att++;
+    }
+    const r = await run('node', ['scripts/corrector.mjs', p.round, p.subj, p.num], { CORR_BACKEND: 'or' });
+    if (stateOf(it.md) === 'quarantine') { failed++; log(`  ⚠ ${slug} 격리(or ${mode})`); }
+    else if (r.code === 3) { (mode === 're' ? recorrectQ : correctQ).push(slug); await sleep(5000); }  // 429/빈출력 → 재투입, 긴 backoff
+    else verifyQ.push(slug);
+    gActive--; beat();
+  }
+}
 
 await Promise.all(DUAL ? [
   correctWorker(),                                       // gemma 1차 전담(맥북 1대)
   agyLaneWorker(),                                       // agy: 재교정 우선 + 1차 여유분(단일인스턴스 1개)
+  ...(OR_AVAILABLE ? [orLaneWorker()] : []),             // OpenRouter gemma-4-26b:free 3번째 병렬 레인
   ...Array.from({ length: PAR_V }, verifyWorker),
 ] : [
   ...Array.from({ length: PAR_C }, correctWorker),
