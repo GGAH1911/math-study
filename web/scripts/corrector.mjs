@@ -55,7 +55,7 @@ async function gemmaCall(prompt, imgPath) {
     const res = await fetch(GEMMA_URL, {
       method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        model: 'mlx-community/gemma-4-12B-it-qat-4bit', max_tokens: 1400, temperature: 0,
+        model: 'mlx-community/gemma-4-12B-it-qat-4bit', max_tokens: 3000, temperature: 0,  // 1400→3000: 긴 킬러 출력이 ===END=== 전 잘려 파싱실패하던 주원인 차단
         messages: [{ role: 'user', content: [
           { type: 'text', text: prompt },
           { type: 'image_url', image_url: { url: `data:image/png;base64,${b64}` } },
