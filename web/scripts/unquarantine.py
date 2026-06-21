@@ -35,7 +35,7 @@ def main():
     if fm:
         t = t[:fm.end()] + note_line + '\n' + t[fm.end():]
     else:
-        t = re.sub(r'\nsearchable_text:', f'\ncorrector_fixes:\n{note_line}\nsearchable_text:', t, count=1)
+        t = re.sub(r'\nsearchable_text:', lambda m: f'\ncorrector_fixes:\n{note_line}\nsearchable_text:', t, count=1)  # lambda=백슬래시(\log 등) escape 회피
     # 상태 줄 재삽입(searchable_text 앞)
     t = re.sub(r'\nsearchable_text:', '\ncorrector_by: opus\ncorrector_done: true\ncorrector_verify: ok\nsearchable_text:', t, count=1)
     open(md, 'w', encoding='utf-8').write(t)
