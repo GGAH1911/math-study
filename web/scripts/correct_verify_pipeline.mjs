@@ -113,8 +113,15 @@ async function correctWorker() {
 async function verifyWorker() {
   while (true) {
     if (!verifyQ.length) { if (idle()) break; await sleep(300); continue; }
-    const r0 = parseSlug(verifyQ[0]).round; const chunk = [];
+    const r0 = parseSlug(verifyQ[0]).round;
+    // ★받는 대로 1건씩 돌리면 배치(CHUNK/콜)가 무의미 → 문제당 ~4배 비쌈(verify_batch 주석의 sweet spot).
+    //   같은 라운드가 CHUNK개 쌓일 때까지 대기. 단 교정·재교정이 끝나가면(더 안 들어옴) 남은 것 flush.
+    const sameRound = verifyQ.reduce((n, s) => n + (parseSlug(s).round === r0 ? 1 : 0), 0);
+    const noMoreComing = correctQ.length === 0 && cActive === 0 && recorrectQ.length === 0 && gActive === 0;
+    if (sameRound < CHUNK && !noMoreComing) { await sleep(500); continue; }
+    const chunk = [];
     while (chunk.length < CHUNK && verifyQ.length && parseSlug(verifyQ[0]).round === r0) chunk.push(verifyQ.shift());
+    if (!chunk.length) { await sleep(300); continue; }
     vActive++;
     await run('node', ['scripts/verify_batch.mjs', '--list', chunk.join(','), '--chunk', String(CHUNK), '--par', '1', '--force'], { RUN_TS: TS });
     for (const slug of chunk) {
