@@ -17,6 +17,7 @@ const PAR_V = Math.max(1, parseInt(process.env.PAR_V || '4', 10));   // 검증 �
 const PAR_G = Math.max(1, parseInt(process.env.PAR_G || '1', 10));   // 재교정 동시수(agy 단일인스턴스 → 1)
 const CORRECT_BACKEND = process.env.CORRECT_BACKEND || 'gemma';      // 초기 교정 백엔드(로컬·토큰0)
 const RECORRECT_BACKEND = process.env.RECORRECT_BACKEND || 'agy';    // 재교정 백엔드(gemma와 별도라 병렬)
+const DUAL = process.env.DUAL === '1';   // gemma+agy 1차 병렬 + agy 공유 재교정레인. agy 단일인스턴스(동시호출 충돌)라 재교정·1차를 agy 워커 1개가 번갈아.
 const MAXATT = Math.max(1, parseInt(process.env.MAXATT || '3', 10));
 const SKIP_TABLE = process.env.SKIP_TABLE === '1' || process.env.CLEAN_ONLY === '1';  // {{TABLE}} 보유 교정완료분 제외(재추출 배치 B용)
 const CHUNK = 5;
@@ -73,7 +74,10 @@ for (const md of walk(PROB)) {
 }
 let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
-log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · 교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND}) · LOG ${LOG}`);
+const modeStr = DUAL
+  ? `교정 gemma+agy(병렬2) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(공유레인)`
+  : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
+log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
 
 let lastBeat = 0;
@@ -133,7 +137,32 @@ async function recorrectWorker() {
   }
 }
 
-await Promise.all([
+// ③' agy 공유 레인(DUAL): 재교정(우선) + 1차교정(여유분). agy 단일인스턴스라 워커 1개가 둘을 번갈아 → 충돌 0.
+async function agyLaneWorker() {
+  while (true) {
+    let slug, mode;
+    if (recorrectQ.length) { slug = recorrectQ.shift(); mode = 're'; }     // 재교정 우선(품질: 실패분 빨리 고침)
+    else if (correctQ.length) { slug = correctQ.shift(); mode = 'co'; }    // 여유 시 1차교정 분담(gemma와 병렬 2)
+    else { if (idle()) break; await sleep(300); continue; }
+    const it = items.get(slug); const p = parseSlug(slug);
+    gActive++;
+    if (mode === 're') {
+      if (it.att >= MAXATT) { failed++; gActive--; log(`  ✗ ${slug} 재교정 상한 — issues 잔존`); continue; }
+      it.att++;
+    }
+    const r = await run('node', ['scripts/corrector.mjs', p.round, p.subj, p.num], { CORR_BACKEND: 'agy' });
+    if (stateOf(it.md) === 'quarantine') { failed++; log(`  ⚠ ${slug} 격리(agy ${mode})`); }
+    else if (r.code === 3) { (mode === 're' ? recorrectQ : correctQ).push(slug); await sleep(2000); }
+    else verifyQ.push(slug);
+    gActive--; beat();
+  }
+}
+
+await Promise.all(DUAL ? [
+  correctWorker(),                                       // gemma 1차 전담(맥북 1대)
+  agyLaneWorker(),                                       // agy: 재교정 우선 + 1차 여유분(단일인스턴스 1개)
+  ...Array.from({ length: PAR_V }, verifyWorker),
+] : [
   ...Array.from({ length: PAR_C }, correctWorker),
   ...Array.from({ length: PAR_V }, verifyWorker),
   ...Array.from({ length: PAR_G }, recorrectWorker),
