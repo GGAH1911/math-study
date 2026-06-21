@@ -78,7 +78,7 @@ let cActive = 0, vActive = 0, gActive = 0, done = 0, failed = 0;
 const total = items.size;
 const orOn = process.env.OR_LANE === '1' && OR_AVAILABLE;
 const modeStr = DUAL
-  ? `교정 gemma×${GEMMA_PAR}(로컬26b)+agy${orOn ? '+OR' : ''} ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(쿼터소진→sonnet)${orOn ? '+OR' : ''}`
+  ? `교정 gemma×${GEMMA_PAR}(로컬26b)${orOn ? '+OR' : ''} ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 agy(쿼터소진→sonnet)${orOn ? '+OR' : ''}`
   : `교정 ${PAR_C}(${CORRECT_BACKEND}) ∥ 검증 ${PAR_V}(sonnet) ∥ 재교정 ${PAR_G}(${RECORRECT_BACKEND})`;
 log(`══ pipeline 시작: 대상 ${total}문제${FILTER ? ` (필터:${FILTER})` : ''} (교정대기 ${correctQ.length} · 검증대기 ${verifyQ.length}) · ${modeStr} · LOG ${LOG}`);
 if (!total) { log('대상 0 — 종료'); process.exit(0); }
@@ -144,8 +144,7 @@ async function recorrectWorker() {
 async function agyLaneWorker() {
   while (true) {
     let slug, mode;
-    if (recorrectQ.length) { slug = recorrectQ.shift(); mode = 're'; }     // 재교정 우선(품질: 실패분 빨리 고침)
-    else if (correctQ.length) { slug = correctQ.shift(); mode = 'co'; }    // 여유 시 1차교정 분담(gemma와 병렬 2)
+    if (recorrectQ.length) { slug = recorrectQ.shift(); mode = 're'; }     // 재교정 전용(1차는 gemma×2 전담, agy는 재교정만 — 사용자 지정)
     else { if (idle()) break; await sleep(300); continue; }
     const it = items.get(slug); const p = parseSlug(slug);
     gActive++;
@@ -183,7 +182,7 @@ async function orLaneWorker() {
 
 await Promise.all(DUAL ? [
   ...Array.from({ length: GEMMA_PAR }, correctWorker),   // 로컬 26b ×GEMMA_PAR (mlx continuous batching → ~N배)
-  agyLaneWorker(),                                       // agy(쿼터소진→sonnet) 재교정 우선 + 1차 여유분
+  agyLaneWorker(),                                       // agy(쿼터소진→sonnet) 재교정 전용(1차는 gemma×2)
   ...(orOn ? [orLaneWorker()] : []),                     // OR 레인 기본 off(무료풀 429), OR_LANE=1로 켬
   ...Array.from({ length: PAR_V }, verifyWorker),
 ] : [
