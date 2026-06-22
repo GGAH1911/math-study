@@ -19,6 +19,11 @@ const MODEL = getOpt('--model', process.env.VERIFY_MODEL || 'sonnet');
 const FORCE = has('--force');
 
 if (!existsSync(LOGDIR)) mkdirSync(LOGDIR, { recursive: true });
+// ★claude -p 캐시 친화: 레포 cwd 면 git status(미커밋 변경 다발)가 매 호출 시스템 프롬프트의
+//   env 블록을 바꿔 프롬프트 캐시를 깬다(실측: 콜당 ~17k 토큰 재기록). 깨끗한 빈 cwd 에서 실행하면
+//   prefix 가 안정돼 cache_read 가 살아난다(~76% 입력비용 절감). 이미지·전사는 --add-dir/프롬프트로 전달.
+const CLEAN_DIR = '/tmp/claude_p_clean';
+if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 const TS = process.env.RUN_TS || String(Math.floor(Date.now() / 1000));
 const LOG = `${LOGDIR}/verify_batch_${TS}.log`;
 const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); appendFileSync(LOG, l + '\n'); };
@@ -54,7 +59,7 @@ function collectSlugs() {
 
 function claudeCall(prompt, imgDir) {
   return new Promise((res) => {
-    const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR });
     let out = ''; c.stdout.on('data', (d) => (out += d));
     c.on('close', () => { try { const j = JSON.parse(out); const u = j.usage || {}; appendFileSync(`${LOGDIR}/verify_usage.log`, `${MODEL}\tcr=${u.cache_read_input_tokens ?? '?'}\tcc=${u.cache_creation_input_tokens ?? '?'}\tin=${u.input_tokens ?? '?'}\tout=${u.output_tokens ?? '?'}\n`); res(j.result || ''); } catch { res(''); } });
   });
