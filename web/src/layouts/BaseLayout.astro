@@ -12,6 +12,9 @@ interface Props {
 }
 
 const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 신경망', containerClass = '' } = Astro.props;
+// 개념지도(/graph)는 튜터 그래프가 없고, StickyGraphPanel 닫힘 탭(우상단)이 노드 상세
+// 카드의 닫기 버튼과 겹쳐 간섭 → /graph 에선 마운트하지 않는다.
+const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
 ---
 
 <!doctype html>
@@ -71,7 +74,7 @@ const { title = 'Math Study', description = 'LWIP 기반 한국 수능 학습 �
          SSR을 건너뛰고 load 시점에 클라이언트에서만 마운트 — 여전히 일찍 떠서
          ChatPanel graph 컴포넌트의 첫 broadcast 를 잡는다(client:idle 처럼 늦지
          않음). 초기 패널은 비어 있으므로 SSR HTML 부재로 인한 시각적 손실 없음. */}
-    <StickyGraphPanel client:only="react" />
+    {showStickyGraph && <StickyGraphPanel client:only="react" />}
 
 
     <!-- Auto-enhance any ```python code block with a Run button (sympy via /api/sympy) -->
