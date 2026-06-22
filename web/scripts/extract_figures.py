@@ -43,23 +43,33 @@ def spans_of(page):
     return out
 
 
-def find_region(doc, num):
+# 통합 문제.pdf 선택과목 섹션 — 23~30 번호가 확통/미적분/기하 섹션마다 중복되어 과목 구분 필요
+_SUBJ_SECTIONS = ('확률과통계', '미적분', '기하')
+def find_region(doc, num, subj=None):
     """번호 'num.' 위치로 문제 영역(단 경계 + 다음 번호까지) 탐지. 문제 마커 = 마침표 'N.' + 컬럼 좌측 edge
     (x0≈88 좌단 / 429 우단). 페이지 헤더 '10월'·본문 중간 stray 숫자(마침표X·비edge)에 오매치해 엉뚱한 페이지
-    잡던 버그 수정. 1차 마침표 필수(엄격), 못 찾으면 2차 마침표 옵션 폴백(마커에 마침표 없는 회차 대비). 둘 다 edge."""
+    잡던 버그 수정. 1차 마침표 필수(엄격), 못 찾으면 2차 마침표 옵션 폴백(마커에 마침표 없는 회차 대비). 둘 다 edge.
+    ★통합 PDF region-bleed 수정: subj가 선택과목(확통/미적분/기하)이고 통합 문제.pdf면 23~30이 과목마다 중복 →
+    페이지 러닝헤더의 '(과목명)'이 subj와 일치하는 섹션으로 먼저 제한 검색. 일치 섹션이 없으면(분할 PDF·공통)
+    기존 무제한 검색으로 폴백 → 분할PDF·공통·확통선택은 결과 불변(회귀 0)."""
     def edge(r, PW): return r.x0 < 110 or PW / 2 - 5 <= r.x0 < PW / 2 + 110
-    for require_dot in (True, False):
-        for pi, page in enumerate(doc):
-            sp = spans_of(page); PW = page.rect.width
-            pat = rf'^{num}\.$' if require_dot else rf'^{num}\.?$'
-            tgt = next((r for t, r in sp if re.match(pat, t.strip()) and edge(r, PW)), None)
-            if not tgt: continue
-            x0, x1 = (0, PW / 2) if tgt.x0 < PW / 2 else (PW / 2, PW)  # 좌/우 단
-            # 같은 단 아래쪽 다음 마커(마침표+edge) = 영역 끝. 없으면 page 끝.
-            cands = [r.y0 for t, r in sp if re.match(r'^\d+\.$', t.strip())
-                     and x0 - 5 <= r.x0 < x1 and edge(r, PW) and r.y0 > tgt.y1 + 5]
-            y1 = min(cands) if cands else page.rect.y1
-            return pi, fitz.Rect(x0, tgt.y0 - 3, x1, y1)
+    want = subj if subj in _SUBJ_SECTIONS else None
+    for constrain in ((True, False) if want else (False,)):
+        for require_dot in (True, False):
+            for pi, page in enumerate(doc):
+                # 러닝헤더(상단 ~120자, 페이지 하단의 '선택과목 안내문'은 제외됨)에 과목명이 있어야 그 섹션
+                if constrain and want not in re.sub(r'\s+', '', page.get_text()[:120]):
+                    continue
+                sp = spans_of(page); PW = page.rect.width
+                pat = rf'^{num}\.$' if require_dot else rf'^{num}\.?$'
+                tgt = next((r for t, r in sp if re.match(pat, t.strip()) and edge(r, PW)), None)
+                if not tgt: continue
+                x0, x1 = (0, PW / 2) if tgt.x0 < PW / 2 else (PW / 2, PW)  # 좌/우 단
+                # 같은 단 아래쪽 다음 마커(마침표+edge) = 영역 끝. 없으면 page 끝.
+                cands = [r.y0 for t, r in sp if re.match(r'^\d+\.$', t.strip())
+                         and x0 - 5 <= r.x0 < x1 and edge(r, PW) and r.y0 > tgt.y1 + 5]
+                y1 = min(cands) if cands else page.rect.y1
+                return pi, fitz.Rect(x0, tgt.y0 - 3, x1, y1)
     return None, None
 
 
@@ -197,7 +207,7 @@ def extract(round_, subj, num):
     pdf = f'{REPO}/db/raw/{round_}/{subj}_문제.pdf'
     if not os.path.exists(pdf): pdf = f'{REPO}/db/raw/{round_}/문제.pdf'
     doc = fitz.open(pdf)
-    pi, REG = find_region(doc, num)
+    pi, REG = find_region(doc, num, subj)
     if REG is None: return None, [], [], [], '영역 못찾음'
     page = doc[pi]
     seen = set(); objs = []
