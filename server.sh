@@ -122,9 +122,34 @@ watchdog() {
         sleep 12
       done ) &
     local mon_pid=$!
+    # ── HMR watcher 갱신 모니터 (4323 전용; STABLE=4324 는 수동 재시작 설계라 제외) ──
+    # corrector/ingest/box_backfill 등 대량 배치가 docs md 를 다발로 다시 쓰면 inotify
+    # 이벤트 큐(max_queued_events)를 넘쳐 chokidar watcher 가 조용히 desync → 이후 단일
+    # 편집이 HMR 에 안 잡힌다(서버 재시작 전까지). 배치를 감지해 *가라앉은 뒤* astro 를
+    # 한 번 kill → 위 while 루프가 fresh watcher 로 재기동시킨다. 평소 단일 편집은 영향 X.
+    local hmr_pid=""
+    if [ -z "${STABLE:-}" ]; then
+      ( sleep 90                                          # 콜드 기동(content sync) 유예
+        mark="${LOG_FILE%.log}.hmrmark"; touch "$mark"
+        batch=0
+        while kill -0 "$astro_pid" 2>/dev/null; do
+          sleep 25
+          changed=$(find "$SCRIPT_DIR/docs" -name '*.md' -newer "$mark" 2>/dev/null | wc -l)
+          touch "$mark"
+          if [ "$changed" -ge 25 ]; then                  # 25s 창에 md 25개+ = 배치(수동편집 아님)
+            [ "$batch" -eq 0 ] && echo "[$(date '+%F %T')] 📦 배치 감지(${changed} md 변경) — 가라앉으면 4323 HMR 갱신"
+            batch=1
+          elif [ "$batch" -eq 1 ] && [ "$changed" -le 3 ]; then   # 배치 후 잠잠 = 종료
+            echo "[$(date '+%F %T')] 📦 배치 종료 — 4323 재시작(HMR watcher 갱신)"
+            kill -KILL "$astro_pid" 2>/dev/null; break
+          fi
+        done ) &
+      hmr_pid=$!
+    fi
     wait "$astro_pid" 2>/dev/null
     local code=$?
     kill "$mon_pid" 2>/dev/null    # 헬스 모니터 정리
+    [ -n "$hmr_pid" ] && kill "$hmr_pid" 2>/dev/null    # HMR 모니터 정리
     echo "[$(date '+%F %T')] astro 종료(exit $code) — 3초 뒤 재시작"
     sleep 3
   done
