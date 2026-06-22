@@ -92,29 +92,48 @@ def classify_box(rows):
 
 
 def extract_table(page, REG):
-    """벡터 격자 → {type, rows, bbox}. type=classify_box(rows). 셀 값은 hancom_decode(PUA). 격자 없으면 None."""
+    """객체(격자) 감지 → [{rows, bbox}]. ★내용 안 봄(classify_box 휴리스틱 폐기). 가로선·세로선을 교차로
+    연결요소 클러스터링한 뒤, ≥3가로 ∩ ≥3세로(=≥2행 2열) 규칙격자인 컴포넌트만 '데이터표'로 본다.
+    side-by-side 수식·조건박스(1셀)·stray 선은 표 격자선과 안 만나 다른 컴포넌트라 자동 분리
+    (2021수능 가형12류 side-by-side 표·기하29류 누락표 복구). 셀 값은 hancom_decode(PUA). 없으면 []."""
     PH = page.rect.height
-    grid = [d['rect'] for d in page.get_drawings()
-            if REG.x0 - 5 <= d['rect'].x0 and d['rect'].x1 <= REG.x1 + 5
-            and d['rect'].y0 >= REG.y0 - 5 and d['rect'].y1 <= REG.y1 + 5
-            and (d['rect'].y1 - d['rect'].y0) < PH * 0.4]  # 단 경계선(긴 세로) 제외
-    vx = sorted(set(round(r.x0) for r in grid if abs(r.x1 - r.x0) < 2))  # 세로 격자선
-    hy = sorted(set(round(r.y0) for r in grid if abs(r.y1 - r.y0) < 2))  # 가로 격자선
-    if len(vx) < 2 or len(hy) < 2: return None  # 셀 격자 아님
-    tb = fitz.Rect(min(vx), min(hy), max(vx), max(hy))
-    cells = {}
-    for t, r in spans_of(page):
-        cx, cy = (r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2
-        if not (tb.x0 - 2 <= cx <= tb.x1 + 2 and tb.y0 - 2 <= cy <= tb.y1 + 2): continue
-        ci = sum(1 for x in vx if x < cx) - 1; rj = sum(1 for y in hy if y < cy) - 1
-        if ci >= 0 and rj >= 0: cells[(rj, ci)] = cells.get((rj, ci), '') + t
-    nr, nc = len(hy) - 1, len(vx) - 1
-    if nr < 2 or nc < 2: return None  # 1행·1열·단일 셀 = (가)(나) 조건 박스 등 → 데이터 표 아님(표 오인 방지)
-    rows = [[decode_str(cells.get((j, i), ''), _ROSETTA) for i in range(nc)] for j in range(nr)]
-    # 시험지 푸터("확인 사항 / 답안지 기입")는 문제 표가 아니므로 제외(마지막 문항에 격자로 붙어옴)
-    rows = [r for r in rows if not any('확인사항' in c.replace(' ', '') or '답안지' in c for c in r)]
-    if not rows: return None
-    return {'type': classify_box(rows), 'rows': rows, 'bbox': [round(v) for v in tb]}
+    H, V = [], []
+    for d in page.get_drawings():
+        r = d['rect']
+        if not (REG.x0 - 5 <= r.x0 and r.x1 <= REG.x1 + 5 and r.y0 >= REG.y0 - 5 and r.y1 <= REG.y1 + 5): continue
+        w, h = r.x1 - r.x0, r.y1 - r.y0
+        if h < 2 and w > 5: H.append(('H', r.y0, r.x0, r.x1))                     # 가로선 (kind, y, x0, x1)
+        elif w < 2 and h > 5 and h < PH * 0.4: V.append(('V', r.x0, r.y0, r.y1))  # 세로선 (kind, x, y0, y1) — 단경계 제외
+    N = H + V; n = len(N)
+    if n < 6: return []                                                           # 표 최소: 가로3+세로3
+    par = list(range(n))
+    def find(a):
+        while par[a] != a: par[a] = par[par[a]]; a = par[a]
+        return a
+    for i, a in enumerate(N):                                                     # 가로선 ∩ 세로선 교차 → 같은 격자
+        if a[0] != 'H': continue
+        for j, b in enumerate(N):
+            if b[0] == 'V' and a[2] - 2 <= b[1] <= a[3] + 2 and b[2] - 2 <= a[1] <= b[3] + 2: par[find(i)] = find(j)
+    comps = {}
+    for i in range(n): comps.setdefault(find(i), []).append(N[i])
+    out = []
+    for c in comps.values():
+        vx = sorted(set(round(x[1]) for x in c if x[0] == 'V'))
+        hy = sorted(set(round(x[1]) for x in c if x[0] == 'H'))
+        if len(hy) < 3 or len(vx) < 3: continue                                  # ≥2행 × ≥2열 규칙격자만 = 데이터표(박스 배제)
+        tb = fitz.Rect(min(vx), min(hy), max(vx), max(hy))
+        cells = {}
+        for t, r in spans_of(page):
+            cx, cy = (r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2
+            if not (tb.x0 - 2 <= cx <= tb.x1 + 2 and tb.y0 - 2 <= cy <= tb.y1 + 2): continue
+            ci = sum(1 for x in vx if x < cx) - 1; rj = sum(1 for y in hy if y < cy) - 1
+            if ci >= 0 and rj >= 0: cells[(rj, ci)] = cells.get((rj, ci), '') + t
+        rows = [[decode_str(cells.get((j, i), ''), _ROSETTA) for i in range(len(vx) - 1)] for j in range(len(hy) - 1)]
+        # 시험지 푸터("확인 사항 / 답안지 기입") 격자는 문제 표가 아니므로 제외
+        rows = [r for r in rows if not any('확인사항' in cc.replace(' ', '') or '답안지' in cc for cc in r)]
+        if rows: out.append({'rows': rows, 'bbox': [round(v) for v in tb]})
+    out.sort(key=lambda t: (t['bbox'][1], t['bbox'][0]))                          # 위→아래, 좌→우
+    return out
 
 
 def detect_boxes(page, REG):
@@ -205,12 +224,9 @@ def extract(round_, subj, num):
     # 블록 클러스터링 gap=8: HWP strip(한 도형의 조각, 간격 ~0-3px)은 합치되, 별개 도형(R₁·R₂처럼 간격 10-30px)은
     #   분리 → 각자 객체추출(깨끗). gap=20이면 R₁·R₂가 합쳐져 캡쳐로 빠지고 위 질문줄까지 bleed.
     cl = merge([r for x, r in block_objs], gap=8)
-    tbl = extract_table(page, REG)  # 벡터 격자 → {type,rows,bbox}
-    # 1단계: 진짜 데이터 표(type=table)만 {{TABLE}} 로 유지. 본문·조건·(가)(나)·보기·시험안내문이
-    #   테두리 격자로 오인된 것(classify_box 가 noise/passage/choicebox/… 로 판정)은 placeholder 를
-    #   만들지 않는다 — 그 내용은 searchable_text 에 이미 텍스트로 있으므로 본문으로 둔다(박스 렌더는 후속).
-    tables = [tbl] if (tbl and tbl.get('type') == 'table') else []
-    _box_skip = tbl['type'] if (tbl and tbl.get('type') != 'table') else None
+    # 표 감지: 연결요소 격자(객체)로 — 내용 휴리스틱(classify_box) 폐기. ≥2행2열 규칙격자만 데이터표.
+    #   side-by-side 수식/조건박스·stray 선은 다른 컴포넌트라 자동 분리(가형12류 복구). 다중표 지원.
+    tables = extract_table(page, REG)
     box_rects = detect_boxes(page, REG)   # 그려진 테두리 박스(도형 없는 증명/조건 문제도 박스만 있을 수 있음)
     if not cl and not tables and not inline_objs and not box_rects: return None, [], [], [], '이미지·표 없음'
     cl = sorted(cl, key=lambda r: (r.y0, r.x0))
