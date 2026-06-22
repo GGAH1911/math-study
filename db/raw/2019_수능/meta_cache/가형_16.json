@@ -1,0 +1,17 @@
+{
+  "text_sha": "1cc958091ea6",
+  "meta": {
+    "searchable_text": "16. x>0에서 정의된 연속함수 f(x)가 모든 양수 x에 대하여\n2f(x)+\\frac{1}{x^{2}}f(\\frac{1}{x})=\\frac{1}{x}+\\frac{1}{x^{2}}\n을 만족시킬 때, \\int_{\\frac{1}{2}}^{2}f(x)dx의 값은? [4점]\n① \\frac{ln2}{3}+\\frac{1}{2}② \\frac{2ln2}{3}+\\frac{1}{2}③ \\frac{ln2}{3}+1\n④ \\frac{2ln2}{3}+1 ⑤ \\frac{2ln2}{3}+\\frac{3}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지_적분법",
+    "concepts": [
+      "함수방정식",
+      "정적분",
+      "로그함수"
+    ],
+    "exam_intent": "함수방정식을 연립으로 풀어 적분값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

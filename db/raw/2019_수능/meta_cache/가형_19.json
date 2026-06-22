@@ -1,0 +1,17 @@
+{
+  "text_sha": "c72a1f52fc39",
+  "meta": {
+    "searchable_text": "19. 한 변의 길이가 12인 정삼각형 BCD를 한 면으로 하는\n사면체 ABCD의 꼭짓점 A에서 평면 BCD에 내린 수선의\n발을 H라 할 때, 점 H는 삼각형 BCD의 내부에 놓여 있다.\n삼각형 CDH의 넓이는 삼각형 BCH의 넓이의 3배,\n삼각형 DBH의 넓이는 삼각형 BCH의 넓이의 2배이고\n\\overline{AH}=3이다. 선분 BD의 중점을 M, 점 A에서 선분 CM에\n내린 수선의 발을 Q라 할 때, 선분 AQ의 길이는? [4점]\n① \\sqrt{11}② 2\\sqrt{3}③ \\sqrt{13}④ \\sqrt{14}⑤ \\sqrt{15}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "사면체의_부피_관계",
+      "공간_좌표계",
+      "점_사이의_거리"
+    ],
+    "exam_intent": "좌표계 설정으로 공간도형 점의 위치를 결정하고 거리 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

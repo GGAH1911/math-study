@@ -1,0 +1,16 @@
+{
+  "text_sha": "79bab32c261d",
+  "meta": {
+    "searchable_text": "11. 0≤θ<2π일 때, x에 대한 이차방정식\n6x^{2}+(4cosθ)x+sinθ=0\n이 실근을 갖지 않도록 하는 모든 θ의 값의 범위는\nα<θ<β이다. 3α+β의 값은? [3점]\n① \\frac{5}{6}π ② π ③ \\frac{7}{6}π ④ \\frac{4}{3}π ⑤ \\frac{3}{2}π",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "이차방정식",
+    "concepts": [
+      "판별식",
+      "삼각함수부등식"
+    ],
+    "exam_intent": "판별식 조건으로 실근 존재성을 삼각함수로 표현하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

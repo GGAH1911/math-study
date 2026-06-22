@@ -1,0 +1,17 @@
+{
+  "text_sha": "365d5e4b73d2",
+  "meta": {
+    "searchable_text": "13. 좌표공간에서 점 (2,0,5)를 지나고 직선\nx-1=2-y=\\frac{z+1}{2}을 포함하는 평면이 x축과 만나는 점의\nx좌표는? [3점]\n① \\frac{9}{2}② 4 ③ \\frac{7}{2}④ 3 ⑤ \\frac{5}{2}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "공간도형과_공간벡터",
+    "concepts": [
+      "직선의_매개변수_방정식",
+      "평면의_방정식",
+      "법선벡터"
+    ],
+    "exam_intent": "점과 직선을 포함하는 평면의 방정식을 구하고 축과의 교점 계산",
+    "killer_tier": "early",
+    "cognitive_type": "응용"
+  }
+}

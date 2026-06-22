@@ -1,0 +1,17 @@
+{
+  "text_sha": "ffa7791a8d33",
+  "meta": {
+    "searchable_text": "4. 두 사건 A, B에 대하여 A와 B^{C}은 서로 배반사건이고\nP(A)=\\frac{1}{3}, P(A^{C}∩B)=\\frac{1}{6}\n일 때, P(B)의 값은? (단, A^{C}은 A의 여사건이다.) [3점]\n① \\frac{5}{12}② \\frac{1}{2}③ \\frac{7}{12}④ \\frac{2}{3}⑤ \\frac{3}{4}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "배반사건",
+      "여사건",
+      "확률의_덧셈"
+    ],
+    "exam_intent": "배반사건과 여사건 성질을 이용한 확률 계산",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

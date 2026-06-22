@@ -1,0 +1,13 @@
+{
+  "text_sha": "8b3f87964af5",
+  "meta": {
+    "searchable_text": "18. 그림과 같이 \\overline{AB}=1, ∠B=\\frac{π}{2}인 직각삼각형 ABC에서\n∠C를 이등분하는 직선과 선분 AB의 교점을 D, 중심이\nA이고 반지름의 길이가 \\overline{AD}인 원과 선분 AC의 교점을 E라\n하자. ∠A=θ일 때, 부채꼴 ADE의 넓이를 S(θ), 삼각형\nBCE의 넓이를 T(θ)라 하자. \\lim_{θ→0+}\\frac{{S(θ)}^{2}}{T(θ)}의 값은? [4점]\n① \\frac{1}{4}② \\frac{1}{2}③ \\frac{3}{4}④ 1 ⑤ \\frac{5}{4}",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "여러가지함수의_극한",
+    "concepts": [],
+    "exam_intent": "도형 넓이 함수의 극한을 이용한 함수값 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

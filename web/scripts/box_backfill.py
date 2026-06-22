@@ -161,8 +161,11 @@ def process(md):
 
 
 def main():
+    flt = sys.argv[1] if len(sys.argv) > 1 else None   # 선택: 라운드 슬러그 필터(예 2019_수능) — 인제스트 후 해당 회차만
     files = sorted(glob.glob(f'{REPO}/docs/problems/**/*.md', recursive=True))
-    print(f'══ box_backfill 시작 {time.strftime("%F %T")} · {len(files)} md 스캔 · 대상=corrector_done · 읽기전용·LLM0', flush=True)
+    if flt:
+        files = [f for f in files if flt in os.path.basename(f)]
+    print(f'══ box_backfill 시작 {time.strftime("%F %T")} · {len(files)} md 스캔{f" (필터 {flt})" if flt else ""} · 대상=corrector_done · 읽기전용·LLM0', flush=True)
     stat = Counter(); markers = 0; t0 = time.time()
     for n, md in enumerate(files, 1):
         try:

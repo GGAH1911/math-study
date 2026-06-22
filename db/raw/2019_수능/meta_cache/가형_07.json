@@ -1,0 +1,17 @@
+{
+  "text_sha": "28e900d71039",
+  "meta": {
+    "searchable_text": "7. 곡선 e^{x}-xe^{y}=y 위의 점 (0,1)에서의 접선의 기울기는?\n[3점]\n① 3-e ② 2-e ③ 1-e ④ -e ⑤ -1-e",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "음함수의_미분",
+      "지수함수의_미분",
+      "접선의_기울기"
+    ],
+    "exam_intent": "음함수를 미분하여 특정 점에서의 접선의 기울기 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

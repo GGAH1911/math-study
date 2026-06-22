@@ -14,6 +14,11 @@ const DIR = dirname(fileURLToPath(import.meta.url));
 const REPO = '/home/insung/Projects/math-study';
 const GEMINI = process.env.CORR_MODEL || 'Gemini 3.5 Flash (Medium)';
 const QLOG = '/tmp/ingest_logs/corrector_quarantine.log';
+// ★claude -p 캐시 친화: 레포 cwd면 git status(미커밋 변경)가 매 호출 시스템 프롬프트 env 블록을
+//   바꿔 프롬프트 캐시를 깬다(콜당 ~17k 재기록). 깨끗한 빈 cwd에서 spawn → prefix 안정 → cache_read 생존.
+//   이미지 접근은 --add-dir(절대경로)로 유지. 참고: docs/CLAUDE_P_CACHING.md, lib/claude_p.mjs.
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || '/tmp/claude_p_clean';
+if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
 // agy(Gemini) = plain text. 쿼터 소진 = 빈 출력.
 function agyCall(prompt, imgDir, retries = 2) {
@@ -32,10 +37,14 @@ function agyCall(prompt, imgDir, retries = 2) {
     run(retries);
   });
 }
-// claude(Sonnet) = --output-format json → {result:"..."} 래퍼. 자가치유용(별도 백엔드·쿼터).
-function claudeCall(prompt, imgDir, model = 'sonnet') {
+// claude(Sonnet) = --output-format json → {result:"..."} 래퍼. 자가치유·재교정용(별도 백엔드·쿼터).
+// ★cwd: CLEAN_DIR → 프롬프트 캐시 생존(verify_batch와 동일 패턴). maxTurns>0이면 --max-turns 부여
+//   = 이미지 Read→교정→자가검증을 한 warm-cache 프로세스 안에서 도는 에이전트 루프(상한).
+function claudeCall(prompt, imgDir, model = 'sonnet', maxTurns = 0) {
   return new Promise((res) => {
-    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const args = ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir];
+    if (maxTurns > 0) args.push('--max-turns', String(maxTurns));
+    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
     c.on('close', () => {
@@ -134,7 +143,10 @@ function validate(corrected, st) {
   if (_miss.length) f.push(`placeholder누락(${_miss.join(',')})`);   // gemma 추가분 허용(비전 우선) · 누락만 실패
   const o = (corrected.match(/\{/g) || []).length, c = (corrected.match(/\}/g) || []).length;
   if (o !== c) f.push(`중괄호(${o}/${c})`);                              // LaTeX 균형
-  const ratio = corrected.length / Math.max(1, st.length);
+  // 도형 설명 [그림:...] 블록은 교정이 정당하게 제거(OK 문제 표준=본문에 설명 없음) → 길이비 기준에서 제외.
+  // 안 그러면 짧은 문제(예 가형_28)가 설명 제거 후 0.35로 떨어져 false-positive 격리됨.
+  const _stripFig = (s) => s.replace(/\[그림:[^\]]*\]/g, '');
+  const ratio = _stripFig(corrected).length / Math.max(1, _stripFig(st).length);
   if (ratio < 0.4 || ratio > 3.0) f.push(`길이비(${ratio.toFixed(2)})`);  // 환각·누락. 상한 완화: 원본 텍스트레이어가 깨져 짧은 경우 corrected가 정상이어도 비율이 커짐(false positive 방지)
   if (/①/.test(st) && !/①/.test(corrected)) f.push('선택지누락');
   if (/\$/.test(corrected)) f.push('잔여$');                             // 방향A 위반
@@ -220,6 +232,13 @@ if (BACKEND === 'gemma') {
 } else if (BACKEND === 'sonnet') {
   console.log('② claude(Sonnet) 재교정…');               // 병렬 가능(PAR_G>1) — gemma4 실패분 빠르게 재교정
   out = await claudeCall(promptF, imgDir, 'sonnet'); by = 'sonnet';
+} else if (BACKEND === 'agent') {
+  // ★재교정 에이전트 루프: claude -p가 이미지를 Read→대조→교정→자가검증을 한 warm-cache 프로세스에서.
+  //   clean cwd로 캐시 생존, --max-turns로 상한. agy(다운) 대체 + 오케스트레이터 수동 재교정 자동화.
+  const am = process.env.AGENT_MODEL || 'sonnet';
+  const at = parseInt(process.env.AGENT_MAXTURNS || '6', 10);
+  console.log(`② claude(${am}) agent-loop 재교정 (max-turns ${at}, clean cwd)…`);
+  out = await claudeCall(promptF, imgDir, am, at); by = `agent-${am}`;
 } else {
   console.log('② claude(Haiku) 교정…');
   out = await claudeCall(promptF, imgDir, 'haiku'); by = 'haiku';
@@ -236,12 +255,13 @@ if (fails.length) {
   const out2 = BACKEND === 'gemma' ? await gemmaCall(promptF, img)
     : BACKEND === 'agy' ? await agyCall(promptF, imgDir)
     : BACKEND === 'or' ? await orCall(promptF, img)
+    : BACKEND === 'agent' ? await claudeCall(promptF, imgDir, process.env.AGENT_MODEL || 'sonnet', parseInt(process.env.AGENT_MAXTURNS || '6', 10))
     : BACKEND === 'sonnet' ? await claudeCall(promptF, imgDir, 'sonnet')
     : await claudeCall(promptF, imgDir);
   const parsed2 = parseCorrected(out2);
   if (parsed2) parsed2.corrected = reconcilePH(parsed2.corrected, st);   // 자가치유분도 화해
   const fails2 = parsed2 ? validate(parsed2.corrected, st) : ['파싱실패'];
-  if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma' && BACKEND !== 'agy' && BACKEND !== 'or' && BACKEND !== 'sonnet') by = 'sonnet'; console.log('④ 자가치유 통과'); }  // 자가치유는 같은 백엔드 재시도 → by 유지(haiku만 sonnet 승격)
+  if (!fails2.length) { parsed = parsed2; fails = []; if (BACKEND !== 'gemma' && BACKEND !== 'agy' && BACKEND !== 'or' && BACKEND !== 'sonnet' && BACKEND !== 'agent') by = 'sonnet'; console.log('④ 자가치유 통과'); }  // 자가치유는 같은 백엔드 재시도 → by 유지(haiku만 sonnet 승격)
   else {
     mkdirSync(dirname(QLOG), { recursive: true });
     appendFileSync(QLOG, `${round}_${subj}_${num}\t1차:${fails.join('|')}\t재시도:${fails2.join('|')}\n`);
@@ -282,6 +302,7 @@ if (parsed.fixes.length) {
 }
 if (!/^corrector_by:/m.test(txt)) txt = txt.replace(/\nsearchable_text:/, `\ncorrector_by: ${by}\nsearchable_text:`);
 if (!/^corrector_done:/m.test(txt)) txt = txt.replace(/\nsearchable_text:/, '\ncorrector_done: true\nsearchable_text:');
+txt = txt.replace(/\ncorrector_quarantine: true(?=\n)/, '');  // ★재교정 성공 → 격리 마커 해제(stale 방지)
 writeFileSync(md, txt);
 const _sec = ((Date.now() - t0) / 1000).toFixed(1);
 console.log(`⑤ 교정 적용(${by}, ${_sec}s) — fixes ${parsed.fixes.length}건${parsed.fixes.length ? ': ' + parsed.fixes.join(' / ') : ' (변경 없음)'}`);

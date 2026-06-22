@@ -1,0 +1,16 @@
+{
+  "text_sha": "6c91013b07ee",
+  "meta": {
+    "searchable_text": "28. 숫자 1, 2, 3, 4가 하나씩 적혀 있는 흰 공 4개와 숫자\n4, 5, 6이 하나씩 적혀 있는 검은 공 3개가 있다. 이 7개의\n공을 임의로 일렬로 나열할 때, 같은 숫자가 적혀 있는 공이\n서로 이웃하지 않게 나열될 확률은 \\frac{q}{p}이다. p+q의 값을\n구하시오. (단, p와 q는 서로소인 자연수이다.) [4점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "여사건",
+      "경우의_수"
+    ],
+    "exam_intent": "여사건을 이용한 조건부 확률 계산",
+    "killer_tier": "killer",
+    "cognitive_type": "계산"
+  }
+}

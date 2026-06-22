@@ -1,0 +1,17 @@
+{
+  "text_sha": "48e90b7c3510",
+  "meta": {
+    "searchable_text": "8. 확률변수 X가 이항분포 B(n,\\frac{1}{2})을 따르고\nE(X^{2})=V(X)+25를 만족시킬 때, n의 값은? [3점]\n① 10 ② 12 ③ 14 ④ 16 ⑤ 18",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "확률",
+    "concepts": [
+      "이항분포",
+      "확률변수",
+      "기댓값과_분산"
+    ],
+    "exam_intent": "이항분포의 기댓값·분산 성질을 이용한 모수 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

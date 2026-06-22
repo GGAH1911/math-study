@@ -111,6 +111,14 @@ MAP_SYSTEM = dedent("""
 """).strip()
 
 
+# ★claude -p 캐시 친화 + 타임아웃 방지: 레포 cwd면 git status(미커밋 변경 — 지금 수정 PNG 수백)가
+#   시스템 프롬프트 env 블록을 거대하게 만들어 ① 프롬프트 캐시를 깨고 ② 그 큰 프롬프트가 처리 지연
+#   (60s 타임아웃)을 부른다. 깨끗한 빈 cwd에서 실행 → 캐시 생존 + 호출 5~15s로 단축.
+#   파일 접근은 add_dir(절대경로)로 유지(매핑 MAP은 add_dir 없이 프롬프트 임베드라 무관). docs/CLAUDE_P_CACHING.md.
+_CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
+os.makedirs(_CLEAN_DIR, exist_ok=True)
+
+
 def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, add_dir: str | None = None, timeout: int = 180, retries: int = 2) -> str | None:
     """Invoke `claude -p`. Returns stdout text or None. Retries on failure.
 

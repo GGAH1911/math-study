@@ -1,0 +1,17 @@
+{
+  "text_sha": "096126f01f00",
+  "meta": {
+    "searchable_text": "15. 2 이상의 자연수 n에 대하여 5logn2의 값이 자연수가\n되도록 하는 모든 n의 값의 합은? [4점]\n① 34 ② 38 ③ 42 ④ 46 ⑤ 50",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수와_로그",
+    "concepts": [
+      "로그의_밑_변환",
+      "로그방정식",
+      "자연수_조건"
+    ],
+    "exam_intent": "로그의 밑 변환과 지수-로그 관계로 자연수 조건 분석",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

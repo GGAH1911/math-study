@@ -204,6 +204,7 @@ def main():
     ap.add_argument('--no-sync', action='store_true')
     ap.add_argument('--no-correct', action='store_true', help='교정+검증 루프 생략')
     ap.add_argument('--no-verify', action='store_true', help='교정만 하고 sonnet 검증 생략')
+    ap.add_argument('--no-remap', action='store_true', help='교정 후 개념 재매핑 생략(어댑터 매핑 유지)')
     a = ap.parse_args()
 
     d = Path(a.dir)
@@ -265,11 +266,28 @@ def main():
                     print(f'\n══════ 교정만 {rd} (gemma 직렬) ══════', flush=True)
                     subprocess.run(['node', 'web/scripts/corrector_batch.mjs', rd],
                                    env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'CORR_BACKEND': 'gemma', 'CORR_CONC': '1'})
-                else:                                 # 완전 스트리밍: gemma 교정 ∥ sonnet 검증 ∥ agy 재교정
-                    print(f'\n══════ 교정∥검증∥재교정 스트리밍 {rd} (gemma ∥ sonnet ∥ agy) ══════', flush=True)
+                else:                                 # 완전 스트리밍: gemma 교정 ∥ sonnet 검증 ∥ 재교정
+                    # 재교정 백엔드는 env override 가능(기본 agy). agy 다운(쿼터)이면 RECORRECT_BACKEND=agent
+                    # 로 claude 에이전트루프(이미지 Read→교정→자가검증, clean cwd 캐시)로 대체.
+                    _rb = os.environ.get('RECORRECT_BACKEND', 'agy')
+                    print(f'\n══════ 교정∥검증∥재교정 스트리밍 {rd} (gemma ∥ sonnet ∥ {_rb}) ══════', flush=True)
                     subprocess.run(['node', 'web/scripts/correct_verify_pipeline.mjs', rd],
-                                   env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'PAR_C': '1', 'PAR_V': '4',
-                                        'PAR_G': '1', 'CORRECT_BACKEND': 'gemma', 'RECORRECT_BACKEND': 'agy', 'MAXATT': '3'})
+                                   env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT), 'PAR_C': os.environ.get('PAR_C', '2'), 'PAR_V': os.environ.get('PAR_V', '4'),
+                                        'PAR_G': os.environ.get('PAR_G', '1'), 'CORRECT_BACKEND': os.environ.get('CORRECT_BACKEND', 'gemma'),
+                                        'RECORRECT_BACKEND': _rb, 'MAXATT': os.environ.get('MAXATT', '3')})
+            # 교정 후: 박스 마커 결정적 백필(LLM 0·멱등·읽기전용) — corrector_done 깨끗한 텍스트에 {{BOX}} 삽입.
+            #   extract_figures.apply_md 는 raw 텍스트라 박스 안 넣음(설계) → 교정 후 여기서 회차별 백필.
+            for rd in rounds_set:
+                print(f'\n══════ 박스 백필 {rd} (결정적·LLM0) ══════', flush=True)
+                subprocess.run([PY, 'web/scripts/box_backfill.py', rd],
+                               env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
+            # 교정 후: 개념 재매핑 — 어댑터 매핑은 교정 前(PUA 깨진 원문) 기반이라, 교정된 텍스트로 다시 매핑한다
+            #   ('매핑 前 교정' 원칙). haiku·claude_p clean cwd 캐시. --no-remap 으로 생략 가능.
+            if not getattr(a, 'no_remap', False):
+                for rd in rounds_set:
+                    print(f'\n══════ 개념 재매핑 {rd} (교정후·haiku·캐시) ══════', flush=True)
+                    subprocess.run([PY, 'scripts/ingest_kice/concept_remap.py', rd],
+                                   env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
         if not a.no_cache:
             print(f'\n══════ 풀이캐시 {len(slugs)}문제 --parallel {a.parallel} ══════', flush=True)
             subprocess.run([PY, 'scripts/build_solution_cache.py', '--list', ','.join(slugs),

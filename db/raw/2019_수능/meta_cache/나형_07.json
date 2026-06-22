@@ -1,0 +1,17 @@
+{
+  "text_sha": "f5664afaea1c",
+  "meta": {
+    "searchable_text": "7. 함수 y=f(x)의 그래프가 그림과 같다.\n\\lim_{x→-1-}f(x)-\\lim_{x→1+}f(x)의 값은? [3점]\n① -2 ② -1 ③ 0 ④ 1 ⑤ 2",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수의_극한과_연속",
+    "concepts": [
+      "함수의_극한",
+      "좌극한",
+      "우극한"
+    ],
+    "exam_intent": "함수의 그래프에서 좌극한과 우극한의 차를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "b91eb936a525",
+  "meta": {
+    "searchable_text": "1. 두 벡터 \\vec{a}=(1,-2), \\vec{b}=(-1,4)에 대하여\n벡터 \\vec{a}+2\\vec{b}의 모든 성분의 합은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "평면벡터",
+    "concepts": [
+      "벡터의_덧셈",
+      "스칼라배"
+    ],
+    "exam_intent": "벡터의 일차결합 계산 및 성분 합 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

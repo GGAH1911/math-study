@@ -1,0 +1,17 @@
+{
+  "text_sha": "58d3840c30dc",
+  "meta": {
+    "searchable_text": "5. 함수 y=2^{x}+2의 그래프를 x축의 방향으로 m만큼\n평행이동한 그래프가 함수 y=log_{2}8x의 그래프를 x축의\n방향으로 2만큼 평행이동한 그래프와 직선 y=x에 대하여\n대칭일 때, 상수 m의 값은? [3점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "지수함수와_로그함수",
+    "concepts": [
+      "지수함수의_평행이동",
+      "로그함수의_평행이동_및_성질",
+      "역함수와_y=x_대칭"
+    ],
+    "exam_intent": "지수함수와 로그함수의 역함수 관계 및 평행이동 이해",
+    "killer_tier": "mid",
+    "cognitive_type": "개념"
+  }
+}

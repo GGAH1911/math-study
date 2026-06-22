@@ -1,0 +1,16 @@
+{
+  "text_sha": "2c6525d1245c",
+  "meta": {
+    "searchable_text": "13. 수열 {an}은 a1=2이고, 모든 자연수 n에 대하여\n이홀수인경우\na_{n+1}=\\begin{cases}\\frac{a_{n}}{2-3a_{n}}(n ) \\\\ 1+a_{n} (n )\\end{cases}\n이짝수인경우\n를 만족시킨다. \\sum_{n=1}^{40}an의 값은? [3점]\n① 30 ② 35 ③ 40 ④ 45 ⑤ 50",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열",
+    "concepts": [
+      "점화식",
+      "주기성"
+    ],
+    "exam_intent": "점화식으로 정의된 수열의 주기성을 파악하여 합 계산",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

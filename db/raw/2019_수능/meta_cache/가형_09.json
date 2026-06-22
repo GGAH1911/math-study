@@ -1,0 +1,16 @@
+{
+  "text_sha": "067a561db094",
+  "meta": {
+    "searchable_text": "9. 함수 f(x)=\\frac{1}{1+e^{-x}}의 역함수를 g(x)라 할 때,\ng′(f(-1))의 값은? [3점]\n2\n① \\frac{1}{(1+e)^{2}}② \\frac{e}{1+e}③ (\\frac{1+e}{e})\n④ \\frac{e^{2}}{1+e}⑤ \\frac{(1+e)^{2}}{e}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "여러가지함수의_미분",
+    "concepts": [
+      "역함수의_미분",
+      "지수함수"
+    ],
+    "exam_intent": "역함수의 미분 공식과 지수함수 활용 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "개념"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "text_sha": "190e598860c2",
+  "meta": {
+    "searchable_text": "20. 점 (-\\frac{π}{2},0)에서 곡선 y=sinx(x>0)에 접선을 그어\n접점의 x좌표를 작은 수부터 크기순으로 모두 나열할 때,\nn번째 수를 an이라 하자. 모든 자연수 n에 대하여\n<보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보 기>\nㄱ. tana_{n}=a_{n}+\\frac{π}{2}\nㄴ. tana_{n+2}-tana_{n}>2π\nㄷ. a_{n+1}+a_{n+2}>a_{n}+a_{n+3}\n① ㄱ ② ㄱ, ㄴ ③ ㄱ, ㄷ\n④ ㄴ, ㄷ ⑤ ㄱ, ㄴ, ㄷ",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "삼각함수",
+    "concepts": [],
+    "exam_intent": "접선 조건에서 초월방정식을 유도하고 수열 성질을 판단",
+    "killer_tier": "mid",
+    "cognitive_type": "통합"
+  }
+}

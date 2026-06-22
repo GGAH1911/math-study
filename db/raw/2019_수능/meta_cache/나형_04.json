@@ -1,0 +1,17 @@
+{
+  "text_sha": "f15e567dfcdc",
+  "meta": {
+    "searchable_text": "4. 그림은 함수 f:X→X를 나타낸 것이다.\nf(4)+(f∘f)(2)의 값은? [3점]\n① 3 ② 4 ③ 5 ④ 6 ⑤ 7",
+    "format": "choice",
+    "has_figure": true,
+    "unit": "함수와_그래프",
+    "concepts": [
+      "함수의_정의",
+      "합성함수",
+      "함숫값"
+    ],
+    "exam_intent": "함수의 그래프에서 함숫값과 합성함수의 값을 구하는 기본 능력",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

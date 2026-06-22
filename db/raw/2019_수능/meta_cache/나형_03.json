@@ -1,0 +1,16 @@
+{
+  "text_sha": "48de2437829a",
+  "meta": {
+    "searchable_text": "3.\\lim_{n→∞}\\frac{6n^{2}-3}{2n^{2}+5n}의 값은? [2점]\n① 5 ② 4 ③ 3 ④ 2 ⑤ 1",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "수열의_극한",
+    "concepts": [
+      "무한수열의_극한",
+      "극한의_기본_성질"
+    ],
+    "exam_intent": "최고차항 계산으로 무한수열의 극한값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}
