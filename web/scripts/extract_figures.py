@@ -106,7 +106,7 @@ def extract_table(page, REG):
         elif w < 2 and h > 5 and h < PH * 0.4: V.append(('V', r.x0, r.y0, r.y1))  # 세로선 (kind, x, y0, y1) — 단경계 제외
     N = H + V; n = len(N)
     if n < 6: return []                                                           # 표 최소: 가로3+세로3
-    if len(H) * len(V) > 4000: return []                                          # 도형 과다(축·격자·해칭 수천선) → 표 비신뢰 + O(n²) 폭발 방지(실제표는 |H|×|V|<600)
+    if n > 200: return []                                                         # 도형 과다(축·격자·해칭 수천선) → 표 비신뢰 + O(n²) 폭발 방지(실제표는 n<50)
     par = list(range(n))
     def find(a):
         while par[a] != a: par[a] = par[par[a]]; a = par[a]
