@@ -134,8 +134,10 @@ async function verifyWorker() {
       else if (st === 'issues') { if (!NO_RECORRECT) recorrectQ.push(slug); vWin.push(0); }   // NO_RECORRECT: md에 issues 마커만(별도 러너가 agy로 처리)
       else { failed++; vWin.push(1); log(`  ✗ ${slug} parsefail → opus(재시도0)`); }   // ★parsefail 재큐 안 함 = 루프·폭주 차단
     }
-    vTokEst += 72000;                                                                     // 라인배치 ~72K/청크 추정
-    if (vTokEst > VERIFY_BUDGET && !verifyHalt) { verifyHalt = true; log(`★verify 토큰예산 ${(VERIFY_BUDGET / 1e6).toFixed(1)}M 도달 — 자동중단(5h 통제). 1차·재교정 계속, 5h 리셋 후 재개.`); }
+    if (VERIFY_MODEL !== 'gemma') {                                                       // ★gemma는 로컬 무료 → 토큰예산 무관(Claude verify 전용). gemma에 적용하면 무료인데도 멋대로 중단됨(버그).
+      vTokEst += 72000;                                                                   // 라인배치 ~72K/청크 추정
+      if (vTokEst > VERIFY_BUDGET && !verifyHalt) { verifyHalt = true; log(`★verify 토큰예산 ${(VERIFY_BUDGET / 1e6).toFixed(1)}M 도달 — 자동중단(5h 통제). 1차·재교정 계속, 5h 리셋 후 재개.`); }
+    }
     if (vWin.length > 40) vWin.splice(0, vWin.length - 40);                                // 슬라이딩 윈도우
     const recent = vWin.slice(-20);
     if (recent.length >= 20 && recent.reduce((a, b) => a + b, 0) / 20 > 0.4) {
