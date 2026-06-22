@@ -271,6 +271,8 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   // Set of unit ids whose direct-prereq spokes are visible.
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
   const [collapseMode, setCollapseMode] = useState<boolean>(true);
+  // 모바일: 필터 패널을 토글 드로어로(기본 닫힘 → 그래프가 전체화면). 데스크톱은 md:로 상시표시.
+  const [panelOpen, setPanelOpen] = useState(false);
   const rf = useReactFlow();
 
   // Map each spoke to its "home unit": the first unit reached by walking
@@ -641,6 +643,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
     // Select only — don't fly/zoom. Auto-zoom was disorienting; the user
     // could easily lose context (panned to an off-screen blank area).
     setSelected(node.id);
+    setPanelOpen(false); // 모바일: 노드 선택 시 필터 드로어 닫아 상세/그래프가 보이게(데스크톱은 md:로 영향 없음)
   }, []);
 
   const onNodeDoubleClick: NodeMouseHandler = useCallback((_, node) => {
@@ -816,8 +819,21 @@ function Inner({ data, variant = 'full', highlight }: Props) {
 
       {variant === 'full' && (
         <>
-          {/* Left filter panel */}
-          <div className="absolute top-4 bottom-24 left-4 z-10 w-72 card p-3 space-y-3 overflow-auto">
+          {/* 모바일 필터 토글 (데스크톱은 패널 상시표시라 숨김) */}
+          <button
+            onClick={() => setPanelOpen((v) => !v)}
+            className="md:hidden absolute top-4 left-4 z-20 card px-3 py-2 text-sm font-medium flex items-center gap-1.5"
+            aria-label="필터 패널 열기"
+          >
+            <span aria-hidden>☰</span> 필터
+          </button>
+          {/* Left filter panel — 모바일 기본 숨김(토글 드로어), 데스크톱(md+) 상시 표시 */}
+          <div className={`${panelOpen ? 'block' : 'hidden'} md:block absolute top-4 bottom-24 left-4 z-20 w-72 max-w-[calc(100vw-2rem)] card p-3 space-y-3 overflow-auto`}>
+            <button
+              onClick={() => setPanelOpen(false)}
+              className="md:hidden absolute top-2 right-2 text-zinc-400 hover:text-zinc-100 text-base leading-none px-1"
+              aria-label="필터 패널 닫기"
+            >✕</button>
             <div>
               <label className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 block mb-1">검색 <span className="text-zinc-600 normal-case tracking-normal">(/ 키)</span></label>
               <input
@@ -1044,7 +1060,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
 
           {/* Right detail panel */}
           {selectedNode && (
-            <div className="absolute top-4 right-4 z-10 w-72 card p-4 space-y-3">
+            <div className="absolute top-4 right-4 z-10 w-72 max-w-[calc(100vw-2rem)] card p-4 space-y-3">
               <header className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold">{selectedNode.label.replace(/_/g, ' ')}</h3>
                 <button onClick={() => setSelected(null)} className="text-zinc-500 hover:text-zinc-100 text-lg leading-none">×</button>
@@ -1154,7 +1170,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
           )}
 
           {/* Legend bottom-left */}
-          <div className="absolute bottom-4 left-4 z-10 card px-3 py-2 text-xs">
+          <div className="hidden md:block absolute bottom-4 left-4 z-10 card px-3 py-2 text-xs">
             <div className="text-[10px] uppercase tracking-[0.15em] text-zinc-500 mb-1.5">노드 모양</div>
             <div className="flex gap-4 text-zinc-300">
               {(['definition', 'theorem', 'lemma', 'example'] as const).map((t) => (
