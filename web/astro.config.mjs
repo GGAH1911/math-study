@@ -167,11 +167,12 @@ export default defineConfig({
       rehypePlugins: [[rehypeKatex, katexOptions]],
     }),
   ],
-  // STABLE(학습용 안정 서버, 포트 4324): content/빌드 캐시를 메인(4323)과 분리해 두 dev 서버 동시 구동 시 충돌 방지.
-  cacheDir: process.env.STABLE ? './.astro-stable' : undefined,
+  // 동시 구동 서버는 캐시를 분리해야 .astro content store 동시 write 충돌이 안 난다.
+  // STABLE(4324 학습용)·DEV_NOAUTH(검증 전용 포트)는 각자 별도 캐시, 기본(4323)은 default.
+  cacheDir: process.env.STABLE ? './.astro-stable' : process.env.DEV_NOAUTH ? './.astro-noauth' : undefined,
   vite: {
     plugins: [tailwindcss()],
-    cacheDir: process.env.STABLE ? './node_modules/.vite-stable' : undefined,
+    cacheDir: process.env.STABLE ? './node_modules/.vite-stable' : process.env.DEV_NOAUTH ? './node_modules/.vite-noauth' : undefined,
     server: {
       allowedHosts: [
         'localhost',

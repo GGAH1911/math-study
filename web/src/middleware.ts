@@ -1,7 +1,22 @@
 // 전역 미들웨어 — 세션 해석 + 로그인 게이팅 + CSRF(동일출처) 검증.
 // 보안 원칙: fail-safe. 세션 해석 실패는 throw 하지 않고 미인증으로 취급한다.
 import { defineMiddleware } from 'astro:middleware';
-import { resolveUser, isSameOrigin } from './lib/auth.ts';
+import { resolveUser, isSameOrigin, type User } from './lib/auth.ts';
+
+// 로컬 검증 전용 우회(DEV_NOAUTH=1). 합성 admin 을 주입하고 인증·CSRF·admin 게이팅을
+// 전부 통과시킨다 → admin 계정 없이도 검증자(Claude)가 모든 페이지 렌더를 직접 확인.
+// ★real 서버(4323/4324)는 이 env 가 없어 절대 영향 없음. 반드시 127.0.0.1 바인드로만 띄울 것
+// (네트워크 노출 시 무인증 admin 접근이 되므로 server.sh 가 noauth 면 MATH_STUDY_HOST=127.0.0.1 강제).
+// ★dev 모드(astro dev)에서만 — 프로덕션 빌드(import.meta.env.DEV=false)에선 env 가 새도 절대 우회 불가.
+const DEV_NOAUTH = import.meta.env.DEV && process.env.DEV_NOAUTH === '1';
+const DEV_NOAUTH_USER: User = {
+  id: '00000000-0000-0000-0000-000000000000',
+  email: 'hwangi0404@gmail.com',
+  display_name: 'DEV (noauth)',
+  is_legacy: false,
+  is_active: true,
+  is_admin: true,
+};
 
 // 공개 라우트(미인증 허용).
 const PUBLIC_PATHS: RegExp[] = [
@@ -49,6 +64,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const pathname = url.pathname;
 
   if (isAssetOrInternal(pathname)) return next();
+
+  // 로컬 검증 전용 포트: 합성 admin 주입 후 모든 게이팅 우회(real 서버는 DEV_NOAUTH 미설정).
+  if (DEV_NOAUTH) {
+    context.locals.user = DEV_NOAUTH_USER;
+    return next();
+  }
 
   // CSRF: state-changing 요청은 동일출처만 허용(SameSite=Lax 쿠키 + Origin 검증 이중방어).
   const method = request.method.toUpperCase();

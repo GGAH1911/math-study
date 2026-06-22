@@ -18,7 +18,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SELF="$SCRIPT_DIR/$(basename "${BASH_SOURCE[0]}")"
 WEB_DIR="${MATH_STUDY_WEB:-$SCRIPT_DIR/web}"
 
-HOST="0.0.0.0"                              # Tailscale/LAN 접속용 전체 바인드
+HOST="${MATH_STUDY_HOST:-0.0.0.0}"          # 기본 전체 바인드(Tailscale/LAN). 검증 전용 noauth 포트는 127.0.0.1 로만.
 PORT="${MATH_STUDY_PORT:-4323}"
 PID_FILE="${MATH_STUDY_PID:-/tmp/math-study-server.pid}"
 LOG_FILE="${MATH_STUDY_LOG:-/tmp/math-study-server.log}"
