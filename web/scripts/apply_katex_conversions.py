@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# 풀이 step LaTeX 변환 적용 — /tmp/conversions.json([{slug,i,latex}])을 읽어 해당 step 교체.
+# 풀이 step KaTeX 변환 적용 — /tmp/conversions.json([{slug,i,latex}])을 읽어 해당 step 교체.
 # steps 블록만 재직렬화(json.dumps 이스케이프), yaml 재파싱 검증 후 기록.
 import glob, re, yaml, json, sys
 REPO='/home/insung/Projects/math-study'
