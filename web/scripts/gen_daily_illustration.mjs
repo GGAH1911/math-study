@@ -45,11 +45,13 @@ Schema: {"strokes":[{"pts":[x0,y0,x1,y1,...],"dash":false,"hover":false,"smooth"
 Concept: 「${c.label}」  (단원: ${c.unit || '-'}, 과목: ${c.domain || '-'})
 Output ONLY the JSON object.`;
 
-function callLLM(concept) {
+// claude 1회 호출 + JSON 추출. timeout/파싱 실패 시 throw.
+function callOnce(concept) {
   const args = ['-p', '--model', MODEL, '--output-format', 'json',
     '--disallowedTools', 'Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch',
     '--max-turns', '1', '--', PROMPT(concept)];
-  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 120000, maxBuffer: 8 * 1024 * 1024, cwd: CLEAN_DIR });
+  // ★timeout 120→180s: 일부 개념은 haiku 응답이 길어 120s 초과 → ETIMEDOUT 잦았다.
+  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 180000, maxBuffer: 8 * 1024 * 1024, cwd: CLEAN_DIR });
   const env = JSON.parse(out);
   if (env.is_error) throw new Error('cli:' + (env.subtype || ''));
   let txt = env.result || '';
@@ -58,6 +60,26 @@ function callLLM(concept) {
   const obj = txt.match(/\{[\s\S]*\}/);
   if (!obj) throw new Error('no-json');
   return JSON.parse(obj[0]);
+}
+
+// ★ETIMEDOUT/일시 오류 자동 재시도(총 3회). claude 응답시간 편차로 1회 실패가 잦아
+//   cron 이 폴백곡선을 남기던 문제를 흡수. 점증 대기로 부하 회피.
+function callLLM(concept) {
+  let lastErr;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      return callOnce(concept);
+    } catch (e) {
+      lastErr = e;
+      const msg = String(e && e.message || e);
+      // 마지막 시도거나 재시도 무의미한 에러(쿼터 등)면 즉시 throw
+      if (attempt === 3) break;
+      // 5s, 12s 대기 후 재시도(ETIMEDOUT·no-json·일시 cli 오류 대상)
+      execFileSync('sleep', [String(attempt === 1 ? 5 : 12)]);
+      console.log(`    ↻ 재시도 ${attempt + 1}/3 (이전: ${msg.slice(0, 40)})`);
+    }
+  }
+  throw lastErr;
 }
 
 // figure spec 검증·정제 — 부적합 stroke 제거, 유효 stroke 1개 이상이어야 통과.
