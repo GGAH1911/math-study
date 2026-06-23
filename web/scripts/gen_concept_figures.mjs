@@ -19,6 +19,13 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { mkdirSync, existsSync as _existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+
+// ★claude -p 캐시 친화: 레포 cwd면 git status가 시스템 프롬프트 env 블록을 매 호출 바꿔 캐시를 깬다.
+//   깨끗한 빈 cwd에서 spawn → prefix 안정 → 여러 개념 연속 생성 시 cache_read 생존. (docs/CLAUDE_P_CACHING.md)
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || resolve(tmpdir(), 'claude_p_clean');
+if (!_existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
 // 백엔드: 'claude'(Haiku, 구독 한도) | 'agy'(Antigravity CLI, Google AI Pro 쿼터 — 별도 풀).
 // agy 는 --output-format json 이 없어 plain text 를 내므로 parseEnvelope 로 직접 추출한다.
@@ -158,8 +165,10 @@ function callLLM(c, body) {
 }
 
 // Claude (Haiku) — --output-format json 래퍼에서 result 추출.
-function callClaude(prompt) {
-  const args = ['-p', '--model', MODEL,
+//   parser: result 텍스트 → envelope 추출기(기본 2D parseEnvelope, 3D는 parse3dEnvelope).
+//   model: 모델 오버라이드(3D 재처리 시 sonnet).
+function callClaude(prompt, parser = parseEnvelope, model = MODEL) {
+  const args = ['-p', '--model', model,
     '--output-format', 'json',
     '--allowedTools', 'Bash',
     '--disallowedTools', 'Read,Write,Edit,Glob,Grep,WebFetch,WebSearch',
@@ -167,7 +176,7 @@ function callClaude(prompt) {
     '--no-session-persistence',
     '--', prompt];
   return new Promise((res, rej) => {
-    const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR });
     child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 240000);
@@ -180,7 +189,7 @@ function callClaude(prompt) {
       try {
         const env = JSON.parse(out);
         if (env.is_error) return rej(new Error('cli:' + (env.subtype || '')));
-        res(parseEnvelope(env.result || ''));
+        res(parser(env.result || ''));
       } catch (e) { rej(e); }
     });
   });
@@ -321,6 +330,12 @@ function resolveTargets(graph) {
   let targets;
   if (ids.length) targets = ids;
   else if (bools.has('--pilot')) targets = PILOT;
+  else if (bools.has('--only-3d')) {
+    // 3D 개념만(Geometry3D 파동). 2D 미생성분은 안 건드림.
+    const nodes = graph.nodes.filter((n) => is3D(n) && (!domain || n.id.startsWith(`${domain}/`) || n.domain === domain));
+    console.log(`(3D/공간 전용 모드: ${nodes.length}개)`);
+    targets = nodes.map((n) => n.id);
+  }
   else if (bools.has('--all') || domain) {
     let nodes = graph.nodes.filter((n) => !domain || n.id.startsWith(`${domain}/`) || n.domain === domain);
     // 3D/공간 개념은 2D Geometry 로 표현 불가 → 전부 null 로 낭비. 기본 제외(--include-3d 로 포함).
@@ -339,11 +354,94 @@ function resolveTargets(graph) {
   return { byId, targets: targets.slice(0, Number.isFinite(limit) ? limit : undefined), force: bools.has('--force'), concurrency };
 }
 
-// 명백한 3D/공간 개념 판별 — 2D Geometry 로는 정확히 못 그려 항상 null. 호출 자체를 건너뛴다.
+// 명백한 3D/공간 개념 판별 — 2D Geometry 로는 정확히 못 그려 항상 null.
+//   --include-3d 없으면 제외(2D 파동), 있으면 Geometry3D(geometry3d 블록)로 생성한다.
 const UNIT_3D = new Set(['입체도형', '공간도형과 공간벡터']);
 const KW_3D = /공간|입체|사면체|정사면체|다면체|정육면체|직육면체|원기둥|원뿔|구면|구의\s|이면각|삼수선|정사영|평면의\s*방정식|공간벡터|교선|겉넓이|부피/;
 function is3D(n) {
   return UNIT_3D.has(n.unit) || KW_3D.test(n.label || '') || KW_3D.test(n.id || '');
+}
+
+// ── 3D(입체) 도식 프롬프트 — 파일럿 검증본(6/6 ≥45). 2D gen 교훈 반영(primitive 명시·강제, 좌표정확). ──
+const GEMMA3D_URL = process.env.GEMMA_URL || 'http://100.79.230.49:8080/v1/chat/completions';
+const PROMPT3D = (c, body) => `너는 한국 수학 학습앱 **개념 노드**에 들어갈 **3D(입체) 도식**을 만든다.
+R3F(three.js)로 렌더되며 사용자가 회전시켜 본다. 좌표가 **정확**해야 한다(정육면체는 실제 정육면체, 수직은 실제 90°, 점은 실제 곡면 위).
+
+개념: 「${c.label}」 (단원: ${c.unit || '-'})
+${body ? '참고 본문:\n' + body.slice(0, 800) : ''}
+
+진행(단계별 사고):
+STEP A — 이 개념에 3D 도식이 의미 있게 도움 되는가? 순수 대수/추상이면 → {"figure3d": null, "note":"<한 줄>"} 출력 종료.
+STEP B — 핵심 입체 요소와 **반드시 성립할 관계**(직각·합동·점이 곡면 위·회전축)를 정한다.
+STEP C — 구체 좌표를 배정한다(정확한 수 또는 "sqrt(3)" 평가가능 문자열).
+STEP D — 최종 JSON 객체 **하나만** 출력(산문·코드펜스 금지).
+
+출력 스키마:
+{"figure3d": {"shapes":[...], "axes":true, "title":"<짧은 한국어 제목>"}, "note":"<한 줄>"}
+또는 {"figure3d": null, "note":"<한 줄>"}
+
+shapes 종류(좌표는 모두 [x,y,z] 수학좌표):
+- {"type":"point3d","at":[x,y,z],"label?":"P","color?":"#e11"}
+- {"type":"segment3d","from":[x,y,z],"to":[x,y,z],"label?":"","dashed?":false}
+- {"type":"polyhedron","vertices":[[x,y,z],...],"faces":[[0,1,2,3],...],"labels?":["A",...],"fillOpacity?":0.3}  // faces=꼭짓점 인덱스. 정육면체=8정점 6면.
+- {"type":"sphere","center":[x,y,z],"radius":r,"opacity?":0.4,"wireframe?":true}
+- {"type":"parametricSurface","x":"u","y":"v","z":"<식>","uRange":[a,b],"vRange":[c,d]}  // 회전체 등 곡면. 식은 문자열, 거듭제곱은 ^ (Python ** 금지).
+- {"type":"parametricCurve3d","x":"cos(t)","y":"sin(t)","z":"t","tRange":[0,"2*pi"]}  // 공간곡선
+- {"type":"plane","origin":[x,y,z],"normal":[x,y,z],"size?":4,"opacity?":0.3,"label?":""}  // 평면(법선벡터)
+- {"type":"text3d","at":[x,y,z],"text":"..."}
+
+규칙(★2D 도식 운영 교훈 — 반드시 준수):
+- **개념에 맞는 primitive를 정확히 골라라**(억지 표현 금지): 다면체=polyhedron, 구=sphere, 회전체=parametricSurface(회전식), 평면관계=plane, 벡터=segment3d(화살표 의미), 좌표점=point3d.
+  · 회전체는 point다발/곡선 흉내 말고 **parametricSurface로 곡면을 채워라**. 예: y=f(x) x축회전 → x="u", y="f(u)*cos(v)", z="f(u)*sin(v)", uRange=[정의역], vRange=[0,"2*pi"].
+  · 평면 위 수직관계(삼수선 등)는 plane + segment3d(수선). 점선은 보조선.
+- **좌표 정확**: 정육면체는 모서리 길이 동일, 직각은 실제 90°, 점은 실제로 곡면/평면 위.
+- **거듭제곱은 ^** (parametricSurface/Curve 식에서 ** 쓰면 곡면 소실).
+- **라벨**: 핵심 점/벡터엔 label. 너무 많이 X(겹침). 충분히 떨어뜨려라. KaTeX 가능(\\\\alpha, \\\\vec{v}).
+- **최소·명료**(shapes 2~6개, 입체는 최대 12). 개념의 실제 의미에 충실(일반 모양 X).
+- axes: 좌표 자체가 의미면 true(공간좌표·벡터성분), 순수 입체(정육면체 단독)면 false 가능.
+- title은 짧은 한국어.`;
+
+// 3D envelope 추출(figure3d) — 산문/코드펜스 섞여도 균형중괄호로 객체만.
+function parse3dEnvelope(text) {
+  let t = String(text).replace(/```(?:json)?\s*([\s\S]*?)```/g, '$1');
+  const j = t.indexOf('"figure3d"');
+  if (j < 0) return null;
+  const start = t.lastIndexOf('{', j);
+  if (start < 0) return null;
+  let depth = 0, end = -1;
+  for (let k = start; k < t.length; k++) {
+    if (t[k] === '{') depth++;
+    else if (t[k] === '}') { depth--; if (depth === 0) { end = k; break; } }
+  }
+  if (end < 0) return null;
+  try { return JSON.parse(t.slice(start, end + 1)); } catch { return null; }
+}
+
+const VALID_3D = new Set(['point3d', 'segment3d', 'polyhedron', 'parametricSurface', 'parametricCurve3d', 'sphere', 'plane', 'text3d']);
+// 3D spec 검증 — 스키마 정합(타입·shapes·** 금지). 통과만 채택.
+function sanitizeFigure3d(f) {
+  if (!f || !Array.isArray(f.shapes) || f.shapes.length === 0) return null;
+  if (f.shapes.some((s) => !s || !VALID_3D.has(s.type))) return null;
+  if (JSON.stringify(f).includes('**')) return null;   // 거듭제곱 ** → 곡면 소실
+  return { shapes: f.shapes, axes: f.axes !== false, title: (f.title || '').slice(0, 60) };
+}
+
+// gemma(맥북 로컬, 토큰0) 텍스트 생성 — 3D 기본 백엔드(파일럿서 빠르고 충분).
+async function callGemma3d(prompt) {
+  const body = JSON.stringify({ model: process.env.GEMMA_MODEL || 'mlx-community/gemma-4-26B-A4B-it-qat-4bit',
+    messages: [{ role: 'user', content: prompt }], max_tokens: 2000, temperature: 0.2 });
+  const r = await fetch(GEMMA3D_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+  const j = await r.json();
+  return j.choices?.[0]?.message?.content || '';
+}
+
+// 3D 도식 생성 — 백엔드: gemma(기본·토큰0) / claude(FIGURE3D_BACKEND=claude, sonnet 권장). 반환 {figure3d, note}.
+async function callLLM3d(c, body) {
+  const prompt = PROMPT3D(c, body);
+  const be = process.env.FIGURE3D_BACKEND || 'gemma';
+  if (be === 'gemma') return parse3dEnvelope(await callGemma3d(prompt));
+  // claude 경로(clean cwd 캐싱) — sonnet 이 교육적 부가요소 강함(파일럿 결과). parse3dEnvelope 로 figure3d 추출.
+  return callClaude(prompt, parse3dEnvelope, process.env.FIGURE_MODEL || 'sonnet');
 }
 
 async function main() {
@@ -364,7 +462,28 @@ async function main() {
       const c = byId.get(id);
       const tag = () => `[${stat.done + 1}/${N}]`;
       if (!c) { console.log(`✗ ${id} — 그래프에 없음`); stat.failed++; stat.done++; continue; }
-      if (!force && cache.figures[id]) { console.log(`· ${c.label} — 이미 캐시(스킵)`); stat.skipped++; stat.done++; continue; }
+      // 멱등 스킵: 3D 개념은 figure3d 키, 2D 개념은 figure 키가 이미 있으면 스킵.
+      const _cached = cache.figures[id];
+      const _alreadyDone = _cached && (is3D(c) ? ('figure3d' in _cached) : ('figure' in _cached));
+      if (!force && _alreadyDone) { console.log(`· ${c.label} — 이미 캐시(스킵)`); stat.skipped++; stat.done++; continue; }
+      // ── 3D 개념: Geometry3D(geometry3d) 경로 — figure3d 키로 저장 ──
+      if (is3D(c)) {
+        try {
+          const env = await callLLM3d(c, conceptBody(id));
+          if (!env || !('figure3d' in env)) throw new Error('no-figure3d-field');
+          if (env.figure3d === null) {
+            cache.figures[id] = { ...(cache.figures[id] || {}), figure3d: null, label: c.label, note3d: (env.note || '').slice(0, 200), model3d: process.env.FIGURE3D_BACKEND || 'gemma', v: SCHEMA_VERSION };
+            stat.nullFig++; console.log(`${tag()} ○ ${c.label} — 3D 도식 불필요 (${(env.note || '').slice(0, 40)})`);
+          } else {
+            const f3 = sanitizeFigure3d(env.figure3d);
+            if (!f3) { console.log(`${tag()} ✗ ${c.label} — 무효 3D spec`); stat.failed++; stat.done++; continue; }
+            cache.figures[id] = { ...(cache.figures[id] || {}), figure3d: f3, label: c.label, note3d: (env.note || '').slice(0, 200), model3d: process.env.FIGURE3D_BACKEND || 'gemma', v: SCHEMA_VERSION };
+            stat.made++; console.log(`${tag()} ✓ ${c.label} — 3D figure OK (shapes ${f3.shapes.length})`);
+          }
+          writeCache();
+        } catch (e) { console.log(`${tag()} ✗ ${c.label} — 3D 생성 실패: ${e.message}`); stat.failed++; }
+        stat.done++; continue;
+      }
       try {
         const env = await callLLM(c, conceptBody(id));
         if (!env || !('figure' in env)) throw new Error('no-figure-field');

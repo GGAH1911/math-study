@@ -1,18 +1,35 @@
 ---
 export const prerender = false;
-import Geometry3D from '../../components/Geometry3D.tsx';
+import Lazy3D from '../../components/Lazy3D.tsx';
 import { readFileSync, existsSync } from 'node:fs';
 import '../../styles/global.css';
 
-// 3D 도식 최종본 갤러리 — 5카테고리 검수(각 10, 합 50, ≥45 합격) 통과한 개념별 최선 spec.
-// 데이터: /tmp/gen3d_final.json = [{concept,label,backend,score,scores:{...},spec,note}]
-// 합격(≥45)은 강조, 미달은 회색 표시(참고).
+// 3D 도식 갤러리. 두 소스:
+//   기본(파일럿): /tmp/gen3d_final.json = [{concept,label,backend,score,scores,spec,note}] (5카테고리 검수)
+//   ?src=cache: 본 캐시 concept-figures.json 의 figure3d 전수(전수 생성분 검토용)
+const src = Astro.url.searchParams.get('src') ?? 'final';
 let items: any[] = [];
-const FINAL = '/tmp/gen3d_final.json';
-if (existsSync(FINAL)) {
-  try { items = JSON.parse(readFileSync(FINAL, 'utf-8')); } catch { /* */ }
-}
 const CATS = ['스키마', '좌표정확', 'primitive', '가독성', '충실성'];
+if (src === 'cache') {
+  try {
+    const d = JSON.parse(readFileSync(new URL('../../data/concept-figures.json', import.meta.url), 'utf-8'));
+    for (const [id, v] of Object.entries<any>(d.figures ?? {})) {
+      if (v?.figure3d) items.push({ concept: id, label: v.label ?? id, backend: v.model3d ?? '?', score: 0, spec: v.figure3d, note: v.note3d ?? '' });
+    }
+  } catch { /* */ }
+} else {
+  const FINAL = '/tmp/gen3d_final.json';
+  if (existsSync(FINAL)) { try { items = JSON.parse(readFileSync(FINAL, 'utf-8')); } catch { /* */ } }
+}
+// ★페이지네이션: 한 페이지에 WebGL Canvas 가 많으면(~16+) 브라우저 컨텍스트 한계로 빈화면.
+//   페이지당 PER 개만 마운트. ?page=N (1-base).
+items.sort((a, b) => String(a.concept).localeCompare(String(b.concept)));
+const PER = 12;  // Lazy3D(IntersectionObserver)가 화면 보이는 것만 마운트 → 동시 컨텍스트 안전.
+const total = items.length;
+const pages = Math.max(1, Math.ceil(total / PER));
+const page = Math.min(pages, Math.max(1, Number(Astro.url.searchParams.get('page') ?? 1)));
+const pageItems = items.slice((page - 1) * PER, page * PER);
+const qsBase = `?src=${src}`;
 ---
 <!doctype html>
 <html lang="ko">
@@ -22,27 +39,37 @@ const CATS = ['스키마', '좌표정확', 'primitive', '가독성', '충실성'
     <title>3D 도식 갤러리 — 5카테고리 검수</title>
   </head>
   <body style="margin:0;padding:24px;background:#0a0a0b;color:#e4e4e7;font-family:sans-serif;">
-    <h1 style="font-size:20px;margin:0 0 4px;">3D 개념 도식 — 최종 검수 갤러리</h1>
-    <p style="color:#888;font-size:13px;margin:0 0 20px;">
-      5카테고리 × 10점 = 50점 만점 · 합격 ≥45점 · gemma/haiku/sonnet 중 최선 선별 · 회전해서 볼 수 있음
+    <h1 style="font-size:20px;margin:0 0 4px;">3D 개념 도식 — 검수 갤러리 {src === 'cache' ? `(전수 ${total}개)` : '(파일럿 검수)'}</h1>
+    <p style="color:#888;font-size:13px;margin:0 0 12px;">
+      각 도식 드래그로 회전 · 페이지 {page}/{pages} (개당 WebGL 컨텍스트라 12개씩 분할) · {src === 'cache' ? '본 캐시 figure3d 전수' : '5카테고리 ≥45 합격 최선본'}
     </p>
-    {items.length === 0 && <p style="color:#f87171;">아직 검수 결과 없음 (/tmp/gen3d_final.json 대기)</p>}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
+        <a href={`${qsBase}&page=${p}`} style={`padding:4px 10px;border-radius:6px;font-size:12px;text-decoration:none;border:1px solid ${p === page ? '#22c55e' : '#3f3f46'};color:${p === page ? '#22c55e' : '#a1a1aa'};`}>{p}</a>
+      ))}
+    </div>
+    {total === 0 && <p style="color:#f87171;">아직 3D 도식 없음</p>}
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px;">
-      {items.map((it) => (
+      {pageItems.map((it) => (
         <div style={`border:1px solid ${it.score >= 45 ? '#22c55e55' : '#52525244'};border-radius:12px;padding:14px;background:#18181b;`}>
           <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
             <strong style="font-size:15px;">{it.label}</strong>
-            <span style={`font-size:18px;font-weight:700;color:${it.score >= 45 ? '#22c55e' : '#a1a1aa'};`}>{it.score}/50</span>
+            {it.score > 0 && <span style={`font-size:18px;font-weight:700;color:${it.score >= 45 ? '#22c55e' : '#a1a1aa'};`}>{it.score}/50</span>}
           </div>
           <div style="font-size:11px;color:#888;margin-bottom:10px;">
-            {it.backend} · {it.score >= 45 ? '✓ 합격' : '미달(참고)'}
+            {it.backend}{it.score > 0 ? (it.score >= 45 ? ' · ✓ 합격' : ' · 미달(참고)') : ''}
             {it.scores && ` · ${CATS.map((c, i) => `${c} ${it.scores[i]}`).join(' · ')}`}
           </div>
           {it.spec
-            ? <Geometry3D client:only="react" spec={it.spec} width={340} height={290} hideCaption noBroadcast />
+            ? <Lazy3D client:only="react" spec={it.spec} width={340} height={290} />
             : <p style="color:#777;font-size:12px;">spec 없음</p>}
           {it.note && <p style="font-size:11px;color:#71717a;margin:8px 0 0;">{it.note}</p>}
         </div>
+      ))}
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;">
+      {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
+        <a href={`${qsBase}&page=${p}`} style={`padding:4px 10px;border-radius:6px;font-size:12px;text-decoration:none;border:1px solid ${p === page ? '#22c55e' : '#3f3f46'};color:${p === page ? '#22c55e' : '#a1a1aa'};`}>{p}</a>
       ))}
     </div>
   </body>

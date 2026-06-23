@@ -91,7 +91,11 @@ const enablesGroups = groupByType(fm.enables);
 // Geometry spec. 축·눈금 숨김으로 본문 위에 교과서 도식처럼 렌더. 없으면(미생성·도식불필요) 생략.
 import conceptFigures from '../../data/concept-figures.json';
 import Geometry from '../../components/Geometry.tsx';
-const conceptFigure = (conceptFigures as any).figures?.[entry.id]?.figure ?? null;
+import Geometry3D from '../../components/Geometry3D.tsx';
+const _figEntry = (conceptFigures as any).figures?.[entry.id];
+const conceptFigure = _figEntry?.figure ?? null;
+// 3D(입체) 개념은 Geometry3D(R3F) 로 — gen_concept_figures --include-3d 가 figure3d 키로 캐시.
+const conceptFigure3d = _figEntry?.figure3d ?? null;
 
 // "이 개념의 기출 문제" — predev로 빌드된 problems-by-concept 인덱스에서 로드.
 import problemIndex from '../../data/problems-by-concept.json';
@@ -171,10 +175,17 @@ const PREVIEW_COUNT = 8;
           <Geometry client:load spec={conceptFigure} width={1400} height={760} hideCaption />
         </figure>
       )}
+      {!conceptFigure && conceptFigure3d && (
+        // 3D(입체) 개념: Geometry3D(R3F). client:only(SSR 불가). 드래그로 회전. relocate 스크립트가
+        // conceptFigureSlot id 로 본문 직전 이동(2D 와 동일 처리).
+        <figure id="conceptFigureSlot" class="not-prose my-6 flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
+          <Geometry3D client:only="react" spec={conceptFigure3d} width={720} height={480} hideCaption />
+        </figure>
+      )}
       <div class="prose prose-invert max-w-none" id="conceptBody">
         <Content />
       </div>
-      {conceptFigure && (
+      {(conceptFigure || conceptFigure3d) && (
         // 도식을 본문 적절한 위치로 이동 — 제목/요약 다음, 상세 본문(## 본문) 직전.
         // island 하이드레이션 전(파싱 중)에 실행돼 깜빡임/하이드레이션-이동 문제 없음.
         // 대상 없으면 breadcrumb 다음, 그것도 없으면 상단 그대로(폴백).
