@@ -44,7 +44,9 @@ function claudeCall(prompt, imgDir, model = 'sonnet', maxTurns = 0) {
   return new Promise((res) => {
     const args = ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir];
     if (maxTurns > 0) args.push('--max-turns', String(maxTurns));
-    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR });
+    // ★CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1: git status 블록을 system prompt 에서 제거 → prefix 안정
+    //   (clean cwd 와 벨트+멜빵. --add-dir 가 레포를 가리켜도 git 블록이 안 살아남. 실측 cache_read 고정.)
+    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
     c.on('close', () => {

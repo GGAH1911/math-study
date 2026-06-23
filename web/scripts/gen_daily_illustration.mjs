@@ -51,7 +51,7 @@ function callOnce(concept) {
     '--disallowedTools', 'Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch',
     '--max-turns', '1', '--', PROMPT(concept)];
   // ★timeout 120→180s: 일부 개념은 haiku 응답이 길어 120s 초과 → ETIMEDOUT 잦았다.
-  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 180000, maxBuffer: 8 * 1024 * 1024, cwd: CLEAN_DIR });
+  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 180000, maxBuffer: 8 * 1024 * 1024, cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
   const env = JSON.parse(out);
   if (env.is_error) throw new Error('cli:' + (env.subtype || ''));
   let txt = env.result || '';

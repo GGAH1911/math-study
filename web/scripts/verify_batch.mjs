@@ -59,7 +59,8 @@ function collectSlugs() {
 
 function claudeCall(prompt, imgDir) {
   return new Promise((res) => {
-    const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR });
+    // CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1: git 블록 제거 → prefix 안정(clean cwd 보강, 실측 cache_read 고정).
+    const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
     let out = ''; c.stdout.on('data', (d) => (out += d));
     c.on('close', () => { try { const j = JSON.parse(out); const u = j.usage || {}; appendFileSync(`${LOGDIR}/verify_usage.log`, `${MODEL}\tcr=${u.cache_read_input_tokens ?? '?'}\tcc=${u.cache_creation_input_tokens ?? '?'}\tin=${u.input_tokens ?? '?'}\tout=${u.output_tokens ?? '?'}\n`); res(j.result || ''); } catch { res(''); } });
   });

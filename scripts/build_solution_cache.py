@@ -35,6 +35,9 @@ MODEL = 'sonnet'
 #   이미지 접근은 --add-dir(절대경로)로 유지. 참고: docs/CLAUDE_P_CACHING.md.
 CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
 os.makedirs(CLEAN_DIR, exist_ok=True)
+# ★git 블록 제거 → prompt 캐시 prefix 안정(cache_read 고정). clean cwd 와 벨트+멜빵.
+#   --add-dir 가 레포(이미지)를 가리켜도 git status 가 system prompt 를 안 흔든다(실측 검증).
+CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
 
 sys.path.insert(0, str(ROOT / 'scripts'))
 from tiling import tile_for_vision  # noqa: E402  세로 긴 문제 → 원해상도 타일
@@ -145,7 +148,7 @@ def call_model(img_paths: list[str], fmt: str, meta: str, model: str, effort: st
     if HEARTBEAT:
         threading.Thread(target=_hb, daemon=True).start()
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
     finally:
@@ -196,7 +199,7 @@ def call_model_text(problem_text: str, fmt: str, meta: str, model: str, effort: 
             '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
     blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
@@ -320,7 +323,7 @@ def call_openbook(problem_text: str, gold: str, fmt: str, steps_text: str,
             '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
     blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
@@ -499,7 +502,7 @@ def call_promote(problem_text: str, gold: str, fmt: str, steps_text: str, lite_c
             '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
     blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
@@ -611,7 +614,7 @@ def _agent_solve(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
                 s += HEARTBEAT_S; print(f'      · agent 직접풀이 {s}s… (타임아웃 {AGENT_TIMEOUT}s)', flush=True)
         threading.Thread(target=_hb, daemon=True).start()
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=AGENT_TIMEOUT, cwd=CLEAN_DIR)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=AGENT_TIMEOUT, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         trace.append(('agent', 'timeout')); return None
     finally:

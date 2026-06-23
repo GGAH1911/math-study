@@ -139,6 +139,8 @@ def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, 
     # 중첩 Claude Code 의 만료 가능한 OAuth env 토큰을 빼고 호출 → subprocess claude 가 디스크
     # 자격증명(~/.claude/.credentials.json, 자동 refresh)을 쓰게 한다. (env 토큰 상속 시 401.)
     sub_env = {k: v for k, v in os.environ.items() if k != 'CLAUDE_CODE_OAUTH_TOKEN'}
+    # ★git 블록 제거 → prefix 안정(prompt 캐시 cache_read 고정). clean cwd 보강. 매핑은 git 정보 불필요.
+    sub_env['CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS'] = '1'
     for attempt in range(retries + 1):
         try:
             r = subprocess.run(args, capture_output=True, text=True, timeout=timeout, env=sub_env)
