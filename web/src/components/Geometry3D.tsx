@@ -637,7 +637,7 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
       <Canvas
         camera={{ position: camPos, up: [0, 0, 1], fov: 50, near: 0.1, far: 1000 }}
         style={{ background: spec.bgColor ?? '#0c0c0e', borderRadius: 8 }}
-        gl={{ antialias: true, alpha: false }}
+        gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
       >
         <PortalCtx.Provider value={portalRef}>
         <ambientLight intensity={0.55} />

@@ -1,0 +1,49 @@
+---
+export const prerender = false;
+import Geometry3D from '../../components/Geometry3D.tsx';
+import { readFileSync, existsSync } from 'node:fs';
+import '../../styles/global.css';
+
+// 3D 도식 최종본 갤러리 — 5카테고리 검수(각 10, 합 50, ≥45 합격) 통과한 개념별 최선 spec.
+// 데이터: /tmp/gen3d_final.json = [{concept,label,backend,score,scores:{...},spec,note}]
+// 합격(≥45)은 강조, 미달은 회색 표시(참고).
+let items: any[] = [];
+const FINAL = '/tmp/gen3d_final.json';
+if (existsSync(FINAL)) {
+  try { items = JSON.parse(readFileSync(FINAL, 'utf-8')); } catch { /* */ }
+}
+const CATS = ['스키마', '좌표정확', 'primitive', '가독성', '충실성'];
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3D 도식 갤러리 — 5카테고리 검수</title>
+  </head>
+  <body style="margin:0;padding:24px;background:#0a0a0b;color:#e4e4e7;font-family:sans-serif;">
+    <h1 style="font-size:20px;margin:0 0 4px;">3D 개념 도식 — 최종 검수 갤러리</h1>
+    <p style="color:#888;font-size:13px;margin:0 0 20px;">
+      5카테고리 × 10점 = 50점 만점 · 합격 ≥45점 · gemma/haiku/sonnet 중 최선 선별 · 회전해서 볼 수 있음
+    </p>
+    {items.length === 0 && <p style="color:#f87171;">아직 검수 결과 없음 (/tmp/gen3d_final.json 대기)</p>}
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px;">
+      {items.map((it) => (
+        <div style={`border:1px solid ${it.score >= 45 ? '#22c55e55' : '#52525244'};border-radius:12px;padding:14px;background:#18181b;`}>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+            <strong style="font-size:15px;">{it.label}</strong>
+            <span style={`font-size:18px;font-weight:700;color:${it.score >= 45 ? '#22c55e' : '#a1a1aa'};`}>{it.score}/50</span>
+          </div>
+          <div style="font-size:11px;color:#888;margin-bottom:10px;">
+            {it.backend} · {it.score >= 45 ? '✓ 합격' : '미달(참고)'}
+            {it.scores && ` · ${CATS.map((c, i) => `${c} ${it.scores[i]}`).join(' · ')}`}
+          </div>
+          {it.spec
+            ? <Geometry3D client:only="react" spec={it.spec} width={340} height={290} hideCaption noBroadcast />
+            : <p style="color:#777;font-size:12px;">spec 없음</p>}
+          {it.note && <p style="font-size:11px;color:#71717a;margin:8px 0 0;">{it.note}</p>}
+        </div>
+      ))}
+    </div>
+  </body>
+</html>

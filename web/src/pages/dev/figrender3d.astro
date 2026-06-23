@@ -1,0 +1,46 @@
+---
+export const prerender = false;
+import Geometry3D from '../../components/Geometry3D.tsx';
+import { readFileSync } from 'node:fs';
+import '../../styles/global.css';
+
+// 3D 도식 시각 검수용 렌더 하네스 — ?id=<concept id>&backend=<gemma|haiku|sonnet>&w=<px>.
+// /tmp/gen3d_results.json (3백엔드 테스트 결과) 또는 concept-figures.json(figure3d) 에서 spec 로드.
+// Geometry3D 는 R3F(WebGL) → client:only(SSR 불가). 헤드리스 캡처는 --headless=new --use-gl=angle.
+const id = Astro.url.searchParams.get('id') ?? '';
+const backend = Astro.url.searchParams.get('backend') ?? '';
+const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 560)));
+const src = Astro.url.searchParams.get('src') ?? 'test'; // test=/tmp/gen3d_results.json · concept=캐시
+
+let spec: any = null;
+if (src === 'test') {
+  try {
+    const arr = JSON.parse(readFileSync('/tmp/gen3d_results.json', 'utf-8'));
+    const row = arr.find((r: any) => r.concept === id && (!backend || r.backend === backend));
+    spec = row?.spec ?? null;
+  } catch { /* 없음 */ }
+} else {
+  try {
+    const d = JSON.parse(readFileSync(new URL('../../data/concept-figures.json', import.meta.url), 'utf-8'));
+    spec = d.figures?.[id]?.figure3d ?? null;
+  } catch { /* 없음 */ }
+}
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>figrender3d</title>
+  </head>
+  <body style="margin:0;padding:16px;background:#0a0a0b;">
+    <div id="figbox" style={`width:${w}px;`} data-fig-id={id} data-backend={backend} data-has-fig={spec ? '1' : '0'}>
+      {spec
+        ? <Geometry3D client:only="react" spec={spec} width={w} height={Math.round(w * 0.85)} hideCaption noBroadcast interactive={false} />
+        : <p id="nofig" style="color:#aaa;font-family:sans-serif;">no 3d figure for id={id} backend={backend}</p>}
+    </div>
+    <div style={`width:${w}px;color:#888;font:12px sans-serif;margin-top:8px;`}>
+      {id} · {backend} {spec?.title ? `· ${spec.title}` : ''}
+    </div>
+  </body>
+</html>
