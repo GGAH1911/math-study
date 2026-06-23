@@ -11,6 +11,13 @@ import problemIndex from '../../data/problems-by-concept.json';
 
 export const prerender = false;
 
+// ★claude -p 캐시 친화: 레포 cwd에서 spawn하면 git status(미커밋 변경)가 시스템 프롬프트 env 블록을
+//   매 요청 바꿔 프롬프트 캐시를 깬다. 깨끗한 빈 cwd에서 실행 → prefix(base+이전 대화 turn) 안정 →
+//   같은 대화 내 5분 TTL 연속 질문 시 cache_read 생존(긴 대화일수록 절약↑). 이미지는 --add-dir(절대경로)로.
+//   참고: docs/CLAUDE_P_CACHING.md. (커스텀 --system-prompt 자체는 CLI가 캐시 안 하는 한계는 남음.)
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || join(tmpdir(), 'claude_p_clean');
+try { if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true }); } catch { /* */ }
+
 type ChatMessage = { role: 'user' | 'assistant'; content: string; images?: string[] };
 
 type ChatRequest = {
@@ -339,6 +346,7 @@ ${lines}`;
       const child = spawn('claude', args, {
         env: safeChildEnv(),
         stdio: ['ignore', 'pipe', 'pipe'],
+        cwd: CLEAN_DIR,   // ★프롬프트 캐시 생존(git-env churn 제거). 이미지 접근은 --add-dir(절대경로)로 유지.
       });
       state.child = child;
 
