@@ -37,9 +37,15 @@ function walkMd(dir) {
 }
 
 // sub-dir 호환: 'algebra/근의_공식' 형태의 슬러그 집합
-const conceptSlugs = new Set(
-  walkMd(CONCEPTS_DIR).map((p) => relative(CONCEPTS_DIR, p).replace(/\.md$/, '').split(/[\\/]/).join('/')),
-);
+const conceptSlugList = walkMd(CONCEPTS_DIR).map((p) => relative(CONCEPTS_DIR, p).replace(/\.md$/, '').split(/[\\/]/).join('/'));
+const conceptSlugs = new Set(conceptSlugList);
+// flat-slug(잎 이름) → nested-slug 폴백 인덱스. 문제 frontmatter 는 'docs/concepts/평면벡터.md'(flat)로
+//   참조하는데 개념은 'geometry/.../평면벡터.md'(nested)에 저장돼 매칭이 깨진다(전 회차 공통). 잎 이름이
+//   유일할 때만 nested 로 해석(중복이면 모호 → 폴백 안 함, missing 으로 남김).
+const _leafCount = {};
+for (const s of conceptSlugList) { const leaf = s.split('/').pop(); _leafCount[leaf] = (_leafCount[leaf] || 0) + 1; }
+const leafToNested = {};
+for (const s of conceptSlugList) { const leaf = s.split('/').pop(); if (_leafCount[leaf] === 1) leafToNested[leaf] = s; }
 
 // Spoke (definition/theorem/lemma/example) → parent unit 매핑.
 // concept-graph.json 의 unit 노드 `enables:` 를 역방향으로 walk.
@@ -72,7 +78,12 @@ let propagatedMappings = 0;
 // dedup용 — (concept slug, problem slug) 페어 추적
 const seenPair = new Set();
 function addMapping(conceptSlug, brief, via) {
-  if (!conceptSlugs.has(conceptSlug)) { missing.add(conceptSlug); return false; }
+  if (!conceptSlugs.has(conceptSlug)) {
+    // flat-slug('평면벡터') → nested('geometry/.../평면벡터') 폴백(잎 이름 유일 시).
+    const nested = leafToNested[conceptSlug];
+    if (nested) { conceptSlug = nested; }
+    else { missing.add(conceptSlug); return false; }
+  }
   const k = `${conceptSlug}::${brief.slug}`;
   if (seenPair.has(k)) return false;
   seenPair.add(k);

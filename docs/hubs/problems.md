@@ -1,16 +1,16 @@
 ---
 sources: []
-created: 2026-06-20
-updated: 2026-06-20
+created: 2026-06-23
+updated: 2026-06-23
 hub_type: problems
 counts:
-  total: 4104
+  total: 4164
   years: 10
 ---
 
 # Problems hub
 
-총 4104개 문항, 10개 학년도.
+총 4164개 문항, 10개 학년도.
 
 - [2028학년도](./problems/2028.md) — 1개 회차, 30개 문항
 - [2027학년도](./problems/2027.md) — 1개 회차, 46개 문항
@@ -21,4 +21,4 @@ counts:
 - [2022학년도](./problems/2022.md) — 16개 회차, 608개 문항
 - [2021학년도](./problems/2021.md) — 15개 회차, 604개 문항
 - [2020학년도](./problems/2020.md) — 11개 회차, 540개 문항
-- [2019학년도](./problems/2019.md) — 4개 회차, 240개 문항
+- [2019학년도](./problems/2019.md) — 5개 회차, 300개 문항

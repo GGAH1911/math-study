@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-06-20
-updated: 2026-06-20
+created: 2026-06-23
+updated: 2026-06-23
 hub_type: concepts-grade
 domain: geometry
 grade: high-1
