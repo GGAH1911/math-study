@@ -667,11 +667,24 @@ def _round_parts(stem: str):
     return (parts[0], parts[1], parts[2]) if len(parts) == 3 else (stem, '', '')
 
 
+def _tiles_for(p: Path) -> list[str]:
+    """문제 원본 이미지의 vision 타일 절대경로(있으면). 오케스트레이터가 Read 로 직접 보도록 큐에 넣는다.
+    [[feedback_tiles_for_llm]]: LLM 은 통이미지(다운스케일로 깨짐)가 아니라 원해상도 타일만 봐야 한다."""
+    real_img = IMGDIR / f'{p.stem}.png'
+    if not real_img.exists():
+        return []
+    try:
+        return [str(t) for t in tile_for_vision(str(real_img))]
+    except Exception:
+        return []
+
+
 def _queue_entry(p: Path, gold, fmt, has_fig, tier, reason, best_sol, trace):
     """손풀이 큐 json 만 기록(md 는 안 건드림). gold-match-무솔버 처럼 답은 맞았지만
     솔버가 필요한 경우에도 재사용."""
     rnd, subj, num = _round_parts(p.stem)
     HANDSOLVE_DIR.mkdir(parents=True, exist_ok=True)
+    tiles = _tiles_for(p)
     entry = {
         'slug': p.stem, 'round': rnd, 'subject': subj, 'number': num,
         'gold': gold, 'format': fmt, 'has_figure': has_fig, 'tier': tier,
@@ -680,6 +693,10 @@ def _queue_entry(p: Path, gold, fmt, has_fig, tier, reason, best_sol, trace):
         'best_steps': (best_sol or {}).get('solution_steps') or [],
         'trace': [f'{m}:{r}' for m, r in (trace or [])],
         'image': f'/problem-images/{p.stem}.png',
+        # ★오케스트레이터 지시: 이 타일들을 Read 로 직접 보고 풀어라(통이미지·텍스트 추론만으로 도형 추측 금지).
+        #   도형 문제는 특히 타일 판독이 필수. [[feedback_tiles_for_llm]] · scripts/CLAUDE.md 핸드솔브 프로토콜.
+        'vision_tiles': tiles,
+        'instruction': 'Read 로 vision_tiles 의 원해상도 타일을 직접 보고 풀이/솔버를 작성하라. 통이미지 다운스케일이나 텍스트 추론만으로 도형·그래프를 추측하지 말 것.',
     }
     (HANDSOLVE_DIR / f'{p.stem}.json').write_text(
         json.dumps(entry, ensure_ascii=False, indent=2), encoding='utf-8')
