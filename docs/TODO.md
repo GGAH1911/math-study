@@ -1,6 +1,20 @@
 # TODO — 솔버/파이프라인 백로그
 
-> 갱신: 2026-06-19 · agy(Gemini) 도식 파이프라인 + 자율 운영. **부팅·진행상태는 `docs/HANDOFF.md`**.
+> 갱신: 2026-06-23 · 인제스트 캐싱/루프 + 2019수능 적재. **부팅·진행상태는 `docs/HANDOFF.md`**.
+
+## 완료 (2026-06-23) — 인제스트 캐싱·루프·2019수능
+- [x] **claude -p 프롬프트 캐싱 전수 적용**(clean cwd): verify_batch·corrector·ingest_round·build_solution_cache·chat.ts(튜터)·gen_daily·regenerate-body + cta-law. git-env churn 제거 → 콜당 ~10× 절약, 매핑 타임아웃 해소. `docs/CLAUDE_P_CACHING.md`.
+- [x] **재교정 agent-loop**(corrector `CORR_BACKEND=agent`, claude --max-turns) — agy 다운 대체. ingest_auto `RECORRECT_BACKEND` override.
+- [x] **교정 후처리 배선**: corrector→box_backfill(박스마커 결정적)→concept_remap(교정후 개념재매핑)→솔버캐시→sync. PAR_C=2.
+- [x] **2019학년도 수능 완전 적재**(60/60: 교정·솔버·풀이·박스11·개념60). 핸드솔브 9건 직접풀이(변이테스트 통과, 가형30=p=-9π a²=27).
+- [x] **ad-hoc 슬러그 정리**(`cleanup_adhoc_concepts.py`): 38종 기존개념 흡수·새개념0. build-problem-index flat→nested 폴백. 누락 668→0.
+- [x] **핸드솔브 큐 vision_tiles 주입**(타일 직접 Read 강제).
+- [x] gemma 솔버 테스트 → **미도입 결정**(상급 killer 무능). 기존 사다리 유지.
+
+## 보류/미진행
+- [ ] (사장님 결정) **검정고시 인제스트** — 이번엔 안 함.
+- [ ] (선택) build_solution_cache usage 로깅 추가(캐싱 절약 직접 측정용 — 현재 corr/verify 로그로 간접측정).
+- [ ] (선택) 완전 캐싱 = Anthropic API 직접 cache_control(커스텀 system 포함) — 현재 CLI는 내장 base만 캐시.
 
 ## 자율 도식 파이프라인 (2026-06-19) — 부팅·함정은 `docs/HANDOFF.md`
 순서: 함수 gen → QA(area전수점검) → 3D(`Geometry3D`) → 기출 교정기. 하트비트 cron(세션전용, 부팅 시 재생성).
