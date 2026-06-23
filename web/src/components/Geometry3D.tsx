@@ -22,18 +22,35 @@ import katex from 'katex';
 import { broadcastLatestGraph } from './Graph';
 
 // 3D 라벨 — KaTeX 수식 렌더. 라벨에 \vec{a}·\alpha·^·_·\frac 등이 흔해(31/84 도식) plain text 면 깨진다.
-//   $...$ 델리미터는 벗기고, 백슬래시/위첨자/아래첨자/그리스문자가 있으면 KaTeX, 순수 ASCII(A·B·P)면 그대로.
-const _MATHY = /\\[a-zA-Z]+|[_^]|\\frac|\\sqrt|\\vec|[Ͱ-Ͽ]/;
+//   3가지 경우: ① 전체가 $...$ 또는 순수 LaTeX(\vec·첨자·그리스) → 통째 KaTeX
+//   ② 한글+중간 $수식$ 혼합('거리 $d(P,\pi)$') → $...$ 부분만 KaTeX, 나머지는 텍스트(HTML escape)
+//   ③ 순수 텍스트(A·B·평면) → 그대로
+const _MATHY = /\\[a-zA-Z]+|[_^{}]|[Ͱ-Ͽ]/;
+function _esc(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function _kx(s: string): string {
+  try { return katex.renderToString(s, { throwOnError: false, displayMode: false }); }
+  catch { return _esc(s); }
+}
 function mathHtml(raw: string): { __html: string } | null {
   if (!raw) return null;
-  let s = raw.trim();
-  const dollar = /^\$(.*)\$$/s.exec(s);
-  if (dollar) s = dollar[1];                         // $...$ 벗김
-  if (!_MATHY.test(s) && !dollar) return null;       // 순수 텍스트(A·B·평면 등)는 KaTeX 안 씀
-  try { return { __html: katex.renderToString(s, { throwOnError: false, displayMode: false }) }; }
-  catch { return null; }
+  const s = raw.trim();
+  // ② 중간에 $...$ 가 낀 혼합 — 토큰별로 분리(escape 텍스트 + KaTeX)
+  if (/\$[^$]+\$/.test(s)) {
+    const parts = s.split(/(\$[^$]+\$)/);
+    const html = parts.map((p) => {
+      const m = /^\$([^$]+)\$$/.exec(p);
+      return m ? _kx(m[1]) : _esc(p);
+    }).join('');
+    return { __html: html };
+  }
+  // ① 전체가 LaTeX (델리미터 없이 \vec·첨자·그리스문자)
+  if (_MATHY.test(s)) return { __html: _kx(s) };
+  // ③ 순수 텍스트
+  return null;
 }
-// geom3d-label 내용 — 수식이면 KaTeX HTML, 아니면 텍스트.
+// geom3d-label 내용 — 수식/혼합이면 KaTeX HTML, 순수텍스트면 그대로.
 function Label3D({ text, color }: { text: string; color?: string }) {
   const html = mathHtml(text);
   return html
