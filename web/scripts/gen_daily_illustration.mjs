@@ -4,11 +4,17 @@
 //
 // 사용:  node scripts/gen_daily_illustration.mjs [dayOffset ...]
 //   인자 없음 = [1](내일). 시드: node scripts/gen_daily_illustration.mjs 0 1 2 3 4 5 6
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { pickDailyConcept } from '../src/lib/daily-concept.mjs';
+
+// ★claude -p 캐시 친화: 레포 cwd면 git status가 시스템 프롬프트 env 블록을 매 호출 바꿔 캐시를 깬다.
+//   깨끗한 빈 cwd에서 실행 → prefix 안정 → 크론이 여러 개념을 연속 생성할 때 cache_read 생존(파일접근 없어 안전).
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || resolve(tmpdir(), 'claude_p_clean');
+if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
 // 모델 — 하루 1콜(크론)이라 비용 무시 가능. 기하 품질·개념 충실도 위해 sonnet 기본.
 const MODEL = process.env.FIGURE_MODEL || 'sonnet';
@@ -43,7 +49,7 @@ function callLLM(concept) {
   const args = ['-p', '--model', MODEL, '--output-format', 'json',
     '--disallowedTools', 'Bash,Edit,Write,Read,Glob,Grep,WebFetch,WebSearch',
     '--max-turns', '1', '--', PROMPT(concept)];
-  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 120000, maxBuffer: 8 * 1024 * 1024 });
+  const out = execFileSync('claude', args, { encoding: 'utf-8', timeout: 120000, maxBuffer: 8 * 1024 * 1024, cwd: CLEAN_DIR });
   const env = JSON.parse(out);
   if (env.is_error) throw new Error('cli:' + (env.subtype || ''));
   let txt = env.result || '';

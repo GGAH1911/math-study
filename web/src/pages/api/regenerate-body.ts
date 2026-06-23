@@ -1,10 +1,16 @@
 import type { APIRoute } from 'astro';
 import { spawn } from 'node:child_process';
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 import { resolve, join } from 'node:path';
+import { tmpdir } from 'node:os';
 import matter from 'gray-matter';
 
 export const prerender = false;
+
+// ★claude -p 캐시 친화: 레포 cwd면 git status가 시스템 프롬프트 env 블록을 매 요청 바꿔 캐시를 깬다.
+//   깨끗한 빈 cwd에서 spawn → prefix 안정 → cache_read 생존. 파일접근 없어(프롬프트 임베드) 안전.
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || join(tmpdir(), 'claude_p_clean');
+try { if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true }); } catch { /* */ }
 
 const WEB_ROOT = process.cwd();
 const DOCS = resolve(WEB_ROOT, '..', 'docs', 'concepts');
@@ -150,7 +156,7 @@ ${noteBlock}`;
       '--no-session-persistence',
       '--system-prompt', TUTOR_SYSTEM,
       userPrompt,
-    ], { env: process.env });
+    ], { env: process.env, cwd: CLEAN_DIR });   // ★clean cwd → 프롬프트 캐시 생존
 
     let buf = '';
     child.stdout.on('data', (c) => { buf += c.toString('utf-8'); });
