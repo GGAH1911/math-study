@@ -1,28 +1,33 @@
 ---
 export const prerender = false;
 import Geometry3D from '../../components/Geometry3D.tsx';
+import Geometry from '../../components/Geometry.tsx';
 import { readFileSync } from 'node:fs';
 import '../../styles/global.css';
 
-// 3D 도식 시각 검수용 렌더 하네스 — ?id=<concept id>&backend=<gemma|haiku|sonnet>&w=<px>.
-// /tmp/gen3d_results.json (3백엔드 테스트 결과) 또는 concept-figures.json(figure3d) 에서 spec 로드.
-// Geometry3D 는 R3F(WebGL) → client:only(SSR 불가). 헤드리스 캡처는 --headless=new --use-gl=angle.
+// 3D 도식 시각 검수 하네스 — ?id=<concept id>&src=concept&w=<px>.
+// 개념페이지와 동일하게 3D(figure3d)+2D(figure) 둘 다 렌더(둘 다 있으면). 가벼운 페이지라
+// 헤드리스서 R3F 가 안정적으로 그려진다(개념페이지는 튜터 island 로 무거워 3D 첫프레임 늦음).
+// ★캡처 타이밍: Geometry3D 가 첫 프레임 그린 뒤 requestAnimationFrame 2틱 후 window.__figReady=true.
+//   헤드리스는 'document.title 에 READY' 가 뜰 때까지 기다렸다 스샷.
 const id = Astro.url.searchParams.get('id') ?? '';
 const backend = Astro.url.searchParams.get('backend') ?? '';
-const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 560)));
-const src = Astro.url.searchParams.get('src') ?? 'test'; // test=/tmp/gen3d_results.json · concept=캐시
+const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 640)));
+const src = Astro.url.searchParams.get('src') ?? 'concept';
 
-let spec: any = null;
+let spec3d: any = null;
+let spec2d: any = null;
 if (src === 'test') {
   try {
     const arr = JSON.parse(readFileSync('/tmp/gen3d_results.json', 'utf-8'));
     const row = arr.find((r: any) => r.concept === id && (!backend || r.backend === backend));
-    spec = row?.spec ?? null;
+    spec3d = row?.spec ?? null;
   } catch { /* 없음 */ }
 } else {
   try {
     const d = JSON.parse(readFileSync(new URL('../../data/concept-figures.json', import.meta.url), 'utf-8'));
-    spec = d.figures?.[id]?.figure3d ?? null;
+    spec3d = d.figures?.[id]?.figure3d ?? null;
+    spec2d = d.figures?.[id]?.figure ?? null;
   } catch { /* 없음 */ }
 }
 ---
@@ -34,13 +39,32 @@ if (src === 'test') {
     <title>figrender3d</title>
   </head>
   <body style="margin:0;padding:16px;background:#0a0a0b;">
-    <div id="figbox" style={`width:${w}px;`} data-fig-id={id} data-backend={backend} data-has-fig={spec ? '1' : '0'}>
-      {spec
-        ? <Geometry3D client:only="react" spec={spec} width={w} height={Math.round(w * 0.85)} hideCaption noBroadcast interactive={false} />
-        : <p id="nofig" style="color:#aaa;font-family:sans-serif;">no 3d figure for id={id} backend={backend}</p>}
+    <div id="figbox" style={`width:${w}px;display:flex;flex-direction:column;gap:10px;`} data-fig-id={id} data-has-3d={spec3d ? '1' : '0'} data-has-2d={spec2d ? '1' : '0'}>
+      {spec3d && (
+        <div class="fig3d-slot" style="border:1px solid #3f3f46;border-radius:8px;padding:8px;background:#0c0c0e;">
+          <Geometry3D client:only="react" spec={spec3d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast interactive={false} />
+        </div>
+      )}
+      {spec2d && (
+        <div style="border:1px solid #3f3f46;border-radius:8px;padding:8px;background:#0c0c0e;">
+          <Geometry client:load spec={spec2d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast fixedWidth={w - 18} />
+        </div>
+      )}
+      {!spec3d && !spec2d && <p id="nofig" style="color:#aaa;font-family:sans-serif;">no figure for id={id}</p>}
     </div>
     <div style={`width:${w}px;color:#888;font:12px sans-serif;margin-top:8px;`}>
-      {id} · {backend} {spec?.title ? `· ${spec.title}` : ''}
+      {id} {spec3d?.title ? `· 3D: ${spec3d.title}` : ''} {spec2d ? '· +2D' : ''}
     </div>
+    <script is:inline define:vars={{ has3d: !!spec3d }}>
+      // R3F 가 첫 프레임을 그릴 시간을 준 뒤 title 에 READY 표시 → 헤드리스가 이걸 보고 스샷.
+      // 3D 있으면 더 길게(WebGL init), 없으면 짧게.
+      const delay = has3d ? 3500 : 1200;
+      setTimeout(() => {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          window.__figReady = true;
+          document.title = 'READY ' + document.title;
+        }));
+      }, delay);
+    </script>
   </body>
 </html>
