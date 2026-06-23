@@ -167,19 +167,22 @@ const PREVIEW_COUNT = 8;
 <BaseLayout title={entry.id}>
   <div class="max-w-6xl mx-auto px-6 md:max-xl:pr-14 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="max-w-none min-w-0">
-      {conceptFigure && (
-        // 도식을 본문 좌우폭에 꽉 차게(높은 도형은 height 까지 ≈ 화면 높이). width 를 크게 줘
-        // 컨테이너 폭이 실효폭을 결정(Geometry 가 부모폭 측정), height 도 넉넉히 줘 가로 도형은
-        // 폭이 제한축이 되어 좌우로 꽉 참. (Geometry 가 height 로 H 를 캡하므로 clip 불필요.)
-        <figure id="conceptFigureSlot" class="not-prose my-6 flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
-          <Geometry client:load spec={conceptFigure} width={1400} height={760} hideCaption />
-        </figure>
-      )}
-      {!conceptFigure && conceptFigure3d && (
-        // 3D(입체) 개념: Geometry3D(R3F). client:only(SSR 불가). 드래그로 회전. relocate 스크립트가
-        // conceptFigureSlot id 로 본문 직전 이동(2D 와 동일 처리).
-        <figure id="conceptFigureSlot" class="not-prose my-6 flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
-          <Geometry3D client:only="react" spec={conceptFigure3d} width={720} height={480} hideCaption />
+      {(conceptFigure || conceptFigure3d) && (
+        // 도식 슬롯 — 3D(입체)와 2D(평면) 둘 다 있으면 둘 다 보여준다(사장님 지시): 3D 먼저(입체가
+        // 개념의 핵심), 2D 보조. relocate 스크립트가 conceptFigureSlot 을 본문 직전으로 옮긴다.
+        <figure id="conceptFigureSlot" class="not-prose my-6 flex flex-col items-center gap-3">
+          {conceptFigure3d && (
+            // 3D: Geometry3D(R3F). client:only(SSR 불가). 드래그로 회전.
+            <div class="w-full flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
+              <Geometry3D client:only="react" spec={conceptFigure3d} width={720} height={480} hideCaption />
+            </div>
+          )}
+          {conceptFigure && (
+            // 2D: 평면 단면/투영 도식. width 크게 줘 컨테이너 폭이 실효폭 결정(Geometry 부모폭 측정).
+            <div class="w-full flex justify-center rounded-lg border border-zinc-700/60 bg-zinc-950/40 p-3">
+              <Geometry client:load spec={conceptFigure} width={1400} height={760} hideCaption />
+            </div>
+          )}
         </figure>
       )}
       <div class="prose prose-invert max-w-none" id="conceptBody">
