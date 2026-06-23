@@ -1,6 +1,17 @@
 # TODO — 솔버/파이프라인 백로그
 
-> 갱신: 2026-06-23 · 인제스트 캐싱/루프 + 2019수능 적재. **부팅·진행상태는 `docs/HANDOFF.md`**.
+> 갱신: 2026-06-23(저녁) · 3D 도식·수식가독성·오늘의페이지·캐싱. **부팅·진행상태는 `docs/HANDOFF.md`**.
+
+## 완료 (2026-06-23 저녁) — 3D·수식·오늘의페이지·캐싱
+- [x] **3D 개념도식 전수(84개)** gen `--only-3d`+figure3d. 개념페이지 3D+2D 둘다 렌더. Geometry3D KaTeX 라벨(Label3D). 5카테고리 50점 전수검수(평균46.2, 미달 즉시교정16). 갤러리 `/dev/figgallery3d?src=cache`(Lazy3D).
+- [x] **수식 줄바꿈 가독성**: 인라인 nowrap+오버플로우 CSS, 긴 등식 $$블록 프롬프트지침, \frac→\tfrac 후처리(728파일 `scripts/fix_inline_math.py`).
+- [x] **오늘의페이지 그림 근본수정**: ETIMEDOUT 재시도3회+timeout180s, cron 06:00·12:00 보강.
+- [x] **claude -p DISABLE_GIT 이중우회**: clean cwd + CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1(배치6곳, 튜터 제외). 실측 cache_read 고정. [[project_claude_p_caching]]
+
+## 보류/후속
+- [ ] (선택) 그래프 변경 시 오늘의페이지 폴백 노출 — 낮 시간대 그래프변경 시 다음 cron(최대~6h)까지 폴백곡선. 매시간 cron or 렌더시 즉시생성(무거움)은 미적용.
+- [ ] (선택) 완전 캐싱 = Anthropic API 직접 cache_control(커스텀 system 포함). 현 CLI는 내장 base만.
+- [ ] (선택) 3D 도식 ad-hoc 잔여 영어/카메라 미세조정 — 전수검수 통과했으나 일부 라벨 작음.
 
 ## 완료 (2026-06-23) — 인제스트 캐싱·루프·2019수능
 - [x] **claude -p 프롬프트 캐싱 전수 적용**(clean cwd): verify_batch·corrector·ingest_round·build_solution_cache·chat.ts(튜터)·gen_daily·regenerate-body + cta-law. git-env churn 제거 → 콜당 ~10× 절약, 매핑 타임아웃 해소. `docs/CLAUDE_P_CACHING.md`.

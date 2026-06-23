@@ -1,13 +1,31 @@
-# 핸드오프 — 2026-06-23 · 인제스트 캐싱/루프 + 2019수능 적재 + claude -p 전수 캐싱
+# 핸드오프 — 2026-06-23(저녁) · 3D 도식 전수 + 수식 가독성 + 오늘의페이지 + claude -p DISABLE_GIT
 
-> **다음 세션 "부팅해" → 이 문서대로 이어받기.** 메모리 `project_solution_cache`·`project_handsolve_tiles`·`feedback_main_only_commit`·`feedback_handsolve_orchestrator` 동반 참조. (이전 도식 파이프라인 핸드오프는 아래 "이전 컨텍스트" 참고.)
+> **다음 세션 "부팅해" → 이 문서대로 이어받기.** 메모리 `project_claude_p_caching`·`project_concept_figures`·`project_daily_concept_hero`·`feedback_main_only_commit`·`reference_noauth_verify_port` 동반 참조. (인제스트/2019수능 핸드오프는 아래 "이전 세션(낮)" 참고.)
 
 ## ★부팅 시 먼저 할 일
-1. **상태 점검**: `git status`(깨끗해야), `git log --oneline -8`(아래 커밋 확인), `./server.sh status`(끄지 말 것).
-2. **gemma 서버**: `web/scripts/gemma_server.sh status`. 인제스트/변환 안 돌면 유휴. 필요 없으면 watchdog 꺼도 됨(아래 셧다운 참조).
-3. **이어받을 작업 없음(이번 세션 전부 완료·커밋)** — 새 지시 대기. 새 회차 인제스트 시 `python scripts/ingest_kice/ingest_auto.py --run`(아래 파이프라인).
+1. **상태 점검**: `git status`(깨끗해야), `git log --oneline -10`, `./server.sh status`(4323·4324 끄지 말 것).
+2. **서버 3종 확인**: 4323(실시간)·4324(STABLE)·4325(noauth 검증포트). ★**4325는 오케스트레이터 검증의 핵심**(사용자 지정) — 죽었으면 반드시 복구. 자꾸 죽는 원인=watchdog 좀비 누적 → 아래 4325 복구절차.
+3. **이어받을 작업 없음(이번 세션 전부 완료·커밋)** — 새 지시 대기.
 
-## 이번 세션(2026-06-23) 한 일 — 전부 커밋·푸시됨 (bc2888ab0 까지)
+## 이번 세션(2026-06-23 저녁) 한 일 — 전부 커밋·푸시됨 (7b0c68e4c 까지)
+1. **3D 개념 도식 전수(84개)** — gen_concept_figures `--only-3d` + figure3d 캐시(gemma 73 + sonnet 11). 개념페이지([...slug].astro) **3D+2D 둘 다 렌더**(구가 2D로만 보이던 버그 수정). Geometry3D **KaTeX 라벨 렌더**(Label3D: \vec·첨자·그리스·한글+$수식$ 혼합). **5카테고리(평면입체정합·완전성·KaTeX·좌표정확·충실성)×10=50점 전수검수**: 74채점 전부≥45(평균46.2), 미달 즉시 직접교정 16건(외적→평행사변형, 회전체/원기둥 곡면 미정의변수 복구, 영어라벨 13 한글화, label?물음표키 5, 카메라각도 등). 검수=figrender3d(2D+3D+READY신호) 헤드리스 캡처, 갤러리 `/dev/figgallery3d?src=cache`(Lazy3D=IntersectionObserver로 WebGL 컨텍스트 한계 회피). ★헤드리스 WebGL 캡처=`--headless=new --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader`.
+2. **수식 줄바꿈 가독성**(사용자 지적) — ①인라인 .katex nowrap+inline-block max-width 오버플로우(중간 안쪼개짐, 긴건 자체 가로스크롤) ②긴 등식체인 $$블록 생성프롬프트 지침(regenerate-body·fill_spoke_bodies) ③인라인 \frac→\tfrac 후처리 728파일 2036개(scripts/fix_inline_math.py, 블록 \dfrac 보존). global.css.
+3. **오늘의 페이지 그림 근본수정** — gen_daily_illustration: ETIMEDOUT 자동재시도 3회(5s·12s)+timeout 120→180s, cron 06:00·12:00 day+0 보강 추가(23:40 미리생성 유지). 원인=①claude 응답시간 편차 ETIMEDOUT ②그날 그래프 변경 시 pickDailyConcept 결과 바뀌어 cron 캐시 무효. 오늘·내일·모레·+3 그림 채움.
+4. **claude -p DISABLE_GIT 이중우회**(토론→측정→적용) — git status가 system prompt prefix 깨는 **알려진 이슈**(커뮤니티 동일 인식). clean cwd(기존)+`CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`(신규) 벨트+멜빵. ★실측: git켜짐 cache_read 호출마다 변동(17506→25092), DISABLE_GIT 반복 23478 고정. 적용 6곳(corrector·verify_batch·build_solution_cache·ingest_round·gen_daily·gen_concept_figures), **튜터 chat.ts 제외**(clean cwd만). [[project_claude_p_caching]]
+
+## 4325(noauth 검증포트) 복구 절차 — 자주 죽음
+원인: stop/start 반복으로 watchdog 좀비 누적(`pgrep -af 'server.sh __watchdog'` 으로 PORT별 확인) + setsid 분리 꼬임. 복구:
+```
+# 4325 watchdog/astro 정리 (4324 STABLE 보존 — environ의 MATH_STUDY_PORT 로 구분)
+for pid in $(pgrep -f 'server.sh __watchdog'); do port=$(tr '\0' '\n' </proc/$pid/environ|grep MATH_STUDY_PORT|cut -d= -f2); [ "$port" = 4325 ] && kill -9 $pid; done
+pkill -9 -f 'astro dev.*4325'; rm -f /tmp/math-noauth.pid
+# 직접 기동(watchdog 우회가 가장 확실) — content store 재로딩 ~60초 대기
+cd web && nohup env DEV_NOAUTH=1 node node_modules/.bin/astro dev --host 127.0.0.1 --port 4325 > /tmp/4325_direct.log 2>&1 &
+# 200 될 때까지: until curl -sm3 127.0.0.1:4325/ -o/dev/null -w '%{http_code}'|grep -q 200; do sleep 4; done
+```
+★pgrep는 자기 명령문 매칭 false-positive 잦음 → 실제 프로세스는 `ss -tlnp|grep :4325`(포트) 또는 `ps`로 확인.
+
+## 이전 세션(2026-06-23 낮) — 인제스트 캐싱·2019수능 (bc2888ab0 까지)
 1. **claude -p 프롬프트 캐싱 전수 적용** (핵심). 레포 cwd면 git-env 블록 churn으로 캐시가 깨짐 → 모든 claude -p 호출을 **clean cwd**(`/tmp/claude_p_clean`)에서 spawn. 적용 경로: verify_batch·corrector·ingest_round(claude_p)·build_solution_cache(5곳)·chat.ts(튜터)·gen_daily_illustration·regenerate-body + cta-law llm_client. 실측 콜당 cache_read≈43k·plain in~0 → 프리픽스 ~10× 절약. **개념매핑 60초 타임아웃도 해소**(거대 env 제거). 한계: 커스텀 `--system-prompt`는 CLI가 캐시 안 함(내장 base만) → 완전캐싱은 API 직접 cache_control 필요(미실행). 상세 `docs/CLAUDE_P_CACHING.md`.
 2. **재교정 agent-loop 백엔드**: corrector.mjs 에 `CORR_BACKEND=agent`(claude -p `--max-turns`, 이미지 Read→교정→자가검증). agy(쿼터다운) 대체. ingest_auto `RECORRECT_BACKEND` env override. gemma 격리 하드테일 자동복구 실증.
 3. **교정 후처리 배선**(ingest_auto): corrector → **box_backfill**(결정적 박스마커, LLM0) → **concept_remap**(교정된 텍스트로 개념 재매핑, '매핑前 교정' 원칙, haiku·캐시) → 솔버캐시 → sync. PAR_C 기본 2(gemma 2병렬). corrector validate 길이비에서 `[그림:]` 제외(false-positive 격리 방지)+재교정 성공시 격리마커 해제.
