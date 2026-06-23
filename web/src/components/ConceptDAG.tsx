@@ -655,20 +655,32 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   const expandAll = useCallback(() => setExpandedUnits(new Set(allUnitIds)), [allUnitIds]);
   const collapseAll = useCallback(() => setExpandedUnits(new Set()), []);
 
+  // 초기 1회 fitView. ★positions(dagre 레이아웃)가 준비된 *뒤* 맞춰야 한다 —
+  //   50ms 고정 타임아웃은 49단원+엣지 레이아웃이 늦으면 빈/일부 상태에 fit 해버려
+  //   노드가 화면 밖으로 나가 "노드가 안 보임"이 된다(4323 증상). requestAnimationFrame
+  //   2틱(React Flow가 노드 measure 후 좌표 반영)을 기다린 뒤, 안 잡히면 재시도(최대 ~2s).
+  const didInitialFit = useRef(false);
   useEffect(() => {
-    const t = setTimeout(() => {
-      if (effectiveHighlight) {
-        // Only the explicit ?highlight=... param flies the camera.
-        goto(effectiveHighlight);
-      } else {
-        rf.fitView({ padding: 0.2, duration: 400 });
+    if (didInitialFit.current) return;
+    if (positions.size === 0) return;          // 레이아웃 전 — 다음 렌더 대기
+    let tries = 0;
+    let raf = 0;
+    const attempt = () => {
+      const ns = rf.getNodes();
+      const ready = ns.length > 0 && ns.some((n) => n.width); // 노드가 measure됨
+      if (ready) {
+        didInitialFit.current = true;
+        if (effectiveHighlight) goto(effectiveHighlight);
+        else rf.fitView({ padding: 0.2, duration: 300 });
+        return;
       }
-    }, 50);
-    return () => clearTimeout(t);
-    // goto intentionally excluded — we don't want this to re-fire on
-    // every render of goto's closure deps.
+      if (tries++ < 30) raf = requestAnimationFrame(attempt);  // ~0.5s(30프레임) 재시도
+    };
+    raf = requestAnimationFrame(attempt);
+    return () => cancelAnimationFrame(raf);
+    // goto intentionally excluded.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rf, effectiveHighlight]);
+  }, [rf, effectiveHighlight, positions]);
 
   // (No automatic camera fit on expand/collapse — the user explicitly
   // doesn't want the view to fly around. Press `f` to manually fit.)
