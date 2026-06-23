@@ -18,7 +18,28 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Grid, Html, Line, Edges, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import * as THREE from 'three';
 import { create, all } from 'mathjs';
+import katex from 'katex';
 import { broadcastLatestGraph } from './Graph';
+
+// 3D 라벨 — KaTeX 수식 렌더. 라벨에 \vec{a}·\alpha·^·_·\frac 등이 흔해(31/84 도식) plain text 면 깨진다.
+//   $...$ 델리미터는 벗기고, 백슬래시/위첨자/아래첨자/그리스문자가 있으면 KaTeX, 순수 ASCII(A·B·P)면 그대로.
+const _MATHY = /\\[a-zA-Z]+|[_^]|\\frac|\\sqrt|\\vec|[Ͱ-Ͽ]/;
+function mathHtml(raw: string): { __html: string } | null {
+  if (!raw) return null;
+  let s = raw.trim();
+  const dollar = /^\$(.*)\$$/s.exec(s);
+  if (dollar) s = dollar[1];                         // $...$ 벗김
+  if (!_MATHY.test(s) && !dollar) return null;       // 순수 텍스트(A·B·평면 등)는 KaTeX 안 씀
+  try { return { __html: katex.renderToString(s, { throwOnError: false, displayMode: false }) }; }
+  catch { return null; }
+}
+// geom3d-label 내용 — 수식이면 KaTeX HTML, 아니면 텍스트.
+function Label3D({ text, color }: { text: string; color?: string }) {
+  const html = mathHtml(text);
+  return html
+    ? <div className="geom3d-label" style={color ? { color } : undefined} dangerouslySetInnerHTML={html} />
+    : <div className="geom3d-label" style={color ? { color } : undefined}>{text}</div>;
+}
 
 const _math = create(all);
 function _eval(s: string | number): number {
@@ -146,7 +167,7 @@ function PolyhedronShape({ s, defaultColor }: { s: Extract<Geom3DShape, { type: 
         const [x, y, z] = normalizedVertices[i];
         return (
           <Html key={`pl${i}`} position={[x, y, z]} center portal={portal ? { current: portal } : undefined} style={{ pointerEvents: 'none' }}>
-            <div className="geom3d-label">{label}</div>
+            <Label3D text={label} />
           </Html>
         );
       })}
@@ -284,7 +305,7 @@ function PlaneShape({ s, defaultColor, portal }: {
       </mesh>
       {s.label && (
         <Html position={origin} center portal={portal ? { current: portal } : undefined} style={{ pointerEvents: 'none' }}>
-          <div className="geom3d-label">{s.label}</div>
+          <Label3D text={s.label} />
         </Html>
       )}
     </>
@@ -329,7 +350,7 @@ function ShapeRouter({ s, idx, palette, polyhedronVertexKeys }: {
           </mesh>
           {s.label && (
             <Html position={[x, y, z]} center portal={portal ? { current: portal } : undefined} style={{ pointerEvents: 'none' }}>
-              <div className="geom3d-label">{s.label}</div>
+              <Label3D text={s.label} />
             </Html>
           )}
         </>
@@ -357,7 +378,7 @@ function ShapeRouter({ s, idx, palette, polyhedronVertexKeys }: {
               position={[(from[0] + to[0]) / 2, (from[1] + to[1]) / 2, (from[2] + to[2]) / 2]}
               center portal={portal ? { current: portal } : undefined} style={{ pointerEvents: 'none' }}
             >
-              <div className="geom3d-label">{s.label}</div>
+              <Label3D text={s.label} />
             </Html>
           )}
         </>
@@ -402,7 +423,7 @@ function ShapeRouter({ s, idx, palette, polyhedronVertexKeys }: {
           </mesh>
           {s.label && (
             <Html position={center} center portal={portal ? { current: portal } : undefined} style={{ pointerEvents: 'none' }}>
-              <div className="geom3d-label">{s.label}</div>
+              <Label3D text={s.label} />
             </Html>
           )}
         </>
@@ -415,7 +436,7 @@ function ShapeRouter({ s, idx, palette, polyhedronVertexKeys }: {
       if (!at) return null;
       return (
         <Html position={at} center portal={portal ? { current: portal } : undefined} style={{ pointerEvents: 'none' }}>
-          <div className="geom3d-label" style={s.color ? { color: s.color } : undefined}>{s.text}</div>
+          <Label3D text={s.text} color={s.color} />
         </Html>
       );
     }
@@ -698,16 +719,18 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
         }
         .geom3d-label {
           color: #fafafa;
-          background: rgba(20, 20, 23, 0.7);
+          background: rgba(20, 20, 23, 0.78);
           border: 1px solid #3f3f46;
-          padding: 0 4px;
+          padding: 1px 5px;
           border-radius: 3px;
-          font-size: 11px;
-          line-height: 14px;
+          font-size: 13px;
+          line-height: 16px;
           font-family: var(--font-mono, monospace);
           white-space: nowrap;
           user-select: none;
         }
+        /* KaTeX 수식 라벨 — 색 상속(흰색) + 크기 보장(작은 박스에 안 뭉개지게) */
+        .geom3d-label .katex { font-size: 1em; color: inherit; }
       `}</style>
     </div>
   );
