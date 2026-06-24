@@ -34,12 +34,14 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/dev\/ingest-test\/?$/,         // 기출 인제스트 agy 교정+도식 테스트(임시) — 비로그인 열람
   /^\/dev\/figextract\/?$/,          // 그림 추출 프로토타입 뷰어(임시) — 비로그인 열람
   /^\/dev\/corrector-gallery\/?$/,   // 교정기 결과 갤러리(임시) — 비로그인 열람
+  /^\/dev\/goldboard\/?$/,           // GOLD 5종 실시간 검수 보드(임시) — 비로그인 열람
 ];
 
 // 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.
 const ADMIN_PATHS: RegExp[] = [
   /^\/dev(\/|$)/,              // 개발/디버그 도구 페이지(figure-test·rounds·variants 등)
   /^\/api\/regenerate-body\b/, // 공유 개념 본문 LLM 재생성(저작 행위)
+  /^\/api\/figure-triage\b/,   // figure 트리아지 분류 저장(어드민)
   /^\/log\/?$/,               // LWIP 운영 로그(promote/prune/restructure/ingest…) — 개발 기록
 ];
 
