@@ -171,8 +171,6 @@ export interface ReconOpts {
   tables?: string[][][];
   /** 인라인 도형(임베드 객체 src) — 본문 줄 중간 {{INLn}} 자리에 인라인 <img>로 렌더(블록 {{FIGn}}과 별개). */
   inlineFigures?: string[];
-  /** figures 의 이미지 src(인덱스 일치) — {{FIGn}} 이 문장 중간에 있으면 그 자리에 인라인 <img>로 렌더('○○ 모양의 도형' 인라인 기호). */
-  figureSrcs?: string[];
 }
 
 // 표(셀 2D 배열) → HTML <table>. 첫 행=헤더, 셀 값은 renderInline(수식/한글 혼합).
@@ -237,28 +235,16 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   // recon-disp 로 가운데정렬되던 것 교정 — 불렛은 목록이라 좌측정렬이 맞음).
   const BULLET_RE = /^\s*([•∙·▪◦●])\s*/;
   const inlFigs = opts.inlineFigures ?? [];
-  const figSrcs = opts.figureSrcs ?? [];
-  // 문장 중간 {{FIGn}} 직후가 '모양/꼴/공통부분' = 본문에 박히는 인라인 도형 기호('○○ 모양의 도형').
-  // → 그 자리에 인라인 <img>로 렌더 + 블록 배치에서 제외. ('NN. {{FIG}} 그림과 같이…' 블록그림은 신호 없어 제외 안 됨.)
-  const inlineFigIdx = new Set<number>();
-  for (const m of text.matchAll(/\{\{FIG(\d+)\}\}\s*(?:모양|꼴|공통부분)/g)) inlineFigIdx.add(+m[1]);
-  // 본문 줄 중간 {{INLn}}/{{FIGn}}(인라인 기호) → 인라인 <img>(텍스트 흐름 안). 마커 기준으로 쪼개 사이사이 renderInline.
+  // 본문 줄 중간 {{INLn}} → 인라인 도형 <img>(텍스트 흐름 안). {{INLn}} 기준으로 쪼개 사이사이 renderInline.
   const renderInlineWithFig = (s: string): string => {
-    if (!/\{\{(?:INL|FIG)\d+\}\}/.test(s)) return renderInline(s);
+    if (!/\{\{INL\d+\}\}/.test(s)) return renderInline(s);
     return s
-      .split(/(\{\{(?:INL|FIG)\d+\}\})/)
+      .split(/(\{\{INL\d+\}\})/)
       .map((p) => {
-        const mi = p.match(/^\{\{INL(\d+)\}\}$/);
-        if (mi) {
-          const src = inlFigs[+mi[1]];
+        const m = p.match(/^\{\{INL(\d+)\}\}$/);
+        if (m) {
+          const src = inlFigs[+m[1]];
           return src ? `<img src="${src}" alt="도형" class="recon-inl" style="height:1.3em;vertical-align:-0.28em;display:inline" />` : '';
-        }
-        const mf = p.match(/^\{\{FIG(\d+)\}\}$/);
-        if (mf) {
-          const src = figSrcs[+mf[1]];
-          return src && inlineFigIdx.has(+mf[1])
-            ? `<img src="${src}" alt="도형" class="recon-inl" style="height:1.5em;vertical-align:-0.4em;display:inline" />`
-            : '';   // 인라인 신호 없는 {{FIGn}}(블록 도형)은 그 자리에선 제거(블록으로 따로 배치됨)
         }
         return p ? renderInline(p) : '';
       })
@@ -293,7 +279,7 @@ export function renderReconstruct(text: string, opts: ReconOpts = {}): string {
   // placeholder 안 쓰인 도형만 afterLine(미지정=본문 끝)으로 배치.
   const clampLine = (n?: number) => Math.max(0, Math.min(body.length, typeof n === 'number' ? n : body.length));
   const figByLine = new Map<number, string[]>();
-  figList.forEach((f, idx) => { if (placeholderIdx.has(idx) || inlineFigIdx.has(idx)) return; const a = clampLine(f.afterLine); if (!figByLine.has(a)) figByLine.set(a, []); figByLine.get(a)!.push(f.html); });
+  figList.forEach((f, idx) => { if (placeholderIdx.has(idx)) return; const a = clampLine(f.afterLine); if (!figByLine.has(a)) figByLine.set(a, []); figByLine.get(a)!.push(f.html); });
 
   let html = '';
   if (figByLine.has(0)) html += figByLine.get(0)!.join('');
