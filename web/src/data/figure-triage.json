@@ -170,7 +170,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_3월모의고사_가형_15_fig0.png": {
+    "/problem-images/2019_고3_3월모의고사_가형_15_fig0.jpeg": {
       "problem_slug": "2019_고3_3월모의고사_가형_15",
       "round": "2019/고3_3월모의고사",
       "subject": "가형",
@@ -198,7 +198,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_3월모의고사_가형_27_fig0.png": {
+    "/problem-images/2019_고3_3월모의고사_가형_27_fig0.jpeg": {
       "problem_slug": "2019_고3_3월모의고사_가형_27",
       "round": "2019/고3_3월모의고사",
       "subject": "가형",
@@ -212,7 +212,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_3월모의고사_가형_28_fig0.png": {
+    "/problem-images/2019_고3_3월모의고사_가형_28_fig0.jpeg": {
       "problem_slug": "2019_고3_3월모의고사_가형_28",
       "round": "2019/고3_3월모의고사",
       "subject": "가형",
@@ -240,7 +240,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_3월모의고사_나형_04_fig0.png": {
+    "/problem-images/2019_고3_3월모의고사_나형_04_fig0.jpeg": {
       "problem_slug": "2019_고3_3월모의고사_나형_04",
       "round": "2019/고3_3월모의고사",
       "subject": "나형",
@@ -254,7 +254,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_3월모의고사_나형_11_fig0.png": {
+    "/problem-images/2019_고3_3월모의고사_나형_11_fig0.jpeg": {
       "problem_slug": "2019_고3_3월모의고사_나형_11",
       "round": "2019/고3_3월모의고사",
       "subject": "나형",
@@ -268,7 +268,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_3월모의고사_나형_17_fig0.png": {
+    "/problem-images/2019_고3_3월모의고사_나형_17_fig0.jpeg": {
       "problem_slug": "2019_고3_3월모의고사_나형_17",
       "round": "2019/고3_3월모의고사",
       "subject": "나형",
@@ -562,7 +562,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2019_고3_7월모의고사_나형_19_fig0.png": {
+    "/problem-images/2019_고3_7월모의고사_나형_19_fig0.jpeg": {
       "problem_slug": "2019_고3_7월모의고사_나형_19",
       "round": "2019/고3_7월모의고사",
       "subject": "나형",
@@ -610,20 +610,6 @@
       "subject": "나형",
       "kind": "figure",
       "figure_index": 3,
-      "status": "untriaged",
-      "suggested": null,
-      "suggest_reason": null,
-      "triaged_by": null,
-      "triaged_at": null,
-      "notes": null,
-      "render3d": null
-    },
-    "/problem-images/2019_고3_7월모의고사_나형_19_fig4.png": {
-      "problem_slug": "2019_고3_7월모의고사_나형_19",
-      "round": "2019/고3_7월모의고사",
-      "subject": "나형",
-      "kind": "figure",
-      "figure_index": 4,
       "status": "untriaged",
       "suggested": null,
       "suggest_reason": null,
@@ -1206,7 +1192,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2020_고2_3월모의고사_단일_18_fig0.png": {
+    "/problem-images/2020_고2_3월모의고사_단일_18_fig0.jpeg": {
       "problem_slug": "2020_고2_3월모의고사_단일_18",
       "round": "2020/고2_3월모의고사",
       "subject": "단일",
@@ -1962,7 +1948,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2020_고3_4월모의고사_나형_19_fig0.png": {
+    "/problem-images/2020_고3_4월모의고사_나형_19_fig0.jpeg": {
       "problem_slug": "2020_고3_4월모의고사_나형_19",
       "round": "2020/고3_4월모의고사",
       "subject": "나형",
@@ -2200,6 +2186,20 @@
       "notes": null,
       "render3d": null
     },
+    "/problem-images/2020_수능_가형_27_fig1.png": {
+      "problem_slug": "2020_수능_가형_27",
+      "round": "2020/수능",
+      "subject": "가형",
+      "kind": "figure",
+      "figure_index": 1,
+      "status": "untriaged",
+      "suggested": null,
+      "suggest_reason": null,
+      "triaged_by": null,
+      "triaged_at": null,
+      "notes": null,
+      "render3d": null
+    },
     "/problem-images/2020_수능_나형_04_fig0.png": {
       "problem_slug": "2020_수능_나형_04",
       "round": "2020/수능",
@@ -2248,20 +2248,6 @@
       "subject": "나형",
       "kind": "figure",
       "figure_index": 1,
-      "status": "untriaged",
-      "suggested": null,
-      "suggest_reason": null,
-      "triaged_by": null,
-      "triaged_at": null,
-      "notes": null,
-      "render3d": null
-    },
-    "/problem-images/2020_수능_나형_18_fig2.png": {
-      "problem_slug": "2020_수능_나형_18",
-      "round": "2020/수능",
-      "subject": "나형",
-      "kind": "figure",
-      "figure_index": 2,
       "status": "untriaged",
       "suggested": null,
       "suggest_reason": null,
@@ -4916,12 +4902,40 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2022_고3_10월모의고사_미적분_27_fig0.png": {
+    "/problem-images/2022_고3_10월모의고사_미적분_27_fig0.jpeg": {
       "problem_slug": "2022_고3_10월모의고사_미적분_27",
       "round": "2022/고3_10월모의고사",
       "subject": "미적분",
       "kind": "figure",
       "figure_index": 0,
+      "status": "untriaged",
+      "suggested": null,
+      "suggest_reason": null,
+      "triaged_by": null,
+      "triaged_at": null,
+      "notes": null,
+      "render3d": null
+    },
+    "/problem-images/2022_고3_10월모의고사_미적분_27_fig1.jpeg": {
+      "problem_slug": "2022_고3_10월모의고사_미적분_27",
+      "round": "2022/고3_10월모의고사",
+      "subject": "미적분",
+      "kind": "figure",
+      "figure_index": 1,
+      "status": "untriaged",
+      "suggested": null,
+      "suggest_reason": null,
+      "triaged_by": null,
+      "triaged_at": null,
+      "notes": null,
+      "render3d": null
+    },
+    "/problem-images/2022_고3_10월모의고사_미적분_27_fig2.png": {
+      "problem_slug": "2022_고3_10월모의고사_미적분_27",
+      "round": "2022/고3_10월모의고사",
+      "subject": "미적분",
+      "kind": "figure",
+      "figure_index": 2,
       "status": "untriaged",
       "suggested": null,
       "suggest_reason": null,
@@ -6988,6 +7002,20 @@
       "notes": null,
       "render3d": null
     },
+    "/problem-images/2023_고3_7월모의고사_미적분_27_fig1.png": {
+      "problem_slug": "2023_고3_7월모의고사_미적분_27",
+      "round": "2023/고3_7월모의고사",
+      "subject": "미적분",
+      "kind": "figure",
+      "figure_index": 1,
+      "status": "untriaged",
+      "suggested": null,
+      "suggest_reason": null,
+      "triaged_by": null,
+      "triaged_at": null,
+      "notes": null,
+      "render3d": null
+    },
     "/problem-images/2023_고3_7월모의고사_미적분_28_fig0.png": {
       "problem_slug": "2023_고3_7월모의고사_미적분_28",
       "round": "2023/고3_7월모의고사",
@@ -8276,7 +8304,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2024_고3_10월모의고사_기하_30_fig0.jpeg": {
+    "/problem-images/2024_고3_10월모의고사_기하_30_fig0.png": {
       "problem_slug": "2024_고3_10월모의고사_기하_30",
       "round": "2024/고3_10월모의고사",
       "subject": "기하",
@@ -8584,7 +8612,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2024_고3_7월모의고사_기하_26_fig0.jpeg": {
+    "/problem-images/2024_고3_7월모의고사_기하_26_fig0.png": {
       "problem_slug": "2024_고3_7월모의고사_기하_26",
       "round": "2024/고3_7월모의고사",
       "subject": "기하",
@@ -8598,21 +8626,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2024_고3_7월모의고사_기하_26_fig1.jpeg": {
-      "problem_slug": "2024_고3_7월모의고사_기하_26",
-      "round": "2024/고3_7월모의고사",
-      "subject": "기하",
-      "kind": "figure",
-      "figure_index": 1,
-      "status": "untriaged",
-      "suggested": null,
-      "suggest_reason": null,
-      "triaged_by": null,
-      "triaged_at": null,
-      "notes": null,
-      "render3d": null
-    },
-    "/problem-images/2024_고3_7월모의고사_기하_28_fig0.jpeg": {
+    "/problem-images/2024_고3_7월모의고사_기하_28_fig0.png": {
       "problem_slug": "2024_고3_7월모의고사_기하_28",
       "round": "2024/고3_7월모의고사",
       "subject": "기하",
@@ -8626,26 +8640,12 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2024_고3_7월모의고사_미적분_26_fig0.jpeg": {
+    "/problem-images/2024_고3_7월모의고사_미적분_26_fig0.png": {
       "problem_slug": "2024_고3_7월모의고사_미적분_26",
       "round": "2024/고3_7월모의고사",
       "subject": "미적분",
       "kind": "figure",
       "figure_index": 0,
-      "status": "untriaged",
-      "suggested": null,
-      "suggest_reason": null,
-      "triaged_by": null,
-      "triaged_at": null,
-      "notes": null,
-      "render3d": null
-    },
-    "/problem-images/2024_고3_7월모의고사_미적분_26_fig1.jpeg": {
-      "problem_slug": "2024_고3_7월모의고사_미적분_26",
-      "round": "2024/고3_7월모의고사",
-      "subject": "미적분",
-      "kind": "figure",
-      "figure_index": 1,
       "status": "untriaged",
       "suggested": null,
       "suggest_reason": null,
@@ -9886,7 +9886,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2025_고3_5월모의고사_기하_29_fig0.jpeg": {
+    "/problem-images/2025_고3_5월모의고사_기하_29_fig0.png": {
       "problem_slug": "2025_고3_5월모의고사_기하_29",
       "round": "2025/고3_5월모의고사",
       "subject": "기하",
@@ -9900,7 +9900,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2025_고3_5월모의고사_기하_30_fig0.jpeg": {
+    "/problem-images/2025_고3_5월모의고사_기하_30_fig0.png": {
       "problem_slug": "2025_고3_5월모의고사_기하_30",
       "round": "2025/고3_5월모의고사",
       "subject": "기하",
@@ -9914,7 +9914,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2025_고3_5월모의고사_미적분_29_fig0.jpeg": {
+    "/problem-images/2025_고3_5월모의고사_미적분_29_fig0.png": {
       "problem_slug": "2025_고3_5월모의고사_미적분_29",
       "round": "2025/고3_5월모의고사",
       "subject": "미적분",
@@ -10880,7 +10880,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2026_고3_5월모의고사_기하_29_fig0.jpeg": {
+    "/problem-images/2026_고3_5월모의고사_기하_29_fig0.png": {
       "problem_slug": "2026_고3_5월모의고사_기하_29",
       "round": "2026/고3_5월모의고사",
       "subject": "기하",
@@ -10908,7 +10908,7 @@
       "notes": null,
       "render3d": null
     },
-    "/problem-images/2026_고3_5월모의고사_미적분_29_fig0.jpeg": {
+    "/problem-images/2026_고3_5월모의고사_미적분_29_fig0.png": {
       "problem_slug": "2026_고3_5월모의고사_미적분_29",
       "round": "2026/고3_5월모의고사",
       "subject": "미적분",
