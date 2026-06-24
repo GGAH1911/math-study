@@ -55,7 +55,7 @@ const reconUnsupported =
     (/연립방정식/.test(_sText) && !/\\begin\{cases\}/.test(_sText)));
 const reconFull = reconUnsupported
   ? `<div class="recon-fig-wrap"><img src="/problem-images/${_wholeStem}" alt="문제" class="recon-fig recon-fig-full" loading="lazy" /><span class="recon-fig-note">표·연립 등 복잡한 구조 — 원본 이미지로 표시 (텍스트 재구성 미지원)</span></div>`
-  : renderReconstruct(_sText, { figures: figureList, tables: fm.tables, inlineFigures: inlineFigList });
+  : renderReconstruct(_sText, { figures: figureList, figureSrcs: Array.isArray(fm.figures) ? (fm.figures as any[]).map((f) => String(f.image)) : [], tables: fm.tables, inlineFigures: inlineFigList });
 // 재구성은 어드민 전용: 도형 라벨이 이미지 밖으로 새는 등 엣지케이스가 있어 사용자에겐 부적합 →
 // 사용자는 원본 이미지(<Content/>)만, 재구성 토글·뷰는 admin 만. (디코더의 가치는 인제스트용 searchable_text.)
 const isAdmin = !!Astro.locals.user?.is_admin;
