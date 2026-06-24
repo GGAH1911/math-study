@@ -346,14 +346,17 @@ def extract(round_, subj, num):
             else:                 L, R, conf = 0.0, PW, False   # 분단 가로지르는 넓은 도형 → 가로 무제한
             top, bot = page.rect.y0, page.rect.y1
             if conf:
+                Ls, Rs = L, R
                 for _t, _sp in allsp:
+                    if not (re.search(r'\d+\s*점\s*\]', _t) or re.search(r'[①-⑨]', _t)): continue
                     _scx = (_sp.x0 + _sp.x1) / 2
                     if not (L <= _scx < R): continue
-                    _npt = re.search(r'\d+\s*점\s*\]', _t)        # [n점](문제 끝)
-                    _chc = re.search(r'[①-⑨]', _t)               # 보기 ①②③
-                    # 보기는 위/아래 어디 있든 하드경계: 도형 위면 상단한계, 도형 아래면 하단한계. [n점]은 항상 위(상단).
-                    if (_npt or _chc) and _sp.y1 <= c.y0 + 8: top = max(top, _sp.y1)
-                    if _chc and _sp.y0 >= c.y1 - 8: bot = min(bot, _sp.y0)
+                    # [n점]·①②③ = 하드경계: 도형 바깥 어느 쪽이든 그 변을 당김(위/아래/좌/우)
+                    if   _sp.y1 <= c.y0 + 8: top = max(top, _sp.y1)   # 위
+                    elif _sp.y0 >= c.y1 - 8: bot = min(bot, _sp.y0)   # 아래
+                    elif _sp.x0 >= c.x1 - 2: Rs = min(Rs, _sp.x0)     # 우(옆)
+                    elif _sp.x1 <= c.x0 + 2: Ls = max(Ls, _sp.x1)     # 좌(옆)
+                L, R = Ls, Rs
             clip = (fitz.Rect(max(region.x0 - m, L), max(region.y0 - m, top),
                               min(region.x1 + m, R), min(region.y1 + m, bot)) & page.rect)
             fn = f'{stem}_fig{i}.png'
