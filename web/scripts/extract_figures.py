@@ -73,6 +73,24 @@ def find_region(doc, num, subj=None):
     return None, None
 
 
+def find_divider(page):
+    """컬럼 분단선 = 페이지 세로 70%+ 를 차지하는 단일 세로선 객체(중앙부). 도형변·밑줄 등 짧은 선이나
+       페이지 테두리(가장자리)와 혼동 금지. 탐지 실패 시 None(호출부에서 PW/2 폴백)."""
+    PW, PH = page.rect.width, page.rect.height
+    best = None  # (x, height)
+    for d in page.get_drawings():
+        for it in d.get('items', []):
+            if it[0] == 'l' and abs(it[1].x - it[2].x) < 2:       # 세로선
+                x, h = it[1].x, abs(it[1].y - it[2].y)
+            elif it[0] == 're' and it[1].width < 3:               # 얇은 세로 사각(선 대용)
+                x, h = it[1].x0, it[1].height
+            else:
+                continue
+            if h > 0.7 * PH and 0.2 * PW < x < 0.8 * PW and (best is None or h > best[1]):
+                best = (x, h)
+    return best[0] if best else None
+
+
 def trim(path):
     im = Image.open(path).convert('RGB')
     bg = Image.new('RGB', im.size, im.getpixel((0, 0)))
@@ -251,7 +269,7 @@ def extract(round_, subj, num):
     blocks = [b for b in page.get_text('blocks')  # 단 경계(x1)까지 — 옆 단 블록 침투 방지
               if REG.x0 - 5 <= b[0] and b[2] <= REG.x1 + 5 and b[1] >= REG.y0 - 5 and b[3] <= REG.y1 + 5]
     stem = f'{round_}_{subj}_{num:02d}'
-    cmat = fitz.Matrix(220 / 72, 220 / 72); m = 8
+    cmat = fitz.Matrix(220 / 72, 220 / 72); m = 8; div = find_divider(page)
     def is_body(b):  # 본문 블록(한글 포함, 캡션 [그림N] 제외)
         return re.search(r'[가-힣]', b[4]) and not re.match(r'^\s*\[그림\s*\d+\]\s*$', b[4].strip())
     def anchor_for(c):  # 좌우 나란히(c 왼쪽에 같은높이 본문)면 본문 끝(선택지 앞), 아니면 바로 위 본문
@@ -321,7 +339,23 @@ def extract(round_, subj, num):
             region = +c
             for sp in labels:
                 region.include_rect(sp)
-            clip = (fitz.Rect(region.x0 - m, region.y0 - m, region.x1 + m, region.y1 + m) & page.rect)
+            # ★bleed 차단(크롭 하드리밋, 사용자 로직): 위=[n점]·아래=①②③·좌우=중간 분단선(PW/2). 이 좌표는 절대 포함 금지.
+            PW = page.rect.width; mid = div if div else PW / 2   # 실제 분단선 객체(70%+ 세로선) 우선
+            if c.x1 <= mid + 5:   L, R, conf = 0.0, mid, True   # 좌단 도형
+            elif c.x0 >= mid - 5: L, R, conf = mid, PW, True    # 우단 도형
+            else:                 L, R, conf = 0.0, PW, False   # 분단 가로지르는 넓은 도형 → 가로 무제한
+            top, bot = page.rect.y0, page.rect.y1
+            if conf:
+                for _t, _sp in allsp:
+                    _scx = (_sp.x0 + _sp.x1) / 2
+                    if not (L <= _scx < R): continue
+                    _npt = re.search(r'\d+\s*점\s*\]', _t)        # [n점](문제 끝)
+                    _chc = re.search(r'[①-⑨]', _t)               # 보기 ①②③
+                    # 보기는 위/아래 어디 있든 하드경계: 도형 위면 상단한계, 도형 아래면 하단한계. [n점]은 항상 위(상단).
+                    if (_npt or _chc) and _sp.y1 <= c.y0 + 8: top = max(top, _sp.y1)
+                    if _chc and _sp.y0 >= c.y1 - 8: bot = min(bot, _sp.y0)
+            clip = (fitz.Rect(max(region.x0 - m, L), max(region.y0 - m, top),
+                              min(region.x1 + m, R), min(region.y1 + m, bot)) & page.rect)
             fn = f'{stem}_fig{i}.png'
             page.get_pixmap(matrix=cmat, clip=clip).save(f'{PUB}/{fn}'); trim(f'{PUB}/{fn}')
         figs.append({'image': f'/problem-images/{fn}', 'anchor': anchor_for(c)})
