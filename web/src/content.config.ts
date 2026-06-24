@@ -74,6 +74,7 @@ const problems = defineCollection({
     figure_after_line: z.number().optional(),  // 재구성 본문 몇 번째 줄 뒤에 도형 삽입 (백필이 PDF 위치로 계산)
     figures: z.array(z.object({ image: z.string(), after_line: z.number().optional() })).optional(),  // 다중 그림: 각 추출 PNG + 삽입 위치(줄). figure_image보다 우선.
     inline_figures: z.array(z.object({ image: z.string() })).optional(),  // 인라인 도형(임베드 객체): 본문 {{INLn}} 자리에 인라인 <img>. 블록 figures와 별개.
+    choice_figures: z.array(z.object({ label: z.string(), image: z.string() })).optional(),  // 선택지가 이미지(산점도·그래프 고르기): ①~⑤ 보기 이미지. figures와 별개로 보기로 렌더.
     tables: z.array(z.array(z.array(z.string()))).optional(),  // 표(셀 2D 배열들) — searchable_text {{TABLEn}} 자리에 HTML <table> 렌더
     searchable_text: z.string().optional(),
     corrector_done: z.boolean().optional(),  // Gemini 텍스트 교정 완료(멱등 플래그)

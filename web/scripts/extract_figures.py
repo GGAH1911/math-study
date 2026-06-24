@@ -226,7 +226,7 @@ def extract(round_, subj, num):
     if not os.path.exists(pdf): pdf = f'{REPO}/db/raw/{round_}/문제.pdf'
     doc = fitz.open(pdf)
     pi, REG = find_region(doc, num, subj)
-    if REG is None: return None, [], [], [], '영역 못찾음'
+    if REG is None: return None, [], [], [], [], '영역 못찾음'
     page = doc[pi]
     seen = set(); objs = []
     for img in page.get_images(full=True):
@@ -250,6 +250,35 @@ def extract(round_, subj, num):
         return L and R
     inline_objs = [(x, r) for x, r in objs if _is_inline_rect(r)]
     block_objs = [(x, r) for x, r in objs if not _is_inline_rect(r)]   # xref 유지(객체추출 판단용)
+    # ── 선택지-이미지({{CHO}}): 보기 ①②③④⑤ 마커 바로 오른쪽에 이미지객체가 정렬되면 = 선택지가 그림(산점도·그래프 고르기).
+    #    뭉쳐 {{FIG}} strip 만들지 말고 보기번호별 객체를 직접추출(bleed 0). 매칭된 객체는 block_objs 에서 제거.
+    choices = []
+    _marks = {}
+    for _t, _sp in allsp:
+        _mm = re.match(r'^([①②③④⑤])', _t.strip())
+        if _mm and REG.x0 - 2 <= _sp.x0 < REG.x1 and REG.y0 <= _sp.y0 <= REG.y1:
+            _marks.setdefault(_mm.group(1), _sp)            # 첫 등장(문제영역 내)
+    _matched = []
+    for _lab in '①②③④⑤':
+        _mk = _marks.get(_lab)
+        if not _mk: continue
+        _mcy = (_mk.y0 + _mk.y1) / 2
+        _cand = sorted([(x, r) for x, r in block_objs
+                        if _mk.x1 - 6 <= r.x0 <= _mk.x1 + 45 and r.y0 - 8 <= _mcy <= r.y1 + 8],
+                       key=lambda xr: xr[1].x0)
+        if _cand: _matched.append((_lab, _cand[0]))
+    if len(_matched) >= 4:                                  # 보기 5개 중 4+ 가 이미지객체와 정렬 → 선택지-이미지
+        _stem = f'{round_}_{subj}_{num:02d}'; _used = set()
+        for _i, (_lab, (_xref, _r)) in enumerate(_matched):
+            try:
+                _info = doc.extract_image(_xref)
+                _fn = f'{_stem}_cho{_i}.{_info.get("ext", "png")}'
+                with open(f'{PUB}/{_fn}', 'wb') as _fp: _fp.write(_info['image'])
+                choices.append({'label': _lab, 'image': f'/problem-images/{_fn}'})
+                _used.add((round(_r.x0), round(_r.y0), round(_r.x1), round(_r.y1)))
+            except Exception: pass
+        block_objs = [(x, r) for x, r in block_objs
+                      if (round(r.x0), round(r.y0), round(r.x1), round(r.y1)) not in _used]
     # 블록 클러스터링 gap=8: HWP strip(한 도형의 조각, 간격 ~0-3px)은 합치되, 별개 도형(R₁·R₂처럼 간격 10-30px)은
     #   분리 → 각자 객체추출(깨끗). gap=20이면 R₁·R₂가 합쳐져 캡쳐로 빠지고 위 질문줄까지 bleed.
     cl = merge([r for x, r in block_objs], gap=8)
@@ -257,7 +286,7 @@ def extract(round_, subj, num):
     #   side-by-side 수식/조건박스·stray 선은 다른 컴포넌트라 자동 분리(가형12류 복구). 다중표 지원.
     tables = extract_table(page, REG)
     box_rects = detect_boxes(page, REG)   # 그려진 테두리 박스(도형 없는 증명/조건 문제도 박스만 있을 수 있음)
-    if not cl and not tables and not inline_objs and not box_rects: return None, [], [], [], '이미지·표 없음'
+    if not cl and not tables and not inline_objs and not box_rects and not choices: return None, [], [], [], [], '이미지·표 없음'
     cl = sorted(cl, key=lambda r: (r.y0, r.x0))
     # 캡션 [그림N] 단독을 클러스터에 합집합 (라벨 통째 캡처)
     caps = [(t, r) for t, r in spans_of(page) if re.match(r'^\[그림\s*\d+\]$', t) and REG.x0 - 5 <= r.x0 < REG.x1]
@@ -391,7 +420,7 @@ def extract(round_, subj, num):
         boxes.append({'start': re.sub(r'\s+', ' ', above[-1][4]).strip()[-14:] if above else '',
                       'end': re.sub(r'\s+', ' ', below[0][4]).strip()[:14] if below else '',
                       'bbox': list(b)})
-    return figs, inls, tables, boxes, None
+    return figs, inls, tables, boxes, choices, None
 
 
 import glob as _glob
@@ -406,14 +435,20 @@ def find_md(round_, subj, num):
     return None
 
 
-def apply_md(round_, subj, num, figs, inls, tables, boxes=None):
+def apply_md(round_, subj, num, figs, inls, tables, boxes=None, choices=None):
     """기존 searchable_text에 앵커로 {{FIGn}}·{{INLn}}·{{TABLEn}}·{{BOXn_START/END}} 삽입 + frontmatter 갱신."""
-    boxes = boxes or []
+    boxes = boxes or []; choices = choices or []
     md = find_md(round_, subj, num)
     if not md: return 'md 못찾음'
     txt = open(md, encoding='utf-8').read()
+    def _cho_block(): return 'choice_figures:\n' + '\n'.join(f'  - label: "{c["label"]}"\n    image: {c["image"]}' for c in choices)
     if os.environ.get('CROP_ONLY'):   # ★크롭 전용: figures 이미지 경로만 갱신(+재크롭), searchable_text·{{FIG}}위치·inline·tables 보존
-        if figs:
+        if choices:                   # 선택지-이미지: 잘못된 strip figures 제거 + choice_figures + searchable_text의 {{FIG}}마커 제거
+            txt = re.sub(r'\nfigures:\n(?:  - .*\n)*', '\n', txt)
+            txt = re.sub(r'\nchoice_figures:\n(?:  - .*\n| {4}.*\n)*', '\n', txt)
+            txt = re.sub(r'(\nproblem_image: .*\n)', lambda _m: _m.group(1) + _cho_block() + '\n', txt, count=1)
+            txt = re.sub(r'\n {2}\{\{FIG\d+\}\}(?= )?', '', txt)   # searchable_text 의 {{FIGn}} 마커 줄 제거(strip 사라짐)
+        elif figs:
             fb = 'figures:\n' + '\n'.join(f'  - image: {f["image"]}' for f in figs)
             if re.search(r'\nfigures:\n(?:  - .*\n)*', txt):
                 txt = re.sub(r'\nfigures:\n(?:  - .*\n)*', lambda _m: '\n' + fb + '\n', txt, count=1)
@@ -474,6 +509,9 @@ def apply_md(round_, subj, num, figs, inls, tables, boxes=None):
     if figs:
         figblock = '\n'.join(f'  - image: {f["image"]}' for f in figs)
         txt = re.sub(r'(\nproblem_image: .*\n)', r'\1figures:\n' + figblock + '\n', txt, count=1)
+    txt = re.sub(r'\nchoice_figures:\n(?:  - .*\n| {4}.*\n)*', '\n', txt)   # 기존 choice_figures 제거
+    if choices:                                                            # 선택지-이미지 → choice_figures(렌더러가 ①~⑤ 이미지로)
+        txt = re.sub(r'(\nproblem_image: .*\n)', lambda _m: _m.group(1) + _cho_block() + '\n', txt, count=1)
     if tables:
         tblock = '\n'.join('  - ' + json.dumps(t['rows'], ensure_ascii=False) for t in tables)
         txt = re.sub(r'(\nproblem_image: .*\n)', r'\1tables:\n' + tblock + '\n', txt, count=1)
@@ -484,8 +522,8 @@ def apply_md(round_, subj, num, figs, inls, tables, boxes=None):
 if __name__ == '__main__':
     args = [a for a in sys.argv[1:] if a != '--apply']
     do_apply = '--apply' in sys.argv
-    figs, inls, tables, boxes, err = extract(*args[:3])
+    figs, inls, tables, boxes, choices, err = extract(*args[:3])
     if err: print('FAIL:', err); sys.exit(1)
-    print(json.dumps({'figs': figs, 'inls': inls, 'tables': [t['rows'] for t in tables], 'boxes': boxes}, ensure_ascii=False, indent=2))
+    print(json.dumps({'figs': figs, 'inls': inls, 'tables': [t['rows'] for t in tables], 'boxes': boxes, 'choices': choices}, ensure_ascii=False, indent=2))
     if do_apply:
-        print('APPLY:', apply_md(*args[:3], figs, inls, tables, boxes) or 'OK')
+        print('APPLY:', apply_md(*args[:3], figs, inls, tables, boxes, choices) or 'OK')
