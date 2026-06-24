@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 export const prerender = false;
 
 const IDX = fileURLToPath(new URL('../../data/figure-triage.json', import.meta.url));
-const STATUSES = ['untriaged', 'reuse', 'redraw-2d', 'redraw-3d'];
+const STATUSES = ['untriaged', 'reuse', 'redraw-2d', 'redraw-3d', 'delete'];
 
 function json(d: unknown, s = 200): Response {
   return new Response(JSON.stringify(d), { status: s, headers: { 'content-type': 'application/json' } });

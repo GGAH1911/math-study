@@ -7,12 +7,15 @@
 **의사결정 트리:**
 ```
 figure 추출 → [트리아지]
+  ⓪ 애초에 유효한 도형인가?
+     · 아님(추출오류 — 본문 텍스트/잡음을 통째로 크롭. find_region region-bleed) → "삭제" : 제거 대상
   ① 이미지에 숫자/수식 박혀 있나? (변형 시 바뀌는 값)
      · 없음(글자라벨·추상도형만) → "재활용" : 원본 이미지 그대로. 안 그림.
      · 있음 → 재생성 필요 → ② 타입 분류
         · 2D 일반도형/그래프 → "2D 재생성" : 채점 루프(결정적 렌더 + 원본대비 적대적 검증)
         · 3D 그래픽         → "3D" : 사용자 확정 절차
 ```
+- ★**삭제**는 *마킹만* 한다(안전). 실제 제거(frontmatter figures에서 빼고 PNG 삭제)는 삭제목록 검토 후 일괄 정리 단계로 분리 → solution-loss류 풋건·오삭제 방지. 근본은 extract_figures region-bleed 수정(별도).
 - ★글자 라벨(A,B,M…)은 숫자/수식 아님. 디짓·`=`·√·첨자만 "있음"으로 판정.
 - 예: #19(정사면체, A~Q 라벨만) = **재활용**. #28(y=√2x 등 박힘) = **2D 재생성 + 3D**.
 
@@ -40,7 +43,7 @@ figure 추출 → [트리아지]
     "<image_path>": {                  // 키 = /problem-images/XXXX_fig0.png
       "problem_slug": "2019_고3_10월모의고사_가형_19",
       "figure_index": 0,
-      "status": "untriaged",           // untriaged | reuse | redraw-2d | redraw-3d
+      "status": "untriaged",           // untriaged | reuse | redraw-2d | redraw-3d | delete(추출오류)
       "suggested": "reuse",            // 자동제안(텍스트레이어/비전)
       "suggest_reason": "이미지에 숫자/수식 없음",
       "triaged_by": null,              // admin email
@@ -65,6 +68,15 @@ figure 추출 → [트리아지]
 - [x] 1.3 API `web/src/pages/api/figure-triage.ts` (POST 분류 저장) + middleware ADMIN_PATHS 등록 — 왕복 검증됨
 - [x] 1.4 어드민 페이지 `web/src/pages/dev/figure-triage.astro` — 썸네일 그리드+상태배지+분류버튼+탭/검색/페이지네이션
 - [x] 1.5 검증: 4325 렌더 OK, 분류 저장 왕복 OK, 기존 페이지(`/`·`/dev/rounds`·`/dev/corrector-gallery`) 회귀 0, 타입에러 수정
+- [x] 1.6 **삭제** 분류 추가 — 추출오류(region-bleed 텍스트크롭) 마킹용 버튼·배지·API(사용자 피드백)
+- [ ] 1.7 (later) 삭제 일괄정리 스크립트 — delete 마킹 검토 → frontmatter figures 제거 + PNG 백업 후 정리. extract_figures region-bleed 근본수정은 별도.
+
+### Phase 1.5 — ★선행: 레거시 크롭 정리 (트리아지 전에 필수)
+**발견(2026-06-24, 사용자 피드백):** 대시보드가 보여준 나쁜 크롭(가형_09·나형_21 등 png, 전부 06-21 01:54 배치)은 **옛 캡쳐-영역 폴백**이 본문+도형+보기를 통째 잡은 것. 현재 직접추출 로직은 정상(타이트 jpeg). 즉 입력 크롭 자체가 레거시 오염.
+- [ ] 1.5a stale 포인터 재동기화 — frontmatter가 .png 가리키는데 같은이름 .jpeg 존재 시 .jpeg로 (현재 **1건**: 나형_21). 인덱스 재빌드.
+- [ ] 1.5b 레거시 캡쳐-폴백 크롭 재추출 — `extract_figures.py`(솔루션 미접촉=안전)로 정상 재크롭+frontmatter 동기화. 규모 가늠 후 회차별 dry-run → 적용.
+- [ ] 1.5c 재추출 불가(진짜 도형 없음/잡음)만 **삭제** 후보로 남김.
+- 원칙: 크롭이 정상이어야 트리아지가 의미 있음. 쓰레기 크롭 분류 금지.
 
 ### Phase 2 — 2D 채점 루프 연결 (later)
 - [ ] redraw-2d 건을 기존 corrector/rubric 파이프라인으로 라우팅
