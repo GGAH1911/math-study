@@ -570,11 +570,12 @@
       "figure_index": 0,
       "status": "untriaged",
       "suggested": "reuse",
-      "suggest_reason": "\"○○ 모양의 도형\" 인라인 도형(junk 아님) → 재활용",
+      "suggest_reason": "인라인 도형(본문에 박힘) → 재활용",
       "triaged_by": null,
       "triaged_at": null,
       "notes": null,
-      "render3d": null
+      "render3d": null,
+      "inline_shape": true
     },
     "/problem-images/2019_고3_7월모의고사_나형_19_fig1.png": {
       "problem_slug": "2019_고3_7월모의고사_나형_19",
@@ -584,11 +585,12 @@
       "figure_index": 1,
       "status": "untriaged",
       "suggested": "reuse",
-      "suggest_reason": "숫자/수식 없음 (geometry)",
+      "suggest_reason": "인라인 도형(본문에 박힘) → 재활용",
       "triaged_by": null,
       "triaged_at": null,
       "notes": null,
-      "render3d": null
+      "render3d": null,
+      "inline_shape": true
     },
     "/problem-images/2019_고3_7월모의고사_나형_19_fig2.png": {
       "problem_slug": "2019_고3_7월모의고사_나형_19",
@@ -920,11 +922,12 @@
       "figure_index": 0,
       "status": "untriaged",
       "suggested": "reuse",
-      "suggest_reason": "숫자/수식 없음 (geometry)",
+      "suggest_reason": "인라인 도형(본문에 박힘) → 재활용",
       "triaged_by": null,
       "triaged_at": null,
       "notes": null,
-      "render3d": null
+      "render3d": null,
+      "inline_shape": true
     },
     "/problem-images/2020_6월모평_나형_17_fig1.png": {
       "problem_slug": "2020_6월모평_나형_17",
@@ -2250,11 +2253,12 @@
       "figure_index": 1,
       "status": "untriaged",
       "suggested": "reuse",
-      "suggest_reason": "숫자/수식 없음 (geometry)",
+      "suggest_reason": "인라인 도형(본문에 박힘) → 재활용",
       "triaged_by": null,
       "triaged_at": null,
       "notes": null,
-      "render3d": null
+      "render3d": null,
+      "inline_shape": true
     },
     "/problem-images/2021_6월모평_가형_08_fig0.png": {
       "problem_slug": "2021_6월모평_가형_08",
@@ -3720,11 +3724,12 @@
       "figure_index": 0,
       "status": "untriaged",
       "suggested": "reuse",
-      "suggest_reason": "\"○○ 모양의 도형\" 인라인 도형(junk 아님) → 재활용",
+      "suggest_reason": "인라인 도형(본문에 박힘) → 재활용",
       "triaged_by": null,
       "triaged_at": null,
       "notes": null,
-      "render3d": null
+      "render3d": null,
+      "inline_shape": true
     },
     "/problem-images/2021_고3_7월모의고사_미적분_26_fig1.png": {
       "problem_slug": "2021_고3_7월모의고사_미적분_26",
@@ -5875,12 +5880,13 @@
       "kind": "figure",
       "figure_index": 1,
       "status": "untriaged",
-      "suggested": null,
-      "suggest_reason": null,
+      "suggested": "reuse",
+      "suggest_reason": "인라인 도형(본문에 박힘) → 재활용",
       "triaged_by": null,
       "triaged_at": null,
       "notes": null,
-      "render3d": null
+      "render3d": null,
+      "inline_shape": true
     },
     "/problem-images/2023_고1_3월모의고사_단일_18_fig2.png": {
       "problem_slug": "2023_고1_3월모의고사_단일_18",
