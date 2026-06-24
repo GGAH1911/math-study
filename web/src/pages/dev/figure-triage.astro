@@ -21,12 +21,16 @@ for (const s of STATUSES) counts[s] = all.filter((f) => f.status === s).length;
 
 const url = Astro.url;
 const status = url.searchParams.get('status') ?? 'untriaged';
+const subj = url.searchParams.get('subj') ?? 'all';
 const q = (url.searchParams.get('q') ?? '').trim();
 const page = Math.max(1, Number(url.searchParams.get('page') ?? 1) || 1);
 const PER = 48;
+const SUBJECTS = ['가형', '나형', '공통', '미적분', '확률과통계', '기하', '단일'].filter((s) => all.some((f) => f.subject === s));
+const subjCount = (s: string) => all.filter((f) => f.subject === s).length;
 
 let rows = all;
 if (status !== 'all') rows = rows.filter((f) => f.status === status);
+if (subj !== 'all') rows = rows.filter((f) => f.subject === subj);
 if (q) rows = rows.filter((f) => f.problem_slug?.includes(q) || f.image?.includes(q));
 rows.sort((a, b) => (a.problem_slug || '').localeCompare(b.problem_slug || ''));
 const total = rows.length;
@@ -34,7 +38,7 @@ const pages = Math.max(1, Math.ceil(total / PER));
 const pageRows = rows.slice((page - 1) * PER, page * PER);
 
 const link = (over: Record<string, string>) => {
-  const p = new URLSearchParams({ status, ...(q ? { q } : {}), page: String(page), ...over });
+  const p = new URLSearchParams({ status, ...(subj !== 'all' ? { subj } : {}), ...(q ? { q } : {}), page: String(page), ...over });
   if (!over.page) p.set('page', '1');
   return '?' + p.toString();
 };
@@ -50,7 +54,8 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
   header{position:sticky;top:0;background:#161922;padding:10px 16px;border-bottom:1px solid #2a2f3a;z-index:5}
   h1{font-size:16px;margin:0 0 8px}
   .tabs a,.flt a{display:inline-block;padding:4px 10px;margin-right:6px;border-radius:6px;background:#222733;color:#cfd3dc;text-decoration:none;font-size:13px}
-  .tabs a.on{background:#1f6feb;color:#fff}
+  .tabs a.on,.flt a.on{background:#1f6feb;color:#fff}
+  .flt{margin-top:6px}
   .cnt{color:#9aa0a6;font-size:12px}
   form{display:inline}
   input{background:#222733;border:1px solid #2a2f3a;color:#e6e6e6;border-radius:6px;padding:4px 8px;width:240px}
@@ -74,7 +79,14 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
     {['all', ...STATUSES].map((s) => (
       <a class={status === s ? 'on' : ''} href={link({ status: s, page: '1' })}>{s === 'all' ? '전체' : label[s]} <span class="cnt">{counts[s] ?? 0}</span></a>
     ))}
-    <form><input type="hidden" name="status" value={status} /><input name="q" value={q} placeholder="문제 slug 검색…" /></form>
+    <form><input type="hidden" name="status" value={status} /><input type="hidden" name="subj" value={subj} /><input name="q" value={q} placeholder="문제 slug 검색…" /></form>
+  </div>
+  <div class="flt">
+    <span class="cnt">과목 </span>
+    <a class={subj === 'all' ? 'on' : ''} href={link({ subj: 'all', page: '1' })}>전체</a>
+    {SUBJECTS.map((s) => (
+      <a class={subj === s ? 'on' : ''} href={link({ subj: s, page: '1' })}>{s} <span class="cnt">{subjCount(s)}</span></a>
+    ))}
   </div>
 </header>
 
