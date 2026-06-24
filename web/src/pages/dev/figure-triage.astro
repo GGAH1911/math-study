@@ -1,7 +1,13 @@
 ---
 export const prerender = false;
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+
+// 캐시버스터: 이미지 mtime → 재크롭하면 같은 파일명이어도 브라우저가 최신을 받음
+const cacheKey = (img: string): string => {
+  try { return String(Math.floor(statSync(fileURLToPath(new URL('../../../public' + img, import.meta.url))).mtimeMs)); }
+  catch { return '0'; }
+};
 
 // figure-triage.json 읽기 (admin 게이팅은 middleware /dev/*)
 const IDX = fileURLToPath(new URL('../../data/figure-triage.json', import.meta.url));
@@ -75,7 +81,7 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
 <div class="grid">
   {pageRows.map((f) => (
     <div class="card" data-image={f.image}>
-      <div class="thumb"><img src={f.image} loading="lazy" alt="" /></div>
+      <div class="thumb"><img src={`${f.image}?v=${cacheKey(f.image)}`} loading="lazy" alt="" /></div>
       <div class="meta">
         <span class="bdg" style={`background:${badge[f.status]}`}>{label[f.status]}</span><br />
         {f.problem_slug}<br /><span class="cnt">{f.round} · {f.subject} · fig{f.figure_index}</span>

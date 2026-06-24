@@ -33,7 +33,7 @@ for (const slug of targets) {
   const round = parts[0], num = parts.slice(1).join('_' + subj + '_');
   try {
     execFileSync('python3', [join(REPO, 'web/scripts/extract_figures.py'), round, subj, num, '--apply'],
-      { cwd: REPO, stdio: 'pipe', timeout: 90000 });
+      { cwd: REPO, stdio: 'pipe', timeout: 90000, env: { ...process.env, CROP_ONLY: '1' } });  // ★crop-only: searchable_text 보존
     ok++;
   } catch (e) {
     fail++;

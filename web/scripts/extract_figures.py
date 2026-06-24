@@ -412,6 +412,15 @@ def apply_md(round_, subj, num, figs, inls, tables, boxes=None):
     md = find_md(round_, subj, num)
     if not md: return 'md 못찾음'
     txt = open(md, encoding='utf-8').read()
+    if os.environ.get('CROP_ONLY'):   # ★크롭 전용: figures 이미지 경로만 갱신(+재크롭), searchable_text·{{FIG}}위치·inline·tables 보존
+        if figs:
+            fb = 'figures:\n' + '\n'.join(f'  - image: {f["image"]}' for f in figs)
+            if re.search(r'\nfigures:\n(?:  - .*\n)*', txt):
+                txt = re.sub(r'\nfigures:\n(?:  - .*\n)*', lambda _m: '\n' + fb + '\n', txt, count=1)
+            else:
+                txt = re.sub(r'(\nproblem_image: .*\n)', lambda _m: _m.group(1) + fb + '\n', txt, count=1)
+        open(md, 'w', encoding='utf-8').write(txt)
+        return 'OK(crop-only)'
     m = re.search(r'\nsearchable_text: \|\n((?:  .*\n?)*)', txt)
     if not m: return 'searchable_text 없음'
     st = ' '.join(l.strip() for l in m.group(1).splitlines())
