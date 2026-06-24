@@ -241,13 +241,14 @@ def extract(round_, subj, num):
     #   블록 도형(질문↔선택지/우측)과 구분해 {{INLn}} 으로 분류 → reconstruct 가 본문 줄 중간에 인라인 렌더.
     def _is_inline_rect(r):
         if (r.y1 - r.y0) > 30: return False                      # 1 텍스트라인(~13pt) 넘게 크면 블록
-        L = R = False
+        L = R = anyL = anyR = False
         for t, sp in allsp:
-            if not re.search(r'[가-힣]', t): continue              # 본문 한글만
             if sp.y1 <= r.y0 + 2 or sp.y0 >= r.y1 - 2: continue    # y-밴드 안 겹침
-            if sp.x1 <= r.x0 + 3: L = True
-            if sp.x0 >= r.x1 - 3: R = True
-        return L and R
+            ko = bool(re.search(r'[가-힣]', t))                    # 본문 한글
+            if sp.x1 <= r.x0 + 3: anyL = True; L = L or ko         # 왼쪽 abutting(한글?)
+            if sp.x0 >= r.x1 - 3: anyR = True; R = R or ko         # 오른쪽 abutting(한글?)
+        # 인라인: 양쪽 한글, 또는 한쪽 한글 abutting + 반대쪽 줄경계(텍스트 없음)=줄바꿈된 인라인 도형(⌣ 모양 등)
+        return (L and R) or (R and not anyL) or (L and not anyR)
     inline_objs = [(x, r) for x, r in objs if _is_inline_rect(r)]
     block_objs = [(x, r) for x, r in objs if not _is_inline_rect(r)]   # xref 유지(객체추출 판단용)
     # ── 선택지-이미지({{CHO}}): 보기 ①②③④⑤ 마커 바로 오른쪽에 이미지객체가 정렬되면 = 선택지가 그림(산점도·그래프 고르기).
