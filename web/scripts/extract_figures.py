@@ -397,7 +397,11 @@ def extract(round_, subj, num):
         cands = [(sp, t) for t, sp in allsp
                  if re.search(r'[가-힣]', t) and sp.x1 <= r.x0 + 3
                  and not (sp.y1 <= r.y0 + 2 or sp.y0 >= r.y1 - 2)]
-        if not cands: return ''
+        if not cands:  # 줄 시작(왼쪽 텍스트 없음) → 바로 윗줄 끝 텍스트를 앵커로(줄바꿈된 인라인 도형)
+            above = [(sp, t) for t, sp in allsp if re.search(r'[가-힣]', t) and sp.y1 <= r.y0 + 2]
+            if not above: return ''
+            sp, t = max(above, key=lambda c: (c[0].y1, c[0].x1))
+            return re.sub(r'\s+', ' ', t).strip()[-12:]
         sp, t = max(cands, key=lambda c: c[0].x1)
         return re.sub(r'\s+', ' ', t).strip()[-12:]
     for x, r in inline_objs:
