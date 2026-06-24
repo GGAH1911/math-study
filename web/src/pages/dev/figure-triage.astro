@@ -22,15 +22,18 @@ for (const s of STATUSES) counts[s] = all.filter((f) => f.status === s).length;
 const url = Astro.url;
 const status = url.searchParams.get('status') ?? 'untriaged';
 const subj = url.searchParams.get('subj') ?? 'all';
+const sug = url.searchParams.get('sug') ?? 'all';
 const q = (url.searchParams.get('q') ?? '').trim();
 const page = Math.max(1, Number(url.searchParams.get('page') ?? 1) || 1);
 const PER = 48;
 const SUBJECTS = ['가형', '나형', '공통', '미적분', '확률과통계', '기하', '단일'].filter((s) => all.some((f) => f.subject === s));
 const subjCount = (s: string) => all.filter((f) => f.subject === s).length;
+const sugCount = (s: string) => all.filter((f) => f.suggested === s).length;
 
 let rows = all;
 if (status !== 'all') rows = rows.filter((f) => f.status === status);
 if (subj !== 'all') rows = rows.filter((f) => f.subject === subj);
+if (sug !== 'all') rows = rows.filter((f) => f.suggested === sug);
 if (q) rows = rows.filter((f) => f.problem_slug?.includes(q) || f.image?.includes(q));
 rows.sort((a, b) => (a.problem_slug || '').localeCompare(b.problem_slug || ''));
 const total = rows.length;
@@ -38,7 +41,7 @@ const pages = Math.max(1, Math.ceil(total / PER));
 const pageRows = rows.slice((page - 1) * PER, page * PER);
 
 const link = (over: Record<string, string>) => {
-  const p = new URLSearchParams({ status, ...(subj !== 'all' ? { subj } : {}), ...(q ? { q } : {}), page: String(page), ...over });
+  const p = new URLSearchParams({ status, ...(subj !== 'all' ? { subj } : {}), ...(sug !== 'all' ? { sug } : {}), ...(q ? { q } : {}), page: String(page), ...over });
   if (!over.page) p.set('page', '1');
   return '?' + p.toString();
 };
@@ -65,6 +68,7 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
   .thumb img{max-width:100%;max-height:100%;object-fit:contain}
   .meta{padding:7px 9px;font-size:12px;color:#aeb4bf;word-break:break-all}
   .bdg{display:inline-block;padding:1px 7px;border-radius:10px;color:#fff;font-size:11px;margin-bottom:4px}
+  .sug{margin-top:3px;font-size:11px;color:#cfd3dc}
   .btns{display:flex;gap:4px;padding:0 9px 9px;flex-wrap:wrap}
   .btns button{flex:1;min-width:54px;border:1px solid #2a2f3a;background:#222733;color:#cfd3dc;border-radius:6px;padding:5px 0;cursor:pointer;font-size:12px}
   .btns button:hover{background:#2a3140}
@@ -88,6 +92,13 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
       <a class={subj === s ? 'on' : ''} href={link({ subj: s, page: '1' })}>{s} <span class="cnt">{subjCount(s)}</span></a>
     ))}
   </div>
+  <div class="flt">
+    <span class="cnt">🤖제안 </span>
+    <a class={sug === 'all' ? 'on' : ''} href={link({ sug: 'all', page: '1' })}>전체</a>
+    {['reuse', 'redraw-2d', 'redraw-3d', 'delete'].map((s) => (
+      <a class={sug === s ? 'on' : ''} href={link({ sug: s, page: '1' })}>{label[s]} <span class="cnt">{sugCount(s)}</span></a>
+    ))}
+  </div>
 </header>
 
 <div class="grid">
@@ -97,6 +108,9 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
       <div class="meta">
         <span class="bdg" style={`background:${badge[f.status]}`}>{label[f.status]}</span><br />
         {f.problem_slug}<br /><span class="cnt">{f.round} · {f.subject} · fig{f.figure_index}</span>
+        {f.suggested && f.suggested !== f.status && (
+          <div class="sug">🤖 <b style={`color:${badge[f.suggested]}`}>{label[f.suggested]}</b> <span class="cnt">{f.suggest_reason}</span></div>
+        )}
       </div>
       <div class="btns">
         <button data-s="reuse">재활용</button>
