@@ -1,0 +1,172 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/두_직선이_이루는_각",
+ "spec": {
+  "title": "두 직선이 이루는 각",
+  "params": [
+   {
+    "name": "m1",
+    "label": "직선1의 기울기 m₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "m2",
+    "label": "직선2의 기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "a1=atan(m1); a2=atan(m2); num=abs(m1-m2); den=abs(1+m1*m2); tanT=num/den; theta=atan2(num,den); thetaDeg=theta*180/pi",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-3*cos(a1)",
+      "=-3*sin(a1)"
+     ],
+     "to": [
+      "=3*cos(a1)",
+      "=3*sin(a1)"
+     ],
+     "color": "#2563eb",
+     "label": "직선1 (m₁)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-3*cos(a2)",
+      "=-3*sin(a2)"
+     ],
+     "to": [
+      "=3*cos(a2)",
+      "=3*sin(a2)"
+     ],
+     "color": "#dc2626",
+     "label": "직선2 (m₂)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(a1)",
+      "=sin(a1)"
+     ],
+     "label": "v₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(a2)",
+      "=sin(a2)"
+     ],
+     "label": "v₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "교점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 m₁",
+    "expr": "m1",
+    "digits": 3
+   },
+   {
+    "label": "기울기 m₂",
+    "expr": "m2",
+    "digits": 3
+   },
+   {
+    "label": "tan θ = |(m₁−m₂)/(1+m₁m₂)|",
+    "expr": "tanT",
+    "digits": 4
+   },
+   {
+    "label": "이루는 각 θ (°)",
+    "expr": "thetaDeg",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "m2": 0
+   },
+   {
+    "m1": 2,
+    "m2": -3
+   },
+   {
+    "m1": -1,
+    "m2": 0.5
+   },
+   {
+    "m1": 3,
+    "m2": 2
+   }
+  ],
+  "invariants": [
+   "tan(theta)*den - num",
+   "cos(theta) - abs(1+m1*m2)/(sqrt(1+m1^2)*sqrt(1+m2^2))",
+   "theta - (pi/2 - abs(abs(a1-a2)-pi/2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "m2": 0
+    },
+    "expect": {
+     "tanT": 1,
+     "thetaDeg": 45
+    }
+   },
+   {
+    "params": {
+     "m1": 1,
+     "m2": -1
+    },
+    "expect": {
+     "thetaDeg": 90
+    }
+   },
+   {
+    "params": {
+     "m1": 0,
+     "m2": 0
+    },
+    "expect": {
+     "tanT": 0,
+     "thetaDeg": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/실근의_개수_판정",
+ "spec": {
+  "title": "실근의 개수 판정 (f(x)=c)",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (수평선 y=c)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "xmax = -1; xmin = 1; M = 2; m = -2; onCurveMax = M - (xmax^3 - 3*xmax); onCurveMin = m - (xmin^3 - 3*xmin); critMax = 3*xmax^2 - 3; critMin = 3*xmin^2 - 3; disc = 27*(4 - c^2); discFactored = -27*(c - M)*(c - m); discCheck = disc - discFactored; nroots = ((c > M or c < m) ? 1 : ((c < M and c > m) ? 3 : 2))",
+  "plot": {
+   "range": [
+    -2.3,
+    2.3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "y = f(x) = x³ - 3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "0*x + c",
+     "label": "y = c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상수 c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "극댓값 M",
+    "expr": "M",
+    "digits": 2
+   },
+   {
+    "label": "극솟값 m",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "판별식 D = 27(4−c²)",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "nroots",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": -3
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 1.5
+   },
+   {
+    "c": 3
+   }
+  ],
+  "invariants": [
+   "onCurveMax",
+   "onCurveMin",
+   "critMax",
+   "critMin",
+   "discCheck"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "nroots": 3,
+     "disc": 108
+    }
+   },
+   {
+    "params": {
+     "c": 3
+    },
+    "expect": {
+     "nroots": 1,
+     "disc": -135
+    }
+   },
+   {
+    "params": {
+     "c": 2
+    },
+    "expect": {
+     "nroots": 2,
+     "disc": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

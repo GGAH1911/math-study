@@ -1,0 +1,163 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/원점을_지나는_접선",
+ "spec": {
+  "title": "원점을 지나는 접선 — 조건 f(a)=a·f'(a)",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점의 x좌표 a",
+    "type": "slider",
+    "min": -0.5,
+    "max": 2,
+    "init": 0.4,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = exp(a); fpa = exp(a); slope = fpa; intercept = fa - slope*a; gap = fa - a*fpa; tanAtA = slope*a + intercept",
+  "geometry": {
+   "range": [
+    -2,
+    2.5
+   ],
+   "yRange": [
+    -4,
+    8.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "접점 (a, f(a))"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=fa"
+     ],
+     "label": "O→접점"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2,
+    2.5
+   ],
+   "yRange": [
+    -4,
+    8.5
+   ],
+   "fns": [
+    {
+     "fn": "exp(x)",
+     "label": "f(x)=e^x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "slope*(x - a) + fa",
+     "label": "접선 (a, f(a))",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "f'(a) = 접선 기울기",
+    "expr": "slope",
+    "digits": 4
+   },
+   {
+    "label": "접선의 y절편 = f(a) - a·f'(a)",
+    "expr": "gap",
+    "digits": 4
+   },
+   {
+    "label": "원점 통과 조건(=0이면 원점 지남)",
+    "expr": "gap",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 0.4
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 0
+   }
+  ],
+  "invariants": [
+   "slope - exp(a)",
+   "intercept - gap",
+   "tanAtA - fa",
+   "fa - exp(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 2.718281828459045,
+     "slope": 2.718281828459045,
+     "intercept": 0,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": 1,
+     "slope": 1,
+     "intercept": 1,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 7.38905609893065,
+     "slope": 7.38905609893065,
+     "intercept": -7.38905609893065,
+     "gap": -7.38905609893065
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

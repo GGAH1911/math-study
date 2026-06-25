@@ -1,0 +1,138 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/기울기의_범위",
+ "spec": {
+  "title": "기울기의 범위 — 접선의 기울기 f'(x)의 치역 (f(x)=x³−3x, 정의역 [−2, 2])",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점의 x좌표 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "px = a; py = px^3 - 3*px; m = 3*px^2 - 3; rangeMin = -3; rangeMax = 9",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*(x - px) + py",
+     "label": "접선 y=f'(a)(x−a)+f(a)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 a",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "접선의 기울기 f'(a)",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "기울기의 범위 최솟값 (a=0)",
+    "expr": "rangeMin",
+    "digits": 3
+   },
+   {
+    "label": "기울기의 범위 최댓값 (a=±2)",
+    "expr": "rangeMax",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": -1
+   }
+  ],
+  "invariants": [
+   "py - (px^3 - 3*px)",
+   "m - (3*px^2 - 3)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "px": 0,
+     "py": 0,
+     "m": -3
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "px": 1,
+     "py": -2,
+     "m": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "px": 2,
+     "py": 2,
+     "m": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

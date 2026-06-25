@@ -1,0 +1,137 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/운동과_거리",
+ "spec": {
+  "title": "운동과 거리: 변위 vs 이동거리",
+  "params": [
+   {
+    "name": "c",
+    "label": "방향 전환 시각 c",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.5,
+    "unit": "s"
+   },
+   {
+    "name": "b",
+    "label": "관찰 끝 시각 b",
+    "type": "slider",
+    "min": 0.5,
+    "max": 6,
+    "init": 4,
+    "step": 0.5,
+    "unit": "s"
+   }
+  ],
+  "scope": "m = min(b, c); bwd = c*m - m^2/2; fwd = (b > c) ? (b^2/2 - c*b + c^2/2) : 0; disp = b^2/2 - c*b; dist = (b > c) ? (b^2/2 - c*b + c^2) : (c*b - b^2/2); sb = b^2/2 - c*b; vb = b - c",
+  "plot": {
+   "range": [
+    0,
+    "=b"
+   ],
+   "yRange": [
+    -4.5,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x - c",
+     "label": "v(t)=t−c (속도)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs(x - c)",
+     "label": "|v(t)| (속력)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변위 ∫v dt",
+    "expr": "disp",
+    "digits": 2
+   },
+   {
+    "label": "이동거리 ∫|v| dt",
+    "expr": "dist",
+    "digits": 2
+   },
+   {
+    "label": "속도 v(b)",
+    "expr": "vb",
+    "digits": 2
+   },
+   {
+    "label": "위치 s(b)",
+    "expr": "sb",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 2,
+    "b": 4
+   },
+   {
+    "c": 2,
+    "b": 1
+   },
+   {
+    "c": 3,
+    "b": 4
+   },
+   {
+    "c": 1.5,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "disp - (fwd - bwd)",
+   "dist - (fwd + bwd)",
+   "disp - sb"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 2,
+     "b": 4
+    },
+    "expect": {
+     "disp": 0,
+     "dist": 4,
+     "vb": 2,
+     "sb": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2,
+     "b": 1
+    },
+    "expect": {
+     "disp": -1.5,
+     "dist": 1.5,
+     "vb": -1,
+     "sb": -1.5
+    }
+   },
+   {
+    "params": {
+     "c": 3,
+     "b": 4
+    },
+    "expect": {
+     "disp": -4,
+     "dist": 5,
+     "vb": 1,
+     "sb": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

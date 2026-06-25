@@ -1,0 +1,203 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/폐구간에서의_최댓값과_최솟값",
+ "spec": {
+  "title": "폐구간 [a,b]에서의 최댓값·최솟값 (f(x)=x³−3x)",
+  "params": [
+   {
+    "name": "a",
+    "label": "왼쪽 끝점 a",
+    "type": "slider",
+    "min": -2.2,
+    "max": -1.2,
+    "init": -1.5,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "오른쪽 끝점 b",
+    "type": "slider",
+    "min": 1.2,
+    "max": 2.2,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; fb = b^3 - 3*b; fc1 = 2; fc2 = -2; Mx = max(fa, fb, fc1, fc2); Mn = min(fa, fb, fc1, fc2)",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      -5
+     ],
+     "to": [
+      "=a",
+      5
+     ],
+     "label": "x=a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      -5
+     ],
+     "to": [
+      "=b",
+      5
+     ],
+     "label": "x=b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "A(끝점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=fb"
+     ],
+     "label": "B(끝점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      2
+     ],
+     "label": "극대 f'(x)=0"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      -2
+     ],
+     "label": "극소 f'(x)=0"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(b)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "최댓값 M",
+    "expr": "Mx",
+    "digits": 3
+   },
+   {
+    "label": "최솟값 m",
+    "expr": "Mn",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1.5,
+    "b": 1.5
+   },
+   {
+    "a": -2.2,
+    "b": 2.2
+   },
+   {
+    "a": -2,
+    "b": 2
+   },
+   {
+    "a": -1.2,
+    "b": 1.2
+   }
+  ],
+  "invariants": [
+   "3*(-1)^2 - 3",
+   "3*1^2 - 3",
+   "fa - (a^3 - 3*a)",
+   "fb - (b^3 - 3*b)",
+   "(Mx-fa)*(Mx-fb)*(Mx-fc1)*(Mx-fc2)",
+   "(Mn-fa)*(Mn-fb)*(Mn-fc1)*(Mn-fc2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1.5,
+     "b": 1.5
+    },
+    "expect": {
+     "fa": 1.125,
+     "fb": -1.125,
+     "Mx": 2,
+     "Mn": -2
+    }
+   },
+   {
+    "params": {
+     "a": -2.2,
+     "b": 2.2
+    },
+    "expect": {
+     "fa": -4.048,
+     "fb": 4.048,
+     "Mx": 4.048,
+     "Mn": -4.048
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 2
+    },
+    "expect": {
+     "fa": -2,
+     "fb": 2,
+     "Mx": 2,
+     "Mn": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

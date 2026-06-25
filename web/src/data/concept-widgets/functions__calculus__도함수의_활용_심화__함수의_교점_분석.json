@@ -1,0 +1,176 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/함수의_교점_분석",
+ "spec": {
+  "title": "함수의 교점 분석: 포물선 y=x²과 직선 y=mx+c",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "직선 y절편 c",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "disc = m^2 + 4*c; x1 = (m - sqrt(disc))/2; x2 = (m + sqrt(disc))/2; y1 = x1^2; y2 = x2^2",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -4,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "교점1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "교점2"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -4,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + c",
+     "label": "g(x)=mx+c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = m²+4c",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "교점 개수",
+    "expr": "disc>1e-9?2:(disc>-1e-9?1:0)",
+    "digits": 0
+   },
+   {
+    "label": "교점 x좌표 x₁",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점 x좌표 x₂",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "x₂에서 기울기 차 f'(x₂)−g'(x₂) (=√D)",
+    "expr": "2*x2 - m",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "c": 0
+   },
+   {
+    "m": 0,
+    "c": 4
+   },
+   {
+    "m": 2,
+    "c": 1
+   },
+   {
+    "m": 2,
+    "c": -1
+   }
+  ],
+  "invariants": [
+   "x1^2 - m*x1 - c",
+   "x2^2 - m*x2 - c",
+   "x1 + x2 - m",
+   "x1*x2 + c",
+   "y1 - (m*x1 + c)",
+   "y2 - x2^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "c": 0
+    },
+    "expect": {
+     "disc": 4,
+     "x1": 0,
+     "x2": 2,
+     "y1": 0,
+     "y2": 4
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "c": 4
+    },
+    "expect": {
+     "disc": 16,
+     "x1": -2,
+     "x2": 2,
+     "y1": 4,
+     "y2": 4
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "c": -1
+    },
+    "expect": {
+     "disc": 0,
+     "x1": 1,
+     "x2": 1,
+     "y1": 1,
+     "y2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

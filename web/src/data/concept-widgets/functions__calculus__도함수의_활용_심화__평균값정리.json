@@ -1,0 +1,186 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/평균값정리",
+ "spec": {
+  "title": "평균값정리: 할선과 평행한 접선 찾기",
+  "params": [
+   {
+    "name": "a",
+    "label": "구간 시작 a",
+    "type": "slider",
+    "min": 0,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "구간 끝 b",
+    "type": "slider",
+    "min": 2,
+    "max": 3,
+    "init": 2.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; fb = b^3 - 3*b; m = (fb - fa)/(b - a); c = sqrt((a^2 + a*b + b^2)/3); fc = c^3 - 3*c; fpc = 3*c^2 - 3",
+  "geometry": {
+   "range": [
+    -0.3,
+    3.2
+   ],
+   "yRange": [
+    -4,
+    19
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=fa"
+     ],
+     "to": [
+      "=b",
+      "=fb"
+     ],
+     "label": "할선",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=fb"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      "=fc"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -0.3,
+    3.2
+   ],
+   "yRange": [
+    -4,
+    19
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³-3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fc + fpc*(x - c)",
+     "label": "c에서의 접선",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균변화율 (할선 기울기)",
+    "expr": "m",
+    "digits": 4
+   },
+   {
+    "label": "f'(c) (접선 기울기)",
+    "expr": "fpc",
+    "digits": 4
+   },
+   {
+    "label": "평균값정리의 점 c",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "두 기울기 차이 (≈0)",
+    "expr": "fpc - m",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5,
+    "b": 2.5
+   },
+   {
+    "a": 0,
+    "b": 3
+   },
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": 1.5,
+    "b": 2.5
+   }
+  ],
+  "invariants": [
+   "fpc - m",
+   "m - (a^2 + a*b + b^2 - 3)",
+   "3*c^2 - (a^2 + a*b + b^2)",
+   "fc - (c^3 - 3*c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 3
+    },
+    "expect": {
+     "m": 6,
+     "c": 1.7320508,
+     "fpc": 6,
+     "fc": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "m": 4,
+     "c": 1.5275252,
+     "fpc": 4,
+     "fc": -1.0183502
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 2.5
+    },
+    "expect": {
+     "m": 4.75,
+     "c": 1.6072751,
+     "fpc": 4.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

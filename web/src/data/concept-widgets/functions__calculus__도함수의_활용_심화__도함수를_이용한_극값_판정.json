@@ -1,0 +1,156 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/도함수를_이용한_극값_판정",
+ "spec": {
+  "title": "도함수를 이용한 극값 판정 — f(x)=x³−3x",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 x=a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; slope = 3*a^2 - 3; sec = 6*a",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "(a, f(a))"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      2
+     ],
+     "label": "극대 (-1,2)"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      -2
+     ],
+     "label": "극소 (1,-2)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3",
+     "label": "f'(x)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "fa + slope*(x - a)",
+     "label": "x=a 에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f'(a) (접선 기울기)",
+    "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "f''(a)",
+    "expr": "sec",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": -1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": -0.3
+   }
+  ],
+  "invariants": [
+   "fa - (a^3 - 3*a)",
+   "slope - (3*a^2 - 3)",
+   "sec - 6*a",
+   "sec^2 - 12*(slope + 3)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": -2,
+     "slope": 0,
+     "sec": 6
+    }
+   },
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "fa": 2,
+     "slope": 0,
+     "sec": -6
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": 0,
+     "slope": -3,
+     "sec": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

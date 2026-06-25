@@ -1,0 +1,157 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/함수의_결정",
+ "spec": {
+  "title": "함수의 결정: f'(x)=2x 와 초기조건 f(a)=b",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (초기점 x)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b = f(a) (초기점 y)",
+    "type": "slider",
+    "min": -2,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "C = b - a^2",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "P(a, b)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=a",
+      "=b"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + C",
+     "label": "결정된 f(x)=x²+C",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^2",
+     "label": "같은 도함수 (C=0)",
+     "color": "#d1d5db"
+    },
+    {
+     "fn": "x^2 + 4",
+     "label": "같은 도함수 (C=4)",
+     "color": "#e5e7eb"
+    },
+    {
+     "fn": "x^2 - 2",
+     "label": "같은 도함수 (C=-2)",
+     "color": "#e5e7eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "적분상수 C = b - a²",
+    "expr": "C",
+    "digits": 3
+   },
+   {
+    "label": "검산 f(a) (= b 여야 함)",
+    "expr": "a^2 + C",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": 2,
+    "b": 6
+   },
+   {
+    "a": -2,
+    "b": 0
+   },
+   {
+    "a": 0,
+    "b": 4
+   }
+  ],
+  "invariants": [
+   "a^2 + C - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "C": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 6
+    },
+    "expect": {
+     "C": 2
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 0
+    },
+    "expect": {
+     "C": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

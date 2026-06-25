@@ -1,0 +1,188 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/극대극소",
+ "spec": {
+  "title": "삼차함수의 극대·극소 — 도함수의 부호 변화",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (극점 간격 조절)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "r=sqrt(a); xmax=-r; xmin=r; ymax=xmax^3-3*a*xmax; ymin=xmin^3-3*a*xmin; slopemax=3*xmax^2-3*a; slopemin=3*xmin^2-3*a",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=xmax",
+      "=ymax"
+     ],
+     "label": "극대"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xmin",
+      "=ymin"
+     ],
+     "label": "극소"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xmax-0.5",
+      "=ymax"
+     ],
+     "to": [
+      "=xmax+0.5",
+      "=ymax"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xmin-0.5",
+      "=ymin"
+     ],
+     "to": [
+      "=xmin+0.5",
+      "=ymin"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "fns": [
+    {
+     "fn": "x^3-3*a*x",
+     "label": "f(x)=x^3-3ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2-3*a",
+     "label": "f'(x)=3x^2-3a",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극대점 x=√a 좌측(-√a)",
+    "expr": "xmax",
+    "digits": 3
+   },
+   {
+    "label": "극댓값 f(-√a)",
+    "expr": "ymax",
+    "digits": 3
+   },
+   {
+    "label": "극소점 x=√a",
+    "expr": "xmin",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f(√a)",
+    "expr": "ymin",
+    "digits": 3
+   },
+   {
+    "label": "f'(극대점) (=0이어야)",
+    "expr": "slopemax",
+    "digits": 3
+   },
+   {
+    "label": "f'(극소점) (=0이어야)",
+    "expr": "slopemin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 2.5
+   }
+  ],
+  "invariants": [
+   "slopemax",
+   "slopemin",
+   "ymax-2*a*sqrt(a)",
+   "ymin+2*a*sqrt(a)",
+   "ymax+ymin",
+   "xmax^2-a",
+   "xmin^2-a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "xmax": -1,
+     "ymax": 2,
+     "xmin": 1,
+     "ymin": -2,
+     "slopemax": 0,
+     "slopemin": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.25
+    },
+    "expect": {
+     "xmax": -0.5,
+     "ymax": 0.25,
+     "xmin": 0.5,
+     "ymin": -0.25
+    }
+   },
+   {
+    "params": {
+     "a": 2.25
+    },
+    "expect": {
+     "xmax": -1.5,
+     "ymax": 6.75,
+     "xmin": 1.5,
+     "ymin": -6.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

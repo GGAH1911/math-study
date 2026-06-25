@@ -1,0 +1,133 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/속도",
+ "spec": {
+  "title": "속도: 위치 함수의 미분과 접선의 기울기",
+  "params": [
+   {
+    "name": "a",
+    "label": "시각 t",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": "s"
+   }
+  ],
+  "scope": "sa = -a^2 + 4*a; va = -2*a + 4; speed = abs(va)",
+  "geometry": {
+   "range": [
+    -0.5,
+    4.5
+   ],
+   "yRange": [
+    -3,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=sa"
+     ],
+     "label": "P(t, s(t))"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -0.5,
+    4.5
+   ],
+   "yRange": [
+    -3,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "-x^2 + 4*x",
+     "label": "위치 s(t) = -t² + 4t",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "sa + va*(x - a)",
+     "label": "점 P에서의 접선 (기울기 = 속도 v(t))",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위치 s(t)",
+    "expr": "sa",
+    "digits": 2
+   },
+   {
+    "label": "속도 v(t) = s'(t)",
+    "expr": "va",
+    "digits": 2
+   },
+   {
+    "label": "속력 |v(t)|",
+    "expr": "speed",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "va^2 + 4*sa - 16",
+   "speed - abs(va)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "sa": 0,
+     "va": 4,
+     "speed": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "sa": 4,
+     "va": 0,
+     "speed": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "sa": 3,
+     "va": -2,
+     "speed": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,179 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/함수의_극값",
+ "spec": {
+  "title": "함수의 극값 — 극대·극소와 f'(x)=0",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (모양 조절)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "xmax = -sqrt(a); xmin = sqrt(a); ymax = xmax^3 - 3*a*xmax; ymin = xmin^3 - 3*a*xmin; dmax = 3*xmax^2 - 3*a; dmin = 3*xmin^2 - 3*a",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=xmax",
+      "=ymax"
+     ],
+     "label": "극대"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xmin",
+      "=ymin"
+     ],
+     "label": "극소"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xmax-0.5",
+      "=ymax"
+     ],
+     "to": [
+      "=xmax+0.5",
+      "=ymax"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xmin-0.5",
+      "=ymin"
+     ],
+     "to": [
+      "=xmin+0.5",
+      "=ymin"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*a*x",
+     "label": "f(x)=x³-3ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3*a",
+     "label": "f'(x)=3x²-3a",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극대점 x",
+    "expr": "xmax",
+    "digits": 3
+   },
+   {
+    "label": "극댓값 f",
+    "expr": "ymax",
+    "digits": 3
+   },
+   {
+    "label": "극소점 x",
+    "expr": "xmin",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f",
+    "expr": "ymin",
+    "digits": 3
+   },
+   {
+    "label": "f'(극점)",
+    "expr": "dmax",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 0.25
+   },
+   {
+    "a": 0.81
+   },
+   {
+    "a": 1.44
+   }
+  ],
+  "invariants": [
+   "dmax",
+   "dmin",
+   "xmax+xmin",
+   "ymax+ymin",
+   "ymax - ymin - 4*a^1.5"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "xmax": -1,
+     "xmin": 1,
+     "ymax": 2,
+     "ymin": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0.25
+    },
+    "expect": {
+     "xmax": -0.5,
+     "xmin": 0.5,
+     "ymax": 0.25,
+     "ymin": -0.25
+    }
+   },
+   {
+    "params": {
+     "a": 0.81
+    },
+    "expect": {
+     "xmax": -0.9,
+     "xmin": 0.9,
+     "ymax": 1.458,
+     "ymin": -1.458
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

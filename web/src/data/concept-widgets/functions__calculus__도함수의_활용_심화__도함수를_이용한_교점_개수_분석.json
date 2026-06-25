@@ -1,0 +1,124 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/도함수를_이용한_교점_개수_분석",
+ "spec": {
+  "title": "도함수를 이용한 교점 개수 분석 (y=x³−3x 와 y=k)",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (직선 y=k)",
+    "type": "slider",
+    "min": -3.5,
+    "max": 3.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "hmax = 2 - k; hmin = -2 - k; prd = hmax*hmin; cnt = 2 - sign(prd)",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "0*x + k",
+     "label": "g(x)=k",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "x^3 - 3*x - k",
+     "label": "h(x)=f−g",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "h 극댓값 (2−k)",
+    "expr": "hmax",
+    "digits": 2
+   },
+   {
+    "label": "h 극솟값 (−2−k)",
+    "expr": "hmin",
+    "digits": 2
+   },
+   {
+    "label": "극값의 곱 (양수=1교점·0=접함2교점·음수=3교점)",
+    "expr": "prd",
+    "digits": 2
+   },
+   {
+    "label": "교점 개수",
+    "expr": "cnt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0
+   },
+   {
+    "k": 1.5
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": -2.5
+   }
+  ],
+  "invariants": [
+   "hmax - hmin - 4",
+   "prd - (k^2 - 4)",
+   "cnt - 2 + sign(prd)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "hmax": 2,
+     "hmin": -2,
+     "prd": -4,
+     "cnt": 3
+    }
+   },
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "hmax": 0,
+     "hmin": -4,
+     "prd": 0,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "hmax": -1,
+     "hmin": -5,
+     "prd": 5,
+     "cnt": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
