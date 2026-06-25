@@ -283,6 +283,12 @@ def extract(round_, subj, num):
     # 블록 클러스터링 gap=8: HWP strip(한 도형의 조각, 간격 ~0-3px)은 합치되, 별개 도형(R₁·R₂처럼 간격 10-30px)은
     #   분리 → 각자 객체추출(깨끗). gap=20이면 R₁·R₂가 합쳐져 캡쳐로 빠지고 위 질문줄까지 bleed.
     cl = merge([r for x, r in block_objs], gap=8)
+    # ★WHOLE_FIG: 재활용 복합도형(R₁/R₂/R₃ 같은 반복도형)은 개별 객체/클러스터로 쪼개지 말고 전체를 한 영역으로
+    #   통합 캡처 → 원본 레이아웃 그대로 1장(재활용이므로 객체 분해 불필요). 본문 줄 침투는 아래 캡처 clip 이 막음.
+    if os.environ.get('WHOLE_FIG') and len(cl) > 1:
+        whole = +cl[0]
+        for r in cl[1:]: whole.include_rect(r)
+        cl = [whole]
     # 표 감지: 연결요소 격자(객체)로 — 내용 휴리스틱(classify_box) 폐기. ≥2행2열 규칙격자만 데이터표.
     #   side-by-side 수식/조건박스·stray 선은 다른 컴포넌트라 자동 분리(가형12류 복구). 다중표 지원.
     tables = extract_table(page, REG)
