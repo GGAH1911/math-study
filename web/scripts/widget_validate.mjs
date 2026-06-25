@@ -6,6 +6,7 @@
 //   ★카나리아: --canary 로 정답spec 통과 & 깨진spec reject 확인(검증기 자가진단). 실패=검증기 고장.
 // 사용: node web/scripts/widget_validate.mjs <specFile> <recipeFile>   |   --canary
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { create, all } from 'mathjs';
 const math = create(all);
 
@@ -64,10 +65,19 @@ function canary() {
   process.exit(pass ? 0 : 1);
 }
 
-const argv = process.argv.slice(2);
-if (argv[0] === '--canary') canary();
-else if (argv.length >= 2) {
-  const r = validate(JSON.parse(readFileSync(argv[0], 'utf8')), JSON.parse(readFileSync(argv[1], 'utf8')));
-  console.log(r.ok ? '✓ PASS' : '✗ FAIL\n' + r.fails.map((f) => '  - ' + f).join('\n'));
-  process.exit(r.ok ? 0 : 1);
-} else { console.log('사용: --canary | <specFile> <recipeFile>'); process.exit(2); }
+// ★main-guard: import 시엔 CLI 안 돔(워커풀이 validate 를 import 함)
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  const argv = process.argv.slice(2);
+  if (argv[0] === '--canary') canary();
+  else if (argv.length === 1) {   // 통합 {id,spec,recipe} 파일
+    const o = JSON.parse(readFileSync(argv[0], 'utf8'));
+    const r = validate(o.spec, o.recipe);
+    console.log(`${o.id || argv[0]}: ${r.ok ? '✓ PASS' : '✗ FAIL'}`);
+    if (!r.ok) r.fails.forEach((f) => console.log('  - ' + f));
+    process.exit(r.ok ? 0 : 1);
+  } else if (argv.length >= 2) {
+    const r = validate(JSON.parse(readFileSync(argv[0], 'utf8')), JSON.parse(readFileSync(argv[1], 'utf8')));
+    console.log(r.ok ? '✓ PASS' : '✗ FAIL\n' + r.fails.map((f) => '  - ' + f).join('\n'));
+    process.exit(r.ok ? 0 : 1);
+  } else { console.log('사용: --canary | <combined> | <spec> <recipe>'); process.exit(2); }
+}
