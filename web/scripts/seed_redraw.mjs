@@ -11,7 +11,9 @@ for (const d of [SPECS, LOGDIR]) if (!existsSync(d)) mkdirSync(d, { recursive: t
 const A = process.argv.slice(2);
 const getOpt = (k, d) => { const i = A.indexOf(k); return i >= 0 && A[i + 1] ? A[i + 1] : d; };
 const N = parseInt(getOpt('--n', '15'), 10);
-const PAR = parseInt(getOpt('--par', '2'), 10);   // gemma 최대 2병렬
+const PAR = parseInt(getOpt('--par', '2'), 10);   // 측정 병렬(2)
+const MEAS = process.env.MEASURE_SCRIPT || 'redraw_opus_measure.mjs';   // ★기본 Opus 원샷측정(품질·반복 degrade 회피). gemma_measure.mjs 로 오버라이드
+const REMEASURE = A.includes('--remeasure');   // 기존 갤러리를 재측정(gemma시드/저품질 → Opus)
 const LOG = `${LOGDIR}/seed_redraw_${Math.floor(Date.now() / 1000)}.log`;
 const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); appendFileSync(LOG, l + '\n'); };
 
@@ -27,10 +29,17 @@ function bonmun(id) {
 }
 const idx = JSON.parse(readFileSync(`${REPO}/web/src/data/figure-triage.json`, 'utf8'));
 const have = new Set(readdirSync(SPECS).map((f) => f.replace('.json', '')));
-const cands = Object.entries(idx.figures)
-  .filter(([, v]) => v.suggested === 'redraw-2d' && /graph/.test(v.suggest_reason || ''))
-  .map(([k, v]) => ({ id: v.problem_slug, img: k }))
-  .filter((c) => !have.has(c.id)).slice(0, N);
+let cands;
+if (REMEASURE) {   // 기존 갤러리 Opus 원샷 재측정
+  const only = getOpt('--list', null);
+  const ids = only ? only.split(',').map((s) => s.trim()).filter(Boolean) : [...have];
+  cands = ids.map((id) => { try { const s = JSON.parse(readFileSync(`${SPECS}/${id}.json`, 'utf8')); return { id, img: s.img }; } catch { return null; } }).filter(Boolean).slice(0, N);
+} else {   // 신규 도형
+  cands = Object.entries(idx.figures)
+    .filter(([, v]) => v.suggested === 'redraw-2d' && /graph/.test(v.suggest_reason || ''))
+    .map(([k, v]) => ({ id: v.problem_slug, img: k }))
+    .filter((c) => !have.has(c.id)).slice(0, N);
+}
 
 async function seed(c) {
   const bm = bonmun(c.id);
@@ -39,8 +48,8 @@ async function seed(c) {
   if (!existsSync(img)) { log(`✗ ${c.id} 이미지없음`); return; }
   const bf = `/tmp/seed_b_${c.id}.txt`; writeFileSync(bf, bm);
   const out = `/tmp/seed_s_${c.id}.json`;
-  await new Promise((res) => { const p = spawn('node', [`${REPO}/web/scripts/gemma_measure.mjs`, img, bf, out], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 180000 }); p.on('close', res); p.on('error', res); });
-  if (existsSync(out)) { try { const spec = JSON.parse(readFileSync(out, 'utf8')); if (!(spec.curves || []).length && !(spec.points || []).length) { log(`✗ ${c.id} 빈spec`); return; } writeFileSync(`${SPECS}/${c.id}.json`, JSON.stringify({ id: c.id, img: c.img, spec, note: 'gemma seed' })); log(`✓ ${c.id} (곡선 ${(spec.curves || []).length})`); } catch { log(`✗ ${c.id} 파싱실패`); } }
+  await new Promise((res) => { const p = spawn('node', [`${REPO}/web/scripts/${MEAS}`, img, bf, out], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 300000 }); p.on('close', res); p.on('error', res); });
+  if (existsSync(out)) { try { const spec = JSON.parse(readFileSync(out, 'utf8')); if (!(spec.curves || []).length && !(spec.points || []).length) { log(`✗ ${c.id} 빈spec`); return; } writeFileSync(`${SPECS}/${c.id}.json`, JSON.stringify({ id: c.id, img: c.img, spec, note: MEAS.includes('opus') ? 'opus 원샷측정' : 'gemma seed' })); log(`✓ ${c.id} (라벨 ${(spec.texts || []).length + (spec.points || []).filter((p) => p.label).length})`); } catch { log(`✗ ${c.id} 파싱실패`); } }
   else log(`✗ ${c.id} gemma무응답`);
 }
 (async () => {
