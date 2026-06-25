@@ -99,9 +99,10 @@ export default function SineUnitCircle() {
 
   useEffect(() => {
     ensureKatex().then((katex) => {
+      if (!katex) return;
       const s = Math.sin((angle * Math.PI) / 180);
-      if (f1Ref.current) katex.render(`\\sin(${angle.toFixed(1)}^\\circ)=\\frac{\\text{대변 (활시위의 절반)}}{\\text{빗변 } r}=\\frac{${s.toFixed(4)}}{1}=${s.toFixed(4)}`, f1Ref.current, { displayMode: true, throwOnError: false });
-      if (f2Ref.current) katex.render(`\\text{활시위 전체}=2\\times\\sin(${angle.toFixed(1)}^\\circ)=${(s * 2).toFixed(4)}`, f2Ref.current, { displayMode: true, throwOnError: false });
+      if (f1Ref.current) f1Ref.current.innerHTML = katex.renderToString(`\\sin(${angle.toFixed(1)}^\\circ)=\\frac{\\text{대변 (활시위의 절반)}}{\\text{빗변 } r}=\\frac{${s.toFixed(4)}}{1}=${s.toFixed(4)}`, { displayMode: true, throwOnError: false });
+      if (f2Ref.current) f2Ref.current.innerHTML = katex.renderToString(`\\text{활시위 전체}=2\\times\\sin(${angle.toFixed(1)}^\\circ)=${(s * 2).toFixed(4)}`, { displayMode: true, throwOnError: false });
     }).catch(() => {});
   }, [angle]);
 
