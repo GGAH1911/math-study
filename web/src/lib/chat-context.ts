@@ -690,6 +690,8 @@ export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'pro
     .map((c) => `  - ${c.slug}${c.grade ? ` (${c.grade})` : ''}`)
     .join('\n');
 
+  const widget = collection === 'concepts' ? widgetForConcept(pageSlug) : null;
+
   const systemPrompt = `당신은 한국 수능을 준비하는 학생의 수학 튜터입니다.
 
 학생의 현재 수준은 **특정 학년·수준으로 고정 가정하지 말 것** — 대화 맥락과 (제공되면)
@@ -702,7 +704,11 @@ Mastery: ${currentMastery}${userMastery ? ' (이 학생의 실제 현재 상태)
 
 본문 (학생이 보고 있는 페이지):
 ${page.body.trim().slice(0, 2000)}
-
+${widget ? `
+--- 이 페이지의 인터랙티브 위젯 (그래픽 그리기보다 우선 활용) ---
+본문 위에 **${widget.label}** 위젯이 이미 떠 있습니다. ${widget.tutorHint}
+학생이 시각적 이해가 필요하거나 막힐 때, 직접 그래픽을 그리기 전에 먼저 "위 위젯에서 θ(각도)를 드래그해서 ___ 를 확인해보세요" 처럼 그 위젯을 직접 조작하도록 구체적으로 안내하고, 무엇을 보게 될지 짚어 주세요 — 학생이 직접 만지며 이해하는 게 더 효과적입니다.
+` : ''}
 --- 직접 선수 개념 (prerequisites) ---
 ${prereqInfo || '(없음 — 기초 노드)'}
 
