@@ -1,10 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { ensureKatex, renderMathSegments } from '../lib/mathish';
 
-// 기출 redraw 그래프 전용 렌더러 — 학습노트/튜터와 같은 function-plot 엔진 +
-//   라벨은 KaTeX SSOT(mathish: ensureKatex/renderMathSegments)로 foreignObject 렌더.
-//   curves(함수식·fill) · lines(직선/세로선/점근선) · points(라벨·빈원/채운원) · regions(다각형 음영) · texts(자유 라벨).
-//   ★라벨 text/label 은 KaTeX TeX (예 "y=\\log_{2}x"·"x=\\frac{\\pi}{2}"). $ 없으면 자동으로 감싼다.
+// 기출 redraw 그래프 렌더러 — function-plot 곡선/음영/직선 + 라벨은 KaTeX SSOT(mathish).
+//   ★라벨은 SVG 안(foreignObject·클립패스 quirk로 잘림)이 아니라 **wrapper 위 HTML overlay div**로 렌더:
+//   일반 HTML이라 폭 실측 정확 + 캔버스 안 클램프 신뢰. text/label 은 KaTeX TeX($ 없으면 자동 감쌈).
 export type RPSpec = {
   range: [number, number];
   yRange: [number, number];
@@ -16,12 +15,11 @@ export type RPSpec = {
   title?: string;
 };
 
-// (dx=앵커 가로offset, dy=라벨박스 top offset). H=30 기준.
+// dx=앵커 가로offset, dy=라벨박스 top offset(라벨 높이 ~18px 기준)
 const DIR: Record<string, [number, number]> = {
-  '위': [0, -34], '아래': [0, 3], '좌': [-6, -15], '우': [6, -15],
-  '좌하': [-6, 2], '우하': [6, 2], '좌상': [-6, -30], '우상': [6, -30],
+  '위': [0, -20], '아래': [0, 6], '좌': [-8, -9], '우': [8, -9],
+  '좌하': [-8, 3], '우하': [8, 3], '좌상': [-8, -20], '우상': [8, -20],
 };
-const XHTML = 'http://www.w3.org/1999/xhtml';
 
 export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: RPSpec; width?: number; height?: number }) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -29,8 +27,9 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
     let cancel = false;
     Promise.all([import('function-plot'), ensureKatex()]).then(([mod, katex]) => {
       const fp = ((mod as unknown as { default?: unknown }).default ?? mod) as (o: unknown) => { meta: { xScale: (n: number) => number; yScale: (n: number) => number } };
-      if (cancel || !ref.current) return;
-      ref.current.innerHTML = '';
+      const wrap = ref.current;
+      if (cancel || !wrap) return;
+      wrap.innerHTML = '';
       const data: Array<Record<string, unknown>> = [];
       for (const c of spec.curves ?? []) {
         const d: Record<string, unknown> = { fn: c.fn, color: '#1a1a1a', graphType: 'polyline', nSamples: 900 };
@@ -42,17 +41,16 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
       if (closedPts.length) data.push({ points: closedPts, fnType: 'points', graphType: 'scatter', color: '#1a1a1a' });
       let inst;
       try {
-        inst = fp({ target: ref.current, width, height, grid: false, xAxis: { domain: spec.range }, yAxis: { domain: spec.yRange }, tip: { xLine: false, yLine: false }, data });
-      } catch (e) { if (ref.current) ref.current.textContent = 'plot err: ' + e; return; }
+        inst = fp({ target: wrap, width, height, grid: false, xAxis: { domain: spec.range }, yAxis: { domain: spec.yRange }, tip: { xLine: false, yLine: false }, data });
+      } catch (e) { wrap.textContent = 'plot err: ' + e; return; }
       try {
         const xS = inst.meta.xScale, yS = inst.meta.yScale;
-        const svg = ref.current.querySelector('svg');
+        const svg = wrap.querySelector('svg');
         const content = (svg?.querySelector('.content') ?? svg) as SVGElement | null;
         const NS = 'http://www.w3.org/2000/svg';
-        // 교과서식 정제: 데이터 선 굵게 + function-plot 기본 눈금/축 제거(자체 축으로 대체)
         svg?.querySelectorAll('path').forEach((p) => (p as Element).setAttribute('stroke-width', '1.9'));
         svg?.querySelectorAll('.tick, .domain, .x.axis, .y.axis').forEach((t) => t.remove());
-        svg?.querySelectorAll('[clip-path]').forEach((e) => e.removeAttribute('clip-path'));  // ★플롯영역 클립 제거 — 여백의 라벨(곡선식·축눈금)이 잘리던 원인
+        svg?.querySelectorAll('[clip-path]').forEach((e) => e.removeAttribute('clip-path'));
         // 굵은 x·y축 + 화살표
         const defs = document.createElementNS(NS, 'defs');
         defs.innerHTML = '<marker id="rax" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>';
@@ -74,31 +72,7 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
           poly.setAttribute('fill', '#c9c9c9'); poly.setAttribute('fill-opacity', String(rg.opacity ?? 0.5)); poly.setAttribute('stroke', 'none');
           content?.insertBefore(poly, content?.firstChild ?? null);
         }
-        // KaTeX 라벨 = foreignObject. dir 로 정렬(좌=우측정렬·중앙=가운데). px,py=앵커 투영좌표.
-        const H = 30;
-        const measEl = document.createElement('div');   // off-screen 실측용(SVG 밖 일반 HTML → 정확한 폭)
-        measEl.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font-size:15.5px;';
-        document.body.appendChild(measEl);
-        const addLabel = (tex: string, px: number, py: number, dir?: string) => {
-          const wrapped = /\$/.test(tex) ? tex : `$${tex}$`;
-          let html = tex;
-          try { if (katex) html = renderMathSegments(wrapped, katex); } catch { /* plain */ }
-          measEl.innerHTML = html;
-          const w2 = Math.max(measEl.getBoundingClientRect().width, measEl.scrollWidth, tex.length * 8) * 1.32 + 8;   // 실측 + 여유(KaTeX 실폭 보정 → 클립/잘림 방지)
-          const d = dir ?? '우상';
-          const [dx, dy] = DIR[d] ?? [6, -30];
-          const ax2 = px + dx;
-          let fx = d.includes('좌') ? ax2 - w2 : (d === '위' || d === '아래') ? ax2 - w2 / 2 : ax2;
-          fx = Math.max(2, Math.min(fx, width - w2 - 2));   // 캔버스 안 클램프(잘림 방지)
-          const fo = document.createElementNS(NS, 'foreignObject');
-          fo.setAttribute('x', String(fx)); fo.setAttribute('y', String(Math.max(0, Math.min(py + dy, height - H))));
-          fo.setAttribute('width', String(Math.ceil(w2) + 20)); fo.setAttribute('height', String(H)); fo.setAttribute('overflow', 'visible');
-          const div = document.createElementNS(XHTML, 'div') as unknown as HTMLDivElement;
-          div.setAttribute('style', `font-size:15.5px;color:#111;white-space:nowrap;line-height:${H}px;height:${H}px;`);
-          div.innerHTML = html;
-          fo.appendChild(div); content?.appendChild(fo);
-        };
-        for (const p of spec.points ?? []) {   // 빈원(불연속)은 즉시
+        for (const p of spec.points ?? []) {   // 빈원(불연속)
           if (p.open) {
             const c = document.createElementNS(NS, 'circle');
             c.setAttribute('cx', String(xS(p.x))); c.setAttribute('cy', String(yS(p.y))); c.setAttribute('r', '4.5');
@@ -106,11 +80,28 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
             content?.appendChild(c);
           }
         }
-        // ★라벨은 폰트(KaTeX) 로드 후 렌더 — getBoundingClientRect 폭이 정확해야 클램프/정렬이 맞는다(폰트 전엔 0/오측정).
+        // ★라벨 = wrapper 위 HTML overlay div(SVG 밖). 폰트 로드 후 실측·클램프.
+        const addLabel = (tex: string, sx: number, sy: number, dir?: string) => {
+          const wrapped = /\$/.test(tex) ? tex : `$${tex}$`;
+          let html = tex;
+          try { if (katex) html = renderMathSegments(wrapped, katex); } catch { /* plain */ }
+          const lab = document.createElement('div');
+          lab.style.cssText = 'position:absolute;white-space:nowrap;font-size:15.5px;color:#111;pointer-events:none;line-height:1.1;';
+          lab.innerHTML = html;
+          wrap.appendChild(lab);
+          const r = lab.getBoundingClientRect();
+          const w2 = r.width || tex.length * 9, h2 = r.height || 18;
+          const d = dir ?? '우상';
+          const [dx, dy] = DIR[d] ?? [8, -20];
+          const axx = sx + dx;
+          let lx = d.includes('좌') ? axx - w2 : (d === '위' || d === '아래') ? axx - w2 / 2 : axx;
+          lx = Math.max(1, Math.min(lx, width - w2 - 1));
+          const ly = Math.max(1, Math.min(sy + dy, height - h2 - 1));
+          lab.style.left = `${lx}px`; lab.style.top = `${ly}px`;
+        };
         const doLabels = () => {
           for (const tx of spec.texts ?? []) addLabel(tx.text, xS(tx.x), yS(tx.y), tx.dir);
           for (const p of spec.points ?? []) if (p.label) addLabel(p.label, xS(p.x), yS(p.y), p.dir ?? '우상');
-          measEl.remove();
           (window as unknown as { __figReady?: boolean }).__figReady = true;
         };
         const fr = (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts?.ready;
@@ -119,5 +110,5 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
     });
     return () => { cancel = true; };
   }, [JSON.stringify(spec), width, height]);
-  return <div ref={ref} style={{ background: '#fff', borderRadius: 8, padding: 4 }} />;
+  return <div ref={ref} style={{ position: 'relative', background: '#fff', borderRadius: 8, width, height, overflow: 'hidden' }} />;
 }

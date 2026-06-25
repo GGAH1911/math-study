@@ -40,7 +40,8 @@ function remeasure(id) {  // gemma 재측정(채점 피드백 주입) → spec �
     const s = rd(id);
     const img = `${REPO}/web/public${s.img}`;
     const bf = `/tmp/loop_b_${id}.txt`; writeFileSync(bf, bonmun(id) || s.note || '');
-    const fbf = `/tmp/loop_fb_${id}.txt`; writeFileSync(fbf, `현재 ${s.score ?? '?'}/40, 결함: ${s.issue || '(없음)'}\n채점기준의 라벨(누락·겹침·앵커링·KaTeX 잘림)·본문정합성을 특히 점검.`);
+    const base = s._best ?? s.spec;   // ★최고점 spec 기반으로 개선(회귀 방지)
+    const fbf = `/tmp/loop_fb_${id}.txt`; writeFileSync(fbf, `★이전 재현 spec(이걸 기반으로 지적된 결함만 고치고 잘 된 부분은 그대로 유지):\n${JSON.stringify(base)}\n\n채점(${s._bestScore ?? s.score ?? '?'}/40) 결함: ${s._bestIssue ?? s.issue || '(없음)'}\n특히 라벨(누락·겹침·잘림)·본문정합성(곡선식·k값·점위치)·음영영역(맞는 도형)을 점검.`);
     const out = `/tmp/loop_s_${id}.json`;
     const c = spawn('node', [`${REPO}/web/scripts/gemma_measure.mjs`, img, bf, out, fbf], { stdio: ['ignore', 'pipe', 'pipe'] });
     c.on('close', () => {
@@ -56,18 +57,17 @@ async function par2(items, fn) { let i = 0; const w = async () => { while (i < i
   const all = ids();
   log(`══ redraw 수렴 루프: ${all.length}도형 · 목표 ${TARGET}/40 · 최대 ${MAXROUND}라운드 · LOG ${LOG}`);
   for (let round = 1; round <= MAXROUND; round++) {
-    const toScore = all.filter((id) => { const s = rd(id); return (s.score ?? -1) < TARGET; });  // 미만점만 채점(만점 고정)
-    log(`── 라운드 ${round}: 채점대상 ${toScore.length}`);
-    if (toScore.length) spawnSync('node', [`${REPO}/web/scripts/redraw_score_batch.mjs`, '--list', toScore.join(','), '--chunk', '5', '--model', 'opus'], { stdio: 'inherit', timeout: 900000 });
-    const scored = all.map((id) => ({ id, ...rd(id) }));
-    const perfect = scored.filter((s) => (s.score ?? 0) >= TARGET);
-    const failing = scored.filter((s) => (s.score ?? 0) < TARGET);
-    log(`   결과: 만점 ${perfect.length}/${all.length} · 미만점 ${failing.length}`);
-    for (const s of failing) log(`     ${s.id} ${s.score ?? '?'}/40 ·①${s.bonmunFit ?? '?'} · ${(s.issue || '').slice(0, 50)}`);
-    if (!failing.length) { log(`🎉 전부 만점 달성 (라운드 ${round})`); break; }
-    if (round === MAXROUND) { log(`⏹ 최대 라운드 도달 — 미만점 ${failing.length} 잔존(최선값 유지)`); break; }
-    log(`   ↻ gemma 재측정 ${failing.length}도형 (피드백 주입, 2병렬)`);
-    await par2(failing.map((s) => s.id), remeasure);
+    const pending = all.filter((id) => { const s = rd(id); return Math.max(s._bestScore ?? -1, s.score ?? -1) < TARGET; });  // best<40만
+    log(`── 라운드 ${round}: 미만점 ${pending.length}/${all.length}`);
+    if (!pending.length) { log(`🎉 전부 만점 달성 (라운드 ${round - 1})`); break; }
+    if (round > 1) { log(`   ↻ gemma 재측정 ${pending.length} (best 기반, 2병렬)`); await par2(pending, remeasure); }
+    spawnSync('node', [`${REPO}/web/scripts/redraw_score_batch.mjs`, '--list', pending.join(','), '--chunk', '5', '--model', 'opus'], { stdio: 'inherit', timeout: 900000 });
+    for (const id of pending) { const s = rd(id); if ((s.score ?? -1) > (s._bestScore ?? -1)) { s._best = s.spec; s._bestScore = s.score; s._bestIssue = s.issue; s._bestBon = s.bonmunFit; wr(id, s); } }  // ★keep-best
+    const best = all.map((id) => { const s = rd(id); return { id, b: s._bestScore ?? 0, i: s._bestIssue ?? s.issue ?? '' }; });
+    log(`   결과(best): 만점 ${best.filter((x) => x.b >= TARGET).length}/${all.length}`);
+    for (const x of best) log(`     ${x.id} best ${x.b}/40 · ${(x.i || '').slice(0, 50)}`);
+    if (round === MAXROUND) log(`⏹ 최대 라운드 — best 유지`);
   }
+  for (const id of all) { const s = rd(id); if (s._best) { s.spec = s._best; s.score = s._bestScore; s.issue = s._bestIssue; s.bonmunFit = s._bestBon; wr(id, s); } }  // best 복원
   log(`══ 루프 종료`);
 })();
