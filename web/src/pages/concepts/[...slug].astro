@@ -188,28 +188,32 @@ const PREVIEW_COUNT = 8;
           )}
         </figure>
       )}
-      <ConceptWidget client:only="react" conceptId={entry.id} spec={conceptWidgetSpec} />
+      <div id="conceptWidgetSlot" class="not-prose">
+        <ConceptWidget client:only="react" conceptId={entry.id} spec={conceptWidgetSpec} />
+      </div>
       <div class="prose prose-invert max-w-none" id="conceptBody">
         <Content />
       </div>
-      {(conceptFigure || conceptFigure3d) && (
-        // 도식을 본문 적절한 위치로 이동 — 제목/요약 다음, 상세 본문(## 본문) 직전.
-        // island 하이드레이션 전(파싱 중)에 실행돼 깜빡임/하이드레이션-이동 문제 없음.
-        // 대상 없으면 breadcrumb 다음, 그것도 없으면 상단 그대로(폴백).
-        <script is:inline>
-          (function () {
-            var fig = document.getElementById('conceptFigureSlot');
-            var body = document.getElementById('conceptBody');
-            if (!fig || !body) return;
-            var h2 = Array.prototype.find.call(body.querySelectorAll('h2'), function (h) {
-              return (h.textContent || '').trim().indexOf('본문') === 0;
-            });
-            if (h2) { body.insertBefore(fig, h2); return; }
-            var bq = body.querySelector('blockquote');
-            if (bq) { bq.parentNode.insertBefore(fig, bq.nextSibling); }
-          })();
-        </script>
-      )}
+      {/* 도식·위젯 버튼을 요약 다음·상세 본문(## 본문) 직전으로 이동 — 도식 → 탐구버튼 순.
+          island 하이드레이션 전(파싱 중) 실행이라 깜빡임 없음. 슬롯 없으면 무동작. */}
+      <script is:inline>
+        (function () {
+          var body = document.getElementById('conceptBody');
+          if (!body) return;
+          var h2 = Array.prototype.find.call(body.querySelectorAll('h2'), function (h) {
+            return (h.textContent || '').trim().indexOf('본문') === 0;
+          });
+          var bq = body.querySelector('blockquote');
+          var anchor = h2 || (bq ? bq.nextSibling : null);
+          function place(el) {
+            if (!el) return;
+            if (anchor) body.insertBefore(el, anchor);
+            else body.insertBefore(el, body.firstChild);
+          }
+          place(document.getElementById('conceptFigureSlot'));
+          place(document.getElementById('conceptWidgetSlot'));
+        })();
+      </script>
     </article>
 
     {/* 튜터 대화 — 본문 하단 인라인 폐지. 모든 화면에서 우측 하단 FAB → 큰 대화창. */}
