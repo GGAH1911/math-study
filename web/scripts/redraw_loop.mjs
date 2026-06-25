@@ -43,7 +43,8 @@ function remeasure(id) {  // gemma 재측정(채점 피드백 주입) → spec �
     const base = s._best ?? s.spec;   // ★최고점 spec 기반으로 개선(회귀 방지)
     const fbf = `/tmp/loop_fb_${id}.txt`; writeFileSync(fbf, `★이전 재현 spec(이걸 기반으로 지적된 결함만 고치고 잘 된 부분은 그대로 유지):\n${JSON.stringify(base)}\n\n채점(${s._bestScore ?? s.score ?? '?'}/40) 결함: ${s._bestIssue ?? s.issue ?? '(없음)'}\n특히 라벨(누락·겹침·잘림)·본문정합성(곡선식·k값·점위치)·음영영역(맞는 도형)을 점검.`);
     const out = `/tmp/loop_s_${id}.json`;
-    const c = spawn('node', [`${REPO}/web/scripts/gemma_measure.mjs`, img, bf, out, fbf], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const MEAS = process.env.MEASURE_SCRIPT || 'redraw_opus_measure.mjs';   // ★수정=Opus(품질). gemma_measure.mjs 로 오버라이드 가능
+    const c = spawn('node', [`${REPO}/web/scripts/${MEAS}`, img, bf, out, fbf], { stdio: ['ignore', 'pipe', 'pipe'] });
     c.on('close', () => {
       if (existsSync(out)) { try { const ns = JSON.parse(readFileSync(out, 'utf8')); s.spec = ns; delete s.score; delete s.verdict; delete s.issue; wr(id, s); log(`    ↻ ${id} 재측정 완료`); } catch { log(`    ✗ ${id} 재측정 파싱실패`); } }
       else log(`    ✗ ${id} 재측정 출력없음`);
@@ -60,7 +61,7 @@ async function par2(items, fn) { let i = 0; const w = async () => { while (i < i
     const pending = all.filter((id) => { const s = rd(id); return Math.max(s._bestScore ?? -1, s.score ?? -1) < TARGET; });  // best<40만
     log(`── 라운드 ${round}: 미만점 ${pending.length}/${all.length}`);
     if (!pending.length) { log(`🎉 전부 만점 달성 (라운드 ${round - 1})`); break; }
-    if (round > 1) { log(`   ↻ gemma 재측정 ${pending.length} (best 기반, 2병렬)`); await par2(pending, remeasure); }
+    log(`   ↻ Opus 재측정 ${pending.length} (${round === 1 ? '신규측정' : 'best 기반 수정'}, 2병렬)`); await par2(pending, remeasure);
     spawnSync('node', [`${REPO}/web/scripts/redraw_score_batch.mjs`, '--list', pending.join(','), '--chunk', '5', '--model', 'opus'], { stdio: 'inherit', timeout: 900000 });
     for (const id of pending) { const s = rd(id); if ((s.score ?? -1) > (s._bestScore ?? -1)) { s._best = s.spec; s._bestScore = s.score; s._bestIssue = s.issue; s._bestBon = s.bonmunFit; wr(id, s); } }  // ★keep-best
     const best = all.map((id) => { const s = rd(id); return { id, b: s._bestScore ?? 0, i: s._bestIssue ?? s.issue ?? '' }; });
