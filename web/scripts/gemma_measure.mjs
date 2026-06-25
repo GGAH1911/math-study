@@ -1,13 +1,15 @@
 // 맥북 gemma4(mlx_vlm.server, OpenAI호환)로 기출 함수그래프 → RedrawPlot spec 산출.
 // 사용: node web/scripts/gemma_measure.mjs <imgPath> <bonmunFile> <outPath>
 //   bonmunFile = 본문(ground truth) 텍스트 파일.  out = RedrawPlot spec JSON.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 const GEMMA = process.env.GEMMA_URL || 'http://100.79.230.49:8080/v1/chat/completions';
 const MODEL = process.env.GEMMA_MODEL || 'mlx-community/gemma-4-26B-A4B-it-qat-4bit';
 const [imgPath, bonmunFile, outPath] = process.argv.slice(2);
 const img = readFileSync(imgPath).toString('base64');
 const ext = imgPath.endsWith('.png') ? 'png' : 'jpeg';
 const bonmun = readFileSync(bonmunFile, 'utf8').trim();
+const fbFile = process.argv[5];   // 채점 피드백(루프 재시도) — 있으면 프롬프트에 주입
+const feedback = (fbFile && existsSync(fbFile)) ? readFileSync(fbFile, 'utf8').trim() : '';
 
 const prompt = `너는 한국 수능 기출 함수그래프를 function-plot 기반 RedrawPlot spec 으로 재현하는 측정가다.
 
@@ -16,7 +18,7 @@ const prompt = `너는 한국 수능 기출 함수그래프를 function-plot 기
 본문(ground truth):
 ${bonmun}
 
-이미지(레이아웃 참조): 첨부.
+이미지(레이아웃 참조): 첨부.${feedback ? `\n\n★★이전 재현이 채점에서 받은 지적이다. **반드시 전부 고쳐서** 개선된 spec을 산출하라:\n${feedback}` : ''}
 
 RedrawPlot spec(JSON):
 {
