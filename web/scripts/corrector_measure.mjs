@@ -181,7 +181,25 @@ function buildSolid(sd, pr) {
   out.push({ type: 'parametric', x: bl(0), y: bl(1), tRange: [a - ext, b + ext] });
   return out;
 }
+// 측정 서브에이전트 스키마 편차 정규화 → buildOne 이 기대하는 필드로(점은 렌더 안 됨=synthetic anchor 안전).
+//   axes from/to(좌표)→fromXyz/toXyz · segments fromXyz/toXyz(좌표)→synthetic point+from/to ·
+//   labels anchorTo[좌표]→at[좌표] · curves points→pts.
+function normalizeMeasure(m) {
+  if (!m || typeof m !== 'object') return m;
+  m.points = m.points || []; let syn = 0;
+  const addPt = (xyz) => { const n = '__s' + (syn++); m.points.push({ name: n, xyz }); return n; };
+  for (const a of m.axes || []) { if (Array.isArray(a.from) && !a.fromXyz) a.fromXyz = a.from; if (Array.isArray(a.to) && !a.toXyz) a.toXyz = a.to; }
+  for (const c of m.curves || []) { if (Array.isArray(c.points) && !c.pts) c.pts = c.points.map((p) => [p[0], p[1]]); }
+  for (const s of m.segments || []) { if (Array.isArray(s.fromXyz) && s.from == null) s.from = addPt(s.fromXyz); if (Array.isArray(s.toXyz) && s.to == null) s.to = addPt(s.toXyz); }
+  // 라벨 앵커 좌표(anchorTo/at/anchor 가 [x,y,z])→synthetic point+anchorTo(name) 으로(buildOne 이 proj 거쳐 투영좌표로 렌더, 논리좌표 그대로 쓰던 버그 차단)
+  for (const l of m.labels || []) { const a = Array.isArray(l.anchorTo) ? l.anchorTo : Array.isArray(l.at) ? l.at : Array.isArray(l.anchor) ? l.anchor : null; if (a) { l.anchorTo = addPt(a); delete l.at; delete l.anchor; } }
+  // scale(논리1당 픽셀)을 별도로 주면 종횡비용 len 으로(서브에이전트가 len 을 총길이로 오해하는 케이스 보정)
+  if (m.scale && m.projection && m.projection.axes) { if (m.scale.x && m.projection.axes.x) m.projection.axes.x.len = m.scale.x; if (m.scale.y && m.projection.axes.y) m.projection.axes.y.len = m.scale.y; }
+  return m;
+}
+
 function buildOne(m) {
+  m = normalizeMeasure(m);
   const pr = m.projection || { origin: [50, 50], axes: { x: { deg: -25, len: 14 }, y: { deg: 35, len: 12 }, z: { deg: 90, len: 14 } } };
   if (pr.axes && pr.axes.x && pr.axes.y) { const yl = pr.axes.y.len || 12; if ((pr.axes.x.len || 12) < yl * 0.85) pr.axes.x.len = Math.round(yl * 0.85); } // aspect 가드: 적분축이 단면축 대비 너무 짧으면 보정(답답 방지)
   const proj = projFn(pr);
