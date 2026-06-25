@@ -15,10 +15,10 @@ export type RPSpec = {
   title?: string;
 };
 
-// dx=앵커 가로offset, dy=라벨박스 top offset(라벨 높이 ~18px 기준)
+// dx=앵커 가로offset, dy=라벨박스 top offset(라벨 높이 ~18px 기준). 앵커(점·선)와 겹치지 않게 여유.
 const DIR: Record<string, [number, number]> = {
-  '위': [0, -20], '아래': [0, 6], '좌': [-8, -9], '우': [8, -9],
-  '좌하': [-8, 3], '우하': [8, 3], '좌상': [-8, -20], '우상': [8, -20],
+  '위': [0, -24], '아래': [0, 9], '좌': [-12, -9], '우': [12, -9],
+  '좌하': [-12, 6], '우하': [12, 6], '좌상': [-12, -24], '우상': [12, -24],
 };
 
 export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: RPSpec; width?: number; height?: number }) {
@@ -84,7 +84,9 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
             content?.appendChild(c);
           }
         }
-        // ★라벨 = wrapper 위 HTML overlay div(SVG 밖). 폰트 로드 후 실측·클램프.
+        // ★라벨 = wrapper 위 HTML overlay div(SVG 밖). 폰트 로드 후 실측·클램프·충돌회피.
+        const placed: Array<{ x: number; y: number; w: number; h: number }> = [];
+        const hit = (a: { x: number; y: number; w: number; h: number }, b: { x: number; y: number; w: number; h: number }) => a.x < b.x + b.w + 2 && a.x + a.w + 2 > b.x && a.y < b.y + b.h + 2 && a.y + a.h + 2 > b.y;
         const addLabel = (tex: string, sx: number, sy: number, dir?: string) => {
           const wrapped = /\$/.test(tex) ? tex : `$${tex}$`;
           let html = tex;
@@ -100,8 +102,16 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
           const axx = sx + dx;
           let lx = d.includes('좌') ? axx - w2 : (d === '위' || d === '아래') ? axx - w2 / 2 : axx;
           lx = Math.max(1, Math.min(lx, width - w2 - 1));
-          const ly = Math.max(1, Math.min(sy + dy, height - h2 - 1));
-          lab.style.left = `${lx}px`; lab.style.top = `${ly}px`;
+          let fy = Math.max(1, Math.min(sy + dy, height - h2 - 1));
+          // 라벨끼리 겹치면 상/하 첫 빈자리로 넛지
+          if (placed.some((p) => hit({ x: lx, y: fy, w: w2, h: h2 }, p))) {
+            const cands: number[] = [];
+            for (let k = 1; k <= 5; k++) cands.push(fy + k * (h2 + 3), fy - k * (h2 + 3));
+            const ok = cands.find((cy) => cy >= 1 && cy <= height - h2 - 1 && !placed.some((p) => hit({ x: lx, y: cy, w: w2, h: h2 }, p)));
+            if (ok != null) fy = ok;
+          }
+          placed.push({ x: lx, y: fy, w: w2, h: h2 });
+          lab.style.left = `${lx}px`; lab.style.top = `${fy}px`;
         };
         const doLabels = () => {
           for (const tx of spec.texts ?? []) addLabel(tx.text, xS(tx.x), yS(tx.y), tx.dir);
