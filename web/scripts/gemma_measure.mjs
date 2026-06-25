@@ -18,7 +18,7 @@ const prompt = `너는 한국 수능 기출 함수그래프를 function-plot 기
 본문(ground truth):
 ${bonmun}
 
-이미지(레이아웃 참조): 첨부.${feedback ? `\n\n★★이전 재현이 채점에서 받은 지적이다. **반드시 전부 고쳐서** 개선된 spec을 산출하라:\n${feedback}` : ''}
+이미지(레이아웃 참조): 첨부.${feedback ? `\n\n★★재시도다. 아래에 [이전 재현 spec]과 [채점 결함]이 있다. **이전 spec을 그대로 복사하되 지적된 결함만 고쳐라.** ★라벨(texts·points의 label·곡선식 라벨·축눈금)을 **하나도 빠뜨리지 마라** — 누락은 감점. 곡선식·점·음영영역도 그대로 유지하고, 지적된 부분만 수정:\n${feedback}` : ''}
 
 RedrawPlot spec(JSON):
 {
