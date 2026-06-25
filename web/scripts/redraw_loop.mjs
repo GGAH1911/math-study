@@ -41,7 +41,7 @@ function remeasure(id) {  // gemma 재측정(채점 피드백 주입) → spec �
     const img = `${REPO}/web/public${s.img}`;
     const bf = `/tmp/loop_b_${id}.txt`; writeFileSync(bf, bonmun(id) || s.note || '');
     const base = s._best ?? s.spec;   // ★최고점 spec 기반으로 개선(회귀 방지)
-    const fbf = `/tmp/loop_fb_${id}.txt`; writeFileSync(fbf, `★이전 재현 spec(이걸 기반으로 지적된 결함만 고치고 잘 된 부분은 그대로 유지):\n${JSON.stringify(base)}\n\n채점(${s._bestScore ?? s.score ?? '?'}/40) 결함: ${s._bestIssue ?? s.issue || '(없음)'}\n특히 라벨(누락·겹침·잘림)·본문정합성(곡선식·k값·점위치)·음영영역(맞는 도형)을 점검.`);
+    const fbf = `/tmp/loop_fb_${id}.txt`; writeFileSync(fbf, `★이전 재현 spec(이걸 기반으로 지적된 결함만 고치고 잘 된 부분은 그대로 유지):\n${JSON.stringify(base)}\n\n채점(${s._bestScore ?? s.score ?? '?'}/40) 결함: ${s._bestIssue ?? s.issue ?? '(없음)'}\n특히 라벨(누락·겹침·잘림)·본문정합성(곡선식·k값·점위치)·음영영역(맞는 도형)을 점검.`);
     const out = `/tmp/loop_s_${id}.json`;
     const c = spawn('node', [`${REPO}/web/scripts/gemma_measure.mjs`, img, bf, out, fbf], { stdio: ['ignore', 'pipe', 'pipe'] });
     c.on('close', () => {
