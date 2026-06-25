@@ -51,6 +51,16 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         const svg = ref.current.querySelector('svg');
         const content = (svg?.querySelector('.content') ?? svg) as SVGElement | null;
         const NS = 'http://www.w3.org/2000/svg';
+        // 교과서식 정제: 데이터 선 굵게 + function-plot 기본 눈금/축 제거(자체 축으로 대체)
+        svg?.querySelectorAll('path').forEach((p) => (p as Element).setAttribute('stroke-width', '1.9'));  // 곡선/선 굵게
+        svg?.querySelectorAll('.tick, .domain, .x.axis, .y.axis').forEach((t) => t.remove());  // function-plot 기본 눈금·축 제거(자체 축 사용)
+        // 굵은 x·y축 + 화살표(원점 통과, 도형 너머 연장)
+        const defs = document.createElementNS(NS, 'defs');
+        defs.innerHTML = '<marker id="rax" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>';
+        svg?.insertBefore(defs, svg.firstChild);
+        const ax = (x1: number, y1: number, x2: number, y2: number) => { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', String(x1)); l.setAttribute('y1', String(y1)); l.setAttribute('x2', String(x2)); l.setAttribute('y2', String(y2)); l.setAttribute('stroke', '#1a1a1a'); l.setAttribute('stroke-width', '1.4'); l.setAttribute('marker-end', 'url(#rax)'); content?.appendChild(l); };
+        if (spec.yRange[0] <= 0 && spec.yRange[1] >= 0) ax(xS(spec.range[0]), yS(0), xS(spec.range[1]), yS(0));
+        if (spec.range[0] <= 0 && spec.range[1] >= 0) ax(xS(0), yS(spec.yRange[0]), xS(0), yS(spec.yRange[1]));
         for (const rg of spec.regions ?? []) {   // 음영 다각형 = 곡선/선 뒤(맨앞 삽입)
           const poly = document.createElementNS(NS, 'polygon');
           poly.setAttribute('points', rg.pts.map(([x, y]) => `${xS(x)},${yS(y)}`).join(' '));
