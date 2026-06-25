@@ -23,6 +23,14 @@ if (src === 'test') {
     const row = arr.find((r: any) => r.concept === id && (!backend || r.backend === backend));
     spec3d = row?.spec ?? null;
   } catch { /* 없음 */ }
+} else if (src === 'corr') {
+  // 교정기 measure-then-build 결과(/tmp/corrector_full/<id>.json) 단독 렌더 — redraw 검증용
+  try {
+    const j = JSON.parse(readFileSync(`/tmp/corrector_full/${id}.json`, 'utf-8'));
+    const is3d = j.measure?.projection?.is3D;
+    const fig = j.figure ?? (Array.isArray(j.figures) ? j.figures[0] : null);
+    if (is3d) spec3d = fig; else spec2d = fig;
+  } catch { /* 없음 */ }
 } else {
   try {
     const d = JSON.parse(readFileSync(new URL('../../data/concept-figures.json', import.meta.url), 'utf-8'));
@@ -47,7 +55,7 @@ if (src === 'test') {
       )}
       {spec2d && (
         <div style="border:1px solid #3f3f46;border-radius:8px;padding:8px;background:#0c0c0e;">
-          <Geometry client:load spec={spec2d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast fixedWidth={w - 18} />
+          <Geometry client:load spec={spec2d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast fixedWidth={w - 18} noLabelBg={src === 'corr'} />
         </div>
       )}
       {!spec3d && !spec2d && <p id="nofig" style="color:#aaa;font-family:sans-serif;">no figure for id={id}</p>}
