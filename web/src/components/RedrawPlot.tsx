@@ -34,11 +34,7 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         if (c.closed) d.closed = true;
         data.push(d);
       }
-      for (const ln of spec.lines ?? []) {
-        const [x1, y1] = ln.from, [x2, y2] = ln.to;
-        const d: Record<string, unknown> = { fnType: 'parametric', x: `${x1}+(${x2 - x1})*t`, y: `${y1}+(${y2 - y1})*t`, range: [0, 1], graphType: 'polyline', color: '#1a1a1a' };
-        data.push(d);
-      }
+      // 직선/세로선/점근선은 후처리 SVG 로(정확한 끝점 + dashed 지원)
       const closedPts = (spec.points ?? []).filter((p) => !p.open).map((p) => [p.x, p.y]);
       if (closedPts.length) data.push({ points: closedPts, fnType: 'points', graphType: 'scatter', color: '#1a1a1a' });
       let inst;
@@ -62,6 +58,14 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         const ax = (x1: number, y1: number, x2: number, y2: number) => { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', String(x1)); l.setAttribute('y1', String(y1)); l.setAttribute('x2', String(x2)); l.setAttribute('y2', String(y2)); l.setAttribute('stroke', '#1a1a1a'); l.setAttribute('stroke-width', '1.4'); l.setAttribute('marker-end', 'url(#rax)'); content?.appendChild(l); };
         if (spec.yRange[0] <= 0 && spec.yRange[1] >= 0) ax(xS(spec.range[0]), yS(0), xS(spec.range[1]), yS(0));
         if (spec.range[0] <= 0 && spec.range[1] >= 0) ax(xS(0), yS(spec.yRange[0]), xS(0), yS(spec.yRange[1]));
+        for (const ln of spec.lines ?? []) {   // 직선/세로선/점근선 (dashed 지원)
+          const l = document.createElementNS(NS, 'line');
+          l.setAttribute('x1', String(xS(ln.from[0]))); l.setAttribute('y1', String(yS(ln.from[1])));
+          l.setAttribute('x2', String(xS(ln.to[0]))); l.setAttribute('y2', String(yS(ln.to[1])));
+          l.setAttribute('stroke', '#1a1a1a'); l.setAttribute('stroke-width', '1.6');
+          if (ln.dashed) l.setAttribute('stroke-dasharray', '6,4');
+          content?.appendChild(l);
+        }
         for (const rg of spec.regions ?? []) {   // 음영 다각형 = 곡선/선 뒤(맨앞 삽입)
           const poly = document.createElementNS(NS, 'polygon');
           poly.setAttribute('points', rg.pts.map(([x, y]) => `${xS(x)},${yS(y)}`).join(' '));
