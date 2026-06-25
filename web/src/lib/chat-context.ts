@@ -495,10 +495,14 @@ function slugOf(p: string) {
 const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$/;
 
 function safeJoin(baseDir: string, slug: string): string | null {
-  if (!SLUG_RE.test(slug) || slug.includes('..')) return null;
-  const target = resolve(baseDir, `${slug}.md`);
-  if (!target.startsWith(resolve(baseDir) + '/')) return null;
-  return target;
+  const nfc = String(slug).normalize('NFC');                 // 한글 슬러그는 NFC로 화이트리스트 검사
+  if (!SLUG_RE.test(nfc) || nfc.includes('..')) return null;
+  // ★파일시스템 정규화 불일치(Astro entry.id=NFC vs readdir=NFD) 대비 — 존재하는 형태를 찾는다.
+  for (const s of [slug, nfc, String(slug).normalize('NFD')]) {
+    const target = resolve(baseDir, `${s}.md`);
+    if (target.startsWith(resolve(baseDir) + '/') && existsSync(target)) return target;
+  }
+  return null;
 }
 
 function readConcept(slug: string): ConceptFM | null {
@@ -594,7 +598,7 @@ function readProblem(slug: string): { slug: string; fm: Record<string, any>; bod
 // 직접 요청 ("그려봐", "보여줘") 시 sympy 단계 건너뛰고 즉시 graphic block emit 강조.
 export function buildCompactTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts'): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
   const full = buildTutorPrompt(pageSlug, collection);
-  if (full.pageTitle === pageSlug) return full; // 페이지 못 찾음 — fallback
+  if (full.systemPrompt.includes('was not found')) return full; // ★진짜 못 찾음만 fallback (pageTitle===slug 오판 방지: unit 없는 개념도 compact 사용)
 
   // 페이지 컨텍스트 추출 (간략)
   const fullText = full.systemPrompt;
