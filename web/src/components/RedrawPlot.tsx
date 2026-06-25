@@ -16,9 +16,10 @@ export type RPSpec = {
   title?: string;
 };
 
+// (dx=앵커 가로offset, dy=라벨박스 top offset). H=30 기준.
 const DIR: Record<string, [number, number]> = {
-  '위': [0, -12], '아래': [0, 8], '좌': [-10, -8], '우': [10, -8],
-  '좌하': [-10, 4], '우하': [10, 4], '좌상': [-10, -20], '우상': [10, -20],
+  '위': [0, -34], '아래': [0, 3], '좌': [-6, -15], '우': [6, -15],
+  '좌하': [-6, 2], '우하': [6, 2], '좌상': [-6, -30], '우상': [6, -30],
 };
 const XHTML = 'http://www.w3.org/1999/xhtml';
 
@@ -73,25 +74,24 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
           content?.insertBefore(poly, content?.firstChild ?? null);
         }
         // KaTeX 라벨 = foreignObject. dir 로 정렬(좌=우측정렬·중앙=가운데). px,py=앵커 투영좌표.
-        const W = 240, H = 30;
+        const H = 30;
         const addLabel = (tex: string, px: number, py: number, dir?: string) => {
           const wrapped = /\$/.test(tex) ? tex : `$${tex}$`;
           let html = tex;
           try { if (katex) html = renderMathSegments(wrapped, katex); } catch { /* plain */ }
-          const [dx, dy] = DIR[dir ?? '우상'] ?? [10, -20];
           const d = dir ?? '우상';
-          let fx: number, align: string;
-          if (d.includes('좌')) { fx = px + dx - W; align = 'right'; }
-          else if (d === '위' || d === '아래') { fx = px + dx - W / 2; align = 'center'; }
-          else { fx = px + dx; align = 'left'; }
-          const fy = Math.max(-4, Math.min(py + dy, height - H));
+          const [dx, dy] = DIR[d] ?? [6, -30];
           const fo = document.createElementNS(NS, 'foreignObject');
-          fo.setAttribute('x', String(fx)); fo.setAttribute('y', String(fy));
-          fo.setAttribute('width', String(W)); fo.setAttribute('height', String(H)); fo.setAttribute('overflow', 'visible');
+          fo.setAttribute('width', '320'); fo.setAttribute('height', String(H)); fo.setAttribute('overflow', 'visible');
           const div = document.createElementNS(XHTML, 'div') as unknown as HTMLDivElement;
-          div.setAttribute('style', `font-size:15.5px;color:#111;white-space:nowrap;text-align:${align};line-height:${H}px;height:${H}px;`);
+          div.setAttribute('style', `display:inline-block;font-size:15.5px;color:#111;white-space:nowrap;line-height:${H}px;height:${H}px;`);
           div.innerHTML = html;
           fo.appendChild(div); content?.appendChild(fo);
+          const w2 = div.getBoundingClientRect().width || tex.length * 8;   // 실측 폭
+          const ax2 = px + dx;
+          let fx = d.includes('좌') ? ax2 - w2 : (d === '위' || d === '아래') ? ax2 - w2 / 2 : ax2;
+          fx = Math.max(2, Math.min(fx, width - w2 - 2));   // 캔버스 안 클램프(잘림 방지)
+          fo.setAttribute('x', String(fx)); fo.setAttribute('y', String(Math.max(0, Math.min(py + dy, height - H))));
         };
         for (const tx of spec.texts ?? []) addLabel(tx.text, xS(tx.x), yS(tx.y), tx.dir);
         for (const p of spec.points ?? []) {

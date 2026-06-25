@@ -4,8 +4,10 @@ import RedrawPlot from '../../components/RedrawPlot.tsx';
 import 'katex/dist/katex.min.css';
 import { readFileSync } from 'node:fs';
 const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 440)));
+const id = Astro.url.searchParams.get('id') ?? '';
 let spec: unknown = null;
-try { spec = JSON.parse(readFileSync('/tmp/redraw_plot.json', 'utf-8')); } catch { /* 없음 */ }
+if (id) { try { spec = JSON.parse(readFileSync(`/tmp/redraw_specs/${id}.json`, 'utf-8')).spec; } catch { /* 없음 */ } }
+if (!spec) { try { spec = JSON.parse(readFileSync('/tmp/redraw_plot.json', 'utf-8')); } catch { /* 없음 */ } }
 ---
 <!doctype html>
 <html lang="ko">
