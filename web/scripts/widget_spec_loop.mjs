@@ -49,9 +49,9 @@ async function worker() {
   await Promise.all(Array.from({ length: PAR }, worker));
   log(`══ 종료: accept ${accepted} · skip ${skipped} · 영속 ${OUT} · 합격률 ${queue.length ? Math.round(accepted / queue.length * 100) : 0}%`);
   if (COMMIT && accepted > 0) {
-    try {
-      execSync(`git add web/src/data/concept-widgets/ && git commit -q -m "data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증" && git push -q`, { cwd: REPO, stdio: 'pipe' });
-      log(`커밋·푸시 완료 (+${accepted})`);
-    } catch (e) { log(`커밋 실패: ${String(e.message).slice(0, 120)}`); }
+    try { execSync(`git add web/src/data/concept-widgets/ && git commit -q -m "data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증"`, { cwd: REPO, stdio: 'pipe' }); log(`커밋 완료 (+${accepted})`); }
+    catch (e) { log(`커밋 실패: ${String(e.message).slice(0, 120)}`); }
+    try { execSync('git push -q', { cwd: REPO, stdio: 'pipe' }); log('푸시 완료'); }
+    catch (e) { log(`푸시 실패(로컬 커밋 유지): ${String(e.message).slice(0, 80)}`); }
   }
 })();
