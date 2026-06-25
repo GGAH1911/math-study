@@ -377,8 +377,8 @@ def extract(round_, subj, num):
                 region.include_rect(sp)
             # ★bleed 차단(크롭 하드리밋, 사용자 로직): 위=[n점]·아래=①②③·좌우=중간 분단선(PW/2). 이 좌표는 절대 포함 금지.
             PW = page.rect.width; mid = div if div else PW / 2   # 실제 분단선 객체(70%+ 세로선) 우선
-            if c.x1 <= mid + 5:   L, R, conf = 0.0, mid, True   # 좌단 도형
-            elif c.x0 >= mid - 5: L, R, conf = mid, PW, True    # 우단 도형
+            if c.x1 <= mid + 5:   L, R, conf = 0.0, mid - 2, True   # 좌단 도형(분단선 선 자체 제외 -2)
+            elif c.x0 >= mid - 5: L, R, conf = mid + 2, PW, True    # 우단 도형(분단선 선 자체 제외 +2)
             else:                 L, R, conf = 0.0, PW, False   # 분단 가로지르는 넓은 도형 → 가로 무제한
             top, bot = page.rect.y0, page.rect.y1
             if conf:
