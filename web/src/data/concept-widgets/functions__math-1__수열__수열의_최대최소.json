@@ -1,0 +1,232 @@
+{
+ "id": "functions/math-1/수열/수열의_최대최소",
+ "spec": {
+  "title": "수열의 최대·최소: 이차수열 aₙ = a(n−p)² + q",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (위로/아래로 볼록 · 폭)",
+    "type": "slider",
+    "min": -0.5,
+    "max": 0.5,
+    "init": 0.3,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "p (대칭축 · 꼭짓점 n)",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q (꼭짓점 값)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.5
+   }
+  ],
+  "scope": "nstar = max(1, round(p)); ext = a*(nstar-p)^2 + q",
+  "geometry": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    -8,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=p",
+      "=-8"
+     ],
+     "to": [
+      "=p",
+      "=12"
+     ],
+     "label": "대칭축 n=p"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=0",
+      "=q"
+     ],
+     "to": [
+      "=10",
+      "=q"
+     ],
+     "label": "꼭짓점 값 q"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=1",
+      "=a*(1-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=2",
+      "=a*(2-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=3",
+      "=a*(3-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=4",
+      "=a*(4-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=5",
+      "=a*(5-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=6",
+      "=a*(6-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=7",
+      "=a*(7-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=8",
+      "=a*(8-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=9",
+      "=a*(9-p)^2+q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=nstar",
+      "=ext"
+     ],
+     "label": "최값 항"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "대칭축(꼭짓점 n)",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "최값이 되는 항 번호 n",
+    "expr": "nstar",
+    "digits": 0
+   },
+   {
+    "label": "그 항의 값 aₙ",
+    "expr": "ext",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 값 q (연속 최값)",
+    "expr": "q",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.3,
+    "p": 5,
+    "q": -3
+   },
+   {
+    "a": -0.4,
+    "p": 4,
+    "q": 2
+   },
+   {
+    "a": 0.5,
+    "p": 4.3,
+    "q": 0
+   },
+   {
+    "a": 0,
+    "p": 5.5,
+    "q": 1
+   }
+  ],
+  "invariants": [
+   "(a*(4-p)^2+q) - 2*(a*(3-p)^2+q) + (a*(2-p)^2+q) - 2*a",
+   "(a*(6-p)^2+q) - (a*((2*p-6)-p)^2+q)",
+   "ext - (a*(nstar-p)^2 + q)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.3,
+     "p": 5,
+     "q": -3
+    },
+    "expect": {
+     "nstar": 5,
+     "ext": -3
+    }
+   },
+   {
+    "params": {
+     "a": -0.4,
+     "p": 4,
+     "q": 2
+    },
+    "expect": {
+     "nstar": 4,
+     "ext": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "p": 4.3,
+     "q": 0
+    },
+    "expect": {
+     "nstar": 4,
+     "ext": 0.045
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

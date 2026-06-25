@@ -1,0 +1,206 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_성질",
+ "spec": {
+  "title": "삼각함수의 성질 — 단위원 위의 대칭과 항등식",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": -360,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; c=cos(rad); s=sin(rad); crad=(90-theta)*pi/180; qx=cos(crad); qy=sin(crad); negx=cos(-rad); negy=sin(-rad); t=tan(rad)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=c",
+      "=s"
+     ],
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      "=s"
+     ],
+     "to": [
+      "=c",
+      0
+     ],
+     "color": "#aaaaaa",
+     "label": "sinθ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      "=s"
+     ],
+     "to": [
+      0,
+      "=s"
+     ],
+     "color": "#aaaaaa",
+     "label": "cosθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      "=s"
+     ],
+     "label": "P(cosθ, sinθ)",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "여각 90°−θ",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=negx",
+      "=negy"
+     ],
+     "label": "−θ",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cosθ",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "sinθ",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "sin²θ+cos²θ",
+    "expr": "s^2+c^2",
+    "digits": 4
+   },
+   {
+    "label": "cos(−θ) (우함수)",
+    "expr": "negx",
+    "digits": 4
+   },
+   {
+    "label": "sin(−θ) (기함수)",
+    "expr": "negy",
+    "digits": 4
+   },
+   {
+    "label": "sin(90°−θ)=cosθ",
+    "expr": "qx",
+    "digits": 4
+   },
+   {
+    "label": "tanθ",
+    "expr": "t",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 137
+   },
+   {
+    "theta": -58
+   },
+   {
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "c^2+s^2-1",
+   "negx-c",
+   "negy+s",
+   "qx-s",
+   "qy-c",
+   "s/c-t"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "c": 0.8660254037844387,
+     "s": 0.5,
+     "qx": 0.5,
+     "qy": 0.8660254037844387,
+     "negy": -0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "c": 0.5,
+     "s": 0.8660254037844387,
+     "qx": 0.8660254037844387,
+     "qy": 0.5,
+     "negy": -0.8660254037844387
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "c": 0.7071067811865476,
+     "s": 0.7071067811865476,
+     "qx": 0.7071067811865476,
+     "qy": 0.7071067811865476,
+     "negx": 0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

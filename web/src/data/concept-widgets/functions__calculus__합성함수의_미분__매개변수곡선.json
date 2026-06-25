@@ -1,0 +1,285 @@
+{
+ "id": "functions/calculus/합성함수의_미분/매개변수곡선",
+ "spec": {
+  "title": "매개변수곡선: 타원 x=a·cos t, y=b·sin t",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (가로 반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (세로 반지름)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "t (매개변수)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=t*pi/180; cx=a*cos(rad); cy=b*sin(rad)",
+  "geometry": {
+   "range": [
+    -3.3,
+    3.3
+   ],
+   "yRange": [
+    -3.3,
+    3.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "closed": true,
+     "label": "C: (a·cos t, b·sin t)",
+     "points": [
+      [
+       "=a*cos(0)",
+       "=b*sin(0)"
+      ],
+      [
+       "=a*cos(15*pi/180)",
+       "=b*sin(15*pi/180)"
+      ],
+      [
+       "=a*cos(30*pi/180)",
+       "=b*sin(30*pi/180)"
+      ],
+      [
+       "=a*cos(45*pi/180)",
+       "=b*sin(45*pi/180)"
+      ],
+      [
+       "=a*cos(60*pi/180)",
+       "=b*sin(60*pi/180)"
+      ],
+      [
+       "=a*cos(75*pi/180)",
+       "=b*sin(75*pi/180)"
+      ],
+      [
+       "=a*cos(90*pi/180)",
+       "=b*sin(90*pi/180)"
+      ],
+      [
+       "=a*cos(105*pi/180)",
+       "=b*sin(105*pi/180)"
+      ],
+      [
+       "=a*cos(120*pi/180)",
+       "=b*sin(120*pi/180)"
+      ],
+      [
+       "=a*cos(135*pi/180)",
+       "=b*sin(135*pi/180)"
+      ],
+      [
+       "=a*cos(150*pi/180)",
+       "=b*sin(150*pi/180)"
+      ],
+      [
+       "=a*cos(165*pi/180)",
+       "=b*sin(165*pi/180)"
+      ],
+      [
+       "=a*cos(180*pi/180)",
+       "=b*sin(180*pi/180)"
+      ],
+      [
+       "=a*cos(195*pi/180)",
+       "=b*sin(195*pi/180)"
+      ],
+      [
+       "=a*cos(210*pi/180)",
+       "=b*sin(210*pi/180)"
+      ],
+      [
+       "=a*cos(225*pi/180)",
+       "=b*sin(225*pi/180)"
+      ],
+      [
+       "=a*cos(240*pi/180)",
+       "=b*sin(240*pi/180)"
+      ],
+      [
+       "=a*cos(255*pi/180)",
+       "=b*sin(255*pi/180)"
+      ],
+      [
+       "=a*cos(270*pi/180)",
+       "=b*sin(270*pi/180)"
+      ],
+      [
+       "=a*cos(285*pi/180)",
+       "=b*sin(285*pi/180)"
+      ],
+      [
+       "=a*cos(300*pi/180)",
+       "=b*sin(300*pi/180)"
+      ],
+      [
+       "=a*cos(315*pi/180)",
+       "=b*sin(315*pi/180)"
+      ],
+      [
+       "=a*cos(330*pi/180)",
+       "=b*sin(330*pi/180)"
+      ],
+      [
+       "=a*cos(345*pi/180)",
+       "=b*sin(345*pi/180)"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      "=cx",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      0,
+      "=cy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "P(x, y)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "t",
+    "expr": "t",
+    "digits": 0
+   },
+   {
+    "label": "x = a·cos t",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "y = b·sin t",
+    "expr": "cy",
+    "digits": 4
+   },
+   {
+    "label": "(x/a)²+(y/b)²",
+    "expr": "(cx/a)^2+(cy/b)^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "t": 0
+   },
+   {
+    "a": 2,
+    "b": 1.5,
+    "t": 45
+   },
+   {
+    "a": 3,
+    "b": 1,
+    "t": 120
+   },
+   {
+    "a": 1.5,
+    "b": 2,
+    "t": 270
+   }
+  ],
+  "invariants": [
+   "(cx/a)^2+(cy/b)^2-1",
+   "cx-a*cos(rad)",
+   "cy-b*sin(rad)",
+   "(cx^2)*(b^2)+(cy^2)*(a^2)-(a^2)*(b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "t": 0
+    },
+    "expect": {
+     "cx": 2,
+     "cy": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "t": 90
+    },
+    "expect": {
+     "cx": 0,
+     "cy": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "t": 30
+    },
+    "expect": {
+     "cx": 1.7320508075688772,
+     "cy": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

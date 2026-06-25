@@ -1,0 +1,155 @@
+{
+ "id": "functions/calculus/정적분의_활용/곡선의_길이",
+ "spec": {
+  "title": "곡선의 길이: 현수선 y = cosh(x)의 호의 길이",
+  "params": [
+   {
+    "name": "b",
+    "label": "구간 끝 b",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fb = cosh(b); fpb = sinh(b); integrand_b = sqrt(1 + fpb^2); L = sinh(b); chord = sqrt(b^2 + (fb - 1)^2)",
+  "geometry": {
+   "range": [
+    0,
+    2
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      1
+     ],
+     "label": "시작 (0,1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=fb"
+     ],
+     "label": "끝점"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      1
+     ],
+     "to": [
+      "=b",
+      "=fb"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    2
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "cosh(x)",
+     "label": "y = cosh(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "호의 길이 L = ∫₀ᵇ√(1+f'²)dx",
+    "expr": "L",
+    "digits": 5
+   },
+   {
+    "label": "피적분함수 √(1+f'(b)²) = cosh(b)",
+    "expr": "integrand_b",
+    "digits": 5
+   },
+   {
+    "label": "끝점 기울기 f'(b) = sinh(b)",
+    "expr": "fpb",
+    "digits": 5
+   },
+   {
+    "label": "현(직선거리) √(b²+(cosh b−1)²)",
+    "expr": "chord",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0
+   },
+   {
+    "b": 0.5
+   },
+   {
+    "b": 1
+   },
+   {
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "integrand_b - cosh(b)",
+   "fb^2 - fpb^2 - 1",
+   "L - fpb"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1
+    },
+    "expect": {
+     "L": 1.1752012,
+     "fb": 1.5430806,
+     "integrand_b": 1.5430806,
+     "fpb": 1.1752012,
+     "chord": 1.1379528
+    }
+   },
+   {
+    "params": {
+     "b": 0.5
+    },
+    "expect": {
+     "L": 0.5210953,
+     "fb": 1.127626,
+     "integrand_b": 1.127626
+    }
+   },
+   {
+    "params": {
+     "b": 2
+    },
+    "expect": {
+     "L": 3.6268604,
+     "fb": 3.7621957,
+     "integrand_b": 3.7621957
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

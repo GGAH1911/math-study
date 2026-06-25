@@ -1,0 +1,191 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/삼각함수_극한",
+ "spec": {
+  "title": "삼각함수의 극한: x→0일 때 sin x ≈ tan x ≈ 호의 길이 x",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (라디안)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": "rad"
+   }
+  ],
+  "scope": "sx=sin(x); cx=cos(x); tx=tan(x); r1=sx/x; r2=tx/x; r3=(1-cx)/x^2",
+  "geometry": {
+   "range": [
+    -0.3,
+    1.7
+   ],
+   "yRange": [
+    -0.3,
+    1.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      "=tx"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      1,
+      "=tx"
+     ],
+     "label": "tan x"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sx"
+     ],
+     "label": "sin x"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sx"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin x",
+    "expr": "sx",
+    "digits": 5
+   },
+   {
+    "label": "x (호의 길이)",
+    "expr": "x",
+    "digits": 5
+   },
+   {
+    "label": "tan x",
+    "expr": "tx",
+    "digits": 5
+   },
+   {
+    "label": "sin x / x",
+    "expr": "r1",
+    "digits": 5
+   },
+   {
+    "label": "tan x / x",
+    "expr": "r2",
+    "digits": 5
+   },
+   {
+    "label": "(1-cos x)/x^2",
+    "expr": "r3",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1
+   },
+   {
+    "x": 0.1
+   },
+   {
+    "x": 0.05
+   }
+  ],
+  "invariants": [
+   "sx^2 + cx^2 - 1",
+   "tx*cx - sx",
+   "(1-cx) - 2*sin(x/2)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "sx": 0.479425538604,
+     "cx": 0.87758256189,
+     "r1": 0.958851077208,
+     "r3": 0.489669752439
+    }
+   },
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "sx": 0.841470984808,
+     "tx": 1.557407724655,
+     "r1": 0.841470984808,
+     "r3": 0.459697694132
+    }
+   },
+   {
+    "params": {
+     "x": 0.1
+    },
+    "expect": {
+     "r1": 0.998334166468,
+     "r2": 1.003346720855,
+     "r3": 0.499583472197
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,181 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_변환",
+ "spec": {
+  "title": "함수의 변환: 평행이동·대칭이동·확대/축소",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 이동 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "세로 이동 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "세로 배율 c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "가로 배율 d",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "f(x) = x^2 + x; g(x) = c*f(d*(x-a)) + b; ay1 = f(1); ay2 = f(-1); bx1 = a + 1/d; by1 = c*f(1) + b; bx2 = a - 1/d; by2 = c*f(-1) + b",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -6,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2 + x",
+     "label": "y=f(x) (원본)",
+     "color": "#888888"
+    },
+    {
+     "fn": "c*((d*(x-a))^2 + d*(x-a)) + b",
+     "label": "y=c·f(d(x-a))+b",
+     "color": "#e3342f"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "세로 배율 |c|",
+    "expr": "abs(c)",
+    "digits": 2
+   },
+   {
+    "label": "가로 배율 1/|d|",
+    "expr": "1/abs(d)",
+    "digits": 3
+   },
+   {
+    "label": "원본 점 P(1, f(1)) → 이동 후 x",
+    "expr": "bx1",
+    "digits": 3
+   },
+   {
+    "label": "이동 후 y",
+    "expr": "by1",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 0,
+    "c": 1,
+    "d": 1
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": -1,
+    "d": 1
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 2,
+    "d": 1
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": 1,
+    "d": -1
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": 1,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "g(bx1) - by1",
+   "g(bx2) - by2",
+   "g(a) - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 0,
+     "c": 1,
+     "d": 1
+    },
+    "expect": {
+     "ay1": 2,
+     "bx1": 3,
+     "by1": 2,
+     "bx2": 1,
+     "by2": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "c": -1,
+     "d": 1
+    },
+    "expect": {
+     "ay1": 2,
+     "bx1": 1,
+     "by1": -2,
+     "bx2": -1,
+     "by2": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "c": 1,
+     "d": -1
+    },
+    "expect": {
+     "bx1": -1,
+     "by1": 2,
+     "bx2": 1,
+     "by2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

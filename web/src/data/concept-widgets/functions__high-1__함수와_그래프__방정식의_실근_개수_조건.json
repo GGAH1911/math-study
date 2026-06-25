@@ -1,0 +1,188 @@
+{
+ "id": "functions/high-1/함수와_그래프/방정식의_실근_개수_조건",
+ "spec": {
+  "title": "이차방정식의 실근 개수와 판별식 D",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x² 계수)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x 계수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   }
+  ],
+  "scope": "D = b^2 - 4*a*c; vx = -b/(2*a); vy = (4*a*c - b^2)/(4*a); n = (D > 0 ? 2 : (D == 0 ? 1 : 0)); rp1 = (D >= 0 ? (-b - sqrt(D))/(2*a) : 1e6); rp2 = (D >= 0 ? (-b + sqrt(D))/(2*a) : 1e6)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rp1",
+      0
+     ],
+     "label": "실근"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rp2",
+      0
+     ],
+     "label": "실근"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y = ax²+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = b²-4ac",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "꼭짓점 x좌표",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y좌표 (= -D/4a)",
+    "expr": "vy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -1,
+    "c": -2
+   },
+   {
+    "a": 1,
+    "b": -4,
+    "c": 4
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 1
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": -1
+   }
+  ],
+  "invariants": [
+   "b^2 - 4*a*c - D",
+   "a*vx^2 + b*vx + c - vy",
+   "vy + D/(4*a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -1,
+     "c": -2
+    },
+    "expect": {
+     "D": 9,
+     "vx": 0.5,
+     "vy": -2.25,
+     "n": 2,
+     "rp1": -1,
+     "rp2": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -4,
+     "c": 4
+    },
+    "expect": {
+     "D": 0,
+     "vx": 2,
+     "vy": 0,
+     "n": 1,
+     "rp1": 2,
+     "rp2": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": -1
+    },
+    "expect": {
+     "D": 12,
+     "vx": -0.5,
+     "vy": -1.5,
+     "n": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

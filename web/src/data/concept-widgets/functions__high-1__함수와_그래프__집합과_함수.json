@@ -1,0 +1,154 @@
+{
+ "id": "functions/high-1/함수와_그래프/집합과_함수",
+ "spec": {
+  "title": "집합과 함수 f(x)=x² : 정의역·공역·치역",
+  "params": [
+   {
+    "name": "x",
+    "label": "입력값 x (정의역의 원소)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx = x^2; gx = (-x)^2",
+  "geometry": {
+   "range": [
+    -3.2,
+    3.2
+   ],
+   "yRange": [
+    -1,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=fx"
+     ],
+     "label": "P=(x, f(x))"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-x",
+      "=gx"
+     ],
+     "label": "Q=(-x, f(-x))"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=fx"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=fx"
+     ],
+     "to": [
+      "=x",
+      "=fx"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3.2,
+    3.2
+   ],
+   "yRange": [
+    -1,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "입력 x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "함숫값 f(x)=x²",
+    "expr": "fx",
+    "digits": 3
+   },
+   {
+    "label": "f(-x) (다른 입력, 같은 출력)",
+    "expr": "gx",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 1
+   },
+   {
+    "x": 2
+   },
+   {
+    "x": -1.5
+   },
+   {
+    "x": 0
+   }
+  ],
+  "invariants": [
+   "fx - x^2",
+   "fx - gx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "fx": 4,
+     "gx": 4
+    }
+   },
+   {
+    "params": {
+     "x": -3
+    },
+    "expect": {
+     "fx": 9,
+     "gx": 9
+    }
+   },
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "fx": 0.25,
+     "gx": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

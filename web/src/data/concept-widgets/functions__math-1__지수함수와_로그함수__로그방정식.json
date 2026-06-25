@@ -1,0 +1,168 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/로그방정식",
+ "spec": {
+  "title": "로그방정식 log_a x = c 의 해 (x = a^c)",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "우변 c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "sol = a^c; ycheck = log(sol)/log(a); check = ycheck - c",
+  "geometry": {
+   "range": [
+    0,
+    16
+   ],
+   "yRange": [
+    -2.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=sol",
+      "=c"
+     ],
+     "label": "해 (a^c, c)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=sol",
+      0
+     ],
+     "to": [
+      "=sol",
+      "=c"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sol",
+      0
+     ],
+     "label": "x=a^c"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    16
+   ],
+   "yRange": [
+    -2.5,
+    4.5
+   ],
+   "fns": [
+    {
+     "fn": "log(x)/log(a)",
+     "label": "y = log_a x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "c",
+     "label": "y = c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해  x = a^c",
+    "expr": "sol",
+    "digits": 4
+   },
+   {
+    "label": "검산  log_a(해)",
+    "expr": "log(sol)/log(a)",
+    "digits": 4
+   },
+   {
+    "label": "잔차 (≈0)",
+    "expr": "check",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "c": 2
+   },
+   {
+    "a": 2,
+    "c": -1
+   },
+   {
+    "a": 4,
+    "c": 1
+   },
+   {
+    "a": 3,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "check",
+   "a^(log(sol)/log(a)) - sol",
+   "log(sol)/log(a) - c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "c": 2
+    },
+    "expect": {
+     "sol": 4,
+     "ycheck": 2,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "c": -1
+    },
+    "expect": {
+     "sol": 0.5,
+     "ycheck": -1,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "c": 0.5
+    },
+    "expect": {
+     "sol": 2,
+     "ycheck": 0.5,
+     "check": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

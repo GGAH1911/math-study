@@ -1,0 +1,177 @@
+{
+ "id": "functions/math-1/삼각함수/탄젠트의_정의",
+ "spec": {
+  "title": "탄젠트의 정의 — 단위원과 기울기",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 75,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); tn=sy/cx",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.6
+   ],
+   "yRange": [
+    -1.6,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      -1.6
+     ],
+     "to": [
+      1,
+      4
+     ],
+     "label": "x=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      "=tn"
+     ],
+     "label": "반직선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      1,
+      "=tn"
+     ],
+     "label": "tanθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cosθ,sinθ)"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=tn"
+     ],
+     "label": "T(1,tanθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "tanθ = sinθ/cosθ",
+    "expr": "tn",
+    "digits": 4
+   },
+   {
+    "label": "반직선의 기울기",
+    "expr": "tn",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "tn*cx-sy",
+   "sqrt(1+tn^2)-1/cx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "sy": 0.5,
+     "tn": 0.5773502691896257
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "cx": 0.7071067811865476,
+     "sy": 0.7071067811865476,
+     "tn": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254037844386,
+     "tn": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,162 @@
+{
+ "id": "functions/math-1/삼각함수/단위원_삼각함수",
+ "spec": {
+  "title": "단위원과 삼각함수의 정의",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); tn=sy/cx",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "단위원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "r=1",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "sinθ",
+     "color": "#e4572e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      0
+     ],
+     "label": "cosθ",
+     "color": "#1a73e8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cosθ, sinθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cos θ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sin θ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "tan θ",
+    "expr": "tn",
+    "digits": 4
+   },
+   {
+    "label": "cos²θ+sin²θ",
+    "expr": "cx^2+sy^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 210
+   },
+   {
+    "theta": 315
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "cx-cos(theta*pi/180)",
+   "sy-sin(theta*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "sy": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "sy": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "cx": -1,
+     "sy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

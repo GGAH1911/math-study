@@ -4,7 +4,7 @@
 //   재시도=re-roll 최대 3회(생성 stochastic). accept=web/src/data/concept-widgets/<id>.json 영속. 실패=needs-manual 로그.
 //   ※렌더게이트(/dev/interactive-test)는 후속. 현재 수학게이트(린치핀)만 — 좌표 finite·불변식·오라클.
 // 사용: node web/scripts/widget_spec_loop.mjs [--n 15]
-import { spawn } from 'node:child_process';
+import { spawn, execSync } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, appendFileSync, copyFileSync } from 'node:fs';
 import { validate } from './widget_validate.mjs';
 const REPO = '/home/insung/Projects/math-study';
@@ -12,6 +12,7 @@ const CDIR = `${REPO}/docs/concepts`, TMP = '/tmp/widget_specs', OUT = `${REPO}/
 for (const d of [TMP, OUT, LOGDIR]) if (!existsSync(d)) mkdirSync(d, { recursive: true });
 const A = process.argv.slice(2);
 const N = parseInt((A[A.indexOf('--n') + 1]) || '15', 10), PAR = 2, MAXTRY = 3;
+const PRIORITY = A.includes('--priority'), COMMIT = A.includes('--commit');
 const LOG = `${LOGDIR}/widget_loop_${Math.floor(Date.now() / 1000)}.log`;
 const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); appendFileSync(LOG, l + '\n'); };
 const safe = (id) => id.replace(/\//g, '__');
@@ -21,9 +22,12 @@ function meta(p) { const raw = readFileSync(p, 'utf8'); const fm = raw.match(/^-
 
 const done = new Set(readdirSync(OUT).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', '')));
 const cands = walk(CDIR).map(meta).filter((c) => c && c.type === 'definition' && (c.domain === '함수' || c.domain === '도형') && !done.has(safe(c.id)));
-const stepN = Math.max(1, Math.floor(cands.length / N));
-const queue = cands.filter((_, i) => i % stepN === 0).slice(0, N);
-log(`══ 워커풀: 미처리후보 ${cands.length}, 이번 큐 ${queue.length}, par ${PAR}, maxtry ${MAXTRY} · LOG ${LOG}`);
+// 수능 단원 중요도(고가치 우선): 미적분 > 수1/2·선택 > 고1 > 중3 > 중2 > 중1
+const lvl = (id) => /\/calculus\//.test(id) ? 7 : /\/(math-[12]|geometry-elective|prob-stats-elective|electives?)\//.test(id) ? 6 : /\/high-1\//.test(id) ? 5 : /\/middle-3\//.test(id) ? 3 : /\/middle-2\//.test(id) ? 2 : /\/middle-1\//.test(id) ? 1 : 4;
+let queue;
+if (PRIORITY) { cands.sort((a, b) => lvl(b.id) - lvl(a.id) || a.id.localeCompare(b.id)); queue = cands.slice(0, N); }
+else { const stepN = Math.max(1, Math.floor(cands.length / N)); queue = cands.filter((_, i) => i % stepN === 0).slice(0, N); }
+log(`══ 워커풀${PRIORITY ? '(고가치순)' : ''}: 미처리후보 ${cands.length}, 이번 큐 ${queue.length}, par ${PAR}, maxtry ${MAXTRY} · LOG ${LOG}`);
 
 const genOnce = (id) => new Promise((res) => { const c = spawn('node', [`${REPO}/web/scripts/widget_generate.mjs`, id], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 240000 }); c.on('close', res); c.on('error', res); });
 
@@ -44,4 +48,10 @@ async function worker() {
 (async () => {
   await Promise.all(Array.from({ length: PAR }, worker));
   log(`══ 종료: accept ${accepted} · skip ${skipped} · 영속 ${OUT} · 합격률 ${queue.length ? Math.round(accepted / queue.length * 100) : 0}%`);
+  if (COMMIT && accepted > 0) {
+    try {
+      execSync(`git add web/src/data/concept-widgets/ && git commit -q -m "data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증" && git push -q`, { cwd: REPO, stdio: 'pipe' });
+      log(`커밋·푸시 완료 (+${accepted})`);
+    } catch (e) { log(`커밋 실패: ${String(e.message).slice(0, 120)}`); }
+  }
 })();

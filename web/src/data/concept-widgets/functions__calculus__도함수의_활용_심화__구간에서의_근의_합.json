@@ -1,0 +1,205 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/구간에서의_근의_합",
+ "spec": {
+  "title": "구간 [0, b] 에서의 근의 합",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (수평선 y=k 의 높이)",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (구간 [0, b] 의 오른쪽 끝)",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=0; disc=4-k; r1=2-sqrt(disc); r2=2+sqrt(disc); sel1=((r1>=a) and (r1<=b))?1:0; sel2=((r2>=a) and (r2<=b))?1:0; rootsum=sel1*r1+sel2*r2; cnt=sel1+sel2",
+  "geometry": {
+   "range": [
+    -1.5,
+    5.5
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ],
+     "label": "구간 [0, b]",
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=r1",
+      0
+     ],
+     "to": [
+      "=r1",
+      "=k"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=r2",
+      0
+     ],
+     "to": [
+      "=r2",
+      "=k"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r1",
+      "=k"
+     ],
+     "label": "x₁",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r2",
+      "=k"
+     ],
+     "label": "x₂",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -1.5,
+    5.5
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "-x^2+4*x",
+     "label": "f(x) = -x² + 4x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "k",
+     "label": "y = k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "구간 내 근의 합",
+    "expr": "rootsum",
+    "digits": 3
+   },
+   {
+    "label": "구간 내 근의 개수",
+    "expr": "cnt",
+    "digits": 0
+   },
+   {
+    "label": "작은 근 x₁",
+    "expr": "r1",
+    "digits": 3
+   },
+   {
+    "label": "큰 근 x₂",
+    "expr": "r2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 3,
+    "b": 5
+   },
+   {
+    "k": 1,
+    "b": 2
+   },
+   {
+    "k": 0,
+    "b": 1
+   },
+   {
+    "k": -2,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "-r1^2+4*r1-k",
+   "-r2^2+4*r2-k",
+   "r1+r2-4",
+   "r1*r2-k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 3,
+     "b": 5
+    },
+    "expect": {
+     "r1": 1,
+     "r2": 3,
+     "rootsum": 4,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "k": 3,
+     "b": 2
+    },
+    "expect": {
+     "r1": 1,
+     "r2": 3,
+     "rootsum": 1,
+     "cnt": 1
+    }
+   },
+   {
+    "params": {
+     "k": 0,
+     "b": 5
+    },
+    "expect": {
+     "r1": 0,
+     "r2": 4,
+     "rootsum": 4,
+     "cnt": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
