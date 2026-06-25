@@ -3,10 +3,13 @@
 import RedrawPlot from '../../components/RedrawPlot.tsx';
 import 'katex/dist/katex.min.css';
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 440)));
 const id = Astro.url.searchParams.get('id') ?? '';
 let spec: unknown = null;
-if (id) { try { spec = JSON.parse(readFileSync(`/tmp/redraw_specs/${id}.json`, 'utf-8')).spec; } catch { /* 없음 */ } }
+// /tmp(라이브) 우선 → repo(영속) 폴백
+const SPEC_DIRS = ['/tmp/redraw_specs', fileURLToPath(new URL('../../data/redraw_specs', import.meta.url))];
+if (id) { for (const base of SPEC_DIRS) { if (spec) break; try { spec = JSON.parse(readFileSync(`${base}/${id}.json`, 'utf-8')).spec; } catch { /* 없음 */ } } }
 if (!spec) { try { spec = JSON.parse(readFileSync('/tmp/redraw_plot.json', 'utf-8')); } catch { /* 없음 */ } }
 ---
 <!doctype html>

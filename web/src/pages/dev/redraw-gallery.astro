@@ -4,16 +4,22 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RedrawPlot from '../../components/RedrawPlot.tsx';
 import 'katex/dist/katex.min.css';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const DIR = '/tmp/redraw_specs';
+// /tmp(라이브 override) 우선 → repo(영속) 보충. 휘발 대비.
+const DIRS = ['/tmp/redraw_specs', fileURLToPath(new URL('../../data/redraw_specs', import.meta.url))];
 type Item = { id?: string; spec?: unknown; img?: string; score?: number; verdict?: string; note?: string };
 const items: Item[] = [];
-try {
-  for (const f of readdirSync(DIR)) {
-    if (f.endsWith('.json')) { try { items.push(JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8'))); } catch { /* skip */ } }
-  }
-} catch { /* 아직 없음 */ }
+const seen = new Set<string>();
+for (const DIR of DIRS) {
+  if (!existsSync(DIR)) continue;
+  try {
+    for (const f of readdirSync(DIR)) {
+      if (f.endsWith('.json') && !seen.has(f)) { seen.add(f); try { items.push(JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8'))); } catch { /* skip */ } }
+    }
+  } catch { /* skip */ }
+}
 items.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
 const q = (Astro.url.searchParams.get('q') ?? '').toLowerCase();
 const list = q ? items.filter((s) => (s.id || '').toLowerCase().includes(q)) : items;
