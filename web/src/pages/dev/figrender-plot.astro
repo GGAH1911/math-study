@@ -1,0 +1,17 @@
+---
+// redraw 그래프(function-plot) 단독 렌더 검증 하네스 — /tmp/redraw_plot.json 읽어 RedrawPlot 으로.
+import RedrawPlot from '../../components/RedrawPlot.tsx';
+import { readFileSync } from 'node:fs';
+const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 440)));
+let spec: unknown = null;
+try { spec = JSON.parse(readFileSync('/tmp/redraw_plot.json', 'utf-8')); } catch { /* 없음 */ }
+---
+<!doctype html>
+<html lang="ko">
+  <head><meta charset="utf-8" /><title>figrender-plot</title></head>
+  <body style="margin:0;padding:16px;background:#0a0a0b;">
+    <div style={`width:${w}px;border:1px solid #333;border-radius:8px;overflow:hidden;`}>
+      {spec ? <RedrawPlot client:only="react" spec={spec as never} width={w - 8} height={Math.round((w - 8) * 0.82)} /> : <p style="color:#aaa;font-family:sans-serif;">no spec at /tmp/redraw_plot.json</p>}
+    </div>
+  </body>
+</html>
