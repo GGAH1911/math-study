@@ -1,6 +1,7 @@
 ---
 // redraw 그래프(function-plot) 단독 렌더 검증 하네스 — /tmp/redraw_plot.json 읽어 RedrawPlot 으로.
 import RedrawPlot from '../../components/RedrawPlot.tsx';
+import 'katex/dist/katex.min.css';
 import { readFileSync } from 'node:fs';
 const w = Math.max(200, Math.min(900, Number(Astro.url.searchParams.get('w') ?? 440)));
 let spec: unknown = null;

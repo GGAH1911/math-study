@@ -3,6 +3,7 @@
 // 각 파일 = { id, spec(RedrawPlot spec), img(원본 경로), score?, verdict? }
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RedrawPlot from '../../components/RedrawPlot.tsx';
+import 'katex/dist/katex.min.css';
 import { readFileSync, readdirSync } from 'node:fs';
 
 const DIR = '/tmp/redraw_specs';

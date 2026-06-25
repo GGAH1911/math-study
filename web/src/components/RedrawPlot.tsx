@@ -1,29 +1,32 @@
 import { useEffect, useRef } from 'react';
+import { ensureKatex, renderMathSegments } from '../lib/mathish';
 
-// 기출 redraw 그래프 전용 렌더러 — 학습노트/튜터와 같은 function-plot 엔진 사용
-//   (corrector 의 수동 폴리곤/곡선 대신 진짜 수학 플로팅: 곡선·fill 음영·직선·교점 정확).
-//   curves(함수식·fill·범위) · lines(임의 직선/세로선=parametric) · points(라벨·빈원/채운원).
+// 기출 redraw 그래프 전용 렌더러 — 학습노트/튜터와 같은 function-plot 엔진 +
+//   라벨은 KaTeX SSOT(mathish: ensureKatex/renderMathSegments)로 foreignObject 렌더.
+//   curves(함수식·fill) · lines(직선/세로선/점근선) · points(라벨·빈원/채운원) · regions(다각형 음영) · texts(자유 라벨).
+//   ★라벨 text/label 은 KaTeX TeX (예 "y=\\log_{2}x"·"x=\\frac{\\pi}{2}"). $ 없으면 자동으로 감싼다.
 export type RPSpec = {
-  range: [number, number];                  // x축 도메인
-  yRange: [number, number];                 // y축 도메인
-  curves?: Array<{ fn: string; range?: [number, number]; closed?: boolean }>;  // closed=x축까지 음영(∫)
+  range: [number, number];
+  yRange: [number, number];
+  curves?: Array<{ fn: string; range?: [number, number]; closed?: boolean }>;
   lines?: Array<{ from: [number, number]; to: [number, number]; dashed?: boolean }>;
-  points?: Array<{ x: number; y: number; label?: string; dir?: string; open?: boolean }>;  // open=빈원(불연속)
-  regions?: Array<{ pts: Array<[number, number]>; opacity?: number }>;  // 임의 다각형 음영(곡선변은 점샘플로). 곡선/선 뒤에 깔림
-  texts?: Array<{ x: number; y: number; text: string; dir?: string }>;  // 곡선식·축눈금 등 자유 라벨
+  points?: Array<{ x: number; y: number; label?: string; dir?: string; open?: boolean }>;
+  regions?: Array<{ pts: Array<[number, number]>; opacity?: number }>;
+  texts?: Array<{ x: number; y: number; text: string; dir?: string }>;
   title?: string;
 };
 
 const DIR: Record<string, [number, number]> = {
-  '위': [0, -10], '아래': [2, 18], '좌': [-14, 5], '우': [10, 5],
-  '좌하': [-15, 17], '우하': [10, 17], '좌상': [-15, -8], '우상': [11, -9],
+  '위': [0, -12], '아래': [0, 8], '좌': [-10, -8], '우': [10, -8],
+  '좌하': [-10, 4], '우하': [10, 4], '좌상': [-10, -20], '우상': [10, -20],
 };
+const XHTML = 'http://www.w3.org/1999/xhtml';
 
 export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: RPSpec; width?: number; height?: number }) {
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     let cancel = false;
-    import('function-plot').then((mod) => {
+    Promise.all([import('function-plot'), ensureKatex()]).then(([mod, katex]) => {
       const fp = ((mod as unknown as { default?: unknown }).default ?? mod) as (o: unknown) => { meta: { xScale: (n: number) => number; yScale: (n: number) => number } };
       if (cancel || !ref.current) return;
       ref.current.innerHTML = '';
@@ -34,31 +37,28 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         if (c.closed) d.closed = true;
         data.push(d);
       }
-      // 직선/세로선/점근선은 후처리 SVG 로(정확한 끝점 + dashed 지원)
       const closedPts = (spec.points ?? []).filter((p) => !p.open).map((p) => [p.x, p.y]);
       if (closedPts.length) data.push({ points: closedPts, fnType: 'points', graphType: 'scatter', color: '#1a1a1a' });
       let inst;
       try {
         inst = fp({ target: ref.current, width, height, grid: false, xAxis: { domain: spec.range }, yAxis: { domain: spec.yRange }, tip: { xLine: false, yLine: false }, data });
       } catch (e) { if (ref.current) ref.current.textContent = 'plot err: ' + e; return; }
-      // 라벨 + 빈원(open)을 투영좌표로 SVG 에 직접 추가
       try {
         const xS = inst.meta.xScale, yS = inst.meta.yScale;
         const svg = ref.current.querySelector('svg');
         const content = (svg?.querySelector('.content') ?? svg) as SVGElement | null;
         const NS = 'http://www.w3.org/2000/svg';
-        const clamp = (cx: number, cy: number, txt: string): [number, number] => [Math.max(3, Math.min(cx, width - 6 - txt.length * 7)), Math.max(13, Math.min(cy, height - 5))];  // 라벨 캔버스 안으로
         // 교과서식 정제: 데이터 선 굵게 + function-plot 기본 눈금/축 제거(자체 축으로 대체)
-        svg?.querySelectorAll('path').forEach((p) => (p as Element).setAttribute('stroke-width', '1.9'));  // 곡선/선 굵게
-        svg?.querySelectorAll('.tick, .domain, .x.axis, .y.axis').forEach((t) => t.remove());  // function-plot 기본 눈금·축 제거(자체 축 사용)
-        // 굵은 x·y축 + 화살표(원점 통과, 도형 너머 연장)
+        svg?.querySelectorAll('path').forEach((p) => (p as Element).setAttribute('stroke-width', '1.9'));
+        svg?.querySelectorAll('.tick, .domain, .x.axis, .y.axis').forEach((t) => t.remove());
+        // 굵은 x·y축 + 화살표
         const defs = document.createElementNS(NS, 'defs');
         defs.innerHTML = '<marker id="rax" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>';
         svg?.insertBefore(defs, svg.firstChild);
         const ax = (x1: number, y1: number, x2: number, y2: number) => { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', String(x1)); l.setAttribute('y1', String(y1)); l.setAttribute('x2', String(x2)); l.setAttribute('y2', String(y2)); l.setAttribute('stroke', '#1a1a1a'); l.setAttribute('stroke-width', '1.4'); l.setAttribute('marker-end', 'url(#rax)'); content?.appendChild(l); };
         if (spec.yRange[0] <= 0 && spec.yRange[1] >= 0) ax(xS(spec.range[0]), yS(0), xS(spec.range[1]), yS(0));
         if (spec.range[0] <= 0 && spec.range[1] >= 0) ax(xS(0), yS(spec.yRange[0]), xS(0), yS(spec.yRange[1]));
-        for (const ln of spec.lines ?? []) {   // 직선/세로선/점근선 (dashed 지원)
+        for (const ln of spec.lines ?? []) {
           const l = document.createElementNS(NS, 'line');
           l.setAttribute('x1', String(xS(ln.from[0]))); l.setAttribute('y1', String(yS(ln.from[1])));
           l.setAttribute('x2', String(xS(ln.to[0]))); l.setAttribute('y2', String(yS(ln.to[1])));
@@ -66,20 +66,34 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
           if (ln.dashed) l.setAttribute('stroke-dasharray', '6,4');
           content?.appendChild(l);
         }
-        for (const rg of spec.regions ?? []) {   // 음영 다각형 = 곡선/선 뒤(맨앞 삽입)
+        for (const rg of spec.regions ?? []) {
           const poly = document.createElementNS(NS, 'polygon');
           poly.setAttribute('points', rg.pts.map(([x, y]) => `${xS(x)},${yS(y)}`).join(' '));
           poly.setAttribute('fill', '#c9c9c9'); poly.setAttribute('fill-opacity', String(rg.opacity ?? 0.5)); poly.setAttribute('stroke', 'none');
           content?.insertBefore(poly, content?.firstChild ?? null);
         }
-        for (const tx of spec.texts ?? []) {   // 자유 라벨(곡선식·축눈금)
-          const [dx, dy] = DIR[tx.dir ?? '우'] ?? [10, 5];
-          const t = document.createElementNS(NS, 'text');
-          const [ctx2, cty2] = clamp(xS(tx.x) + dx, yS(tx.y) + dy, tx.text);
-          t.setAttribute('x', String(ctx2)); t.setAttribute('y', String(cty2));
-          t.setAttribute('font-size', '15'); t.setAttribute('font-family', 'KaTeX_Math, Times, serif'); t.setAttribute('font-style', 'italic'); t.setAttribute('fill', '#111');
-          t.textContent = tx.text; content?.appendChild(t);
-        }
+        // KaTeX 라벨 = foreignObject. dir 로 정렬(좌=우측정렬·중앙=가운데). px,py=앵커 투영좌표.
+        const W = 240, H = 30;
+        const addLabel = (tex: string, px: number, py: number, dir?: string) => {
+          const wrapped = /\$/.test(tex) ? tex : `$${tex}$`;
+          let html = tex;
+          try { if (katex) html = renderMathSegments(wrapped, katex); } catch { /* plain */ }
+          const [dx, dy] = DIR[dir ?? '우상'] ?? [10, -20];
+          const d = dir ?? '우상';
+          let fx: number, align: string;
+          if (d.includes('좌')) { fx = px + dx - W; align = 'right'; }
+          else if (d === '위' || d === '아래') { fx = px + dx - W / 2; align = 'center'; }
+          else { fx = px + dx; align = 'left'; }
+          const fy = Math.max(-4, Math.min(py + dy, height - H));
+          const fo = document.createElementNS(NS, 'foreignObject');
+          fo.setAttribute('x', String(fx)); fo.setAttribute('y', String(fy));
+          fo.setAttribute('width', String(W)); fo.setAttribute('height', String(H)); fo.setAttribute('overflow', 'visible');
+          const div = document.createElementNS(XHTML, 'div') as unknown as HTMLDivElement;
+          div.setAttribute('style', `font-size:15.5px;color:#111;white-space:nowrap;text-align:${align};line-height:${H}px;height:${H}px;`);
+          div.innerHTML = html;
+          fo.appendChild(div); content?.appendChild(fo);
+        };
+        for (const tx of spec.texts ?? []) addLabel(tx.text, xS(tx.x), yS(tx.y), tx.dir);
         for (const p of spec.points ?? []) {
           if (p.open) {
             const c = document.createElementNS(NS, 'circle');
@@ -87,16 +101,9 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
             c.setAttribute('fill', '#fff'); c.setAttribute('stroke', '#1a1a1a'); c.setAttribute('stroke-width', '1.6');
             content?.appendChild(c);
           }
-          if (p.label) {
-            const [dx, dy] = DIR[p.dir ?? '우상'] ?? [11, -9];
-            const t = document.createElementNS(NS, 'text');
-            const [clx, cly] = clamp(xS(p.x) + dx, yS(p.y) + dy, p.label);
-            t.setAttribute('x', String(clx)); t.setAttribute('y', String(cly));
-            t.setAttribute('font-size', '16'); t.setAttribute('font-family', 'KaTeX_Math, Times, serif'); t.setAttribute('font-style', 'italic'); t.setAttribute('fill', '#111');
-            t.textContent = p.label; content?.appendChild(t);
-          }
+          if (p.label) addLabel(p.label, xS(p.x), yS(p.y), p.dir ?? '우상');
         }
-      } catch { /* 라벨은 best-effort */ }
+      } catch { /* 라벨 best-effort */ }
       (window as unknown as { __figReady?: boolean }).__figReady = true;
     });
     return () => { cancel = true; };
