@@ -39,9 +39,13 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
       }
       const closedPts = (spec.points ?? []).filter((p) => !p.open).map((p) => [p.x, p.y]);
       if (closedPts.length) data.push({ points: closedPts, fnType: 'points', graphType: 'scatter', color: '#1a1a1a' });
+      // ★데이터 도메인을 ~7% 패딩해 가장자리 라벨(곡선끝·x=c 하단)이 캔버스 끝에 잘리지 않게 여백 확보
+      const pX = (spec.range[1] - spec.range[0]) * 0.07, pY = (spec.yRange[1] - spec.yRange[0]) * 0.09;
+      const dom: [number, number] = [spec.range[0] - pX, spec.range[1] + pX];
+      const ydom: [number, number] = [spec.yRange[0] - pY, spec.yRange[1] + pY];
       let inst;
       try {
-        inst = fp({ target: wrap, width, height, grid: false, xAxis: { domain: spec.range }, yAxis: { domain: spec.yRange }, tip: { xLine: false, yLine: false }, data });
+        inst = fp({ target: wrap, width, height, grid: false, xAxis: { domain: dom }, yAxis: { domain: ydom }, tip: { xLine: false, yLine: false }, data });
       } catch (e) { wrap.textContent = 'plot err: ' + e; return; }
       try {
         const xS = inst.meta.xScale, yS = inst.meta.yScale;
@@ -56,8 +60,8 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         defs.innerHTML = '<marker id="rax" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>';
         svg?.insertBefore(defs, svg.firstChild);
         const ax = (x1: number, y1: number, x2: number, y2: number) => { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', String(x1)); l.setAttribute('y1', String(y1)); l.setAttribute('x2', String(x2)); l.setAttribute('y2', String(y2)); l.setAttribute('stroke', '#1a1a1a'); l.setAttribute('stroke-width', '1.4'); l.setAttribute('marker-end', 'url(#rax)'); content?.appendChild(l); };
-        if (spec.yRange[0] <= 0 && spec.yRange[1] >= 0) ax(xS(spec.range[0]), yS(0), xS(spec.range[1]), yS(0));
-        if (spec.range[0] <= 0 && spec.range[1] >= 0) ax(xS(0), yS(spec.yRange[0]), xS(0), yS(spec.yRange[1]));
+        if (spec.yRange[0] <= 0 && spec.yRange[1] >= 0) ax(xS(dom[0]), yS(0), xS(dom[1]), yS(0));
+        if (spec.range[0] <= 0 && spec.range[1] >= 0) ax(xS(0), yS(ydom[0]), xS(0), yS(ydom[1]));
         for (const ln of spec.lines ?? []) {
           const l = document.createElementNS(NS, 'line');
           l.setAttribute('x1', String(xS(ln.from[0]))); l.setAttribute('y1', String(yS(ln.from[1])));
