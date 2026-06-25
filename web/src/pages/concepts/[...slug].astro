@@ -92,6 +92,7 @@ const enablesGroups = groupByType(fm.enables);
 import conceptFigures from '../../data/concept-figures.json';
 import Geometry from '../../components/Geometry.tsx';
 import Geometry3D from '../../components/Geometry3D.tsx';
+import ConceptWidget from '../../components/ConceptWidget.tsx';   // 노드별 인터랙티브 위젯(있는 노드만)
 const _figEntry = (conceptFigures as any).figures?.[entry.id];
 const conceptFigure = _figEntry?.figure ?? null;
 // 3D(입체) 개념은 Geometry3D(R3F) 로 — gen_concept_figures --include-3d 가 figure3d 키로 캐시.
@@ -185,6 +186,7 @@ const PREVIEW_COUNT = 8;
           )}
         </figure>
       )}
+      <ConceptWidget client:only="react" conceptId={entry.id} />
       <div class="prose prose-invert max-w-none" id="conceptBody">
         <Content />
       </div>
