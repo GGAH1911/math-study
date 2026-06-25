@@ -3,6 +3,9 @@ const REPO = '/home/insung/Projects/math-study';
 const idx = JSON.parse(readFileSync(`${REPO}/web/src/data/figure-triage.json`, 'utf-8'));
 function suggest(c) {
   if (c.type === 'junk') return ['delete', '추출오류(텍스트조각)'];
+  // ★도형 아닌 유형 = 재활용(재생성 X): 표·삽화/다이어그램·통계데이터그래프(산점도/히스토그램/막대/상자).
+  //   redraw 는 오직 함수그래프·좌표/측정값 박힌 geometry·3D 입체.
+  if (c.type === 'table' || c.type === 'diagram' || c.type === 'stat') return ['reuse', `${c.type}(도형 아님/데이터) → 재활용`];
   if (!c.has_math) return ['reuse', `숫자/수식 없음 (${c.type})`];
   if (c.dim === '3d') return ['redraw-3d', '수식+3D 입체'];
   return ['redraw-2d', `수식 박힘 (${c.type})`];
