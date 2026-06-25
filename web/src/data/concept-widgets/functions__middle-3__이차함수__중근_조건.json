@@ -1,0 +1,146 @@
+{
+ "id": "functions/middle-3/이차함수/중근_조건",
+ "spec": {
+  "title": "이차함수의 중근 조건 (D = b² − 4ac = 0)",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (일차항 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -1,
+    "max": 8,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "a=1; D=b^2-4*a*c; vx=-b/(2*a); vy=c-b^2/(4*a)",
+  "geometry": {
+   "range": [
+    -4,
+    8
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "꼭짓점"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -4,
+    8
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "y = x² + bx + c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = b² − 4ac",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 x = −b/2a (중근 위치)",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y (= −D/4a)",
+    "expr": "vy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -4,
+    "c": 4
+   },
+   {
+    "b": 2,
+    "c": 3
+   },
+   {
+    "b": -2,
+    "c": 1
+   },
+   {
+    "b": 0,
+    "c": -1
+   }
+  ],
+  "invariants": [
+   "a*vx^2 + b*vx + c - vy",
+   "vy + D/(4*a)",
+   "2*a*vx + b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": -4,
+     "c": 4
+    },
+    "expect": {
+     "D": 0,
+     "vx": 2,
+     "vy": 0
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 3
+    },
+    "expect": {
+     "D": -8,
+     "vx": -1,
+     "vy": 2
+    }
+   },
+   {
+    "params": {
+     "b": -2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "vx": 1,
+     "vy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

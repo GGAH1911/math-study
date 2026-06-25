@@ -1,0 +1,219 @@
+{
+ "id": "geometry/middle-2/도형의_성질/외심",
+ "spec": {
+  "title": "삼각형의 외심과 외접원",
+  "params": [
+   {
+    "name": "cx",
+    "label": "점 C의 x좌표",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "점 C의 y좌표",
+    "type": "slider",
+    "min": 1,
+    "max": 3.2,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ax=-2; Ay=0; Bx=2; By=0; Ox=0; Oy=(cx^2+cy^2-4)/(2*cy); dOA=sqrt((Ox-Ax)^2+(Oy-Ay)^2); dOB=sqrt((Ox-Bx)^2+(Oy-By)^2); dOC=sqrt((Ox-cx)^2+(Oy-cy)^2); R=dOA; Mabx=0; Maby=0; Macx=(Ax+cx)/2; Macy=(Ay+cy)/2; Mbcx=(Bx+cx)/2; Mbcy=(By+cy)/2",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Ox",
+      "=Oy"
+     ],
+     "radius": "=R",
+     "label": "외접원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Mabx",
+      "=Maby"
+     ],
+     "to": [
+      "=Ox",
+      "=Oy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Macx",
+      "=Macy"
+     ],
+     "to": [
+      "=Ox",
+      "=Oy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Mbcx",
+      "=Mbcy"
+     ],
+     "to": [
+      "=Ox",
+      "=Oy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ox",
+      "=Oy"
+     ],
+     "label": "O(외심)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "외심 O의 y좌표",
+    "expr": "Oy",
+    "digits": 3
+   },
+   {
+    "label": "|OA|",
+    "expr": "dOA",
+    "digits": 3
+   },
+   {
+    "label": "|OB|",
+    "expr": "dOB",
+    "digits": 3
+   },
+   {
+    "label": "|OC|",
+    "expr": "dOC",
+    "digits": 3
+   },
+   {
+    "label": "외접원 반지름 R",
+    "expr": "R",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 0,
+    "cy": 3
+   },
+   {
+    "cx": 2,
+    "cy": 2
+   },
+   {
+    "cx": -1.5,
+    "cy": 1
+   },
+   {
+    "cx": 1,
+    "cy": 2.5
+   }
+  ],
+  "invariants": [
+   "dOA - dOB",
+   "dOB - dOC",
+   "dOC - dOA",
+   "Ox"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 0,
+     "cy": 3
+    },
+    "expect": {
+     "Oy": 0.8333333,
+     "R": 2.1666667
+    }
+   },
+   {
+    "params": {
+     "cx": 2,
+     "cy": 2
+    },
+    "expect": {
+     "Oy": 1,
+     "R": 2.236068
+    }
+   },
+   {
+    "params": {
+     "cx": -1.5,
+     "cy": 1
+    },
+    "expect": {
+     "Oy": -0.375,
+     "R": 2.0348526
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

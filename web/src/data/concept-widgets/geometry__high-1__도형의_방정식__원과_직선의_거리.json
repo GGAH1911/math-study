@@ -1,0 +1,183 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원과_직선의_거리",
+ "spec": {
+  "title": "원과 직선의 거리 (d와 r의 비교)",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "직선 y절편 k",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=m; b=-1; c=k; x0=2; y0=1; den=sqrt(a^2+b^2); val=a*x0+b*y0+c; d=abs(val)/den; t=val/(a^2+b^2); footx=x0-a*t; footy=y0-b*t",
+  "geometry": {
+   "range": [
+    -6,
+    8
+   ],
+   "yRange": [
+    -5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      2,
+      1
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -6,
+      "=-6*m+k"
+     ],
+     "to": [
+      8,
+      "=8*m+k"
+     ],
+     "label": "직선 y=mx+k"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      1
+     ],
+     "label": "C(2,1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=footx",
+      "=footy"
+     ],
+     "label": "H"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      1
+     ],
+     "to": [
+      "=footx",
+      "=footy"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심-직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "d - r (>0 만나지않음, =0 접함, <0 두점)",
+    "expr": "d-r",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0,
+    "k": 3,
+    "r": 2
+   },
+   {
+    "m": 1,
+    "k": 0,
+    "r": 2
+   },
+   {
+    "m": -2,
+    "k": 1,
+    "r": 1.5
+   },
+   {
+    "m": 0.5,
+    "k": -4,
+    "r": 3
+   }
+  ],
+  "invariants": [
+   "footy - (m*footx + k)",
+   "(footx - x0) + (footy - y0)*m",
+   "d - sqrt((x0-footx)^2 + (y0-footy)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0,
+     "k": 3,
+     "r": 2
+    },
+    "expect": {
+     "d": 2,
+     "footx": 2,
+     "footy": 3
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "k": 0,
+     "r": 2
+    },
+    "expect": {
+     "d": 0.7071067811865476,
+     "footx": 1.5,
+     "footy": 1.5
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "k": 1,
+     "r": 2
+    },
+    "expect": {
+     "d": 0,
+     "footx": 2,
+     "footy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

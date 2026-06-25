@@ -1,0 +1,179 @@
+{
+ "id": "functions/math-1/삼각함수/탄젠트를_이용한_사인,_코사인_구하기",
+ "spec": {
+  "title": "탄젠트로 사인·코사인 구하기",
+  "params": [
+   {
+    "name": "t",
+    "label": "tan θ = t",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "s",
+    "label": "cos θ 부호 (사분면 결정)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 2
+   }
+  ],
+  "scope": "den = sqrt(1+t^2); cx = s/den; sy = s*t/den",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "단위원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "기울기 = tanθ = t"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      0
+     ],
+     "label": "cosθ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "sinθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cosθ, sinθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "tan θ = t",
+    "expr": "t",
+    "digits": 3
+   },
+   {
+    "label": "cos θ = s·1/√(1+t²)",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sin θ = s·t/√(1+t²)",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "sin²θ + cos²θ (=1)",
+    "expr": "cx^2+sy^2",
+    "digits": 4
+   },
+   {
+    "label": "sinθ/cosθ (=t)",
+    "expr": "sy/cx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.5,
+    "s": 1
+   },
+   {
+    "t": -2,
+    "s": 1
+   },
+   {
+    "t": 1,
+    "s": -1
+   },
+   {
+    "t": -0.7,
+    "s": -1
+   }
+  ],
+  "invariants": [
+   "cx^2 + sy^2 - 1",
+   "sy - t*cx",
+   "cx^2*(1+t^2) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0,
+     "s": 1
+    },
+    "expect": {
+     "cx": 1,
+     "sy": 0
+    }
+   },
+   {
+    "params": {
+     "t": 1,
+     "s": 1
+    },
+    "expect": {
+     "cx": 0.7071067811865476,
+     "sy": 0.7071067811865476
+    }
+   },
+   {
+    "params": {
+     "t": 1,
+     "s": -1
+    },
+    "expect": {
+     "cx": -0.7071067811865476,
+     "sy": -0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

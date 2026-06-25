@@ -1,0 +1,206 @@
+{
+ "id": "functions/high-1/함수와_그래프/구간에서의_함수_분석",
+ "spec": {
+  "title": "구간 [a,b]에서 f(x)=x³−3x 분석 (도함수 부호로 증감·최대최소 판정)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "조사점 x₀",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "구간 시작 a",
+    "type": "slider",
+    "min": -2.5,
+    "max": -1.2,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "구간 끝 b",
+    "type": "slider",
+    "min": 1.2,
+    "max": 2.5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "y0 = x0^3 - 3*x0; m = 3*x0^2 - 3; fa = a^3 - 3*a; fb = b^3 - 3*b; Mx = max(fa, fb, 2); Mn = min(fa, fb, -2)",
+  "geometry": {
+   "range": [
+    -2.7,
+    2.7
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "P(조사점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=fb"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ],
+     "label": "구간[a,b]"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2.7,
+    2.7
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(x0^3 - 3*x0) + (3*x0^2 - 3)*(x - x0)",
+     "label": "x₀에서의 접선 (기울기=f'(x₀))",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "f'(x₀) 접선기울기",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "증감판정 (+1 증가 / −1 감소 / 0 극값)",
+    "expr": "sign(m)",
+    "digits": 0
+   },
+   {
+    "label": "구간 최댓값",
+    "expr": "Mx",
+    "digits": 3
+   },
+   {
+    "label": "구간 최솟값",
+    "expr": "Mn",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 0,
+    "a": -2,
+    "b": 2
+   },
+   {
+    "x0": 1,
+    "a": -2,
+    "b": 2
+   },
+   {
+    "x0": -1,
+    "a": -2.5,
+    "b": 2.5
+   },
+   {
+    "x0": 2,
+    "a": -1.5,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "m - 3*(x0^2 - 1)",
+   "y0 - x0*(x0^2 - 3)",
+   "(-8*x0^3 + 6*x0) - (y0 + m*(-3*x0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 1,
+     "a": -2,
+     "b": 2
+    },
+    "expect": {
+     "y0": -2,
+     "m": 0,
+     "Mx": 2,
+     "Mn": -2
+    }
+   },
+   {
+    "params": {
+     "x0": 2,
+     "a": -1.5,
+     "b": 2
+    },
+    "expect": {
+     "y0": 2,
+     "m": 9,
+     "Mx": 2,
+     "Mn": -2
+    }
+   },
+   {
+    "params": {
+     "x0": 0,
+     "a": -2,
+     "b": 2
+    },
+    "expect": {
+     "y0": 0,
+     "m": -3,
+     "Mx": 2,
+     "Mn": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

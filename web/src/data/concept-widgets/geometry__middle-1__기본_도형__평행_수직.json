@@ -1,0 +1,202 @@
+{
+ "id": "geometry/middle-1/기본_도형/평행_수직",
+ "spec": {
+  "title": "평행과 수직: 직선 l, m, n",
+  "params": [
+   {
+    "name": "theta",
+    "label": "l의 방향각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "d",
+    "label": "평행선 m의 간격 d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; ux=cos(rad); uy=sin(rad); vx=-sin(rad); vy=cos(rad); mx=cos(rad); my=sin(rad); ox=d*vx; oy=d*vy; dot=ux*vx+uy*vy",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=-4*ux",
+      "=-4*uy"
+     ],
+     "to": [
+      "=4*ux",
+      "=4*uy"
+     ],
+     "label": "l",
+     "color": "#2563eb"
+    },
+    {
+     "type": "line",
+     "from": [
+      "=ox-4*ux",
+      "=oy-4*uy"
+     ],
+     "to": [
+      "=ox+4*ux",
+      "=oy+4*uy"
+     ],
+     "label": "m (l∥m)",
+     "color": "#16a34a"
+    },
+    {
+     "type": "line",
+     "from": [
+      "=-4*vx",
+      "=-4*vy"
+     ],
+     "to": [
+      "=4*vx",
+      "=4*vy"
+     ],
+     "label": "n (l⊥n)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=0.4*ux",
+       "=0.4*uy"
+      ],
+      [
+       "=0.4*ux+0.4*vx",
+       "=0.4*uy+0.4*vy"
+      ],
+      [
+       "=0.4*vx",
+       "=0.4*vy"
+      ]
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "θ (l의 방향각)",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "l·n 방향벡터 내적 (수직 ⇒ 0)",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "l과 n이 이루는 각 (°)",
+    "expr": "acos(dot)*180/pi",
+    "digits": 1
+   },
+   {
+    "label": "l, m 방향 외적 (평행 ⇒ 0)",
+    "expr": "ux*my-uy*mx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "d": 1
+   },
+   {
+    "theta": 30,
+    "d": -1
+   },
+   {
+    "theta": 60,
+    "d": 0.5
+   },
+   {
+    "theta": 135,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "ux^2+uy^2-1",
+   "vx^2+vy^2-1",
+   "mx^2+my^2-1",
+   "ux*vx+uy*vy",
+   "ux*my-uy*mx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "d": 1
+    },
+    "expect": {
+     "ux": 1,
+     "uy": 0,
+     "vx": 0,
+     "vy": 1,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "d": -1
+    },
+    "expect": {
+     "ux": 0.8660254038,
+     "uy": 0.5,
+     "vx": -0.5,
+     "vy": 0.8660254038,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 60,
+     "d": 0.5
+    },
+    "expect": {
+     "ux": 0.5,
+     "uy": 0.8660254038,
+     "vx": -0.8660254038,
+     "vy": 0.5,
+     "dot": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

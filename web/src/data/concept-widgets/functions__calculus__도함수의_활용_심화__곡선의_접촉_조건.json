@@ -1,0 +1,161 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/곡선의_접촉_조건",
+ "spec": {
+  "title": "곡선의 접촉 조건 — 3차곡선 y=x³과 접선",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 x좌표 a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "fa = a^3; dfa = 3*a^2; ga = dfa*(a-a) + fa; cx3 = -2*a; y3 = cx3^3; gx3 = dfa*(cx3 - a) + fa",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "P(접점·2중근)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx3",
+      "=y3"
+     ],
+     "label": "Q(또 다른 교점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=a",
+      "=fa"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3",
+     "label": "y=f(x)=x³",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "dfa*(x - a) + fa",
+     "label": "접선 y=g(x)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "g(a)",
+    "expr": "ga",
+    "digits": 4
+   },
+   {
+    "label": "f'(a)=접선 기울기",
+    "expr": "dfa",
+    "digits": 4
+   },
+   {
+    "label": "또 다른 교점 x",
+    "expr": "cx3",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": -0.5
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": -0.8
+   }
+  ],
+  "invariants": [
+   "a^3 - ga",
+   "3*a^2 - dfa",
+   "y3 - gx3",
+   "fa - ga"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "fa": 0.125,
+     "dfa": 0.75,
+     "cx3": -1,
+     "y3": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 1,
+     "dfa": 3,
+     "cx3": -2,
+     "y3": -8
+    }
+   },
+   {
+    "params": {
+     "a": -0.5
+    },
+    "expect": {
+     "fa": -0.125,
+     "dfa": 0.75,
+     "cx3": 1,
+     "y3": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

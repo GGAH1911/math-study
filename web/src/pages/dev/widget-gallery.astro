@@ -1,0 +1,54 @@
+---
+// 개념 위젯 갤러리 — widget_spec_loop가 생성·수학게이트 통과시킨 InteractiveSpec을 Interactive로 렌더.
+//   데이터: web/src/data/concept-widgets/*.json ({ id, spec, recipe }). 슬라이더 직접 조작 가능.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Interactive from '../../components/Interactive.tsx';
+import 'katex/dist/katex.min.css';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const DIR = fileURLToPath(new URL('../../data/concept-widgets', import.meta.url));
+type Item = { id?: string; spec?: unknown; recipe?: { invariants?: unknown[]; oracle?: unknown[] } };
+const items: Item[] = [];
+if (existsSync(DIR)) {
+  for (const f of readdirSync(DIR)) {
+    if (f.endsWith('.json')) { try { items.push(JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8'))); } catch { /* skip */ } }
+  }
+}
+items.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
+const q = (Astro.url.searchParams.get('q') ?? '').toLowerCase();
+const list = q ? items.filter((s) => (s.id || '').toLowerCase().includes(q)) : items;
+const domainOf = (id = '') => (id.includes('함수') || id.startsWith('functions') ? '함수' : id.includes('도형') || id.startsWith('geometry') ? '도형' : '기타');
+---
+<BaseLayout title="개념 위젯 갤러리">
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <h1 class="text-2xl font-bold" style="color:var(--color-text)">개념 위젯 갤러리 — InteractiveSpec</h1>
+    <p class="text-sm mt-1" style="color:var(--color-muted)">
+      web/src/data/concept-widgets · 총 <b style="color:var(--color-text)">{items.length}</b>건 (수학게이트 검증 통과 ✓) · 슬라이더를 직접 움직여 보세요
+      {q ? ` · "${q}" ${list.length}건` : ''}
+    </p>
+    <form method="get" class="mt-3">
+      <input name="q" value={q} placeholder="개념 id 검색 (예: 삼각, 미분, 원)"
+        class="w-full max-w-sm rounded-lg px-3 py-2 text-sm"
+        style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)" />
+    </form>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+      {list.map((it) => (
+        <div class="rounded-2xl p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-mono" style="color:var(--color-subtle)">{it.id}</span>
+            <span class="text-[11px] px-2 py-0.5 rounded-full" style="background:var(--color-surface-2);color:var(--color-muted);border:1px solid var(--color-border)">{domainOf(it.id)}</span>
+          </div>
+          {it.spec && <Interactive client:only="react" spec={it.spec as never} interactive />}
+          <div class="text-[11px] mt-2" style="color:var(--color-muted)">
+            불변식 {(it.recipe?.invariants ?? []).length} · 오라클 {(it.recipe?.oracle ?? []).length} · 검증 통과 ✓
+          </div>
+        </div>
+      ))}
+      {list.length === 0 && (
+        <p class="col-span-2 py-10 text-center" style="color:var(--color-muted)">아직 위젯 없음 — widget_spec_loop.mjs 가 concept-widgets/ 를 채운다.</p>
+      )}
+    </div>
+  </div>
+</BaseLayout>

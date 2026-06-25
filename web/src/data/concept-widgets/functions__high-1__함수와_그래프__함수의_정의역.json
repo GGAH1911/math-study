@@ -1,0 +1,184 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_정의역",
+ "spec": {
+  "title": "함수의 정의역: y=√((x−a)(b−x)) 의 정의역 [a, b]",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (왼쪽 경계)",
+    "type": "slider",
+    "min": -3,
+    "max": 1,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (오른쪽 경계)",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "m=(a+b)/2; h=(b-a)/2; len=b-a",
+  "geometry": {
+   "range": [
+    -4,
+    7
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ],
+     "label": "정의역 [a, b]",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "x=a (좌경계)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "x=b (우경계)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      "=h"
+     ],
+     "label": "최고점 (m, h)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -4,
+    7
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "sqrt((x-a)*(b-x))",
+     "label": "y=√((x−a)(b−x))",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정의역 좌경계 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "정의역 우경계 b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "정의역 길이 (b−a)",
+    "expr": "len",
+    "digits": 2
+   },
+   {
+    "label": "그래프 존재 구간",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "최댓값(=반지름 h)",
+    "expr": "h",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 4
+   },
+   {
+    "a": -3,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "h - sqrt((m-a)*(b-m))",
+   "(m-h) - a",
+   "(m+h) - b",
+   "(a-m) + (b-m)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 3
+    },
+    "expect": {
+     "m": 1,
+     "h": 2,
+     "len": 4
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 4
+    },
+    "expect": {
+     "m": 2,
+     "h": 2,
+     "len": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "m": 1.5,
+     "h": 0.5,
+     "len": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

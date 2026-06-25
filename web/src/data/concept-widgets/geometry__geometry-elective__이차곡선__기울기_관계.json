@@ -1,0 +1,234 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/기울기_관계",
+ "spec": {
+  "title": "포물선 현의 기울기 관계  m = a(x₁+x₂)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (포물선 계수)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "x1",
+    "label": "x₁ (한 끝점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x2",
+    "label": "x₂ (다른 끝점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "y1=a*x1^2; y2=a*x2^2; xm=(x1+x2)/2; ym=(y1+y2)/2; mchord=(y2-y1)/(x2-x1); mformula=a*(x1+x2); yt=a*xm^2",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1.5,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=xm",
+      "=-1.5"
+     ],
+     "to": [
+      "=xm",
+      "=9.5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=yt + mchord*(x1 - xm)"
+     ],
+     "to": [
+      "=x2",
+      "=yt + mchord*(x2 - xm)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xm",
+      "=ym"
+     ],
+     "label": "M(현의 중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xm",
+      "=yt"
+     ],
+     "label": "T(접점, 접선∥현)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1.5,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2",
+     "label": "y=ax²",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "현의 기울기 m (두 점으로 실측)",
+    "expr": "mchord",
+    "digits": 3
+   },
+   {
+    "label": "a(x₁+x₂) (공식)",
+    "expr": "mformula",
+    "digits": 3
+   },
+   {
+    "label": "x₁+x₂ (= m/a)",
+    "expr": "x1+x2",
+    "digits": 3
+   },
+   {
+    "label": "중점 x = m/(2a)",
+    "expr": "xm",
+    "digits": 3
+   },
+   {
+    "label": "다른 끝점 x₂ = m/a − x₁",
+    "expr": "mchord/a - x1",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5,
+    "x1": -2,
+    "x2": 1
+   },
+   {
+    "a": 0.5,
+    "x1": -1,
+    "x2": 2
+   },
+   {
+    "a": 0.3,
+    "x1": -3,
+    "x2": 1
+   },
+   {
+    "a": 0.8,
+    "x1": 0,
+    "x2": 2
+   }
+  ],
+  "invariants": [
+   "mchord - mformula",
+   "2*a*xm - mchord",
+   "xm - mchord/(2*a)",
+   "(mchord/a - x1) - x2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5,
+     "x1": -2,
+     "x2": 1
+    },
+    "expect": {
+     "mchord": -0.5,
+     "mformula": -0.5,
+     "xm": -0.5,
+     "y1": 2,
+     "y2": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 0.3,
+     "x1": -3,
+     "x2": 1
+    },
+    "expect": {
+     "mchord": -0.6,
+     "xm": -1,
+     "y1": 2.7,
+     "y2": 0.3
+    }
+   },
+   {
+    "params": {
+     "a": 0.8,
+     "x1": 0,
+     "x2": 2
+    },
+    "expect": {
+     "mchord": 1.6,
+     "xm": 1,
+     "y2": 3.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

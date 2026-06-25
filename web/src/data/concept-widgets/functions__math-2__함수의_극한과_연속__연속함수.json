@@ -1,0 +1,149 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/연속함수",
+ "spec": {
+  "title": "연속함수: 극한값과 함숫값이 만날 때",
+  "params": [
+   {
+    "name": "k",
+    "label": "f(1) (함숫값)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "a = 1; L = a + 1; fa = k; gap = fa - L",
+  "geometry": {
+   "range": [
+    -1,
+    3
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=L"
+     ],
+     "label": "극한값 L=2 (메워야 할 구멍)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "함숫값 f(1)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=L"
+     ],
+     "to": [
+      "=a",
+      "=fa"
+     ],
+     "label": "불연속 간격"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -1,
+    3
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x+1",
+     "label": "y=x+1 (x≠1)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한값 lim(x→1) f(x)",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "함숫값 f(1)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "차이 f(1) − L (0이면 연속)",
+    "expr": "gap",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0
+   },
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3.5
+   }
+  ],
+  "invariants": [
+   "L - (a + 1)",
+   "gap - (fa - L)",
+   "fa - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "fa": 2,
+     "L": 2,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "fa": 0,
+     "L": 2,
+     "gap": -2
+    }
+   },
+   {
+    "params": {
+     "k": 3.5
+    },
+    "expect": {
+     "fa": 3.5,
+     "L": 2,
+     "gap": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

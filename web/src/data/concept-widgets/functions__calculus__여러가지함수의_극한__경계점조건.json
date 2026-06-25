@@ -1,0 +1,171 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/경계점조건",
+ "spec": {
+  "title": "경계점조건: 곡선족에서 특수해 결정 (dy/dx = 2x)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "경계점 x₀",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "y0",
+    "label": "경계값 y₀ = y(x₀)",
+    "type": "slider",
+    "min": -4,
+    "max": 8,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "C = y0 - x0^2; yc = x0^2 + C; slope = 2*x0; tx1 = x0 - 0.8; ty1 = y0 - 0.8*slope; tx2 = x0 + 0.8; ty2 = y0 + 0.8*slope",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -8,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=tx1",
+      "=ty1"
+     ],
+     "to": [
+      "=tx2",
+      "=ty2"
+     ],
+     "label": "기울기 f'(x₀)=2x₀"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "경계점 (x₀, y₀)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -8,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2 - 4",
+     "label": "곡선족 C=-4",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "x^2",
+     "label": "곡선족 C=0",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "x^2 + 4",
+     "label": "곡선족 C=4",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "x^2 + (y0 - x0^2)",
+     "label": "특수해 y=x²+C",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "적분상수 C",
+    "expr": "C",
+    "digits": 2
+   },
+   {
+    "label": "특수해의 x₀에서 값 y(x₀)",
+    "expr": "yc",
+    "digits": 2
+   },
+   {
+    "label": "경계점 기울기 f'(x₀)=2x₀",
+    "expr": "slope",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 1,
+    "y0": 3
+   },
+   {
+    "x0": 2,
+    "y0": 1
+   },
+   {
+    "x0": -1,
+    "y0": 0
+   },
+   {
+    "x0": 0,
+    "y0": 5
+   }
+  ],
+  "invariants": [
+   "yc - y0",
+   "slope - 2*x0",
+   "C - (y0 - x0^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 1,
+     "y0": 3
+    },
+    "expect": {
+     "C": 2,
+     "yc": 3,
+     "slope": 2
+    }
+   },
+   {
+    "params": {
+     "x0": 2,
+     "y0": 1
+    },
+    "expect": {
+     "C": -3,
+     "yc": 1,
+     "slope": 4
+    }
+   },
+   {
+    "params": {
+     "x0": -1,
+     "y0": 0
+    },
+    "expect": {
+     "C": -1,
+     "yc": 0,
+     "slope": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

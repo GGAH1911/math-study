@@ -1,0 +1,198 @@
+{
+ "id": "geometry/middle-1/평면도형/삼각형의_높이",
+ "spec": {
+  "title": "삼각형의 높이와 넓이",
+  "params": [
+   {
+    "name": "ax",
+    "label": "꼭짓점 A의 x좌표 (밑변 위를 미끄러짐)",
+    "type": "slider",
+    "min": -3,
+    "max": 8,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 0.5,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "bx=0; by=0; cx=5; cy=0; Ax=ax; Ay=h; Hx=ax; Hy=0; base=cx-bx; height=h; area=0.5*base*height",
+  "geometry": {
+   "range": [
+    -4,
+    9
+   ],
+   "yRange": [
+    -1.5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=bx",
+      "=by"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "밑변 BC의 직선(연장선)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=Ax",
+       "=Ay"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "h"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "H"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑변 (BC)",
+    "expr": "base",
+    "digits": 0
+   },
+   {
+    "label": "높이 (AH)",
+    "expr": "height",
+    "digits": 2
+   },
+   {
+    "label": "넓이 = ½×밑변×높이",
+    "expr": "area",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ax": 1.5,
+    "h": 3
+   },
+   {
+    "ax": 6,
+    "h": 3
+   },
+   {
+    "ax": -1,
+    "h": 4
+   },
+   {
+    "ax": 4,
+    "h": 2
+   }
+  ],
+  "invariants": [
+   "(Hx-Ax)*(cx-bx)+(Hy-Ay)*(cy-by)",
+   "height-(Ay-Hy)",
+   "Hy-by",
+   "area-0.5*(bx*(cy-Ay)+cx*(Ay-by)+Ax*(by-cy))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ax": 1.5,
+     "h": 3
+    },
+    "expect": {
+     "base": 5,
+     "height": 3,
+     "area": 7.5,
+     "Hx": 1.5,
+     "Hy": 0
+    }
+   },
+   {
+    "params": {
+     "ax": 6,
+     "h": 3
+    },
+    "expect": {
+     "base": 5,
+     "height": 3,
+     "area": 7.5
+    }
+   },
+   {
+    "params": {
+     "ax": -1,
+     "h": 4
+    },
+    "expect": {
+     "base": 5,
+     "height": 4,
+     "area": 10,
+     "Hx": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

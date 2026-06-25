@@ -1,0 +1,131 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/지수함수와_로그함수의_교점",
+ "spec": {
+  "title": "지수함수와 로그함수의 교점",
+  "params": [
+   {
+    "name": "c",
+    "label": "교점의 x좌표 c",
+    "type": "slider",
+    "min": 1.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a = c^(1/c)",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      "=c"
+     ],
+     "label": "교점 (c, c)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "#e8590c"
+    },
+    {
+     "fn": "log(x, a)",
+     "label": "y = log_a x",
+     "color": "#1c7ed6"
+    },
+    {
+     "fn": "x",
+     "label": "y = x",
+     "color": "#868e96"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑 a = c^(1/c)",
+    "expr": "a",
+    "digits": 5
+   },
+   {
+    "label": "교점 좌표 c",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "검산 a^c (=c 여야)",
+    "expr": "a^c",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 2
+   },
+   {
+    "c": 3
+   },
+   {
+    "c": 4
+   },
+   {
+    "c": 1.5
+   }
+  ],
+  "invariants": [
+   "a^c - c",
+   "log(c, a) - c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 2
+    },
+    "expect": {
+     "a": 1.4142135624
+    }
+   },
+   {
+    "params": {
+     "c": 3
+    },
+    "expect": {
+     "a": 1.4422495703
+    }
+   },
+   {
+    "params": {
+     "c": 4
+    },
+    "expect": {
+     "a": 1.4142135624
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
