@@ -1,0 +1,42 @@
+---
+// redraw(function-plot/RedrawPlot) 결과 갤러리 — /tmp/redraw_specs/*.json 을 원본 ↔ 재현 나란히.
+// 각 파일 = { id, spec(RedrawPlot spec), img(원본 경로), score?, verdict? }
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RedrawPlot from '../../components/RedrawPlot.tsx';
+import { readFileSync, readdirSync } from 'node:fs';
+
+const DIR = '/tmp/redraw_specs';
+type Item = { id?: string; spec?: unknown; img?: string; score?: number; verdict?: string; note?: string };
+const items: Item[] = [];
+try {
+  for (const f of readdirSync(DIR)) {
+    if (f.endsWith('.json')) { try { items.push(JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8'))); } catch { /* skip */ } }
+  }
+} catch { /* 아직 없음 */ }
+items.sort((a, b) => (a.id || '').localeCompare(b.id || ''));
+const q = (Astro.url.searchParams.get('q') ?? '').toLowerCase();
+const list = q ? items.filter((s) => (s.id || '').toLowerCase().includes(q)) : items;
+---
+<BaseLayout title="Redraw 갤러리">
+  <div style="padding:16px 20px;max-width:1100px;margin:0 auto;">
+    <h1 style="font-size:20px;font-weight:700;">Redraw 갤러리 — function-plot 재현 (원본 ↔ 재현)</h1>
+    <p style="color:#9aa0a6;font-size:13px;">/tmp/redraw_specs · 총 {items.length}건{q ? ` · "${q}" ${list.length}건` : ''}</p>
+    <form style="margin:8px 0 16px;"><input type="text" name="q" value={q} placeholder="id 검색 (예: 가형)" style="padding:6px 12px;border-radius:6px;border:1px solid #444;background:#1a1a1a;color:#eee;width:260px;" /></form>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      {list.map((it) => (
+        <div style="border:1px solid #333;border-radius:10px;padding:12px 14px;background:#141416;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-weight:600;font-size:14px;">{it.id}</span>
+            {it.verdict && <span style={`font-size:12px;padding:2px 8px;border-radius:5px;background:${it.verdict === 'pass' ? '#1a7f37' : '#9a6700'};color:#fff;`}>{it.verdict}{it.score != null ? ` ${it.score}/40` : ''}</span>}
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;">
+            <div><div style="font-size:11px;color:#888;margin-bottom:4px;">원본</div><img src={it.img} style="width:420px;max-width:46vw;background:#fff;border-radius:6px;display:block;" /></div>
+            <div><div style="font-size:11px;color:#888;margin-bottom:4px;">재현 (RedrawPlot)</div>{it.spec ? <RedrawPlot client:only="react" spec={it.spec as never} width={420} height={336} /> : <span style="color:#666;">no spec</span>}</div>
+          </div>
+          {it.note && <p style="font-size:11px;color:#9aa0a6;margin-top:6px;">{it.note}</p>}
+        </div>
+      ))}
+      {list.length === 0 && <p style="color:#9aa0a6;padding:20px;">아직 재현 없음 — measure→spec 배치가 /tmp/redraw_specs/*.json 에 채운다.</p>}
+    </div>
+  </div>
+</BaseLayout>

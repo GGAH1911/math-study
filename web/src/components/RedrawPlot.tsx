@@ -51,6 +51,7 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         const svg = ref.current.querySelector('svg');
         const content = (svg?.querySelector('.content') ?? svg) as SVGElement | null;
         const NS = 'http://www.w3.org/2000/svg';
+        const clamp = (cx: number, cy: number, txt: string): [number, number] => [Math.max(3, Math.min(cx, width - 6 - txt.length * 7)), Math.max(13, Math.min(cy, height - 5))];  // 라벨 캔버스 안으로
         // 교과서식 정제: 데이터 선 굵게 + function-plot 기본 눈금/축 제거(자체 축으로 대체)
         svg?.querySelectorAll('path').forEach((p) => (p as Element).setAttribute('stroke-width', '1.9'));  // 곡선/선 굵게
         svg?.querySelectorAll('.tick, .domain, .x.axis, .y.axis').forEach((t) => t.remove());  // function-plot 기본 눈금·축 제거(자체 축 사용)
@@ -70,7 +71,8 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         for (const tx of spec.texts ?? []) {   // 자유 라벨(곡선식·축눈금)
           const [dx, dy] = DIR[tx.dir ?? '우'] ?? [10, 5];
           const t = document.createElementNS(NS, 'text');
-          t.setAttribute('x', String(xS(tx.x) + dx)); t.setAttribute('y', String(yS(tx.y) + dy));
+          const [ctx2, cty2] = clamp(xS(tx.x) + dx, yS(tx.y) + dy, tx.text);
+          t.setAttribute('x', String(ctx2)); t.setAttribute('y', String(cty2));
           t.setAttribute('font-size', '15'); t.setAttribute('font-family', 'KaTeX_Math, Times, serif'); t.setAttribute('font-style', 'italic'); t.setAttribute('fill', '#111');
           t.textContent = tx.text; content?.appendChild(t);
         }
@@ -84,7 +86,8 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
           if (p.label) {
             const [dx, dy] = DIR[p.dir ?? '우상'] ?? [11, -9];
             const t = document.createElementNS(NS, 'text');
-            t.setAttribute('x', String(xS(p.x) + dx)); t.setAttribute('y', String(yS(p.y) + dy));
+            const [clx, cly] = clamp(xS(p.x) + dx, yS(p.y) + dy, p.label);
+            t.setAttribute('x', String(clx)); t.setAttribute('y', String(cly));
             t.setAttribute('font-size', '16'); t.setAttribute('font-family', 'KaTeX_Math, Times, serif'); t.setAttribute('font-style', 'italic'); t.setAttribute('fill', '#111');
             t.textContent = p.label; content?.appendChild(t);
           }
