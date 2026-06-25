@@ -51,7 +51,7 @@ c.stdout.on('data', (d) => (out += d));
 c.on('close', () => {
   let result = '', usage = {};
   try { const j = JSON.parse(out); result = j.result || ''; usage = j.usage || {}; } catch { result = out; }
-  appendFileSync(`${LOGDIR}/opus_measure_usage.log`, `${MODEL}\tcr=${usage.cache_read_input_tokens ?? '?'}\tin=${usage.input_tokens ?? '?'}\tout=${usage.output_tokens ?? '?'}\n`);
+  appendFileSync(`${LOGDIR}/opus_measure_usage.log`, `${MODEL}\tcr=${usage.cache_read_input_tokens ?? '?'}\tcc=${usage.cache_creation_input_tokens ?? '?'}\tin=${usage.input_tokens ?? '?'}\tout=${usage.output_tokens ?? '?'}\n`);
   const m = result.match(/\{[\s\S]*\}/);
   if (!m) { console.error('JSON 추출 실패:', result.slice(0, 200)); process.exit(1); }
   try {
