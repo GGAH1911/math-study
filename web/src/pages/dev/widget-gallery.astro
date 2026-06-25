@@ -37,7 +37,7 @@ const domainOf = (id = '') => (id.includes('함수') || id.startsWith('functions
       {list.map((it) => (
         <div class="rounded-2xl p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-mono" style="color:var(--color-subtle)">{it.id}</span>
+            <a href={`/concepts/${it.id}`} target="_blank" rel="noopener" class="text-xs font-mono hover:underline" style="color:var(--color-accent)" title="개념 페이지 열기 ↗">{it.id} ↗</a>
             <span class="text-[11px] px-2 py-0.5 rounded-full" style="background:var(--color-surface-2);color:var(--color-muted);border:1px solid var(--color-border)">{domainOf(it.id)}</span>
           </div>
           {it.spec && <Interactive client:only="react" spec={it.spec as never} interactive />}
