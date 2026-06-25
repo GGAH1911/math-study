@@ -103,12 +103,13 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
           let lx = d.includes('좌') ? axx - w2 : (d === '위' || d === '아래') ? axx - w2 / 2 : axx;
           lx = Math.max(1, Math.min(lx, width - w2 - 1));
           let fy = Math.max(1, Math.min(sy + dy, height - h2 - 1));
-          // 라벨끼리 겹치면 상/하 첫 빈자리로 넛지
+          // 라벨끼리 겹치면 상/하·좌/우 첫 빈자리로 넛지
           if (placed.some((p) => hit({ x: lx, y: fy, w: w2, h: h2 }, p))) {
-            const cands: number[] = [];
-            for (let k = 1; k <= 5; k++) cands.push(fy + k * (h2 + 3), fy - k * (h2 + 3));
-            const ok = cands.find((cy) => cy >= 1 && cy <= height - h2 - 1 && !placed.some((p) => hit({ x: lx, y: cy, w: w2, h: h2 }, p)));
-            if (ok != null) fy = ok;
+            const cand: Array<[number, number]> = [];
+            for (let k = 1; k <= 5; k++) cand.push([lx, fy + k * (h2 + 3)], [lx, fy - k * (h2 + 3)]);
+            for (let k = 1; k <= 4; k++) cand.push([lx + k * 16, fy], [lx - k * 16, fy]);
+            const ok = cand.find(([cx, cy]) => cx >= 1 && cx <= width - w2 - 1 && cy >= 1 && cy <= height - h2 - 1 && !placed.some((p) => hit({ x: cx, y: cy, w: w2, h: h2 }, p)));
+            if (ok) { lx = ok[0]; fy = ok[1]; }
           }
           placed.push({ x: lx, y: fy, w: w2, h: h2 });
           lab.style.left = `${lx}px`; lab.style.top = `${fy}px`;
