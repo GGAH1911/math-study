@@ -52,6 +52,7 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         // 교과서식 정제: 데이터 선 굵게 + function-plot 기본 눈금/축 제거(자체 축으로 대체)
         svg?.querySelectorAll('path').forEach((p) => (p as Element).setAttribute('stroke-width', '1.9'));
         svg?.querySelectorAll('.tick, .domain, .x.axis, .y.axis').forEach((t) => t.remove());
+        svg?.querySelectorAll('[clip-path]').forEach((e) => e.removeAttribute('clip-path'));  // ★플롯영역 클립 제거 — 여백의 라벨(곡선식·축눈금)이 잘리던 원인
         // 굵은 x·y축 + 화살표
         const defs = document.createElementNS(NS, 'defs');
         defs.innerHTML = '<marker id="rax" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker>';
@@ -75,36 +76,46 @@ export default function RedrawPlot({ spec, width = 420, height = 360 }: { spec: 
         }
         // KaTeX 라벨 = foreignObject. dir 로 정렬(좌=우측정렬·중앙=가운데). px,py=앵커 투영좌표.
         const H = 30;
+        const measEl = document.createElement('div');   // off-screen 실측용(SVG 밖 일반 HTML → 정확한 폭)
+        measEl.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font-size:15.5px;';
+        document.body.appendChild(measEl);
         const addLabel = (tex: string, px: number, py: number, dir?: string) => {
           const wrapped = /\$/.test(tex) ? tex : `$${tex}$`;
           let html = tex;
           try { if (katex) html = renderMathSegments(wrapped, katex); } catch { /* plain */ }
+          measEl.innerHTML = html;
+          const w2 = Math.max(measEl.getBoundingClientRect().width, measEl.scrollWidth, tex.length * 8) * 1.32 + 8;   // 실측 + 여유(KaTeX 실폭 보정 → 클립/잘림 방지)
           const d = dir ?? '우상';
           const [dx, dy] = DIR[d] ?? [6, -30];
-          const fo = document.createElementNS(NS, 'foreignObject');
-          fo.setAttribute('width', '320'); fo.setAttribute('height', String(H)); fo.setAttribute('overflow', 'visible');
-          const div = document.createElementNS(XHTML, 'div') as unknown as HTMLDivElement;
-          div.setAttribute('style', `display:inline-block;font-size:15.5px;color:#111;white-space:nowrap;line-height:${H}px;height:${H}px;`);
-          div.innerHTML = html;
-          fo.appendChild(div); content?.appendChild(fo);
-          const w2 = div.getBoundingClientRect().width || tex.length * 8;   // 실측 폭
           const ax2 = px + dx;
           let fx = d.includes('좌') ? ax2 - w2 : (d === '위' || d === '아래') ? ax2 - w2 / 2 : ax2;
           fx = Math.max(2, Math.min(fx, width - w2 - 2));   // 캔버스 안 클램프(잘림 방지)
+          const fo = document.createElementNS(NS, 'foreignObject');
           fo.setAttribute('x', String(fx)); fo.setAttribute('y', String(Math.max(0, Math.min(py + dy, height - H))));
+          fo.setAttribute('width', String(Math.ceil(w2) + 20)); fo.setAttribute('height', String(H)); fo.setAttribute('overflow', 'visible');
+          const div = document.createElementNS(XHTML, 'div') as unknown as HTMLDivElement;
+          div.setAttribute('style', `font-size:15.5px;color:#111;white-space:nowrap;line-height:${H}px;height:${H}px;`);
+          div.innerHTML = html;
+          fo.appendChild(div); content?.appendChild(fo);
         };
-        for (const tx of spec.texts ?? []) addLabel(tx.text, xS(tx.x), yS(tx.y), tx.dir);
-        for (const p of spec.points ?? []) {
+        for (const p of spec.points ?? []) {   // 빈원(불연속)은 즉시
           if (p.open) {
             const c = document.createElementNS(NS, 'circle');
             c.setAttribute('cx', String(xS(p.x))); c.setAttribute('cy', String(yS(p.y))); c.setAttribute('r', '4.5');
             c.setAttribute('fill', '#fff'); c.setAttribute('stroke', '#1a1a1a'); c.setAttribute('stroke-width', '1.6');
             content?.appendChild(c);
           }
-          if (p.label) addLabel(p.label, xS(p.x), yS(p.y), p.dir ?? '우상');
         }
-      } catch { /* 라벨 best-effort */ }
-      (window as unknown as { __figReady?: boolean }).__figReady = true;
+        // ★라벨은 폰트(KaTeX) 로드 후 렌더 — getBoundingClientRect 폭이 정확해야 클램프/정렬이 맞는다(폰트 전엔 0/오측정).
+        const doLabels = () => {
+          for (const tx of spec.texts ?? []) addLabel(tx.text, xS(tx.x), yS(tx.y), tx.dir);
+          for (const p of spec.points ?? []) if (p.label) addLabel(p.label, xS(p.x), yS(p.y), p.dir ?? '우상');
+          measEl.remove();
+          (window as unknown as { __figReady?: boolean }).__figReady = true;
+        };
+        const fr = (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts?.ready;
+        if (fr) fr.then(() => requestAnimationFrame(doLabels)); else doLabels();
+      } catch { (window as unknown as { __figReady?: boolean }).__figReady = true; }
     });
     return () => { cancel = true; };
   }, [JSON.stringify(spec), width, height]);
