@@ -30,13 +30,13 @@ const PER = 48;
 const SUBJECTS = ['가형', '나형', '공통', '미적분', '확률과통계', '기하', '단일'].filter((s) => all.some((f) => f.subject === s));
 const subjCount = (s: string) => all.filter((f) => f.subject === s).length;
 const sugCount = (s: string) => all.filter((f) => f.suggested === s).length;
-const inlineCount = all.filter((f) => f.inline_shape).length;
+const inlineCount = all.filter((f) => f.kind === 'inline').length;   // 결정론적 {{INL}} 인라인 기호
 
 let rows = all;
 if (status !== 'all') rows = rows.filter((f) => f.status === status);
 if (subj !== 'all') rows = rows.filter((f) => f.subject === subj);
 if (sug !== 'all') rows = rows.filter((f) => f.suggested === sug);
-if (inl === '1') rows = rows.filter((f) => f.inline_shape);
+if (inl === '1') rows = rows.filter((f) => f.kind === 'inline');
 if (q) rows = rows.filter((f) => f.problem_slug?.includes(q) || f.image?.includes(q));
 rows.sort((a, b) => (a.problem_slug || '').localeCompare(b.problem_slug || ''));
 const total = rows.length;
@@ -114,7 +114,7 @@ const label: Record<string, string> = { untriaged: '미분류', reuse: '재활�
         <span class="bdg" style={`background:${badge[f.status]}`}>{label[f.status]}</span><br />
         {f.problem_slug}<br /><span class="cnt">{f.round} · {f.subject} · fig{f.figure_index}</span>
         {f.suggested && f.suggested !== f.status && (
-          <div class="sug">{f.inline_shape ? '📎' : '🤖'} <b style={`color:${badge[f.suggested]}`}>{label[f.suggested]}</b> <span class="cnt">{f.suggest_reason}</span></div>
+          <div class="sug">{f.kind === 'inline' ? '📎' : '🤖'} <b style={`color:${badge[f.suggested]}`}>{label[f.suggested]}</b> <span class="cnt">{f.suggest_reason}</span></div>
         )}
       </div>
       <div class="btns">
