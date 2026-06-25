@@ -3,6 +3,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import matter from 'gray-matter';
+import { widgetForConcept } from './concept-widgets';   // 노드별 인터랙티브 위젯 메타(튜터 인지용)
 
 const WEB_ROOT = process.cwd();
 const CONCEPTS_DIR = resolve(WEB_ROOT, '..', 'docs', 'concepts');
@@ -605,9 +606,12 @@ export function buildCompactTutorPrompt(pageSlug: string, collection: 'concepts'
     ? ''
     : fullText.match(/문제 본문:\s*\n([\s\S]+?)(?=\n---|$)/)?.[1]?.slice(0, 800) ?? '';
 
+  const widget = collection === 'concepts' ? widgetForConcept(pageSlug) : null;
+
   const compact = `당신은 한국 고등학교 수학 튜터입니다. 학생이 "${full.pageTitle}" 페이지에 있습니다.
 
 ${pageContext ? `## 페이지 컨텍스트\n${pageContext}\n` : ''}
+${widget ? `## 이 페이지의 인터랙티브 위젯 (적극 활용)\n본문 위에 **${widget.label}** 위젯이 이미 있습니다. ${widget.tutorHint}\n학생이 시각적 이해가 필요하거나 막힐 때, (이 튜터는 도형을 직접 못 그리니) 큰 모델 권유 대신 **"위 위젯에서 ___ 해보세요"** 라고 그 위젯을 직접 조작하도록 구체적으로 안내하고, 무엇을 보게 될지 짚어 주세요.\n` : ''}
 ${problemText ? `## 문제\n${problemText}\n` : ''}
 ${hasImage ? `## 문제 이미지 (유일한 원본)
 이 문제의 본문·식·도형은 첨부된 이미지로만 확인. OCR 텍스트는 부정확해 의도적으로 제외했음.
