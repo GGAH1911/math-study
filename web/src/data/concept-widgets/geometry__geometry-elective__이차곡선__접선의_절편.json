@@ -1,0 +1,156 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/접선의_절편",
+ "spec": {
+  "title": "접선의 절편 (y = x²)",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 x좌표 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fa=a^2; fpa=2*a; xint=a-fa/fpa; yint=fa-a*fpa",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -9.5,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "P(a, f(a))"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xint",
+      "=0"
+     ],
+     "label": "x절편"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0",
+      "=yint"
+     ],
+     "label": "y절편"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -9.5,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fpa*(x - a) + fa",
+     "label": "접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f'(a) 접선 기울기",
+    "expr": "fpa",
+    "digits": 3
+   },
+   {
+    "label": "x절편  a − f(a)/f'(a)",
+    "expr": "xint",
+    "digits": 3
+   },
+   {
+    "label": "y절편  f(a) − a·f'(a)",
+    "expr": "yint",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": -1.5
+   },
+   {
+    "a": 0.5
+   }
+  ],
+  "invariants": [
+   "fa - a^2",
+   "fpa - 2*a",
+   "fpa*(xint - a) + fa",
+   "(fa - a*fpa) - yint",
+   "xint - a/2",
+   "yint + a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 1,
+     "fpa": 2,
+     "xint": 0.5,
+     "yint": -1
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 4,
+     "fpa": 4,
+     "xint": 1,
+     "yint": -4
+    }
+   },
+   {
+    "params": {
+     "a": -1.5
+    },
+    "expect": {
+     "fa": 2.25,
+     "fpa": -3,
+     "xint": -0.75,
+     "yint": -2.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

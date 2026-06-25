@@ -1,0 +1,169 @@
+{
+ "id": "functions/calculus/여러가지_적분법/치환적분",
+ "spec": {
+  "title": "치환적분: 넓이는 보존된다 — ∫₀ᵇ 2x·cos(x²)dx = ∫₀^(b²) cos(u)du",
+  "params": [
+   {
+    "name": "b",
+    "label": "적분 상한 b",
+    "type": "slider",
+    "min": 0,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "ub = b^2; Ax = sin(b^2); Au = sin(ub); gp = 2*b; fend = cos(b^2); hend = 2*b*cos(b^2)",
+  "geometry": {
+   "range": [
+    0,
+    2.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      0
+     ],
+     "to": [
+      "=b",
+      "=hend"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=hend"
+     ],
+     "label": "끝점 f(g(b))·g'(b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=Ax"
+     ],
+     "label": "누적넓이 = sin(b²)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    2.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "fns": [
+    {
+     "fn": "2*x*cos(x^2)",
+     "label": "피적분함수 f(g(x))g'(x)=2x·cos(x²)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "sin(x^2)",
+     "label": "원시함수 F(g(x))=sin(x²) (누적넓이)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "치환변수 u = g(b) = b²",
+    "expr": "ub",
+    "digits": 3
+   },
+   {
+    "label": "x-세계 넓이 ∫₀ᵇ 2x·cos(x²)dx",
+    "expr": "Ax",
+    "digits": 5
+   },
+   {
+    "label": "u-세계 넓이 ∫₀^(b²) cos(u)du",
+    "expr": "Au",
+    "digits": 5
+   },
+   {
+    "label": "g'(b)=2b (du=g'(x)dx)",
+    "expr": "gp",
+    "digits": 3
+   },
+   {
+    "label": "피적분함수 끝점값 f(g(b))·g'(b)",
+    "expr": "hend",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0.5
+   },
+   {
+    "b": 1
+   },
+   {
+    "b": 1.5
+   },
+   {
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "Ax - Au",
+   "hend - fend*gp",
+   "ub - b^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0
+    },
+    "expect": {
+     "ub": 0,
+     "Ax": 0,
+     "Au": 0,
+     "gp": 0,
+     "hend": 0
+    }
+   },
+   {
+    "params": {
+     "b": 1
+    },
+    "expect": {
+     "ub": 1,
+     "Ax": 0.8414709848078965,
+     "Au": 0.8414709848078965,
+     "gp": 2,
+     "hend": 1.0806046117362795
+    }
+   },
+   {
+    "params": {
+     "b": 0.5
+    },
+    "expect": {
+     "ub": 0.25,
+     "Ax": 0.24740395925452294,
+     "Au": 0.24740395925452294,
+     "gp": 1,
+     "hend": 0.9689124217106447
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

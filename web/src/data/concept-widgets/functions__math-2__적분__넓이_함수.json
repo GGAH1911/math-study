@@ -1,0 +1,167 @@
+{
+ "id": "functions/math-2/적분/넓이_함수",
+ "spec": {
+  "title": "넓이 함수 F(x) = ∫₀ˣ f(t) dt  (f(t)=t)",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (오른쪽 끝점)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "a=0; fx=x; Fx=x^2/2",
+  "geometry": {
+   "range": [
+    -0.4,
+    3.3
+   ],
+   "yRange": [
+    -0.4,
+    3.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      3,
+      3
+     ],
+     "label": "y=f(t)=t",
+     "color": "#888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x",
+       "=fx"
+      ]
+     ],
+     "label": "누적 넓이 F(x)",
+     "color": "#3b82f6"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=fx"
+     ],
+     "color": "#ef4444"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=fx"
+     ],
+     "label": "(x, f(x))"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 3
+   },
+   {
+    "label": "F(x)=∫₀ˣ f(t)dt (누적 넓이)",
+    "expr": "Fx",
+    "digits": 3
+   },
+   {
+    "label": "삼각형 넓이 ½·x·f(x)",
+    "expr": "x*fx/2",
+    "digits": 3
+   },
+   {
+    "label": "F'(x)=f(x) (미적분 기본정리)",
+    "expr": "fx",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0
+   },
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1.5
+   },
+   {
+    "x": 3
+   }
+  ],
+  "invariants": [
+   "Fx - x^2/2",
+   "Fx - x*fx/2",
+   "fx - x",
+   "Fx - (x*fx/2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "fx": 0,
+     "Fx": 0
+    }
+   },
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "fx": 2,
+     "Fx": 2
+    }
+   },
+   {
+    "params": {
+     "x": 3
+    },
+    "expect": {
+     "fx": 3,
+     "Fx": 4.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

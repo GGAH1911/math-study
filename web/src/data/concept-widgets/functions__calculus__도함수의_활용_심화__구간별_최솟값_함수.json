@@ -1,0 +1,208 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/구간별_최솟값_함수",
+ "spec": {
+  "title": "구간별 최솟값 함수 m(t) — 슬라이딩 윈도우",
+  "params": [
+   {
+    "name": "t",
+    "label": "구간 왼쪽 끝 t",
+    "type": "slider",
+    "min": -1.8,
+    "max": 3.5,
+    "init": -0.5,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "구간 길이 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xmin = max(t, min(2, t + a)); mt = (xmin - 2)^2 + 1; fl = (t - 2)^2 + 1; fr = (t + a - 2)^2 + 1",
+  "geometry": {
+   "range": [
+    -1.8,
+    6
+   ],
+   "yRange": [
+    -0.9,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=t",
+      -0.9
+     ],
+     "to": [
+      "=t",
+      8
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=t + a",
+      -0.9
+     ],
+     "to": [
+      "=t + a",
+      8
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=t",
+      "=mt"
+     ],
+     "to": [
+      "=t + a",
+      "=mt"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=t",
+      "=fl"
+     ],
+     "label": "f(t)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=t + a",
+      "=fr"
+     ],
+     "label": "f(t+a)"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      1
+     ],
+     "label": "꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xmin",
+      "=mt"
+     ],
+     "label": "최소"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -1.8,
+    6
+   ],
+   "yRange": [
+    -0.9,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^2 - 4*x + 5",
+     "label": "f(x)=x²-4x+5",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(max(x, min(2, x + a)) - 2)^2 + 1",
+     "label": "m(t)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 끝 t",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "오른쪽 끝 t+a",
+    "expr": "t + a",
+    "digits": 2
+   },
+   {
+    "label": "최소가 되는 위치 x*",
+    "expr": "xmin",
+    "digits": 3
+   },
+   {
+    "label": "최솟값 m(t)",
+    "expr": "mt",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": -1,
+    "a": 2
+   },
+   {
+    "t": 1,
+    "a": 2
+   },
+   {
+    "t": 3,
+    "a": 2
+   },
+   {
+    "t": 0.5,
+    "a": 1.5
+   }
+  ],
+  "invariants": [
+   "(xmin - 2) * (xmin - t) * (xmin - (t + a))",
+   "mt - (xmin^2 - 4*xmin + 5)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": -1,
+     "a": 2
+    },
+    "expect": {
+     "xmin": 1,
+     "mt": 2
+    }
+   },
+   {
+    "params": {
+     "t": 1,
+     "a": 2
+    },
+    "expect": {
+     "xmin": 2,
+     "mt": 1
+    }
+   },
+   {
+    "params": {
+     "t": 3,
+     "a": 2
+    },
+    "expect": {
+     "xmin": 3,
+     "mt": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

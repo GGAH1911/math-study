@@ -1,0 +1,224 @@
+{
+ "id": "geometry/middle-1/기본_도형/기하학적_대칭",
+ "spec": {
+  "title": "선 대칭과 점 대칭 (기하학적 대칭)",
+  "params": [
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "theta",
+    "label": "대칭축 ℓ의 각도 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; c2=cos(2*rad); s2=sin(2*rad); plx=px*c2+py*s2; ply=px*s2-py*c2; ppx=-px; ppy=-py; mlx=(px+plx)/2; mly=(py+ply)/2; ax1=-6*cos(rad); ay1=-6*sin(rad); ax2=6*cos(rad); ay2=6*sin(rad)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=ax1",
+      "=ay1"
+     ],
+     "to": [
+      "=ax2",
+      "=ay2"
+     ],
+     "label": "대칭축 ℓ",
+     "color": "#888888"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O (대칭의 중심)",
+     "color": "#000000"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#0066cc"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=plx",
+      "=ply"
+     ],
+     "label": "P′ (ℓ에 대한 선대칭)",
+     "color": "#cc3300"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ppx",
+      "=ppy"
+     ],
+     "label": "P″ (O에 대한 점대칭)",
+     "color": "#009933"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=plx",
+      "=ply"
+     ],
+     "color": "#cc3300"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=ppx",
+      "=ppy"
+     ],
+     "color": "#009933"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "OP 길이",
+    "expr": "sqrt(px^2+py^2)",
+    "digits": 3
+   },
+   {
+    "label": "OP′ 길이 (선대칭, OP와 같아야)",
+    "expr": "sqrt(plx^2+ply^2)",
+    "digits": 3
+   },
+   {
+    "label": "OP″ 길이 (점대칭, OP와 같아야)",
+    "expr": "sqrt(ppx^2+ppy^2)",
+    "digits": 3
+   },
+   {
+    "label": "P″ x좌표 (= -P_x)",
+    "expr": "ppx",
+    "digits": 2
+   },
+   {
+    "label": "P″ y좌표 (= -P_y)",
+    "expr": "ppy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 3,
+    "py": 2,
+    "theta": 30
+   },
+   {
+    "px": -2,
+    "py": 1,
+    "theta": 120
+   },
+   {
+    "px": 1.5,
+    "py": -3,
+    "theta": 75
+   },
+   {
+    "px": 0,
+    "py": 2.5,
+    "theta": 45
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-(plx^2+ply^2)",
+   "mlx*sin(rad)-mly*cos(rad)",
+   "(plx-px)*cos(rad)+(ply-py)*sin(rad)",
+   "px+ppx",
+   "py+ppy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 2,
+     "py": 1,
+     "theta": 0
+    },
+    "expect": {
+     "plx": 2,
+     "ply": -1,
+     "ppx": -2,
+     "ppy": -1
+    }
+   },
+   {
+    "params": {
+     "px": 1,
+     "py": 0,
+     "theta": 45
+    },
+    "expect": {
+     "plx": 0,
+     "ply": 1,
+     "ppx": -1,
+     "ppy": 0
+    }
+   },
+   {
+    "params": {
+     "px": 2,
+     "py": 1,
+     "theta": 90
+    },
+    "expect": {
+     "plx": -2,
+     "ply": 1,
+     "ppx": -2,
+     "ppy": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

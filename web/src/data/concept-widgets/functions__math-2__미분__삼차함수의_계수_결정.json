@@ -1,0 +1,231 @@
+{
+ "id": "functions/math-2/미분/삼차함수의_계수_결정",
+ "spec": {
+  "title": "삼차함수의 계수 결정 — 계수와 극값·변곡점",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = b^2 - 3*a*c; s = sqrt(D); x1 = (-b - s)/(3*a); x2 = (-b + s)/(3*a); y1 = a*x1^3 + b*x1^2 + c*x1 + d; y2 = a*x2^3 + b*x2^2 + c*x2 + d; xi = -b/(3*a); yi = a*xi^3 + b*xi^2 + c*xi + d",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "극대"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "극소"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xi",
+      "=yi"
+     ],
+     "label": "변곡점"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)=ax³+bx²+cx+d",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 b²-3ac",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "극대점 x",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "극댓값",
+    "expr": "y1",
+    "digits": 3
+   },
+   {
+    "label": "극소점 x",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "극솟값",
+    "expr": "y2",
+    "digits": 3
+   },
+   {
+    "label": "변곡점 x = -b/3a",
+    "expr": "xi",
+    "digits": 3
+   },
+   {
+    "label": "변곡점 y",
+    "expr": "yi",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 0
+   },
+   {
+    "a": 2,
+    "b": 0,
+    "c": -6,
+    "d": 1
+   },
+   {
+    "a": 0.5,
+    "b": 2,
+    "c": -2,
+    "d": 1
+   }
+  ],
+  "invariants": [
+   "3*a*x1^2 + 2*b*x1 + c",
+   "3*a*x2^2 + 2*b*x2 + c",
+   "6*a*xi + 2*b",
+   "x1 + x2 - 2*xi",
+   "y1 + y2 - 2*yi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
+    },
+    "expect": {
+     "D": 9,
+     "x1": -1,
+     "x2": 1,
+     "y1": 2,
+     "y2": -2,
+     "xi": 0,
+     "yi": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "D": 9,
+     "x1": 0,
+     "x2": 2,
+     "y1": 0,
+     "y2": -4,
+     "xi": 1,
+     "yi": -2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 0,
+     "c": -6,
+     "d": 1
+    },
+    "expect": {
+     "D": 36,
+     "x1": -1,
+     "x2": 1,
+     "y1": 5,
+     "y2": -3,
+     "xi": 0,
+     "yi": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

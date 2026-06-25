@@ -1,0 +1,199 @@
+{
+ "id": "geometry/middle-1/평면도형/반사_대칭",
+ "spec": {
+  "title": "반사 대칭 — 거울에 비친 점 P′",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "대칭축 ℓ의 기울기 각도",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=alpha*pi/180; ux=cos(a); uy=sin(a); c2=cos(2*a); s2=sin(2*a); qx=px*c2+py*s2; qy=px*s2-py*c2; mx=(px+qx)/2; my=(py+qy)/2",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-3*ux",
+      "=-3*uy"
+     ],
+     "to": [
+      "=3*ux",
+      "=3*uy"
+     ],
+     "label": "ℓ",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "color": "#e07b39"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "P′"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P′의 x좌표",
+    "expr": "qx",
+    "digits": 3
+   },
+   {
+    "label": "P′의 y좌표",
+    "expr": "qy",
+    "digits": 3
+   },
+   {
+    "label": "P에서 축 ℓ까지 거리",
+    "expr": "abs(py*cos(a)-px*sin(a))",
+    "digits": 3
+   },
+   {
+    "label": "PM 길이",
+    "expr": "sqrt((px-mx)^2+(py-my)^2)",
+    "digits": 3
+   },
+   {
+    "label": "MP′ 길이",
+    "expr": "sqrt((qx-mx)^2+(qy-my)^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 0,
+    "px": 1,
+    "py": 2
+   },
+   {
+    "alpha": 90,
+    "px": 1,
+    "py": 2
+   },
+   {
+    "alpha": 45,
+    "px": 2,
+    "py": 0
+   },
+   {
+    "alpha": 30,
+    "px": 1.5,
+    "py": -1
+   }
+  ],
+  "invariants": [
+   "mx*sin(a)-my*cos(a)",
+   "(qx-px)*cos(a)+(qy-py)*sin(a)",
+   "px^2+py^2-qx^2-qy^2",
+   "sqrt((px-mx)^2+(py-my)^2)-sqrt((qx-mx)^2+(qy-my)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 0,
+     "px": 1,
+     "py": 2
+    },
+    "expect": {
+     "qx": 1,
+     "qy": -2,
+     "mx": 1,
+     "my": 0
+    }
+   },
+   {
+    "params": {
+     "alpha": 90,
+     "px": 1,
+     "py": 2
+    },
+    "expect": {
+     "qx": -1,
+     "qy": 2,
+     "mx": 0,
+     "my": 2
+    }
+   },
+   {
+    "params": {
+     "alpha": 45,
+     "px": 2,
+     "py": 0
+    },
+    "expect": {
+     "qx": 0,
+     "qy": 2,
+     "mx": 1,
+     "my": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

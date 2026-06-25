@@ -1,0 +1,165 @@
+{
+ "id": "geometry/middle-1/평면도형/정삼각형의_조건",
+ "spec": {
+  "title": "정삼각형의 조건: 두 변이 같을 때 꼭지각이 60°이면 정삼각형",
+  "params": [
+   {
+    "name": "theta",
+    "label": "꼭지각 ∠A",
+    "type": "slider",
+    "min": 1,
+    "max": 179,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); a=sqrt(2-2*cos(rad))",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -0.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "AC=AB=1 자취"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변 AB = 변 AC",
+    "expr": "1",
+    "digits": 3
+   },
+   {
+    "label": "변 BC",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "BC - AB (0이면 정삼각형)",
+    "expr": "a-1",
+    "digits": 3
+   },
+   {
+    "label": "꼭지각 ∠A",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "밑각 ∠B = ∠C",
+    "expr": "(180-theta)/2",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "cx^2 + cy^2 - 1",
+   "(cx-1)^2 + cy^2 - a^2",
+   "(180 - theta - 2*((180-theta)/2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "cy": 0.8660254037844386,
+     "a": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "cy": 1,
+     "a": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "cx": -0.5,
+     "cy": 0.8660254037844387,
+     "a": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

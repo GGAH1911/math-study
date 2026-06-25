@@ -1,0 +1,150 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/함수의_극값_조건",
+ "spec": {
+  "title": "삼차함수의 극값 조건 — 판별식 D=4b²−12ac",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = 4*b^2 - 12*a*c; root = sqrt(abs(D)); x1 = (-2*b - root)/(6*a); x2 = (-2*b + root)/(6*a); fp1 = 3*a*x1^2 + 2*b*x1 + c; fp2 = 3*a*x2^2 + 2*b*x2 + c",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x",
+     "label": "f(x)=ax³+bx²+cx",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)=3ax²+2bx+c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = 4b²−12ac",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "극값 개수 (D>0 ⇒ 2, D≤0 ⇒ 0)",
+    "expr": "D > 0 ? 2 : 0",
+    "digits": 0
+   },
+   {
+    "label": "극점 x₁ (D>0일 때 f'=0)",
+    "expr": "x1",
+    "digits": 4
+   },
+   {
+    "label": "극점 x₂ (D>0일 때 f'=0)",
+    "expr": "x2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 1
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "c": -2
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "fp1",
+   "fp2",
+   "x1 + x2 + 2*b/(3*a)",
+   "x1*x2 - c/(3*a)",
+   "D - (4*b^2 - 12*a*c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -1
+    },
+    "expect": {
+     "D": 12,
+     "x1": -0.5773502692,
+     "x2": 0.5773502692
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 1
+    },
+    "expect": {
+     "D": 24,
+     "x1": 0.1835034191,
+     "x2": 1.8164965809
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": -2
+    },
+    "expect": {
+     "D": 52,
+     "x1": -0.7675918792,
+     "x2": 0.4342585459
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

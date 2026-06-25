@@ -1,0 +1,162 @@
+{
+ "id": "functions/calculus/정적분의_활용/교점의_활용",
+ "spec": {
+  "title": "교점이 정하는 적분 구간 — 두 곡선 사이의 넓이",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "x2=m; y2=m^2; area=m^3/6",
+  "geometry": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    -0.5,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "교점 A (x=0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "교점 B (x=m)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      0
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    -0.5,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x",
+     "label": "y = m·x",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 교점의 x좌표 (적분 하한)",
+    "expr": "0"
+   },
+   {
+    "label": "오른쪽 교점의 x좌표 (적분 상한)",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "두 곡선 사이 넓이 ∫₀^m(mx−x²)dx = m³/6",
+    "expr": "area",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1
+   },
+   {
+    "m": 2
+   },
+   {
+    "m": 3
+   },
+   {
+    "m": 0.5
+   }
+  ],
+  "invariants": [
+   "y2 - x2^2",
+   "y2 - m*x2",
+   "area*6 - x2^3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2
+    },
+    "expect": {
+     "x2": 2,
+     "y2": 4,
+     "area": 1.3333333333
+    }
+   },
+   {
+    "params": {
+     "m": 3
+    },
+    "expect": {
+     "x2": 3,
+     "y2": 9,
+     "area": 4.5
+    }
+   },
+   {
+    "params": {
+     "m": 1
+    },
+    "expect": {
+     "x2": 1,
+     "y2": 1,
+     "area": 0.1666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

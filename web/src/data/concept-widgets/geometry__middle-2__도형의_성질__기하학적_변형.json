@@ -1,0 +1,237 @@
+{
+ "id": "geometry/middle-2/도형의_성질/기하학적_변형",
+ "spec": {
+  "title": "기하학적 변형: 중심 O를 기준으로 회전·확대(축소)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "회전각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "k",
+    "label": "배율 k",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "rad=theta*pi/180; c=cos(rad); s=sin(rad); ax=2; ay=0; bx=1; by=2; ax2=k*(ax*c-ay*s); ay2=k*(ax*s+ay*c); bx2=k*(bx*c-by*s); by2=k*(bx*s+by*c)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       1,
+       2
+      ]
+     ],
+     "label": "원래 삼각형 OAB",
+     "color": "#868e96"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ax2",
+       "=ay2"
+      ],
+      [
+       "=bx2",
+       "=by2"
+      ]
+     ],
+     "label": "변형된 삼각형 O'A'B'",
+     "color": "#e8590c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      2,
+      0
+     ],
+     "color": "#adb5bd"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax2",
+      "=ay2"
+     ],
+     "color": "#ffa94d"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O (중심·고정점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax2",
+      "=ay2"
+     ],
+     "label": "A'"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      2
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx2",
+      "=by2"
+     ],
+     "label": "B'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "회전각 θ (도)",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "배율 k",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "|OA'| (= k·|OA|, |OA|=2)",
+    "expr": "sqrt(ax2^2+ay2^2)",
+    "digits": 3
+   },
+   {
+    "label": "닮음비 |A'B'| / |AB|  (= k)",
+    "expr": "sqrt((ax2-bx2)^2+(ay2-by2)^2)/sqrt(5)",
+    "digits": 3
+   },
+   {
+    "label": "넓이 배율 S' / S  (= k²)",
+    "expr": "(ax2*by2-bx2*ay2)/4",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "k": 1
+   },
+   {
+    "theta": 120,
+    "k": 1.5
+   },
+   {
+    "theta": 270,
+    "k": 0.4
+   },
+   {
+    "theta": 45,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "sqrt(ax2^2+ay2^2)-2*k",
+   "sqrt(bx2^2+by2^2)-sqrt(5)*k",
+   "sqrt((ax2-bx2)^2+(ay2-by2)^2)-sqrt(5)*k",
+   "ay2*c-ax2*s",
+   "(ax2*by2-bx2*ay2)/2-2*k^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "k": 1
+    },
+    "expect": {
+     "ax2": 2,
+     "ay2": 0,
+     "bx2": 1,
+     "by2": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "k": 2
+    },
+    "expect": {
+     "ax2": 0,
+     "ay2": 4,
+     "bx2": -4,
+     "by2": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "k": 0.5
+    },
+    "expect": {
+     "ax2": -1,
+     "ay2": 0,
+     "bx2": -0.5,
+     "by2": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

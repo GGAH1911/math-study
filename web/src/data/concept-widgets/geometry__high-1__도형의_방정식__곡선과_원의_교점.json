@@ -1,0 +1,208 @@
+{
+ "id": "geometry/high-1/도형의_방정식/곡선과_원의_교점",
+ "spec": {
+  "title": "직선과 원의 교점 — 대입법으로 찾기",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "직선 y절편 c",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "원의 반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "den = 1 + m^2; disc = r^2*(1 + m^2) - c^2; sq = (disc >= 0 ? sqrt(disc) : NaN); x1 = (-m*c + sq)/den; x2 = (-m*c - sq)/den; y1 = m*x1 + c; y2 = m*x2 + c; cnt = (disc > 0 ? 2 : (disc < 0 ? 0 : 1))",
+  "geometry": {
+   "range": [
+    -4.5,
+    4.5
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "원 x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -4.5,
+      "=m*(-4.5)+c"
+     ],
+     "to": [
+      4.5,
+      "=m*4.5+c"
+     ],
+     "label": "직선 y=mx+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "교점1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "교점2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점의 개수",
+    "expr": "cnt",
+    "digits": 0
+   },
+   {
+    "label": "판별식 D/4 = r²(1+m²)−c²",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "교점1 x",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점1 y",
+    "expr": "y1",
+    "digits": 3
+   },
+   {
+    "label": "교점2 x",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "교점2 y",
+    "expr": "y2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0,
+    "c": 0,
+    "r": 2
+   },
+   {
+    "m": 0,
+    "c": 1.7320508075688772,
+    "r": 2
+   },
+   {
+    "m": 1,
+    "c": 0,
+    "r": 2
+   },
+   {
+    "m": 0,
+    "c": 2,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "x1^2 + y1^2 - r^2",
+   "x2^2 + y2^2 - r^2",
+   "x1 + x2 + 2*m*c/den",
+   "x1*x2 - (c^2 - r^2)/den"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0,
+     "c": 0,
+     "r": 2
+    },
+    "expect": {
+     "disc": 4,
+     "x1": 2,
+     "y1": 0,
+     "x2": -2,
+     "y2": 0,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "c": 1.7320508075688772,
+     "r": 2
+    },
+    "expect": {
+     "disc": 1,
+     "x1": 1,
+     "y1": 1.7320508075688772,
+     "x2": -1,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "c": 0,
+     "r": 2
+    },
+    "expect": {
+     "disc": 8,
+     "x1": 1.4142135623730951,
+     "y1": 1.4142135623730951,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "c": 2,
+     "r": 2
+    },
+    "expect": {
+     "disc": 0,
+     "x1": 0,
+     "y1": 2,
+     "cnt": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

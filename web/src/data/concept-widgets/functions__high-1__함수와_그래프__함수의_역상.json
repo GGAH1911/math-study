@@ -1,0 +1,283 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_역상",
+ "spec": {
+  "title": "함수의 역상: f(x)=x²에서 구간 Y=[a,b]의 역상 f⁻¹(Y)",
+  "params": [
+   {
+    "name": "yLow",
+    "label": "Y 하한 a",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.25
+   },
+   {
+    "name": "yHigh",
+    "label": "Y 상한 b",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 4,
+    "step": 0.25
+   }
+  ],
+  "scope": "rt_low=sqrt(yLow); rt_high=sqrt(yHigh)",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      "=yLow"
+     ],
+     "to": [
+      3,
+      "=yLow"
+     ],
+     "color": "#16a34a",
+     "label": "y=a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      "=yHigh"
+     ],
+     "to": [
+      3,
+      "=yHigh"
+     ],
+     "color": "#16a34a",
+     "label": "y=b"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -3,
+       "=yLow"
+      ],
+      [
+       3,
+       "=yLow"
+      ],
+      [
+       3,
+       "=yHigh"
+      ],
+      [
+       -3,
+       "=yHigh"
+      ]
+     ],
+     "color": "#16a34a",
+     "label": "Y"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=rt_low",
+      0
+     ],
+     "to": [
+      "=rt_high",
+      0
+     ],
+     "color": "#dc2626",
+     "label": "f⁻¹(Y)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-rt_high",
+      0
+     ],
+     "to": [
+      "=-rt_low",
+      0
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=rt_high",
+      0
+     ],
+     "to": [
+      "=rt_high",
+      "=yHigh"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=rt_low",
+      0
+     ],
+     "to": [
+      "=rt_low",
+      "=yLow"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-rt_high",
+      0
+     ],
+     "to": [
+      "=-rt_high",
+      "=yHigh"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-rt_low",
+      0
+     ],
+     "to": [
+      "=-rt_low",
+      "=yLow"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rt_low",
+      "=yLow"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rt_high",
+      "=yHigh"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-rt_low",
+      "=yLow"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-rt_high",
+      "=yHigh"
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "√a (안쪽 경계)",
+    "expr": "rt_low",
+    "digits": 3
+   },
+   {
+    "label": "√b (바깥쪽 경계)",
+    "expr": "rt_high",
+    "digits": 3
+   },
+   {
+    "label": "역상 한쪽 구간 [√a,√b] 길이",
+    "expr": "rt_high-rt_low",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "yLow": 1,
+    "yHigh": 4
+   },
+   {
+    "yLow": 0,
+    "yHigh": 9
+   },
+   {
+    "yLow": 2.25,
+    "yHigh": 6.25
+   },
+   {
+    "yLow": 0.25,
+    "yHigh": 1
+   }
+  ],
+  "invariants": [
+   "rt_high^2 - yHigh",
+   "rt_low^2 - yLow",
+   "(-rt_low)^2 - yLow"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "yLow": 1,
+     "yHigh": 4
+    },
+    "expect": {
+     "rt_low": 1,
+     "rt_high": 2
+    }
+   },
+   {
+    "params": {
+     "yLow": 0.25,
+     "yHigh": 1
+    },
+    "expect": {
+     "rt_low": 0.5,
+     "rt_high": 1
+    }
+   },
+   {
+    "params": {
+     "yLow": 2.25,
+     "yHigh": 6.25
+    },
+    "expect": {
+     "rt_low": 1.5,
+     "rt_high": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

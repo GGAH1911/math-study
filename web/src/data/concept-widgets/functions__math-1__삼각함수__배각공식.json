@@ -1,0 +1,162 @@
+{
+ "id": "functions/math-1/삼각함수/배각공식",
+ "spec": {
+  "title": "배각공식 — 단위원에서 α와 2α",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=alpha*pi/180; ca=cos(rad); sa=sin(rad); c2=cos(2*rad); s2=sin(2*rad); sin2f=2*sa*ca; cos2f=ca^2-sa^2",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ca",
+      "=sa"
+     ],
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=c2",
+      "=s2"
+     ],
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ca",
+      "=sa"
+     ],
+     "label": "P(α)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c2",
+      "=s2"
+     ],
+     "label": "Q(2α)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin 2α (직접)",
+    "expr": "s2",
+    "digits": 4
+   },
+   {
+    "label": "2 sinα cosα",
+    "expr": "sin2f",
+    "digits": 4
+   },
+   {
+    "label": "cos 2α (직접)",
+    "expr": "c2",
+    "digits": 4
+   },
+   {
+    "label": "cos²α − sin²α",
+    "expr": "cos2f",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 30
+   },
+   {
+    "alpha": 45
+   },
+   {
+    "alpha": 60
+   },
+   {
+    "alpha": 120
+   }
+  ],
+  "invariants": [
+   "s2 - 2*sa*ca",
+   "c2 - (ca^2 - sa^2)",
+   "c2 - (2*ca^2 - 1)",
+   "c2 - (1 - 2*sa^2)",
+   "ca^2 + sa^2 - 1",
+   "c2^2 + s2^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 30
+    },
+    "expect": {
+     "ca": 0.8660254037844387,
+     "sa": 0.5,
+     "c2": 0.5,
+     "s2": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "alpha": 45
+    },
+    "expect": {
+     "c2": 0,
+     "s2": 1,
+     "sin2f": 1
+    }
+   },
+   {
+    "params": {
+     "alpha": 60
+    },
+    "expect": {
+     "ca": 0.5,
+     "sa": 0.8660254037844386,
+     "c2": -0.5,
+     "s2": 0.8660254037844387
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

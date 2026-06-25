@@ -1,0 +1,166 @@
+{
+ "id": "functions/math-1/삼각함수/초월방정식",
+ "spec": {
+  "title": "초월방정식 sin x = x/2 — 두 곡선의 교점으로 해 찾기",
+  "params": [
+   {
+    "name": "t",
+    "label": "검사값 x",
+    "type": "slider",
+    "min": -4,
+    "max": 7,
+    "init": 1.9,
+    "step": 0.001
+   }
+  ],
+  "scope": "s = sin(t); c = cos(t); rhs = t/2; lhs = s; diff = s - t/2",
+  "geometry": {
+   "range": [
+    -4,
+    7
+   ],
+   "yRange": [
+    -2,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=t",
+      "=-2"
+     ],
+     "to": [
+      "=t",
+      "=3.5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=t",
+      "=s"
+     ],
+     "to": [
+      "=t",
+      "=rhs"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=t",
+      "=s"
+     ],
+     "label": "(x, sin x)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=t",
+      "=rhs"
+     ],
+     "label": "(x, x/2)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -4,
+    7
+   ],
+   "yRange": [
+    -2,
+    3.5
+   ],
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x (좌변)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x/2",
+     "label": "y = x/2 (우변)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌변 sin x",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "우변 x/2",
+    "expr": "rhs",
+    "digits": 4
+   },
+   {
+    "label": "차이 sin x − x/2 (0이면 해)",
+    "expr": "diff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1.895494267
+   },
+   {
+    "t": 2.5
+   },
+   {
+    "t": -1.5
+   }
+  ],
+  "invariants": [
+   "s^2 + c^2 - 1",
+   "sin(2*t) - 2*s*c",
+   "diff - (lhs - rhs)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "s": 0,
+     "c": 1,
+     "rhs": 0,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "t": 1.5707963268
+    },
+    "expect": {
+     "s": 1,
+     "c": 0,
+     "rhs": 0.7853981634,
+     "diff": 0.2146018366
+    }
+   },
+   {
+    "params": {
+     "t": 3.1415926536
+    },
+    "expect": {
+     "s": 0,
+     "c": -1,
+     "rhs": 1.5707963268,
+     "diff": -1.5707963268
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

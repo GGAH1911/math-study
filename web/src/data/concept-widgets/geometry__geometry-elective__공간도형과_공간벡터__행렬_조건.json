@@ -1,0 +1,236 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/행렬_조건",
+ "spec": {
+  "title": "행렬 조건 — 행렬식 det=ad−bc 와 역행렬의 존재",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "det = a*d - b*c; cross = a*d - c*b; parea = abs(a*(c+d) - (a+b)*c + (a+b)*d - b*(c+d))/2",
+  "geometry": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -6.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "label": "원래 단위정사각형 (넓이 1)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a+b",
+       "=c+d"
+      ],
+      [
+       "=b",
+       "=d"
+      ]
+     ],
+     "label": "변환된 평행사변형 (넓이 = |det|)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=c"
+     ],
+     "label": "Ae₁ = (a, c)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=b",
+      "=d"
+     ],
+     "label": "Ae₂ = (b, d)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=c"
+     ],
+     "label": "열1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=d"
+     ],
+     "label": "열2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "det = ad − bc",
+    "expr": "det",
+    "digits": 3
+   },
+   {
+    "label": "평행사변형 넓이 = |det|",
+    "expr": "parea",
+    "digits": 3
+   },
+   {
+    "label": "역행렬 존재 (1=예, 0=아니오·붕괴)",
+    "expr": "det != 0 ? 1 : 0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "c": 1,
+    "d": 2
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "c": 1,
+    "d": 2
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "c": 1,
+    "d": 3
+   }
+  ],
+  "invariants": [
+   "parea - abs(det)",
+   "cross - det",
+   "(a*d + b*(-c))/det - 1",
+   "(a*(-b) + b*a)/det"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "det": 3,
+     "cross": 3,
+     "parea": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3,
+     "d": 4
+    },
+    "expect": {
+     "det": -2,
+     "cross": -2,
+     "parea": 2
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "det": 4,
+     "cross": 4,
+     "parea": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/자연로그",
+ "spec": {
+  "title": "자연로그 y = ln x — 지수함수 y = eˣ의 역함수",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 0.1,
+    "max": 6,
+    "init": 2.72,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "lnx = log(x); slope = 1/x",
+  "geometry": {
+   "range": [
+    -2,
+    6
+   ],
+   "yRange": [
+    -2,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=lnx"
+     ],
+     "label": "P(x, ln x)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=lnx",
+      "=x"
+     ],
+     "label": "Q(ln x, x)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      "=lnx"
+     ],
+     "to": [
+      "=lnx",
+      "=x"
+     ],
+     "label": "y=x 대칭"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "(1, 0)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2,
+    6
+   ],
+   "yRange": [
+    -2,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "log(x)",
+     "label": "y = ln x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "exp(x)",
+     "label": "y = eˣ",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "x",
+     "label": "y = x",
+     "color": "#9ca3af"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "ln x",
+    "expr": "lnx",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 (1/x)",
+    "expr": "slope",
+    "digits": 4
+   },
+   {
+    "label": "e^(ln x)  (= x 확인)",
+    "expr": "exp(lnx)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1
+   },
+   {
+    "x": 2
+   },
+   {
+    "x": 4
+   }
+  ],
+  "invariants": [
+   "exp(lnx) - x",
+   "slope*x - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "lnx": 0,
+     "slope": 1
+    }
+   },
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "lnx": 0.6931471806,
+     "slope": 0.5
+    }
+   },
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "lnx": -0.6931471806,
+     "slope": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,257 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/벡터의_내적과_수직",
+ "spec": {
+  "title": "벡터의 내적과 수직 — a·b = |a||b|cosθ",
+  "params": [
+   {
+    "name": "thetaA",
+    "label": "a의 방향각",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 20,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "thetaB",
+    "label": "b의 방향각",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 80,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "la",
+    "label": "|a| (a의 크기)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "lb",
+    "label": "|b| (b의 크기)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "radA=thetaA*pi/180; radB=thetaB*pi/180; ax=la*cos(radA); ay=la*sin(radA); bx=lb*cos(radB); by=lb*sin(radB); dot=ax*bx+ay*by; t=dot/(la^2); fx=t*ax; fy=t*ay; cosang=dot/(la*lb); ang=acos(cosang)*180/pi",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#1f77b4",
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#d62728",
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B",
+     "color": "#d62728"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      "=by"
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "color": "#999999",
+     "label": "수선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "color": "#2ca02c",
+     "label": "정사영 |b|cosθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H",
+     "color": "#2ca02c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a·b (내적)",
+    "expr": "dot",
+    "digits": 3
+   },
+   {
+    "label": "성분곱 합 ax·bx+ay·by",
+    "expr": "ax*bx+ay*by",
+    "digits": 3
+   },
+   {
+    "label": "|a|·|b|·cosθ",
+    "expr": "la*lb*cosang",
+    "digits": 3
+   },
+   {
+    "label": "사이각 θ",
+    "expr": "ang",
+    "digits": 1
+   },
+   {
+    "label": "cosθ",
+    "expr": "cosang",
+    "digits": 3
+   },
+   {
+    "label": "b의 a방향 정사영 |b|cosθ",
+    "expr": "dot/la",
+    "digits": 3
+   },
+   {
+    "label": "수직? (a·b=0)",
+    "expr": "dot",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "thetaA": 0,
+    "thetaB": 90,
+    "la": 2,
+    "lb": 1
+   },
+   {
+    "thetaA": 0,
+    "thetaB": 60,
+    "la": 2,
+    "lb": 2
+   },
+   {
+    "thetaA": 30,
+    "thetaB": 120,
+    "la": 1.5,
+    "lb": 2
+   },
+   {
+    "thetaA": 45,
+    "thetaB": 200,
+    "la": 2.5,
+    "lb": 1.5
+   }
+  ],
+  "invariants": [
+   "sqrt(ax^2+ay^2)-la",
+   "sqrt(bx^2+by^2)-lb",
+   "ax*bx+ay*by-dot",
+   "dot-la*lb*cos((thetaB-thetaA)*pi/180)",
+   "(bx-fx)*ax+(by-fy)*ay",
+   "dot-la*lb*cosang"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "thetaA": 0,
+     "thetaB": 90,
+     "la": 2,
+     "lb": 1
+    },
+    "expect": {
+     "dot": 0,
+     "ax": 2,
+     "ay": 0,
+     "bx": 0,
+     "by": 1
+    }
+   },
+   {
+    "params": {
+     "thetaA": 0,
+     "thetaB": 60,
+     "la": 2,
+     "lb": 2
+    },
+    "expect": {
+     "dot": 2,
+     "bx": 1,
+     "by": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "thetaA": 0,
+     "thetaB": 0,
+     "la": 2,
+     "lb": 3
+    },
+    "expect": {
+     "dot": 6,
+     "ang": 0,
+     "cosang": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

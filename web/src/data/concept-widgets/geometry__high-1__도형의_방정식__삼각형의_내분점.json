@@ -1,0 +1,194 @@
+{
+ "id": "geometry/high-1/도형의_방정식/삼각형의_내분점",
+ "spec": {
+  "title": "삼각형의 내분점 — 변 BC를 m:n으로 내분",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (BD 쪽 비)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (DC 쪽 비)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "Ax=2; Ay=7; Bx=1; By=1; Cx=9; Cy=3; Dx=(n*Bx+m*Cx)/(m+n); Dy=(n*By+m*Cy)/(m+n); BD=sqrt((Dx-Bx)^2+(Dy-By)^2); DC=sqrt((Cx-Dx)^2+(Cy-Dy)^2)",
+  "geometry": {
+   "range": [
+    -1,
+    10
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2,
+       7
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       9,
+       3
+      ]
+     ],
+     "label": "ABC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      7
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "AD"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      7
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      1
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      3
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "D (내분점)",
+    "expr": "Dx",
+    "digits": 4
+   },
+   {
+    "label": "Dy",
+    "expr": "Dy",
+    "digits": 4
+   },
+   {
+    "label": "B에서 본 위치 m/(m+n)",
+    "expr": "m/(m+n)",
+    "digits": 4
+   },
+   {
+    "label": "BD",
+    "expr": "BD",
+    "digits": 4
+   },
+   {
+    "label": "DC",
+    "expr": "DC",
+    "digits": 4
+   },
+   {
+    "label": "BD/DC (= m/n)",
+    "expr": "BD/DC",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "n": 1
+   },
+   {
+    "m": 2,
+    "n": 1
+   },
+   {
+    "m": 3,
+    "n": 2
+   },
+   {
+    "m": 4,
+    "n": 3
+   }
+  ],
+  "invariants": [
+   "(Dx-Bx)*(Cy-By) - (Dy-By)*(Cx-Bx)",
+   "(Dx-Bx) - m/(m+n)*(Cx-Bx)",
+   "(Dy-By) - m/(m+n)*(Cy-By)",
+   "n*BD - m*DC"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "Dx": 5,
+     "Dy": 2
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "Dx": 6.3333333333,
+     "Dy": 2.3333333333
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 2
+    },
+    "expect": {
+     "Dx": 5.8,
+     "Dy": 2.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

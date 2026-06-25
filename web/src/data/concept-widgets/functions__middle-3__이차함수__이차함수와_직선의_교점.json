@@ -1,0 +1,180 @@
+{
+ "id": "functions/middle-3/이차함수/이차함수와_직선의_교점",
+ "spec": {
+  "title": "이차함수와 직선의 교점",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "n",
+    "label": "직선 y절편 n",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "포물선 상수 c (y=x²+c)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "D = m^2 - 4*(c - n); rt = sqrt(abs(D)); x1 = (m - rt)/2; x2 = (m + rt)/2; y1 = m*x1 + n; y2 = m*x2 + n",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P2"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    16
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + c",
+     "label": "y=x²+c",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + n",
+     "label": "y=mx+n",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = m²-4(c-n)",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "교점1 x좌표 (D≥0)",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점2 x좌표 (D≥0)",
+    "expr": "x2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 3,
+    "c": 0
+   },
+   {
+    "m": 0,
+    "n": 4,
+    "c": 0
+   },
+   {
+    "m": 4,
+    "n": 0,
+    "c": 4
+   },
+   {
+    "m": -2,
+    "n": 0,
+    "c": -3
+   }
+  ],
+  "invariants": [
+   "x1^2 + c - y1",
+   "x2^2 + c - y2",
+   "x1 + x2 - m",
+   "x1*x2 - (c - n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 3,
+     "c": 0
+    },
+    "expect": {
+     "D": 16,
+     "x1": -1,
+     "x2": 3,
+     "y1": 1,
+     "y2": 9
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "n": 4,
+     "c": 0
+    },
+    "expect": {
+     "D": 16,
+     "x1": -2,
+     "x2": 2,
+     "y1": 4,
+     "y2": 4
+    }
+   },
+   {
+    "params": {
+     "m": 4,
+     "n": 0,
+     "c": 4
+    },
+    "expect": {
+     "D": 0,
+     "x1": 2,
+     "x2": 2,
+     "y1": 8,
+     "y2": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

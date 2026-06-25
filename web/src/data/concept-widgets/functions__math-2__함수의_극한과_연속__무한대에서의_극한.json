@@ -1,0 +1,157 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/무한대에서의_극한",
+ "spec": {
+  "title": "무한대에서의 극한 — 수평점근선과 ε·M 정의",
+  "params": [
+   {
+    "name": "L",
+    "label": "극한값 L (점근선 높이)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "접근 계수 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "eps",
+    "label": "ε (허용 오차)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "M=abs(c)/eps; fM=L+c/M; f2M=L+c/(2*M); f10=L+c/10",
+  "plot": {
+   "range": [
+    1,
+    30
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "L+c/x",
+     "label": "f(x)=L+c/x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "L",
+     "label": "y=L (수평점근선)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "L+eps",
+     "label": "y=L+ε",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "L-eps",
+     "label": "y=L−ε",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한 lim(x→∞) f(x) = L",
+    "expr": "L",
+    "digits": 2
+   },
+   {
+    "label": "임계값 M  (x>M ⇒ |f(x)−L|<ε)",
+    "expr": "M",
+    "digits": 3
+   },
+   {
+    "label": "f(M)",
+    "expr": "fM",
+    "digits": 3
+   },
+   {
+    "label": "|f(M)−L|  (= ε)",
+    "expr": "abs(fM-L)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "L": 1,
+    "c": 2,
+    "eps": 0.5
+   },
+   {
+    "L": 0,
+    "c": 1,
+    "eps": 0.25
+   },
+   {
+    "L": -2,
+    "c": 3,
+    "eps": 0.4
+   },
+   {
+    "L": 2,
+    "c": -4,
+    "eps": 0.8
+   }
+  ],
+  "invariants": [
+   "abs(fM-L)-eps",
+   "abs(f2M-L)-eps/2",
+   "(f10-L)*10-c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "L": 1,
+     "c": 2,
+     "eps": 0.5
+    },
+    "expect": {
+     "M": 4,
+     "fM": 1.5
+    }
+   },
+   {
+    "params": {
+     "L": 0,
+     "c": 1,
+     "eps": 0.25
+    },
+    "expect": {
+     "M": 4,
+     "fM": 0.25
+    }
+   },
+   {
+    "params": {
+     "L": -1,
+     "c": -2,
+     "eps": 0.5
+    },
+    "expect": {
+     "M": 4,
+     "fM": -1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
