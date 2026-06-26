@@ -49,6 +49,8 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
   const wrapRef = useRef<HTMLDivElement>(null);
   const overRef = useRef<HTMLCanvasElement>(null);
   const overCtx = useRef<CanvasRenderingContext2D | null>(null);
+  const uiRef = useRef<HTMLCanvasElement>(null);   // UI 전용(지우개 커서·올가미·선택박스) — 비desynchronized(iOS 정적표시 안전)
+  const uiCtx = useRef<CanvasRenderingContext2D | null>(null);
   const strokesOf = useRef(new Map<string, Stroke[]>());                 // layerId → strokes
   const elOf = useRef(new Map<string, { c: HTMLCanvasElement; ctx: CanvasRenderingContext2D | null }>());
   const cur = useRef<Stroke | null>(null);
@@ -135,7 +137,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
   };
   // 갈무리: 선택 박스(점선) 그리기 + 올가미 폴리곤 → 포함 stroke idx.
   const drawSelBox = useCallback(() => {
-    const ctx = overCtx.current; if (!ctx) return;
+    const ctx = uiCtx.current; if (!ctx) return;
     ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     const sel = selRef.current; if (!sel) return;
     const bb = bboxOf(strokesOf.current.get(sel.layerId) ?? [], sel.idxs); if (!bb) return;
@@ -171,6 +173,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
       const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
       sizeRef.current = { w: wrap.clientWidth, h: wrap.clientHeight, dpr };
       overCtx.current = sizeCanvas(over, true); // 진행 overlay만 저지연
+      if (uiRef.current) uiCtx.current = sizeCanvas(uiRef.current, false); // UI(커서·선택)=일반
       for (const [id, e] of elOf.current) { e.ctx = sizeCanvas(e.c); drawLayer(id); } // 확정 레이어=일반
     };
     setupAll();
@@ -185,7 +188,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
     };
     // 지우개 영역 표시(스탠다드) — overlay에 점선 원 + 옅은 채움. eraserSize=지름.
     const drawEraserCursor = (x: number, y: number) => {
-      const ctx = overCtx.current; if (!ctx) return;
+      const ctx = uiCtx.current; if (!ctx) return;
       ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
       ctx.save();
       ctx.beginPath(); ctx.arc(x, y, live.current.eraserSize / 2, 0, Math.PI * 2);
@@ -193,13 +196,13 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
       ctx.lineWidth = 1.3; ctx.setLineDash([4, 3]); ctx.strokeStyle = 'rgba(120,120,120,0.9)'; ctx.stroke();
       ctx.restore();
     };
-    const clearCursor = () => overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
+    const clearCursor = () => uiCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     const eraseStrokeAt = (x: number, y: number) => {
       const id = live.current.activeId, idx = hit(id, x, y, live.current.eraserSize / 2);
       if (idx >= 0) { const [s] = (strokesOf.current.get(id) ?? []).splice(idx, 1); removed.current.push(s); drawLayer(id); }
     };
     const drawLasso = () => {
-      const ctx = overCtx.current, poly = lassoRef.current; if (!ctx || !poly || poly.length < 2) return;
+      const ctx = uiCtx.current, poly = lassoRef.current; if (!ctx || !poly || poly.length < 2) return;
       ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); ctx.save();
       ctx.beginPath(); ctx.moveTo(poly[0].x, poly[0].y);
       for (let i = 1; i < poly.length; i++) ctx.lineTo(poly[i].x, poly[i].y); ctx.closePath();
@@ -341,7 +344,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
   }, [layers, sizeCanvas, drawLayer]);
 
   // 도구/지우개 설정이 바뀌면 overlay(지우개 커서·선택 박스 잔상) 정리. select 벗어나면 선택 해제.
-  useEffect(() => { if (tool !== 'select') selRef.current = null; overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }, [tool, eraserMode, eraserSize]);
+  useEffect(() => { if (tool !== 'select') selRef.current = null; uiCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }, [tool, eraserMode, eraserSize]);
 
   // 화면 방향(전체화면 세로 → 가로 유도용).
   useEffect(() => {
@@ -493,6 +496,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
           {full && bgImage && <img src={bgImage} alt="문제" draggable={false} style={{ position: 'absolute', left: 0, top: 0, width: '50%', height: '100%', objectFit: 'contain', objectPosition: 'top left', zIndex: 0, opacity: 0.97, pointerEvents: 'none', userSelect: 'none' }} />}
           {layers.map((l, i) => (<canvas key={l.id} data-lid={l.id} ref={layerRef} style={{ position: 'absolute', inset: 0, zIndex: i + 1, display: l.visible ? 'block' : 'none', touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }} />))}
           <canvas ref={overRef} style={{ position: 'absolute', inset: 0, zIndex: 998, touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }} />
+          <canvas ref={uiRef} style={{ position: 'absolute', inset: 0, zIndex: 999, pointerEvents: 'none' }} />
         </div>
         {panel && (
           <div style={{ width: 168, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6, padding: 8, borderRadius: 12, border: '1px solid var(--color-border)', background: 'var(--color-surface)', overflowY: 'auto', maxHeight: full ? undefined : height + 46 }}>
