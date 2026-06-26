@@ -13,7 +13,7 @@ type Paper = 'blank' | 'ruled' | 'grid';
 
 const COLORS = ['#2A261E', '#39487D', '#C13D38', '#2E7B4F'];
 const WIDTHS = [1.5, 2.5, 4];
-const ERASER_W = 18;
+const ERASER_SIZES = [12, 24, 44]; // 지우개 지름(px) — 소/중/대
 const nid = () => 'L' + Math.random().toString(36).slice(2, 8);
 
 export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
@@ -36,6 +36,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const [rev, setRev] = useState(0); // 썸네일·패널 갱신
   const [tool, setTool] = useState<'pen' | 'eraser'>('pen');
   const [eraserMode, setEraserMode] = useState<'precise' | 'stroke'>('precise');
+  const [eraserSize, setEraserSize] = useState(24);
   const [pressure, setPressure] = useState(false);
   const [dashed, setDashed] = useState(false);
   const [color, setColor] = useState(COLORS[0]);
@@ -43,8 +44,8 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const [paper, setPaper] = useState<Paper>('grid');
   const [gap, setGap] = useState(24);
   const [full, setFull] = useState(false);
-  const live = useRef({ tool, eraserMode, pressure, dashed, color, width, activeId });
-  live.current = { tool, eraserMode, pressure, dashed, color, width, activeId };
+  const live = useRef({ tool, eraserMode, eraserSize, pressure, dashed, color, width, activeId });
+  live.current = { tool, eraserMode, eraserSize, pressure, dashed, color, width, activeId };
   const layersRef = useRef(layers); layersRef.current = layers; // save()가 effect 재실행 없이 최신 레이어 읽게
 
   const KEY = `ink:${storageKey}`;
@@ -127,8 +128,19 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); drawStroke(ctx, cur.current);
       if (predicted?.length) { const last = cur.current.pts[cur.current.pts.length - 1]; drawStroke(ctx, { ...cur.current, pts: [last, ...predicted] }); }
     };
+    // 지우개 영역 표시(스탠다드) — overlay에 점선 원 + 옅은 채움. eraserSize=지름.
+    const drawEraserCursor = (x: number, y: number) => {
+      const ctx = overCtx.current; if (!ctx) return;
+      ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
+      ctx.save();
+      ctx.beginPath(); ctx.arc(x, y, live.current.eraserSize / 2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(150,150,150,0.14)'; ctx.fill();
+      ctx.lineWidth = 1.3; ctx.setLineDash([4, 3]); ctx.strokeStyle = 'rgba(120,120,120,0.9)'; ctx.stroke();
+      ctx.restore();
+    };
+    const clearCursor = () => overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     const eraseStrokeAt = (x: number, y: number) => {
-      const id = live.current.activeId, idx = hit(id, x, y, ERASER_W);
+      const id = live.current.activeId, idx = hit(id, x, y, live.current.eraserSize / 2);
       if (idx >= 0) { const [s] = (strokesOf.current.get(id) ?? []).splice(idx, 1); removed.current.push(s); drawLayer(id); }
     };
     // 진행 획을 레이어에 확정+저장. ★iOS가 pointerup을 지연/누락해 다음 pointerdown이 먼저 와도
@@ -154,17 +166,19 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       try { (window.getSelection?.())?.removeAllRanges?.(); } catch { /* iOS 선택 콜아웃 방지 */ }
       over.setPointerCapture(e.pointerId);
       const L = live.current;
-      if (L.tool === 'eraser' && L.eraserMode === 'stroke') { removed.current = []; const p0 = pt(e); eraseStrokeAt(p0.x, p0.y); cur.current = { tool: 'eraser', color: '', width: 0, dashed: false, pressure: false, pts: [] }; return; }
+      if (L.tool === 'eraser' && L.eraserMode === 'stroke') { removed.current = []; const p0 = pt(e); eraseStrokeAt(p0.x, p0.y); drawEraserCursor(p0.x, p0.y); cur.current = { tool: 'eraser', color: '', width: 0, dashed: false, pressure: false, pts: [] }; return; }
       redoStack.current = [];
-      cur.current = { tool: L.tool, color: L.color, width: L.tool === 'eraser' ? ERASER_W : L.width, dashed: L.dashed, pressure: L.pressure, pts: [pt(e)] };
-      if (L.tool === 'eraser') drawStroke(activeCtx()!, cur.current); else renderOverlay();
+      cur.current = { tool: L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.pressure, pts: [pt(e)] };
+      if (L.tool === 'eraser') { const p0 = pt(e); drawStroke(activeCtx()!, cur.current); drawEraserCursor(p0.x, p0.y); } else renderOverlay();
     };
     const move = (e: PointerEvent) => {
-      if (!cur.current || !accept(e)) return; e.preventDefault();
+      if (!accept(e)) return;
       const L = live.current;
-      if (L.tool === 'eraser' && L.eraserMode === 'stroke') { const p = pt(e); eraseStrokeAt(p.x, p.y); return; }
+      if (!cur.current) { if (L.tool === 'eraser') { const p = pt(e); drawEraserCursor(p.x, p.y); } return; } // 호버: 지우개 영역 미리보기(애플펜슬 호버 지원시)
+      e.preventDefault();
+      if (L.tool === 'eraser' && L.eraserMode === 'stroke') { const p = pt(e); eraseStrokeAt(p.x, p.y); drawEraserCursor(p.x, p.y); return; }
       for (const ce of (e.getCoalescedEvents?.() ?? [e]) as PointerEvent[]) cur.current.pts.push(pt(ce));
-      if (cur.current.tool === 'eraser') drawStroke(activeCtx()!, cur.current);
+      if (cur.current.tool === 'eraser') { drawStroke(activeCtx()!, cur.current); const p = pt(e); drawEraserCursor(p.x, p.y); } // 지우개=레이어에 지우고 overlay에 커서
       else { const pred = cur.current.dashed ? [] : ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[]; renderOverlay(pred.map(pt)); }
     };
     const up = (e: PointerEvent) => {
@@ -172,10 +186,13 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       if (!cur.current) return;
       try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
       finalizeCur();
+      if (live.current.tool === 'eraser') clearCursor(); // 지우개 커서 정리(다음 호버/이동에 다시 그림)
     };
+    const onLeave = () => { if (!cur.current && live.current.tool === 'eraser') clearCursor(); }; // 펜이 캔버스 벗어나면 커서 제거
 
     over.addEventListener('pointerdown', down); over.addEventListener('pointermove', move);
     over.addEventListener('pointerup', up); over.addEventListener('pointercancel', up);
+    over.addEventListener('pointerleave', onLeave);
     // ★iOS 더블탭-줌 제스처가 빠른 둘째 탭의 pointerdown을 통째로 삼키는 것 차단.
     //   touch-action:none이 iOS Safari에선 부족 → 터치 기본동작을 직접 preventDefault(passive:false 필수).
     //   포인터 이벤트는 별개로 발생하므로 그리기는 유지됨.
@@ -202,7 +219,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     const onResize = () => { if (cur.current) return; const w = wrap.clientWidth, h = wrap.clientHeight; if (!w || !h) return; if (w === sizeRef.current.w && h === sizeRef.current.h && overCtx.current) return; setupAll(); };
     const ro = new ResizeObserver(onResize); ro.observe(wrap);
     return () => {
-      over.removeEventListener('pointerdown', down); over.removeEventListener('pointermove', move); over.removeEventListener('pointerup', up); over.removeEventListener('pointercancel', up);
+      over.removeEventListener('pointerdown', down); over.removeEventListener('pointermove', move); over.removeEventListener('pointerup', up); over.removeEventListener('pointercancel', up); over.removeEventListener('pointerleave', onLeave);
       over.removeEventListener('touchstart', killTouch); over.removeEventListener('touchmove', killTouch); over.removeEventListener('touchend', killTouch);
       wrap.removeEventListener('selectstart', killSel); wrap.removeEventListener('contextmenu', killSel); over.removeEventListener('contextmenu', killSel);
       document.removeEventListener('selectstart', docSel); document.removeEventListener('dblclick', docSel);
@@ -216,6 +233,9 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     if (!sizeRef.current.w) return;
     for (const [id, e] of elOf.current) if (!e.ctx) { e.ctx = sizeCanvas(e.c); drawLayer(id); }
   }, [layers, sizeCanvas, drawLayer]);
+
+  // 도구/지우개 설정이 바뀌면 overlay(지우개 커서 잔상 등) 정리.
+  useEffect(() => { overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }, [tool, eraserMode, eraserSize]);
 
   const layerRef = useCallback((el: HTMLCanvasElement | null) => {
     if (!el) return; const id = el.dataset.lid!; if (!elOf.current.has(id) || elOf.current.get(id)!.c !== el) elOf.current.set(id, { c: el, ctx: sizeRef.current.w ? sizeCanvas(el) : null });
@@ -261,6 +281,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
         {tool === 'eraser' && (<>
           <button style={btn(eraserMode === 'precise')} onClick={() => setEraserMode('precise')}>정밀</button>
           <button style={btn(eraserMode === 'stroke')} onClick={() => setEraserMode('stroke')}>획</button>
+          {ERASER_SIZES.map((s) => (<button key={s} style={{ ...btn(eraserSize === s), padding: '4px 7px' }} onClick={() => setEraserSize(s)} title={`지우개 ${s}px`}><span style={{ display: 'inline-block', width: Math.round(s / 3) + 3, height: Math.round(s / 3) + 3, borderRadius: '50%', border: '1.5px solid currentColor', verticalAlign: 'middle' }} /></button>))}
         </>)}
         {sep}
         {COLORS.map((c) => (<button key={c} onClick={() => { setColor(c); setTool('pen'); }} title={c} style={{ width: 20, height: 20, borderRadius: '50%', background: c, cursor: 'pointer', border: color === c ? '2px solid var(--color-accent)' : '2px solid var(--color-border)' }} />))}
