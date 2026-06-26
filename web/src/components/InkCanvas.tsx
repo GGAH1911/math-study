@@ -8,13 +8,34 @@ type PE = PointerEvent & { getPredictedEvents?: () => PointerEvent[] };
 type Pt = { x: number; y: number; p: number };
 type Stroke = { tool: 'pen' | 'eraser'; color: string; width: number; dashed: boolean; pressure: boolean; pts: Pt[] };
 type LayerMeta = { id: string; name: string; visible: boolean };
-type Action = { type: 'add' | 'remove'; layerId: string; strokes: Stroke[] };
+type Action =
+  | { type: 'add'; layerId: string; strokes: Stroke[] }
+  | { type: 'remove'; layerId: string; strokes: Stroke[] }
+  | { type: 'mutate'; layerId: string; idxs: number[]; before: Stroke[]; after: Stroke[] } // 이동·재색(객체 교체)
+  | { type: 'move'; from: string; to: string; strokes: Stroke[] };                          // 레이어 이동
 type Paper = 'blank' | 'ruled' | 'grid';
+type Tool = 'pen' | 'eraser' | 'select';
+type Sel = { layerId: string; idxs: number[] };
 
 const COLORS = ['#2A261E', '#39487D', '#C13D38', '#2E7B4F'];
 const WIDTHS = [1.5, 2.5, 4];
 const ERASER_SIZES = [12, 24, 44]; // 지우개 지름(px) — 소/중/대
 const nid = () => 'L' + Math.random().toString(36).slice(2, 8);
+// 갈무리(선택) 기하 헬퍼
+const pointInPoly = (x: number, y: number, poly: Pt[]): boolean => {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const xi = poly[i].x, yi = poly[i].y, xj = poly[j].x, yj = poly[j].y;
+    if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) inside = !inside;
+  }
+  return inside;
+};
+const bboxOf = (arr: Stroke[], idxs: number[]) => {
+  let a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
+  for (const i of idxs) for (const p of arr[i]?.pts ?? []) { if (p.x < a) a = p.x; if (p.y < b) b = p.y; if (p.x > c) c = p.x; if (p.y > d) d = p.y; }
+  return a === Infinity ? null : { x: a, y: b, w: c - a, h: d - b };
+};
+const translateStroke = (s: Stroke, dx: number, dy: number): Stroke => ({ ...s, pts: s.pts.map((p) => ({ x: p.x + dx, y: p.y + dy, p: p.p })) });
 
 export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -29,12 +50,15 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const penSeen = useRef(false);
   const recentPen = useRef(false); // 최근 펜 접촉 윈도우 — 획 사이 빠른 2탭(iOS 더블탭 선택 콜아웃) 차단용
   const sizeRef = useRef({ w: 0, h: 0, dpr: 1 });
+  const selRef = useRef<Sel | null>(null);     // 갈무리 선택(활성 레이어 stroke idx 집합)
+  const lassoRef = useRef<Pt[] | null>(null);  // 진행 중 올가미 폴리곤
+  const dragRef = useRef<{ sx: number; sy: number; before: Stroke[]; idxs: number[] } | null>(null); // 선택 이동(시작점+원본)
 
   const [layers, setLayers] = useState<LayerMeta[]>([{ id: 'L1', name: '레이어 1', visible: true }]);
   const [activeId, setActiveId] = useState('L1');
   const [panel, setPanel] = useState(false);
   const [rev, setRev] = useState(0); // 썸네일·패널 갱신
-  const [tool, setTool] = useState<'pen' | 'eraser'>('pen');
+  const [tool, setTool] = useState<Tool>('pen');
   const [eraserMode, setEraserMode] = useState<'precise' | 'stroke'>('precise');
   const [eraserSize, setEraserSize] = useState(24);
   const [pressure, setPressure] = useState(false);
@@ -98,6 +122,26 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     for (let i = arr.length - 1; i >= 0; i--) { const s = arr[i]; if (s.tool !== 'pen') continue; for (const pt of s.pts) if ((pt.x - x) ** 2 + (pt.y - y) ** 2 <= rad * rad) return i; }
     return -1;
   };
+  // 갈무리: 선택 박스(점선) 그리기 + 올가미 폴리곤 → 포함 stroke idx.
+  const drawSelBox = useCallback(() => {
+    const ctx = overCtx.current; if (!ctx) return;
+    ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
+    const sel = selRef.current; if (!sel) return;
+    const bb = bboxOf(strokesOf.current.get(sel.layerId) ?? [], sel.idxs); if (!bb) return;
+    const pad = 7; ctx.save();
+    ctx.fillStyle = 'rgba(80,120,220,0.09)'; ctx.fillRect(bb.x - pad, bb.y - pad, bb.w + 2 * pad, bb.h + 2 * pad);
+    ctx.strokeStyle = 'rgba(70,110,210,0.95)'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]);
+    ctx.strokeRect(bb.x - pad, bb.y - pad, bb.w + 2 * pad, bb.h + 2 * pad); ctx.restore();
+  }, []);
+  const computeSel = useCallback((poly: Pt[], layerId: string): number[] => {
+    const arr = strokesOf.current.get(layerId) ?? [], idxs: number[] = [];
+    for (let i = 0; i < arr.length; i++) {
+      const s = arr[i]; if (!s.pts.length) continue;
+      let inN = 0; for (const p of s.pts) if (pointInPoly(p.x, p.y, poly)) inN++;
+      if (inN / s.pts.length >= 0.5) idxs.push(i); // 과반 포함이면 선택
+    }
+    return idxs;
+  }, []);
 
   // 마운트: 로드(마이그레이션) + 사이즈 + 오버레이 핸들러 + 리사이즈.
   useEffect(() => {
@@ -143,6 +187,14 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       const id = live.current.activeId, idx = hit(id, x, y, live.current.eraserSize / 2);
       if (idx >= 0) { const [s] = (strokesOf.current.get(id) ?? []).splice(idx, 1); removed.current.push(s); drawLayer(id); }
     };
+    const drawLasso = () => {
+      const ctx = overCtx.current, poly = lassoRef.current; if (!ctx || !poly || poly.length < 2) return;
+      ctx.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); ctx.save();
+      ctx.beginPath(); ctx.moveTo(poly[0].x, poly[0].y);
+      for (let i = 1; i < poly.length; i++) ctx.lineTo(poly[i].x, poly[i].y); ctx.closePath();
+      ctx.fillStyle = 'rgba(80,120,220,0.08)'; ctx.fill();
+      ctx.strokeStyle = 'rgba(70,110,210,0.9)'; ctx.lineWidth = 1.3; ctx.setLineDash([5, 4]); ctx.stroke(); ctx.restore();
+    };
     // 진행 획을 레이어에 확정+저장. ★iOS가 pointerup을 지연/누락해 다음 pointerdown이 먼저 와도
     //   이전 획을 잃지 않도록 down에서도 호출 → 빠른 연속 획(짝수 획 누락) 방지.
     const finalizeCur = () => {
@@ -166,6 +218,16 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       try { (window.getSelection?.())?.removeAllRanges?.(); } catch { /* iOS 선택 콜아웃 방지 */ }
       over.setPointerCapture(e.pointerId);
       const L = live.current;
+      if (L.tool === 'select') { // ── 갈무리: 선택 내부면 이동, 아니면 새 올가미 ──
+        const p = pt(e), sel = selRef.current;
+        if (sel) { const bb = bboxOf(strokesOf.current.get(sel.layerId) ?? [], sel.idxs);
+          if (bb && p.x >= bb.x - 10 && p.x <= bb.x + bb.w + 10 && p.y >= bb.y - 10 && p.y <= bb.y + bb.h + 10) {
+            const arr = strokesOf.current.get(sel.layerId) ?? [];
+            dragRef.current = { sx: p.x, sy: p.y, before: sel.idxs.map((i) => arr[i]), idxs: sel.idxs.slice() }; return;
+          }
+        }
+        selRef.current = null; lassoRef.current = [p]; drawSelBox(); return;
+      }
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { removed.current = []; const p0 = pt(e); eraseStrokeAt(p0.x, p0.y); drawEraserCursor(p0.x, p0.y); cur.current = { tool: 'eraser', color: '', width: 0, dashed: false, pressure: false, pts: [] }; return; }
       redoStack.current = [];
       cur.current = { tool: L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.pressure, pts: [pt(e)] };
@@ -174,6 +236,15 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     const move = (e: PointerEvent) => {
       if (!accept(e)) return;
       const L = live.current;
+      if (L.tool === 'select') { // ── 갈무리: 이동 or 올가미 ──
+        if (dragRef.current) { e.preventDefault(); const sel = selRef.current; if (!sel) return;
+          const p = pt(e), dx = p.x - dragRef.current.sx, dy = p.y - dragRef.current.sy, arr = strokesOf.current.get(sel.layerId) ?? [];
+          dragRef.current.idxs.forEach((idx, k) => { arr[idx] = translateStroke(dragRef.current!.before[k], dx, dy); });
+          drawLayer(sel.layerId); drawSelBox(); return;
+        }
+        if (lassoRef.current) { e.preventDefault(); lassoRef.current.push(pt(e)); drawLasso(); }
+        return;
+      }
       if (!cur.current) { if (L.tool === 'eraser') { const p = pt(e); drawEraserCursor(p.x, p.y); } return; } // 호버: 지우개 영역 미리보기(애플펜슬 호버 지원시)
       e.preventDefault();
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { const p = pt(e); eraseStrokeAt(p.x, p.y); drawEraserCursor(p.x, p.y); return; }
@@ -183,10 +254,29 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     };
     const up = (e: PointerEvent) => {
       markPen(); // 손 뗀 직후 윈도우 갱신(획 직후 빠른 2번째 탭 차단)
+      const L = live.current;
+      if (L.tool === 'select') { // ── 갈무리 확정 ──
+        try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
+        if (dragRef.current) {
+          const sel = selRef.current;
+          if (sel) { const arr = strokesOf.current.get(sel.layerId) ?? [];
+            const moved = sel.idxs.some((i, k) => arr[i] !== dragRef.current!.before[k]);
+            if (moved) { undoStack.current.push({ type: 'mutate', layerId: sel.layerId, idxs: sel.idxs.slice(), before: dragRef.current.before, after: sel.idxs.map((i) => arr[i]) }); redoStack.current = []; save(); }
+          }
+          dragRef.current = null; drawSelBox(); setRev((r) => r + 1); return;
+        }
+        if (lassoRef.current) {
+          const poly = lassoRef.current; lassoRef.current = null;
+          if (poly.length >= 3) { const lid = L.activeId, idxs = computeSel(poly, lid); selRef.current = idxs.length ? { layerId: lid, idxs } : null; }
+          else selRef.current = null;
+          drawSelBox(); setRev((r) => r + 1); return;
+        }
+        return;
+      }
       if (!cur.current) return;
       try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
       finalizeCur();
-      if (live.current.tool === 'eraser') clearCursor(); // 지우개 커서 정리(다음 호버/이동에 다시 그림)
+      if (L.tool === 'eraser') clearCursor(); // 지우개 커서 정리(다음 호버/이동에 다시 그림)
     };
     const onLeave = () => { if (!cur.current && live.current.tool === 'eraser') clearCursor(); }; // 펜이 캔버스 벗어나면 커서 제거
 
@@ -226,7 +316,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       if (penTimer) clearTimeout(penTimer); document.body.style.removeProperty('-webkit-user-select');
       ro.disconnect();
     };
-  }, [KEY, drawStroke, drawLayer, sizeCanvas, save]);
+  }, [KEY, drawStroke, drawLayer, sizeCanvas, save, drawSelBox, computeSel]);
 
   // 새 레이어 캔버스(나중에 추가된)도 사이즈+그림 보장.
   useEffect(() => {
@@ -234,8 +324,8 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     for (const [id, e] of elOf.current) if (!e.ctx) { e.ctx = sizeCanvas(e.c); drawLayer(id); }
   }, [layers, sizeCanvas, drawLayer]);
 
-  // 도구/지우개 설정이 바뀌면 overlay(지우개 커서 잔상 등) 정리.
-  useEffect(() => { overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }, [tool, eraserMode, eraserSize]);
+  // 도구/지우개 설정이 바뀌면 overlay(지우개 커서·선택 박스 잔상) 정리. select 벗어나면 선택 해제.
+  useEffect(() => { if (tool !== 'select') selRef.current = null; overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }, [tool, eraserMode, eraserSize]);
 
   const layerRef = useCallback((el: HTMLCanvasElement | null) => {
     if (!el) return; const id = el.dataset.lid!; if (!elOf.current.has(id) || elOf.current.get(id)!.c !== el) elOf.current.set(id, { c: el, ctx: sizeRef.current.w ? sizeCanvas(el) : null });
@@ -254,9 +344,50 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const rename = (id: string) => { const n = prompt('레이어 이름', layers.find((l) => l.id === id)?.name); if (n != null) { setLayers((ls) => ls.map((l) => l.id === id ? { ...l, name: n } : l)); save(); } };
   const moveLayer = (id: string, dir: -1 | 1) => { setLayers((ls) => { const i = ls.findIndex((l) => l.id === id), j = i + dir; if (j < 0 || j >= ls.length) return ls; const n = ls.slice(); [n[i], n[j]] = [n[j], n[i]]; return n; }); setRev((r) => r + 1); save(); };
 
-  const undo = () => { const a = undoStack.current.pop(); if (!a) return; redoStack.current.push(a); const arr = strokesOf.current.get(a.layerId) ?? []; if (a.type === 'add') { for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } } else arr.push(...a.strokes); drawLayer(a.layerId); save(); setRev((r) => r + 1); };
-  const redoFn = () => { const a = redoStack.current.pop(); if (!a) return; undoStack.current.push(a); const arr = strokesOf.current.get(a.layerId) ?? []; if (a.type === 'add') arr.push(...a.strokes); else for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } drawLayer(a.layerId); save(); setRev((r) => r + 1); };
-  const clearActive = () => { const arr = strokesOf.current.get(activeId) ?? []; if (!arr.length || !confirm('이 레이어 필기를 지울까요?')) return; undoStack.current.push({ type: 'remove', layerId: activeId, strokes: arr.slice() }); arr.length = 0; drawLayer(activeId); save(); setRev((r) => r + 1); };
+  const applyAct = (a: Action, forward: boolean) => { // forward=redo방향, !forward=undo
+    if (a.type === 'add') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) arr.push(...a.strokes); else for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } drawLayer(a.layerId); }
+    else if (a.type === 'remove') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } else arr.push(...a.strokes); drawLayer(a.layerId); }
+    else if (a.type === 'mutate') { const arr = strokesOf.current.get(a.layerId) ?? []; const src = forward ? a.after : a.before; a.idxs.forEach((i, k) => { arr[i] = src[k]; }); drawLayer(a.layerId); }
+    else { const from = strokesOf.current.get(a.from) ?? [], to = strokesOf.current.get(a.to) ?? []; const [src, dst] = forward ? [from, to] : [to, from]; for (const s of a.strokes) { const i = src.indexOf(s); if (i >= 0) src.splice(i, 1); } dst.push(...a.strokes); drawLayer(a.from); drawLayer(a.to); }
+  };
+  const undo = () => { const a = undoStack.current.pop(); if (!a) return; redoStack.current.push(a); applyAct(a, false); selRef.current = null; drawSelBox(); save(); setRev((r) => r + 1); };
+  const redoFn = () => { const a = redoStack.current.pop(); if (!a) return; undoStack.current.push(a); applyAct(a, true); selRef.current = null; drawSelBox(); save(); setRev((r) => r + 1); };
+  const clearActive = () => { const arr = strokesOf.current.get(activeId) ?? []; if (!arr.length || !confirm('이 레이어 필기를 지울까요?')) return; undoStack.current.push({ type: 'remove', layerId: activeId, strokes: arr.slice() }); redoStack.current = []; arr.length = 0; selRef.current = null; drawLayer(activeId); drawSelBox(); save(); setRev((r) => r + 1); };
+
+  // ── 갈무리(선택) 조작 ──
+  const deselect = () => { selRef.current = null; drawSelBox(); setRev((r) => r + 1); };
+  const deleteSel = () => {
+    const sel = selRef.current; if (!sel) return;
+    const arr = strokesOf.current.get(sel.layerId) ?? [], removedS = sel.idxs.map((i) => arr[i]).filter(Boolean);
+    [...sel.idxs].sort((a, b) => b - a).forEach((i) => arr.splice(i, 1));
+    undoStack.current.push({ type: 'remove', layerId: sel.layerId, strokes: removedS }); redoStack.current = [];
+    selRef.current = null; drawLayer(sel.layerId); drawSelBox(); save(); setRev((r) => r + 1);
+  };
+  const dupSel = () => {
+    const sel = selRef.current; if (!sel) return;
+    const arr = strokesOf.current.get(sel.layerId) ?? [], clones = sel.idxs.map((i) => arr[i]).filter(Boolean).map((s) => translateStroke(s, 18, 18));
+    const start = arr.length; arr.push(...clones);
+    undoStack.current.push({ type: 'add', layerId: sel.layerId, strokes: clones }); redoStack.current = [];
+    selRef.current = { layerId: sel.layerId, idxs: clones.map((_, k) => start + k) };
+    drawLayer(sel.layerId); drawSelBox(); save(); setRev((r) => r + 1);
+  };
+  const recolorSel = (col: string) => {
+    const sel = selRef.current; if (!sel) return;
+    const arr = strokesOf.current.get(sel.layerId) ?? [], idxs = sel.idxs.filter((i) => arr[i]?.tool === 'pen'); if (!idxs.length) return;
+    const before = idxs.map((i) => arr[i]), after = before.map((s) => ({ ...s, color: col }));
+    idxs.forEach((i, k) => { arr[i] = after[k]; });
+    undoStack.current.push({ type: 'mutate', layerId: sel.layerId, idxs, before, after }); redoStack.current = [];
+    drawLayer(sel.layerId); drawSelBox(); save(); setRev((r) => r + 1);
+  };
+  const moveSelTo = (targetId: string) => {
+    const sel = selRef.current; if (!sel || targetId === sel.layerId) return;
+    const arr = strokesOf.current.get(sel.layerId) ?? [], moving = sel.idxs.map((i) => arr[i]).filter(Boolean);
+    [...sel.idxs].sort((a, b) => b - a).forEach((i) => arr.splice(i, 1));
+    const tArr = strokesOf.current.get(targetId) ?? strokesOf.current.set(targetId, []).get(targetId)!;
+    tArr.push(...moving);
+    undoStack.current.push({ type: 'move', from: sel.layerId, to: targetId, strokes: moving }); redoStack.current = [];
+    selRef.current = null; drawLayer(sel.layerId); drawLayer(targetId); drawSelBox(); save(); setRev((r) => r + 1);
+  };
 
   // 썸네일: 레이어 strokes 를 작은 캔버스에 축소 렌더.
   const thumbRef = (id: string) => (el: HTMLCanvasElement | null) => {
@@ -278,10 +409,23 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
         <button style={btn(tool === 'pen')} onClick={() => setTool('pen')}>✏️ 펜</button>
         <button style={btn(tool === 'eraser')} onClick={() => setTool('eraser')}>지우개</button>
+        <button style={btn(tool === 'select')} onClick={() => setTool('select')} title="올가미로 묶어 이동·복제·색변경·레이어이동">⬚ 선택</button>
         {tool === 'eraser' && (<>
           <button style={btn(eraserMode === 'precise')} onClick={() => setEraserMode('precise')}>정밀</button>
           <button style={btn(eraserMode === 'stroke')} onClick={() => setEraserMode('stroke')}>획</button>
           {ERASER_SIZES.map((s) => (<button key={s} style={{ ...btn(eraserSize === s), padding: '4px 7px' }} onClick={() => setEraserSize(s)} title={`지우개 ${s}px`}><span style={{ display: 'inline-block', width: Math.round(s / 3) + 3, height: Math.round(s / 3) + 3, borderRadius: '50%', border: '1.5px solid currentColor', verticalAlign: 'middle' }} /></button>))}
+        </>)}
+        {tool === 'select' && selRef.current && (<>
+          <button style={btn(false)} onClick={dupSel}>복제</button>
+          <button style={btn(false)} onClick={() => recolorSel(color)} title="선택을 현재 색으로">🎨 색</button>
+          {layers.length > 1 && (
+            <select value="" onChange={(e) => { if (e.target.value) moveSelTo(e.target.value); }} style={{ ...btn(false), padding: '4px 6px' }} title="다른 레이어로 이동">
+              <option value="">레이어→</option>
+              {layers.filter((l) => l.id !== selRef.current!.layerId).map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
+            </select>
+          )}
+          <button style={btn(false)} onClick={deleteSel}>삭제</button>
+          <button style={btn(false)} onClick={deselect}>해제</button>
         </>)}
         {sep}
         {COLORS.map((c) => (<button key={c} onClick={() => { setColor(c); setTool('pen'); }} title={c} style={{ width: 20, height: 20, borderRadius: '50%', background: c, cursor: 'pointer', border: color === c ? '2px solid var(--color-accent)' : '2px solid var(--color-border)' }} />))}
