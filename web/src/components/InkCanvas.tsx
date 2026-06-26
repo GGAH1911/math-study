@@ -45,7 +45,7 @@ const snapAngle = (s: Pt, c: Pt): Pt => {
 };
 const snapGrid = (p: Pt, gap: number): Pt => ({ x: Math.round(p.x / gap) * gap, y: Math.round(p.y / gap) * gap, p: p.p });
 
-export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
+export default function InkCanvas({ storageKey, height = 560, bgImage }: { storageKey: string; height?: number; bgImage?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const overRef = useRef<HTMLCanvasElement>(null);
   const overCtx = useRef<CanvasRenderingContext2D | null>(null);
@@ -78,6 +78,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const [paper, setPaper] = useState<Paper>('grid');
   const [gap, setGap] = useState(24);
   const [full, setFull] = useState(false);
+  const [portrait, setPortrait] = useState(false); // 전체화면 세로 → 가로 유도
   const live = useRef({ tool, eraserMode, eraserSize, pressure, dashed, lineMode, gridSnap, gap, color, width, activeId });
   live.current = { tool, eraserMode, eraserSize, pressure, dashed, lineMode, gridSnap, gap, color, width, activeId };
   const layersRef = useRef(layers); layersRef.current = layers; // save()가 effect 재실행 없이 최신 레이어 읽게
@@ -342,6 +343,13 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   // 도구/지우개 설정이 바뀌면 overlay(지우개 커서·선택 박스 잔상) 정리. select 벗어나면 선택 해제.
   useEffect(() => { if (tool !== 'select') selRef.current = null; overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }, [tool, eraserMode, eraserSize]);
 
+  // 화면 방향(전체화면 세로 → 가로 유도용).
+  useEffect(() => {
+    const mq = window.matchMedia('(orientation: portrait)');
+    const on = () => setPortrait(mq.matches); on();
+    mq.addEventListener('change', on); return () => mq.removeEventListener('change', on);
+  }, []);
+
   const layerRef = useCallback((el: HTMLCanvasElement | null) => {
     if (!el) return; const id = el.dataset.lid!; if (!elOf.current.has(id) || elOf.current.get(id)!.c !== el) elOf.current.set(id, { c: el, ctx: sizeRef.current.w ? sizeCanvas(el) : null });
     if (elOf.current.get(id)!.ctx) drawLayer(id);
@@ -421,6 +429,13 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
 
   return (
     <div style={full ? { position: 'fixed', inset: 0, zIndex: 1000, background: 'var(--color-bg)', display: 'flex', flexDirection: 'column', padding: 10, gap: 8 } : { display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {full && portrait && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1002, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, background: 'var(--color-bg)', color: 'var(--color-text)', textAlign: 'center', padding: 24 }}>
+          <div style={{ fontSize: 44 }}>📱↻</div>
+          <div style={{ fontSize: 17, fontWeight: 700 }}>가로로 돌려주세요</div>
+          <div style={{ fontSize: 13, color: 'var(--color-muted)' }}>문제 풀이는 가로 화면에서 가장 편합니다 (왼쪽 문제 · 오른쪽 풀이)</div>
+        </div>
+      )}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
         <button style={btn(tool === 'pen')} onClick={() => setTool('pen')}>✏️ 펜</button>
         <button style={btn(tool === 'eraser')} onClick={() => setTool('eraser')}>지우개</button>
@@ -461,7 +476,8 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       </div>
       <div style={{ display: 'flex', gap: 8, flex: full ? 1 : undefined, minHeight: 0 }}>
         <div ref={wrapRef} style={{ position: 'relative', flex: 1, height: full ? undefined : height, borderRadius: 12, border: '1px solid var(--color-border)', overflow: 'hidden', background: 'var(--color-surface)', touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none', backgroundImage: paperBg() }}>
-          {layers.map((l, i) => (<canvas key={l.id} data-lid={l.id} ref={layerRef} style={{ position: 'absolute', inset: 0, zIndex: i, display: l.visible ? 'block' : 'none', touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }} />))}
+          {full && bgImage && <img src={bgImage} alt="문제" draggable={false} style={{ position: 'absolute', left: 0, top: 0, width: '50%', height: '100%', objectFit: 'contain', objectPosition: 'top left', zIndex: 0, opacity: 0.97, pointerEvents: 'none', userSelect: 'none' }} />}
+          {layers.map((l, i) => (<canvas key={l.id} data-lid={l.id} ref={layerRef} style={{ position: 'absolute', inset: 0, zIndex: i + 1, display: l.visible ? 'block' : 'none', touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }} />))}
           <canvas ref={overRef} style={{ position: 'absolute', inset: 0, zIndex: 998, touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }} />
         </div>
         {panel && (
