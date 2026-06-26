@@ -27,6 +27,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const undoStack = useRef<Action[]>([]);
   const redoStack = useRef<Action[]>([]);
   const penSeen = useRef(false);
+  const recentPen = useRef(false); // 최근 펜 접촉 윈도우 — 획 사이 빠른 2탭(iOS 더블탭 선택 콜아웃) 차단용
   const sizeRef = useRef({ w: 0, h: 0, dpr: 1 });
 
   const [layers, setLayers] = useState<LayerMeta[]>([{ id: 'L1', name: '레이어 1', visible: true }]);
@@ -131,6 +132,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     const down = (e: PointerEvent) => {
       if (e.pointerType === 'pen') penSeen.current = true;
       if (!accept(e)) return; e.preventDefault();
+      markPen(); // 펜 접촉 윈도우 갱신(다음 빠른 탭의 선택 콜아웃 차단)
       try { (window.getSelection?.())?.removeAllRanges?.(); } catch { /* iOS 선택 콜아웃 방지 */ }
       over.setPointerCapture(e.pointerId);
       const L = live.current;
@@ -148,6 +150,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       else { const pred = cur.current.dashed ? [] : ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[]; renderOverlay(pred.map(pt)); }
     };
     const up = (e: PointerEvent) => {
+      markPen(); // 손 뗀 직후 윈도우 갱신(획 직후 빠른 2번째 탭 차단)
       if (!cur.current) return; try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
       const L = live.current, id = L.activeId;
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { if (removed.current.length) { undoStack.current.push({ type: 'remove', layerId: id, strokes: removed.current.slice() }); save(); setRev((r) => r + 1); } cur.current = null; return; }
@@ -159,16 +162,29 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
 
     over.addEventListener('pointerdown', down); over.addEventListener('pointermove', move);
     over.addEventListener('pointerup', up); over.addEventListener('pointercancel', up);
-    // ★iOS Safari 텍스트 선택 콜아웃(복사/번역/찾아보기 메뉴)이 필기 중 뜨는 것 차단.
-    const killSel = (ev: Event) => ev.preventDefault();           // 캔버스 영역 선택 시작·컨텍스트메뉴 무조건 차단
-    const docSel = (ev: Event) => { if (cur.current) ev.preventDefault(); }; // 그리는 중엔 문서 전역 선택도 차단
+    // ★iOS Safari 텍스트 선택 콜아웃(복사/번역 메뉴) 차단. ★핵심: 펜 빠른 2탭(짧은 간격)=iOS 더블탭 단어선택 제스처 → 콜아웃.
+    //   "그리는 중(cur.current)"만으론 획과 획 사이 2번째 탭을 못 막음 → "최근 펜 접촉(recentPen)" 윈도우 동안 문서 전역 선택·더블클릭 차단.
+    let penTimer: ReturnType<typeof setTimeout> | undefined;
+    // recentPen 윈도우 동안 ①문서 전역 selectstart/dblclick 차단 ②★페이지 전체 -webkit-user-select:none
+    //   (iOS 터치 더블탭 선택은 selectstart를 안 거칠 수 있어 CSS 비선택이 가장 확실).
+    const markPen = () => {
+      recentPen.current = true;
+      document.body.style.setProperty('-webkit-user-select', 'none');
+      if (penTimer) clearTimeout(penTimer);
+      penTimer = setTimeout(() => { recentPen.current = false; document.body.style.removeProperty('-webkit-user-select'); }, 900);
+    };
+    const killSel = (ev: Event) => ev.preventDefault();
+    const docSel = (ev: Event) => { if (cur.current || recentPen.current) ev.preventDefault(); };
     wrap.addEventListener('selectstart', killSel); wrap.addEventListener('contextmenu', killSel);
-    over.addEventListener('contextmenu', killSel); document.addEventListener('selectstart', docSel);
+    over.addEventListener('contextmenu', killSel);
+    document.addEventListener('selectstart', docSel); document.addEventListener('dblclick', docSel);
     const onResize = () => { if (cur.current) return; const w = wrap.clientWidth, h = wrap.clientHeight; if (!w || !h) return; if (w === sizeRef.current.w && h === sizeRef.current.h && overCtx.current) return; setupAll(); };
     const ro = new ResizeObserver(onResize); ro.observe(wrap);
     return () => {
       over.removeEventListener('pointerdown', down); over.removeEventListener('pointermove', move); over.removeEventListener('pointerup', up); over.removeEventListener('pointercancel', up);
-      wrap.removeEventListener('selectstart', killSel); wrap.removeEventListener('contextmenu', killSel); over.removeEventListener('contextmenu', killSel); document.removeEventListener('selectstart', docSel);
+      wrap.removeEventListener('selectstart', killSel); wrap.removeEventListener('contextmenu', killSel); over.removeEventListener('contextmenu', killSel);
+      document.removeEventListener('selectstart', docSel); document.removeEventListener('dblclick', docSel);
+      if (penTimer) clearTimeout(penTimer); document.body.style.removeProperty('-webkit-user-select');
       ro.disconnect();
     };
   }, [KEY, drawStroke, drawLayer, sizeCanvas, save]);
