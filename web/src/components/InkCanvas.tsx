@@ -393,6 +393,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
 
   // ── 갈무리(선택) 조작 ──
   const deselect = () => { selRef.current = null; drawSelBox(); setRev((r) => r + 1); };
+  const selectAll = () => { const arr = strokesOf.current.get(activeId) ?? []; if (!arr.length) return; selRef.current = { layerId: activeId, idxs: arr.map((_, i) => i) }; drawSelBox(); setRev((r) => r + 1); };
   const deleteSel = () => {
     const sel = selRef.current; if (!sel) return;
     const arr = strokesOf.current.get(sel.layerId) ?? [], removedS = sel.idxs.map((i) => arr[i]).filter(Boolean);
@@ -473,6 +474,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
           <button style={btn(eraserMode === 'stroke')} onClick={() => setEraserMode('stroke')}>획</button>
           {ERASER_SIZES.map((s) => (<button key={s} style={{ ...btn(eraserSize === s), padding: '4px 7px' }} onClick={() => setEraserSize(s)} title={`지우개 ${s}px`}><span style={{ display: 'inline-block', width: Math.round(s / 3) + 3, height: Math.round(s / 3) + 3, borderRadius: '50%', border: '1.5px solid currentColor', verticalAlign: 'middle' }} /></button>))}
         </>)}
+        {tool === 'select' && <button style={btn(false)} onClick={selectAll} title="이 레이어 전체 선택">전체선택</button>}
         {tool === 'select' && selRef.current && (<>
           <button style={btn(false)} onClick={dupSel}>복제</button>
           <button style={btn(false)} onClick={() => recolorSel(color)} title="선택을 현재 색으로">🎨 색</button>
