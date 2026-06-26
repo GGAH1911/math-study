@@ -41,7 +41,13 @@ async function worker() {
       if (!existsSync(sf)) { lastFail = '생성출력 없음'; continue; }
       try { const o = JSON.parse(readFileSync(sf, 'utf8')); const r = validate(o.spec, o.recipe); if (r.ok) ok = true; else lastFail = r.fails[0] || '검증 실패'; } catch (e) { lastFail = '파싱: ' + e.message; }
     }
-    if (ok) { copyFileSync(sf, `${OUT}/${safe(id)}.json`); accepted++; log(`✓ ${id} accept (누적 ${accepted})`); }
+    if (ok) {
+      // 안전망: plot이 있는데 geometry가 곡선 없이 점·선분뿐이면 중복·혼란 → 제거(plot만 영속)
+      const o = JSON.parse(readFileSync(sf, 'utf8')); const g = o.spec?.geometry, p = o.spec?.plot; let strip = '';
+      if (p?.fns?.length && g?.shapes?.length && g.shapes.every((x) => !/circle|polygon|curve|parametric|path|arc|angle/.test(x.type || ''))) { delete o.spec.geometry; strip = ' [중복 geometry 제거]'; }
+      writeFileSync(`${OUT}/${safe(id)}.json`, JSON.stringify(o, null, 1));
+      accepted++; log(`✓ ${id} accept (누적 ${accepted})${strip}`);
+    }
     else { appendFileSync(`${TMP}/needs-manual.txt`, `${id}\t${lastFail}\n`); skipped++; log(`✗ ${id} skip-manual: ${lastFail.slice(0, 70)}`); }
   }
 }

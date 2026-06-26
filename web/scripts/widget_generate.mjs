@@ -20,7 +20,7 @@ const HEAD = `너는 한국 수학 개념을 **인터랙티브 시각화(Interac
 
 InteractiveSpec 형식:
 { "title", "params":[{"name","label","type":"slider","min","max","init","step","unit"}], "scope":"mathjs ;구분 대입식(슬라이더값→보조변수)", "geometry":{"range":[x0,x1],"yRange":[y0,y1],"showAxes":true,"showGrid":true,"shapes":[{"type":"circle|point|segment|line|polygon", ...좌표/값에 \\"=식\\" 가능}]}, "plot":{"range","yRange","fns":[{"fn","label","color"}]}, "readout":[{"label","expr","digits"}] }
-- \\"=식\\"은 어디든 mathjs로 scope에서 평가(scope변수 사용). geometry 또는 plot 택1(둘 다도 가능). 슬라이더 돌리면 실시간 갱신.
+- \\"=식\\"은 어디든 mathjs로 scope에서 평가(scope변수 사용). **함수 그래프가 핵심이면 plot만 써라** — plot이 있는데 geometry에 곡선 없이 점·선분만 찍는 건 **금지**(중복·혼란). geometry는 곡선이 없는 진짜 도형(원·다각형·단위원·벡터·각)일 때만. 슬라이더 돌리면 실시간 갱신.
 예시(단위원·삼각비): {"params":[{"name":"theta","label":"θ","type":"slider","min":0,"max":360,"init":30,"step":1}],"scope":"rad=theta*pi/180; cx=cos(rad); sy=sin(rad)","geometry":{"range":[-1.4,1.4],"yRange":[-1.4,1.4],"showAxes":true,"shapes":[{"type":"circle","center":[0,0],"radius":1},{"type":"point","at":["=cx","=sy"],"label":"P"}]},"readout":[{"label":"sin","expr":"sy"}]}
 
 recipe(검증용 — 매우 중요): {"samples":[{슬라이더값}×3~4],"invariants":["scope변수로 쓴 수학 항등식; 모든 샘플서 절댓값 ≈0이어야"],"oracle":[{"params":{슬라이더값},"expect":{"scope변수":손계산값}}×2~3],"tol":1e-6}
