@@ -51,18 +51,29 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const drawStroke = useCallback((ctx: CanvasRenderingContext2D, s: Stroke) => {
     if (s.pts.length === 0) return;
     ctx.save();
-    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.lineJoin = 'round';
     ctx.globalCompositeOperation = s.tool === 'eraser' ? 'destination-out' : 'source-over';
     ctx.strokeStyle = s.color;
-    ctx.setLineDash(s.dashed && s.tool === 'pen' ? [s.width * 2.2, s.width * 2.6] : []);
+    const isDash = s.dashed && s.tool === 'pen';
     if (s.pts.length === 1) {
       const a = s.pts[0]; ctx.fillStyle = s.color; ctx.beginPath();
       ctx.arc(a.x, a.y, pw(s, a.p) / 2, 0, Math.PI * 2); ctx.fill(); ctx.restore(); return;
     }
-    for (let i = 1; i < s.pts.length; i++) {
-      const a = s.pts[i - 1], b = s.pts[i];
-      ctx.beginPath(); ctx.lineWidth = pw(s, (a.p + b.p) / 2);
-      ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    if (isDash) {
+      // ★점선: 전체 경로를 한 path로 → dash가 "경로 길이" 기준 균일(펜 속도·점간격 무관). 압력 무시(균일 굵기).
+      ctx.lineCap = 'butt'; ctx.lineWidth = s.width;
+      ctx.setLineDash([s.width * 2.6, s.width * 3]);
+      ctx.beginPath(); ctx.moveTo(s.pts[0].x, s.pts[0].y);
+      for (let i = 1; i < s.pts.length; i++) ctx.lineTo(s.pts[i].x, s.pts[i].y);
+      ctx.stroke();
+    } else {
+      // 실선: 세그먼트별(압력 굵기 가변). round cap으로 매끈.
+      ctx.lineCap = 'round'; ctx.setLineDash([]);
+      for (let i = 1; i < s.pts.length; i++) {
+        const a = s.pts[i - 1], b = s.pts[i];
+        ctx.beginPath(); ctx.lineWidth = pw(s, (a.p + b.p) / 2);
+        ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      }
     }
     ctx.restore();
   }, []);
@@ -137,7 +148,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       const coalesced = (e.getCoalescedEvents?.() ?? [e]) as PointerEvent[];
       for (const ce of coalesced) cur.current.pts.push(pt(ce));
       if (cur.current.tool === 'eraser') drawStroke(baseCtx.current!, cur.current); // 정밀: base에 즉시(풀 경로 유지)
-      else { const pred = ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[]; renderOverlay(pred.map(pt)); }
+      else { const pred = cur.current.dashed ? [] : ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[]; renderOverlay(pred.map(pt)); } // 점선은 예측 끔(끝 dash 리셋 방지)
     };
     const up = (e: PointerEvent) => {
       if (!cur.current) return;
