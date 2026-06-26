@@ -14,6 +14,7 @@ type Paper = 'blank' | 'ruled' | 'grid';
 const COLORS = ['#2A261E', '#39487D', '#C13D38', '#2E7B4F'];
 const WIDTHS = [1.5, 2.5, 4];
 const ERASER_W = 18;
+const BUILD = 'ink v8'; // ★캐시 확인용 빌드 표식 — 코드 바뀔 때마다 올림
 const nid = () => 'L' + Math.random().toString(36).slice(2, 8);
 
 export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
@@ -268,6 +269,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
         <button style={btn(false)} onClick={redoFn}>↷</button>
         <button style={btn(false)} onClick={clearActive}>레이어지움</button>
         <button style={btn(full)} onClick={() => setFull((v) => !v)}>{full ? '✕ 닫기' : '⛶ 전체화면'}</button>
+        <span style={{ fontSize: 10, color: 'var(--color-muted)', opacity: 0.7, marginLeft: 4 }} title="확정된 획 수 · 빌드(캐시 확인용)">{layers.reduce((n, l) => n + (strokesOf.current.get(l.id)?.length || 0), 0)}획 · {BUILD}</span>
       </div>
       <div style={{ display: 'flex', gap: 8, flex: full ? 1 : undefined, minHeight: 0 }}>
         <div ref={wrapRef} style={{ position: 'relative', flex: 1, height: full ? undefined : height, borderRadius: 12, border: '1px solid var(--color-border)', overflow: 'hidden', background: 'var(--color-surface)', touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none', backgroundImage: paperBg() }}>
