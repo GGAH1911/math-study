@@ -25,6 +25,20 @@ const bbox = (pts: P[]) => {
   for (const p of pts) { if (p.x < a) a = p.x; if (p.y < b) b = p.y; if (p.x > c) c = p.x; if (p.y > d) d = p.y; }
   return { minX: a, minY: b, maxX: c, maxY: d, w: c - a, h: d - b };
 };
+// 균일 arc-length 리샘플 — 실펜의 가변 속도(점 밀도 차이)에 코너/곡률 검출이 흔들리지 않게 정규화.
+const resample = (pts: P[], n: number): P[] => {
+  if (pts.length < 2) return pts.slice();
+  let total = 0; for (let i = 1; i < pts.length; i++) total += dist(pts[i - 1], pts[i]);
+  if (total === 0) return pts.slice();
+  const step = total / (n - 1), out: P[] = [pts[0]]; let d = 0, i = 1, prev = pts[0];
+  while (i < pts.length && out.length < n) {
+    const seg = dist(prev, pts[i]);
+    if (d + seg >= step && seg > 0) { const t = (step - d) / seg; const np = { x: prev.x + (pts[i].x - prev.x) * t, y: prev.y + (pts[i].y - prev.y) * t }; out.push(np); prev = np; d = 0; }
+    else { d += seg; prev = pts[i]; i++; }
+  }
+  while (out.length < n) out.push(pts[pts.length - 1]);
+  return out;
+};
 // 꼭짓점 v 에서의 내각(도). 직선=180, 직각=90.
 const angleAt = (prev: P, v: P, next: P) => {
   const a1 = Math.atan2(prev.y - v.y, prev.x - v.x), a2 = Math.atan2(next.y - v.y, next.x - v.x);
@@ -59,9 +73,10 @@ function edgesStraight(pts: P[], idxs: number[], closed: boolean): boolean {
 }
 
 /** 한 획(점 배열)을 도형으로 인식. 인식 불가(자유 필기)면 null. */
-export function recognizeShape(raw: P[]): RecShape | null {
-  if (raw.length < 2) return null;
-  if (raw.length < 6) return { kind: 'line', a: raw[0], b: raw[raw.length - 1] };
+export function recognizeShape(rawIn: P[]): RecShape | null {
+  if (rawIn.length < 2) return null;
+  if (rawIn.length < 6) return { kind: 'line', a: rawIn[0], b: rawIn[rawIn.length - 1] };
+  const raw = resample(rawIn, 64); // 균일 arc-length 정규화(실펜 속도/밀도 무관하게 강건)
   const bb = bbox(raw), diag = Math.hypot(bb.w, bb.h); if (diag < 8) return null;
   const closed = dist(raw[0], raw[raw.length - 1]) < diag * 0.2;
 
