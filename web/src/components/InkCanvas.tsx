@@ -51,6 +51,11 @@ const distToSeg = (px: number, py: number, ax: number, ay: number, bx: number, b
   return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
 };
 
+// 펜/종이 설정은 모든 캔버스 공통 — localStorage에 영속(새로고침·페이지이동에도 유지).
+const PREFS_KEY = 'ink:prefs';
+type Prefs = { color?: string; width?: number; paper?: Paper; gap?: number; pressure?: boolean; dashed?: boolean; eraserSize?: number };
+const loadPrefs = (): Prefs => { try { return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); } catch { return {}; } };
+
 export default function InkCanvas({ storageKey, height = 560, bgImage }: { storageKey: string; height?: number; bgImage?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const overRef = useRef<HTMLCanvasElement>(null);
@@ -76,15 +81,15 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
   const [rev, setRev] = useState(0); // 썸네일·패널 갱신
   const [tool, setTool] = useState<Tool>('pen');
   const [eraserMode, setEraserMode] = useState<'precise' | 'stroke'>('precise');
-  const [eraserSize, setEraserSize] = useState(24);
-  const [pressure, setPressure] = useState(false);
-  const [dashed, setDashed] = useState(false);
+  const [eraserSize, setEraserSize] = useState(() => loadPrefs().eraserSize ?? 24);
+  const [pressure, setPressure] = useState(() => loadPrefs().pressure ?? false);
+  const [dashed, setDashed] = useState(() => loadPrefs().dashed ?? false);
   const [lineMode, setLineMode] = useState(false); // 직선 도구(펜이 직선 + 각도 스냅)
   const [gridSnap, setGridSnap] = useState(false); // 격자 스냅(직선 끝점을 격자에)
-  const [color, setColor] = useState(COLORS[0]);
-  const [width, setWidth] = useState(WIDTHS[1]);
-  const [paper, setPaper] = useState<Paper>('grid');
-  const [gap, setGap] = useState(24);
+  const [color, setColor] = useState(() => loadPrefs().color ?? COLORS[0]);
+  const [width, setWidth] = useState(() => loadPrefs().width ?? WIDTHS[1]);
+  const [paper, setPaper] = useState<Paper>(() => loadPrefs().paper ?? 'grid');
+  const [gap, setGap] = useState(() => loadPrefs().gap ?? 24);
   const [full, setFull] = useState(false);
   const [portrait, setPortrait] = useState(false); // 전체화면 세로 → 가로 유도
   const live = useRef({ tool, eraserMode, eraserSize, pressure, dashed, lineMode, gridSnap, gap, color, width, activeId });
@@ -362,6 +367,11 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
     const on = () => setPortrait(mq.matches); on();
     mq.addEventListener('change', on); return () => mq.removeEventListener('change', on);
   }, []);
+
+  // 펜/종이 설정 영속(공통 prefs — 새로고침·페이지이동에도 유지).
+  useEffect(() => {
+    try { localStorage.setItem(PREFS_KEY, JSON.stringify({ color, width, paper, gap, pressure, dashed, eraserSize })); } catch { /* quota */ }
+  }, [color, width, paper, gap, pressure, dashed, eraserSize]);
 
   const layerRef = useCallback((el: HTMLCanvasElement | null) => {
     if (!el) return; const id = el.dataset.lid!; if (!elOf.current.has(id) || elOf.current.get(id)!.c !== el) elOf.current.set(id, { c: el, ctx: sizeRef.current.w ? sizeCanvas(el) : null });
