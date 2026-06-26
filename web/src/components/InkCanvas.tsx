@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback, type CSSProperties } from 'react';
+import { recognizeShape, shapeToPoints } from '../lib/shape-recognize'; // 도형 모드: 손그림→깔끔한 도형 스냅
 
 // 저지연 필기 캔버스 + 레이어 — 애플펜슬/S펜/터치/마우스. 채점·LLM·API 무관.
 //   저지연: desynchronized · getCoalescedEvents · getPredictedEvents · 진행 overlay · 압력 · 팜리젝션
@@ -14,7 +15,7 @@ type Action =
   | { type: 'mutate'; layerId: string; idxs: number[]; before: Stroke[]; after: Stroke[] } // 이동·재색(객체 교체)
   | { type: 'move'; from: string; to: string; strokes: Stroke[] };                          // 레이어 이동
 type Paper = 'blank' | 'ruled' | 'grid';
-type Tool = 'pen' | 'eraser' | 'select';
+type Tool = 'pen' | 'eraser' | 'select' | 'shape';
 type Sel = { layerId: string; idxs: number[] };
 
 const COLORS = ['#2A261E', '#39487D', '#C13D38', '#2E7B4F'];
@@ -260,7 +261,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { removed.current = []; const p0 = pt(e); eraseStrokeAt(p0.x, p0.y); drawEraserCursor(p0.x, p0.y); cur.current = { tool: 'eraser', color: '', width: 0, dashed: false, pressure: false, pts: [] }; return; }
       redoStack.current = [];
       const start = (L.tool === 'pen' && L.lineMode && L.gridSnap) ? snapGrid(pt(e), L.gap) : pt(e); // 직선+격자스냅이면 시작점 격자에
-      cur.current = { tool: L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.pressure, pts: [start] };
+      cur.current = { tool: L.tool === 'shape' ? 'pen' : L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.tool === 'shape' ? false : L.pressure, pts: [start] };
       if (L.tool === 'eraser') { const p0 = pt(e); drawStroke(activeCtx()!, cur.current); drawEraserCursor(p0.x, p0.y); } else renderOverlay();
     };
     const move = (e: PointerEvent) => {
@@ -309,6 +310,10 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
       }
       if (!cur.current) return;
       try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
+      if (L.tool === 'shape' && cur.current.pts.length >= 4) { // ★도형 모드: 인식되면 깔끔한 도형으로 스냅(아니면 자유필기 유지)
+        const rec = recognizeShape(cur.current.pts.map((p) => ({ x: p.x, y: p.y })));
+        if (rec) cur.current.pts = shapeToPoints(rec).map((p) => ({ x: p.x, y: p.y, p: 0.5 }));
+      }
       finalizeCur();
       if (L.tool === 'eraser') clearCursor(); // 지우개 커서 정리(다음 호버/이동에 다시 그림)
     };
@@ -479,6 +484,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
         <button style={btn(tool === 'pen')} onClick={() => setTool('pen')}>✏️ 펜</button>
         <button style={btn(tool === 'eraser')} onClick={() => setTool('eraser')}>지우개</button>
         <button style={btn(tool === 'select')} onClick={() => setTool('select')} title="올가미로 묶어 이동·복제·색변경·레이어이동">⬚ 선택</button>
+        <button style={btn(tool === 'shape')} onClick={() => setTool('shape')} title="대충 그리면 깔끔한 도형으로 — 삼각형·사각형·원·타원·직선">⬡ 도형</button>
         {tool === 'eraser' && (<>
           <button style={btn(eraserMode === 'precise')} onClick={() => setEraserMode('precise')}>정밀</button>
           <button style={btn(eraserMode === 'stroke')} onClick={() => setEraserMode('stroke')}>획</button>
