@@ -135,9 +135,9 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       const coalesced = (e.getCoalescedEvents?.() ?? [e]) as PointerEvent[];
       for (const ce of coalesced) cur.current.pts.push(pt(ce));
       if (cur.current.tool === 'eraser') {
-        // 지우개: base에 즉시 적용(예측 불필요)
+        // 지우개: base에 즉시 적용(destination-out). ★풀 경로 유지 → 저장/재그림 시 동일하게 지워짐.
+        //   (destination-out은 같은 픽셀 반복 지워도 동일 = 매 프레임 풀 재그림 무해. 1점 저장 버그 수정.)
         drawStroke(baseCtx.current!, cur.current);
-        cur.current.pts = [cur.current.pts[cur.current.pts.length - 1]]; // 누적 재그림 방지
       } else {
         const pred = ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[];
         renderOverlay(pred.map(pt));
@@ -217,6 +217,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
         position: 'relative', flex: full ? 1 : undefined, height: full ? undefined : height,
         borderRadius: 12, border: '1px solid var(--color-border)', overflow: 'hidden',
         background: 'var(--color-surface)', touchAction: 'none',
+        userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none', // 펜 드래그 시 텍스트 선택(파란 하이라이트) 차단
         backgroundImage: 'radial-gradient(color-mix(in oklab, var(--color-border) 60%, transparent) 0.7px, transparent 0.7px)',
         backgroundSize: '22px 22px',
       }}>
