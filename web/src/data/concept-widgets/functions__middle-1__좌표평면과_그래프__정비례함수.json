@@ -25,57 +25,6 @@
    }
   ],
   "scope": "y0 = a*x0; x2 = 2*x0; y2 = a*x2; ratio = y0/x0",
-  "geometry": {
-   "range": [
-    -5,
-    5
-   ],
-   "yRange": [
-    -5,
-    5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      0,
-      0
-     ],
-     "label": "O"
-    },
-    {
-     "type": "line",
-     "through": [
-      [
-       0,
-       0
-      ],
-      [
-       "=x0",
-       "=y0"
-      ]
-     ]
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x0",
-      "=y0"
-     ],
-     "label": "P(x, ax)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x2",
-      "=y2"
-     ],
-     "label": "x가 2배 → y도 2배"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -5,

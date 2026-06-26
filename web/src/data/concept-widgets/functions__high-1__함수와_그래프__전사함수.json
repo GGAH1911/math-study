@@ -15,55 +15,6 @@
    }
   ],
   "scope": "a = sign(b)*abs(b)^(1/3); fa = a^3; gap = fa - b",
-  "geometry": {
-   "range": [
-    -2.1,
-    2.1
-   ],
-   "yRange": [
-    -9.5,
-    9.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=a",
-      0
-     ],
-     "to": [
-      "=a",
-      "=b"
-     ]
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=b"
-     ],
-     "label": "P(a, b)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      0
-     ],
-     "label": "a (정의역)"
-    },
-    {
-     "type": "point",
-     "at": [
-      0,
-      "=b"
-     ],
-     "label": "b (공역)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.1,

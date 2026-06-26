@@ -23,39 +23,6 @@
    }
   ],
   "scope": "xi=-b/3; yi=xi^3+b*xi^2+c*xi; fpp=6*xi+2*b; concav_left=6*(xi-0.5)+2*b; concav_right=6*(xi+0.5)+2*b",
-  "geometry": {
-   "range": [
-    -2.5,
-    2.5
-   ],
-   "yRange": [
-    -12,
-    12
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=xi",
-      "=yi"
-     ],
-     "label": "변곡점"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=xi",
-      -12
-     ],
-     "to": [
-      "=xi",
-      12
-     ]
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.5,

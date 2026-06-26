@@ -15,55 +15,6 @@
    }
   ],
   "scope": "pos = 5*t^2; vel = 10*t; acc = 10; x1 = t-1; y1 = pos - vel; x2 = t+1; y2 = pos + vel",
-  "geometry": {
-   "range": [
-    0,
-    7
-   ],
-   "yRange": [
-    -40,
-    220
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=t",
-      0
-     ],
-     "to": [
-      "=t",
-      "=pos"
-     ],
-     "color": "#9ca3af",
-     "label": "위치"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=x1",
-      "=y1"
-     ],
-     "to": [
-      "=x2",
-      "=y2"
-     ],
-     "color": "#dc2626",
-     "label": "접선: 기울기=순간속도"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=t",
-      "=pos"
-     ],
-     "label": "P(t, s(t))",
-     "color": "#dc2626"
-    }
-   ]
-  },
   "plot": {
    "range": [
     0,

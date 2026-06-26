@@ -23,47 +23,6 @@
    }
   ],
   "scope": "sol = a^c; ycheck = log(sol)/log(a); check = ycheck - c",
-  "geometry": {
-   "range": [
-    0,
-    16
-   ],
-   "yRange": [
-    -2.5,
-    4.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=sol",
-      "=c"
-     ],
-     "label": "해 (a^c, c)"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=sol",
-      0
-     ],
-     "to": [
-      "=sol",
-      "=c"
-     ]
-    },
-    {
-     "type": "point",
-     "at": [
-      "=sol",
-      0
-     ],
-     "label": "x=a^c"
-    }
-   ]
-  },
   "plot": {
    "range": [
     0,

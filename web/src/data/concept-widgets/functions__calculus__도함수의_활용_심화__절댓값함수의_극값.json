@@ -14,44 +14,6 @@
    }
   ],
   "scope": "xc = sqrt(c); g0 = -c; fmax = abs(g0); fcusp = abs(xc^2 - c)",
-  "geometry": {
-   "range": [
-    -2.6,
-    2.6
-   ],
-   "yRange": [
-    -4.5,
-    5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      0,
-      "=fmax"
-     ],
-     "label": "극대(f'=0, g'=0)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=xc",
-      0
-     ],
-     "label": "첨점(g=0)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=-xc",
-      0
-     ],
-     "label": "첨점(g=0)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.6,

@@ -14,58 +14,6 @@
    }
   ],
   "scope": "x2=m; y2=m^2; area=m^3/6",
-  "geometry": {
-   "range": [
-    -0.5,
-    3.5
-   ],
-   "yRange": [
-    -0.5,
-    9.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      0,
-      0
-     ],
-     "label": "교점 A (x=0)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x2",
-      "=y2"
-     ],
-     "label": "교점 B (x=m)"
-    },
-    {
-     "type": "segment",
-     "from": [
-      0,
-      0
-     ],
-     "to": [
-      "=x2",
-      "=y2"
-     ]
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=x2",
-      0
-     ],
-     "to": [
-      "=x2",
-      "=y2"
-     ]
-    }
-   ]
-  },
   "plot": {
    "range": [
     -0.5,

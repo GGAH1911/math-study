@@ -15,28 +15,6 @@
    }
   ],
   "scope": "px = a; py = px^3 - 3*px; m = 3*px^2 - 3; rangeMin = -3; rangeMax = 9",
-  "geometry": {
-   "range": [
-    -2.5,
-    2.5
-   ],
-   "yRange": [
-    -9,
-    9
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=px",
-      "=py"
-     ],
-     "label": "P"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.5,

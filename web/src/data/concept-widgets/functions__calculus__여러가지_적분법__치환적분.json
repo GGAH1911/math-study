@@ -14,48 +14,6 @@
    }
   ],
   "scope": "ub = b^2; Ax = sin(b^2); Au = sin(ub); gp = 2*b; fend = cos(b^2); hend = 2*b*cos(b^2)",
-  "geometry": {
-   "range": [
-    0,
-    2.5
-   ],
-   "yRange": [
-    -5.5,
-    5.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=b",
-      0
-     ],
-     "to": [
-      "=b",
-      "=hend"
-     ],
-     "color": "#2563eb"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=b",
-      "=hend"
-     ],
-     "label": "끝점 f(g(b))·g'(b)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=b",
-      "=Ax"
-     ],
-     "label": "누적넓이 = sin(b²)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     0,

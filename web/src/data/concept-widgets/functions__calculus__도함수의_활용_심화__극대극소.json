@@ -15,58 +15,6 @@
    }
   ],
   "scope": "r=sqrt(a); xmax=-r; xmin=r; ymax=xmax^3-3*a*xmax; ymin=xmin^3-3*a*xmin; slopemax=3*xmax^2-3*a; slopemin=3*xmin^2-3*a",
-  "geometry": {
-   "range": [
-    -2,
-    2
-   ],
-   "yRange": [
-    -11,
-    11
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=xmax",
-      "=ymax"
-     ],
-     "label": "극대"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=xmin",
-      "=ymin"
-     ],
-     "label": "극소"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=xmax-0.5",
-      "=ymax"
-     ],
-     "to": [
-      "=xmax+0.5",
-      "=ymax"
-     ]
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=xmin-0.5",
-      "=ymin"
-     ],
-     "to": [
-      "=xmin+0.5",
-      "=ymin"
-     ]
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2,

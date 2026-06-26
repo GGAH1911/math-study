@@ -15,28 +15,6 @@
    }
   ],
   "scope": "fa = a^2; mt = 2*a; mn = -1/(2*a); prod = mt*mn",
-  "geometry": {
-   "range": [
-    -3,
-    3
-   ],
-   "yRange": [
-    -1,
-    5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "P(a, f(a))"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -3,

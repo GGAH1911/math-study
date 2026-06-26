@@ -14,58 +14,6 @@
    }
   ],
   "scope": "fx = x^2; gx = (-x)^2",
-  "geometry": {
-   "range": [
-    -3.2,
-    3.2
-   ],
-   "yRange": [
-    -1,
-    9.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=x",
-      "=fx"
-     ],
-     "label": "P=(x, f(x))"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=-x",
-      "=gx"
-     ],
-     "label": "Q=(-x, f(-x))"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=x",
-      0
-     ],
-     "to": [
-      "=x",
-      "=fx"
-     ]
-    },
-    {
-     "type": "segment",
-     "from": [
-      0,
-      "=fx"
-     ],
-     "to": [
-      "=x",
-      "=fx"
-     ]
-    }
-   ]
-  },
   "plot": {
    "range": [
     -3.2,

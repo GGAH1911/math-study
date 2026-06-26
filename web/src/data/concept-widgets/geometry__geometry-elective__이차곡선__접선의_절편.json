@@ -15,44 +15,6 @@
    }
   ],
   "scope": "fa=a^2; fpa=2*a; xint=a-fa/fpa; yint=fa-a*fpa",
-  "geometry": {
-   "range": [
-    -4,
-    4
-   ],
-   "yRange": [
-    -9.5,
-    9.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "P(a, f(a))"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=xint",
-      "=0"
-     ],
-     "label": "x절편"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=0",
-      "=yint"
-     ],
-     "label": "y절편"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -4,

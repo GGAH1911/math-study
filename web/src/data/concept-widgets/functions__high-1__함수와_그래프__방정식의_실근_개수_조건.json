@@ -32,44 +32,6 @@
    }
   ],
   "scope": "D = b^2 - 4*a*c; vx = -b/(2*a); vy = (4*a*c - b^2)/(4*a); n = (D > 0 ? 2 : (D == 0 ? 1 : 0)); rp1 = (D >= 0 ? (-b - sqrt(D))/(2*a) : 1e6); rp2 = (D >= 0 ? (-b + sqrt(D))/(2*a) : 1e6)",
-  "geometry": {
-   "range": [
-    -5,
-    5
-   ],
-   "yRange": [
-    -10,
-    10
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=vx",
-      "=vy"
-     ],
-     "label": "꼭짓점"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=rp1",
-      0
-     ],
-     "label": "실근"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=rp2",
-      0
-     ],
-     "label": "실근"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -5,

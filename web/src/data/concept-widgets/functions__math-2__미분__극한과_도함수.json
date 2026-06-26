@@ -24,48 +24,6 @@
    }
   ],
   "scope": "fa = a^2; fah = (a+h)^2; slope = (fah - fa)/h; dslope = 2*a",
-  "geometry": {
-   "range": [
-    -2.5,
-    3.5
-   ],
-   "yRange": [
-    -1.5,
-    9
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "P(a, f(a))"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a+h",
-      "=fah"
-     ],
-     "label": "Q(a+h, f(a+h))"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=a",
-      "=fa"
-     ],
-     "to": [
-      "=a+h",
-      "=fah"
-     ],
-     "label": "할선"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.5,

@@ -32,56 +32,6 @@
    }
   ],
   "scope": "y0 = x0^3 - 3*x0; m = 3*x0^2 - 3; fa = a^3 - 3*a; fb = b^3 - 3*b; Mx = max(fa, fb, 2); Mn = min(fa, fb, -2)",
-  "geometry": {
-   "range": [
-    -2.7,
-    2.7
-   ],
-   "yRange": [
-    -9,
-    9
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=x0",
-      "=y0"
-     ],
-     "label": "P(조사점)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "a"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=b",
-      "=fb"
-     ],
-     "label": "b"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=a",
-      0
-     ],
-     "to": [
-      "=b",
-      0
-     ],
-     "label": "구간[a,b]"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.7,

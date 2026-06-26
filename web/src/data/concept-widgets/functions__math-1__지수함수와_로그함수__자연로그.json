@@ -15,56 +15,6 @@
    }
   ],
   "scope": "lnx = log(x); slope = 1/x",
-  "geometry": {
-   "range": [
-    -2,
-    6
-   ],
-   "yRange": [
-    -2,
-    6
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=x",
-      "=lnx"
-     ],
-     "label": "P(x, ln x)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=lnx",
-      "=x"
-     ],
-     "label": "Q(ln x, x)"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=x",
-      "=lnx"
-     ],
-     "to": [
-      "=lnx",
-      "=x"
-     ],
-     "label": "y=x 대칭"
-    },
-    {
-     "type": "point",
-     "at": [
-      1,
-      0
-     ],
-     "label": "(1, 0)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2,

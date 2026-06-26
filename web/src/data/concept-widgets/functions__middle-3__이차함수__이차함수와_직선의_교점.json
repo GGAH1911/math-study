@@ -32,36 +32,6 @@
    }
   ],
   "scope": "D = m^2 - 4*(c - n); rt = sqrt(abs(D)); x1 = (m - rt)/2; x2 = (m + rt)/2; y1 = m*x1 + n; y2 = m*x2 + n",
-  "geometry": {
-   "range": [
-    -4,
-    4
-   ],
-   "yRange": [
-    -4,
-    16
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=x1",
-      "=y1"
-     ],
-     "label": "P1"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x2",
-      "=y2"
-     ],
-     "label": "P2"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -4,

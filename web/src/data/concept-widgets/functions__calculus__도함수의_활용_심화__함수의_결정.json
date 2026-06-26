@@ -23,39 +23,6 @@
    }
   ],
   "scope": "C = b - a^2",
-  "geometry": {
-   "range": [
-    -3,
-    3
-   ],
-   "yRange": [
-    -3,
-    8
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=b"
-     ],
-     "label": "P(a, b)"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=a",
-      0
-     ],
-     "to": [
-      "=a",
-      "=b"
-     ]
-    }
-   ]
-  },
   "plot": {
    "range": [
     -3,

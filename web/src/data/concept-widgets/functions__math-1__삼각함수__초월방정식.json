@@ -14,58 +14,6 @@
    }
   ],
   "scope": "s = sin(t); c = cos(t); rhs = t/2; lhs = s; diff = s - t/2",
-  "geometry": {
-   "range": [
-    -4,
-    7
-   ],
-   "yRange": [
-    -2,
-    3.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=t",
-      "=-2"
-     ],
-     "to": [
-      "=t",
-      "=3.5"
-     ]
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=t",
-      "=s"
-     ],
-     "to": [
-      "=t",
-      "=rhs"
-     ]
-    },
-    {
-     "type": "point",
-     "at": [
-      "=t",
-      "=s"
-     ],
-     "label": "(x, sin x)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=t",
-      "=rhs"
-     ],
-     "label": "(x, x/2)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -4,

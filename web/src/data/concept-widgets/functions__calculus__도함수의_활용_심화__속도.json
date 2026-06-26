@@ -15,28 +15,6 @@
    }
   ],
   "scope": "sa = -a^2 + 4*a; va = -2*a + 4; speed = abs(va)",
-  "geometry": {
-   "range": [
-    -0.5,
-    4.5
-   ],
-   "yRange": [
-    -3,
-    6
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=sa"
-     ],
-     "label": "P(t, s(t))"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -0.5,

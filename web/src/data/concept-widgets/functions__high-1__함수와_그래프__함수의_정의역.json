@@ -23,57 +23,6 @@
    }
   ],
   "scope": "m=(a+b)/2; h=(b-a)/2; len=b-a",
-  "geometry": {
-   "range": [
-    -4,
-    7
-   ],
-   "yRange": [
-    -1,
-    5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=a",
-      0
-     ],
-     "to": [
-      "=b",
-      0
-     ],
-     "label": "정의역 [a, b]",
-     "color": "#dc2626"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      0
-     ],
-     "label": "x=a (좌경계)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=b",
-      0
-     ],
-     "label": "x=b (우경계)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=m",
-      "=h"
-     ],
-     "label": "최고점 (m, h)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -4,

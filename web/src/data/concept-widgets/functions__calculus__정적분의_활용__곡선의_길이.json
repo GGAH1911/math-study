@@ -15,47 +15,6 @@
    }
   ],
   "scope": "fb = cosh(b); fpb = sinh(b); integrand_b = sqrt(1 + fpb^2); L = sinh(b); chord = sqrt(b^2 + (fb - 1)^2)",
-  "geometry": {
-   "range": [
-    0,
-    2
-   ],
-   "yRange": [
-    0,
-    4
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      0,
-      1
-     ],
-     "label": "시작 (0,1)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=b",
-      "=fb"
-     ],
-     "label": "끝점"
-    },
-    {
-     "type": "segment",
-     "from": [
-      0,
-      1
-     ],
-     "to": [
-      "=b",
-      "=fb"
-     ]
-    }
-   ]
-  },
   "plot": {
    "range": [
     0,

@@ -23,56 +23,6 @@
    }
   ],
   "scope": "ea = e^a; tanAtX0 = ea*(x0 - a) + ea; curveAtX0 = e^x0; gap = curveAtX0 - tanAtX0; fAtA = e^a - (ea*(a - a) + ea); fpAtA = e^a - ea",
-  "geometry": {
-   "range": [
-    -2.5,
-    2.5
-   ],
-   "yRange": [
-    -1,
-    8
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=ea"
-     ],
-     "label": "접점 (a, eᵃ)"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x0",
-      "=curveAtX0"
-     ],
-     "label": "곡선 위 점"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x0",
-      "=tanAtX0"
-     ],
-     "label": "접선 위 점"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=x0",
-      "=tanAtX0"
-     ],
-     "to": [
-      "=x0",
-      "=curveAtX0"
-     ],
-     "label": "f(x₀) ≥ 0"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.5,

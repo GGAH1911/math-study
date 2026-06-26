@@ -23,40 +23,6 @@
    }
   ],
   "scope": "C = y0 - x0^2; yc = x0^2 + C; slope = 2*x0; tx1 = x0 - 0.8; ty1 = y0 - 0.8*slope; tx2 = x0 + 0.8; ty2 = y0 + 0.8*slope",
-  "geometry": {
-   "range": [
-    -4,
-    4
-   ],
-   "yRange": [
-    -8,
-    12
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=tx1",
-      "=ty1"
-     ],
-     "to": [
-      "=tx2",
-      "=ty2"
-     ],
-     "label": "기울기 f'(x₀)=2x₀"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x0",
-      "=y0"
-     ],
-     "label": "경계점 (x₀, y₀)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -4,

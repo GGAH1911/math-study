@@ -25,28 +25,6 @@
    }
   ],
   "scope": "a=1; D=b^2-4*a*c; vx=-b/(2*a); vy=c-b^2/(4*a)",
-  "geometry": {
-   "range": [
-    -4,
-    8
-   ],
-   "yRange": [
-    -6,
-    12
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=vx",
-      "=vy"
-     ],
-     "label": "꼭짓점"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -4,

@@ -23,57 +23,6 @@
    }
   ],
   "scope": "fa = a^3 - 3*a; fb = b^3 - 3*b; m = (fb - fa)/(b - a); c = sqrt((a^2 + a*b + b^2)/3); fc = c^3 - 3*c; fpc = 3*c^2 - 3",
-  "geometry": {
-   "range": [
-    -0.3,
-    3.2
-   ],
-   "yRange": [
-    -4,
-    19
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      "=a",
-      "=fa"
-     ],
-     "to": [
-      "=b",
-      "=fb"
-     ],
-     "label": "할선",
-     "color": "#dc2626"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "A"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=b",
-      "=fb"
-     ],
-     "label": "B"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=c",
-      "=fc"
-     ],
-     "label": "C"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -0.3,

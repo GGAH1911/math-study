@@ -15,48 +15,6 @@
    }
   ],
   "scope": "fa = exp(a); fpa = exp(a); slope = fpa; intercept = fa - slope*a; gap = fa - a*fpa; tanAtA = slope*a + intercept",
-  "geometry": {
-   "range": [
-    -2,
-    2.5
-   ],
-   "yRange": [
-    -4,
-    8.5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      0,
-      0
-     ],
-     "label": "O"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "접점 (a, f(a))"
-    },
-    {
-     "type": "segment",
-     "from": [
-      0,
-      0
-     ],
-     "to": [
-      "=a",
-      "=fa"
-     ],
-     "label": "O→접점"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2,

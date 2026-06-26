@@ -15,44 +15,6 @@
    }
   ],
   "scope": "fa = a^3 - 3*a; slope = 3*a^2 - 3; sec = 6*a",
-  "geometry": {
-   "range": [
-    -2.5,
-    2.5
-   ],
-   "yRange": [
-    -5,
-    5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "(a, f(a))"
-    },
-    {
-     "type": "point",
-     "at": [
-      -1,
-      2
-     ],
-     "label": "극대 (-1,2)"
-    },
-    {
-     "type": "point",
-     "at": [
-      1,
-      -2
-     ],
-     "label": "극소 (1,-2)"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.5,

@@ -23,36 +23,6 @@
    }
   ],
   "scope": "disc = m^2 + 4*c; x1 = (m - sqrt(disc))/2; x2 = (m + sqrt(disc))/2; y1 = x1^2; y2 = x2^2",
-  "geometry": {
-   "range": [
-    -3.5,
-    3.5
-   ],
-   "yRange": [
-    -4,
-    9
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=x1",
-      "=y1"
-     ],
-     "label": "교점1"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x2",
-      "=y2"
-     ],
-     "label": "교점2"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -3.5,

@@ -14,28 +14,6 @@
    }
   ],
   "scope": "fa = a^3 - 3*a^2 + 2*a + 1; d1 = 3*a^2 - 6*a + 2; d2 = 6*a - 6",
-  "geometry": {
-   "range": [
-    -0.5,
-    2.5
-   ],
-   "yRange": [
-    -1,
-    3
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=a",
-      "=fa"
-     ],
-     "label": "P"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -0.5,

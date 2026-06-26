@@ -15,28 +15,6 @@
    }
   ],
   "scope": "f0 = x0^3 - 3*x0; d0 = 3*x0^2 - 3",
-  "geometry": {
-   "range": [
-    -2.4,
-    2.4
-   ],
-   "yRange": [
-    -5,
-    5
-   ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": [
-    {
-     "type": "point",
-     "at": [
-      "=x0",
-      "=f0"
-     ],
-     "label": "P"
-    }
-   ]
-  },
   "plot": {
    "range": [
     -2.4,
