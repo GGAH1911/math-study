@@ -36,6 +36,14 @@ const bboxOf = (arr: Stroke[], idxs: number[]) => {
   return a === Infinity ? null : { x: a, y: b, w: c - a, h: d - b };
 };
 const translateStroke = (s: Stroke, dx: number, dy: number): Stroke => ({ ...s, pts: s.pts.map((p) => ({ x: p.x + dx, y: p.y + dy, p: p.p })) });
+// 직선 도구: 시작→현재를 45° 격자에 가까우면 스냅(축·대각선 정밀).
+const snapAngle = (s: Pt, c: Pt): Pt => {
+  const dx = c.x - s.x, dy = c.y - s.y, len = Math.hypot(dx, dy); if (len < 2) return c;
+  let ang = Math.atan2(dy, dx); const step = Math.PI / 4, snapped = Math.round(ang / step) * step;
+  if (Math.abs(ang - snapped) < 0.12) ang = snapped; // ~7°
+  return { x: s.x + Math.cos(ang) * len, y: s.y + Math.sin(ang) * len, p: c.p };
+};
+const snapGrid = (p: Pt, gap: number): Pt => ({ x: Math.round(p.x / gap) * gap, y: Math.round(p.y / gap) * gap, p: p.p });
 
 export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -63,13 +71,15 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const [eraserSize, setEraserSize] = useState(24);
   const [pressure, setPressure] = useState(false);
   const [dashed, setDashed] = useState(false);
+  const [lineMode, setLineMode] = useState(false); // 직선 도구(펜이 직선 + 각도 스냅)
+  const [gridSnap, setGridSnap] = useState(false); // 격자 스냅(직선 끝점을 격자에)
   const [color, setColor] = useState(COLORS[0]);
   const [width, setWidth] = useState(WIDTHS[1]);
   const [paper, setPaper] = useState<Paper>('grid');
   const [gap, setGap] = useState(24);
   const [full, setFull] = useState(false);
-  const live = useRef({ tool, eraserMode, eraserSize, pressure, dashed, color, width, activeId });
-  live.current = { tool, eraserMode, eraserSize, pressure, dashed, color, width, activeId };
+  const live = useRef({ tool, eraserMode, eraserSize, pressure, dashed, lineMode, gridSnap, gap, color, width, activeId });
+  live.current = { tool, eraserMode, eraserSize, pressure, dashed, lineMode, gridSnap, gap, color, width, activeId };
   const layersRef = useRef(layers); layersRef.current = layers; // save()가 effect 재실행 없이 최신 레이어 읽게
 
   const KEY = `ink:${storageKey}`;
@@ -230,7 +240,8 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       }
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { removed.current = []; const p0 = pt(e); eraseStrokeAt(p0.x, p0.y); drawEraserCursor(p0.x, p0.y); cur.current = { tool: 'eraser', color: '', width: 0, dashed: false, pressure: false, pts: [] }; return; }
       redoStack.current = [];
-      cur.current = { tool: L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.pressure, pts: [pt(e)] };
+      const start = (L.tool === 'pen' && L.lineMode && L.gridSnap) ? snapGrid(pt(e), L.gap) : pt(e); // 직선+격자스냅이면 시작점 격자에
+      cur.current = { tool: L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.pressure, pts: [start] };
       if (L.tool === 'eraser') { const p0 = pt(e); drawStroke(activeCtx()!, cur.current); drawEraserCursor(p0.x, p0.y); } else renderOverlay();
     };
     const move = (e: PointerEvent) => {
@@ -248,6 +259,10 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       if (!cur.current) { if (L.tool === 'eraser') { const p = pt(e); drawEraserCursor(p.x, p.y); } return; } // 호버: 지우개 영역 미리보기(애플펜슬 호버 지원시)
       e.preventDefault();
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { const p = pt(e); eraseStrokeAt(p.x, p.y); drawEraserCursor(p.x, p.y); return; }
+      if (cur.current.tool === 'pen' && L.lineMode) { // 직선: 시작→현재(격자 or 각도 스냅)
+        const s = cur.current.pts[0], end = L.gridSnap ? snapGrid(pt(e), L.gap) : snapAngle(s, pt(e));
+        cur.current.pts = [s, end]; renderOverlay(); return;
+      }
       for (const ce of (e.getCoalescedEvents?.() ?? [e]) as PointerEvent[]) cur.current.pts.push(pt(ce));
       if (cur.current.tool === 'eraser') { drawStroke(activeCtx()!, cur.current); const p = pt(e); drawEraserCursor(p.x, p.y); } // 지우개=레이어에 지우고 overlay에 커서
       else { const pred = cur.current.dashed ? [] : ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[]; renderOverlay(pred.map(pt)); }
@@ -432,6 +447,8 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
         {WIDTHS.map((w) => (<button key={w} onClick={() => setWidth(w)} style={btn(width === w)}><span style={{ display: 'inline-block', width: 16, height: w + 2, borderRadius: 99, background: 'currentColor', verticalAlign: 'middle' }} /></button>))}
         <button style={btn(dashed)} onClick={() => setDashed((v) => !v)} title="점선/실선">{dashed ? '┈ 점선' : '─ 실선'}</button>
         <button style={btn(pressure)} onClick={() => setPressure((v) => !v)} title="필압(수학엔 무감지 권장)">{pressure ? '✍️ 필압' : '═ 균일'}</button>
+        <button style={btn(lineMode)} onClick={() => setLineMode((v) => !v)} title="직선 도구(끌면 직선 + 0/45/90° 각도 스냅)">📐 직선</button>
+        {lineMode && paper === 'grid' && <button style={btn(gridSnap)} onClick={() => setGridSnap((v) => !v)} title="직선 끝점을 격자에 스냅">⊞ 격자스냅</button>}
         {sep}
         <select value={paper} onChange={(e) => setPaper(e.target.value as Paper)} style={{ ...btn(false), padding: '4px 6px' }} title="종이"><option value="blank">백지</option><option value="ruled">줄</option><option value="grid">격자</option></select>
         {paper !== 'blank' && <input type="range" min={14} max={48} value={gap} onChange={(e) => setGap(+e.target.value)} title={`간격 ${gap}px`} style={{ width: 64 }} />}
