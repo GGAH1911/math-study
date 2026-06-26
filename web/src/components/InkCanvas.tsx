@@ -14,7 +14,6 @@ type Paper = 'blank' | 'ruled' | 'grid';
 const COLORS = ['#2A261E', '#39487D', '#C13D38', '#2E7B4F'];
 const WIDTHS = [1.5, 2.5, 4];
 const ERASER_W = 18;
-const BUILD = 'ink v10'; // ★캐시 확인용 빌드 표식 — 코드 바뀔 때마다 올림
 const nid = () => 'L' + Math.random().toString(36).slice(2, 8);
 
 export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
@@ -29,7 +28,6 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   const redoStack = useRef<Action[]>([]);
   const penSeen = useRef(false);
   const recentPen = useRef(false); // 최근 펜 접촉 윈도우 — 획 사이 빠른 2탭(iOS 더블탭 선택 콜아웃) 차단용
-  const dbg = useRef({ d: 0, u: 0, c: 0 }); // 진단: raw pointerdown/up/cancel 수
   const sizeRef = useRef({ w: 0, h: 0, dpr: 1 });
 
   const [layers, setLayers] = useState<LayerMeta[]>([{ id: 'L1', name: '레이어 1', visible: true }]);
@@ -149,7 +147,6 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     };
 
     const down = (e: PointerEvent) => {
-      dbg.current.d++; setRev((r) => r + 1); // 진단: raw pointerdown 수(먹히는지 확인)
       if (e.pointerType === 'pen') penSeen.current = true;
       if (!accept(e)) return; e.preventDefault();
       markPen(); // 펜 접촉 윈도우 갱신(다음 빠른 탭의 선택 콜아웃 차단)
@@ -171,7 +168,6 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       else { const pred = cur.current.dashed ? [] : ((e as PE).getPredictedEvents?.() ?? []) as PointerEvent[]; renderOverlay(pred.map(pt)); }
     };
     const up = (e: PointerEvent) => {
-      if (e.type === 'pointercancel') dbg.current.c++; else dbg.current.u++; setRev((r) => r + 1); // 진단
       markPen(); // 손 뗀 직후 윈도우 갱신(획 직후 빠른 2번째 탭 차단)
       if (!cur.current) return;
       try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
@@ -280,10 +276,6 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
         <button style={btn(false)} onClick={redoFn}>↷</button>
         <button style={btn(false)} onClick={clearActive}>레이어지움</button>
         <button style={btn(full)} onClick={() => setFull((v) => !v)}>{full ? '✕ 닫기' : '⛶ 전체화면'}</button>
-        <span onClick={() => { dbg.current = { d: 0, u: 0, c: 0 }; setRev((r) => r + 1); }} title="탭하면 카운터 리셋 · d=pointerdown u=up c=cancel · 획=확정 · 빌드"
-          style={{ fontSize: 10, color: 'var(--color-muted)', opacity: 0.75, marginLeft: 4, cursor: 'pointer' }}>
-          d{dbg.current.d} u{dbg.current.u} c{dbg.current.c} · {layers.reduce((n, l) => n + (strokesOf.current.get(l.id)?.length || 0), 0)}획 · {BUILD}
-        </span>
       </div>
       <div style={{ display: 'flex', gap: 8, flex: full ? 1 : undefined, minHeight: 0 }}>
         <div ref={wrapRef} style={{ position: 'relative', flex: 1, height: full ? undefined : height, borderRadius: 12, border: '1px solid var(--color-border)', overflow: 'hidden', background: 'var(--color-surface)', touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none', backgroundImage: paperBg() }}>
