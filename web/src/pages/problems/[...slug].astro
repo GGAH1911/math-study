@@ -13,6 +13,7 @@ import { STATUS_LABEL_KO } from '../../lib/srs.ts';
 import { renderReconstruct } from '../../lib/reconstruct';
 import Geometry from '../../components/Geometry.tsx';
 import reconData from '../../data/problem-reconstructions.json';
+import { hasWidget } from '../../lib/concept-widgets';
 
 const slug = Astro.params.slug as string;
 const entry = await getEntry('problems', slug);
@@ -253,7 +254,7 @@ if (src) {
                 const resolved = resolveConcept(p);
                 const label = labelOf(fmtPath(p));
                 return <li>{resolved
-                  ? <a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${resolved}`}>{label}</a>
+                  ? <><a class="text-[color:var(--color-accent)] hover:underline" href={`/concepts/${resolved}`}>{label}</a>{hasWidget(resolved) && <span class="iw-mark" title="인터랙티브 위젯 있음"> 🔭</span>}</>
                   : <span class="text-[color:var(--color-subtle)]" title="아직 개념 노드가 없는 태그">{label}</span>}</li>;
               })}
             </ul>

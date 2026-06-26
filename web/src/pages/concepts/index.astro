@@ -3,6 +3,7 @@ export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ConceptCard from '../../components/ConceptCard.astro';
 import ConceptFilters from '../../components/ConceptFilters.tsx';
+import { hasWidget } from '../../lib/concept-widgets';
 import { getCollection } from 'astro:content';
 
 import {
@@ -139,6 +140,7 @@ function cardProps(c: C, options: { emphasized?: boolean } = {}) {
       { label: masteryKo, class: `chip-mastery-${mlvl}` },
       { label: typeKo, class: '' },
       ...(c.data.grade ? [{ label: c.data.grade, class: '' }] : []),
+      ...(hasWidget(c.id) ? [{ label: '🔭 인터랙티브', class: 'chip-interactive' }] : []),
     ],
   };
 }
@@ -153,6 +155,7 @@ function dataAttrs(c: C) {
     'data-label': label.toLowerCase(),
     'data-id': c.id.toLowerCase(),
     'data-unit': (c.data.unit ?? '').toLowerCase(),
+    'data-interactive': hasWidget(c.id) ? '1' : '',
   };
 }
 
@@ -189,7 +192,7 @@ const filterOptions = {
       </p>
     </header>
 
-    <ConceptFilters client:load options={filterOptions} tracks={tracks} totalConcepts={concepts.length} />
+    <ConceptFilters client:load options={filterOptions} tracks={tracks} totalConcepts={concepts.length} interactiveCount={concepts.filter((c) => hasWidget(c.id)).length} />
 
     {recRows.length > 0 && (
       <div class="space-y-3">

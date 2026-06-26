@@ -15,6 +15,7 @@ import { getMasteryMap } from '../lib/mastery.ts';
 import { getDueProblemCount, getWeeklyActivity } from '../lib/activity.ts';
 import synthesesIndex from '../data/syntheses-by-concept.json';
 import { pickDailyConcept } from '../lib/daily-concept.mjs';
+import { hasWidget } from '../lib/concept-widgets';
 import { readFileSync } from 'node:fs';
 
 const health = readHealth();
@@ -82,6 +83,7 @@ try {
         <p class="text-sm text-[color:var(--color-muted)]">
           <span class="font-hand text-[16px] sm:text-[18px] text-[color:var(--color-subtle)] mr-1.5">오늘의 개념</span>
           <a href={`/concepts/${todayConcept.id}`} class="font-medium text-[color:var(--color-text)] hover:text-[color:var(--color-accent)] hover:underline">「{todayConcept.label}」</a>
+          {hasWidget(todayConcept.id) && <span class="iw-mark" title="인터랙티브 위젯 있음"> 🔭</span>}
           {(todayConcept.unit || todayConcept.domain) && (
             <span class="text-[color:var(--color-subtle)]"> · {[todayConcept.domain, todayConcept.unit].filter(Boolean).join(' · ')}</span>
           )}
@@ -140,7 +142,7 @@ try {
               </div>
               {s.origin_concept && (
                 <a class="text-[11px] text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] truncate block" href={`/concepts/${s.origin_concept}`} title={s.origin_concept}>
-                  ← {leafOf(s.origin_concept)}
+                  ← {leafOf(s.origin_concept)}{hasWidget(s.origin_concept) && <span class="iw-mark" title="인터랙티브 위젯 있음"> 🔭</span>}
                 </a>
               )}
               {s.excerpt && <p class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-1"><MathishText text={s.excerpt} display={false} client:visible /></p>}

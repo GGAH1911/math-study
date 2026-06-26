@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { hasWidget } from '../lib/concept-widgets';
 
 // 학습 경로 시각화 v2 — 갈래가 합류하는 세로 층상 DAG("잉크 노선도"의 분기·환승 진화형).
 // 위=기초(여러 갈래) → 아래로 내려가며 합류 → 맨 아래 목표로 수렴. 실제 선수관계 엣지 사용.
@@ -209,6 +210,16 @@ export default function MetroMap({ nodes, edges, totalPrereqs, donePrereqs, todo
                   <circle cx={p.x} cy={p.y} r={R * 1.5 + 5} fill="none" stroke="var(--atlas-gold)" strokeWidth={2.2} />
                 )}
                 <circle cx={p.x} cy={p.y} r={n.isGoal ? R * 1.5 : R} {...bodyProps(n.mastery, n.isGoal)} />
+                {hasWidget(n.id) && (
+                  <text
+                    x={p.x + (n.isGoal ? R * 1.5 : R) - 1}
+                    y={p.y - (n.isGoal ? R * 1.5 : R) + 3}
+                    fontSize={11}
+                    textAnchor="middle"
+                    fill="var(--color-accent)"
+                    aria-hidden="true"
+                  >🔭</text>
+                )}
                 {n.isGoal && (
                   <path className="metro-flag" d={`M ${p.x + R * 1.5 + 2} ${p.y - 4} l 0 -18 l 14 5 l -14 5`} />
                 )}

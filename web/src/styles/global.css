@@ -385,6 +385,10 @@ html.dark {
   .chip-mastery-proficient{ color: var(--color-mastery-proficient);border-color: color-mix(in srgb, var(--color-mastery-proficient) 40%, var(--color-border)); }
   .chip-mastery-mastered  { color: var(--color-mastery-mastered);  border-color: color-mix(in srgb, var(--color-mastery-mastered) 40%, var(--color-border)); }
 
+  /* 인터랙티브 위젯 있는 개념 표시(SSOT: concept-widgets-index.json). 모든 표면 공용. */
+  .chip-interactive { color: var(--color-accent); font-weight: 600; border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border)); background: color-mix(in oklab, var(--color-accent) 12%, transparent); }
+  .iw-mark { display: inline-flex; align-items: center; font-size: 0.72rem; line-height: 1; color: var(--color-accent); vertical-align: middle; }
+
   .chip-status-solved   { color: var(--color-status-solved);   border-color: color-mix(in srgb, var(--color-status-solved) 40%, var(--color-border)); }
   .chip-status-unsolved { color: var(--color-status-unsolved); }
   .chip-status-review   { color: var(--color-status-review);   border-color: color-mix(in srgb, var(--color-status-review) 40%, var(--color-border)); }
@@ -1114,6 +1118,8 @@ html.dark {
   border-radius: 3px;
 }
 .geom-label .katex { font-size: 1em; }
+/* 기출 재현(noLabelBg): 라벨 배경박스 제거 — 원본엔 라벨 배경 없음 */
+.geom-nobg .geom-label { background: none; padding: 0; border-radius: 0; }
 
 /* ---- 분장 외 파일 응급 오버라이드(§14-D) — 2차 웨이브에서 본 수선 ---- */
 /* ProblemCard.astro의 중복 .thumb invert 필터 — 라이트에서 무력화 */

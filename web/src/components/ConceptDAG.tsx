@@ -25,6 +25,7 @@ import {
   DOMAIN_COLOR,
 } from '../lib/concept-meta';
 import { REVIEW_STATE_LABEL_KO } from '../lib/srs.ts';
+import { hasWidget } from '../lib/concept-widgets';
 
 type GraphNode = {
   id: string;
@@ -157,6 +158,13 @@ function ConceptNodeImpl({ data }: { data: GraphNode & {
                 className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 hover:bg-amber-500/30 transition leading-none cursor-pointer"
               >🗒{data.note_count}</a>
             )}
+            {hasWidget(data.id) && (
+              <span
+                className="text-[10px] px-1.5 py-0.5 rounded-full leading-none"
+                style={{ background: 'color-mix(in oklab, var(--color-accent) 18%, transparent)', color: 'var(--color-accent)', border: '1px solid color-mix(in srgb, var(--color-accent) 40%, var(--color-border))' }}
+                title="인터랙티브 위젯 있음"
+              >🔭</span>
+            )}
             <span
               className="inline-block size-2 rounded-full"
               style={{ background: masteryColor }}
@@ -264,6 +272,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
   const [domainFilter, setDomainFilter] = useState<Set<string>>(new Set());
   // "노트 있음" 토글 — true면 note_count>0 인 노드만 visible로 인정.
   const [notesOnly, setNotesOnly] = useState<boolean>(false);
+  const [interactiveOnly, setInteractiveOnly] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedTerm, setDebouncedTerm] = useState('');
   const [colorBy, setColorBy] = useState<ColorMode>('domain');
@@ -387,6 +396,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         // "노트 있음" 토글: 노트 카운트가 있는 노드만 통과. 단원도 동일
         // 기준으로 dim — 노트 없는 단원도 어차피 흥미 없으니 일관 처리.
         .filter((n) => !notesOnly || (n.note_count ?? 0) > 0)
+        .filter((n) => !interactiveOnly || hasWidget(n.id))
         .filter((n) => {
           if (!collapseMode) return true;
           if (n.concept_type === 'unit') return true;
@@ -400,7 +410,7 @@ function Inner({ data, variant = 'full', highlight }: Props) {
         .map((n) => n.id),
     );
   }, [data.nodes, masteryFilter, gradeFilter, domainFilter, debouncedTerm,
-      collapseMode, expandedUnits, searchAutoExpanded, homeUnitOf, notesOnly]);
+      collapseMode, expandedUnits, searchAutoExpanded, homeUnitOf, notesOnly, interactiveOnly]);
 
   // When a node is selected, compute the set of nodes that are *related*
   // (the selected node + every direct prereq / enables target). Other
@@ -959,6 +969,19 @@ function Inner({ data, variant = 'full', highlight }: Props) {
                 >
                   <span aria-hidden>🗒</span>
                   <span>노트 있음</span>
+                </button>
+                <button
+                  onClick={() => setInteractiveOnly((v) => !v)}
+                  className="px-2 py-1 rounded-md text-xs font-medium transition border flex items-center gap-1.5"
+                  style={{
+                    background: interactiveOnly ? 'color-mix(in oklab, var(--color-accent) 28%, transparent)' : 'transparent',
+                    borderColor: interactiveOnly ? 'var(--color-accent)' : '#27272a',
+                    color: interactiveOnly ? 'var(--color-accent)' : '#52525b',
+                  }}
+                  title={interactiveOnly ? '필터 해제' : '인터랙티브 위젯이 있는 개념만 표시'}
+                >
+                  <span aria-hidden>🔭</span>
+                  <span>인터랙티브</span>
                 </button>
               </div>
             </div>

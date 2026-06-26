@@ -10,6 +10,7 @@ type Props = {
   };
   tracks?: { key: string; grades: string[] }[];
   totalConcepts: number;
+  interactiveCount?: number;
 };
 
 function readQuerySet(name: string): Set<string> | null {
@@ -33,7 +34,7 @@ function writeQuerySet(name: string, set: Set<string>, allKeys: string[]) {
   window.history.replaceState(null, '', url.toString());
 }
 
-export default function ConceptFilters({ options, tracks = [], totalConcepts }: Props) {
+export default function ConceptFilters({ options, tracks = [], totalConcepts, interactiveCount = 0 }: Props) {
   const masteryKeys = useMemo(() => options.masteries.map((o) => o.key), [options.masteries]);
   const domainKeys = useMemo(() => options.domains.map((o) => o.key), [options.domains]);
   const gradeKeys = useMemo(() => options.grades.map((o) => o.key), [options.grades]);
@@ -47,6 +48,7 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
   const [grade, setGrade] = useState<Set<string>>(() => new Set());
   const [search, setSearch] = useState<string>('');
   const [debounced, setDebounced] = useState('');
+  const [interactiveOnly, setInteractiveOnly] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [visibleCount, setVisibleCount] = useState<number>(totalConcepts);
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
@@ -73,6 +75,7 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
     if (g) setGrade(g);
     const q = new URLSearchParams(window.location.search).get('q') ?? '';
     if (q) { setSearch(q); setDebounced(q.trim().toLowerCase()); }
+    if (new URLSearchParams(window.location.search).get('interactive') === '1') setInteractiveOnly(true);
     if (document.readyState === 'complete') {
       setHydrated(true);
     } else {
@@ -131,7 +134,8 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
         label.includes(debounced) ||
         id.includes(debounced) ||
         unit.includes(debounced);
-      const visibleHere = passMastery && passDomain && passGrade && passSearch;
+      const passInteractive = !interactiveOnly || el.dataset.interactive === '1';
+      const visibleHere = passMastery && passDomain && passGrade && passSearch && passInteractive;
       el.classList.toggle('filtered-out', !visibleHere);
       if (visibleHere) visible++;
     }
@@ -146,7 +150,7 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
       s.classList.toggle('filtered-out', !anyVisible);
     }
     setVisibleCount(visible);
-  }, [hydrated, mastery, domain, grade, debounced]);
+  }, [hydrated, mastery, domain, grade, debounced, interactiveOnly]);
 
   // Sync each filter set back to the URL so refresh / bookmarks restore state.
   // Guarded by `hydrated` so the mount-time URL replay doesn't immediately
@@ -170,6 +174,13 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
     else url.searchParams.delete('q');
     window.history.replaceState(null, '', url.toString());
   }, [hydrated, search]);
+  useEffect(() => {
+    if (!hydrated) return;
+    const url = new URL(window.location.href);
+    if (interactiveOnly) url.searchParams.set('interactive', '1');
+    else url.searchParams.delete('interactive');
+    window.history.replaceState(null, '', url.toString());
+  }, [hydrated, interactiveOnly]);
 
   const toggle = (set: Set<string>, setter: (s: Set<string>) => void, key: string) => {
     const next = new Set(set);
@@ -183,13 +194,14 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
   const masteryAll = mastery.size === 0;
   const domainAll = domain.size === 0;
   const gradeAll = grade.size === 0;
-  const anyFilter = !masteryAll || !domainAll || !gradeAll || !!debounced;
+  const anyFilter = !masteryAll || !domainAll || !gradeAll || !!debounced || interactiveOnly;
 
   const resetAll = () => {
     setMastery(new Set());
     setDomain(new Set());
     setGrade(new Set());
     setSearch('');
+    setInteractiveOnly(false);
   };
 
   // --- 단원 접기/펼치기 --------------------------------------------------
@@ -298,6 +310,13 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts }: 
             >모두 해제</button>
           )}
         </span>
+        <button
+          type="button"
+          onClick={() => setInteractiveOnly((v) => !v)}
+          aria-pressed={interactiveOnly}
+          className={`chip chip-interactive ${interactiveOnly ? '' : 'opacity-50'} hover:opacity-100`}
+          title="인터랙티브 위젯 있는 개념만 보기"
+        >🔭 인터랙티브{interactiveCount ? ` ${interactiveCount}` : ''}</button>
         {allDomainIds.length > 0 && (
           <button
             type="button"

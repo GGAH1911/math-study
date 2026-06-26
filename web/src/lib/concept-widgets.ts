@@ -2,6 +2,8 @@
 //   - ConceptWidget.tsx(클라): key로 컴포넌트 렌더.
 //   - chat-context.ts(서버): tutorHint를 튜터 시스템프롬프트에 주입 → 튜터가 위젯 존재를 인지하고 안내.
 //   매칭은 leaf(파일명) NFC ([[project_concept_normalization]] 흔들림 회피).
+import widgetIndex from '../data/concept-widgets-index.json';
+
 export type ConceptWidgetMeta = {
   leaf: string;       // 개념 id 끝 매칭(파일명)
   key: string;        // ConceptWidget 컴포넌트 맵 키
@@ -25,3 +27,15 @@ export function widgetForConcept(slug: string): ConceptWidgetMeta | null {
   const id = norm(slug);
   return CONCEPT_WIDGETS.find((w) => id.endsWith(norm(w.leaf))) ?? null;
 }
+
+// ── SSOT 매니페스트: 인터랙티브 위젯 있는 개념 id 집합(자동생성, 워커풀 --commit이 매일 갱신) ──
+const SPEC_WIDGET_IDS = new Set((widgetIndex as string[]).map((s) => s.normalize('NFC')));
+
+/** spec(자동) 또는 bespoke 위젯이 있는 개념인가 — 모든 표면의 🔭 뱃지·필터 공용 판정. */
+export function hasWidget(slug: string): boolean {
+  const id = norm(slug);
+  return SPEC_WIDGET_IDS.has(id) || CONCEPT_WIDGETS.some((w) => id.endsWith(norm(w.leaf)));
+}
+
+/** 전체 위젯 개념 id 집합(필터·카운트용). */
+export const WIDGET_CONCEPT_IDS = SPEC_WIDGET_IDS;
