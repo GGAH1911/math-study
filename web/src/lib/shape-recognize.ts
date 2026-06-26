@@ -91,3 +91,19 @@ export function recognizeShape(raw: P[]): RecShape | null {
   }
   return { kind: 'polygon', pts: verts };
 }
+
+/** 인식된 도형 → 깔끔한 점 배열(스트로크로 그리기 위함). 원/타원은 둘레 샘플. */
+export function shapeToPoints(s: RecShape): P[] {
+  const arc = (cx: number, cy: number, rx: number, ry: number) => {
+    const r: P[] = []; for (let i = 0; i <= 48; i++) { const t = (i / 48) * 2 * Math.PI; r.push({ x: cx + rx * Math.cos(t), y: cy + ry * Math.sin(t) }); } return r;
+  };
+  switch (s.kind) {
+    case 'line': return [s.a, s.b];
+    case 'polyline': return s.pts;
+    case 'triangle': return [...s.pts, s.pts[0]];
+    case 'polygon': return [...s.pts, s.pts[0]];
+    case 'rect': return [{ x: s.x, y: s.y }, { x: s.x + s.w, y: s.y }, { x: s.x + s.w, y: s.y + s.h }, { x: s.x, y: s.y + s.h }, { x: s.x, y: s.y }];
+    case 'circle': return arc(s.cx, s.cy, s.r, s.r);
+    case 'ellipse': return arc(s.cx, s.cy, s.rx, s.ry);
+  }
+}
