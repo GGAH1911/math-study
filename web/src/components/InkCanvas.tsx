@@ -411,6 +411,19 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
     undoStack.current.push({ type: 'move', from: sel.layerId, to: targetId, strokes: moving }); redoStack.current = [];
     selRef.current = null; drawLayer(sel.layerId); drawLayer(targetId); drawSelBox(); save(); setRev((r) => r + 1);
   };
+  // 내보내기: 선택영역(있으면) 또는 전체를 흰 배경 PNG로. 튜터 이미지 피드백의 토대.
+  const exportPng = () => {
+    const { w, h, dpr } = sizeRef.current; if (!w) return;
+    const sel = selRef.current, bb = sel ? bboxOf(strokesOf.current.get(sel.layerId) ?? [], sel.idxs) : null, pad = 14;
+    const rx = bb ? Math.max(0, bb.x - pad) : 0, ry = bb ? Math.max(0, bb.y - pad) : 0;
+    const rw = bb ? Math.min(w - rx, bb.w + 2 * pad) : w, rh = bb ? Math.min(h - ry, bb.h + 2 * pad) : h;
+    const out = document.createElement('canvas'); out.width = Math.round(rw * dpr); out.height = Math.round(rh * dpr);
+    const octx = out.getContext('2d'); if (!octx) return;
+    octx.fillStyle = '#ffffff'; octx.fillRect(0, 0, out.width, out.height);
+    octx.scale(dpr, dpr); octx.translate(-rx, -ry);
+    for (const l of layers) if (l.visible) { const e = elOf.current.get(l.id); if (e?.c) octx.drawImage(e.c, 0, 0, w, h); }
+    out.toBlob((blob) => { if (!blob) return; const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `손풀이-${storageKey.replace(/[^a-z0-9가-힣]+/gi, '_')}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); });
+  };
 
   // 썸네일: 레이어 strokes 를 작은 캔버스에 축소 렌더.
   const thumbRef = (id: string) => (el: HTMLCanvasElement | null) => {
@@ -472,6 +485,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
         <button style={btn(false)} onClick={undo}>↶</button>
         <button style={btn(false)} onClick={redoFn}>↷</button>
         <button style={btn(false)} onClick={clearActive}>레이어지움</button>
+        <button style={btn(false)} onClick={exportPng} title={selRef.current ? '선택 영역을 PNG로 저장' : '전체를 PNG로 저장'}>📷</button>
         <button style={btn(full)} onClick={() => setFull((v) => !v)}>{full ? '✕ 닫기' : '⛶ 전체화면'}</button>
       </div>
       <div style={{ display: 'flex', gap: 8, flex: full ? 1 : undefined, minHeight: 0 }}>
