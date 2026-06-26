@@ -74,10 +74,13 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
   }, [drawStroke]);
 
   // 캔버스 사이즈(retina) + 컨텍스트. sizeRef 가 정해진 뒤 호출.
-  const sizeCanvas = useCallback((c: HTMLCanvasElement): CanvasRenderingContext2D | null => {
+  const sizeCanvas = useCallback((c: HTMLCanvasElement, lowLatency = false): CanvasRenderingContext2D | null => {
     const { w, h, dpr } = sizeRef.current;
     c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); c.style.width = w + 'px'; c.style.height = h + 'px';
-    const ctx = c.getContext('2d', { desynchronized: true } as CanvasRenderingContext2DSettings);
+    // ★진행 overlay만 desynchronized(저지연). 확정 레이어는 일반 컨텍스트 —
+    //   desynchronized 캔버스를 여러 개 겹치면 일부가 하드웨어 overlay plane으로 빠져 합성이 안 돼
+    //   보이지 않을 수 있음(필기 그렸다가 확정 시 사라지는 버그의 원인).
+    const ctx = c.getContext('2d', lowLatency ? ({ desynchronized: true } as CanvasRenderingContext2DSettings) : undefined);
     ctx?.scale(dpr, dpr); return ctx;
   }, []);
 
@@ -111,8 +114,8 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     const setupAll = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
       sizeRef.current = { w: wrap.clientWidth, h: wrap.clientHeight, dpr };
-      overCtx.current = sizeCanvas(over);
-      for (const [id, e] of elOf.current) { e.ctx = sizeCanvas(e.c); drawLayer(id); }
+      overCtx.current = sizeCanvas(over, true); // 진행 overlay만 저지연
+      for (const [id, e] of elOf.current) { e.ctx = sizeCanvas(e.c); drawLayer(id); } // 확정 레이어=일반
     };
     setupAll();
 
