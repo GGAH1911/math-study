@@ -1,0 +1,14 @@
+---
+// 도형 인식기(스케치-후-스냅 엔진) 시각 검증 갤러리. 손그림(회색) → 인식 결과(파랑).
+// ⬡ 도형 모드가 쓰는 lib/shape-recognize.ts 의 분류·점변환을 합성 도형으로 확인.
+export const prerender = false;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ShapeGallery from '../../components/ShapeGallery.tsx';
+---
+<BaseLayout title="도형 인식기 갤러리">
+  <main class="max-w-5xl mx-auto p-6">
+    <h1 class="text-xl font-bold mb-1">도형 인식기 갤러리 <span class="text-sm font-normal" style="color:var(--color-muted)">(dev)</span></h1>
+    <p class="text-sm mb-4" style="color:var(--color-muted)">합성 손그림(회색)을 <code>recognizeShape</code>로 인식 → 깔끔한 결과(파랑). 필기 ⬡ 도형 모드의 인식 엔진을 시각 확인합니다. 라벨 옆이 인식된 종류.</p>
+    <ShapeGallery client:only="react" />
+  </main>
+</BaseLayout>
