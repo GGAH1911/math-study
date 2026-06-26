@@ -131,11 +131,26 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
       const id = live.current.activeId, idx = hit(id, x, y, ERASER_W);
       if (idx >= 0) { const [s] = (strokesOf.current.get(id) ?? []).splice(idx, 1); removed.current.push(s); drawLayer(id); }
     };
+    // 진행 획을 레이어에 확정+저장. ★iOS가 pointerup을 지연/누락해 다음 pointerdown이 먼저 와도
+    //   이전 획을 잃지 않도록 down에서도 호출 → 빠른 연속 획(짝수 획 누락) 방지.
+    const finalizeCur = () => {
+      if (!cur.current) return;
+      const id = live.current.activeId, c = cur.current; cur.current = null;
+      if (c.tool === 'eraser' && c.pts.length === 0) { // 획 지우개
+        if (removed.current.length) { undoStack.current.push({ type: 'remove', layerId: id, strokes: removed.current.slice() }); removed.current = []; save(); setRev((r) => r + 1); }
+        return;
+      }
+      if (c.tool === 'pen') { drawStroke(activeCtx()!, c); overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); } // 펜=overlay→레이어(정밀지우개는 이미 레이어에)
+      (strokesOf.current.get(id) ?? strokesOf.current.set(id, []).get(id)!).push(c);
+      undoStack.current.push({ type: 'add', layerId: id, strokes: [c] });
+      save(); setRev((r) => r + 1);
+    };
 
     const down = (e: PointerEvent) => {
       if (e.pointerType === 'pen') penSeen.current = true;
       if (!accept(e)) return; e.preventDefault();
       markPen(); // 펜 접촉 윈도우 갱신(다음 빠른 탭의 선택 콜아웃 차단)
+      if (cur.current) finalizeCur(); // ★이전 획 미완(iOS pointerup 지연)이면 먼저 확정 — 클로버 방지
       try { (window.getSelection?.())?.removeAllRanges?.(); } catch { /* iOS 선택 콜아웃 방지 */ }
       over.setPointerCapture(e.pointerId);
       const L = live.current;
@@ -154,13 +169,9 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     };
     const up = (e: PointerEvent) => {
       markPen(); // 손 뗀 직후 윈도우 갱신(획 직후 빠른 2번째 탭 차단)
-      if (!cur.current) return; try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
-      const L = live.current, id = L.activeId;
-      if (L.tool === 'eraser' && L.eraserMode === 'stroke') { if (removed.current.length) { undoStack.current.push({ type: 'remove', layerId: id, strokes: removed.current.slice() }); save(); setRev((r) => r + 1); } cur.current = null; return; }
-      if (cur.current.tool === 'pen') { drawStroke(activeCtx()!, cur.current); overCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); }
-      (strokesOf.current.get(id) ?? strokesOf.current.set(id, []).get(id)!).push(cur.current);
-      undoStack.current.push({ type: 'add', layerId: id, strokes: [cur.current] });
-      cur.current = null; save(); setRev((r) => r + 1);
+      if (!cur.current) return;
+      try { over.releasePointerCapture(e.pointerId); } catch { /* */ }
+      finalizeCur();
     };
 
     over.addEventListener('pointerdown', down); over.addEventListener('pointermove', move);
