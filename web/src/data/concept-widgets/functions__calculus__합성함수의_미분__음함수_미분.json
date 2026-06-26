@@ -1,0 +1,145 @@
+{
+ "id": "functions/calculus/합성함수의_미분/음함수_미분",
+ "spec": {
+  "title": "음함수 미분: 원 x²+y²=25의 접선 기울기",
+  "params": [
+   {
+    "name": "theta",
+    "label": "점의 위치 θ",
+    "type": "slider",
+    "min": 1,
+    "max": 359,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=5*cos(rad); py=5*sin(rad); m=-px/py; ax=px-5*sin(rad); ay=py+5*cos(rad); bx=px+5*sin(rad); by=py-5*cos(rad)",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 5,
+     "label": "x²+y²=25"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "반지름"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "접선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "dy/dx = -x/y",
+    "expr": "m",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 225
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - 25",
+   "px + py*m",
+   "px*(bx-ax) + py*(by-ay)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 5,
+     "m": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "px": 4.330127018922193,
+     "py": 2.5,
+     "m": -1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "px": 2.5,
+     "py": 4.330127018922193,
+     "m": -0.5773502691896257
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

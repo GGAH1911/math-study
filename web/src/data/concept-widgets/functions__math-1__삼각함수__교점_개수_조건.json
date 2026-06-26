@@ -1,0 +1,130 @@
+{
+ "id": "functions/math-1/삼각함수/교점_개수_조건",
+ "spec": {
+  "title": "y = sin x 와 직선의 교점 개수 — 접선 임계",
+  "params": [
+   {
+    "name": "x0",
+    "label": "접점 x좌표",
+    "type": "slider",
+    "min": -3.2,
+    "max": 3.2,
+    "init": 0.6,
+    "step": 0.05,
+    "unit": "rad"
+   },
+   {
+    "name": "d",
+    "label": "직선 평행이동(위로)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "m=cos(x0); b=sin(x0)-cos(x0)*x0+d; yt=sin(x0); yl=m*x0+b; gap=yl-yt",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -6.3,
+    6.3
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + b",
+     "label": "y = mx + b",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 m = cos(x0)",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "접점 y = sin(x0)",
+    "expr": "yt",
+    "digits": 3
+   },
+   {
+    "label": "접점에서 직선−곡선 간격(=d일 때 접함)",
+    "expr": "gap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 0,
+    "d": 0
+   },
+   {
+    "x0": 1,
+    "d": 0.5
+   },
+   {
+    "x0": 2,
+    "d": -1
+   },
+   {
+    "x0": -1.5,
+    "d": 0.3
+   }
+  ],
+  "invariants": [
+   "m-cos(x0)",
+   "gap-d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 0,
+     "d": 0
+    },
+    "expect": {
+     "m": 1,
+     "yt": 0,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "x0": 0,
+     "d": 0.5
+    },
+    "expect": {
+     "m": 1,
+     "yt": 0,
+     "gap": 0.5
+    }
+   },
+   {
+    "params": {
+     "x0": 1.5707963267948966,
+     "d": 0
+    },
+    "expect": {
+     "m": 0,
+     "yt": 1,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,160 @@
+{
+ "id": "functions/math-1/삼각함수/사분면별_부호",
+ "spec": {
+  "title": "사분면별 삼각함수의 부호",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); ty=tan(rad)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "color": "#999"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "동경 OP",
+     "color": "#444"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      0
+     ],
+     "label": "cos θ (x좌표)",
+     "color": "#d00"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "sin θ (y좌표)",
+     "color": "#06c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cos θ, sin θ)",
+     "color": "#000"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cos θ (x좌표 부호)",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sin θ (y좌표 부호)",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "tan θ = sin/cos",
+    "expr": "ty",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 210
+   },
+   {
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "cx^2 + sy^2 - 1",
+   "ty*cx - sy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "sy": 0.5,
+     "ty": 0.5773502691896258
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "cx": -0.5,
+     "sy": 0.8660254037844387,
+     "ty": -1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "theta": 210
+    },
+    "expect": {
+     "cx": -0.8660254037844387,
+     "sy": -0.5,
+     "ty": 0.5773502691896258
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

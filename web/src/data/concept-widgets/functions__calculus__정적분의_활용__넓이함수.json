@@ -1,0 +1,162 @@
+{
+ "id": "functions/calculus/정적분의_활용/넓이함수",
+ "spec": {
+  "title": "넓이함수 F(x)=∫₀ˣ 2t dt 와 미적분 기본정리",
+  "params": [
+   {
+    "name": "x",
+    "label": "상한 x",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fx = 2*x; Fx = x^2",
+  "geometry": {
+   "range": [
+    -0.3,
+    3.2
+   ],
+   "yRange": [
+    -0.6,
+    6.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x",
+       "=fx"
+      ]
+     ],
+     "label": "넓이 = F(x)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=fx"
+     ],
+     "label": "P(x, f(x))"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    3
+   ],
+   "yRange": [
+    -0.5,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "2*x",
+     "label": "f(x)=2x (피적분함수)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^2",
+     "label": "F(x)=∫₀ˣ2t dt (넓이함수)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상한 x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "피적분함수 f(x)=2x",
+    "expr": "fx",
+    "digits": 2
+   },
+   {
+    "label": "넓이함수 F(x)=∫₀ˣ2t dt",
+    "expr": "Fx",
+    "digits": 2
+   },
+   {
+    "label": "F'(x)=f(x) (기본정리)",
+    "expr": "fx",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1
+   },
+   {
+    "x": 2
+   },
+   {
+    "x": 2.5
+   }
+  ],
+  "invariants": [
+   "Fx - x^2",
+   "fx - 2*x",
+   "Fx - 0.5*x*fx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "fx": 2,
+     "Fx": 1
+    }
+   },
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "fx": 4,
+     "Fx": 4
+    }
+   },
+   {
+    "params": {
+     "x": 3
+    },
+    "expect": {
+     "fx": 6,
+     "Fx": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

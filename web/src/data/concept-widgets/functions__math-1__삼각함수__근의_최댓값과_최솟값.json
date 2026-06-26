@@ -1,0 +1,110 @@
+{
+ "id": "functions/math-1/삼각함수/근의_최댓값과_최솟값",
+ "spec": {
+  "title": "삼각방정식 근의 최댓값·최솟값 (sin x = k, 0 ≤ x < 2π)",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (수평선 높이)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "a=asin(k); rootA=(a>=0 ? a : a+2*pi); rootB=pi-a; rmin=min(rootA,rootB); rmax=max(rootA,rootB); rsum=rmin+rmax",
+  "plot": {
+   "range": [
+    0,
+    6.283185307
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "k + 0*x",
+     "label": "y = k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의 최솟값 (가장 왼쪽 교점, rad)",
+    "expr": "rmin",
+    "digits": 4
+   },
+   {
+    "label": "근의 최댓값 (가장 오른쪽 교점, rad)",
+    "expr": "rmax",
+    "digits": 4
+   },
+   {
+    "label": "두 근의 합",
+    "expr": "rsum",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5
+   },
+   {
+    "k": 0.8
+   },
+   {
+    "k": -0.5
+   },
+   {
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "sin(rmin) - k",
+   "sin(rmax) - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "rmin": 0.5235987755982988,
+     "rmax": 2.6179938779914944,
+     "rsum": 3.141592653589793
+    }
+   },
+   {
+    "params": {
+     "k": -0.5
+    },
+    "expect": {
+     "rmin": 3.665191429188092,
+     "rmax": 5.759586531581287,
+     "rsum": 9.42477796076938
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "rmin": 1.5707963267948966,
+     "rmax": 1.5707963267948966,
+     "rsum": 3.141592653589793
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

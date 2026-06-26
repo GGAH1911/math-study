@@ -1,0 +1,165 @@
+{
+ "id": "functions/calculus/정적분의_활용/회전체_부피",
+ "spec": {
+  "title": "회전체의 부피: y=mx를 x축 둘레로 회전 (원뿔)",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m (= 반지름/길이 비율)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "L",
+    "label": "길이 L (적분 상한 = 현재 원판 위치)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "r = m*L; A = pi*r^2; V = pi*m^2*L^3/3; Vcone = (1/3)*pi*r^2*L",
+  "geometry": {
+   "range": [
+    -0.5,
+    4.5
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=L",
+       "=r"
+      ],
+      [
+       "=L",
+       "=-r"
+      ]
+     ],
+     "label": "회전체의 축단면(원뿔)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=L",
+      0
+     ],
+     "to": [
+      "=L",
+      "=r"
+     ],
+     "label": "반지름 f(L)=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=L",
+      "=r"
+     ],
+     "label": "P(L, f(L))=mx 위"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "반지름 f(L)=mL",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "원판 단면 넓이 π·f(L)²",
+    "expr": "A",
+    "digits": 3
+   },
+   {
+    "label": "부피 V=∫₀ᴸ π[f(x)]² dx",
+    "expr": "V",
+    "digits": 3
+   },
+   {
+    "label": "검산: 원뿔 ⅓πr²L",
+    "expr": "Vcone",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0.5,
+    "L": 2
+   },
+   {
+    "m": 1,
+    "L": 3
+   },
+   {
+    "m": 0.8,
+    "L": 2.5
+   },
+   {
+    "m": 0.3,
+    "L": 4
+   }
+  ],
+  "invariants": [
+   "r - m*L",
+   "A - pi*r^2",
+   "V - A*L/3",
+   "V - Vcone"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0.5,
+     "L": 2
+    },
+    "expect": {
+     "r": 1,
+     "A": 3.141592653589793,
+     "V": 2.0943951023931953
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "L": 3
+    },
+    "expect": {
+     "r": 3,
+     "A": 28.274333882308138,
+     "V": 28.274333882308138
+    }
+   },
+   {
+    "params": {
+     "m": 0.8,
+     "L": 2.5
+    },
+    "expect": {
+     "r": 2,
+     "A": 12.566370614359172,
+     "V": 10.471975511965976
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

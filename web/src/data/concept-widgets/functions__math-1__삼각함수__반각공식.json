@@ -1,0 +1,160 @@
+{
+ "id": "functions/math-1/삼각함수/반각공식",
+ "spec": {
+  "title": "반각공식: θ와 θ/2의 삼각비",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; half=rad/2; cosT=cos(rad); sinT=sin(rad); shalf=sin(half); chalf=cos(half); thalf=tan(half); sinHalfSq=(1-cosT)/2; cosHalfSq=(1+cosT)/2; tanHalfFormula=sinT/(1+cosT)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cosT",
+      "=sinT"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=chalf",
+      "=shalf"
+     ],
+     "color": "#d22"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cosT",
+      "=sinT"
+     ],
+     "label": "P(θ)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=chalf",
+      "=shalf"
+     ],
+     "label": "Q(θ/2)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cos θ",
+    "expr": "cosT",
+    "digits": 4
+   },
+   {
+    "label": "sin²(θ/2)=(1-cosθ)/2",
+    "expr": "sinHalfSq",
+    "digits": 4
+   },
+   {
+    "label": "cos²(θ/2)=(1+cosθ)/2",
+    "expr": "cosHalfSq",
+    "digits": 4
+   },
+   {
+    "label": "tan(θ/2)=sinθ/(1+cosθ)",
+    "expr": "thalf",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 270
+   }
+  ],
+  "invariants": [
+   "shalf^2 - sinHalfSq",
+   "chalf^2 - cosHalfSq",
+   "thalf - tanHalfFormula",
+   "shalf^2 + chalf^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cosT": 0.5,
+     "shalf": 0.5,
+     "chalf": 0.8660254,
+     "thalf": 0.5773503
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "cosT": -0.5,
+     "shalf": 0.8660254,
+     "chalf": 0.5,
+     "thalf": 1.7320508
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "shalf": 0.7071068,
+     "chalf": 0.7071068,
+     "thalf": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

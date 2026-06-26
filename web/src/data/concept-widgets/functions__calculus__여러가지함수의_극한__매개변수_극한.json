@@ -1,0 +1,140 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/매개변수_극한",
+ "spec": {
+  "title": "매개변수 극한: 단위원 위 점이 t→±∞에서 (0,−1)로 수렴",
+  "params": [
+   {
+    "name": "t",
+    "label": "매개변수 t",
+    "type": "slider",
+    "min": -15,
+    "max": 15,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "px = 2*t/(1+t^2); py = (1-t^2)/(1+t^2); dist = sqrt(px^2 + (py+1)^2)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.35
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "곡선 (x(t),y(t))"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      -1
+     ],
+     "label": "극한점 L=(0,−1)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      0,
+      -1
+     ],
+     "label": "L까지 거리"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(t)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x(t)=2t/(1+t²)",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y(t)=(1−t²)/(1+t²)",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "극한점 L까지 거리",
+    "expr": "dist",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 1
+   },
+   {
+    "t": 2
+   },
+   {
+    "t": 5
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - 1",
+   "px - t*(1+py)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "t": 2
+    },
+    "expect": {
+     "px": 0.8,
+     "py": -0.6,
+     "dist": 0.894427190999916
+    }
+   },
+   {
+    "params": {
+     "t": 3
+    },
+    "expect": {
+     "px": 0.6,
+     "py": -0.8,
+     "dist": 0.632455532033676
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

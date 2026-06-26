@@ -1,0 +1,132 @@
+{
+ "id": "functions/calculus/정적분의_활용/거리와_적분",
+ "spec": {
+  "title": "거리와 적분: 변위 vs 거리",
+  "params": [
+   {
+    "name": "c",
+    "label": "부호변화 시각 c (v(c)=0)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 0.1,
+    "unit": "s"
+   },
+   {
+    "name": "b",
+    "label": "끝 시각 b",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1,
+    "unit": "s"
+   }
+  ],
+  "scope": "cc = min(max(c,0),b); disp = b^2/2 - c*b; B = c*cc - cc^2/2; F = b^2/2 - c*b - cc^2/2 + c*cc; dist = 2*c*cc - cc^2 + b^2/2 - c*b",
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -6.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x - c",
+     "label": "v(t)=t-c (변위 적분 대상)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs(x - c)",
+     "label": "|v(t)| (거리 적분 대상)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변위 ∫₀ᵇ v dt",
+    "expr": "disp",
+    "digits": 3
+   },
+   {
+    "label": "거리 ∫₀ᵇ |v| dt",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "역방향 넓이 B",
+    "expr": "B",
+    "digits": 3
+   },
+   {
+    "label": "정방향 넓이 F",
+    "expr": "F",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 2,
+    "b": 4
+   },
+   {
+    "c": 0,
+    "b": 4
+   },
+   {
+    "c": 3,
+    "b": 2
+   },
+   {
+    "c": 1.5,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "dist - (F + B)",
+   "disp - (F - B)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0,
+     "b": 4
+    },
+    "expect": {
+     "disp": 8,
+     "dist": 8
+    }
+   },
+   {
+    "params": {
+     "c": 2,
+     "b": 4
+    },
+    "expect": {
+     "disp": 0,
+     "dist": 4
+    }
+   },
+   {
+    "params": {
+     "c": 3,
+     "b": 2
+    },
+    "expect": {
+     "disp": -4,
+     "dist": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

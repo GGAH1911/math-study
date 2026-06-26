@@ -1,0 +1,140 @@
+{
+ "id": "functions/calculus/합성함수의_미분/매개변수_미분",
+ "spec": {
+  "title": "매개변수 미분: 원 위 점의 접선 기울기 dy/dx = (dy/dt)/(dx/dt)",
+  "params": [
+   {
+    "name": "t",
+    "label": "매개변수 t",
+    "type": "slider",
+    "min": 1,
+    "max": 359,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=t*pi/180; px=cos(rad); py=sin(rad); vx=-sin(rad); vy=cos(rad); slope=vy/vx; L=0.6; t1x=px-L*vx; t1y=py-L*vy; t2x=px+L*vx; t2y=py+L*vy",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "x=cos t, y=sin t"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=t1x",
+      "=t1y"
+     ],
+     "to": [
+      "=t2x",
+      "=t2y"
+     ],
+     "label": "접선 (기울기 dy/dx)",
+     "color": "#e11d48"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(cos t, sin t)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "dx/dt = -sin t",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "dy/dt = cos t",
+    "expr": "vy",
+    "digits": 3
+   },
+   {
+    "label": "dy/dx = (dy/dt)/(dx/dt) = -cot t",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 30
+   },
+   {
+    "t": 45
+   },
+   {
+    "t": 60
+   },
+   {
+    "t": 120
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - 1",
+   "vx^2 + vy^2 - 1",
+   "px*vx + py*vy",
+   "slope*vx - vy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 45
+    },
+    "expect": {
+     "px": 0.7071067811865476,
+     "py": 0.7071067811865476,
+     "vx": -0.7071067811865476,
+     "vy": 0.7071067811865476,
+     "slope": -1
+    }
+   },
+   {
+    "params": {
+     "t": 30
+    },
+    "expect": {
+     "px": 0.8660254037844387,
+     "py": 0.5,
+     "vx": -0.5,
+     "vy": 0.8660254037844387,
+     "slope": -1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "t": 90
+    },
+    "expect": {
+     "py": 1,
+     "vx": -1,
+     "slope": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

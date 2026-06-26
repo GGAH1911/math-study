@@ -1,0 +1,130 @@
+{
+ "id": "functions/calculus/정적분의_활용/거리와_변위",
+ "spec": {
+  "title": "거리와 변위: 속도 v(t)의 정적분",
+  "params": [
+   {
+    "name": "v0",
+    "label": "초기 속도 v₀",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 6,
+    "step": 0.5,
+    "unit": "m/s"
+   },
+   {
+    "name": "b",
+    "label": "관찰 시각 b",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 5,
+    "step": 0.5,
+    "unit": "s"
+   }
+  ],
+  "scope": "g=2; tstar=v0/g; vstar=v0-g*b; disp=v0*b-(g/2)*b^2; dist=(b<=tstar) ? (v0*b-(g/2)*b^2) : ((g/2)*b^2-v0*b+v0^2/g)",
+  "plot": {
+   "range": [
+    0,
+    8
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "v0-2*x",
+     "label": "v(t)=v₀-2t (속도)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs(v0-2*x)",
+     "label": "|v(t)| (속력)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변위 s=∫₀ᵇ v dt",
+    "expr": "disp",
+    "digits": 2
+   },
+   {
+    "label": "거리 d=∫₀ᵇ |v| dt",
+    "expr": "dist",
+    "digits": 2
+   },
+   {
+    "label": "방향전환 시각 t*",
+    "expr": "tstar",
+    "digits": 2
+   },
+   {
+    "label": "현재 속도 v(b)",
+    "expr": "vstar",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "v0": 6,
+    "b": 2
+   },
+   {
+    "v0": 6,
+    "b": 5
+   },
+   {
+    "v0": 8,
+    "b": 6
+   },
+   {
+    "v0": 4,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "disp - (v0 + (v0 - g*b))/2 * b",
+   "dist - (v0*min(b,tstar) - (g/2)*min(b,tstar)^2) - abs(disp - (v0*min(b,tstar) - (g/2)*min(b,tstar)^2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "v0": 6,
+     "b": 2
+    },
+    "expect": {
+     "disp": 8,
+     "dist": 8
+    }
+   },
+   {
+    "params": {
+     "v0": 6,
+     "b": 5
+    },
+    "expect": {
+     "disp": 5,
+     "dist": 13
+    }
+   },
+   {
+    "params": {
+     "v0": 8,
+     "b": 6
+    },
+    "expect": {
+     "disp": 12,
+     "dist": 20
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

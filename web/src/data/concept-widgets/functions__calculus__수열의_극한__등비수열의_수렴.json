@@ -1,0 +1,292 @@
+{
+ "id": "functions/calculus/수열의_극한/등비수열의_수렴",
+ "spec": {
+  "title": "등비수열의 수렴 — 공비 r에 따른 극한",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "t1=a1; t2=a1*r; t3=a1*r^2; t4=a1*r^3; t5=a1*r^4; t6=a1*r^5; t7=a1*r^6; t8=a1*r^7; t9=a1*r^8; t10=a1*r^9; tail=a1*r^49",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=t1"
+     ],
+     "to": [
+      2,
+      "=t2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=t2"
+     ],
+     "to": [
+      3,
+      "=t3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=t3"
+     ],
+     "to": [
+      4,
+      "=t4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=t4"
+     ],
+     "to": [
+      5,
+      "=t5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      "=t5"
+     ],
+     "to": [
+      6,
+      "=t6"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      6,
+      "=t6"
+     ],
+     "to": [
+      7,
+      "=t7"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      7,
+      "=t7"
+     ],
+     "to": [
+      8,
+      "=t8"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      8,
+      "=t8"
+     ],
+     "to": [
+      9,
+      "=t9"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      9,
+      "=t9"
+     ],
+     "to": [
+      10,
+      "=t10"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=t1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=t2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=t3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=t4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=t5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=t6"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=t7"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=t8"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      "=t9"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      "=t10"
+     ],
+     "label": "a₁₀"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "공비 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "a₁₀ = a₁·r⁹",
+    "expr": "t10",
+    "digits": 4
+   },
+   {
+    "label": "a₅₀ = a₁·r⁴⁹ (먼 항)",
+    "expr": "tail",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "r": 0.5
+   },
+   {
+    "a1": 2,
+    "r": -0.5
+   },
+   {
+    "a1": 1,
+    "r": 1
+   },
+   {
+    "a1": 1,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "t2 - r*t1",
+   "t2^2 - t1*t3",
+   "t10 - a1*r^9"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 1,
+     "r": 0.5
+    },
+    "expect": {
+     "t2": 0.5,
+     "t3": 0.25,
+     "t10": 0.001953125
+    }
+   },
+   {
+    "params": {
+     "a1": 2,
+     "r": -0.5
+    },
+    "expect": {
+     "t2": -1,
+     "t3": 0.5,
+     "t10": -0.00390625
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "r": 1
+    },
+    "expect": {
+     "t2": 1,
+     "t3": 1,
+     "t10": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

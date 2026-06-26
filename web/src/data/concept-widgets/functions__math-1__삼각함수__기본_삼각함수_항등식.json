@@ -1,0 +1,156 @@
+{
+ "id": "functions/math-1/삼각함수/기본_삼각함수_항등식",
+ "spec": {
+  "title": "기본 삼각함수 항등식: sin²θ + cos²θ = 1",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); pyth=cx^2+sy^2",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "단위원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "r=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      0
+     ],
+     "label": "cosθ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "sinθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cosθ, sinθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "sin²θ + cos²θ",
+    "expr": "sy^2+cx^2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 137
+   },
+   {
+    "theta": 200
+   },
+   {
+    "theta": 305
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "sy^2+cx^2-pyth"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "sy": 0.5,
+     "pyth": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254037844386,
+     "pyth": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "sy": 1,
+     "pyth": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

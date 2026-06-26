@@ -1,0 +1,185 @@
+{
+ "id": "functions/math-1/삼각함수/삼각방정식",
+ "spec": {
+  "title": "삼각방정식 sin x = a — 단위원에서 해 찾기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (sin x = a 의 우변)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "px=sqrt(1-a^2); py=a; t1=asin(a); sol1=mod(t1,2*pi); sol2=pi-t1; sol1deg=sol1*180/pi; sol2deg=sol2*180/pi",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "단위원",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-1.45",
+      "=py"
+     ],
+     "to": [
+      "=1.45",
+      "=py"
+     ],
+     "label": "y=a",
+     "color": "#d62728"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=-px",
+      "=py"
+     ],
+     "color": "#2ca02c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P₁ (x₁)",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-px",
+      "=py"
+     ],
+     "label": "P₂ (x₂)",
+     "color": "#2ca02c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해 x₁ (°)",
+    "expr": "sol1deg",
+    "digits": 1
+   },
+   {
+    "label": "해 x₂ (°)",
+    "expr": "sol2deg",
+    "digits": 1
+   },
+   {
+    "label": "sin x₁ (= a 확인)",
+    "expr": "sin(sol1)",
+    "digits": 3
+   },
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": -0.5
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - 1",
+   "sin(sol1) - a",
+   "sin(sol2) - a",
+   "cos(sol1) - px",
+   "cos(sol2) + px"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "sol1deg": 30,
+     "sol2deg": 150,
+     "px": 0.8660254037844386,
+     "py": 0.5,
+     "sol1": 0.5235987755982988,
+     "sol2": 2.6179938779914944
+    }
+   },
+   {
+    "params": {
+     "a": -0.5
+    },
+    "expect": {
+     "sol1deg": 330,
+     "sol2deg": 210,
+     "px": 0.8660254037844386,
+     "py": -0.5,
+     "sol1": 5.759586531581287,
+     "sol2": 3.665191429188092
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "sol1deg": 90,
+     "sol2deg": 90,
+     "px": 0,
+     "py": 1,
+     "sol1": 1.5707963267948966,
+     "sol2": 1.5707963267948966
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

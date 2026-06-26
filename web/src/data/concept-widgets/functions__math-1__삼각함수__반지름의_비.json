@@ -1,0 +1,209 @@
+{
+ "id": "functions/math-1/삼각함수/반지름의_비",
+ "spec": {
+  "title": "외접원·내접원 반지름의 비 R/r (삼각형의 두 각으로 결정)",
+  "params": [
+   {
+    "name": "A",
+    "label": "각 A",
+    "type": "slider",
+    "min": 20,
+    "max": 120,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "B",
+    "label": "각 B",
+    "type": "slider",
+    "min": 20,
+    "max": 120,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Ar=A*pi/180; Br=B*pi/180; Cr=(180-A-B)*pi/180; sA=sin(Ar); sB=sin(Br); sC=sin(Cr); a=2*sA; b=2*sB; c=2*sC; ax=cos(pi/2); ay=sin(pi/2); bx=cos(pi/2+2*Cr); by=sin(pi/2+2*Cr); cx=cos(pi/2+2*Cr+2*Ar); cy=sin(pi/2+2*Cr+2*Ar); peri=a+b+c; ix=(a*ax+b*bx+c*cx)/peri; iy=(a*ay+b*by+c*cy)/peri; Rr=1; r=2*sA*sB*sC/(sA+sB+sC); ratio=Rr/r; OI2=ix^2+iy^2; dBC=abs((cx-bx)*(iy-by)-(cy-by)*(ix-bx))/sqrt((cx-bx)^2+(cy-by)^2)",
+  "geometry": {
+   "range": [
+    -1.45,
+    1.45
+   ],
+   "yRange": [
+    -1.45,
+    1.45
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "외접원 R=1"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=ix",
+      "=iy"
+     ],
+     "radius": "=r",
+     "label": "내접원 r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ix",
+      "=iy"
+     ],
+     "label": "I"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "외접원 R",
+    "expr": "Rr",
+    "digits": 3
+   },
+   {
+    "label": "내접원 r",
+    "expr": "r",
+    "digits": 4
+   },
+   {
+    "label": "비 R/r (≥2, 정삼각형서 =2)",
+    "expr": "ratio",
+    "digits": 4
+   },
+   {
+    "label": "각 C = 180−A−B",
+    "expr": "180-A-B",
+    "digits": 0
+   },
+   {
+    "label": "OI² (=R²−2Rr=1−2r)",
+    "expr": "OI2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 60,
+    "B": 60
+   },
+   {
+    "A": 90,
+    "B": 45
+   },
+   {
+    "A": 30,
+    "B": 60
+   },
+   {
+    "A": 50,
+    "B": 70
+   }
+  ],
+  "invariants": [
+   "ax^2+ay^2-1",
+   "bx^2+by^2-1",
+   "cx^2+cy^2-1",
+   "sqrt((bx-cx)^2+(by-cy)^2)-a",
+   "ix^2+iy^2-(1-2*r)",
+   "dBC-r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 60,
+     "B": 60
+    },
+    "expect": {
+     "r": 0.5,
+     "ratio": 2,
+     "ix": 0,
+     "iy": 0
+    }
+   },
+   {
+    "params": {
+     "A": 90,
+     "B": 45
+    },
+    "expect": {
+     "r": 0.4142135624,
+     "ratio": 2.4142135624
+    }
+   },
+   {
+    "params": {
+     "A": 30,
+     "B": 60
+    },
+    "expect": {
+     "r": 0.3660254038,
+     "ratio": 2.7320508076
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

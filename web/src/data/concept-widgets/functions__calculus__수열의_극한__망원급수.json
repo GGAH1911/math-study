@@ -1,0 +1,121 @@
+{
+ "id": "functions/calculus/수열의_극한/망원급수",
+ "spec": {
+  "title": "망원급수: ∑ 1/(n(n+1)) 의 부분합과 수렴",
+  "params": [
+   {
+    "name": "N",
+    "label": "더하는 항의 개수 N",
+    "type": "slider",
+    "min": 1,
+    "max": 50,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "SN = 1 - 1/(N+1); lim = 1; remainder = lim - SN; aN = 1/(N*(N+1))",
+  "plot": {
+   "range": [
+    "=1",
+    "=N+1"
+   ],
+   "yRange": [
+    0,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "1 - 1/(x+1)",
+     "label": "부분합 S_N = 1 − 1/(N+1) = (1/1−1/2)+(1/2−1/3)+···",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "1",
+     "label": "극한값 = 1",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "1/(x*(x+1))",
+     "label": "일반항 a_n = 1/(n(n+1)) → 0",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분합 S_N",
+    "expr": "SN",
+    "digits": 5
+   },
+   {
+    "label": "극한과의 오차 = 극한 − S_N",
+    "expr": "remainder",
+    "digits": 5
+   },
+   {
+    "label": "끝까지 안 지워지고 남는 항 b_{N+1} = 1/(N+1)",
+    "expr": "1/(N+1)",
+    "digits": 5
+   },
+   {
+    "label": "일반항 a_N = 1/(N(N+1))",
+    "expr": "aN",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 1
+   },
+   {
+    "N": 2
+   },
+   {
+    "N": 5
+   },
+   {
+    "N": 20
+   }
+  ],
+  "invariants": [
+   "aN - (1/N - 1/(N+1))",
+   "SN - (1 - 1/N) - aN",
+   "remainder - 1/(N+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 1
+    },
+    "expect": {
+     "SN": 0.5,
+     "remainder": 0.5,
+     "aN": 0.5
+    }
+   },
+   {
+    "params": {
+     "N": 3
+    },
+    "expect": {
+     "SN": 0.75,
+     "remainder": 0.25,
+     "aN": 0.0833333333333
+    }
+   },
+   {
+    "params": {
+     "N": 9
+    },
+    "expect": {
+     "SN": 0.9,
+     "remainder": 0.1,
+     "aN": 0.0111111111111
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "id": "functions/calculus/정적분의_활용/두_곡선_사이의_넓이",
+ "spec": {
+  "title": "두 곡선 사이의 넓이 — 포물선 y=x² 과 직선 y=mx+c",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "직선 절편 c",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "disc = m^2 + 4*c; w = sqrt(disc); x1 = (m - w)/2; x2 = (m + w)/2; area = w^3/6",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -3,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x² (아래 곡선)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + c",
+     "label": "y = mx + c (위 곡선)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이 S = ∫(직선−포물선)dx",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "교점 x₁ (왼쪽)",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점 x₂ (오른쪽)",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "적분 구간 폭 x₂−x₁",
+    "expr": "w",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "c": 2
+   },
+   {
+    "m": -1,
+    "c": 3
+   },
+   {
+    "m": 2,
+    "c": 0.5
+   },
+   {
+    "m": 0,
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "x1^2 - (m*x1 + c)",
+   "x2^2 - (m*x2 + c)",
+   "w - (x2 - x1)",
+   "area - (x2 - x1)^3/6"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "c": 2
+    },
+    "expect": {
+     "x1": -1,
+     "x2": 2,
+     "w": 3,
+     "area": 4.5
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "c": 4
+    },
+    "expect": {
+     "x1": -2,
+     "x2": 2,
+     "w": 4,
+     "area": 10.666666666666666
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "c": 0
+    },
+    "expect": {
+     "x1": 0,
+     "x2": 2,
+     "w": 2,
+     "area": 1.3333333333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

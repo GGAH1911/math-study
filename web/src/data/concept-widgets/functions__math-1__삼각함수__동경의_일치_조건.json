@@ -1,0 +1,177 @@
+{
+ "id": "functions/math-1/삼각함수/동경의_일치_조건",
+ "spec": {
+  "title": "동경의 일치 조건: β = α + 360°·k",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α (기준각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "k",
+    "label": "k (정수 회전 수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "arad = alpha*pi/180; beta = alpha + 360*k; brad = beta*pi/180; ax = cos(arad); ay = sin(arad); bx = cos(brad); by = sin(brad)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "α 동경",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "β 동경",
+     "color": "#e0245e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "P (α·β 일치)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "α",
+    "expr": "alpha",
+    "digits": 0
+   },
+   {
+    "label": "β = α + 360·k",
+    "expr": "beta",
+    "digits": 0
+   },
+   {
+    "label": "cos α",
+    "expr": "ax",
+    "digits": 4
+   },
+   {
+    "label": "cos β",
+    "expr": "bx",
+    "digits": 4
+   },
+   {
+    "label": "sin α",
+    "expr": "ay",
+    "digits": 4
+   },
+   {
+    "label": "sin β",
+    "expr": "by",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 30,
+    "k": 1
+   },
+   {
+    "alpha": 60,
+    "k": -1
+   },
+   {
+    "alpha": 90,
+    "k": 2
+   },
+   {
+    "alpha": 200,
+    "k": -3
+   }
+  ],
+  "invariants": [
+   "bx - ax",
+   "by - ay",
+   "bx*bx + by*by - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 30,
+     "k": 1
+    },
+    "expect": {
+     "beta": 390,
+     "bx": 0.8660254037844387,
+     "by": 0.5
+    }
+   },
+   {
+    "params": {
+     "alpha": 60,
+     "k": -1
+    },
+    "expect": {
+     "beta": -300,
+     "bx": 0.5,
+     "by": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "alpha": 0,
+     "k": -2
+    },
+    "expect": {
+     "beta": -720,
+     "bx": 1,
+     "by": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

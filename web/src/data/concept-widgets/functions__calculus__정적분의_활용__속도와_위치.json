@@ -1,0 +1,130 @@
+{
+ "id": "functions/calculus/정적분의_활용/속도와_위치",
+ "spec": {
+  "title": "속도와 위치: 변위는 속도 그래프의 넓이",
+  "params": [
+   {
+    "name": "t",
+    "label": "시각 t",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": "s"
+   },
+   {
+    "name": "s0",
+    "label": "초기 위치 s₀",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1,
+    "unit": "m"
+   }
+  ],
+  "scope": "vt = 6 - 2*t; disp = 6*t - t^2; pos = s0 + disp",
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -8,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "6 - 2*x",
+     "label": "v(t)=6−2t (속도)",
+     "color": "#e8590c"
+    },
+    {
+     "fn": "s0 + 6*x - x^2",
+     "label": "s(t)=s₀+6t−t² (위치)",
+     "color": "#1c7ed6"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "속도 v(t)",
+    "expr": "vt",
+    "digits": 2
+   },
+   {
+    "label": "변위 ∫₀ᵗ v du (속도그래프 넓이)",
+    "expr": "disp",
+    "digits": 3
+   },
+   {
+    "label": "위치 s(t)=s₀+변위",
+    "expr": "pos",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0,
+    "s0": 0
+   },
+   {
+    "t": 2,
+    "s0": 3
+   },
+   {
+    "t": 3.5,
+    "s0": -2
+   },
+   {
+    "t": 5,
+    "s0": 1
+   }
+  ],
+  "invariants": [
+   "pos - (s0 + disp)",
+   "disp - t*(6 + vt)/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 3,
+     "s0": 0
+    },
+    "expect": {
+     "vt": 0,
+     "disp": 9,
+     "pos": 9
+    }
+   },
+   {
+    "params": {
+     "t": 4,
+     "s0": 2
+    },
+    "expect": {
+     "vt": -2,
+     "disp": 8,
+     "pos": 10
+    }
+   },
+   {
+    "params": {
+     "t": 1,
+     "s0": -3
+    },
+    "expect": {
+     "vt": 4,
+     "disp": 5,
+     "pos": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

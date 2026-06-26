@@ -1,0 +1,134 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/절댓값과_경우_분석",
+ "spec": {
+  "title": "절댓값 함수의 미분: |x²−c| 의 꺾이는 점",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (안쪽 식 x²−c)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (관찰점)",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "root = sqrt(c); fx0 = x0^2 - c; absx0 = abs(fx0); slope = sign(fx0) * 2 * x0",
+  "plot": {
+   "range": [
+    -2.8,
+    2.8
+   ],
+   "yRange": [
+    -4.5,
+    6.5
+   ],
+   "fns": [
+    {
+     "fn": "x^2 - c",
+     "label": "f(x)=x²−c (원래 함수)",
+     "color": "#9aa0a6"
+    },
+    {
+     "fn": "abs(x^2 - c)",
+     "label": "|f(x)|=|x²−c| (아래를 위로 반사)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근 √c (그래프가 꺾이는 x좌표)",
+    "expr": "root",
+    "digits": 3
+   },
+   {
+    "label": "f(x₀)=x₀²−c",
+    "expr": "fx0",
+    "digits": 3
+   },
+   {
+    "label": "|f(x₀)|",
+    "expr": "absx0",
+    "digits": 3
+   },
+   {
+    "label": "|f|'(x₀)=sign(f)·f' (근에서는 좌·우미분계수가 달라 정의 안 됨)",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1,
+    "x0": 2
+   },
+   {
+    "c": 4,
+    "x0": 1
+   },
+   {
+    "c": 1,
+    "x0": 0.5
+   },
+   {
+    "c": 2,
+    "x0": -1.5
+   }
+  ],
+  "invariants": [
+   "absx0^2 - fx0^2",
+   "slope*fx0 - 2*x0*absx0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1,
+     "x0": 2
+    },
+    "expect": {
+     "root": 1,
+     "fx0": 3,
+     "absx0": 3,
+     "slope": 4
+    }
+   },
+   {
+    "params": {
+     "c": 4,
+     "x0": 1
+    },
+    "expect": {
+     "root": 2,
+     "fx0": -3,
+     "absx0": 3,
+     "slope": -2
+    }
+   },
+   {
+    "params": {
+     "c": 1,
+     "x0": 0.5
+    },
+    "expect": {
+     "root": 1,
+     "fx0": -0.75,
+     "absx0": 0.75,
+     "slope": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

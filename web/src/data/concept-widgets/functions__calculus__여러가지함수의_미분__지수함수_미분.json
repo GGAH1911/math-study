@@ -1,0 +1,131 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/지수함수_미분",
+ "spec": {
+  "title": "지수함수의 미분: 접선의 기울기 = 함숫값 × ln a",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 1.2,
+    "max": 4,
+    "init": 2.72,
+    "step": 0.01,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "접점 x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2.5,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "lna = log(a); fx0 = a^x0; slope = fx0*lna",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fx0 + slope*(x - x0)",
+     "label": "x₀에서의 접선 (기울기 = a^{x₀}·ln a)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀) = a^{x₀}",
+    "expr": "fx0",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 = a^{x₀}·ln a",
+    "expr": "slope",
+    "digits": 4
+   },
+   {
+    "label": "기울기 ÷ 함숫값 = ln a (a=e면 1)",
+    "expr": "lna",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x0": 0
+   },
+   {
+    "a": 2,
+    "x0": 3
+   },
+   {
+    "a": 3,
+    "x0": 2
+   },
+   {
+    "a": 2.5,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "slope - fx0*lna",
+   "fx0 - exp(x0*lna)",
+   "lna - log(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x0": 0
+    },
+    "expect": {
+     "fx0": 1,
+     "slope": 0.6931471805599453,
+     "lna": 0.6931471805599453
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": 3
+    },
+    "expect": {
+     "fx0": 8,
+     "slope": 5.545177444479562,
+     "lna": 0.6931471805599453
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "x0": 2
+    },
+    "expect": {
+     "fx0": 9,
+     "slope": 9.887510598012987,
+     "lna": 1.0986122886681098
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

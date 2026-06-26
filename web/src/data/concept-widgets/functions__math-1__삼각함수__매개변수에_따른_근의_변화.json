@@ -1,0 +1,103 @@
+{
+ "id": "functions/math-1/삼각함수/매개변수에_따른_근의_변화",
+ "spec": {
+  "title": "sin x = m : 매개변수 m에 따른 근의 개수 변화 (0 ≤ x < 2π)",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (직선 y=m의 높이)",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "x1 = asin(m); x2 = pi - asin(m); count = (abs(m)<1)*2 + (abs(m)==1)*1",
+  "plot": {
+   "range": [
+    0,
+    6.283185307
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "0*x + m",
+     "label": "y = m",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의 개수 (0 ≤ x < 2π)",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "직선 높이 m",
+    "expr": "m",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0.5
+   },
+   {
+    "m": -0.5
+   },
+   {
+    "m": 0.8
+   },
+   {
+    "m": -0.3
+   }
+  ],
+  "invariants": [
+   "sin(x1) - m",
+   "sin(x2) - m",
+   "x1 + x2 - pi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0.5
+    },
+    "expect": {
+     "count": 2,
+     "x1": 0.5235987755982988,
+     "x2": 2.6179938779914944
+    }
+   },
+   {
+    "params": {
+     "m": 1.5
+    },
+    "expect": {
+     "count": 0
+    }
+   },
+   {
+    "params": {
+     "m": 1
+    },
+    "expect": {
+     "count": 1,
+     "x1": 1.5707963267948966
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

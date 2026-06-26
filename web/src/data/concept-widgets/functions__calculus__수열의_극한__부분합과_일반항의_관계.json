@@ -1,0 +1,211 @@
+{
+ "id": "functions/calculus/수열의_극한/부분합과_일반항의_관계",
+ "spec": {
+  "title": "부분합과 일반항의 관계: aₙ = Sₙ − Sₙ₋₁ (예: Sₙ = n²)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (몇 번째 항?)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 1,
+    "unit": "번째"
+   }
+  ],
+  "scope": "Sn = n^2; Snm1 = (n-1)^2; an = Sn - Snm1",
+  "geometry": {
+   "range": [
+    0,
+    5
+   ],
+   "yRange": [
+    0,
+    68
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.7,
+       0
+      ],
+      [
+       1.7,
+       0
+      ],
+      [
+       1.7,
+       "=Snm1"
+      ],
+      [
+       0.7,
+       "=Snm1"
+      ]
+     ],
+     "color": "#3b82f6"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       "=Snm1"
+      ],
+      [
+       3,
+       "=Snm1"
+      ]
+     ],
+     "color": "#3b82f6"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3,
+       "=Snm1"
+      ],
+      [
+       4,
+       "=Snm1"
+      ],
+      [
+       4,
+       "=Sn"
+      ],
+      [
+       3,
+       "=Sn"
+      ]
+     ],
+     "color": "#ef4444"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1.7,
+      "=Snm1"
+     ],
+     "to": [
+      3,
+      "=Snm1"
+     ],
+     "color": "#94a3b8"
+    },
+    {
+     "type": "point",
+     "at": [
+      1.2,
+      "=Snm1/2"
+     ],
+     "label": "S(n-1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=Sn"
+     ],
+     "label": "S(n)"
+    },
+    {
+     "type": "point",
+     "at": [
+      3.5,
+      "=(Snm1+Sn)/2"
+     ],
+     "label": "a(n)=S(n)-S(n-1)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "S(n-1) 이전 부분합",
+    "expr": "Snm1",
+    "digits": 0
+   },
+   {
+    "label": "S(n) 부분합",
+    "expr": "Sn",
+    "digits": 0
+   },
+   {
+    "label": "a(n)=S(n)-S(n-1) 일반항",
+    "expr": "an",
+    "digits": 0
+   },
+   {
+    "label": "닫힌식 2n-1 확인",
+    "expr": "2*n-1",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 2
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 7
+   }
+  ],
+  "invariants": [
+   "an - (Sn - Snm1)",
+   "an - (2*n - 1)",
+   "Sn - n^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "Sn": 1,
+     "Snm1": 0,
+     "an": 1
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "Sn": 9,
+     "Snm1": 4,
+     "an": 5
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "Sn": 25,
+     "Snm1": 16,
+     "an": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

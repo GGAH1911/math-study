@@ -1,0 +1,133 @@
+{
+ "id": "functions/calculus/여러가지_적분법/위치_적분",
+ "spec": {
+  "title": "부정적분 ∫f(x)dx = F(x)+C : 적분상수와 원시함수족",
+  "params": [
+   {
+    "name": "C",
+    "label": "적분상수 C",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "접점 x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fx0 = x0^2 - 1; Fx0 = x0^3/3 - x0 + C",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3/3 - x + C",
+     "label": "F(x)=x³/3−x+C (원시함수)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "x^2 - 1",
+     "label": "f(x)=x²−1 (피적분함수)",
+     "color": "#888888"
+    },
+    {
+     "fn": "fx0*(x - x0) + Fx0",
+     "label": "F의 접선: 기울기 = f(x₀)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀) = F′(x₀)",
+    "expr": "fx0",
+    "digits": 3
+   },
+   {
+    "label": "F(x₀)",
+    "expr": "Fx0",
+    "digits": 3
+   },
+   {
+    "label": "적분상수 C",
+    "expr": "C",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "C": 0,
+    "x0": 1
+   },
+   {
+    "C": 2,
+    "x0": 0
+   },
+   {
+    "C": -1,
+    "x0": 2
+   },
+   {
+    "C": 1.5,
+    "x0": -1.5
+   }
+  ],
+  "invariants": [
+   "Fx0 - (x0^3/3 - x0 + C)",
+   "fx0 - (x0^2 - 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "C": 0,
+     "x0": 1
+    },
+    "expect": {
+     "fx0": 0,
+     "Fx0": -0.6666666667
+    }
+   },
+   {
+    "params": {
+     "C": 2,
+     "x0": 0
+    },
+    "expect": {
+     "fx0": -1,
+     "Fx0": 2
+    }
+   },
+   {
+    "params": {
+     "C": -1,
+     "x0": 2
+    },
+    "expect": {
+     "fx0": 3,
+     "Fx0": -0.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

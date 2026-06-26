@@ -1,0 +1,133 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/역삼각함수",
+ "spec": {
+  "title": "역삼각함수: 비율값 → 각도",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (비율값)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "asx=asin(x); acx=acos(x); atx=atan(x); asDeg=asx*180/pi; acDeg=acx*180/pi; atDeg=atx*180/pi; sumAng=asx+acx",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -1,
+    1
+   ],
+   "yRange": [
+    -2,
+    3.4
+   ],
+   "fns": [
+    {
+     "fn": "asin(x)",
+     "label": "arcsin x  (치역 [-π/2, π/2])",
+     "color": "#e11d48"
+    },
+    {
+     "fn": "acos(x)",
+     "label": "arccos x  (치역 [0, π])",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "atan(x)",
+     "label": "arctan x  (치역 (-π/2, π/2))",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "arcsin x (rad)",
+    "expr": "asx",
+    "digits": 4
+   },
+   {
+    "label": "arcsin x (°)",
+    "expr": "asDeg",
+    "digits": 2
+   },
+   {
+    "label": "arccos x (°)",
+    "expr": "acDeg",
+    "digits": 2
+   },
+   {
+    "label": "arctan x (°)",
+    "expr": "atDeg",
+    "digits": 2
+   },
+   {
+    "label": "arcsin x + arccos x (항상 π/2)",
+    "expr": "sumAng",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0
+   },
+   {
+    "x": 0.5
+   },
+   {
+    "x": -0.5
+   },
+   {
+    "x": 1
+   }
+  ],
+  "invariants": [
+   "sin(asx)-x",
+   "cos(acx)-x",
+   "tan(atx)-x",
+   "asx+acx-pi/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "asx": 0.523598776,
+     "acx": 1.047197551,
+     "atx": 0.463647609,
+     "asDeg": 30,
+     "acDeg": 60
+    }
+   },
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "asx": 1.570796327,
+     "acx": 0,
+     "asDeg": 90,
+     "atDeg": 45
+    }
+   },
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "asx": 0,
+     "acx": 1.570796327,
+     "atx": 0,
+     "acDeg": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "id": "functions/calculus/정적분의_활용/절댓값_적분",
+ "spec": {
+  "title": "절댓값 적분: 부호 있는 넓이 vs 전체 넓이",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (직선이 x축을 지나는 위치)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "s = 1/2 - c; a = c^2 - c + 1/2; pos = 1/2 - c + c^2/2; neg = -c^2/2",
+  "plot": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    -1.1,
+    1.1
+   ],
+   "fns": [
+    {
+     "fn": "x - c",
+     "label": "f(x) = x − c",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs(x - c)",
+     "label": "|f(x)|",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부호 있는 넓이 ∫₀¹(x−c)dx",
+    "expr": "s",
+    "digits": 3
+   },
+   {
+    "label": "절댓값 넓이 ∫₀¹|x−c|dx",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "x축 위 넓이",
+    "expr": "pos",
+    "digits": 3
+   },
+   {
+    "label": "x축 아래 넓이",
+    "expr": "-neg",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0.1
+   },
+   {
+    "c": 0.4
+   },
+   {
+    "c": 0.7
+   },
+   {
+    "c": 0.95
+   }
+  ],
+  "invariants": [
+   "s - pos - neg",
+   "a - pos + neg",
+   "a - s + 2*neg"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0.25
+    },
+    "expect": {
+     "s": 0.25,
+     "a": 0.3125,
+     "pos": 0.28125,
+     "neg": -0.03125
+    }
+   },
+   {
+    "params": {
+     "c": 0.5
+    },
+    "expect": {
+     "s": 0,
+     "a": 0.25,
+     "pos": 0.125,
+     "neg": -0.125
+    }
+   },
+   {
+    "params": {
+     "c": 1
+    },
+    "expect": {
+     "s": -0.5,
+     "a": 0.5,
+     "pos": 0,
+     "neg": -0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/함수의_미분가능성",
+ "spec": {
+  "title": "함수의 미분가능성: 좌·우 미분계수 (f(x)=|x|)",
+  "params": [
+   {
+    "name": "a",
+    "label": "점 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "간격 h",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "hh=abs(h); fa=abs(a); fr=abs(a+hh); fl=abs(a-hh); rs=(fr-fa)/hh; ls=(fa-fl)/hh; gap=rs-ls",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -0.5,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "abs(x)",
+     "label": "f(x)=|x|",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + rs*(x-a)",
+     "label": "우할선 (우미분계수)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fa + ls*(x-a)",
+     "label": "좌할선 (좌미분계수)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "우미분계수 ≈ (h→0+)",
+    "expr": "rs",
+    "digits": 4
+   },
+   {
+    "label": "좌미분계수 ≈ (h→0-)",
+    "expr": "ls",
+    "digits": 4
+   },
+   {
+    "label": "좌우 차이 (0이면 미분가능)",
+    "expr": "gap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "h": 0.5
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1,
+    "h": 0.5
+   },
+   {
+    "a": 0.7,
+    "h": 0.3
+   }
+  ],
+  "invariants": [
+   "rs*hh-(abs(a+hh)-abs(a))",
+   "ls*hh-(abs(a)-abs(a-hh))",
+   "abs(-a)-abs(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "rs": 1,
+     "ls": -1,
+     "gap": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "rs": 1,
+     "ls": 1,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "h": 0.5
+    },
+    "expect": {
+     "rs": -1,
+     "ls": -1,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

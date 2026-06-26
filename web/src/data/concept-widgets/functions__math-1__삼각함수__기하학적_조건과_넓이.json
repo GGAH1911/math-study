@@ -1,0 +1,196 @@
+{
+ "id": "functions/math-1/삼각함수/기하학적_조건과_넓이",
+ "spec": {
+  "title": "삼각형의 넓이: S = ½·ab·sinC",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (밑변 CB)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (변 CA)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "C",
+    "label": "끼인각 C",
+    "type": "slider",
+    "min": 1,
+    "max": 179,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Crad=C*pi/180; ax=b*cos(Crad); ay=b*sin(Crad); area=0.5*a*b*sin(Crad); h=b*sin(Crad)",
+  "geometry": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -1,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=ax",
+       "=ay"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=ax",
+      0
+     ],
+     "label": "h=b·sinC"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이 S = ½·ab·sinC",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "높이 h = b·sinC",
+    "expr": "h",
+    "digits": 4
+   },
+   {
+    "label": "sin C",
+    "expr": "sin(Crad)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 3,
+    "C": 60
+   },
+   {
+    "a": 5,
+    "b": 2,
+    "C": 120
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "C": 45
+   },
+   {
+    "a": 6,
+    "b": 4,
+    "C": 90
+   }
+  ],
+  "invariants": [
+   "0.5*a*ay - area",
+   "area - 0.5*a*h",
+   "sqrt(ax^2+ay^2) - b",
+   "h - ay"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 3,
+     "C": 90
+    },
+    "expect": {
+     "ax": 0,
+     "ay": 3,
+     "h": 3,
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2,
+     "C": 30
+    },
+    "expect": {
+     "ax": 1.7320508075688772,
+     "ay": 1,
+     "h": 1,
+     "area": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "C": 60
+    },
+    "expect": {
+     "ax": 1,
+     "ay": 1.7320508075688772,
+     "h": 1.7320508075688772,
+     "area": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

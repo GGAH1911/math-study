@@ -1,0 +1,114 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/유리함수의_미분",
+ "spec": {
+  "title": "유리함수의 미분 — 몫의 미분법과 접선",
+  "params": [
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "P = x0 + 1; Q = x0^2 + 1; dP = 1; dQ = 2*x0; f0 = P/Q; fp = (dP*Q - P*dQ)/Q^2; h = 0.0001; fph = ((x0+h)+1)/((x0+h)^2+1); fmh = ((x0-h)+1)/((x0-h)^2+1); numD = (fph - fmh)/(2*h)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(x+1)/(x^2+1)",
+     "label": "f(x)=(x+1)/(x²+1)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "f0 + fp*(x - x0)",
+     "label": "x₀에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₀) = (P'Q − PQ')/Q²",
+    "expr": "fp",
+    "digits": 4
+   },
+   {
+    "label": "분자 P'Q − PQ'",
+    "expr": "dP*Q - P*dQ",
+    "digits": 4
+   },
+   {
+    "label": "분모 Q²",
+    "expr": "Q^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": -2
+   },
+   {
+    "x0": 0
+   },
+   {
+    "x0": 1
+   },
+   {
+    "x0": 2.5
+   }
+  ],
+  "invariants": [
+   "fp - numD",
+   "fp - (-x0^2 - 2*x0 + 1)/(x0^2 + 1)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 0
+    },
+    "expect": {
+     "f0": 1,
+     "fp": 1
+    }
+   },
+   {
+    "params": {
+     "x0": 1
+    },
+    "expect": {
+     "f0": 1,
+     "fp": -0.5
+    }
+   },
+   {
+    "params": {
+     "x0": 2
+    },
+    "expect": {
+     "f0": 0.6,
+     "fp": -0.28
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

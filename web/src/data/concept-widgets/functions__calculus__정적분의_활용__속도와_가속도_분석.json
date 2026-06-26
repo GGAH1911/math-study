@@ -1,0 +1,128 @@
+{
+ "id": "functions/calculus/정적분의_활용/속도와_가속도_분석",
+ "spec": {
+  "title": "위치·속도·가속도의 관계  (x(t)=t³−6t²+9t)",
+  "params": [
+   {
+    "name": "t",
+    "label": "시각 t",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.05,
+    "unit": "s"
+   }
+  ],
+  "scope": "x0 = t^3 - 6*t^2 + 9*t; v0 = 3*t^2 - 12*t + 9; a0 = 6*t - 12; spd = abs(v0)",
+  "plot": {
+   "range": [
+    0,
+    5
+   ],
+   "yRange": [
+    -15,
+    27
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 6*x^2 + 9*x",
+     "label": "위치 x(t)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 12*x + 9",
+     "label": "속도 v(t)=x'(t)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "6*x - 12",
+     "label": "가속도 a(t)=x''(t)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "시각 t (초)",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "위치 x",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "속도 v (접선기울기)",
+    "expr": "v0",
+    "digits": 3
+   },
+   {
+    "label": "가속도 a (v의 변화율)",
+    "expr": "a0",
+    "digits": 3
+   },
+   {
+    "label": "속력 |v|",
+    "expr": "spd",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1.5
+   },
+   {
+    "t": 2.5
+   },
+   {
+    "t": 4
+   }
+  ],
+  "invariants": [
+   "x0 - t*(t-3)^2",
+   "v0 - 3*(t-1)*(t-3)",
+   "a0 - 6*(t-2)",
+   "a0^2 - 12*v0 - 36"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "x0": 0,
+     "v0": 9,
+     "a0": -12
+    }
+   },
+   {
+    "params": {
+     "t": 1
+    },
+    "expect": {
+     "x0": 4,
+     "v0": 0,
+     "a0": -6
+    }
+   },
+   {
+    "params": {
+     "t": 3
+    },
+    "expect": {
+     "x0": 0,
+     "v0": 0,
+     "a0": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

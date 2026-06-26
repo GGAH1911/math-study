@@ -1,0 +1,153 @@
+{
+ "id": "functions/calculus/정적분의_활용/함수의_부호_분석",
+ "spec": {
+  "title": "함수의 부호 분석: 영점과 부호 변화",
+  "params": [
+   {
+    "name": "r1",
+    "label": "영점 r₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "r2",
+    "label": "영점 r₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "r3",
+    "label": "영점 r₃",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "대푯값 x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "s1=r1+r2+r3; s2=r1*r2+r2*r3+r3*r1; s3=r1*r2*r3; fx0=(x0-r1)*(x0-r2)*(x0-r3); gx0=x0^3-s1*x0^2+s2*x0-s3; gr1=r1^3-s1*r1^2+s2*r1-s3; gr2=r2^3-s1*r2^2+s2*r2-s3; gr3=r3^3-s1*r3^2+s2*r3-s3",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(x-r1)*(x-r2)*(x-r3)",
+     "label": "f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs((x-r1)*(x-r2)*(x-r3))",
+     "label": "|f(x)|",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "fx0",
+    "digits": 3
+   },
+   {
+    "label": "x₀에서의 부호 (−1: 음, 0: 영점, +1: 양)",
+    "expr": "sign(fx0)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": -2,
+    "r2": 0,
+    "r3": 2,
+    "x0": 1
+   },
+   {
+    "r1": -1,
+    "r2": 1,
+    "r3": 3,
+    "x0": 0
+   },
+   {
+    "r1": -3,
+    "r2": -1,
+    "r3": 2,
+    "x0": -2
+   },
+   {
+    "r1": 0,
+    "r2": 1,
+    "r3": 2,
+    "x0": 1.5
+   }
+  ],
+  "invariants": [
+   "fx0-gx0",
+   "gr1",
+   "gr2",
+   "gr3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": -2,
+     "r2": 0,
+     "r3": 2,
+     "x0": 1
+    },
+    "expect": {
+     "fx0": -3,
+     "gx0": -3
+    }
+   },
+   {
+    "params": {
+     "r1": -1,
+     "r2": 1,
+     "r3": 3,
+     "x0": 0
+    },
+    "expect": {
+     "fx0": 3,
+     "gx0": 3
+    }
+   },
+   {
+    "params": {
+     "r1": -3,
+     "r2": -1,
+     "r3": 2,
+     "x0": -2
+    },
+    "expect": {
+     "fx0": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

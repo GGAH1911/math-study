@@ -1,0 +1,139 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/로피탈_정리",
+ "spec": {
+  "title": "로피탈 정리: 원래 비 f/g 와 도함수 비 f′/g′ 의 극한 비교",
+  "params": [
+   {
+    "name": "px",
+    "label": "x (→ 0 으로 이동)",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.8,
+    "step": 0.01
+   }
+  ],
+  "scope": "R = (exp(2*px) - 1)/(exp(px) - 1); D = 2*exp(2*px)/exp(px); L = 2",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -0.5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -0.5,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "(exp(2*x) - 1)/(exp(x) - 1)",
+     "label": "f/g = (e^{2x}−1)/(e^x−1)  (x=0 에서 0/0)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "2*exp(2*x)/exp(x)",
+     "label": "f'/g' = 2e^{2x}/e^x",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "2",
+     "label": "극한값 L = f'(0)/g'(0) = 2",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f/g  (원래 비, x=0 이면 부정형)",
+    "expr": "R",
+    "digits": 5
+   },
+   {
+    "label": "f'/g'  (도함수 비)",
+    "expr": "D",
+    "digits": 5
+   },
+   {
+    "label": "극한값 L = f'(0)/g'(0)",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "|f/g − L|",
+    "expr": "abs(R - L)",
+    "digits": 5
+   },
+   {
+    "label": "|f'/g' − L|",
+    "expr": "abs(D - L)",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 1
+   },
+   {
+    "px": -1
+   },
+   {
+    "px": 0.5
+   },
+   {
+    "px": -0.7
+   }
+  ],
+  "invariants": [
+   "R - (exp(px) + 1)",
+   "D - 2*exp(px)",
+   "2*px/px - L"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 1
+    },
+    "expect": {
+     "R": 3.718281828,
+     "D": 5.436563657,
+     "L": 2
+    }
+   },
+   {
+    "params": {
+     "px": -1
+    },
+    "expect": {
+     "R": 1.367879441,
+     "D": 0.735758882,
+     "L": 2
+    }
+   },
+   {
+    "params": {
+     "px": 0.5
+    },
+    "expect": {
+     "R": 2.648721271,
+     "D": 3.297442541,
+     "L": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

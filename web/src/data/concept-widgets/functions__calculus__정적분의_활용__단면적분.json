@@ -1,0 +1,183 @@
+{
+ "id": "functions/calculus/정적분의_활용/단면적분",
+ "spec": {
+  "title": "단면적분: 구의 부피 V=∫A(x)dx",
+  "params": [
+   {
+    "name": "R",
+    "label": "구의 반지름 R",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "절단 위치 비율 t (x=tR)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "x0 = t*R; rc = R*sqrt(1-t^2); A0 = pi*rc^2; V = 4/3*pi*R^3",
+  "geometry": {
+   "range": [
+    -3.4,
+    3.4
+   ],
+   "yRange": [
+    -3.4,
+    3.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=R",
+     "label": "최대 단면(적도면)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=rc",
+     "label": "x에서의 단면"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=rc",
+      0
+     ],
+     "label": "r=√(R²−x²)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rc",
+      0
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    "=-R",
+    "=R"
+   ],
+   "yRange": [
+    0,
+    "=pi*R^2*1.15"
+   ],
+   "fns": [
+    {
+     "fn": "pi*(R^2 - x^2)",
+     "label": "A(x)=π(R²−x²)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "절단 위치 x = tR",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "단면 반지름 √(R²−x²)",
+    "expr": "rc",
+    "digits": 3
+   },
+   {
+    "label": "단면 넓이 A(x)=πr²",
+    "expr": "A0",
+    "digits": 3
+   },
+   {
+    "label": "부피 V=∫A(x)dx=4/3·πR³",
+    "expr": "V",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0,
+    "R": 2
+   },
+   {
+    "t": 0.5,
+    "R": 2
+   },
+   {
+    "t": -0.6,
+    "R": 1.5
+   },
+   {
+    "t": 0.8,
+    "R": 3
+   }
+  ],
+  "invariants": [
+   "rc^2 + x0^2 - R^2",
+   "A0 - pi*rc^2",
+   "A0 - pi*R^2*(1-t^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0,
+     "R": 2
+    },
+    "expect": {
+     "x0": 0,
+     "rc": 2,
+     "A0": 12.566370614359172,
+     "V": 33.510321638291124
+    }
+   },
+   {
+    "params": {
+     "t": 0.5,
+     "R": 2
+    },
+    "expect": {
+     "x0": 1,
+     "rc": 1.7320508075688772,
+     "A0": 9.42477796076938,
+     "V": 33.510321638291124
+    }
+   },
+   {
+    "params": {
+     "t": 0,
+     "R": 3
+    },
+    "expect": {
+     "x0": 0,
+     "rc": 3,
+     "A0": 28.274333882308138,
+     "V": 113.09733552923255
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

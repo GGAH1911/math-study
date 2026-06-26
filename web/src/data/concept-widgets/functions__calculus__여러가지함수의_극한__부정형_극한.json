@@ -1,0 +1,135 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/부정형_극한",
+ "spec": {
+  "title": "부정형 0/0 탐구: (x²−a²)/(x−a)의 극한",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (극한을 보는 점 x=a)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "h (x를 a에서 떨어뜨린 양)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "lim = 2*a; xv = a + h; fval = (xv^2 - a^2)/(xv - a); approx = xv + a; gap = fval - lim",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "(x^2 - a^2)/(x - a)",
+     "label": "y=(x²−a²)/(x−a)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x=a 직접대입 → 0/0 (부정형)",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "실제 극한값 lim(x→a)=2a",
+    "expr": "lim",
+    "digits": 3
+   },
+   {
+    "label": "대입점 x = a+h",
+    "expr": "xv",
+    "digits": 3
+   },
+   {
+    "label": "f(x) 값 (h→0이면 2a로 수렴)",
+    "expr": "fval",
+    "digits": 4
+   },
+   {
+    "label": "f(x) − 극한값 (h→0이면 →0)",
+    "expr": "gap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 1
+   },
+   {
+    "a": 2,
+    "h": -0.5
+   },
+   {
+    "a": -1,
+    "h": 0.5
+   },
+   {
+    "a": 0.5,
+    "h": 2
+   }
+  ],
+  "invariants": [
+   "fval - approx",
+   "gap - h",
+   "lim - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "lim": 2,
+     "xv": 1.5,
+     "fval": 2.5,
+     "gap": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "h": 1
+    },
+    "expect": {
+     "lim": 4,
+     "xv": 3,
+     "fval": 5,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "h": -0.5
+    },
+    "expect": {
+     "lim": -2,
+     "xv": -1.5,
+     "fval": -2.5,
+     "gap": -0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

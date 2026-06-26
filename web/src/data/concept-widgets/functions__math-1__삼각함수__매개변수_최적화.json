@@ -1,0 +1,161 @@
+{
+ "id": "functions/math-1/삼각함수/매개변수_최적화",
+ "spec": {
+  "title": "매개변수 최적화: 단위원 위의 점으로 f=3cosθ+4sinθ의 최댓값 찾기",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (매개변수)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 20,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); f=3*cx+4*sy",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "제약: x²+y²=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P=(cosθ, sinθ)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0.6,
+      0.8
+     ],
+     "label": "최적점 (max f=5)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0.6,
+      0.8
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P 좌표 x=cosθ",
+    "expr": "cx",
+    "digits": 3
+   },
+   {
+    "label": "P 좌표 y=sinθ",
+    "expr": "sy",
+    "digits": 3
+   },
+   {
+    "label": "목적함수 f=3cosθ+4sinθ",
+    "expr": "f",
+    "digits": 3
+   },
+   {
+    "label": "이론적 최댓값 √(3²+4²)",
+    "expr": "sqrt(3^2+4^2)",
+    "digits": 3
+   },
+   {
+    "label": "최댓값까지 남은 차이",
+    "expr": "5-f",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 20
+   },
+   {
+    "theta": 135
+   },
+   {
+    "theta": 210
+   },
+   {
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "f-(3*cx+4*sy)",
+   "f-5*cos(rad-atan2(4,3))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "cx": 1,
+     "sy": 0,
+     "f": 3
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "sy": 1,
+     "f": 4
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "cx": -1,
+     "sy": 0,
+     "f": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/샌드위치_정리",
+ "spec": {
+  "title": "샌드위치 정리: x²sin(1/x) → 0",
+  "params": [
+   {
+    "name": "a",
+    "label": "표본점 a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.01
+   }
+  ],
+  "scope": "gx = -a^2; hx = a^2; fx = a^2 * sin(1/a); L = 0; gap = hx - gx",
+  "plot": {
+   "range": [
+    -1,
+    1
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "-x^2",
+     "label": "하한 g(x)=−x²",
+     "color": "#3b82f6"
+    },
+    {
+     "fn": "x^2",
+     "label": "상한 h(x)=x²",
+     "color": "#3b82f6"
+    },
+    {
+     "fn": "x^2*sin(1/x)",
+     "label": "끼인 f(x)=x²sin(1/x)",
+     "color": "#ef4444"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "하한 g(a)=−a²",
+    "expr": "gx",
+    "digits": 5
+   },
+   {
+    "label": "끼인 f(a)=a²sin(1/a)",
+    "expr": "fx",
+    "digits": 5
+   },
+   {
+    "label": "상한 h(a)=a²",
+    "expr": "hx",
+    "digits": 5
+   },
+   {
+    "label": "틈새 h−g=2a² (→0이면 f도 0으로 조임)",
+    "expr": "gap",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.3
+   },
+   {
+    "a": 0.7
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": -0.5
+   }
+  ],
+  "invariants": [
+   "gx + hx",
+   "max(0, gx - fx)",
+   "max(0, fx - hx)",
+   "gap - 2*a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "gx": -0.25,
+     "hx": 0.25,
+     "gap": 0.5,
+     "fx": 0.2273243567064204
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "gx": -1,
+     "hx": 1,
+     "gap": 2,
+     "fx": 0.8414709848078965
+    }
+   },
+   {
+    "params": {
+     "a": 0.25
+    },
+    "expect": {
+     "gx": -0.0625,
+     "hx": 0.0625,
+     "gap": 0.125,
+     "fx": -0.04730015595674551
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

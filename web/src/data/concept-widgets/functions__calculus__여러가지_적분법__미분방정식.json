@@ -1,0 +1,155 @@
+{
+ "id": "functions/calculus/여러가지_적분법/미분방정식",
+ "spec": {
+  "title": "미분방정식 dy/dx = ky 와 그 해 y = Ce^(kx)",
+  "params": [
+   {
+    "name": "k",
+    "label": "비례상수 k (증가율·감소율)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   },
+   {
+    "name": "C",
+    "label": "적분상수 C (=y(0), 초깃값)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "접선을 그릴 점 x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "y0 = C*exp(k*x0); slope = k*y0; dydx_true = C*k*exp(k*x0); ode_res = dydx_true - slope; ratio = slope/y0",
+  "plot": {
+   "range": [
+    -2,
+    3
+   ],
+   "yRange": [
+    -2,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "C*exp(k*x)",
+     "label": "해 y = Ce^(kx)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "y0 + slope*(x - x0)",
+     "label": "x₀에서의 접선 (기울기 = k·y)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "y(x₀)",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 dy/dx",
+    "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "k·y(x₀)",
+    "expr": "dydx_true",
+    "digits": 3
+   },
+   {
+    "label": "(dy/dx)/y = k",
+    "expr": "ratio",
+    "digits": 3
+   },
+   {
+    "label": "ODE 잔차 dy/dx − ky",
+    "expr": "ode_res",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1,
+    "C": 1,
+    "x0": 0
+   },
+   {
+    "k": 0.5,
+    "C": 2,
+    "x0": 1
+   },
+   {
+    "k": -1,
+    "C": 3,
+    "x0": 2
+   },
+   {
+    "k": 0.8,
+    "C": 1.5,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "ode_res",
+   "(C*exp(k*(x0+0.0001)) - C*exp(k*(x0-0.0001)))/0.0002 - k*y0",
+   "ratio - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1,
+     "C": 1,
+     "x0": 0
+    },
+    "expect": {
+     "y0": 1,
+     "slope": 1,
+     "ratio": 1
+    }
+   },
+   {
+    "params": {
+     "k": 0.5,
+     "C": 2,
+     "x0": 0
+    },
+    "expect": {
+     "y0": 2,
+     "slope": 1,
+     "ratio": 0.5
+    }
+   },
+   {
+    "params": {
+     "k": -1,
+     "C": 3,
+     "x0": 0
+    },
+    "expect": {
+     "y0": 3,
+     "slope": -3,
+     "ratio": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/로그함수의_극한",
+ "spec": {
+  "title": "로그함수의 극한: y = logₐx",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 5,
+    "init": 2,
+    "step": 0.3,
+    "unit": ""
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 0.05,
+    "max": 16,
+    "init": 8,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "lna=log(a); fx=log(x)/lna; xlnx=x*log(x)",
+  "plot": {
+   "range": [
+    0.05,
+    16
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "log(x)/log(a)",
+     "label": "y = logₐx",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "logₐx (현재 x)",
+    "expr": "fx",
+    "digits": 4
+   },
+   {
+    "label": "x·ln x (x→0⁺면 →0)",
+    "expr": "xlnx",
+    "digits": 4
+   },
+   {
+    "label": "logₐ(0.001)  (0⁺쪽 극한 부호)",
+    "expr": "log(0.001)/lna",
+    "digits": 2
+   },
+   {
+    "label": "밑 ln a (>0이면 증가)",
+    "expr": "lna",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x": 8
+   },
+   {
+    "a": 0.5,
+    "x": 8
+   },
+   {
+    "a": 2,
+    "x": 0.5
+   },
+   {
+    "a": 3.2,
+    "x": 0.25
+   }
+  ],
+  "invariants": [
+   "a^fx - x",
+   "fx*lna - log(x)",
+   "xlnx - x*log(x)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x": 8
+    },
+    "expect": {
+     "fx": 3,
+     "xlnx": 16.6355323334,
+     "lna": 0.6931471806
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x": 8
+    },
+    "expect": {
+     "fx": -3,
+     "xlnx": 16.6355323334,
+     "lna": -0.6931471806
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x": 0.5
+    },
+    "expect": {
+     "fx": -1,
+     "xlnx": -0.3465735903
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

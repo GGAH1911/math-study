@@ -1,0 +1,130 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_곱",
+ "spec": {
+  "title": "삼각함수의 곱→합: sin·cos 파동 분해 (간섭)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (sin의 주파수)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (cos의 주파수)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "x0 = pi/6; x1 = pi/4; prod = sin(a*x0)*cos(b*x0); sumform = 0.5*(sin((a+b)*x0) + sin((a-b)*x0)); gap = prod - sumform; prod1 = sin(a*x1)*cos(b*x1); sum1 = 0.5*(sin((a+b)*x1) + sin((a-b)*x1)); gap1 = prod1 - sum1",
+  "plot": {
+   "range": [
+    0,
+    6.2832
+   ],
+   "yRange": [
+    -1.1,
+    1.1
+   ],
+   "fns": [
+    {
+     "fn": "sin(a*x)*cos(b*x)",
+     "label": "sin(ax)·cos(bx)  (곱)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "0.5*sin((a+b)*x)",
+     "label": "½ sin((a+b)x)  성분1",
+     "color": "#f59e0b"
+    },
+    {
+     "fn": "0.5*sin((a-b)*x)",
+     "label": "½ sin((a−b)x)  성분2",
+     "color": "#10b981"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "곱 sin(ax)·cos(bx)  (x=30°)",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "½[sin((a+b)x)+sin((a−b)x)]  (x=30°)",
+    "expr": "sumform",
+    "digits": 4
+   },
+   {
+    "label": "차이 = 0 (곱-합 항등식)",
+    "expr": "gap",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": 5,
+    "b": 4
+   },
+   {
+    "a": 6,
+    "b": 1
+   },
+   {
+    "a": 2,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "prod - sumform",
+   "prod1 - sum1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 2
+    },
+    "expect": {
+     "prod": 0.5,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 4
+    },
+    "expect": {
+     "prod": -0.25,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2
+    },
+    "expect": {
+     "prod": 0.4330127019,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

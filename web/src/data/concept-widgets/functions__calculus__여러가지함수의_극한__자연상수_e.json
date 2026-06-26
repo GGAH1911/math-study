@@ -1,0 +1,108 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/자연상수_e",
+ "spec": {
+  "title": "자연상수 e — (1+1/n)^n의 극한",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (복리 분할 횟수)",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1
+   }
+  ],
+  "scope": "aval = (1+1/n)^n",
+  "plot": {
+   "range": [
+    1,
+    100
+   ],
+   "yRange": [
+    1.9,
+    2.8
+   ],
+   "fns": [
+    {
+     "fn": "(1+1/x)^x",
+     "label": "y=(1+1/x)^x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "e",
+     "label": "y=e ≈ 2.71828",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "aval",
+     "label": "y=(1+1/n)^n (현재값)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "(1+1/n)^n",
+    "expr": "aval",
+    "digits": 6
+   },
+   {
+    "label": "e",
+    "expr": "e",
+    "digits": 6
+   },
+   {
+    "label": "e − (1+1/n)^n (남은 거리)",
+    "expr": "e - aval",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 10
+   },
+   {
+    "n": 50
+   },
+   {
+    "n": 100
+   }
+  ],
+  "invariants": [
+   "log(aval) - n*log(1+1/n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "aval": 2
+    }
+   },
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "aval": 2.25
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "aval": 2.44140625
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

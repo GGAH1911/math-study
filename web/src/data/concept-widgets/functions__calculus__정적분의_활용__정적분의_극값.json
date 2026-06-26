@@ -1,0 +1,123 @@
+{
+ "id": "functions/calculus/정적분의_활용/정적분의_극값",
+ "spec": {
+  "title": "정적분의 극값: F(x)=∫₀ˣ(p²−t²)dt 의 극대·극소",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (피적분함수 f=p²−x²의 양의 근)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xmax = p; xmin = -p; Fmax = p^2*xmax - xmax^3/3; Fmin = p^2*xmin - xmin^3/3; fAtMax = p^2 - xmax^2; fAtMin = p^2 - xmin^2",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "p^2 - x^2",
+     "label": "f(x)=p²−x²  (피적분함수, F'(x)=f(x))",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "p^2*x - x^3/3",
+     "label": "F(x)=∫₀ˣf(t)dt",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극대점 x  (f의 부호 +→−)",
+    "expr": "xmax",
+    "digits": 2
+   },
+   {
+    "label": "극댓값 F(p)",
+    "expr": "Fmax",
+    "digits": 4
+   },
+   {
+    "label": "극소점 x  (f의 부호 −→+)",
+    "expr": "xmin",
+    "digits": 2
+   },
+   {
+    "label": "극솟값 F(−p)",
+    "expr": "Fmin",
+    "digits": 4
+   },
+   {
+    "label": "극점에서 F'(=f) 값 (≈0)",
+    "expr": "fAtMax",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 0.5
+   },
+   {
+    "p": 1
+   },
+   {
+    "p": 1.5
+   },
+   {
+    "p": 2
+   }
+  ],
+  "invariants": [
+   "fAtMax",
+   "fAtMin",
+   "Fmax + Fmin"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1
+    },
+    "expect": {
+     "xmax": 1,
+     "xmin": -1,
+     "Fmax": 0.6666666667,
+     "Fmin": -0.6666666667,
+     "fAtMax": 0
+    }
+   },
+   {
+    "params": {
+     "p": 1.5
+    },
+    "expect": {
+     "Fmax": 2.25,
+     "Fmin": -2.25,
+     "fAtMax": 0
+    }
+   },
+   {
+    "params": {
+     "p": 2
+    },
+    "expect": {
+     "Fmax": 5.3333333333,
+     "Fmin": -5.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

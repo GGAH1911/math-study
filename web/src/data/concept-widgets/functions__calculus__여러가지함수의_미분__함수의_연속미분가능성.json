@@ -1,0 +1,133 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/함수의_연속미분가능성",
+ "spec": {
+  "title": "함수의 연속미분가능성 — 지수 a로 보는 '미분가능'과 'C¹'의 경계: f(x)=xᵃ·sin(1/x)",
+  "params": [
+   {
+    "name": "a",
+    "label": "지수 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "p=0.2; s=sin(1/p); co=cos(1/p); env=p^a; fp=env*s; dfp=a*p^(a-1)*s - p^(a-2)*co; diffMargin=a-1; c1Margin=a-2",
+  "plot": {
+   "range": [
+    0,
+    0.5
+   ],
+   "yRange": [
+    -1.3,
+    1.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^a*sin(1/x)",
+     "label": "f(x)=xᵃ·sin(1/x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a*x^(a-1)*sin(1/x) - x^(a-2)*cos(1/x)",
+     "label": "f'(x)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "x^a",
+     "label": "포락선 ±xᵃ",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "-x^a",
+     "label": "",
+     "color": "#cbd5e1"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a (지수)",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "미분가능 여유 a−1 (>0이면 x=0에서 미분가능)",
+    "expr": "diffMargin",
+    "digits": 2
+   },
+   {
+    "label": "C¹ 여유 a−2 (>0이면 도함수 연속 ⇒ 연속미분가능)",
+    "expr": "c1Margin",
+    "digits": 2
+   },
+   {
+    "label": "f(0.2)",
+    "expr": "fp",
+    "digits": 4
+   },
+   {
+    "label": "f'(0.2)",
+    "expr": "dfp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "s^2 + co^2 - 1",
+   "fp - env*s",
+   "dfp - (a/p)*fp + (env/p^2)*co"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "diffMargin": 1,
+     "c1Margin": 0,
+     "env": 0.04
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "diffMargin": 2,
+     "c1Margin": 1,
+     "env": 0.008
+    }
+   },
+   {
+    "params": {
+     "a": 1.5
+    },
+    "expect": {
+     "diffMargin": 0.5,
+     "c1Margin": -0.5,
+     "env": 0.08944272
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

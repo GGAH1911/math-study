@@ -1,0 +1,140 @@
+{
+ "id": "functions/math-1/삼각함수/매개변수_결정",
+ "spec": {
+  "title": "매개변수 결정 — 원 위의 점 x=cosθ, y=sinθ",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 80,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); tx=sqrt(3)/2; ty=0.5; dist=sqrt((cx-tx)^2+(sy-ty)^2)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cosθ, sinθ)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tx",
+      "=ty"
+     ],
+     "label": "목표 (√3/2, 1/2)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "목표까지 거리",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "θ(라디안)",
+    "expr": "rad",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 210
+   },
+   {
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.86602540378,
+     "sy": 0.5,
+     "dist": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.86602540378
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "sy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

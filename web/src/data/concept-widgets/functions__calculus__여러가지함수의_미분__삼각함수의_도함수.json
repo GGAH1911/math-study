@@ -1,0 +1,115 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/삼각함수의_도함수",
+ "spec": {
+  "title": "삼각함수의 도함수: (sin x)′ = cos x",
+  "params": [
+   {
+    "name": "t",
+    "label": "접점 x₀",
+    "type": "slider",
+    "min": -6.28,
+    "max": 6.28,
+    "init": 0.5236,
+    "step": 0.01,
+    "unit": "rad"
+   }
+  ],
+  "scope": "y0 = sin(t); m = cos(t)",
+  "plot": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -2.2,
+    2.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "cos(x)",
+     "label": "y = (sin x)′ = cos x",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "y0 + m*(x - t)",
+     "label": "x₀에서의 접선 (기울기 = cos x₀)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₀ (rad)",
+    "expr": "t",
+    "digits": 4
+   },
+   {
+    "label": "sin x₀",
+    "expr": "y0",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 = cos x₀ = (sin x₀)′",
+    "expr": "m",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 0.5235987756
+   },
+   {
+    "t": 1.5707963268
+   },
+   {
+    "t": -1
+   }
+  ],
+  "invariants": [
+   "y0^2 + m^2 - 1",
+   "(sin(t+1e-4) - sin(t-1e-4))/(2e-4) - m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "y0": 0,
+     "m": 1
+    }
+   },
+   {
+    "params": {
+     "t": 0.5235987755982988
+    },
+    "expect": {
+     "y0": 0.5,
+     "m": 0.8660254037844387
+    }
+   },
+   {
+    "params": {
+     "t": 1.5707963267948966
+    },
+    "expect": {
+     "y0": 1,
+     "m": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

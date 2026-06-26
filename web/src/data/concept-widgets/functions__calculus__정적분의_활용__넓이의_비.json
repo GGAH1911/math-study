@@ -1,0 +1,121 @@
+{
+ "id": "functions/calculus/정적분의_활용/넓이의_비",
+ "spec": {
+  "title": "넓이의 비 — 포물선 아래 vs 위 (언제나 1:2)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "a2 = a^2; S1 = a^3/3; S2 = 2*a^3/3; rect = a^3; ratio = S1/S2",
+  "geometry": null,
+  "plot": {
+   "range": [
+    0,
+    3.2
+   ],
+   "yRange": [
+    0,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a2",
+     "label": "y=a² (직사각형 윗변)",
+     "color": "#9ca3af"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "S₁ = 곡선 아래 넓이 ∫₀ᵃ x²dx",
+    "expr": "S1",
+    "digits": 4
+   },
+   {
+    "label": "S₂ = 곡선 위 넓이 (직사각형−S₁)",
+    "expr": "S2",
+    "digits": 4
+   },
+   {
+    "label": "직사각형 넓이 a·a²",
+    "expr": "rect",
+    "digits": 4
+   },
+   {
+    "label": "넓이의 비 S₁:S₂ (=0.5 → 1:2)",
+    "expr": "ratio",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 2.5
+   }
+  ],
+  "invariants": [
+   "ratio - 1/2",
+   "S1 + S2 - rect",
+   "S2 - 2*S1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "S1": 0.3333333333,
+     "S2": 0.6666666667,
+     "rect": 1,
+     "ratio": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "S1": 2.6666666667,
+     "S2": 5.3333333333,
+     "rect": 8,
+     "ratio": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "S1": 9,
+     "S2": 18,
+     "rect": 27,
+     "ratio": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

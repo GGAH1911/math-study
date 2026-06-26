@@ -1,0 +1,146 @@
+{
+ "id": "functions/calculus/수열의_극한/극한의_성질",
+ "spec": {
+  "title": "조임정리(샌드위치 정리) — 극한의 성질",
+  "params": [
+   {
+    "name": "L",
+    "label": "공통 극한 L",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "N",
+    "label": "살펴볼 항 번호 n",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "aN = L - 1/N; cN = L + cos(pi*N)/N; bN = L + 1/N; gap = bN - aN",
+  "plot": {
+   "range": [
+    1,
+    30
+   ],
+   "yRange": [
+    -3.3,
+    3.3
+   ],
+   "fns": [
+    {
+     "fn": "L - 1/x",
+     "label": "하한  a_n = L − 1/n",
+     "color": "#ef4444"
+    },
+    {
+     "fn": "L + 1/x",
+     "label": "상한  b_n = L + 1/n",
+     "color": "#ef4444"
+    },
+    {
+     "fn": "L + cos(pi*x)/x",
+     "label": "중간  c_n = L + (−1)ⁿ/n",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "L",
+     "label": "극한 L",
+     "color": "#9ca3af"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "하한 a_n",
+    "expr": "aN",
+    "digits": 4
+   },
+   {
+    "label": "중간 c_n (a_n ≤ c_n ≤ b_n)",
+    "expr": "cN",
+    "digits": 4
+   },
+   {
+    "label": "상한 b_n",
+    "expr": "bN",
+    "digits": 4
+   },
+   {
+    "label": "조임 폭 b_n − a_n",
+    "expr": "gap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "L": 1,
+    "N": 4
+   },
+   {
+    "L": 0,
+    "N": 5
+   },
+   {
+    "L": -1,
+    "N": 10
+   },
+   {
+    "L": 2,
+    "N": 7
+   }
+  ],
+  "invariants": [
+   "max(0, cN - bN)",
+   "max(0, aN - cN)",
+   "gap - 2/N",
+   "(aN + bN)/2 - L"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "L": 1,
+     "N": 4
+    },
+    "expect": {
+     "aN": 0.75,
+     "bN": 1.25,
+     "cN": 1.25,
+     "gap": 0.5
+    }
+   },
+   {
+    "params": {
+     "L": 0,
+     "N": 5
+    },
+    "expect": {
+     "aN": -0.2,
+     "bN": 0.2,
+     "cN": -0.2,
+     "gap": 0.4
+    }
+   },
+   {
+    "params": {
+     "L": -1,
+     "N": 10
+    },
+    "expect": {
+     "aN": -1.1,
+     "bN": -0.9,
+     "cN": -0.9,
+     "gap": 0.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

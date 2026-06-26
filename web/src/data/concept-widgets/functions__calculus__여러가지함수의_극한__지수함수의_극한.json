@@ -1,0 +1,121 @@
+{
+ "id": "functions/calculus/여러가지함수의_극한/지수함수의_극한",
+ "spec": {
+  "title": "지수함수 y = aˣ의 극한 (밑 a에 따른 x→±∞ 거동)",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "평가점 x",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "val = a^x0; valneg = a^(-x0); base = val^(1/x0)",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -0.5,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^x  (x = x0)",
+    "expr": "val",
+    "digits": 4
+   },
+   {
+    "label": "a^(-x0)",
+    "expr": "valneg",
+    "digits": 4
+   },
+   {
+    "label": "a>1이면 x→∞에서 ∞·x→-∞에서 0,  0<a<1이면 반대",
+    "expr": "a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x0": 3
+   },
+   {
+    "a": 0.5,
+    "x0": 2
+   },
+   {
+    "a": 3,
+    "x0": -2
+   },
+   {
+    "a": 1.5,
+    "x0": 4
+   }
+  ],
+  "invariants": [
+   "val*valneg - 1",
+   "base - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x0": 3
+    },
+    "expect": {
+     "val": 8,
+     "valneg": 0.125
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x0": 2
+    },
+    "expect": {
+     "val": 0.25,
+     "valneg": 4
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "x0": -2
+    },
+    "expect": {
+     "val": 0.1111111111,
+     "valneg": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

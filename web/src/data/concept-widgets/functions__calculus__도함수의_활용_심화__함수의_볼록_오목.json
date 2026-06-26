@@ -1,0 +1,101 @@
+{
+ "id": "functions/calculus/도함수의_활용_심화/함수의_볼록_오목",
+ "spec": {
+  "title": "함수의 볼록·오목과 접선 (f''의 부호)",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 x=a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^3; fpa = 3*a^2; fppa = 6*a",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^3",
+     "label": "f(x)=x³",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "a^3 + 3*a^2*(x - a)",
+     "label": "x=a에서의 접선",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f''(a) = 6a",
+    "expr": "fppa",
+    "digits": 2
+   },
+   {
+    "label": "f'(a) (접선 기울기)",
+    "expr": "fpa",
+    "digits": 2
+   },
+   {
+    "label": "판정 (+1 아래로 볼록 / -1 위로 오목)",
+    "expr": "sign(fppa)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": -2
+   }
+  ],
+  "invariants": [
+   "fa - a^3",
+   "fpa - 3*a^2",
+   "fppa - 6*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 1,
+     "fpa": 3,
+     "fppa": 6
+    }
+   },
+   {
+    "params": {
+     "a": -2
+    },
+    "expect": {
+     "fa": -8,
+     "fpa": 12,
+     "fppa": -12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,179 @@
+{
+ "id": "functions/calculus/수열의_극한/분자분모_최고차항_비교",
+ "spec": {
+  "title": "유리식 극한 — 분자·분모 최고차항 비교",
+  "params": [
+   {
+    "name": "m",
+    "label": "분자 차수 m",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "분모 차수 k",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "분자 최고차항 계수 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 최고차항 계수 b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "n0=5; ratio=a/b; diff=m-k; L=(m==k)?(a/b):0; diverge=(m>k)?1:0; fval=(a*n0^m+20)/(b*n0^k+20); fval_lead=n0^(m-k)*(a+20/n0^m)/(b+20/n0^k); fval_div=(a*n0^(m-k)+20/n0^k)/(b+20/n0^k)",
+  "plot": {
+   "range": [
+    1,
+    40
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "(a*x^m + 20)/(b*x^k + 20)",
+     "label": "수열 aₙ = (a·nᵐ+20)/(b·nᵏ+20)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(a/b)*x^(m-k)",
+     "label": "최고차항비 (a/b)·n^(m−k)",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "분자 차수 m",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": "분모 차수 k",
+    "expr": "k",
+    "digits": 0
+   },
+   {
+    "label": "차수차 m−k",
+    "expr": "diff",
+    "digits": 0
+   },
+   {
+    "label": "최고차항 계수비 a/b",
+    "expr": "ratio",
+    "digits": 4
+   },
+   {
+    "label": "극한값 (수렴 시)",
+    "expr": "L",
+    "digits": 4
+   },
+   {
+    "label": "발산(1)/수렴(0)",
+    "expr": "diverge",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "k": 2,
+    "a": 3,
+    "b": 2
+   },
+   {
+    "m": 1,
+    "k": 3,
+    "a": 4,
+    "b": 5
+   },
+   {
+    "m": 3,
+    "k": 1,
+    "a": 2,
+    "b": 3
+   },
+   {
+    "m": 3,
+    "k": 3,
+    "a": 5,
+    "b": 4
+   }
+  ],
+  "invariants": [
+   "fval - fval_lead",
+   "fval - fval_div"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "k": 2,
+     "a": 3,
+     "b": 2
+    },
+    "expect": {
+     "ratio": 1.5,
+     "diff": 0,
+     "L": 1.5,
+     "diverge": 0,
+     "fval": 1.3571428571428572
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "k": 3,
+     "a": 4,
+     "b": 5
+    },
+    "expect": {
+     "ratio": 0.8,
+     "diff": -2,
+     "L": 0,
+     "diverge": 0,
+     "fval": 0.06201550387596899
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "k": 1,
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "ratio": 0.6666666666666666,
+     "diff": 2,
+     "L": 0,
+     "diverge": 1,
+     "fval": 7.714285714285714
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

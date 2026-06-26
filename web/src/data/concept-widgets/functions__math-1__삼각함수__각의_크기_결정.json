@@ -1,0 +1,179 @@
+{
+ "id": "functions/math-1/삼각함수/각의_크기_결정",
+ "spec": {
+  "title": "각의 크기 결정: sinθ = a 의 두 해",
+  "params": [
+   {
+    "name": "a",
+    "label": "sinθ = a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "ref = asin(abs(a)); t1 = a>=0 ? ref : pi+ref; t2 = a>=0 ? pi-ref : 2*pi-ref; x1 = cos(t1); x2 = cos(t2); t1deg = t1*180/pi; t2deg = t2*180/pi; refdeg = ref*180/pi",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1.3,
+      "=a"
+     ],
+     "to": [
+      1.3,
+      "=a"
+     ],
+     "label": "y=a",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x1",
+      "=a"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x2",
+      "=a"
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=a"
+     ],
+     "label": "P₁(θ₁)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=a"
+     ],
+     "label": "P₂(θ₂)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기준각 α",
+    "expr": "refdeg",
+    "digits": 2
+   },
+   {
+    "label": "θ₁ (도)",
+    "expr": "t1deg",
+    "digits": 2
+   },
+   {
+    "label": "θ₂ (도)",
+    "expr": "t2deg",
+    "digits": 2
+   },
+   {
+    "label": "sinθ₁",
+    "expr": "sin(t1)",
+    "digits": 3
+   },
+   {
+    "label": "sinθ₂",
+    "expr": "sin(t2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": -0.5
+   },
+   {
+    "a": 0.8660254037844386
+   },
+   {
+    "a": 0
+   }
+  ],
+  "invariants": [
+   "sin(t1) - a",
+   "sin(t2) - a",
+   "x1^2 + a^2 - 1",
+   "x2^2 + a^2 - 1",
+   "sin(ref) - abs(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "refdeg": 30,
+     "t1deg": 30,
+     "t2deg": 150
+    }
+   },
+   {
+    "params": {
+     "a": -0.5
+    },
+    "expect": {
+     "refdeg": 30,
+     "t1deg": 210,
+     "t2deg": 330
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "refdeg": 0,
+     "t1deg": 0,
+     "t2deg": 180
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

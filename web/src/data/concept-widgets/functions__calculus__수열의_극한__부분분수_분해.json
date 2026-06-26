@@ -1,0 +1,152 @@
+{
+ "id": "functions/calculus/수열의_극한/부분분수_분해",
+ "spec": {
+  "title": "부분분수 분해: 1/((x−a)(x−b)) = A/(x−a) + B/(x−b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (첫 번째 극점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (두 번째 극점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "A = 1/(a-b); B = 1/(b-a); xt = (a+b)/2",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "1/((x-a)*(x-b))",
+     "label": "원래 함수 1/((x−a)(x−b))",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "A/(x-a) + B/(x-b)",
+     "label": "부분분수의 합 (원래 함수와 일치)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "A/(x-a)",
+     "label": "A/(x−a)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "B/(x-b)",
+     "label": "B/(x−b)",
+     "color": "#ea580c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A = 1/(a−b)",
+    "expr": "A",
+    "digits": 4
+   },
+   {
+    "label": "B = 1/(b−a)",
+    "expr": "B",
+    "digits": 4
+   },
+   {
+    "label": "A+B (항상 0)",
+    "expr": "A+B",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 1
+   },
+   {
+    "a": 0,
+    "b": 1
+   },
+   {
+    "a": -2,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "A + B",
+   "A*(a - b) - 1",
+   "1/((xt - a)*(xt - b)) - (A/(xt - a) + B/(xt - b))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 1
+    },
+    "expect": {
+     "A": -1,
+     "B": 1,
+     "xt": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 2
+    },
+    "expect": {
+     "A": -0.25,
+     "B": 0.25,
+     "xt": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "A": -0.5,
+     "B": 0.5,
+     "xt": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

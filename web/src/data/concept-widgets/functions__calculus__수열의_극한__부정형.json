@@ -1,0 +1,138 @@
+{
+ "id": "functions/calculus/수열의_극한/부정형",
+ "spec": {
+  "title": "부정형(∞−∞): √(x²+ax) − x 의 극한",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (안쪽 일차항 계수)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "N",
+    "label": "N (관찰 지점 x)",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "L = a/2; fN = sqrt(N^2 + a*N) - N; err = fN - L",
+  "geometry": {
+   "range": [
+    0,
+    50
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    50
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(x^2 + a*x) - x",
+     "label": "f(x)=√(x²+ax)−x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a/2",
+     "label": "극한 L = a/2",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한 L = a/2",
+    "expr": "L",
+    "digits": 4
+   },
+   {
+    "label": "f(N) (현재 근사값)",
+    "expr": "fN",
+    "digits": 4
+   },
+   {
+    "label": "오차 f(N) − L",
+    "expr": "err",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "N": 4
+   },
+   {
+    "a": 6,
+    "N": 12
+   },
+   {
+    "a": 2,
+    "N": 24
+   },
+   {
+    "a": 4,
+    "N": 50
+   }
+  ],
+  "invariants": [
+   "fN*(sqrt(N^2 + a*N) + N) - a*N",
+   "(fN + N)^2 - (N^2 + a*N)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "N": 4
+    },
+    "expect": {
+     "fN": 0.898979485566356,
+     "L": 1
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "N": 12
+    },
+    "expect": {
+     "fN": 2.696938456699069,
+     "L": 3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "N": 24
+    },
+    "expect": {
+     "fN": 0.979991993593592,
+     "L": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

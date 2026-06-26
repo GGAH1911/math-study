@@ -1,0 +1,156 @@
+{
+ "id": "functions/calculus/수열의_극한/등비급수",
+ "spec": {
+  "title": "등비급수의 수렴: 부분합 Sₙ이 a/(1−r)에 다가간다",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫째항 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -0.7,
+    "max": 0.7,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "항의 개수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 6,
+    "step": 1,
+    "unit": "항"
+   }
+  ],
+  "scope": "S = a*(1 - r^n)/(1 - r); L = a/(1 - r); term = a*r^(n - 1); err = abs(L - S)",
+  "plot": {
+   "range": [
+    0,
+    30
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*(1 - r^round(x))/(1 - r)",
+     "label": "부분합 Sₙ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a/(1 - r)",
+     "label": "수렴값 a/(1−r)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "제n항 aₙ = a·rⁿ⁻¹",
+    "expr": "term",
+    "digits": 4
+   },
+   {
+    "label": "부분합 Sₙ",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "수렴값 a/(1−r)",
+    "expr": "L",
+    "digits": 4
+   },
+   {
+    "label": "오차 |L − Sₙ| (= 꼬리합)",
+    "expr": "err",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "r": 0.5,
+    "n": 4
+   },
+   {
+    "a": 2,
+    "r": -0.5,
+    "n": 3
+   },
+   {
+    "a": -1.5,
+    "r": 0.3,
+    "n": 6
+   },
+   {
+    "a": 2,
+    "r": 0.7,
+    "n": 10
+   }
+  ],
+  "invariants": [
+   "S*(1 - r) - a*(1 - r^n)",
+   "L*(1 - r) - a",
+   "(L - S) - a*r^n/(1 - r)",
+   "term - a*r^(n - 1)",
+   "err - abs(L - S)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "r": 0.5,
+     "n": 4
+    },
+    "expect": {
+     "S": 1.875,
+     "L": 2,
+     "term": 0.125,
+     "err": 0.125
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "r": -0.5,
+     "n": 3
+    },
+    "expect": {
+     "S": 1.5,
+     "L": 1.3333333333,
+     "term": 0.5,
+     "err": 0.1666666667
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "r": 0.5,
+     "n": 1
+    },
+    "expect": {
+     "S": 1,
+     "L": 2,
+     "term": 1,
+     "err": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

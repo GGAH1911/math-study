@@ -1,0 +1,152 @@
+{
+ "id": "functions/calculus/여러가지함수의_미분/절댓값함수의_미분",
+ "spec": {
+  "title": "절댓값함수의 미분: f(x)=|g(x)|, g(x)=x²−c",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (꺾인점 위치 x=±√c)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (미분계수 보는 점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "g0 = x0^2 - c; gp0 = 2*x0; yp = abs(g0); s = sign(g0); m = s*gp0",
+  "plot": {
+   "range": [
+    -3.2,
+    3.2
+   ],
+   "yRange": [
+    -4.5,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2 - c",
+     "label": "g(x)=x²−c",
+     "color": "#9ca3af"
+    },
+    {
+     "fn": "abs(x^2 - c)",
+     "label": "f(x)=|g(x)| (음수부 반사)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "yp + m*(x - x0)",
+     "label": "x₀에서의 접선 (기울기 f'(x₀))",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "g(x₀)",
+    "expr": "g0",
+    "digits": 3
+   },
+   {
+    "label": "g'(x₀)=2x₀",
+    "expr": "gp0",
+    "digits": 3
+   },
+   {
+    "label": "부호 g/|g|",
+    "expr": "s",
+    "digits": 0
+   },
+   {
+    "label": "f(x₀)=|g(x₀)|",
+    "expr": "yp",
+    "digits": 3
+   },
+   {
+    "label": "f'(x₀)=g/|g|·g'",
+    "expr": "m",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1,
+    "x0": 2
+   },
+   {
+    "c": 1,
+    "x0": 0.5
+   },
+   {
+    "c": 4,
+    "x0": 1
+   },
+   {
+    "c": 2,
+    "x0": 2.5
+   }
+  ],
+  "invariants": [
+   "yp*m - g0*gp0",
+   "abs(m) - abs(gp0)",
+   "yp^2 - g0^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1,
+     "x0": 2
+    },
+    "expect": {
+     "g0": 3,
+     "gp0": 4,
+     "yp": 3,
+     "s": 1,
+     "m": 4
+    }
+   },
+   {
+    "params": {
+     "c": 4,
+     "x0": 1
+    },
+    "expect": {
+     "g0": -3,
+     "gp0": 2,
+     "yp": 3,
+     "s": -1,
+     "m": -2
+    }
+   },
+   {
+    "params": {
+     "c": 0,
+     "x0": 2
+    },
+    "expect": {
+     "g0": 4,
+     "gp0": 4,
+     "yp": 4,
+     "s": 1,
+     "m": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

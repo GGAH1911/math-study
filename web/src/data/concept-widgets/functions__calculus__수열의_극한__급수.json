@@ -1,0 +1,147 @@
+{
+ "id": "functions/calculus/수열의_극한/급수",
+ "spec": {
+  "title": "급수: 등비급수의 부분합과 극한",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫째항 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": 0.1,
+    "max": 0.75,
+    "init": 0.5,
+    "step": 0.05
+   },
+   {
+    "name": "N",
+    "label": "더한 항 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "L=a/(1-r); SN=a*(1-r^N)/(1-r); rem=L-SN",
+  "geometry": null,
+  "plot": {
+   "range": [
+    1,
+    20
+   ],
+   "yRange": [
+    0,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*(1-r^x)/(1-r)",
+     "label": "Sₙ (부분합)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a/(1-r)",
+     "label": "극한 L",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분합 S_n",
+    "expr": "SN",
+    "digits": 4
+   },
+   {
+    "label": "극한 L = a/(1-r)",
+    "expr": "L",
+    "digits": 4
+   },
+   {
+    "label": "오차 L - S_n",
+    "expr": "rem",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "r": 0.5,
+    "N": 5
+   },
+   {
+    "a": 1.5,
+    "r": 0.5,
+    "N": 3
+   },
+   {
+    "a": 1,
+    "r": 0.25,
+    "N": 2
+   },
+   {
+    "a": 0.5,
+    "r": 0.75,
+    "N": 10
+   }
+  ],
+  "invariants": [
+   "L*(1-r) - a",
+   "SN*(1-r) - a*(1-r^N)",
+   "SN + rem - L",
+   "rem - a*r^N/(1-r)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "r": 0.5,
+     "N": 5
+    },
+    "expect": {
+     "SN": 1.9375,
+     "L": 2,
+     "rem": 0.0625
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "r": 0.5,
+     "N": 3
+    },
+    "expect": {
+     "SN": 2.625,
+     "L": 3,
+     "rem": 0.375
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "r": 0.5,
+     "N": 1
+    },
+    "expect": {
+     "SN": 1,
+     "L": 2,
+     "rem": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "id": "functions/calculus/정적분의_활용/정적분과_넓이",
+ "spec": {
+  "title": "정적분과 넓이 — 곡선 y=x² 아래 넓이 = ∫₀ᵇ x² dx",
+  "params": [
+   {
+    "name": "b",
+    "label": "위끝 b (적분 상한, 아래끝 a=0)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "직사각형 개수 n (리만 합)",
+    "type": "slider",
+    "min": 1,
+    "max": 200,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "S = b^3/3; R = b^3*(n+1)*(2*n+1)/(6*n^2); T = R - b^3/(2*n); err = R - S; fb = b^2",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이 S = ∫₀ᵇ x² dx = b³/3",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "오른쪽 리만 합 Rₙ (n개 직사각형)",
+    "expr": "R",
+    "digits": 4
+   },
+   {
+    "label": "사다리꼴 근사 Tₙ",
+    "expr": "T",
+    "digits": 4
+   },
+   {
+    "label": "오차 Rₙ − S  (n↑ → 0)",
+    "expr": "err",
+    "digits": 4
+   },
+   {
+    "label": "f(b) = b²",
+    "expr": "fb",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 2,
+    "n": 4
+   },
+   {
+    "b": 3,
+    "n": 1
+   },
+   {
+    "b": 1,
+    "n": 2
+   },
+   {
+    "b": 4,
+    "n": 100
+   }
+  ],
+  "invariants": [
+   "err - b^3*(3*n+1)/(6*n^2)",
+   "T - S - b^3/(6*n^2)",
+   "3*S - b*fb"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 2,
+     "n": 4
+    },
+    "expect": {
+     "S": 2.6666666667,
+     "R": 3.75,
+     "fb": 4
+    }
+   },
+   {
+    "params": {
+     "b": 3,
+     "n": 1
+    },
+    "expect": {
+     "S": 9,
+     "R": 27,
+     "fb": 9
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "n": 2
+    },
+    "expect": {
+     "S": 0.3333333333,
+     "R": 0.625,
+     "fb": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

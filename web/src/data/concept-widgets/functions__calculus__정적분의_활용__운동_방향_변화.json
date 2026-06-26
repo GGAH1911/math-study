@@ -1,0 +1,136 @@
+{
+ "id": "functions/calculus/정적분의_활용/운동_방향_변화",
+ "spec": {
+  "title": "운동 방향 변화 — 속도 v(t)의 부호가 바뀔 때",
+  "params": [
+   {
+    "name": "r1",
+    "label": "v=0 시각 t₁",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 1,
+    "step": 0.1,
+    "unit": "s"
+   },
+   {
+    "name": "r2",
+    "label": "v=0 시각 t₂",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 3,
+    "step": 0.1,
+    "unit": "s"
+   }
+  ],
+  "scope": "b = r1 + r2; c = r1 * r2; vmin = -(r1 - r2)^2 / 4; tv = (r1 + r2) / 2; nchange = sign((r1 - r2)^2) * 2; vr1 = r1^2 - b*r1 + c; vr2 = r2^2 - b*r2 + c; vmid = tv^2 - b*tv + c; dvtv = 2*tv - b",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    -2.5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "(x - r1)*(x - r2)",
+     "label": "v(t) = (t−t₁)(t−t₂) 속도",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "v=0 인 시각 t₁",
+    "expr": "min(r1, r2)",
+    "digits": 2
+   },
+   {
+    "label": "v=0 인 시각 t₂",
+    "expr": "max(r1, r2)",
+    "digits": 2
+   },
+   {
+    "label": "최소 속도 vmin",
+    "expr": "vmin",
+    "digits": 3
+   },
+   {
+    "label": "방향 전환 횟수",
+    "expr": "nchange",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 1.5,
+    "r2": 2.5
+   },
+   {
+    "r1": 2,
+    "r2": 2
+   },
+   {
+    "r1": 1,
+    "r2": 3
+   },
+   {
+    "r1": 1.2,
+    "r2": 2.8
+   }
+  ],
+  "invariants": [
+   "vr1",
+   "vr2",
+   "vmid - vmin",
+   "dvtv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 1,
+     "r2": 3
+    },
+    "expect": {
+     "b": 4,
+     "c": 3,
+     "vmin": -1,
+     "tv": 2,
+     "nchange": 2
+    }
+   },
+   {
+    "params": {
+     "r1": 2,
+     "r2": 2
+    },
+    "expect": {
+     "b": 4,
+     "c": 4,
+     "vmin": 0,
+     "tv": 2,
+     "nchange": 0
+    }
+   },
+   {
+    "params": {
+     "r1": 0.5,
+     "r2": 3.5
+    },
+    "expect": {
+     "b": 4,
+     "c": 1.75,
+     "vmin": -2.25,
+     "tv": 2,
+     "nchange": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

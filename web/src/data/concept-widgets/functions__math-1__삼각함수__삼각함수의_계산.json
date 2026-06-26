@@ -1,0 +1,159 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_계산",
+ "spec": {
+  "title": "삼각함수의 계산 — 단위원으로 보는 sin·cos·tan",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); ty=tan(rad)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "단위원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "r=1",
+     "color": "#444"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      0
+     ],
+     "label": "cosθ",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "sinθ",
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(cosθ, sinθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin θ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "cos θ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "tan θ",
+    "expr": "ty",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "sy/cx-ty"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "sy": 0.5,
+     "ty": 0.5773502691896258
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "cx": 0.7071067811865476,
+     "sy": 0.7071067811865476,
+     "ty": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254037844386,
+     "ty": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

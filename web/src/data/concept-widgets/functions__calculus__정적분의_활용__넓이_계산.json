@@ -1,0 +1,111 @@
+{
+ "id": "functions/calculus/정적분의_활용/넓이_계산",
+ "spec": {
+  "title": "정적분으로 넓이 구하기: 곡선 y = a − x² 와 x축이 둘러싸는 영역",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (꼭짓점 높이)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "r = sqrt(a); S = (4/3)*a^(3/2); Sp = (4/3)*(a+0.0001)^(3/2); Sm = (4/3)*(a-0.0001)^(3/2); dSda = (Sp - Sm)/0.0002; leib = dSda - 2*r",
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -0.6,
+    4.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a - x^2",
+     "label": "y = a − x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "둘러싸인 넓이  S = ∫₋√a^√a (a − x²) dx",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "x축과의 교점  x = ±√a",
+    "expr": "r",
+    "digits": 4
+   },
+   {
+    "label": "밑변×높이  2√a · a (참고)",
+    "expr": "2*r*a",
+    "digits": 4
+   },
+   {
+    "label": "검증  dS/da − 2√a  (≈0, 넓이의 변화율)",
+    "expr": "leib",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 2.25
+   },
+   {
+    "a": 4
+   }
+  ],
+  "invariants": [
+   "a - r^2",
+   "S - (2/3)*(2*r)*a",
+   "leib"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "r": 1,
+     "S": 1.3333333333
+    }
+   },
+   {
+    "params": {
+     "a": 2.25
+    },
+    "expect": {
+     "r": 1.5,
+     "S": 4.5
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "r": 2,
+     "S": 10.6666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
