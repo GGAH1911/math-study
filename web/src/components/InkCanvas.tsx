@@ -14,7 +14,7 @@ type Paper = 'blank' | 'ruled' | 'grid';
 const COLORS = ['#2A261E', '#39487D', '#C13D38', '#2E7B4F'];
 const WIDTHS = [1.5, 2.5, 4];
 const ERASER_W = 18;
-const BUILD = 'ink v9'; // ★캐시 확인용 빌드 표식 — 코드 바뀔 때마다 올림
+const BUILD = 'ink v10'; // ★캐시 확인용 빌드 표식 — 코드 바뀔 때마다 올림
 const nid = () => 'L' + Math.random().toString(36).slice(2, 8);
 
 export default function InkCanvas({ storageKey, height = 560 }: { storageKey: string; height?: number }) {
@@ -180,6 +180,13 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
 
     over.addEventListener('pointerdown', down); over.addEventListener('pointermove', move);
     over.addEventListener('pointerup', up); over.addEventListener('pointercancel', up);
+    // ★iOS 더블탭-줌 제스처가 빠른 둘째 탭의 pointerdown을 통째로 삼키는 것 차단.
+    //   touch-action:none이 iOS Safari에선 부족 → 터치 기본동작을 직접 preventDefault(passive:false 필수).
+    //   포인터 이벤트는 별개로 발생하므로 그리기는 유지됨.
+    const killTouch = (ev: TouchEvent) => ev.preventDefault();
+    over.addEventListener('touchstart', killTouch, { passive: false });
+    over.addEventListener('touchmove', killTouch, { passive: false });
+    over.addEventListener('touchend', killTouch, { passive: false });
     // ★iOS Safari 텍스트 선택 콜아웃(복사/번역 메뉴) 차단. ★핵심: 펜 빠른 2탭(짧은 간격)=iOS 더블탭 단어선택 제스처 → 콜아웃.
     //   "그리는 중(cur.current)"만으론 획과 획 사이 2번째 탭을 못 막음 → "최근 펜 접촉(recentPen)" 윈도우 동안 문서 전역 선택·더블클릭 차단.
     let penTimer: ReturnType<typeof setTimeout> | undefined;
@@ -200,6 +207,7 @@ export default function InkCanvas({ storageKey, height = 560 }: { storageKey: st
     const ro = new ResizeObserver(onResize); ro.observe(wrap);
     return () => {
       over.removeEventListener('pointerdown', down); over.removeEventListener('pointermove', move); over.removeEventListener('pointerup', up); over.removeEventListener('pointercancel', up);
+      over.removeEventListener('touchstart', killTouch); over.removeEventListener('touchmove', killTouch); over.removeEventListener('touchend', killTouch);
       wrap.removeEventListener('selectstart', killSel); wrap.removeEventListener('contextmenu', killSel); over.removeEventListener('contextmenu', killSel);
       document.removeEventListener('selectstart', docSel); document.removeEventListener('dblclick', docSel);
       if (penTimer) clearTimeout(penTimer); document.body.style.removeProperty('-webkit-user-select');
