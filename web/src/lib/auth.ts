@@ -60,7 +60,8 @@ export async function verifyPassword(password: string, stored: string | null): P
 // ─────────────────────────────────────────── 세션
 export const SESSION_COOKIE = 'ms_session';
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30일
-const SECURE_COOKIES = process.env.MATH_STUDY_SECURE_COOKIES === 'true'; // HTTPS 배포 시 'true'
+// 프로덕션(NODE_ENV=production)은 항상 Secure 쿠키(HTTPS 전제) — 깜빡 누락 방지. env로도 강제 가능.
+const SECURE_COOKIES = process.env.MATH_STUDY_SECURE_COOKIES === 'true' || process.env.NODE_ENV === 'production';
 
 function hashToken(token: string): string {
   return createHash('sha256').update(token).digest('hex');

@@ -141,9 +141,16 @@ export const POST: APIRoute = async ({ request }) => {
   if (!code) return new Response(JSON.stringify({ error: 'empty code' }), { status: 400 });
   if (code.length > 4000) return new Response(JSON.stringify({ error: 'code too long' }), { status: 400 });
 
+  // ★샌드박싱(2026-06): sympy 계산 외 위험 토큰 차단 — 임의 코드실행·파일/네트워크/내부 접근 방지.
+  //   HEADER가 필요한 심볼·헬퍼를 모두 제공하므로 사용자 코드엔 import·시스템 접근이 불필요하다.
+  if (/__|\b(import|os|sys|subprocess|socket|shutil|importlib|pickle|marshal|ctypes|eval|exec|compile|open|input|globals|locals|getattr|setattr|delattr|breakpoint|exit|quit)\b/.test(code)) {
+    return new Response(JSON.stringify({ error: 'disallowed token (sympy 계산만 허용)' }), { status: 400 });
+  }
+
   return new Promise<Response>((resolveResp) => {
     const child = spawn(VENV_PYTHON, ['-c', HEADER + code], {
-      env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+      // ★최소 env — process.env(DATABASE_URL·세션시크릿·OAuth토큰) 상속 금지(코드가 os.environ 못 읽게 이중방어).
+      env: { PYTHONIOENCODING: 'utf-8', PATH: '/usr/bin:/bin', HOME: '/tmp', LANG: 'C.UTF-8' },
       stdio: ['ignore', 'pipe', 'pipe'],
     });
 

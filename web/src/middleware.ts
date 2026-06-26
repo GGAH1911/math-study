@@ -24,17 +24,9 @@ const PUBLIC_PATHS: RegExp[] = [
   /^\/signup\/?$/,
   /^\/api\/auth\//, // 로그인/가입/로그아웃 API
   /^\/api\/health\b/,
-  /^\/progress\/?$/,    // 인제스트 진행 관측 — 개발용, 미인증 허용
-  /^\/api\/progress\b/, // progress 폴링 API
-  /^\/dev\/concept-figure-test\/?$/, // figure 디자인 검증 — 정적 데모(데이터 없음), 비로그인 허용
-  /^\/dev\/concept-figures\/?$/,     // 개념 도식 갤러리 검토 — 비민감 도식, 비로그인 허용(임시)
-  /^\/dev\/figrender\/?$/,           // QA 단일 도식 렌더 하네스(고정폭) — 헤드리스 스샷용
-  /^\/dev\/figrender3d\/?$/,         // 3D 도식 렌더 하네스(R3F) — 3D figure 시각 검수
-  /^\/dev\/figgallery3d\/?$/,        // 3D 도식 갤러리(최종본) — 비로그인 열람
-  /^\/dev\/ingest-test\/?$/,         // 기출 인제스트 agy 교정+도식 테스트(임시) — 비로그인 열람
-  /^\/dev\/figextract\/?$/,          // 그림 추출 프로토타입 뷰어(임시) — 비로그인 열람
-  /^\/dev\/corrector-gallery\/?$/,   // 교정기 결과 갤러리(임시) — 비로그인 열람
-  /^\/dev\/goldboard\/?$/,           // GOLD 5종 실시간 검수 보드(임시) — 비로그인 열람
+  // ★프로덕션 게이팅(2026-06): dev 도구/진행관측 라우트는 더 이상 PUBLIC 아님.
+  //   /dev/* 는 ADMIN_PATHS 로, /progress·/api/progress 는 로그인 필요로 강등(무인증 노출 차단).
+  //   개발 중 비로그인 열람이 필요하면 DEV_NOAUTH(=dev 모드 전용)로 우회.
 ];
 
 // 관리자 전용 경로(인증 + is_admin 필요). 비관리자: 페이지=홈, API=403.
@@ -49,13 +41,15 @@ const ADMIN_PATHS: RegExp[] = [
 // dev(Vite) 경로(/@vite, /@fs, /@id, /src/, /node_modules/.vite)와 빌드 자산(/_astro)을
 // 게이팅하면 모듈 로드·HMR 이 깨지므로 반드시 통과시킨다.
 function isAssetOrInternal(pathname: string): boolean {
+  // ★기출 원본 이미지는 자산이지만 인증 뒤로 게이팅(무인증 스크래핑 차단·유료화 전제).
+  //   .png 확장자 regex(아래)로도 우회되지 않게 자산 판정보다 먼저 false 반환.
+  if (pathname.startsWith('/problem-images/')) return false;
   if (
     pathname.startsWith('/@') ||
     pathname.startsWith('/_') ||
     pathname.startsWith('/src/') ||
     pathname.startsWith('/node_modules') ||
     pathname.startsWith('/assets/') ||
-    pathname.startsWith('/problem-images/') ||
     pathname.startsWith('/favicon') ||
     pathname === '/sw.js' ||
     pathname === '/manifest.webmanifest'

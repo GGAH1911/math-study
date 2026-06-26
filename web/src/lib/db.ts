@@ -3,6 +3,10 @@
 // pages built at compile time.
 import postgres from 'postgres';
 
+// ★프로덕션에선 약한 dev 기본 자격증명(mathstudy:mathstudy)으로 조용히 뜨지 못하게 — env 필수.
+if (process.env.NODE_ENV === 'production' && !process.env.MATH_STUDY_DATABASE_URL) {
+  throw new Error('MATH_STUDY_DATABASE_URL 환경변수가 프로덕션에 필요합니다 (기본 dev 자격증명 사용 금지).');
+}
 const DATABASE_URL =
   process.env.MATH_STUDY_DATABASE_URL ??
   'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy';
