@@ -6,6 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry, getCollection, render } from 'astro:content';
 import TutorChat from '../../components/TutorChat.astro';
 import ProblemAttemptPanel from '../../components/ProblemAttemptPanel.tsx';
+import InkCanvas from '../../components/InkCanvas.tsx';   // 손풀이 필기 캔버스(펜·태블릿, 자동저장)
 import SolutionPanel from '../../components/SolutionPanel.tsx';
 import RoundNav from '../../components/RoundNav.astro';
 import { yearLabel, FORMAT_LABEL, TIER_BADGE } from '../../lib/problem-meta';
@@ -195,6 +196,12 @@ if (src) {
             )}
           </div>
         )}
+        <details class="not-prose my-6" open>
+          <summary class="cursor-pointer text-sm font-semibold select-none" style="color:var(--color-muted)">✏️ 손풀이 — 펜·태블릿으로 직접 풀어보세요 (자동 저장)</summary>
+          <div class="mt-3">
+            <InkCanvas client:only="react" storageKey={`problem:${entry.id}`} />
+          </div>
+        </details>
         <div class="my-6">
           <ProblemAttemptPanel client:load slug={entry.id} />
         </div>
