@@ -44,6 +44,12 @@ const snapAngle = (s: Pt, c: Pt): Pt => {
   return { x: s.x + Math.cos(ang) * len, y: s.y + Math.sin(ang) * len, p: c.p };
 };
 const snapGrid = (p: Pt, gap: number): Pt => ({ x: Math.round(p.x / gap) * gap, y: Math.round(p.y / gap) * gap, p: p.p });
+// 점→선분 최단거리 (획 지우개가 2점 직선의 중간도 잡도록).
+const distToSeg = (px: number, py: number, ax: number, ay: number, bx: number, by: number): number => {
+  const dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+  let t = len2 ? ((px - ax) * dx + (py - ay) * dy) / len2 : 0; t = t < 0 ? 0 : t > 1 ? 1 : t;
+  return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+};
 
 export default function InkCanvas({ storageKey, height = 560, bgImage }: { storageKey: string; height?: number; bgImage?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -132,7 +138,11 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
 
   const hit = (id: string, x: number, y: number, rad: number): number => {
     const arr = strokesOf.current.get(id) ?? [];
-    for (let i = arr.length - 1; i >= 0; i--) { const s = arr[i]; if (s.tool !== 'pen') continue; for (const pt of s.pts) if ((pt.x - x) ** 2 + (pt.y - y) ** 2 <= rad * rad) return i; }
+    for (let i = arr.length - 1; i >= 0; i--) {
+      const s = arr[i]; if (s.tool !== 'pen' || !s.pts.length) continue;
+      if (s.pts.length === 1) { if (Math.hypot(s.pts[0].x - x, s.pts[0].y - y) <= rad) return i; continue; }
+      for (let k = 1; k < s.pts.length; k++) if (distToSeg(x, y, s.pts[k - 1].x, s.pts[k - 1].y, s.pts[k].x, s.pts[k].y) <= rad) return i; // 세그먼트 거리(직선 중간도)
+    }
     return -1;
   };
   // 갈무리: 선택 박스(점선) 그리기 + 올가미 폴리곤 → 포함 stroke idx.
@@ -363,6 +373,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
   const delLayer = (id: string) => {
     if (layers.length <= 1) return; if (!confirm('이 레이어를 삭제할까요?')) return;
     strokesOf.current.delete(id); elOf.current.delete(id);
+    if (selRef.current?.layerId === id) { selRef.current = null; uiCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h); } // 선택 레이어 삭제 시 선택 해제
     const next = layers.filter((l) => l.id !== id); setLayers(next);
     if (activeId === id) setActiveId(next[0].id); setRev((r) => r + 1); save();
   };
@@ -425,7 +436,8 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
     octx.fillStyle = '#ffffff'; octx.fillRect(0, 0, out.width, out.height);
     octx.scale(dpr, dpr); octx.translate(-rx, -ry);
     for (const l of layers) if (l.visible) { const e = elOf.current.get(l.id); if (e?.c) octx.drawImage(e.c, 0, 0, w, h); }
-    out.toBlob((blob) => { if (!blob) return; const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `손풀이-${storageKey.replace(/[^a-z0-9가-힣]+/gi, '_')}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); });
+    // toDataURL(동기)로 — 사용자 제스처 안에서 즉시 다운로드(iOS Safari는 toBlob 비동기 콜백 다운로드를 막음).
+    const a = document.createElement('a'); a.href = out.toDataURL('image/png'); a.download = `손풀이-${storageKey.replace(/[^a-z0-9가-힣]+/gi, '_')}.png`; a.click();
   };
 
   // 썸네일: 레이어 strokes 를 작은 캔버스에 축소 렌더.
