@@ -1,0 +1,15 @@
+# ★주의: 우리 표준 빌드는 컨텍스트=레포 루트라 이 파일이 아니라 /.dockerignore 가 쓰인다
+#   (web/Dockerfile 헤더 참고: docker build -f web/Dockerfile -t math-study .).
+#   이 파일은 web/ 만 단독 컨텍스트로 줄 때를 위한 사본일 뿐이다.
+node_modules
+dist
+.astro
+.astro-stable
+.astro-noauth
+node_modules/.vite*
+.env
+.env.*
+*.key
+.DS_Store
+scripts/_*
+public/problem-images/tiles

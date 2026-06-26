@@ -2,6 +2,14 @@
 // 보안 원칙: fail-safe. 세션 해석 실패는 throw 하지 않고 미인증으로 취급한다.
 import { defineMiddleware } from 'astro:middleware';
 import { resolveUser, isSameOrigin, type User } from './lib/auth.ts';
+import { rateLimit, sweep } from './lib/rate-limit.ts';
+
+// 남용방지: 비싼 POST 엔드포인트 per-user 분당 한도(429). 스팸/DoS 방지(빌링 아님).
+const RATE_LIMITS: Array<[RegExp, number]> = [
+  [/^\/api\/chat\b/, 25],        // LLM 튜터
+  [/^\/api\/openrouter\b/, 25],  // 폴백 LLM
+  [/^\/api\/sympy\b/, 60],       // 검증 계산(튜터가 다회 호출 가능)
+];
 
 // 로컬 검증 전용 우회(DEV_NOAUTH=1). 합성 admin 을 주입하고 인증·CSRF·admin 게이팅을
 // 전부 통과시킨다 → admin 계정 없이도 검증자(Claude)가 모든 페이지 렌더를 직접 확인.
@@ -22,6 +30,8 @@ const DEV_NOAUTH_USER: User = {
 const PUBLIC_PATHS: RegExp[] = [
   /^\/login\/?$/,
   /^\/signup\/?$/,
+  /^\/terms\/?$/,    // 이용약관(가입 전 열람·법적 고지)
+  /^\/privacy\/?$/,  // 개인정보처리방침(가입 전 열람·법적 고지)
   /^\/api\/auth\//, // 로그인/가입/로그아웃 API
   /^\/api\/health\b/,
   // ★프로덕션 게이팅(2026-06): dev 도구/진행관측 라우트는 더 이상 PUBLIC 아님.
@@ -101,6 +111,22 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
     const returnTo = encodeURIComponent(pathname + url.search);
     return context.redirect(`/login?returnTo=${returnTo}`);
+  }
+
+  // 남용방지: 인증된 사용자라도 비싼 엔드포인트는 분당 한도 초과 시 429.
+  if (method === 'POST') {
+    for (const [re, limit] of RATE_LIMITS) {
+      if (re.test(pathname)) {
+        sweep(60_000);
+        if (!rateLimit(`${user.id}:${pathname}`, limit, 60_000)) {
+          return new Response(JSON.stringify({ error: '요청이 너무 잦습니다. 잠시 후 다시 시도해 주세요.' }), {
+            status: 429,
+            headers: { 'content-type': 'application/json' },
+          });
+        }
+        break;
+      }
+    }
   }
 
   // 관리자 전용 경로 — dev 도구 + 공유 콘텐츠(개념 본문) 재생성.

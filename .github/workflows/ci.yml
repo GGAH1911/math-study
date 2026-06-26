@@ -1,0 +1,40 @@
+name: CI
+
+# web(Astro)의 타입체크 + 빌드 게이트. astro check/build 는 prebuild 스크립트가
+# ../docs(개념/문제 마크다운)를 읽으므로 레포 전체를 체크아웃해야 한다.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# 같은 ref 에 푸시가 몰리면 이전 실행 취소(중복 빌드 방지).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check (astro check)
+        run: npx astro check
+
+      - name: Build (astro build)
+        run: npx astro build

@@ -42,6 +42,21 @@ function formatAreas(format: ExamFormat, option?: string): Record<string, number
   return { 대수: 10, 미적분1: 12, 확통: 8 };                 // 2028 통합형 (대수·미적분Ⅰ·확통)
 }
 
+// 양식별 실제 수능 배치(format 슬롯). length 30, 1-based position i ↔ slots[i-1].
+//  · 2028 통합형 : 1-21 객관식 · 22-30 단답
+//  · 공통+선택   : 공통 1-15 객관식·16-22 단답 / 선택 23-28 객관식·29-30 단답
+//  · 가/나형     : 1-21 객관식 · 22-30 단답
+// (consistency_gate 기준 format = choice/numeric)
+function formatSlots(format: ExamFormat): ('choice' | 'numeric')[] {
+  const fill = (n: number, v: 'choice' | 'numeric') => Array(n).fill(v) as ('choice' | 'numeric')[];
+  if (format === 'gongseon') {
+    return [...fill(15, 'choice'), ...fill(7, 'numeric'),   // 공통 1-22
+            ...fill(6, 'choice'), ...fill(2, 'numeric')];   // 선택 23-30
+  }
+  // 2028 통합형 · 가/나형: 1-21 객관식, 22-30 단답
+  return [...fill(21, 'choice'), ...fill(9, 'numeric')];
+}
+
 const TIERS = ['early', 'mid', 'killer'] as const;
 const TIER_RANK: Record<string, number> = { early: 0, mid: 1, killer: 2 };
 const AREA_RANK: Record<string, number> = { 대수: 0, 미적분1: 1, 미적분2: 2, 확통: 3, 기하: 4, 기초: 5 };
@@ -95,11 +110,26 @@ export function buildRandomExam(problems: P[], opts: BuildOpts): P[] {
     for (const p of pickN(rest, TOTAL - out.length)) { out.push(p); used.add(p.id); }
   }
 
-  // 영역 순 → 난이도 순. 번호는 라우트에서 1..N 재부여.
-  out.sort((a, b) => {
+  // 각 format 큐를 영역 순 → 난이도 순으로 정렬(기존 출제 의도 유지).
+  const byAreaTier = (a: P, b: P) => {
     const ra = AREA_RANK[areaOf(a)] ?? 9, rb = AREA_RANK[areaOf(b)] ?? 9;
     if (ra !== rb) return ra - rb;
     return (TIER_RANK[a.data.killer_tier ?? 'mid'] ?? 1) - (TIER_RANK[b.data.killer_tier ?? 'mid'] ?? 1);
-  });
-  return out.slice(0, TOTAL);
+  };
+  const pool = out.slice(0, TOTAL);
+  const fmtOf = (p: P) => (String(p.data.format ?? 'choice') === 'numeric' ? 'numeric' : 'choice');
+  const queues: Record<'choice' | 'numeric', P[]> = {
+    choice: pool.filter((p) => fmtOf(p) === 'choice').sort(byAreaTier),
+    numeric: pool.filter((p) => fmtOf(p) === 'numeric').sort(byAreaTier),
+  };
+
+  // 실제 수능 배치 슬롯에 format별로 배정. 큐 불균형 시 반대 큐로 폴백(빈자리 방지).
+  const slots = formatSlots(opts.format);
+  const placed: P[] = [];
+  for (const want of slots) {
+    const other = want === 'choice' ? 'numeric' : 'choice';
+    const p = queues[want].shift() ?? queues[other].shift();
+    if (p) placed.push(p);
+  }
+  return placed;
 }

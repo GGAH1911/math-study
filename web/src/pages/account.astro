@@ -5,6 +5,7 @@ export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getMasteryCounts } from '../lib/mastery.ts';
 import { getUserProfile } from '../lib/learner.ts';
+import sql from '../lib/db.ts';
 
 const user = Astro.locals.user;
 if (!user) return Astro.redirect('/login?returnTo=/account');
@@ -12,6 +13,12 @@ if (!user) return Astro.redirect('/login?returnTo=/account');
 const counts = await getMasteryCounts(user.id);
 const profile = await getUserProfile(user.id);
 const recorded = counts.learning + counts.proficient + counts.mastered;
+
+// 비밀번호 계정 여부 — 탈퇴 모달에서 비번 재확인 요구 여부 결정(OAuth 전용은 비번 없음).
+const pwRows = await sql<{ has_password: boolean }[]>`
+  SELECT (password_hash IS NOT NULL) AS has_password FROM users WHERE id = ${user.id} LIMIT 1
+`;
+const hasPassword = pwRows[0]?.has_password ?? false;
 
 const masteryChips = [
   { key: 'mastered', label: '마스터', n: counts.mastered, v: 'mastered' },
@@ -137,6 +144,50 @@ const masteryChips = [
         )}
       </div>
     </section>
+
+    {/* ── 위험 구역: 회원 탈퇴 ── */}
+    <section class="rounded-lg border border-rose-500/30 bg-rose-500/[0.03] p-5">
+      <h2 class="text-sm font-semibold text-rose-300 mb-1">회원 탈퇴</h2>
+      <p class="text-xs text-[color:var(--color-muted)] mb-4">
+        계정과 모든 학습 데이터(개념 숙달·문제 풀이 기록·대화 이력·학습자 프로필)가 영구히 삭제됩니다.
+        이 작업은 되돌릴 수 없습니다.
+      </p>
+      <button id="delete-account-btn" type="button" data-has-password={hasPassword ? '1' : '0'}
+        class="px-3 py-1.5 rounded-md border border-rose-500/40 text-sm text-rose-300 hover:bg-rose-500/10 transition">
+        회원 탈퇴하기
+      </button>
+    </section>
+  </div>
+
+  {/* ── 탈퇴 확인 모달 ── */}
+  <div id="delete-modal" hidden
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+    role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+    <div class="w-full max-w-md rounded-lg border border-rose-500/30 bg-[color:var(--color-surface)] p-6 shadow-xl">
+      <h3 id="delete-modal-title" class="text-lg font-semibold text-rose-300 mb-2">정말 탈퇴하시겠어요?</h3>
+      <p class="text-sm text-[color:var(--color-muted)] mb-4">
+        계정과 모든 학습 데이터가 <strong class="text-rose-300">영구히 삭제</strong>되며, 복구할 수 없습니다.
+      </p>
+      {hasPassword && (
+        <div class="mb-4">
+          <label class="block text-xs text-[color:var(--color-muted)] mb-1" for="delete-password">비밀번호 확인</label>
+          <input id="delete-password" type="password" autocomplete="current-password"
+            placeholder="현재 비밀번호"
+            class="w-full px-3 py-2 rounded-md bg-[color:var(--color-bg)] border border-[color:var(--color-border)] focus:border-rose-500/60 outline-none text-sm" />
+        </div>
+      )}
+      <p id="delete-error" class="text-xs text-rose-400 min-h-[1rem] mb-3" role="alert" aria-live="polite"></p>
+      <div class="flex items-center justify-end gap-3">
+        <button id="delete-cancel" type="button"
+          class="px-3 py-1.5 rounded-md border border-[color:var(--color-border)] text-sm text-[color:var(--color-muted)] hover:border-[color:var(--color-subtle)] transition">
+          취소
+        </button>
+        <button id="delete-confirm" type="button"
+          class="px-3 py-1.5 rounded-md bg-rose-500/20 border border-rose-500/50 text-sm font-medium text-rose-200 hover:bg-rose-500/30 transition disabled:opacity-50">
+          영구 삭제
+        </button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -183,6 +234,58 @@ const masteryChips = [
         await fetch('/api/auth/logout', { method: 'POST' });
       } catch { /* 무시하고 로그인으로 */ }
       location.href = '/login';
+    });
+
+    // ── 회원 탈퇴 ──
+    const modal = document.getElementById('delete-modal');
+    const openBtn = document.getElementById('delete-account-btn') as HTMLButtonElement | null;
+    const hasPassword = openBtn?.dataset.hasPassword === '1';
+    const cancelBtn = document.getElementById('delete-cancel') as HTMLButtonElement | null;
+    const confirmBtn = document.getElementById('delete-confirm') as HTMLButtonElement | null;
+    const pwInput = document.getElementById('delete-password') as HTMLInputElement | null;
+    const errEl = document.getElementById('delete-error');
+
+    function closeModal() {
+      if (!modal) return;
+      modal.hidden = true;
+      if (pwInput) pwInput.value = '';
+      if (errEl) errEl.textContent = '';
+    }
+    openBtn?.addEventListener('click', () => {
+      if (!modal) return;
+      modal.hidden = false;
+      if (errEl) errEl.textContent = '';
+      pwInput?.focus();
+    });
+    cancelBtn?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal && !modal.hidden) closeModal(); });
+
+    confirmBtn?.addEventListener('click', async () => {
+      if (!errEl) return;
+      if (hasPassword && !(pwInput?.value)) {
+        errEl.textContent = '비밀번호를 입력해 주세요.';
+        pwInput?.focus();
+        return;
+      }
+      confirmBtn.disabled = true;
+      errEl.textContent = '';
+      try {
+        const r = await fetch('/api/account/delete', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(hasPassword ? { password: pwInput?.value ?? '' } : {}),
+        });
+        const d = await r.json().catch(() => ({}));
+        if (r.ok && d.ok) {
+          location.href = '/';
+          return;
+        }
+        errEl.textContent = d.error || '탈퇴에 실패했습니다.';
+      } catch {
+        errEl.textContent = '네트워크 오류가 발생했습니다.';
+      }
+      confirmBtn.disabled = false;
     });
   </script>
 </BaseLayout>

@@ -1,0 +1,50 @@
+# Docker 빌드 컨텍스트 = 레포 루트(web/Dockerfile 헤더 참고).
+# docker 는 컨텍스트 루트의 .dockerignore 만 읽으므로 이 파일이 실효 목록이다.
+# (web/.dockerignore 는 web/ 만 컨텍스트로 줄 때를 위한 사본 — 보통 미사용.)
+
+# ── node / 빌드 산출물(이미지 안에서 npm ci + build 로 재생성) ──
+**/node_modules
+web/dist
+web/.astro
+web/.astro-stable
+web/.astro-noauth
+web/node_modules/.vite*
+
+# ── 파이썬 venv(런타임 이미지가 자체 설치) ──
+.venv
+**/__pycache__
+**/*.pyc
+
+# ── VCS / 에디터 / OS ──
+.git
+.gitignore
+.vscode
+.idea
+**/.DS_Store
+**/Thumbs.db
+*.swp
+*.swo
+
+# ── 시크릿 / 로컬 env(이미지에 절대 굽지 말 것) ──
+.env
+.env.*
+web/.env
+web/.env.*
+**/*.key
+
+# ── Claude Code 워크트리(하네스 스크래치) ──
+.claude/worktrees
+
+# ── 원본 PDF·OCR 타일(이미지에 불필요, 용량만 큼) ──
+#    ★docs/concepts·docs/problems 의 .md 와 docs/assets 는 빌드가 읽으므로 제외하지 말 것.
+db/raw/*/images/tiles
+web/public/problem-images/tiles
+incoming
+capture
+**/*.pdf
+
+# ── 일회성 마이그레이션/감사 산출물 ──
+web/scripts/_*
+
+# ── 배포 문서(런북·리포트)는 런타임/빌드와 무관 ──
+docs/report

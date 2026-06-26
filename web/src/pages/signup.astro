@@ -78,7 +78,13 @@ const inputCls = 'w-full px-3 py-2 rounded-md outline-none';
 
         <label class="flex items-start gap-2 text-xs text-[color:var(--color-muted)] cursor-pointer select-none">
           <input type="checkbox" name="terms" class="mt-0.5 accent-indigo-500" />
-          <span>이용약관 및 개인정보 처리방침에 동의합니다. <span class="text-rose-400">(필수)</span></span>
+          <span>
+            <span class="text-rose-400">[필수]</span>
+            <a href="/terms" target="_blank" class="text-[color:var(--color-accent)] hover:underline">이용약관</a>
+            및
+            <a href="/privacy" target="_blank" class="text-[color:var(--color-accent)] hover:underline">개인정보처리방침</a>에
+            동의합니다.
+          </span>
         </label>
 
         <button type="submit" id="submitBtn" disabled class="btn-ink w-full disabled:opacity-50">
