@@ -85,9 +85,14 @@ export function recognizeShape(raw: P[]): RecShape | null {
   }
   if (nC === 3) return { kind: 'triangle', pts: verts };
   if (nC === 4) {
-    let rect = true;
-    for (let i = 0; i < 4; i++) if (Math.abs(angleAt(verts[(i + 3) % 4], verts[i], verts[(i + 1) % 4]) - 90) > 22) rect = false;
-    return rect ? { kind: 'rect', x: bb.minX, y: bb.minY, w: bb.w, h: bb.h } : { kind: 'polygon', pts: verts };
+    let rect = true, axis = true;
+    for (let i = 0; i < 4; i++) {
+      if (Math.abs(angleAt(verts[(i + 3) % 4], verts[i], verts[(i + 1) % 4]) - 90) > 22) rect = false;
+      const a = verts[i], b = verts[(i + 1) % 4], dx = Math.abs(b.x - a.x), dy = Math.abs(b.y - a.y);
+      if (Math.min(dx, dy) / Math.max(dx, dy, 1) > 0.28) axis = false; // 엣지가 수평/수직 아님(회전 사각형) → bbox rect는 틀림
+    }
+    if (rect && axis) return { kind: 'rect', x: bb.minX, y: bb.minY, w: bb.w, h: bb.h };
+    return { kind: 'polygon', pts: verts }; // 회전·비직각 사각형은 실제 꼭짓점 다각형으로
   }
   return { kind: 'polygon', pts: verts };
 }
