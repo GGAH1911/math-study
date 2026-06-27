@@ -477,11 +477,17 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
 
   return (
     <div style={full ? { position: 'fixed', inset: 0, zIndex: 1000, background: 'var(--color-bg)', display: 'flex', flexDirection: 'column', padding: 10, gap: 8 } : undefined}>
-      {/* 접힘 상태: 전체화면을 꽉 채우는 손풀이를 여는 런처 버튼(인라인 캔버스 없음). 캔버스 DOM 은
-          아래 작업영역에 display:none 으로 살아 있어 init 안전 — 열면 ResizeObserver 가 재size·재draw. */}
+      {/* 접힘 상태: 좌하단 floating FAB(튜터 우하단 ↔ 손풀이 좌하단). 본문에 묻히지 않고 항상 노출돼
+          "손으로 풀 수 있다"를 인지시킨다. 누르면 전체화면. .tutor-fab 와 동일 스타일(좌우만 반전).
+          캔버스 DOM 은 아래 작업영역에 display:none 으로 살아있어 init 안전(열 때 ResizeObserver 재size·재draw). */}
       {!full && (
-        <button onClick={() => setFull(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 18px', borderRadius: 12, border: '1px solid var(--color-border)', background: 'var(--color-surface)', color: 'var(--color-text)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
-          ✏️ {launchLabel}<span style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-muted)' }}>— 전체화면 · 펜·태블릿 (자동 저장)</span>
+        <button onClick={() => setFull(true)} aria-label={launchLabel} title={`${launchLabel} — 전체화면 펜·태블릿 (자동 저장)`}
+          style={{ position: 'fixed', left: 16, bottom: 'calc(env(safe-area-inset-bottom) + 16px)', zIndex: 48, display: 'inline-flex', alignItems: 'center', gap: 8, height: 48, padding: '0 18px', borderRadius: 999, background: 'var(--color-surface)', border: '1px solid var(--color-border-strong)', color: 'var(--color-text)', boxShadow: 'var(--shadow-card-hover)', fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', cursor: 'pointer' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--pen-red)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }} aria-hidden="true">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          <span style={{ whiteSpace: 'nowrap' }}>{launchLabel}</span>
         </button>
       )}
       {full && portrait && (

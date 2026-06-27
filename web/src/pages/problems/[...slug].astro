@@ -196,8 +196,9 @@ if (src) {
             )}
           </div>
         )}
-        <div class="not-prose my-6">
-          <InkCanvas client:only="react" storageKey={`problem:${entry.id}`} bgImage={_wholeStem ? `/problem-images/${_wholeStem}` : undefined} launchLabel="손으로 풀기" />
+        {/* 손풀이 — 좌하단 floating FAB(InkCanvas 내부 렌더). 래퍼는 마운트 지점일 뿐 공간 차지 안 함. */}
+        <div class="not-prose">
+          <InkCanvas client:only="react" storageKey={`problem:${entry.id}`} bgImage={_wholeStem ? `/problem-images/${_wholeStem}` : undefined} launchLabel="손으로 풀이" />
         </div>
         <div class="my-6">
           <ProblemAttemptPanel client:load slug={entry.id} />

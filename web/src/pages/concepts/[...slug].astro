@@ -196,7 +196,8 @@ const PREVIEW_COUNT = 8;
       <div class="prose prose-invert max-w-none" id="conceptBody">
         <Content />
       </div>
-      <div class="not-prose my-6">
+      {/* 필기 — 좌하단 floating FAB(InkCanvas 내부 렌더). 래퍼는 마운트 지점일 뿐 공간 차지 안 함. */}
+      <div class="not-prose">
         <InkCanvas client:only="react" storageKey={`concept:${entry.id}`} launchLabel="필기" />
       </div>
       {/* 도식·위젯 버튼을 요약 다음·상세 본문(## 본문) 직전으로 이동 — 도식 → 탐구버튼 순.
