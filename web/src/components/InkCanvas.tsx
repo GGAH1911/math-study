@@ -176,9 +176,11 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     return idxs;
   }, []);
 
-  // 마운트: 로드(마이그레이션) + 사이즈 + 오버레이 핸들러 + 리사이즈.
+  // 마운트 1회: localStorage 데이터 로드(마이그레이션). ★아래 캔버스 setup 과 분리한다 — setup 은
+  //   full 토글(작업영역 mount/unmount)마다 재실행되는데, 로드의 setLayers/setActiveId 가 그때마다
+  //   리렌더→캔버스 리마운트 레이스를 일으켜 "기존 데이터 있는 일반모드에선 필기가 안 됨"(시크릿=빈
+  //   데이터는 멀쩡) 회귀가 났음. 로드는 데이터만이라 캔버스(wrap/over) 불필요 → deps [KEY] 만.
   useEffect(() => {
-    const wrap = wrapRef.current, over = overRef.current; if (!wrap || !over) return;
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) {
@@ -188,6 +190,11 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
       }
     } catch { /* */ }
     if (!strokesOf.current.has('L1') && strokesOf.current.size === 0) strokesOf.current.set('L1', []);
+  }, [KEY]);
+
+  // 캔버스 setup + 오버레이 핸들러 + 리사이즈. full 토글마다 재실행(접힘=작업영역 unmount→cleanup).
+  useEffect(() => {
+    const wrap = wrapRef.current, over = overRef.current; if (!wrap || !over) return;
 
     const setupAll = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
