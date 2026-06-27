@@ -1448,7 +1448,15 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
             <span className="text-[color:var(--color-accent)]">{placeholderHint}</span>
           </p>
         ) : (
-          messages.map((m, i) => (
+          messages.map((m, i) => {
+            // ★A: 검증 과정(자동 검증/계산결과/시각검증 user 턴 + 그 *사이* 중간 assistant 응답=계산중·1차그래프)은
+            //   채팅에서 숨긴다. 데이터는 messages(=DB)에 그대로 남아 디버깅·검증 가능 — '표시'만 거른다.
+            //   첫 설명(앞이 진짜 user)과 최종 응답(뒤가 검증턴 아님)은 보인다.
+            const vU = (x?: ChatMessage) => !!x && x.role === 'user' && /^\[(자동 검증|자동 계산 결과|시각 검증)/.test(x.content);
+            if (vU(m)
+              || (m.role === 'assistant' && vU(messages[i - 1]) && vU(messages[i + 1]))
+              || (m.role === 'assistant' && m.content.trim() === '[검증 통과]')) return null;
+            return (
             <Message
               key={i}
               msg={m}
@@ -1466,14 +1474,22 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
               onPromote={promote}
               onNoteFollowup={handleNoteFollowup}
             />
-          ))
+            );
+          })
         )}
-        {streaming && messages[messages.length - 1]?.content === '' && (
+        {(() => {
+          // 검증 과정 턴을 숨겼으니, 그 동안 "멈춘 듯" 보이지 않게 진행 표시. 최근 메시지에 검증턴이 있으면
+          // 검증 중(그래프 작도 문구), 아니면 빈 placeholder 스트리밍이면 일반 문구.
+          const last = messages[messages.length - 1];
+          const inVerify = messages.slice(-4).some((x) => /^\[(자동 검증|자동 계산 결과|시각 검증)/.test(x.content));
+          if (!streaming || (last?.content !== '' && !inVerify)) return null;
+          return (
           <div className="flex items-center gap-2 text-xs text-[color:var(--color-muted)] pl-2">
             <span className="inline-block size-1.5 rounded-full bg-[color:var(--color-accent)] animate-pulse"></span>
-            <span>답변 생성 중…</span>
+            <span>{inVerify ? '📐 정확한 좌표로 그래프 검증·작도 중…' : '답변 생성 중…'}</span>
           </div>
-        )}
+          );
+        })()}
       </div>
         <ChatScrollbar targetRef={scrollRef} />
       </div>
