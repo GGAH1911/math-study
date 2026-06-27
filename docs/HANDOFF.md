@@ -1,41 +1,50 @@
-# 핸드오프 — 2026-06-23(저녁) · 3D 도식 전수 + 수식 가독성 + 오늘의페이지 + claude -p DISABLE_GIT
+# 핸드오프 — 2026-06-27 · 필기 캔버스 밤샘 빌드(A/B/C 1단계) + ★CI/배포 빌드 복구
 
-> **다음 세션 "부팅해" → 이 문서대로 이어받기.** 메모리 `project_claude_p_caching`·`project_concept_figures`·`project_daily_concept_hero`·`feedback_main_only_commit`·`reference_noauth_verify_port` 동반 참조. (인제스트/2019수능 핸드오프는 아래 "이전 세션(낮)" 참고.)
+> **다음 세션 "부팅해" → 이 문서대로 이어받기.** 메모리 `project_handwriting_canvas`·`feedback_main_only_commit`·`reference_noauth_verify_port`·`feedback_shutdown_keep_server` 동반 참조.
 
 ## ★부팅 시 먼저 할 일
-1. **상태 점검**: `git status`(깨끗해야), `git log --oneline -10`, `./server.sh status`(4323·4324 끄지 말 것).
-2. **서버 3종 확인**: 4323(실시간)·4324(STABLE)·4325(noauth 검증포트). ★**4325는 오케스트레이터 검증의 핵심**(사용자 지정) — 죽었으면 반드시 복구. 자꾸 죽는 원인=watchdog 좀비 누적 → 아래 4325 복구절차.
-3. **이어받을 작업 없음(이번 세션 전부 완료·커밋)** — 새 지시 대기.
+1. **상태 점검**: `git status`(깨끗해야), `git log --oneline -10`, `./server.sh status`(4323·4324 끄지 말 것). `git rev-parse HEAD` == `origin/main`(동기화 확인).
+2. **서버 3종**: 4323(실시간)·4324(STABLE 학습용)·4325(noauth 검증포트). 죽었으면 아래 4325 복구절차.
+3. **CI 상태**: 이번 세션에 CI/배포 빌드 복구함(아래). `gh run list --workflow=ci.yml -L 1`로 최신이 success인지 확인.
+4. **이어받을 작업**: 필기 캔버스 남은 항목(아래) — **단, 실펜 테스트·설계 입력이 필요해 사장님 피드백 먼저**. 새 지시 대기.
 
-## 이번 세션(2026-06-23 저녁) 한 일 — 전부 커밋·푸시됨 (7b0c68e4c 까지)
-1. **3D 개념 도식 전수(84개)** — gen_concept_figures `--only-3d` + figure3d 캐시(gemma 73 + sonnet 11). 개념페이지([...slug].astro) **3D+2D 둘 다 렌더**(구가 2D로만 보이던 버그 수정). Geometry3D **KaTeX 라벨 렌더**(Label3D: \vec·첨자·그리스·한글+$수식$ 혼합). **5카테고리(평면입체정합·완전성·KaTeX·좌표정확·충실성)×10=50점 전수검수**: 74채점 전부≥45(평균46.2), 미달 즉시 직접교정 16건(외적→평행사변형, 회전체/원기둥 곡면 미정의변수 복구, 영어라벨 13 한글화, label?물음표키 5, 카메라각도 등). 검수=figrender3d(2D+3D+READY신호) 헤드리스 캡처, 갤러리 `/dev/figgallery3d?src=cache`(Lazy3D=IntersectionObserver로 WebGL 컨텍스트 한계 회피). ★헤드리스 WebGL 캡처=`--headless=new --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader`.
-2. **수식 줄바꿈 가독성**(사용자 지적) — ①인라인 .katex nowrap+inline-block max-width 오버플로우(중간 안쪼개짐, 긴건 자체 가로스크롤) ②긴 등식체인 $$블록 생성프롬프트 지침(regenerate-body·fill_spoke_bodies) ③인라인 \frac→\tfrac 후처리 728파일 2036개(scripts/fix_inline_math.py, 블록 \dfrac 보존). global.css.
-3. **오늘의 페이지 그림 근본수정** — gen_daily_illustration: ETIMEDOUT 자동재시도 3회(5s·12s)+timeout 120→180s, cron 06:00·12:00 day+0 보강 추가(23:40 미리생성 유지). 원인=①claude 응답시간 편차 ETIMEDOUT ②그날 그래프 변경 시 pickDailyConcept 결과 바뀌어 cron 캐시 무효. 오늘·내일·모레·+3 그림 채움.
-4. **claude -p DISABLE_GIT 이중우회**(토론→측정→적용) — git status가 system prompt prefix 깨는 **알려진 이슈**(커뮤니티 동일 인식). clean cwd(기존)+`CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`(신규) 벨트+멜빵. ★실측: git켜짐 cache_read 호출마다 변동(17506→25092), DISABLE_GIT 반복 23478 고정. 적용 6곳(corrector·verify_batch·build_solution_cache·ingest_round·gen_daily·gen_concept_figures), **튜터 chat.ts 제외**(clean cwd만). [[project_claude_p_caching]]
+## 이번 세션(2026-06-27) 한 일 — 전부 커밋·푸시됨
+
+### 1. 필기 캔버스 밤샘 자율빌드 (사장님 '제일 중요한 기능') — ~40커밋
+- **A**: 지우개 영역커서(점선원·호버)+크기(소/중/대) · **A3 갈무리**(올가미 선택→이동·복제·색·레이어이동·삭제·전체선택, undo 4종 add/remove/mutate/move, 점-선분 히트테스트)
+- **B**: 📐직선도구+각도/격자 스냅 · **전체화면 문제 좌측절반분할**+세로→가로유도(헤드리스 시각검증✓) · 📷PNG내보내기(toDataURL, 튜터피드백 토대) · 펜/종이 설정영속(ink:prefs)
+- **C 1단계**: `web/src/lib/shape-recognize.ts` 손그림→직선/원/타원/삼각형/사각형/다각형 분류(곡률코너+엣지직선성+균일리샘플, **합성 12/12**+`/dev/shape-gallery` 시각검증) + **⬡ 도형모드** 자동스냅
+- 인프라: UI캔버스 분리(커서/선택박스=비desync z999, iOS 정적표시 안전) · 자가리뷰 3픽스
+- ★**iOS 더블탭 3대버그**(콜아웃·필기사라짐·짝수획누락)는 이전 세션에 해결("작동한다" 확인). 상세 메모리 `project_handwriting_canvas`.
+- **상세 보고서·테스트 체크리스트 = `docs/report/handwriting-overnight-report.md`** (필독).
+- ★**실펜 미검증**(헤드리스라 펜입력 못 봄): A3 갈무리·⬡도형모드 자동스냅·지우개 커서가 아이패드 1순위 테스트.
+
+### 2. ★CI/배포 빌드 복구 (15시간 #1~#23 계속 실패하던 것 → 그린)
+원인 = **밤샘 필기작업과 무관한 3가지 선재 문제**:
+1. **CI가 `npx astro check`를 직접 실행** → npm `prebuild`(concept-graph/summaries·syntheses-by-concept 생성, 전부 gitignore) 건너뜀 → '모듈 못 찾음' 8에러. → `.github/workflows/ci.yml`에 prebuild 단계 추가.
+2. **Geometry.tsx 미커밋**(커밋된 figrender3d가 noLabelBg 의존) → 커밋.
+3. ★**문제이미지 심링크 2584개가 절대경로**(`/home/insung/Projects/...`=로컬)로 커밋됨 → 클린 체크아웃(CI·배포)서 전부 댕글링→vite copyDir ENOENT. → `../../../db/raw/...` 상대경로로 변환(07a211ee6). **이게 프로덕션 배포도 동일하게 깨뜨렸음 — 같이 복구됨.**
+- **★재발 방지 TODO**: 심링크를 *만드는* 인제스트 파이프라인(extract_figures 계열 추정, sync-assets 아님)이 여전히 절대경로로 생성하면 **새 회차 적재 시 다시 절대 심링크 발생**→빌드 재실패. 생성지점 찾아 상대경로화 필요(미완).
+
+### 3. Gmail MCP — 보류
+사장님이 메일 확인용 Gmail 플러그인 요청 → `@gongrzhe/server-gmail-autoauth-mcp` 후보. 단 Google OAuth 자격증명(gcp-oauth.keys.json) 생성+승인이 사장님 몫(~10분)이라 보류. "Gmail 설치해"하면 재개.
+
+## 남은 항목 (사장님 피드백·기기테스트 필요 — 단독 강행 말 것)
+- [ ] **필기 C 2단계**: 도형 자동스냅 후 **1탭 확정 UI** + **InteractiveSpec 슬라이더로 파라미터 실시간 조절**(슬라이더 파라미터·범위 설계는 사장님 입력 필요, [[project_concept_widgets]]·Geometry3D 엔진 재사용).
+- [ ] **갈무리→튜터 이미지 피드백**: 📷 내보내기 됨; 채팅 이미지첨부+튜터 vision(chat.ts/ChatPanel 개조) 남음.
+- [ ] **필기 DB 저장**(localStorage→기기간 동기화, 멤버십 백엔드).
+- [ ] **★심링크 재발 방지**(인제스트 파이프라인 상대경로 생성 — 위 2번 후속).
+- [ ] **실펜 테스트 후 버그픽스**(아이패드 피드백 받고).
 
 ## 4325(noauth 검증포트) 복구 절차 — 자주 죽음
-원인: stop/start 반복으로 watchdog 좀비 누적(`pgrep -af 'server.sh __watchdog'` 으로 PORT별 확인) + setsid 분리 꼬임. 복구:
+원인: stop/start 반복으로 watchdog 좀비 누적(`pgrep -af 'server.sh __watchdog'`) + setsid 분리 꼬임. 복구:
 ```
 # 4325 watchdog/astro 정리 (4324 STABLE 보존 — environ의 MATH_STUDY_PORT 로 구분)
 for pid in $(pgrep -f 'server.sh __watchdog'); do port=$(tr '\0' '\n' </proc/$pid/environ|grep MATH_STUDY_PORT|cut -d= -f2); [ "$port" = 4325 ] && kill -9 $pid; done
 pkill -9 -f 'astro dev.*4325'; rm -f /tmp/math-noauth.pid
-# 직접 기동(watchdog 우회가 가장 확실) — content store 재로딩 ~60초 대기
 cd web && nohup env DEV_NOAUTH=1 node node_modules/.bin/astro dev --host 127.0.0.1 --port 4325 > /tmp/4325_direct.log 2>&1 &
 # 200 될 때까지: until curl -sm3 127.0.0.1:4325/ -o/dev/null -w '%{http_code}'|grep -q 200; do sleep 4; done
 ```
-★pgrep는 자기 명령문 매칭 false-positive 잦음 → 실제 프로세스는 `ss -tlnp|grep :4325`(포트) 또는 `ps`로 확인.
-
-## 이전 세션(2026-06-23 낮) — 인제스트 캐싱·2019수능 (bc2888ab0 까지)
-1. **claude -p 프롬프트 캐싱 전수 적용** (핵심). 레포 cwd면 git-env 블록 churn으로 캐시가 깨짐 → 모든 claude -p 호출을 **clean cwd**(`/tmp/claude_p_clean`)에서 spawn. 적용 경로: verify_batch·corrector·ingest_round(claude_p)·build_solution_cache(5곳)·chat.ts(튜터)·gen_daily_illustration·regenerate-body + cta-law llm_client. 실측 콜당 cache_read≈43k·plain in~0 → 프리픽스 ~10× 절약. **개념매핑 60초 타임아웃도 해소**(거대 env 제거). 한계: 커스텀 `--system-prompt`는 CLI가 캐시 안 함(내장 base만) → 완전캐싱은 API 직접 cache_control 필요(미실행). 상세 `docs/CLAUDE_P_CACHING.md`.
-2. **재교정 agent-loop 백엔드**: corrector.mjs 에 `CORR_BACKEND=agent`(claude -p `--max-turns`, 이미지 Read→교정→자가검증). agy(쿼터다운) 대체. ingest_auto `RECORRECT_BACKEND` env override. gemma 격리 하드테일 자동복구 실증.
-3. **교정 후처리 배선**(ingest_auto): corrector → **box_backfill**(결정적 박스마커, LLM0) → **concept_remap**(교정된 텍스트로 개념 재매핑, '매핑前 교정' 원칙, haiku·캐시) → 솔버캐시 → sync. PAR_C 기본 2(gemma 2병렬). corrector validate 길이비에서 `[그림:]` 제외(false-positive 격리 방지)+재교정 성공시 격리마커 해제.
-4. **2019학년도 수능 완전 적재**: 60문제(가/나형 각30). corrector_verify 60/60 ok·솔버 60/60·verified 60/60·박스11·개념60. **핸드솔브 9건 오케스트레이터 직접풀이**(변이테스트 ±1→FAIL 전수통과): 가형22/23/24/27/28/30·나형22/29/30. 하이라이트 **가형30(킬러)=p=-9π 닫힌형 a²=27**, 가형28(타원)=수치검증11.
-5. **ad-hoc 슬러그 정리**: 개념그래프에 없는 즉석 슬러그(LLM 매핑 부산물, 전 회차 누적)를 `scripts/cleanup_adhoc_concepts.py`로 정리. 38종 기존개념 흡수(정규화+의미매핑)·1종 제거·레거시 멀티라인2건·빈concepts1건 수정. **새 개념 생성 0**(사장님 지침: 최대한 기존 노드 연결). build-problem-index에 flat-slug→nested 폴백 추가. 누락 668→**0**, 빈concepts 0, audit_solvers orphan/누락 0.
-6. **핸드솔브 큐 vision_tiles 주입**: `_queue_entry`가 타일경로+instruction을 큐 json에 넣어, 오케스트레이터가 통이미지 대신 **타일을 Read로 직접** 보게 강제. scripts/CLAUDE.md 프로토콜 명시. [[project_handsolve_tiles]]
-
-## 결정 사항 (사장님 지시)
-- **gemma 솔버 도입 안 함** — 테스트 결과 상급 killer(가형30) 🔴 완전실패(답·솔버 0). 기존 사다리(Haiku→Sonnet→Opus + 오케스트레이터 핸드솔브) 유지. (난이도별 예상 하🟢/중🟡/상🔴 실증.)
-- **검정고시 인제스트 안 함** (이번엔).
 
 ## 인제스트 파이프라인 (차기 회차 — 검증된 자동 흐름)
 ```
@@ -43,20 +52,13 @@ python scripts/ingest_kice/ingest_auto.py --run [--only <slug>]
   → 감지/스테이징 → 추출+크롭 → 교정[gemma×2 ∥ sonnet검증(캐시) ∥ 재교정]
   → box_backfill → concept_remap → build_solution_cache → post_ingest_sync
 ```
-- 재교정 백엔드: 기본 agy. agy 다운 시 `RECORRECT_BACKEND=agent`(claude 에이전트루프).
-- 솔버: auto 사다리 통과분 자동 + **단답 gold-match·killer·도형은 핸드솔브 큐 → 오케스트레이터 직접**(서브에이전트 위임 금지, [[feedback_handsolve_orchestrator]]). 큐 json `vision_tiles` 를 Read 로 보고 변이테스트 통과 솔버 작성.
-- 멱등: corrector_verify:ok·skip-cached 자동 스킵.
+- 재교정 백엔드: 기본 agy. agy 다운 시 `RECORRECT_BACKEND=agent`. 솔버: auto 사다리 + 단답/killer/도형은 핸드솔브 큐→오케스트레이터 직접([[feedback_handsolve_orchestrator]], 서브에이전트 위임 금지). ★새 회차 적재하면 **위 심링크 재발 주의**.
 
-## 커밋 정책 / 미커밋
-- main-only + 작업 끝나면 commit+push. git 상태 현재 깨끗.
-- 미추적 debris(내 것 아님, 건드리지 않음): `web/{scratch_tangent.png,test_*.py,verify*.py}` — 이전 세션 산물.
+## 커밋 정책 / 함정
+- **main-only + 작업 끝나면 즉시 commit+push**([[feedback_main_only_commit]]). ★이번 세션 교훈: 밤샘 자율빌드 중 commit만 하고 push 누락 22커밋 발생 → 모니터링서 발견·일괄 푸시. **autonomous 작업도 push 챙길 것.**
+- 미커밋 debris(내 것 아님, 건드리지 않음): `web/src/pages/dev/{figrender.astro 1줄, goldboard.astro(명시 비커밋 임시도구)}`·`web/public/problem-images/_tmp_*.png`·`concept-illustrations.json`(일일크론) — 다른 작업 산물.
+- 서버 stop 금지(setsid·always-on, [[feedback_shutdown_keep_server]]). 서버 뜬 채 `astro check`/`npm install`→Vite stale→`server.sh restart`(또는 dep 재최적화 ~60s 대기). 로그 `>` 덮어쓰기 금지(append/타임스탬프).
+- claude -p: clean cwd + `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1`(캐시 prefix 안정, [[project_claude_p_caching]]).
 
-## 함정 (이번 세션 + 기존)
-- **clean cwd 안전조건**: 파일 접근은 반드시 `--add-dir`(절대경로). 상대경로 의존 호출은 clean cwd로 옮기면 깨짐(verify 실행 `_run_code` 등은 cwd 안 바꿈).
-- **build-problem-index 누락 경고**: 문제 frontmatter가 flat slug(`docs/concepts/X.md`) 참조인데 개념은 nested 저장 → leaf 유일 시 폴백. leaf 중복이면 모호로 남김.
-- **레거시 멀티라인 concepts**: 구형 문제는 `concepts:\n  - 슬러그`(경로없음) 형식 — 단일라인 `[...]` 정규식이 못 잡음. 정리 시 둘 다 처리.
-- **가짜솔버 방지**: 변이테스트(CANDIDATE ±1→FAIL) 필수. 객관식은 게이트 약함→realmath+원본통과만, 도형은 타일 직접보고 검증.
-- gemma 상급 killer 무능(닫힌형 추론·도형판독 불가). 서버 stop 금지(setsid). 서버 뜬 채 `astro check`/`npm install`→Vite stale→`server.sh restart`. 로그 `>` 덮어쓰기 금지(append/타임스탬프).
-
-## 이전 컨텍스트 (도식 파이프라인 — 보류, 별도 재개 시)
-함수 개념도식 gen 완료(figure 450)·QA(area전수점검) 진행중이었음 → 3D(Geometry3D, 설계대기) → 기출 Gemini 교정기. 상세 [[project_concept_figures]]·[[project_gemini_corrector]]. 재개하려면 git 이력 9ad32dec6 근방 + 당시 하트비트 cron 프롬프트 참조(git log).
+## 이전 세션 컨텍스트(요약)
+2026-06-23 저녁: 3D 개념도식 전수(84)·수식가독성·오늘의페이지·claude -p DISABLE_GIT(`docs/TODO.md` "완료" 참조). 그 전: 인제스트 캐싱·2019수능 적재·노드다이어트·위젯 자율루프·상용화 하드닝. 상세 git log + 메모리.
