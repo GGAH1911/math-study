@@ -12,8 +12,10 @@ const { round: r } = Astro.props;
   <summary class="flex items-center justify-between gap-3 px-3 py-2 cursor-pointer list-none rounded-lg hover:bg-[color:var(--color-surface-2)]/40">
     <span class="flex items-center gap-2 min-w-0">
       <span class="round-marker text-[color:var(--color-subtle)] text-xs select-none transition-transform">▸</span>
-      <span class="font-medium text-sm truncate">{roundTitle(r.meta)}</span>
-      <span class="text-[11px] text-[color:var(--color-subtle)] whitespace-nowrap">{subjectBreakdown(r.problems)}</span>
+      <span class="font-medium text-sm truncate min-w-0">{roundTitle(r.meta)}</span>
+      {/* 유형 breakdown(공통·미적분 …)은 모바일에선 숨김 — 회차(연도)가 중요하지 종류는 안 중요(사장님).
+          breakdown 이 사라져 제목이 공간을 다 받으므로 회차는 안 잘린다. 데스크탑/태블릿(sm+)만 노출. */}
+      <span class="hidden sm:inline truncate text-[11px] text-[color:var(--color-subtle)]">{subjectBreakdown(r.problems)}</span>
     </span>
     <a
       href={`/exam/round/${r.year}/${r.round}`}
