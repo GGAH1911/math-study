@@ -1583,3 +1583,14 @@ html[data-font="clean"] {
   [data-nav-mobilebar] { display: flex !important; }       /* xl:hidden 무력화 → 햄버거 노출 */
   #dock-sheet:not([hidden]) { display: grid !important; }  /* 열림 시 노출(xl:hidden 무력화), 닫힘은 [hidden] 유지 */
 }
+
+/* ── 하단 FAB ↔ ContextDrawer 핸들 충돌 회피 ──────────────────────────────────
+   모바일(<768px) 개념·오답·synthesis 페이지엔 바닥 중앙에 드로어 핸들(기출·개념지도·노트)이
+   있어 좌하단 손풀이 FAB·우하단 튜터 FAB 의 폭과 겹친다(핸들이 넓어 코너까지 닿음).
+   드로어 있는 페이지에서만(:has(.ctx-drawer)) 두 FAB 을 핸들 위로 올려 충돌 해소. */
+@media (max-width: 767px) {
+  body:has(.ctx-drawer) .tutor-fab,
+  body:has(.ctx-drawer) [data-ink-fab] {
+    bottom: calc(env(safe-area-inset-bottom) + 60px) !important;
+  }
+}

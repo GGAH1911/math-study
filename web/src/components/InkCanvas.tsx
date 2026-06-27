@@ -481,7 +481,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
           "손으로 풀 수 있다"를 인지시킨다. 누르면 전체화면. .tutor-fab 와 동일 스타일(좌우만 반전).
           캔버스 DOM 은 아래 작업영역에 display:none 으로 살아있어 init 안전(열 때 ResizeObserver 재size·재draw). */}
       {!full && (
-        <button onClick={() => setFull(true)} aria-label={launchLabel} title={`${launchLabel} — 전체화면 펜·태블릿 (자동 저장)`}
+        <button onClick={() => setFull(true)} data-ink-fab aria-label={launchLabel} title={`${launchLabel} — 전체화면 펜·태블릿 (자동 저장)`}
           style={{ position: 'fixed', left: 16, bottom: 'calc(env(safe-area-inset-bottom) + 16px)', zIndex: 48, display: 'inline-flex', alignItems: 'center', gap: 8, height: 48, padding: '0 18px', borderRadius: 999, background: 'var(--color-surface)', border: '1px solid var(--color-border-strong)', color: 'var(--color-text)', boxShadow: 'var(--shadow-card-hover)', fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', cursor: 'pointer' }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--pen-red)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }} aria-hidden="true">
             <path d="M12 20h9" />
