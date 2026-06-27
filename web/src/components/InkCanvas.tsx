@@ -57,6 +57,10 @@ const PREFS_KEY = 'ink:prefs';
 type Prefs = { color?: string; width?: number; paper?: Paper; gap?: number; pressure?: boolean; dashed?: boolean; eraserSize?: number };
 const loadPrefs = (): Prefs => { try { return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); } catch { return {}; } };
 
+// ★Android Chrome 에선 그릴 때 desynchronized 캔버스가 불투명 검정 하드웨어 overlay plane 으로 승격돼
+//   화면 전체가 까맣게 덮이는 버그(삼성폰 확인). iOS/iPadOS·데스크탑은 정상 → 거기서만 저지연(desync) 유지.
+const DESYNC_OK = typeof navigator === 'undefined' || !/android/i.test(navigator.userAgent || '');
+
 export default function InkCanvas({ storageKey, height = 560, bgImage, launchLabel = '손으로 풀기' }: { storageKey: string; height?: number; bgImage?: string; launchLabel?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const overRef = useRef<HTMLCanvasElement>(null);
@@ -130,7 +134,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     // ★진행 overlay만 desynchronized(저지연). 확정 레이어는 일반 컨텍스트 —
     //   desynchronized 캔버스를 여러 개 겹치면 일부가 하드웨어 overlay plane으로 빠져 합성이 안 돼
     //   보이지 않을 수 있음(필기 그렸다가 확정 시 사라지는 버그의 원인).
-    const ctx = c.getContext('2d', lowLatency ? ({ desynchronized: true } as CanvasRenderingContext2DSettings) : undefined);
+    const ctx = c.getContext('2d', (lowLatency && DESYNC_OK) ? ({ desynchronized: true } as CanvasRenderingContext2DSettings) : undefined);
     ctx?.scale(dpr, dpr); return ctx;
   }, []);
 
