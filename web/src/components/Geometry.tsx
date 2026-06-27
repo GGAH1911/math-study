@@ -341,7 +341,7 @@ function autoBounds(shapes: GeomShape[]): { x: [number, number]; y: [number, num
   return { x: [xMin - padX, xMax + padX], y: [yMin - padY, yMax + padY] };
 }
 
-function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }: { spec: GeomSpec; width: number; height: number; hideCaption?: boolean; fixedWidth?: number }) {
+function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth, noLabelBg = false }: { spec: GeomSpec; width: number; height: number; hideCaption?: boolean; fixedWidth?: number; noLabelBg?: boolean }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   // fixedWidth: ResizeObserver 우회 → 부모폭 측정 없이 그 폭으로 고정 렌더.
   // 헤드리스 스크린샷이 부모 clientWidth 를 과소측정(240 floor)해 실제보다 작게/라벨이
@@ -899,7 +899,7 @@ function GeometryCanvas({ spec, width, height, hideCaption = false, fixedWidth }
   const resolvedLabels = deOverlapLabels(labelDescs, labelFontPx, W, H, obstacles);
 
   return (
-    <div ref={wrapRef} className="graph-host bg-zinc-950 border border-zinc-700/80 rounded-lg shadow-inner max-w-full"
+    <div ref={wrapRef} className={`graph-host bg-zinc-950 border border-zinc-700/80 rounded-lg shadow-inner max-w-full${noLabelBg ? ' geom-nobg' : ''}`}
          style={{ padding: '10px 12px', ['--geom-label-size' as string]: `${labelFontPx}px` } as React.CSSProperties}>
       {!hideCaption && spec.title && (
         <div className="text-zinc-300 mb-1 px-1 break-keep" style={{ fontSize: labelFontPx + 1 }}>
@@ -1059,9 +1059,10 @@ type Props = {
   hideCaption?: boolean;
   noBroadcast?: boolean;   // sticky panel sets this to avoid bouncing back to latest on nav
   fixedWidth?: number;     // ResizeObserver 우회·고정폭 렌더(QA 시각 검수 하네스용)
+  noLabelBg?: boolean;     // 라벨 배경박스 제거(기출 재현 — 원본엔 라벨 배경 없음)
 };
 
-export default function Geometry({ spec, width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, onOpen, interactive, hideCaption, noBroadcast, fixedWidth }: Props) {
+export default function Geometry({ spec, width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT, onOpen, interactive, hideCaption, noBroadcast, fixedWidth, noLabelBg }: Props) {
   const clickable = !interactive && onOpen;
   // Mirror to the sticky side panel — same contract as PlotGraph/SvgGraph.
   // Skip when interactive (modal) OR when explicitly muted (sticky panel
@@ -1073,7 +1074,7 @@ export default function Geometry({ spec, width = DEFAULT_WIDTH, height = DEFAULT
     // at module-init time.
     import('./Graph').then((m) => m.broadcastLatestGraph({ kind: 'geom', geomSpec: spec }));
   }, [spec, interactive, noBroadcast]);
-  const node = <GeometryCanvas spec={spec} width={width} height={height} hideCaption={hideCaption} fixedWidth={fixedWidth} />;
+  const node = <GeometryCanvas spec={spec} width={width} height={height} hideCaption={hideCaption} fixedWidth={fixedWidth} noLabelBg={noLabelBg} />;
   if (clickable) {
     return (
       <button type="button" onClick={onOpen} title="클릭하면 크게 봐요"
