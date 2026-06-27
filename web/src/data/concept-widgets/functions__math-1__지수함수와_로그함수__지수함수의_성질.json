@@ -1,0 +1,117 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/지수함수의_성질",
+ "spec": {
+  "title": "지수함수 y = a^x 의 성질",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0 = a^0; f1 = a^1; fm1 = a^(-1); p2 = a^2; p3 = a^3; p5 = a^5",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(0) (항상 1, (0,1) 통과)",
+    "expr": "f0",
+    "digits": 3
+   },
+   {
+    "label": "f(1) = a",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "f(-1) = 1/a",
+    "expr": "fm1",
+    "digits": 3
+   },
+   {
+    "label": "밑 a (a>1 증가 · 0<a<1 감소)",
+    "expr": "a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": 3
+   },
+   {
+    "a": 0.25
+   }
+  ],
+  "invariants": [
+   "f0 - 1",
+   "f1 - a",
+   "fm1 - 1/a",
+   "f1*fm1 - 1",
+   "p2*p3 - p5"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "f0": 1,
+     "f1": 2,
+     "fm1": 0.5,
+     "p5": 32
+    }
+   },
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "f1": 0.5,
+     "fm1": 2,
+     "p2": 0.25
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "f0": 1,
+     "p3": 64,
+     "fm1": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

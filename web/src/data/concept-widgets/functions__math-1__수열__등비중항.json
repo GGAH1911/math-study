@@ -1,0 +1,200 @@
+{
+ "id": "functions/math-1/수열/등비중항",
+ "spec": {
+  "title": "등비중항: 반원과 닮음으로 보는 b²=ac",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 8,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 0.5,
+    "max": 8,
+    "init": 8,
+    "step": 0.5
+   }
+  ],
+  "scope": "cx=(a+c)/2; R=(a+c)/2; h=sqrt(a*c)",
+  "geometry": {
+   "range": [
+    -1,
+    16.5
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=cx",
+      0
+     ],
+     "radius": "=R"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a+c",
+      0
+     ],
+     "label": "지름 a+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "H"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a+c",
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=-h"
+     ],
+     "to": [
+      "=a",
+      "=h"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=h"
+     ],
+     "label": "P  b=+√(ac)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=-h"
+     ],
+     "label": "Q  b=−√(ac)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "등비중항 b = √(ac)",
+    "expr": "h",
+    "digits": 4
+   },
+   {
+    "label": "b²",
+    "expr": "h*h",
+    "digits": 4
+   },
+   {
+    "label": "ac (= b² 이어야)",
+    "expr": "a*c",
+    "digits": 4
+   },
+   {
+    "label": "log b",
+    "expr": "log(h)",
+    "digits": 4
+   },
+   {
+    "label": "(log a + log c)/2",
+    "expr": "(log(a)+log(c))/2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "c": 8
+   },
+   {
+    "a": 1,
+    "c": 4
+   },
+   {
+    "a": 4,
+    "c": 4
+   },
+   {
+    "a": 8,
+    "c": 0.5
+   }
+  ],
+  "invariants": [
+   "h^2 - a*c",
+   "(a-cx)^2 + h^2 - R^2",
+   "log(h) - (log(a)+log(c))/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "c": 8
+    },
+    "expect": {
+     "cx": 5,
+     "R": 5,
+     "h": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "c": 4
+    },
+    "expect": {
+     "cx": 2.5,
+     "R": 2.5,
+     "h": 2
+    }
+   },
+   {
+    "params": {
+     "a": 8,
+     "c": 0.5
+    },
+    "expect": {
+     "cx": 4.25,
+     "R": 4.25,
+     "h": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

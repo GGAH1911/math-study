@@ -1,0 +1,255 @@
+{
+ "id": "functions/math-1/수열/등비수열의_일반항",
+ "spec": {
+  "title": "등비수열의 일반항 aₙ = a₁·rⁿ⁻¹",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -1.5,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "항 번호 n",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "an = a1*r^(n-1); anext = a1*r^n; ratio = anext/an",
+  "geometry": {
+   "range": [
+    0,
+    7
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1*r^0"
+     ],
+     "to": [
+      2,
+      "=a1*r^1"
+     ],
+     "color": "#cbd5e1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=a1*r^1"
+     ],
+     "to": [
+      3,
+      "=a1*r^2"
+     ],
+     "color": "#cbd5e1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=a1*r^2"
+     ],
+     "to": [
+      4,
+      "=a1*r^3"
+     ],
+     "color": "#cbd5e1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=a1*r^3"
+     ],
+     "to": [
+      5,
+      "=a1*r^4"
+     ],
+     "color": "#cbd5e1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      "=a1*r^4"
+     ],
+     "to": [
+      6,
+      "=a1*r^5"
+     ],
+     "color": "#cbd5e1"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1*r^0"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a1*r^1"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a1*r^2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a1*r^3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a1*r^4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a1*r^5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=an"
+     ],
+     "label": "aₙ",
+     "color": "#e11d48"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "첫째항 a₁",
+    "expr": "a1"
+   },
+   {
+    "label": "공비 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "항 번호 n",
+    "expr": "n"
+   },
+   {
+    "label": "aₙ = a₁·rⁿ⁻¹",
+    "expr": "an",
+    "digits": 4
+   },
+   {
+    "label": "aₙ₊₁ / aₙ (= r 이어야)",
+    "expr": "ratio",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "r": 2,
+    "n": 4
+   },
+   {
+    "a1": 3,
+    "r": 1.5,
+    "n": 3
+   },
+   {
+    "a1": 2,
+    "r": -1,
+    "n": 5
+   },
+   {
+    "a1": 2,
+    "r": 0.5,
+    "n": 4
+   }
+  ],
+  "invariants": [
+   "anext - an*r",
+   "ratio - r",
+   "an - a1*r^(n-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 1,
+     "r": 2,
+     "n": 4
+    },
+    "expect": {
+     "an": 8,
+     "anext": 16,
+     "ratio": 2
+    }
+   },
+   {
+    "params": {
+     "a1": 3,
+     "r": 2,
+     "n": 3
+    },
+    "expect": {
+     "an": 12,
+     "anext": 24,
+     "ratio": 2
+    }
+   },
+   {
+    "params": {
+     "a1": 2,
+     "r": -1,
+     "n": 5
+    },
+    "expect": {
+     "an": 2,
+     "anext": -2,
+     "ratio": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/함수값의_대소비교",
+ "spec": {
+  "title": "함수값의 대소비교 — 지수함수 f(x)=aˣ",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "f1 = a^x1; f2 = a^x2; diff = f1 - f2; dx = x1 - x2",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    0,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "f(x)=a^x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₁)",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "x₁ − x₂",
+    "expr": "dx",
+    "digits": 3
+   },
+   {
+    "label": "f(x₁) − f(x₂)",
+    "expr": "diff",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x1": 1,
+    "x2": -1
+   },
+   {
+    "a": 0.5,
+    "x1": 2,
+    "x2": 0
+   },
+   {
+    "a": 3,
+    "x1": 0.5,
+    "x2": 1.5
+   },
+   {
+    "a": 0.7,
+    "x1": -1,
+    "x2": 2
+   }
+  ],
+  "invariants": [
+   "f1 - a^x1",
+   "f2 - a^x2",
+   "f1*f2 - a^(x1+x2)",
+   "f1/f2 - a^(x1-x2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x1": 2,
+     "x2": 0
+    },
+    "expect": {
+     "f1": 4,
+     "f2": 1,
+     "diff": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x1": 1,
+     "x2": -1
+    },
+    "expect": {
+     "f1": 0.5,
+     "f2": 2,
+     "diff": -1.5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "x1": -1,
+     "x2": 1
+    },
+    "expect": {
+     "f1": 0.3333333333,
+     "f2": 3,
+     "diff": -2.6666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

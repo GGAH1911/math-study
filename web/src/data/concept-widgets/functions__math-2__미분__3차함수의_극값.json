@@ -1,0 +1,163 @@
+{
+ "id": "functions/math-2/미분/3차함수의_극값",
+ "spec": {
+  "title": "3차함수의 극값 — f'(x)=3a(x−α)(x−β)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (최고차항 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "alpha",
+    "label": "α (작은 극점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "beta",
+    "label": "β (큰 극점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "b = -1.5*a*(alpha+beta); c = 3*a*alpha*beta; d = 0; fa = a*alpha^3 + b*alpha^2 + c*alpha + d; fb = a*beta^3 + b*beta^2 + c*beta + d; dfa = 3*a*alpha^2 + 2*b*alpha + c; dfb = 3*a*beta^2 + 2*b*beta + c; disc = 4*b^2 - 12*a*c",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극댓값 f(α) (a>0 기준)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f(β) (a>0 기준)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "f'(α)",
+    "expr": "dfa",
+    "digits": 3
+   },
+   {
+    "label": "f'(β)",
+    "expr": "dfb",
+    "digits": 3
+   },
+   {
+    "label": "판별식 D=4b²−12ac (=9a²(α−β)²)",
+    "expr": "disc",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "alpha": -1,
+    "beta": 2
+   },
+   {
+    "a": 1,
+    "alpha": 0,
+    "beta": 1
+   },
+   {
+    "a": 2,
+    "alpha": -2,
+    "beta": 1
+   },
+   {
+    "a": -1,
+    "alpha": -1,
+    "beta": 1
+   }
+  ],
+  "invariants": [
+   "dfa",
+   "dfb",
+   "disc - 9*a^2*(alpha-beta)^2",
+   "fa - (a*alpha^3 + b*alpha^2 + c*alpha + d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "alpha": -1,
+     "beta": 2
+    },
+    "expect": {
+     "b": -1.5,
+     "c": -6,
+     "fa": 3.5,
+     "fb": -10,
+     "disc": 81
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "alpha": 0,
+     "beta": 1
+    },
+    "expect": {
+     "b": -1.5,
+     "c": 0,
+     "fa": 0,
+     "fb": -0.5,
+     "disc": 9
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "alpha": -2,
+     "beta": 1
+    },
+    "expect": {
+     "b": 3,
+     "c": -12,
+     "fa": 20,
+     "fb": -7,
+     "disc": 324
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

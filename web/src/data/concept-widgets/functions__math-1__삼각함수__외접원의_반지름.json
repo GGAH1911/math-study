@@ -1,0 +1,227 @@
+{
+ "id": "functions/math-1/삼각함수/외접원의_반지름",
+ "spec": {
+  "title": "외접원의 반지름 R와 정현법칙 (a = 2R sin A)",
+  "params": [
+   {
+    "name": "R",
+    "label": "외접원 반지름 R",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "A",
+    "label": "대각 A",
+    "type": "slider",
+    "min": 20,
+    "max": 150,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=A*pi/180; Bx=-R*sin(rad); By=R*cos(rad); Cx=R*sin(rad); Cy=R*cos(rad); Ax=0; Ay=-R; a=2*R*sin(rad); Rcalc=a/(2*sin(rad)); ux=Bx-Ax; uy=By-Ay; vx=Cx-Ax; vy=Cy-Ay; inAngle=acos((ux*vx+uy*vy)/(sqrt(ux^2+uy^2)*sqrt(vx^2+vy^2)))",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=R"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "R"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "외접원 반지름 R",
+    "expr": "R",
+    "digits": 2
+   },
+   {
+    "label": "대변 a = BC",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "대각 A",
+    "expr": "A",
+    "digits": 0
+   },
+   {
+    "label": "2R·sin A",
+    "expr": "2*R*sin(rad)",
+    "digits": 3
+   },
+   {
+    "label": "a / (2 sin A)",
+    "expr": "Rcalc",
+    "digits": 3
+   },
+   {
+    "label": "내접각 ∠BAC (°)",
+    "expr": "inAngle*180/pi",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "R": 1,
+    "A": 30
+   },
+   {
+    "R": 2,
+    "A": 90
+   },
+   {
+    "R": 2.5,
+    "A": 120
+   },
+   {
+    "R": 1.5,
+    "A": 60
+   }
+  ],
+  "invariants": [
+   "Bx^2+By^2-R^2",
+   "Cx^2+Cy^2-R^2",
+   "Ax^2+Ay^2-R^2",
+   "a-2*R*sin(rad)",
+   "Rcalc-R",
+   "inAngle-rad"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "R": 1,
+     "A": 30
+    },
+    "expect": {
+     "Bx": -0.5,
+     "By": 0.8660254038,
+     "Cx": 0.5,
+     "a": 1,
+     "Rcalc": 1,
+     "inAngle": 0.5235987756
+    }
+   },
+   {
+    "params": {
+     "R": 2,
+     "A": 90
+    },
+    "expect": {
+     "Bx": -2,
+     "Cx": 2,
+     "a": 4,
+     "Rcalc": 2,
+     "inAngle": 1.5707963268
+    }
+   },
+   {
+    "params": {
+     "R": 2,
+     "A": 45
+    },
+    "expect": {
+     "Bx": -1.4142135624,
+     "Cx": 1.4142135624,
+     "a": 2.8284271247,
+     "Rcalc": 2,
+     "inAngle": 0.7853981634
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

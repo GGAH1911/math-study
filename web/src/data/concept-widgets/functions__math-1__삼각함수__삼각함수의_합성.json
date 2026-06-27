@@ -1,0 +1,138 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_합성",
+ "spec": {
+  "title": "삼각함수의 합성: a sinθ + b cosθ = R sin(θ + α)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (sinθ의 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (cosθ의 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "R=sqrt(a^2+b^2); alpha=atan2(b,a)",
+  "plot": {
+   "range": [
+    0,
+    6.2832
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*sin(x)",
+     "label": "a sinθ (성분 1)",
+     "color": "#7ec8e3"
+    },
+    {
+     "fn": "b*cos(x)",
+     "label": "b cosθ (성분 2)",
+     "color": "#f4b183"
+    },
+    {
+     "fn": "a*sin(x)+b*cos(x)",
+     "label": "a sinθ + b cosθ (합성 전 — 두 파동의 합)",
+     "color": "#2e8b57"
+    },
+    {
+     "fn": "R*sin(x+alpha)",
+     "label": "R sin(θ + α) (합성 후 — 하나의 파동, 합성 전과 완전히 겹침)",
+     "color": "#e03b3b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "진폭 R = √(a² + b²)",
+    "expr": "R",
+    "digits": 4
+   },
+   {
+    "label": "위상 α (rad)",
+    "expr": "alpha",
+    "digits": 4
+   },
+   {
+    "label": "위상 α (도)",
+    "expr": "alpha*180/pi",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": -2,
+    "b": 3
+   },
+   {
+    "a": 2,
+    "b": -3
+   }
+  ],
+  "invariants": [
+   "R^2 - a^2 - b^2",
+   "R*cos(alpha) - a",
+   "R*sin(alpha) - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "R": 5,
+     "alpha": 0.9272952180016122
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "R": 1.4142135623730951,
+     "alpha": 0.7853981633974483
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 4
+    },
+    "expect": {
+     "R": 5,
+     "alpha": 2.214297435588181
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

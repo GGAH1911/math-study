@@ -1,0 +1,112 @@
+{
+ "id": "functions/math-2/미분/극값_구하기",
+ "spec": {
+  "title": "극값 구하기: f(x)=x³−3x의 접선과 극값",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (접점의 x좌표)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; fpa = 3*a^2 - 3",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2.3,
+    2.3
+   ],
+   "yRange": [
+    -6.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + fpa*(x - a)",
+     "label": "x=a에서의 접선 (기울기 f'(a))",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 x=a",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "접선기울기 f'(a)",
+    "expr": "fpa",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "fa - (a^3 - 3*a)",
+   "fpa - (3*a^2 - 3)",
+   "(fa + fpa*(a - a)) - fa"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "fa": 2,
+     "fpa": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": -2,
+     "fpa": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 2,
+     "fpa": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

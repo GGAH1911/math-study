@@ -1,0 +1,157 @@
+{
+ "id": "functions/math-1/수열/자연수_합",
+ "spec": {
+  "title": "자연수의 합 Sₙ = n(n+1)/2 — 가우스의 직사각형",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (항의 개수)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "Sn = n*(n+1)/2; rectArea = n*(n+1); Sprev = (n-1)*n/2",
+  "geometry": {
+   "range": [
+    "=-1",
+    "=n+2"
+   ],
+   "yRange": [
+    "=-1",
+    "=n+3"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=n",
+       0
+      ],
+      [
+       "=n",
+       "=n+1"
+      ],
+      [
+       0,
+       "=n+1"
+      ]
+     ],
+     "label": "넓이 = n(n+1)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=n",
+       0
+      ],
+      [
+       "=n",
+       "=n+1"
+      ]
+     ],
+     "label": "Sₙ = 절반",
+     "fill": true
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=n+1"
+     ],
+     "label": "(n, n+1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      0
+     ],
+     "label": "(n, 0)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Sₙ = 1+2+⋯+n",
+    "expr": "Sn",
+    "digits": 0
+   },
+   {
+    "label": "직사각형 넓이 n(n+1)",
+    "expr": "rectArea",
+    "digits": 0
+   },
+   {
+    "label": "2Sₙ (가우스 짝짓기)",
+    "expr": "2*Sn",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 9
+   }
+  ],
+  "invariants": [
+   "Sn - Sprev - n",
+   "2*Sn - rectArea"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "Sn": 10,
+     "rectArea": 20
+    }
+   },
+   {
+    "params": {
+     "n": 7
+    },
+    "expect": {
+     "Sn": 28,
+     "rectArea": 56
+    }
+   },
+   {
+    "params": {
+     "n": 10
+    },
+    "expect": {
+     "Sn": 55,
+     "rectArea": 110
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

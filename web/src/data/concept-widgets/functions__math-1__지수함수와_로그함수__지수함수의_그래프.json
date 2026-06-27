@@ -1,0 +1,146 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/지수함수의_그래프",
+ "spec": {
+  "title": "지수함수의 그래프 y = aˣ",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "점의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "f0 = a^0; y0 = a^x0; yinv = (1/a)^x0",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -0.5,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -0.5,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = aˣ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(1/a)^x",
+     "label": "y = (1/a)ˣ  (y축 대칭)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(0) = a⁰ (항상 1, y축과 만나는 점)",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "점에서 aˣ⁰ 값",
+    "expr": "y0",
+    "digits": 4
+   },
+   {
+    "label": "같은 x₀에서 (1/a)ˣ⁰ 값",
+    "expr": "yinv",
+    "digits": 4
+   },
+   {
+    "label": "aˣ⁰ · (1/a)ˣ⁰ (항상 1)",
+    "expr": "y0*yinv",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x0": 1
+   },
+   {
+    "a": 0.5,
+    "x0": 2
+   },
+   {
+    "a": 3,
+    "x0": -1
+   },
+   {
+    "a": 1.5,
+    "x0": 0
+   }
+  ],
+  "invariants": [
+   "f0 - 1",
+   "y0*yinv - 1",
+   "yinv - a^(-x0)",
+   "y0 - a^x0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x0": 1
+    },
+    "expect": {
+     "y0": 2,
+     "yinv": 0.5,
+     "f0": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": 3
+    },
+    "expect": {
+     "y0": 8,
+     "yinv": 0.125
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x0": 2
+    },
+    "expect": {
+     "y0": 0.25,
+     "yinv": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

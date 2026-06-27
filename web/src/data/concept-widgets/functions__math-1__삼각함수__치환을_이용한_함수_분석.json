@@ -1,0 +1,117 @@
+{
+ "id": "functions/math-1/삼각함수/치환을_이용한_함수_분석",
+ "spec": {
+  "title": "치환을 이용한 함수 분석: y = (2sin x − 1)²",
+  "params": [
+   {
+    "name": "t",
+    "label": "x (각도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=t*pi/180; s=sin(rad); u=2*s-1; y=u^2",
+  "plot": {
+   "range": [
+    0,
+    360
+   ],
+   "yRange": [
+    -3.5,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "sin(x*pi/180)",
+     "label": "sin x  (범위 [-1,1])",
+     "color": "#9ca3af"
+    },
+    {
+     "fn": "2*sin(x*pi/180)-1",
+     "label": "u = 2sin x − 1  (범위 [-3,1])",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(2*sin(x*pi/180)-1)^2",
+     "label": "y = u² = (2sin x − 1)²  (범위 [0,9])",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내부함수 입력  sin x",
+    "expr": "s",
+    "digits": 3
+   },
+   {
+    "label": "치환변수  u = 2sin x − 1",
+    "expr": "u",
+    "digits": 3
+   },
+   {
+    "label": "외부함수 출력  y = u²",
+    "expr": "y",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 30
+   },
+   {
+    "t": 90
+   },
+   {
+    "t": 150
+   },
+   {
+    "t": 270
+   }
+  ],
+  "invariants": [
+   "u-(2*sin(rad)-1)",
+   "y-u^2",
+   "sin(rad)^2+cos(rad)^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 30
+    },
+    "expect": {
+     "s": 0.5,
+     "u": 0,
+     "y": 0
+    }
+   },
+   {
+    "params": {
+     "t": 90
+    },
+    "expect": {
+     "s": 1,
+     "u": 1,
+     "y": 1
+    }
+   },
+   {
+    "params": {
+     "t": 270
+    },
+    "expect": {
+     "s": -1,
+     "u": -3,
+     "y": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

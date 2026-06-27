@@ -1,0 +1,165 @@
+{
+ "id": "functions/math-1/삼각함수/정수값_조건",
+ "spec": {
+  "title": "정수값 조건: 단위원 위의 격자점",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); ty=tan(rad)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "(1,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "(-1,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      1
+     ],
+     "label": "(0,1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      -1
+     ],
+     "label": "(0,-1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P=(cosθ,sinθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 3
+   },
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 3
+   },
+   {
+    "label": "tanθ",
+    "expr": "ty",
+    "digits": 3
+   },
+   {
+    "label": "두 좌표 정수까지 거리(0이면 격자점)",
+    "expr": "abs(cx)*abs(sy)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "sin(2*rad)-2*sy*cx",
+   "cos(2*rad)-(cx^2-sy^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "sy": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "sy": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254037844387
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

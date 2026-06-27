@@ -1,0 +1,114 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/실근의_개수_분석",
+ "spec": {
+  "title": "실근의 개수 분석: 2^x = x + k",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (직선 y=x+k의 y절편)",
+    "type": "slider",
+    "min": -1,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "ln2 = log(2); x0 = log2(1/ln2); kstar = pow(2,x0) - x0; hmin = kstar - k; nroots = hmin > 0 ? 0 : (hmin < 0 ? 2 : 1)",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -5,
+    4
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "2^x",
+     "label": "y = 2^x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x + k",
+     "label": "y = x + k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "실근의 개수",
+    "expr": "nroots",
+    "digits": 0
+   },
+   {
+    "label": "최소간격 min(2^x-(x+k))",
+    "expr": "hmin",
+    "digits": 3
+   },
+   {
+    "label": "접선이 되는 임계값 k*",
+    "expr": "kstar",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": -1
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 1
+   },
+   {
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "pow(2,x0)*log(2) - 1",
+   "pow(2,x0) - x0 - kstar",
+   "hmin - (pow(2,x0) - x0 - k)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "x0": 0.5287664,
+     "kstar": 0.9139287,
+     "hmin": 0.9139287,
+     "nroots": 0
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "kstar": 0.9139287,
+     "hmin": -0.0860713,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "k": 5
+    },
+    "expect": {
+     "hmin": -4.0860713,
+     "nroots": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

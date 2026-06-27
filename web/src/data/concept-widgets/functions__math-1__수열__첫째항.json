@@ -1,0 +1,235 @@
+{
+ "id": "functions/math-1/수열/첫째항",
+ "spec": {
+  "title": "첫째항 a₁ — 수열의 출발점",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "공차 d",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "a2=a1+d; a3=a1+2*d; a4=a1+3*d; a5=a1+4*d; a6=a1+5*d",
+  "geometry": {
+   "range": [
+    0,
+    7
+   ],
+   "yRange": [
+    -16,
+    38
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      2,
+      "=a2"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=a2"
+     ],
+     "to": [
+      3,
+      "=a3"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=a3"
+     ],
+     "to": [
+      4,
+      "=a4"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=a4"
+     ],
+     "to": [
+      5,
+      "=a5"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      "=a5"
+     ],
+     "to": [
+      6,
+      "=a6"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ],
+     "label": "a₁ (첫째항)",
+     "color": "#e8000b"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ],
+     "label": "a₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ],
+     "label": "a₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ],
+     "label": "a₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ],
+     "label": "a₅"
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a6"
+     ],
+     "label": "a₆"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "첫째항 a₁",
+    "expr": "a1",
+    "digits": 0
+   },
+   {
+    "label": "공차 d",
+    "expr": "d",
+    "digits": 0
+   },
+   {
+    "label": "여섯째항 a₆ = a₁+5d",
+    "expr": "a6",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 3,
+    "d": 4
+   },
+   {
+    "a1": 1,
+    "d": 2
+   },
+   {
+    "a1": 5,
+    "d": -2
+   },
+   {
+    "a1": 10,
+    "d": 1
+   }
+  ],
+  "invariants": [
+   "a2 - a1 - d",
+   "a3 - a1 - 2*d",
+   "a4 - a1 - 3*d",
+   "a5 - a1 - 4*d",
+   "a6 - a1 - 5*d",
+   "a3 - 2*a2 + a1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 3,
+     "d": 4
+    },
+    "expect": {
+     "a2": 7,
+     "a3": 11,
+     "a4": 15,
+     "a5": 19,
+     "a6": 23
+    }
+   },
+   {
+    "params": {
+     "a1": 5,
+     "d": -2
+    },
+    "expect": {
+     "a2": 3,
+     "a3": 1,
+     "a4": -1,
+     "a5": -3,
+     "a6": -5
+    }
+   },
+   {
+    "params": {
+     "a1": 10,
+     "d": 1
+    },
+    "expect": {
+     "a2": 11,
+     "a3": 12,
+     "a6": 15
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

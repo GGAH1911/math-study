@@ -1,0 +1,175 @@
+{
+ "id": "functions/math-2/미분/3차함수",
+ "spec": {
+  "title": "3차함수 f(x)=ax³+bx²+cx+d",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (최고차항 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.5
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "D=4*b^2-12*a*c; xi=-b/(3*a); yi=a*xi^3+b*xi^2+c*xi+d; slope_i=3*a*xi^2+2*b*xi+c; ddf_i=6*a*xi+2*b",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3+b*x^2+c*x+d",
+     "label": "f(x)=ax³+bx²+cx+d",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2+2*b*x+c",
+     "label": "f'(x)=3ax²+2bx+c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D=4b²−12ac",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "극값 개수 (D>0:2, D≤0:0)",
+    "expr": "D>0 ? 2 : 0",
+    "digits": 0
+   },
+   {
+    "label": "변곡점 x좌표 (−b/3a)",
+    "expr": "xi",
+    "digits": 3
+   },
+   {
+    "label": "변곡점 y좌표",
+    "expr": "yi",
+    "digits": 3
+   },
+   {
+    "label": "변곡점에서의 접선기울기 f'(xi)",
+    "expr": "slope_i",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 3,
+    "d": 1
+   },
+   {
+    "a": -2,
+    "b": 1,
+    "c": 4,
+    "d": -1
+   },
+   {
+    "a": 0.5,
+    "b": -2,
+    "c": 1,
+    "d": 3
+   }
+  ],
+  "invariants": [
+   "ddf_i",
+   "slope_i-(c-b^2/(3*a))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
+    },
+    "expect": {
+     "D": 36,
+     "xi": 0,
+     "yi": 0,
+     "slope_i": -3,
+     "ddf_i": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 3,
+     "d": 1
+    },
+    "expect": {
+     "D": 0,
+     "xi": -1,
+     "yi": 0,
+     "slope_i": 0,
+     "ddf_i": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 6,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "D": 144,
+     "xi": -1,
+     "yi": 4,
+     "slope_i": -6,
+     "ddf_i": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

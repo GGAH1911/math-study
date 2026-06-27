@@ -1,0 +1,103 @@
+{
+ "id": "functions/math-1/삼각함수/해의_개수_판정",
+ "spec": {
+  "title": "삼각방정식 sin x = a 의 해의 개수",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "n = abs(a) > 1 ? 0 : (abs(a) == 1 ? 1 : 2); x1 = abs(a) <= 1 ? mod(asin(a), 2*pi) : 0; x2 = abs(a) <= 1 ? pi - asin(a) : 0",
+  "plot": {
+   "range": [
+    0,
+    6.283185307179586
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a",
+     "label": "y = a",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "교점(해)의 개수",
+    "expr": "n",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": -0.3
+   },
+   {
+    "a": 0.9
+   },
+   {
+    "a": -0.7
+   }
+  ],
+  "invariants": [
+   "sin(x1) - a",
+   "sin(x2) - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "n": 2,
+     "x1": 0.5235987755982988
+    }
+   },
+   {
+    "params": {
+     "a": 1.5
+    },
+    "expect": {
+     "n": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "n": 1,
+     "x1": 4.71238898038469
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

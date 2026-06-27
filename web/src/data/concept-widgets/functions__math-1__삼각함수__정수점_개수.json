@@ -1,0 +1,158 @@
+{
+ "id": "functions/math-1/삼각함수/정수점_개수",
+ "spec": {
+  "title": "선분 위의 정수점 개수 — 원점에서 (m, n)까지",
+  "params": [
+   {
+    "name": "m",
+    "label": "끝점 x좌표 m",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "끝점 y좌표 n",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "g = gcd(m, n); count = g + 1; px = m/g; py = n/g",
+  "geometry": {
+   "range": [
+    -1,
+    13
+   ],
+   "yRange": [
+    -1,
+    13
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=m",
+      "=n"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "첫 정수점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      "=n"
+     ],
+     "label": "(m, n)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "gcd(m, n)",
+    "expr": "g",
+    "digits": 0
+   },
+   {
+    "label": "선분 위 정수점 개수 = gcd(m,n)+1",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "기본 격자벡터 (m/g, n/g)",
+    "expr": "px",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 6,
+    "n": 4
+   },
+   {
+    "m": 5,
+    "n": 3
+   },
+   {
+    "m": 12,
+    "n": 8
+   },
+   {
+    "m": 9,
+    "n": 6
+   }
+  ],
+  "invariants": [
+   "px*g - m",
+   "py*g - n",
+   "gcd(px, py) - 1",
+   "count - g - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 6,
+     "n": 4
+    },
+    "expect": {
+     "g": 2,
+     "count": 3,
+     "px": 3,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "m": 5,
+     "n": 3
+    },
+    "expect": {
+     "g": 1,
+     "count": 2,
+     "px": 5,
+     "py": 3
+    }
+   },
+   {
+    "params": {
+     "m": 12,
+     "n": 8
+    },
+    "expect": {
+     "g": 4,
+     "count": 5,
+     "px": 3,
+     "py": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

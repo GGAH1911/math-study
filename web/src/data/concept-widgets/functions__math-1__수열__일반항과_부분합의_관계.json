@@ -1,0 +1,264 @@
+{
+ "id": "functions/math-1/수열/일반항과_부분합의_관계",
+ "spec": {
+  "title": "일반항과 부분합의 관계 (aₙ = Sₙ − Sₙ₋₁)",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (n² 계수)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "q (n 계수)",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 0,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "n (항 번호)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "Sn = p*n^2 + q*n + c; Sprev = p*(n-1)^2 + q*(n-1) + c; an = Sn - Sprev; afor = p*(2*n-1) + q; a1true = p + q + c",
+  "geometry": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    "=Sn*1.2+0.5"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.6,
+       0
+      ],
+      [
+       1.4,
+       0
+      ],
+      [
+       1.4,
+       "=Sn"
+      ],
+      [
+       0.6,
+       "=Sn"
+      ]
+     ],
+     "label": "Sₙ",
+     "color": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2.6,
+       0
+      ],
+      [
+       3.4,
+       0
+      ],
+      [
+       3.4,
+       "=Sprev"
+      ],
+      [
+       2.6,
+       "=Sprev"
+      ]
+     ],
+     "label": "Sₙ₋₁",
+     "color": "#94a3b8"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2.6,
+       "=Sprev"
+      ],
+      [
+       3.4,
+       "=Sprev"
+      ],
+      [
+       3.4,
+       "=Sn"
+      ],
+      [
+       2.6,
+       "=Sn"
+      ]
+     ],
+     "label": "aₙ",
+     "color": "#f97316"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0.6,
+      "=Sn"
+     ],
+     "to": [
+      3.4,
+      "=Sn"
+     ],
+     "color": "#1e293b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1.4,
+      "=Sprev"
+     ],
+     "to": [
+      2.6,
+      "=Sprev"
+     ],
+     "color": "#94a3b8"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Sₙ",
+    "expr": "Sn",
+    "digits": 2
+   },
+   {
+    "label": "Sₙ₋₁ (식 대입)",
+    "expr": "Sprev",
+    "digits": 2
+   },
+   {
+    "label": "aₙ = Sₙ − Sₙ₋₁",
+    "expr": "an",
+    "digits": 2
+   },
+   {
+    "label": "일반항 공식 p(2n−1)+q",
+    "expr": "afor",
+    "digits": 2
+   },
+   {
+    "label": "실제 a₁ = S₁ (n=1 별도 확인)",
+    "expr": "a1true",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "q": 1,
+    "c": 0,
+    "n": 3
+   },
+   {
+    "p": 2,
+    "q": 0.5,
+    "c": 2,
+    "n": 5
+   },
+   {
+    "p": 0.5,
+    "q": 3,
+    "c": 1,
+    "n": 2
+   },
+   {
+    "p": 1.5,
+    "q": 2,
+    "c": 4,
+    "n": 1
+   }
+  ],
+  "invariants": [
+   "an - (p*(2*n-1) + q)",
+   "Sn - Sprev - an",
+   "an - (p*(2*(n-1)-1) + q) - 2*p"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "q": 1,
+     "c": 0,
+     "n": 3
+    },
+    "expect": {
+     "Sn": 12,
+     "Sprev": 6,
+     "an": 6,
+     "afor": 6,
+     "a1true": 2
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "q": 0.5,
+     "c": 2,
+     "n": 5
+    },
+    "expect": {
+     "Sn": 54.5,
+     "Sprev": 36,
+     "an": 18.5,
+     "afor": 18.5,
+     "a1true": 4.5
+    }
+   },
+   {
+    "params": {
+     "p": 1.5,
+     "q": 2,
+     "c": 4,
+     "n": 1
+    },
+    "expect": {
+     "Sn": 7.5,
+     "Sprev": 4,
+     "an": 3.5,
+     "afor": 3.5,
+     "a1true": 7.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

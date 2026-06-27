@@ -1,0 +1,121 @@
+{
+ "id": "functions/math-1/수열/텔레스코핑",
+ "spec": {
+  "title": "텔레스코핑: ∑1/(k(k+1)) = 1 − 1/(n+1)",
+  "params": [
+   {
+    "name": "n",
+    "label": "항의 개수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "Sn = n/(n+1); telescoped = 1 - 1/(n+1); remainder = 1/(n+1); limit = 1; term = 1/(n*(n+1)); diff = 1/n - 1/(n+1)",
+  "plot": {
+   "range": [
+    0,
+    30
+   ],
+   "yRange": [
+    0,
+    1.15
+   ],
+   "fns": [
+    {
+     "fn": "x/(x+1)",
+     "label": "부분합 S_n = n/(n+1)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "1",
+     "label": "극한 = 1",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분합 S_n = ∑1/(k(k+1))",
+    "expr": "Sn",
+    "digits": 5
+   },
+   {
+    "label": "텔레스코핑 값 1 − 1/(n+1)",
+    "expr": "telescoped",
+    "digits": 5
+   },
+   {
+    "label": "소거 후 남는 항 b_n = 1/(n+1)",
+    "expr": "remainder",
+    "digits": 5
+   },
+   {
+    "label": "n번째 항 1/(n(n+1))",
+    "expr": "term",
+    "digits": 5
+   },
+   {
+    "label": "= 1/n − 1/(n+1) (부분분수)",
+    "expr": "diff",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 9
+   }
+  ],
+  "invariants": [
+   "Sn - telescoped",
+   "Sn + remainder - limit",
+   "term - diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "Sn": 0.5,
+     "remainder": 0.5,
+     "term": 0.5,
+     "diff": 0.5
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "Sn": 0.75,
+     "remainder": 0.25,
+     "term": 0.0833333333
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "Sn": 0.8333333333,
+     "remainder": 0.1666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

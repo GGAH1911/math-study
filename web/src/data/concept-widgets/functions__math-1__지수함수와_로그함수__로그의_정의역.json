@@ -1,0 +1,131 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/로그의_정의역",
+ "spec": {
+  "title": "로그함수의 정의역: (0, ∞)",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "진수 x₀",
+    "type": "slider",
+    "min": 0.1,
+    "max": 16,
+    "init": 8,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "logval = log(x0, a); expval = a^x0; roundtrip = log(a^x0, a)",
+  "plot": {
+   "range": [
+    -2,
+    8
+   ],
+   "yRange": [
+    -4,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "log(x, a)",
+     "label": "y = log_a x (정의역 x>0)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a^x",
+     "label": "y = a^x (치역 y>0)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "x",
+     "label": "y = x (대칭축)",
+     "color": "#9ca3af"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "진수 x₀ (양수여야 정의됨)",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "log_a(x₀)",
+    "expr": "logval",
+    "digits": 4
+   },
+   {
+    "label": "a^x₀ (항상 양수 → 로그의 정의역)",
+    "expr": "expval",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x0": 8
+   },
+   {
+    "a": 2,
+    "x0": 0.5
+   },
+   {
+    "a": 3,
+    "x0": 9
+   },
+   {
+    "a": 4,
+    "x0": 2
+   }
+  ],
+  "invariants": [
+   "roundtrip - x0",
+   "a^logval - x0",
+   "log(a, a) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x0": 8
+    },
+    "expect": {
+     "logval": 3,
+     "expval": 256
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "x0": 9
+    },
+    "expect": {
+     "logval": 2,
+     "expval": 19683
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": 0.5
+    },
+    "expect": {
+     "logval": -1,
+     "expval": 1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

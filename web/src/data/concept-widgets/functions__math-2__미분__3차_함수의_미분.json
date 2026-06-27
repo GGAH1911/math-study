@@ -1,0 +1,187 @@
+{
+ "id": "functions/math-2/미분/3차_함수의_미분",
+ "spec": {
+  "title": "3차 함수의 미분: 도함수 f'(x)와 접선·극값",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (접점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx0 = a*x0^3 + b*x0^2 + c*x0 + d; fpx0 = 3*a*x0^2 + 2*b*x0 + c; D = 4*b^2 - 12*a*c; xe1 = (-2*b - sqrt(D))/(6*a); xe2 = (-2*b + sqrt(D))/(6*a); fpe1 = 3*a*xe1^2 + 2*b*xe1 + c; fpe2 = 3*a*xe2^2 + 2*b*xe2 + c",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)=ax³+bx²+cx+d",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)=3ax²+2bx+c",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fx0 + fpx0*(x - x0)",
+     "label": "x₀에서의 접선 (기울기 f'(x₀))",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f'(x₀) = 접선의 기울기(순간변화율)",
+    "expr": "fpx0",
+    "digits": 3
+   },
+   {
+    "label": "f(x₀)",
+    "expr": "fx0",
+    "digits": 3
+   },
+   {
+    "label": "판별식 D=4b²-12ac (D>0이면 극값 2개)",
+    "expr": "D",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
+    "x0": 0.5
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "d": 1,
+    "x0": 1
+   },
+   {
+    "a": 0.5,
+    "b": 0,
+    "c": -2,
+    "d": 1,
+    "x0": 2
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": -1,
+    "d": 0,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "fpe1",
+   "fpe2",
+   "xe1 + xe2 + 2*b/(3*a)",
+   "xe1*xe2 - c/(3*a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "x0": 0.5
+    },
+    "expect": {
+     "fx0": -1.375,
+     "fpx0": -2.25,
+     "D": 36,
+     "xe1": -1,
+     "xe2": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "d": 1,
+     "x0": 1
+    },
+    "expect": {
+     "fx0": 5,
+     "fpx0": 9,
+     "D": 36,
+     "xe1": -2,
+     "xe2": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": -1,
+     "d": 0,
+     "x0": -1
+    },
+    "expect": {
+     "fx0": 1,
+     "fpx0": 1,
+     "D": 40
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

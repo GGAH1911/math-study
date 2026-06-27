@@ -1,0 +1,191 @@
+{
+ "id": "functions/math-1/삼각함수/호도법",
+ "spec": {
+  "title": "호도법: 호의 길이와 중심각 θ = l/r",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "중심각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 6.2832,
+    "init": 2,
+    "step": 0.01,
+    "unit": "rad"
+   }
+  ],
+  "scope": "l = r*theta; deg = theta*180/pi; cx = r*cos(theta); sy = r*sin(theta)",
+  "geometry": {
+   "range": [
+    -4.5,
+    4.5
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=r",
+       0
+      ],
+      [
+       "=r*cos(theta/6)",
+       "=r*sin(theta/6)"
+      ],
+      [
+       "=r*cos(theta/3)",
+       "=r*sin(theta/3)"
+      ],
+      [
+       "=r*cos(theta/2)",
+       "=r*sin(theta/2)"
+      ],
+      [
+       "=r*cos(2*theta/3)",
+       "=r*sin(2*theta/3)"
+      ],
+      [
+       "=r*cos(5*theta/6)",
+       "=r*sin(5*theta/6)"
+      ],
+      [
+       "=cx",
+       "=sy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "θ (라디안)",
+    "expr": "theta",
+    "digits": 3
+   },
+   {
+    "label": "θ (도)",
+    "expr": "deg",
+    "digits": 1
+   },
+   {
+    "label": "호의 길이 l = rθ",
+    "expr": "l",
+    "digits": 3
+   },
+   {
+    "label": "l / r  (= θ 확인)",
+    "expr": "l/r",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 3,
+    "theta": 2
+   },
+   {
+    "r": 1,
+    "theta": 1
+   },
+   {
+    "r": 2,
+    "theta": 4
+   },
+   {
+    "r": 4,
+    "theta": 0.5
+   }
+  ],
+  "invariants": [
+   "l - r*theta",
+   "l/r - theta",
+   "cx^2 + sy^2 - r^2",
+   "deg - theta*180/pi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 3,
+     "theta": 0
+    },
+    "expect": {
+     "l": 0,
+     "cx": 3,
+     "sy": 0,
+     "deg": 0
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 3.141592653589793
+    },
+    "expect": {
+     "l": 6.283185307179586,
+     "cx": -2,
+     "sy": 0,
+     "deg": 180
+    }
+   },
+   {
+    "params": {
+     "r": 4,
+     "theta": 1.5707963267948966
+    },
+    "expect": {
+     "l": 6.283185307179586,
+     "cx": 0,
+     "sy": 4,
+     "deg": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

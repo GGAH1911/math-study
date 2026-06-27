@@ -1,0 +1,129 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/지수함수",
+ "spec": {
+  "title": "지수함수 y = aˣ",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x",
+    "label": "지수 x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ax = a^x; a0 = a^0; ainv = (1/a)^x",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    0,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = aˣ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(1/a)^x",
+     "label": "y = (1/a)ˣ (y축 대칭)",
+     "color": "#f97316"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "aˣ (현재 x에서의 값, 항상 양수)",
+    "expr": "ax",
+    "digits": 4
+   },
+   {
+    "label": "a⁰ (밑과 무관하게 항상 1)",
+    "expr": "a0",
+    "digits": 4
+   },
+   {
+    "label": "(1/a)ˣ = a⁻ˣ",
+    "expr": "ainv",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x": 3
+   },
+   {
+    "a": 0.5,
+    "x": 1.5
+   },
+   {
+    "a": 3,
+    "x": -2
+   },
+   {
+    "a": 1.5,
+    "x": 2
+   }
+  ],
+  "invariants": [
+   "a0 - 1",
+   "ax * ainv - 1",
+   "ainv - a^(-x)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x": 3
+    },
+    "expect": {
+     "ax": 8,
+     "a0": 1,
+     "ainv": 0.125
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "x": 0.5
+    },
+    "expect": {
+     "ax": 2,
+     "a0": 1,
+     "ainv": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x": -2
+    },
+    "expect": {
+     "ax": 0.25,
+     "a0": 1,
+     "ainv": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,224 @@
+{
+ "id": "functions/math-1/수열/일의_자리_주기성",
+ "spec": {
+  "title": "거듭제곱 aⁿ의 일의 자리 주기성",
+  "params": [
+   {
+    "name": "d",
+    "label": "밑 a (일의 자리)",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "u1=mod(d^1,10); u2=mod(d^2,10); u3=mod(d^3,10); u4=mod(d^4,10); u8=mod(d^8,10); u=mod(d^n,10); ushift=mod(d^(n+4),10)",
+  "geometry": {
+   "range": [
+    0,
+    13
+   ],
+   "yRange": [
+    -0.7,
+    9.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=mod(d^1,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=mod(d^2,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=mod(d^3,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=mod(d^4,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=mod(d^5,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=mod(d^6,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=mod(d^7,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=mod(d^8,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      "=mod(d^9,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      "=mod(d^10,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      11,
+      "=mod(d^11,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      12,
+      "=mod(d^12,10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=u"
+     ],
+     "label": "aⁿ",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "aⁿ의 일의 자리",
+    "expr": "u",
+    "digits": 0
+   },
+   {
+    "label": "aⁿ⁺⁴의 일의 자리 (=aⁿ)",
+    "expr": "ushift",
+    "digits": 0
+   },
+   {
+    "label": "주기블록 a¹",
+    "expr": "u1",
+    "digits": 0
+   },
+   {
+    "label": "주기블록 a²",
+    "expr": "u2",
+    "digits": 0
+   },
+   {
+    "label": "주기블록 a³",
+    "expr": "u3",
+    "digits": 0
+   },
+   {
+    "label": "주기블록 a⁴",
+    "expr": "u4",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 2,
+    "n": 5
+   },
+   {
+    "d": 7,
+    "n": 3
+   },
+   {
+    "d": 3,
+    "n": 6
+   },
+   {
+    "d": 5,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "u - ushift",
+   "u4 - u8"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 2,
+     "n": 5
+    },
+    "expect": {
+     "u": 2,
+     "u1": 2,
+     "u2": 4,
+     "u3": 8,
+     "u4": 6
+    }
+   },
+   {
+    "params": {
+     "d": 3,
+     "n": 4
+    },
+    "expect": {
+     "u": 1
+    }
+   },
+   {
+    "params": {
+     "d": 7,
+     "n": 3
+    },
+    "expect": {
+     "u": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

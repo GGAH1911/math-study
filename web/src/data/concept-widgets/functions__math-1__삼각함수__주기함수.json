@@ -1,0 +1,113 @@
+{
+ "id": "functions/math-1/삼각함수/주기함수",
+ "spec": {
+  "title": "주기함수: f(x+p)=f(x) — 평행이동으로 보는 주기",
+  "params": [
+   {
+    "name": "p",
+    "label": "이동량 p",
+    "type": "slider",
+    "min": 0,
+    "max": 12.57,
+    "init": 2,
+    "step": 0.01,
+    "unit": "rad"
+   }
+  ],
+  "scope": "x0 = 1; f0 = sin(x0); gp = sin(x0 + p); cp = cos(x0 + p); periodCheck = sin(x0 + p + 2*pi) - sin(x0 + p); pyth = gp^2 + cp^2 - 1",
+  "plot": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "f(x)=sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "sin(x + p)",
+     "label": "f(x+p)=sin(x+p)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "이동량 p",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "f(x₀), x₀=1",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "f(x₀+p)",
+    "expr": "gp",
+    "digits": 4
+   },
+   {
+    "label": "|f(x₀+p)−f(x₀)| (p=2π마다 0)",
+    "expr": "abs(gp - f0)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 0
+   },
+   {
+    "p": 3.14159265
+   },
+   {
+    "p": 6.28318531
+   },
+   {
+    "p": 9.42477796
+   }
+  ],
+  "invariants": [
+   "periodCheck",
+   "pyth"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 0
+    },
+    "expect": {
+     "f0": 0.8414709848,
+     "gp": 0.8414709848
+    }
+   },
+   {
+    "params": {
+     "p": 3.14159265
+    },
+    "expect": {
+     "gp": -0.8414709848
+    }
+   },
+   {
+    "params": {
+     "p": 6.28318531
+    },
+    "expect": {
+     "gp": 0.8414709848
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

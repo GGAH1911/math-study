@@ -1,0 +1,126 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/함수_그래프의_교점",
+ "spec": {
+  "title": "함수 그래프의 교점: y = aˣ 와 y = k",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "직선 높이 k",
+    "type": "slider",
+    "min": 1,
+    "max": 16,
+    "init": 8,
+    "step": 0.5
+   }
+  ],
+  "scope": "xint = log(k)/log(a); yint = k; gap = a^xint - k",
+  "plot": {
+   "range": [
+    -1,
+    5
+   ],
+   "yRange": [
+    0,
+    18
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = aˣ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "k",
+     "label": "y = k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x좌표 ( = logₐk, 방정식 aˣ=k 의 해)",
+    "expr": "xint",
+    "digits": 4
+   },
+   {
+    "label": "교점 y좌표",
+    "expr": "yint",
+    "digits": 4
+   },
+   {
+    "label": "검증: aˣ − k (교점은 곡선 위 ⇒ ≈0)",
+    "expr": "gap",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "k": 8
+   },
+   {
+    "a": 3,
+    "k": 9
+   },
+   {
+    "a": 4,
+    "k": 16
+   },
+   {
+    "a": 2.5,
+    "k": 10
+   }
+  ],
+  "invariants": [
+   "a^xint - k",
+   "xint*log(a) - log(k)",
+   "yint - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "k": 8
+    },
+    "expect": {
+     "xint": 3,
+     "yint": 8
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "k": 4
+    },
+    "expect": {
+     "xint": 2,
+     "yint": 4
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "k": 16
+    },
+    "expect": {
+     "xint": 2,
+     "yint": 16
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

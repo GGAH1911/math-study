@@ -1,0 +1,199 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_덧셈",
+ "spec": {
+  "title": "삼각함수의 덧셈 — 단위원으로 보는 sin(A+B), cos(A+B)",
+  "params": [
+   {
+    "name": "A",
+    "label": "각 A",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "B",
+    "label": "각 B",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "radA=A*pi/180; radB=B*pi/180; sumRad=radA+radB; cA=cos(radA); sA=sin(radA); cB=cos(radB); sB=sin(radB); Px=cos(sumRad); Py=sin(sumRad); sinSum=sA*cB+cA*sB; cosSum=cA*cB-sA*sB",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cA",
+      "=sA"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cA",
+      "=sA"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "A+B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      0
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=Py"
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin(A+B) (단위원 y좌표)",
+    "expr": "Py",
+    "digits": 4
+   },
+   {
+    "label": "sinA·cosB+cosA·sinB",
+    "expr": "sinSum",
+    "digits": 4
+   },
+   {
+    "label": "cos(A+B) (단위원 x좌표)",
+    "expr": "Px",
+    "digits": 4
+   },
+   {
+    "label": "cosA·cosB−sinA·sinB",
+    "expr": "cosSum",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 30,
+    "B": 60
+   },
+   {
+    "A": 45,
+    "B": 45
+   },
+   {
+    "A": 90,
+    "B": 30
+   },
+   {
+    "A": 0,
+    "B": 0
+   }
+  ],
+  "invariants": [
+   "Py-(sA*cB+cA*sB)",
+   "Px-(cA*cB-sA*sB)",
+   "Px^2+Py^2-1",
+   "cA^2+sA^2-1",
+   "cB^2+sB^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 30,
+     "B": 60
+    },
+    "expect": {
+     "Py": 1,
+     "Px": 0,
+     "sinSum": 1,
+     "cosSum": 0
+    }
+   },
+   {
+    "params": {
+     "A": 0,
+     "B": 90
+    },
+    "expect": {
+     "Px": 0,
+     "Py": 1,
+     "sinSum": 1,
+     "cosSum": 0
+    }
+   },
+   {
+    "params": {
+     "A": 90,
+     "B": 90
+    },
+    "expect": {
+     "Px": -1,
+     "Py": 0,
+     "sinSum": 0,
+     "cosSum": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

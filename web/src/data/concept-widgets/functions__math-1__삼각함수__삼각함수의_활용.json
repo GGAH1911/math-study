@@ -1,0 +1,136 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_활용",
+ "spec": {
+  "title": "삼각함수의 합성: a·sin x + b·cos x = R·sin(x+φ)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (sin 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (cos 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "R=sqrt(a^2+b^2); phi=atan2(b,a)",
+  "plot": {
+   "range": [
+    0,
+    6.2832
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*sin(x)",
+     "label": "a·sin x",
+     "color": "#90caf9"
+    },
+    {
+     "fn": "b*cos(x)",
+     "label": "b·cos x",
+     "color": "#a5d6a7"
+    },
+    {
+     "fn": "a*sin(x)+b*cos(x)",
+     "label": "a·sin x + b·cos x (합)",
+     "color": "#e53935"
+    },
+    {
+     "fn": "R*sin(x+phi)",
+     "label": "R·sin(x+φ) (합성)",
+     "color": "#fb8c00"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "R (진폭=최댓값)",
+    "expr": "R",
+    "digits": 4
+   },
+   {
+    "label": "φ (위상, rad)",
+    "expr": "phi",
+    "digits": 4
+   },
+   {
+    "label": "최솟값",
+    "expr": "-R",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": -2,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "R^2-(a^2+b^2)",
+   "R*cos(phi)-a",
+   "R*sin(phi)-b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "R": 5,
+     "phi": 0.9272952180016122
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "R": 1.4142135623730951,
+     "phi": 0.7853981633974483
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2
+    },
+    "expect": {
+     "R": 2,
+     "phi": 1.5707963267948966
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

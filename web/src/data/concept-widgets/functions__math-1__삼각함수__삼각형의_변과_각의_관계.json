@@ -1,0 +1,223 @@
+{
+ "id": "functions/math-1/삼각함수/삼각형의_변과_각의_관계",
+ "spec": {
+  "title": "삼각형의 변과 각의 관계 — 사인법칙·코사인법칙",
+  "params": [
+   {
+    "name": "b",
+    "label": "변 b (=AC)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "변 c (=AB)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.5
+   },
+   {
+    "name": "A",
+    "label": "∠A",
+    "type": "slider",
+    "min": 20,
+    "max": 150,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Arad=A*pi/180; Ax=0; Ay=0; Bx=c; By=0; Cx=b*cos(Arad); Cy=b*sin(Arad); a=sqrt(b^2+c^2-2*b*c*cos(Arad)); Brad=acos((a^2+c^2-b^2)/(2*a*c)); Crad=acos((a^2+b^2-c^2)/(2*a*b)); Bdeg=Brad*180/pi; Cdeg=Crad*180/pi; Ox=c/2; Oy=(Cx^2+Cy^2-c*Cx)/(2*Cy); R=sqrt(Ox^2+Oy^2)",
+  "geometry": {
+   "range": [
+    -7.5,
+    10
+   ],
+   "yRange": [
+    -4,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=Ox",
+      "=Oy"
+     ],
+     "radius": "=R",
+     "label": "외접원 R"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ox",
+      "=Oy"
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = √(b²+c²−2bc·cosA)",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "∠B",
+    "expr": "Bdeg",
+    "digits": 1
+   },
+   {
+    "label": "∠C",
+    "expr": "Cdeg",
+    "digits": 1
+   },
+   {
+    "label": "∠A+∠B+∠C",
+    "expr": "A+Bdeg+Cdeg",
+    "digits": 1
+   },
+   {
+    "label": "a/sinA",
+    "expr": "a/sin(Arad)",
+    "digits": 3
+   },
+   {
+    "label": "b/sinB",
+    "expr": "b/sin(Brad)",
+    "digits": 3
+   },
+   {
+    "label": "2R",
+    "expr": "2*R",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 4,
+    "c": 5,
+    "A": 60
+   },
+   {
+    "b": 3,
+    "c": 4,
+    "A": 90
+   },
+   {
+    "b": 2,
+    "c": 3,
+    "A": 120
+   },
+   {
+    "b": 6,
+    "c": 6,
+    "A": 45
+   }
+  ],
+  "invariants": [
+   "sqrt((Bx-Cx)^2+(By-Cy)^2)-a",
+   "a/sin(Arad)-b/sin(Brad)",
+   "b/sin(Brad)-c/sin(Crad)",
+   "a/sin(Arad)-2*R",
+   "Arad+Brad+Crad-pi",
+   "(Cx-Ox)^2+(Cy-Oy)^2-R^2",
+   "(Bx-Ox)^2+(By-Oy)^2-R^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 3,
+     "c": 4,
+     "A": 90
+    },
+    "expect": {
+     "a": 5,
+     "Bdeg": 36.8698976458,
+     "Cdeg": 53.1301023542,
+     "R": 2.5,
+     "Ox": 2,
+     "Oy": 1.5
+    }
+   },
+   {
+    "params": {
+     "b": 5,
+     "c": 5,
+     "A": 60
+    },
+    "expect": {
+     "a": 5,
+     "Bdeg": 60,
+     "Cdeg": 60,
+     "R": 2.8867513459
+    }
+   },
+   {
+    "params": {
+     "b": 6,
+     "c": 8,
+     "A": 90
+    },
+    "expect": {
+     "a": 10,
+     "Bdeg": 36.8698976458,
+     "Cdeg": 53.1301023542,
+     "R": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

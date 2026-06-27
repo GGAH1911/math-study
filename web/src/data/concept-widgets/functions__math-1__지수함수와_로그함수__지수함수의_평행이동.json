@@ -1,0 +1,152 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/지수함수의_평행이동",
+ "spec": {
+  "title": "지수함수의 평행이동: g(x)=a^(x-p)+q",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "x축 이동 p (오른쪽 +)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "y축 이동 q (위 +)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "asym=q; g0=a^(-p)+q; g_at_p=a^(p-p)+q; g_at_1p=a^((1+p)-p)+q; g_2p=a^((2+p)-p)+q; f_2=a^2",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "f(x)=a^x (원래)",
+     "color": "#9aa0a6"
+    },
+    {
+     "fn": "a^(x-p)+q",
+     "label": "g(x)=a^(x-p)+q (이동)",
+     "color": "#ea4335"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "y절편 g(0)",
+    "expr": "g0",
+    "digits": 3
+   },
+   {
+    "label": "점근선 y=",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "점 (0,1)의 상 → g(p)",
+    "expr": "g_at_p",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "p": 1,
+    "q": 1
+   },
+   {
+    "a": 3,
+    "p": -2,
+    "q": 2
+   },
+   {
+    "a": 2,
+    "p": 0,
+    "q": 0
+   },
+   {
+    "a": 0.5,
+    "p": 2,
+    "q": -1
+   }
+  ],
+  "invariants": [
+   "g_at_p-(1+q)",
+   "g_at_1p-(a+q)",
+   "g_2p-q-f_2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "p": 1,
+     "q": 1
+    },
+    "expect": {
+     "g0": 1.5,
+     "g_at_p": 2,
+     "g_at_1p": 3,
+     "g_2p": 5,
+     "f_2": 4,
+     "asym": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "p": -2,
+     "q": 2
+    },
+    "expect": {
+     "g0": 11,
+     "g_at_p": 3,
+     "g_at_1p": 5,
+     "g_2p": 11,
+     "f_2": 9,
+     "asym": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": 0,
+     "q": 0
+    },
+    "expect": {
+     "g0": 1,
+     "g_at_p": 1,
+     "g_at_1p": 2,
+     "g_2p": 4,
+     "f_2": 4,
+     "asym": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

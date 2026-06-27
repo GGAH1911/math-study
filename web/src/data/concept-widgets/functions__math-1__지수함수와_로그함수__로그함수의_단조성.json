@@ -1,0 +1,155 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/로그함수의_단조성",
+ "spec": {
+  "title": "로그함수의 단조성 (밑 a에 따른 증가·감소)",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": 0.5,
+    "max": 8,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x2",
+    "label": "x₂ (>x₁)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 8,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "la = log(a); y1 = log(x1)/la; y2 = log(x2)/la; diff = y2 - y1",
+  "geometry": null,
+  "plot": {
+   "range": [
+    0.1,
+    8
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "log(x)/la",
+     "label": "y = log_a(x)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "log_a(x₁)",
+    "expr": "y1",
+    "digits": 3
+   },
+   {
+    "label": "log_a(x₂)",
+    "expr": "y2",
+    "digits": 3
+   },
+   {
+    "label": "y₂ − y₁ (양수면 증가, 음수면 감소)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "a − 1 의 부호 (+1 증가 / −1 감소)",
+    "expr": "sign(a-1)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x1": 2,
+    "x2": 8
+   },
+   {
+    "a": 0.5,
+    "x1": 2,
+    "x2": 4
+   },
+   {
+    "a": 3,
+    "x1": 1.5,
+    "x2": 6
+   },
+   {
+    "a": 5,
+    "x1": 0.5,
+    "x2": 7
+   }
+  ],
+  "invariants": [
+   "y1*la - log(x1)",
+   "y2*la - log(x2)",
+   "diff*la - (log(x2) - log(x1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x1": 2,
+     "x2": 8
+    },
+    "expect": {
+     "la": 0.6931471805599453,
+     "y1": 1,
+     "y2": 3,
+     "diff": 2
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "x1": 2,
+     "x2": 8
+    },
+    "expect": {
+     "y1": 0.5,
+     "y2": 1.5,
+     "diff": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x1": 2,
+     "x2": 4
+    },
+    "expect": {
+     "y1": -1,
+     "y2": -2,
+     "diff": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

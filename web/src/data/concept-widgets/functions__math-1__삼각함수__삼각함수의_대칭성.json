@@ -1,0 +1,198 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_대칭성",
+ "spec": {
+  "title": "삼각함수의 대칭성 (단위원에서의 대칭이동)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 35,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); negx=cos(-rad); negy=sin(-rad); supx=cos(pi-rad); supy=sin(pi-rad); cox=cos(pi/2-rad); coy=sin(pi/2-rad)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P(θ)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=negx",
+      "=negy"
+     ],
+     "label": "−θ (x축대칭)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=supx",
+      "=supy"
+     ],
+     "label": "180°−θ (y축대칭)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cox",
+      "=coy"
+     ],
+     "label": "90°−θ (y=x대칭)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "sin(−θ) = −sinθ",
+    "expr": "negy",
+    "digits": 4
+   },
+   {
+    "label": "cos(−θ) = cosθ",
+    "expr": "negx",
+    "digits": 4
+   },
+   {
+    "label": "sin(180°−θ) = sinθ",
+    "expr": "supy",
+    "digits": 4
+   },
+   {
+    "label": "cos(180°−θ) = −cosθ",
+    "expr": "supx",
+    "digits": 4
+   },
+   {
+    "label": "sin(90°−θ) = cosθ",
+    "expr": "coy",
+    "digits": 4
+   },
+   {
+    "label": "cos(90°−θ) = sinθ",
+    "expr": "cox",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 225
+   }
+  ],
+  "invariants": [
+   "cx^2 + sy^2 - 1",
+   "negx - cx",
+   "negy + sy",
+   "supy - sy",
+   "supx + cx",
+   "coy - cx",
+   "cox - sy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254038,
+     "sy": 0.5,
+     "negx": 0.8660254038,
+     "negy": -0.5,
+     "supx": -0.8660254038,
+     "supy": 0.5,
+     "cox": 0.5,
+     "coy": 0.8660254038
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254038,
+     "negx": 0.5,
+     "negy": -0.8660254038,
+     "supx": -0.5,
+     "supy": 0.8660254038,
+     "cox": 0.8660254038,
+     "coy": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "cx": -0.5,
+     "sy": 0.8660254038,
+     "negy": -0.8660254038,
+     "supx": 0.5,
+     "supy": 0.8660254038,
+     "cox": 0.8660254038,
+     "coy": -0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

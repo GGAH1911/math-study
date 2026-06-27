@@ -1,0 +1,183 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_그래프",
+ "spec": {
+  "title": "삼각함수의 그래프: y = a·sin(bx − c) + d",
+  "params": [
+   {
+    "name": "a",
+    "label": "진폭 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "주기계수 b",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "위상 c",
+    "type": "slider",
+    "min": -3.14,
+    "max": 3.14,
+    "init": 0,
+    "step": 0.01,
+    "unit": "rad"
+   },
+   {
+    "name": "d",
+    "label": "수직이동 d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "amp=a; per=2*pi/b; phase=c; vshift=d; maxval=d+a; minval=d-a; xmax=(phase+pi/2)/b; fmax=amp*sin(b*xmax-phase)+vshift; xmin=(phase-pi/2)/b; fmin=amp*sin(b*xmin-phase)+vshift; shift=c/b",
+  "plot": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y=sin x (기준)",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "a*sin(b*x-c)+d",
+     "label": "y=a·sin(bx−c)+d",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "진폭 |a|",
+    "expr": "amp",
+    "digits": 2
+   },
+   {
+    "label": "주기 2π/b",
+    "expr": "per",
+    "digits": 3
+   },
+   {
+    "label": "가로이동 c/b",
+    "expr": "shift",
+    "digits": 3
+   },
+   {
+    "label": "최댓값 d+a",
+    "expr": "maxval",
+    "digits": 2
+   },
+   {
+    "label": "최솟값 d−a",
+    "expr": "minval",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1,
+    "c": 0,
+    "d": 0
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": 0.5,
+    "d": 1
+   },
+   {
+    "a": 1.5,
+    "b": 0.5,
+    "c": -1,
+    "d": -0.5
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "c": 1,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "per*b - 2*pi",
+   "fmax - maxval",
+   "fmin - minval",
+   "fmax - (a+d)",
+   "fmin - (d-a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "amp": 1,
+     "per": 6.283185307179586,
+     "maxval": 1,
+     "minval": -1,
+     "fmax": 1,
+     "fmin": -1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": 0,
+     "d": 1
+    },
+    "expect": {
+     "amp": 2,
+     "per": 3.141592653589793,
+     "maxval": 3,
+     "minval": -1,
+     "fmax": 3,
+     "fmin": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "b": 1,
+     "c": 0,
+     "d": 0.5
+    },
+    "expect": {
+     "amp": 1.5,
+     "per": 6.283185307179586,
+     "maxval": 2,
+     "minval": -1,
+     "fmax": 2,
+     "fmin": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

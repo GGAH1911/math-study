@@ -1,0 +1,124 @@
+{
+ "id": "functions/math-1/삼각함수/탄젠트_함수의_그래프",
+ "spec": {
+  "title": "탄젠트 함수의 그래프: y = a·tan(bx)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (세로 배율)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (가로 배율, 주기=π/b)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "T=pi/b; xq=pi/(4*b); vq=a*tan(b*xq); odd=a*tan(b*0.5)+a*tan(-b*0.5); per=a*tan(b*0.5)-a*tan(b*(0.5+pi/b)); def=a*tan(b*0.5)-a*sin(b*0.5)/cos(b*0.5)",
+  "plot": {
+   "range": [
+    -4.8,
+    4.8
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "tan(x)",
+     "label": "y = tan x (기본)",
+     "color": "#bbbbbb"
+    },
+    {
+     "fn": "a*tan(b*x)",
+     "label": "y = a·tan(bx)",
+     "color": "#e8590c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "주기 (period) = π/b",
+    "expr": "T",
+    "digits": 4
+   },
+   {
+    "label": "x = π/(4b) 에서의 y 값 (= a)",
+    "expr": "vq",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": 2,
+    "b": 2
+   },
+   {
+    "a": 0.5,
+    "b": 0.5
+   },
+   {
+    "a": 1.5,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "vq - a",
+   "odd",
+   "per",
+   "def"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "T": 3.141592653589793,
+     "vq": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2
+    },
+    "expect": {
+     "T": 1.5707963267948966,
+     "vq": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0.5
+    },
+    "expect": {
+     "T": 6.283185307179586,
+     "vq": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

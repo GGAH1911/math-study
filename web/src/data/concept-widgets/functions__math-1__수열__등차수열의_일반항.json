@@ -1,0 +1,201 @@
+{
+ "id": "functions/math-1/수열/등차수열의_일반항",
+ "spec": {
+  "title": "등차수열의 일반항  aₙ = a₁ + (n−1)d",
+  "params": [
+   {
+    "name": "a1",
+    "label": "a₁ (첫째항)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "d (공차)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "n (항의 번호)",
+    "type": "slider",
+    "min": 1,
+    "max": 7,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "an = a1 + (n-1)*d; aprev = a1 + (n-2)*d; anext = a1 + n*d",
+  "geometry": {
+   "range": [
+    0,
+    8
+   ],
+   "yRange": [
+    -35,
+    35
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a1+d"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a1+2*d"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a1+3*d"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a1+4*d"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a1+5*d"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=a1+6*d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      "=n",
+      "=an"
+     ],
+     "label": "기울기 = d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=an"
+     ],
+     "label": "aₙ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "aₙ = a₁ + (n−1)d",
+    "expr": "an",
+    "digits": 0
+   },
+   {
+    "label": "공차를 더한 횟수 (n−1)",
+    "expr": "n-1",
+    "digits": 0
+   },
+   {
+    "label": "이웃 항과의 차 aₙ−aₙ₋₁ (=d)",
+    "expr": "an-aprev",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 2,
+    "d": 3,
+    "n": 5
+   },
+   {
+    "a1": -4,
+    "d": 2,
+    "n": 7
+   },
+   {
+    "a1": 5,
+    "d": -3,
+    "n": 4
+   },
+   {
+    "a1": 0,
+    "d": 1,
+    "n": 1
+   }
+  ],
+  "invariants": [
+   "an - a1 - (n-1)*d",
+   "an - aprev - d",
+   "anext - an - d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 2,
+     "d": 3,
+     "n": 5
+    },
+    "expect": {
+     "an": 14,
+     "aprev": 11,
+     "anext": 17
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "d": 2,
+     "n": 7
+    },
+    "expect": {
+     "an": 13
+    }
+   },
+   {
+    "params": {
+     "a1": -3,
+     "d": 4,
+     "n": 6
+    },
+    "expect": {
+     "an": 17
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

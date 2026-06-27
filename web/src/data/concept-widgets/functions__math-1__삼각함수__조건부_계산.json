@@ -1,0 +1,162 @@
+{
+ "id": "functions/math-1/삼각함수/조건부_계산",
+ "spec": {
+  "title": "조건부 계산: 단위원에서 부호로 값 확정하기",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; sy=sin(rad); cx=cos(rad); tn=tan(rad); quad=floor(mod(theta,360)/90)+1",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "r=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "sinθ",
+     "color": "#e11"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      0
+     ],
+     "label": "cosθ",
+     "color": "#1a1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "tanθ",
+    "expr": "tn",
+    "digits": 4
+   },
+   {
+    "label": "사분면",
+    "expr": "quad",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 150
+   },
+   {
+    "theta": 210
+   },
+   {
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "cx^2+sy^2-1",
+   "tn*cx-sy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "sy": 0.5,
+     "cx": 0.8660254037844387,
+     "tn": 0.5773502691896257
+    }
+   },
+   {
+    "params": {
+     "theta": 150
+    },
+    "expect": {
+     "sy": 0.5,
+     "cx": -0.8660254037844387,
+     "tn": -0.5773502691896257
+    }
+   },
+   {
+    "params": {
+     "theta": 300
+    },
+    "expect": {
+     "sy": -0.8660254037844387,
+     "cx": 0.5,
+     "tn": -1.7320508075688767
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

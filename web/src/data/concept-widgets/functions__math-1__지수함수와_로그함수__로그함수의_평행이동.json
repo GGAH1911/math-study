@@ -1,0 +1,159 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/로그함수의_평행이동",
+ "spec": {
+  "title": "로그함수의 평행이동",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "x축 이동 p",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "y축 이동 q",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "asym = p; px = p + 1; py = q; gp1 = log((px - p), a) + q; forig = log(1, a); gpa = log(a, a) + q",
+  "plot": {
+   "range": [
+    -3,
+    9
+   ],
+   "yRange": [
+    -5,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "log(x, a)",
+     "label": "f(x)=log_a x",
+     "color": "#9ca3af"
+    },
+    {
+     "fn": "log(x - p, a) + q",
+     "label": "g(x)=log_a(x-p)+q",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점근선 x=",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "지나는 점 x (p+1)",
+    "expr": "p+1",
+    "digits": 2
+   },
+   {
+    "label": "지나는 점 y (q)",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "g(p+1)",
+    "expr": "log((p+1)-p, a) + q",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "p": 1,
+    "q": 1
+   },
+   {
+    "a": 3,
+    "p": -2,
+    "q": 2
+   },
+   {
+    "a": 5,
+    "p": 2,
+    "q": -1
+   },
+   {
+    "a": 2,
+    "p": 0,
+    "q": 0
+   }
+  ],
+  "invariants": [
+   "gp1 - q",
+   "forig",
+   "gpa - q - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "p": 1,
+     "q": 1
+    },
+    "expect": {
+     "asym": 1,
+     "px": 2,
+     "py": 1,
+     "gp1": 1,
+     "forig": 0,
+     "gpa": 2
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "p": -2,
+     "q": 2
+    },
+    "expect": {
+     "asym": -2,
+     "px": -1,
+     "py": 2,
+     "gp1": 2,
+     "forig": 0,
+     "gpa": 3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": 0,
+     "q": 0
+    },
+    "expect": {
+     "asym": 0,
+     "px": 1,
+     "py": 0,
+     "gp1": 0,
+     "forig": 0,
+     "gpa": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

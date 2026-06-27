@@ -1,0 +1,175 @@
+{
+ "id": "functions/math-1/수열/수열의_항",
+ "spec": {
+  "title": "수열의 항: n번째 항 aₙ 찾기 (aₙ = n²)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (항의 번호)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 1,
+    "unit": "번째"
+   }
+  ],
+  "scope": "an = n^2; prev = (n-1)^2; diff = an - prev",
+  "geometry": {
+   "range": [
+    -0.5,
+    9
+   ],
+   "yRange": [
+    -4,
+    70
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      4
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      9
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      16
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      25
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      36
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      49
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      64
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=n",
+      0
+     ],
+     "to": [
+      "=n",
+      "=an"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=an"
+     ],
+     "label": "aₙ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "항의 번호 n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "aₙ = n²",
+    "expr": "an",
+    "digits": 0
+   },
+   {
+    "label": "계차 aₙ − aₙ₋₁",
+    "expr": "diff",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 8
+   }
+  ],
+  "invariants": [
+   "an - n^2",
+   "diff - (2*n - 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "an": 9,
+     "diff": 5
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "an": 25,
+     "diff": 9
+    }
+   },
+   {
+    "params": {
+     "n": 7
+    },
+    "expect": {
+     "an": 49,
+     "diff": 13
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

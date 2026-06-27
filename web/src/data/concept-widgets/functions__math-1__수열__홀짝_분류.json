@@ -1,0 +1,416 @@
+{
+ "id": "functions/math-1/수열/홀짝_분류",
+ "spec": {
+  "title": "수열의 홀짝 분류 — 하나의 수열을 두 부분수열로",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α (홀수항 첫항 a₁)",
+    "type": "slider",
+    "min": -5,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "d_o",
+    "label": "홀수항 공차 d₁ (a₁,a₃,a₅,…)",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "beta",
+    "label": "β (짝수항 첫항 a₂)",
+    "type": "slider",
+    "min": -5,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d_e",
+    "label": "짝수항 공차 d₂ (a₂,a₄,a₆,…)",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "a1=alpha; a3=alpha+d_o; a5=alpha+2*d_o; a7=alpha+3*d_o; a2=beta; a4=beta+d_e; a6=beta+2*d_e; a8=beta+3*d_e",
+  "geometry": {
+   "range": [
+    0,
+    9
+   ],
+   "yRange": [
+    -6,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      2,
+      "=a2"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=a2"
+     ],
+     "to": [
+      3,
+      "=a3"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=a3"
+     ],
+     "to": [
+      4,
+      "=a4"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=a4"
+     ],
+     "to": [
+      5,
+      "=a5"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      "=a5"
+     ],
+     "to": [
+      6,
+      "=a6"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      6,
+      "=a6"
+     ],
+     "to": [
+      7,
+      "=a7"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      7,
+      "=a7"
+     ],
+     "to": [
+      8,
+      "=a8"
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      3,
+      "=a3"
+     ],
+     "color": "#e3342f"
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=a3"
+     ],
+     "to": [
+      5,
+      "=a5"
+     ],
+     "color": "#e3342f"
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      "=a5"
+     ],
+     "to": [
+      7,
+      "=a7"
+     ],
+     "color": "#e3342f"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=a2"
+     ],
+     "to": [
+      4,
+      "=a4"
+     ],
+     "color": "#3490dc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=a4"
+     ],
+     "to": [
+      6,
+      "=a6"
+     ],
+     "color": "#3490dc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      6,
+      "=a6"
+     ],
+     "to": [
+      8,
+      "=a8"
+     ],
+     "color": "#3490dc"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ],
+     "label": "a₁",
+     "color": "#e3342f"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ],
+     "label": "a₃",
+     "color": "#e3342f"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ],
+     "label": "a₅",
+     "color": "#e3342f"
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=a7"
+     ],
+     "label": "a₇",
+     "color": "#e3342f"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ],
+     "label": "a₂",
+     "color": "#3490dc"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ],
+     "label": "a₄",
+     "color": "#3490dc"
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a6"
+     ],
+     "label": "a₆",
+     "color": "#3490dc"
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=a8"
+     ],
+     "label": "a₈",
+     "color": "#3490dc"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "홀수항 a₁,a₃,a₅,a₇ (빨강)",
+    "expr": "a7",
+    "digits": 2
+   },
+   {
+    "label": "홀수항 공차 a₃−a₁",
+    "expr": "a3-a1",
+    "digits": 2
+   },
+   {
+    "label": "홀수항 2계차 a₁−2a₃+a₅ (=0이면 등차)",
+    "expr": "a1-2*a3+a5",
+    "digits": 2
+   },
+   {
+    "label": "짝수항 a₂,a₄,a₆,a₈ (파랑)",
+    "expr": "a8",
+    "digits": 2
+   },
+   {
+    "label": "짝수항 공차 a₄−a₂",
+    "expr": "a4-a2",
+    "digits": 2
+   },
+   {
+    "label": "짝수항 2계차 a₂−2a₄+a₆ (=0이면 등차)",
+    "expr": "a2-2*a4+a6",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 1,
+    "d_o": 2,
+    "beta": 2,
+    "d_e": 3
+   },
+   {
+    "alpha": 3,
+    "d_o": -1,
+    "beta": 0,
+    "d_e": 2
+   },
+   {
+    "alpha": 0,
+    "d_o": 5,
+    "beta": 10,
+    "d_e": -2
+   },
+   {
+    "alpha": -2,
+    "d_o": 1.5,
+    "beta": 4,
+    "d_e": 0.5
+   }
+  ],
+  "invariants": [
+   "a3-a1-d_o",
+   "a5-a3-d_o",
+   "a7-a5-d_o",
+   "a4-a2-d_e",
+   "a6-a4-d_e",
+   "a8-a6-d_e",
+   "a1-2*a3+a5",
+   "a2-2*a4+a6",
+   "a1-alpha",
+   "a2-beta"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 1,
+     "d_o": 2,
+     "beta": 2,
+     "d_e": 3
+    },
+    "expect": {
+     "a1": 1,
+     "a3": 3,
+     "a5": 5,
+     "a7": 7,
+     "a2": 2,
+     "a4": 5,
+     "a6": 8,
+     "a8": 11
+    }
+   },
+   {
+    "params": {
+     "alpha": 3,
+     "d_o": -1,
+     "beta": 0,
+     "d_e": 2
+    },
+    "expect": {
+     "a1": 3,
+     "a3": 2,
+     "a5": 1,
+     "a7": 0,
+     "a2": 0,
+     "a4": 2,
+     "a6": 4,
+     "a8": 6
+    }
+   },
+   {
+    "params": {
+     "alpha": 0,
+     "d_o": 5,
+     "beta": 10,
+     "d_e": -2
+    },
+    "expect": {
+     "a1": 0,
+     "a3": 5,
+     "a5": 10,
+     "a7": 15,
+     "a2": 10,
+     "a4": 8,
+     "a6": 6,
+     "a8": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

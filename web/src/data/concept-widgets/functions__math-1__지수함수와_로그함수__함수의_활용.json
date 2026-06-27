@@ -1,0 +1,137 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/함수의_활용",
+ "spec": {
+  "title": "지수함수 모델링: 개체수 증가와 목표 도달 시각 예측",
+  "params": [
+   {
+    "name": "N0",
+    "label": "초기 개체수 N₀",
+    "type": "slider",
+    "min": 1,
+    "max": 50,
+    "init": 10,
+    "step": 1,
+    "unit": "마리"
+   },
+   {
+    "name": "a",
+    "label": "시간당 배율 a",
+    "type": "slider",
+    "min": 1.2,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": "배"
+   },
+   {
+    "name": "target",
+    "label": "목표 개체수",
+    "type": "slider",
+    "min": 20,
+    "max": 500,
+    "init": 80,
+    "step": 10,
+    "unit": "마리"
+   }
+  ],
+  "scope": "tr = log(target/N0, a); Nr = N0*a^tr",
+  "plot": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    0,
+    500
+   ],
+   "fns": [
+    {
+     "fn": "N0*a^x",
+     "label": "N(t)=N₀·aᵗ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "target",
+     "label": "목표값",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "도달 시각 t* = logₐ(목표/N₀)",
+    "expr": "tr",
+    "digits": 3
+   },
+   {
+    "label": "검산 N(t*) (목표와 일치)",
+    "expr": "Nr",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N0": 10,
+    "a": 2,
+    "target": 80
+   },
+   {
+    "N0": 10,
+    "a": 2,
+    "target": 160
+   },
+   {
+    "N0": 50,
+    "a": 2,
+    "target": 200
+   },
+   {
+    "N0": 20,
+    "a": 1.5,
+    "target": 80
+   }
+  ],
+  "invariants": [
+   "Nr - target",
+   "a^tr - target/N0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N0": 10,
+     "a": 2,
+     "target": 80
+    },
+    "expect": {
+     "tr": 3,
+     "Nr": 80
+    }
+   },
+   {
+    "params": {
+     "N0": 10,
+     "a": 2,
+     "target": 160
+    },
+    "expect": {
+     "tr": 4,
+     "Nr": 160
+    }
+   },
+   {
+    "params": {
+     "N0": 50,
+     "a": 2,
+     "target": 200
+    },
+    "expect": {
+     "tr": 2,
+     "Nr": 200
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

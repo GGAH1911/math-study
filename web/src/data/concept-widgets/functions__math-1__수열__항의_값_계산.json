@@ -1,0 +1,205 @@
+{
+ "id": "functions/math-1/수열/항의_값_계산",
+ "spec": {
+  "title": "수열의 항의 값 계산 — 등차수열 aₙ = a + (n−1)d",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫째항 a",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "공차 d",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "항의 위치 n",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "a1=a; a2=a+d; a3=a+2*d; a4=a+3*d; a5=a+4*d; a6=a+5*d; a7=a+6*d; a8=a+7*d; an=a+(n-1)*d",
+  "geometry": {
+   "range": [
+    0,
+    9
+   ],
+   "yRange": [
+    -15,
+    28
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      8,
+      "=a8"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a6"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=a7"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=a8"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=an"
+     ],
+     "label": "aₙ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n (항의 위치)",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "aₙ = a+(n−1)d",
+    "expr": "an",
+    "digits": 0
+   },
+   {
+    "label": "공차 d",
+    "expr": "d",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "d": 3,
+    "n": 5
+   },
+   {
+    "a": 3,
+    "d": -2,
+    "n": 4
+   },
+   {
+    "a": 1,
+    "d": 1,
+    "n": 8
+   },
+   {
+    "a": 5,
+    "d": 2,
+    "n": 1
+   }
+  ],
+  "invariants": [
+   "an - (a + (n-1)*d)",
+   "a2 - a1 - d",
+   "a8 - a1 - 7*d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "d": 3,
+     "n": 5
+    },
+    "expect": {
+     "an": 14
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "d": -2,
+     "n": 4
+    },
+    "expect": {
+     "an": -3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "d": 1,
+     "n": 8
+    },
+    "expect": {
+     "an": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

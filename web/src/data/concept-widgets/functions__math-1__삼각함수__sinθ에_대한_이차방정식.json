@@ -1,0 +1,159 @@
+{
+ "id": "functions/math-1/삼각함수/sinθ에_대한_이차방정식",
+ "spec": {
+  "title": "sinθ에 대한 이차방정식: a·sin²θ + b·sinθ + c = 0",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (일차항)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -1,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -1,
+    "step": 1
+   }
+  ],
+  "scope": "disc = b^2 - 4*a*c; t1 = disc >= 0 ? (-b + sqrt(disc))/(2*a) : NaN; t2 = disc >= 0 ? (-b - sqrt(disc))/(2*a) : NaN",
+  "plot": {
+   "range": [
+    0,
+    360
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "fns": [
+    {
+     "fn": "sin(x*pi/180)",
+     "label": "y = sin θ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "t1",
+     "label": "y = t₁ (근1)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "t2",
+     "label": "y = t₂ (근2)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = b²-4ac",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "t₁ = (-b+√D)/2a",
+    "expr": "t1",
+    "digits": 4
+   },
+   {
+    "label": "t₂ = (-b-√D)/2a",
+    "expr": "t2",
+    "digits": 4
+   },
+   {
+    "label": "t₁ 유효(|t₁|≤1)",
+    "expr": "abs(t1)<=1 ? 1 : 0",
+    "digits": 0
+   },
+   {
+    "label": "t₂ 유효(|t₂|≤1)",
+    "expr": "abs(t2)<=1 ? 1 : 0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": -1,
+    "c": -1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "c": -1
+   },
+   {
+    "a": 3,
+    "b": 1,
+    "c": -2
+   }
+  ],
+  "invariants": [
+   "a*t1^2 + b*t1 + c",
+   "a*t2^2 + b*t2 + c",
+   "a*(t1+t2) + b",
+   "a*t1*t2 - c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": -1,
+     "c": -1
+    },
+    "expect": {
+     "disc": 9,
+     "t1": 1,
+     "t2": -0.5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -1
+    },
+    "expect": {
+     "disc": 4,
+     "t1": 1,
+     "t2": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 2
+    },
+    "expect": {
+     "disc": 1,
+     "t1": 2,
+     "t2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

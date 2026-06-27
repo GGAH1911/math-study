@@ -1,0 +1,184 @@
+{
+ "id": "functions/math-1/수열/공차",
+ "spec": {
+  "title": "공차 d — 등차수열은 기울기가 d인 직선 위의 점들",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "공차 d",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "a2=a1+d; a3=a1+2*d; a4=a1+3*d; a5=a1+4*d",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      5,
+      "=a5"
+     ],
+     "label": "기울기 = d",
+     "color": "#bbb"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ],
+     "label": "a₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ],
+     "label": "a₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ],
+     "label": "a₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ],
+     "label": "a₅"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "공차 d",
+    "expr": "d",
+    "digits": 0
+   },
+   {
+    "label": "a₂−a₁",
+    "expr": "a2-a1",
+    "digits": 0
+   },
+   {
+    "label": "a₄−a₃",
+    "expr": "a4-a3",
+    "digits": 0
+   },
+   {
+    "label": "a₅ ( =a₁+4d )",
+    "expr": "a5",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 2,
+    "d": 3
+   },
+   {
+    "a1": -1,
+    "d": 2
+   },
+   {
+    "a1": 5,
+    "d": -3
+   },
+   {
+    "a1": 0,
+    "d": 0
+   }
+  ],
+  "invariants": [
+   "a2-a1-d",
+   "a3-a2-d",
+   "a4-a3-d",
+   "a5-a4-d",
+   "a3-(a1+2*d)",
+   "a5-(a1+4*d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 2,
+     "d": 3
+    },
+    "expect": {
+     "a2": 5,
+     "a3": 8,
+     "a4": 11,
+     "a5": 14
+    }
+   },
+   {
+    "params": {
+     "a1": -1,
+     "d": 2
+    },
+    "expect": {
+     "a2": 1,
+     "a3": 3,
+     "a4": 5,
+     "a5": 7
+    }
+   },
+   {
+    "params": {
+     "a1": 5,
+     "d": -3
+    },
+    "expect": {
+     "a2": 2,
+     "a3": -1,
+     "a4": -4,
+     "a5": -7
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

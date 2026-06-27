@@ -1,0 +1,161 @@
+{
+ "id": "functions/math-1/수열/합의_선형성",
+ "spec": {
+  "title": "합의 선형성 (aₖ=k, bₖ=k²): Σ(c·aₖ+d·bₖ) = c·Σaₖ + d·Σbₖ",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (aₖ=k의 계수)",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "d",
+    "label": "d (bₖ=k²의 계수)",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "n",
+    "label": "n (항의 개수)",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 10,
+    "step": 1
+   }
+  ],
+  "scope": "r = range(1,n,true); Sa = sum(r); Sb = sum(r.^2); Sab = sum(r + r.^2); Sca = sum(c*r); LHS = sum(c*r + d*(r.^2)); RHS = c*Sa + d*Sb; diff = LHS - RHS",
+  "plot": {
+   "range": [
+    0,
+    "=n"
+   ],
+   "yRange": [
+    0,
+    "=1.15*RHS+10"
+   ],
+   "fns": [
+    {
+     "fn": "c*(x*(x+1)/2)",
+     "label": "c·Σaₖ 부분합",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "d*(x*(x+1)*(2*x+1)/6)",
+     "label": "d·Σbₖ 부분합",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "c*(x*(x+1)/2) + d*(x*(x+1)*(2*x+1)/6)",
+     "label": "Σ(c·aₖ+d·bₖ) 부분합 = 좌변 = 우변",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Σaₖ (=Σk)",
+    "expr": "Sa",
+    "digits": 2
+   },
+   {
+    "label": "Σbₖ (=Σk²)",
+    "expr": "Sb",
+    "digits": 2
+   },
+   {
+    "label": "좌변 Σ(c·aₖ+d·bₖ)",
+    "expr": "LHS",
+    "digits": 2
+   },
+   {
+    "label": "우변 c·Σaₖ+d·Σbₖ",
+    "expr": "RHS",
+    "digits": 2
+   },
+   {
+    "label": "좌변 − 우변",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 2,
+    "d": 1,
+    "n": 10
+   },
+   {
+    "c": 0,
+    "d": 3,
+    "n": 5
+   },
+   {
+    "c": 4,
+    "d": 0,
+    "n": 8
+   },
+   {
+    "c": 1.5,
+    "d": 2.5,
+    "n": 6
+   }
+  ],
+  "invariants": [
+   "diff",
+   "Sab-(Sa+Sb)",
+   "Sca-c*Sa"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 2,
+     "d": 1,
+     "n": 10
+    },
+    "expect": {
+     "Sa": 55,
+     "Sb": 385,
+     "LHS": 495,
+     "RHS": 495
+    }
+   },
+   {
+    "params": {
+     "c": 0,
+     "d": 3,
+     "n": 5
+    },
+    "expect": {
+     "Sa": 15,
+     "Sb": 55,
+     "LHS": 165,
+     "RHS": 165
+    }
+   },
+   {
+    "params": {
+     "c": 4,
+     "d": 0,
+     "n": 8
+    },
+    "expect": {
+     "Sa": 36,
+     "Sb": 204,
+     "LHS": 144,
+     "RHS": 144
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

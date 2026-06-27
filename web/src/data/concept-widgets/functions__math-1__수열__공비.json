@@ -1,0 +1,217 @@
+{
+ "id": "functions/math-1/수열/공비",
+ "spec": {
+  "title": "등비수열의 공비 r — 항의 변화 탐구",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": "배"
+   }
+  ],
+  "scope": "a2=a1*r; a3=a1*r^2; a4=a1*r^3; a5=a1*r^4",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -10,
+    18
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ],
+     "label": "a₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ],
+     "label": "a₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ],
+     "label": "a₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ],
+     "label": "a₅"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      2,
+      "=a2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=a2"
+     ],
+     "to": [
+      3,
+      "=a3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=a3"
+     ],
+     "to": [
+      4,
+      "=a4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=a4"
+     ],
+     "to": [
+      5,
+      "=a5"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "공비 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "a₂/a₁",
+    "expr": "a2/a1",
+    "digits": 3
+   },
+   {
+    "label": "a₃/a₂",
+    "expr": "a3/a2",
+    "digits": 3
+   },
+   {
+    "label": "a₅ (=a₁·r⁴)",
+    "expr": "a5",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "r": 2
+   },
+   {
+    "a1": 4,
+    "r": 0.5
+   },
+   {
+    "a1": 2,
+    "r": -1.5
+   },
+   {
+    "a1": 3,
+    "r": 1
+   }
+  ],
+  "invariants": [
+   "a2-a1*r",
+   "a3-a2*r",
+   "a4-a3*r",
+   "a5-a4*r",
+   "a2^2-a1*a3",
+   "a3^2-a2*a4",
+   "a5-a1*r^4"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 1,
+     "r": 2
+    },
+    "expect": {
+     "a2": 2,
+     "a3": 4,
+     "a4": 8,
+     "a5": 16
+    }
+   },
+   {
+    "params": {
+     "a1": 4,
+     "r": 0.5
+    },
+    "expect": {
+     "a2": 2,
+     "a3": 1,
+     "a4": 0.5,
+     "a5": 0.25
+    }
+   },
+   {
+    "params": {
+     "a1": 2,
+     "r": -1.5
+    },
+    "expect": {
+     "a2": -3,
+     "a3": 4.5,
+     "a4": -6.75,
+     "a5": 10.125
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

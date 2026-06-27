@@ -1,0 +1,119 @@
+{
+ "id": "functions/math-1/삼각함수/일반해의_합",
+ "spec": {
+  "title": "일반해의 합: sin x = a 의 두 해와 그 합",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (= sin x)",
+    "type": "slider",
+    "min": -0.9,
+    "max": 0.9,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "x1 = mod(asin(a), 2*pi); x2 = mod(pi - asin(a), 2*pi); s = x1 + x2",
+  "plot": {
+   "range": [
+    0,
+    6.28318530718
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a",
+     "label": "y = a",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해 x₁",
+    "expr": "x1",
+    "digits": 4
+   },
+   {
+    "label": "해 x₂",
+    "expr": "x2",
+    "digits": 4
+   },
+   {
+    "label": "두 해의 합 x₁+x₂",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "합 ÷ π",
+    "expr": "s/pi",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": -0.5
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 0.8
+   }
+  ],
+  "invariants": [
+   "sin(x1) - a",
+   "sin(x2) - a",
+   "cos(x1) + cos(x2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "x1": 0.5235987756,
+     "x2": 2.617993878,
+     "s": 3.1415926536
+    }
+   },
+   {
+    "params": {
+     "a": -0.5
+    },
+    "expect": {
+     "x1": 5.7595865316,
+     "x2": 3.6651914292,
+     "s": 9.4247779608
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "x1": 0,
+     "x2": 3.1415926536,
+     "s": 3.1415926536
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

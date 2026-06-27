@@ -1,0 +1,175 @@
+{
+ "id": "functions/math-2/미분/구간별_함수의_미분가능성",
+ "spec": {
+  "title": "구간별 함수의 미분가능성: f(x)=x² (x<a), px+q (x≥a)",
+  "params": [
+   {
+    "name": "a",
+    "label": "이음점 a",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "직선 기울기 p",
+    "type": "slider",
+    "min": -2,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "직선 절편 q",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^2; rightVal = p*a + q; leftD = 2*a; rightD = p; contGap = rightVal - fa; derivGap = rightD - leftD",
+  "plot": {
+   "range": [
+    -1,
+    3.5
+   ],
+   "yRange": [
+    -3,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "(x < a)*(x^2) + (x >= a)*(p*x + q)",
+     "label": "f(x): x<a면 x², x≥a면 px+q",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "leftD*(x - a) + fa",
+     "label": "좌측 접선 (기울기 2a)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "rightD*(x - a) + rightVal",
+     "label": "우측 직선 연장 (기울기 p)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a⁻) 좌극한 = a²",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(a⁺) 우극한 = pa+q",
+    "expr": "rightVal",
+    "digits": 3
+   },
+   {
+    "label": "연속 차이 (f(a⁺)−f(a⁻)) → 0이어야 연속",
+    "expr": "contGap",
+    "digits": 3
+   },
+   {
+    "label": "좌미분계수 = 2a",
+    "expr": "leftD",
+    "digits": 3
+   },
+   {
+    "label": "우미분계수 = p",
+    "expr": "rightD",
+    "digits": 3
+   },
+   {
+    "label": "미분계수 차이 (우−좌) → 0이어야 미분가능",
+    "expr": "derivGap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": 2,
+    "q": -1
+   },
+   {
+    "a": 1,
+    "p": 1,
+    "q": 0
+   },
+   {
+    "a": 2,
+    "p": 3,
+    "q": 1
+   },
+   {
+    "a": 0.5,
+    "p": 1,
+    "q": 0.5
+   }
+  ],
+  "invariants": [
+   "leftD - 2*a",
+   "rightD - p",
+   "fa - a^2",
+   "rightVal - (p*a + q)",
+   "contGap - (rightVal - fa)",
+   "derivGap - (rightD - leftD)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": 2,
+     "q": -1
+    },
+    "expect": {
+     "fa": 1,
+     "rightVal": 1,
+     "leftD": 2,
+     "rightD": 2,
+     "contGap": 0,
+     "derivGap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "p": 1,
+     "q": 0
+    },
+    "expect": {
+     "fa": 1,
+     "rightVal": 1,
+     "leftD": 2,
+     "rightD": 1,
+     "contGap": 0,
+     "derivGap": -1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": 3,
+     "q": 1
+    },
+    "expect": {
+     "fa": 4,
+     "rightVal": 7,
+     "leftD": 4,
+     "rightD": 3,
+     "contGap": 3,
+     "derivGap": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

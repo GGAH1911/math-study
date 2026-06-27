@@ -1,0 +1,183 @@
+{
+ "id": "functions/math-1/삼각함수/코사인_법칙",
+ "spec": {
+  "title": "코사인 법칙: a² = b² + c² − 2bc·cos A",
+  "params": [
+   {
+    "name": "b",
+    "label": "b = AC",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c = AB",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "A",
+    "label": "끼인각 A",
+    "type": "slider",
+    "min": 1,
+    "max": 179,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=A*pi/180; Bx=c*cos(rad); By=c*sin(rad); Cx=b; Cy=0; cosA=cos(rad); a=sqrt(b^2+c^2-2*b*c*cosA); aDist=sqrt((Bx-Cx)^2+(By-Cy)^2)",
+  "geometry": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -2,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       0
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      0
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = BC (코사인 법칙)",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "a² (좌변)",
+    "expr": "a^2",
+    "digits": 3
+   },
+   {
+    "label": "b² + c² − 2bc·cos A (우변)",
+    "expr": "b^2+c^2-2*b*c*cosA",
+    "digits": 3
+   },
+   {
+    "label": "cos A",
+    "expr": "cosA",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 3,
+    "c": 4,
+    "A": 90
+   },
+   {
+    "b": 2,
+    "c": 2,
+    "A": 60
+   },
+   {
+    "b": 5,
+    "c": 3,
+    "A": 120
+   },
+   {
+    "b": 6,
+    "c": 7,
+    "A": 45
+   }
+  ],
+  "invariants": [
+   "aDist^2-(b^2+c^2-2*b*c*cosA)",
+   "a-aDist"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 3,
+     "c": 4,
+     "A": 90
+    },
+    "expect": {
+     "a": 5,
+     "cosA": 0,
+     "Bx": 0,
+     "By": 4
+    }
+   },
+   {
+    "params": {
+     "b": 5,
+     "c": 3,
+     "A": 120
+    },
+    "expect": {
+     "a": 7,
+     "cosA": -0.5
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 2,
+     "A": 60
+    },
+    "expect": {
+     "a": 2,
+     "cosA": 0.5,
+     "Bx": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

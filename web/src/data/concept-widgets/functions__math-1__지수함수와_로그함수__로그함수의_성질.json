@@ -1,0 +1,187 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/로그함수의_성질",
+ "spec": {
+  "title": "로그함수의 성질 — 곱셈을 덧셈으로",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 1,
+    "max": 16,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "y",
+    "label": "y",
+    "type": "slider",
+    "min": 1,
+    "max": 16,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "지수 k",
+    "type": "slider",
+    "min": -3,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "lx=log(x,a); ly=log(y,a); lxy=log(x*y,a); ldiv=log(x/y,a); lpow=log(x^k,a); sumxy=lx+ly; submxy=lx-ly; kpow=k*lx",
+  "plot": {
+   "range": [
+    0.1,
+    12
+   ],
+   "yRange": [
+    -4,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "log(x,a)",
+     "label": "y = log_a(x)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log_a x",
+    "expr": "lx",
+    "digits": 4
+   },
+   {
+    "label": "log_a y",
+    "expr": "ly",
+    "digits": 4
+   },
+   {
+    "label": "log_a(xy)",
+    "expr": "lxy",
+    "digits": 4
+   },
+   {
+    "label": "log_a x + log_a y",
+    "expr": "sumxy",
+    "digits": 4
+   },
+   {
+    "label": "log_a(x/y)",
+    "expr": "ldiv",
+    "digits": 4
+   },
+   {
+    "label": "log_a x − log_a y",
+    "expr": "submxy",
+    "digits": 4
+   },
+   {
+    "label": "log_a(x^k)",
+    "expr": "lpow",
+    "digits": 4
+   },
+   {
+    "label": "k · log_a x",
+    "expr": "kpow",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x": 4,
+    "y": 2,
+    "k": 2
+   },
+   {
+    "a": 3,
+    "x": 9,
+    "y": 3,
+    "k": 2
+   },
+   {
+    "a": 2,
+    "x": 8,
+    "y": 2,
+    "k": 3
+   },
+   {
+    "a": 10,
+    "x": 10,
+    "y": 2,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "lxy-sumxy",
+   "ldiv-submxy",
+   "lpow-kpow"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x": 4,
+     "y": 2,
+     "k": 2
+    },
+    "expect": {
+     "lx": 2,
+     "ly": 1,
+     "lxy": 3,
+     "ldiv": 1,
+     "lpow": 4
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "x": 9,
+     "y": 3,
+     "k": 2
+    },
+    "expect": {
+     "lx": 2,
+     "ly": 1,
+     "lxy": 3,
+     "ldiv": 1,
+     "lpow": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x": 8,
+     "y": 2,
+     "k": 3
+    },
+    "expect": {
+     "lx": 3,
+     "ly": 1,
+     "lxy": 4,
+     "ldiv": 2,
+     "lpow": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

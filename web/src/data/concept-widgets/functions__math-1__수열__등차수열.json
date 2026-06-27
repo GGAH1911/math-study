@@ -1,0 +1,201 @@
+{
+ "id": "functions/math-1/수열/등차수열",
+ "spec": {
+  "title": "등차수열: 항들이 한 직선 위에 놓인다",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫째항 a",
+    "type": "slider",
+    "min": -5,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "공차 d",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "항의 번호 n",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "a1=a; a2=a+d; a3=a+2*d; a4=a+3*d; a5=a+4*d; a6=a+5*d; ak=a+(k-1)*d",
+  "geometry": {
+   "range": [
+    0,
+    7
+   ],
+   "yRange": [
+    -21,
+    26
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=a-d"
+     ],
+     "to": [
+      7,
+      "=a+6*d"
+     ],
+     "color": "#999",
+     "label": "y=a+(n-1)d"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a6"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=k",
+      "=ak"
+     ],
+     "label": "aₙ",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n번째 항 aₙ = a+(n-1)d",
+    "expr": "ak",
+    "digits": 0
+   },
+   {
+    "label": "공차 d (이웃 항의 차)",
+    "expr": "a2-a1",
+    "digits": 0
+   },
+   {
+    "label": "a₆ - a₁ = 5d",
+    "expr": "a6-a1",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "d": 2,
+    "k": 5
+   },
+   {
+    "a": 0,
+    "d": 1,
+    "k": 3
+   },
+   {
+    "a": 10,
+    "d": -3,
+    "k": 4
+   },
+   {
+    "a": -5,
+    "d": 3,
+    "k": 6
+   }
+  ],
+  "invariants": [
+   "a2-a1-d",
+   "a3-a2-d",
+   "(a6-a1)-5*d",
+   "ak-(a+(k-1)*d)",
+   "a1+a3-2*a2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "d": 2,
+     "k": 5
+    },
+    "expect": {
+     "a1": 3,
+     "ak": 11,
+     "a6": 13
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "d": 1,
+     "k": 3
+    },
+    "expect": {
+     "ak": 2,
+     "a6": 5
+    }
+   },
+   {
+    "params": {
+     "a": 10,
+     "d": -3,
+     "k": 4
+    },
+    "expect": {
+     "ak": 1,
+     "a6": -5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

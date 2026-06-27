@@ -1,0 +1,110 @@
+{
+ "id": "functions/math-1/삼각함수/함수값의_조건_분석",
+ "spec": {
+  "title": "삼각방정식 sinθ = k 의 해 (0° ≤ θ < 360°)",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (=sinθ)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "a = asin(k)*180/pi; th1 = mod(a, 360); th2 = mod(180 - a, 360)",
+  "plot": {
+   "range": [
+    0,
+    360
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x*pi/180)",
+     "label": "y = sinθ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "k",
+     "label": "y = k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "k",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "θ₁ (°)",
+    "expr": "th1",
+    "digits": 2
+   },
+   {
+    "label": "θ₂ (°)",
+    "expr": "th2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5
+   },
+   {
+    "k": -0.5
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 0.8
+   }
+  ],
+  "invariants": [
+   "sin(th1*pi/180) - k",
+   "sin(th2*pi/180) - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "th1": 30,
+     "th2": 150
+    }
+   },
+   {
+    "params": {
+     "k": -0.5
+    },
+    "expect": {
+     "th1": 330,
+     "th2": 210
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "th1": 0,
+     "th2": 180
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

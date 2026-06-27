@@ -1,0 +1,122 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_주기성",
+ "spec": {
+  "title": "삼각함수의 주기성: f(x+T)=f(x)",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (sin bx의 계수)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "s",
+    "label": "수평 이동 s (s=T이면 두 그래프 일치)",
+    "type": "slider",
+    "min": 0,
+    "max": 6.3,
+    "init": 0,
+    "step": 0.05,
+    "unit": "rad"
+   }
+  ],
+  "scope": "T = 2*pi/b; chk1 = sin(b*0.5) - sin(b*(0.5+T)); chk2 = sin(b*1.3) - sin(b*(1.3+T))",
+  "plot": {
+   "range": [
+    -6.3,
+    6.3
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "fns": [
+    {
+     "fn": "sin(b*x)",
+     "label": "f(x)=sin(bx)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "sin(b*(x+s))",
+     "label": "f(x+s)",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기본 주기 T = 2π/b",
+    "expr": "T",
+    "digits": 4
+   },
+   {
+    "label": "이동량 s",
+    "expr": "s",
+    "digits": 2
+   },
+   {
+    "label": "f(0.5) − f(0.5+T) (항상 0)",
+    "expr": "chk1",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 1,
+    "s": 0
+   },
+   {
+    "b": 2,
+    "s": 1
+   },
+   {
+    "b": 3,
+    "s": 2
+   },
+   {
+    "b": 4,
+    "s": 3
+   }
+  ],
+  "invariants": [
+   "chk1",
+   "chk2",
+   "T*b - 2*pi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1,
+     "s": 0
+    },
+    "expect": {
+     "T": 6.283185307
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "s": 1
+    },
+    "expect": {
+     "T": 3.141592654
+    }
+   },
+   {
+    "params": {
+     "b": 4,
+     "s": 3
+    },
+    "expect": {
+     "T": 1.570796327
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

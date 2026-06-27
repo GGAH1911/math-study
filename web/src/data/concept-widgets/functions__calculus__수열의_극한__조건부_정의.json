@@ -1,0 +1,146 @@
+{
+ "id": "functions/calculus/수열의_극한/조건부_정의",
+ "spec": {
+  "title": "조건부 수렴: 교대조화급수 Σ(-1)ⁿ⁺¹/n vs 절댓값급수 Σ1/n",
+  "params": [
+   {
+    "name": "N",
+    "label": "항의 개수 N",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1,
+    "unit": "항"
+   }
+  ],
+  "scope": "nn = 1:N; sg = (-1) .^ (nn + 1); S = sum(sg ./ nn); T = sum(1 ./ nn); P = sum( ((sg + 1) / 2) ./ nn ); Q = sum( ((1 - sg) / 2) ./ nn ); L = log(2); gap = abs(S - L)",
+  "geometry": {
+   "range": [
+    0,
+    100
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=L"
+     ],
+     "to": [
+      100,
+      "=L"
+     ],
+     "label": "극한 ln2 ≈ 0.693",
+     "color": "#999999"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=N",
+      "=S"
+     ],
+     "label": "Sₙ=Σ(-1)ⁿ⁺¹/n (수렴)",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=N",
+      "=T"
+     ],
+     "label": "Tₙ=Σ|aₙ|=Σ1/n (발산)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Sₙ (원래 급수, 교대조화)",
+    "expr": "S",
+    "digits": 6
+   },
+   {
+    "label": "Tₙ (절댓값 급수, 조화)",
+    "expr": "T",
+    "digits": 6
+   },
+   {
+    "label": "극한값 ln2",
+    "expr": "L",
+    "digits": 6
+   },
+   {
+    "label": "오차 |Sₙ − ln2|",
+    "expr": "gap",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 1
+   },
+   {
+    "N": 2
+   },
+   {
+    "N": 7
+   },
+   {
+    "N": 20
+   },
+   {
+    "N": 50
+   }
+  ],
+  "invariants": [
+   "S - (P - Q)",
+   "T - (P + Q)",
+   "sum(sg .^ 2) - N"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 1
+    },
+    "expect": {
+     "S": 1,
+     "T": 1,
+     "P": 1,
+     "Q": 0
+    }
+   },
+   {
+    "params": {
+     "N": 2
+    },
+    "expect": {
+     "S": 0.5,
+     "T": 1.5,
+     "P": 1,
+     "Q": 0.5
+    }
+   },
+   {
+    "params": {
+     "N": 4
+    },
+    "expect": {
+     "S": 0.5833333333333333,
+     "T": 2.0833333333333335,
+     "P": 1.3333333333333333,
+     "Q": 0.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

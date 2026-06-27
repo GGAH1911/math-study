@@ -1,0 +1,189 @@
+{
+ "id": "functions/math-1/삼각함수/삼각함수의_최댓값과_최솟값",
+ "spec": {
+  "title": "삼각함수의 최댓값과 최솟값: f(x)=a·sin(bx+c)+d",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (진폭계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b (주기계수, b>0)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c (위상이동)",
+    "type": "slider",
+    "min": -3.14,
+    "max": 3.14,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (수직이동)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "amp=abs(a); maxv=abs(a)+d; minv=-abs(a)+d; mid=d; T=2*pi/b",
+  "geometry": {
+   "range": [
+    -6.3,
+    6.3
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6.3,
+    6.3
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "a*sin(b*x+c)+d",
+     "label": "f(x)=a·sin(bx+c)+d",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs(a)+d",
+     "label": "최댓값 |a|+d",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "-abs(a)+d",
+     "label": "최솟값 -|a|+d",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "d",
+     "label": "중심선 y=d",
+     "color": "#9ca3af"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 |a|+d",
+    "expr": "maxv",
+    "digits": 3
+   },
+   {
+    "label": "최솟값 -|a|+d",
+    "expr": "minv",
+    "digits": 3
+   },
+   {
+    "label": "진폭 |a|",
+    "expr": "amp",
+    "digits": 3
+   },
+   {
+    "label": "주기 2π/b",
+    "expr": "T",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "c": 0,
+    "d": 0
+   },
+   {
+    "a": -3,
+    "b": 2,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 1,
+    "b": 0.5,
+    "c": 1,
+    "d": 3
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "c": -1,
+    "d": -2
+   }
+  ],
+  "invariants": [
+   "maxv-(abs(a)+d)",
+   "minv-(-abs(a)+d)",
+   "maxv-minv-2*abs(a)",
+   "(maxv+minv)/2-mid",
+   "mid-d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "maxv": 2,
+     "minv": -2,
+     "amp": 2
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 2,
+     "c": 0,
+     "d": 1
+    },
+    "expect": {
+     "maxv": 4,
+     "minv": -2,
+     "amp": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0.5,
+     "c": 1,
+     "d": 3
+    },
+    "expect": {
+     "maxv": 4,
+     "minv": 2,
+     "amp": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

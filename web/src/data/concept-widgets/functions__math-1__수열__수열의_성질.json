@@ -1,0 +1,184 @@
+{
+ "id": "functions/math-1/수열/수열의_성질",
+ "spec": {
+  "title": "수열의 성질: 유계성·단조성·수렴성",
+  "params": [
+   {
+    "name": "L",
+    "label": "극한값 L",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "A",
+    "label": "초기 편차 A ( = a₁ − L )",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "감쇠 지수 p (클수록 빨리 수렴)",
+    "type": "slider",
+    "min": 0.3,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "eps",
+    "label": "ε (수렴 판정폭)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "t = abs(A)/eps; thr = t^(1/p); Ncrit = floor(thr); a1 = L + A; supA = L + max(A,0); infA = L + min(A,0)",
+  "plot": {
+   "range": [
+    1,
+    30
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "L + A/x^p",
+     "label": "aₙ = L + A / nᵖ",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "L",
+     "label": "극한 L",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "L + eps",
+     "label": "L + ε",
+     "color": "#f59e0b"
+    },
+    {
+     "fn": "L - eps",
+     "label": "L − ε",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한 L",
+    "expr": "L",
+    "digits": 2
+   },
+   {
+    "label": "첫째항 a₁",
+    "expr": "a1",
+    "digits": 3
+   },
+   {
+    "label": "상한 sup (유계)",
+    "expr": "supA",
+    "digits": 3
+   },
+   {
+    "label": "하한 inf (유계)",
+    "expr": "infA",
+    "digits": 3
+   },
+   {
+    "label": "수렴 지수 N ( n>N ⇒ |aₙ−L|<ε )",
+    "expr": "Ncrit",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "L": 1,
+    "A": 2,
+    "p": 1,
+    "eps": 0.5
+   },
+   {
+    "L": 0,
+    "A": 4,
+    "p": 2,
+    "eps": 1
+   },
+   {
+    "L": 2,
+    "A": -3,
+    "p": 1,
+    "eps": 1.5
+   },
+   {
+    "L": -1,
+    "A": -2,
+    "p": 0.5,
+    "eps": 0.4
+   }
+  ],
+  "invariants": [
+   "a1 - (L + A)",
+   "supA - infA - abs(A)",
+   "supA + infA - (2*L + A)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "L": 0,
+     "A": 4,
+     "p": 2,
+     "eps": 1
+    },
+    "expect": {
+     "Ncrit": 2,
+     "a1": 4,
+     "supA": 4,
+     "infA": 0
+    }
+   },
+   {
+    "params": {
+     "L": 2,
+     "A": -3,
+     "p": 1,
+     "eps": 1.5
+    },
+    "expect": {
+     "Ncrit": 2,
+     "a1": -1,
+     "supA": 2,
+     "infA": -1
+    }
+   },
+   {
+    "params": {
+     "L": 0,
+     "A": 3,
+     "p": 1,
+     "eps": 2
+    },
+    "expect": {
+     "Ncrit": 1,
+     "a1": 3,
+     "supA": 3,
+     "infA": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

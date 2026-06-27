@@ -1,0 +1,170 @@
+{
+ "id": "functions/math-1/지수함수와_로그함수/조건부_최댓값·최솟값",
+ "spec": {
+  "title": "조건부 최댓값·최솟값: x+y=k일 때 xy의 최대 (산술-기하 평균)",
+  "params": [
+   {
+    "name": "k",
+    "label": "합 k (제약: x+y=k)",
+    "type": "slider",
+    "min": 2,
+    "max": 14,
+    "init": 10,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "위치 t (x = t·k)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "x = t*k; y = (1-t)*k; P = x*y; Pmax = k^2/4",
+  "geometry": {
+   "range": [
+    -1,
+    15
+   ],
+   "yRange": [
+    -1,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=k",
+      0
+     ],
+     "to": [
+      0,
+      "=k"
+     ],
+     "label": "x+y=k"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x",
+       "=y"
+      ],
+      [
+       0,
+       "=y"
+      ]
+     ],
+     "label": "넓이 = xy"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P(x,y)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "y",
+    "expr": "y",
+    "digits": 2
+   },
+   {
+    "label": "xy (직사각형 넓이)",
+    "expr": "P",
+    "digits": 2
+   },
+   {
+    "label": "이론상 최댓값 k²/4 (x=y일 때)",
+    "expr": "Pmax",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 10,
+    "t": 0.5
+   },
+   {
+    "k": 10,
+    "t": 0.2
+   },
+   {
+    "k": 12,
+    "t": 0.7
+   },
+   {
+    "k": 6,
+    "t": 0.35
+   }
+  ],
+  "invariants": [
+   "x + y - k",
+   "Pmax - P - ((x-y)/2)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 10,
+     "t": 0.5
+    },
+    "expect": {
+     "x": 5,
+     "y": 5,
+     "P": 25,
+     "Pmax": 25
+    }
+   },
+   {
+    "params": {
+     "k": 10,
+     "t": 0.3
+    },
+    "expect": {
+     "x": 3,
+     "y": 7,
+     "P": 21,
+     "Pmax": 25
+    }
+   },
+   {
+    "params": {
+     "k": 8,
+     "t": 0.25
+    },
+    "expect": {
+     "x": 2,
+     "y": 6,
+     "P": 12,
+     "Pmax": 16
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
