@@ -1584,13 +1584,18 @@ html[data-font="clean"] {
   #dock-sheet:not([hidden]) { display: grid !important; }  /* 열림 시 노출(xl:hidden 무력화), 닫힘은 [hidden] 유지 */
 }
 
-/* ── 하단 FAB ↔ ContextDrawer 핸들 충돌 회피 ──────────────────────────────────
-   모바일(<768px) 개념·오답·synthesis 페이지엔 바닥 중앙에 드로어 핸들(기출·개념지도·노트)이
-   있어 좌하단 손풀이 FAB·우하단 튜터 FAB 의 폭과 겹친다(핸들이 넓어 코너까지 닿음).
-   드로어 있는 페이지에서만(:has(.ctx-drawer)) 두 FAB 을 핸들 위로 올려 충돌 해소. */
+/* ── 하단 FAB 들이 ContextDrawer 핸들 좌우에 나란히 들어가게(모바일) ─────────────────
+   개념·오답·synthesis 페이지는 바닥 중앙에 드로어 핸들(기출·개념지도·노트)이 있다. 좌하단 손풀이
+   FAB·우하단 튜터 FAB 을 그 좌우 코너에 끼우려면 폭을 줄여야 한다(라벨도 짧게: 필기/AI튜터).
+   드로어 있는 페이지에서만(:has(.ctx-drawer)) FAB 을 컴팩트하게. */
 @media (max-width: 767px) {
   body:has(.ctx-drawer) .tutor-fab,
   body:has(.ctx-drawer) [data-ink-fab] {
-    bottom: calc(env(safe-area-inset-bottom) + 60px) !important;
+    height: 42px !important; padding: 0 13px !important;
+    gap: 6px !important; font-size: 13px !important;
+  }
+  /* 핸들은 좌우 FAB 사이 중앙에 — 폭을 살짝 줄여 코너에 자리 양보 */
+  body:has([data-ink-fab]) .ctx-drawer[data-open="false"] .ctx-drawer-handle {
+    max-width: 52vw; padding-left: 14px; padding-right: 14px;
   }
 }

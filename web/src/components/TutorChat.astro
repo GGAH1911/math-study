@@ -16,7 +16,7 @@ interface Props {
 const {
   slug, unitTitle, collection = 'concepts', fab = 'always',
   fabLabel = '튜터와 대화',
-  fabText = collection === 'dashboard' ? '학습 길잡이' : '튜터에게 질문',
+  fabText = collection === 'dashboard' ? '학습 길잡이' : 'AI튜터',
 } = Astro.props;
 ---
 <div class:list={['tutor-chat', `tutor-chat--${fab}`]} data-open="false" data-tutor>
