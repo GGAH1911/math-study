@@ -1067,7 +1067,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           if (!_py) {
             // STEP B(python) 없이 그래픽만 = 원샷. 좌표 계산을 먼저 하도록 강제 후 재응답.
             finalizeAssistant(assistantText || '좌표를 정확히 계산해 다시 그리겠습니다.');
-            appendTurn({ role: 'user', content: '[단계 검증 필요]\n좌표가 있는 도형(네가 새로 만드는 예제·연습문제 도형 포함)은 추정으로 한 번에 그리지 마라. 먼저 STEP B: 필요한 점·교점·접선·각의 좌표를 sympy(```python``` 한 블록)로 계산하는 코드만 emit하고 그래픽 블록은 절대 넣지 마라. 계산 결과를 받은 다음 응답에서 그 좌표를 그대로 옮겨 그린다.' });
+            appendTurn({ role: 'user', content: '[자동 검증 · 시스템 메시지 — 사용자가 보낸 게 아님]\n방금 네가 그린 도형은 검증 안 된 추정 좌표라 화면에서 자동 제거했다. 지금 이 턴에 할 일은 **딱 하나**: 그 도형에 필요한 점·교점·접선·각의 좌표를 구하는 ```python``` (sympy) 코드 **한 블록만** 출력해라. 설명도, 그래픽 블록(geometry/plot/interactive)도 넣지 말고 python 코드 블록 하나만. 그 코드는 시스템이 자동 실행해서 결과를 다음 턴에 너에게 돌려주고, 그때 그 좌표로 도형을 그리면 된다. 이건 정해진 시스템 절차다 — 사용자에게 "무슨 뜻이냐"고 되묻지 말고 바로 sympy 코드를 출력해라.' });
             assistantText = await callLLM(rawHistory);
           }
         }
