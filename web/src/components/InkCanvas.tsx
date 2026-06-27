@@ -359,7 +359,9 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
       if (penTimer) clearTimeout(penTimer); document.body.style.removeProperty('-webkit-user-select');
       ro.disconnect();
     };
-  }, [KEY, drawStroke, drawLayer, sizeCanvas, save, drawSelBox, computeSel]);
+    // ★full 추가: 전체화면 열림(작업영역 mount)/닫힘(unmount)마다 effect 재실행 → 새 캔버스에 setup·리스너 부착,
+    //   닫을 때 cleanup. 접힘 땐 wrap/over ref null 이라 상단 early-return.
+  }, [KEY, drawStroke, drawLayer, sizeCanvas, save, drawSelBox, computeSel, full]);
 
   // 새 레이어 캔버스(나중에 추가된)도 사이즈+그림 보장.
   useEffect(() => {
@@ -497,7 +499,10 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
           <div style={{ fontSize: 13, color: 'var(--color-muted)' }}>문제 풀이는 가로 화면에서 가장 편합니다 (왼쪽 문제 · 오른쪽 풀이)</div>
         </div>
       )}
-      <div style={{ display: full ? 'flex' : 'none', flexDirection: 'column', gap: 8, flex: full ? 1 : undefined, minHeight: 0 }}>
+      {/* ★접힘일 땐 작업영역을 display:none 이 아니라 아예 unmount → 열 때 캔버스(특히 desync 오버레이)를
+          새 엘리먼트로 mount=깨끗한 실사이즈 init. display:none 재init 이 iPad desync 합성을 깨던 회귀 차단. */}
+      {full && (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, minHeight: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
         <button style={btn(tool === 'pen')} onClick={() => setTool('pen')}>✏️ 펜</button>
         <button style={btn(tool === 'eraser')} onClick={() => setTool('eraser')}>지우개</button>
@@ -567,7 +572,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
           </div>
         )}
       </div>
-      </div>
+      </div>)}
     </div>
   );
 }
