@@ -57,7 +57,7 @@ const PREFS_KEY = 'ink:prefs';
 type Prefs = { color?: string; width?: number; paper?: Paper; gap?: number; pressure?: boolean; dashed?: boolean; eraserSize?: number };
 const loadPrefs = (): Prefs => { try { return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); } catch { return {}; } };
 
-export default function InkCanvas({ storageKey, height = 560, bgImage }: { storageKey: string; height?: number; bgImage?: string }) {
+export default function InkCanvas({ storageKey, height = 560, bgImage, launchLabel = '손으로 풀기' }: { storageKey: string; height?: number; bgImage?: string; launchLabel?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const overRef = useRef<HTMLCanvasElement>(null);
   const overCtx = useRef<CanvasRenderingContext2D | null>(null);
@@ -472,7 +472,14 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
   const sep = <span style={{ width: 1, height: 18, background: 'var(--color-border)', margin: '0 2px' }} />;
 
   return (
-    <div style={full ? { position: 'fixed', inset: 0, zIndex: 1000, background: 'var(--color-bg)', display: 'flex', flexDirection: 'column', padding: 10, gap: 8 } : { display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <div style={full ? { position: 'fixed', inset: 0, zIndex: 1000, background: 'var(--color-bg)', display: 'flex', flexDirection: 'column', padding: 10, gap: 8 } : undefined}>
+      {/* 접힘 상태: 전체화면을 꽉 채우는 손풀이를 여는 런처 버튼(인라인 캔버스 없음). 캔버스 DOM 은
+          아래 작업영역에 display:none 으로 살아 있어 init 안전 — 열면 ResizeObserver 가 재size·재draw. */}
+      {!full && (
+        <button onClick={() => setFull(true)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 18px', borderRadius: 12, border: '1px solid var(--color-border)', background: 'var(--color-surface)', color: 'var(--color-text)', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+          ✏️ {launchLabel}<span style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-muted)' }}>— 전체화면 · 펜·태블릿 (자동 저장)</span>
+        </button>
+      )}
       {full && portrait && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 1002, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, background: 'var(--color-bg)', color: 'var(--color-text)', textAlign: 'center', padding: 24 }}>
           <div style={{ fontSize: 44 }}>📱↻</div>
@@ -480,6 +487,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
           <div style={{ fontSize: 13, color: 'var(--color-muted)' }}>문제 풀이는 가로 화면에서 가장 편합니다 (왼쪽 문제 · 오른쪽 풀이)</div>
         </div>
       )}
+      <div style={{ display: full ? 'flex' : 'none', flexDirection: 'column', gap: 8, flex: full ? 1 : undefined, minHeight: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
         <button style={btn(tool === 'pen')} onClick={() => setTool('pen')}>✏️ 펜</button>
         <button style={btn(tool === 'eraser')} onClick={() => setTool('eraser')}>지우개</button>
@@ -548,6 +556,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage }: { stora
             ))}
           </div>
         )}
+      </div>
       </div>
     </div>
   );
