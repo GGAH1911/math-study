@@ -1573,3 +1573,13 @@ html[data-font="clean"] {
   .metro-next-leg, .metro-frontier-halo { animation: none !important; }
   .metro-node { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
+
+/* ── 터치 태블릿(iPad Pro 12.9" 가로 1366px 등) 내비 통일 ───────────────────────────
+   사이드바는 `hidden xl:flex`(≥1280px 노출)이라 12.9" 가로에서 데스크탑 사이드바가 뜬다.
+   터치 기기(pointer:coarse)는 화면이 넓어도 모바일 햄버거(☰)로 통일한다 — 데스크탑(마우스=fine)엔
+   영향 0. xl: 유틸리티를 !important 로 무력화. dock-sheet 개폐는 [hidden] 속성이 관리(닫힘 유지). */
+@media (pointer: coarse) {
+  aside[data-nav-sidebar] { display: none !important; }   /* xl:flex 무력화 → 사이드바 숨김 */
+  [data-nav-mobilebar] { display: flex !important; }       /* xl:hidden 무력화 → 햄버거 노출 */
+  #dock-sheet:not([hidden]) { display: grid !important; }  /* 열림 시 노출(xl:hidden 무력화), 닫힘은 [hidden] 유지 */
+}

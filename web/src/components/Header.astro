@@ -19,7 +19,7 @@ const { pathname } = Astro.url; // 모바일 도크 active 판정용
 {/* 높이 계약: 정확히 h-14(3.5rem) — graph.astro 의 h-[calc(100vh-3.5rem)] 와 결합.
      border-b 대신 손그림 괘선 SVG(마지막 자식)가 하단 경계를 담당한다. */}
 <header class="sticky top-0 z-30 flex items-center gap-4 px-6 h-14 relative bg-[color:var(--color-bg)]/85 backdrop-blur">
-  <div class="xl:hidden flex items-center gap-2">
+  <div data-nav-mobilebar class="xl:hidden flex items-center gap-2">
     {/* 모바일 메뉴 버튼(<lg) — 상단 단일 버튼. 누르면 전체 메뉴 시트가 헤더 아래로 펼쳐짐. */}
     <button type="button" data-dock-more aria-expanded="false" aria-controls="dock-sheet" aria-label="메뉴"
       class="inline-flex items-center justify-center size-9 -ml-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-base">☰</button>
