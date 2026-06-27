@@ -1166,6 +1166,50 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           finalizeAssistant(finalText);
         }
       }
+
+      // ★(b) 시스템 검산: 최종 응답의 *순수 산술* 등식에 모순(좌변≠우변)이 있으면 = 검증 정답을 틀린
+      //   식 위에 덧씌운 조작/계산실수 → [자동 검산] 으로 1회 정정 재생성. 변수 든 식·비산술은 무시.
+      //   CSP 안전(eval/Function 미사용, 자체 shunting-yard 평가기).
+      {
+        const evalArith = (e: string): number | null => {
+          const toks = e.match(/\d+\.?\d*|[+\-*/()]/g); if (!toks) return null;
+          const out: (number | string)[] = []; const ops: string[] = [];
+          const prec: Record<string, number> = { '+': 1, '-': 1, '*': 2, '/': 2 };
+          for (const t of toks) {
+            if (/\d/.test(t)) out.push(parseFloat(t));
+            else if (t === '(') ops.push(t);
+            else if (t === ')') { while (ops.length && ops[ops.length - 1] !== '(') out.push(ops.pop()!); ops.pop(); }
+            else { while (ops.length && (prec[ops[ops.length - 1]] ?? 0) >= prec[t]) out.push(ops.pop()!); ops.push(t); }
+          }
+          while (ops.length) out.push(ops.pop()!);
+          const st: number[] = [];
+          for (const t of out) {
+            if (typeof t === 'number') st.push(t);
+            else { const b = st.pop(); const a = st.pop(); if (a === undefined || b === undefined) return null; st.push(t === '+' ? a + b : t === '-' ? a - b : t === '*' ? a * b : a / b); }
+          }
+          return st.length === 1 ? st[0] : null;
+        };
+        const findArithErr = (text: string): { expr: string; claimed: string; correct: string } | null => {
+          const clean = text.replace(/\\boxed\{([^}]*)\}/g, '$1').replace(/\\cdot|\\times/g, '*').replace(/\\div/g, '/').replace(/\\[a-zA-Z]+|[$]/g, ' ');
+          const re = /([0-9][0-9\s+\-*/().]{2,})\s*=\s*(-?[0-9]+(?:\.[0-9]+)?)/g;
+          let m: RegExpExecArray | null;
+          while ((m = re.exec(clean)) !== null) {
+            const e = m[1].replace(/\s/g, '');
+            if (!/^[0-9+\-*/().]+$/.test(e) || !/[+\-*/]/.test(e)) continue;
+            const v = evalArith(e);
+            if (v === null || !isFinite(v)) continue;
+            if (Math.abs(v - parseFloat(m[2])) > 1e-6) return { expr: m[1].trim(), claimed: m[2], correct: String(Number.isInteger(v) ? v : +v.toFixed(4)) };
+          }
+          return null;
+        };
+        const lastMsg = displayMessages[displayMessages.length - 1];
+        const ae = lastMsg?.role === 'assistant' ? findArithErr(lastMsg.content) : null;
+        if (ae) {
+          appendTurn({ role: 'user', content: `[자동 검산] 네 답에 산술 모순이 있다: "${ae.expr}" 의 실제 계산값은 ${ae.correct} 인데 너는 ${ae.claimed} 라고 썼다. 정답을 틀린 식 위에 덧씌웠거나 계산 실수다. 검증된 단계를 처음부터 다시 따라, 식과 답이 *일치*하도록 모순 없이 풀어라(정답값을 틀린 식에 끼워맞추지 말 것).` });
+          const fixed = await callLLM(rawHistory);
+          finalizeAssistant(fixed);
+        }
+      }
     } finally {
       setStreaming(false);
     }
@@ -1452,7 +1496,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
             // ★A: 검증 과정(자동 검증/계산결과/시각검증 user 턴 + 그 *사이* 중간 assistant 응답=계산중·1차그래프)은
             //   채팅에서 숨긴다. 데이터는 messages(=DB)에 그대로 남아 디버깅·검증 가능 — '표시'만 거른다.
             //   첫 설명(앞이 진짜 user)과 최종 응답(뒤가 검증턴 아님)은 보인다.
-            const vU = (x?: ChatMessage) => !!x && x.role === 'user' && /^\[(자동 검증|자동 계산 결과|시각 검증)/.test(x.content);
+            const vU = (x?: ChatMessage) => !!x && x.role === 'user' && /^\[(자동 검증|자동 계산 결과|시각 검증|자동 검산)/.test(x.content);
             if (vU(m)
               || (m.role === 'assistant' && vU(messages[i - 1]) && vU(messages[i + 1]))
               || (m.role === 'assistant' && m.content.trim() === '[검증 통과]')) return null;
@@ -1481,7 +1525,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           // 검증 과정 턴을 숨겼으니, 그 동안 "멈춘 듯" 보이지 않게 진행 표시. 최근 메시지에 검증턴이 있으면
           // 검증 중(그래프 작도 문구), 아니면 빈 placeholder 스트리밍이면 일반 문구.
           const last = messages[messages.length - 1];
-          const inVerify = messages.slice(-4).some((x) => /^\[(자동 검증|자동 계산 결과|시각 검증)/.test(x.content));
+          const inVerify = messages.slice(-4).some((x) => /^\[(자동 검증|자동 계산 결과|시각 검증|자동 검산)/.test(x.content));
           if (!streaming || (last?.content !== '' && !inVerify)) return null;
           return (
           <div className="flex items-center gap-2 text-xs text-[color:var(--color-muted)] pl-2">
