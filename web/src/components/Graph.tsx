@@ -819,14 +819,15 @@ export function StickyGraphPanel() {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [rect, setRect] = useState<PanelRect>(() => loadRect());
-  // 모바일(<768px): 드래그/리사이즈가 마우스 전용이라 터치로 못 옮기고, 저장된 rect 가 폰 폭을 벗어나
-  // 잘리거나 챗 패널(z-49)에 가린다 → 펼침+모바일이면 rect 무시·뷰포트 맞춤 상단시트 + z 상향(아래 effRect).
+  // 터치 기기(폰·iPad): 드래그/리사이즈가 마우스 전용이라 터치로 못 옮기고, 저장된 rect 가 화면을 벗어나
+  // 잘리거나 챗 패널(z-49)에 가린다 → 펼침+터치면 rect 무시·뷰포트 맞춤 상단시트(좌측 420폭) + z 상향(아래 effRect).
+  // ★pointer:coarse 로 iPad 포함(iPad 는 ≥768px 라 width 기준에선 빠졌음 = 채팅 뒤에 가리던 원인).
   const [vp, setVp] = useState(() => ({
     w: typeof window !== 'undefined' ? window.innerWidth : 1280,
-    mobile: typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
+    touch: typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches,
   }));
   useEffect(() => {
-    const on = () => setVp({ w: window.innerWidth, mobile: window.matchMedia('(max-width: 767px)').matches });
+    const on = () => setVp({ w: window.innerWidth, touch: window.matchMedia('(pointer: coarse)').matches });
     window.addEventListener('resize', on); on();
     return () => window.removeEventListener('resize', on);
   }, []);
@@ -950,9 +951,9 @@ export function StickyGraphPanel() {
   // Height = width / natural aspect (per content kind). Numberline is 1D
   // and uses its own natural height regardless of width.
   const INNER_PAD = 12;
-  // 모바일 펼침 = 뷰포트 맞춤 상단시트(좌8·상64·폭 min(vw-16,420)): 세로 우측잘림·가로 챗가림 해소.
-  // 가로(landscape)도 420 상한이라 우측에 챗 공간이 남아 공존, 세로는 z-50 으로 챗 위.
-  const effRect = open && vp.mobile ? { x: 8, y: 64, w: Math.min(vp.w - 16, 420) } : rect;
+  // 터치(폰·iPad) 펼침 = 뷰포트 맞춤 상단시트(좌8·상64·폭 min(vw-16,420)): 세로 우측잘림·챗 뒤 가림 해소.
+  // 폭 420 상한이라 iPad/가로에선 우측에 챗 공간이 남아 공존, 좁은 화면은 z-50 으로 챗 위.
+  const effRect = open && vp.touch ? { x: 8, y: 64, w: Math.min(vp.w - 16, 420) } : rect;
   const graphicW = Math.max(PANEL_MIN_W - INNER_PAD, effRect.w - INNER_PAD);
   const aspect = CONTENT_ASPECT[current.kind] ?? 1.5;
   const graphicH = current.kind === 'numberline' ? undefined : Math.round(graphicW / aspect);
@@ -966,7 +967,7 @@ export function StickyGraphPanel() {
           right: open ? undefined : 0,
           top: open ? effRect.y : 80,
           width: open ? effRect.w : 40,
-          zIndex: open && vp.mobile ? 50 : undefined,
+          zIndex: open && vp.touch ? 50 : undefined,
         }}
       >
         {open ? (
