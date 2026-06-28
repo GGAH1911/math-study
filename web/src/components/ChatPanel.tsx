@@ -1826,11 +1826,11 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
            를 쓴다: 항상 보이고, 굵고, 손/터치로 드래그 가능. */
         .chat-scroll { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
         .chat-scroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
-        /* 드래그 선택을 또렷하게(인용용) — 다크 채팅서 기본 노랑이 약함. KaTeX 내부 span 까지 적용. */
-        .chat-scroll ::selection, .chat-scroll .katex ::selection {
-          background: color-mix(in oklab, var(--color-accent) 45%, transparent);
-          color: inherit;
-        }
+        /* 드래그 선택을 또렷하게(인용용). 기본 ::selection(연노랑)이 약해 안 보이던 것 → 진한 인디고+흰
+           글자로 강제. 불투명색이라 light(베이지)·dark 양쪽서 또렷. KaTeX 의 모든 자식 span 까지 적용. */
+        .chat-scroll ::selection { background: #4f46e5 !important; color: #ffffff !important; }
+        .chat-scroll *::selection { background: #4f46e5 !important; color: #ffffff !important; }
+        .chat-scroll .katex *::selection { background: #4f46e5 !important; color: #ffffff !important; }
         /* 커스텀 스크롤바 트랙 — 영역 우측 가장자리에 떠 있는 굵은 레일(14px). overflow 있을 때만 노출. */
         .chat-scrollbar-track {
           position: absolute;
