@@ -15,26 +15,31 @@ updated: 2026-06-28
   과금이 아니라 한도 소진을 늦춘다. 대량 배치(인제스트·솔버·위젯)에서 한도 절약이 곧 처리량.
 - **API 직접(BYOK·프로덕션)에서는 진짜 비용 절감** — cache_read 토큰은 입력 단가의 1/10.
 
-## 2. ★핵심 진실 — claude CLI 는 *우리* 프롬프트를 prefix 캐싱 못 한다
+## 2. ★핵심 진실 (2026-06-28 대조실측으로 *재정정*) — claude CLI 는 `--system-prompt` 를 prefix 캐싱한다
 
-측정으로 밝혀진 것(이전 "cache_read≈43k/콜이 우리 시스템 프롬프트" 주장은 오해였음):
+★이 문서의 직전 버전은 "CLI 는 우리 프롬프트 캐싱 못 한다(breakpoint 끝에만)"고 단정했으나 **틀렸다.**
+그 측정은 DISABLE_GIT 적용 *전*(git churn 활성)이라 prefix 가 매 호출 깨진 걸 "캐싱 불가"로 오판한 것 —
+cta-law '동시2=헛다리'와 **같은 git churn 함정에 두 번** 빠진 사례. prefix 만 안정시키면 캐싱은 **작동한다.**
 
-- claude CLI(`-p`)는 `cache_control` breakpoint 를 프롬프트 **맨 끝에만 자동으로** 찍는다.
-  → **프롬프트 전체가 byte-identical 일 때만** cache_read 히트. 질문이 한 글자라도 다르면, 멀티턴으로
-  앞부분을 공유해도 **미스**(cc 매번 생성, cr=0).
-- 그럼 인제스트·배치에서 잡히던 cache_read 는 무엇? → **claude 내장 base**(claude 자체 시스템 프롬프트
-  + 도구 정의)가 캐시된 것. **우리 콘텐츠가 아니다.** 실측: 도구 활성 시 "사과"·"바나나"(완전 다른
-  질문) 2회도 cr 동일(≈14877) = 질문 무관한 내장 base 토큰.
+대조실험(clean cwd + DISABLE_GIT, **질문만 변경**):
+- 큰 `--system-prompt` 고정 → 2콜째 **cr 이 시스템 크기만큼 증가**: SYS 10k자 → cr=22982, SYS 44k자 → cr=32265
+  (내장 base ≈14877 을 초과하는 분 = **우리 시스템 프롬프트가 캐시된 것**).
+- `--system-prompt` 한 글자만 바꾸면 → cr 붕괴(12745) + cc 재기록 = **byte-identical prefix 가 캐시 조건**(인과 확정).
+- production `tutor_usage`: concepts **max_cr≈29237** = 개념 본문이 실제로 캐시·재사용됨(0이 아니다).
 
-### 따라서 우리가 통제 가능한 것 / 불가능한 것
-| 대상 | CLI 로 캐시? | 비고 |
+### 캐시 조건 (이걸 다 만족해야 cr)
+| 대상 | CLI 로 캐시? | 조건 |
 |---|---|---|
-| claude 내장 base (도구 정의 등) | ✅ (자동) | **도구 쓰는 호출**(--allowedTools / --add-dir)에서 cr 로 잡힘 |
-| 우리 시스템 프롬프트 (규칙·문제텍스트·개념) | ❌ | breakpoint 가 끝에만 → prefix 부분캐시 불가 |
-| 우리 프롬프트 (전체 동일 반복) | ✅ | 비현실적(질문이 매번 다름) |
+| claude 내장 base (도구 정의) | ✅ | 도구 쓰는 호출(--allowedTools/--add-dir). 도구 없으면 base 작음 |
+| 우리 `--system-prompt` (규칙·개념본문 등) | ✅ | **byte-identical 안정 prefix** + clean cwd + DISABLE_GIT + 5분 TTL + **2콜째~** |
+| `-p` 본문 prefix | ✅ | 〃 (단 질문이 본문 안에 있으면 그 뒤부터는 매 턴 달라져 미스) |
 
-→ **우리 거대 프롬프트의 진짜 캐싱 = Anthropic API 직접 + 명시적 cache_control breakpoint** 뿐.
-  계획: [[TUTOR_PROMPT_CACHE_C_API|backlog/TUTOR_PROMPT_CACHE_C_API]].
+→ 핵심은 "캐싱 되냐"가 아니라 **무엇을 안정 prefix(`--system-prompt`)에 두고, 무엇을 경계 밖(질문·per-user
+동적값)에 두느냐.** chat.ts 가 staticPrefix(slug-only) / dynamicSuffix(per-user·질문) 로 쪼개는 이유가 이것.
+
+### C(API 직접)의 역할 — "유일 해법" 아니라 "추가 정밀제어"
+CLI 로도 안정 prefix 는 캐시된다. C([[TUTOR_PROMPT_CACHE_C_API|backlog/TUTOR_PROMPT_CACHE_C_API]])는 *추가*
+이득(동적부 별도 cache_control breakpoint·다중 경계·BYOK 모델별 제어)일 뿐 — 기본 캐싱의 전제조건이 아니다.
 
 ## 3. CLI 에서 캐시를 *깨는* 것들 (피해야 할 것)
 
@@ -79,11 +84,11 @@ plan: [[PROMPT_CACHE_HYGIENE_2026-06-28|completed/2026_06/PROMPT_CACHE_HYGIENE]]
 | `web/scripts/verify_corrected.mjs` (교정검증) | sonnet | — | ✅(0628추가) | ✅(0628추가) | |
 | `web/scripts/lib/claude_p.mjs` (공용 래퍼) | * | * | ✅ | ✅(0628추가) | corrector import(자체 spawn 씀=저영향이나 footgun 제거) |
 | `web/scripts/gen_daily_illustration.mjs` (그림) | haiku | — | ✅ | ✅ | 작음(도구 없음) |
-| `web/src/pages/api/chat.ts` (튜터) | haiku/sonnet | problem=Read · concept=없음 | ✅ | ✅(0628추가) | **problem cr≈20585 / concept≈0** |
+| `web/src/pages/api/chat.ts` (튜터) | haiku/sonnet | problem=Read · concept=없음 | ✅ | ✅(0628추가) | **problem max_cr≈20585 / concept max_cr≈29237** (멀티턴, staticPrefix slug-only 고정 후) |
 | `web/src/pages/api/regenerate-body.ts` (개념본문 재생성·라이브) | haiku/sonnet | — | ✅ | ✅(0628추가) | |
 
-> ※ 위 표는 **위생 적용 여부**(git churn 차단)이지 "이득 보장"이 아니다. 실이득은 **연사 배치**(5분 TTL
-> 안 다수 콜)에서만 — 드문 단발 호출(regenerate-body 1회 등)은 매번 cc만이라 cr≈0. 형태별 실측=§6-(e).
+> ※ 위 표는 **위생 적용 여부**(git churn 차단)다. 실이득(cr)은 ① 안정 prefix(byte-identical) ② 5분 TTL
+> 안 2콜째~ 일 때 발생 — 멀티턴 튜터·연사 배치가 이득, 드문 단발 호출(regenerate-body 1회)은 cc만. 형태별 실측=§6-(e).
 
 ### ★구조 교훈 (공용함수 = 단일 수정점)
 Python 인제스트는 **공용 `claude_p()` 2개**(`run_stage1.py`, `ingest_round.py`)에 하위 5개가 의존 →
@@ -122,18 +127,22 @@ for l in sys.stdin:
   `SELECT collection, avg(cache_read_tokens) FROM tutor_usage GROUP BY collection;`
 - **크론(위젯)**: `widget_daily.log` 의 `cache_read=K` + `cron-runs.md` 다이제스트(cr avg/max).
 
-### (e) ★형태별 실측 매트릭스 (2026-06-28, clean cwd + DISABLE_GIT 고정)
-우리 호출은 도구 플래그가 3형태. **셋 다 2콜째(다른 질문) cr>0** = 내장 base 생존 확인.
-유일한 cr≈0 형태는 `--tools ""`(도구 완전 비활성)뿐 — 개념 튜터만 해당.
+### (e) ★형태별 실측 매트릭스 (2026-06-28, clean cwd + DISABLE_GIT 고정, **질문만 변경**)
 
 | config 형태 | 쓰는 곳 | 1콜 | 2콜(다른 질문) |
 |---|---|---|---|
-| `--allowedTools Read[,Bash]` | regenerate_searchable · qa_concept_figures · verify_batch · build_solution_cache · 튜터(problem) | cc≈22939 / cr=0 | **cr≈14877** |
-| `--system-prompt`만(도구플래그 X, 기본도구 로드됨) | regenerate-body · fill_spoke_bodies | cc≈16758 / cr=0 | **cr≈12755** |
-| `--add-dir`만(allowedTools X) | run_stage1 · ingest_round · verify_corrected · lib/claude_p.mjs | cr≈14877 | **cr≈14877** |
-| `--tools ""`(도구 비활성) | 개념 튜터(chat.ts concept) | cc 작음 | **cr≈0**(base 비어서·정상) |
+| `--allowedTools Read[,Bash]` (작은 sys) | qa_concept_figures · verify_batch · build_solution_cache · 튜터(problem) | cc≈22939 / cr=0 | cr≈14877 |
+| `--system-prompt` 작음 | (테스트) | cc≈16758 / cr=0 | cr≈12755 |
+| `--add-dir`만 | run_stage1 · ingest_round · verify_corrected | cr≈14877 | cr≈14877 |
+| **`--system-prompt` 큼 10k자** | 개념 튜터 staticPrefix 패턴 | cc≈14240 / cr=12745 | **cr≈22982** |
+| **`--system-prompt` 큼 44k자** | 〃 (더 큰 본문) | cc≈23522 | **cr≈32265** |
+| `--tools ""` + 작은 sys | (도구·콘텐츠 둘 다 없을 때) | cc 작음 | cr≈0 |
 
-★해석: cr 크기(~12–15k)는 우리 system-prompt 길이와 **무관**(내장 base 고정) → 우리 콘텐츠는 안 잡힘(§2). cr은 **2콜째부터**(1콜=cc 기록) → **연사 배치는 이득 큼**(build_solution·ingest·qa·widget). **드문 단발 호출**(regenerate-body 를 사용자가 어쩌다 1회)은 매번 cc만 = 위생 적용해도 실질 이득 거의 0(구조적 한계, 버그 아님).
+★핵심 해석(직전 버전 "cr 은 sys 길이 무관" 은 **오류, 정정**): **cr 은 `--system-prompt` 크기 따라 증가한다**
+(12755 → 22982 → 32265). 즉 우리 콘텐츠(개념 본문·규칙)도 안정 prefix 면 캐시된다. production 개념 튜터
+max_cr≈29237 이 그 증거. cr≈0 인 경우는 "캐싱 불가"가 아니라 **(a) 1콜째**(cc 기록) **(b) prefix 가 byte-identical
+이 아님**(per-user 동적값 혼입) **(c) TTL 만료** **(d) 캐시할 게 실제로 없음**(작은 sys + `--tools ""`) 중 하나.
+→ **연사·멀티턴이 이득 큼**, **드문 단발 호출**(regenerate-body 1회)은 매번 cc만(구조적, 버그 아님).
 
 ## 7. 도구 (재사용)
 - `web/scripts/lib/claude_p.mjs` — 공용 spawn 래퍼(clean cwd + DISABLE_GIT 둘 다, 0628 완비).

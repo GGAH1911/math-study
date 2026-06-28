@@ -241,28 +241,39 @@ export const POST: APIRoute = async ({ request, locals }) => {
       if (m?.mastery) userMastery = m.mastery;
     } catch { /* 조회 실패 시 frontmatter 폴백 */ }
   }
-  const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection, userMastery);
-  // ★프롬프트 캐싱(B): claude CLI 는 --system-prompt 를 캐시하지 않고(실측 cache_creation 도 0),
-  //   `-p` 본문의 prefix 만 캐시한다. 그래서 시스템 프롬프트를 둘로 나눈다:
-  //   ① staticPrefix = slug·user 에만 의존(같은 대화의 연속 질문에 *동일*) → `-p` 맨 앞에 둬서 캐시.
-  //   ② dynamicSuffix = 질문마다 바뀌는 부분(매칭 개념 후보) → prefix 뒤(캐시 경계 밖).
-  //   같은 페이지에서 연속 질문 시 ①이 cache_read 로 생존(5분 TTL). [[project_claude_p_caching]]
+  // ★userMastery 는 staticPrefix 에 넣지 않는다(아래 dynamicSuffix 로) — 그래야 prefix 가 slug-only 로 고정.
+  const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection);
+  // ★프롬프트 캐싱(실측 확정 2026-06-28): claude CLI 는 `--system-prompt`(및 -p 본문 prefix)를
+  //   **prefix 캐싱한다** — 큰 SYS 고정 + 질문만 변경 시 cr 이 SYS 크기만큼 증가(22982→32265),
+  //   prefix 한 글자 변경 시 붕괴(12745). production tutor_usage concepts max_cr≈29237 = 본문 캐시됨.
+  //   (이전 "CLI 는 우리 프롬프트 캐싱 불가" 결론은 git churn 켜진 상태 측정의 오판이었다.)
+  //   ① staticPrefix = **slug 에만 의존**(같은 개념의 모든 턴에 byte-identical) → --system-prompt 로 캐시 생존.
+  //   ② per-user 동적값(이 개념 실제 mastery·학습자모델)·질문별값은 dynamicSuffix(캐시 경계 밖)로 뺀다.
+  //   같은 개념 연속 질문 시 ①이 cache_read 로 생존(5분 TTL). [[project_claude_p_caching]]
   let staticPrefix = basePrompt;
   // 이 개념에 연결된 기출(메타데이터) — slug 고정이므로 정적.
   if (collection === 'concepts') {
     staticPrefix += linkedProblemsBlock(slug);
   }
-  // 학습자 모델(per-user) — 한 대화 세션 중엔 사실상 고정이므로 정적 prefix 에 포함.
+
+  // ② 동적(캐시 경계 밖): per-user 값(mastery·학습자모델) + 질문 매칭 개념. staticPrefix 를 깨지 않게 모두 여기로.
+  let dynamicSuffix = '';
+  // 이 학생의 실제 현재 mastery — staticPrefix 의 'Mastery:'(frontmatter 전역값)를 덮는 권위 기준.
+  //   promote/demote 로 턴마다 바뀔 수 있어 캐시 경계 밖. (staticPrefix 에 두면 매 턴 캐시 붕괴.)
   const learnerUserId = locals.user?.id;
+  if (userMastery) {
+    dynamicSuffix += `\n\n--- 이 학생의 실제 현재 상태 (★promote/demote 판정 기준) ---
+이 개념(${slug})의 이 학생 실제 mastery: **${userMastery}**.
+위 시스템 프롬프트의 'Mastery:' 줄은 전역 기본값일 뿐 — 승급/강등·수준 판단은 반드시 이 값을 기준으로 한다.`;
+  }
+  // 학습자 모델(per-user, mastery_updated DESC 라 턴마다 변동 가능) — 캐시 경계 밖.
   if (learnerUserId) {
     try {
       const learner = await buildLearnerContext(learnerUserId);
-      if (learner) staticPrefix += `\n\n${learner}`;
+      if (learner) dynamicSuffix += `\n\n${learner}`;
     } catch { /* 학습자 컨텍스트 실패는 튜터 동작을 막지 않음 */ }
   }
-
-  // ② 동적: 학생 질문에 매칭되는 *실존* 개념 노드(질문마다 달라짐) → 캐시 prefix 뒤에 둔다.
-  let dynamicSuffix = '';
+  // 학생 질문에 매칭되는 *실존* 개념 노드(질문마다 달라짐).
   if (collection === 'concepts' && lastUser.content) {
     const hits = searchConcepts(lastUser.content, 6);
     if (hits.length > 0) {
@@ -279,13 +290,9 @@ ${lines}`;
     }
   }
 
-  // `-p` 본문 = [정적 prefix(캐시)] + [동적 개념후보] + [학생 대화]. 정적 prefix 를 맨 앞에 둬야
-  // 연속 질문 시 그 부분이 cache_read 로 잡힌다. 페르소나·규칙이 본문 앞에 있으므로 --system-prompt 불필요.
-  // ※캐싱 한계(실측): claude CLI 는 `-p` 본문에 cache_control breakpoint 를 *끝*에만 자동으로 찍어,
-  //   우리 시스템 프롬프트(staticPrefix)를 prefix 로 부분 캐시하지 못한다(전체 동일할 때만 히트).
-  //   인제스트의 cache_read 는 우리 콘텐츠가 아니라 claude 내장 base(도구 정의)가 캐시된 것이었음.
-  //   → 우리 프롬프트의 진짜 캐싱은 C(Anthropic API 직접 + 명시적 cache_control)에서만. (plan 참조)
-  //   따라서 staticPrefix 는 동작 안전하게 --system-prompt 로 주고, 질문별 dynamicSuffix 만 user 턴에 둔다.
+  // 캐시 경계: systemPrompt=staticPrefix(slug-only) → --system-prompt 로 prefix 캐시(연속 질문에 cr 생존).
+  //   userPrompt=dynamicSuffix(per-user·질문별)+대화 → 캐시 경계 밖(매 턴 변동 정상).
+  //   C(Anthropic API 직접)는 추가 정밀제어(동적부 별도 cache_control·다중 breakpoint)일 뿐 — 필수 아님.
   const convo = (formatHistory(messages) + '\n' + lastUser.content).trim();
   const systemPrompt = staticPrefix;
   let userPrompt = `${dynamicSuffix ? dynamicSuffix + '\n\n' : ''}--- 학생과의 대화 ---\n${convo}`;
