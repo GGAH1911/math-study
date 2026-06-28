@@ -835,6 +835,27 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     }, 0);
   }, [input]);
 
+  // 렌더된 KaTeX 를 복사하면 클립보드 text/plain 이 기호마다 줄바꿈돼 입력창에서 세로로 깨진다.
+  // 클립보드 HTML 의 .katex LaTeX annotation 을 $...$ 로 재구성 → 깔끔한 LaTeX(메시지에서 수식 렌더 +
+  // LLM 도 정상 수신). 수식 외 텍스트는 그대로 두고 복사 잔여 공백/줄바꿈만 정리.
+  const reconstructPastedMath = (html: string): string | null => {
+    try {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      if (!doc.querySelector('.katex')) return null;
+      doc.querySelectorAll('.katex').forEach((k) => {
+        const tex = k.querySelector('annotation[encoding="application/x-tex"]')?.textContent?.trim();
+        k.replaceWith(doc.createTextNode(tex ? ` $${tex}$ ` : (k.textContent ?? '')));
+      });
+      const text = (doc.body.textContent ?? '')
+        .replace(/ /g, ' ')
+        .replace(/[ \t]*\n[ \t]*/g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .replace(/[ \t]{2,}/g, ' ')
+        .trim();
+      return text || null;
+    } catch { return null; }
+  };
+
   const storageKey = `${collection}:${slug}`;
 
   // Interactive 컴포넌트가 '📋 현재 상태 채팅에 첨부' 버튼을 누르면
@@ -1584,7 +1605,20 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           onChange={(e) => setInput(e.target.value)}
           onPaste={(e) => {
             const imgs = imagesFromDataTransfer(e.clipboardData);
-            if (imgs.length) { e.preventDefault(); void addFile(imgs); }
+            if (imgs.length) { e.preventDefault(); void addFile(imgs); return; }
+            // 렌더된 수식(KaTeX) 복사 → 클립보드 HTML 의 LaTeX 로 재구성(세로로 쪼개지는 것 방지).
+            // KaTeX 가 없으면 손대지 않고 기본 붙여넣기(일반 텍스트엔 영향 0).
+            const html = e.clipboardData.getData('text/html');
+            if (!html || !/katex/i.test(html)) return;
+            const tex = reconstructPastedMath(html);
+            if (!tex) return;
+            e.preventDefault();
+            const ta = textareaRef.current;
+            const start = ta?.selectionStart ?? input.length;
+            const end = ta?.selectionEnd ?? input.length;
+            const next = input.slice(0, start) + tex + input.slice(end);
+            setInput(next);
+            setTimeout(() => { ta?.focus(); const pos = start + tex.length; ta?.setSelectionRange(pos, pos); }, 0);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
