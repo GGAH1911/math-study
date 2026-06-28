@@ -10,12 +10,12 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
-- 📁 [[architecture|architecture/]]
-- 📁 [[audits|audits/]]
-- 📁 [[handover|handover/]]
-- 📁 [[ops|ops/]]
-- 📁 [[report|report/]]
-- 📁 [[tools|tools/]]
+- 📁 [[00_ARCHITECTURE|architecture/]]
+- 📁 [[00_AUDITS|audits/]]
+- 📁 [[00_HANDOVER|handover/]]
+- 📁 [[00_OPS|ops/]]
+- 📁 [[00_REPORT|report/]]
+- 📁 [[00_TOOLS|tools/]]
 - `BACKFILL_TRACKS.md` — 등록 자산
 - `CLAUDE_P_CACHING.md` — 등록 자산
 - `FIGURE_TRIAGE_BLUEPRINT.md` — 등록 자산

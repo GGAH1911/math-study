@@ -38,7 +38,7 @@ if (src === 'corrector') {
       {figs
         ? <div style="display:flex;flex-wrap:wrap;gap:8px;">{figs.map((f) => <Geometry client:load spec={f} width={Math.round(w / Math.min(figs!.length, 2))} height={Math.round((w / Math.min(figs!.length, 2)) * 0.85)} hideCaption noBroadcast fixedWidth={Math.round(w / Math.min(figs!.length, 2))} />)}</div>
         : fig
-        ? <Geometry client:load spec={fig} width={w} height={Math.round(w * 0.8)} hideCaption noBroadcast fixedWidth={w} />
+        ? <Geometry client:load spec={fig} width={w} height={Math.round(w * 0.8)} hideCaption noBroadcast fixedWidth={w} noLabelBg />
         : <p id="nofig" style="color:#aaa;font-family:sans-serif;">no figure for id</p>}
     </div>
   </body>

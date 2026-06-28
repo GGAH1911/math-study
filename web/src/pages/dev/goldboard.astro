@@ -1,0 +1,54 @@
+---
+export const prerender = false;
+// GOLD 5종 실시간 검수 보드 — /tmp/corrector_full/GOLD_*.json 을 매 요청 읽어 렌더 + 원본 나란히.
+// 스크래치 스크립트(write_gold.mjs)가 JSON 갱신하면 자동새로고침으로 반영. (임시 dev 도구, 비커밋)
+import Geometry from '../../components/Geometry.tsx';
+import { readFileSync } from 'node:fs';
+import '../../styles/global.css';
+
+const ITEMS: [string, string][] = [
+  ['GOLD_가형_15', 'db/raw/2019_고3_3월모의고사/images/2019_고3_3월모의고사_가형_15.png'],
+  ['GOLD_가형_16', 'db/raw/2019_고3_10월모의고사/images/2019_고3_10월모의고사_가형_16.png'],
+  ['GOLD_가형_09', 'db/raw/2019_고3_3월모의고사/images/2019_고3_3월모의고사_가형_09.png'],
+  ['GOLD_가형_19', 'db/raw/2019_고3_10월모의고사/images/2019_고3_10월모의고사_가형_19.png'],
+  ['GOLD_가형_28', 'db/raw/2019_고3_3월모의고사/images/2019_고3_3월모의고사_가형_28.png'],
+];
+const REPO = '/home/insung/Projects/math-study';
+const DIR = '/tmp/corrector_full';
+const w = Math.max(280, Math.min(560, Number(Astro.url.searchParams.get('w') ?? 440)));
+const sec = Math.max(2, Math.min(20, Number(Astro.url.searchParams.get('sec') ?? 4)));
+
+const rows = ITEMS.map(([id, opath]) => {
+  let fig: any = null, orig = '';
+  try { fig = JSON.parse(readFileSync(`${DIR}/${id}.json`, 'utf8')).figure ?? null; } catch { /* */ }
+  try { orig = 'data:image/png;base64,' + readFileSync(`${REPO}/${opath}`).toString('base64'); } catch { /* */ }
+  return { id, fig, orig };
+});
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={String(sec)} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GOLD live board</title>
+  </head>
+  <body style="margin:0;padding:14px;background:#e8e8ec;font-family:sans-serif;">
+    <div style="font-size:13px;color:#555;margin-bottom:10px;">
+      GOLD 5종 실시간 · {sec}초 자동새로고침 · 좌=원본 / 우=재현(라이브)
+    </div>
+    {rows.map((r) => (
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;background:#fff;border:1px solid #ccc;border-radius:8px;padding:8px;">
+        <div style="width:84px;font-size:12px;color:#999;flex:none;">{r.id}</div>
+        {r.orig
+          ? <img src={r.orig} style={`width:${w}px;height:auto;background:#fff;flex:none;`} />
+          : <span style="color:#c00;">원본 없음</span>}
+        <div style={`width:${w}px;background:#fff;flex:none;`}>
+          {r.fig
+            ? <Geometry client:load spec={r.fig} width={w - 10} height={Math.round((w - 10) * 0.85)} hideCaption noBroadcast fixedWidth={w - 10} noLabelBg />
+            : <span style="color:#c00;">fig 없음</span>}
+        </div>
+      </div>
+    ))}
+  </body>
+</html>

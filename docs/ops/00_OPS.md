@@ -10,7 +10,7 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
-- 📁 [[plans|plans/]]
+- 📁 [[00_PLANS|plans/]]
 
 ---
 ## 🔗 지식망 연결

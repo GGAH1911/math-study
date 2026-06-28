@@ -16,3 +16,5 @@ updated: 2026-06-28
 ---
 ## 🔗 지식망 연결
 - **상위 분류**: [[index]]
+- **코드 맵 (구현)**: [[00_SRC|web/src/]] · [[00_SCRIPTS|scripts/]] — 설계→코드 traverse 진입점.
+  소스 폴더마다 `00_<DIR>.md` 자동 인덱스(`web/scripts/ensure-doc-indices.mjs`)로 docs↔code 연결.
