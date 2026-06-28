@@ -12,6 +12,7 @@ updated: 2026-06-28
 <!-- AUTO_INDEX_SECTION -->
 - `handwriting-canvas.md` — 등록 자산
 - `interactive-widget-spec-loop.md` — 등록 자산
+- `prompt-caching.md` — 등록 자산
 
 ---
 ## 🔗 지식망 연결
