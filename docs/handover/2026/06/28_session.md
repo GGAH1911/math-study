@@ -35,13 +35,14 @@ open_questions: 3
 ## 🕒 세션 2 (모듈화 + 인덱싱 확장 + 캐싱 측정 + docs 정리)
 > 집도: 대규모 모듈화 · 소스코드 00 인덱싱 · 프롬프트 캐싱 진실규명 · docs 루트 정리
 
-**총평**: ChatPanel(1972→582·−70%) 및 chat-context·ConceptDAG·build_solution_cache 모듈화. 00 인덱싱을 docs→**소스코드까지 확장**(설계↔코드 traverse). 튜터 캐시를 DB 계정별 적재하며 ★"claude CLI는 우리 프롬프트 prefix 캐싱 불가"를 측정으로 규명(인제스트 cr은 내장 base였음). docs 루트 12→3개 정리.
+**총평**: ChatPanel(1972→582·−70%) 및 chat-context·ConceptDAG·build_solution_cache 모듈화. 00 인덱싱을 docs→**소스코드까지 확장**(설계↔코드 traverse). 튜터 캐시를 DB 계정별 적재하며 ★"claude CLI는 우리 프롬프트 prefix 캐싱 불가"를 측정으로 규명(인제스트 cr은 내장 base였음 — **⚠️이 결론은 후속 세션에서 오판으로 정정됨: 실제로 CLI는 --system-prompt를 캐싱, 아래 §캐싱 진실 정정 참조**). docs 루트 12→3개 정리.
 
 ### 🚀 주요 성과
 - **모듈화**(신규 모듈 14+): ChatPanel→lib/chat/*·components/chat/*. chat-context→tutor-rules·concept-fs. ConceptDAG→dag-types·dag-layout·ConceptNode. build_solution_cache→solve_prompts. 회귀방지=베이스라인→순수이동→타입체커→스모크→체크포인트커밋. [[feedback_module_first]]
 - **소스코드 00 인덱싱**: ensure-doc-indices.mjs 다중루트(docs+web/src+scripts). 폴더명 충돌 시 부모 접두(00_LIB_CHAT). docs/architecture↔00_SRC 양방향. traverse 링크 69개 댕글링0.
 - **튜터 usage DB 적재**: tutor_usage 테이블(0004)+lib/tutor-usage.ts+chat.ts result 캡처. 계정별 input/output/cache_read/creation.
 - **★캐싱 진실**: claude CLI는 cache_control breakpoint를 끝에만 → 우리 프롬프트 prefix캐싱 불가. 인제스트 cr=claude 내장 base(도구정의). 도구튜터(problem)는 DISABLE_GIT로 base cr 생존(0→20585), 개념튜터(--tools'')는 미미. safeChildEnv에 DISABLE_GIT 빠져있던 것 추가. 권위문서 architecture/prompt-caching.md. [[project_claude_p_caching]]
+  - **⚠️★정정(2026-06-28 후속 세션)**: 위 "prefix캐싱 불가"는 **오판**(git churn 켜진 측정). 실제로 **CLI는 `--system-prompt`를 prefix 캐싱한다** — e2e 실측 턴1 cc=23256→턴2 cr=21720(개념 본문 캐시). chat.ts staticPrefix를 slug-only로 고정해 멀티턴 cr 살림. prompt-caching.md §2 재정정 참조.
 - **크론 추적**: widget_spec_loop cr 로그 + docs/ops/status/cron-runs.md 자동누적.
 - **docs 루트 정리**: 낟개 7개→분류폴더, 빈 포인터 삭제, readFileSync 실경로 갱신.
 

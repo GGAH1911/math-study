@@ -9,8 +9,9 @@ owner: "@insung + 튜터"
 # 프롬프트 캐싱 위생 전수 반영 (clean cwd + DISABLE_GIT)
 
 > 분류: Operations / LLM. SSOT = [[prompt-caching|docs/architecture/prompt-caching.md]].
-> 전제: claude CLI는 우리 프롬프트 prefix 캐싱 불가 → 이 위생은 **claude 내장 base 캐시**(도구정의)를
-> git churn 으로부터 보호하는 것. 진짜 콘텐츠 캐싱은 plan C(API 직접)에서만.
+> 전제(작성 당시): claude CLI는 우리 프롬프트 prefix 캐싱 불가 → 이 위생은 내장 base 캐시 보호.
+> ⚠️★정정(후속): 이 전제는 **오판**이었다 — CLI 는 `--system-prompt` 도 prefix 캐싱한다(e2e cr=21720).
+> 단, 이 위생(clean cwd + DISABLE_GIT) 자체는 **여전히 옳고 필수**(prefix 안정의 전제조건). prompt-caching.md §2.
 
 ## Context
 2026-06-28 전수 조사로 누락 다수 발견(권위 문서 §5보다 많음). 표준 처방 = `cwd: CLEAN_DIR`(벨트) +
