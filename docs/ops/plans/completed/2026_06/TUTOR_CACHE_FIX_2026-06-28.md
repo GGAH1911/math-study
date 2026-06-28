@@ -24,9 +24,10 @@ owner: "@insung + 튜터"
       ② userMastery → dynamicSuffix 에 "★promote/demote 판정 기준" 권위 override. learnerContext 도 이동.
       → staticPrefix = slug-only(body·prereq·enables·masteryByLevel(frontmatter)·linkedProblems) = byte-stable.
 - [x] 타입체크 — pre-push astro check 0 err
-- [~] 실측: noauth 포트 2턴 — **보류**(4325 DEV_NOAUTH/authed 세션·로깅이 로그인 유저限라 실패점多).
-      메커니즘은 §2 대조실측으로 인과 증명 + 리팩토링이 staticPrefix 를 순수 slug 함수로 만듦 →
-      실사용(로그인 멀티턴) 누적으로 tutor_usage concepts avg_cr 상승 확인 예정.
+- [x] 실측 **완료**: 4325(DEV_NOAUTH) /api/chat 같은 개념(등비수열) 2턴 — **턴1 cc=23256/cr=0 →
+      턴2(질문 다름) cr=21720** = staticPrefix(개념 본문) 캐시 재사용 확인. (FK tutor_usage.user_id→users(id)
+      때문에 합성 유저 00000…0 이 users 부재→best-effort INSERT 조용히 실패 → 임시삽입 dev-noauth@local.test
+      로 우회, CASCADE 삭제로 정리, 실데이터 무오염.)
 - [x] **문서 정정** prompt-caching.md §2(핵심진실 교체)/§5(chat row·note)/§6-(e)(매트릭스+해석).
 - [x] **메모리 정정** [[project_claude_p_caching]] — 오결론 교체 + "git churn 함정 2회" 교훈.
 

@@ -140,7 +140,18 @@ for l in sys.stdin:
 
 ★핵심 해석(직전 버전 "cr 은 sys 길이 무관" 은 **오류, 정정**): **cr 은 `--system-prompt` 크기 따라 증가한다**
 (12755 → 22982 → 32265). 즉 우리 콘텐츠(개념 본문·규칙)도 안정 prefix 면 캐시된다. production 개념 튜터
-max_cr≈29237 이 그 증거. cr≈0 인 경우는 "캐싱 불가"가 아니라 **(a) 1콜째**(cc 기록) **(b) prefix 가 byte-identical
+max_cr≈29237 이 그 증거.
+
+### (f) ★end-to-end 실측 (2026-06-28, 실제 /api/chat, staticPrefix slug-only 고정 후)
+4325(DEV_NOAUTH) 에서 같은 개념(등비수열) 2턴, 질문만 변경:
+| 턴 | cr | cc |
+|---|---|---|
+| 1 (질문 A) | 0 | 23256 |
+| 2 (질문 B, 다름) | **21720** | 1374 |
+턴2 cr=21720 ≫ 도구 base(~14877) ≈ 턴1 cc = **staticPrefix(개념 본문+규칙)가 캐시·재사용됨**. staticPrefix 를
+slug-only 로 고정(per-user mastery·learnerContext 를 dynamicSuffix 로) 했기에 질문이 바뀌어도 cr 생존.
+(측정 시 합성 유저 FK 우회 필요: `tutor_usage.user_id → users(id)`, DEV_NOAUTH 유저 00000…0 이 users 부재면
+ best-effort 로깅이 조용히 실패한다.) cr≈0 인 경우는 "캐싱 불가"가 아니라 **(a) 1콜째**(cc 기록) **(b) prefix 가 byte-identical
 이 아님**(per-user 동적값 혼입) **(c) TTL 만료** **(d) 캐시할 게 실제로 없음**(작은 sys + `--tools ""`) 중 하나.
 → **연사·멀티턴이 이득 큼**, **드문 단발 호출**(regenerate-body 1회)은 매번 cc만(구조적, 버그 아님).
 
