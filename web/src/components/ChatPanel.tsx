@@ -905,14 +905,25 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     if (last && last.role === 'user') {
       const node = el.querySelector(`[data-mi="${messages.length - 1}"]`) as HTMLElement | null;
       if (node) {
-        // 영역 내 상대 위치만큼 스크롤(페이지 전체 스크롤 부작용 없는 방식).
-        el.scrollTop += node.getBoundingClientRect().top - el.getBoundingClientRect().top - 8;
+        // 영역 내 상대 위치만큼 스크롤. ★behavior:'instant' — 컨테이너 scroll-behavior:smooth 가
+        //   직접 scrollTop 쓰기를 애니메이션해 스트리밍 중 위아래로 흔들리던 것 차단.
+        el.scrollTo({ top: el.scrollTop + (node.getBoundingClientRect().top - el.getBoundingClientRect().top - 8), behavior: 'instant' as ScrollBehavior });
         return;
       }
     }
     const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 200;
-    if (nearBottom) el.scrollTop = el.scrollHeight;
+    if (nearBottom) el.scrollTo({ top: el.scrollHeight, behavior: 'instant' as ScrollBehavior }); // #2 흔들림 픽스: instant
   }, [messages]);
+
+  // #3 재진입: 마운트 시 바텀부터(과거 대화는 최신이 아래에 있어야). 비동기 DB 로드·KaTeX 렌더로
+  //   높이가 변하므로 짧게 몇 번 바텀 재고정. 마운트 직후라 사용자가 위로 읽는 중일 일 없어 무해.
+  useEffect(() => {
+    const el = scrollRef.current; if (!el) return;
+    const jumps = [50, 250, 600].map((d) => window.setTimeout(() => {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'instant' as ScrollBehavior });
+    }, d));
+    return () => jumps.forEach((j) => clearTimeout(j));
+  }, []);
 
   // `override`: when called from the 학습 노트 buttons (right-side card or
   // action row), we pass the prompt directly instead of routing through the
