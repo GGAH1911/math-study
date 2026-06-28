@@ -513,12 +513,15 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
     if (!body.contains(range.commonAncestorContainer)) { setQuoteBtn(null); return; }
     const latex = latexFromSelection(range, body);
     if (!latex.trim()) { setQuoteBtn(null); return; }
-    const rect = range.getBoundingClientRect();
-    const host = body.closest('[data-chat-host]') as HTMLElement | null;
-    const hostRect = host?.getBoundingClientRect();
+    // ★버튼은 data-mi 래퍼(position:relative) 안에 있으므로 좌표도 그 래퍼 기준이어야 한다(이전엔
+    //   data-chat-host 기준이라 어긋나 뷰포트 밖으로 튐). 선택의 *끝* rect 위에 띄운다(드래그 종료점 근처).
+    const wrap = body.closest('[data-mi]') as HTMLElement | null;
+    const wrapRect = (wrap ?? body).getBoundingClientRect();
+    const rects = range.getClientRects();
+    const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
     setQuoteBtn({
-      x: rect.left - (hostRect?.left ?? 0) + rect.width / 2,
-      y: rect.top - (hostRect?.top ?? 0) - 8,
+      x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
+      y: last.top - wrapRect.top - 6,
       latex,
     });
   }, [onQuote, isUser]);
@@ -568,8 +571,8 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
           type="button"
           onMouseDown={(e) => { e.preventDefault(); }}
           onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
-          style={{ position: 'absolute', left: quoteBtn.x, top: quoteBtn.y, transform: 'translate(-50%, -100%)', zIndex: 30 }}
-          className="px-2 py-1 rounded-md bg-zinc-800 border border-zinc-600 text-[11px] text-zinc-100 shadow-lg whitespace-nowrap hover:bg-zinc-700"
+          style={{ position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
+          className="px-2.5 py-1 rounded-full bg-indigo-500 border border-indigo-400 text-[12px] font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400"
         >💬 인용</button>
       )}
       <div
@@ -1823,6 +1826,11 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
            를 쓴다: 항상 보이고, 굵고, 손/터치로 드래그 가능. */
         .chat-scroll { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
         .chat-scroll::-webkit-scrollbar { width: 0; height: 0; display: none; }
+        /* 드래그 선택을 또렷하게(인용용) — 다크 채팅서 기본 노랑이 약함. KaTeX 내부 span 까지 적용. */
+        .chat-scroll ::selection, .chat-scroll .katex ::selection {
+          background: color-mix(in oklab, var(--color-accent) 45%, transparent);
+          color: inherit;
+        }
         /* 커스텀 스크롤바 트랙 — 영역 우측 가장자리에 떠 있는 굵은 레일(14px). overflow 있을 때만 노출. */
         .chat-scrollbar-track {
           position: absolute;
