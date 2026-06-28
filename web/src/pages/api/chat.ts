@@ -8,6 +8,7 @@ import { buildTutorPrompt, searchConcepts } from '../../lib/chat-context.ts';
 import { buildLearnerContext } from '../../lib/learner.ts';
 import { getMastery } from '../../lib/mastery.ts';
 import problemIndex from '../../data/problems-by-concept.json';
+import { logTutorUsage, parseUsage } from '../../lib/tutor-usage.ts';
 
 export const prerender = false;
 
@@ -386,6 +387,11 @@ ${lines}`;
               // We intentionally drop thinking_delta — keep the UX clean.
             } else if (obj.type === 'system' && obj.subtype === 'post_turn_summary') {
               sendEvent('done', { status: obj.status_category });
+            } else if (obj.type === 'result') {
+              // ★result 이벤트의 usage(input/output/cache_read/cache_creation) → 계정별 DB 적재.
+              //   best-effort, fire-and-forget(채팅 스트림 막지 않음). dev fallback 이라 byok=false.
+              const m = parseUsage(obj.usage);
+              if (m) void logTutorUsage({ userId: learnerUserId, collection, slug, model, byok: false, ...m });
             } else if (obj.type === 'rate_limit_event') {
               sendEvent('rate_limit', obj.rate_limit_info ?? {});
             }
