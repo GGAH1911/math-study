@@ -29,7 +29,20 @@ if (PRIORITY) { cands.sort((a, b) => lvl(b.id) - lvl(a.id) || a.id.localeCompare
 else { const stepN = Math.max(1, Math.floor(cands.length / N)); queue = cands.filter((_, i) => i % stepN === 0).slice(0, N); }
 log(`══ 워커풀${PRIORITY ? '(고가치순)' : ''}: 미처리후보 ${cands.length}, 이번 큐 ${queue.length}, par ${PAR}, maxtry ${MAXTRY} · LOG ${LOG}`);
 
-const genOnce = (id) => new Promise((res) => { const c = spawn('node', [`${REPO}/web/scripts/widget_generate.mjs`, id], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 240000 }); c.on('close', res); c.on('error', res); });
+// 자식 stdout 캡처 → widget_generate 가 찍는 `cr=N`(cache_read_input_tokens)을 로그에 남겨 프롬프트
+// 캐시 히트 추적 가능하게(이전엔 stdout='ignore'라 캐시 실측이 버려졌음). 연속 호출서 cr 상승=캐시 생존.
+const crVals = [];   // 캐시 히트 추적용 — genOnce 가 수집, 종료 시 다이제스트로 cron-runs.md 에 누적.
+const genOnce = (id) => new Promise((res) => {
+  const c = spawn('node', [`${REPO}/web/scripts/widget_generate.mjs`, id], { stdio: ['ignore', 'pipe', 'ignore'], timeout: 240000 });
+  let out = '';
+  c.stdout.on('data', (d) => { out += d; });
+  c.on('close', (code) => {
+    const m = out.match(/cr=(\d+)/);
+    if (m) { crVals.push(+m[1]); log(`  ${id} cache_read=${m[1]}`); }
+    res(code);
+  });
+  c.on('error', res);
+});
 
 let accepted = 0, skipped = 0, qi = 0;
 async function worker() {
@@ -53,10 +66,18 @@ async function worker() {
 }
 (async () => {
   await Promise.all(Array.from({ length: PAR }, worker));
-  log(`══ 종료: accept ${accepted} · skip ${skipped} · 영속 ${OUT} · 합격률 ${queue.length ? Math.round(accepted / queue.length * 100) : 0}%`);
+  const rate = queue.length ? Math.round(accepted / queue.length * 100) : 0;
+  log(`══ 종료: accept ${accepted} · skip ${skipped} · 영속 ${OUT} · 합격률 ${rate}%`);
+  // ★실행 다이제스트를 레포 추적 문서에 누적(00_STATUS 인덱스로 traverse). /tmp 로그는 휘발성이라.
+  //   cache=cr 평균/최대(연속 호출서 상승=프롬프트 캐시 생존). 캐시 셋업 검증은 cron-runs.md 참조.
+  try {
+    const ts = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 16); // KST
+    const crStr = crVals.length ? `cr avg ${Math.round(crVals.reduce((a, b) => a + b, 0) / crVals.length)} · max ${Math.max(...crVals)} (n=${crVals.length})` : 'cr 없음';
+    appendFileSync(`${REPO}/docs/ops/status/cron-runs.md`, `| ${ts} | widget | accept ${accepted} · skip ${skipped} · ${rate}% | ${crStr} |\n`);
+  } catch (e) { log(`다이제스트 기록 실패: ${String(e.message).slice(0, 80)}`); }
   if (COMMIT && accepted > 0) {
     try { execSync('node web/scripts/gen_widget_index.mjs', { cwd: REPO, stdio: 'pipe' }); } catch { /* 인덱스(SSOT) 재생성 best-effort */ }
-    try { execSync(`git add web/src/data/concept-widgets/ web/src/data/concept-widgets-index.json && git commit -q -m "data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증 + 인덱스 갱신"`, { cwd: REPO, stdio: 'pipe' }); log(`커밋 완료 (+${accepted})`); }
+    try { execSync(`git add web/src/data/concept-widgets/ web/src/data/concept-widgets-index.json docs/ops/status/cron-runs.md && git commit -q -m "data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증 + 인덱스 갱신 + 크론 다이제스트"`, { cwd: REPO, stdio: 'pipe' }); log(`커밋 완료 (+${accepted})`); }
     catch (e) { log(`커밋 실패: ${String(e.message).slice(0, 120)}`); }
     // --no-verify: 데이터(json)만 커밋이라 pre-push 타입체크 불필요 + 3am astro check가 dev 서버 dep 캐시 stale 시키는 footgun 회피
     try { execSync('git push -q --no-verify', { cwd: REPO, stdio: 'pipe' }); log('푸시 완료'); }
