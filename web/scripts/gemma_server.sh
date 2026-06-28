@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 맥북 Pro mlx_vlm gemma 서버 관리 — corrector(비전 교정)·개념 본문 변환이 의존.
-# 상세 운영 지침: docs/GEMMA_SERVER.md
+# 상세 운영 지침: docs/ops/runbooks/GEMMA_SERVER.md
 #
 #   ./gemma_server.sh start     기동(분리·모델 로딩 대기)
 #   ./gemma_server.sh status    생사 확인

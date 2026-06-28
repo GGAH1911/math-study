@@ -10,8 +10,12 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
+- `CLAUDE_P_CACHING.md` — 등록 자산
+- `FIGURE_TRIAGE_BLUEPRINT.md` — 등록 자산
+- `concept_graph.md` — 등록 자산
 - `handwriting-canvas.md` — 등록 자산
 - `interactive-widget-spec-loop.md` — 등록 자산
+- `membership-design.md` — 등록 자산
 - `prompt-caching.md` — 등록 자산
 
 ---

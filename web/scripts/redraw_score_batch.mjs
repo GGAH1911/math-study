@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // redraw 재현 벌크 채점 — 그리기=gemma4, 채점=Opus.
 //   verify_batch 패턴: 1콜에 N도형 묶음(CHUNK 5) + clean cwd/DISABLE_GIT 프롬프트캐싱(cache_read ~76%↓ 분산) + 라인파싱(parsefail 차단).
-//   각 도형: [원본 이미지]+[재현 이미지(figrender-plot screenshot)]+[본문] → docs/REDRAW_RUBRIC.md 8항목 채점.
+//   각 도형: [원본 이미지]+[재현 이미지(figrender-plot screenshot)]+[본문] → docs/report/REDRAW_RUBRIC.md 8항목 채점.
 //   결과(verdict/total/①/issue)를 /tmp/redraw_specs/<id>.json 에 기록(갤러리 뱃지).
 // 사용: node web/scripts/redraw_score_batch.mjs [--list id1,id2] [--chunk 5] [--model opus] [--norender]
 import { spawn, spawnSync } from 'node:child_process';
@@ -23,7 +23,7 @@ if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 const TS = String(Math.floor(Date.now() / 1000));
 const LOG = `${LOGDIR}/redraw_score_${TS}.log`;
 const log = (s) => { const l = `${new Date().toISOString()} ${s}`; console.log(l); appendFileSync(LOG, l + '\n'); };
-const RUBRIC = readFileSync(`${REPO}/docs/REDRAW_RUBRIC.md`, 'utf8');
+const RUBRIC = readFileSync(`${REPO}/docs/report/REDRAW_RUBRIC.md`, 'utf8');
 
 function ids() {
   const list = getOpt('--list');

@@ -33,7 +33,7 @@ VERIFIER_DIR = ROOT / 'db' / 'solutions'
 MODEL = 'sonnet'
 # ★claude -p 캐시 친화: 레포 cwd면 git status(미커밋 변경)가 시스템 프롬프트 env 블록을 매 호출 바꿔
 #   프롬프트 캐시를 깬다. 깨끗한 빈 cwd에서 claude를 spawn → prefix 안정 → cache_read 생존(입력비용↓).
-#   이미지 접근은 --add-dir(절대경로)로 유지. 참고: docs/CLAUDE_P_CACHING.md.
+#   이미지 접근은 --add-dir(절대경로)로 유지. 참고: docs/architecture/CLAUDE_P_CACHING.md.
 CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
 os.makedirs(CLEAN_DIR, exist_ok=True)
 # ★git 블록 제거 → prompt 캐시 prefix 안정(cache_read 고정). clean cwd 와 벨트+멜빵.

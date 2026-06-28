@@ -23,7 +23,7 @@ import { mkdirSync, existsSync as _existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 
 // ★claude -p 캐시 친화: 레포 cwd면 git status가 시스템 프롬프트 env 블록을 매 호출 바꿔 캐시를 깬다.
-//   깨끗한 빈 cwd에서 spawn → prefix 안정 → 여러 개념 연속 생성 시 cache_read 생존. (docs/CLAUDE_P_CACHING.md)
+//   깨끗한 빈 cwd에서 spawn → prefix 안정 → 여러 개념 연속 생성 시 cache_read 생존. (docs/architecture/CLAUDE_P_CACHING.md)
 const CLEAN_DIR = process.env.CLAUDE_P_CWD || resolve(tmpdir(), 'claude_p_clean');
 if (!_existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 

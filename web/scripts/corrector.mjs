@@ -16,7 +16,7 @@ const GEMINI = process.env.CORR_MODEL || 'Gemini 3.5 Flash (Medium)';
 const QLOG = '/tmp/ingest_logs/corrector_quarantine.log';
 // ★claude -p 캐시 친화: 레포 cwd면 git status(미커밋 변경)가 매 호출 시스템 프롬프트 env 블록을
 //   바꿔 프롬프트 캐시를 깬다(콜당 ~17k 재기록). 깨끗한 빈 cwd에서 spawn → prefix 안정 → cache_read 생존.
-//   이미지 접근은 --add-dir(절대경로)로 유지. 참고: docs/CLAUDE_P_CACHING.md, lib/claude_p.mjs.
+//   이미지 접근은 --add-dir(절대경로)로 유지. 참고: docs/architecture/CLAUDE_P_CACHING.md, lib/claude_p.mjs.
 const CLEAN_DIR = process.env.CLAUDE_P_CWD || '/tmp/claude_p_clean';
 if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
