@@ -15,6 +15,8 @@ import { buildNoteUserPrompt, NOTE_FOLLOWUPS, isNoteRequest, type NoteFollowup }
 import { prepareImage, imagesFromDataTransfer } from '../lib/image-utils';
 import ImageCropper from './ImageCropper.tsx';
 import { isVisionDisabled } from '../lib/vision';
+import type { ChatMessage } from '../lib/chat/types';
+import { STORAGE_PREFIX, MAX_HISTORY_TURNS, loadHistory, saveHistory, loadDbHistory, saveDbHistory } from '../lib/chat/persistence';
 
 type ChatModalState =
   | { kind: 'plot' | 'svg'; spec?: PlotSpec; svg?: string }
@@ -23,16 +25,6 @@ type ChatModalState =
   | { kind: 'numberline'; numberlineSpec: NumberlineSpec }
   | { kind: 'chart'; chartSpec: ChartSpec }
   | { kind: 'interactive'; interactiveSpec: InteractiveSpec };
-
-type ChatMessage = {
-  role: 'user' | 'assistant';
-  content: string;
-  promoted?: { path: string };
-  images?: string[];   // 비전(LLM)용 타일 dataURL (user 메시지에만). 표시엔 displayImage 사용.
-  displayImage?: string; // 사용자 표시용 통이미지 dataURL(작게). 타일과 분리해 "조각" 노출 안 함.
-  quoted?: string;     // 렌더된 수식 채팅을 복붙해 삽입한 인용 내용(LaTeX 재구성). 표시엔 칩, LLM 엔 인용블록.
-  displayText?: string; // quoted 동반 시 칩 옆에 보일 사용자 실제 질문(content 는 인용블록 포함이라 분리).
-};
 
 type Props = {
   slug: string;
@@ -43,63 +35,6 @@ type Props = {
   // 기존 inline 카드 (concepts/dashboard 페이지).
   fill?: boolean;
 };
-
-const STORAGE_PREFIX = 'math-study:chat:';
-const MAX_HISTORY_TURNS = 12; // include up to last N messages in API request
-
-// sub-dir 진입 후 호환: 'algebra/근의_공식' 같은 새 slug 로 로딩 시,
-// 기존 flat slug 'math-study:chat:근의_공식' 도 fallback 으로 확인하고 lazy 이전.
-function loadHistory(slug: string): ChatMessage[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const newKey = STORAGE_PREFIX + slug;
-    const raw = window.localStorage.getItem(newKey);
-    if (raw) return JSON.parse(raw) as ChatMessage[];
-    if (slug.includes('/')) {
-      const leaf = slug.split('/').pop() ?? slug;
-      const legacyKey = STORAGE_PREFIX + leaf;
-      const legacy = window.localStorage.getItem(legacyKey);
-      if (legacy) {
-        window.localStorage.setItem(newKey, legacy);
-        window.localStorage.removeItem(legacyKey);
-        return JSON.parse(legacy) as ChatMessage[];
-      }
-    }
-    return [];
-  } catch {
-    return [];
-  }
-}
-
-function saveHistory(slug: string, msgs: ChatMessage[]): void {
-  try {
-    // 이미지 dataURL 은 용량이 커 localStorage quota 를 빠르게 소진 → 저장 시 제외.
-    const slim = msgs.map((m) => (m.images?.length ? { ...m, images: undefined } : m));
-    window.localStorage.setItem(STORAGE_PREFIX + slug, JSON.stringify(slim));
-  } catch {
-    /* quota or disabled — ignore */
-  }
-}
-
-// 대화 이력 DB 동기화(계정별 · 기기 넘어 유지). localStorage 는 빠른 캐시로 병행.
-async function loadDbHistory(collection: string, slug: string): Promise<ChatMessage[] | null> {
-  try {
-    const r = await fetch(`/api/chat-history?collection=${encodeURIComponent(collection)}&slug=${encodeURIComponent(slug)}`);
-    if (!r.ok) return null;
-    const d = await r.json();
-    return Array.isArray(d.messages) ? (d.messages as ChatMessage[]) : null;
-  } catch { return null; }
-}
-function saveDbHistory(collection: string, slug: string, msgs: ChatMessage[]): void {
-  try {
-    const slim = msgs.map((m) => (m.images?.length ? { ...m, images: undefined } : m));
-    fetch('/api/chat-history', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ collection, slug, messages: slim }),
-    }).catch(() => { /* offline/실패 무시 — localStorage 에 캐시됨 */ });
-  } catch { /* ignore */ }
-}
 
 // Lightweight markdown rendering: bold, italic, code spans, code blocks, paragraphs, KaTeX-aware passthrough.
 // Strategy: split paragraphs, wrap code fences as <pre><code>, render inline.
