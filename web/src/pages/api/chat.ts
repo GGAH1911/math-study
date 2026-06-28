@@ -55,6 +55,11 @@ function safeChildEnv(): NodeJS.ProcessEnv {
     const v = process.env[k];
     if (v !== undefined) out[k] = v;
   }
+  // ★프롬프트 캐싱 멜빵: git 안내 블록을 시스템 프롬프트에서 제거 → prefix 안정(cache_read 생존).
+  //   clean cwd(cwd:CLEAN_DIR)는 벨트지만 그것만으론 git churn 이 새어 cache_creation 만 잡히고
+  //   cache_read=0 이었음. 인제스트·배치(build_solution_cache·widget_generate 등)가 전부 이 env 를
+  //   같이 줘서 cache_read 가 고정됐다 — 튜터에만 빠져 있던 것. [[project_claude_p_caching]]
+  out.CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS = '1';
   return out;
 }
 
@@ -237,20 +242,35 @@ export const POST: APIRoute = async ({ request, locals }) => {
     } catch { /* 조회 실패 시 frontmatter 폴백 */ }
   }
   const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection, userMastery);
-  // Retrieval grounding: 학생 질문에 매칭되는 *실존* 개념 노드를 프롬프트에 주입해
-  // 튜터가 경로를 지어내지 않게 한다(개념 튜터는 현재 페이지 이웃만 알아 멀리 있는
-  // 개념은 추측하던 문제). concepts 컬렉션에서만.
-  let systemPrompt = basePrompt;
+  // ★프롬프트 캐싱(B): claude CLI 는 --system-prompt 를 캐시하지 않고(실측 cache_creation 도 0),
+  //   `-p` 본문의 prefix 만 캐시한다. 그래서 시스템 프롬프트를 둘로 나눈다:
+  //   ① staticPrefix = slug·user 에만 의존(같은 대화의 연속 질문에 *동일*) → `-p` 맨 앞에 둬서 캐시.
+  //   ② dynamicSuffix = 질문마다 바뀌는 부분(매칭 개념 후보) → prefix 뒤(캐시 경계 밖).
+  //   같은 페이지에서 연속 질문 시 ①이 cache_read 로 생존(5분 TTL). [[project_claude_p_caching]]
+  let staticPrefix = basePrompt;
+  // 이 개념에 연결된 기출(메타데이터) — slug 고정이므로 정적.
+  if (collection === 'concepts') {
+    staticPrefix += linkedProblemsBlock(slug);
+  }
+  // 학습자 모델(per-user) — 한 대화 세션 중엔 사실상 고정이므로 정적 prefix 에 포함.
+  const learnerUserId = locals.user?.id;
+  if (learnerUserId) {
+    try {
+      const learner = await buildLearnerContext(learnerUserId);
+      if (learner) staticPrefix += `\n\n${learner}`;
+    } catch { /* 학습자 컨텍스트 실패는 튜터 동작을 막지 않음 */ }
+  }
+
+  // ② 동적: 학생 질문에 매칭되는 *실존* 개념 노드(질문마다 달라짐) → 캐시 prefix 뒤에 둔다.
+  let dynamicSuffix = '';
   if (collection === 'concepts' && lastUser.content) {
     const hits = searchConcepts(lastUser.content, 6);
     if (hits.length > 0) {
-      // 표시이름(개념명) + **그대로 복사할 완전한 URL**. Haiku 가 긴 nested 경로를 줄여
-      // 쓰면 404 (라우트는 전체 경로만 인식) → URL 통째 제시 + verbatim 강조.
       const lines = hits.map((c) => {
         const name = (c.slug.split('/').pop() ?? c.slug).replace(/_/g, ' ');
         return `  - ${name}${c.grade ? ` (${c.grade})` : ''}:  /concepts/${c.slug}`;
       }).join('\n');
-      systemPrompt += `\n\n--- 질문 관련 개념 후보 (개념지도에 *실존* · 링크 URL 그대로 복사) ---
+      dynamicSuffix += `\n\n--- 질문 관련 개념 후보 (개념지도에 *실존* · 링크 URL 그대로 복사) ---
 학생 질문과 매칭된 실제 개념 노드들. 어디로 가야 할지 안내할 때 **반드시 이 목록에서 고르고**,
 마크다운 링크 URL은 **아래 \`/concepts/...\` 를 글자 그대로 복사**한다 — 경로를 절대 줄이거나
 바꾸지 말 것(줄이면 404). **이 목록에 없는 개념 경로는 지어내지 말 것**; 적절한 후보가 없으면
@@ -258,21 +278,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
 ${lines}`;
     }
   }
-  // 이 개념에 연결된 기출(메타데이터)을 서버가 인덱스에서 조회해 주입 — 튜터가 "DB 접근 못 함"
-  // 으로 답하던 문제 해결. LLM 은 여전히 DB·도구 접근 0(--tools ""), 비민감 메타만 텍스트로 받음.
-  if (collection === 'concepts') {
-    systemPrompt += linkedProblemsBlock(slug);
-  }
-  // 학습자 모델: 이 학생의 정량 수준 + 정성 프로필을 프롬프트에 주입(per-user, 하드코딩 0).
-  const learnerUserId = locals.user?.id;
-  if (learnerUserId) {
-    try {
-      const learner = await buildLearnerContext(learnerUserId);
-      if (learner) systemPrompt += `\n\n${learner}`;
-    } catch { /* 학습자 컨텍스트 실패는 튜터 동작을 막지 않음 */ }
-  }
 
-  let userPrompt = (formatHistory(messages) + '\n' + lastUser.content).trim();
+  // `-p` 본문 = [정적 prefix(캐시)] + [동적 개념후보] + [학생 대화]. 정적 prefix 를 맨 앞에 둬야
+  // 연속 질문 시 그 부분이 cache_read 로 잡힌다. 페르소나·규칙이 본문 앞에 있으므로 --system-prompt 불필요.
+  // ※캐싱 한계(실측): claude CLI 는 `-p` 본문에 cache_control breakpoint 를 *끝*에만 자동으로 찍어,
+  //   우리 시스템 프롬프트(staticPrefix)를 prefix 로 부분 캐시하지 못한다(전체 동일할 때만 히트).
+  //   인제스트의 cache_read 는 우리 콘텐츠가 아니라 claude 내장 base(도구 정의)가 캐시된 것이었음.
+  //   → 우리 프롬프트의 진짜 캐싱은 C(Anthropic API 직접 + 명시적 cache_control)에서만. (plan 참조)
+  //   따라서 staticPrefix 는 동작 안전하게 --system-prompt 로 주고, 질문별 dynamicSuffix 만 user 턴에 둔다.
+  const convo = (formatHistory(messages) + '\n' + lastUser.content).trim();
+  const systemPrompt = staticPrefix;
+  let userPrompt = `${dynamicSuffix ? dynamicSuffix + '\n\n' : ''}--- 학생과의 대화 ---\n${convo}`;
 
   // 사용자가 첨부한 이미지를 임시 PNG 로 저장 → claude CLI 가 Read 도구로 직접 본다
   // (문제 PNG 와 동일 메커니즘). 응답 종료 시 삭제(cleanup).
