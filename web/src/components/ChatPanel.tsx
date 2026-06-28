@@ -9,6 +9,8 @@ import type { ChatMessage } from '../lib/chat/types';
 import { STORAGE_PREFIX, MAX_HISTORY_TURNS, loadHistory, saveHistory, loadDbHistory, saveDbHistory } from '../lib/chat/persistence';
 import ChatScrollbar from './chat/ChatScrollbar';
 import Message, { QuotedChip } from './chat/Message';
+import { reconstructPastedMath } from '../lib/chat/markdown';
+import { sanitizeForDisplay, findArithErr } from '../lib/chat/verification';
 
 
 type Props = {
@@ -118,28 +120,6 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   // 렌더된 KaTeX 를 복사하면 클립보드 text/plain 이 기호마다 줄바꿈돼 입력창에서 세로로 깨진다.
   // 클립보드 HTML 의 .katex LaTeX annotation 을 $...$ 로 재구성 → 깔끔한 LaTeX(메시지에서 수식 렌더 +
   // LLM 도 정상 수신). 수식 외 텍스트는 그대로 두고 복사 잔여 공백/줄바꿈만 정리.
-  const reconstructPastedMath = (html: string): string | null => {
-    try {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      if (!doc.querySelector('.katex')) return null;
-      doc.querySelectorAll('.katex').forEach((k) => {
-        // ★LaTeX 원본은 MathML 의 <annotation> 에 있다. encoding 속성이 HTML 파싱서 유실될 수 있어
-        //   속성 필터 없이 annotation 태그로 찾는다(엄격 셀렉터 실패→textContent 중복폴백이 'x3...x3' 깨짐 원인).
-        const tex = (k.querySelector('annotation')?.textContent ?? '').trim();
-        if (tex) { k.replaceWith(doc.createTextNode(` $${tex}$ `)); return; }
-        // annotation 이 복사 과정에 잘렸으면 보이는 부분(.katex-html)만 — MathML 중복 텍스트 제거.
-        const visible = k.querySelector('.katex-html')?.textContent ?? k.textContent ?? '';
-        k.replaceWith(doc.createTextNode(visible));
-      });
-      const text = (doc.body.textContent ?? '')
-        .replace(/\u00a0/g, ' ')
-        .replace(/[ \t]*\n[ \t]*/g, '\n')
-        .replace(/\n{3,}/g, '\n\n')
-        .replace(/[ \t]{2,}/g, ' ')
-        .trim();
-      return text || null;
-    } catch { return null; }
-  };
 
   const storageKey = `${collection}:${slug}`;
 
@@ -264,22 +244,6 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
 
     // python block 을 채팅창에 노출하지 않기 위한 display sanitize.
     // python block 만 있는 응답은 chip 으로, geometry 등 다른 본문이 있으면 그대로.
-    const sanitizeForDisplay = (s: string) => {
-      // ① 닫힌 python block 제거.
-      let stripped = s.replace(/```(?:python|py|sympy)[\s\S]*?```/g, '');
-      // ② 스트리밍 중 아직 닫는 ``` 가 안 온 미완성 펜스도 잘라낸다. 안 그러면
-      //    여는 펜스부터 끝까지 raw python 이 사용자에게 노출됨.
-      let hadOpenPy = false;
-      const openIdx = stripped.search(/```(?:python|py|sympy)\b/);
-      if (openIdx !== -1) {
-        stripped = stripped.slice(0, openIdx);
-        hadOpenPy = true;
-      }
-      stripped = stripped.trim();
-      const hadPy = hadOpenPy || stripped !== s.trim();
-      if (hadPy && stripped.length < 50) return '⚙ 정확한 좌표 계산 중…';
-      return stripped;
-    };
 
     // raw conversation (LLM 호출용, python/geometry 등 원본 보존)
     const rawHistory: ChatMessage[] = [...messages.slice(-MAX_HISTORY_TURNS), newUserMsg];
@@ -497,39 +461,6 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       //   식 위에 덧씌운 조작/계산실수 → [자동 검산] 으로 1회 정정 재생성. 변수 든 식·비산술은 무시.
       //   CSP 안전(eval/Function 미사용, 자체 shunting-yard 평가기).
       {
-        const evalArith = (e: string): number | null => {
-          const toks = e.match(/\d+\.?\d*|[+\-*/()]/g); if (!toks) return null;
-          const out: (number | string)[] = []; const ops: string[] = [];
-          const prec: Record<string, number> = { '+': 1, '-': 1, '*': 2, '/': 2 };
-          for (const t of toks) {
-            if (/\d/.test(t)) out.push(parseFloat(t));
-            else if (t === '(') ops.push(t);
-            else if (t === ')') { while (ops.length && ops[ops.length - 1] !== '(') out.push(ops.pop()!); ops.pop(); }
-            else { while (ops.length && (prec[ops[ops.length - 1]] ?? 0) >= prec[t]) out.push(ops.pop()!); ops.push(t); }
-          }
-          while (ops.length) out.push(ops.pop()!);
-          const st: number[] = [];
-          for (const t of out) {
-            if (typeof t === 'number') st.push(t);
-            else { const b = st.pop(); const a = st.pop(); if (a === undefined || b === undefined) return null; st.push(t === '+' ? a + b : t === '-' ? a - b : t === '*' ? a * b : a / b); }
-          }
-          return st.length === 1 ? st[0] : null;
-        };
-        const findArithErr = (text: string): { expr: string; claimed: string; correct: string } | null => {
-          const clean = text.replace(/\\boxed\{([^}]*)\}/g, '$1').replace(/\\cdot|\\times/g, '*').replace(/\\div/g, '/').replace(/\\[a-zA-Z]+|[$]/g, ' ');
-          // ★체인 "X = <순수산술> = <숫자>" 에서 두 등호 *사이* 전체 산술을 캡처(앞 등호 필수) — 이전엔
-          //   부분 매칭이 "8+12-18+9" 의 "8+" 를 앞 매칭에 뺏겨 "12-18+9=11" 오탐(3≠11)했음. 비체인은 패스(오탐<누락).
-          const re = /=\s*([0-9][0-9\s+\-*/().]*?)\s*=\s*(-?[0-9]+(?:\.[0-9]+)?)/g;
-          let m: RegExpExecArray | null;
-          while ((m = re.exec(clean)) !== null) {
-            const e = m[1].replace(/\s/g, '');
-            if (!/^[0-9+\-*/().]+$/.test(e) || !/[+\-*/]/.test(e)) continue;
-            const v = evalArith(e);
-            if (v === null || !isFinite(v)) continue;
-            if (Math.abs(v - parseFloat(m[2])) > 1e-6) return { expr: m[1].trim(), claimed: m[2], correct: String(Number.isInteger(v) ? v : +v.toFixed(4)) };
-          }
-          return null;
-        };
         const lastMsg = displayMessages[displayMessages.length - 1];
         const ae = lastMsg?.role === 'assistant' ? findArithErr(lastMsg.content) : null;
         if (ae) {

@@ -176,3 +176,26 @@ export function latexFromSelection(range: Range, root: HTMLElement): string {
     .replace(/\n{3,}/g, '\n\n')    // \uacfc\ud55c \ube48 \uc904\ub9cc \ucd95\uc18c
     .trim();
 }
+
+export const reconstructPastedMath = (html: string): string | null => {
+  try {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    if (!doc.querySelector('.katex')) return null;
+    doc.querySelectorAll('.katex').forEach((k) => {
+      // ★LaTeX 원본은 MathML 의 <annotation> 에 있다. encoding 속성이 HTML 파싱서 유실될 수 있어
+      //   속성 필터 없이 annotation 태그로 찾는다(엄격 셀렉터 실패→textContent 중복폴백이 'x3...x3' 깨짐 원인).
+      const tex = (k.querySelector('annotation')?.textContent ?? '').trim();
+      if (tex) { k.replaceWith(doc.createTextNode(` $${tex}$ `)); return; }
+      // annotation 이 복사 과정에 잘렸으면 보이는 부분(.katex-html)만 — MathML 중복 텍스트 제거.
+      const visible = k.querySelector('.katex-html')?.textContent ?? k.textContent ?? '';
+      k.replaceWith(doc.createTextNode(visible));
+    });
+    const text = (doc.body.textContent ?? '')
+      .replace(/\u00a0/g, ' ')
+      .replace(/[ \t]*\n[ \t]*/g, '\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/[ \t]{2,}/g, ' ')
+      .trim();
+    return text || null;
+  } catch { return null; }
+};
