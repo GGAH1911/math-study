@@ -30,6 +30,8 @@ type ChatMessage = {
   promoted?: { path: string };
   images?: string[];   // 비전(LLM)용 타일 dataURL (user 메시지에만). 표시엔 displayImage 사용.
   displayImage?: string; // 사용자 표시용 통이미지 dataURL(작게). 타일과 분리해 "조각" 노출 안 함.
+  quoted?: string;     // 렌더된 수식 채팅을 복붙해 삽입한 인용 내용(LaTeX 재구성). 표시엔 칩, LLM 엔 인용블록.
+  displayText?: string; // quoted 동반 시 칩 옆에 보일 사용자 실제 질문(content 는 인용블록 포함이라 분리).
 };
 
 type Props = {
@@ -411,6 +413,31 @@ class GraphicErrorBoundary extends Component<{ children: ReactNode; kind: string
   }
 }
 
+// 인용 칩 — 렌더 수식 채팅을 복붙해 삽입한 내용을 마스킹 표시(탭하면 펼쳐 미리보기, 수식 렌더).
+export function QuotedChip({ text, onRemove }: { text: string; onRemove?: () => void }) {
+  const [open, setOpen] = useState(false);
+  const chars = text.replace(/\s+/g, ' ').trim().length;
+  return (
+    <div className="mb-1.5 w-full">
+      <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 bg-zinc-700/30 border border-zinc-600/60 rounded-lg px-2 py-1">
+        <button type="button" onClick={() => setOpen((v) => !v)} className="flex items-center gap-1.5 flex-1 min-w-0 text-left hover:text-zinc-200">
+          <span aria-hidden="true">📋</span>
+          <span className="truncate">채팅 내용 삽입됨 · {chars}자</span>
+          <span className="text-zinc-500" aria-hidden="true">{open ? '▴' : '▾'}</span>
+        </button>
+        {onRemove && (
+          <button type="button" onClick={onRemove} title="삭제" className="text-zinc-500 hover:text-rose-300 shrink-0">✕</button>
+        )}
+      </div>
+      {open && (
+        <div className="mt-1 max-h-48 overflow-y-auto rounded-lg border border-zinc-700/60 bg-zinc-800/40 px-2.5 py-2">
+          <MdSegment content={text} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function MdSegment({ content }: { content: string }) {
   // 동기 markdown 처리 (escape + inline + 표). 이걸 첫 paint 시점에 바로 표시해서
   // KaTeX 모듈 import 완료 전에 raw content가 DOM에 들어가는 사고를 막는다.
@@ -504,7 +531,13 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
             <img src={msg.displayImage ?? msg.images![0]} alt="첨부 이미지" className="max-h-40 rounded border border-indigo-500/30" />
           </div>
         )}
-        {segments.map((s, i) => {
+        {isUser && msg.quoted && (
+          <QuotedChip text={msg.quoted} />
+        )}
+        {/* quoted 동반 user 메시지는 content 에 인용블록이 들어있으므로(LLM용), 표시는 칩 + 사용자 실제 질문만. */}
+        {isUser && msg.quoted
+          ? <MdSegment content={msg.displayText ?? ''} />
+          : segments.map((s, i) => {
           if (s.type === 'md') return <MdSegment key={i} content={s.content} />;
           // Streaming 중 partial JSON parse 실패는 silent — 완성되면 정상 segment 로 바뀜.
           // 사용자에게 "실패" 처럼 보이는 일시 오류를 숨김.
@@ -567,6 +600,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
             />
           );
         })}
+        {/* (삼항 끝) */}
       </div>
       {isNoteResponse && !isStreaming && msg.content.trim().length > 0 && !busy ? (
         // Action row under a 학습 노트 reply — save (= promote) plus three
@@ -774,6 +808,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   // 이미지 첨부 state
   const [pending, setPending] = useState<string[]>([]);          // 전송 대기 비전 타일들 (원해상도 PNG dataURL N장)
   const [pendingDisplay, setPendingDisplay] = useState<string | null>(null);  // 사용자 표시용 통이미지(타일과 분리)
+  const [quoted, setQuoted] = useState<string | null>(null);     // 렌더 수식 복붙 인용(전송 대기). 표시=칩, LLM=인용블록.
   const [cropSrc, setCropSrc] = useState<string | null>(null);   // 크롭 모달 대상 (원본 dataURL)
   const [imgError, setImgError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -954,15 +989,24 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     const text = (override ?? input).trim();
     const attachedImgs = override === undefined ? pending : [];    // 합성/노트 호출엔 첨부 없음 (첫 user 메시지에만)
     const attachedDisplay = override === undefined ? pendingDisplay : null;  // 표시용 통이미지(타일과 분리)
-    if ((!text && !attachedImgs.length) || streaming) return;      // 이미지만 있어도 전송 허용
+    const attachedQuote = override === undefined ? quoted : null;  // 인용 칩(렌더 수식 복붙)
+    if ((!text && !attachedImgs.length && !attachedQuote) || streaming) return;  // 이미지/인용만 있어도 전송 허용
     setError(null);
-    if (override === undefined) { setInput(''); setPending([]); setPendingDisplay(null); setImgError(null); }
+    if (override === undefined) { setInput(''); setPending([]); setPendingDisplay(null); setQuoted(null); setImgError(null); }
 
+    // content 는 LLM(rawHistory) 과 표시 양쪽에 쓰인다. 인용이 있으면 content 에 인용블록을 포함해
+    //   LLM 이 맥락을 받고, quoted 필드를 별도로 둬 Message 가 그 인용블록을 *칩*으로 마스킹해 표시한다
+    //   (질문 텍스트만 본문에, 인용은 접힌 칩으로). uText=사용자가 실제로 친 질문(칩 옆 표시용).
+    const uText = text || (attachedQuote ? '(인용한 내용에 대한 질문)' : '(첨부한 이미지를 봐주세요)');
+    const contentForLlm = attachedQuote
+      ? `${attachedQuote.split('\n').map((l) => `> ${l}`).join('\n')}\n\n${text || '위 인용 내용에 대해 설명해줘.'}`
+      : uText;
     const newUserMsg: ChatMessage = {
       role: 'user',
-      content: text || '(첨부한 이미지를 봐주세요)',
+      content: contentForLlm,
       // images=비전 타일(LLM 전송), displayImage=통이미지(표시) — 사용자에겐 통이미지만 보임.
       ...(attachedImgs.length ? { images: attachedImgs, displayImage: attachedDisplay ?? attachedImgs[0] } : {}),
+      ...(attachedQuote ? { quoted: attachedQuote, displayText: uText } : {}),
     };
     const placeholder: ChatMessage = { role: 'assistant', content: '' };
     setMessages([...messages, newUserMsg, placeholder]);
@@ -1247,7 +1291,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     } finally {
       setStreaming(false);
     }
-  }, [input, pending, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
+  }, [input, pending, quoted, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
 
   // 이미지 첨부 — prepareImage 후 needsCrop 이면 크롭 모달, 아니면 바로 pending.
   const addFile = useCallback(async (files: File[]) => {
@@ -1576,6 +1620,12 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         <p className="text-xs text-rose-400 mb-2">⚠ {error}</p>
       )}
 
+      {quoted && (
+        <div className="mb-2 shrink-0">
+          <QuotedChip text={quoted} onRemove={() => setQuoted(null)} />
+        </div>
+      )}
+
       {(pending.length > 0 || imgError) && (
         <div className="flex items-center gap-2 mb-2 shrink-0">
           {pending.length > 0 && (
@@ -1606,19 +1656,15 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           onPaste={(e) => {
             const imgs = imagesFromDataTransfer(e.clipboardData);
             if (imgs.length) { e.preventDefault(); void addFile(imgs); return; }
-            // 렌더된 수식(KaTeX) 복사 → 클립보드 HTML 의 LaTeX 로 재구성(세로로 쪼개지는 것 방지).
-            // KaTeX 가 없으면 손대지 않고 기본 붙여넣기(일반 텍스트엔 영향 0).
+            // 렌더된 수식(KaTeX) 채팅을 복사 → 클립보드 HTML 의 LaTeX 로 재구성 후 *인용 칩*으로 마스킹
+            //   (입력창에 세로로 쪼개져 들어가는 것 방지). 수식 입력기/타이핑/평문 LaTeX 는 .katex HTML 이
+            //   없으므로 이 경로 안 탐 → 기본 인라인 입력. 즉 출처(렌더 화면 복사)로만 칩이 된다.
             const html = e.clipboardData.getData('text/html');
             if (!html || !/katex/i.test(html)) return;
             const tex = reconstructPastedMath(html);
             if (!tex) return;
             e.preventDefault();
-            const ta = textareaRef.current;
-            const start = ta?.selectionStart ?? input.length;
-            const end = ta?.selectionEnd ?? input.length;
-            const next = input.slice(0, start) + tex + input.slice(end);
-            setInput(next);
-            setTimeout(() => { ta?.focus(); const pos = start + tex.length; ta?.setSelectionRange(pos, pos); }, 0);
+            setQuoted((prev) => (prev ? prev + '\n\n' : '') + tex);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
@@ -1660,7 +1706,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
           <button
             type="button"
             onClick={() => send()}
-            disabled={streaming || (!input.trim() && !pending.length)}
+            disabled={streaming || (!input.trim() && !pending.length && !quoted)}
             className="px-4 py-2 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {streaming ? '전송 중…' : '전송'}
