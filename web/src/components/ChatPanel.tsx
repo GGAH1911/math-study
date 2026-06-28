@@ -416,14 +416,13 @@ class GraphicErrorBoundary extends Component<{ children: ReactNode; kind: string
 // 인용 칩 — 렌더 수식 채팅을 복붙해 삽입한 내용을 마스킹 표시(탭하면 펼쳐 미리보기, 수식 렌더).
 export function QuotedChip({ text, onRemove }: { text: string; onRemove?: () => void }) {
   const [open, setOpen] = useState(false);
-  const chars = text.replace(/\s+/g, ' ').trim().length;
   return (
     <div className="mb-1.5 w-full">
       <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 bg-zinc-700/30 border border-zinc-600/60 rounded-lg px-2 py-1">
         <button type="button" onClick={() => setOpen((v) => !v)} className="flex items-center gap-1.5 flex-1 min-w-0 text-left hover:text-zinc-200">
           <span aria-hidden="true">📋</span>
-          <span className="truncate">채팅 내용 삽입됨 · {chars}자</span>
-          <span className="text-zinc-500" aria-hidden="true">{open ? '▴' : '▾'}</span>
+          <span className="truncate">채팅 내용 삽입됨</span>
+          <span className="text-zinc-500" aria-hidden="true">{open ? '접기 ▴' : '미리보기 ▾'}</span>
         </button>
         {onRemove && (
           <button type="button" onClick={onRemove} title="삭제" className="text-zinc-500 hover:text-rose-300 shrink-0">✕</button>
@@ -878,8 +877,13 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
       const doc = new DOMParser().parseFromString(html, 'text/html');
       if (!doc.querySelector('.katex')) return null;
       doc.querySelectorAll('.katex').forEach((k) => {
-        const tex = k.querySelector('annotation[encoding="application/x-tex"]')?.textContent?.trim();
-        k.replaceWith(doc.createTextNode(tex ? ` $${tex}$ ` : (k.textContent ?? '')));
+        // ★LaTeX 원본은 MathML 의 <annotation> 에 있다. encoding 속성이 HTML 파싱서 유실될 수 있어
+        //   속성 필터 없이 annotation 태그로 찾는다(엄격 셀렉터 실패→textContent 중복폴백이 'x3...x3' 깨짐 원인).
+        const tex = (k.querySelector('annotation')?.textContent ?? '').trim();
+        if (tex) { k.replaceWith(doc.createTextNode(` $${tex}$ `)); return; }
+        // annotation 이 복사 과정에 잘렸으면 보이는 부분(.katex-html)만 — MathML 중복 텍스트 제거.
+        const visible = k.querySelector('.katex-html')?.textContent ?? k.textContent ?? '';
+        k.replaceWith(doc.createTextNode(visible));
       });
       const text = (doc.body.textContent ?? '')
         .replace(/ /g, ' ')
