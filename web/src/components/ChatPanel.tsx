@@ -413,6 +413,28 @@ class GraphicErrorBoundary extends Component<{ children: ReactNode; kind: string
   }
 }
 
+// 선택(Range) → LaTeX 복원. 드래그한 부분만 인용할 때 쓴다. 복사를 안 거치므로(클립보드 우회)
+// KaTeX 의 annotation(LaTeX 원본=SSOT)이 안 잘려 손실 0. 선택 안의 .katex 는 annotation 으로,
+// 일반 텍스트는 그대로 직렬화. 선택이 .katex 내부에서 시작/끝나도 그 수식 통째를 포함한다.
+export function latexFromSelection(range: Range, root: HTMLElement): string {
+  const frag = range.cloneContents();
+  // 1) 클론에 온전히 들어온 .katex 는 클론의 annotation 으로 치환.
+  frag.querySelectorAll('.katex').forEach((el) => {
+    const tex = (el.querySelector('annotation')?.textContent ?? '').trim();
+    el.replaceWith(document.createTextNode(tex ? ` $${tex}$ ` : (el.querySelector('.katex-html')?.textContent ?? el.textContent ?? '')));
+  });
+  const div = document.createElement('div'); div.appendChild(frag);
+  let out = div.textContent ?? '';
+  // 2) 선택 양 끝이 .katex *내부*에서 잘렸으면 클론엔 annotation 없는 잔해만 → 원본에서 경계 .katex 를
+  //    찾아 그 annotation 보강(경계 수식은 통째 포함, 안전).
+  const texOf = (el: Element | null | undefined) => (el?.querySelector('annotation')?.textContent ?? '').trim();
+  const boundK = (c: Node) => ((c.nodeType === 1 ? c as HTMLElement : c.parentElement)?.closest('.katex') ?? null);
+  const sK = boundK(range.startContainer), eK = boundK(range.endContainer);
+  if (sK && root.contains(sK)) { const t = texOf(sK); if (t && !out.includes(t)) out = ` $${t}$ ` + out; }
+  if (eK && eK !== sK && root.contains(eK)) { const t = texOf(eK); if (t && !out.includes(t)) out = out + ` $${t}$ `; }
+  return out.replace(/\u00a0/g, ' ').replace(/[ \t]{2,}/g, ' ').replace(/[ \t]*\n[ \t]*/g, '\n').trim();
+}
+
 // 인용 칩 — 렌더 수식 채팅을 복붙해 삽입한 내용을 마스킹 표시(탭하면 펼쳐 미리보기, 수식 렌더).
 export function QuotedChip({ text, onRemove }: { text: string; onRemove?: () => void }) {
   const [open, setOpen] = useState(false);
@@ -461,10 +483,11 @@ export function MdSegment({ content }: { content: string }) {
 // chat input. `onPromote` now receives the message index — passing a stable
 // callback from the parent keeps prop identity steady, which lets `memo`
 // actually skip rerenders.
-const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, busy, slug, collection, isStreaming, isNoteResponse }: {
+const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, onQuote, busy, slug, collection, isStreaming, isNoteResponse }: {
   msg: ChatMessage; index: number;
   onPromote?: (idx: number) => void;
   onNoteFollowup?: (kind: NoteFollowup) => void;
+  onQuote?: (latex: string) => void;
   busy?: boolean;
   slug: string; collection: 'concepts' | 'problems' | 'dashboard';
   isStreaming?: boolean;
@@ -478,6 +501,27 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
   const isUser = msg.role === 'user';
   const segments = useMemo(() => parseGraphSegments(msg.content), [msg.content]);
   const [modal, setModal] = useState<ChatModalState | null>(null);
+  // 드래그 선택 → "인용" 버튼. 선택 범위가 이 메시지 본문 안일 때만, 선택 위에 떠오른다.
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; latex: string } | null>(null);
+  const updateQuoteBtn = useCallback(() => {
+    if (!onQuote || isUser) return;
+    const sel = window.getSelection();
+    const body = bodyRef.current;
+    if (!sel || sel.isCollapsed || !body) { setQuoteBtn(null); return; }
+    const range = sel.getRangeAt(0);
+    if (!body.contains(range.commonAncestorContainer)) { setQuoteBtn(null); return; }
+    const latex = latexFromSelection(range, body);
+    if (!latex.trim()) { setQuoteBtn(null); return; }
+    const rect = range.getBoundingClientRect();
+    const host = body.closest('[data-chat-host]') as HTMLElement | null;
+    const hostRect = host?.getBoundingClientRect();
+    setQuoteBtn({
+      x: rect.left - (hostRect?.left ?? 0) + rect.width / 2,
+      y: rect.top - (hostRect?.top ?? 0) - 8,
+      latex,
+    });
+  }, [onQuote, isUser]);
   const canPromote = !!onPromote && !isUser && msg.content.trim().length > 0 && !busy;
 
   // 자동 계산 결과 inject 된 user message 는 내부 protocol — 사용자에겐 chip 만 표시.
@@ -518,8 +562,20 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, b
     );
   }
   return (
-    <div data-mi={index} className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
+    <div data-mi={index} className={`relative flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
+      {quoteBtn && (
+        <button
+          type="button"
+          onMouseDown={(e) => { e.preventDefault(); }}
+          onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
+          style={{ position: 'absolute', left: quoteBtn.x, top: quoteBtn.y, transform: 'translate(-50%, -100%)', zIndex: 30 }}
+          className="px-2 py-1 rounded-md bg-zinc-800 border border-zinc-600 text-[11px] text-zinc-100 shadow-lg whitespace-nowrap hover:bg-zinc-700"
+        >💬 인용</button>
+      )}
       <div
+        ref={bodyRef}
+        onMouseUp={updateQuoteBtn}
+        onTouchEnd={updateQuoteBtn}
         className={`max-w-[92%] rounded-xl px-3.5 py-2 text-sm leading-relaxed space-y-2
           ${isUser
             ? 'bg-indigo-500/10 border border-indigo-500/30 text-zinc-100'
@@ -1345,6 +1401,13 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
     void sendRef.current(NOTE_FOLLOWUPS[kind]);
   }, []);
 
+  // 메시지에서 드래그 선택 → "인용" → 인용 칩에 누적(여러 번 선택하면 이어붙임). 입력창에 포커스.
+  const addQuote = useCallback((latex: string) => {
+    if (!latex.trim()) return;
+    setQuoted((prev) => (prev ? prev + '\n\n' : '') + latex.trim());
+    setTimeout(() => textareaRef.current?.focus(), 0);
+  }, []);
+
   const promote = useCallback(
     async (idx: number) => {
       const msgs = messagesRef.current;
@@ -1560,7 +1623,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         </div>
       )}
 
-      <div className={`chat-scroll-wrap relative ${fill ? 'flex-1 min-h-0' : ''} -mx-1 mb-3`}>
+      <div data-chat-host className={`chat-scroll-wrap relative ${fill ? 'flex-1 min-h-0' : ''} -mx-1 mb-3`}>
       <div
         ref={scrollRef}
         className={`chat-scroll ${fill ? 'h-full' : 'max-h-[420px]'} space-y-3 overflow-y-auto py-2 pl-1 pr-4 scroll-smooth`}
@@ -1599,6 +1662,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
               collection={collection}
               onPromote={promote}
               onNoteFollowup={handleNoteFollowup}
+              onQuote={addQuote}
             />
             );
           })
