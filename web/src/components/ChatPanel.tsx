@@ -1191,7 +1191,9 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         };
         const findArithErr = (text: string): { expr: string; claimed: string; correct: string } | null => {
           const clean = text.replace(/\\boxed\{([^}]*)\}/g, '$1').replace(/\\cdot|\\times/g, '*').replace(/\\div/g, '/').replace(/\\[a-zA-Z]+|[$]/g, ' ');
-          const re = /([0-9][0-9\s+\-*/().]{2,})\s*=\s*(-?[0-9]+(?:\.[0-9]+)?)/g;
+          // ★체인 "X = <순수산술> = <숫자>" 에서 두 등호 *사이* 전체 산술을 캡처(앞 등호 필수) — 이전엔
+          //   부분 매칭이 "8+12-18+9" 의 "8+" 를 앞 매칭에 뺏겨 "12-18+9=11" 오탐(3≠11)했음. 비체인은 패스(오탐<누락).
+          const re = /=\s*([0-9][0-9\s+\-*/().]*?)\s*=\s*(-?[0-9]+(?:\.[0-9]+)?)/g;
           let m: RegExpExecArray | null;
           while ((m = re.exec(clean)) !== null) {
             const e = m[1].replace(/\s/g, '');
@@ -1205,7 +1207,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         const lastMsg = displayMessages[displayMessages.length - 1];
         const ae = lastMsg?.role === 'assistant' ? findArithErr(lastMsg.content) : null;
         if (ae) {
-          appendTurn({ role: 'user', content: `[자동 검산] 네 답에 산술 모순이 있다: "${ae.expr}" 의 실제 계산값은 ${ae.correct} 인데 너는 ${ae.claimed} 라고 썼다. 정답을 틀린 식 위에 덧씌웠거나 계산 실수다. 검증된 단계를 처음부터 다시 따라, 식과 답이 *일치*하도록 모순 없이 풀어라(정답값을 틀린 식에 끼워맞추지 말 것).` });
+          appendTurn({ role: 'user', content: `[자동 검산 · 시스템 메시지 — 사용자가 보낸 게 아님] 시스템이 네 답의 산술을 자동 점검한 결과 모순 *의심*: "${ae.expr}" = ${ae.correct} 인 것 같은데 너는 ${ae.claimed} 라고 썼다. ★이건 사용자의 지적이 아니다 — "지적 감사합니다 / 당신 말이 맞습니다" 같은 응답 절대 금지. 조용히 네 계산을 검증 단계와 다시 대조하라: (1) 정말 틀렸으면 식을 바로잡아 식과 답이 일치하게 다시 풀고, (2) 네 계산이 옳았으면(이 자동 점검이 오탐일 수 있음 — 예: 식의 일부만 떼어 본 경우) 식을 바꾸지 말고 그 항을 다시 더해 답이 맞음을 한 줄로 검산만 보이면 된다. 어느 경우든 최종 식과 산술이 일치해야 한다.` });
           const fixed = await callLLM(rawHistory);
           finalizeAssistant(fixed);
         }
