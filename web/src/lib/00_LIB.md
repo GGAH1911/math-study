@@ -10,7 +10,7 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
-- 📁 [[00_CHAT|chat/]]
+- 📁 [[00_LIB_CHAT|chat/]]
 - 📁 [[00_PROMPTS|prompts/]]
 - `activity.ts` — 등록 자산
 - `admin.ts` — 등록 자산

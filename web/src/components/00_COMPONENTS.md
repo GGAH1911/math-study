@@ -10,7 +10,7 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
-- 📁 [[00_CHAT|chat/]]
+- 📁 [[00_COMPONENTS_CHAT|chat/]]
 - `ActivityFeed.astro` — 등록 자산
 - `AtlasMap.tsx` — 등록 자산
 - `ChatPanel.tsx` — 등록 자산

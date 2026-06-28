@@ -4,7 +4,7 @@ created: 2026-06-28
 updated: 2026-06-28
 ---
 
-# 📝 00_CHAT (자동 생성 인덱스)
+# 📝 00_LIB_CHAT (자동 생성 인덱스)
 > 분류: Wiki / Auto-Generated
 
 ## 전수 명세

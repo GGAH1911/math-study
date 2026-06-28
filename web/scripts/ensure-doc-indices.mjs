@@ -9,6 +9,8 @@
 //     ★content collection 은 docs/ 만 glob 하므로 src 의 00_*.md 는 Astro 가 안 건드림(검증됨).
 //   - <!-- AUTO_INDEX_SECTION --> ~ 다음 '---' 사이만 재생성. 그 위 제목·아래 수동 설명/링크는 보존.
 //   - 사람이 쓴 설명(`- \`file\` — 설명`)은 파일이 남아있으면 유지.
+//   - ★이름 충돌: 같은 폴더명(예: lib/chat·components/chat)은 00_<DIR> 가 겹침 → 2-패스로 감지해
+//     겹치는 폴더만 부모 접두(00_LIB_CHAT·00_COMPONENTS_CHAT). 안 겹치면 00_<DIR> 유지(짧게).
 // prebuild/predev 체인에서 audit-lwip 와 함께 실행.
 
 import fs from 'node:fs';
@@ -25,7 +27,6 @@ const MARK = '<!-- AUTO_INDEX_SECTION -->';
 const ROOTS = [
   {
     dir: path.join(REPO, 'docs'), exts: ['.md'], rootParent: '[[index]]',
-    // 콘텐츠 메시 = audit-lwip 관할 → 제외.
     excludeTop: new Set(['concepts', 'problems', 'hubs', 'mistakes', 'notes', 'syntheses', 'paths', '_archive', 'assets']),
   },
   {
@@ -38,25 +39,55 @@ const ROOTS = [
   },
 ];
 
-let created = 0, updated = 0, skipped = 0;
+const upper = (s) => s.toUpperCase().replace(/[^A-Z0-9]+/g, '_');
 
-// 폴더의 00_ 인덱스 파일명 — TME 규약: 00_<DIRNAME_UPPER>.md
-const indexName = (dir) => `00_${path.basename(dir).toUpperCase().replace(/[^A-Z0-9]+/g, '_')}.md`;
-const indexStem = (dir) => indexName(dir).replace(/\.md$/, '');
+// ── PASS 1 ─────────────────────────────────────────────────────────────────
+// 인덱스를 가질 폴더(파일 또는 live 하위폴더 보유)를 전부 수집.
+const liveDirs = [];
+function collectLive(dir, cfg, isTop) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const subDirs = entries
+    .filter((e) => e.isDirectory() && !EXCLUDE_DIR.has(e.name))
+    .filter((e) => !(isTop && cfg.excludeTop.has(e.name)))
+    .map((e) => e.name);
+  const hasFiles = entries.some((e) => e.isFile() && !e.name.startsWith('00_') && cfg.exts.some((x) => e.name.endsWith(x)));
+  let anyLiveChild = false;
+  for (const sd of subDirs) if (collectLive(path.join(dir, sd), cfg, false)) anyLiveChild = true;
+  const live = hasFiles || anyLiveChild;
+  if (live) liveDirs.push(dir);
+  return live;
+}
+for (const cfg of ROOTS) if (fs.existsSync(cfg.dir)) collectLive(cfg.dir, cfg, true);
 
-// 기존 인덱스에서 '- `file` — 설명' 의 설명을 회수(파일 살아있으면 보존).
+// base 이름(00_<DIR>) 별 그룹 → 2+ 면 부모 접두로 충돌 해소.
+const STEM = new Map();   // dir(abs) → 00_STEM
+{
+  const byBase = new Map();
+  for (const d of liveDirs) {
+    const b = upper(path.basename(d));
+    if (!byBase.has(b)) byBase.set(b, []);
+    byBase.get(b).push(d);
+  }
+  for (const [b, ds] of byBase) {
+    if (ds.length === 1) STEM.set(ds[0], `00_${b}`);
+    else for (const d of ds) STEM.set(d, `00_${upper(path.basename(path.dirname(d)))}_${b}`);
+  }
+}
+const stemOf = (dir) => STEM.get(dir) ?? `00_${upper(path.basename(dir))}`;
+const nameOf = (dir) => `${stemOf(dir)}.md`;
+
+// ── PASS 2 ─────────────────────────────────────────────────────────────────
+let created = 0, updated = 0, removed = 0;
+
 function existingDescriptions(text) {
   const map = new Map();
-  for (const m of text.matchAll(/^- `([^`]+)`\s*(?:—\s*(.*))?$/gm)) {
-    map.set(m[1], (m[2] ?? '').trim());
-  }
+  for (const m of text.matchAll(/^- `([^`]+)`\s*(?:—\s*(.*))?$/gm)) map.set(m[1], (m[2] ?? '').trim());
   return map;
 }
 
 function buildSection(files, subDirs, dir, prevDesc) {
   const lines = [];
-  // 하위 폴더 → 그 폴더의 00_ 인덱스로 링크(트리 traverse).
-  for (const d of subDirs) lines.push(`- 📁 [[${indexStem(path.join(dir, d))}|${d}/]]`);
+  for (const d of subDirs) lines.push(`- 📁 [[${stemOf(path.join(dir, d))}|${d}/]]`);
   for (const f of files) {
     const desc = prevDesc.get(f);
     lines.push(`- \`${f}\`${desc ? ` — ${desc}` : ' — 등록 자산'}`);
@@ -64,7 +95,15 @@ function buildSection(files, subDirs, dir, prevDesc) {
   return lines.join('\n');
 }
 
-// dir 을 처리. parentLink = 이 폴더 인덱스의 '상위 분류' 링크.
+// 폴더의 스테일 자동인덱스(현재 resolved 이름이 아닌 00_*.md, 마커 보유=자동생성) 제거.
+function removeStale(dir, keepName) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isFile() || !e.name.startsWith('00_') || !e.name.endsWith('.md') || e.name === keepName) continue;
+    const fp = path.join(dir, e.name);
+    try { if (fs.readFileSync(fp, 'utf8').includes(MARK)) { fs.rmSync(fp); removed++; } } catch { /* noop */ }
+  }
+}
+
 function processDir(dir, cfg, isTop, parentLink) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const subDirsAll = entries
@@ -76,31 +115,29 @@ function processDir(dir, cfg, isTop, parentLink) {
     .map((e) => e.name)
     .sort();
 
-  const myLink = `[[${indexStem(dir)}]]`;
-  // 하위 폴더 먼저 재귀(부모 링크 = 내 인덱스). 인덱싱 결과 자식이 비면 링크에서 빼야 하므로 수집.
+  const myLink = `[[${stemOf(dir)}]]`;
   const liveSubDirs = [];
   for (const sd of subDirsAll) {
     if (processDir(path.join(dir, sd), cfg, false, myLink)) liveSubDirs.push(sd);
   }
-  if (isTop && cfg.excludeTop.size) skipped += subDirsAll.length === 0 ? 0 : 0; // (집계용 noop)
+  if (files.length === 0 && liveSubDirs.length === 0) return false;
 
-  if (files.length === 0 && liveSubDirs.length === 0) return false;  // 인덱싱할 게 없으면 인덱스 안 만듦
-
-  const idxPath = path.join(dir, indexName(dir));
+  const name = nameOf(dir);
+  removeStale(dir, name);                          // 옛 이름 인덱스 정리(충돌 해소로 rename된 경우)
+  const idxPath = path.join(dir, name);
   const section = buildSection(files, liveSubDirs, dir,
     fs.existsSync(idxPath) ? existingDescriptions(fs.readFileSync(idxPath, 'utf8')) : new Map());
 
   if (!fs.existsSync(idxPath)) {
-    const body = `---\nsources: []\ncreated: ${today()}\nupdated: ${today()}\n---\n\n# 📝 ${indexStem(dir)} (자동 생성 인덱스)\n> 분류: Wiki / Auto-Generated\n\n## 전수 명세\n\n${MARK}\n${section}\n\n---\n## 🔗 지식망 연결\n- **상위 분류**: ${parentLink}\n`;
+    const body = `---\nsources: []\ncreated: ${today()}\nupdated: ${today()}\n---\n\n# 📝 ${stemOf(dir)} (자동 생성 인덱스)\n> 분류: Wiki / Auto-Generated\n\n## 전수 명세\n\n${MARK}\n${section}\n\n---\n## 🔗 지식망 연결\n- **상위 분류**: ${parentLink}\n`;
     fs.writeFileSync(idxPath, body, 'utf8');
     created++;
     return true;
   }
 
-  // 기존 파일 — AUTO_INDEX_SECTION ~ 다음 '---' 사이만 교체(나머지 보존).
   const cur = fs.readFileSync(idxPath, 'utf8');
   const mi = cur.indexOf(MARK);
-  if (mi === -1) { skipped++; return true; }                  // 마커 없으면 손대지 않음(수동 인덱스)
+  if (mi === -1) return true;
   const after = cur.indexOf('\n---', mi);
   const end = after === -1 ? cur.length : after;
   const next = cur.slice(0, mi + MARK.length) + '\n' + section + '\n' + cur.slice(end);
@@ -116,4 +153,4 @@ function today() {
 for (const cfg of ROOTS) {
   if (fs.existsSync(cfg.dir)) processDir(cfg.dir, cfg, true, cfg.rootParent);
 }
-console.log(`[indices] created ${created} · updated ${updated} · skipped ${skipped}`);
+console.log(`[indices] created ${created} · updated ${updated} · removed(stale) ${removed}`);
