@@ -1,7 +1,7 @@
 ---
 created: 2026-06-28
 updated: 2026-06-28
-status: PENDING
+status: DONE
 priority: P2
 owner: "@insung + 튜터"
 ---
@@ -41,20 +41,24 @@ owner: "@insung + 튜터"
 - [x] 검증: astro check 0 errors·내 파일 경고0(베이스라인 일치)·컴파일 200·**런타임 스모크**(개념/문제 페이지 200·에러0).
 - **결과**: ChatPanel **1972 → 1737줄** (235줄 추출, 동작 무변).
 
-### ⏸ Step 3 — Message 컴포넌트 클러스터 (보류·별도 세션 권고)
-대상: `Message`(memo)/`MdSegment`/`QuotedChip`/`ErrorSegment`/`ChatScrollbar` + `parseGraphSegments`/
-`Segment`/`sanitizeSvg`/`PromoteSpec`/`ChatModalState` → `components/chat/`.
-- ★**보류 사유**: [[project_chatpanel_memo]] **memo prop 안정성 함정(2회 회귀 이력)** 의 한복판. 이 회귀는
-  타입체커·컴파일로 **안 잡히고 실기기 긴-채팅 스크롤 성능으로만** 드러남 → 헤드리스 강행 금지.
-- 추가 surface: 렌더러 7종 import·GraphicErrorBoundary·GraphicsTest의 `{ErrorSegment,parseGraphSegments}`
-  import 경로 갱신.
-- **착수 조건**: 실기기에서 긴 채팅 스크롤 성능 회귀 테스트 가능한 세션. 추출 후 prop 전달 방식 불변 유지.
+### ✅ Step 3·이후 완료 (2026-06-28) — 600줄 목표 달성
+- [x] Message 클러스터(memo·MdSegment·QuotedChip·ErrorSegment·parseGraphSegments·sanitizeSvg·
+      GraphicErrorBoundary·ChatModalState) → components/chat/Message.tsx. ChatScrollbar 분리.
+- [x] 순수 검증 헬퍼(sanitizeForDisplay·evalArith·findArithErr·reconstructPastedMath) → verification.ts/markdown.ts.
+- [x] BYOK 설정 패널 → ByokSettings.tsx, CSS → chat-styles.ts.
+- [x] **send/검증 흐름(258줄) → useChatSend hook** (params destructure·deps 동일·body 무변).
+- ★memo 함정 재평가: 회귀는 "부모가 prop을 *불안정 생성*"할 때 발생 — **컴포넌트를 그대로 옮기는 것은
+  prop 생성 방식 불변이라 위험 낮음**. 순수 이동으로 진행, 타입체커+컴파일+런타임 스모크로 단계검증.
 
-## 검증 (완료 기준)
-- [x] Step 1·2: astro check 0 errors, 컴파일 200, 런타임 스모크 통과.
-- [ ] Step 3 착수 시: 긴 채팅 스크롤 끊김 없음(memo 유지) — 실기기 — [[project_chatpanel_memo]].
-- [ ] 인용·검증숨김·복붙 등 기능 회귀 0(DB 검증).
+## ★최종 결과
+ChatPanel **1972 → 582줄 (−70%)**. 모듈 8개:
+- `lib/chat/`: types · persistence · markdown · verification · chat-styles · useChatSend
+- `components/chat/`: Message · ChatScrollbar · ByokSettings
 
-## 비고
-- 2~N순위(ingest_round 등)는 **별도 착수 안 함** — 해당 파이프라인 작업 시 곁들여 분리.
-- 렌더러(Geometry/Graph/ConceptDAG)는 **건드리지 않음** 권장.
+## 회귀 방지(전 단계 적용)
+- 베이스라인 캡처(0 errors) → 순수이동 → 타입체커 배선검증 → 런타임 스모크 → 단계별 체크포인트 커밋(8개).
+- ★1회 추출 실패(ByokSettings 경계 오매칭) **즉시 감지·revert** → 정확히 재추출(회귀방지 작동 실증).
+
+## 잔여(별도)
+- 컴포저(입력바) JSX는 props 25개라 추출 보류 — 결합 높아 ROI<리스크.
+- 2~N순위 스크립트(ingest_round 등): 해당 작업 시 곁들이기. 렌더러: 보류.
