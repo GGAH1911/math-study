@@ -413,9 +413,35 @@ class GraphicErrorBoundary extends Component<{ children: ReactNode; kind: string
   }
 }
 
-// 선택(Range) → LaTeX 복원. 드래그한 부분만 인용할 때 쓴다. 복사를 안 거치므로(클립보드 우회)
-// KaTeX 의 annotation(LaTeX 원본=SSOT)이 안 잘려 손실 0. 선택 안의 .katex 는 annotation 으로,
-// 일반 텍스트는 그대로 직렬화. 선택이 .katex 내부에서 시작/끝나도 그 수식 통째를 포함한다.
+// DOM 조각 → 마크다운 텍스트. 블록 경계는 줄바꿈, <br> 도 줄바꿈, <table> 은 마크다운 표(| … |)로
+// 직렬화해 채팅의 구조(표·줄나눔)를 인용에 보존한다. .katex 는 이미 위에서 $tex$ 텍스트로 치환됨.
+function serializeFrag(node: Node): string {
+  if (node.nodeType === Node.TEXT_NODE) return node.textContent ?? '';
+  if (node.nodeType !== Node.ELEMENT_NODE) return '';
+  const el = node as HTMLElement;
+  const tag = el.tagName.toLowerCase();
+  if (tag === 'br') return '\n';
+  if (tag === 'table') {
+    const rows = Array.from(el.querySelectorAll('tr'));
+    const lines = rows.map((tr) => {
+      const cells = Array.from(tr.querySelectorAll('th,td')).map((c) => serializeFrag(c).replace(/\n+/g, ' ').trim());
+      return `| ${cells.join(' | ')} |`;
+    });
+    // 헤더 구분선(첫 행이 th 면) — 마크다운 표로 다시 렌더되게.
+    if (rows.length && rows[0].querySelector('th')) {
+      const n = rows[0].querySelectorAll('th,td').length;
+      lines.splice(1, 0, `| ${Array(n).fill('---').join(' | ')} |`);
+    }
+    return '\n' + lines.join('\n') + '\n';
+  }
+  const inner = Array.from(el.childNodes).map(serializeFrag).join('');
+  // 블록 요소면 앞뒤 줄바꿈(문단·리스트·표 행 구분 보존).
+  const block = /^(p|div|li|tr|h[1-6]|ul|ol|blockquote|pre)$/.test(tag);
+  return block ? `\n${inner}\n` : inner;
+}
+
+// 선택(Range) → 마크다운+LaTeX 복원. 드래그한 부분만 인용. 복사(클립보드)를 안 거쳐 KaTeX annotation
+// (LaTeX 원본=SSOT)이 안 잘려 손실 0. .katex 는 annotation 으로, 표·줄바꿈 구조는 serializeFrag 로 보존.
 export function latexFromSelection(range: Range, root: HTMLElement): string {
   const frag = range.cloneContents();
   // 1) 클론에 온전히 들어온 .katex 는 클론의 annotation 으로 치환.
@@ -424,7 +450,7 @@ export function latexFromSelection(range: Range, root: HTMLElement): string {
     el.replaceWith(document.createTextNode(tex ? ` $${tex}$ ` : (el.querySelector('.katex-html')?.textContent ?? el.textContent ?? '')));
   });
   const div = document.createElement('div'); div.appendChild(frag);
-  let out = div.textContent ?? '';
+  let out = serializeFrag(div);
   // 2) 선택 양 끝이 .katex *내부*에서 잘렸으면 클론엔 annotation 없는 잔해만 → 원본에서 경계 .katex 를
   //    찾아 그 annotation 보강(경계 수식은 통째 포함, 안전).
   const texOf = (el: Element | null | undefined) => (el?.querySelector('annotation')?.textContent ?? '').trim();
@@ -432,7 +458,12 @@ export function latexFromSelection(range: Range, root: HTMLElement): string {
   const sK = boundK(range.startContainer), eK = boundK(range.endContainer);
   if (sK && root.contains(sK)) { const t = texOf(sK); if (t && !out.includes(t)) out = ` $${t}$ ` + out; }
   if (eK && eK !== sK && root.contains(eK)) { const t = texOf(eK); if (t && !out.includes(t)) out = out + ` $${t}$ `; }
-  return out.replace(/\u00a0/g, ' ').replace(/[ \t]{2,}/g, ' ').replace(/[ \t]*\n[ \t]*/g, '\n').trim();
+  return out
+    .replace(/\u00a0/g, ' ')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/ *\n */g, '\n')      // \uc904 \uc55e\ub4a4 \uacf5\ubc31 \uc815\ub9ac(\uc904\ubc14\uafc8\uc740 \ubcf4\uc874)
+    .replace(/\n{3,}/g, '\n\n')    // \uacfc\ud55c \ube48 \uc904\ub9cc \ucd95\uc18c
+    .trim();
 }
 
 // 인용 칩 — 렌더 수식 채팅을 복붙해 삽입한 내용을 마스킹 표시(탭하면 펼쳐 미리보기, 수식 렌더).
@@ -968,7 +999,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         k.replaceWith(doc.createTextNode(visible));
       });
       const text = (doc.body.textContent ?? '')
-        .replace(/ /g, ' ')
+        .replace(/\u00a0/g, ' ')
         .replace(/[ \t]*\n[ \t]*/g, '\n')
         .replace(/\n{3,}/g, '\n\n')
         .replace(/[ \t]{2,}/g, ' ')
