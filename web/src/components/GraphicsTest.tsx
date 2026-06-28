@@ -12,7 +12,7 @@ import StatsChart, { type ChartSpec } from './StatsChart.tsx';
 import Interactive from './Interactive.tsx';
 import { INTERACTIVE_SAMPLES } from '../data/interactive-samples';
 import type { InteractiveSpec } from '../data/interactive-samples';
-import { ErrorSegment, parseGraphSegments } from './ChatPanel.tsx';
+import { ErrorSegment, parseGraphSegments } from './chat/Message';
 import { useEffect, useState } from 'react';
 
 // Render a string that may contain `$...$` LaTeX segments. Used for section
