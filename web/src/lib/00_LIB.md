@@ -44,6 +44,7 @@ updated: 2026-06-28
 - `reconstruct.ts` — 등록 자산
 - `shape-recognize.ts` — 등록 자산
 - `srs.ts` — 등록 자산
+- `tutor-usage.ts` — 등록 자산
 - `user-claim.ts` — 등록 자산
 - `vision.ts` — 등록 자산
 
