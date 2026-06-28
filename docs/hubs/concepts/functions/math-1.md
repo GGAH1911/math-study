@@ -1,17 +1,17 @@
 ---
 sources: []
-created: 2026-06-23
-updated: 2026-06-23
+created: 2026-06-28
+updated: 2026-06-28
 hub_type: concepts-grade
 domain: functions
 grade: math-1
 counts:
-  total: 121
+  total: 122
 ---
 
 # 함수 · 수학1 (math-1)
 
-총 121개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
+총 122개 concept 노드. 상위: [함수 hub](../functions.md) · [concepts hub](../../concepts.md).
 
 ## 단원 (3)
 
@@ -19,7 +19,7 @@ counts:
 - [수열](../../../concepts/functions/math-1/수열.md) · 수열 `unknown`
 - [지수함수와 로그함수](../../../concepts/functions/math-1/지수함수와_로그함수.md) · 지수함수와 로그함수 `unknown`
 
-## 정의 (101)
+## 정의 (102)
 
 - [각의 조건](../../../concepts/functions/math-1/삼각함수/각의_조건.md) · 삼각함수 `unknown`
 - [각의 크기 결정](../../../concepts/functions/math-1/삼각함수/각의_크기_결정.md) · 삼각함수 `unknown`
@@ -30,6 +30,7 @@ counts:
 - [근의 최댓값과 최솟값](../../../concepts/functions/math-1/삼각함수/근의_최댓값과_최솟값.md) · 삼각함수 `unknown`
 - [기본 삼각함수 항등식](../../../concepts/functions/math-1/삼각함수/기본_삼각함수_항등식.md) · 삼각함수 `unknown`
 - [기하학적 조건과 넓이](../../../concepts/functions/math-1/삼각함수/기하학적_조건과_넓이.md) · 삼각함수 `unknown`
+- [다항식의 차분](../../../concepts/functions/math-1/수열/다항식의_차분.md) · 수열 `unknown`
 - [단위원 삼각함수](../../../concepts/functions/math-1/삼각함수/단위원_삼각함수.md) · 삼각함수 `unknown`
 - [동경과 각](../../../concepts/functions/math-1/삼각함수/동경과_각.md) · 삼각함수 `unknown`
 - [동경의 일치 조건](../../../concepts/functions/math-1/삼각함수/동경의_일치_조건.md) · 삼각함수 `unknown`

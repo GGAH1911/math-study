@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-06-23
-updated: 2026-06-23
+created: 2026-06-28
+updated: 2026-06-28
 hub_type: concepts-grade
 domain: probability-stats
 grade: prob-stats-elective

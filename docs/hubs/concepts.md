@@ -1,12 +1,12 @@
 ---
 sources: []
-created: 2026-06-23
-updated: 2026-06-23
+created: 2026-06-28
+updated: 2026-06-28
 hub_type: concepts
 counts:
-  total: 1340
+  total: 1341
   by_subdir:
-    functions: 505
+    functions: 506
     geometry: 399
     probability-stats: 135
     algebra: 160
@@ -20,9 +20,9 @@ counts:
 
 # Concepts hub
 
-총 1340개 concept 노드, 10개 도메인.
+총 1341개 concept 노드, 10개 도메인.
 
-- [함수 (functions)](./concepts/functions.md) — 505개
+- [함수 (functions)](./concepts/functions.md) — 506개
 - [도형 (geometry)](./concepts/geometry.md) — 399개
 - [확률통계 (probability-stats)](./concepts/probability-stats.md) — 135개
 - [수와식 (algebra)](./concepts/algebra.md) — 160개

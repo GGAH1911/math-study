@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-18T03:48:48.053Z",
-  "entropy": 2,
+  "generatedAt": "2026-06-28T13:15:30.438Z",
+  "entropy": 0,
   "thresholds": {
     "flatWarn": 50,
     "flatHard": 1500,
@@ -10,7 +10,7 @@
   "flatDirs": [
     {
       "rel": "docs/concepts",
-      "count": 128
+      "count": 274
     },
     {
       "rel": "docs/concepts/equations/high-1/방정식과_부등식",
@@ -46,6 +46,10 @@
     },
     {
       "rel": "docs/problems/2019/고3_7월모의고사",
+      "count": 60
+    },
+    {
+      "rel": "docs/problems/2019/수능",
       "count": 60
     },
     {
@@ -97,7 +101,7 @@
     },
     {
       "path": "hubs/concepts/functions/math-1.md",
-      "links": 123
+      "links": 124
     },
     {
       "path": "hubs/concepts/functions/math-2.md",
@@ -117,11 +121,8 @@
     }
   ],
   "congestedHardCount": 0,
-  "isolatedConceptCount": 2,
-  "isolatedConcepts": [
-    "다항식의_차분",
-    "합_표기(시그마)"
-  ],
+  "isolatedConceptCount": 0,
+  "isolatedConcepts": [],
   "missingFmCount": 0,
   "missingFm": []
 }
