@@ -501,9 +501,10 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   const isUser = msg.role === 'user';
   const segments = useMemo(() => parseGraphSegments(msg.content), [msg.content]);
   const [modal, setModal] = useState<ChatModalState | null>(null);
-  // 드래그 선택 → "인용" 버튼. 선택 범위가 이 메시지 본문 안일 때만, 선택 위에 떠오른다.
+  // 드래그 선택 → "인용" 버튼 + 직접 그린 하이라이트(네이티브 ::selection 은 iPad touchend 시 OS 가
+  //   지우고, 데스크탑은 포커스 이탈 시 비활성렌더돼 신뢰 불가 → 선택 rects 를 오버레이로 직접 그린다).
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; latex: string } | null>(null);
+  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; latex: string; hl: { left: number; top: number; w: number; h: number }[] } | null>(null);
   const updateQuoteBtn = useCallback(() => {
     if (!onQuote || isUser) return;
     const sel = window.getSelection();
@@ -513,18 +514,35 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
     if (!body.contains(range.commonAncestorContainer)) { setQuoteBtn(null); return; }
     const latex = latexFromSelection(range, body);
     if (!latex.trim()) { setQuoteBtn(null); return; }
-    // ★버튼은 data-mi 래퍼(position:relative) 안에 있으므로 좌표도 그 래퍼 기준이어야 한다(이전엔
-    //   data-chat-host 기준이라 어긋나 뷰포트 밖으로 튐). 선택의 *끝* rect 위에 띄운다(드래그 종료점 근처).
+    // 버튼·하이라이트는 data-mi 래퍼(position:relative) 안에 있으므로 좌표도 그 래퍼 기준.
     const wrap = body.closest('[data-mi]') as HTMLElement | null;
     const wrapRect = (wrap ?? body).getBoundingClientRect();
-    const rects = range.getClientRects();
+    const rects = Array.from(range.getClientRects());
+    const hl = rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
     const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
     setQuoteBtn({
       x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
       y: last.top - wrapRect.top - 6,
       latex,
+      hl,
     });
   }, [onQuote, isUser]);
+  // 새 포인터 down(다른 곳 클릭/새 드래그 시작) 때 인용 버튼·하이라이트 닫기. ★selectionchange 로 닫으면
+  //   iPad 가 touchend 후 선택을 자동으로 지우는 순간 같이 닫혀버리므로(우리 오버레이의 존재 이유와 충돌)
+  //   포인터 down 으로만 dismiss — 버튼 자신을 누른 경우는 onClick 이 먼저 처리하므로 제외.
+  useEffect(() => {
+    if (!quoteBtn) return;
+    const onDown = (e: Event) => {
+      const t = e.target as HTMLElement;
+      if (t?.closest?.('[data-quote-btn]')) return;   // 인용 버튼 클릭은 onClick 이 처리
+      setQuoteBtn(null);
+    };
+    // 캡처 단계 + 약간 지연(현재 mouseup/touchend 와 같은 틱에 닫히지 않게).
+    const id = window.setTimeout(() => {
+      document.addEventListener('pointerdown', onDown, true);
+    }, 0);
+    return () => { clearTimeout(id); document.removeEventListener('pointerdown', onDown, true); };
+  }, [quoteBtn]);
   const canPromote = !!onPromote && !isUser && msg.content.trim().length > 0 && !busy;
 
   // 자동 계산 결과 inject 된 user message 는 내부 protocol — 사용자에겐 chip 만 표시.
@@ -566,15 +584,20 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   }
   return (
     <div data-mi={index} className={`relative flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
-      {quoteBtn && (
+      {quoteBtn && (<>
+        {/* 직접 그린 선택 하이라이트 — 네이티브 선택이 지워져도 무엇을 골랐는지 보인다. */}
+        {quoteBtn.hl.map((r, i) => (
+          <div key={i} aria-hidden="true" style={{ position: 'absolute', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.32)', borderRadius: 2, pointerEvents: 'none', zIndex: 20 }} />
+        ))}
         <button
           type="button"
+          data-quote-btn
           onMouseDown={(e) => { e.preventDefault(); }}
           onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
           style={{ position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
           className="px-2.5 py-1 rounded-full bg-indigo-500 border border-indigo-400 text-[12px] font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400"
         >💬 인용</button>
-      )}
+      </>)}
       <div
         ref={bodyRef}
         onMouseUp={updateQuoteBtn}
