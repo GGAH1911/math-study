@@ -26,6 +26,10 @@ const WEB = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(WEB, '..');
 const CACHE = resolve(WEB, 'src/data/concept-figures.json');
 const PNG_DIR = '/tmp/qa_figs';
+// ★프롬프트 캐싱 위생: clean cwd(벨트) + DISABLE_GIT(멜빵). 파일접근은 --add-dir(절대경로)라 cwd 무관.
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || '/tmp/claude_p_clean';
+if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
+const CLAUDE_SPAWN = { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } };
 const BASE_URL = process.env.QA_BASE_URL || 'http://localhost:4323';
 const CHROME = process.env.CHROME_BIN || '/home/insung/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome';
 const RENDER_W = 600;
@@ -193,7 +197,7 @@ function callQAClaude(prompt) {
     '--allowedTools', 'Read,Bash', '--disallowedTools', 'Write,Edit,Glob,Grep,WebFetch,WebSearch',
     '--add-dir', PNG_DIR, '--max-turns', '24', '--no-session-persistence', '--', prompt];
   return new Promise((res, rej) => {
-    const child = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    const child = spawn('claude', args, CLAUDE_SPAWN);
     child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, 600000); // 10분(복잡 도식 area·segment 다수는 5분 초과)
@@ -276,7 +280,8 @@ function parseBatchArray(text) {
 // 공용 spawn — bin 별로 출력 파싱(claude=json 래퍼, agy=plain text).
 function spawnParse(bin, args, parseFn, timeoutMs = 360000) {
   return new Promise((res, rej) => {
-    const child = spawn(bin, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    // claude=캐싱 위생(clean cwd+DISABLE_GIT), agy=무해(CLAUDE_CODE_* 무시·--add-dir 절대경로).
+    const child = spawn(bin, args, CLAUDE_SPAWN);
     child.stdout.setEncoding('utf8'); child.stderr.setEncoding('utf8'); // 멀티바이트(한글) 청크경계 깨짐 방지
     let out = '', err = '';
     const to = setTimeout(() => { try { child.kill('SIGTERM'); } catch { /* */ } rej(new Error('timeout')); }, timeoutMs);

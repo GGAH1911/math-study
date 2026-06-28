@@ -158,7 +158,7 @@ ${noteBlock}`;
       '--no-session-persistence',
       '--system-prompt', TUTOR_SYSTEM,
       userPrompt,
-    ], { env: process.env, cwd: CLEAN_DIR });   // ★clean cwd → 프롬프트 캐시 생존
+    ], { env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' }, cwd: CLEAN_DIR });   // ★clean cwd(벨트)+DISABLE_GIT(멜빵) → 프롬프트 캐시 생존
 
     let buf = '';
     child.stdout.on('data', (c) => { buf += c.toString('utf-8'); });

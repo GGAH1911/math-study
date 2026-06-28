@@ -17,6 +17,10 @@ MODEL = os.environ.get('REGEN_MODEL', 'sonnet')
 TO = int(os.environ.get('REGEN_TO', '220'))
 WORKERS = int(os.environ.get('REGEN_WORKERS', '4'))
 LIMIT = int(os.environ.get('REGEN_LIMIT', '0'))
+# ★프롬프트 캐싱 위생: clean cwd(벨트) + DISABLE_GIT(멜빵). 타일은 --add-dir(절대경로)라 cwd 무관.
+_CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
+os.makedirs(_CLEAN_DIR, exist_ok=True)
+_CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
 SYSTEM = ("당신은 한국 수능 수학 문제를 한 글자도 틀리지 않게 전사하는 전문가입니다. "
           "첨부 이미지가 유일한 근거입니다. 추측·생략·창작 절대 금지.")
 
@@ -45,7 +49,7 @@ def regen_one(item):
             '--add-dir', str(real.parent), '--disallowedTools', 'Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '12', '--system-prompt', SYSTEM, '--output-format', 'json', '--', prompt_for(tiles)]
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=TO)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TO, cwd=_CLEAN_DIR, env=_CLAUDE_ENV)
         env = json.loads(r.stdout)
     except Exception:
         return dict(stem=stem, ok=False, err='timeout/err', cost=0.0)

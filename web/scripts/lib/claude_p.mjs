@@ -21,7 +21,8 @@ export function claudeP({ prompt, model = 'sonnet', system = null, addDirs = [],
     const args = ['-p', prompt, '--model', model, '--output-format', 'json', '--max-turns', String(maxTurns)];
     if (system) args.push('--system-prompt', system);
     for (const d of addDirs) args.push('--add-dir', d);
-    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR });
+    // ★clean cwd(벨트)만으론 git 블록이 새어 cache_creation 만 잡히는 경우 있음 → DISABLE_GIT(멜빵) 동시.
+    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
     let out = '', err = '';
     const to = setTimeout(() => { try { c.kill('SIGKILL'); } catch {} reject(new Error('claude -p timeout')); }, timeoutMs);
     c.stdout.on('data', (d) => (out += d));

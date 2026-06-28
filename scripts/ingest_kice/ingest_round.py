@@ -143,7 +143,7 @@ def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, 
     sub_env['CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS'] = '1'
     for attempt in range(retries + 1):
         try:
-            r = subprocess.run(args, capture_output=True, text=True, timeout=timeout, env=sub_env)
+            r = subprocess.run(args, capture_output=True, text=True, timeout=timeout, env=sub_env, cwd=_CLEAN_DIR)
             if r.returncode == 0 and r.stdout.strip():
                 return r.stdout.strip()
             if attempt < retries:

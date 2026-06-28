@@ -61,21 +61,33 @@ spawn('claude', args, {
 - 서버(`/api/chat`)는 env 화이트리스트(`safeChildEnv`)를 쓰므로 **거기에 DISABLE_GIT 를 명시 추가**해야
   한다(2026-06-28 튜터에 빠져 있던 게 이 함정 — ALLOW 리스트에 없어 멜빵이 통째 누락됐었음).
 
-## 5. 캐싱이 필요한 부분 (적용 현황)
+## 5. 캐싱이 필요한 부분 (적용 현황 — 2026-06-28 전수 실사 후 정정·완비)
 
-| 호출 지점 | 모델 | 도구 | clean cwd | DISABLE_GIT | 캐시 이득 |
+★2026-06-28: 전수 조사로 누락 다수 발견 후 **전부 보강 완료**(clean cwd + DISABLE_GIT 둘 다).
+plan: [[PROMPT_CACHE_HYGIENE_2026-06-28|completed/2026_06/PROMPT_CACHE_HYGIENE]].
+
+| 호출 지점 | 모델 | 도구 | clean cwd | DISABLE_GIT | 비고 |
 |---|---|---|---|---|---|
 | `scripts/build_solution_cache.py` (솔버) | haiku→sonnet→opus | Read | ✅ | ✅ | 내장 base(도구 큼) |
-| `scripts/ingest_kice/ingest_round.py` (매핑) | haiku | — | ✅ | ✅ | 〃 |
-| `web/scripts/widget_generate.mjs` (위젯) | opus | — | ✅ | ✅ | cr 측정(`cr=`) |
-| `web/scripts/verify_batch.mjs` · `corrector.mjs` | sonnet | Read | ✅ | ✅ | 도구 base |
+| `scripts/ingest_kice/ingest_round.py` `claude_p()` (매핑·**공용**) | haiku | — | ✅(0628추가) | ✅ | text_meta·vision_meta·crop_with_llm·llm_solve_geomgo 가 import |
+| `scripts/ingest_kice/run_stage1.py` `claude_p()` (매핑·**공용**) | sonnet/haiku | — | ✅(0628추가) | ✅(0628추가) | concept_remap(map_problem) 가 import |
+| `scripts/fill_spoke_bodies.py` (개념본문) | haiku | — | ✅(0628추가) | ✅(0628추가) | |
+| `scripts/regenerate_searchable.py` (재OCR) | sonnet | Read | ✅(0628추가) | ✅(0628추가) | 타일 vision |
+| `web/scripts/widget_generate.mjs` · `widget_survey.mjs` (위젯) | opus | — | ✅ | ✅ | cr 측정(`cr=`) |
+| `web/scripts/verify_batch.mjs` · `corrector.mjs` · `redraw_*.mjs` · `gen_concept_figures.mjs` | sonnet | Read | ✅ | ✅ | 도구 base |
+| `web/scripts/qa_concept_figures.mjs` (도식 QA) | sonnet | Read,Bash | ✅(0628추가) | ✅(0628추가) | CLAUDE_SPAWN 공용화 |
+| `web/scripts/verify_corrected.mjs` (교정검증) | sonnet | — | ✅(0628추가) | ✅(0628추가) | |
+| `web/scripts/lib/claude_p.mjs` (공용 래퍼) | * | * | ✅ | ✅(0628추가) | corrector import(자체 spawn 씀=저영향이나 footgun 제거) |
 | `web/scripts/gen_daily_illustration.mjs` (그림) | haiku | — | ✅ | ✅ | 작음(도구 없음) |
-| `web/src/pages/api/chat.ts` (튜터) | haiku/sonnet | problem=Read · concept=없음 | ✅ | ✅(0628 추가) | **problem cr≈20585 / concept≈0** |
+| `web/src/pages/api/chat.ts` (튜터) | haiku/sonnet | problem=Read · concept=없음 | ✅ | ✅(0628추가) | **problem cr≈20585 / concept≈0** |
+| `web/src/pages/api/regenerate-body.ts` (개념본문 재생성·라이브) | haiku/sonnet | — | ✅ | ✅(0628추가) | |
 
-### ★누락 점검 (DISABLE_GIT 빠진 곳 — 보강 후보)
-- `web/scripts/lib/claude_p.mjs` (공용 래퍼) — clean cwd 만, DISABLE_GIT 없음 → 이 래퍼 쓰는 호출 전부 멜빵 누락.
-- `web/src/pages/api/regenerate-body.ts` — clean cwd 만.
-- `web/scripts/{qa_concept_figures,verify_corrected}.mjs` — 둘 다 없음(캐시 안 걸린 경로인지 확인 필요).
+### ★구조 교훈 (공용함수 = 단일 수정점)
+Python 인제스트는 **공용 `claude_p()` 2개**(`run_stage1.py`, `ingest_round.py`)에 하위 5개가 의존 →
+공용함수만 고치면 전파된다. 새 호출은 **반드시 이 공용함수(또는 .mjs `lib/claude_p.mjs`)를 경유**할 것.
+
+### 남은 N/A (1회성 PoC·진단 — 캐싱 무관)
+`scripts/{poc_*,tile_*_test,pilot_*,contamination_probe,ab_path_leak,measure_*,backfill_*,refine_opus,recover_text_defects,audit_searchable_ocr,extract_all_answers}.py` 등.
 
 ## 6. 검증 방법론 (★조용히 깨지므로 반드시 실측)
 
@@ -108,7 +120,8 @@ for l in sys.stdin:
 - **크론(위젯)**: `widget_daily.log` 의 `cache_read=K` + `cron-runs.md` 다이제스트(cr avg/max).
 
 ## 7. 도구 (재사용)
-- `web/scripts/lib/claude_p.mjs` — 공용 spawn 래퍼(★DISABLE_GIT 보강 필요).
+- `web/scripts/lib/claude_p.mjs` — 공용 spawn 래퍼(clean cwd + DISABLE_GIT 둘 다, 0628 완비).
+- `scripts/ingest_kice/{ingest_round,run_stage1}.py` `claude_p()` — Python 공용 매퍼(둘 다 완비).
 - `web/src/lib/tutor-usage.ts` — `parseUsage`(result usage→정수) + `logTutorUsage`(DB 적재).
 
 ---

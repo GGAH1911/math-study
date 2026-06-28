@@ -4,14 +4,17 @@
 //   결과는 corrector_verify(ok/issues) frontmatter + raw 로그(verify_corrected.log)에 누적.
 // 사용: node verify_corrected.mjs <round> <subj> <num>
 import { spawn } from 'node:child_process';
-import { readFileSync, writeFileSync, appendFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, appendFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 
 const REPO = '/home/insung/Projects/math-study';
 const VLOG = '/tmp/ingest_logs/verify_corrected.log';
+// ★프롬프트 캐싱 위생: clean cwd(벨트) + DISABLE_GIT(멜빵). 이미지는 --add-dir(절대경로)라 cwd 무관.
+const CLEAN_DIR = process.env.CLAUDE_P_CWD || '/tmp/claude_p_clean';
+if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
 function claudeCall(prompt, imgDir, model = 'sonnet') {
   return new Promise((res) => {
-    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
     c.on('close', () => { try { res(JSON.parse(out).result || ''); } catch { res(''); } });

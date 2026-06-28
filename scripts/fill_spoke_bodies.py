@@ -7,6 +7,7 @@ Idempotent: skips spokes already marked auto_explained: true.
 """
 from __future__ import annotations
 import concurrent.futures as cf
+import os
 import re
 import subprocess
 import sys
@@ -17,6 +18,10 @@ CONCEPTS = Path('/home/insung/Projects/math-study/docs/concepts')
 TIMEOUT = 90
 MODEL = 'haiku'
 WORKERS = 24
+# ★프롬프트 캐싱 위생: clean cwd(벨트) + DISABLE_GIT(멜빵).
+_CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
+os.makedirs(_CLEAN_DIR, exist_ok=True)
+_CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
 
 TUTOR_SYSTEM = """당신은 한국 수능을 준비하는 학생용 수학 wiki의 콘텐츠 라이터입니다.
 개념 페이지(정의/정리/예제) 하나의 '본문' 섹션을 작성합니다.
@@ -76,6 +81,7 @@ def generate_body(slug, ctype, grade, unit, brief, prereqs):
                  '--system-prompt', TUTOR_SYSTEM,
                  user],
                 capture_output=True, text=True, timeout=TIMEOUT,
+                cwd=_CLEAN_DIR, env=_CLAUDE_ENV,
             )
             if r.returncode == 0 and r.stdout.strip():
                 body = r.stdout.strip()

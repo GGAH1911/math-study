@@ -32,6 +32,12 @@ DOCS_PROBLEMS = ROOT / 'docs' / 'problems'
 WORK = RAW / 'work'  # intermediate per-page markdown
 WORK.mkdir(parents=True, exist_ok=True)
 
+# ★프롬프트 캐싱 위생: clean cwd(벨트) + DISABLE_GIT(멜빵). 레포 cwd 면 git status 가 매 호출
+#   system prompt 를 바꿔 claude 내장 base 캐시까지 깬다. 파일접근은 --add-dir(절대경로)로.
+_CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
+os.makedirs(_CLEAN_DIR, exist_ok=True)
+_CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
+
 DB = 'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy'
 TODAY = '2026-05-17'
 
@@ -99,7 +105,7 @@ def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, 
         args += ['--add-dir', add_dir]
     args += ['--system-prompt', system, user]
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=timeout, cwd=_CLEAN_DIR, env=_CLAUDE_ENV)
         if r.returncode != 0:
             print(f'  ! claude failed (rc={r.returncode}): stderr={r.stderr[:300]!r}', file=sys.stderr, flush=True)
             return None
