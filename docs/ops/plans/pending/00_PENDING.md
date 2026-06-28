@@ -10,7 +10,7 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
-- `SCRIPT_COMPONENT_REFACTOR_2026-06-28.md` — 등록 자산
+
 
 ---
 ## 🔗 지식망 연결

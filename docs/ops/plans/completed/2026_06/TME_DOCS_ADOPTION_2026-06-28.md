@@ -1,7 +1,7 @@
 ---
 created: 2026-06-28
 updated: 2026-06-28
-status: ACTIVE
+status: DONE
 priority: P1
 owner: "@insung + 튜터"
 ---
@@ -28,7 +28,7 @@ TME의 per-directory 자동인덱스·plans 생애주기는 미포함 → 우리
 ## 검증
 - [x] 콘텐츠 폴더(concepts/problems/hubs)엔 00_ 인덱스 **안 생김**(0개) — 제외 정상.
 - [x] 멱등성: 재실행 시 created/updated 0(수동 설명 보존).
-- [ ] 부팅 시 최신 handover의 차기과제가 읽히는지(다음 세션 실증) — **남은 검증**.
-- [ ] 다음 build에서 audit-lwip 회귀 0 확인(콘텐츠 메시 무영향).
+- [x] 부팅 시 최신 handover의 차기과제가 읽히는지 — 2026-06-28 부팅에서 28_session.md 차기과제 surfacing 실증.
+- [x] audit-lwip 회귀 0 확인 — exit 0, hard 위반 0(flat/congested/missing fm). docs 폴더 00_ 인덱스 멱등(created/updated/removed 0).
 
-## 상태: 골격·스크립트 완료. 다음 세션 부팅 실증 후 DONE → completed/2026_06 로 이동.
+## 상태: DONE (2026-06-28). 골격·스크립트·부팅 실증·audit 회귀검증 완료 → completed/2026_06 로 이동.

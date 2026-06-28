@@ -120,9 +120,10 @@ function processDir(dir, cfg, isTop, parentLink) {
   for (const sd of subDirsAll) {
     if (processDir(path.join(dir, sd), cfg, false, myLink)) liveSubDirs.push(sd);
   }
-  if (files.length === 0 && liveSubDirs.length === 0) return false;
-
   const name = nameOf(dir);
+  // 비어도 기존 자동인덱스가 있으면 갱신(=stale 항목 제거). 인덱스 없고 비면 skip.
+  if (files.length === 0 && liveSubDirs.length === 0 && !fs.existsSync(path.join(dir, name))) return false;
+
   removeStale(dir, name);                          // 옛 이름 인덱스 정리(충돌 해소로 rename된 경우)
   const idxPath = path.join(dir, name);
   const section = buildSection(files, liveSubDirs, dir,
