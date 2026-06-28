@@ -82,6 +82,9 @@ plan: [[PROMPT_CACHE_HYGIENE_2026-06-28|completed/2026_06/PROMPT_CACHE_HYGIENE]]
 | `web/src/pages/api/chat.ts` (튜터) | haiku/sonnet | problem=Read · concept=없음 | ✅ | ✅(0628추가) | **problem cr≈20585 / concept≈0** |
 | `web/src/pages/api/regenerate-body.ts` (개념본문 재생성·라이브) | haiku/sonnet | — | ✅ | ✅(0628추가) | |
 
+> ※ 위 표는 **위생 적용 여부**(git churn 차단)이지 "이득 보장"이 아니다. 실이득은 **연사 배치**(5분 TTL
+> 안 다수 콜)에서만 — 드문 단발 호출(regenerate-body 1회 등)은 매번 cc만이라 cr≈0. 형태별 실측=§6-(e).
+
 ### ★구조 교훈 (공용함수 = 단일 수정점)
 Python 인제스트는 **공용 `claude_p()` 2개**(`run_stage1.py`, `ingest_round.py`)에 하위 5개가 의존 →
 공용함수만 고치면 전파된다. 새 호출은 **반드시 이 공용함수(또는 .mjs `lib/claude_p.mjs`)를 경유**할 것.
@@ -118,6 +121,19 @@ for l in sys.stdin:
 - **튜터**: `tutor_usage` 테이블(계정별 input/output/cache_read/cache_creation, [[00_LIB|lib/tutor-usage.ts]]).
   `SELECT collection, avg(cache_read_tokens) FROM tutor_usage GROUP BY collection;`
 - **크론(위젯)**: `widget_daily.log` 의 `cache_read=K` + `cron-runs.md` 다이제스트(cr avg/max).
+
+### (e) ★형태별 실측 매트릭스 (2026-06-28, clean cwd + DISABLE_GIT 고정)
+우리 호출은 도구 플래그가 3형태. **셋 다 2콜째(다른 질문) cr>0** = 내장 base 생존 확인.
+유일한 cr≈0 형태는 `--tools ""`(도구 완전 비활성)뿐 — 개념 튜터만 해당.
+
+| config 형태 | 쓰는 곳 | 1콜 | 2콜(다른 질문) |
+|---|---|---|---|
+| `--allowedTools Read[,Bash]` | regenerate_searchable · qa_concept_figures · verify_batch · build_solution_cache · 튜터(problem) | cc≈22939 / cr=0 | **cr≈14877** |
+| `--system-prompt`만(도구플래그 X, 기본도구 로드됨) | regenerate-body · fill_spoke_bodies | cc≈16758 / cr=0 | **cr≈12755** |
+| `--add-dir`만(allowedTools X) | run_stage1 · ingest_round · verify_corrected · lib/claude_p.mjs | cr≈14877 | **cr≈14877** |
+| `--tools ""`(도구 비활성) | 개념 튜터(chat.ts concept) | cc 작음 | **cr≈0**(base 비어서·정상) |
+
+★해석: cr 크기(~12–15k)는 우리 system-prompt 길이와 **무관**(내장 base 고정) → 우리 콘텐츠는 안 잡힘(§2). cr은 **2콜째부터**(1콜=cc 기록) → **연사 배치는 이득 큼**(build_solution·ingest·qa·widget). **드문 단발 호출**(regenerate-body 를 사용자가 어쩌다 1회)은 매번 cc만 = 위생 적용해도 실질 이득 거의 0(구조적 한계, 버그 아님).
 
 ## 7. 도구 (재사용)
 - `web/scripts/lib/claude_p.mjs` — 공용 spawn 래퍼(clean cwd + DISABLE_GIT 둘 다, 0628 완비).
