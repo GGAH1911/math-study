@@ -76,9 +76,9 @@ const conceptSlugs = new Set(
 );
 // scan all md (concepts + problems + hubs + syntheses + mistakes) for references
 const referencedSlugs = new Set();
-// slug 에는 한국어/영문/숫자/`_-` 외에 그리스 (θ, π, …) + 일부 기호 (·, ,) 가 등장.
-// 가능한 한 너그럽게 — 화이트리스트로 깨진 char 만 차단.
-const SLUG_CHARS = '[^\\s)\\]"`<>(]+';
+// slug 에는 한국어/영문/숫자/`_-` 외에 그리스 (θ, π, …) + 일부 기호 (·, ,) + 괄호('합_표기(시그마)') 가 등장.
+// 괄호도 허용하되 non-greedy(+?)로 첫 `.md` 에서 멈춰 한 줄 다중 링크의 과매칭을 방지.
+const SLUG_CHARS = '[^\\s\\]"`<>]+?';
 const refRe = new RegExp(`docs/concepts/(${SLUG_CHARS})\\.md`, 'g');
 const refMdRe = new RegExp(`\\.\\.\\/(?:\\.\\.\\/)*concepts\\/(${SLUG_CHARS})\\.md`, 'g');
 const allMd = [
