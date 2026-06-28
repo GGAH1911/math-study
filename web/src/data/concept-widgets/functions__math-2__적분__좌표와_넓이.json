@@ -1,0 +1,116 @@
+{
+ "id": "functions/math-2/적분/좌표와_넓이",
+ "spec": {
+  "title": "좌표와 넓이: 넓이 S = ∫|f(x)|dx — 부호있는 적분 vs 실제 넓이",
+  "params": [
+   {
+    "name": "b",
+    "label": "적분 상한 b (하한 a=−1 고정)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "fb = b^2 - 1; absfb = abs(b^2 - 1); signed = b^3/3 - b - 2/3; S = -b^3/3 + b + 2/3; dSdb = 1 - b^2",
+  "plot": {
+   "range": [
+    -1.3,
+    1.3
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2 - 1",
+     "label": "y = f(x) = x²−1",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "abs(x^2 - 1)",
+     "label": "y = |f(x)|",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(b) = b²−1 (구간 [−1,1]에서 ≤0)",
+    "expr": "fb",
+    "digits": 4
+   },
+   {
+    "label": "부호있는 적분 ∫₋₁ᵇ f dx (음수)",
+    "expr": "signed",
+    "digits": 4
+   },
+   {
+    "label": "넓이 S = ∫₋₁ᵇ |f| dx (양수)",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "dS/db = |f(b)| (미적분 기본정리)",
+    "expr": "absfb",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -0.7
+   },
+   {
+    "b": 0
+   },
+   {
+    "b": 0.5
+   },
+   {
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "S + signed",
+   "S - abs(signed)",
+   "dSdb - absfb"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0
+    },
+    "expect": {
+     "S": 0.6666666667,
+     "signed": -0.6666666667
+    }
+   },
+   {
+    "params": {
+     "b": 0.5
+    },
+    "expect": {
+     "S": 1.125,
+     "signed": -1.125
+    }
+   },
+   {
+    "params": {
+     "b": 1
+    },
+    "expect": {
+     "S": 1.3333333333,
+     "signed": -1.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

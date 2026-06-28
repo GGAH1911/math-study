@@ -1,0 +1,144 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/분할함수",
+ "spec": {
+  "title": "분할함수: 경계 c에서의 연속과 도약",
+  "params": [
+   {
+    "name": "c",
+    "label": "경계 c (구간 분할점)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "우측 조각 기울기 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "우측 조각 경계값 d = f(c)",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "leftLim = c^2; rightLim = a*(c - c) + d; jump = rightLim - leftLim",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -4,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x <= c ? x^2 : 0/0",
+     "label": "f(x)=x²  (x<c)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x >= c ? a*(x - c) + d : 0/0",
+     "label": "f(x)=a(x−c)+d  (x≥c)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 lim(x→c⁻) f",
+    "expr": "leftLim",
+    "digits": 3
+   },
+   {
+    "label": "우극한 lim(x→c⁺) f = f(c)",
+    "expr": "rightLim",
+    "digits": 3
+   },
+   {
+    "label": "도약 (우−좌, 0이면 연속)",
+    "expr": "jump",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1,
+    "a": 2,
+    "d": 1
+   },
+   {
+    "c": 1,
+    "a": 1,
+    "d": 3
+   },
+   {
+    "c": 0,
+    "a": -2,
+    "d": 2
+   },
+   {
+    "c": -1,
+    "a": 0.5,
+    "d": 1
+   }
+  ],
+  "invariants": [
+   "leftLim - c^2",
+   "rightLim - d",
+   "jump - (rightLim - leftLim)",
+   "jump - (d - c^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1,
+     "a": 2,
+     "d": 1
+    },
+    "expect": {
+     "leftLim": 1,
+     "rightLim": 1,
+     "jump": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2,
+     "a": 5,
+     "d": 4
+    },
+    "expect": {
+     "leftLim": 4,
+     "rightLim": 4,
+     "jump": 0
+    }
+   },
+   {
+    "params": {
+     "c": 0.5,
+     "a": -3,
+     "d": 1
+    },
+    "expect": {
+     "leftLim": 0.25,
+     "rightLim": 1,
+     "jump": 0.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

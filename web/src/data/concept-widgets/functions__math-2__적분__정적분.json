@@ -1,0 +1,194 @@
+{
+ "id": "functions/math-2/적분/정적분",
+ "spec": {
+  "title": "정적분 ∫ₐᵇ 2x dx = F(b) − F(a)  (부호 있는 넓이)",
+  "params": [
+   {
+    "name": "a",
+    "label": "아래끝 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "위끝 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = 2*a; fb = 2*b; Fa = a^2; Fb = b^2; integral = Fb - Fa",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -3.3,
+      -6.6
+     ],
+     "to": [
+      3.3,
+      6.6
+     ],
+     "label": "y=2x",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=b",
+       "=fb"
+      ],
+      [
+       "=a",
+       "=fa"
+      ]
+     ],
+     "label": "넓이 = F(b)−F(a)",
+     "color": "#ff7f0e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "(a, f(a))"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=fb"
+     ],
+     "label": "(b, f(b))"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∫ₐᵇ 2x dx",
+    "expr": "integral",
+    "digits": 3
+   },
+   {
+    "label": "F(b)=b²",
+    "expr": "Fb",
+    "digits": 3
+   },
+   {
+    "label": "F(a)=a²",
+    "expr": "Fa",
+    "digits": 3
+   },
+   {
+    "label": "사다리꼴 넓이 (f(a)+f(b))/2·(b−a)",
+    "expr": "(fa+fb)/2*(b-a)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": -2,
+    "b": 2
+   },
+   {
+    "a": 0.5,
+    "b": 2.5
+   },
+   {
+    "a": -1,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "integral - (Fb - Fa)",
+   "integral - (fa + fb)/2*(b - a)",
+   "fb - 2*b",
+   "Fb - b^2",
+   "Fa - a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "integral": 8,
+     "Fb": 9,
+     "Fa": 1
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 2
+    },
+    "expect": {
+     "integral": 0,
+     "Fb": 4,
+     "Fa": 4
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2
+    },
+    "expect": {
+     "integral": 4,
+     "Fb": 4,
+     "Fa": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

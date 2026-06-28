@@ -1,0 +1,128 @@
+{
+ "id": "functions/math-2/미분/접선과_법선",
+ "spec": {
+  "title": "접선과 법선 (y = x²)",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점의 x좌표 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^2; m = 2*a; mn = -1/(2*a)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + m*(x - a)",
+     "label": "접선: y = f(a) + f'(a)(x−a)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fa + mn*(x - a)",
+     "label": "법선: y = f(a) − 1/f'(a)·(x−a)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 x좌표 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "접점 y좌표 f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 f'(a) = 2a",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "법선 기울기 −1/f'(a)",
+    "expr": "mn",
+    "digits": 3
+   },
+   {
+    "label": "두 기울기의 곱 (수직이면 −1)",
+    "expr": "m*mn",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 0.5
+   }
+  ],
+  "invariants": [
+   "m*mn + 1",
+   "fa - a^2",
+   "m - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 1,
+     "m": 2,
+     "mn": -0.5
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 4,
+     "m": 4,
+     "mn": -0.25
+    }
+   },
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "fa": 1,
+     "m": -2,
+     "mn": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

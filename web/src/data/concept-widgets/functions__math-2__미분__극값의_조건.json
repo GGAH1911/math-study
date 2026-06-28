@@ -1,0 +1,134 @@
+{
+ "id": "functions/math-2/미분/극값의_조건",
+ "spec": {
+  "title": "극값의 조건: f(x)=x³-3ax (f'(a)=0과 부호 변화)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "xmin = a>0 ? sqrt(a) : NaN; xmax = -xmin; fmin = xmin^3 - 3*a*xmin; fmax = xmax^3 - 3*a*xmax; fppmin = 6*xmin; fppmax = 6*xmax; nExtrema = a>0 ? 2 : 0",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*a*x",
+     "label": "f(x)=x³-3ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3*a",
+     "label": "f'(x)=3x²-3a",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극소점 x = √a",
+    "expr": "xmin",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f(√a)",
+    "expr": "fmin",
+    "digits": 3
+   },
+   {
+    "label": "f''(극소점) (>0 → 극소)",
+    "expr": "fppmin",
+    "digits": 3
+   },
+   {
+    "label": "극대점 x = -√a",
+    "expr": "xmax",
+    "digits": 3
+   },
+   {
+    "label": "극댓값 f(-√a)",
+    "expr": "fmax",
+    "digits": 3
+   },
+   {
+    "label": "f''(극대점) (<0 → 극대)",
+    "expr": "fppmax",
+    "digits": 3
+   },
+   {
+    "label": "극값의 개수 (a≤0이면 f'≥0, 극값 없음)",
+    "expr": "nExtrema",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 4
+   },
+   {
+    "a": 0.25
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "3*xmin^2 - 3*a",
+   "3*xmax^2 - 3*a",
+   "xmin + xmax",
+   "fmax + fmin",
+   "fppmin + fppmax",
+   "fmin + 2*a*sqrt(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "xmin": 1,
+     "xmax": -1,
+     "fmin": -2,
+     "fmax": 2,
+     "fppmin": 6,
+     "fppmax": -6,
+     "nExtrema": 2
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "xmin": 2,
+     "xmax": -2,
+     "fmin": -16,
+     "fmax": 16,
+     "fppmin": 12,
+     "fppmax": -12,
+     "nExtrema": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

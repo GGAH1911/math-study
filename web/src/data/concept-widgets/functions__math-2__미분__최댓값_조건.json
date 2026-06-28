@@ -1,0 +1,169 @@
+{
+ "id": "functions/math-2/미분/최댓값_조건",
+ "spec": {
+  "title": "원 위에서 ax+by의 최댓값 — 접선 조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.6,
+    "step": 0.1
+   }
+  ],
+  "scope": "norm = sqrt(a^2 + b^2); px = a/norm; py = b/norm; val = a*px + b*py; dist = abs(val)/norm",
+  "geometry": {
+   "range": [
+    -1.7,
+    1.7
+   ],
+   "yRange": [
+    -1.7,
+    1.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "제약 x²+y²=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "반지름 (a,b)방향 ⟂ 접선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "접점 P (최댓값 달성)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px - 1.2*py",
+      "=py + 1.2*px"
+     ],
+     "to": [
+      "=px + 1.2*py",
+      "=py - 1.2*px"
+     ],
+     "label": "등위선 ax+by=k (접선)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 k = √(a²+b²)",
+    "expr": "val",
+    "digits": 3
+   },
+   {
+    "label": "접점 Px = a/|(a,b)|",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "접점 Py = b/|(a,b)|",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "중심~접선 거리 (=반지름)",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.2,
+    "b": 1.6
+   },
+   {
+    "a": 1,
+    "b": 0
+   },
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": 0,
+    "b": -2
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - 1",
+   "a*py - b*px",
+   "val - norm",
+   "dist - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1.2,
+     "b": 1.6
+    },
+    "expect": {
+     "px": 0.6,
+     "py": 0.8,
+     "val": 2,
+     "norm": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0,
+     "val": 1,
+     "norm": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -2
+    },
+    "expect": {
+     "px": 0,
+     "py": -1,
+     "val": 2,
+     "norm": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "id": "functions/math-2/미분/미분과_증감",
+ "spec": {
+  "title": "미분과 증감 — 접선 기울기의 부호로 판정",
+  "params": [
+   {
+    "name": "a",
+    "label": "점의 위치 a",
+    "type": "slider",
+    "min": -2.3,
+    "max": 2.3,
+    "init": 1.5,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; fpa = 3*a^2 - 3",
+  "plot": {
+   "range": [
+    -2.3,
+    2.3
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³-3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + fpa*(x - a)",
+     "label": "x=a에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f'(a) = 접선 기울기",
+    "expr": "fpa",
+    "digits": 3
+   },
+   {
+    "label": "부호 (+1 증가 / -1 감소 / 0 정지)",
+    "expr": "sign(fpa)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "fa - a*(a^2 - 3)",
+   "fpa - 3*(a-1)*(a+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": 0,
+     "fpa": -3
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 2,
+     "fpa": 9
+    }
+   },
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "fa": 2,
+     "fpa": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

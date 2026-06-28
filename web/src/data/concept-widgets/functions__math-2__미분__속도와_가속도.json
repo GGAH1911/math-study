@@ -1,0 +1,112 @@
+{
+ "id": "functions/math-2/미분/속도와_가속도",
+ "spec": {
+  "title": "속도와 가속도: 위치함수 s(t)=t³−6t²+9t",
+  "params": [
+   {
+    "name": "t",
+    "label": "시각 t",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": "초"
+   }
+  ],
+  "scope": "s0 = t^3 - 6*t^2 + 9*t; v = 3*t^2 - 12*t + 9; a = 6*t - 12",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    -4,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 6*x^2 + 9*x",
+     "label": "위치 s(t)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "s0 + v*(x - t)",
+     "label": "접선: 기울기 = 속도 v(t)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위치 s(t)",
+    "expr": "s0",
+    "digits": 3
+   },
+   {
+    "label": "속도 v(t)=s'(t) (접선 기울기)",
+    "expr": "v",
+    "digits": 3
+   },
+   {
+    "label": "가속도 a(t)=s''(t) (오목성)",
+    "expr": "a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1
+   },
+   {
+    "t": 2
+   },
+   {
+    "t": 3
+   }
+  ],
+  "invariants": [
+   "v - (3*t^2 - 12*t + 9)",
+   "a - (6*t - 12)",
+   "s0 - (t^3 - 6*t^2 + 9*t)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "s0": 0,
+     "v": 9,
+     "a": -12
+    }
+   },
+   {
+    "params": {
+     "t": 1
+    },
+    "expect": {
+     "s0": 4,
+     "v": 0,
+     "a": -6
+    }
+   },
+   {
+    "params": {
+     "t": 2
+    },
+    "expect": {
+     "s0": 2,
+     "v": -3,
+     "a": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

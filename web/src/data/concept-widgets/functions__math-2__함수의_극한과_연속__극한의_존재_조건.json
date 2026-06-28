@@ -1,0 +1,148 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/극한의_존재_조건",
+ "spec": {
+  "title": "극한의 존재 조건 — 좌극한 = 우극한",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (극한을 보는 점)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "Lleft",
+    "label": "좌극한값 L⁻",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "jump",
+    "label": "점프 크기 (우극한−좌극한)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "Lright = Lleft + jump; exists = abs(jump) < 1e-9 ? 1 : 0",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "x < a ? Lleft + 0.7*(x - a) : NaN",
+     "label": "좌극한 경로 (x→a⁻)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x > a ? Lright + 0.7*(x - a) : NaN",
+     "label": "우극한 경로 (x→a⁺)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 lim(x→a⁻)",
+    "expr": "Lleft",
+    "digits": 2
+   },
+   {
+    "label": "우극한 lim(x→a⁺)",
+    "expr": "Lright",
+    "digits": 2
+   },
+   {
+    "label": "극한 존재? (1=존재, 0=없음)",
+    "expr": "exists",
+    "digits": 0
+   },
+   {
+    "label": "점프 크기 |우−좌|",
+    "expr": "abs(jump)",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "Lleft": 2,
+    "jump": 0
+   },
+   {
+    "a": 0,
+    "Lleft": 1,
+    "jump": 1.5
+   },
+   {
+    "a": -1,
+    "Lleft": -2,
+    "jump": -1
+   },
+   {
+    "a": 2,
+    "Lleft": 0,
+    "jump": 2
+   }
+  ],
+  "invariants": [
+   "Lright - Lleft - jump",
+   "exists * (Lright - Lleft)",
+   "exists - (abs(jump) < 1e-9 ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "Lleft": 2,
+     "jump": 0
+    },
+    "expect": {
+     "Lright": 2,
+     "exists": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "Lleft": 1,
+     "jump": 1.5
+    },
+    "expect": {
+     "Lright": 2.5,
+     "exists": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "Lleft": -2,
+     "jump": -1
+    },
+    "expect": {
+     "Lright": -3,
+     "exists": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

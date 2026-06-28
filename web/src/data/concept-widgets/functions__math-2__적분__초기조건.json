@@ -1,0 +1,134 @@
+{
+ "id": "functions/math-2/적분/초기조건",
+ "spec": {
+  "title": "초기조건: 적분상수 C 결정하기 (dy/dx = 2x)",
+  "params": [
+   {
+    "name": "a",
+    "label": "초기조건 x = a",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "초기조건 y = b",
+    "type": "slider",
+    "min": -2,
+    "max": 8,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "C = b - a^2",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -4,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2 - 2",
+     "label": "일반해 (C=-2)",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "x^2 + 2",
+     "label": "일반해 (C=2)",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "x^2 + 5",
+     "label": "일반해 (C=5)",
+     "color": "#cbd5e1"
+    },
+    {
+     "fn": "x^2 + C",
+     "label": "=concat('특수해 y = x² + (', format(C,3), ')')",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "적분상수 C = b - a²",
+    "expr": "C",
+    "digits": 3
+   },
+   {
+    "label": "특수해의 값 F(a)+C = a²+C (= b 이어야)",
+    "expr": "a^2 + C",
+    "digits": 3
+   },
+   {
+    "label": "초기조건 y값 b",
+    "expr": "b",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 0
+   },
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": 3,
+    "b": 8
+   }
+  ],
+  "invariants": [
+   "a^2 + C - b",
+   "((a+1)^2 + C) - (a^2 + C) - (2*a+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "C": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "C": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "C": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

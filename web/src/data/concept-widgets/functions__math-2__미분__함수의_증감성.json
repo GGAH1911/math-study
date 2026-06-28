@@ -1,0 +1,124 @@
+{
+ "id": "functions/math-2/미분/함수의_증감성",
+ "spec": {
+  "title": "함수의 증감성 — 도함수의 부호",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (모양)",
+    "type": "slider",
+    "min": 0.25,
+    "max": 4,
+    "init": 1,
+    "step": 0.25
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (탐침)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "xc = sqrt(a); fp0 = 3*x0^2 - 3*a; f0 = x0^3 - 3*a*x0; fp_xc = 3*xc^2 - 3*a; h = 1e-4; fp_num = (((x0+h)^3 - 3*a*(x0+h)) - ((x0-h)^3 - 3*a*(x0-h)))/(2*h); dcheck = fp0 - fp_num; mono = sign(fp0)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*a*x",
+     "label": "f(x)=x³-3ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3*a",
+     "label": "f'(x)=3x²-3a",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "임계점 +√a",
+    "expr": "xc",
+    "digits": 3
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "fp0",
+    "digits": 3
+   },
+   {
+    "label": "증감 부호 sign(f'(x₀))  (+1 증가 / −1 감소)",
+    "expr": "mono",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "x0": 2
+   },
+   {
+    "a": 1,
+    "x0": 0.5
+   },
+   {
+    "a": 4,
+    "x0": 0
+   },
+   {
+    "a": 0.25,
+    "x0": 1
+   }
+  ],
+  "invariants": [
+   "fp_xc",
+   "dcheck"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "x0": 2
+    },
+    "expect": {
+     "fp0": 9,
+     "xc": 1,
+     "mono": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "x0": 0.5
+    },
+    "expect": {
+     "fp0": -2.25,
+     "mono": -1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "x0": 0
+    },
+    "expect": {
+     "fp0": -12,
+     "xc": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

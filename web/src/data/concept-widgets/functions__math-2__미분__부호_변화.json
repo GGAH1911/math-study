@@ -1,0 +1,121 @@
+{
+ "id": "functions/math-2/미분/부호_변화",
+ "spec": {
+  "title": "도함수의 부호 변화와 극값",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (임계점 위치 ±a)",
+    "type": "slider",
+    "min": 0,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "xcmax = -a; xcmin = a; fpmax = 3*xcmax^2 - 3*a^2; fpmin = 3*xcmin^2 - 3*a^2; fmax = xcmax^3 - 3*a^2*xcmax; fmin = xcmin^3 - 3*a^2*xcmin; gap = 2*a",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*a^2*x",
+     "label": "f(x)=x³-3a²x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3*a^2",
+     "label": "f'(x)=3x²-3a²",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극댓값 f(-a) (x=-a, f'가 +→-)",
+    "expr": "fmax",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f(a) (x=a, f'가 -→+)",
+    "expr": "fmin",
+    "digits": 3
+   },
+   {
+    "label": "f'(-a) (임계점 기울기=0)",
+    "expr": "fpmax",
+    "digits": 3
+   },
+   {
+    "label": "극점 간격 2a (a→0이면 0: 부호변화 사라짐)",
+    "expr": "gap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 0
+   }
+  ],
+  "invariants": [
+   "fpmax",
+   "fpmin",
+   "fmax - 2*a^3",
+   "fmin + 2*a^3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fmax": 2,
+     "fmin": -2,
+     "fpmax": 0,
+     "gap": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "fmax": 0.25,
+     "fmin": -0.25,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fmax": 0,
+     "fmin": 0,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

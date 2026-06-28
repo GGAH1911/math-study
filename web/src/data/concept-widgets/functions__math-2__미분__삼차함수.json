@@ -1,0 +1,163 @@
+{
+ "id": "functions/math-2/미분/삼차함수",
+ "spec": {
+  "title": "삼차함수 f(x)=ax³+bx²+cx+d의 개형",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (최고차항)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.25
+   },
+   {
+    "name": "b",
+    "label": "b (2차항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.25
+   },
+   {
+    "name": "c",
+    "label": "c (1차항)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.25
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.25
+   }
+  ],
+  "scope": "xinf = -b/(3*a); yinf = a*xinf^3 + b*xinf^2 + c*xinf + d; disc = 4*b^2 - 12*a*c; fdd_inf = 6*a*xinf + 2*b; sym = (a*(xinf+1)^3 + b*(xinf+1)^2 + c*(xinf+1) + d) + (a*(xinf-1)^3 + b*(xinf-1)^2 + c*(xinf-1) + d) - 2*yinf",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)=3ax²+2bx+c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변곡점 x = -b/3a",
+    "expr": "xinf",
+    "digits": 3
+   },
+   {
+    "label": "변곡점 y",
+    "expr": "yinf",
+    "digits": 3
+   },
+   {
+    "label": "판별식 D = 4b²-12ac",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "극값 개수 (D>0이면 2)",
+    "expr": "(disc>0)?2:0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 0,
+    "d": 1
+   }
+  ],
+  "invariants": [
+   "fdd_inf",
+   "sym"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
+    },
+    "expect": {
+     "xinf": 0,
+     "yinf": 0,
+     "disc": 36
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "xinf": -1,
+     "yinf": 2,
+     "disc": 36
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "xinf": 0,
+     "yinf": 0,
+     "disc": -36
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

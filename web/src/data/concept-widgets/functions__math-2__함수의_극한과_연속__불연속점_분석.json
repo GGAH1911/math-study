@@ -1,0 +1,127 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/불연속점_분석",
+ "spec": {
+  "title": "불연속점 분석: 점프 불연속과 연속 조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "불연속점 위치 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "오른쪽 가지 높이 k",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "LL = a^2; RL = a + k; jump = RL - LL",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x < a ? x^2 : NaN",
+     "label": "y = x² (x < a)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x >= a ? x + k : NaN",
+     "label": "y = x + k (x ≥ a)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 lim(x→a⁻)",
+    "expr": "LL",
+    "digits": 3
+   },
+   {
+    "label": "우극한·함숫값 f(a)",
+    "expr": "RL",
+    "digits": 3
+   },
+   {
+    "label": "점프 크기 (우−좌, 0이면 연속)",
+    "expr": "jump",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "k": 0
+   },
+   {
+    "a": 2,
+    "k": 2
+   },
+   {
+    "a": 1,
+    "k": 1
+   },
+   {
+    "a": 0,
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "LL - a^2",
+   "RL - (a + k)",
+   "jump - ((a + k) - a^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "k": 1
+    },
+    "expect": {
+     "LL": 1,
+     "RL": 2,
+     "jump": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "k": 0
+    },
+    "expect": {
+     "LL": 4,
+     "RL": 2,
+     "jump": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "k": 0
+    },
+    "expect": {
+     "LL": 0,
+     "RL": 0,
+     "jump": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

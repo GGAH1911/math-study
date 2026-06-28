@@ -1,0 +1,176 @@
+{
+ "id": "functions/math-2/미분/다항함수의_도함수",
+ "spec": {
+  "title": "다항함수의 도함수: 접선의 기울기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (접점의 x좌표)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0 = a*x0^3 + b*x0^2 + c*x0 + d; fp0 = 3*a*x0^2 + 2*b*x0 + c; h = 0.0001; fph = a*(x0+h)^3 + b*(x0+h)^2 + c*(x0+h) + d; fmh = a*(x0-h)^3 + b*(x0-h)^2 + c*(x0-h) + d; numd = (fph - fmh)/(2*h)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -14,
+    14
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x) = 3a x² + 2b x + c",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "f0 + fp0*(x - x0)",
+     "label": "x=x₀ 에서의 접선",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 3
+   },
+   {
+    "label": "f'(x₀) = 접선의 기울기",
+    "expr": "fp0",
+    "digits": 3
+   },
+   {
+    "label": "수치미분 (검산)",
+    "expr": "numd",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
+    "x0": 1
+   },
+   {
+    "a": 3,
+    "b": -2,
+    "c": 5,
+    "d": -1,
+    "x0": 1
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "c": 0,
+    "d": 1,
+    "x0": -1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
+    "x0": 2
+   }
+  ],
+  "invariants": [
+   "numd - fp0",
+   "(3*a*x0^2 + 2*b*x0 + c) - fp0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": -2,
+     "c": 5,
+     "d": -1,
+     "x0": 1
+    },
+    "expect": {
+     "f0": 5,
+     "fp0": 10
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "x0": 2
+    },
+    "expect": {
+     "f0": 2,
+     "fp0": 9
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": 0,
+     "d": 1,
+     "x0": -1
+    },
+    "expect": {
+     "f0": 0,
+     "fp0": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

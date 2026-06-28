@@ -1,0 +1,120 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/구간별_함수의_연속",
+ "spec": {
+  "title": "구간별 함수의 연속 — 경계 x=1에서 좌·우극한과 함숫값 맞추기",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (오른쪽 식 2x+k 의 상수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=1; Llim=a^2; Rlim=2*a+k; gap=Rlim-Llim; fa=Rlim",
+  "plot": {
+   "range": [
+    -1,
+    3
+   ],
+   "yRange": [
+    -2,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x < 1 ? x^2 : NaN",
+     "label": "x<1 : x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x >= 1 ? 2*x + k : NaN",
+     "label": "x≥1 : 2x+k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 lim(x→1⁻)f(x)",
+    "expr": "Llim",
+    "digits": 2
+   },
+   {
+    "label": "우극한 lim(x→1⁺)f(x)",
+    "expr": "Rlim",
+    "digits": 2
+   },
+   {
+    "label": "함숫값 f(1)",
+    "expr": "fa",
+    "digits": 2
+   },
+   {
+    "label": "점프 크기 (우극한−좌극한)",
+    "expr": "gap",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": -1
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "Llim - 1",
+   "Rlim - (2 + k)",
+   "fa - Rlim",
+   "gap - (Rlim - Llim)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "Llim": 1,
+     "Rlim": 3,
+     "gap": 2,
+     "fa": 3
+    }
+   },
+   {
+    "params": {
+     "k": -1
+    },
+    "expect": {
+     "Llim": 1,
+     "Rlim": 1,
+     "gap": 0,
+     "fa": 1
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "Llim": 1,
+     "Rlim": 2,
+     "gap": 1,
+     "fa": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

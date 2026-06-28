@@ -1,0 +1,132 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/다항함수의_극한",
+ "spec": {
+  "title": "다항함수의 극한: lim(x→a) f(x) = f(a)",
+  "params": [
+   {
+    "name": "a",
+    "label": "접근점 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "가까움 h (작을수록 x가 a에 근접)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1.2,
+    "init": 0.8,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^3 - 2*a; fL = (a-h)^3 - 2*(a-h); fR = (a+h)^3 - 2*(a+h); gapL = fa - fL; gapR = fR - fa; maxgap = abs(gapL) + abs(gapR)",
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 2*x",
+     "label": "f(x) = x³ − 2x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접근점 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "f(a) — x 자리에 a 직접 대입 (= 극한값)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "왼쪽에서 접근 f(a−h)",
+    "expr": "fL",
+    "digits": 4
+   },
+   {
+    "label": "오른쪽에서 접근 f(a+h)",
+    "expr": "fR",
+    "digits": 4
+   },
+   {
+    "label": "양쪽 오차 합 |f(a)−f(a−h)|+|f(a+h)−f(a)|  (h→0이면 0)",
+    "expr": "maxgap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1.5,
+    "h": 0.3
+   },
+   {
+    "a": 2,
+    "h": 1
+   },
+   {
+    "a": 0.7,
+    "h": 0.2
+   }
+  ],
+  "invariants": [
+   "fa - a*(a*a - 2)",
+   "(fR - fL) - 2*h*(3*a*a + h*h - 2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": -1,
+     "fL": -0.875,
+     "fR": 0.375
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "h": 1
+    },
+    "expect": {
+     "fa": 4,
+     "fL": -1,
+     "fR": 21
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 0,
+     "fL": 0.875,
+     "fR": -0.875
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

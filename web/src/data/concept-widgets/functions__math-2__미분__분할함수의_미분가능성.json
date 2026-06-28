@@ -1,0 +1,168 @@
+{
+ "id": "functions/math-2/미분/분할함수의_미분가능성",
+ "spec": {
+  "title": "분할함수의 미분가능성: 연속 + 좌·우미분계수 일치",
+  "params": [
+   {
+    "name": "a",
+    "label": "경계점 a",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "우측 직선 기울기 m",
+    "type": "slider",
+    "min": -2,
+    "max": 6,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "우측 경계값 k = f(a)",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "gL = a^2; gR = k; dL = 2*a; dR = m; contGap = gR - gL; diffGap = dR - dL",
+  "plot": {
+   "range": [
+    -1,
+    4
+   ],
+   "yRange": [
+    -2,
+    14
+   ],
+   "fns": [
+    {
+     "fn": "x <= a ? x^2 : NaN",
+     "label": "좌측: x²  (x<a)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x >= a ? m*(x-a)+k : NaN",
+     "label": "우측: m(x−a)+k  (x≥a)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 f(a⁻)=a²",
+    "expr": "gL",
+    "digits": 3
+   },
+   {
+    "label": "우값 f(a)=k",
+    "expr": "gR",
+    "digits": 3
+   },
+   {
+    "label": "연속 갭 = 우값−좌극한 (0이면 연속)",
+    "expr": "contGap",
+    "digits": 3
+   },
+   {
+    "label": "좌미분계수 f′₋(a)=2a",
+    "expr": "dL",
+    "digits": 3
+   },
+   {
+    "label": "우미분계수 f′₊(a)=m",
+    "expr": "dR",
+    "digits": 3
+   },
+   {
+    "label": "미분 갭 = 우−좌 (연속+0이면 미분가능)",
+    "expr": "diffGap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "m": 2,
+    "k": 1
+   },
+   {
+    "a": 2,
+    "m": 3,
+    "k": 4
+   },
+   {
+    "a": 0.5,
+    "m": 1,
+    "k": 0.25
+   },
+   {
+    "a": 1.5,
+    "m": 3,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "((a+1)^2 - (a-1)^2)/2 - dL",
+   "(( m*((a+1)-a)+k ) - ( m*((a-1)-a)+k ))/2 - dR",
+   "contGap - (gR - gL)",
+   "diffGap - (dR - dL)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "m": 2,
+     "k": 1
+    },
+    "expect": {
+     "gL": 1,
+     "gR": 1,
+     "dL": 2,
+     "dR": 2,
+     "contGap": 0,
+     "diffGap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "m": 3,
+     "k": 4
+    },
+    "expect": {
+     "gL": 4,
+     "gR": 4,
+     "dL": 4,
+     "dR": 3,
+     "contGap": 0,
+     "diffGap": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "m": 2,
+     "k": 3
+    },
+    "expect": {
+     "gL": 1,
+     "gR": 3,
+     "dL": 2,
+     "dR": 2,
+     "contGap": 2,
+     "diffGap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

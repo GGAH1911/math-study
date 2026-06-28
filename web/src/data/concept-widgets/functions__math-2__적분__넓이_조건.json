@@ -1,0 +1,139 @@
+{
+ "id": "functions/math-2/적분/넓이_조건",
+ "spec": {
+  "title": "넓이 조건: 포물선과 x축 사이의 넓이 S=|a|/6·(β-α)³",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "alpha",
+    "label": "α (작은 근)",
+    "type": "slider",
+    "min": -4,
+    "max": 0,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "beta",
+    "label": "β (큰 근)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "S=abs(a)/6*(beta-alpha)^3; integ=a*((beta^3-alpha^3)/3-(alpha+beta)*(beta^2-alpha^2)/2+alpha*beta*(beta-alpha)); formula=-a/6*(beta-alpha)^3",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*(x-alpha)*(x-beta)",
+     "label": "f(x)=a(x-α)(x-β)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 근의 차 (β-α)",
+    "expr": "beta-alpha",
+    "digits": 3
+   },
+   {
+    "label": "실제 적분값 ∫_α^β f dx",
+    "expr": "integ",
+    "digits": 4
+   },
+   {
+    "label": "넓이 S = |a|/6·(β-α)³",
+    "expr": "S",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "alpha": -2,
+    "beta": 2
+   },
+   {
+    "a": 2,
+    "alpha": 0,
+    "beta": 3
+   },
+   {
+    "a": -1,
+    "alpha": -1,
+    "beta": 1
+   },
+   {
+    "a": 1.5,
+    "alpha": -3,
+    "beta": 1
+   }
+  ],
+  "invariants": [
+   "integ + a*(beta-alpha)^3/6",
+   "S - abs(integ)",
+   "S - abs(formula)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "alpha": -2,
+     "beta": 2
+    },
+    "expect": {
+     "S": 10.666666666666666,
+     "integ": -10.666666666666666
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "alpha": -1,
+     "beta": 1
+    },
+    "expect": {
+     "S": 1.3333333333333333,
+     "integ": 1.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "alpha": 0,
+     "beta": 2
+    },
+    "expect": {
+     "S": 4,
+     "integ": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,172 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/그래프에서_극한값_읽기",
+ "spec": {
+  "title": "그래프에서 극한값 읽기: f(x)=x+1 (x≠1), f(1)=4",
+  "params": [
+   {
+    "name": "h",
+    "label": "접근 거리 h (x=1로 다가가기)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "a=1; L=a+1; xL=a-h; yL=xL+1; xR=a+h; yR=xR+1; fa=4",
+  "geometry": {
+   "range": [
+    -1.5,
+    4.5
+   ],
+   "yRange": [
+    -1,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -1.5,
+      -0.5
+     ],
+     "to": [
+      4,
+      5
+     ],
+     "label": "y=x+1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-1.5",
+      "=L"
+     ],
+     "to": [
+      "=4.5",
+      "=L"
+     ],
+     "label": "y=L (극한 높이)"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      2
+     ],
+     "label": "구멍 lim=2"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      4
+     ],
+     "label": "f(1)=4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xL",
+      "=yL"
+     ],
+     "label": "왼쪽 f(1-h)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xR",
+      "=yR"
+     ],
+     "label": "오른쪽 f(1+h)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한값 L = lim_{x→1} f(x)",
+    "expr": "L",
+    "digits": 2
+   },
+   {
+    "label": "왼쪽 f(1-h)",
+    "expr": "yL",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 f(1+h)",
+    "expr": "yR",
+    "digits": 3
+   },
+   {
+    "label": "f(1) (극한과 무관)",
+    "expr": "fa",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": 0.5
+   },
+   {
+    "h": 1
+   },
+   {
+    "h": 0.2
+   },
+   {
+    "h": 1.5
+   }
+  ],
+  "invariants": [
+   "yL-(xL+1)",
+   "yR-(xR+1)",
+   "(yL+yR)/2-L",
+   "L-2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 0.5
+    },
+    "expect": {
+     "xL": 0.5,
+     "yL": 1.5,
+     "xR": 1.5,
+     "yR": 2.5,
+     "L": 2
+    }
+   },
+   {
+    "params": {
+     "h": 1
+    },
+    "expect": {
+     "xL": 0,
+     "yL": 1,
+     "xR": 2,
+     "yR": 3,
+     "L": 2
+    }
+   },
+   {
+    "params": {
+     "h": 0.2
+    },
+    "expect": {
+     "xL": 0.8,
+     "yL": 1.8,
+     "xR": 1.2,
+     "yR": 2.2,
+     "L": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

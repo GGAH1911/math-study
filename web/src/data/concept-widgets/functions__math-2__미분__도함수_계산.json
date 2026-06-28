@@ -1,0 +1,133 @@
+{
+ "id": "functions/math-2/미분/도함수_계산",
+ "spec": {
+  "title": "도함수: 할선에서 접선으로 (f(x)=x²)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "x₀ (접점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "h (증분)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "fx0 = x0^2; fxh = (x0+h)^2; sec = (fxh - fx0)/h; der = 2*x0",
+  "plot": {
+   "range": [
+    -3.5,
+    4
+   ],
+   "yRange": [
+    -3,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fx0 + sec*(x - x0)",
+     "label": "할선 (기울기 = sec)",
+     "color": "#ef4444"
+    },
+    {
+     "fn": "fx0 + der*(x - x0)",
+     "label": "접선 (기울기 = f'(x₀))",
+     "color": "#10b981"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "할선 기울기 (f(x₀+h)-f(x₀))/h",
+    "expr": "sec",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 f'(x₀)=2x₀",
+    "expr": "der",
+    "digits": 4
+   },
+   {
+    "label": "sec - der  (h→0이면 0)",
+    "expr": "sec - der",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 1,
+    "h": 1
+   },
+   {
+    "x0": 2,
+    "h": 0.5
+   },
+   {
+    "x0": -1,
+    "h": 0.3
+   },
+   {
+    "x0": 0,
+    "h": 1
+   }
+  ],
+  "invariants": [
+   "der - 2*x0",
+   "sec - (2*x0 + h)",
+   "fx0 - x0^2",
+   "sec - der - h"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 1,
+     "h": 1
+    },
+    "expect": {
+     "fx0": 1,
+     "sec": 3,
+     "der": 2
+    }
+   },
+   {
+    "params": {
+     "x0": 2,
+     "h": 0.5
+    },
+    "expect": {
+     "fx0": 4,
+     "sec": 4.5,
+     "der": 4
+    }
+   },
+   {
+    "params": {
+     "x0": 0,
+     "h": 1
+    },
+    "expect": {
+     "fx0": 0,
+     "sec": 1,
+     "der": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

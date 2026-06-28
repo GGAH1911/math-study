@@ -1,0 +1,113 @@
+{
+ "id": "functions/math-2/미분/극값의_개수",
+ "spec": {
+  "title": "극값의 개수: f(x)=x³−3ax (a로 극값 개수 조절)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "numext = (a > 0) ? 2 : 0; nroot = (a > 0) ? 2 : ((a == 0) ? 1 : 0); xc1 = sqrt(max(a, 0)); xc2 = -xc1; fc1 = xc1^3 - 3*a*xc1; fc2 = xc2^3 - 3*a*xc2; symm = fc1 + fc2; fpc1 = 3*xc1^2 - 3*a",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -14,
+    14
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*a*x",
+     "label": "f(x)=x³−3ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3*a",
+     "label": "f'(x)=3x²−3a (부호 변화↔극값)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극값의 개수",
+    "expr": "numext",
+    "digits": 0
+   },
+   {
+    "label": "f'(x)=0의 서로 다른 실근 수",
+    "expr": "nroot",
+    "digits": 0
+   },
+   {
+    "label": "임계점 x = ±√a",
+    "expr": "xc1",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "symm",
+   "fpc1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "numext": 2,
+     "nroot": 2,
+     "xc1": 1,
+     "fc1": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "numext": 0,
+     "nroot": 1,
+     "xc1": 0,
+     "fc1": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "numext": 0,
+     "nroot": 0,
+     "xc1": 0,
+     "fc1": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

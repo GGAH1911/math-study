@@ -1,0 +1,144 @@
+{
+ "id": "functions/math-2/적분/부정적분",
+ "spec": {
+  "title": "부정적분: ∫2x dx = x² + C — 곡선족과 접선",
+  "params": [
+   {
+    "name": "C",
+    "label": "적분상수 C",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "접점 x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "s = 2*x0; yt = x0^2 + C; f0 = 2*x0; gap = (x0^2 + C + 2) - (x0^2 + C)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    14
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + C",
+     "label": "y = x² + C (선택한 부정적분)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^2 + C + 2",
+     "label": "y = x² + (C+2)",
+     "color": "#93c5fd"
+    },
+    {
+     "fn": "x^2 + C - 2",
+     "label": "y = x² + (C−2)",
+     "color": "#93c5fd"
+    },
+    {
+     "fn": "2*x0*(x - x0) + (x0^2 + C)",
+     "label": "x₀에서의 접선 (기울기 2x₀)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "2*x",
+     "label": "f(x) = 2x (원함수)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "적분상수 C",
+    "expr": "C",
+    "digits": 2
+   },
+   {
+    "label": "x₀에서 접선 기울기 (C와 무관)",
+    "expr": "s",
+    "digits": 2
+   },
+   {
+    "label": "f(x₀) = 2x₀ (원함수 값)",
+    "expr": "f0",
+    "digits": 2
+   },
+   {
+    "label": "F(x₀)+C",
+    "expr": "yt",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "C": 0,
+    "x0": 1
+   },
+   {
+    "C": 1,
+    "x0": 2
+   },
+   {
+    "C": -2,
+    "x0": -1
+   },
+   {
+    "C": 3,
+    "x0": 0
+   }
+  ],
+  "invariants": [
+   "x0^2 + C - yt",
+   "s - 2*x0",
+   "gap - 2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "C": 0,
+     "x0": 1
+    },
+    "expect": {
+     "s": 2,
+     "yt": 1
+    }
+   },
+   {
+    "params": {
+     "C": 1,
+     "x0": 2
+    },
+    "expect": {
+     "s": 4,
+     "yt": 5
+    }
+   },
+   {
+    "params": {
+     "C": -2,
+     "x0": -1
+    },
+    "expect": {
+     "s": -2,
+     "yt": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

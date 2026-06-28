@@ -1,0 +1,128 @@
+{
+ "id": "functions/math-2/미분/실근의_개수_조건",
+ "spec": {
+  "title": "실근의 개수 조건 — 삼차함수 y = x³ − 3x + k",
+  "params": [
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "fmax = k+2; fmin = k-2; prod = fmax*fmin; nroots = 2 - sign(prod)",
+  "geometry": {
+   "range": [
+    -2.6,
+    2.6
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2.6,
+    2.6
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x + k",
+     "label": "f(x)=x³−3x+k",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극댓값 f(−1)",
+    "expr": "fmax",
+    "digits": 2
+   },
+   {
+    "label": "극솟값 f(1)",
+    "expr": "fmin",
+    "digits": 2
+   },
+   {
+    "label": "극값의 곱",
+    "expr": "prod",
+    "digits": 2
+   },
+   {
+    "label": "서로 다른 실근의 개수",
+    "expr": "nroots",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0
+   },
+   {
+    "k": 1.5
+   },
+   {
+    "k": -3
+   },
+   {
+    "k": 2.7
+   }
+  ],
+  "invariants": [
+   "fmax - ((-1)^3 - 3*(-1) + k)",
+   "fmin - (1^3 - 3*1 + k)",
+   "prod - (k^2 - 4)",
+   "nroots - (2 - sign(prod))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "fmax": 2,
+     "fmin": -2,
+     "prod": -4,
+     "nroots": 3
+    }
+   },
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "fmax": 4,
+     "fmin": 0,
+     "prod": 0,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "fmax": 5,
+     "fmin": 1,
+     "prod": 5,
+     "nroots": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/기하학적_극한",
+ "spec": {
+  "title": "ε–δ로 보는 함수의 극한 (f(x)=x²)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x가 다가가는 목표점)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "eps",
+    "label": "ε (허용 오차)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.6,
+    "init": 0.3,
+    "step": 0.01
+   }
+  ],
+  "scope": "L=a^2; del=sqrt(a^2+eps)-a; upper=L+eps; lower=L-eps; left=a-del; right=a+del",
+  "plot": {
+   "range": [
+    "=a-0.9",
+    "=a+0.9"
+   ],
+   "yRange": [
+    "=L-0.9",
+    "=L+0.9"
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a^2+eps",
+     "label": "L+ε",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "a^2-eps",
+     "label": "L−ε",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한값 L = f(a)",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "필요한 폭 δ",
+    "expr": "del",
+    "digits": 4
+   },
+   {
+    "label": "구간 오른쪽 끝 a+δ",
+    "expr": "right",
+    "digits": 4
+   },
+   {
+    "label": "검증 f(a+δ) (=L+ε 이어야)",
+    "expr": "(a+del)^2",
+    "digits": 4
+   },
+   {
+    "label": "상단 띠 L+ε",
+    "expr": "upper",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "eps": 0.3
+   },
+   {
+    "a": 1.5,
+    "eps": 0.5
+   },
+   {
+    "a": 0.5,
+    "eps": 0.2
+   },
+   {
+    "a": 2,
+    "eps": 0.6
+   }
+  ],
+  "invariants": [
+   "(a+del)^2 - upper",
+   "(a-del)^2 - lower - 2*del^2",
+   "left + right - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "eps": 0.44
+    },
+    "expect": {
+     "del": 0.2,
+     "L": 1,
+     "upper": 1.44
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "eps": 0.31
+    },
+    "expect": {
+     "del": 0.1,
+     "L": 2.25,
+     "upper": 2.56
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "eps": 0.41
+    },
+    "expect": {
+     "del": 0.1,
+     "L": 4,
+     "upper": 4.41
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

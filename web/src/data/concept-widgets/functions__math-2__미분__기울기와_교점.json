@@ -1,0 +1,141 @@
+{
+ "id": "functions/math-2/미분/기울기와_교점",
+ "spec": {
+  "title": "기울기와 교점: 할선에서 접선으로",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 x좌표 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "두 점 간격 h",
+    "type": "slider",
+    "min": 0.05,
+    "max": 3,
+    "init": 2,
+    "step": 0.05
+   }
+  ],
+  "scope": "fa = a^2; ah = a + h; fah = ah^2; msec = (fah - fa)/h; mtan = 2*a; b_sec = fa - msec*a; b_tan = fa - mtan*a",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -2,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = f(x) = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "msec*x + b_sec",
+     "label": "할선: 두 점 (a,f(a)), (a+h,f(a+h)) 통과",
+     "color": "#f59e0b"
+    },
+    {
+     "fn": "mtan*x + b_tan",
+     "label": "접선: 기울기 f'(a) = 2a",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "할선 기울기 (f(a+h)−f(a))/h = 2a+h",
+    "expr": "msec",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 f'(a) = 2a",
+    "expr": "mtan",
+    "digits": 4
+   },
+   {
+    "label": "차이(할선−접선) = h → 0이면 일치",
+    "expr": "msec - mtan",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 2
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": 0.5,
+    "h": 1
+   },
+   {
+    "a": -1,
+    "h": 1
+   }
+  ],
+  "invariants": [
+   "msec - (2*a + h)",
+   "mtan - 2*a",
+   "msec*a + b_sec - fa",
+   "mtan*a + b_tan - fa",
+   "msec*ah + b_sec - fah"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 2
+    },
+    "expect": {
+     "fa": 1,
+     "fah": 9,
+     "msec": 4,
+     "mtan": 2,
+     "b_sec": -3,
+     "b_tan": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "fah": 2.25,
+     "msec": 2.5,
+     "mtan": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "h": 1
+    },
+    "expect": {
+     "fa": 0.25,
+     "fah": 2.25,
+     "msec": 2,
+     "mtan": 1,
+     "b_sec": -0.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

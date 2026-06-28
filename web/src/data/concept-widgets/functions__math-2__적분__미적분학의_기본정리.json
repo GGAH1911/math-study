@@ -1,0 +1,196 @@
+{
+ "id": "functions/math-2/적분/미적분학의_기본정리",
+ "spec": {
+  "title": "미적분학의 기본정리: ∫ₐᵇ f(x)dx = F(b) − F(a)",
+  "params": [
+   {
+    "name": "a",
+    "label": "아래끝 a",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "위끝 b",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "fa = 2*a; fb = 2*b; Fa = a^2; Fb = b^2; integral = Fb - Fa; trapezoid = (b - a)*(fa + fb)/2",
+  "geometry": {
+   "range": [
+    -0.5,
+    5.5
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=b",
+       "=fb"
+      ],
+      [
+       "=a",
+       "=fa"
+      ]
+     ],
+     "label": "∫ₐᵇ 2x dx (넓이)",
+     "color": "#f59e0b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      5.5,
+      11
+     ],
+     "label": "f(x)=2x",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=fb"
+     ],
+     "label": "f(b)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a) = 2a",
+    "expr": "fa",
+    "digits": 2
+   },
+   {
+    "label": "f(b) = 2b",
+    "expr": "fb",
+    "digits": 2
+   },
+   {
+    "label": "부정적분 F(a) = a²",
+    "expr": "Fa",
+    "digits": 3
+   },
+   {
+    "label": "부정적분 F(b) = b²",
+    "expr": "Fb",
+    "digits": 3
+   },
+   {
+    "label": "정적분 ∫ₐᵇ2x dx = F(b)−F(a)",
+    "expr": "integral",
+    "digits": 3
+   },
+   {
+    "label": "사다리꼴 넓이(기하 검산)",
+    "expr": "trapezoid",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 4
+   },
+   {
+    "a": 2,
+    "b": 5
+   },
+   {
+    "a": 3,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "integral - trapezoid",
+   "Fb - b*fb/2",
+   "Fa - a*fa/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "integral": 8,
+     "Fa": 1,
+     "Fb": 9,
+     "trapezoid": 8
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 4
+    },
+    "expect": {
+     "integral": 16,
+     "Fb": 16,
+     "trapezoid": 16
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 5
+    },
+    "expect": {
+     "integral": 21,
+     "Fa": 4,
+     "Fb": 25,
+     "trapezoid": 21
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "id": "functions/math-2/적분/조건부상수결정",
+ "spec": {
+  "title": "조건부상수결정 — 초기조건으로 적분상수 C 결정 (f(x)=2x, F(x)=x²)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "조건점 x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "y0",
+    "label": "조건값 y₀ = y(x₀)",
+    "type": "slider",
+    "min": -5,
+    "max": 8,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "C = y0 - x0^2",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + C + 3",
+     "label": "후보곡선 y=x²+(C+3)",
+     "color": "#c9c9c9"
+    },
+    {
+     "fn": "x^2 + C - 3",
+     "label": "후보곡선 y=x²+(C-3)",
+     "color": "#c9c9c9"
+    },
+    {
+     "fn": "x^2 + C",
+     "label": "특수해 y=x²+C",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "결정된 적분상수 C = y₀ - F(x₀)",
+    "expr": "C",
+    "digits": 3
+   },
+   {
+    "label": "특수해의 값 y(x₀) = x₀²+C",
+    "expr": "x0^2 + C",
+    "digits": 3
+   },
+   {
+    "label": "조건 만족 검산 y(x₀)-y₀ (=0이어야)",
+    "expr": "x0^2 + C - y0",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 1,
+    "y0": 3
+   },
+   {
+    "x0": 2,
+    "y0": 0
+   },
+   {
+    "x0": -1,
+    "y0": 2
+   },
+   {
+    "x0": 0.5,
+    "y0": 4
+   }
+  ],
+  "invariants": [
+   "x0^2 + C - y0",
+   "C - (y0 - x0^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 1,
+     "y0": 3
+    },
+    "expect": {
+     "C": 2
+    }
+   },
+   {
+    "params": {
+     "x0": 2,
+     "y0": 0
+    },
+    "expect": {
+     "C": -4
+    }
+   },
+   {
+    "params": {
+     "x0": 0,
+     "y0": 5
+    },
+    "expect": {
+     "C": 5
+    }
+   },
+   {
+    "params": {
+     "x0": -1,
+     "y0": 2
+    },
+    "expect": {
+     "C": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

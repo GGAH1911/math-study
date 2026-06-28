@@ -1,0 +1,126 @@
+{
+ "id": "functions/math-2/미분/대칭_미분",
+ "spec": {
+  "title": "대칭 미분: 좌우 대칭 할선의 기울기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (중심점)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.05
+   },
+   {
+    "name": "h",
+    "label": "h (좌우 간격)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 0.8,
+    "step": 0.05
+   }
+  ],
+  "scope": "fp = abs(a+h); fm = abs(a-h); fa = abs(a); Ds = (fp - fm)/(2*h); fmid = (fp + fm)/2",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -0.5,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "abs(x)",
+     "label": "f(x)=|x|",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "Ds*(x - a) + fmid",
+     "label": "대칭 할선 (기울기 = Dₛf(a))",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "대칭미분계수 Dₛf(a) = (f(a+h)−f(a−h))/2h",
+    "expr": "Ds",
+    "digits": 4
+   },
+   {
+    "label": "전진차분 (f(a+h)−f(a))/h",
+    "expr": "(fp-fa)/h",
+    "digits": 4
+   },
+   {
+    "label": "후진차분 (f(a)−f(a−h))/h",
+    "expr": "(fa-fm)/h",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "h": 0.5
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": 1,
+    "h": 2
+   },
+   {
+    "a": -0.5,
+    "h": 0.25
+   }
+  ],
+  "invariants": [
+   "Ds - ((fp - fa)/h + (fa - fm)/h)/2",
+   "Ds*h + fmid - abs(a+h)",
+   "fmid - Ds*h - abs(a-h)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "Ds": 0,
+     "fmid": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "Ds": 1,
+     "fmid": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 2
+    },
+    "expect": {
+     "Ds": 0.5,
+     "fmid": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

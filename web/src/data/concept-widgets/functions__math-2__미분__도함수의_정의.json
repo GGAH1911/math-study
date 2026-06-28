@@ -1,0 +1,149 @@
+{
+ "id": "functions/math-2/미분/도함수의_정의",
+ "spec": {
+  "title": "도함수의 정의 — 할선에서 접선으로",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (미분하는 점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "h (증분, 0에 가깝게)",
+    "type": "slider",
+    "min": 0.01,
+    "max": 2,
+    "init": 1,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^2; fah = (a+h)^2; secSlope = (fah - fa)/h; tanSlope = 2*a",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + secSlope*(x - a)",
+     "label": "할선: 기울기 (f(a+h)-f(a))/h",
+     "color": "#f59e0b"
+    },
+    {
+     "fn": "fa + tanSlope*(x - a)",
+     "label": "접선: 기울기 f'(a)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(a+h)",
+    "expr": "fah",
+    "digits": 3
+   },
+   {
+    "label": "할선 기울기 (f(a+h)-f(a))/h",
+    "expr": "secSlope",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 f'(a)=2a",
+    "expr": "tanSlope",
+    "digits": 3
+   },
+   {
+    "label": "할선−접선 (= h, →0)",
+    "expr": "secSlope - tanSlope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 1
+   },
+   {
+    "a": 2,
+    "h": 0.5
+   },
+   {
+    "a": -1,
+    "h": 0.5
+   },
+   {
+    "a": 0,
+    "h": 1
+   }
+  ],
+  "invariants": [
+   "secSlope - (2*a + h)",
+   "tanSlope - 2*a",
+   "(secSlope - tanSlope) - h",
+   "fah - (a+h)^2",
+   "fa - a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 1
+    },
+    "expect": {
+     "fa": 1,
+     "fah": 4,
+     "secSlope": 3,
+     "tanSlope": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 4,
+     "fah": 6.25,
+     "secSlope": 4.5,
+     "tanSlope": 4
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "h": 1
+    },
+    "expect": {
+     "fa": 0,
+     "fah": 1,
+     "secSlope": 1,
+     "tanSlope": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

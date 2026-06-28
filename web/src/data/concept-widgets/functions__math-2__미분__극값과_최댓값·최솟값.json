@@ -1,0 +1,127 @@
+{
+ "id": "functions/math-2/미분/극값과_최댓값·최솟값",
+ "spec": {
+  "title": "극값과 도함수 — 접선의 기울기로 극값 찾기",
+  "params": [
+   {
+    "name": "c",
+    "label": "접점의 x좌표 c",
+    "type": "slider",
+    "min": -2.2,
+    "max": 2.2,
+    "init": -1,
+    "step": 0.01
+   }
+  ],
+  "scope": "fc = c^3 - 3*c; dfc = 3*c^2 - 3; ddfc = 6*c; numder = (((c+0.0001)^3 - 3*(c+0.0001)) - ((c-0.0001)^3 - 3*(c-0.0001)))/0.0002",
+  "plot": {
+   "range": [
+    -2.3,
+    2.3
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x) = x³ − 3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - 3",
+     "label": "f '(x) = 3x² − 3 (도함수)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "fc + dfc*(x - c)",
+     "label": "x=c 에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 x = c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "f(c)",
+    "expr": "fc",
+    "digits": 3
+   },
+   {
+    "label": "f '(c) = 접선의 기울기",
+    "expr": "dfc",
+    "digits": 3
+   },
+   {
+    "label": "|f '(c)|  (0이면 극값 후보)",
+    "expr": "abs(dfc)",
+    "digits": 4
+   },
+   {
+    "label": "f ''(c)  (>0 극소, <0 극대)",
+    "expr": "ddfc",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": -1
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 1
+   },
+   {
+    "c": 1.5
+   }
+  ],
+  "invariants": [
+   "dfc - numder",
+   "fc - (c^3 - 3*c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": -1
+    },
+    "expect": {
+     "fc": 2,
+     "dfc": 0,
+     "ddfc": -6
+    }
+   },
+   {
+    "params": {
+     "c": 1
+    },
+    "expect": {
+     "fc": -2,
+     "dfc": 0,
+     "ddfc": 6
+    }
+   },
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "fc": 0,
+     "dfc": -3,
+     "ddfc": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

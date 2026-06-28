@@ -1,0 +1,105 @@
+{
+ "id": "functions/math-2/적분/도형의_넓이",
+ "spec": {
+  "title": "두 곡선 사이의 넓이 — 직선 y=a·x 와 포물선 y=x²",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (직선 기울기 = 오른쪽 교점)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xint = a; A = a^3/6; Acheck = a*xint^2/2 - xint^3/3; gap = a*xint - xint^2",
+  "plot": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*x",
+     "label": "y = a·x (위 곡선)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^2",
+     "label": "y = x² (아래 곡선)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x = a",
+    "expr": "xint",
+    "digits": 2
+   },
+   {
+    "label": "넓이 S = ∫₀ᵃ(a·x − x²)dx = a³/6",
+    "expr": "A",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   },
+   {
+    "a": 1.5
+   }
+  ],
+  "invariants": [
+   "A - Acheck",
+   "gap"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "xint": 1,
+     "A": 0.1666666666666667
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "xint": 2,
+     "A": 1.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "xint": 3,
+     "A": 4.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

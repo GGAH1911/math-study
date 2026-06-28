@@ -1,0 +1,132 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/방정식의_해의_존재_조건",
+ "spec": {
+  "title": "방정식의 해의 존재 조건 (중간값 정리)",
+  "params": [
+   {
+    "name": "a",
+    "label": "구간 왼쪽 끝 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "구간 오른쪽 끝 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^3 - 5*a + 2; fb = b^3 - 5*b + 2; prod = fa*fb; r1 = -1 + sqrt(2); fr1 = r1^3 - 5*r1 + 2; r2 = -1 - sqrt(2); fr2 = r2^3 - 5*r2 + 2; r3 = 2; fr3 = r3^3 - 5*r3 + 2",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 5*x + 2",
+     "label": "f(x)=x³−5x+2",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(b)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "f(a)·f(b)",
+    "expr": "prod",
+    "digits": 3
+   },
+   {
+    "label": "해 존재 보장 (1=예, f(a)·f(b)<0)",
+    "expr": "(prod < 0) ? 1 : 0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 1
+   },
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": -1,
+    "b": 1
+   },
+   {
+    "a": 0.5,
+    "b": 2.5
+   }
+  ],
+  "invariants": [
+   "fa - (a^3 - 5*a + 2)",
+   "fb - (b^3 - 5*b + 2)",
+   "fr1",
+   "fr2",
+   "fr3",
+   "prod - fa*fb"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 1
+    },
+    "expect": {
+     "fa": 2,
+     "fb": -2,
+     "prod": -4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "fa": 0,
+     "fb": 14,
+     "prod": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 1
+    },
+    "expect": {
+     "fa": 6,
+     "fb": -2,
+     "prod": -12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

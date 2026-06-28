@@ -1,0 +1,140 @@
+{
+ "id": "functions/math-2/미분/최대·최소",
+ "spec": {
+  "title": "폐구간 [a, b]에서의 최대·최소",
+  "params": [
+   {
+    "name": "a",
+    "label": "구간 시작 a",
+    "type": "slider",
+    "min": -2,
+    "max": 0,
+    "init": -1.5,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "구간 끝 b",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; fb = b^3 - 3*b; c1 = max(min(-1, b), a); c2 = max(min(1, b), a); fc1 = c1^3 - 3*c1; fc2 = c2^3 - 3*c2; fmax = max(fa, fb, fc1, fc2); fmin = min(fa, fb, fc1, fc2)",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fmax",
+     "label": "최댓값 M",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fmin",
+     "label": "최솟값 m",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "구간 시작 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "구간 끝 b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "최댓값 M (구간 [a,b])",
+    "expr": "fmax",
+    "digits": 3
+   },
+   {
+    "label": "최솟값 m (구간 [a,b])",
+    "expr": "fmin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1.5,
+    "b": 1.5
+   },
+   {
+    "a": -0.5,
+    "b": 2
+   },
+   {
+    "a": -2,
+    "b": 0
+   },
+   {
+    "a": -1.2,
+    "b": 0.8
+   }
+  ],
+  "invariants": [
+   "(3*c1^2 - 3) * (c1 - a) * (c1 - b)",
+   "(3*c2^2 - 3) * (c2 - a) * (c2 - b)",
+   "(fmax - fa) * (fmax - fb) * (fmax - fc1) * (fmax - fc2)",
+   "(fmin - fa) * (fmin - fb) * (fmin - fc1) * (fmin - fc2)",
+   "fa + ((-a)^3 - 3*(-a))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1.5,
+     "b": 1.5
+    },
+    "expect": {
+     "fc1": 2,
+     "fc2": -2,
+     "fmax": 2,
+     "fmin": -2
+    }
+   },
+   {
+    "params": {
+     "a": -0.5,
+     "b": 2
+    },
+    "expect": {
+     "fmax": 2,
+     "fmin": -2
+    }
+   },
+   {
+    "params": {
+     "a": -0.5,
+     "b": 0.5
+    },
+    "expect": {
+     "fmax": 1.375,
+     "fmin": -1.375
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

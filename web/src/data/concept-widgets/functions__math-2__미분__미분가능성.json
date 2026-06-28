@@ -1,0 +1,145 @@
+{
+ "id": "functions/math-2/미분/미분가능성",
+ "spec": {
+  "title": "미분가능성: 좌·우 미분계수(할선 기울기) 비교",
+  "params": [
+   {
+    "name": "a",
+    "label": "점 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "증분 h",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = abs(a); aR = abs(a+h); aL = abs(a-h); sR = (aR - fa)/h; sL = (fa - aL)/h; gap = sR - sL",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -1.5,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "abs(x)",
+     "label": "f(x)=|x|",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + sR*(x - a)",
+     "label": "우할선 (h→0⁺, 우미분계수)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "fa + sL*(x - a)",
+     "label": "좌할선 (h→0⁻, 좌미분계수)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "우미분계수 sR (우할선 기울기)",
+    "expr": "sR",
+    "digits": 3
+   },
+   {
+    "label": "좌미분계수 sL (좌할선 기울기)",
+    "expr": "sL",
+    "digits": 3
+   },
+   {
+    "label": "좌우 차이 (0이면 미분가능)",
+    "expr": "gap",
+    "digits": 3
+   },
+   {
+    "label": "f(a)=|a|",
+    "expr": "fa",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "h": 1
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1,
+    "h": 0.5
+   },
+   {
+    "a": 0.2,
+    "h": 1
+   }
+  ],
+  "invariants": [
+   "fa^2 - a^2",
+   "fa + sR*h - aR",
+   "fa - sL*h - aL",
+   "gap - (sR - sL)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "h": 1
+    },
+    "expect": {
+     "fa": 0,
+     "sR": 1,
+     "sL": -1,
+     "gap": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 1,
+     "sR": 1,
+     "sL": 1,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 1,
+     "sR": -1,
+     "sL": -1,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

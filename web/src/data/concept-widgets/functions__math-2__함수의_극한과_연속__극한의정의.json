@@ -1,0 +1,167 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/극한의정의",
+ "spec": {
+  "title": "극한의 정의: ε–δ로 탐구하기 (f(x)=x², x→1)",
+  "params": [
+   {
+    "name": "eps",
+    "label": "ε (허용 오차: y의 띠 폭)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1.5,
+    "init": 0.6,
+    "step": 0.05
+   },
+   {
+    "name": "delta",
+    "label": "δ (구간 폭: x의 창)",
+    "type": "slider",
+    "min": 0.02,
+    "max": 1.2,
+    "init": 0.3,
+    "step": 0.02
+   }
+  ],
+  "scope": "a=1; L=a^2; yhi=L+eps; ylo=L-eps; xL=a-delta; xR=a+delta; fL=xL^2; fR=xR^2; devR=fR-L; devL=L-fL; worst=max(abs(devR),abs(devL)); works=(worst<=eps)?1:0; dreq=sqrt(a^2+eps)-a",
+  "plot": {
+   "range": [
+    0.3,
+    1.7
+   ],
+   "yRange": [
+    -0.7,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "1+eps",
+     "label": "L+ε (상단)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "1-eps",
+     "label": "L−ε (하단)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "abs(x-1)<=delta ? x^2 : NaN",
+     "label": "δ-구간 위의 f",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "L (목표 극한값)",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "띠 상단 L+ε",
+    "expr": "yhi",
+    "digits": 3
+   },
+   {
+    "label": "띠 하단 L−ε",
+    "expr": "ylo",
+    "digits": 3
+   },
+   {
+    "label": "창 왼쪽 끝 a−δ",
+    "expr": "xL",
+    "digits": 3
+   },
+   {
+    "label": "창 오른쪽 끝 a+δ",
+    "expr": "xR",
+    "digits": 3
+   },
+   {
+    "label": "f(a+δ)",
+    "expr": "fR",
+    "digits": 3
+   },
+   {
+    "label": "창 안 최대 오차 |f−L|",
+    "expr": "worst",
+    "digits": 3
+   },
+   {
+    "label": "|f−L|<ε 만족? (1=예, 0=아니오)",
+    "expr": "works",
+    "digits": 0
+   },
+   {
+    "label": "이 ε에 충분한 δ (경계값)",
+    "expr": "dreq",
+    "digits": 4
+   }
+  ],
+  "plot_note": "ε(빨간 띠)를 아무리 좁혀도, δ(초록 창)를 충분히 줄이면 창 위의 곡선이 띠 안에 들어간다 → lim_{x→1} x² = 1"
+ },
+ "recipe": {
+  "samples": [
+   {
+    "eps": 0.6,
+    "delta": 0.3
+   },
+   {
+    "eps": 0.5,
+    "delta": 0.2
+   },
+   {
+    "eps": 1,
+    "delta": 0.5
+   },
+   {
+    "eps": 0.3,
+    "delta": 0.1
+   }
+  ],
+  "invariants": [
+   "yhi - ylo - 2*eps",
+   "fR - (1 + 2*delta + delta^2)",
+   "fL - (1 - 2*delta + delta^2)",
+   "(a+dreq)^2 - (L+eps)",
+   "(devR - devL) - 2*delta^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "eps": 0.6,
+     "delta": 0.3
+    },
+    "expect": {
+     "yhi": 1.6,
+     "ylo": 0.4,
+     "fR": 1.69,
+     "fL": 0.49,
+     "worst": 0.69,
+     "works": 0,
+     "dreq": 0.2649110640673518
+    }
+   },
+   {
+    "params": {
+     "eps": 0.5,
+     "delta": 0.2
+    },
+    "expect": {
+     "yhi": 1.5,
+     "ylo": 0.5,
+     "fR": 1.44,
+     "fL": 0.64,
+     "worst": 0.44,
+     "works": 1,
+     "dreq": 0.224744871391589
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

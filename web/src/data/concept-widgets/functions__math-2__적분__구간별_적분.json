@@ -1,0 +1,144 @@
+{
+ "id": "functions/math-2/적분/구간별_적분",
+ "spec": {
+  "title": "구간별 적분: ∫ₐᵇ|x|dx = ∫ₐᶜ|x|dx + ∫꜀ᵇ|x|dx",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (왼쪽 끝)",
+    "type": "slider",
+    "min": -3,
+    "max": 0,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (분할점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (오른쪽 끝)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "Fa = a*abs(a)/2; Fc = c*abs(c)/2; Fb = b*abs(b)/2; AL = Fc - Fa; AR = Fb - Fc; AT = Fb - Fa; chk = AL + AR - AT",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -0.3,
+    3.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "abs(x)",
+     "label": "y = |x|",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 넓이  ∫ₐᶜ|x|dx",
+    "expr": "AL",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 넓이  ∫꜀ᵇ|x|dx",
+    "expr": "AR",
+    "digits": 3
+   },
+   {
+    "label": "왼쪽+오른쪽",
+    "expr": "AL+AR",
+    "digits": 3
+   },
+   {
+    "label": "전체 넓이  ∫ₐᵇ|x|dx",
+    "expr": "AT",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2,
+    "c": 0,
+    "b": 3
+   },
+   {
+    "a": -1,
+    "c": 1,
+    "b": 2
+   },
+   {
+    "a": -3,
+    "c": -1,
+    "b": 2
+   },
+   {
+    "a": 0,
+    "c": 1,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "AL + AR - AT",
+   "AT - (a^2/2 + b^2/2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -2,
+     "c": 0,
+     "b": 3
+    },
+    "expect": {
+     "AL": 2,
+     "AR": 4.5,
+     "AT": 6.5
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "c": 1,
+     "b": 2
+    },
+    "expect": {
+     "AL": 1,
+     "AR": 1.5,
+     "AT": 2.5
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "c": -1,
+     "b": 2
+    },
+    "expect": {
+     "AL": 4,
+     "AR": 2.5,
+     "AT": 6.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "id": "functions/math-2/미분/연속성과_미분가능성",
+ "spec": {
+  "title": "연속성과 미분가능성 — |x|의 뾰족한 모서리",
+  "params": [
+   {
+    "name": "a",
+    "label": "점 a (모서리는 a=0)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "증분 h",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "fa = abs(a); fL = abs(a - h); fR = abs(a + h); slopeR = (fR - fa)/h; slopeL = (fa - fL)/h; gap = slopeR - slopeL",
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -2.5,
+    2.5
+   ],
+   "fns": [
+    {
+     "fn": "abs(x)",
+     "label": "f(x)=|x|",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + slopeR*(x - a)",
+     "label": "오른쪽 기울기 f'(a⁺)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fa + slopeL*(x - a)",
+     "label": "왼쪽 기울기 f'(a⁻)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)  (연속이므로 항상 존재)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "왼쪽 미분계수 f'(a⁻)",
+    "expr": "slopeL",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 미분계수 f'(a⁺)",
+    "expr": "slopeR",
+    "digits": 3
+   },
+   {
+    "label": "좌우 차이 (0이면 미분가능, a=0에선 ≠0)",
+    "expr": "gap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "h": 0.5
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1.2,
+    "h": 0.4
+   },
+   {
+    "a": 0.3,
+    "h": 0.5
+   }
+  ],
+  "invariants": [
+   "fa^2 - a^2",
+   "fR^2 - (a+h)^2",
+   "fL^2 - (a-h)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 0,
+     "slopeL": -1,
+     "slopeR": 1,
+     "gap": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 1,
+     "slopeL": 1,
+     "slopeR": 1,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.3,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 0.3,
+     "slopeL": 0.2,
+     "slopeR": 1,
+     "gap": 0.8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

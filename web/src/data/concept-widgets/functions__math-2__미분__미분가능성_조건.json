@@ -1,0 +1,146 @@
+{
+ "id": "functions/math-2/미분/미분가능성_조건",
+ "spec": {
+  "title": "미분가능성 조건 — 연속성과 좌·우 미분계수",
+  "params": [
+   {
+    "name": "mL",
+    "label": "좌측 기울기 mL",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "mR",
+    "label": "우측 기울기 mR",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "x=0 에서의 점프 c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "fLm1 = mL*(-1); fLm2 = mL*(-2); fRp1 = mR*1 + c; fRp2 = mR*2 + c; f0 = c; leftSlope = (fLm1 - fLm2)/((-1)-(-2)); rightSlope = (fRp2 - fRp1)/(2-1); gap = rightSlope - leftSlope; contGap = f0",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "mL*x*(x<0) + (mR*x + c)*(x>=0)",
+     "label": "f(x)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌미분계수 f'(0⁻)",
+    "expr": "leftSlope",
+    "digits": 3
+   },
+   {
+    "label": "우미분계수 f'(0⁺)",
+    "expr": "rightSlope",
+    "digits": 3
+   },
+   {
+    "label": "좌우 기울기 차 (0이면 꺾이지 않음)",
+    "expr": "gap",
+    "digits": 3
+   },
+   {
+    "label": "불연속 간격 (0이면 연속)",
+    "expr": "contGap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mL": -1,
+    "mR": 1,
+    "c": 0
+   },
+   {
+    "mL": 2,
+    "mR": 2,
+    "c": 0
+   },
+   {
+    "mL": 1,
+    "mR": 1,
+    "c": 1
+   },
+   {
+    "mL": 0.5,
+    "mR": -2,
+    "c": -1
+   }
+  ],
+  "invariants": [
+   "leftSlope - mL",
+   "rightSlope - mR",
+   "gap - (mR - mL)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mL": -1,
+     "mR": 1,
+     "c": 0
+    },
+    "expect": {
+     "leftSlope": -1,
+     "rightSlope": 1,
+     "gap": 2,
+     "contGap": 0
+    }
+   },
+   {
+    "params": {
+     "mL": 2,
+     "mR": 2,
+     "c": 0
+    },
+    "expect": {
+     "leftSlope": 2,
+     "rightSlope": 2,
+     "gap": 0,
+     "contGap": 0
+    }
+   },
+   {
+    "params": {
+     "mL": 1,
+     "mR": 1,
+     "c": 1
+    },
+    "expect": {
+     "leftSlope": 1,
+     "rightSlope": 1,
+     "gap": 0,
+     "contGap": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

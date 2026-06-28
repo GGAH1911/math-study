@@ -1,0 +1,128 @@
+{
+ "id": "functions/math-2/미분/미분의_계산",
+ "spec": {
+  "title": "미분계수: 할선에서 접선으로 (f(x)=x²)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (접점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "h (증분, 0에 가까이)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "fa = a^2; fah = (a + h)^2; msec = (fah - fa) / h; mtan = 2 * a",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -4,
+    13
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + mtan * (x - a)",
+     "label": "접선 (기울기 f'(a)=2a)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fa + msec * (x - a)",
+     "label": "할선 (기울기 [f(a+h)−f(a)]/h)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "할선 기울기 [f(a+h)−f(a)]/h",
+    "expr": "msec",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 f'(a)=2a",
+    "expr": "mtan",
+    "digits": 4
+   },
+   {
+    "label": "할선−접선 (h→0이면 →0)",
+    "expr": "msec - mtan",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 1
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1,
+    "h": 0.5
+   },
+   {
+    "a": 2,
+    "h": 0.1
+   }
+  ],
+  "invariants": [
+   "msec - (2 * a + h)",
+   "msec - mtan - h"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 1
+    },
+    "expect": {
+     "msec": 3,
+     "mtan": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "msec": 2.5,
+     "mtan": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "h": 0.1
+    },
+    "expect": {
+     "msec": 4.1,
+     "mtan": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

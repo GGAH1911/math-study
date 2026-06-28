@@ -1,0 +1,134 @@
+{
+ "id": "functions/math-2/적분/정적분의_성질",
+ "spec": {
+  "title": "정적분의 성질: 구간 분할(가법성)과 상수배",
+  "params": [
+   {
+    "name": "c",
+    "label": "분할점 c",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "상수배 k",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "a=0; b=3; Ibase=(b^3-a^3)/3; Itot=k*(b^3-a^3)/3; I1=k*(c^3-a^3)/3; I2=k*(b^3-c^3)/3; sumsplit=I1+I2",
+  "plot": {
+   "range": [
+    0,
+    3
+   ],
+   "yRange": [
+    0,
+    18.5
+   ],
+   "fns": [
+    {
+     "fn": "k*x^2",
+     "label": "y = k·x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "I₁ = ∫₀ᶜ k·x² dx",
+    "expr": "I1",
+    "digits": 3
+   },
+   {
+    "label": "I₂ = ∫꜀³ k·x² dx",
+    "expr": "I2",
+    "digits": 3
+   },
+   {
+    "label": "I₁ + I₂ (분할 합)",
+    "expr": "sumsplit",
+    "digits": 3
+   },
+   {
+    "label": "∫₀³ k·x² dx (전체)",
+    "expr": "Itot",
+    "digits": 3
+   },
+   {
+    "label": "k · ∫₀³ x² dx",
+    "expr": "k*Ibase",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1.5,
+    "k": 1
+   },
+   {
+    "c": 0.5,
+    "k": 0.5
+   },
+   {
+    "c": 2.4,
+    "k": 2
+   },
+   {
+    "c": 3,
+    "k": 1.2
+   }
+  ],
+  "invariants": [
+   "I1+I2-Itot",
+   "Itot-k*Ibase"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1.5,
+     "k": 1
+    },
+    "expect": {
+     "I1": 1.125,
+     "I2": 7.875,
+     "Itot": 9,
+     "sumsplit": 9
+    }
+   },
+   {
+    "params": {
+     "c": 3,
+     "k": 2
+    },
+    "expect": {
+     "I1": 18,
+     "I2": 0,
+     "Itot": 18
+    }
+   },
+   {
+    "params": {
+     "c": 0,
+     "k": 1.5
+    },
+    "expect": {
+     "I1": 0,
+     "I2": 13.5,
+     "Itot": 13.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "id": "functions/math-2/적분/기하학적_넓이",
+ "spec": {
+  "title": "두 곡선 사이의 넓이: y=x² 와 y=ax",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (직선 y=ax의 기울기 = 오른쪽 교점)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xR=a; S=a^3/6; fmid=a*(a/2)-(a/2)^2; Ssimpson=(a/6)*4*fmid; yLine=a*xR; yPar=xR^2",
+  "plot": {
+   "range": [
+    -0.5,
+    3.3
+   ],
+   "yRange": [
+    -0.5,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a*x",
+     "label": "y=ax",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "오른쪽 교점 x",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "넓이 S = ∫₀ᵃ(ax−x²)dx = a³/6",
+    "expr": "S",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "S - Ssimpson",
+   "yLine - yPar"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "S": 0.16666666666666666
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "S": 1.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "S": 4.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

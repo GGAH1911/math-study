@@ -1,0 +1,137 @@
+{
+ "id": "functions/math-2/적분/좌표평면_위의_도형의_넓이",
+ "spec": {
+  "title": "정적분과 넓이: 곡선 y=kx²와 x축, x=a, x=b로 둘러싸인 도형의 넓이",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (곡선 계수)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "a",
+    "label": "a (왼쪽 경계 x=a)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (오른쪽 경계 x=b)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "Fa = k*a^3/3; Fb = k*b^3/3; area = Fb - Fa; w = b - a; havg = area/w; m = (a+b)/2; Fm = k*m^3/3; areaL = Fm - Fa; areaR = Fb - Fm; area2 = (2*k)*b^3/3 - (2*k)*a^3/3",
+  "plot": {
+   "range": [
+    -0.5,
+    3.2
+   ],
+   "yRange": [
+    0,
+    18
+   ],
+   "fns": [
+    {
+     "fn": "k*x^2",
+     "label": "y = k x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이 S = ∫ₐᵇ k x² dx",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "구간 폭 b − a",
+    "expr": "w",
+    "digits": 3
+   },
+   {
+    "label": "평균 높이 S /(b − a)",
+    "expr": "havg",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1,
+    "a": 0,
+    "b": 3
+   },
+   {
+    "k": 2,
+    "a": 1,
+    "b": 2
+   },
+   {
+    "k": 0.5,
+    "a": 0,
+    "b": 2
+   },
+   {
+    "k": 1.5,
+    "a": 1,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "area - areaL - areaR",
+   "area2 - 2*area"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1,
+     "a": 0,
+     "b": 3
+    },
+    "expect": {
+     "area": 9,
+     "havg": 3
+    }
+   },
+   {
+    "params": {
+     "k": 2,
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "area": 4.66666667,
+     "havg": 4.66666667
+    }
+   },
+   {
+    "params": {
+     "k": 1,
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "area": 2.33333333,
+     "havg": 2.33333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

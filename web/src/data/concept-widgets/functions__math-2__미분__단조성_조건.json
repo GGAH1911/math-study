@@ -1,0 +1,131 @@
+{
+ "id": "functions/math-2/미분/단조성_조건",
+ "spec": {
+  "title": "단조성 조건: 도함수 f'의 부호와 함수의 증가·감소",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (곡선 모양 결정)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (기울기 관찰점)",
+    "type": "slider",
+    "min": -2.2,
+    "max": 2.2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx0 = x0^3/3 - a*x0; fp0 = x0^2 - a",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3/3 - a*x",
+     "label": "f(x)=x³/3 − ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^2 - a",
+     "label": "f'(x)=x² − a",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "(x0^2 - a)*(x - x0) + x0^3/3 - a*x0",
+     "label": "x₀에서의 접선",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f'(x₀): 점 x₀에서의 기울기",
+    "expr": "fp0",
+    "digits": 3
+   },
+   {
+    "label": "f'의 최솟값 (= −a) · 0 이상이면 전 구간 증가(단조)",
+    "expr": "-a",
+    "digits": 3
+   },
+   {
+    "label": "x₀에서 증가(+1)/감소(−1) 판정",
+    "expr": "sign(fp0)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "x0": 1
+   },
+   {
+    "a": 1,
+    "x0": 0.5
+   },
+   {
+    "a": 2,
+    "x0": -1
+   },
+   {
+    "a": 0,
+    "x0": 1.5
+   }
+  ],
+  "invariants": [
+   "fx0 - (x0^3/3 - a*x0)",
+   "fp0 - (((x0+0.0001)^3/3 - a*(x0+0.0001)) - ((x0-0.0001)^3/3 - a*(x0-0.0001)))/(2*0.0001)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "x0": 1
+    },
+    "expect": {
+     "fx0": 1.3333333,
+     "fp0": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "x0": 0.5
+    },
+    "expect": {
+     "fx0": -0.4583333,
+     "fp0": -0.75
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": -1
+    },
+    "expect": {
+     "fx0": 1.6666667,
+     "fp0": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

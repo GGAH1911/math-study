@@ -1,0 +1,134 @@
+{
+ "id": "functions/math-2/미분/미분불가능점",
+ "spec": {
+  "title": "미분불가능점: 꺾인 점에서의 좌·우 미분계수",
+  "params": [
+   {
+    "name": "sL",
+    "label": "좌미분계수 (왼쪽 기울기)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "sR",
+    "label": "우미분계수 (오른쪽 기울기)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "gap = sR - sL; dqL = (sL * (-0.001) - 0) / (-0.001); dqR = (sR * 0.001 - 0) / 0.001",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x < 0 ? sL*x : sR*x",
+     "label": "f(x) (원점에서 꺾임)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "sL*x",
+     "label": "좌미분계수 방향 f'(0⁻)",
+     "color": "#f97316"
+    },
+    {
+     "fn": "sR*x",
+     "label": "우미분계수 방향 f'(0⁺)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌미분계수 f'(0⁻)",
+    "expr": "dqL",
+    "digits": 2
+   },
+   {
+    "label": "우미분계수 f'(0⁺)",
+    "expr": "dqR",
+    "digits": 2
+   },
+   {
+    "label": "우−좌 차이 (0이면 미분가능)",
+    "expr": "gap",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "sL": -1,
+    "sR": 1
+   },
+   {
+    "sL": 0.5,
+    "sR": 0.5
+   },
+   {
+    "sL": 2,
+    "sR": -1
+   },
+   {
+    "sL": -2,
+    "sR": 0
+   }
+  ],
+  "invariants": [
+   "dqL - sL",
+   "dqR - sR",
+   "gap - (dqR - dqL)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "sL": -1,
+     "sR": 1
+    },
+    "expect": {
+     "gap": 2,
+     "dqL": -1,
+     "dqR": 1
+    }
+   },
+   {
+    "params": {
+     "sL": 0.5,
+     "sR": 0.5
+    },
+    "expect": {
+     "gap": 0,
+     "dqL": 0.5,
+     "dqR": 0.5
+    }
+   },
+   {
+    "params": {
+     "sL": 2,
+     "sR": -1
+    },
+    "expect": {
+     "gap": -3,
+     "dqL": 2,
+     "dqR": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

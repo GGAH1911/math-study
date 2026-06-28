@@ -1,0 +1,190 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/불연속점",
+ "spec": {
+  "title": "불연속점: 좌극한·우극한·함숫값으로 판정",
+  "params": [
+   {
+    "name": "jump",
+    "label": "단차(우극한−좌극한)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "함숫값 f(1)",
+    "type": "slider",
+    "min": -1,
+    "max": 5,
+    "init": 0,
+    "step": 0.25,
+    "unit": ""
+   }
+  ],
+  "scope": "Lleft = 2; Lright = 2 + jump; fa = c; jumpGap = Lright - Lleft",
+  "geometry": {
+   "range": [
+    -1.6,
+    3.6
+   ],
+   "yRange": [
+    -1.5,
+    7.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -1.5,
+      -0.5
+     ],
+     "to": [
+      1,
+      2
+     ],
+     "label": "x<1 조각 (y=x+1)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=Lright"
+     ],
+     "to": [
+      3.5,
+      "=Lright+2.5"
+     ],
+     "label": "x>1 조각",
+     "color": "#2563eb"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1,
+      "=Lleft"
+     ],
+     "radius": 0.08,
+     "label": "좌극한",
+     "color": "#1d4ed8"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1,
+      "=Lright"
+     ],
+     "radius": 0.08,
+     "label": "우극한",
+     "color": "#7c3aed"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=fa"
+     ],
+     "label": "f(1)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 lim(x→1⁻)",
+    "expr": "Lleft",
+    "digits": 2
+   },
+   {
+    "label": "우극한 lim(x→1⁺)",
+    "expr": "Lright",
+    "digits": 2
+   },
+   {
+    "label": "함숫값 f(1)",
+    "expr": "fa",
+    "digits": 2
+   },
+   {
+    "label": "우극한−좌극한 (0이면 극한 존재)",
+    "expr": "jumpGap",
+    "digits": 2
+   },
+   {
+    "label": "불연속 정도 (0이면 연속)",
+    "expr": "abs(Lleft-Lright)+abs(fa-(Lleft+Lright)/2)",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "jump": 0,
+    "c": 0
+   },
+   {
+    "jump": 0,
+    "c": 2
+   },
+   {
+    "jump": 2,
+    "c": 3
+   },
+   {
+    "jump": -1,
+    "c": 1
+   }
+  ],
+  "invariants": [
+   "Lright - Lleft - jump",
+   "fa - c",
+   "Lleft - 2",
+   "jumpGap - (Lright - Lleft)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "jump": 0,
+     "c": 2
+    },
+    "expect": {
+     "Lleft": 2,
+     "Lright": 2,
+     "fa": 2,
+     "jumpGap": 0
+    }
+   },
+   {
+    "params": {
+     "jump": 0,
+     "c": 0
+    },
+    "expect": {
+     "Lleft": 2,
+     "Lright": 2,
+     "fa": 0,
+     "jumpGap": 0
+    }
+   },
+   {
+    "params": {
+     "jump": 2,
+     "c": 3
+    },
+    "expect": {
+     "Lleft": 2,
+     "Lright": 4,
+     "fa": 3,
+     "jumpGap": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

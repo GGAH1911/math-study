@@ -1,0 +1,179 @@
+{
+ "id": "functions/math-2/적분/속도_적분",
+ "spec": {
+  "title": "속도 적분: 변위와 거리",
+  "params": [
+   {
+    "name": "T",
+    "label": "끝 시각 T",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 4,
+    "step": 0.1,
+    "unit": "s"
+   }
+  ],
+  "scope": "vT=6-2*T; disp=6*T-T^2; dist=(T<=3)?disp:(18-disp); tp=min(T,3); vtp=6-2*tp; tn=max(T,3); vtn=6-2*tn",
+  "geometry": {
+   "range": [
+    -0.4,
+    5.3
+   ],
+   "yRange": [
+    -5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      6
+     ],
+     "to": [
+      5,
+      -4
+     ],
+     "color": "#333333",
+     "label": "v(t)=6-2t"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       6
+      ],
+      [
+       "=tp",
+       "=vtp"
+      ],
+      [
+       "=tp",
+       0
+      ]
+     ],
+     "color": "#4a90d9",
+     "label": "+넓이(전진)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3,
+       0
+      ],
+      [
+       "=tn",
+       0
+      ],
+      [
+       "=tn",
+       "=vtn"
+      ]
+     ],
+     "color": "#e15554",
+     "label": "-넓이(후진)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=T",
+      0
+     ],
+     "to": [
+      "=T",
+      "=vT"
+     ],
+     "color": "#888888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=T",
+      "=vT"
+     ],
+     "label": "t=T"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "v(T)",
+    "expr": "vT",
+    "digits": 2
+   },
+   {
+    "label": "변위 ∫₀ᵀ v dt",
+    "expr": "disp",
+    "digits": 2
+   },
+   {
+    "label": "거리 ∫₀ᵀ |v| dt",
+    "expr": "dist",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "T": 1
+   },
+   {
+    "T": 2
+   },
+   {
+    "T": 4
+   },
+   {
+    "T": 5
+   }
+  ],
+  "invariants": [
+   "disp - ((6*tp - tp^2) - (tn-3)^2)",
+   "dist - ((6*tp - tp^2) + (tn-3)^2)",
+   "vT - (6 - 2*T)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "T": 2
+    },
+    "expect": {
+     "vT": 2,
+     "disp": 8,
+     "dist": 8
+    }
+   },
+   {
+    "params": {
+     "T": 4
+    },
+    "expect": {
+     "vT": -2,
+     "disp": 8,
+     "dist": 10
+    }
+   },
+   {
+    "params": {
+     "T": 5
+    },
+    "expect": {
+     "vT": -4,
+     "disp": 5,
+     "dist": 13
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

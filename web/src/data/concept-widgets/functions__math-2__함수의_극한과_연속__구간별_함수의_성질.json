@@ -1,0 +1,181 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/구간별_함수의_성질",
+ "spec": {
+  "title": "구간별 함수의 연속과 미분가능 (경계점 x=c)",
+  "params": [
+   {
+    "name": "c",
+    "label": "경계점 c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "오른쪽 직선 기울기 m",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "오른쪽 직선 절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   }
+  ],
+  "scope": "leftLim = c^2; fVal = c^2; rightLim = m*c + b; contGap = rightLim - leftLim; leftDeriv = 2*c; rightDeriv = m; diffGap = leftDeriv - rightDeriv",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -4,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "x² (왼쪽 식, 연장)",
+     "color": "#e9a3a3"
+    },
+    {
+     "fn": "m*x + b",
+     "label": "mx+b (오른쪽 식, 연장)",
+     "color": "#a3c9e9"
+    },
+    {
+     "fn": "x < c ? x^2 : m*x + b",
+     "label": "f(x) 구간별 함수",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한  lim x→c⁻ f",
+    "expr": "leftLim",
+    "digits": 3
+   },
+   {
+    "label": "우극한  lim x→c⁺ f",
+    "expr": "rightLim",
+    "digits": 3
+   },
+   {
+    "label": "함숫값  f(c)",
+    "expr": "fVal",
+    "digits": 3
+   },
+   {
+    "label": "연속 판정 (우-좌 차, 0이면 연속)",
+    "expr": "contGap",
+    "digits": 3
+   },
+   {
+    "label": "좌미분계수",
+    "expr": "leftDeriv",
+    "digits": 3
+   },
+   {
+    "label": "우미분계수",
+    "expr": "rightDeriv",
+    "digits": 3
+   },
+   {
+    "label": "미분 판정 (좌-우 차, 연속+이값0이면 미분가능)",
+    "expr": "diffGap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1,
+    "m": 3,
+    "b": -2
+   },
+   {
+    "c": 2,
+    "m": 4,
+    "b": -4
+   },
+   {
+    "c": 0,
+    "m": 1,
+    "b": 2
+   },
+   {
+    "c": -1,
+    "m": -2,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "leftLim - c^2",
+   "rightLim - (m*c + b)",
+   "leftDeriv - 2*c",
+   "contGap - (rightLim - leftLim)",
+   "diffGap - (leftDeriv - rightDeriv)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1,
+     "m": 3,
+     "b": -2
+    },
+    "expect": {
+     "leftLim": 1,
+     "rightLim": 1,
+     "contGap": 0,
+     "leftDeriv": 2,
+     "rightDeriv": 3,
+     "diffGap": -1
+    }
+   },
+   {
+    "params": {
+     "c": 2,
+     "m": 4,
+     "b": -4
+    },
+    "expect": {
+     "leftLim": 4,
+     "rightLim": 4,
+     "contGap": 0,
+     "leftDeriv": 4,
+     "rightDeriv": 4,
+     "diffGap": 0
+    }
+   },
+   {
+    "params": {
+     "c": 0,
+     "m": 1,
+     "b": 2
+    },
+    "expect": {
+     "leftLim": 0,
+     "rightLim": 2,
+     "contGap": 2,
+     "leftDeriv": 0,
+     "rightDeriv": 1,
+     "diffGap": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

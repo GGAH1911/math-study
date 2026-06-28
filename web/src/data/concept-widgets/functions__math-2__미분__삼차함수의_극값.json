@@ -1,0 +1,181 @@
+{
+ "id": "functions/math-2/미분/삼차함수의_극값",
+ "spec": {
+  "title": "삼차함수의 극값",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.5
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "disc = b^2 - 3*a*c; r = sqrt(abs(disc)); x1 = (-b - r)/(3*a); x2 = (-b + r)/(3*a); fx1 = a*x1^3 + b*x1^2 + c*x1 + d; fx2 = a*x2^3 + b*x2^2 + c*x2 + d",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)",
+     "color": "#f97316"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D=b²−3ac",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "극값 개수 (D>0이면 2)",
+    "expr": "(disc > 0 ? 2 : 0)",
+    "digits": 0
+   },
+   {
+    "label": "x₁ (극대점)",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "극댓값 f(x₁)",
+    "expr": "fx1",
+    "digits": 3
+   },
+   {
+    "label": "x₂ (극소점)",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f(x₂)",
+    "expr": "fx2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 2,
+    "b": -3,
+    "c": -3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "3*a*x1^2 + 2*b*x1 + c",
+   "3*a*x2^2 + 2*b*x2 + c",
+   "x1 + x2 + 2*b/(3*a)",
+   "x1*x2 - c/(3*a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
+    },
+    "expect": {
+     "disc": 9,
+     "x1": -1,
+     "x2": 1,
+     "fx1": 2,
+     "fx2": -2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "d": 1
+    },
+    "expect": {
+     "disc": 9,
+     "x1": -2,
+     "x2": 0,
+     "fx1": 5,
+     "fx2": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 0,
+     "d": 2
+    },
+    "expect": {
+     "disc": 9,
+     "x1": 0,
+     "x2": 2,
+     "fx1": 2,
+     "fx2": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

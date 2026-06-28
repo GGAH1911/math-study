@@ -1,0 +1,129 @@
+{
+ "id": "functions/math-2/미분/도함수의_성질",
+ "spec": {
+  "title": "곱의 미분법 (fg)' = f'g + fg' — 접선으로 확인",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fa=sin(a); ga=a; ha=fa*ga; fpa=cos(a); gpa=1; hp=fpa*ga+fa*gpa",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "f(x)=sin x",
+     "color": "#3b82f6"
+    },
+    {
+     "fn": "x",
+     "label": "g(x)=x",
+     "color": "#22c55e"
+    },
+    {
+     "fn": "x*sin(x)",
+     "label": "h(x)=f·g",
+     "color": "#a855f7"
+    },
+    {
+     "fn": "hp*(x-a)+ha",
+     "label": "h의 접선 (기울기 = f'g+fg')",
+     "color": "#ef4444"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "f'(a)=cos a",
+    "expr": "fpa",
+    "digits": 4
+   },
+   {
+    "label": "g'(a)=1",
+    "expr": "gpa",
+    "digits": 4
+   },
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "h'(a)=f'g+fg'",
+    "expr": "hp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": -1.5
+   }
+  ],
+  "invariants": [
+   "hp - (a*cos(a) + sin(a))",
+   "hp/ha - fpa/fa - gpa/ga"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 0.8414709848,
+     "ga": 1,
+     "ha": 0.8414709848,
+     "fpa": 0.5403023059,
+     "gpa": 1,
+     "hp": 1.3817732907
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 0.9092974268,
+     "ga": 2,
+     "ha": 1.8185948536,
+     "fpa": -0.4161468365,
+     "gpa": 1,
+     "hp": 0.0770037538
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

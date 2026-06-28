@@ -1,0 +1,133 @@
+{
+ "id": "functions/math-2/적분/리만합",
+ "spec": {
+  "title": "리만합: 곡선 y=x² 아래 넓이의 근사 (구간 [0,2])",
+  "params": [
+   {
+    "name": "n",
+    "label": "분할 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "t",
+    "label": "표본점 위치 (0:좌끝점, 0.5:중점, 1:우끝점)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "dx = 2/n; Sk = (n-1)*n*(2*n-1)/6 + t*n*(n-1) + n*t^2; S = (8/n^3)*Sk; I = 8/3; err = S - I",
+  "plot": {
+   "range": [
+    0,
+    2
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "((min(floor(x/dx), n-1) + t) * dx)^2",
+     "label": "리만합 계단(직사각형 높이 f(c_i))",
+     "color": "#ea580c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "소구간 폭 Δx = 2/n",
+    "expr": "dx",
+    "digits": 4
+   },
+   {
+    "label": "리만합 S = Σ f(c_i)Δx",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "정적분 ∫₀² x² dx (참값)",
+    "expr": "I",
+    "digits": 4
+   },
+   {
+    "label": "오차 (S − 참값)",
+    "expr": "err",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "t": 0
+   },
+   {
+    "n": 4,
+    "t": 0.5
+   },
+   {
+    "n": 8,
+    "t": 1
+   },
+   {
+    "n": 1,
+    "t": 0
+   }
+  ],
+  "invariants": [
+   "dx*n - 2",
+   "I - 8/3",
+   "err - ((8*t-4)/n + (4/3 - 8*t + 8*t^2)/n^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "t": 0
+    },
+    "expect": {
+     "dx": 1,
+     "S": 1,
+     "err": -1.6666666666666667
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "t": 1
+    },
+    "expect": {
+     "S": 5,
+     "err": 2.3333333333333335
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "t": 0.5
+    },
+    "expect": {
+     "dx": 0.5,
+     "S": 2.625
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

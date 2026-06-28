@@ -1,0 +1,115 @@
+{
+ "id": "functions/math-2/미분/도함수",
+ "spec": {
+  "title": "도함수: 접선의 기울기를 모아 만든 새 함수",
+  "params": [
+   {
+    "name": "a",
+    "label": "점 x=a",
+    "type": "slider",
+    "min": -2.2,
+    "max": 2.2,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^3 - 3*a; slope = 3*a^2 - 3",
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x)=x³−3x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "slope*(x - a) + fa",
+     "label": "x=a 에서의 접선 (기울기 f′(a))",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "3*x^2 - 3",
+     "label": "f′(x)=3x²−3 (도함수)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "f(a) (접점의 y좌표)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f′(a) = 접선의 기울기",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "fa - (a^3 - 3*a)",
+   "(((a+0.0001)^3 - 3*(a+0.0001)) - ((a-0.0001)^3 - 3*(a-0.0001)))/0.0002 - slope"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": -2,
+     "slope": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": 0,
+     "slope": -3
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 2,
+     "slope": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
