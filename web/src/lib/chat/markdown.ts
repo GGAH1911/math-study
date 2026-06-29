@@ -154,6 +154,18 @@ export function serializeFrag(node: Node): string {
 // 선택(Range) → 마크다운+LaTeX 복원. 드래그한 부분만 인용. 복사(클립보드)를 안 거쳐 KaTeX annotation
 // (LaTeX 원본=SSOT)이 안 잘려 손실 0. .katex 는 annotation 으로, 표·줄바꿈 구조는 serializeFrag 로 보존.
 export function latexFromSelection(range: Range, root: HTMLElement): string {
+  // 0) 선택이 한 수식(.katex) 안/위에 머물면(공통조상이 .katex 내부) = 수식 부분선택 →
+  //    원본의 전체 LaTeX(annotation)를 통째로 인용한다. 수식은 원자라 반쪽만 인용해도 의미 없고,
+  //    부분클론은 .katex 래퍼조차 안 잡혀(.katex-html 내부 조각만) annotation·boundary 복구 다 빗나가
+  //    "f(x) =" 처럼 일부만 남거나 분수가 뒤집힌다. 그래서 원본 .katex annotation 으로 직행.
+  //    (전체식·여러요소 선택은 공통조상이 .katex 밖→soleK=null→아래 일반 경로.)
+  const ca = range.commonAncestorContainer;
+  const caEl = ca.nodeType === Node.ELEMENT_NODE ? (ca as Element) : ca.parentElement;
+  const soleK = caEl?.closest('.katex');
+  if (soleK && root.contains(soleK)) {
+    const tex = (soleK.querySelector('annotation')?.textContent ?? '').trim();
+    if (tex) return `$${tex}$`;
+  }
   const frag = range.cloneContents();
   // 1) 클론에 온전히 들어온 .katex 는 클론의 annotation 으로 치환.
   frag.querySelectorAll('.katex').forEach((el) => {
