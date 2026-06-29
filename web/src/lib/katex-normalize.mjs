@@ -66,7 +66,11 @@ export function normalizeKatex(tex) {
     .replace(/\\begin\{align\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
-    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
+    .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}')
+    // 5. \lim·\limsup·\liminf 의 첨자를 인라인($...$, textstyle)에서도 아래로 쌓이게 한다(\limits).
+    //    인라인 기본은 첨자가 옆(lim 옆 작은 x→1)으로 가는데, display 처럼 lim 아래로 내린다.
+    //    이미 \limits 가 붙었거나 \limits 자체(\lim+its)는 lookahead(다음이 글자/역슬래시면 제외)로 안 건드림.
+    .replace(/\\lim(?:sup|inf)?(?![a-zA-Z\\])/g, (m) => m + '\\limits');
 }
 
 /**
