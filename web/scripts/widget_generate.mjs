@@ -45,7 +45,7 @@ function gen(id) {
         const obj = JSON.parse(m[0]);
         if (!obj.spec || !obj.recipe) { console.log(`✗ ${id} spec/recipe 누락`); return res(); }
         writeFileSync(`${OUT}/${id.replace(/\//g, '__')}.json`, JSON.stringify({ id, ...obj }, null, 1));
-        console.log(`✓ ${id} (params ${(obj.spec.params || []).length}, invariants ${(obj.recipe.invariants || []).length}, cr=${u.cache_read_input_tokens ?? '?'})`);
+        console.log(`✓ ${id} (params ${(obj.spec.params || []).length}, invariants ${(obj.recipe.invariants || []).length}, cr=${u.cache_read_input_tokens ?? '?'}, cc=${u.cache_creation_input_tokens ?? '?'})`);
       } catch (e) { console.log(`✗ ${id} 파싱: ${e.message}`); }
       res();
     });

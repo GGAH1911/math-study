@@ -32,13 +32,15 @@ log(`══ 워커풀${PRIORITY ? '(고가치순)' : ''}: 미처리후보 ${cand
 // 자식 stdout 캡처 → widget_generate 가 찍는 `cr=N`(cache_read_input_tokens)을 로그에 남겨 프롬프트
 // 캐시 히트 추적 가능하게(이전엔 stdout='ignore'라 캐시 실측이 버려졌음). 연속 호출서 cr 상승=캐시 생존.
 const crVals = [];   // 캐시 히트 추적용 — genOnce 가 수집, 종료 시 다이제스트로 cron-runs.md 에 누적.
+const ccVals = [];   // cache_creation(쓰기) 추적 — net 절감(쓰기 프리미엄) 정확 계산용.
 const genOnce = (id) => new Promise((res) => {
   const c = spawn('node', [`${REPO}/web/scripts/widget_generate.mjs`, id], { stdio: ['ignore', 'pipe', 'ignore'], timeout: 240000 });
   let out = '';
   c.stdout.on('data', (d) => { out += d; });
   c.on('close', (code) => {
     const m = out.match(/cr=(\d+)/);
-    if (m) { crVals.push(+m[1]); log(`  ${id} cache_read=${m[1]}`); }
+    const mc = out.match(/cc=(\d+)/);
+    if (m) { crVals.push(+m[1]); if (mc) ccVals.push(+mc[1]); log(`  ${id} cache_read=${m[1]} cache_creation=${mc ? mc[1] : '?'}`); }
     res(code);
   });
   c.on('error', res);
@@ -72,7 +74,8 @@ async function worker() {
   //   cache=cr 평균/최대(연속 호출서 상승=프롬프트 캐시 생존). 캐시 셋업 검증은 cron-runs.md 참조.
   try {
     const ts = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 16); // KST
-    const crStr = crVals.length ? `cr avg ${Math.round(crVals.reduce((a, b) => a + b, 0) / crVals.length)} · max ${Math.max(...crVals)} (n=${crVals.length})` : 'cr 없음';
+    const sum = (a) => a.reduce((x, y) => x + y, 0);
+    const crStr = crVals.length ? `cr avg ${Math.round(sum(crVals) / crVals.length)} · max ${Math.max(...crVals)} · Σcr ${sum(crVals)} · Σcc ${sum(ccVals)} (n=${crVals.length})` : 'cr 없음';
     appendFileSync(`${REPO}/docs/ops/status/cron-runs.md`, `| ${ts} | widget | accept ${accepted} · skip ${skipped} · ${rate}% | ${crStr} |\n`);
   } catch (e) { log(`다이제스트 기록 실패: ${String(e.message).slice(0, 80)}`); }
   if (COMMIT && accepted > 0) {
