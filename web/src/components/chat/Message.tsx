@@ -298,10 +298,13 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
     const rects = Array.from(range.getClientRects());
     const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
     const coarse = typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)')?.matches === true;
-    // ★터치(coarse): 직접 그린 오버레이 하이라이트를 안 그린다(hl=[]). 메시지 DOM 안에 노드를 끼우면
-    //   진행 중인 네이티브 선택의 앵커가 재설정돼 "위쪽 전부 선택"되거나 선택 핸들이 사라진다.
-    //   터치는 네이티브 선택 하이라이트+핸들이 그대로 보이므로 우리 오버레이가 불필요. (데스크탑만 오버레이.)
-    const hl = coarse ? [] : rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
+    // ★하이라이트 좌표계: 터치(coarse)=viewport(position:fixed, body portal 용) — 버튼 표시 리렌더로
+    //   네이티브 선택이 풀려도 "드래그한 부분"이 계속 보이게 우리가 직접 그린다. 메시지 DOM 이 아니라
+    //   portal(body)에 그려 선택 앵커 재설정("위쪽 전부 선택")·핸들 소실을 피한다.
+    //   데스크탑=래퍼 상대좌표(position:absolute, 메시지 안).
+    const hl = coarse
+      ? rects.map((r) => ({ left: r.left, top: r.top, w: r.width, h: r.height }))
+      : rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
     setQuoteBtn({
       x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
       y: coarse ? last.bottom - wrapRect.top + 8 : last.top - wrapRect.top - 6,
@@ -406,10 +409,18 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
             className={`rounded-full bg-indigo-500 border border-indigo-400 font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400 ${quoteBtn.below ? 'px-4 py-2 text-[13px]' : 'px-2.5 py-1 text-[12px]'}`}
           >💬 선택 인용</button>
         );
-        // ★터치(coarse): 버튼을 document.body 로 portal → 메시지 DOM 에 노드를 안 끼운다(진행 중 네이티브
-        //   선택 앵커 재설정="위쪽 전부 선택" 버그 + 핸들 소실 방지). 오버레이도 안 그림(네이티브로 충분).
-        //   데스크탑: 기존대로 메시지 안에 오버레이 하이라이트 + 절대배치 버튼.
-        if (quoteBtn.below) return createPortal(btn, document.body);
+        // ★터치(coarse): 하이라이트+버튼 모두 document.body 로 portal → 메시지 DOM 에 노드를 안 끼운다
+        //   (진행 중 네이티브 선택 앵커 재설정="위쪽 전부 선택" + 핸들 소실 방지). 버튼 표시 리렌더로
+        //   네이티브 선택이 풀려도, viewport 좌표(position:fixed)로 직접 그린 하이라이트가 "드래그한 부분"을
+        //   계속 보여준다. 데스크탑: 메시지 안 절대배치 오버레이 + 버튼(기존).
+        if (quoteBtn.below) return createPortal(
+          <>
+            {quoteBtn.hl.map((r, i) => (
+              <div key={i} aria-hidden="true" style={{ position: 'fixed', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.30)', borderRadius: 2, pointerEvents: 'none', zIndex: 69 }} />
+            ))}
+            {btn}
+          </>,
+          document.body);
         return (<>
           {/* 직접 그린 선택 하이라이트 — 데스크탑은 포커스 이탈 시 네이티브 선택이 흐려져 직접 그린다. */}
           {quoteBtn.hl.map((r, i) => (
