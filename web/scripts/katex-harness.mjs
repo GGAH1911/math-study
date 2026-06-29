@@ -86,6 +86,28 @@ const INEQUALITY_RUN = new RegExp(`(${MATH_TOKEN}(?:\\s+${MATH_TOKEN})*)(\\s*${E
 const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+(?![A-Za-z]{3,}(?![A-Za-z]))[A-Za-z0-9\-+*/^=.,()|\\{}]+)*)/g;
 
 function recoverBareMath(html) {
+  // 골든도 본체와 동일하게 렌더된 KaTeX 스팬(<annotation> 의 raw LaTeX)을 마스킹 후 복구
+  //   (안 하면 annotation 안 \frac 등을 또 렌더해 오염 → 드래그 인용 깨짐). renderMathSegments 와 패리티.
+  const SENT = String.fromCharCode(1);
+  const masks = [];
+  {
+    let masked = '', i = 0;
+    while (i < html.length) {
+      const s = html.indexOf('<span class="katex', i);
+      if (s === -1) { masked += html.slice(i); break; }
+      masked += html.slice(i, s);
+      const re = /<span\b|<\/span>/g; re.lastIndex = s;
+      let depth = 0, end = html.length, m;
+      while ((m = re.exec(html))) {
+        if (m[0] === '</span>') { if (--depth === 0) { end = m.index + m[0].length; break; } }
+        else depth++;
+      }
+      masks.push(html.slice(s, end));
+      masked += `${SENT}${masks.length - 1}${SENT}`;
+      i = end;
+    }
+    html = masked;
+  }
   html = html.replace(INEQUALITY_RUN, (full) => {
     if (/[<>]/.test(full)) return full;
     try { return katex.renderToString(decodeEntities(full), { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); } catch { return full; }
@@ -96,6 +118,7 @@ function recoverBareMath(html) {
     if (tex.length < 2) return full;
     try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); } catch { return full; }
   });
+  html = html.replace(new RegExp(`${SENT}(\\d+)${SENT}`, 'g'), (_, n) => masks[+n]);
   return html;
 }
 

@@ -126,6 +126,31 @@ const LATEX_CMD_RUN = /(\\[A-Za-z]+(?:\{[^}]{0,80}\})*(?:\s+(?![A-Za-z]{3,}(?![A
 // LLM 이 `$` 마커를 빠뜨린 raw 부등호/명령어를 수학 문맥에서만 KaTeX 로 복원.
 // 실패하면 원본 유지(throwOnError:true 고정 — 복구는 항상 안전 폴백). HTML 태그 영역은 skip.
 export function recoverBareMath(html, katex) {
+  // ★이미 렌더된 KaTeX 스팬을 마스킹한 뒤 복구한다. 안 하면 아래 bare-command 복구(LATEX_CMD_RUN)가
+  //   렌더 결과의 <annotation>(LaTeX 원본=인용 SSOT) 안에 든 raw `\frac{…}` 등을 *또* 렌더해
+  //   annotation 을 중첩 KaTeX 로 오염시킨다 → 시각은 .katex-html 이라 멀쩡하지만 드래그 인용이
+  //   annotation 을 읽어 "f(x) =" 처럼 잘린다. (display 수식 + 분수/근호 등에서 재현.)
+  // 플레이스홀더 경계는 MATH_TOKEN/명령/엔티티 패턴 어디에도 안 걸리는 제어문자 → 인접 수식런에 안 휩쓸림.
+  const SENT = String.fromCharCode(1);
+  const masks = [];
+  {
+    let masked = '', i = 0;
+    while (i < html.length) {
+      const s = html.indexOf('<span class="katex', i);
+      if (s === -1) { masked += html.slice(i); break; }
+      masked += html.slice(i, s);
+      const re = /<span\b|<\/span>/g; re.lastIndex = s;
+      let depth = 0, end = html.length, m;
+      while ((m = re.exec(html))) {
+        if (m[0] === '</span>') { if (--depth === 0) { end = m.index + m[0].length; break; } }
+        else depth++;
+      }
+      masks.push(html.slice(s, end));
+      masked += `${SENT}${masks.length - 1}${SENT}`;
+      i = end;
+    }
+    html = masked;
+  }
   html = html.replace(INEQUALITY_RUN, (full) => {
     if (/[<>]/.test(full)) return full;
     try { return katex.renderToString(decodeEntities(full), { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); } catch { return full; }
@@ -136,6 +161,8 @@ export function recoverBareMath(html, katex) {
     if (tex.length < 2) return full;
     try { return katex.renderToString(tex, { displayMode: false, throwOnError: true, strict: KATEX_STRICT }); } catch { return full; }
   });
+  // 마스크 복원 — 렌더된 KaTeX 스팬 원본 그대로.
+  html = html.replace(new RegExp(`${SENT}(\\d+)${SENT}`, 'g'), (_, n) => masks[+n]);
   return html;
 }
 
