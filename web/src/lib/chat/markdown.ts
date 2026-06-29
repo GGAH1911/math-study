@@ -158,7 +158,11 @@ export function latexFromSelection(range: Range, root: HTMLElement): string {
   // 1) 클론에 온전히 들어온 .katex 는 클론의 annotation 으로 치환.
   frag.querySelectorAll('.katex').forEach((el) => {
     const tex = (el.querySelector('annotation')?.textContent ?? '').trim();
-    el.replaceWith(document.createTextNode(tex ? ` $${tex}$ ` : (el.querySelector('.katex-html')?.textContent ?? el.textContent ?? '')));
+    // ★annotation 없는 부분클론은 .katex-html 의 보이는 텍스트가 분수 등에서 순서가 뒤집혀(분모→분자)
+    //   깨진다(`\frac{(x+2)(x-2)}{x-2}` → "x−2(x+2)(x−2)"). KaTeX 구조상 .katex-mathml(annotation)이
+    //   .katex-html 앞이라, 보이는 부분에서 시작한 선택은 mathml 을 범위 밖으로 빠뜨려 annotation 이 없다.
+    //   → 깨진 텍스트 대신 비우고, 아래 boundary 복구가 원본에서 전체 LaTeX 를 보강한다(중복·scramble 방지).
+    el.replaceWith(document.createTextNode(tex ? ` $${tex}$ ` : ''));
   });
   const div = document.createElement('div'); div.appendChild(frag);
   let out = serializeFrag(div);
