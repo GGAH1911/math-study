@@ -1,6 +1,7 @@
 // 튜터 메시지 렌더링 클러스터 — ChatPanel 에서 분리(동작 무변). 메시지 1건의 표시(마크다운·수식·
 // 그래프/도형/3D/수직선/차트/인터랙티브 세그먼트·인용칩·드래그인용 버튼·에러바운더리·모달).
 import { Component, memo, type ReactNode, useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import Graph, { GraphModal, type PlotSpec } from '../Graph.tsx';
 import Geometry, { type GeomSpec } from '../Geometry.tsx';
 import Geometry3D, { type Geom3DSpec } from '../Geometry3D.tsx';
@@ -295,11 +296,12 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
     const wrap = body.closest('[data-mi]') as HTMLElement | null;
     const wrapRect = (wrap ?? body).getBoundingClientRect();
     const rects = Array.from(range.getClientRects());
-    const hl = rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
     const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
-    // ★터치기기(coarse): 네이티브 선택 툴바가 선택 위를 가리므로 버튼을 선택 *아래*에 둔다.
-    //   데스크탑: 선택 끝 위쪽(기존). below 플래그로 버튼 transform 분기.
     const coarse = typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)')?.matches === true;
+    // ★터치(coarse): 직접 그린 오버레이 하이라이트를 안 그린다(hl=[]). 메시지 DOM 안에 노드를 끼우면
+    //   진행 중인 네이티브 선택의 앵커가 재설정돼 "위쪽 전부 선택"되거나 선택 핸들이 사라진다.
+    //   터치는 네이티브 선택 하이라이트+핸들이 그대로 보이므로 우리 오버레이가 불필요. (데스크탑만 오버레이.)
+    const hl = coarse ? [] : rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
     setQuoteBtn({
       x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
       y: coarse ? last.bottom - wrapRect.top + 8 : last.top - wrapRect.top - 6,
@@ -327,7 +329,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
         if (!sel || sel.isCollapsed || sel.rangeCount === 0 || !body) return;
         if (!body.contains(sel.getRangeAt(0).commonAncestorContainer)) return; // 이 메시지 밖 선택 무시
         updateQuoteBtn();
-      }, 300);
+      }, 600);   // ★한 템포 쉬고: 드래그·핸들조정이 멎은 뒤에만 버튼 표시(네이티브 핸들이 더 오래 남음)
     };
     document.addEventListener('selectionchange', onSelChange);
     return () => { document.removeEventListener('selectionchange', onSelChange); window.clearTimeout(t); };
@@ -389,24 +391,33 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   }
   return (
     <div data-mi={index} className={`relative flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
-      {quoteBtn && (<>
-        {/* 직접 그린 선택 하이라이트 — 네이티브 선택이 지워져도 무엇을 골랐는지 보인다. */}
-        {quoteBtn.hl.map((r, i) => (
-          <div key={i} aria-hidden="true" style={{ position: 'absolute', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.32)', borderRadius: 2, pointerEvents: 'none', zIndex: 20 }} />
-        ))}
-        <button
-          type="button"
-          data-quote-btn
-          onMouseDown={(e) => { e.preventDefault(); }}
-          onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
-          style={quoteBtn.below
-            // ★모바일(coarse): 선택 위엔 네이티브 툴바, 아래엔 선택 핸들(물방울)이 떠 둘 다 덮으면
-            //   드래그-확장이 막힌다. 그래서 선택과 무관한 고정 위치(입력창 위 중앙)에 띄운다.
-            ? { position: 'fixed', left: '50%', bottom: '88px', transform: 'translateX(-50%)', zIndex: 70 }
-            : { position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
-          className={`rounded-full bg-indigo-500 border border-indigo-400 font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400 ${quoteBtn.below ? 'px-4 py-2 text-[13px]' : 'px-2.5 py-1 text-[12px]'}`}
-        >💬 선택 인용</button>
-      </>)}
+      {quoteBtn && (() => {
+        const btn = (
+          <button
+            type="button"
+            data-quote-btn
+            onMouseDown={(e) => { e.preventDefault(); }}
+            onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
+            style={quoteBtn.below
+              // ★모바일(coarse): 선택 위엔 네이티브 툴바, 아래엔 선택 핸들(물방울)이 떠 둘 다 덮으면
+              //   드래그-확장이 막힌다. 그래서 선택과 무관한 고정 위치(입력창 위 중앙)에 띄운다.
+              ? { position: 'fixed', left: '50%', bottom: '88px', transform: 'translateX(-50%)', zIndex: 70 }
+              : { position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
+            className={`rounded-full bg-indigo-500 border border-indigo-400 font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400 ${quoteBtn.below ? 'px-4 py-2 text-[13px]' : 'px-2.5 py-1 text-[12px]'}`}
+          >💬 선택 인용</button>
+        );
+        // ★터치(coarse): 버튼을 document.body 로 portal → 메시지 DOM 에 노드를 안 끼운다(진행 중 네이티브
+        //   선택 앵커 재설정="위쪽 전부 선택" 버그 + 핸들 소실 방지). 오버레이도 안 그림(네이티브로 충분).
+        //   데스크탑: 기존대로 메시지 안에 오버레이 하이라이트 + 절대배치 버튼.
+        if (quoteBtn.below) return createPortal(btn, document.body);
+        return (<>
+          {/* 직접 그린 선택 하이라이트 — 데스크탑은 포커스 이탈 시 네이티브 선택이 흐려져 직접 그린다. */}
+          {quoteBtn.hl.map((r, i) => (
+            <div key={i} aria-hidden="true" style={{ position: 'absolute', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.32)', borderRadius: 2, pointerEvents: 'none', zIndex: 20 }} />
+          ))}
+          {btn}
+        </>);
+      })()}
       <div
         ref={bodyRef}
         onMouseUp={updateQuoteBtn}
