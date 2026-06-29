@@ -144,8 +144,37 @@ function loadHistory(): GraphHistoryEntry[] {
   } catch { return []; }
 }
 function saveHistory(h: GraphHistoryEntry[]) {
-  try { window.localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(-HISTORY_MAX), infReplacer)); }
+  const capped = h.slice(-HISTORY_MAX);
+  try { window.localStorage.setItem(HISTORY_KEY, JSON.stringify(capped, infReplacer)); }
   catch { /* quota */ }
+  saveDbHistory(capped);   // 로그인 시 계정 DB 동기화(비로그인=401 무시)
+}
+
+// ── DB 계정 동기화(chat_history 패턴) — 기기 넘어 유지·캐시삭제에도 생존 ──────────
+// ±Infinity 는 JSON/jsonb 에서 null 로 깨지므로(numberline interval 방향 버그) wire 에서도
+// infReplacer/Reviver 로 sentinel 문자열로 인코딩해 주고받는다.
+const toWire = (h: GraphHistoryEntry[]): unknown =>
+  JSON.parse(JSON.stringify(h, infReplacer));
+const fromWire = (arr: unknown): GraphHistoryEntry[] =>
+  JSON.parse(JSON.stringify(arr), infReviver) as GraphHistoryEntry[];
+
+function saveDbHistory(h: GraphHistoryEntry[]): void {
+  try {
+    fetch('/api/graph-history', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ entries: toWire(h) }),
+    }).catch(() => { /* offline/비로그인 무시 — localStorage 에 있음 */ });
+  } catch { /* ignore */ }
+}
+
+async function loadDbHistory(): Promise<GraphHistoryEntry[] | null> {
+  try {
+    const r = await fetch('/api/graph-history');
+    if (!r.ok) return null;                     // 401(비로그인) 등
+    const d = await r.json();
+    return Array.isArray(d.entries) ? fromWire(d.entries) : null;
+  } catch { return null; }
 }
 
 export function broadcastLatestGraph(g: {
@@ -901,6 +930,21 @@ export function StickyGraphPanel() {
     const h = loadHistory();
     setHistory(h);
     setIdx(h.length - 1);
+    // DB(계정) 동기화: 로그인 시 기기 넘어 유지. local 과 ts 기준 머지(둘 중 한쪽만 있던 것 보존),
+    // 최신 12개로 캡. 비로그인/실패면 local 유지(여기 진입 안 함).
+    loadDbHistory().then((dbEntries) => {
+      if (!dbEntries) return;
+      const local = loadHistory();
+      const byTs = new Map<number, GraphHistoryEntry>();
+      for (const e of [...local, ...dbEntries]) if (isValidEntry(e)) byTs.set(e.ts, e);
+      const merged = [...byTs.values()].sort((a, b) => a.ts - b.ts).slice(-HISTORY_MAX);
+      if (merged.length === 0) return;
+      try { window.localStorage.setItem(HISTORY_KEY, JSON.stringify(merged, infReplacer)); } catch { /* quota */ }
+      // 머지 결과가 DB 와 다르면(local-only 항목이 있었으면) DB 도 갱신.
+      if (merged.length !== dbEntries.length) saveDbHistory(merged);
+      setHistory(merged);
+      setIdx(merged.length - 1);
+    });
     const onGraph = (e: CustomEvent<GraphHistoryEntry>) => {
       // Reload from storage (storage already deduped + capped).
       const next = loadHistory();
@@ -947,6 +991,7 @@ export function StickyGraphPanel() {
   const clearHistory = () => {
     if (!confirm('최근 그래프 기록을 모두 지울까요?')) return;
     try { window.localStorage.removeItem(HISTORY_KEY); } catch { /* ignore */ }
+    saveDbHistory([]);   // 계정 DB 도 비움
     setHistory([]); setIdx(-1);
   };
 

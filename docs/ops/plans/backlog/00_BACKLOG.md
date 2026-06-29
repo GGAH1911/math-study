@@ -18,7 +18,7 @@ updated: 2026-06-28
 - [ ] **★심링크 재발 방지**: 인제스트가 problem-images 심링크를 상대경로로 생성하게(extract_figures 계열). 안 고치면 새 회차 적재 시 절대경로 재발→빌드 재실패.
 - [ ] **3D/공간 기출 76개** → Geometry3D 신규(렌더러 설계 결정 필요). [[project_3d_figure_hlr]]
 - [ ] **기출 Gemini 교정기 전수**(~5h): 독립검증→쿼터멱등→전수. [[project_gemini_corrector]]
-- [ ] **그래프 변경 시 계정 귀속**: 그래프·필기 기록도 chat_history처럼 계정귀속(대화는 이미 됨). [[project_tutor_chat_ux]]
+- [ ] **필기 계정 귀속**: 필기 기록 DB화(그래프는 2026-06-29 완료 — graph_history 테이블+/api/graph-history+Graph.tsx 머지동기화). 필기는 데이터 커서 같은 패턴으로 후속. [[project_tutor_chat_ux]] [[project_membership]]
 
 ## 선택·보류
 - [ ] 완전 캐싱 = Anthropic API 직접 cache_control(현 CLI는 내장 base만). [[project_claude_p_caching]]
