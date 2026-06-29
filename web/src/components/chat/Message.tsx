@@ -314,17 +314,23 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   //   닫기는 기존 pointerdown 경로가 담당.)
   useEffect(() => {
     if (!onQuote || isUser) return;
-    let raf = 0;
+    let t = 0;
+    // ★디바운스 필수: 드래그로 선택 범위를 넓히는 동안 selectionchange 가 매 프레임 발화한다.
+    //   거기서 곧장 updateQuoteBtn 하면 버튼·오버레이 DOM 이 매 프레임 재생성(churn)돼 네이티브
+    //   선택 드래그 제스처가 끊긴다("드래그 선택 안됨"). → 선택이 멈춘 뒤(마지막 변경 후 300ms)에만
+    //   버튼을 띄워 드래그 중엔 DOM 을 안 건드린다.
     const onSelChange = () => {
-      const sel = window.getSelection();
-      const body = bodyRef.current;
-      if (!sel || sel.isCollapsed || sel.rangeCount === 0 || !body) return;
-      if (!body.contains(sel.getRangeAt(0).commonAncestorContainer)) return; // 이 메시지 밖 선택 무시
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => updateQuoteBtn());
+      window.clearTimeout(t);
+      t = window.setTimeout(() => {
+        const sel = window.getSelection();
+        const body = bodyRef.current;
+        if (!sel || sel.isCollapsed || sel.rangeCount === 0 || !body) return;
+        if (!body.contains(sel.getRangeAt(0).commonAncestorContainer)) return; // 이 메시지 밖 선택 무시
+        updateQuoteBtn();
+      }, 300);
     };
     document.addEventListener('selectionchange', onSelChange);
-    return () => { document.removeEventListener('selectionchange', onSelChange); cancelAnimationFrame(raf); };
+    return () => { document.removeEventListener('selectionchange', onSelChange); window.clearTimeout(t); };
   }, [onQuote, isUser, updateQuoteBtn]);
   // 새 포인터 down(다른 곳 클릭/새 드래그 시작) 때 인용 버튼·하이라이트 닫기. ★selectionchange 로 닫으면
   //   iPad 가 touchend 후 선택을 자동으로 지우는 순간 같이 닫혀버리므로(우리 오버레이의 존재 이유와 충돌)
