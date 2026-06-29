@@ -11,14 +11,14 @@ updated: 2026-06-28
 ## 필기 캔버스 (사장님 입력·기기테스트 필요)
 - [ ] **필기 C 2단계**: 도형 자동스냅→1탭 확정 UI + InteractiveSpec 슬라이더 파라미터 조절(설계 입력 필요). [[project_concept_widgets]]
 - [ ] **갈무리→튜터 이미지 피드백**: 채팅 이미지첨부 + 튜터 vision(chat.ts/ChatPanel 개조). 📷내보내기는 됨.
-- [ ] **필기 DB 저장**: localStorage → 기기간 동기화(멤버십 백엔드, chat_history 패턴). [[project_membership]]
+- [x] **필기 DB 저장** (2026-06-29 완료): handwriting 테이블 + /api/handwriting + InkCanvas 디바운스 push·로컬우선 hydration. [[project_membership]]
 - [ ] **실펜 테스트 후 버그픽스**: A3 갈무리·도형모드·지우개 커서(헤드리스 미검증) — 아이패드 피드백 후.
 
 ## 파이프라인·인프라
-- [ ] **★심링크 재발 방지**: 인제스트가 problem-images 심링크를 상대경로로 생성하게(extract_figures 계열). 안 고치면 새 회차 적재 시 절대경로 재발→빌드 재실패.
+- [x] **심링크 재발 방지** (완료확인 2026-06-29): _ensure_web_symlink 가 이미 os.path.relpath 로 상대경로 심링크 생성(절대경로 심링크 0개 확인). extract_figures 는 심링크 미생성. backlog 항목 stale였음.
 - [ ] **3D/공간 기출 76개** → Geometry3D 신규(렌더러 설계 결정 필요). [[project_3d_figure_hlr]]
 - [ ] **기출 Gemini 교정기 전수**(~5h): 독립검증→쿼터멱등→전수. [[project_gemini_corrector]]
-- [ ] **필기 계정 귀속**: 필기 기록 DB화(그래프는 2026-06-29 완료 — graph_history 테이블+/api/graph-history+Graph.tsx 머지동기화). 필기는 데이터 커서 같은 패턴으로 후속. [[project_tutor_chat_ux]] [[project_membership]]
+- [x] **그래프·필기 계정 귀속** (2026-06-29 완료): graph_history·handwriting 테이블 양쪽 DB동기화. 비로그인=localStorage 폴백. [[project_tutor_chat_ux]] [[project_membership]]
 
 ## 선택·보류
 - [ ] 완전 캐싱 = Anthropic API 직접 cache_control(현 CLI는 내장 base만). [[project_claude_p_caching]]

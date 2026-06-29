@@ -138,13 +138,22 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     ctx?.scale(dpr, dpr); return ctx;
   }, []);
 
+  const dbTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const save = useCallback(() => {
-    try {
-      const strokes: Record<string, Stroke[]> = {};
-      for (const l of layersRef.current) strokes[l.id] = strokesOf.current.get(l.id) ?? [];
-      localStorage.setItem(KEY, JSON.stringify({ v: 2, layers: layersRef.current, strokes, activeId: live.current.activeId }));
-    } catch { /* quota */ }
-  }, [KEY]);
+    const strokes: Record<string, Stroke[]> = {};
+    for (const l of layersRef.current) strokes[l.id] = strokesOf.current.get(l.id) ?? [];
+    const doc = { v: 2, layers: layersRef.current, strokes, activeId: live.current.activeId };
+    try { localStorage.setItem(KEY, JSON.stringify(doc)); } catch { /* quota */ }
+    // 계정 DB 동기화(디바운스 1.5s — 획마다 POST 방지). 비로그인=401·offline=무시. 4MB 초과 스킵.
+    if (dbTimer.current) clearTimeout(dbTimer.current);
+    dbTimer.current = setTimeout(() => {
+      try {
+        const payload = JSON.stringify({ key: storageKey, doc });
+        if (payload.length > 4_000_000) return;
+        fetch('/api/handwriting', { method: 'POST', headers: { 'content-type': 'application/json' }, body: payload }).catch(() => { /* */ });
+      } catch { /* */ }
+    }, 1500);
+  }, [KEY, storageKey]);
 
   const hit = (id: string, x: number, y: number, rad: number): number => {
     const arr = strokesOf.current.get(id) ?? [];
@@ -191,6 +200,27 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     } catch { /* */ }
     if (!strokesOf.current.has('L1') && strokesOf.current.size === 0) strokesOf.current.set('L1', []);
   }, [KEY]);
+
+  // DB(계정) hydration: 로컬에 이 페이지 필기가 없을 때만 DB 에서 불러와 그린다(로컬 작업 보존 우선).
+  //   로그인 시 기기·시크릿·캐시삭제 무관 유지. 비로그인(401)/실패면 아무것도 안 함(로컬 유지).
+  useEffect(() => {
+    if (localStorage.getItem(KEY)) return;                 // 로컬 우선 — 덮어쓰기 방지
+    let cancelled = false;
+    fetch(`/api/handwriting?key=${encodeURIComponent(storageKey)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        const doc = d?.doc;
+        if (cancelled || !doc || doc.v !== 2 || !Array.isArray(doc.layers)) return;
+        strokesOf.current.clear();
+        for (const l of doc.layers) strokesOf.current.set(l.id, doc.strokes?.[l.id] ?? []);
+        setLayers(doc.layers);
+        setActiveId(doc.activeId ?? doc.layers[0]?.id);
+        try { localStorage.setItem(KEY, JSON.stringify(doc)); } catch { /* quota */ }
+        for (const l of doc.layers) drawLayer(l.id);       // 캔버스 준비됐으면 즉시 그림
+      })
+      .catch(() => { /* */ });
+    return () => { cancelled = true; };
+  }, [KEY, storageKey, drawLayer]);
 
   // 캔버스 setup + 오버레이 핸들러 + 리사이즈. full 토글마다 재실행(접힘=작업영역 unmount→cleanup).
   useEffect(() => {
