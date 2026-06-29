@@ -75,7 +75,10 @@ async function worker() {
   try {
     const ts = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 16); // KST
     const sum = (a) => a.reduce((x, y) => x + y, 0);
-    const crStr = crVals.length ? `cr avg ${Math.round(sum(crVals) / crVals.length)} · max ${Math.max(...crVals)} · Σcr ${sum(crVals)} · Σcc ${sum(ccVals)} (n=${crVals.length})` : 'cr 없음';
+    // ★API환산 net 절감(widget=opus 4.8, 입력 $5/1M): cache_read=0.1×·write(5m)=1.25× → cr×0.9×p − cc×0.25×p.
+    const P_IN = 5.0;
+    const saveUsd = (sum(crVals) * 0.9 * P_IN - sum(ccVals) * 0.25 * P_IN) / 1e6;
+    const crStr = crVals.length ? `cr avg ${Math.round(sum(crVals) / crVals.length)} · max ${Math.max(...crVals)} · Σcr ${sum(crVals)} · Σcc ${sum(ccVals)} · save≈$${saveUsd.toFixed(2)} (n=${crVals.length})` : 'cr 없음';
     appendFileSync(`${REPO}/docs/ops/status/cron-runs.md`, `| ${ts} | widget | accept ${accepted} · skip ${skipped} · ${rate}% | ${crStr} |\n`);
   } catch (e) { log(`다이제스트 기록 실패: ${String(e.message).slice(0, 80)}`); }
   if (COMMIT && accepted > 0) {
