@@ -825,18 +825,25 @@ export function StickyGraphPanel() {
 
   const panelRef = useRef<HTMLDivElement | null>(null);
   // Drag / resize state — kept in a ref to avoid re-renders during pointer moves.
+  // active=false 인 'drag' 는 아직 임계값 미만(=탭 후보) → 움직이면 활성. 헤더 전체가 그랩이라
+  // 버튼 위에서 시작해도 탭이면 클릭, 끌면 이동(아래 movedRef + onClickCapture 로 드래그후 클릭 차단).
   const dragRef = useRef<
-    | { kind: 'drag' | 'resize'; sx: number; sy: number; orig: PanelRect }
+    | { kind: 'drag' | 'resize'; sx: number; sy: number; orig: PanelRect; active: boolean }
     | null
   >(null);
+  const movedRef = useRef(false);   // 이번 제스처가 실제 이동이었나(드래그 후 클릭 swallow 판정)
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       const d = dragRef.current;
       if (!d) return;
-      e.preventDefault();
       const dx = e.clientX - d.sx;
       const dy = e.clientY - d.sy;
+      if (!d.active) {
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;  // 임계값(6px) 미만 = 아직 탭, 클릭 통과
+        d.active = true; movedRef.current = true;
+      }
+      e.preventDefault();
       if (d.kind === 'drag') {
         // clampRect와 동일한 minimum visible 면적 보호.
         const clamped = clampRect(
@@ -857,9 +864,10 @@ export function StickyGraphPanel() {
       }
     };
     const onUp = () => {
-      if (dragRef.current) {
+      const d = dragRef.current;
+      if (d) {
         dragRef.current = null;
-        setRect((r) => { saveRect(r); return r; });
+        if (d.active) setRect((r) => { saveRect(r); return r; });  // 실제 이동만 저장(탭은 무시)
       }
     };
     window.addEventListener('pointermove', onMove, { passive: false });
@@ -873,16 +881,20 @@ export function StickyGraphPanel() {
   }, []);
 
   const startDrag = useCallback((e: React.PointerEvent) => {
-    e.preventDefault();
-    dragRef.current = { kind: 'drag', sx: e.clientX, sy: e.clientY, orig: rect };
+    // ★preventDefault 안 함 → 버튼 탭(이동 없음)은 클릭 그대로. 이동 시 onMove 가 임계값 넘으면 드래그 활성.
+    movedRef.current = false;
+    dragRef.current = { kind: 'drag', sx: e.clientX, sy: e.clientY, orig: rect, active: false };
   }, [rect]);
   const startResize = useCallback((e: React.PointerEvent) => {
     e.preventDefault();
-    e.stopPropagation();
-    dragRef.current = { kind: 'resize', sx: e.clientX, sy: e.clientY, orig: rect };
+    e.stopPropagation();   // 리사이즈는 명시적 핸들 → 즉시 활성
+    movedRef.current = true;
+    dragRef.current = { kind: 'resize', sx: e.clientX, sy: e.clientY, orig: rect, active: true };
   }, [rect]);
-  // Stops the header's drag handler from firing when a button is tapped/clicked.
-  const stopDrag = useCallback((e: React.PointerEvent) => { e.stopPropagation(); }, []);
+  // 드래그 직후 발생하는 클릭(버튼 오발동) 차단 — capture 단계에서 swallow.
+  const swallowClickAfterDrag = useCallback((e: React.MouseEvent) => {
+    if (movedRef.current) { e.stopPropagation(); e.preventDefault(); movedRef.current = false; }
+  }, []);
 
   // Initial load + subscribe to broadcasts.
   useEffect(() => {
@@ -965,12 +977,12 @@ export function StickyGraphPanel() {
                className="bg-zinc-900/95 backdrop-blur border border-zinc-700 rounded-lg shadow-xl overflow-hidden relative flex flex-col">
             <header
               onPointerDown={startDrag}
+              onClickCapture={swallowClickAfterDrag}
               className="flex items-center justify-between px-2 py-1.5 border-b border-zinc-800 bg-zinc-950/60 gap-1 cursor-move select-none touch-none"
-              title="헤더를 드래그해 이동 (터치·마우스)"
+              title="헤더 어디서나 드래그해 이동 · 버튼은 탭하면 동작 (터치·마우스)"
             >
               <div className="flex items-center gap-1 min-w-0">
                 <button
-                  onPointerDown={stopDrag}
                   onClick={() => setIdx((i) => Math.max(0, i - 1))}
                   disabled={safeIdx <= 0}
                   className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 disabled:opacity-30"
@@ -980,7 +992,6 @@ export function StickyGraphPanel() {
                   {safeIdx + 1} / {total}
                 </span>
                 <button
-                  onPointerDown={stopDrag}
                   onClick={() => setIdx((i) => Math.min(total - 1, i + 1))}
                   disabled={safeIdx >= total - 1}
                   className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 disabled:opacity-30"
@@ -991,7 +1002,7 @@ export function StickyGraphPanel() {
                 </span>
               </div>
               <div className="flex gap-0.5 shrink-0">
-                <button onPointerDown={stopDrag}
+                <button
                         onClick={() => {
                           setModalOpen(true);
                           if (current.kind === 'geom3d') {
@@ -999,9 +1010,9 @@ export function StickyGraphPanel() {
                           }
                         }} title="확대"
                         className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100">⤢</button>
-                <button onPointerDown={stopDrag} onClick={clearHistory} title="기록 지우기"
+                <button onClick={clearHistory} title="기록 지우기"
                         className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-500 hover:bg-rose-500/20 hover:text-rose-300">×</button>
-                <button onPointerDown={stopDrag} onClick={() => setOpen(false)} title="패널 접기"
+                <button onClick={() => setOpen(false)} title="패널 접기"
                         className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100">→</button>
               </div>
             </header>
