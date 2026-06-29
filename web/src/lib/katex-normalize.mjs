@@ -67,10 +67,16 @@ export function normalizeKatex(tex) {
     .replace(/\\end\{align\*?\}/g, '\\end{aligned}')
     .replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
     .replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}')
-    // 5. \lim·\limsup·\liminf 의 첨자를 인라인($...$, textstyle)에서도 아래로 쌓이게 한다(\limits).
-    //    인라인 기본은 첨자가 옆(lim 옆 작은 x→1)으로 가는데, display 처럼 lim 아래로 내린다.
-    //    이미 \limits 가 붙었거나 \limits 자체(\lim+its)는 lookahead(다음이 글자/역슬래시면 제외)로 안 건드림.
-    .replace(/\\lim(?:sup|inf)?(?![a-zA-Z\\])/g, (m) => m + '\\limits');
+    // 5. 가동첨자(movable-limits) 연산자의 첨자를 인라인($...$, textstyle)에서도 위아래로 쌓이게(\limits).
+    //    인라인 기본은 첨자가 옆으로 가는데(∑_{k} → ∑ 옆), display 처럼 위아래로 = 교과서식.
+    //    포함: lim류·max·min·sup·inf·gcd·det·arg·Pr·∑·∏·∐·⋃·⋂·⨁ 등 큰 연산자.
+    //    ★제외: \int·\iint·\oint(적분)은 관례상 옆이 표준 → 목록 미포함.
+    //    lookahead(다음이 글자/역슬래시면 제외)로 \limits 자체·이중적용·\infty(\inf+ty) 등 오염 방지.
+    //    긴 이름 우선 정렬(liminf 가 lim 보다 먼저)로 부분매치 방지.
+    .replace(
+      /\\(?:varlimsup|varliminf|limsup|liminf|projlim|injlim|lim|max|min|sup|inf|gcd|det|arg|Pr|sum|prod|coprod|bigcup|bigcap|bigsqcup|bigoplus|bigotimes|bigodot|biguplus|bigvee|bigwedge)(?![a-zA-Z\\])/g,
+      (m) => m + '\\limits',
+    );
 }
 
 /**
