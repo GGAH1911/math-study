@@ -721,7 +721,7 @@ export function GraphModal({ open, kind, spec, svg, geomSpec, geom3dSpec, number
                              (spec?.title ?? '그래프');
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div className={`bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl ${
@@ -819,18 +819,9 @@ export function StickyGraphPanel() {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [rect, setRect] = useState<PanelRect>(() => loadRect());
-  // 터치 기기(폰·iPad): 드래그/리사이즈가 마우스 전용이라 터치로 못 옮기고, 저장된 rect 가 화면을 벗어나
-  // 잘리거나 챗 패널(z-49)에 가린다 → 펼침+터치면 rect 무시·뷰포트 맞춤 상단시트(좌측 420폭) + z 상향(아래 effRect).
-  // ★pointer:coarse 로 iPad 포함(iPad 는 ≥768px 라 width 기준에선 빠졌음 = 채팅 뒤에 가리던 원인).
-  const [vp, setVp] = useState(() => ({
-    w: typeof window !== 'undefined' ? window.innerWidth : 1280,
-    touch: typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches,
-  }));
-  useEffect(() => {
-    const on = () => setVp({ w: window.innerWidth, touch: window.matchMedia('(pointer: coarse)').matches });
-    window.addEventListener('resize', on); on();
-    return () => window.removeEventListener('resize', on);
-  }, []);
+  // 드래그/리사이즈는 Pointer Events(마우스·터치·펜 공통)로 처리 → 모든 기기에서 이동·크기조절 가능.
+  // 핸들에 touch-action:none 을 줘 브라우저 스크롤이 제스처를 가로채지 않게 한다.
+  // 패널은 항상 z-[60](챗 z-49 위) = 최상단, clampRect 로 화면 안 유지. (옛 터치 effRect 강제고정 폐기)
 
   const panelRef = useRef<HTMLDivElement | null>(null);
   // Drag / resize state — kept in a ref to avoid re-renders during pointer moves.
@@ -840,7 +831,7 @@ export function StickyGraphPanel() {
   >(null);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
+    const onMove = (e: PointerEvent) => {
       const d = dragRef.current;
       if (!d) return;
       e.preventDefault();
@@ -871,25 +862,27 @@ export function StickyGraphPanel() {
         setRect((r) => { saveRect(r); return r; });
       }
     };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
+    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
     return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
     };
   }, []);
 
-  const startDrag = useCallback((e: React.MouseEvent) => {
+  const startDrag = useCallback((e: React.PointerEvent) => {
     e.preventDefault();
     dragRef.current = { kind: 'drag', sx: e.clientX, sy: e.clientY, orig: rect };
   }, [rect]);
-  const startResize = useCallback((e: React.MouseEvent) => {
+  const startResize = useCallback((e: React.PointerEvent) => {
     e.preventDefault();
     e.stopPropagation();
     dragRef.current = { kind: 'resize', sx: e.clientX, sy: e.clientY, orig: rect };
   }, [rect]);
-  // Stops the header's drag handler from firing when a button is clicked.
-  const stopDrag = useCallback((e: React.MouseEvent) => { e.stopPropagation(); }, []);
+  // Stops the header's drag handler from firing when a button is tapped/clicked.
+  const stopDrag = useCallback((e: React.PointerEvent) => { e.stopPropagation(); }, []);
 
   // Initial load + subscribe to broadcasts.
   useEffect(() => {
@@ -951,9 +944,7 @@ export function StickyGraphPanel() {
   // Height = width / natural aspect (per content kind). Numberline is 1D
   // and uses its own natural height regardless of width.
   const INNER_PAD = 12;
-  // 터치(폰·iPad) 펼침 = 뷰포트 맞춤 상단시트(좌8·상64·폭 min(vw-16,420)): 세로 우측잘림·챗 뒤 가림 해소.
-  // 폭 420 상한이라 iPad/가로에선 우측에 챗 공간이 남아 공존, 좁은 화면은 z-50 으로 챗 위.
-  const effRect = open && vp.touch ? { x: 8, y: 64, w: Math.min(vp.w - 16, 420) } : rect;
+  const effRect = rect;  // 모든 기기 동일: Pointer 드래그로 옮긴 위치 사용(터치 포함). z-[60] 으로 항상 최상단.
   const graphicW = Math.max(PANEL_MIN_W - INNER_PAD, effRect.w - INNER_PAD);
   const aspect = CONTENT_ASPECT[current.kind] ?? 1.5;
   const graphicH = current.kind === 'numberline' ? undefined : Math.round(graphicW / aspect);
@@ -961,26 +952,25 @@ export function StickyGraphPanel() {
   return (
     <>
       <aside
-        className="block fixed z-30"
+        className="block fixed z-[60]"
         style={{
           left: open ? effRect.x : undefined,
           right: open ? undefined : 0,
           top: open ? effRect.y : 80,
           width: open ? effRect.w : 40,
-          zIndex: open && vp.touch ? 50 : undefined,
         }}
       >
         {open ? (
           <div ref={panelRef}
                className="bg-zinc-900/95 backdrop-blur border border-zinc-700 rounded-lg shadow-xl overflow-hidden relative flex flex-col">
             <header
-              onMouseDown={startDrag}
-              className="flex items-center justify-between px-2 py-1.5 border-b border-zinc-800 bg-zinc-950/60 gap-1 cursor-move select-none"
-              title="헤더를 드래그해 이동"
+              onPointerDown={startDrag}
+              className="flex items-center justify-between px-2 py-1.5 border-b border-zinc-800 bg-zinc-950/60 gap-1 cursor-move select-none touch-none"
+              title="헤더를 드래그해 이동 (터치·마우스)"
             >
               <div className="flex items-center gap-1 min-w-0">
                 <button
-                  onMouseDown={stopDrag}
+                  onPointerDown={stopDrag}
                   onClick={() => setIdx((i) => Math.max(0, i - 1))}
                   disabled={safeIdx <= 0}
                   className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 disabled:opacity-30"
@@ -990,7 +980,7 @@ export function StickyGraphPanel() {
                   {safeIdx + 1} / {total}
                 </span>
                 <button
-                  onMouseDown={stopDrag}
+                  onPointerDown={stopDrag}
                   onClick={() => setIdx((i) => Math.min(total - 1, i + 1))}
                   disabled={safeIdx >= total - 1}
                   className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 disabled:opacity-30"
@@ -1001,7 +991,7 @@ export function StickyGraphPanel() {
                 </span>
               </div>
               <div className="flex gap-0.5 shrink-0">
-                <button onMouseDown={stopDrag}
+                <button onPointerDown={stopDrag}
                         onClick={() => {
                           setModalOpen(true);
                           if (current.kind === 'geom3d') {
@@ -1009,9 +999,9 @@ export function StickyGraphPanel() {
                           }
                         }} title="확대"
                         className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100">⤢</button>
-                <button onMouseDown={stopDrag} onClick={clearHistory} title="기록 지우기"
+                <button onPointerDown={stopDrag} onClick={clearHistory} title="기록 지우기"
                         className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-500 hover:bg-rose-500/20 hover:text-rose-300">×</button>
-                <button onMouseDown={stopDrag} onClick={() => setOpen(false)} title="패널 접기"
+                <button onPointerDown={stopDrag} onClick={() => setOpen(false)} title="패널 접기"
                         className="w-6 h-6 inline-flex items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100">→</button>
               </div>
             </header>
@@ -1042,8 +1032,8 @@ export function StickyGraphPanel() {
             </div>
             {/* resize handle (bottom-right corner) */}
             <div
-              onMouseDown={startResize}
-              className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize select-none flex items-end justify-end pr-0.5 pb-0.5 text-zinc-500 hover:text-indigo-400"
+              onPointerDown={startResize}
+              className="absolute bottom-0 right-0 w-5 h-5 cursor-se-resize select-none touch-none flex items-end justify-end pr-0.5 pb-0.5 text-zinc-500 hover:text-indigo-400"
               title="우하단을 드래그해 크기 조절"
             >
               <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
