@@ -23,6 +23,7 @@ Env: ANTHROPIC_API_KEY (claude CLI auth). Verifiers run via the repo venv.
 """
 from __future__ import annotations
 import re, sys, json, glob, subprocess, tempfile, os
+from datetime import datetime
 from pathlib import Path
 from solve_prompts import build_prompt, build_text_prompt, build_openbook_prompt, build_promote_prompt
 
@@ -39,6 +40,36 @@ os.makedirs(CLEAN_DIR, exist_ok=True)
 # ★git 블록 제거 → prompt 캐시 prefix 안정(cache_read 고정). clean cwd 와 벨트+멜빵.
 #   --add-dir 가 레포(이미지)를 가리켜도 git status 가 system prompt 를 안 흔든다(실측 검증).
 CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
+
+# ── usage/절감 로깅 (cta-law llm_client 패턴) — 모델별 단가로 API환산 net 절감 기록 ──
+# net = cr×0.9×p − cc×0.25×p (cache_read=0.1×·write5m=1.25×). 사다리 haiku/sonnet/opus 각 단가.
+_USAGE_LOG = os.environ.get('SOLVER_USAGE_LOG', '/tmp/solver_usage.log')
+_PRICE_IN = {'opus': 5.0, 'sonnet': 3.0, 'haiku': 1.0, 'fable': 10.0}
+
+def _log_usage(model: str, u: dict) -> None:
+    try:
+        cr = u.get('cache_read_input_tokens', 0) or 0
+        cc = u.get('cache_creation_input_tokens', 0) or 0
+        p = _PRICE_IN.get(model, 5.0)
+        save = (cr * 0.9 * p - cc * 0.25 * p) / 1e6
+        with open(_USAGE_LOG, 'a') as f:
+            f.write(f"{datetime.now().isoformat(timespec='seconds')}\t{model}"
+                    f"\tcr={cr}\tcc={cc}\tin={u.get('input_tokens', 0)}\tout={u.get('output_tokens', 0)}"
+                    f"\tsave=${save:.4f}\n")
+    except Exception:
+        pass
+
+def _unwrap_and_log(stdout: str, model: str) -> str:
+    """--output-format json 엔벨로프면 usage 로깅 후 result(모델 텍스트) 반환. 아니면 원문 그대로
+    (하위호환). 다운스트림 파싱은 언랩된 텍스트에 대해 기존과 동일하게 동작."""
+    try:
+        env = json.loads(stdout)
+        if isinstance(env, dict) and 'result' in env:
+            _log_usage(model, env.get('usage') or {})
+            return env.get('result') or ''
+    except Exception:
+        pass
+    return stdout
 
 sys.path.insert(0, str(ROOT / 'scripts'))
 from tiling import tile_for_vision  # noqa: E402  세로 긴 문제 → 원해상도 타일
@@ -104,7 +135,7 @@ def call_model(img_paths: list[str], fmt: str, meta: str, model: str, effort: st
     import shutil
     anon_paths, anon_dir = _anonymize(img_paths)   # ← 파일명 정체 누출 차단
     prompt = build_prompt(anon_paths, fmt, meta, hint, with_verifier)
-    args = ['claude', '-p', '--model', model, '--effort', effort,
+    args = ['claude', '-p', '--output-format', 'json', '--model', model, '--effort', effort,
             '--allowedTools', 'Read', '--add-dir', anon_dir,
             '--disallowedTools', 'Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '14', '--system-prompt', SYSTEM, '--', prompt]
@@ -124,7 +155,7 @@ def call_model(img_paths: list[str], fmt: str, meta: str, model: str, effort: st
     finally:
         stop.set()
         shutil.rmtree(anon_dir, ignore_errors=True)
-    out = r.stdout
+    out = _unwrap_and_log(r.stdout, model)
     blocks = re.findall(r'```json\s*(.*?)```', out, re.DOTALL)
     if not blocks:
         blocks = re.findall(r'(\{.*"verifier_python".*\})', out, re.DOTALL)
@@ -150,16 +181,17 @@ def extract_searchable(md_text: str) -> str:
 def call_model_text(problem_text: str, fmt: str, meta: str, model: str, effort: str) -> dict | None:
     """식-텍스트 우회 — 이미지 없이 searchable_text만으로 풀이(도구 없음). vision 누명 제거용."""
     prompt = build_text_prompt(problem_text, fmt, meta)
-    args = ['claude', '-p', '--model', model, '--effort', effort,
+    args = ['claude', '-p', '--output-format', 'json', '--model', model, '--effort', effort,
             '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
     try:
         r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
-    blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
+    out = _unwrap_and_log(r.stdout, model)
+    blocks = re.findall(r'```json\s*(.*?)```', out, re.DOTALL)
     if not blocks:
-        blocks = re.findall(r'(\{.*"answer".*\})', r.stdout, re.DOTALL)
+        blocks = re.findall(r'(\{.*"answer".*\})', out, re.DOTALL)
     for b in reversed(blocks):
         try:
             return json.loads(b.strip())
@@ -221,16 +253,17 @@ def call_openbook(problem_text: str, gold: str, fmt: str, steps_text: str,
     prompt = build_openbook_prompt(problem_text, gold, fmt, steps_text, lite=lite)
     if hint:
         prompt += f"\n\n{hint}"
-    args = ['claude', '-p', '--model', model, '--effort', effort,
+    args = ['claude', '-p', '--output-format', 'json', '--model', model, '--effort', effort,
             '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
     try:
         r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
-    blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
+    out = _unwrap_and_log(r.stdout, model)
+    blocks = re.findall(r'```json\s*(.*?)```', out, re.DOTALL)
     if not blocks:
-        blocks = re.findall(r'(\{.*"verifier_python".*\})', r.stdout, re.DOTALL)
+        blocks = re.findall(r'(\{.*"verifier_python".*\})', out, re.DOTALL)
     for b in reversed(blocks):
         try:
             return json.loads(b.strip())
@@ -384,16 +417,17 @@ def call_promote(problem_text: str, gold: str, fmt: str, steps_text: str, lite_c
     prompt = build_promote_prompt(problem_text, gold, fmt, steps_text, lite_code)
     if hint:
         prompt += f"\n\n{hint}"
-    args = ['claude', '-p', '--model', model, '--effort', effort,
+    args = ['claude', '-p', '--output-format', 'json', '--model', model, '--effort', effort,
             '--disallowedTools', 'Read,Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
             '--max-turns', '6', '--system-prompt', SYSTEM_TEXT, '--', prompt]
     try:
         r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=CLEAN_DIR, env=CLAUDE_ENV)
     except subprocess.TimeoutExpired:
         return None
-    blocks = re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)
+    out = _unwrap_and_log(r.stdout, model)
+    blocks = re.findall(r'```json\s*(.*?)```', out, re.DOTALL)
     if not blocks:
-        blocks = re.findall(r'(\{.*"verifier_python".*\})', r.stdout, re.DOTALL)
+        blocks = re.findall(r'(\{.*"verifier_python".*\})', out, re.DOTALL)
     for b in reversed(blocks):
         try:
             return json.loads(b.strip())
@@ -488,7 +522,7 @@ def _agent_solve(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
     → verified:true(CACHED@A) 목표, 답만 맞으면 verified:false(CACHED@A~)."""
     import shutil, threading
     anon_paths, anon_dir = _anonymize(tiles)
-    args = ['claude', '-p', '--model', 'opus', '--effort', 'high',
+    args = ['claude', '-p', '--output-format', 'json', '--model', 'opus', '--effort', 'high',
             '--allowedTools', 'Read,Bash,Write', '--add-dir', anon_dir,
             '--disallowedTools', 'WebFetch,WebSearch,Edit', '--max-turns', '30',
             '--system-prompt', SYSTEM, '--', _agent_prompt(anon_paths, fmt, meta)]
@@ -506,7 +540,7 @@ def _agent_solve(p: Path, tiles, fmt, meta, img_dir, gold, solved_by, trace):
     finally:
         stop.set(); shutil.rmtree(anon_dir, ignore_errors=True)
     sol = None
-    for b in reversed(re.findall(r'```json\s*(.*?)```', r.stdout, re.DOTALL)):
+    for b in reversed(re.findall(r'```json\s*(.*?)```', _unwrap_and_log(r.stdout, 'opus'), re.DOTALL)):
         try: sol = json.loads(b.strip()); break
         except Exception: continue
     if not sol:

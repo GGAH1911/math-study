@@ -24,7 +24,7 @@ updated: 2026-06-28
 - [ ] 완전 캐싱 = Anthropic API 직접 cache_control(현 CLI는 내장 base만). [[project_claude_p_caching]]
 - [ ] 검정고시 인제스트(87회차 메인 종료 후). [[project_geomgo_plan]]
 - [ ] Gmail MCP 설치(@gongrzhe/server-gmail-autoauth-mcp + Google OAuth, "Gmail 설치해"). — *세션 중 claude.ai Gmail 커넥터 연결됨, 재평가 가능*
-- [ ] build_solution_cache usage 로깅(캐싱 절약 직접 측정).
+- [x] build_solution_cache usage/절감 로깅 (2026-06-29 완료): --output-format json + _unwrap_and_log 로 5개 호출(haiku/sonnet/opus) cr/cc/save=$ 기록(/tmp/solver_usage.log, 모델별 단가). 파싱은 result 언랩으로 기존과 동일.
 
 ---
 ## 🔗 지식망 연결
