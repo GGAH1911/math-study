@@ -399,9 +399,13 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
           data-quote-btn
           onMouseDown={(e) => { e.preventDefault(); }}
           onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
-          style={{ position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: quoteBtn.below ? 'translate(-100%, 0)' : 'translate(-100%, -100%)', zIndex: 30 }}
-          className="px-2.5 py-1 rounded-full bg-indigo-500 border border-indigo-400 text-[12px] font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400"
-        >💬 인용</button>
+          style={quoteBtn.below
+            // ★모바일(coarse): 선택 위엔 네이티브 툴바, 아래엔 선택 핸들(물방울)이 떠 둘 다 덮으면
+            //   드래그-확장이 막힌다. 그래서 선택과 무관한 고정 위치(입력창 위 중앙)에 띄운다.
+            ? { position: 'fixed', left: '50%', bottom: '88px', transform: 'translateX(-50%)', zIndex: 70 }
+            : { position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
+          className={`rounded-full bg-indigo-500 border border-indigo-400 font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400 ${quoteBtn.below ? 'px-4 py-2 text-[13px]' : 'px-2.5 py-1 text-[12px]'}`}
+        >💬 선택 인용</button>
       </>)}
       <div
         ref={bodyRef}
