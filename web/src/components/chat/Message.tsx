@@ -281,7 +281,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   // 드래그 선택 → "인용" 버튼 + 직접 그린 하이라이트(네이티브 ::selection 은 iPad touchend 시 OS 가
   //   지우고, 데스크탑은 포커스 이탈 시 비활성렌더돼 신뢰 불가 → 선택 rects 를 오버레이로 직접 그린다).
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; latex: string; hl: { left: number; top: number; w: number; h: number }[] } | null>(null);
+  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; below: boolean; latex: string; hl: { left: number; top: number; w: number; h: number }[] } | null>(null);
   const updateQuoteBtn = useCallback(() => {
     if (!onQuote || isUser) return;
     const sel = window.getSelection();
@@ -297,13 +297,35 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
     const rects = Array.from(range.getClientRects());
     const hl = rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
     const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
+    // ★터치기기(coarse): 네이티브 선택 툴바가 선택 위를 가리므로 버튼을 선택 *아래*에 둔다.
+    //   데스크탑: 선택 끝 위쪽(기존). below 플래그로 버튼 transform 분기.
+    const coarse = typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)')?.matches === true;
     setQuoteBtn({
       x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
-      y: last.top - wrapRect.top - 6,
+      y: coarse ? last.bottom - wrapRect.top + 8 : last.top - wrapRect.top - 6,
+      below: coarse,
       latex,
       hl,
     });
   }, [onQuote, isUser]);
+  // 모바일/태블릿: 롱프레스 선택은 touchend *후* 네이티브 핸들로 이뤄져 onTouchEnd 핸들러는 빈 선택만
+  //   본다. selectionchange 로 실제 선택 완료·핸들 조정 시 버튼을 띄운다. (★닫기는 안 함 — 선택 해제/
+  //   collapse 시엔 return 만. iPad 가 touchend 후 선택을 자동으로 지우는 순간 같이 닫히는 사고 방지.
+  //   닫기는 기존 pointerdown 경로가 담당.)
+  useEffect(() => {
+    if (!onQuote || isUser) return;
+    let raf = 0;
+    const onSelChange = () => {
+      const sel = window.getSelection();
+      const body = bodyRef.current;
+      if (!sel || sel.isCollapsed || sel.rangeCount === 0 || !body) return;
+      if (!body.contains(sel.getRangeAt(0).commonAncestorContainer)) return; // 이 메시지 밖 선택 무시
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => updateQuoteBtn());
+    };
+    document.addEventListener('selectionchange', onSelChange);
+    return () => { document.removeEventListener('selectionchange', onSelChange); cancelAnimationFrame(raf); };
+  }, [onQuote, isUser, updateQuoteBtn]);
   // 새 포인터 down(다른 곳 클릭/새 드래그 시작) 때 인용 버튼·하이라이트 닫기. ★selectionchange 로 닫으면
   //   iPad 가 touchend 후 선택을 자동으로 지우는 순간 같이 닫혀버리므로(우리 오버레이의 존재 이유와 충돌)
   //   포인터 down 으로만 dismiss — 버튼 자신을 누른 경우는 onClick 이 먼저 처리하므로 제외.
@@ -371,7 +393,7 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
           data-quote-btn
           onMouseDown={(e) => { e.preventDefault(); }}
           onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
-          style={{ position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
+          style={{ position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: quoteBtn.below ? 'translate(-100%, 0)' : 'translate(-100%, -100%)', zIndex: 30 }}
           className="px-2.5 py-1 rounded-full bg-indigo-500 border border-indigo-400 text-[12px] font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400"
         >💬 인용</button>
       </>)}
