@@ -99,4 +99,7 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 ENV PATH="/root/.local/bin:${PATH}"
 WORKDIR /app/web
 # node_modules(named volume)가 비어 있으면 npm ci 후 astro dev. 이후 기동은 캐시 → 빠름.
-CMD ["sh","-c","[ -e node_modules/astro ] || npm ci; exec npm run dev -- --host 0.0.0.0 --port 8080"]
+# ★safe.directory: /app/.git 은 호스트 바인드라 소유자가 호스트 uid(컨테이너는 root) → git 이
+#   "dubious ownership"로 전부 거부한다(컨테이너 재생성마다 초기화되는 root 글로벌설정이라 매 기동 필요).
+#   크론(widget_spec_loop)의 git add/commit 이 이걸로 매번 실패했었다(2026-07-01 발견).
+CMD ["sh","-c","git config --global --add safe.directory /app; [ -e node_modules/astro ] || npm ci; exec npm run dev -- --host 0.0.0.0 --port 8080"]
