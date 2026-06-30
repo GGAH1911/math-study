@@ -25,6 +25,14 @@ RUN npm ci
 WORKDIR /app
 COPY web ./web
 COPY docs ./docs
+# ★문제 이미지: web/public/problem-images/*.png 4천여 개가 ../../../db/raw 로 가는 심링크다.
+#   런타임 이미지엔 db/(872M)를 안 넣으므로 빌드 단계에서 db 를 복사해 심링크를 실파일로 풀어 박는다
+#   (깨진 심링크는 제거). 그래야 runner 가 public 만 복사해도 문제 이미지가 서빙된다.
+COPY db ./db
+RUN set -e; cd /app/web/public/problem-images && for l in *; do \
+      if [ -L "$l" ]; then t="$(readlink -f "$l")"; \
+        if [ -f "$t" ]; then cp --remove-destination "$t" "$l"; else rm -f "$l"; fi; \
+      fi; done
 
 # prebuild(허브/그래프/인덱스 생성 + LWIP 감사) → astro build.
 WORKDIR /app/web
@@ -42,7 +50,7 @@ ENV PORT=8080
 # api/sympy.ts 는 ../.venv/bin/python 을 spawn 한다(런타임 cwd=/app/web → /app/.venv).
 # python3 + sympy 를 전용 venv 에 설치(시스템 파이썬 오염 없이 경로 고정).
 RUN apt-get update \
- && apt-get install -y --no-install-recommends python3 python3-venv \
+ && apt-get install -y --no-install-recommends python3 python3-venv curl ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 RUN python3 -m venv /app/.venv \
  && /app/.venv/bin/pip install --no-cache-dir --upgrade pip \
@@ -58,6 +66,12 @@ COPY --from=builder /app/web/public ./public
 # 비루트 실행(node:22-slim 에 내장된 node 유저).
 RUN chown -R node:node /app
 USER node
+
+# ★튜터(chat.ts)가 spawn 하는 claude CLI(네이티브 설치). 구독 인증(~/.claude)은 *런타임 마운트*로
+#   주입(시크릿 미베이크). 프롬프트 캐싱은 chat.ts 의 CLEAN_DIR(clean cwd)+DISABLE_GIT 가 담당하므로
+#   컨테이너에서도 그대로 유지된다(별도 설정 불필요). [[project_claude_p_caching]]
+RUN curl -fsSL https://claude.ai/install.sh | bash
+ENV PATH="/home/node/.local/bin:${PATH}"
 
 EXPOSE 8080
 

@@ -1,0 +1,56 @@
+# math-study 자가호스팅(tme) — 부동산 포렌식과 한 박스 공존.
+# mem_limit 로 리소스 격리(학습기가 포렌식을 굶기지 못하게). claude 구독 인증은 런타임 마운트.
+#
+# 사용:
+#   cd deploy && cp .env.example .env && vi .env      # 시크릿 채우기(미커밋)
+#   docker compose up -d --build                       # 빌드+기동
+#   docker compose logs -f web                         # 로그
+# 빌드 컨텍스트=레포 루트(web/Dockerfile 헤더 참고: prebuild 가 ../docs·db/raw 읽음).
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mathstudy
+      POSTGRES_USER: mathstudy
+      POSTGRES_PASSWORD: ${MS_DB_PASSWORD}
+    volumes:
+      - ms_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mathstudy -d mathstudy"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    mem_limit: 4g
+    # ★호스트 포트 미노출 — web 컨테이너(내부 네트워크)만 접근. 포렌식 postgres(5432)와 완전 분리.
+
+  web:
+    build:
+      context: ..
+      dockerfile: web/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 8080
+      MATH_STUDY_DATABASE_URL: postgres://mathstudy:${MS_DB_PASSWORD}@db:5432/mathstudy
+      MATH_STUDY_ADMIN_EMAILS: ${MS_ADMIN_EMAILS}
+      # TLS 리버스 프록시 붙이기 전엔 false(http 로 쿠키 전달돼야 로그인됨). 붙이면 true 로.
+      MATH_STUDY_SECURE_COOKIES: ${MS_SECURE_COOKIES:-false}
+      # ★프롬프트 캐싱: clean cwd(컨테이너 /tmp 는 깨끗) + chat.ts 가 DISABLE_GIT 주입 → cache_read 유지.
+      CLAUDE_P_CWD: /tmp/claude_p_clean
+      HOME: /home/node
+    volumes:
+      # 튜터 claude -p 구독 인증·설정. rw: OAuth 토큰 갱신 위해(시크릿은 이미지에 안 구움).
+      - ${MS_CLAUDE_DIR}:/home/node/.claude
+    ports:
+      # 초기 검증은 Tailscale 로 직접(0.0.0.0). 프로덕션은 리버스 프록시 뒤로 옮기고 127.0.0.1 로 제한.
+      - "${MS_WEB_PORT:-4324}:8080"
+    mem_limit: 6g
+
+volumes:
+  ms_pgdata:
