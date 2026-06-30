@@ -56,22 +56,20 @@ RUN python3 -m venv /app/.venv \
  && /app/.venv/bin/pip install --no-cache-dir --upgrade pip \
  && /app/.venv/bin/pip install --no-cache-dir "sympy>=1.14"
 
-# 런타임에 필요한 것만 복사: 빌드 산출물 + 프로덕션 node_modules + 정적 public.
-WORKDIR /app/web
-COPY --from=builder /app/web/dist ./dist
-COPY --from=builder /app/web/node_modules ./node_modules
-COPY --from=builder /app/web/package.json ./package.json
-COPY --from=builder /app/web/public ./public
-
-# 비루트 실행(node:22-slim 에 내장된 node 유저).
-RUN chown -R node:node /app
+# 비루트 실행(node:22-slim 내장 node 유저). ★앱 코드보다 *먼저* claude CLI 를 설치해 레이어 캐시:
+#   소스만 바뀌는 재빌드에선 이 레이어가 캐시 적중 → claude 재다운로드 안 함.
+# ★튜터(chat.ts)가 spawn 하는 claude CLI(네이티브). 구독 인증(~/.claude)은 *런타임 마운트*(시크릿
+#   미베이크). 캐싱은 chat.ts 의 CLEAN_DIR+DISABLE_GIT 담당 → 컨테이너서도 유지. [[project_claude_p_caching]]
 USER node
-
-# ★튜터(chat.ts)가 spawn 하는 claude CLI(네이티브 설치). 구독 인증(~/.claude)은 *런타임 마운트*로
-#   주입(시크릿 미베이크). 프롬프트 캐싱은 chat.ts 의 CLEAN_DIR(clean cwd)+DISABLE_GIT 가 담당하므로
-#   컨테이너에서도 그대로 유지된다(별도 설정 불필요). [[project_claude_p_caching]]
 RUN curl -fsSL https://claude.ai/install.sh | bash
 ENV PATH="/home/node/.local/bin:${PATH}"
+
+# 런타임 산출물 복사 — 소유권을 COPY 시점에 지정(--chown)해 별도 `chown -R /app`(이전 5.5분!) 제거.
+WORKDIR /app/web
+COPY --chown=node:node --from=builder /app/web/dist ./dist
+COPY --chown=node:node --from=builder /app/web/node_modules ./node_modules
+COPY --chown=node:node --from=builder /app/web/package.json ./package.json
+COPY --chown=node:node --from=builder /app/web/public ./public
 
 EXPOSE 8080
 
