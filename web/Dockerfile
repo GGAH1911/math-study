@@ -88,7 +88,7 @@ CMD ["node", "./dist/server/entry.mjs"]
 FROM node:22-slim AS dev
 ENV NODE_ENV=development HOST=0.0.0.0 PORT=8080 HOME=/root
 RUN apt-get update \
- && apt-get install -y --no-install-recommends python3 python3-venv curl ca-certificates git \
+ && apt-get install -y --no-install-recommends python3 python3-venv curl ca-certificates git openssh-client \
  && rm -rf /var/lib/apt/lists/*
 # sympy(api/sympy.ts) — /app/.venv 는 /app/web 만 바인드하므로 가려지지 않는다.
 RUN python3 -m venv /app/.venv \
