@@ -79,3 +79,24 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
 
 # @astrojs/node standalone 엔트리.
 CMD ["node", "./dist/server/entry.mjs"]
+
+# ─────────────────────────────────────────────────────────────
+# 3) dev — 즉시 반영(astro dev + HMR). 소스/콘텐츠/db 는 런타임 바인드마운트(compose.dev),
+#    node_modules 는 named volume. 앱코드를 굽지 않으므로 git pull 만 하면 HMR 로 바로 반영
+#    (재빌드 불필요 = laptop 과 동일). ★프로덕션 아님 — 단일 사용자 프리런치 반복용.
+# ─────────────────────────────────────────────────────────────
+FROM node:22-slim AS dev
+ENV NODE_ENV=development HOST=0.0.0.0 PORT=8080 HOME=/root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 python3-venv curl ca-certificates git \
+ && rm -rf /var/lib/apt/lists/*
+# sympy(api/sympy.ts) — /app/.venv 는 /app/web 만 바인드하므로 가려지지 않는다.
+RUN python3 -m venv /app/.venv \
+ && /app/.venv/bin/pip install --no-cache-dir --upgrade pip \
+ && /app/.venv/bin/pip install --no-cache-dir "sympy>=1.14"
+# 튜터 claude CLI(루트 설치 → /root/.claude 마운트로 인증). 캐싱은 chat.ts CLEAN_DIR+DISABLE_GIT.
+RUN curl -fsSL https://claude.ai/install.sh | bash
+ENV PATH="/root/.local/bin:${PATH}"
+WORKDIR /app/web
+# node_modules(named volume)가 비어 있으면 npm ci 후 astro dev. 이후 기동은 캐시 → 빠름.
+CMD ["sh","-c","[ -e node_modules/astro ] || npm ci; exec npm run dev -- --host 0.0.0.0 --port 8080"]

@@ -1,0 +1,34 @@
+# 즉시 반영(dev) 오버레이 — 소스를 바인드마운트 + astro dev(HMR). 재빌드 없이 git pull 만으로 반영.
+# 사용:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build web
+#   # 이후 코드 수정 반영: tme 에서  git pull  → astro dev HMR 가 자동 반영(재빌드 X)
+# 프로덕션(빌드)으로 돌아가기:
+#   docker compose -f docker-compose.yml up -d --build web
+#
+# ★단일 사용자 프리런치 반복용. 공개 출시 땐 프로덕션(빌드) 모드로.
+
+services:
+  web:
+    build:
+      target: dev
+    environment:
+      NODE_ENV: development
+      HOME: /root
+    volumes:
+      # 소스 라이브(HMR) + 콘텐츠 + 문제이미지(db/raw). node_modules 는 바인드에 안 가려지게 named volume.
+      - ../web:/app/web
+      - ms_devnode:/app/web/node_modules
+      - ../docs:/app/docs
+      - ../db:/app/db
+      # 튜터 구독 인증(dev 컨테이너는 root 실행 → /root/.claude).
+      - ${MS_CLAUDE_DIR}:/root/.claude
+    # dev 서버는 헬스체크 워밍업이 길 수 있어 완화(빌드본 healthcheck 상속 무력화).
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+volumes:
+  ms_devnode:
