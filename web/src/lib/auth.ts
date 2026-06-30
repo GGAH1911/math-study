@@ -122,8 +122,15 @@ export async function resolveUser(cookies: AstroCookies): Promise<User | null> {
 // ─────────────────────────────────────────── CSRF (Origin/Referer 동일출처 검증)
 // state-changing 요청(POST/PUT/PATCH/DELETE)에만 미들웨어가 적용.
 export function isSameOrigin(request: Request): boolean {
-  let host: string;
-  try { host = new URL(request.url).host; } catch { return false; }
+  // ★브라우저가 실제로 친 호스트 = Host 헤더로 비교한다. request.url 의 host 는 프로덕션 node
+  //   어댑터(standalone)에선 내부 bind(예: localhost:8080)로 잡혀, 포트매핑/프록시 뒤에서 Origin 과
+  //   영영 불일치 → 모든 state-changing 요청이 403 으로 막혔다(컨테이너 배포 시 로그인 불가).
+  //   프록시(TLS) 뒤에선 x-forwarded-host 가 공개 도메인을 담으므로 TRUST_PROXY 시 우선 사용.
+  const trustProxy = process.env.MATH_STUDY_TRUST_PROXY === 'true';
+  const host = (trustProxy ? request.headers.get('x-forwarded-host') : null)
+    ?? request.headers.get('host')
+    ?? (() => { try { return new URL(request.url).host; } catch { return ''; } })();
+  if (!host) return false;
   const origin = request.headers.get('origin');
   if (origin) {
     try { return new URL(origin).host === host; } catch { return false; }
