@@ -15,13 +15,16 @@ services:
       NODE_ENV: development
       HOME: /root
     volumes:
-      # 소스 라이브(HMR) + 콘텐츠 + 문제이미지(db/raw). node_modules 는 바인드에 안 가려지게 named volume.
-      - ../web:/app/web
+      # ★레포 루트 전체를 바인드(.git 포함) — 콘텐츠 크론(widget_spec_loop 등)이 컨테이너 안에서
+      #   git add/commit/push 하므로 .git 이 없으면 "not a git repository"로 실패한다.
+      #   node_modules 만 named volume 으로 오버라이드(바인드에 안 가려지게, 호스트오염 방지).
+      - ..:/app
       - ms_devnode:/app/web/node_modules
-      - ../docs:/app/docs
-      - ../db:/app/db
       # 튜터 구독 인증(dev 컨테이너는 root 실행 → /root/.claude).
       - ${MS_CLAUDE_DIR}:/root/.claude
+      # 크론의 git push(SSH) + 신원. 읽기전용 마운트(컨테이너가 키 변경 못 함).
+      - ${HOME}/.ssh:/root/.ssh:ro
+      - ${HOME}/.gitconfig:/root/.gitconfig:ro
     # dev 서버는 헬스체크 워밍업이 길 수 있어 완화(빌드본 healthcheck 상속 무력화).
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/api/health || exit 1"]

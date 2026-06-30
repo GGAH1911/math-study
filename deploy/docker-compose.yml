@@ -24,6 +24,10 @@ services:
       retries: 5
     mem_limit: 4g
     # ★호스트 포트 미노출 — web 컨테이너(내부 네트워크)만 접근. 포렌식 postgres(5432)와 완전 분리.
+    dns: &dns [1.1.1.1, 8.8.8.8]
+    # ★tme 호스트의 /etc/resolv.conf 는 Tailscale MagicDNS(100.100.100.100, tailscale0 전용)라
+    #   Docker 브리지망 컨테이너에선 라우팅 불가 → 임베디드 DNS(127.0.0.11)가 외부 도메인 전부
+    #   resolve 실패(api.anthropic.com 포함, 컨테이너간 서비스명만 됨). 공개 DNS 명시로 우회.
 
   web:
     build:
@@ -51,6 +55,7 @@ services:
       # 초기 검증은 Tailscale 로 직접(0.0.0.0). 프로덕션은 리버스 프록시 뒤로 옮기고 127.0.0.1 로 제한.
       - "${MS_WEB_PORT:-4324}:8080"
     mem_limit: 6g
+    dns: *dns
 
 volumes:
   ms_pgdata:
