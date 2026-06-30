@@ -22,12 +22,14 @@ services:
       - ms_devnode:/app/web/node_modules
       # 튜터 구독 인증(dev 컨테이너는 root 실행 → /root/.claude).
       - ${MS_CLAUDE_DIR}:/root/.claude
-      # 크론의 git push(SSH). 읽기전용 마운트(컨테이너가 키 변경 못 함).
-      # ★gitconfig 는 안 옮긴다 — /app/.git 이 호스트와 *같은 바인드*(레포 루트 전체 마운트)라
-      #   `git config user.*` 를 컨테이너 안에서 한 번 설정하면 .git/config 에 박혀 호스트와도 공유된다.
-      #   (호스트에 ~/.gitconfig 파일이 원래 없었는데 이 키로 마운트 시도하면 Docker 가 빈 디렉터리로
-      #   자동생성해 호스트를 오염시킨다 — 2026-07-01 발견·정리.)
-      - ${HOME}/.ssh:/root/.ssh:ro
+      # ★git push(SSH)는 컨테이너 안에서 안 한다 — 호스트 ~/.ssh 를 마운트하면 OpenSSH 가 파일
+      #   소유자(host uid)와 마운트 후 읽는 유저(컨테이너 root)가 달라 "Bad owner or permissions"로
+      #   거부한다(2026-07-01 발견). /app/.git 이 호스트와 *같은 바인드*(레포 루트 전체 마운트)이므로
+      #   컨테이너의 `git commit`(로컬, 네트워크 불필요)은 그대로 호스트 .git 에 반영된다 — push 만
+      #   크론 호출부에서 컨테이너 실행 *다음 단계*로 호스트에서 한다(이미 SSH 되는 호스트 자격 재사용).
+      # ★gitconfig 도 안 옮긴다 — 위 이유로 컨테이너 안에서 `git config user.*` 한 번이면 같은
+      #   .git/config 에 박혀 호스트와도 공유된다(호스트에 없던 ~/.gitconfig 를 마운트시도하면 Docker
+      #   가 빈 디렉터리로 자동생성해 호스트를 오염시켰던 사고도 2026-07-01 정리함).
     # dev 서버는 헬스체크 워밍업이 길 수 있어 완화(빌드본 healthcheck 상속 무력화).
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/api/health || exit 1"]
