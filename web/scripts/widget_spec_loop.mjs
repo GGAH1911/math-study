@@ -7,7 +7,10 @@
 import { spawn, execSync } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, appendFileSync, copyFileSync } from 'node:fs';
 import { validate } from './widget_validate.mjs';
-const REPO = '/home/insung/Projects/math-study';
+import { fileURLToPath } from 'node:url';
+// ★REPO 는 이 스크립트 자기 위치 기준(web/scripts/.. 의 부모)으로 도출 — 하드코딩 절대경로는
+//   레포 위치가 머신마다 다르면(laptop ~/Projects/math-study, tme ~/math-study) 깨진다.
+const REPO = fileURLToPath(new URL('../..', import.meta.url)).replace(/\/$/, '');
 const CDIR = `${REPO}/docs/concepts`, TMP = '/tmp/widget_specs', OUT = `${REPO}/web/src/data/concept-widgets`, LOGDIR = '/tmp/ingest_logs';
 for (const d of [TMP, OUT, LOGDIR]) if (!existsSync(d)) mkdirSync(d, { recursive: true });
 const A = process.argv.slice(2);

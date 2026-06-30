@@ -4,7 +4,10 @@
 // 사용: node web/scripts/widget_generate.mjs <conceptId> [<conceptId> ...]
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
-const REPO = '/home/insung/Projects/math-study';
+import { fileURLToPath } from 'node:url';
+// ★REPO 는 이 스크립트 자기 위치 기준(web/scripts/.. 의 부모) — 하드코딩 절대경로는 레포 위치가
+//   머신마다 다르면(laptop ~/Projects/math-study, tme ~/math-study) 깨진다.
+const REPO = fileURLToPath(new URL('../..', import.meta.url)).replace(/\/$/, '');
 const CDIR = `${REPO}/docs/concepts`;
 const OUT = '/tmp/widget_specs'; if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });
 const CLEAN = '/tmp/claude_p_clean'; if (!existsSync(CLEAN)) mkdirSync(CLEAN, { recursive: true });
