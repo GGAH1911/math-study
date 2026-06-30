@@ -257,6 +257,105 @@ export function MdSegment({ content }: { content: string }) {
   return <div className="prose-chat" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
+// 드래그 선택 → "인용" 버튼 + 직접 그린 하이라이트. ★본문(bodyRef)의 *형제* 컴포넌트로 분리한 이유:
+//   인용 버튼 상태(quoteBtn)를 Message 에 두면 버튼이 뜰 때 Message 전체가 리렌더되며 선택된 본문 DOM
+//   이 reconcile 돼 **모바일 네이티브 선택(드래그 핸들)이 풀린다**(재조정 불가). 상태를 이 자식
+//   컴포넌트에 가두면 버튼이 떠도 형제인 본문은 리렌더 X → 네이티브 핸들이 유지돼 재조정 가능.
+function QuoteUI({ bodyRef, onQuote }: { bodyRef: React.RefObject<HTMLDivElement | null>; onQuote?: (latex: string) => void }) {
+  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; below: boolean; latex: string; hl: { left: number; top: number; w: number; h: number }[] } | null>(null);
+  const updateQuoteBtn = useCallback(() => {
+    if (!onQuote) return;
+    const sel = window.getSelection();
+    const body = bodyRef.current;
+    if (!sel || sel.isCollapsed || !body) { setQuoteBtn(null); return; }
+    const range = sel.getRangeAt(0);
+    if (!body.contains(range.commonAncestorContainer)) { setQuoteBtn(null); return; }
+    const latex = latexFromSelection(range, body);
+    if (!latex.trim()) { setQuoteBtn(null); return; }
+    const wrap = body.closest('[data-mi]') as HTMLElement | null;
+    const wrapRect = (wrap ?? body).getBoundingClientRect();
+    const rects = Array.from(range.getClientRects());
+    const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
+    const coarse = typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)')?.matches === true;
+    // 터치=viewport 좌표(position:fixed, body portal). 데스크탑=래퍼 상대좌표(position:absolute, 메시지 안).
+    const hl = coarse
+      ? rects.map((r) => ({ left: r.left, top: r.top, w: r.width, h: r.height }))
+      : rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
+    setQuoteBtn({
+      x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
+      y: coarse ? last.bottom - wrapRect.top + 8 : last.top - wrapRect.top - 6,
+      below: coarse, latex, hl,
+    });
+  }, [onQuote, bodyRef]);
+  // 본문에 mouseup/touchend 직접 바인딩(형제 컴포넌트라 Message JSX 대신 ref 로 attach).
+  useEffect(() => {
+    const body = bodyRef.current;
+    if (!body || !onQuote) return;
+    const h = () => updateQuoteBtn();
+    body.addEventListener('mouseup', h);
+    body.addEventListener('touchend', h);
+    return () => { body.removeEventListener('mouseup', h); body.removeEventListener('touchend', h); };
+  }, [onQuote, bodyRef, updateQuoteBtn]);
+  // 모바일: 롱프레스 선택은 touchend *후* 네이티브 핸들로 이뤄져 onTouchEnd 만으론 빈 선택만 본다.
+  //   selectionchange(디바운스 600ms — 드래그·핸들조정 멎은 뒤)로 버튼 표시. collapse 는 무시(닫기는 pointerdown).
+  useEffect(() => {
+    if (!onQuote) return;
+    let t = 0;
+    const onSelChange = () => {
+      window.clearTimeout(t);
+      t = window.setTimeout(() => {
+        const sel = window.getSelection();
+        const body = bodyRef.current;
+        if (!sel || sel.isCollapsed || sel.rangeCount === 0 || !body) return;
+        if (!body.contains(sel.getRangeAt(0).commonAncestorContainer)) return;
+        updateQuoteBtn();
+      }, 600);
+    };
+    document.addEventListener('selectionchange', onSelChange);
+    return () => { document.removeEventListener('selectionchange', onSelChange); window.clearTimeout(t); };
+  }, [onQuote, bodyRef, updateQuoteBtn]);
+  // 새 포인터 down 때 닫기(버튼 자신 제외). selectionchange 로 닫으면 iPad 자동해제와 충돌하므로 pointerdown 만.
+  useEffect(() => {
+    if (!quoteBtn) return;
+    const onDown = (e: Event) => {
+      const t = e.target as HTMLElement;
+      if (t?.closest?.('[data-quote-btn]')) return;
+      setQuoteBtn(null);
+    };
+    const id = window.setTimeout(() => { document.addEventListener('pointerdown', onDown, true); }, 0);
+    return () => { clearTimeout(id); document.removeEventListener('pointerdown', onDown, true); };
+  }, [quoteBtn]);
+  if (!quoteBtn || !onQuote) return null;
+  const btn = (
+    <button
+      type="button"
+      data-quote-btn
+      onMouseDown={(e) => { e.preventDefault(); }}
+      onClick={() => { onQuote(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
+      style={quoteBtn.below
+        ? { position: 'fixed', left: '50%', bottom: '88px', transform: 'translateX(-50%)', zIndex: 70 }
+        : { position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
+      className={`rounded-full bg-indigo-500 border border-indigo-400 font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400 ${quoteBtn.below ? 'px-4 py-2 text-[13px]' : 'px-2.5 py-1 text-[12px]'}`}
+    >💬 선택 인용</button>
+  );
+  // 터치: 하이라이트+버튼 모두 body 로 portal(메시지 DOM 불변 → 네이티브 선택/핸들 안 건드림).
+  //   네이티브가 풀려도 viewport 좌표 하이라이트가 선택 영역을 계속 보여준다. 데스크탑: 메시지 안 절대배치.
+  if (quoteBtn.below) return createPortal(
+    <>
+      {quoteBtn.hl.map((r, i) => (
+        <div key={i} aria-hidden="true" style={{ position: 'fixed', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.30)', borderRadius: 2, pointerEvents: 'none', zIndex: 69 }} />
+      ))}
+      {btn}
+    </>,
+    document.body);
+  return (<>
+    {quoteBtn.hl.map((r, i) => (
+      <div key={i} aria-hidden="true" style={{ position: 'absolute', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.32)', borderRadius: 2, pointerEvents: 'none', zIndex: 20 }} />
+    ))}
+    {btn}
+  </>);
+}
+
 // Memoized so the message list doesn't re-render on every keystroke in the
 // chat input. `onPromote` now receives the message index — passing a stable
 // callback from the parent keeps prop identity steady, which lets `memo`
@@ -279,80 +378,9 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   const isUser = msg.role === 'user';
   const segments = useMemo(() => parseGraphSegments(msg.content), [msg.content]);
   const [modal, setModal] = useState<ChatModalState | null>(null);
-  // 드래그 선택 → "인용" 버튼 + 직접 그린 하이라이트(네이티브 ::selection 은 iPad touchend 시 OS 가
-  //   지우고, 데스크탑은 포커스 이탈 시 비활성렌더돼 신뢰 불가 → 선택 rects 를 오버레이로 직접 그린다).
+  // 드래그 인용 UI 는 QuoteUI(본문 형제 컴포넌트)가 담당 — 버튼 상태를 Message 밖에 둬 본문 리렌더로
+  //   모바일 네이티브 선택(핸들)이 풀리는 걸 방지. bodyRef 만 여기서 보유해 QuoteUI 에 넘긴다.
   const bodyRef = useRef<HTMLDivElement | null>(null);
-  const [quoteBtn, setQuoteBtn] = useState<{ x: number; y: number; below: boolean; latex: string; hl: { left: number; top: number; w: number; h: number }[] } | null>(null);
-  const updateQuoteBtn = useCallback(() => {
-    if (!onQuote || isUser) return;
-    const sel = window.getSelection();
-    const body = bodyRef.current;
-    if (!sel || sel.isCollapsed || !body) { setQuoteBtn(null); return; }
-    const range = sel.getRangeAt(0);
-    if (!body.contains(range.commonAncestorContainer)) { setQuoteBtn(null); return; }
-    const latex = latexFromSelection(range, body);
-    if (!latex.trim()) { setQuoteBtn(null); return; }
-    // 버튼·하이라이트는 data-mi 래퍼(position:relative) 안에 있으므로 좌표도 그 래퍼 기준.
-    const wrap = body.closest('[data-mi]') as HTMLElement | null;
-    const wrapRect = (wrap ?? body).getBoundingClientRect();
-    const rects = Array.from(range.getClientRects());
-    const last = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
-    const coarse = typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)')?.matches === true;
-    // ★하이라이트 좌표계: 터치(coarse)=viewport(position:fixed, body portal 용) — 버튼 표시 리렌더로
-    //   네이티브 선택이 풀려도 "드래그한 부분"이 계속 보이게 우리가 직접 그린다. 메시지 DOM 이 아니라
-    //   portal(body)에 그려 선택 앵커 재설정("위쪽 전부 선택")·핸들 소실을 피한다.
-    //   데스크탑=래퍼 상대좌표(position:absolute, 메시지 안).
-    const hl = coarse
-      ? rects.map((r) => ({ left: r.left, top: r.top, w: r.width, h: r.height }))
-      : rects.map((r) => ({ left: r.left - wrapRect.left, top: r.top - wrapRect.top, w: r.width, h: r.height }));
-    setQuoteBtn({
-      x: Math.max(28, Math.min(last.right - wrapRect.left, wrapRect.width - 28)),
-      y: coarse ? last.bottom - wrapRect.top + 8 : last.top - wrapRect.top - 6,
-      below: coarse,
-      latex,
-      hl,
-    });
-  }, [onQuote, isUser]);
-  // 모바일/태블릿: 롱프레스 선택은 touchend *후* 네이티브 핸들로 이뤄져 onTouchEnd 핸들러는 빈 선택만
-  //   본다. selectionchange 로 실제 선택 완료·핸들 조정 시 버튼을 띄운다. (★닫기는 안 함 — 선택 해제/
-  //   collapse 시엔 return 만. iPad 가 touchend 후 선택을 자동으로 지우는 순간 같이 닫히는 사고 방지.
-  //   닫기는 기존 pointerdown 경로가 담당.)
-  useEffect(() => {
-    if (!onQuote || isUser) return;
-    let t = 0;
-    // ★디바운스 필수: 드래그로 선택 범위를 넓히는 동안 selectionchange 가 매 프레임 발화한다.
-    //   거기서 곧장 updateQuoteBtn 하면 버튼·오버레이 DOM 이 매 프레임 재생성(churn)돼 네이티브
-    //   선택 드래그 제스처가 끊긴다("드래그 선택 안됨"). → 선택이 멈춘 뒤(마지막 변경 후 300ms)에만
-    //   버튼을 띄워 드래그 중엔 DOM 을 안 건드린다.
-    const onSelChange = () => {
-      window.clearTimeout(t);
-      t = window.setTimeout(() => {
-        const sel = window.getSelection();
-        const body = bodyRef.current;
-        if (!sel || sel.isCollapsed || sel.rangeCount === 0 || !body) return;
-        if (!body.contains(sel.getRangeAt(0).commonAncestorContainer)) return; // 이 메시지 밖 선택 무시
-        updateQuoteBtn();
-      }, 600);   // ★한 템포 쉬고: 드래그·핸들조정이 멎은 뒤에만 버튼 표시(네이티브 핸들이 더 오래 남음)
-    };
-    document.addEventListener('selectionchange', onSelChange);
-    return () => { document.removeEventListener('selectionchange', onSelChange); window.clearTimeout(t); };
-  }, [onQuote, isUser, updateQuoteBtn]);
-  // 새 포인터 down(다른 곳 클릭/새 드래그 시작) 때 인용 버튼·하이라이트 닫기. ★selectionchange 로 닫으면
-  //   iPad 가 touchend 후 선택을 자동으로 지우는 순간 같이 닫혀버리므로(우리 오버레이의 존재 이유와 충돌)
-  //   포인터 down 으로만 dismiss — 버튼 자신을 누른 경우는 onClick 이 먼저 처리하므로 제외.
-  useEffect(() => {
-    if (!quoteBtn) return;
-    const onDown = (e: Event) => {
-      const t = e.target as HTMLElement;
-      if (t?.closest?.('[data-quote-btn]')) return;   // 인용 버튼 클릭은 onClick 이 처리
-      setQuoteBtn(null);
-    };
-    // 캡처 단계 + 약간 지연(현재 mouseup/touchend 와 같은 틱에 닫히지 않게).
-    const id = window.setTimeout(() => {
-      document.addEventListener('pointerdown', onDown, true);
-    }, 0);
-    return () => { clearTimeout(id); document.removeEventListener('pointerdown', onDown, true); };
-  }, [quoteBtn]);
   const canPromote = !!onPromote && !isUser && msg.content.trim().length > 0 && !busy;
 
   // 자동 계산 결과 inject 된 user message 는 내부 protocol — 사용자에겐 chip 만 표시.
@@ -394,45 +422,9 @@ const Message = memo(function Message({ msg, index, onPromote, onNoteFollowup, o
   }
   return (
     <div data-mi={index} className={`relative flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
-      {quoteBtn && (() => {
-        const btn = (
-          <button
-            type="button"
-            data-quote-btn
-            onMouseDown={(e) => { e.preventDefault(); }}
-            onClick={() => { onQuote?.(quoteBtn.latex); setQuoteBtn(null); window.getSelection()?.removeAllRanges(); }}
-            style={quoteBtn.below
-              // ★모바일(coarse): 선택 위엔 네이티브 툴바, 아래엔 선택 핸들(물방울)이 떠 둘 다 덮으면
-              //   드래그-확장이 막힌다. 그래서 선택과 무관한 고정 위치(입력창 위 중앙)에 띄운다.
-              ? { position: 'fixed', left: '50%', bottom: '88px', transform: 'translateX(-50%)', zIndex: 70 }
-              : { position: 'absolute', left: quoteBtn.x, top: Math.max(0, quoteBtn.y), transform: 'translate(-100%, -100%)', zIndex: 30 }}
-            className={`rounded-full bg-indigo-500 border border-indigo-400 font-medium text-white shadow-lg whitespace-nowrap hover:bg-indigo-400 ${quoteBtn.below ? 'px-4 py-2 text-[13px]' : 'px-2.5 py-1 text-[12px]'}`}
-          >💬 선택 인용</button>
-        );
-        // ★터치(coarse): 하이라이트+버튼 모두 document.body 로 portal → 메시지 DOM 에 노드를 안 끼운다
-        //   (진행 중 네이티브 선택 앵커 재설정="위쪽 전부 선택" + 핸들 소실 방지). 버튼 표시 리렌더로
-        //   네이티브 선택이 풀려도, viewport 좌표(position:fixed)로 직접 그린 하이라이트가 "드래그한 부분"을
-        //   계속 보여준다. 데스크탑: 메시지 안 절대배치 오버레이 + 버튼(기존).
-        if (quoteBtn.below) return createPortal(
-          <>
-            {quoteBtn.hl.map((r, i) => (
-              <div key={i} aria-hidden="true" style={{ position: 'fixed', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.30)', borderRadius: 2, pointerEvents: 'none', zIndex: 69 }} />
-            ))}
-            {btn}
-          </>,
-          document.body);
-        return (<>
-          {/* 직접 그린 선택 하이라이트 — 데스크탑은 포커스 이탈 시 네이티브 선택이 흐려져 직접 그린다. */}
-          {quoteBtn.hl.map((r, i) => (
-            <div key={i} aria-hidden="true" style={{ position: 'absolute', left: r.left, top: r.top, width: r.w, height: r.h, background: 'rgba(79,70,229,0.32)', borderRadius: 2, pointerEvents: 'none', zIndex: 20 }} />
-          ))}
-          {btn}
-        </>);
-      })()}
+      {!isUser && <QuoteUI bodyRef={bodyRef} onQuote={onQuote} />}
       <div
         ref={bodyRef}
-        onMouseUp={updateQuoteBtn}
-        onTouchEnd={updateQuoteBtn}
         className={`max-w-[92%] rounded-xl px-3.5 py-2 text-sm leading-relaxed space-y-2
           ${isUser
             ? 'bg-indigo-500/10 border border-indigo-500/30 text-zinc-100'
