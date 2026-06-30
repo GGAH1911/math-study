@@ -1,0 +1,201 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/우극한",
+ "spec": {
+  "title": "우극한: x가 a의 오른쪽에서 접근할 때 f(x)의 극한",
+  "params": [
+   {
+    "name": "a",
+    "label": "접근점 a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "오른쪽 간격 d  (x = a+d, d>0)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 2,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "xr = a + d; fx = xr + 2; Lplus = a + 2; Lminus = a; gap = fx - Lplus; jump = Lplus - Lminus",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -3,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a-3",
+      "=a-3"
+     ],
+     "to": [
+      "=a",
+      "=a"
+     ],
+     "label": "x<a: f(x)=x",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=a+2"
+     ],
+     "to": [
+      "=a+3",
+      "=a+5"
+     ],
+     "label": "x>a: f(x)=x+2",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "-3"
+     ],
+     "to": [
+      "=a",
+      "6"
+     ],
+     "color": "#ccc"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=a+2"
+     ],
+     "label": "우극한값 L⁺=a+2",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=a"
+     ],
+     "label": "좌극한값 L⁻=a",
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=fx"
+     ],
+     "label": "P=(x, f(x)), d→0⁺이면 L⁺로",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "현재 x (=a+d)",
+    "expr": "xr",
+    "digits": 3
+   },
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 3
+   },
+   {
+    "label": "우극한 L⁺ = lim(x→a⁺) f(x)",
+    "expr": "Lplus",
+    "digits": 3
+   },
+   {
+    "label": "좌극한 L⁻ = lim(x→a⁻) f(x)",
+    "expr": "Lminus",
+    "digits": 3
+   },
+   {
+    "label": "f(x) − L⁺  (d→0⁺일 때 0으로)",
+    "expr": "gap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "d": 1
+   },
+   {
+    "a": 1,
+    "d": 0.5
+   },
+   {
+    "a": -1,
+    "d": 0.25
+   },
+   {
+    "a": 0.5,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "fx - xr - 2",
+   "gap - d",
+   "jump - 2",
+   "Lplus - a - 2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "d": 1
+    },
+    "expect": {
+     "xr": 1,
+     "fx": 3,
+     "Lplus": 2,
+     "Lminus": 0,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "d": 0.5
+    },
+    "expect": {
+     "xr": 1.5,
+     "fx": 3.5,
+     "Lplus": 3,
+     "gap": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "d": 0.25
+    },
+    "expect": {
+     "xr": -0.75,
+     "fx": 1.25,
+     "Lplus": 1,
+     "gap": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

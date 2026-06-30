@@ -33,3 +33,4 @@ updated: 2026-06-28
 | 2026-06-28 04:03 | widget | accept 80 · skip 0 · 100% | (cr 미기록 — 이번 픽스 전) |
 | 2026-06-28 06:00 | illust | 실패 0 · day+2 미리생성 | 캐시 총 26 |
 | 2026-06-29 04:15 | widget | accept 80 · skip 0 · 100% | cr avg 14118 · max 18099 (n=81) |
+| 2026-07-01 08:35 | widget | accept 1 · skip 0 · 100% | cr avg 14647 · max 14647 · Σcr 14647 · Σcc 3983 · save≈$0.06 (n=1) |

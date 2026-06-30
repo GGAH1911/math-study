@@ -1,0 +1,115 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/유리함수의_극한",
+ "spec": {
+  "title": "유리함수의 극한: 0/0 꼴의 약분",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (→1로 접근)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "fx=(x^2-1)/(x-1); simp=x+1; gap=abs(fx-2)",
+  "plot": {
+   "range": [
+    -0.5,
+    2.5
+   ],
+   "yRange": [
+    0,
+    3.5
+   ],
+   "fns": [
+    {
+     "fn": "(x^2-1)/(x-1)",
+     "label": "f(x)=(x²−1)/(x−1)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x+1",
+     "label": "약분 후: x+1",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 4
+   },
+   {
+    "label": "약분식 x+1",
+    "expr": "simp",
+    "digits": 4
+   },
+   {
+    "label": "극한값 (x→1)",
+    "expr": "2",
+    "digits": 0
+   },
+   {
+    "label": "|f(x)−2|",
+    "expr": "gap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1.5
+   },
+   {
+    "x": 1.9
+   },
+   {
+    "x": 0.1
+   }
+  ],
+  "invariants": [
+   "fx - simp"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "fx": 1.5,
+     "simp": 1.5,
+     "gap": 0.5
+    }
+   },
+   {
+    "params": {
+     "x": 1.5
+    },
+    "expect": {
+     "fx": 2.5,
+     "simp": 2.5,
+     "gap": 0.5
+    }
+   },
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "fx": 1,
+     "simp": 1,
+     "gap": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

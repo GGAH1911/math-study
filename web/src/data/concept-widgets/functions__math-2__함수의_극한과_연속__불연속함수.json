@@ -1,0 +1,189 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/불연속함수",
+ "spec": {
+  "title": "불연속함수: 좌극한·우극한·함수값으로 보는 연속 조건",
+  "params": [
+   {
+    "name": "j",
+    "label": "우측 가지 점프 j (우극한 조절)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "fa",
+    "label": "함수값 f(1)",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "Lm = 1; Lp = 1 + j; jump = Lp - Lm; disc = abs(Lp - Lm) + abs(fa - Lm)",
+  "geometry": {
+   "range": [
+    -2.5,
+    4
+   ],
+   "yRange": [
+    -4.5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      -4.5
+     ],
+     "to": [
+      1,
+      7
+     ],
+     "label": "x=a (a=1)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2.5,
+      -2.5
+     ],
+     "to": [
+      1,
+      1
+     ],
+     "label": "x<1: y=x"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=1+j"
+     ],
+     "to": [
+      3.5,
+      "=3.5+j"
+     ],
+     "label": "x>1: y=x+j"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      1
+     ],
+     "label": "좌극한=1"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=1+j"
+     ],
+     "label": "우극한=1+j"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=fa"
+     ],
+     "label": "f(1)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 lim_{x→1⁻}",
+    "expr": "Lm",
+    "digits": 2
+   },
+   {
+    "label": "우극한 lim_{x→1⁺}",
+    "expr": "Lp",
+    "digits": 2
+   },
+   {
+    "label": "함수값 f(1)",
+    "expr": "fa",
+    "digits": 2
+   },
+   {
+    "label": "점프량 (우−좌)",
+    "expr": "jump",
+    "digits": 2
+   },
+   {
+    "label": "불연속 정도 (0이면 연속)",
+    "expr": "disc",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "j": 0,
+    "fa": 1
+   },
+   {
+    "j": 2,
+    "fa": 1
+   },
+   {
+    "j": 0,
+    "fa": 3
+   },
+   {
+    "j": -1.5,
+    "fa": 0
+   }
+  ],
+  "invariants": [
+   "Lm - 1",
+   "Lp - (1 + j)",
+   "jump - (Lp - Lm)",
+   "jump - j"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "j": 2,
+     "fa": 1
+    },
+    "expect": {
+     "Lm": 1,
+     "Lp": 3,
+     "jump": 2
+    }
+   },
+   {
+    "params": {
+     "j": 0,
+     "fa": 3
+    },
+    "expect": {
+     "Lm": 1,
+     "Lp": 1,
+     "jump": 0
+    }
+   },
+   {
+    "params": {
+     "j": -1.5,
+     "fa": 0
+    },
+    "expect": {
+     "Lp": -0.5,
+     "jump": -1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
