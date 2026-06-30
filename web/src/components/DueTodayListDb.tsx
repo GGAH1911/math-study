@@ -30,8 +30,13 @@ export default function DueTodayListDb() {
       const r = await fetch('/api/due-today?limit=20&includeNew=1', { cache: 'no-store' });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const j = await r.json();
-      setDue(j.due ?? []);
-      setNew(j.new ?? []);
+      // slug 중복 방어(렌더 key 충돌·중복 표시 방지). 근본은 DB 중복 문제행이지만 프론트에서도 한 번 더.
+      const dedupe = (arr: Card[]): Card[] => {
+        const seen = new Set<string>();
+        return (arr ?? []).filter((c) => (seen.has(c.slug) ? false : (seen.add(c.slug), true)));
+      };
+      setDue(dedupe(j.due));
+      setNew(dedupe(j.new));
       setErr(null);
     } catch (e) {
       setErr(String((e as Error).message ?? e));
