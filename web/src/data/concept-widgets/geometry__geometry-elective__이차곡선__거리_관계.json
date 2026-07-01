@@ -1,0 +1,305 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/거리_관계",
+ "spec": {
+  "title": "타원의 거리 관계: |PF₁|+|PF₂|=2a",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (긴반지름)",
+    "type": "slider",
+    "min": 4,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (짧은반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "점 P 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 40,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=t*pi/180; c=sqrt(a^2-b^2); px=a*cos(rad); py=b*sin(rad); d1=sqrt((px+c)^2+py^2); d2=sqrt((px-c)^2+py^2); sum=d1+d2",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*cos(0*pi/180)",
+       "=b*sin(0*pi/180)"
+      ],
+      [
+       "=a*cos(15*pi/180)",
+       "=b*sin(15*pi/180)"
+      ],
+      [
+       "=a*cos(30*pi/180)",
+       "=b*sin(30*pi/180)"
+      ],
+      [
+       "=a*cos(45*pi/180)",
+       "=b*sin(45*pi/180)"
+      ],
+      [
+       "=a*cos(60*pi/180)",
+       "=b*sin(60*pi/180)"
+      ],
+      [
+       "=a*cos(75*pi/180)",
+       "=b*sin(75*pi/180)"
+      ],
+      [
+       "=a*cos(90*pi/180)",
+       "=b*sin(90*pi/180)"
+      ],
+      [
+       "=a*cos(105*pi/180)",
+       "=b*sin(105*pi/180)"
+      ],
+      [
+       "=a*cos(120*pi/180)",
+       "=b*sin(120*pi/180)"
+      ],
+      [
+       "=a*cos(135*pi/180)",
+       "=b*sin(135*pi/180)"
+      ],
+      [
+       "=a*cos(150*pi/180)",
+       "=b*sin(150*pi/180)"
+      ],
+      [
+       "=a*cos(165*pi/180)",
+       "=b*sin(165*pi/180)"
+      ],
+      [
+       "=a*cos(180*pi/180)",
+       "=b*sin(180*pi/180)"
+      ],
+      [
+       "=a*cos(195*pi/180)",
+       "=b*sin(195*pi/180)"
+      ],
+      [
+       "=a*cos(210*pi/180)",
+       "=b*sin(210*pi/180)"
+      ],
+      [
+       "=a*cos(225*pi/180)",
+       "=b*sin(225*pi/180)"
+      ],
+      [
+       "=a*cos(240*pi/180)",
+       "=b*sin(240*pi/180)"
+      ],
+      [
+       "=a*cos(255*pi/180)",
+       "=b*sin(255*pi/180)"
+      ],
+      [
+       "=a*cos(270*pi/180)",
+       "=b*sin(270*pi/180)"
+      ],
+      [
+       "=a*cos(285*pi/180)",
+       "=b*sin(285*pi/180)"
+      ],
+      [
+       "=a*cos(300*pi/180)",
+       "=b*sin(300*pi/180)"
+      ],
+      [
+       "=a*cos(315*pi/180)",
+       "=b*sin(315*pi/180)"
+      ],
+      [
+       "=a*cos(330*pi/180)",
+       "=b*sin(330*pi/180)"
+      ],
+      [
+       "=a*cos(345*pi/180)",
+       "=b*sin(345*pi/180)"
+      ]
+     ],
+     "label": "타원"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=-c",
+      0
+     ],
+     "label": "PF₁"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=c",
+      0
+     ],
+     "label": "PF₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|PF₁|",
+    "expr": "d1",
+    "digits": 3
+   },
+   {
+    "label": "|PF₂|",
+    "expr": "d2",
+    "digits": 3
+   },
+   {
+    "label": "|PF₁|+|PF₂|",
+    "expr": "sum",
+    "digits": 3
+   },
+   {
+    "label": "2a",
+    "expr": "2*a",
+    "digits": 3
+   },
+   {
+    "label": "c=√(a²−b²)",
+    "expr": "c",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 5,
+    "b": 3,
+    "t": 0
+   },
+   {
+    "a": 5,
+    "b": 3,
+    "t": 90
+   },
+   {
+    "a": 5,
+    "b": 3,
+    "t": 180
+   },
+   {
+    "a": 6,
+    "b": 2,
+    "t": 50
+   }
+  ],
+  "invariants": [
+   "d1+d2-2*a",
+   "c^2-a^2+b^2",
+   "px^2/a^2+py^2/b^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 5,
+     "b": 3,
+     "t": 0
+    },
+    "expect": {
+     "c": 4,
+     "px": 5,
+     "py": 0,
+     "d1": 9,
+     "d2": 1,
+     "sum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 3,
+     "t": 90
+    },
+    "expect": {
+     "c": 4,
+     "px": 0,
+     "py": 3,
+     "d1": 5,
+     "d2": 5,
+     "sum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 3,
+     "t": 180
+    },
+    "expect": {
+     "c": 4,
+     "px": -5,
+     "py": 0,
+     "d1": 1,
+     "d2": 9,
+     "sum": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

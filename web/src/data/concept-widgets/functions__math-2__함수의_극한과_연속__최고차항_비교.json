@@ -1,0 +1,139 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/최고차항_비교",
+ "spec": {
+  "title": "최고차항 비교 — 유리함수의 극한 lim (ax²+bx+c)/(x²+1)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x² 계수·최고차항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b (x 계수)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "L = a; f2 = (a*4 + b*2 + c)/5; fbig = (a*1e9^2 + b*1e9 + c)/(1e9^2 + 1); err = fbig - L; fneg = (a*1e9^2 - b*1e9 + c)/(1e9^2 + 1); err2 = fneg - L",
+  "plot": {
+   "range": [
+    -25,
+    25
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "(a*x^2 + b*x + c)/(x^2 + 1)",
+     "label": "f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a",
+     "label": "y = a (극한값)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한 L = lim_{x→∞} f(x)",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "f(1000) (거의 a와 같음)",
+    "expr": "(a*1000^2 + b*1000 + c)/(1000^2 + 1)",
+    "digits": 5
+   },
+   {
+    "label": "f(2)",
+    "expr": "f2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 6,
+    "c": 0
+   },
+   {
+    "a": -2,
+    "b": 0,
+    "c": 4
+   },
+   {
+    "a": 0,
+    "b": 5,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "err",
+   "err2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 0,
+     "c": 0
+    },
+    "expect": {
+     "L": 3,
+     "f2": 2.4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3
+    },
+    "expect": {
+     "L": 1,
+     "f2": 2.2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 5,
+     "c": 1
+    },
+    "expect": {
+     "L": 0,
+     "f2": 2.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

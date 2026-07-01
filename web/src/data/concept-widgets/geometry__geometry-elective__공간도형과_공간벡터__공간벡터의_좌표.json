@@ -1,0 +1,243 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간벡터의_좌표",
+ "spec": {
+  "title": "공간벡터의 좌표 v=(a,b,c)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (i방향, x)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (j방향, y)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (k방향, z)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "c30=sqrt(3)/2; mag=sqrt(a^2+b^2+c^2); p1x=-c30*a; p1y=-a/2; p2x=-c30*a+b; p2y=-a/2; px=-c30*a+b; py=-a/2+c",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=-c30*3",
+      "=-3/2"
+     ],
+     "label": "x",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      3,
+      0
+     ],
+     "label": "y",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      3
+     ],
+     "label": "z",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=p1x",
+      "=p1y"
+     ],
+     "label": "a·i",
+     "color": "#e07a5f"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=p1x",
+      "=p1y"
+     ],
+     "to": [
+      "=p2x",
+      "=p2y"
+     ],
+     "label": "b·j",
+     "color": "#81b29a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=p2x",
+      "=p2y"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "c·k",
+     "color": "#3d5a80"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "v",
+     "color": "#d62828"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "v=(a,b,c)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "|v|",
+    "expr": "mag",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 2
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3
+   },
+   {
+    "a": 0,
+    "b": 3,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "mag^2-(a^2+b^2+c^2)",
+   "px-b+c30*a",
+   "py-c+a/2",
+   "p1x+c30*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 2
+    },
+    "expect": {
+     "mag": 3,
+     "px": 1.13397459622,
+     "py": 1.5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "mag": 3,
+     "px": 0.26794919243,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 3,
+     "c": 0
+    },
+    "expect": {
+     "mag": 3,
+     "px": 3,
+     "py": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

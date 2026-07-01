@@ -1,0 +1,126 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/포물선의_성질",
+ "spec": {
+  "title": "포물선의 정의: |PF| = d(P, l)",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (꼭짓점↔초점 거리)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "py = (t^2)/(4*p); PF = sqrt(t^2 + (py-p)^2); dist = py + p",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^2/(4*p)",
+     "label": "포물선 x²=4py",
+     "color": "#ff7f0e"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|PF| (초점까지)",
+    "expr": "PF",
+    "digits": 3
+   },
+   {
+    "label": "d(P,l) (준선까지)",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "차이 |PF|−d(P,l)",
+    "expr": "PF-dist",
+    "digits": 6
+   },
+   {
+    "label": "y_P",
+    "expr": "py",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "t": 2
+   },
+   {
+    "p": 1,
+    "t": 0
+   },
+   {
+    "p": 2,
+    "t": 4
+   },
+   {
+    "p": 0.5,
+    "t": -1.5
+   }
+  ],
+  "invariants": [
+   "PF - dist",
+   "py - (t^2)/(4*p)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "t": 2
+    },
+    "expect": {
+     "py": 1,
+     "PF": 2,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "p": 1,
+     "t": 0
+    },
+    "expect": {
+     "py": 0,
+     "PF": 1,
+     "dist": 1
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "t": 4
+    },
+    "expect": {
+     "py": 2,
+     "PF": 4,
+     "dist": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

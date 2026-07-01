@@ -1,0 +1,151 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/구",
+ "spec": {
+  "title": "구의 단면 — 높이 z에서 자른 원",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "z",
+    "label": "자르는 높이 z",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "cs = sqrt(max(r^2 - z^2, 0))",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "대원(반지름 r)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=cs",
+     "label": "z에서의 단면"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cs",
+      "=0"
+     ],
+     "label": "단면 반지름"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cs",
+      "=0"
+     ],
+     "label": "단면 끝점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "단면 반지름 √(r²−z²)",
+    "expr": "cs",
+    "digits": 4
+   },
+   {
+    "label": "단면 넓이 π·cs²",
+    "expr": "pi*cs^2",
+    "digits": 4
+   },
+   {
+    "label": "검증 cs²+z²",
+    "expr": "cs^2 + z^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 5,
+    "z": 3
+   },
+   {
+    "r": 3,
+    "z": 0
+   },
+   {
+    "r": 4,
+    "z": 2
+   },
+   {
+    "r": 2,
+    "z": 1
+   }
+  ],
+  "invariants": [
+   "cs^2 + z^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 5,
+     "z": 3
+    },
+    "expect": {
+     "cs": 4
+    }
+   },
+   {
+    "params": {
+     "r": 3,
+     "z": 0
+    },
+    "expect": {
+     "cs": 3
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "z": 1
+    },
+    "expect": {
+     "cs": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

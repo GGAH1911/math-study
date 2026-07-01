@@ -1,0 +1,144 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/이차곡선의_표준형",
+ "spec": {
+  "title": "타원의 표준형  x²/a² + y²/b² = 1  (a > b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (장반축)",
+    "type": "slider",
+    "min": 3.5,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (단반축)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "c=sqrt(a^2-b^2); e=c/a; foc=2*a",
+  "plot": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sqrt(b^2*(1-x^2/a^2))",
+     "label": "타원 (위쪽 반)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "-sqrt(b^2*(1-x^2/a^2))",
+     "label": "타원 (아래쪽 반)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "초점거리 c = √(a²−b²)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "초점 F(±c, 0) 의 c",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "이심률 e = c/a",
+    "expr": "e",
+    "digits": 4
+   },
+   {
+    "label": "장축 길이 2a",
+    "expr": "2*a",
+    "digits": 2
+   },
+   {
+    "label": "단축 길이 2b",
+    "expr": "2*b",
+    "digits": 2
+   },
+   {
+    "label": "초점거리의 합 (임의의 점→두 초점) = 2a",
+    "expr": "foc",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 5,
+    "b": 3
+   },
+   {
+    "a": 5,
+    "b": 4
+   },
+   {
+    "a": 4,
+    "b": 2
+   },
+   {
+    "a": 6,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "c^2-(a^2-b^2)",
+   "e*a-c",
+   "c^2+b^2-a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 5,
+     "b": 3
+    },
+    "expect": {
+     "c": 4,
+     "e": 0.8,
+     "foc": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 4
+    },
+    "expect": {
+     "c": 3,
+     "e": 0.6,
+     "foc": 10
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2
+    },
+    "expect": {
+     "c": 3.4641016151,
+     "e": 0.8660254038,
+     "foc": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

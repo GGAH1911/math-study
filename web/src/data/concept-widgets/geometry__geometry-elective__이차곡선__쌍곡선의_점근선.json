@@ -1,0 +1,129 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/쌍곡선의_점근선",
+ "spec": {
+  "title": "쌍곡선의 점근선  x²/a² − y²/b² = 1  →  y = ±(b/a)x",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (가로 반축)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (세로 반축)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "sl = b/a; px = a*cosh(1); py = b*sinh(1); onCurve = px^2/a^2 - py^2/b^2 - 1; cornerCheck = sl*a - b",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "b*sqrt(x^2/a^2 - 1)",
+     "label": "쌍곡선 위쪽 가지",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "-b*sqrt(x^2/a^2 - 1)",
+     "label": "쌍곡선 아래쪽 가지",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(b/a)*x",
+     "label": "점근선 y=(b/a)x",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "-(b/a)*x",
+     "label": "점근선 y=-(b/a)x",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점근선 기울기 b/a",
+    "expr": "sl",
+    "digits": 4
+   },
+   {
+    "label": "곡선-점근선 검증(≈0)",
+    "expr": "onCurve",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": 5,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 4
+   }
+  ],
+  "invariants": [
+   "onCurve",
+   "cornerCheck"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "sl": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 6
+    },
+    "expect": {
+     "sl": 2
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 2
+    },
+    "expect": {
+     "sl": 0.4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

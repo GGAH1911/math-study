@@ -1,0 +1,139 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/이심률",
+ "spec": {
+  "title": "이심률 e = r/d — 하나의 슬라이더로 타원·포물선·쌍곡선",
+  "params": [
+   {
+    "name": "e",
+    "label": "이심률 e",
+    "type": "slider",
+    "min": 0.15,
+    "max": 2.2,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "theta",
+    "label": "점 P의 위치 θ",
+    "type": "slider",
+    "min": 60,
+    "max": 300,
+    "init": 120,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; ct=cos(rad); st=sin(rad); r=e/(1-e*ct); Px=r*ct; Py=r*st; dline=Px+1; ratio=r/dline",
+  "plot": {
+   "range": [
+    -3.5,
+    6
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "fns": [
+    {
+     "fn": "sqrt((e^2-1)*x^2+2*e^2*x+e^2)",
+     "label": "곡선(위)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "-sqrt((e^2-1)*x^2+2*e^2*x+e^2)",
+     "label": "곡선(아래)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "이심률 e",
+    "expr": "e",
+    "digits": 3
+   },
+   {
+    "label": "r (P→초점)",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "d (P→준선)",
+    "expr": "dline",
+    "digits": 3
+   },
+   {
+    "label": "r/d (= e 이어야)",
+    "expr": "ratio",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "e": 0.6,
+    "theta": 120
+   },
+   {
+    "e": 1,
+    "theta": 90
+   },
+   {
+    "e": 2,
+    "theta": 120
+   },
+   {
+    "e": 0.9,
+    "theta": 200
+   }
+  ],
+  "invariants": [
+   "ratio-e",
+   "r-e*dline",
+   "Py^2-((e^2-1)*Px^2+2*e^2*Px+e^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "e": 0.6,
+     "theta": 120
+    },
+    "expect": {
+     "r": 0.4615384615,
+     "Px": -0.2307692308,
+     "Py": 0.3997040327,
+     "dline": 0.7692307692,
+     "ratio": 0.6
+    }
+   },
+   {
+    "params": {
+     "e": 1,
+     "theta": 90
+    },
+    "expect": {
+     "r": 1,
+     "Px": 0,
+     "Py": 1,
+     "dline": 1,
+     "ratio": 1
+    }
+   },
+   {
+    "params": {
+     "e": 2,
+     "theta": 120
+    },
+    "expect": {
+     "r": 1,
+     "Px": -0.5,
+     "Py": 0.8660254038,
+     "dline": 0.5,
+     "ratio": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

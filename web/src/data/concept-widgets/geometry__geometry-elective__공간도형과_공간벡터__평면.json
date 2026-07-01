@@ -1,0 +1,174 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/평면",
+ "spec": {
+  "title": "평면과 법선벡터 (2D 단면 모형)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "법선 방향 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "d",
+    "label": "원점~평면 거리 d",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "rad=theta*pi/180; nx=cos(rad); ny=sin(rad); footx=d*nx; footy=d*ny; dirx=-ny; diry=nx",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=footx",
+      "=footy"
+     ],
+     "label": "n (법선벡터)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=footx",
+      "=footy"
+     ],
+     "label": "H"
+    },
+    {
+     "type": "line",
+     "from": [
+      "=footx-2.6*dirx",
+      "=footy-2.6*diry"
+     ],
+     "to": [
+      "=footx+2.6*dirx",
+      "=footy+2.6*diry"
+     ],
+     "label": "평면 π: nx·x+ny·y=d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "법선 n_x = cosθ",
+    "expr": "nx",
+    "digits": 3
+   },
+   {
+    "label": "법선 n_y = sinθ",
+    "expr": "ny",
+    "digits": 3
+   },
+   {
+    "label": "원점→평면 수선의 발 H",
+    "expr": "footx",
+    "digits": 3
+   },
+   {
+    "label": "원점~평면 거리 |d|",
+    "expr": "abs(d)",
+    "digits": 3
+   },
+   {
+    "label": "n·H (=d 이어야)",
+    "expr": "nx*footx+ny*footy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "d": 1
+   },
+   {
+    "theta": 90,
+    "d": 2
+   },
+   {
+    "theta": 30,
+    "d": 1.5
+   },
+   {
+    "theta": 135,
+    "d": 1
+   }
+  ],
+  "invariants": [
+   "nx^2+ny^2-1",
+   "nx*footx+ny*footy-d",
+   "nx*dirx+ny*diry"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "d": 1
+    },
+    "expect": {
+     "nx": 1,
+     "ny": 0,
+     "footx": 1,
+     "footy": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "d": 2
+    },
+    "expect": {
+     "nx": 0,
+     "ny": 1,
+     "footx": 0,
+     "footy": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "d": 2
+    },
+    "expect": {
+     "nx": 0.8660254037844387,
+     "ny": 0.5,
+     "footx": 1.7320508075688772,
+     "footy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

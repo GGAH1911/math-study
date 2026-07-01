@@ -1,0 +1,172 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/접선_조건",
+ "spec": {
+  "title": "원의 접선 조건 — 접점과 접선",
+  "params": [
+   {
+    "name": "theta",
+    "label": "접점 각도 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); dx=-sin(rad); dy=cos(rad); dist=abs(r)/sqrt(cos(rad)^2+sin(rad)^2); t1x=px+3*dx; t1y=py+3*dy; t2x=px-3*dx; t2y=py-3*dy",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "반지름 OP"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(접점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=t1x",
+      "=t1y"
+     ],
+     "to": [
+      "=t2x",
+      "=t2y"
+     ],
+     "label": "접선 x·x₀+y·y₀=r²"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 P_x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "접점 P_y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "중심-접선 거리 d",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "OP·(접선방향) 내적",
+    "expr": "px*dx+py*dy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "r": 2
+   },
+   {
+    "theta": 120,
+    "r": 1.5
+   },
+   {
+    "theta": 210,
+    "r": 3
+   },
+   {
+    "theta": 0,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "dist-r",
+   "px*dx+py*dy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "r": 2
+    },
+    "expect": {
+     "px": 2,
+     "py": 0,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "r": 1
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "dist": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "r": 2
+    },
+    "expect": {
+     "px": 1.7320508075688772,
+     "py": 1,
+     "dist": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

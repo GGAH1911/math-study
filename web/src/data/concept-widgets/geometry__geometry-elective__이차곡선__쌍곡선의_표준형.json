@@ -1,0 +1,142 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/쌍곡선의_표준형",
+ "spec": {
+  "title": "쌍곡선의 표준형 x²/a² − y²/b² = 1",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (꼭짓점까지 거리)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (모양 상수)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "c=sqrt(a^2+b^2); e=c/a; s=b/a",
+  "plot": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "b*sqrt(max(x^2/a^2-1,0))",
+     "label": "위쪽 가지 y=+b√(x²/a²−1)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "-b*sqrt(max(x^2/a^2-1,0))",
+     "label": "아래쪽 가지 y=−b√(x²/a²−1)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(b/a)*x",
+     "label": "점근선 y=(b/a)x",
+     "color": "#9ca3af"
+    },
+    {
+     "fn": "-(b/a)*x",
+     "label": "점근선 y=−(b/a)x",
+     "color": "#9ca3af"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "c = √(a²+b²) (초점거리)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "초점 F(±c, 0)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "이심률 e = c/a",
+    "expr": "e",
+    "digits": 4
+   },
+   {
+    "label": "점근선 기울기 b/a",
+    "expr": "s",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 4,
+    "b": 3
+   },
+   {
+    "a": 2,
+    "b": 2
+   },
+   {
+    "a": 5,
+    "b": 1.5
+   }
+  ],
+  "invariants": [
+   "c^2-a^2-b^2",
+   "e*a-c",
+   "s*a-b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "c": 5,
+     "e": 1.6666666667,
+     "s": 1.3333333333
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 3
+    },
+    "expect": {
+     "c": 5,
+     "e": 1.25,
+     "s": 0.75
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2
+    },
+    "expect": {
+     "c": 2.8284271247,
+     "e": 1.4142135624,
+     "s": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

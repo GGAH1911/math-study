@@ -1,0 +1,223 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/평면의_방정식",
+ "spec": {
+  "title": "평면의 방정식 — 점 P₀를 지나 법선벡터 n에 수직 (단면도)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "법선벡터 방향 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "x0",
+    "label": "P₀ x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "y0",
+    "label": "P₀ y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "평면 위 점 P 위치 t",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; nx=cos(rad); ny=sin(rad); dx=-sin(rad); dy=cos(rad); Px=x0+t*dx; Py=y0+t*dy; cc=-(nx*x0+ny*y0); dot=nx*(Px-x0)+ny*(Py-y0)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x0-6*dx",
+      "=y0-6*dy"
+     ],
+     "to": [
+      "=x0+6*dx",
+      "=y0+6*dy"
+     ],
+     "label": "평면 π (법선에 수직)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "P₀",
+     "color": "#111827"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=x0+nx",
+      "=y0+ny"
+     ],
+     "label": "법선벡터 n=(a,b)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P",
+     "color": "#059669"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P₀P",
+     "color": "#059669"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = nₓ",
+    "expr": "nx",
+    "digits": 3
+   },
+   {
+    "label": "b = n_y",
+    "expr": "ny",
+    "digits": 3
+   },
+   {
+    "label": "평면식  nₓ·x + n_y·y + c = 0  의 c",
+    "expr": "cc",
+    "digits": 3
+   },
+   {
+    "label": "P₀P · n  (수직이면 0)",
+    "expr": "dot",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "x0": 1,
+    "y0": 1,
+    "t": 2
+   },
+   {
+    "theta": 120,
+    "x0": -1,
+    "y0": 0.5,
+    "t": -1
+   },
+   {
+    "theta": 200,
+    "x0": 0,
+    "y0": -2,
+    "t": 3
+   },
+   {
+    "theta": 315,
+    "x0": 2,
+    "y0": -1,
+    "t": -2
+   }
+  ],
+  "invariants": [
+   "nx^2+ny^2-1",
+   "nx*dx+ny*dy",
+   "dot"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "x0": 1,
+     "y0": 0,
+     "t": 2
+    },
+    "expect": {
+     "nx": 1,
+     "ny": 0,
+     "Px": 1,
+     "Py": 2,
+     "cc": -1,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "x0": 0,
+     "y0": 1,
+     "t": 1
+    },
+    "expect": {
+     "nx": 0,
+     "ny": 1,
+     "Px": -1,
+     "Py": 1,
+     "cc": -1,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "x0": 2,
+     "y0": -1,
+     "t": 1
+    },
+    "expect": {
+     "nx": -1,
+     "ny": 0,
+     "Px": 2,
+     "Py": -2,
+     "cc": 2,
+     "dot": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

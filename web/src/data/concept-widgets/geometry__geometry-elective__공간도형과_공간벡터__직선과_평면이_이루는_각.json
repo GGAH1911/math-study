@@ -1,0 +1,212 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/직선과_평면이_이루는_각",
+ "spec": {
+  "title": "직선과 평면이 이루는 각 (방향벡터 d · 법선벡터 n)",
+  "params": [
+   {
+    "name": "dx",
+    "label": "방향벡터 dₓ",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "dy",
+    "label": "방향벡터 d_y",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "dz",
+    "label": "방향벡터 d_z (평면 위 높이 성분)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "h = sqrt(dx^2+dy^2); dnorm = sqrt(dx^2+dy^2+dz^2); sintheta = abs(dz)/dnorm; costheta = h/dnorm; theta = asin(sintheta)*180/pi",
+  "geometry": {
+   "range": [
+    -1.5,
+    5.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -1.5,
+      0
+     ],
+     "to": [
+      5.5,
+      0
+     ],
+     "label": "평면 π (모서리로 봄)",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=h",
+      "=dz"
+     ],
+     "label": "직선 l (방향 d)",
+     "color": "#e6194B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=h",
+      0
+     ],
+     "label": "정사영 l′",
+     "color": "#3cb44b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=dnorm*0.7"
+     ],
+     "label": "법선 n",
+     "color": "#4363d8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=h",
+      "=dz"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=h",
+      0
+     ],
+     "label": "P′"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sinθ = |d·n|/(|d||n|)",
+    "expr": "sintheta",
+    "digits": 4
+   },
+   {
+    "label": "θ (도)",
+    "expr": "theta",
+    "digits": 2
+   },
+   {
+    "label": "|d|",
+    "expr": "dnorm",
+    "digits": 4
+   },
+   {
+    "label": "cosθ (=l′/|d|)",
+    "expr": "costheta",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "dx": 3,
+    "dy": 0,
+    "dz": 0
+   },
+   {
+    "dx": 0,
+    "dy": 0,
+    "dz": 3
+   },
+   {
+    "dx": 3,
+    "dy": 0,
+    "dz": 3
+   },
+   {
+    "dx": 1,
+    "dy": 2,
+    "dz": 2
+   }
+  ],
+  "invariants": [
+   "sintheta^2 + costheta^2 - 1",
+   "sintheta*dnorm - abs(dz)",
+   "costheta*dnorm - h",
+   "h^2 - (dx^2+dy^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "dx": 3,
+     "dy": 0,
+     "dz": 3
+    },
+    "expect": {
+     "sintheta": 0.7071067811865476,
+     "costheta": 0.7071067811865476,
+     "theta": 45,
+     "dnorm": 4.242640687119285
+    }
+   },
+   {
+    "params": {
+     "dx": 1,
+     "dy": 2,
+     "dz": 2
+    },
+    "expect": {
+     "sintheta": 0.6666666666666666,
+     "costheta": 0.7453559924999299,
+     "theta": 41.810314895778596,
+     "dnorm": 3
+    }
+   },
+   {
+    "params": {
+     "dx": 3,
+     "dy": 0,
+     "dz": 0
+    },
+    "expect": {
+     "sintheta": 0,
+     "costheta": 1,
+     "theta": 0,
+     "dnorm": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

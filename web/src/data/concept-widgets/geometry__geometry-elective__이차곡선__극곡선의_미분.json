@@ -1,0 +1,256 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/극곡선의_미분",
+ "spec": {
+  "title": "극곡선의 미분 — 리마송 r = 1 + b·cosθ 접선의 기울기",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (곡선 모양)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "θ (점의 각도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; r=1+b*cos(rad); dr=-b*sin(rad); px=r*cos(rad); py=r*sin(rad); num=dr*sin(rad)+r*cos(rad); den=dr*cos(rad)-r*sin(rad); slope=num/den; L=sqrt(num^2+den^2); tnx=den/L; tny=num/L",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=(1+b*cos(0*pi/180))*cos(0*pi/180)",
+       "=(1+b*cos(0*pi/180))*sin(0*pi/180)"
+      ],
+      [
+       "=(1+b*cos(15*pi/180))*cos(15*pi/180)",
+       "=(1+b*cos(15*pi/180))*sin(15*pi/180)"
+      ],
+      [
+       "=(1+b*cos(30*pi/180))*cos(30*pi/180)",
+       "=(1+b*cos(30*pi/180))*sin(30*pi/180)"
+      ],
+      [
+       "=(1+b*cos(45*pi/180))*cos(45*pi/180)",
+       "=(1+b*cos(45*pi/180))*sin(45*pi/180)"
+      ],
+      [
+       "=(1+b*cos(60*pi/180))*cos(60*pi/180)",
+       "=(1+b*cos(60*pi/180))*sin(60*pi/180)"
+      ],
+      [
+       "=(1+b*cos(75*pi/180))*cos(75*pi/180)",
+       "=(1+b*cos(75*pi/180))*sin(75*pi/180)"
+      ],
+      [
+       "=(1+b*cos(90*pi/180))*cos(90*pi/180)",
+       "=(1+b*cos(90*pi/180))*sin(90*pi/180)"
+      ],
+      [
+       "=(1+b*cos(105*pi/180))*cos(105*pi/180)",
+       "=(1+b*cos(105*pi/180))*sin(105*pi/180)"
+      ],
+      [
+       "=(1+b*cos(120*pi/180))*cos(120*pi/180)",
+       "=(1+b*cos(120*pi/180))*sin(120*pi/180)"
+      ],
+      [
+       "=(1+b*cos(135*pi/180))*cos(135*pi/180)",
+       "=(1+b*cos(135*pi/180))*sin(135*pi/180)"
+      ],
+      [
+       "=(1+b*cos(150*pi/180))*cos(150*pi/180)",
+       "=(1+b*cos(150*pi/180))*sin(150*pi/180)"
+      ],
+      [
+       "=(1+b*cos(165*pi/180))*cos(165*pi/180)",
+       "=(1+b*cos(165*pi/180))*sin(165*pi/180)"
+      ],
+      [
+       "=(1+b*cos(180*pi/180))*cos(180*pi/180)",
+       "=(1+b*cos(180*pi/180))*sin(180*pi/180)"
+      ],
+      [
+       "=(1+b*cos(195*pi/180))*cos(195*pi/180)",
+       "=(1+b*cos(195*pi/180))*sin(195*pi/180)"
+      ],
+      [
+       "=(1+b*cos(210*pi/180))*cos(210*pi/180)",
+       "=(1+b*cos(210*pi/180))*sin(210*pi/180)"
+      ],
+      [
+       "=(1+b*cos(225*pi/180))*cos(225*pi/180)",
+       "=(1+b*cos(225*pi/180))*sin(225*pi/180)"
+      ],
+      [
+       "=(1+b*cos(240*pi/180))*cos(240*pi/180)",
+       "=(1+b*cos(240*pi/180))*sin(240*pi/180)"
+      ],
+      [
+       "=(1+b*cos(255*pi/180))*cos(255*pi/180)",
+       "=(1+b*cos(255*pi/180))*sin(255*pi/180)"
+      ],
+      [
+       "=(1+b*cos(270*pi/180))*cos(270*pi/180)",
+       "=(1+b*cos(270*pi/180))*sin(270*pi/180)"
+      ],
+      [
+       "=(1+b*cos(285*pi/180))*cos(285*pi/180)",
+       "=(1+b*cos(285*pi/180))*sin(285*pi/180)"
+      ],
+      [
+       "=(1+b*cos(300*pi/180))*cos(300*pi/180)",
+       "=(1+b*cos(300*pi/180))*sin(300*pi/180)"
+      ],
+      [
+       "=(1+b*cos(315*pi/180))*cos(315*pi/180)",
+       "=(1+b*cos(315*pi/180))*sin(315*pi/180)"
+      ],
+      [
+       "=(1+b*cos(330*pi/180))*cos(330*pi/180)",
+       "=(1+b*cos(330*pi/180))*sin(330*pi/180)"
+      ],
+      [
+       "=(1+b*cos(345*pi/180))*cos(345*pi/180)",
+       "=(1+b*cos(345*pi/180))*sin(345*pi/180)"
+      ]
+     ],
+     "label": "r=1+b·cosθ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "반지름 r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px-1.6*tnx",
+      "=py-1.6*tny"
+     ],
+     "to": [
+      "=px+1.6*tnx",
+      "=py+1.6*tny"
+     ],
+     "label": "접선"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "dr/dθ",
+    "expr": "dr",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 dy/dx",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0.5,
+    "theta": 60
+   },
+   {
+    "b": 1,
+    "theta": 120
+   },
+   {
+    "b": 1.5,
+    "theta": 30
+   },
+   {
+    "b": 0.5,
+    "theta": 200
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "num-slope*den",
+   "tnx^2+tny^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "theta": 90
+    },
+    "expect": {
+     "r": 1,
+     "slope": 0,
+     "px": 0,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "theta": 45
+    },
+    "expect": {
+     "r": 1,
+     "slope": -1
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "theta": 90
+    },
+    "expect": {
+     "r": 1,
+     "slope": 1,
+     "px": 0,
+     "py": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

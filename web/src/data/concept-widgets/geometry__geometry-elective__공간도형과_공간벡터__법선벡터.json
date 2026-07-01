@@ -1,0 +1,198 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/법선벡터",
+ "spec": {
+  "title": "법선벡터 — 직선 ax+by=c 에 수직인 벡터 (a,b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "d2 = a^2 + b^2; fx = a*c/d2; fy = b*c/d2; nx = fx + a; ny = fy + b; p1x = fx + 10*b; p1y = fy - 10*a; p2x = fx - 10*b; p2y = fy + 10*a; dot = a*(-b) + b*a; nmag = sqrt(d2)",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=p1x",
+      "=p1y"
+     ],
+     "to": [
+      "=p2x",
+      "=p2y"
+     ],
+     "label": "ax+by=c",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=fx",
+      "=fy"
+     ],
+     "to": [
+      "=nx",
+      "=ny"
+     ],
+     "label": "n=(a,b)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=nx",
+      "=ny"
+     ],
+     "label": "n"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "법선벡터 n",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "( , b )",
+    "expr": "b",
+    "digits": 0
+   },
+   {
+    "label": "|n|",
+    "expr": "nmag",
+    "digits": 4
+   },
+   {
+    "label": "n·(방향벡터) =0 확인",
+    "expr": "dot",
+    "digits": 6
+   },
+   {
+    "label": "수선의 발 H가 직선 위: ax+by-c",
+    "expr": "a*fx + b*fy - c",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 10
+   },
+   {
+    "a": 3,
+    "b": 0,
+    "c": 6
+   },
+   {
+    "a": -2,
+    "b": 1,
+    "c": 4
+   },
+   {
+    "a": 2,
+    "b": -3,
+    "c": -6
+   }
+  ],
+  "invariants": [
+   "a*(-b) + b*a",
+   "a*fx + b*fy - c",
+   "a*(p1x-p2x) + b*(p1y-p2y)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 10
+    },
+    "expect": {
+     "fx": 2,
+     "fy": 4,
+     "dot": 0,
+     "d2": 5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 0,
+     "c": 6
+    },
+    "expect": {
+     "fx": 2,
+     "fy": 0,
+     "dot": 0,
+     "d2": 9
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 1,
+     "c": 4
+    },
+    "expect": {
+     "fx": -1.6,
+     "fy": 0.8,
+     "dot": 0,
+     "d2": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

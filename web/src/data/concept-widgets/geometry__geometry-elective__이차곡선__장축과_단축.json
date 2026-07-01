@@ -1,0 +1,341 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/장축과_단축",
+ "spec": {
+  "title": "타원의 장축과 단축",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (긴반지름)",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (짧은반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "c = sqrt(a^2 - b^2); e = c/a; major = 2*a; minor = 2*b",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*cos(2*pi*0/36)",
+       "=b*sin(2*pi*0/36)"
+      ],
+      [
+       "=a*cos(2*pi*1/36)",
+       "=b*sin(2*pi*1/36)"
+      ],
+      [
+       "=a*cos(2*pi*2/36)",
+       "=b*sin(2*pi*2/36)"
+      ],
+      [
+       "=a*cos(2*pi*3/36)",
+       "=b*sin(2*pi*3/36)"
+      ],
+      [
+       "=a*cos(2*pi*4/36)",
+       "=b*sin(2*pi*4/36)"
+      ],
+      [
+       "=a*cos(2*pi*5/36)",
+       "=b*sin(2*pi*5/36)"
+      ],
+      [
+       "=a*cos(2*pi*6/36)",
+       "=b*sin(2*pi*6/36)"
+      ],
+      [
+       "=a*cos(2*pi*7/36)",
+       "=b*sin(2*pi*7/36)"
+      ],
+      [
+       "=a*cos(2*pi*8/36)",
+       "=b*sin(2*pi*8/36)"
+      ],
+      [
+       "=a*cos(2*pi*9/36)",
+       "=b*sin(2*pi*9/36)"
+      ],
+      [
+       "=a*cos(2*pi*10/36)",
+       "=b*sin(2*pi*10/36)"
+      ],
+      [
+       "=a*cos(2*pi*11/36)",
+       "=b*sin(2*pi*11/36)"
+      ],
+      [
+       "=a*cos(2*pi*12/36)",
+       "=b*sin(2*pi*12/36)"
+      ],
+      [
+       "=a*cos(2*pi*13/36)",
+       "=b*sin(2*pi*13/36)"
+      ],
+      [
+       "=a*cos(2*pi*14/36)",
+       "=b*sin(2*pi*14/36)"
+      ],
+      [
+       "=a*cos(2*pi*15/36)",
+       "=b*sin(2*pi*15/36)"
+      ],
+      [
+       "=a*cos(2*pi*16/36)",
+       "=b*sin(2*pi*16/36)"
+      ],
+      [
+       "=a*cos(2*pi*17/36)",
+       "=b*sin(2*pi*17/36)"
+      ],
+      [
+       "=a*cos(2*pi*18/36)",
+       "=b*sin(2*pi*18/36)"
+      ],
+      [
+       "=a*cos(2*pi*19/36)",
+       "=b*sin(2*pi*19/36)"
+      ],
+      [
+       "=a*cos(2*pi*20/36)",
+       "=b*sin(2*pi*20/36)"
+      ],
+      [
+       "=a*cos(2*pi*21/36)",
+       "=b*sin(2*pi*21/36)"
+      ],
+      [
+       "=a*cos(2*pi*22/36)",
+       "=b*sin(2*pi*22/36)"
+      ],
+      [
+       "=a*cos(2*pi*23/36)",
+       "=b*sin(2*pi*23/36)"
+      ],
+      [
+       "=a*cos(2*pi*24/36)",
+       "=b*sin(2*pi*24/36)"
+      ],
+      [
+       "=a*cos(2*pi*25/36)",
+       "=b*sin(2*pi*25/36)"
+      ],
+      [
+       "=a*cos(2*pi*26/36)",
+       "=b*sin(2*pi*26/36)"
+      ],
+      [
+       "=a*cos(2*pi*27/36)",
+       "=b*sin(2*pi*27/36)"
+      ],
+      [
+       "=a*cos(2*pi*28/36)",
+       "=b*sin(2*pi*28/36)"
+      ],
+      [
+       "=a*cos(2*pi*29/36)",
+       "=b*sin(2*pi*29/36)"
+      ],
+      [
+       "=a*cos(2*pi*30/36)",
+       "=b*sin(2*pi*30/36)"
+      ],
+      [
+       "=a*cos(2*pi*31/36)",
+       "=b*sin(2*pi*31/36)"
+      ],
+      [
+       "=a*cos(2*pi*32/36)",
+       "=b*sin(2*pi*32/36)"
+      ],
+      [
+       "=a*cos(2*pi*33/36)",
+       "=b*sin(2*pi*33/36)"
+      ],
+      [
+       "=a*cos(2*pi*34/36)",
+       "=b*sin(2*pi*34/36)"
+      ],
+      [
+       "=a*cos(2*pi*35/36)",
+       "=b*sin(2*pi*35/36)"
+      ]
+     ],
+     "label": "타원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-a",
+      0
+     ],
+     "to": [
+      "=a",
+      0
+     ],
+     "label": "장축 2a",
+     "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=-b"
+     ],
+     "to": [
+      0,
+      "=b"
+     ],
+     "label": "단축 2b",
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "장축 꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=b"
+     ],
+     "label": "단축 끝점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "c = √(a²−b²)",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "이심률 e = c/a",
+    "expr": "e",
+    "digits": 3
+   },
+   {
+    "label": "장축 길이 2a",
+    "expr": "major",
+    "digits": 2
+   },
+   {
+    "label": "단축 길이 2b",
+    "expr": "minor",
+    "digits": 2
+   },
+   {
+    "label": "초점거리 합 (단축끝점)",
+    "expr": "2*sqrt(c^2+b^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": 5,
+    "b": 3
+   },
+   {
+    "a": 4,
+    "b": 2.4
+   },
+   {
+    "a": 2,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "c^2 - (a^2 - b^2)",
+   "sqrt(c^2 + b^2) - a",
+   "e*a - c",
+   "major - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 5,
+     "b": 3
+    },
+    "expect": {
+     "c": 4,
+     "e": 0.8,
+     "major": 10,
+     "minor": 6
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 2
+    },
+    "expect": {
+     "c": 2.2360679775,
+     "e": 0.7453559925,
+     "major": 6,
+     "minor": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "c": 1.7320508076,
+     "e": 0.8660254038,
+     "major": 4,
+     "minor": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

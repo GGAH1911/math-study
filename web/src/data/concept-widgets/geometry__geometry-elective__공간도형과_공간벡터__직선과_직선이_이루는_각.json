@@ -1,0 +1,202 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/직선과_직선이_이루는_각",
+ "spec": {
+  "title": "두 직선이 이루는 각",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "직선 a 방향각 α",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "beta",
+    "label": "직선 b 방향각 β",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 120,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ar=alpha*pi/180; br=beta*pi/180; ax=cos(ar); ay=sin(ar); bx=cos(br); by=sin(br); dot=ax*bx+ay*by; cth=abs(dot); theta=acos(cth)*180/pi",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-2*ax",
+      "=-2*ay"
+     ],
+     "to": [
+      "=2*ax",
+      "=2*ay"
+     ],
+     "label": "직선 a",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-2*bx",
+      "=-2*by"
+     ],
+     "to": [
+      "=2*bx",
+      "=2*by"
+     ],
+     "label": "직선 b",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a·b",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "|a·b|",
+    "expr": "cth",
+    "digits": 4
+   },
+   {
+    "label": "cos θ",
+    "expr": "cth",
+    "digits": 4
+   },
+   {
+    "label": "두 직선이 이루는 각 θ",
+    "expr": "theta",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 0,
+    "beta": 90
+   },
+   {
+    "alpha": 30,
+    "beta": 60
+   },
+   {
+    "alpha": 0,
+    "beta": 150
+   },
+   {
+    "alpha": 45,
+    "beta": 135
+   }
+  ],
+  "invariants": [
+   "ax^2+ay^2-1",
+   "bx^2+by^2-1",
+   "dot-(ax*bx+ay*by)",
+   "cos(theta*pi/180)-abs(dot)",
+   "theta-acos(abs(dot))*180/pi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 0,
+     "beta": 90
+    },
+    "expect": {
+     "dot": 0,
+     "cth": 0,
+     "theta": 90
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 60
+    },
+    "expect": {
+     "dot": 0.8660254037844387,
+     "cth": 0.8660254037844387,
+     "theta": 30
+    }
+   },
+   {
+    "params": {
+     "alpha": 0,
+     "beta": 150
+    },
+    "expect": {
+     "dot": -0.8660254037844387,
+     "cth": 0.8660254037844387,
+     "theta": 30
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

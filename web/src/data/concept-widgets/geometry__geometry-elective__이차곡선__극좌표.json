@@ -1,0 +1,187 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/극좌표",
+ "spec": {
+  "title": "극좌표 (r, θ) → 직교좌표 (x, y)",
+  "params": [
+   {
+    "name": "r",
+    "label": "r (거리)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "θ (각도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad)",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(r, θ)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      0
+     ],
+     "label": "x"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=py"
+     ],
+     "label": "y"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=px",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      0,
+      "=py"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x = r cosθ",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y = r sinθ",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "√(x²+y²)",
+    "expr": "sqrt(px^2+py^2)",
+    "digits": 4
+   },
+   {
+    "label": "r",
+    "expr": "r",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "theta": 30
+   },
+   {
+    "r": 3,
+    "theta": 90
+   },
+   {
+    "r": 1,
+    "theta": 0
+   },
+   {
+    "r": 2.5,
+    "theta": 225
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "py*cos(rad)-px*sin(rad)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "theta": 30
+    },
+    "expect": {
+     "px": 1.7320508075688772,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "r": 3,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 3
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

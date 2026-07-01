@@ -1,0 +1,240 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/벡터의_정사영",
+ "spec": {
+  "title": "벡터의 정사영 proj_b a",
+  "params": [
+   {
+    "name": "ax",
+    "label": "a의 x성분",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "ay",
+    "label": "a의 y성분",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "bx",
+    "label": "b의 x성분",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "by",
+    "label": "b의 y성분",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "dot=ax*bx+ay*by; b2=bx^2+by^2; nb=sqrt(b2); k=dot/b2; px=k*bx; py=k*by; comp=dot/nb; perp=(ax-px)*bx+(ay-py)*by; cross=px*by-py*bx",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-3*bx",
+      "=-3*by"
+     ],
+     "to": [
+      "=3*bx",
+      "=3*by"
+     ],
+     "label": "b의 방향직선",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "proj_b a",
+     "color": "#d62728"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "수선",
+     "color": "#ff7f0e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "H"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a·b",
+    "expr": "dot",
+    "digits": 2
+   },
+   {
+    "label": "|b|",
+    "expr": "nb",
+    "digits": 3
+   },
+   {
+    "label": "계수 k = a·b/|b|²",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "스칼라 정사영 comp",
+    "expr": "comp",
+    "digits": 3
+   },
+   {
+    "label": "정사영 x성분",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "정사영 y성분",
+    "expr": "py",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ax": 3,
+    "ay": 4,
+    "bx": 2,
+    "by": 0
+   },
+   {
+    "ax": 2,
+    "ay": 2,
+    "bx": 0,
+    "by": 3
+   },
+   {
+    "ax": 4,
+    "ay": 2,
+    "bx": 1,
+    "by": 1
+   },
+   {
+    "ax": 3,
+    "ay": 4,
+    "bx": 4,
+    "by": 1
+   }
+  ],
+  "invariants": [
+   "perp",
+   "cross",
+   "px-k*bx",
+   "py-k*by"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ax": 3,
+     "ay": 4,
+     "bx": 2,
+     "by": 0
+    },
+    "expect": {
+     "px": 3,
+     "py": 0,
+     "comp": 3
+    }
+   },
+   {
+    "params": {
+     "ax": 2,
+     "ay": 2,
+     "bx": 0,
+     "by": 3
+    },
+    "expect": {
+     "px": 0,
+     "py": 2,
+     "comp": 2
+    }
+   },
+   {
+    "params": {
+     "ax": 4,
+     "ay": 2,
+     "bx": 1,
+     "by": 1
+    },
+    "expect": {
+     "px": 3,
+     "py": 3,
+     "comp": 4.242640687
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,343 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/초점과_꼭짓점",
+ "spec": {
+  "title": "타원의 초점과 꼭짓점",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (장반경)",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "e",
+    "label": "e (이심률)",
+    "type": "slider",
+    "min": 0,
+    "max": 0.9,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "theta",
+    "label": "점 P 각도",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "b=a*sqrt(1-e^2); c=a*e; t=theta*pi/180; px=a*cos(t); py=b*sin(t); d1=sqrt((px-c)^2+py^2); d2=sqrt((px+c)^2+py^2); sumd=d1+d2",
+  "geometry": {
+   "range": [
+    -5.6,
+    5.6
+   ],
+   "yRange": [
+    -5.6,
+    5.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "label": "타원",
+     "points": [
+      [
+       "=a*cos(0)",
+       "=b*sin(0)"
+      ],
+      [
+       "=a*cos(pi/12)",
+       "=b*sin(pi/12)"
+      ],
+      [
+       "=a*cos(2*pi/12)",
+       "=b*sin(2*pi/12)"
+      ],
+      [
+       "=a*cos(3*pi/12)",
+       "=b*sin(3*pi/12)"
+      ],
+      [
+       "=a*cos(4*pi/12)",
+       "=b*sin(4*pi/12)"
+      ],
+      [
+       "=a*cos(5*pi/12)",
+       "=b*sin(5*pi/12)"
+      ],
+      [
+       "=a*cos(6*pi/12)",
+       "=b*sin(6*pi/12)"
+      ],
+      [
+       "=a*cos(7*pi/12)",
+       "=b*sin(7*pi/12)"
+      ],
+      [
+       "=a*cos(8*pi/12)",
+       "=b*sin(8*pi/12)"
+      ],
+      [
+       "=a*cos(9*pi/12)",
+       "=b*sin(9*pi/12)"
+      ],
+      [
+       "=a*cos(10*pi/12)",
+       "=b*sin(10*pi/12)"
+      ],
+      [
+       "=a*cos(11*pi/12)",
+       "=b*sin(11*pi/12)"
+      ],
+      [
+       "=a*cos(pi)",
+       "=b*sin(pi)"
+      ],
+      [
+       "=a*cos(13*pi/12)",
+       "=b*sin(13*pi/12)"
+      ],
+      [
+       "=a*cos(14*pi/12)",
+       "=b*sin(14*pi/12)"
+      ],
+      [
+       "=a*cos(15*pi/12)",
+       "=b*sin(15*pi/12)"
+      ],
+      [
+       "=a*cos(16*pi/12)",
+       "=b*sin(16*pi/12)"
+      ],
+      [
+       "=a*cos(17*pi/12)",
+       "=b*sin(17*pi/12)"
+      ],
+      [
+       "=a*cos(18*pi/12)",
+       "=b*sin(18*pi/12)"
+      ],
+      [
+       "=a*cos(19*pi/12)",
+       "=b*sin(19*pi/12)"
+      ],
+      [
+       "=a*cos(20*pi/12)",
+       "=b*sin(20*pi/12)"
+      ],
+      [
+       "=a*cos(21*pi/12)",
+       "=b*sin(21*pi/12)"
+      ],
+      [
+       "=a*cos(22*pi/12)",
+       "=b*sin(22*pi/12)"
+      ],
+      [
+       "=a*cos(23*pi/12)",
+       "=b*sin(23*pi/12)"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=c",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=-c",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-a",
+      0
+     ],
+     "label": "꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=b"
+     ],
+     "label": "꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=-b"
+     ],
+     "label": "꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "b (단반경)",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "c (초점거리)",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "PF₁",
+    "expr": "d1",
+    "digits": 3
+   },
+   {
+    "label": "PF₂",
+    "expr": "d2",
+    "digits": 3
+   },
+   {
+    "label": "PF₁+PF₂",
+    "expr": "sumd",
+    "digits": 3
+   },
+   {
+    "label": "2a (일정)",
+    "expr": "2*a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "e": 0.6,
+    "theta": 60
+   },
+   {
+    "a": 4,
+    "e": 0.3,
+    "theta": 120
+   },
+   {
+    "a": 2,
+    "e": 0.8,
+    "theta": 200
+   },
+   {
+    "a": 5,
+    "e": 0.5,
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "px^2/a^2+py^2/b^2-1",
+   "d1+d2-2*a",
+   "c^2-(a^2-b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "e": 0.6,
+     "theta": 90
+    },
+    "expect": {
+     "b": 2.4,
+     "c": 1.8,
+     "px": 0,
+     "py": 2.4,
+     "d1": 3,
+     "d2": 3,
+     "sumd": 6
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "e": 0,
+     "theta": 0
+    },
+    "expect": {
+     "b": 4,
+     "c": 0,
+     "px": 4,
+     "py": 0,
+     "d1": 4,
+     "d2": 4,
+     "sumd": 8
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "e": 0.6,
+     "theta": 0
+    },
+    "expect": {
+     "b": 4,
+     "c": 3,
+     "px": 5,
+     "py": 0,
+     "d1": 2,
+     "d2": 8,
+     "sumd": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

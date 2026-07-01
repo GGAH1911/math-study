@@ -1,0 +1,160 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/수선과_거리",
+ "spec": {
+  "title": "점과 직선 사이의 거리 — 수선이 최단거리",
+  "params": [
+   {
+    "name": "t",
+    "label": "Q의 위치 (직선 위 매개변수)",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 0,
+    "step": 0.05
+   }
+  ],
+  "scope": "Ax=-1; Ay=0; dx=2; dy=1; Px=1; Py=3; Qx=Ax+t*dx; Qy=Ay+t*dy; s=((Px-Ax)*dx+(Py-Ay)*dy)/(dx*dx+dy*dy); Hx=Ax+s*dx; Hy=Ay+s*dy; PQ=sqrt((Px-Qx)^2+(Py-Qy)^2); PH=sqrt((Px-Hx)^2+(Py-Hy)^2); dist=abs((Px-Ax)*dy-(Py-Ay)*dx)/sqrt(dx*dx+dy*dy); QH=sqrt((Qx-Hx)^2+(Qy-Hy)^2)",
+  "geometry": {
+   "range": [
+    -4.5,
+    6.5
+   ],
+   "yRange": [
+    -2,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=Ax-1.5*dx",
+      "=Ay-1.5*dy"
+     ],
+     "to": [
+      "=Ax+3.5*dx",
+      "=Ay+3.5*dy"
+     ],
+     "label": "ℓ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Qx",
+      "=Qy"
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "PH(최단)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Qx",
+      "=Qy"
+     ],
+     "label": "PQ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|PQ| (움직이는 거리)",
+    "expr": "PQ",
+    "digits": 4
+   },
+   {
+    "label": "|PH| (수선=최단거리)",
+    "expr": "PH",
+    "digits": 4
+   },
+   {
+    "label": "거리공식 값",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "|PQ|−|PH| (항상 ≥0)",
+    "expr": "PQ-PH",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": -1
+   },
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1.4
+   },
+   {
+    "t": 3
+   }
+  ],
+  "invariants": [
+   "(Px-Hx)*dx+(Py-Hy)*dy",
+   "PH-dist",
+   "PQ^2-PH^2-QH^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 1.4
+    },
+    "expect": {
+     "Qx": 1.8,
+     "Qy": 1.4,
+     "PH": 1.7888543819998317,
+     "PQ": 1.7888543819998317,
+     "s": 1.4
+    }
+   },
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "Qx": -1,
+     "Qy": 0,
+     "PQ": 3.605551275463989
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,161 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/점근선",
+ "spec": {
+  "title": "쌍곡선의 점근선 — x²/a² − y²/b² = 1",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (가로 반축)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b (세로 반축)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "xp",
+    "label": "관찰점 x좌표 (멀어질수록 직선에 근접)",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "m = b/a; yp = b*sqrt(xp^2/a^2 - 1); ya = m*xp; gap = ya - yp; onhyp = xp^2/a^2 - yp^2/b^2 - 1",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "b*sqrt(x^2/a^2 - 1)",
+     "label": "쌍곡선 (위)",
+     "color": "#1e6fd9"
+    },
+    {
+     "fn": "-b*sqrt(x^2/a^2 - 1)",
+     "label": "쌍곡선 (아래)",
+     "color": "#1e6fd9"
+    },
+    {
+     "fn": "(b/a)*x",
+     "label": "점근선 y=(b/a)x",
+     "color": "#d94f1e"
+    },
+    {
+     "fn": "-(b/a)*x",
+     "label": "점근선 y=−(b/a)x",
+     "color": "#d94f1e"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점근선 기울기 b/a",
+    "expr": "m",
+    "digits": 4
+   },
+   {
+    "label": "쌍곡선 위 점의 y (x=xp)",
+    "expr": "yp",
+    "digits": 4
+   },
+   {
+    "label": "점근선의 y (x=xp)",
+    "expr": "ya",
+    "digits": 4
+   },
+   {
+    "label": "세로 간격 (→0 으로 수렴)",
+    "expr": "gap",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "xp": 4
+   },
+   {
+    "a": 3,
+    "b": 4,
+    "xp": 5
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "xp": 3
+   },
+   {
+    "a": 2.5,
+    "b": 2,
+    "xp": 6
+   }
+  ],
+  "invariants": [
+   "xp^2/a^2 - yp^2/b^2 - 1",
+   "ya - (b/a)*xp"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "xp": 2
+    },
+    "expect": {
+     "m": 0.5,
+     "yp": 0,
+     "ya": 1,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "xp": 5
+    },
+    "expect": {
+     "m": 1.3333333333,
+     "yp": 5.3333333333,
+     "ya": 6.6666666667,
+     "gap": 1.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

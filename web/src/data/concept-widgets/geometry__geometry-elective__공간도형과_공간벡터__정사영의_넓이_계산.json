@@ -1,0 +1,151 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/정사영의_넓이_계산",
+ "spec": {
+  "title": "정사영의 넓이: S' = S cos θ",
+  "params": [
+   {
+    "name": "theta",
+    "label": "두 평면이 이루는 각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 90,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; c=cos(rad); S=6; hp=3*c; Sp=S*c",
+  "geometry": {
+   "range": [
+    -0.6,
+    5
+   ],
+   "yRange": [
+    -0.6,
+    3.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       0,
+       3
+      ]
+     ],
+     "label": "원래 도형 S=6",
+     "color": "#888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       0,
+       "=hp"
+      ]
+     ],
+     "label": "정사영 S'",
+     "color": "#e2467a"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=hp"
+     ],
+     "label": "높이 3·cosθ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원래 넓이 S",
+    "expr": "S",
+    "digits": 2
+   },
+   {
+    "label": "cos θ",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "정사영 넓이 S' = S·cosθ",
+    "expr": "Sp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 30
+   }
+  ],
+  "invariants": [
+   "Sp - S*cos(rad)",
+   "hp - 3*c",
+   "S - 6",
+   "Sp - S*c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "c": 1,
+     "Sp": 6,
+     "hp": 3
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "c": 0.5,
+     "Sp": 3,
+     "hp": 1.5
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "c": 0,
+     "Sp": 0,
+     "hp": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

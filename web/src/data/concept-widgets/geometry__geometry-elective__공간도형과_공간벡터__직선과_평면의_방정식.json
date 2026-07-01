@@ -1,0 +1,218 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/직선과_평면의_방정식",
+ "spec": {
+  "title": "직선과 평면의 방정식 — 한 점과 방향/법선벡터",
+  "params": [
+   {
+    "name": "x0",
+    "label": "기준점 x₀",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "y0",
+    "label": "기준점 y₀",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "theta",
+    "label": "방향각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "t",
+    "label": "매개변수 t",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=cos(theta*pi/180); b=sin(theta*pi/180); px=x0+a*t; py=y0+b*t; nx=-b; ny=a",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x0-4*a",
+      "=y0-4*b"
+     ],
+     "to": [
+      "=x0+4*a",
+      "=y0+4*b"
+     ],
+     "label": "직선 ℓ: P₀+t·d",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "P₀",
+     "color": "#111827"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(t)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=x0+a",
+      "=y0+b"
+     ],
+     "label": "방향벡터 d",
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=x0+nx",
+      "=y0+ny"
+     ],
+     "label": "법선벡터 n (d⊥n)",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = cosθ",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "b = sinθ",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "d·n (수직이면 0)",
+    "expr": "a*nx+b*ny",
+    "digits": 3
+   },
+   {
+    "label": "P(t) = (x₀+at, y₀+bt)",
+    "expr": "px",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 1,
+    "y0": 1,
+    "theta": 30,
+    "t": 2
+   },
+   {
+    "x0": 0,
+    "y0": 0,
+    "theta": 90,
+    "t": 1
+   },
+   {
+    "x0": 2,
+    "y0": -1,
+    "theta": 0,
+    "t": 3
+   },
+   {
+    "x0": -3,
+    "y0": 2,
+    "theta": 135,
+    "t": -2
+   }
+  ],
+  "invariants": [
+   "a^2+b^2-1",
+   "a*nx+b*ny",
+   "(px-x0)*b-(py-y0)*a",
+   "nx*(px-x0)+ny*(py-y0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 1,
+     "y0": 1,
+     "theta": 30,
+     "t": 2
+    },
+    "expect": {
+     "a": 0.8660254037844387,
+     "b": 0.5,
+     "px": 2.7320508075688776,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "x0": 0,
+     "y0": 0,
+     "theta": 90,
+     "t": 1
+    },
+    "expect": {
+     "a": 0,
+     "b": 1,
+     "px": 0,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "x0": 2,
+     "y0": -1,
+     "theta": 0,
+     "t": 3
+    },
+    "expect": {
+     "a": 1,
+     "b": 0,
+     "px": 5,
+     "py": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

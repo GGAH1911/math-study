@@ -1,0 +1,188 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/공통접원",
+ "spec": {
+  "title": "공통접원 — 두 정원(定圓)에 동시에 외접하는 원",
+  "params": [
+   {
+    "name": "t",
+    "label": "접원 위치 t (중심 궤적=쌍곡선 매개변수)",
+    "type": "slider",
+    "min": -1.2,
+    "max": 1.2,
+    "init": 0.4,
+    "step": 0.01
+   }
+  ],
+  "scope": "a=0.25; c=1; r1=1; r2=0.5; b=sqrt(c^2-a^2); x=a*cosh(t); y=b*sinh(t); d1=sqrt((x+1)^2+y^2); d2=sqrt((x-1)^2+y^2); rho=d1-r1",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      -1,
+      0
+     ],
+     "radius": 1,
+     "label": "C1 (r=1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "P1"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1,
+      0
+     ],
+     "radius": 0.5,
+     "label": "C2 (r=0.5)"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "P2"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=x",
+      "=y"
+     ],
+     "radius": "=rho",
+     "label": "공통접원 ρ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "ρ (접원 반지름)",
+    "expr": "rho",
+    "digits": 3
+   },
+   {
+    "label": "|O−P1|",
+    "expr": "d1",
+    "digits": 3
+   },
+   {
+    "label": "ρ+r1 (C1 외접조건)",
+    "expr": "rho+r1",
+    "digits": 3
+   },
+   {
+    "label": "|O−P2|",
+    "expr": "d2",
+    "digits": 3
+   },
+   {
+    "label": "ρ+r2 (C2 외접조건)",
+    "expr": "rho+r2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 0.5
+   },
+   {
+    "t": -0.5
+   },
+   {
+    "t": 1
+   }
+  ],
+  "invariants": [
+   "d1 - rho - r1",
+   "d2 - rho - r2",
+   "x^2/a^2 - y^2/b^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "x": 0.25,
+     "y": 0,
+     "rho": 0.25,
+     "d2": 0.75
+    }
+   },
+   {
+    "params": {
+     "t": 0.5
+    },
+    "expect": {
+     "x": 0.2819065,
+     "y": 0.5045484,
+     "rho": 0.3776261,
+     "d2": 0.8776203
+    }
+   },
+   {
+    "params": {
+     "t": -0.5
+    },
+    "expect": {
+     "x": 0.2819065,
+     "y": -0.5045484,
+     "rho": 0.3776261
+    }
+   }
+  ],
+  "tol": 0.00001
+ }
+}

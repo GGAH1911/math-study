@@ -1,0 +1,122 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/포물선_정의",
+ "spec": {
+  "title": "포물선의 정의: |PF| = d(P, 준선)",
+  "params": [
+   {
+    "name": "p",
+    "label": "초점거리 p",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "py=x^2/(4*p); PF=sqrt(x^2+(py-p)^2); Pd=py+p; diff=PF-Pd",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -2.5,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^2/(4*p)",
+     "label": "x²=4py",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|PF| (초점까지)",
+    "expr": "PF",
+    "digits": 4
+   },
+   {
+    "label": "d(P,준선) = |PH|",
+    "expr": "Pd",
+    "digits": 4
+   },
+   {
+    "label": "차이 |PF|-d(P,준선)",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "x": 2
+   },
+   {
+    "p": 1,
+    "x": 0
+   },
+   {
+    "p": 0.5,
+    "x": 2
+   },
+   {
+    "p": 2,
+    "x": -3
+   }
+  ],
+  "invariants": [
+   "PF-Pd",
+   "PF-sqrt(x^2+(py-p)^2)",
+   "Pd-(py+p)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "x": 2
+    },
+    "expect": {
+     "py": 1,
+     "PF": 2,
+     "Pd": 2
+    }
+   },
+   {
+    "params": {
+     "p": 0.5,
+     "x": 2
+    },
+    "expect": {
+     "py": 2,
+     "PF": 2.5,
+     "Pd": 2.5
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "x": -3
+    },
+    "expect": {
+     "py": 1.125,
+     "PF": 3.125,
+     "Pd": 3.125
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

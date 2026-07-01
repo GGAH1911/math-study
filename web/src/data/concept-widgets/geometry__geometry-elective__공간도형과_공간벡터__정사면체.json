@@ -1,0 +1,180 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/정사면체",
+ "spec": {
+  "title": "정사면체 — 높이·중심·내접구·외접구 (특성 직각삼각형 단면)",
+  "params": [
+   {
+    "name": "a",
+    "label": "모서리 길이 a",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "Rb=a/sqrt(3); h=sqrt(2/3)*a; V=a^3/(6*sqrt(2)); S=sqrt(3)*a^2; Rc=a*sqrt(6)/4; ri=a/(2*sqrt(6)); cz=h/4",
+  "geometry": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -1.5,
+    2.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Rb",
+       0
+      ],
+      [
+       0,
+       "=h"
+      ]
+     ],
+     "label": "특성 직각삼각형"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      "=cz"
+     ],
+     "radius": "=Rc",
+     "label": "외접구 대원"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      "=cz"
+     ],
+     "radius": "=ri",
+     "label": "내접구 대원"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "밑면 무게중심"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Rb",
+      0
+     ],
+     "label": "밑면 꼭짓점"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=h"
+     ],
+     "label": "꼭짓점(빗변=모서리 a)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=cz"
+     ],
+     "label": "중심(높이 3:1 내분)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "높이 h = √(2/3)·a",
+    "expr": "h",
+    "digits": 4
+   },
+   {
+    "label": "부피 V",
+    "expr": "V",
+    "digits": 4
+   },
+   {
+    "label": "겉넓이 S",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "외접구 반지름 R",
+    "expr": "Rc",
+    "digits": 4
+   },
+   {
+    "label": "내접구 반지름 r",
+    "expr": "ri",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "Rb^2 + h^2 - a^2",
+   "cz - ri",
+   "Rc - 3*ri",
+   "V - S*ri/3",
+   "Rc + ri - h"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "h": 1.6329931619,
+     "V": 0.9428090416,
+     "S": 6.9282032303,
+     "Rc": 1.2247448714,
+     "ri": 0.4082482905,
+     "cz": 0.4082482905
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "h": 0.8164965809,
+     "V": 0.1178511302,
+     "S": 1.7320508076,
+     "Rc": 0.6123724357,
+     "ri": 0.2041241452,
+     "cz": 0.2041241452
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

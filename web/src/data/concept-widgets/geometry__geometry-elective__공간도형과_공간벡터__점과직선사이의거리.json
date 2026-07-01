@@ -1,0 +1,185 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/점과직선사이의거리",
+ "spec": {
+  "title": "점과 직선 사이의 거리 (수선의 발)",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "직선 기울기 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=alpha*pi/180; dx=cos(rad); dy=sin(rad); t=px*dx+py*dy; hx=t*dx; hy=t*dy; cross=px*dy-py*dx; dist=abs(cross)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-4*dx",
+      "=-4*dy"
+     ],
+     "to": [
+      "=4*dx",
+      "=4*dy"
+     ],
+     "label": "직선 L",
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#d33"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "H",
+     "color": "#39c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "거리 d",
+     "color": "#d33"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d = |AP×d|/|d|",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "수선의 발 매개변수 t",
+    "expr": "t",
+    "digits": 4
+   },
+   {
+    "label": "외적(2D) AP×d",
+    "expr": "cross",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 0,
+    "px": 0,
+    "py": 2
+   },
+   {
+    "alpha": 90,
+    "px": 3,
+    "py": 1
+   },
+   {
+    "alpha": 45,
+    "px": 1,
+    "py": 0
+   },
+   {
+    "alpha": 30,
+    "px": 2,
+    "py": -1
+   }
+  ],
+  "invariants": [
+   "(px-hx)*dx+(py-hy)*dy",
+   "hx*dy-hy*dx",
+   "dist-sqrt((px-hx)^2+(py-hy)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 0,
+     "px": 0,
+     "py": 2
+    },
+    "expect": {
+     "dist": 2,
+     "t": 0
+    }
+   },
+   {
+    "params": {
+     "alpha": 90,
+     "px": 3,
+     "py": 1
+    },
+    "expect": {
+     "dist": 3,
+     "t": 1
+    }
+   },
+   {
+    "params": {
+     "alpha": 45,
+     "px": 1,
+     "py": 0
+    },
+    "expect": {
+     "dist": 0.7071067811865476,
+     "t": 0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

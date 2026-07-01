@@ -1,0 +1,180 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/쌍곡선의_성질",
+ "spec": {
+  "title": "쌍곡선의 성질: |PF'| − |PF| = 2a",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (주축 반)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "점 P 위치(우측 가지)",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.8,
+    "step": 0.05
+   }
+  ],
+  "scope": "c=sqrt(a^2+b^2); px=a*cosh(t); py=b*sinh(t); pf=sqrt((px-c)^2+py^2); pf2=sqrt((px+c)^2+py^2); diff=pf2-pf; ecc=c/a; slope=b/a",
+  "plot": {
+   "range": [
+    -12,
+    12
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "b*sqrt(x^2/a^2-1)",
+     "label": "쌍곡선(위)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "-b*sqrt(x^2/a^2-1)",
+     "label": "쌍곡선(아래)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "(b/a)*x",
+     "label": "점근선 y=±(b/a)x",
+     "color": "#bbbbbb"
+    },
+    {
+     "fn": "-(b/a)*x",
+     "label": "점근선",
+     "color": "#bbbbbb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "c (초점거리)",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "이심률 e = c/a",
+    "expr": "ecc",
+    "digits": 3
+   },
+   {
+    "label": "|PF'|",
+    "expr": "pf2",
+    "digits": 3
+   },
+   {
+    "label": "|PF|",
+    "expr": "pf",
+    "digits": 3
+   },
+   {
+    "label": "거리차 |PF'|−|PF|",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "2a (일정값)",
+    "expr": "2*a",
+    "digits": 3
+   },
+   {
+    "label": "점근선 기울기 b/a",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1.5,
+    "t": 1
+   },
+   {
+    "a": 3,
+    "b": 4,
+    "t": 0
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "t": 0.5
+   },
+   {
+    "a": 2.5,
+    "b": 2,
+    "t": -1
+   }
+  ],
+  "invariants": [
+   "px^2/a^2 - py^2/b^2 - 1",
+   "pf2 - pf - 2*a",
+   "c^2 - a^2 - b^2",
+   "ecc - c/a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1.5,
+     "t": 1
+    },
+    "expect": {
+     "c": 2.5,
+     "px": 3.0861612696,
+     "py": 1.7628017904,
+     "diff": 4,
+     "ecc": 1.25
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "t": 0
+    },
+    "expect": {
+     "c": 5,
+     "px": 3,
+     "py": 0,
+     "diff": 6,
+     "ecc": 1.6666666667
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "t": 0
+    },
+    "expect": {
+     "c": 1.4142135624,
+     "px": 1,
+     "py": 0,
+     "diff": 2,
+     "ecc": 1.4142135624
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,311 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/초점",
+ "spec": {
+  "title": "타원의 초점 — 두 초점까지 거리의 합은 일정 (|PF₁|+|PF₂|=2a)",
+  "params": [
+   {
+    "name": "a",
+    "label": "장반축 a",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "e",
+    "label": "이심률 e (초점 벌어짐)",
+    "type": "slider",
+    "min": 0,
+    "max": 0.9,
+    "init": 0.6,
+    "step": 0.05
+   },
+   {
+    "name": "t",
+    "label": "점 P 위치각",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "c=a*e; b=a*sqrt(1-e^2); rad=t*pi/180; Px=a*cos(rad); Py=b*sin(rad); d1=sqrt((Px+c)^2+Py^2); d2=sqrt((Px-c)^2+Py^2); summ=d1+d2; target=2*a",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*cos(0)",
+       "=b*sin(0)"
+      ],
+      [
+       "=a*cos(1*pi/12)",
+       "=b*sin(1*pi/12)"
+      ],
+      [
+       "=a*cos(2*pi/12)",
+       "=b*sin(2*pi/12)"
+      ],
+      [
+       "=a*cos(3*pi/12)",
+       "=b*sin(3*pi/12)"
+      ],
+      [
+       "=a*cos(4*pi/12)",
+       "=b*sin(4*pi/12)"
+      ],
+      [
+       "=a*cos(5*pi/12)",
+       "=b*sin(5*pi/12)"
+      ],
+      [
+       "=a*cos(6*pi/12)",
+       "=b*sin(6*pi/12)"
+      ],
+      [
+       "=a*cos(7*pi/12)",
+       "=b*sin(7*pi/12)"
+      ],
+      [
+       "=a*cos(8*pi/12)",
+       "=b*sin(8*pi/12)"
+      ],
+      [
+       "=a*cos(9*pi/12)",
+       "=b*sin(9*pi/12)"
+      ],
+      [
+       "=a*cos(10*pi/12)",
+       "=b*sin(10*pi/12)"
+      ],
+      [
+       "=a*cos(11*pi/12)",
+       "=b*sin(11*pi/12)"
+      ],
+      [
+       "=a*cos(12*pi/12)",
+       "=b*sin(12*pi/12)"
+      ],
+      [
+       "=a*cos(13*pi/12)",
+       "=b*sin(13*pi/12)"
+      ],
+      [
+       "=a*cos(14*pi/12)",
+       "=b*sin(14*pi/12)"
+      ],
+      [
+       "=a*cos(15*pi/12)",
+       "=b*sin(15*pi/12)"
+      ],
+      [
+       "=a*cos(16*pi/12)",
+       "=b*sin(16*pi/12)"
+      ],
+      [
+       "=a*cos(17*pi/12)",
+       "=b*sin(17*pi/12)"
+      ],
+      [
+       "=a*cos(18*pi/12)",
+       "=b*sin(18*pi/12)"
+      ],
+      [
+       "=a*cos(19*pi/12)",
+       "=b*sin(19*pi/12)"
+      ],
+      [
+       "=a*cos(20*pi/12)",
+       "=b*sin(20*pi/12)"
+      ],
+      [
+       "=a*cos(21*pi/12)",
+       "=b*sin(21*pi/12)"
+      ],
+      [
+       "=a*cos(22*pi/12)",
+       "=b*sin(22*pi/12)"
+      ],
+      [
+       "=a*cos(23*pi/12)",
+       "=b*sin(23*pi/12)"
+      ]
+     ],
+     "label": "타원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-c",
+      0
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "PF₁"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      0
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "PF₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "c (초점거리)",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "b (단반축)",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "|PF₁|",
+    "expr": "d1",
+    "digits": 3
+   },
+   {
+    "label": "|PF₂|",
+    "expr": "d2",
+    "digits": 3
+   },
+   {
+    "label": "|PF₁|+|PF₂|",
+    "expr": "summ",
+    "digits": 3
+   },
+   {
+    "label": "2a",
+    "expr": "target",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "e": 0.6,
+    "t": 90
+   },
+   {
+    "a": 4,
+    "e": 0.6,
+    "t": 0
+   },
+   {
+    "a": 3,
+    "e": 0,
+    "t": 123
+   },
+   {
+    "a": 5,
+    "e": 0.85,
+    "t": 200
+   }
+  ],
+  "invariants": [
+   "d1+d2-2*a",
+   "a^2-b^2-c^2",
+   "(Px^2)/(a^2)+(Py^2)/(b^2)-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "e": 0.6,
+     "t": 90
+    },
+    "expect": {
+     "c": 2.4,
+     "b": 3.2,
+     "Px": 0,
+     "Py": 3.2,
+     "d1": 4,
+     "d2": 4,
+     "summ": 8
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "e": 0.6,
+     "t": 0
+    },
+    "expect": {
+     "c": 2.4,
+     "b": 3.2,
+     "Px": 4,
+     "Py": 0,
+     "d1": 6.4,
+     "d2": 1.6,
+     "summ": 8
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "e": 0,
+     "t": 123
+    },
+    "expect": {
+     "c": 0,
+     "b": 3,
+     "d1": 3,
+     "d2": 3,
+     "summ": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

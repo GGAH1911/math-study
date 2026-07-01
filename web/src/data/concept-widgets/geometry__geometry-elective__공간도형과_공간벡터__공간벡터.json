@@ -1,0 +1,221 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간벡터",
+ "spec": {
+  "title": "공간벡터 a=(a₁,a₂,a₃) — 성분과 크기",
+  "params": [
+   {
+    "name": "a1",
+    "label": "a₁ (x성분)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "a2",
+    "label": "a₂ (y성분)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "a3",
+    "label": "a₃ (z성분)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "magsq=a1^2+a2^2+a3^2; mag=sqrt(magsq); rxy=sqrt(a1^2+a2^2); px=0.8660254037844386*(a1-a2); py=-0.5*(a1+a2); sx=px; sy=py+a3",
+  "geometry": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      2.598,
+      -1.5
+     ],
+     "label": "x",
+     "color": "#cccccc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      -2.598,
+      -1.5
+     ],
+     "label": "y",
+     "color": "#cccccc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      3
+     ],
+     "label": "z",
+     "color": "#cccccc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "xy사영",
+     "color": "#f39c12"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=sx",
+      "=sy"
+     ],
+     "label": "a₃(높이)",
+     "color": "#27ae60"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=sx",
+      "=sy"
+     ],
+     "label": "a",
+     "color": "#2980b9"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sx",
+      "=sy"
+     ],
+     "label": "P(a₁,a₂,a₃)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|a| = √(a₁²+a₂²+a₃²)",
+    "expr": "mag",
+    "digits": 4
+   },
+   {
+    "label": "|a|² (성분 제곱합)",
+    "expr": "magsq",
+    "digits": 3
+   },
+   {
+    "label": "xy평면 사영 크기 √(a₁²+a₂²)",
+    "expr": "rxy",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 2,
+    "a2": 3,
+    "a3": 6
+   },
+   {
+    "a1": 1,
+    "a2": 2,
+    "a3": 2
+   },
+   {
+    "a1": -2,
+    "a2": 1,
+    "a3": 2
+   },
+   {
+    "a1": 4,
+    "a2": 0,
+    "a3": 3
+   }
+  ],
+  "invariants": [
+   "mag^2 - a1^2 - a2^2 - a3^2",
+   "mag^2 - rxy^2 - a3^2",
+   "rxy^2 - a1^2 - a2^2",
+   "magsq - mag^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 4,
+     "a2": 0,
+     "a3": 3
+    },
+    "expect": {
+     "mag": 5,
+     "magsq": 25,
+     "rxy": 4
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "a2": 2,
+     "a3": 2
+    },
+    "expect": {
+     "mag": 3,
+     "magsq": 9
+    }
+   },
+   {
+    "params": {
+     "a1": 0,
+     "a2": 3,
+     "a3": 4
+    },
+    "expect": {
+     "mag": 5,
+     "magsq": 25,
+     "rxy": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

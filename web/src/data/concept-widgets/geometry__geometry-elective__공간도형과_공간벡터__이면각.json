@@ -1,0 +1,147 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/이면각",
+ "spec": {
+  "title": "이면각 — 교선에 수직인 두 반직선이 이루는 각",
+  "params": [
+   {
+    "name": "theta",
+    "label": "이면각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; half=rad/2; d1x=sin(half); d1y=cos(half); d2x=-sin(half); d2y=cos(half); dot=d1x*d2x+d1y*d2y; cosval=cos(rad)",
+  "geometry": {
+   "range": [
+    -1.25,
+    1.25
+   ],
+   "yRange": [
+    -0.3,
+    1.35
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O(교선 위 한 점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d1x",
+      "=d1y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d2x",
+      "=d2y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d1x",
+      "=d1y"
+     ],
+     "label": "평면1의 반직선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d2x",
+      "=d2y"
+     ],
+     "label": "평면2의 반직선"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "이면각 θ",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "cos θ",
+    "expr": "cosval",
+    "digits": 4
+   },
+   {
+    "label": "두 반직선 방향의 내적",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 30
+   }
+  ],
+  "invariants": [
+   "dot-cosval",
+   "d1x*d1x+d1y*d1y-1",
+   "d2x*d2x+d2y*d2y-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "dot": 0.5,
+     "cosval": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "dot": 0,
+     "cosval": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "dot": -0.5,
+     "cosval": -0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

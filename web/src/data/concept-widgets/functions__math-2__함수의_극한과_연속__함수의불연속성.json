@@ -1,0 +1,175 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/함수의불연속성",
+ "spec": {
+  "title": "함수의 불연속성: 점프·연속 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "불연속 후보점 a",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "jump",
+    "label": "도약 크기 (우극한−좌극한)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "la = 0.5*a + 1; ra = 0.5*a + 1 + jump; fa = ra; gap = fa - la",
+  "geometry": {
+   "range": [
+    -1,
+    5
+   ],
+   "yRange": [
+    -3,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      "=0.5*(-1)+1"
+     ],
+     "to": [
+      "=a",
+      "=la"
+     ],
+     "label": "x<a",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=ra"
+     ],
+     "to": [
+      5,
+      "=0.5*5+1+jump"
+     ],
+     "label": "x≥a",
+     "color": "#dc2626"
+    },
+    {
+     "type": "line",
+     "x": "=a",
+     "color": "#94a3b8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=la"
+     ],
+     "label": "좌극한 L₁",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=ra"
+     ],
+     "label": "f(a)=우극한 L₂",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 (x→a⁻)",
+    "expr": "la",
+    "digits": 3
+   },
+   {
+    "label": "우극한 = f(a) (x→a⁺)",
+    "expr": "ra",
+    "digits": 3
+   },
+   {
+    "label": "불연속 도약 gap",
+    "expr": "gap",
+    "digits": 3
+   },
+   {
+    "label": "연속 여부 (gap=0이면 연속)",
+    "expr": "gap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "jump": 2
+   },
+   {
+    "a": 0,
+    "jump": 0
+   },
+   {
+    "a": 4,
+    "jump": -3
+   },
+   {
+    "a": 1,
+    "jump": 1
+   }
+  ],
+  "invariants": [
+   "ra - la - jump",
+   "la - (0.5*a + 1)",
+   "gap - jump",
+   "fa - ra"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "jump": 2
+    },
+    "expect": {
+     "la": 2,
+     "ra": 4,
+     "gap": 2,
+     "fa": 4
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "jump": 0
+    },
+    "expect": {
+     "la": 1,
+     "ra": 1,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "jump": -3
+    },
+    "expect": {
+     "la": 3,
+     "ra": 0,
+     "gap": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

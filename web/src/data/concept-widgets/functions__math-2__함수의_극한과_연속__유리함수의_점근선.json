@@ -1,0 +1,150 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/유리함수의_점근선",
+ "spec": {
+  "title": "유리함수의 점근선: y=(ax+b)/(cx+d)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (분자 x계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (분자 상수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (분모 x계수)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "d (분모 상수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 1
+   }
+  ],
+  "scope": "va = -d/c; ha = a/c",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "(a*x+b)/(c*x+d)",
+     "label": "y=(ax+b)/(cx+d)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a/c",
+     "label": "수평점근선 y=a/c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수직점근선 x =",
+    "expr": "va",
+    "digits": 3
+   },
+   {
+    "label": "수평점근선 y =",
+    "expr": "ha",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "d": -1
+   },
+   {
+    "a": 2,
+    "b": 0,
+    "c": 1,
+    "d": 2
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 2,
+    "d": -4
+   },
+   {
+    "a": 3,
+    "b": 1,
+    "c": 1,
+    "d": 3
+   }
+  ],
+  "invariants": [
+   "c*va + d",
+   "ha*c - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": -1
+    },
+    "expect": {
+     "va": 1,
+     "ha": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 0,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "va": -2,
+     "ha": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 2,
+     "d": -4
+    },
+    "expect": {
+     "va": 2,
+     "ha": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

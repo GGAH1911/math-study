@@ -1,0 +1,118 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/접선",
+ "spec": {
+  "title": "포물선 y=x²의 접선",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점의 x좌표 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^2; slope = 2*a; intercept = fa - slope*a",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "slope*x + intercept",
+     "label": "접선 y = f'(a)(x−a)+f(a)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 (a, f(a))",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "f(a) = a²",
+    "expr": "fa",
+    "digits": 2
+   },
+   {
+    "label": "접선 기울기 f'(a) = 2a",
+    "expr": "slope",
+    "digits": 2
+   },
+   {
+    "label": "y절편",
+    "expr": "intercept",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   }
+  ],
+  "invariants": [
+   "slope - 2*a",
+   "fa - a^2",
+   "slope*a + intercept - fa",
+   "intercept + a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 4,
+     "slope": 4,
+     "intercept": -4
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 1,
+     "slope": 2,
+     "intercept": -1
+    }
+   },
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "fa": 1,
+     "slope": -2,
+     "intercept": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

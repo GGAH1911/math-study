@@ -1,0 +1,237 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간좌표",
+ "spec": {
+  "title": "공간좌표 P(x, y, z) — 원점에서의 위치와 거리",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "y",
+    "label": "y",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "z",
+    "label": "z",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "c=0.35; px=y-c*x; py=z-c*x; qx=y-c*x; qy=0-c*x; xpx=0-c*x; xpy=0-c*x; OP=sqrt(x^2+y^2+z^2)",
+  "geometry": {
+   "range": [
+    -2.5,
+    6
+   ],
+   "yRange": [
+    -2.5,
+    6
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      -1.75,
+      -1.75
+     ],
+     "label": "x축",
+     "color": "#c0392b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      5,
+      0
+     ],
+     "label": "y축",
+     "color": "#27ae60"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      5
+     ],
+     "label": "z축",
+     "color": "#2980b9"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=xpx",
+      "=xpy"
+     ],
+     "label": "x만큼",
+     "color": "#c0392b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xpx",
+      "=xpy"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "y만큼",
+     "color": "#27ae60"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=qx",
+      "=qy"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "z만큼",
+     "color": "#2980b9"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "OP",
+     "color": "#8e44ad"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q(x,y,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(x,y,z)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "y",
+    "expr": "y",
+    "digits": 2
+   },
+   {
+    "label": "z",
+    "expr": "z",
+    "digits": 2
+   },
+   {
+    "label": "OP = √(x²+y²+z²)",
+    "expr": "OP",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 2,
+    "y": 1,
+    "z": 3
+   },
+   {
+    "x": 3,
+    "y": 0,
+    "z": 4
+   },
+   {
+    "x": 1,
+    "y": 4,
+    "z": 2
+   },
+   {
+    "x": 5,
+    "y": 5,
+    "z": 0
+   }
+  ],
+  "invariants": [
+   "OP^2 - (x^2 + y^2 + z^2)",
+   "py - qy - z",
+   "qx - xpx - y",
+   "px - qx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 2,
+     "y": 1,
+     "z": 3
+    },
+    "expect": {
+     "OP": 3.7416573868,
+     "px": 0.3,
+     "py": 2.3,
+     "qy": -0.7
+    }
+   },
+   {
+    "params": {
+     "x": 3,
+     "y": 0,
+     "z": 4
+    },
+    "expect": {
+     "OP": 5,
+     "px": -1.05,
+     "py": 2.95
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

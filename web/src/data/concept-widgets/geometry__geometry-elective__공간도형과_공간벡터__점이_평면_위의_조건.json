@@ -1,0 +1,177 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/점이_평면_위의_조건",
+ "spec": {
+  "title": "점이 평면 위에 있을 조건: n·P₀P = 0 (평면을 옆에서 본 단면)",
+  "params": [
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "dx=px-2; dy=py-1; f=1*dx+2*dy; g=px+2*py-4",
+  "geometry": {
+   "range": [
+    -3,
+    7
+   ],
+   "yRange": [
+    -2,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -2,
+      3
+     ],
+     "to": [
+      6,
+      -1
+     ],
+     "label": "평면 π (모서리 방향에서 본 단면 = 직선)"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      1
+     ],
+     "label": "P0(2,1)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      1
+     ],
+     "to": [
+      3,
+      3
+     ],
+     "label": "법선 n=(1,2)"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      3
+     ],
+     "label": "n"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      1
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "P0P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n·P0P = f (0이면 P가 평면 위)",
+    "expr": "f",
+    "digits": 3
+   },
+   {
+    "label": "일반형 값 x+2y-4 = g",
+    "expr": "g",
+    "digits": 3
+   },
+   {
+    "label": "f - g (두 표현의 차, 항상 0)",
+    "expr": "f-g",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 3,
+    "py": 2
+   },
+   {
+    "px": 0,
+    "py": 2
+   },
+   {
+    "px": 4,
+    "py": 0
+   },
+   {
+    "px": -2,
+    "py": 3
+   }
+  ],
+  "invariants": [
+   "f-(px+2*py-4)",
+   "f-(1*dx+2*dy)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 0,
+     "py": 2
+    },
+    "expect": {
+     "f": 0,
+     "g": 0
+    }
+   },
+   {
+    "params": {
+     "px": 3,
+     "py": 2
+    },
+    "expect": {
+     "f": 3,
+     "g": 3
+    }
+   },
+   {
+    "params": {
+     "px": 2,
+     "py": 1
+    },
+    "expect": {
+     "f": 0,
+     "g": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

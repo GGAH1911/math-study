@@ -1,0 +1,225 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/두_구의_교선",
+ "spec": {
+  "title": "두 구의 교선 — 중심축 단면",
+  "params": [
+   {
+    "name": "r1",
+    "label": "구1 반지름 r₁",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2.5,
+    "init": 2,
+    "step": 0.05
+   },
+   {
+    "name": "r2",
+    "label": "구2 반지름 r₂",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2.5,
+    "init": 1.5,
+    "step": 0.05
+   },
+   {
+    "name": "d",
+    "label": "중심 거리 d",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.05
+   }
+  ],
+  "scope": "xr = (r1^2 - r2^2 + d^2)/(2*d); rho2 = r1^2 - xr^2; rho = sqrt(rho2)",
+  "geometry": {
+   "range": [
+    -3,
+    7
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r1",
+     "label": "구1"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=d",
+      0
+     ],
+     "radius": "=r2",
+     "label": "구2"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d",
+      0
+     ],
+     "label": "중심선",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xr",
+      -5
+     ],
+     "to": [
+      "=xr",
+      5
+     ],
+     "label": "교선평면(모서리)",
+     "color": "#2a7"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xr",
+      "=-rho"
+     ],
+     "to": [
+      "=xr",
+      "=rho"
+     ],
+     "label": "교선원(지름)",
+     "color": "#e33"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=rho"
+     ],
+     "label": "P₊"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=-rho"
+     ],
+     "label": "P₋"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      0
+     ],
+     "label": "C₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "C₁→교선평면 거리 xr",
+    "expr": "xr",
+    "digits": 4
+   },
+   {
+    "label": "교선원 반지름 ρ",
+    "expr": "rho",
+    "digits": 4
+   },
+   {
+    "label": "교선 존재(ρ²>0)",
+    "expr": "rho2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 2,
+    "r2": 1.5,
+    "d": 2
+   },
+   {
+    "r1": 2.5,
+    "r2": 2,
+    "d": 3
+   },
+   {
+    "r1": 1.5,
+    "r2": 1.5,
+    "d": 1
+   },
+   {
+    "r1": 2,
+    "r2": 1,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "xr^2 + rho^2 - r1^2",
+   "(xr - d)^2 + rho^2 - r2^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 1.5,
+     "r2": 1.5,
+     "d": 1
+    },
+    "expect": {
+     "xr": 0.5,
+     "rho": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "r1": 2,
+     "r2": 1,
+     "d": 2
+    },
+    "expect": {
+     "xr": 1.75,
+     "rho": 0.9682458365518543
+    }
+   },
+   {
+    "params": {
+     "r1": 2,
+     "r2": 1.5,
+     "d": 2
+    },
+    "expect": {
+     "xr": 1.4375,
+     "rho": 1.3905372434616312
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

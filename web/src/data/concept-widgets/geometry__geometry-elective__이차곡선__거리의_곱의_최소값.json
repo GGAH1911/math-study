@@ -1,0 +1,265 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/거리의_곱의_최소값",
+ "spec": {
+  "title": "이차곡선 위 점에서 두 초점까지 거리의 곱 r₁·r₂ (타원)",
+  "params": [
+   {
+    "name": "t",
+    "label": "점 P의 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "a=3; b=2; c=sqrt(a^2-b^2); rad=t*pi/180; px=a*cos(rad); py=b*sin(rad); r1=sqrt((px+c)^2+py^2); r2=sqrt((px-c)^2+py^2); prod=r1*r2; minprod=b^2",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*cos(0)",
+       "=b*sin(0)"
+      ],
+      [
+       "=a*cos(pi/12)",
+       "=b*sin(pi/12)"
+      ],
+      [
+       "=a*cos(2*pi/12)",
+       "=b*sin(2*pi/12)"
+      ],
+      [
+       "=a*cos(3*pi/12)",
+       "=b*sin(3*pi/12)"
+      ],
+      [
+       "=a*cos(4*pi/12)",
+       "=b*sin(4*pi/12)"
+      ],
+      [
+       "=a*cos(5*pi/12)",
+       "=b*sin(5*pi/12)"
+      ],
+      [
+       "=a*cos(6*pi/12)",
+       "=b*sin(6*pi/12)"
+      ],
+      [
+       "=a*cos(7*pi/12)",
+       "=b*sin(7*pi/12)"
+      ],
+      [
+       "=a*cos(8*pi/12)",
+       "=b*sin(8*pi/12)"
+      ],
+      [
+       "=a*cos(9*pi/12)",
+       "=b*sin(9*pi/12)"
+      ],
+      [
+       "=a*cos(10*pi/12)",
+       "=b*sin(10*pi/12)"
+      ],
+      [
+       "=a*cos(11*pi/12)",
+       "=b*sin(11*pi/12)"
+      ],
+      [
+       "=a*cos(12*pi/12)",
+       "=b*sin(12*pi/12)"
+      ],
+      [
+       "=a*cos(13*pi/12)",
+       "=b*sin(13*pi/12)"
+      ],
+      [
+       "=a*cos(14*pi/12)",
+       "=b*sin(14*pi/12)"
+      ],
+      [
+       "=a*cos(15*pi/12)",
+       "=b*sin(15*pi/12)"
+      ],
+      [
+       "=a*cos(16*pi/12)",
+       "=b*sin(16*pi/12)"
+      ],
+      [
+       "=a*cos(17*pi/12)",
+       "=b*sin(17*pi/12)"
+      ],
+      [
+       "=a*cos(18*pi/12)",
+       "=b*sin(18*pi/12)"
+      ],
+      [
+       "=a*cos(19*pi/12)",
+       "=b*sin(19*pi/12)"
+      ],
+      [
+       "=a*cos(20*pi/12)",
+       "=b*sin(20*pi/12)"
+      ],
+      [
+       "=a*cos(21*pi/12)",
+       "=b*sin(21*pi/12)"
+      ],
+      [
+       "=a*cos(22*pi/12)",
+       "=b*sin(22*pi/12)"
+      ],
+      [
+       "=a*cos(23*pi/12)",
+       "=b*sin(23*pi/12)"
+      ]
+     ],
+     "label": "타원 x²/9+y²/4=1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-c",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "r₁ = |PF₁|",
+    "expr": "r1",
+    "digits": 4
+   },
+   {
+    "label": "r₂ = |PF₂|",
+    "expr": "r2",
+    "digits": 4
+   },
+   {
+    "label": "거리의 합 r₁+r₂ (=2a, 일정)",
+    "expr": "r1+r2",
+    "digits": 4
+   },
+   {
+    "label": "거리의 곱 r₁·r₂",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "곱의 최솟값 b² (장축 끝, θ=0°·180°)",
+    "expr": "minprod",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 45
+   },
+   {
+    "t": 90
+   },
+   {
+    "t": 180
+   }
+  ],
+  "invariants": [
+   "r1+r2-2*a",
+   "px^2/a^2+py^2/b^2-1",
+   "r1*r2-(a^2-c^2*cos(rad)^2)",
+   "prod-minprod-c^2*sin(rad)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 3,
+     "py": 0,
+     "prod": 4
+    }
+   },
+   {
+    "params": {
+     "t": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 2,
+     "r1": 3,
+     "r2": 3,
+     "prod": 9
+    }
+   },
+   {
+    "params": {
+     "t": 180
+    },
+    "expect": {
+     "px": -3,
+     "py": 0,
+     "prod": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

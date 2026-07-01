@@ -1,0 +1,269 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/행렬",
+ "spec": {
+  "title": "행렬의 선형변환: 2×2 행렬이 벡터·단위정사각형을 어떻게 바꾸는가",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (1행1열)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (1행2열)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (2행1열)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (2행2열)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "vx",
+    "label": "입력벡터 x",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "vy",
+    "label": "입력벡터 y",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "e1x=a; e1y=c; e2x=b; e2y=d; tx=a*vx+b*vy; ty=c*vx+d*vy; detm=a*d-b*c; cross=e1x*e2y-e1y*e2x",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=e1x",
+       "=e1y"
+      ],
+      [
+       "=e1x+e2x",
+       "=e1y+e2y"
+      ],
+      [
+       "=e2x",
+       "=e2y"
+      ]
+     ],
+     "label": "단위정사각형의 상(넓이=|det|)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=e1x",
+      "=e1y"
+     ],
+     "label": "열1=A·(1,0)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=e2x",
+      "=e2y"
+     ],
+     "label": "열2=A·(0,1)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "v"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=tx",
+      "=ty"
+     ],
+     "label": "Av"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "v"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tx",
+      "=ty"
+     ],
+     "label": "Av"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Av_x",
+    "expr": "tx",
+    "digits": 3
+   },
+   {
+    "label": "Av_y",
+    "expr": "ty",
+    "digits": 3
+   },
+   {
+    "label": "det A (넓이배율)",
+    "expr": "detm",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 1,
+    "vx": 1,
+    "vy": 1
+   },
+   {
+    "a": 0,
+    "b": -1,
+    "c": 1,
+    "d": 0,
+    "vx": 1,
+    "vy": 0
+   },
+   {
+    "a": 2,
+    "b": 0,
+    "c": 0,
+    "d": 0.5,
+    "vx": 1,
+    "vy": 2
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 0,
+    "d": 1,
+    "vx": 2,
+    "vy": -1
+   }
+  ],
+  "invariants": [
+   "cross-detm",
+   "tx-(a*vx+b*vy)",
+   "ty-(c*vx+d*vy)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 1,
+     "vx": 1,
+     "vy": 1
+    },
+    "expect": {
+     "tx": 1,
+     "ty": 1,
+     "detm": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -1,
+     "c": 1,
+     "d": 0,
+     "vx": 1,
+     "vy": 0
+    },
+    "expect": {
+     "tx": 0,
+     "ty": 1,
+     "detm": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 0,
+     "c": 0,
+     "d": 0.5,
+     "vx": 1,
+     "vy": 2
+    },
+    "expect": {
+     "tx": 2,
+     "ty": 1,
+     "detm": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

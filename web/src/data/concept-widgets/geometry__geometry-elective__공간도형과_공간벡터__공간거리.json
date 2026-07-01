@@ -1,0 +1,198 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간거리",
+ "spec": {
+  "title": "공간거리 — 두 점 사이 거리를 직각삼각형으로 분해",
+  "params": [
+   {
+    "name": "x",
+    "label": "Δx (B의 x좌표, A는 원점)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "y",
+    "label": "Δy (B의 y좌표)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "z",
+    "label": "Δz (B의 z좌표, 높이)",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 12,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "dxy=sqrt(x^2+y^2); dz=z; dist=sqrt(x^2+y^2+z^2)",
+  "geometry": {
+   "range": [
+    -1,
+    10
+   ],
+   "yRange": [
+    -1,
+    13
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=dxy",
+      0
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=dxy",
+      "=dz"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=dxy",
+      0
+     ],
+     "label": "수평거리 √(Δx²+Δy²)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=dxy",
+      0
+     ],
+     "to": [
+      "=dxy",
+      "=dz"
+     ],
+     "label": "높이차 Δz"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=dxy",
+      "=dz"
+     ],
+     "label": "공간거리 AB"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수평투영거리 √(Δx²+Δy²)",
+    "expr": "dxy",
+    "digits": 3
+   },
+   {
+    "label": "높이차 Δz",
+    "expr": "dz",
+    "digits": 3
+   },
+   {
+    "label": "공간거리 |AB|=√(Δx²+Δy²+Δz²)",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 3,
+    "y": 4,
+    "z": 12
+   },
+   {
+    "x": 3,
+    "y": 4,
+    "z": 0
+   },
+   {
+    "x": 0,
+    "y": 0,
+    "z": 5
+   },
+   {
+    "x": 1,
+    "y": 2,
+    "z": 2
+   }
+  ],
+  "invariants": [
+   "dist^2 - (x^2+y^2+z^2)",
+   "dist^2 - (dxy^2+dz^2)",
+   "dxy^2 - (x^2+y^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 3,
+     "y": 4,
+     "z": 12
+    },
+    "expect": {
+     "dxy": 5,
+     "dz": 12,
+     "dist": 13
+    }
+   },
+   {
+    "params": {
+     "x": 3,
+     "y": 4,
+     "z": 0
+    },
+    "expect": {
+     "dxy": 5,
+     "dz": 0,
+     "dist": 5
+    }
+   },
+   {
+    "params": {
+     "x": 0,
+     "y": 0,
+     "z": 5
+    },
+    "expect": {
+     "dxy": 0,
+     "dz": 5,
+     "dist": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,206 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/구의_단면원",
+ "spec": {
+  "title": "구의 단면원: r' = √(r²−d²)",
+  "params": [
+   {
+    "name": "r",
+    "label": "구의 반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "중심-평면 거리 d",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "rp = sqrt(max(r^2 - d^2, 0))",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "구(중심 지나는 대원 단면)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -7,
+      "=d"
+     ],
+     "to": [
+      7,
+      "=d"
+     ],
+     "label": "평면 π"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C(구 중심)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=d"
+     ],
+     "label": "M(단면원 중심)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-rp",
+      "=d"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rp",
+      "=d"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=d"
+     ],
+     "label": "d"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=d"
+     ],
+     "to": [
+      "=rp",
+      "=d"
+     ],
+     "label": "r'"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=rp",
+      "=d"
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "단면원 반지름 r'",
+    "expr": "rp",
+    "digits": 3
+   },
+   {
+    "label": "중심-평면 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "r²−d² (>0이면 원 생성)",
+    "expr": "r^2 - d^2",
+    "digits": 3
+   },
+   {
+    "label": "검산 r'²+d²",
+    "expr": "rp^2 + d^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 5,
+    "d": 3
+   },
+   {
+    "r": 5,
+    "d": 4
+   },
+   {
+    "r": 6,
+    "d": 0
+   },
+   {
+    "r": 2,
+    "d": 1
+   }
+  ],
+  "invariants": [
+   "rp^2 + d^2 - r^2",
+   "sqrt(rp^2 + d^2) - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 5,
+     "d": 3
+    },
+    "expect": {
+     "rp": 4
+    }
+   },
+   {
+    "params": {
+     "r": 5,
+     "d": 4
+    },
+    "expect": {
+     "rp": 3
+    }
+   },
+   {
+    "params": {
+     "r": 6,
+     "d": 0
+    },
+    "expect": {
+     "rp": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

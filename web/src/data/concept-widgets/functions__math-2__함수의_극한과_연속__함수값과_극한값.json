@@ -1,0 +1,164 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/함수값과_극한값",
+ "spec": {
+  "title": "함수값 f(a) vs 극한값 lim f(x) — 같을 수도, 다를 수도",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (관찰 지점)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "f(a) (그 점에 찍힌 함수값)",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 5,
+    "step": 0.5
+   }
+  ],
+  "scope": "lim=2*a; fval=c; gap=fval-lim; jung=abs(gap)",
+  "geometry": {
+   "range": [
+    -1.5,
+    7.5
+   ],
+   "yRange": [
+    -1,
+    13
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-1",
+      "=-1+a"
+     ],
+     "to": [
+      "=7",
+      "=7+a"
+     ],
+     "label": "y=(x^2-a^2)/(x-a)=x+a (x≠a)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=lim"
+     ],
+     "label": "극한값 L=lim f(x)=2a (구멍)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fval"
+     ],
+     "label": "함수값 f(a)=c (실제 찍힌 점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=lim"
+     ],
+     "to": [
+      "=a",
+      "=fval"
+     ],
+     "label": "차이 = f(a)-L"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한값 L = lim(x→a) f(x)",
+    "expr": "lim",
+    "digits": 2
+   },
+   {
+    "label": "함수값 f(a)",
+    "expr": "fval",
+    "digits": 2
+   },
+   {
+    "label": "차이 f(a)-L",
+    "expr": "gap",
+    "digits": 2
+   },
+   {
+    "label": "연속 판정(0이면 연속)",
+    "expr": "jung",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "c": 5
+   },
+   {
+    "a": 4,
+    "c": 10
+   },
+   {
+    "a": 2,
+    "c": 4
+   },
+   {
+    "a": 1,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "lim-2*a",
+   "gap-(fval-lim)",
+   "jung-abs(fval-2*a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "c": 5
+    },
+    "expect": {
+     "lim": 6,
+     "fval": 5,
+     "gap": -1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "c": 10
+    },
+    "expect": {
+     "lim": 8,
+     "fval": 10,
+     "gap": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "c": 4
+    },
+    "expect": {
+     "lim": 4,
+     "fval": 4,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

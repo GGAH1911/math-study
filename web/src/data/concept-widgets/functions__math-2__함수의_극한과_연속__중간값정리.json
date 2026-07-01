@@ -1,0 +1,173 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/중간값정리",
+ "spec": {
+  "title": "중간값정리: f(c)=k를 만족하는 c의 존재",
+  "params": [
+   {
+    "name": "a",
+    "label": "구간 왼끝 a",
+    "type": "slider",
+    "min": -2,
+    "max": 0,
+    "init": -1.2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "구간 오른끝 b",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "중간값 k",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^3; fb = b^3; c = cbrt(k); fc = c^3; between = (k-fa)*(k-fb)",
+  "geometry": null,
+  "plot": {
+   "range": [
+    "=a",
+    "=b"
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^3",
+     "label": "y=f(x)=x³ (연속)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "k",
+     "label": "y=k (중간값)",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "fa",
+     "label": "y=f(a)",
+     "color": "#94a3b8"
+    },
+    {
+     "fn": "fb",
+     "label": "y=f(b)",
+     "color": "#94a3b8"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(b)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "해 c",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "f(c)",
+    "expr": "fc",
+    "digits": 4
+   },
+   {
+    "label": "f(c)−k (0이면 IVT 성립)",
+    "expr": "fc-k",
+    "digits": 8
+   },
+   {
+    "label": "k가 f(a),f(b) 사이면 음수",
+    "expr": "between",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1.2,
+    "b": 1.5,
+    "k": 1
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "k": 0.125
+   },
+   {
+    "a": 0,
+    "b": 2,
+    "k": 8
+   },
+   {
+    "a": -2,
+    "b": 0,
+    "k": -1
+   }
+  ],
+  "invariants": [
+   "fc - k",
+   "fa - a^3",
+   "fb - b^3",
+   "fc - c^3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1.2,
+     "b": 1.5,
+     "k": 1
+    },
+    "expect": {
+     "fa": -1.728,
+     "fb": 3.375,
+     "c": 1,
+     "fc": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 1,
+     "k": 0.125
+    },
+    "expect": {
+     "fa": -1,
+     "fb": 1,
+     "c": 0.5,
+     "fc": 0.125
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2,
+     "k": 8
+    },
+    "expect": {
+     "fa": 0,
+     "fb": 8,
+     "c": 2,
+     "fc": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,173 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/구와_평면의_접촉_조건",
+ "spec": {
+  "title": "구와 평면의 접촉 조건 (중심을 지나는 단면)",
+  "params": [
+   {
+    "name": "r",
+    "label": "구의 반지름 r",
+    "type": "slider",
+    "min": 0.3,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "D",
+    "label": "중심-평면 거리 D",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "gap=D-r; footx=0; footy=-D; dist=sqrt(footx^2+footy^2)",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.3,
+    2.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "구(단면)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-3.4",
+      "=-D"
+     ],
+     "to": [
+      "=3.4",
+      "=-D"
+     ],
+     "label": "평면(모서리)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=-D"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=-D"
+     ],
+     "label": "H(접점 후보)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심-평면 거리 D",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "D − r  (0이면 접함, +면 만나지 않음, −면 원으로 만남)",
+    "expr": "gap",
+    "digits": 3
+   },
+   {
+    "label": "H까지 거리 (=D 검증)",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1,
+    "D": 1
+   },
+   {
+    "r": 1.5,
+    "D": 2
+   },
+   {
+    "r": 1,
+    "D": 0.5
+   },
+   {
+    "r": 2,
+    "D": 2
+   }
+  ],
+  "invariants": [
+   "dist-D",
+   "gap-(D-r)",
+   "footy+D"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1,
+     "D": 1
+    },
+    "expect": {
+     "gap": 0,
+     "dist": 1,
+     "footy": -1
+    }
+   },
+   {
+    "params": {
+     "r": 1.5,
+     "D": 2
+    },
+    "expect": {
+     "gap": 0.5,
+     "dist": 2,
+     "footy": -2
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "D": 0.5
+    },
+    "expect": {
+     "gap": -0.5,
+     "dist": 0.5,
+     "footy": -0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

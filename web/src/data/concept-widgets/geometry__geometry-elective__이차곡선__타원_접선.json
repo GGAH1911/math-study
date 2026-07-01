@@ -1,0 +1,142 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/타원_접선",
+ "spec": {
+  "title": "타원의 접선 xx₀/a² + yy₀/b² = 1",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (y반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "접점 위치 θ",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad = t*pi/180; x0 = a*cos(rad); y0 = b*sin(rad); m = -(b^2*x0)/(a^2*y0); c = b^2/y0",
+  "plot": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "b*sqrt(1 - x^2/a^2)",
+     "label": "타원 (위)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "-b*sqrt(1 - x^2/a^2)",
+     "label": "타원 (아래)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(1 - x*x0/a^2)*b^2/y0",
+     "label": "접선 xx₀/a²+yy₀/b²=1",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 x₀",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "접점 y₀",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 m",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "타원식 검산 x₀²/a²+y₀²/b²",
+    "expr": "x0^2/a^2 + y0^2/b^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 3,
+    "t": 60
+   },
+   {
+    "a": 4,
+    "b": 3,
+    "t": 90
+   },
+   {
+    "a": 5,
+    "b": 2,
+    "t": 30
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "t": 120
+   }
+  ],
+  "invariants": [
+   "x0^2/a^2 + y0^2/b^2 - 1",
+   "m*a^2*y0 + b^2*x0",
+   "(x0*x0)/a^2 + (y0*y0)/b^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 3,
+     "t": 90
+    },
+    "expect": {
+     "x0": 0,
+     "y0": 3,
+     "m": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 3,
+     "t": 30
+    },
+    "expect": {
+     "x0": 3.46410162,
+     "y0": 1.5,
+     "m": -1.29903811
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

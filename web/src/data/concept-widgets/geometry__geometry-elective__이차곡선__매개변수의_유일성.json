@@ -1,0 +1,161 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/매개변수의_유일성",
+ "spec": {
+  "title": "매개변수의 유일성 — 원 위 두 점의 대응",
+  "params": [
+   {
+    "name": "t1",
+    "label": "t₁",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "t2",
+    "label": "t₂",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad1=t1*pi/180; x1=cos(rad1); y1=sin(rad1); rad2=t2*pi/180; x2=cos(rad2); y2=sin(rad2); dist=sqrt((x1-x2)^2+(y1-y2)^2)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "x²+y²=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#bbb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P₁",
+     "color": "#d33"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P₂",
+     "color": "#36c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 점 거리 |P₁P₂|",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "현의 길이 공식 2|sin((t₁-t₂)/2)|",
+    "expr": "2*abs(sin((rad1-rad2)/2))",
+    "digits": 4
+   },
+   {
+    "label": "매개변수 차 |t₁-t₂|",
+    "expr": "abs(t1-t2)",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t1": 30,
+    "t2": 0
+   },
+   {
+    "t1": 90,
+    "t2": 200
+   },
+   {
+    "t1": 150,
+    "t2": 150
+   },
+   {
+    "t1": 270,
+    "t2": 45
+   }
+  ],
+  "invariants": [
+   "x1^2+y1^2-1",
+   "x2^2+y2^2-1",
+   "dist-2*abs(sin((rad1-rad2)/2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t1": 90,
+     "t2": 0
+    },
+    "expect": {
+     "x1": 0,
+     "y1": 1,
+     "x2": 1,
+     "y2": 0,
+     "dist": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "t1": 60,
+     "t2": 0
+    },
+    "expect": {
+     "x1": 0.5,
+     "y1": 0.8660254037844386,
+     "dist": 1
+    }
+   },
+   {
+    "params": {
+     "t1": 180,
+     "t2": 0
+    },
+    "expect": {
+     "x1": -1,
+     "dist": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

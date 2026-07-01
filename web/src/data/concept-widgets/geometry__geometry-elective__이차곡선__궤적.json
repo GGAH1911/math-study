@@ -1,0 +1,199 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/궤적",
+ "spec": {
+  "title": "궤적 — 타원: 두 초점까지 거리의 합이 일정",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (거리 합의 절반, 2a=합)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (초점 위치 ±c)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "t (점 P의 매개변수각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "b=sqrt(a^2-c^2); rad=t*pi/180; px=a*cos(rad); py=b*sin(rad); r1=sqrt((px+c)^2+py^2); r2=sqrt((px-c)^2+py^2); sum=r1+r2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-c",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r₁"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "r₁ = PF₁",
+    "expr": "r1",
+    "digits": 3
+   },
+   {
+    "label": "r₂ = PF₂",
+    "expr": "r2",
+    "digits": 3
+   },
+   {
+    "label": "r₁+r₂ (일정해야)",
+    "expr": "sum",
+    "digits": 3
+   },
+   {
+    "label": "2a (기준값)",
+    "expr": "2*a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "c": 2,
+    "t": 60
+   },
+   {
+    "a": 5,
+    "c": 3,
+    "t": 0
+   },
+   {
+    "a": 4,
+    "c": 1,
+    "t": 120
+   },
+   {
+    "a": 5,
+    "c": 3,
+    "t": 90
+   }
+  ],
+  "invariants": [
+   "r1+r2-2*a",
+   "b-sqrt(a^2-c^2)",
+   "r1^2-((px+c)^2+py^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "c": 0,
+     "t": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 3,
+     "r1": 3,
+     "r2": 3,
+     "sum": 6
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "c": 3,
+     "t": 0
+    },
+    "expect": {
+     "b": 4,
+     "px": 5,
+     "py": 0,
+     "r1": 8,
+     "r2": 2,
+     "sum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "c": 3,
+     "t": 90
+    },
+    "expect": {
+     "b": 4,
+     "px": 0,
+     "py": 4,
+     "r1": 5,
+     "r2": 5,
+     "sum": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

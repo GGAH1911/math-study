@@ -1,0 +1,197 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/수선의_성질",
+ "spec": {
+  "title": "점과 평면 사이의 거리: 수선의 발이 최단",
+  "params": [
+   {
+    "name": "h",
+    "label": "수선 길이 |PH|",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "qx",
+    "label": "평면 위 점 Q의 위치",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ph=h; pq=sqrt(qx^2+h^2); diff=pq-ph",
+  "geometry": {
+   "range": [
+    -4.4,
+    4.4
+   ],
+   "yRange": [
+    -0.6,
+    3.8
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -4.2,
+      0
+     ],
+     "to": [
+      4.2,
+      0
+     ],
+     "label": "평면 α"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=h"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      0
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=h"
+     ],
+     "to": [
+      0,
+      0
+     ],
+     "label": "|PH| (수선)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=h"
+     ],
+     "to": [
+      "=qx",
+      0
+     ],
+     "label": "|PQ|"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.22,
+       0
+      ],
+      [
+       0.22,
+       0.22
+      ],
+      [
+       0,
+       0.22
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수선 길이 |PH|",
+    "expr": "ph",
+    "digits": 3
+   },
+   {
+    "label": "빗변 |PQ|",
+    "expr": "pq",
+    "digits": 3
+   },
+   {
+    "label": "|PQ| - |PH| (항상 ≥ 0)",
+    "expr": "diff",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": 3,
+    "qx": 4
+   },
+   {
+    "h": 1,
+    "qx": 0
+   },
+   {
+    "h": 2,
+    "qx": -3
+   },
+   {
+    "h": 2.5,
+    "qx": 1.5
+   }
+  ],
+  "invariants": [
+   "pq^2 - h^2 - qx^2",
+   "ph - h"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 3,
+     "qx": 4
+    },
+    "expect": {
+     "ph": 3,
+     "pq": 5,
+     "diff": 2
+    }
+   },
+   {
+    "params": {
+     "h": 1,
+     "qx": 0
+    },
+    "expect": {
+     "ph": 1,
+     "pq": 1,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "h": 2,
+     "qx": -3
+    },
+    "expect": {
+     "ph": 2,
+     "pq": 3.605551275463989,
+     "diff": 1.605551275463989
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,188 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/직선과_구의_접선",
+ "spec": {
+  "title": "직선과 구의 접선 — 중심에서 직선까지 거리 d와 반지름 r (대원 단면)",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "중심 P–직선 ℓ 거리 d",
+    "type": "slider",
+    "min": 0,
+    "max": 3.5,
+    "init": 1.4,
+    "step": 0.1
+   }
+  ],
+  "scope": "dist = abs(1*0 - d)/sqrt(1); disc = r^2 - d^2; xI = sqrt(disc); gap = d - r",
+  "geometry": {
+   "range": [
+    -3.6,
+    3.6
+   ],
+   "yRange": [
+    -3.6,
+    3.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "구의 대원 단면"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "P(중심)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -3.4,
+      "=d"
+     ],
+     "to": [
+      3.4,
+      "=d"
+     ],
+     "label": "직선 ℓ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=d"
+     ],
+     "label": "d=|PH|"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=d"
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xI",
+      "=d"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-xI",
+      "=d"
+     ],
+     "label": "A'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d",
+    "expr": "d",
+    "digits": 2
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "d − r  (0이면 접선, <0이면 두 점, >0이면 만나지 않음)",
+    "expr": "gap",
+    "digits": 2
+   },
+   {
+    "label": "교점/접점 x좌표 ±",
+    "expr": "xI",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "d": 1
+   },
+   {
+    "r": 2,
+    "d": 2
+   },
+   {
+    "r": 3,
+    "d": 1.5
+   },
+   {
+    "r": 2.5,
+    "d": 0
+   }
+  ],
+  "invariants": [
+   "xI^2 + d^2 - r^2",
+   "dist - d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "d": 1
+    },
+    "expect": {
+     "xI": 1.7320508075688772,
+     "dist": 1,
+     "gap": -1
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "d": 2
+    },
+    "expect": {
+     "xI": 0,
+     "dist": 2,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "r": 3,
+     "d": 1.5
+    },
+    "expect": {
+     "xI": 2.598076211353316,
+     "dist": 1.5,
+     "gap": -1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

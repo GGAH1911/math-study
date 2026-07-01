@@ -1,0 +1,206 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/점과_평면_사이의_거리",
+ "spec": {
+  "title": "점과 평면(직선) 사이의 거리 — 수선의 발 H와 최단거리",
+  "params": [
+   {
+    "name": "px",
+    "label": "점 P의 x",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "a",
+    "label": "법선 a",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "법선 b",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "상수 d",
+    "type": "slider",
+    "min": -12,
+    "max": 12,
+    "init": -6,
+    "step": 1
+   }
+  ],
+  "scope": "n2=a^2+b^2; s=a*px+b*py+c; num=abs(s); dist=num/sqrt(n2); hx=px-a*s/n2; hy=py-b*s/n2; bx=-a*c/n2; by=-b*c/n2; ux=b/sqrt(n2); uy=-a/sqrt(n2); ax1=bx+10*ux; ay1=by+10*uy; ax2=bx-10*ux; ay2=by-10*uy",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=ax1",
+      "=ay1"
+     ],
+     "to": [
+      "=ax2",
+      "=ay2"
+     ],
+     "label": "평면 α의 자취",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "PH = 거리",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "H(수선의 발)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d = |a·x₀+b·y₀+d| / √(a²+b²)",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "분자 |a·x₀+b·y₀+d|",
+    "expr": "num",
+    "digits": 4
+   },
+   {
+    "label": "분모 √(a²+b²)",
+    "expr": "sqrt(n2)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 2,
+    "py": 3,
+    "a": 3,
+    "b": 4,
+    "c": -6
+   },
+   {
+    "px": 0,
+    "py": 0,
+    "a": 3,
+    "b": 4,
+    "c": -10
+   },
+   {
+    "px": -3,
+    "py": 1,
+    "a": 5,
+    "b": 12,
+    "c": 0
+   },
+   {
+    "px": 4,
+    "py": -2,
+    "a": 1,
+    "b": -2,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "a*hx+b*hy+c",
+   "a*(hy-py)-b*(hx-px)",
+   "dist-sqrt((hx-px)^2+(hy-py)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 2,
+     "py": 3,
+     "a": 3,
+     "b": 4,
+     "c": -6
+    },
+    "expect": {
+     "num": 12,
+     "dist": 2.4
+    }
+   },
+   {
+    "params": {
+     "px": 0,
+     "py": 0,
+     "a": 3,
+     "b": 4,
+     "c": -10
+    },
+    "expect": {
+     "num": 10,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "px": -3,
+     "py": 1,
+     "a": 5,
+     "b": 12,
+     "c": 0
+    },
+    "expect": {
+     "num": 3,
+     "dist": 0.23076923076923078
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

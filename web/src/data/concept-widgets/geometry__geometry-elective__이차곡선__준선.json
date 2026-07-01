@@ -1,0 +1,121 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/준선",
+ "spec": {
+  "title": "포물선의 준선: 초점과 준선에서 같은 거리",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (초점거리)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "py=a^2/(4*p); PF=sqrt(a^2+(py-p)^2); Pdir=py+p",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2/(4*p)",
+     "label": "x² = 4py",
+     "color": "#8e44ad"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "초점까지 거리 |PF|",
+    "expr": "PF",
+    "digits": 3
+   },
+   {
+    "label": "준선까지 거리",
+    "expr": "Pdir",
+    "digits": 3
+   },
+   {
+    "label": "두 거리 차 (항상 0)",
+    "expr": "PF-Pdir",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "a": 2
+   },
+   {
+    "p": 0.5,
+    "a": 1
+   },
+   {
+    "p": 2,
+    "a": -3
+   },
+   {
+    "p": 1.5,
+    "a": 0
+   }
+  ],
+  "invariants": [
+   "PF-Pdir",
+   "a^2-4*p*py"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "a": 2
+    },
+    "expect": {
+     "py": 1,
+     "PF": 2,
+     "Pdir": 2
+    }
+   },
+   {
+    "params": {
+     "p": 1,
+     "a": 0
+    },
+    "expect": {
+     "py": 0,
+     "PF": 1,
+     "Pdir": 1
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "a": 4
+    },
+    "expect": {
+     "py": 2,
+     "PF": 4,
+     "Pdir": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

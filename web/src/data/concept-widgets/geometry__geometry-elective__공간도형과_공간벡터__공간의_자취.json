@@ -1,0 +1,151 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간의_자취",
+ "spec": {
+  "title": "공간의 자취 — 구를 평면 z=h로 자른 단면(원)",
+  "params": [
+   {
+    "name": "r",
+    "label": "구의 반지름 r (원점 O에서 거리)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "자르는 평면 높이 z=h",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "rc = sqrt(r^2 - h^2)",
+  "geometry": {
+   "range": [
+    -5.4,
+    5.4
+   ],
+   "yRange": [
+    -5.4,
+    5.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "구 x²+y²+z²=r² (자취: 구면)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=rc",
+     "label": "z=h 단면의 자취 (원, 반지름 rc)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rc",
+      0
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=rc",
+      0
+     ],
+     "label": "rc"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "단면 자취의 반지름 rc = √(r²−h²)",
+    "expr": "rc",
+    "digits": 3
+   },
+   {
+    "label": "검증 rc²+h² (=r²이어야)",
+    "expr": "rc^2+h^2",
+    "digits": 3
+   },
+   {
+    "label": "r²",
+    "expr": "r^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 5,
+    "h": 3
+   },
+   {
+    "r": 2,
+    "h": 0
+   },
+   {
+    "r": 1,
+    "h": 0.6
+   },
+   {
+    "r": 3,
+    "h": 1.8
+   }
+  ],
+  "invariants": [
+   "rc^2 + h^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 5,
+     "h": 3
+    },
+    "expect": {
+     "rc": 4
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "h": 0
+    },
+    "expect": {
+     "rc": 2
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "h": 0.6
+    },
+    "expect": {
+     "rc": 0.8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

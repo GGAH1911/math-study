@@ -1,0 +1,121 @@
+{
+ "id": "functions/math-2/함수의_극한과_연속/좌극한",
+ "spec": {
+  "title": "좌극한: x → a⁻ 일 때 f(x) → L",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (점 a=1의 왼쪽에서 접근)",
+    "type": "slider",
+    "min": 0,
+    "max": 0.999,
+    "init": 0.6,
+    "step": 0.001,
+    "unit": ""
+   }
+  ],
+  "scope": "a=1; L=2; fx=x^2+1; d=a-x; gap=L-fx",
+  "plot": {
+   "range": [
+    -0.2,
+    2
+   ],
+   "yRange": [
+    -0.3,
+    3.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(x<1)*(x^2+1) + (x>=1)*x",
+     "label": "y=f(x)  (x<1: x²+1, x≥1: x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "2",
+     "label": "좌극한 L=2",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "현재 x (x<a=1)",
+    "expr": "x",
+    "digits": 3
+   },
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 4
+   },
+   {
+    "label": "a − x (왼쪽에서의 거리)",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "L − f(x) (좌극한까지 남은 값)",
+    "expr": "gap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0
+   },
+   {
+    "x": 0.5
+   },
+   {
+    "x": 0.9
+   },
+   {
+    "x": 0.99
+   }
+  ],
+  "invariants": [
+   "fx - (x^2 + 1)",
+   "L - (a^2 + 1)",
+   "d - (a - x)",
+   "gap - (L - fx)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "fx": 1,
+     "d": 1,
+     "gap": 1,
+     "L": 2
+    }
+   },
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "fx": 1.25,
+     "d": 0.5,
+     "gap": 0.75
+    }
+   },
+   {
+    "params": {
+     "x": 0.9
+    },
+    "expect": {
+     "fx": 1.81,
+     "d": 0.1,
+     "gap": 0.19
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

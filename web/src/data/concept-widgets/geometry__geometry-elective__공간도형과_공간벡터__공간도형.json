@@ -1,0 +1,304 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간도형",
+ "spec": {
+  "title": "공간도형: 3차원 점 P(x,y,z)와 직육면체·공간대각선",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (가로)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "y",
+    "label": "y (세로)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "z",
+    "label": "z (높이)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "p=0.35; dist=sqrt(x^2+y^2+z^2); Fx=x+p*z; Fy=y+p*z",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1.5,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      "=y"
+     ],
+     "to": [
+      0,
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=y"
+     ],
+     "to": [
+      0,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=p*z",
+      "=p*z"
+     ],
+     "to": [
+      "=Fx",
+      "=p*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Fx",
+      "=p*z"
+     ],
+     "to": [
+      "=Fx",
+      "=Fy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Fx",
+      "=Fy"
+     ],
+     "to": [
+      "=p*z",
+      "=Fy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=p*z",
+      "=Fy"
+     ],
+     "to": [
+      "=p*z",
+      "=p*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=p*z",
+      "=p*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=Fx",
+      "=p*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      "=y"
+     ],
+     "to": [
+      "=Fx",
+      "=Fy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=y"
+     ],
+     "to": [
+      "=p*z",
+      "=Fy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Fx",
+      "=Fy"
+     ],
+     "color": "red",
+     "label": "공간대각선 =dist"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "P(x,y,z)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "y",
+    "expr": "y",
+    "digits": 2
+   },
+   {
+    "label": "z",
+    "expr": "z",
+    "digits": 2
+   },
+   {
+    "label": "원점 O까지 거리 √(x²+y²+z²)",
+    "expr": "dist",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 3,
+    "y": 2,
+    "z": 2
+   },
+   {
+    "x": 4,
+    "y": 0,
+    "z": 3
+   },
+   {
+    "x": 1,
+    "y": 5,
+    "z": 4
+   },
+   {
+    "x": 6,
+    "y": 6,
+    "z": 6
+   }
+  ],
+  "invariants": [
+   "dist^2 - (x^2 + y^2 + z^2)",
+   "Fx - (x + p*z)",
+   "Fy - (y + p*z)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 3,
+     "y": 4,
+     "z": 0
+    },
+    "expect": {
+     "dist": 5,
+     "Fx": 3,
+     "Fy": 4
+    }
+   },
+   {
+    "params": {
+     "x": 1,
+     "y": 2,
+     "z": 2
+    },
+    "expect": {
+     "dist": 3,
+     "Fx": 1.7,
+     "Fy": 2.7
+    }
+   },
+   {
+    "params": {
+     "x": 2,
+     "y": 3,
+     "z": 6
+    },
+    "expect": {
+     "dist": 7,
+     "Fx": 4.1,
+     "Fy": 5.1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

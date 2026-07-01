@@ -1,0 +1,265 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/매개변수_표현",
+ "spec": {
+  "title": "매개변수로 그리는 타원 x=a·cos t, y=b·sin t",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (가로 반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (세로 반지름)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "t (매개변수, °)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=t*pi/180; px=a*cos(rad); py=b*sin(rad); check=(px/a)^2+(py/b)^2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*cos(0)",
+       "=b*sin(0)"
+      ],
+      [
+       "=a*cos(pi/12)",
+       "=b*sin(pi/12)"
+      ],
+      [
+       "=a*cos(2*pi/12)",
+       "=b*sin(2*pi/12)"
+      ],
+      [
+       "=a*cos(3*pi/12)",
+       "=b*sin(3*pi/12)"
+      ],
+      [
+       "=a*cos(4*pi/12)",
+       "=b*sin(4*pi/12)"
+      ],
+      [
+       "=a*cos(5*pi/12)",
+       "=b*sin(5*pi/12)"
+      ],
+      [
+       "=a*cos(6*pi/12)",
+       "=b*sin(6*pi/12)"
+      ],
+      [
+       "=a*cos(7*pi/12)",
+       "=b*sin(7*pi/12)"
+      ],
+      [
+       "=a*cos(8*pi/12)",
+       "=b*sin(8*pi/12)"
+      ],
+      [
+       "=a*cos(9*pi/12)",
+       "=b*sin(9*pi/12)"
+      ],
+      [
+       "=a*cos(10*pi/12)",
+       "=b*sin(10*pi/12)"
+      ],
+      [
+       "=a*cos(11*pi/12)",
+       "=b*sin(11*pi/12)"
+      ],
+      [
+       "=a*cos(pi)",
+       "=b*sin(pi)"
+      ],
+      [
+       "=a*cos(13*pi/12)",
+       "=b*sin(13*pi/12)"
+      ],
+      [
+       "=a*cos(14*pi/12)",
+       "=b*sin(14*pi/12)"
+      ],
+      [
+       "=a*cos(15*pi/12)",
+       "=b*sin(15*pi/12)"
+      ],
+      [
+       "=a*cos(16*pi/12)",
+       "=b*sin(16*pi/12)"
+      ],
+      [
+       "=a*cos(17*pi/12)",
+       "=b*sin(17*pi/12)"
+      ],
+      [
+       "=a*cos(18*pi/12)",
+       "=b*sin(18*pi/12)"
+      ],
+      [
+       "=a*cos(19*pi/12)",
+       "=b*sin(19*pi/12)"
+      ],
+      [
+       "=a*cos(20*pi/12)",
+       "=b*sin(20*pi/12)"
+      ],
+      [
+       "=a*cos(21*pi/12)",
+       "=b*sin(21*pi/12)"
+      ],
+      [
+       "=a*cos(22*pi/12)",
+       "=b*sin(22*pi/12)"
+      ],
+      [
+       "=a*cos(23*pi/12)",
+       "=b*sin(23*pi/12)"
+      ]
+     ],
+     "label": "타원"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "y=b·sin t"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=py"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "x=a·cos t"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(t)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x = a·cos t",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y = b·sin t",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "(x/a)²+(y/b)²",
+    "expr": "check",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2,
+    "t": 45
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "t": 0
+   },
+   {
+    "a": 4,
+    "b": 3,
+    "t": 60
+   },
+   {
+    "a": 2,
+    "b": 5,
+    "t": 120
+   }
+  ],
+  "invariants": [
+   "(px/a)^2+(py/b)^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "t": 0
+    },
+    "expect": {
+     "px": 3,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "t": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 3,
+     "t": 60
+    },
+    "expect": {
+     "px": 2,
+     "py": 2.598076211
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

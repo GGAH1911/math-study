@@ -1,0 +1,294 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/타원의_표준형",
+ "spec": {
+  "title": "타원의 표준형 x²/a² + y²/b² = 1 (a>b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (장축 반길이)",
+    "type": "slider",
+    "min": 3,
+    "max": 5,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (단축 반길이)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "점 P의 매개각 (°)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 40,
+    "step": 1
+   }
+  ],
+  "scope": "c=sqrt(a^2-b^2); rad=t*pi/180; px=a*cos(rad); py=b*sin(rad); d1=sqrt((px-c)^2+py^2); d2=sqrt((px+c)^2+py^2); focalSum=d1+d2",
+  "geometry": {
+   "range": [
+    -5.6,
+    5.6
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*cos(0*pi/12)",
+       "=b*sin(0*pi/12)"
+      ],
+      [
+       "=a*cos(1*pi/12)",
+       "=b*sin(1*pi/12)"
+      ],
+      [
+       "=a*cos(2*pi/12)",
+       "=b*sin(2*pi/12)"
+      ],
+      [
+       "=a*cos(3*pi/12)",
+       "=b*sin(3*pi/12)"
+      ],
+      [
+       "=a*cos(4*pi/12)",
+       "=b*sin(4*pi/12)"
+      ],
+      [
+       "=a*cos(5*pi/12)",
+       "=b*sin(5*pi/12)"
+      ],
+      [
+       "=a*cos(6*pi/12)",
+       "=b*sin(6*pi/12)"
+      ],
+      [
+       "=a*cos(7*pi/12)",
+       "=b*sin(7*pi/12)"
+      ],
+      [
+       "=a*cos(8*pi/12)",
+       "=b*sin(8*pi/12)"
+      ],
+      [
+       "=a*cos(9*pi/12)",
+       "=b*sin(9*pi/12)"
+      ],
+      [
+       "=a*cos(10*pi/12)",
+       "=b*sin(10*pi/12)"
+      ],
+      [
+       "=a*cos(11*pi/12)",
+       "=b*sin(11*pi/12)"
+      ],
+      [
+       "=a*cos(12*pi/12)",
+       "=b*sin(12*pi/12)"
+      ],
+      [
+       "=a*cos(13*pi/12)",
+       "=b*sin(13*pi/12)"
+      ],
+      [
+       "=a*cos(14*pi/12)",
+       "=b*sin(14*pi/12)"
+      ],
+      [
+       "=a*cos(15*pi/12)",
+       "=b*sin(15*pi/12)"
+      ],
+      [
+       "=a*cos(16*pi/12)",
+       "=b*sin(16*pi/12)"
+      ],
+      [
+       "=a*cos(17*pi/12)",
+       "=b*sin(17*pi/12)"
+      ],
+      [
+       "=a*cos(18*pi/12)",
+       "=b*sin(18*pi/12)"
+      ],
+      [
+       "=a*cos(19*pi/12)",
+       "=b*sin(19*pi/12)"
+      ],
+      [
+       "=a*cos(20*pi/12)",
+       "=b*sin(20*pi/12)"
+      ],
+      [
+       "=a*cos(21*pi/12)",
+       "=b*sin(21*pi/12)"
+      ],
+      [
+       "=a*cos(22*pi/12)",
+       "=b*sin(22*pi/12)"
+      ],
+      [
+       "=a*cos(23*pi/12)",
+       "=b*sin(23*pi/12)"
+      ]
+     ],
+     "label": "타원"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-c",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=c",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=-c",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a (장축 반길이)",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b (단축 반길이)",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "c (초점거리 √(a²-b²))",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "PF₁ + PF₂",
+    "expr": "focalSum",
+    "digits": 3
+   },
+   {
+    "label": "2a (거리합 상수)",
+    "expr": "2*a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 5,
+    "b": 3,
+    "t": 0
+   },
+   {
+    "a": 5,
+    "b": 3,
+    "t": 90
+   },
+   {
+    "a": 5,
+    "b": 4,
+    "t": 45
+   },
+   {
+    "a": 4,
+    "b": 2,
+    "t": 120
+   }
+  ],
+  "invariants": [
+   "px^2/a^2 + py^2/b^2 - 1",
+   "focalSum - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 5,
+     "b": 3,
+     "t": 0
+    },
+    "expect": {
+     "px": 5,
+     "py": 0,
+     "c": 4,
+     "focalSum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 4,
+     "t": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 4,
+     "c": 3,
+     "focalSum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2,
+     "t": 120
+    },
+    "expect": {
+     "px": -2,
+     "py": 1.7320508076,
+     "focalSum": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

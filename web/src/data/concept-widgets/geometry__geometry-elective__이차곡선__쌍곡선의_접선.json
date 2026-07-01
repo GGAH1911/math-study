@@ -1,0 +1,142 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/쌍곡선의_접선",
+ "spec": {
+  "title": "쌍곡선의 접선  x²/a² − y²/b² = 1",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (가로 반축)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (세로 반축)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "접점 매개변수 t",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "x0=a*cosh(t); y0=b*sinh(t); m=b^2*x0/(a^2*y0); c=-b^2/y0",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "b*sqrt(x^2/a^2-1)",
+     "label": "쌍곡선 (위)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "-b*sqrt(x^2/a^2-1)",
+     "label": "쌍곡선 (아래)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x+c",
+     "label": "접선  x·x₀/a² − y·y₀/b² = 1",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 x₀",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "접점 y₀",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 dy/dx = b²x₀/(a²y₀)",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "판별식 x₀²/a² − y₀²/b² (=1)",
+    "expr": "x0^2/a^2-y0^2/b^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "t": 1
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "t": 0.5
+   },
+   {
+    "a": 2,
+    "b": 1.5,
+    "t": -1.2
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "t": 0.8
+   }
+  ],
+  "invariants": [
+   "x0^2/a^2 - y0^2/b^2 - 1",
+   "m*x0 + c - y0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "t": 1
+    },
+    "expect": {
+     "x0": 3.08616127,
+     "y0": 1.175201194,
+     "m": 0.65651764,
+     "c": -0.85091813
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "t": 0.5
+    },
+    "expect": {
+     "x0": 1.127625965,
+     "y0": 1.042190611,
+     "m": 4.32790683,
+     "c": -3.83806972
+    }
+   }
+  ],
+  "tol": 0.0001
+ }
+}

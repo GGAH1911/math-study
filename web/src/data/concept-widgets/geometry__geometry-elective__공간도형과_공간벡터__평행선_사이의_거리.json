@@ -1,0 +1,193 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/평행선_사이의_거리",
+ "spec": {
+  "title": "평행선 사이의 거리 — 외적으로 구하기",
+  "params": [
+   {
+    "name": "theta",
+    "label": "방향벡터 각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "Bx",
+    "label": "점 B의 x",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "By",
+    "label": "점 B의 y",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; dx=cos(rad); dy=sin(rad); dlen=sqrt(dx^2+dy^2); abx=Bx; aby=By; cross=abx*dy-aby*dx; dist=abs(cross)/dlen; proj=abx*dx+aby*dy; Fx=proj*dx; Fy=proj*dy; fbx=Bx-Fx; fby=By-Fy; perp=fbx*dx+fby*dy; fblen=sqrt(fbx^2+fby^2)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-8*dx",
+      "=-8*dy"
+     ],
+     "to": [
+      "=8*dx",
+      "=8*dy"
+     ],
+     "label": "ℓ1 (A, d)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx-8*dx",
+      "=By-8*dy"
+     ],
+     "to": [
+      "=Bx+8*dx",
+      "=By+8*dy"
+     ],
+     "label": "ℓ2 (B, d)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "H"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Fx",
+      "=Fy"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 직선 사이 거리 d",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "|AB × d| (평행사변형 넓이)",
+    "expr": "abs(cross)",
+    "digits": 4
+   },
+   {
+    "label": "|d|",
+    "expr": "dlen",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "Bx": 1,
+    "By": 3
+   },
+   {
+    "theta": 0,
+    "Bx": 0,
+    "By": 2
+   },
+   {
+    "theta": 90,
+    "Bx": 3,
+    "By": 0
+   },
+   {
+    "theta": 45,
+    "Bx": 0,
+    "By": 2
+   }
+  ],
+  "invariants": [
+   "dx^2+dy^2-1",
+   "perp",
+   "fblen-dist"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "Bx": 0,
+     "By": 2
+    },
+    "expect": {
+     "dist": 2,
+     "cross": -2
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "Bx": 3,
+     "By": 0
+    },
+    "expect": {
+     "dist": 3,
+     "cross": 3
+    }
+   },
+   {
+    "params": {
+     "theta": 45,
+     "Bx": 0,
+     "By": 2
+    },
+    "expect": {
+     "dist": 1.4142135623730951,
+     "cross": -1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

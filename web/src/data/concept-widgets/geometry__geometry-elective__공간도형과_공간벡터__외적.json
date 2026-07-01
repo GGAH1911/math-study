@@ -1,0 +1,197 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/외적",
+ "spec": {
+  "title": "외적: |a×b| = |a||b|sinθ = 평행사변형 넓이",
+  "params": [
+   {
+    "name": "la",
+    "label": "|a| (x축 방향 벡터 길이)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "lb",
+    "label": "|b| (벡터 b 길이)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "θ (a와 b가 이루는 각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ax=la; ay=0; bx=lb*cos(theta*pi/180); by=lb*sin(theta*pi/180); cross=ax*by-ay*bx; area=abs(cross)",
+  "geometry": {
+   "range": [
+    -3.5,
+    6.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=ax+bx",
+       "=ay+by"
+      ],
+      [
+       "=bx",
+       "=by"
+      ]
+     ],
+     "label": "넓이=|a×b|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a×b의 z성분 (부호넓이) = a₁b₂−a₂b₁",
+    "expr": "cross",
+    "digits": 4
+   },
+   {
+    "label": "|a×b| (평행사변형 넓이)",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "|a||b|sinθ",
+    "expr": "la*lb*sin(theta*pi/180)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "la": 3,
+    "lb": 2,
+    "theta": 60
+   },
+   {
+    "la": 2,
+    "lb": 3,
+    "theta": 90
+   },
+   {
+    "la": 4,
+    "lb": 1,
+    "theta": 30
+   },
+   {
+    "la": 3,
+    "lb": 2,
+    "theta": 180
+   }
+  ],
+  "invariants": [
+   "cross-la*lb*sin(theta*pi/180)",
+   "area-la*abs(by)",
+   "area-abs(cross)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "la": 2,
+     "lb": 3,
+     "theta": 90
+    },
+    "expect": {
+     "cross": 6,
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "la": 4,
+     "lb": 1,
+     "theta": 30
+    },
+    "expect": {
+     "cross": 2,
+     "area": 2
+    }
+   },
+   {
+    "params": {
+     "la": 3,
+     "lb": 2,
+     "theta": 180
+    },
+    "expect": {
+     "cross": 0,
+     "area": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

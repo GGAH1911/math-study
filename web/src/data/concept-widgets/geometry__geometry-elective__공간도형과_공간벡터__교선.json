@@ -1,0 +1,183 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/교선",
+ "spec": {
+  "title": "두 평면의 교선 — 이면각 단면으로 보기",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "평면1 트레이스 각 α",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "beta",
+    "label": "평면2 트레이스 각 β",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 120,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ar=alpha*pi/180; br=beta*pi/180; t1x=cos(ar); t1y=sin(ar); t2x=cos(br); t2y=sin(br); n1x=sin(ar); n1y=-cos(ar); n2x=sin(br); n2y=-cos(br); dz=n1x*n2y-n1y*n2x; dih=abs(beta-alpha)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-1.3*t1x",
+      "=-1.3*t1y"
+     ],
+     "to": [
+      "=1.3*t1x",
+      "=1.3*t1y"
+     ],
+     "label": "평면1 트레이스",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-1.3*t2x",
+      "=-1.3*t2y"
+     ],
+     "to": [
+      "=1.3*t2x",
+      "=1.3*t2y"
+     ],
+     "label": "평면2 트레이스",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=n1x",
+      "=n1y"
+     ],
+     "label": "n1(법선)",
+     "color": "#93c5fd"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=n2x",
+      "=n2y"
+     ],
+     "label": "n2(법선)",
+     "color": "#fca5a5"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "교선(지면에 수직)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교선 방향 z성분 = (n1×n2)_z",
+    "expr": "dz",
+    "digits": 3
+   },
+   {
+    "label": "두 평면이 이루는 각(이면각)",
+    "expr": "dih",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 0,
+    "beta": 90
+   },
+   {
+    "alpha": 30,
+    "beta": 120
+   },
+   {
+    "alpha": 90,
+    "beta": 150
+   },
+   {
+    "alpha": 10,
+    "beta": 170
+   }
+  ],
+  "invariants": [
+   "n1x*t1x+n1y*t1y",
+   "n2x*t2x+n2y*t2y",
+   "dz-sin(br-ar)",
+   "n1x^2+n1y^2-1",
+   "n2x^2+n2y^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 0,
+     "beta": 90
+    },
+    "expect": {
+     "n1x": 0,
+     "n1y": -1,
+     "n2x": 1,
+     "n2y": 0,
+     "dz": 1,
+     "dih": 90
+    }
+   },
+   {
+    "params": {
+     "alpha": 90,
+     "beta": 150
+    },
+    "expect": {
+     "n1x": 1,
+     "n1y": 0,
+     "dz": 0.8660254038,
+     "dih": 60
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 30
+    },
+    "expect": {
+     "dz": 0,
+     "dih": 0,
+     "n1x": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

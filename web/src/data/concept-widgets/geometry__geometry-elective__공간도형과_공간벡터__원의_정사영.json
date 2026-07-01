@@ -1,0 +1,155 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/원의_정사영",
+ "spec": {
+  "title": "원의 정사영 (원 → 타원)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "두 평면이 이루는 각 θ",
+    "type": "slider",
+    "min": 1,
+    "max": 89,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "원의 반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; k=cos(rad); origArea=pi*r^2; projArea=pi*r^2*k; major=2*r; minor=2*r*k; ratio=k",
+  "geometry": {
+   "range": [
+    -2.3,
+    2.3
+   ],
+   "yRange": [
+    -2.3,
+    2.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2.3,
+    2.3
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(r^2-x^2)",
+     "label": "원(반지름 r)",
+     "color": "#8a8a8a"
+    },
+    {
+     "fn": "-sqrt(r^2-x^2)",
+     "color": "#8a8a8a"
+    },
+    {
+     "fn": "k*sqrt(r^2-x^2)",
+     "label": "정사영된 타원",
+     "color": "#e11d48"
+    },
+    {
+     "fn": "-k*sqrt(r^2-x^2)",
+     "color": "#e11d48"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "장축 길이 = 2r",
+    "expr": "major",
+    "digits": 3
+   },
+   {
+    "label": "단축 길이 = 2r·cosθ",
+    "expr": "minor",
+    "digits": 3
+   },
+   {
+    "label": "원 넓이 = πr²",
+    "expr": "origArea",
+    "digits": 3
+   },
+   {
+    "label": "정사영 넓이 = πr²·cosθ",
+    "expr": "projArea",
+    "digits": 3
+   },
+   {
+    "label": "넓이비 = cosθ",
+    "expr": "ratio",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 15,
+    "r": 1
+   },
+   {
+    "theta": 45,
+    "r": 1.5
+   },
+   {
+    "theta": 75,
+    "r": 2
+   },
+   {
+    "theta": 30,
+    "r": 0.8
+   }
+  ],
+  "invariants": [
+   "projArea - origArea*cos(theta*pi/180)",
+   "minor - major*cos(rad)",
+   "major - 2*r",
+   "ratio - projArea/origArea"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 60,
+     "r": 1
+    },
+    "expect": {
+     "k": 0.5,
+     "major": 2,
+     "minor": 1,
+     "origArea": 3.141592653589793,
+     "projArea": 1.5707963267948966,
+     "ratio": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "r": 2
+    },
+    "expect": {
+     "k": 0.8660254037844387,
+     "major": 4,
+     "minor": 3.4641016151377544,
+     "origArea": 12.566370614359172,
+     "projArea": 10.882796185405306,
+     "ratio": 0.8660254037844387
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

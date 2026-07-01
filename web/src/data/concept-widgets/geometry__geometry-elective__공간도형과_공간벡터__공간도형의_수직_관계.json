@@ -1,0 +1,163 @@
+{
+ "id": "geometry/geometry-elective/공간도형과_공간벡터/공간도형의_수직_관계",
+ "spec": {
+  "title": "공간의 수직: 내적으로 판정하기 (a·b = |a||b|cos θ)",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "벡터 a 방향",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "beta",
+    "label": "벡터 b 방향",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 120,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ra=alpha*pi/180; rb=beta*pi/180; La=1.3; Lb=1.0; ax=La*cos(ra); ay=La*sin(ra); bx=Lb*cos(rb); by=Lb*sin(rb); dot=ax*bx+ay*by; theta=beta-alpha; costh=cos(theta*pi/180)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내적 a·b",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "|a||b|cos θ",
+    "expr": "La*Lb*costh",
+    "digits": 4
+   },
+   {
+    "label": "사잇각 θ",
+    "expr": "theta",
+    "digits": 1
+   },
+   {
+    "label": "수직 판정 (a·b=0 이면 ⟂)",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 0,
+    "beta": 90
+   },
+   {
+    "alpha": 30,
+    "beta": 120
+   },
+   {
+    "alpha": 45,
+    "beta": 200
+   },
+   {
+    "alpha": 10,
+    "beta": 80
+   }
+  ],
+  "invariants": [
+   "dot - La*Lb*cos((beta-alpha)*pi/180)",
+   "ax^2+ay^2 - La^2",
+   "bx^2+by^2 - Lb^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 0,
+     "beta": 90
+    },
+    "expect": {
+     "dot": 0,
+     "ax": 1.3,
+     "ay": 0,
+     "by": 1
+    }
+   },
+   {
+    "params": {
+     "alpha": 0,
+     "beta": 0
+    },
+    "expect": {
+     "dot": 1.3
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 120
+    },
+    "expect": {
+     "dot": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
