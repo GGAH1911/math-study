@@ -1,0 +1,162 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/두_직선의_각도",
+ "spec": {
+  "title": "두 직선의 각도 (방향벡터 내적)",
+  "params": [
+   {
+    "name": "a1",
+    "label": "직선 ℓ₁ 방향각",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "a2",
+    "label": "직선 ℓ₂ 방향각",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 120,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "r1=a1*pi/180; r2=a2*pi/180; ux=cos(r1); uy=sin(r1); vx=cos(r2); vy=sin(r2); dot=ux*vx+uy*vy; cth=abs(dot); theta=acos(cth); thetaDeg=theta*180/pi",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-2*ux",
+      "=-2*uy"
+     ],
+     "to": [
+      "=2*ux",
+      "=2*uy"
+     ],
+     "label": "ℓ₁",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-2*vx",
+      "=-2*vy"
+     ],
+     "to": [
+      "=2*vx",
+      "=2*vy"
+     ],
+     "label": "ℓ₂",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ux",
+      "=uy"
+     ],
+     "label": "u"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "v"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 직선의 각 θ",
+    "expr": "thetaDeg",
+    "digits": 2
+   },
+   {
+    "label": "cos θ = |u·v|/(|u||v|)",
+    "expr": "cth",
+    "digits": 4
+   },
+   {
+    "label": "내적 u·v",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 0,
+    "a2": 90
+   },
+   {
+    "a1": 0,
+    "a2": 45
+   },
+   {
+    "a1": 30,
+    "a2": 120
+   },
+   {
+    "a1": 0,
+    "a2": 150
+   }
+  ],
+  "invariants": [
+   "ux^2+uy^2-1",
+   "vx^2+vy^2-1",
+   "cth-abs(cos(r1-r2))",
+   "cos(theta)-cth"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 0,
+     "a2": 45
+    },
+    "expect": {
+     "cth": 0.70710678,
+     "thetaDeg": 45
+    }
+   },
+   {
+    "params": {
+     "a1": 0,
+     "a2": 150
+    },
+    "expect": {
+     "cth": 0.8660254,
+     "thetaDeg": 30
+    }
+   },
+   {
+    "params": {
+     "a1": 30,
+     "a2": 120
+    },
+    "expect": {
+     "dot": 0,
+     "cth": 0,
+     "thetaDeg": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

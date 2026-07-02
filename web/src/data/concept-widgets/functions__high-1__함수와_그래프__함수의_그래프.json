@@ -1,0 +1,134 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_그래프",
+ "spec": {
+  "title": "함수 y=f(x)의 그래프 (포물선 f(x)=a·x²+c)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (볼록 정도)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (상하 이동)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0 = a*0^2 + c; f2 = a*2^2 + c; fn2 = a*(-2)^2 + c",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + c",
+     "label": "y=f(x)=a·x²+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 f(0)",
+    "expr": "f0",
+    "digits": 3
+   },
+   {
+    "label": "f(2)",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "f(-2) (대칭)",
+    "expr": "fn2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "c": 0
+   },
+   {
+    "a": 2,
+    "c": 1
+   },
+   {
+    "a": 0.5,
+    "c": -1
+   },
+   {
+    "a": 3,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "f2 - fn2",
+   "f0 - c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "c": 0
+    },
+    "expect": {
+     "f0": 0,
+     "f2": 4,
+     "fn2": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "c": 1
+    },
+    "expect": {
+     "f0": 1,
+     "f2": 9,
+     "fn2": 9
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "c": -1
+    },
+    "expect": {
+     "f0": -1,
+     "f2": 1,
+     "fn2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_영점",
+ "spec": {
+  "title": "함수의 영점: f(x)=0과 x축 교점",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (일차항 계수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -5,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -6,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "D=b^2-4*c; sq=sqrt(abs(D)); r1=(-b-sq)/2; r2=(-b+sq)/2; nroots=(D>0 ? 2 : (D==0 ? 1 : 0))",
+  "plot": {
+   "range": [
+    -5,
+    7
+   ],
+   "yRange": [
+    -8,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + b*x + c",
+     "label": "f(x)=x^2+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D=b²-4c",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "영점 개수",
+    "expr": "nroots",
+    "digits": 0
+   },
+   {
+    "label": "영점 x₁ (D≥0일 때)",
+    "expr": "r1",
+    "digits": 4
+   },
+   {
+    "label": "영점 x₂ (D≥0일 때)",
+    "expr": "r2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -5,
+    "c": 6
+   },
+   {
+    "b": 0,
+    "c": -4
+   },
+   {
+    "b": -2,
+    "c": 1
+   },
+   {
+    "b": 2,
+    "c": -3
+   }
+  ],
+  "invariants": [
+   "r1 + r2 + b",
+   "r1^2 + b*r1 + c",
+   "r2^2 + b*r2 + c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": -5,
+     "c": 6
+    },
+    "expect": {
+     "r1": 2,
+     "r2": 3,
+     "D": 1,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": -4
+    },
+    "expect": {
+     "r1": -2,
+     "r2": 2,
+     "D": 16,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "b": -2,
+     "c": 1
+    },
+    "expect": {
+     "r1": 1,
+     "r2": 1,
+     "D": 0,
+     "nroots": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

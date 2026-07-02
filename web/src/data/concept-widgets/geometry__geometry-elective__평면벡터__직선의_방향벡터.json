@@ -1,0 +1,209 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/직선의_방향벡터",
+ "spec": {
+  "title": "직선의 방향벡터: 방향은 하나, 벡터는 무수히",
+  "params": [
+   {
+    "name": "dx",
+    "label": "방향벡터 x성분 (d₁)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "dy",
+    "label": "방향벡터 y성분 (d₂)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "k",
+    "label": "배율 k (k·d)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.5
+   }
+  ],
+  "scope": "px=1; py=1; slope=dy/dx; A1x=px-3*dx; A1y=py-3*dy; A2x=px+3*dx; A2y=py+3*dy; tipx=px+dx; tipy=py+dy; ktipx=px+k*dx; ktipy=py+k*dy; nd=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=A1x",
+      "=A1y"
+     ],
+     "to": [
+      "=A2x",
+      "=A2y"
+     ],
+     "label": "직선 ℓ",
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P₀"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=tipx",
+      "=tipy"
+     ],
+     "label": "d",
+     "color": "#1e88e5"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tipx",
+      "=tipy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=ktipx",
+      "=ktipy"
+     ],
+     "label": "k·d",
+     "color": "#e53935"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ktipx",
+      "=ktipy"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 dy/dx",
+    "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "|d|",
+    "expr": "nd",
+    "digits": 3
+   },
+   {
+    "label": "방향각(°)",
+    "expr": "atan2(dy,dx)*180/pi",
+    "digits": 1
+   },
+   {
+    "label": "k·d 끝점",
+    "expr": "ktipx",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "dx": 2,
+    "dy": 1,
+    "k": -1
+   },
+   {
+    "dx": 1,
+    "dy": 1,
+    "k": 3
+   },
+   {
+    "dx": -2,
+    "dy": 3,
+    "k": 2
+   },
+   {
+    "dx": 3,
+    "dy": -1,
+    "k": -2
+   }
+  ],
+  "invariants": [
+   "slope*dx - dy",
+   "(ktipx-px)*dy - (ktipy-py)*dx",
+   "(A2x-A1x)*dy - (A2y-A1y)*dx",
+   "dx*(k*dy) - dy*(k*dx)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "dx": 2,
+     "dy": 1,
+     "k": 2
+    },
+    "expect": {
+     "slope": 0.5,
+     "tipx": 3,
+     "tipy": 2,
+     "ktipx": 5,
+     "ktipy": 3,
+     "nd": 2.2360679775
+    }
+   },
+   {
+    "params": {
+     "dx": 1,
+     "dy": 1,
+     "k": 3
+    },
+    "expect": {
+     "slope": 1,
+     "tipx": 2,
+     "tipy": 2,
+     "ktipx": 4,
+     "ktipy": 4
+    }
+   },
+   {
+    "params": {
+     "dx": -2,
+     "dy": 3,
+     "k": 2
+    },
+    "expect": {
+     "slope": -1.5,
+     "tipx": -1,
+     "tipy": 4,
+     "ktipx": -3,
+     "ktipy": 7
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

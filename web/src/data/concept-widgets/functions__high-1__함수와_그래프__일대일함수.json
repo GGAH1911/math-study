@@ -1,0 +1,143 @@
+{
+ "id": "functions/high-1/함수와_그래프/일대일함수",
+ "spec": {
+  "title": "일대일함수와 수평선 검사 (f(x)=x³−a·x)",
+  "params": [
+   {
+    "name": "a",
+    "label": "모양 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "수평선 y=c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "xc2=a/3; f1=1-a; fneg1=-1+a; px=1; py=1-a; fmax=(a>0 ? (2*a/3)*sqrt(a/3) : 0); mono=(a<=0 ? 1 : 0); ncross=(a>0 ? (abs(c)<fmax ? 3 : (abs(c)==fmax ? 2 : 1)) : 1)",
+  "geometry": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - a*x",
+     "label": "f(x)=x³−a·x",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "c",
+     "label": "수평선 y=c",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "일대일함수? (1=예, 0=아니오)",
+    "expr": "mono",
+    "digits": 0
+   },
+   {
+    "label": "|극값| (a>0일 때 극점 높이)",
+    "expr": "fmax",
+    "digits": 3
+   },
+   {
+    "label": "y=c 와의 교점 개수",
+    "expr": "ncross",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "c": 0.5
+   },
+   {
+    "a": -1,
+    "c": 0
+   },
+   {
+    "a": 3,
+    "c": 1
+   },
+   {
+    "a": 0,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "3*xc2 - a",
+   "f1 + fneg1",
+   "py - (px^3 - a*px)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "c": 0.5
+    },
+    "expect": {
+     "xc2": 0.3333333333,
+     "fmax": 0.3849001795,
+     "mono": 0,
+     "ncross": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "c": 0
+    },
+    "expect": {
+     "xc2": -0.3333333333,
+     "fmax": 0,
+     "mono": 1,
+     "ncross": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "c": 1
+    },
+    "expect": {
+     "xc2": 1,
+     "fmax": 2,
+     "mono": 0,
+     "ncross": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

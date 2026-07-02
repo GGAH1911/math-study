@@ -1,0 +1,189 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수방정식_풀이",
+ "spec": {
+  "title": "함수방정식 f(x+y)=f(x)+f(y)+k·xy 의 해",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (일차항 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "k (xy 결합항)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "a",
+    "label": "검증용 x=a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "검증용 y=b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "fa=(k/2)*a^2+c*a; fb=(k/2)*b^2+c*b; fab=(k/2)*(a+b)^2+c*(a+b); lhs=fab; rhs=fa+fb+k*a*b; resid=lhs-rhs; f0=(k/2)*0^2+c*0",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -10,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -10,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "(k/2)*x^2+c*x",
+     "label": "f(x)=(k/2)x²+cx",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(b)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "좌변 f(a+b)",
+    "expr": "lhs",
+    "digits": 3
+   },
+   {
+    "label": "우변 f(a)+f(b)+k·ab",
+    "expr": "rhs",
+    "digits": 3
+   },
+   {
+    "label": "좌변-우변 (0이어야 성립)",
+    "expr": "resid",
+    "digits": 6
+   },
+   {
+    "label": "f(0)",
+    "expr": "f0",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1,
+    "k": 1,
+    "a": 1,
+    "b": 2
+   },
+   {
+    "c": 2,
+    "k": 0,
+    "a": 3,
+    "b": -1
+   },
+   {
+    "c": -1,
+    "k": 2,
+    "a": 1,
+    "b": 1
+   },
+   {
+    "c": 0.5,
+    "k": -1,
+    "a": -2,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "resid",
+   "fab-(fa+fb+k*a*b)",
+   "f0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1,
+     "k": 1,
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "fa": 1.5,
+     "fb": 4,
+     "fab": 7.5,
+     "lhs": 7.5,
+     "rhs": 7.5,
+     "resid": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2,
+     "k": 0,
+     "a": 3,
+     "b": -1
+    },
+    "expect": {
+     "fa": 6,
+     "fb": -2,
+     "fab": 4,
+     "resid": 0
+    }
+   },
+   {
+    "params": {
+     "c": -1,
+     "k": 2,
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "fa": 0,
+     "fab": 2,
+     "lhs": 2,
+     "rhs": 2,
+     "resid": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

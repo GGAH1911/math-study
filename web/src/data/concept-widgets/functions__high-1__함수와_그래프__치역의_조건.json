@@ -1,0 +1,124 @@
+{
+ "id": "functions/high-1/함수와_그래프/치역의_조건",
+ "spec": {
+  "title": "치역의 조건 — f(x)=x²의 정의역을 바꾸면 치역이 변한다",
+  "params": [
+   {
+    "name": "a",
+    "label": "정의역 왼쪽 끝 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "정의역 오른쪽 끝 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "ymin = (a <= 0 and b >= 0) ? 0 : min(a^2, b^2); ymax = max(a^2, b^2)",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정의역 [a, b]",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "치역 최솟값 min",
+    "expr": "ymin",
+    "digits": 3
+   },
+   {
+    "label": "치역 최댓값 max",
+    "expr": "ymax",
+    "digits": 3
+   },
+   {
+    "label": "치역 폭",
+    "expr": "ymax - ymin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 3
+   },
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": -3,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "ymax - (max(abs(a), abs(b)))^2",
+   "ymin - ((a <= 0 and b >= 0) ? 0 : min(abs(a), abs(b)))^2",
+   "ymax - max(a^2, b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 3
+    },
+    "expect": {
+     "ymin": 0,
+     "ymax": 9
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "ymin": 1,
+     "ymax": 4
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2
+    },
+    "expect": {
+     "ymin": 0,
+     "ymax": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

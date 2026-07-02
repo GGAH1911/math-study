@@ -1,0 +1,146 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/거리의_최소화",
+ "spec": {
+  "title": "점과 직선 사이 거리의 최소화 — 수선의 발",
+  "params": [
+   {
+    "name": "t",
+    "label": "P의 위치 (매개변수 t)",
+    "type": "slider",
+    "min": -4,
+    "max": 10,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "px=t; py=0.5*t+1; ax=5; ay=1; hx=4; hy=3; dx=px-ax; dy=py-ay; dAP=sqrt(dx^2+dy^2); dir_dot=dx*2+dy*1; dmin=sqrt(5)",
+  "geometry": {
+   "range": [
+    -5,
+    11
+   ],
+   "yRange": [
+    -2,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      -1
+     ],
+     "to": [
+      10,
+      6
+     ],
+     "label": "직선 L: y=0.5x+1"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      1
+     ],
+     "label": "A(5,1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "AP"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 |AP|",
+    "expr": "dAP",
+    "digits": 3
+   },
+   {
+    "label": "AP·(직선방향(2,1))  [0이면 수직·최소]",
+    "expr": "dir_dot",
+    "digits": 3
+   },
+   {
+    "label": "이론적 최솟값 √5",
+    "expr": "dmin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 4
+   },
+   {
+    "t": 0
+   },
+   {
+    "t": 5
+   },
+   {
+    "t": -2
+   }
+  ],
+  "invariants": [
+   "py-0.5*px-1",
+   "(hx-ax)*2+(hy-ay)*1",
+   "dAP^2-(dx^2+dy^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 4
+    },
+    "expect": {
+     "px": 4,
+     "py": 3,
+     "dAP": 2.2360679775,
+     "dir_dot": 0
+    }
+   },
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "dAP": 5,
+     "dir_dot": -10
+    }
+   },
+   {
+    "params": {
+     "t": 5
+    },
+    "expect": {
+     "px": 5,
+     "py": 3.5,
+     "dAP": 2.5,
+     "dir_dot": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

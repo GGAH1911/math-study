@@ -1,0 +1,134 @@
+{
+ "id": "functions/high-1/함수와_그래프/교점",
+ "spec": {
+  "title": "교점: 포물선 y=x² 과 직선 y=mx+b",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -4,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "disc = m^2 + 4*b; x1 = (m - sqrt(disc))/2; x2 = (m + sqrt(disc))/2; y1 = x1^2; y2 = x2^2",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -3,
+    16
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x+b",
+     "label": "g(x)=mx+b",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = m²+4b",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "교점 x₁ (작은 해)",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점 x₂ (큰 해)",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "교점 개수",
+    "expr": "disc>0 ? 2 : (disc==0 ? 1 : 0)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "b": 3
+   },
+   {
+    "m": 0,
+    "b": 1
+   },
+   {
+    "m": 1,
+    "b": 2
+   },
+   {
+    "m": -2,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "x1^2 - m*x1 - b",
+   "x2^2 - m*x2 - b",
+   "y1 - (m*x1 + b)",
+   "y2 - (m*x2 + b)",
+   "disc - (m^2 + 4*b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "b": 3
+    },
+    "expect": {
+     "disc": 16,
+     "x1": -1,
+     "x2": 3
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "b": 1
+    },
+    "expect": {
+     "disc": 4,
+     "x1": -1,
+     "x2": 1
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "b": 2
+    },
+    "expect": {
+     "disc": 9,
+     "x1": -1,
+     "x2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

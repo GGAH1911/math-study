@@ -1,0 +1,143 @@
+{
+ "id": "functions/high-1/함수와_그래프/치역",
+ "spec": {
+  "title": "치역: 정의역 구간 [a,b]에 따른 f(x)=x²의 치역",
+  "params": [
+   {
+    "name": "a",
+    "label": "정의역 왼쪽 끝 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "정의역 오른쪽 끝 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "ymax = max(a^2, b^2); ymin = (a*b > 0) * min(a^2, b^2)",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -0.5,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -0.5,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정의역 [a, b]의 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "정의역 [a, b]의 b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "치역 최솟값 (ymin)",
+    "expr": "ymin",
+    "digits": 2
+   },
+   {
+    "label": "치역 최댓값 (ymax)",
+    "expr": "ymax",
+    "digits": 2
+   },
+   {
+    "label": "치역은 [ymin, ymax]",
+    "expr": "ymax - ymin",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": -3,
+    "b": -1
+   },
+   {
+    "a": -2,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "min(ymin, 0)",
+   "ymin * (a*b <= 0)",
+   "ymax - max(a*a, b*b)",
+   "max(ymin - ymax, 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 2
+    },
+    "expect": {
+     "ymin": 0,
+     "ymax": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "ymin": 1,
+     "ymax": 9
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": -1
+    },
+    "expect": {
+     "ymin": 1,
+     "ymax": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

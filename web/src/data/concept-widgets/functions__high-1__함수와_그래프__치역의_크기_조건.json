@@ -1,0 +1,196 @@
+{
+ "id": "functions/high-1/함수와_그래프/치역의_크기_조건",
+ "spec": {
+  "title": "치역의 크기 조건: 1 ≤ |f(A)| ≤ min(|A|,|B|)",
+  "params": [
+   {
+    "name": "n",
+    "label": "|A| (정의역 크기)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "m",
+    "label": "|B| (공역 크기)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "|f(A)| (치역 크기 시도값)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "ub = min(n, m); lb = 1; valid = (r >= lb and r <= ub) ? 1 : 0; rp = max(lb, min(r, ub))",
+  "geometry": {
+   "range": [
+    0,
+    9
+   ],
+   "yRange": [
+    -1.2,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=lb",
+      0
+     ],
+     "to": [
+      "=ub",
+      0
+     ],
+     "color": "#2b8a3e",
+     "label": "허용범위 [1, min(n,m)]"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=lb",
+      0
+     ],
+     "label": "최소=1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ub",
+      0
+     ],
+     "label": "최대=min(n,m)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r",
+      0.6
+     ],
+     "label": "시도 |f(A)|=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=r",
+      0
+     ],
+     "to": [
+      "=r",
+      0.6
+     ],
+     "color": "#adb5bd"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rp",
+      -0.5
+     ],
+     "label": "실제 가능값(범위로 보정)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상한 min(|A|,|B|)",
+    "expr": "ub",
+    "digits": 0
+   },
+   {
+    "label": "하한",
+    "expr": "lb",
+    "digits": 0
+   },
+   {
+    "label": "시도값 r 이 조건 만족?(1=예,0=아니오)",
+    "expr": "valid",
+    "digits": 0
+   },
+   {
+    "label": "보정된 치역크기",
+    "expr": "rp",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "m": 5,
+    "r": 3
+   },
+   {
+    "n": 6,
+    "m": 2,
+    "r": 5
+   },
+   {
+    "n": 3,
+    "m": 3,
+    "r": 1
+   },
+   {
+    "n": 1,
+    "m": 8,
+    "r": 4
+   }
+  ],
+  "invariants": [
+   "ub - (n + m - abs(n - m))/2",
+   "lb - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4,
+     "m": 5,
+     "r": 3
+    },
+    "expect": {
+     "ub": 4,
+     "valid": 1,
+     "rp": 3
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "m": 2,
+     "r": 5
+    },
+    "expect": {
+     "ub": 2,
+     "valid": 0,
+     "rp": 2
+    }
+   },
+   {
+    "params": {
+     "n": 1,
+     "m": 8,
+     "r": 4
+    },
+    "expect": {
+     "ub": 1,
+     "valid": 0,
+     "rp": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

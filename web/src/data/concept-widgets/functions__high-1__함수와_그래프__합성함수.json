@@ -1,0 +1,146 @@
+{
+ "id": "functions/high-1/함수와_그래프/합성함수",
+ "spec": {
+  "title": "합성함수 (f∘g)(x)=f(g(x))",
+  "params": [
+   {
+    "name": "a",
+    "label": "g의 기울기 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "g의 절편 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "입력 x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "gx0 = a*x0 + b; fgx0 = gx0^2",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x + b",
+     "label": "g(x)=ax+b",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "(a*x + b)^2",
+     "label": "(f∘g)(x)=(ax+b)²",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중간값 g(x₀)",
+    "expr": "gx0",
+    "digits": 3
+   },
+   {
+    "label": "최종값 f(g(x₀))",
+    "expr": "fgx0",
+    "digits": 3
+   },
+   {
+    "label": "직접 검산 (a·x₀+b)²",
+    "expr": "(a*x0+b)^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "x0": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "x0": 2
+   },
+   {
+    "a": 3,
+    "b": -1,
+    "x0": 2
+   },
+   {
+    "a": -2,
+    "b": 1,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "fgx0 - gx0^2",
+   "gx0 - (a*x0 + b)",
+   "fgx0 - (a*x0 + b)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "x0": 1
+    },
+    "expect": {
+     "gx0": 3,
+     "fgx0": 9
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "x0": 2
+    },
+    "expect": {
+     "gx0": 2,
+     "fgx0": 4
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": -1,
+     "x0": 2
+    },
+    "expect": {
+     "gx0": 5,
+     "fgx0": 25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

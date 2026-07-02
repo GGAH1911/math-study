@@ -1,0 +1,184 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/직선의_법선_벡터",
+ "spec": {
+  "title": "직선의 법선 벡터 ax+by+c=0, n⃗=(a,b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (n의 x성분)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (n의 y성분)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "den=a^2+b^2; len=sqrt(den); px=-a*c/den; py=-b*c/den; ux=-b/len; uy=a/len; qx=px+a; qy=py+b; Ax=px-7*ux; Ay=py-7*uy; Bx=px+7*ux; By=py+7*uy",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "ax+by+c=0"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P₀"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "n=(a,b)",
+     "color": "red"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "법선벡터 n_x = a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "법선벡터 n_y = b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "|n| = √(a²+b²)",
+    "expr": "sqrt(a^2+b^2)",
+    "digits": 3
+   },
+   {
+    "label": "n·(직선방향) (항상 0)",
+    "expr": "a*ux+b*uy",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": -3,
+    "c": 5
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -2
+   },
+   {
+    "a": 3,
+    "b": 4,
+    "c": -12
+   },
+   {
+    "a": -2,
+    "b": 2,
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "a*px+b*py+c",
+   "a*ux+b*uy",
+   "ux^2+uy^2-1",
+   "(qx-px)*ux+(qy-py)*uy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": -3,
+     "c": 5
+    },
+    "expect": {
+     "px": -0.769230769,
+     "py": 1.153846154,
+     "ux": 0.832050294,
+     "uy": 0.554700196
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -2
+    },
+    "expect": {
+     "px": 2,
+     "py": 0,
+     "ux": 0,
+     "uy": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c": -12
+    },
+    "expect": {
+     "px": 1.44,
+     "py": 1.92,
+     "ux": -0.8,
+     "uy": 0.6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_정의와_조건",
+ "spec": {
+  "title": "연직선 판정법 — 원 x²+y²=1은 함수인가?",
+  "params": [
+   {
+    "name": "a",
+    "label": "연직선 위치 x=a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "yt = sqrt(1-a^2); yb = -sqrt(1-a^2); ncut = (abs(a)<1 ? 2 : (abs(a)==1 ? 1 : 0))",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "x²+y²=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      -1.35
+     ],
+     "to": [
+      "=a",
+      1.35
+     ],
+     "label": "연직선 x=a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=yt"
+     ],
+     "label": "y=+√(1-a²)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=yb"
+     ],
+     "label": "y=−√(1-a²)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위쪽 교점 y",
+    "expr": "yt",
+    "digits": 3
+   },
+   {
+    "label": "아래쪽 교점 y",
+    "expr": "yb",
+    "digits": 3
+   },
+   {
+    "label": "교점 개수",
+    "expr": "ncut",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 0.6
+   },
+   {
+    "a": 0.8
+   },
+   {
+    "a": -0.6
+   }
+  ],
+  "invariants": [
+   "a^2 + yt^2 - 1",
+   "a^2 + yb^2 - 1",
+   "yt + yb"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "yt": 1,
+     "yb": -1,
+     "ncut": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.6
+    },
+    "expect": {
+     "yt": 0.8,
+     "yb": -0.8,
+     "ncut": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.8
+    },
+    "expect": {
+     "yt": 0.6,
+     "yb": -0.6,
+     "ncut": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

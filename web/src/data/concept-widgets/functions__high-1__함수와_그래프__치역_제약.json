@@ -1,0 +1,185 @@
+{
+ "id": "functions/high-1/함수와_그래프/치역_제약",
+ "spec": {
+  "title": "치역 제약: 이차함수의 정의역·식이 치역을 결정한다",
+  "params": [
+   {
+    "name": "h",
+    "label": "꼭짓점 x (h)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "꼭짓점 y (k = 최솟값)",
+    "type": "slider",
+    "min": -2,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "d0",
+    "label": "정의역 왼쪽 d₀",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d1",
+    "label": "정의역 오른쪽 d₁",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "fd0=(d0-h)^2+k; fd1=(d1-h)^2+k; inside=(d0<=h) and (h<=d1); ymin=inside ? k : min(fd0,fd1); ymax=max(fd0,fd1); width=ymax-ymin",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -2,
+    14
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -2,
+    14
+   ],
+   "fns": [
+    {
+     "fn": "(x-h)^2+k",
+     "label": "f(x)=(x-h)²+k",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "ymin",
+     "label": "치역 최솟값",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "ymax",
+     "label": "치역 최댓값",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "치역 최솟값 ymin",
+    "expr": "ymin",
+    "digits": 2
+   },
+   {
+    "label": "치역 최댓값 ymax",
+    "expr": "ymax",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점이 정의역에 포함(1) 여부",
+    "expr": "inside ? 1 : 0",
+    "digits": 0
+   },
+   {
+    "label": "치역 폭 (ymax−ymin)",
+    "expr": "width",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": 1,
+    "k": 2,
+    "d0": -1,
+    "d1": 4
+   },
+   {
+    "h": 2,
+    "k": 3,
+    "d0": 0,
+    "d1": 3
+   },
+   {
+    "h": 0,
+    "k": 0,
+    "d0": 1,
+    "d1": 3
+   },
+   {
+    "h": -1,
+    "k": 1,
+    "d0": -2,
+    "d1": 2
+   }
+  ],
+  "invariants": [
+   "fd0-k-(d0-h)^2",
+   "fd1-k-(d1-h)^2",
+   "((h+2-h)^2+k)-((h-2-h)^2+k)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 2,
+     "k": 3,
+     "d0": 0,
+     "d1": 3
+    },
+    "expect": {
+     "fd0": 7,
+     "fd1": 4,
+     "ymin": 3,
+     "ymax": 7
+    }
+   },
+   {
+    "params": {
+     "h": 2,
+     "k": 3,
+     "d0": 3,
+     "d1": 5
+    },
+    "expect": {
+     "fd0": 4,
+     "fd1": 12,
+     "ymin": 4,
+     "ymax": 12
+    }
+   },
+   {
+    "params": {
+     "h": 0,
+     "k": 0,
+     "d0": 1,
+     "d1": 3
+    },
+    "expect": {
+     "fd0": 1,
+     "fd1": 9,
+     "ymin": 1,
+     "ymax": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

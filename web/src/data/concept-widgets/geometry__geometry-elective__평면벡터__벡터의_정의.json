@@ -1,0 +1,279 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/벡터의_정의",
+ "spec": {
+  "title": "벡터의 정의 — 크기·방향·성분",
+  "params": [
+   {
+    "name": "Ax",
+    "label": "시점 A의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "Ay",
+    "label": "시점 A의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "Bx",
+    "label": "종점 B의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "By",
+    "label": "종점 B의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "tx",
+    "label": "평행이동 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.5
+   },
+   {
+    "name": "ty",
+    "label": "평행이동 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.5
+   }
+  ],
+  "scope": "a1=Bx-Ax; a2=By-Ay; mag=sqrt(a1^2+a2^2); Cx=Ax+tx; Cy=Ay+ty; Dx=Bx+tx; Dy=By+ty",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Bx"
+     ],
+     "to": [
+      "=Bx",
+      "=Ay"
+     ],
+     "label": "x성분",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "y성분",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "AB",
+     "color": "#d33"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "평행이동한 같은 벡터",
+     "color": "#38a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "A'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "B'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "성분 a1 = Bx-Ax",
+    "expr": "a1",
+    "digits": 2
+   },
+   {
+    "label": "성분 a2 = By-Ay",
+    "expr": "a2",
+    "digits": 2
+   },
+   {
+    "label": "크기 |AB|",
+    "expr": "mag",
+    "digits": 4
+   },
+   {
+    "label": "이동한 벡터 x성분",
+    "expr": "Dx-Cx",
+    "digits": 2
+   },
+   {
+    "label": "이동한 벡터 y성분",
+    "expr": "Dy-Cy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Ax": 0,
+    "Ay": 0,
+    "Bx": 3,
+    "By": 4,
+    "tx": -3,
+    "ty": -2
+   },
+   {
+    "Ax": 1,
+    "Ay": 1,
+    "Bx": 4,
+    "By": -3,
+    "tx": 2,
+    "ty": 2
+   },
+   {
+    "Ax": -2,
+    "Ay": 1,
+    "Bx": 1,
+    "By": 1,
+    "tx": 0,
+    "ty": -4
+   },
+   {
+    "Ax": -4,
+    "Ay": -4,
+    "Bx": -1,
+    "By": 0,
+    "tx": 3,
+    "ty": 1
+   }
+  ],
+  "invariants": [
+   "a1-(Bx-Ax)",
+   "a2-(By-Ay)",
+   "mag^2-(a1^2+a2^2)",
+   "(Dx-Cx)-a1",
+   "(Dy-Cy)-a2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Ax": 0,
+     "Ay": 0,
+     "Bx": 3,
+     "By": 4,
+     "tx": -3,
+     "ty": -2
+    },
+    "expect": {
+     "a1": 3,
+     "a2": 4,
+     "mag": 5
+    }
+   },
+   {
+    "params": {
+     "Ax": 1,
+     "Ay": 1,
+     "Bx": 4,
+     "By": -3,
+     "tx": 2,
+     "ty": 2
+    },
+    "expect": {
+     "a1": 3,
+     "a2": -4,
+     "mag": 5
+    }
+   },
+   {
+    "params": {
+     "Ax": -2,
+     "Ay": 1,
+     "Bx": 1,
+     "By": 1,
+     "tx": 0,
+     "ty": -4
+    },
+    "expect": {
+     "a1": 3,
+     "a2": 0,
+     "mag": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

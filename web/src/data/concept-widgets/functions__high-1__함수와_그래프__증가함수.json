@@ -1,0 +1,150 @@
+{
+ "id": "functions/high-1/함수와_그래프/증가함수",
+ "spec": {
+  "title": "증가함수 — 정의와 평균변화율",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (일차항 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "f1 = x1^3 + a*x1; f2 = x2^3 + a*x2; diff = f2 - f1; dq = diff/(x2 - x1); dmin = a",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "x^3 + a*x",
+     "label": "f(x)=x³+ax",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₁)",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)−f(x₁)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "평균변화율 (f(x₂)−f(x₁))/(x₂−x₁)",
+    "expr": "dq",
+    "digits": 3
+   },
+   {
+    "label": "도함수 최솟값 f'(0)=a  (a≥0이면 전구간 증가함수)",
+    "expr": "dmin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "x1": -1,
+    "x2": 1
+   },
+   {
+    "a": 0,
+    "x1": 0,
+    "x2": 2
+   },
+   {
+    "a": 2,
+    "x1": -2,
+    "x2": -1
+   },
+   {
+    "a": -3,
+    "x1": 0.5,
+    "x2": 1.5
+   }
+  ],
+  "invariants": [
+   "dq - (x1^2 + x1*x2 + x2^2 + a)",
+   "diff - a*(x2-x1) - (x2^3 - x1^3)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "x1": -1,
+     "x2": 1
+    },
+    "expect": {
+     "f1": -2,
+     "f2": 2,
+     "diff": 4,
+     "dq": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "x1": 0,
+     "x2": 2
+    },
+    "expect": {
+     "f1": 0,
+     "f2": 8,
+     "diff": 8,
+     "dq": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x1": -2,
+     "x2": -1
+    },
+    "expect": {
+     "f1": -12,
+     "f2": -3,
+     "diff": 9,
+     "dq": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

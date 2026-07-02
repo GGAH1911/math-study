@@ -1,0 +1,190 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/벡터의_일차결합",
+ "spec": {
+  "title": "벡터의 일차결합  c = m·a + n·b",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (a의 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "n (b의 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=2; ay=1; bx=1; by=2; pmx=m*ax; pmy=m*ay; pnx=n*bx; pny=n*by; cx=pmx+pnx; cy=pmy+pny",
+  "geometry": {
+   "range": [
+    -6,
+    9
+   ],
+   "yRange": [
+    -6,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a",
+     "color": "#1565c0"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b",
+     "color": "#2e7d32"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=pmx",
+      "=pmy"
+     ],
+     "label": "m·a",
+     "color": "#64b5f6"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pmx",
+      "=pmy"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "n·b",
+     "color": "#81c784"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "c = m·a + n·b",
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "c_x",
+    "expr": "cx",
+    "digits": 3
+   },
+   {
+    "label": "c_y",
+    "expr": "cy",
+    "digits": 3
+   },
+   {
+    "label": "c = m·a + n·b",
+    "expr": "m",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "n": 1
+   },
+   {
+    "m": 2,
+    "n": 0
+   },
+   {
+    "m": 0,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": -1
+   }
+  ],
+  "invariants": [
+   "cx-(2*m+n)",
+   "cy-(m+2*n)",
+   "pmx+pnx-cx",
+   "pmy+pny-cy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "cx": 3,
+     "cy": 3
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "n": 0
+    },
+    "expect": {
+     "cx": 4,
+     "cy": 2
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "n": 1
+    },
+    "expect": {
+     "cx": 1,
+     "cy": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

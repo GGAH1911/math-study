@@ -1,0 +1,149 @@
+{
+ "id": "functions/high-1/함수와_그래프/절댓값_함수",
+ "spec": {
+  "title": "절댓값 함수 y = a|x − b| + c",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (기울기·폭)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (좌우 이동)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (상하 이동)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "vx=b; vy=c; fL=a*abs((b-1)-b)+c; fR=a*abs((b+1)-b)+c; f1=a*abs((b+1)-b)+c; f2=a*abs((b+2)-b)+c",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*abs(x-b)+c",
+     "label": "y = a|x−b| + c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 x",
+    "expr": "vx",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "vy",
+    "digits": 2
+   },
+   {
+    "label": "x>b 기울기",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "x<b 기울기",
+    "expr": "-a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "c": -1
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "c": 3
+   },
+   {
+    "a": -1.5,
+    "b": 2,
+    "c": 1
+   }
+  ],
+  "invariants": [
+   "fL - fR",
+   "(f2 - f1) - a",
+   "vy - c",
+   "vx - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0
+    },
+    "expect": {
+     "vx": 0,
+     "vy": 0,
+     "fL": 1,
+     "fR": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": -1
+    },
+    "expect": {
+     "vx": 1,
+     "vy": -1,
+     "fL": 1,
+     "fR": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": 3
+    },
+    "expect": {
+     "vx": -2,
+     "vy": 3,
+     "fL": 4,
+     "fR": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

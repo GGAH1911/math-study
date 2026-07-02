@@ -1,0 +1,142 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/선분의_매개변수_표현",
+ "spec": {
+  "title": "선분의 매개변수 표현 P=(1−t)A+tB",
+  "params": [
+   {
+    "name": "t",
+    "label": "t",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01
+   }
+  ],
+  "scope": "ax=-2; ay=-1; bx=3; by=2; px=(1-t)*ax+t*bx; py=(1-t)*ay+t*by",
+  "geometry": {
+   "range": [
+    -3,
+    4
+   ],
+   "yRange": [
+    -2,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A(t=0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B(t=1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#e00"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "t",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "Px",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "Py",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "AP:AB",
+    "expr": "t",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 0.3
+   },
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1
+   }
+  ],
+  "invariants": [
+   "(px-ax)*(by-ay)-(py-ay)*(bx-ax)",
+   "(px-ax)-t*(bx-ax)",
+   "(py-ay)-t*(by-ay)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": -2,
+     "py": -1
+    }
+   },
+   {
+    "params": {
+     "t": 0.5
+    },
+    "expect": {
+     "px": 0.5,
+     "py": 0.5
+    }
+   },
+   {
+    "params": {
+     "t": 1
+    },
+    "expect": {
+     "px": 3,
+     "py": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

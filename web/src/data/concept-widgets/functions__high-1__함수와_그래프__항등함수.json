@@ -1,0 +1,165 @@
+{
+ "id": "functions/high-1/함수와_그래프/항등함수",
+ "spec": {
+  "title": "항등함수 f(x)=x — 입력과 출력이 같은 함수",
+  "params": [
+   {
+    "name": "a",
+    "label": "입력 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "inp=a; out=a",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      -5
+     ],
+     "to": [
+      5,
+      5
+     ],
+     "label": "y=x (45°)",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=inp",
+      0
+     ],
+     "to": [
+      "=inp",
+      "=out"
+     ],
+     "color": "#e07b39",
+     "dashed": true,
+     "label": "x좌표=a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=out"
+     ],
+     "to": [
+      "=inp",
+      "=out"
+     ],
+     "color": "#3b82c4",
+     "dashed": true,
+     "label": "y좌표=a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=inp",
+      0
+     ],
+     "label": "(a, 0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=out"
+     ],
+     "label": "(0, a)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=inp",
+      "=out"
+     ],
+     "label": "P(a, a)",
+     "color": "#c0392b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "입력 a",
+    "expr": "inp",
+    "digits": 2
+   },
+   {
+    "label": "출력 f(a)",
+    "expr": "out",
+    "digits": 2
+   },
+   {
+    "label": "출력 − 입력",
+    "expr": "out-inp",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3
+   },
+   {
+    "a": -2
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 1.5
+   }
+  ],
+  "invariants": [
+   "out-inp"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "inp": 3,
+     "out": 3
+    }
+   },
+   {
+    "params": {
+     "a": -2
+    },
+    "expect": {
+     "inp": -2,
+     "out": -2
+    }
+   },
+   {
+    "params": {
+     "a": 1.5
+    },
+    "expect": {
+     "inp": 1.5,
+     "out": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

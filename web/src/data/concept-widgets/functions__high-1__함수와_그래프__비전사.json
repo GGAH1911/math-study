@@ -1,0 +1,142 @@
+{
+ "id": "functions/high-1/함수와_그래프/비전사",
+ "spec": {
+  "title": "비전사 함수: 치역이 공역을 못 채운다 (f(x)=x²+c)",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (포물선 최솟값·수직이동)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "t (공역에서 도달 여부를 시험할 목표값)",
+    "type": "slider",
+    "min": -4,
+    "max": 6,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "vy = c; reach = t - c; px = sqrt(abs(reach))",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -5,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + c",
+     "label": "f(x)=x²+c  (치역 = [c, ∞))",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "t",
+     "label": "목표값 y=t (공역의 한 원소)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "치역 최솟값 (꼭짓점 c)",
+    "expr": "vy",
+    "digits": 2
+   },
+   {
+    "label": "t − c  (음수면 도달 불가 → 그 t는 상 없음 = 비전사 증거)",
+    "expr": "reach",
+    "digits": 2
+   },
+   {
+    "label": "도달 가능할 때의 원상 크기 |x| (reach≥0에서 f(±px)=t)",
+    "expr": "px",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0,
+    "t": -2
+   },
+   {
+    "c": 1,
+    "t": 5
+   },
+   {
+    "c": -3,
+    "t": -3
+   },
+   {
+    "c": 2,
+    "t": 0
+   }
+  ],
+  "invariants": [
+   "px^2 - abs(reach)",
+   "vy - c",
+   "(t - vy) - reach"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0,
+     "t": -2
+    },
+    "expect": {
+     "vy": 0,
+     "reach": -2,
+     "px": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "c": 1,
+     "t": 5
+    },
+    "expect": {
+     "vy": 1,
+     "reach": 4,
+     "px": 2
+    }
+   },
+   {
+    "params": {
+     "c": -3,
+     "t": -3
+    },
+    "expect": {
+     "vy": -3,
+     "reach": 0,
+     "px": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/벡터_최적화",
+ "spec": {
+  "title": "벡터 최적화 — 단위원 위의 점과 내적의 최댓값·최솟값",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (점 P의 위치각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; ax=2; ay=1; px=cos(rad); py=sin(rad); amag=sqrt(ax^2+ay^2); dotp=ax*px+ay*py; crossp=ax*py-ay*px; angBetween=acos(dotp/amag)*180/pi",
+  "geometry": {
+   "range": [
+    -2.6,
+    2.6
+   ],
+   "yRange": [
+    -2.6,
+    2.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "color": "#4477aa"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a=(2,1)",
+     "color": "#888888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "p",
+     "color": "#cc3311"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax/amag",
+      "=ay/amag"
+     ],
+     "label": "최대방향",
+     "color": "#009988"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a·p (내적)",
+    "expr": "dotp",
+    "digits": 3
+   },
+   {
+    "label": "최댓값 |a| (P가 a와 같은 방향)",
+    "expr": "amag",
+    "digits": 3
+   },
+   {
+    "label": "최솟값 -|a| (P가 a와 반대 방향)",
+    "expr": "-amag",
+    "digits": 3
+   },
+   {
+    "label": "a와 p 사이 각",
+    "expr": "angBetween",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 180
+   },
+   {
+    "theta": 270
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-1",
+   "dotp^2+crossp^2-amag^2",
+   "dotp-amag*cos(angBetween*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0,
+     "dotp": 2,
+     "crossp": -1,
+     "amag": 2.2360679775
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "dotp": 1,
+     "crossp": 2,
+     "amag": 2.2360679775
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "px": -1,
+     "py": 0,
+     "dotp": -2,
+     "crossp": 1,
+     "amag": 2.2360679775
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

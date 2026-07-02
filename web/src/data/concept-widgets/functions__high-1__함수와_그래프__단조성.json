@@ -1,0 +1,166 @@
+{
+ "id": "functions/high-1/함수와_그래프/단조성",
+ "spec": {
+  "title": "단조성: 두 점 비교와 평균변화율 (f(x)=x³−ax)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (곡선 모양·단조성 조절)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "f1 = x1^3 - a*x1; f2 = x2^3 - a*x2; diff = f2 - f1; dx = x2 - x1; secant = diff/dx",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - a*x",
+     "label": "f(x)=x³−ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x^2 - a",
+     "label": "f′(x)=3x²−a (부호로 증감 판정)",
+     "color": "#94a3b8"
+    },
+    {
+     "fn": "f1 + secant*(x - x1)",
+     "label": "두 점 x₁,x₂를 잇는 할선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₁)",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)−f(x₁)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "평균변화율(할선기울기)",
+    "expr": "secant",
+    "digits": 3
+   },
+   {
+    "label": "이 구간 증가(+1)/감소(−1)",
+    "expr": "sign(diff)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "x1": 1,
+    "x2": 2
+   },
+   {
+    "a": 0,
+    "x1": -1,
+    "x2": 1
+   },
+   {
+    "a": 3,
+    "x1": 0,
+    "x2": 1
+   },
+   {
+    "a": -2,
+    "x1": -1,
+    "x2": 1
+   }
+  ],
+  "invariants": [
+   "secant - (x1^2 + x1*x2 + x2^2 - a)",
+   "(x1^3 - a*x1) + ((-x1)^3 - a*(-x1))",
+   "diff - (f2 - f1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "x1": 1,
+     "x2": 2
+    },
+    "expect": {
+     "f1": 0,
+     "f2": 6,
+     "diff": 6,
+     "secant": 6
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "x1": -1,
+     "x2": 1
+    },
+    "expect": {
+     "f1": -1,
+     "f2": 1,
+     "diff": 2,
+     "secant": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "x1": 0,
+     "x2": 1
+    },
+    "expect": {
+     "f1": 0,
+     "f2": -2,
+     "diff": -2,
+     "secant": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

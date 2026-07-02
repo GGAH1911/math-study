@@ -1,0 +1,146 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_합",
+ "spec": {
+  "title": "함수의 합 (f+g)(x) = f(x) + g(x)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (f의 기울기)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (g의 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (높이 더할 점)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0=a*x0; g0=b*x0^2; s0=a*x0+b*x0^2",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -20,
+    40
+   ],
+   "fns": [
+    {
+     "fn": "a*x",
+     "label": "f(x)=ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "b*x^2",
+     "label": "g(x)=bx²",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "a*x+b*x^2",
+     "label": "(f+g)(x)=ax+bx²",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 3
+   },
+   {
+    "label": "g(x₀)",
+    "expr": "g0",
+    "digits": 3
+   },
+   {
+    "label": "(f+g)(x₀)",
+    "expr": "s0",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "x0": 3
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "x0": 2
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "x0": -4
+   },
+   {
+    "a": 0.5,
+    "b": -2,
+    "x0": 5
+   }
+  ],
+  "invariants": [
+   "s0-(f0+g0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "x0": 3
+    },
+    "expect": {
+     "f0": 6,
+     "g0": 9,
+     "s0": 15
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "x0": 2
+    },
+    "expect": {
+     "f0": 2,
+     "g0": 8,
+     "s0": 10
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 1,
+     "x0": -4
+    },
+    "expect": {
+     "f0": 4,
+     "g0": 16,
+     "s0": 20
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

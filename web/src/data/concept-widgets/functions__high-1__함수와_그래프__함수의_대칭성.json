@@ -1,0 +1,138 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_대칭성",
+ "spec": {
+  "title": "함수의 대칭성: 짝함수(y축 대칭)와 홀함수(원점 대칭)",
+  "params": [
+   {
+    "name": "a",
+    "label": "기준 x좌표 a",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ea = a^2-2; ema = (-a)^2-2; oa = a^3-3*a; oma = (-a)^3-3*(-a); evenDiff = ema-ea; oddSum = oma+oa",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2.8,
+    2.8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2-2",
+     "label": "짝함수 f(x)=x²-2 (f(-x)=f(x))",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "x^3-3x",
+     "label": "홀함수 g(x)=x³-3x (g(-x)=-g(x))",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "짝함수 f(a)",
+    "expr": "ea",
+    "digits": 3
+   },
+   {
+    "label": "짝함수 f(-a)",
+    "expr": "ema",
+    "digits": 3
+   },
+   {
+    "label": "f(-a) − f(a)  (짝함수면 0)",
+    "expr": "evenDiff",
+    "digits": 3
+   },
+   {
+    "label": "홀함수 g(a)",
+    "expr": "oa",
+    "digits": 3
+   },
+   {
+    "label": "홀함수 g(-a)",
+    "expr": "oma",
+    "digits": 3
+   },
+   {
+    "label": "g(-a) + g(a)  (홀함수면 0)",
+    "expr": "oddSum",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "evenDiff",
+   "oddSum"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "ea": -1,
+     "ema": -1,
+     "oa": -2,
+     "oma": 2,
+     "evenDiff": 0,
+     "oddSum": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "ea": 2,
+     "ema": 2,
+     "oa": 2,
+     "oma": -2,
+     "evenDiff": 0,
+     "oddSum": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "ea": -1.75,
+     "ema": -1.75,
+     "oa": -1.375,
+     "oma": 1.375,
+     "evenDiff": 0,
+     "oddSum": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

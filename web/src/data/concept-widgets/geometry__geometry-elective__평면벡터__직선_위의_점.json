@@ -1,0 +1,155 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/직선_위의_점",
+ "spec": {
+  "title": "직선 위의 점: OP = OA + t·d",
+  "params": [
+   {
+    "name": "t",
+    "label": "매개변수 t",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "a1=1; a2=1; d1=2; d2=1; px=a1+t*d1; py=a2+t*d2",
+  "geometry": {
+   "range": [
+    -8,
+    10
+   ],
+   "yRange": [
+    -4,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a1-4*d1",
+      "=a2-4*d2"
+     ],
+     "to": [
+      "=a1+4*d1",
+      "=a2+4*d2"
+     ],
+     "label": "l",
+     "color": "#94a3b8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a1",
+      "=a2"
+     ],
+     "label": "A(1,1)",
+     "color": "#0ea5e9"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a1",
+      "=a2"
+     ],
+     "to": [
+      "=a1+d1",
+      "=a2+d2"
+     ],
+     "label": "d",
+     "color": "#22c55e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a1",
+      "=a2"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "t·d",
+     "color": "#f97316"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#ef4444"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "t",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "P_x",
+    "expr": "px",
+    "digits": 2
+   },
+   {
+    "label": "P_y",
+    "expr": "py",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 1
+   },
+   {
+    "t": -2
+   },
+   {
+    "t": 2.5
+   }
+  ],
+  "invariants": [
+   "d2*(px-a1)-d1*(py-a2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "t": 1
+    },
+    "expect": {
+     "px": 3,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "t": -2
+    },
+    "expect": {
+     "px": -3,
+     "py": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

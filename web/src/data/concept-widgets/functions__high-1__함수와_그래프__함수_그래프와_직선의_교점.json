@@ -1,0 +1,139 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수_그래프와_직선의_교점",
+ "spec": {
+  "title": "함수 그래프와 직선의 교점",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "직선 절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = m^2 + 4*b; s = sqrt(D); x1 = (m - s)/2; x2 = (m + s)/2; y1 = x1^2; y2 = x2^2; n = (D>0)+(D>=0)",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y = x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + b",
+     "label": "y = mx + b",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = m²+4b",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "교점 개수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "교점 x₁",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점 x₂",
+    "expr": "x2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "b": 3
+   },
+   {
+    "m": 0,
+    "b": 4
+   },
+   {
+    "m": 2,
+    "b": -1
+   },
+   {
+    "m": 4,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "x1^2 - m*x1 - b",
+   "x2^2 - m*x2 - b",
+   "y1 - (m*x1 + b)",
+   "y2 - (m*x2 + b)",
+   "D - (m^2 + 4*b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "b": 3
+    },
+    "expect": {
+     "D": 16,
+     "x1": -1,
+     "x2": 3,
+     "n": 2
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "b": -1
+    },
+    "expect": {
+     "D": 0,
+     "x1": 1,
+     "x2": 1,
+     "n": 1
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "b": 4
+    },
+    "expect": {
+     "D": 16,
+     "x1": -2,
+     "x2": 2,
+     "n": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

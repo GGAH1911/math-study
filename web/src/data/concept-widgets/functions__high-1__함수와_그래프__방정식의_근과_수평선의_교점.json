@@ -1,0 +1,119 @@
+{
+ "id": "functions/high-1/함수와_그래프/방정식의_근과_수평선의_교점",
+ "spec": {
+  "title": "방정식 f(x)=c의 근 = y=x²−4와 수평선 y=c의 교점",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (수평선 높이)",
+    "type": "slider",
+    "min": -6,
+    "max": 10,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "disc=c+4; xr=sqrt(abs(disc)); x1=-xr; x2=xr; nroots=(disc>0)*2+(disc==0)*1",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -6,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2-4",
+     "label": "y=x²−4",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "c",
+     "label": "y=c",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별용 c+4",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "근의 개수",
+    "expr": "nroots",
+    "digits": 0
+   },
+   {
+    "label": "근 x₁",
+    "expr": "x1",
+    "digits": 4
+   },
+   {
+    "label": "근 x₂",
+    "expr": "x2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": -3
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 2
+   },
+   {
+    "c": 5
+   }
+  ],
+  "invariants": [
+   "x1+x2",
+   "xr^2-4-c",
+   "x1^2-4-c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "disc": 4,
+     "xr": 2,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "c": -4
+    },
+    "expect": {
+     "disc": 0,
+     "xr": 0,
+     "nroots": 1
+    }
+   },
+   {
+    "params": {
+     "c": 5
+    },
+    "expect": {
+     "disc": 9,
+     "xr": 3,
+     "nroots": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

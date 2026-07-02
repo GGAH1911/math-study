@@ -1,0 +1,130 @@
+{
+ "id": "functions/high-1/함수와_그래프/일대일대응",
+ "spec": {
+  "title": "일대일대응 — 수평선 검사 (f(x)=x³−ax)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (곡선의 굴곡)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "h (수평선 y=h 높이)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "peak = (2*abs(a)/3)*sqrt(abs(a)/3); disc = 4*a^3 - 27*h^2; disc_peak = 4*abs(a)^3 - 27*peak^2; fp = h^3 - a*h; fm = (-h)^3 - a*(-h); oddcheck = fp + fm; nroots = disc>0 ? 3 : (disc<0 ? 1 : 2); bij = a <= 0 ? 1 : 0",
+  "plot": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 - a*x",
+     "label": "f(x)=x³−ax",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "h",
+     "label": "y=h (수평선)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 Δ = 4a³−27h²",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "수평선 y=h 와의 교점 수",
+    "expr": "nroots",
+    "digits": 0
+   },
+   {
+    "label": "함수 전체가 일대일대응? (1=예, a≤0)",
+    "expr": "bij",
+    "digits": 0
+   },
+   {
+    "label": "극값의 크기 |극값| (a>0일 때 굴곡 반높이)",
+    "expr": "peak",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": 3,
+    "h": 0
+   },
+   {
+    "a": -2,
+    "h": 1
+   },
+   {
+    "a": 0,
+    "h": 0.4
+   }
+  ],
+  "invariants": [
+   "disc_peak",
+   "oddcheck"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "disc": -2.75,
+     "peak": 0.3849002
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "h": 0
+    },
+    "expect": {
+     "disc": 108,
+     "peak": 2
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "h": 1
+    },
+    "expect": {
+     "disc": -59,
+     "peak": 1.0886621
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

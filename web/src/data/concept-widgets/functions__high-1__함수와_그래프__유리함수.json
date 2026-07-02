@@ -1,0 +1,133 @@
+{
+ "id": "functions/high-1/함수와_그래프/유리함수",
+ "spec": {
+  "title": "유리함수 y = k/(x-p) + q 와 점근선",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (모양·부호)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "p (수직점근선 x=p)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "q (수평점근선 y=q)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "x0=p+1; y0=k/(x0-p)+q; xm=p-1; ym=k/(xm-p)+q; sym=(y0-q)+(ym-q); chk=y0-(q+k)",
+  "plot": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "k/(x-p)+q",
+     "label": "y = k/(x-p)+q",
+     "color": "#c0392b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수직점근선 x =",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "수평점근선 y =",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "f(p+1)",
+    "expr": "y0",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1,
+    "p": 0,
+    "q": 0
+   },
+   {
+    "k": 2,
+    "p": 1,
+    "q": 3
+   },
+   {
+    "k": -3,
+    "p": -2,
+    "q": 1
+   },
+   {
+    "k": 0.5,
+    "p": 2,
+    "q": -1
+   }
+  ],
+  "invariants": [
+   "chk",
+   "sym"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2,
+     "p": 1,
+     "q": 3
+    },
+    "expect": {
+     "y0": 5
+    }
+   },
+   {
+    "params": {
+     "k": 1,
+     "p": 0,
+     "q": 0
+    },
+    "expect": {
+     "y0": 1
+    }
+   },
+   {
+    "params": {
+     "k": -3,
+     "p": -2,
+     "q": 1
+    },
+    "expect": {
+     "y0": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

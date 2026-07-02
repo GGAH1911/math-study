@@ -1,0 +1,216 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/호의_넓이",
+ "spec": {
+  "title": "극좌표 넓이 — 심장형 r = a(1+cosθ)가 원점에서 쓸고 지나간 영역",
+  "params": [
+   {
+    "name": "a",
+    "label": "크기 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "θ (0→θ까지 스윕)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 120,
+    "step": 5,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; r=a*(1+cos(rad)); px=r*cos(rad); py=r*sin(rad); area=0.5*a^2*(1.5*rad + 2*sin(rad) + 0.25*sin(2*rad)); full=1.5*pi*a^2",
+  "geometry": {
+   "range": [
+    -1.5,
+    4.2
+   ],
+   "yRange": [
+    -2.8,
+    2.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a*(1+cos(rad*0/12))*cos(rad*0/12)",
+       "=a*(1+cos(rad*0/12))*sin(rad*0/12)"
+      ],
+      [
+       "=a*(1+cos(rad*1/12))*cos(rad*1/12)",
+       "=a*(1+cos(rad*1/12))*sin(rad*1/12)"
+      ],
+      [
+       "=a*(1+cos(rad*2/12))*cos(rad*2/12)",
+       "=a*(1+cos(rad*2/12))*sin(rad*2/12)"
+      ],
+      [
+       "=a*(1+cos(rad*3/12))*cos(rad*3/12)",
+       "=a*(1+cos(rad*3/12))*sin(rad*3/12)"
+      ],
+      [
+       "=a*(1+cos(rad*4/12))*cos(rad*4/12)",
+       "=a*(1+cos(rad*4/12))*sin(rad*4/12)"
+      ],
+      [
+       "=a*(1+cos(rad*5/12))*cos(rad*5/12)",
+       "=a*(1+cos(rad*5/12))*sin(rad*5/12)"
+      ],
+      [
+       "=a*(1+cos(rad*6/12))*cos(rad*6/12)",
+       "=a*(1+cos(rad*6/12))*sin(rad*6/12)"
+      ],
+      [
+       "=a*(1+cos(rad*7/12))*cos(rad*7/12)",
+       "=a*(1+cos(rad*7/12))*sin(rad*7/12)"
+      ],
+      [
+       "=a*(1+cos(rad*8/12))*cos(rad*8/12)",
+       "=a*(1+cos(rad*8/12))*sin(rad*8/12)"
+      ],
+      [
+       "=a*(1+cos(rad*9/12))*cos(rad*9/12)",
+       "=a*(1+cos(rad*9/12))*sin(rad*9/12)"
+      ],
+      [
+       "=a*(1+cos(rad*10/12))*cos(rad*10/12)",
+       "=a*(1+cos(rad*10/12))*sin(rad*10/12)"
+      ],
+      [
+       "=a*(1+cos(rad*11/12))*cos(rad*11/12)",
+       "=a*(1+cos(rad*11/12))*sin(rad*11/12)"
+      ],
+      [
+       "=a*(1+cos(rad*12/12))*cos(rad*12/12)",
+       "=a*(1+cos(rad*12/12))*sin(rad*12/12)"
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "label": "쓸고 지나간 영역"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(r,θ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "넓이 A (0→θ)",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "전체 넓이 (3/2)πa²",
+    "expr": "full",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "a": 1
+   },
+   {
+    "theta": 90,
+    "a": 1.5
+   },
+   {
+    "theta": 210,
+    "a": 2
+   },
+   {
+    "theta": 360,
+    "a": 0.8
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - r^2",
+   "a^2*(1+cos(rad))^2 - 4*a^2*cos(rad/2)^4",
+   "area - 0.5*a^2*(1.5*rad + 2*sin(rad) + 0.25*sin(2*rad))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "a": 1
+    },
+    "expect": {
+     "r": 2,
+     "area": 0,
+     "px": 2,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "a": 1
+    },
+    "expect": {
+     "r": 1,
+     "area": 2.178097245,
+     "px": 0,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "a": 1
+    },
+    "expect": {
+     "r": 0,
+     "area": 2.35619449,
+     "px": 0,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 360,
+     "a": 1
+    },
+    "expect": {
+     "r": 2,
+     "area": 4.71238898,
+     "px": 2,
+     "py": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수",
+ "spec": {
+  "title": "함수 f(x)=ax+b — 입력 하나에 출력 하나",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "입력값 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx = a*x0 + b",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x + b",
+     "label": "y = a·x + b",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "입력 x",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "출력 f(x)",
+    "expr": "fx",
+    "digits": 2
+   },
+   {
+    "label": "a=2,b=1일 때 f(3)",
+    "expr": "2*3+1",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "x0": 3
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "x0": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "x0": 5
+   },
+   {
+    "a": -3,
+    "b": 2,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "fx - (a*x0 + b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "x0": 3
+    },
+    "expect": {
+     "fx": 7
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "x0": 0
+    },
+    "expect": {
+     "fx": 1
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 2,
+     "x0": -1
+    },
+    "expect": {
+     "fx": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,213 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/무게중심의_벡터_표현",
+ "spec": {
+  "title": "삼각형 무게중심의 벡터 표현 G=(A+B+C)/3",
+  "params": [
+   {
+    "name": "cx",
+    "label": "C의 x좌표",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "C의 y좌표",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ax=-2; Ay=-1; Bx=2; By=-1; gx=(Ax+Bx+cx)/3; gy=(Ay+By+cy)/3; Mabx=(Ax+Bx)/2; Maby=(Ay+By)/2; Mbcx=(Bx+cx)/2; Mbcy=(By+cy)/2; Mcax=(cx+Ax)/2; Mcay=(cy+Ay)/2; AGlen=sqrt((gx-Ax)^2+(gy-Ay)^2); GMlen=sqrt((Mbcx-gx)^2+(Mbcy-gy)^2)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Mbcx",
+      "=Mbcy"
+     ],
+     "label": "중선 A→M_a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Mcax",
+      "=Mcay"
+     ],
+     "label": "중선 B→M_b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      "=Mabx",
+      "=Maby"
+     ],
+     "label": "중선 C→M_c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Mbcx",
+      "=Mbcy"
+     ],
+     "label": "M_a(BC중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=gx",
+      "=gy"
+     ],
+     "label": "G"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "G_x=(x1+x2+x3)/3",
+    "expr": "gx",
+    "digits": 3
+   },
+   {
+    "label": "G_y=(y1+y2+y3)/3",
+    "expr": "gy",
+    "digits": 3
+   },
+   {
+    "label": "AG:GM_a 비율",
+    "expr": "AGlen/GMlen",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 0,
+    "cy": 3
+   },
+   {
+    "cx": 3,
+    "cy": 3
+   },
+   {
+    "cx": -3,
+    "cy": 0
+   },
+   {
+    "cx": 2,
+    "cy": 5
+   }
+  ],
+  "invariants": [
+   "gx-(Ax+Bx+cx)/3",
+   "gy-(Ay+By+cy)/3",
+   "gx-(Ax+(2/3)*(Mbcx-Ax))",
+   "gy-(Ay+(2/3)*(Mbcy-Ay))",
+   "gx-(Bx+(2/3)*(Mcax-Bx))",
+   "gy-(By+(2/3)*(Mcay-By))",
+   "AGlen-2*GMlen"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 0,
+     "cy": 3
+    },
+    "expect": {
+     "gx": 0,
+     "gy": 0.3333333333
+    }
+   },
+   {
+    "params": {
+     "cx": 3,
+     "cy": 3
+    },
+    "expect": {
+     "gx": 1,
+     "gy": 0.3333333333
+    }
+   },
+   {
+    "params": {
+     "cx": -3,
+     "cy": 0
+    },
+    "expect": {
+     "gx": -1,
+     "gy": -0.6666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

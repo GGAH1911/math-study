@@ -1,0 +1,104 @@
+{
+ "id": "functions/high-1/함수와_그래프/정의역",
+ "spec": {
+  "title": "정의역: f(x)=√(x−a)의 정의역",
+  "params": [
+   {
+    "name": "a",
+    "label": "경계 a (루트 안 x−a≥0)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "b=a; fb=sqrt(b-a); val1=sqrt(1-a)",
+  "plot": {
+   "range": [
+    -4,
+    6
+   ],
+   "yRange": [
+    -1,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(x-a)",
+     "label": "f(x)=√(x−a)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정의역 (x ≥)",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "경계점 f(a) (항상 0)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "x=1에서의 값 (a≤1일 때 정의)",
+    "expr": "val1",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": -3
+   },
+   {
+    "a": 1
+   }
+  ],
+  "invariants": [
+   "fb",
+   "val1^2-(1-a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "b": 0,
+     "fb": 0,
+     "val1": 1
+    }
+   },
+   {
+    "params": {
+     "a": -3
+    },
+    "expect": {
+     "fb": 0,
+     "val1": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fb": 0,
+     "val1": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

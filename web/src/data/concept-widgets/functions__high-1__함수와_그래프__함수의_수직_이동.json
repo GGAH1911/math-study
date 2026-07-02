@@ -1,0 +1,117 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_수직_이동",
+ "spec": {
+  "title": "함수의 수직 이동 y = f(x) + c",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (수직 이동량)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "x0=1; base=sin(x0); shifted=base+c; diff=shifted-base-c",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = f(x) = sin x",
+     "color": "#9aa0a6"
+    },
+    {
+     "fn": "sin(x)+c",
+     "label": "y = f(x) + c",
+     "color": "#1a73e8"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "이동량 c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "f(1)",
+    "expr": "base",
+    "digits": 4
+   },
+   {
+    "label": "f(1)+c",
+    "expr": "shifted",
+    "digits": 4
+   },
+   {
+    "label": "(f(1)+c) − f(1) − c",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1
+   },
+   {
+    "c": -2
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 2.5
+   }
+  ],
+  "invariants": [
+   "shifted-base-c",
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1
+    },
+    "expect": {
+     "base": 0.8414709848,
+     "shifted": 1.8414709848,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "c": -2
+    },
+    "expect": {
+     "base": 0.8414709848,
+     "shifted": -1.1585290152,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "base": 0.8414709848,
+     "shifted": 0.8414709848,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

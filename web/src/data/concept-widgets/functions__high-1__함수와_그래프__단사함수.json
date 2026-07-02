@@ -1,0 +1,114 @@
+{
+ "id": "functions/high-1/함수와_그래프/단사함수",
+ "spec": {
+  "title": "수평선 검사로 보는 단사함수 (g(x)=x²)",
+  "params": [
+   {
+    "name": "h",
+    "label": "수평선 높이 y=h",
+    "type": "slider",
+    "min": -2,
+    "max": 16,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xr = sqrt(abs(h)); npts = (h > 0 ? 2 : (h == 0 ? 1 : 0))",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -2,
+    16
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "g(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "h",
+     "label": "y=h (수평선)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 개수",
+    "expr": "npts",
+    "digits": 0
+   },
+   {
+    "label": "왼쪽 교점 x",
+    "expr": "-xr",
+    "digits": 4
+   },
+   {
+    "label": "오른쪽 교점 x",
+    "expr": "xr",
+    "digits": 4
+   },
+   {
+    "label": "두 교점의 함숫값(같으면 단사 아님)",
+    "expr": "xr^2",
+    "digits": 4
+   }
+  ],
+  "note": "수평선이 그래프와 2점에서 만나면(h>0) 서로 다른 두 x가 같은 함숫값 h를 가지므로 g(x)=x²는 단사함수가 아니다. 최대 1점만 만나야 단사함수."
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": 4
+   },
+   {
+    "h": 9
+   },
+   {
+    "h": 0
+   },
+   {
+    "h": -1
+   }
+  ],
+  "invariants": [
+   "xr^2 - abs(h)",
+   "(-xr)^2 - (xr)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 4
+    },
+    "expect": {
+     "xr": 2,
+     "npts": 2
+    }
+   },
+   {
+    "params": {
+     "h": 0
+    },
+    "expect": {
+     "xr": 0,
+     "npts": 1
+    }
+   },
+   {
+    "params": {
+     "h": 9
+    },
+    "expect": {
+     "xr": 3,
+     "npts": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

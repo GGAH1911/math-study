@@ -1,0 +1,149 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/조건부_최댓값과_최솟값",
+ "spec": {
+  "title": "조건부 최댓값·최솟값: 원 위에서 f(x,y)=x+y 최적화",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (원 위 점의 각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=cos(rad); py=sin(rad); f=px+py",
+  "geometry": {
+   "range": [
+    -1.7,
+    1.7
+   ],
+   "yRange": [
+    -1.7,
+    1.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "제약 g: x²+y²=1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "OP"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px+1.5",
+      "=py-1.5"
+     ],
+     "to": [
+      "=px-1.5",
+      "=py+1.5"
+     ],
+     "label": "등고선 x+y=f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x=cosθ",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y=sinθ",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "f = x+y",
+    "expr": "f",
+    "digits": 4
+   },
+   {
+    "label": "제약 검증 x²+y²",
+    "expr": "px^2+py^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 225
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-1",
+   "f-(px+py)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "px": 0.7071067811865476,
+     "py": 0.7071067811865476,
+     "f": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0,
+     "f": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 225
+    },
+    "expect": {
+     "px": -0.7071067811865476,
+     "py": -0.7071067811865476,
+     "f": -1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

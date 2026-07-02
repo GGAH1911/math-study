@@ -1,0 +1,176 @@
+{
+ "id": "functions/high-1/함수와_그래프/다항함수의_성질",
+ "spec": {
+  "title": "다항함수의 성질 — 그래프·접선·순간기울기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "xp",
+    "label": "접점 x좌표",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "yp = a*xp^3 + b*xp^2 + c*xp + d; slope = 3*a*xp^2 + 2*b*xp + c",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)=ax³+bx²+cx+d",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a*x^3",
+     "label": "최고차항 ax³ (끝 거동)",
+     "color": "#94a3b8"
+    },
+    {
+     "fn": "slope*(x - xp) + yp",
+     "label": "x=xp 에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(xp) (접점 y)",
+    "expr": "yp",
+    "digits": 4
+   },
+   {
+    "label": "f'(xp) (접선 기울기)",
+    "expr": "slope",
+    "digits": 4
+   },
+   {
+    "label": "f(0) (y절편)",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 0,
+    "xp": 2
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 2,
+    "xp": 1
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "c": 2,
+    "d": -1,
+    "xp": -1
+   },
+   {
+    "a": 0.5,
+    "b": 0,
+    "c": -2,
+    "d": 1,
+    "xp": 0
+   }
+  ],
+  "invariants": [
+   "yp - (a*xp^3 + b*xp^2 + c*xp + d)",
+   "slope - (3*a*xp^2 + 2*b*xp + c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 0,
+     "xp": 2
+    },
+    "expect": {
+     "yp": 8,
+     "slope": 12
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 0,
+     "d": 2,
+     "xp": 1
+    },
+    "expect": {
+     "yp": 0,
+     "slope": -3
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0,
+     "c": -2,
+     "d": 1,
+     "xp": 0
+    },
+    "expect": {
+     "yp": 1,
+     "slope": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

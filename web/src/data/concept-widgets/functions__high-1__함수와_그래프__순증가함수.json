@@ -1,0 +1,125 @@
+{
+ "id": "functions/high-1/함수와_그래프/순증가함수",
+ "spec": {
+  "title": "순증가함수: x₁<x₂ ⇒ f(x₁)<f(x₂)",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "f1=x1^3+x1; f2=x2^3+x2; diff=f2-f1; dx=x2-x1; factor=x1^2+x1*x2+x2^2+1; ratio=diff/dx",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3+x",
+     "label": "f(x)=x³+x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₁)",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)−f(x₁)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "x₁²+x₁x₂+x₂²+1 (항상>0)",
+    "expr": "factor",
+    "digits": 3
+   },
+   {
+    "label": "평균변화율 (항상>0)",
+    "expr": "ratio",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": -1,
+    "x2": 1
+   },
+   {
+    "x1": 0,
+    "x2": 2
+   },
+   {
+    "x1": -2,
+    "x2": -0.5
+   },
+   {
+    "x1": 0.3,
+    "x2": 1.7
+   }
+  ],
+  "invariants": [
+   "diff - dx*factor",
+   "f1-(x1^3+x1)",
+   "f2-(x2^3+x2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": -1,
+     "x2": 1
+    },
+    "expect": {
+     "f1": -2,
+     "f2": 2,
+     "diff": 4,
+     "factor": 2
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "x2": 2
+    },
+    "expect": {
+     "f1": 0,
+     "f2": 10,
+     "diff": 10,
+     "factor": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

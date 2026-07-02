@@ -1,0 +1,105 @@
+{
+ "id": "functions/high-1/함수와_그래프/정의역_분석",
+ "spec": {
+  "title": "정의역 분석: y = √(x − c)",
+  "params": [
+   {
+    "name": "c",
+    "label": "c (이동)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "lb=c; fLb=sqrt(c-c); fTest=sqrt((c+4)-c)",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -1,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(x - c)",
+     "label": "y=√(x−c)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정의역 하한",
+    "expr": "lb",
+    "digits": 2
+   },
+   {
+    "label": "조건",
+    "expr": "lb",
+    "digits": 2
+   },
+   {
+    "label": "경계에서의 값 f(c)",
+    "expr": "fLb",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1
+   },
+   {
+    "c": -2
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 2.5
+   }
+  ],
+  "invariants": [
+   "fLb",
+   "fTest-2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1
+    },
+    "expect": {
+     "lb": 1,
+     "fLb": 0,
+     "fTest": 2
+    }
+   },
+   {
+    "params": {
+     "c": -2
+    },
+    "expect": {
+     "lb": -2,
+     "fLb": 0,
+     "fTest": 2
+    }
+   },
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "lb": 0,
+     "fLb": 0,
+     "fTest": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

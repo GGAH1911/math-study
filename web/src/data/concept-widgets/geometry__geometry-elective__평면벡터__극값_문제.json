@@ -1,0 +1,205 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/극값_문제",
+ "spec": {
+  "title": "평면벡터 극값: 두 벡터의 각도에 따른 내적·합의 크기",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (a와 b의 사잇각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "ma",
+    "label": "|a|",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "mb",
+    "label": "|b|",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; ax=ma; ay=0; bx=mb*cos(rad); by=mb*sin(rad); dot=ax*bx+ay*by; sumx=ax+bx; sumy=ay+by; summag=sqrt(sumx^2+sumy^2); diffx=ax-bx; diffy=ay-by; diffmag=sqrt(diffx^2+diffy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    11
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#1565c0",
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#c62828",
+     "label": "b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=sumx",
+      "=sumy"
+     ],
+     "color": "#2e7d32",
+     "label": "a+b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=sumx",
+      "=sumy"
+     ],
+     "color": "#c62828"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sumx",
+      "=sumy"
+     ],
+     "label": "a+b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "θ",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "a·b = |a||b|cosθ",
+    "expr": "dot",
+    "digits": 3
+   },
+   {
+    "label": "|a+b|",
+    "expr": "summag",
+    "digits": 3
+   },
+   {
+    "label": "|a-b|",
+    "expr": "diffmag",
+    "digits": 3
+   },
+   {
+    "label": "내적 범위 [-|a||b|, |a||b|]",
+    "expr": "ma*mb",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "ma": 2,
+    "mb": 3
+   },
+   {
+    "theta": 90,
+    "ma": 2,
+    "mb": 3
+   },
+   {
+    "theta": 180,
+    "ma": 2,
+    "mb": 3
+   },
+   {
+    "theta": 60,
+    "ma": 4,
+    "mb": 5
+   }
+  ],
+  "invariants": [
+   "dot - ma*mb*cos(rad)",
+   "summag^2 - (ma^2 + mb^2 + 2*dot)",
+   "diffmag^2 - (ma^2 + mb^2 - 2*dot)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "ma": 2,
+     "mb": 3
+    },
+    "expect": {
+     "dot": 6,
+     "summag": 5,
+     "diffmag": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "ma": 2,
+     "mb": 3
+    },
+    "expect": {
+     "dot": 0,
+     "summag": 3.605551275,
+     "diffmag": 3.605551275
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "ma": 2,
+     "mb": 3
+    },
+    "expect": {
+     "dot": -6,
+     "summag": 1,
+     "diffmag": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

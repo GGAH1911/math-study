@@ -1,0 +1,139 @@
+{
+ "id": "functions/high-1/함수와_그래프/범위",
+ "spec": {
+  "title": "이차함수의 범위 = 그래프를 y축에 정사영한 구간",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (a>0)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "vx = -b/(2*a); vy = c - b^2/(4*a); fvx = a*vx^2 + b*vx + c; slope = 2*a*vx + b",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y=f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "c - b^2/(4*a)",
+     "label": "y=최솟값 (범위 하한)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 x",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "최솟값 (범위 최솟값)",
+    "expr": "vy",
+    "digits": 3
+   },
+   {
+    "label": "범위 = [최솟값, ∞) 하한",
+    "expr": "vy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "c": 3
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "c": 1
+   },
+   {
+    "a": 0.5,
+    "b": -3,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "fvx - vy",
+   "slope"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": 3
+    },
+    "expect": {
+     "vx": 1,
+     "vy": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -1
+    },
+    "expect": {
+     "vx": 0,
+     "vy": -1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "c": 1
+    },
+    "expect": {
+     "vx": -1,
+     "vy": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

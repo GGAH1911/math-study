@@ -1,0 +1,271 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/계수_결정",
+ "spec": {
+  "title": "계수 결정: c = m·a + n·b",
+  "params": [
+   {
+    "name": "a1",
+    "label": "a₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "a2",
+    "label": "a₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b1",
+    "label": "b₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 1
+   },
+   {
+    "name": "b2",
+    "label": "b₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "cx",
+    "label": "c₁",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "cy",
+    "label": "c₂",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "det=a1*b2-a2*b1; m=(cx*b2-cy*b1)/det; n=(a1*cy-a2*cx)/det; mx=m*a1; my=m*a2; nx=n*b1; ny=n*b2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=mx",
+       "=my"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=nx",
+       "=ny"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a1",
+      "=a2"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=b1",
+      "=b2"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=mx",
+      "=my"
+     ],
+     "label": "m·a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=nx",
+      "=ny"
+     ],
+     "label": "n·b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 3
+   },
+   {
+    "label": "det(a,b)",
+    "expr": "det",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 2,
+    "a2": 1,
+    "b1": -1,
+    "b2": 2,
+    "cx": 3,
+    "cy": 4
+   },
+   {
+    "a1": 1,
+    "a2": 0,
+    "b1": 0,
+    "b2": 1,
+    "cx": 3,
+    "cy": -2
+   },
+   {
+    "a1": 2,
+    "a2": 0,
+    "b1": 1,
+    "b2": 2,
+    "cx": 4,
+    "cy": 4
+   },
+   {
+    "a1": 3,
+    "a2": 1,
+    "b1": 1,
+    "b2": 2,
+    "cx": 5,
+    "cy": 5
+   }
+  ],
+  "invariants": [
+   "m*a1+n*b1-cx",
+   "m*a2+n*b2-cy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 2,
+     "a2": 1,
+     "b1": -1,
+     "b2": 2,
+     "cx": 3,
+     "cy": 4
+    },
+    "expect": {
+     "m": 2,
+     "n": 1,
+     "det": 5
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "a2": 0,
+     "b1": 0,
+     "b2": 1,
+     "cx": 3,
+     "cy": -2
+    },
+    "expect": {
+     "m": 3,
+     "n": -2,
+     "det": 1
+    }
+   },
+   {
+    "params": {
+     "a1": 2,
+     "a2": 0,
+     "b1": 1,
+     "b2": 2,
+     "cx": 4,
+     "cy": 4
+    },
+    "expect": {
+     "m": 1,
+     "n": 2,
+     "det": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

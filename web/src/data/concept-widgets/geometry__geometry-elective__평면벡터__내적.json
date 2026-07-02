@@ -1,0 +1,229 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/내적",
+ "spec": {
+  "title": "두 평면벡터의 내적 a·b = |a||b|cosθ = 성분곱",
+  "params": [
+   {
+    "name": "a_mag",
+    "label": "|a|",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "a_ang",
+    "label": "θa (a의 방향)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "b_mag",
+    "label": "|b|",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "b_ang",
+    "label": "θb (b의 방향)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ra=a_ang*pi/180; rb=b_ang*pi/180; ax=a_mag*cos(ra); ay=a_mag*sin(ra); bx=b_mag*cos(rb); by=b_mag*sin(rb); dot=ax*bx+ay*by; theta=rb-ra; ang=acos(dot/(a_mag*b_mag)); k=dot/(b_mag^2); px=k*bx; py=k*by; projlen=dot/b_mag",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a",
+     "color": "#d62728"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "a의 b 위 정사영",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#999999"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "H"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "성분곱 a·b = a1b1+a2b2",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "|a||b|cosθ",
+    "expr": "a_mag*b_mag*cos(theta)",
+    "digits": 4
+   },
+   {
+    "label": "사이각 θ",
+    "expr": "ang*180/pi",
+    "digits": 2
+   },
+   {
+    "label": "정사영 길이 |a|cosθ",
+    "expr": "projlen",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a_mag": 3,
+    "a_ang": 0,
+    "b_mag": 4,
+    "b_ang": 60
+   },
+   {
+    "a_mag": 2,
+    "a_ang": 30,
+    "b_mag": 3,
+    "b_ang": 150
+   },
+   {
+    "a_mag": 5,
+    "a_ang": 45,
+    "b_mag": 2,
+    "b_ang": 315
+   },
+   {
+    "a_mag": 1.5,
+    "a_ang": 200,
+    "b_mag": 4,
+    "b_ang": 80
+   }
+  ],
+  "invariants": [
+   "dot - a_mag*b_mag*cos(rb-ra)",
+   "(ax-px)*bx + (ay-py)*by",
+   "dot - a_mag*projlen*cos(ang)*0 - projlen*b_mag"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a_mag": 3,
+     "a_ang": 0,
+     "b_mag": 4,
+     "b_ang": 0
+    },
+    "expect": {
+     "dot": 12
+    }
+   },
+   {
+    "params": {
+     "a_mag": 2,
+     "a_ang": 0,
+     "b_mag": 2,
+     "b_ang": 90
+    },
+    "expect": {
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "a_mag": 2,
+     "a_ang": 0,
+     "b_mag": 2,
+     "b_ang": 60
+    },
+    "expect": {
+     "dot": 2,
+     "px": 0.5,
+     "py": 0.8660254038
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,196 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/평행_벡터",
+ "spec": {
+  "title": "평행 벡터: b = k·a",
+  "params": [
+   {
+    "name": "a1",
+    "label": "a₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "a2",
+    "label": "a₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "k (배수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "b1=k*a1; b2=k*a2; cross=a1*b2-a2*b1",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "through": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a1",
+       "=a2"
+      ]
+     ],
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a1",
+      "=a2"
+     ],
+     "label": "a",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=b1",
+      "=b2"
+     ],
+     "label": "b=k·a",
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a1",
+      "=a2"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b1",
+      "=b2"
+     ],
+     "label": "b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "b₁",
+    "expr": "b1",
+    "digits": 2
+   },
+   {
+    "label": "b₂",
+    "expr": "b2",
+    "digits": 2
+   },
+   {
+    "label": "방향",
+    "expr": "k>0 ? 1 : (k<0 ? -1 : 0)",
+    "digits": 0
+   },
+   {
+    "label": "a₁b₂ − a₂b₁ (외적)",
+    "expr": "cross",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 2,
+    "a2": 1,
+    "k": 2
+   },
+   {
+    "a1": 3,
+    "a2": -1,
+    "k": -2
+   },
+   {
+    "a1": -4,
+    "a2": 2,
+    "k": 0.5
+   },
+   {
+    "a1": 1,
+    "a2": 3,
+    "k": -1
+   }
+  ],
+  "invariants": [
+   "a1*b2-a2*b1",
+   "b1-k*a1",
+   "b2-k*a2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 2,
+     "a2": 1,
+     "k": 2
+    },
+    "expect": {
+     "b1": 4,
+     "b2": 2,
+     "cross": 0
+    }
+   },
+   {
+    "params": {
+     "a1": 3,
+     "a2": -1,
+     "k": -2
+    },
+    "expect": {
+     "b1": -6,
+     "b2": 2,
+     "cross": 0
+    }
+   },
+   {
+    "params": {
+     "a1": -4,
+     "a2": 2,
+     "k": 0.5
+    },
+    "expect": {
+     "b1": -2,
+     "b2": 1,
+     "cross": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

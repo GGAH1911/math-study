@@ -1,0 +1,127 @@
+{
+ "id": "functions/high-1/함수와_그래프/교점의_개수",
+ "spec": {
+  "title": "교점의 개수: 포물선과 직선",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "직선 절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "D=m^2+4*b; cnt=sign(D)+1; x1=(m+sqrt(D))/2; x2=(m-sqrt(D))/2",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -6,
+    13
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x+b",
+     "label": "g(x)=mx+b",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D = m²+4b",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "교점의 개수",
+    "expr": "cnt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "b": 0
+   },
+   {
+    "m": 2,
+    "b": -1
+   },
+   {
+    "m": 0,
+    "b": 1
+   },
+   {
+    "m": 3,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "x1^2 - (m*x1 + b)",
+   "x2^2 - (m*x2 + b)",
+   "x1 + x2 - m",
+   "x1*x2 + b",
+   "cnt - (sign(m^2+4*b)+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "b": 0
+    },
+    "expect": {
+     "D": 4,
+     "cnt": 2,
+     "x1": 2,
+     "x2": 0
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "b": -1
+    },
+    "expect": {
+     "D": 0,
+     "cnt": 1,
+     "x1": 1,
+     "x2": 1
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "b": 1
+    },
+    "expect": {
+     "D": 4,
+     "cnt": 2,
+     "x1": 1,
+     "x2": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

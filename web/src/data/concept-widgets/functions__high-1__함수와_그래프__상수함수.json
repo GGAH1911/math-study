@@ -1,0 +1,107 @@
+{
+ "id": "functions/high-1/함수와_그래프/상수함수",
+ "spec": {
+  "title": "상수함수 f(x) = c",
+  "params": [
+   {
+    "name": "c",
+    "label": "상수 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ya=c; yb=c; slope=(yb-ya)/(7-2)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "c",
+     "label": "y = c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "기울기",
+    "expr": "slope",
+    "digits": 2
+   },
+   {
+    "label": "도함수 f'(x)",
+    "expr": "0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 3
+   },
+   {
+    "c": -7
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 2.5
+   }
+  ],
+  "invariants": [
+   "slope",
+   "ya-c",
+   "yb-c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 3
+    },
+    "expect": {
+     "ya": 3,
+     "yb": 3,
+     "slope": 0
+    }
+   },
+   {
+    "params": {
+     "c": -7
+    },
+    "expect": {
+     "ya": -7,
+     "yb": -7,
+     "slope": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2.5
+    },
+    "expect": {
+     "ya": 2.5,
+     "yb": 2.5,
+     "slope": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

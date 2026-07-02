@@ -1,0 +1,174 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/벡터의_내분과_외분",
+ "spec": {
+  "title": "벡터의 내분점과 외분점 (m:n)",
+  "params": [
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "Ax=-2; Ay=-1; Bx=4; By=2; Px=(n*Ax+m*Bx)/(m+n); Py=(n*Ay+m*By)/(m+n); Qx=(-n*Ax+m*Bx)/(m-n); Qy=(-n*Ay+m*By)/(m-n)",
+  "geometry": {
+   "range": [
+    -4,
+    12
+   ],
+   "yRange": [
+    -3,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P(내분)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Qx",
+      "=Qy"
+     ],
+     "label": "Q(외분)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P_x",
+    "expr": "Px",
+    "digits": 3
+   },
+   {
+    "label": "P_y",
+    "expr": "Py",
+    "digits": 3
+   },
+   {
+    "label": "Q_x",
+    "expr": "Qx",
+    "digits": 3
+   },
+   {
+    "label": "Q_y",
+    "expr": "Qy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 1
+   },
+   {
+    "m": 3,
+    "n": 2
+   },
+   {
+    "m": 1,
+    "n": 3
+   },
+   {
+    "m": 4,
+    "n": 1
+   }
+  ],
+  "invariants": [
+   "n*(Px-Ax)-m*(Bx-Px)",
+   "n*(Py-Ay)-m*(By-Py)",
+   "n*(Qx-Ax)-m*(Qx-Bx)",
+   "n*(Qy-Ay)-m*(Qy-By)",
+   "(Px-Ax)*(By-Ay)-(Py-Ay)*(Bx-Ax)",
+   "(Qx-Ax)*(By-Ay)-(Qy-Ay)*(Bx-Ax)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "Px": 2,
+     "Py": 1,
+     "Qx": 10,
+     "Qy": 5
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 2
+    },
+    "expect": {
+     "Px": 1.6,
+     "Py": 0.8,
+     "Qx": 16,
+     "Qy": 8
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "Px": -0.5,
+     "Py": -0.25,
+     "Qx": -5,
+     "Qy": -2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

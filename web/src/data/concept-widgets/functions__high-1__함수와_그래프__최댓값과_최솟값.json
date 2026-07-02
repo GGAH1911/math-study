@@ -1,0 +1,117 @@
+{
+ "id": "functions/high-1/함수와_그래프/최댓값과_최솟값",
+ "spec": {
+  "title": "이차함수의 최댓값과 최솟값 (정의역 [0,3])",
+  "params": [
+   {
+    "name": "c",
+    "label": "상수항 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fmax = 4 + c; fmin = c",
+  "geometry": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    -6,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    -6,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "-x^2 + 4*x + c",
+     "label": "f(x) = -x² + 4x + c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 f(2)",
+    "expr": "fmax",
+    "digits": 2
+   },
+   {
+    "label": "최솟값 f(0)",
+    "expr": "fmin",
+    "digits": 2
+   },
+   {
+    "label": "max − min",
+    "expr": "fmax - fmin",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": -3
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 2
+   },
+   {
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "fmax - (4 + c)",
+   "fmin - c",
+   "fmax - fmin - 4"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": -3
+    },
+    "expect": {
+     "fmax": 1,
+     "fmin": -3
+    }
+   },
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "fmax": 4,
+     "fmin": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2
+    },
+    "expect": {
+     "fmax": 6,
+     "fmin": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

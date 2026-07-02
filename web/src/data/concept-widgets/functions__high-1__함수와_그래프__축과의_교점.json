@@ -1,0 +1,139 @@
+{
+ "id": "functions/high-1/함수와_그래프/축과의_교점",
+ "spec": {
+  "title": "축과의 교점 — 이차함수 y=a(x−p)(x−q)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (최고차항 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "x절편 p",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "x절편 q",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "yint = a*(0-p)*(0-q); prod = a*p*q; fp = a*(p-p)*(p-q); fq = a*(q-p)*(q-q)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*(x-p)*(x-q)",
+     "label": "y=a(x−p)(x−q)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x축과의 교점 ①",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "x축과의 교점 ②",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "y축과의 교점 (y절편)",
+    "expr": "yint",
+    "digits": 2
+   },
+   {
+    "label": "f(p) (검산=0)",
+    "expr": "fp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": -2,
+    "q": 3
+   },
+   {
+    "a": 2,
+    "p": 1,
+    "q": 4
+   },
+   {
+    "a": -1,
+    "p": -3,
+    "q": 2
+   },
+   {
+    "a": 0.5,
+    "p": 0,
+    "q": 5
+   }
+  ],
+  "invariants": [
+   "fp",
+   "fq",
+   "yint - prod"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": -2,
+     "q": 3
+    },
+    "expect": {
+     "yint": -6
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": 1,
+     "q": 4
+    },
+    "expect": {
+     "yint": 8
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "p": -3,
+     "q": 2
+    },
+    "expect": {
+     "yint": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

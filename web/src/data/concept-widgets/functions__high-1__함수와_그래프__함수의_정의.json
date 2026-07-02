@@ -1,0 +1,135 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_정의",
+ "spec": {
+  "title": "함수의 정의 — 연직선 판정법: 원 x²+y²=4는 왜 함수가 아닌가",
+  "params": [
+   {
+    "name": "a",
+    "label": "세로선 위치 x=a",
+    "type": "slider",
+    "min": -1.9,
+    "max": 1.9,
+    "init": 1.2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "yTop = sqrt(4 - a^2); yBot = -sqrt(4 - a^2)",
+  "geometry": {
+   "range": [
+    -2.8,
+    2.8
+   ],
+   "yRange": [
+    -2.8,
+    2.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 2,
+     "label": "x²+y²=4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      -2.7
+     ],
+     "to": [
+      "=a",
+      2.7
+     ],
+     "label": "연직선 x=a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=yTop"
+     ],
+     "label": "P₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=yBot"
+     ],
+     "label": "P₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위쪽 교점 y",
+    "expr": "yTop",
+    "digits": 3
+   },
+   {
+    "label": "아래쪽 교점 y",
+    "expr": "yBot",
+    "digits": 3
+   },
+   {
+    "label": "입력 x=a 하나에 대응하는 y의 개수",
+    "expr": "2",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 1.2
+   },
+   {
+    "a": -1.6
+   }
+  ],
+  "invariants": [
+   "a^2 + yTop^2 - 4",
+   "a^2 + yBot^2 - 4",
+   "yTop + yBot"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "yTop": 2,
+     "yBot": -2
+    }
+   },
+   {
+    "params": {
+     "a": 1.2
+    },
+    "expect": {
+     "yTop": 1.6,
+     "yBot": -1.6
+    }
+   },
+   {
+    "params": {
+     "a": -1.6
+    },
+    "expect": {
+     "yTop": 1.2,
+     "yBot": -1.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,216 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/거리의_극값",
+ "spec": {
+  "title": "점 P와 곡선(원) 사이 거리의 극값",
+  "params": [
+   {
+    "name": "theta",
+    "label": "Q의 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "px",
+    "label": "P의 x좌표",
+    "type": "slider",
+    "min": 3,
+    "max": 7,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "P의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; qx=2*cos(rad); qy=2*sin(rad); dPO=sqrt(px^2+py^2); dPQ=sqrt((qx-px)^2+(qy-py)^2); dmin=dPO-2; dmax=dPO+2; nx=2*px/dPO; ny=2*py/dPO; fx=-2*px/dPO; fy=-2*py/dPO",
+  "geometry": {
+   "range": [
+    -3.5,
+    8
+   ],
+   "yRange": [
+    -4.2,
+    4.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 2,
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "극값의 축"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "PQ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=nx",
+      "=ny"
+     ],
+     "label": "최소점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "최대점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "현재 거리 PQ",
+    "expr": "dPQ",
+    "digits": 3
+   },
+   {
+    "label": "거리의 최솟값 |PO|−r",
+    "expr": "dmin",
+    "digits": 3
+   },
+   {
+    "label": "거리의 최댓값 |PO|+r",
+    "expr": "dmax",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "px": 5,
+    "py": 0
+   },
+   {
+    "theta": 90,
+    "px": 5,
+    "py": 0
+   },
+   {
+    "theta": 180,
+    "px": 5,
+    "py": 0
+   },
+   {
+    "theta": 45,
+    "px": 4,
+    "py": 2
+   }
+  ],
+  "invariants": [
+   "qx^2+qy^2-4",
+   "nx^2+ny^2-4",
+   "fx^2+fy^2-4",
+   "sqrt((nx-px)^2+(ny-py)^2)-dmin",
+   "sqrt((fx-px)^2+(fy-py)^2)-dmax"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "px": 5,
+     "py": 0
+    },
+    "expect": {
+     "qx": 2,
+     "qy": 0,
+     "dPQ": 3,
+     "dmin": 3,
+     "dmax": 7,
+     "nx": 2,
+     "ny": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "px": 5,
+     "py": 0
+    },
+    "expect": {
+     "qx": -2,
+     "qy": 0,
+     "dPQ": 7,
+     "dmax": 7
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "px": 5,
+     "py": 0
+    },
+    "expect": {
+     "dPQ": 5.385164807134504,
+     "dmin": 3,
+     "dmax": 7
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

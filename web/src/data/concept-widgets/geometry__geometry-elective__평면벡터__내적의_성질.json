@@ -1,0 +1,243 @@
+{
+ "id": "geometry/geometry-elective/평면벡터/내적의_성질",
+ "spec": {
+  "title": "벡터의 내적: 성분곱의 합 = |u||v|cosθ (투영)",
+  "params": [
+   {
+    "name": "u_len",
+    "label": "|u| (u의 크기)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "u_ang",
+    "label": "u의 방향각",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 20,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "v_len",
+    "label": "|v| (v의 크기)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "v_ang",
+    "label": "v의 방향각",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 110,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ur=u_ang*pi/180; vr=v_ang*pi/180; ux=u_len*cos(ur); uy=u_len*sin(ur); vx=v_len*cos(vr); vy=v_len*sin(vr); dot=ux*vx+uy*vy; dotg=u_len*v_len*cos(vr-ur); px=dot/(u_len^2)*ux; py=dot/(u_len^2)*uy; vperpx=vx-px; vperpy=vy-py; ang=acos(dot/(u_len*v_len))*180/pi",
+  "geometry": {
+   "range": [
+    -4.5,
+    4.5
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ux",
+      "=uy"
+     ],
+     "label": "u",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "v",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "v의 u방향 투영",
+     "color": "#059669"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=vx",
+      "=vy"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "수선",
+     "color": "#94a3b8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ux",
+      "=uy"
+     ],
+     "label": "U"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "V"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "H(투영발)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "u·v (성분: u₁v₁+u₂v₂)",
+    "expr": "dot",
+    "digits": 3
+   },
+   {
+    "label": "u·v (기하: |u||v|cosθ)",
+    "expr": "dotg",
+    "digits": 3
+   },
+   {
+    "label": "사잇각 θ",
+    "expr": "ang",
+    "digits": 2
+   },
+   {
+    "label": "|u|",
+    "expr": "u_len",
+    "digits": 2
+   },
+   {
+    "label": "|v|",
+    "expr": "v_len",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "u_len": 2,
+    "u_ang": 0,
+    "v_len": 2,
+    "v_ang": 60
+   },
+   {
+    "u_len": 2,
+    "u_ang": 0,
+    "v_len": 3,
+    "v_ang": 90
+   },
+   {
+    "u_len": 3,
+    "u_ang": 20,
+    "v_len": 2,
+    "v_ang": 110
+   },
+   {
+    "u_len": 2.5,
+    "u_ang": 45,
+    "v_len": 1.5,
+    "v_ang": 200
+   }
+  ],
+  "invariants": [
+   "dot-dotg",
+   "vperpx*ux+vperpy*uy",
+   "px*uy-py*ux"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "u_len": 2,
+     "u_ang": 0,
+     "v_len": 2,
+     "v_ang": 60
+    },
+    "expect": {
+     "ux": 2,
+     "uy": 0,
+     "dot": 2,
+     "dotg": 2,
+     "ang": 60
+    }
+   },
+   {
+    "params": {
+     "u_len": 2,
+     "u_ang": 0,
+     "v_len": 3,
+     "v_ang": 90
+    },
+    "expect": {
+     "dot": 0,
+     "ang": 90,
+     "px": 0,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "u_len": 1,
+     "u_ang": 0,
+     "v_len": 1,
+     "v_ang": 0
+    },
+    "expect": {
+     "dot": 1,
+     "ang": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

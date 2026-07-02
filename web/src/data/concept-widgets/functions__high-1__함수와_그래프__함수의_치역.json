@@ -1,0 +1,118 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_치역",
+ "spec": {
+  "title": "함수의 치역: f(x)=x²의 정의역 [a,b] → 치역",
+  "params": [
+   {
+    "name": "a",
+    "label": "정의역 왼끝 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "정의역 오른끝 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "a2=a^2; b2=b^2; contains0=(a<=0) and (b>=0); ymin=contains0 ? 0 : min(a2,b2); ymax=max(a2,b2)",
+  "plot": {
+   "range": [
+    "=a",
+    "=b"
+   ],
+   "yRange": [
+    -0.5,
+    9.5
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x² (정의역 [a,b]만)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "치역 최솟값",
+    "expr": "ymin",
+    "digits": 3
+   },
+   {
+    "label": "치역 최댓값",
+    "expr": "ymax",
+    "digits": 3
+   },
+   {
+    "label": "치역 = [ymin , ymax]",
+    "expr": "ymax-ymin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": -3,
+    "b": -1
+   },
+   {
+    "a": -2,
+    "b": 0.5
+   }
+  ],
+  "invariants": [
+   "ymax-max(a^2,b^2)",
+   "ymin-(max(a,min(0,b)))^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 2
+    },
+    "expect": {
+     "ymin": 0,
+     "ymax": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "ymin": 1,
+     "ymax": 9
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": -1
+    },
+    "expect": {
+     "ymin": 1,
+     "ymax": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

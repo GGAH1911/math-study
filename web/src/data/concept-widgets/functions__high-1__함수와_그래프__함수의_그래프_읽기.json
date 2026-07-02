@@ -1,0 +1,151 @@
+{
+ "id": "functions/high-1/함수와_그래프/함수의_그래프_읽기",
+ "spec": {
+  "title": "함수의 그래프 읽기 — 증감·극값·접선",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (극값 벌어짐)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q (위아래 이동)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (읽을 위치)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "d = 3*x0^2 - 3*p; fx0 = x0^3 - 3*p*x0 + q; lmax = 2*p^1.5 + q; lmin = -2*p^1.5 + q",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*p*x + q",
+     "label": "y=f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "d*(x - x0) + fx0",
+     "label": "x₀에서의 접선(기울기=증감)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "fx0",
+    "digits": 3
+   },
+   {
+    "label": "f'(x₀) (>0 증가, <0 감소)",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "극댓값 (p>0)",
+    "expr": "lmax",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 (p>0)",
+    "expr": "lmin",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "q": 0,
+    "x0": 2
+   },
+   {
+    "p": 0,
+    "q": 1,
+    "x0": 0
+   },
+   {
+    "p": 4,
+    "q": -1,
+    "x0": 1
+   },
+   {
+    "p": 2,
+    "q": 2,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "fx0 - (x0^3 - 3*p*x0 + q)",
+   "d - (3*x0^2 - 3*p)",
+   "lmax + lmin - 2*q"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "q": 0,
+     "x0": 2
+    },
+    "expect": {
+     "d": 9,
+     "fx0": 2,
+     "lmax": 2,
+     "lmin": -2
+    }
+   },
+   {
+    "params": {
+     "p": 4,
+     "q": -1,
+     "x0": 1
+    },
+    "expect": {
+     "d": -9,
+     "fx0": -12,
+     "lmax": 15,
+     "lmin": -17
+    }
+   },
+   {
+    "params": {
+     "p": 0,
+     "q": 1,
+     "x0": 0
+    },
+    "expect": {
+     "d": 0,
+     "fx0": 1,
+     "lmax": 1,
+     "lmin": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

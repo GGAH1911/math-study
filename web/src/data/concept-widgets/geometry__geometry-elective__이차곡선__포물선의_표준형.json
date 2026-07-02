@@ -1,0 +1,253 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/포물선의_표준형",
+ "spec": {
+  "title": "포물선의 표준형 y²=4px — 초점·준선 등거리",
+  "params": [
+   {
+    "name": "p",
+    "label": "초점거리 p",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "px=t^2/(4*p); py=t; dPF=sqrt((px-p)^2+py^2); dPQ=px+p; diff=dPF-dPQ",
+  "geometry": {
+   "range": [
+    -3.5,
+    5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=9/(4*p)",
+       -3
+      ],
+      [
+       "=6.25/(4*p)",
+       -2.5
+      ],
+      [
+       "=4/(4*p)",
+       -2
+      ],
+      [
+       "=2.25/(4*p)",
+       -1.5
+      ],
+      [
+       "=1/(4*p)",
+       -1
+      ],
+      [
+       "=0.25/(4*p)",
+       -0.5
+      ],
+      [
+       0,
+       0
+      ],
+      [
+       "=0.25/(4*p)",
+       0.5
+      ],
+      [
+       "=1/(4*p)",
+       1
+      ],
+      [
+       "=2.25/(4*p)",
+       1.5
+      ],
+      [
+       "=4/(4*p)",
+       2
+      ],
+      [
+       "=6.25/(4*p)",
+       2.5
+      ],
+      [
+       "=9/(4*p)",
+       3
+      ]
+     ],
+     "color": "#1f77b4",
+     "label": "y²=4px"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-p",
+      -3.5
+     ],
+     "to": [
+      "=-p",
+      3.5
+     ],
+     "color": "#888",
+     "label": "준선 x=-p"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p",
+      0
+     ],
+     "color": "#d62728",
+     "label": "F(p,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "color": "#2ca02c",
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-p",
+      "=py"
+     ],
+     "color": "#888",
+     "label": "H"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=p",
+      0
+     ],
+     "color": "#d62728",
+     "label": "PF(초점거리)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=-p",
+      "=py"
+     ],
+     "color": "#2ca02c",
+     "label": "PH(준선거리)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "초점거리 p",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "PF (초점까지)",
+    "expr": "dPF",
+    "digits": 3
+   },
+   {
+    "label": "PH (준선까지)",
+    "expr": "dPQ",
+    "digits": 3
+   },
+   {
+    "label": "PF − PH (=0)",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "t": 2
+   },
+   {
+    "p": 0.5,
+    "t": -1
+   },
+   {
+    "p": 2,
+    "t": 2
+   },
+   {
+    "p": 1.5,
+    "t": 0
+   }
+  ],
+  "invariants": [
+   "dPF-dPQ",
+   "py^2-4*p*px"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "t": 2
+    },
+    "expect": {
+     "px": 1,
+     "py": 2,
+     "dPF": 2,
+     "dPQ": 2
+    }
+   },
+   {
+    "params": {
+     "p": 0.5,
+     "t": -1
+    },
+    "expect": {
+     "px": 0.5,
+     "py": -1,
+     "dPF": 1,
+     "dPQ": 1
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "t": 2
+    },
+    "expect": {
+     "px": 0.5,
+     "py": 2,
+     "dPF": 2.5,
+     "dPQ": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

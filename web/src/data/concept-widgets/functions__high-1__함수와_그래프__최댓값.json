@@ -1,0 +1,126 @@
+{
+ "id": "functions/high-1/함수와_그래프/최댓값",
+ "spec": {
+  "title": "최댓값 — 정의역 [a, b]에 따라 달라지는 최댓값",
+  "params": [
+   {
+    "name": "a",
+    "label": "정의역 왼쪽 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "정의역 오른쪽 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "lo=min(a,b); hi=max(a,b); xstar=min(max(0,lo),hi); ymax=-xstar^2+4",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -9,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "-x^2+4",
+     "label": "f(x) = -x² + 4",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 M",
+    "expr": "ymax",
+    "digits": 3
+   },
+   {
+    "label": "최댓값을 갖는 x",
+    "expr": "xstar",
+    "digits": 3
+   },
+   {
+    "label": "정의역 [a, b]",
+    "expr": "lo",
+    "digits": 2
+   },
+   {
+    "label": "…",
+    "expr": "hi",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": -3,
+    "b": -1
+   },
+   {
+    "a": 0,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "ymax+xstar^2-4",
+   "xstar-min(max(0,lo),hi)",
+   "(xstar-lo)*(hi-xstar)>=0 ? 0 : 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "xstar": 1,
+     "ymax": 3
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2
+    },
+    "expect": {
+     "xstar": 0,
+     "ymax": 4
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": -1
+    },
+    "expect": {
+     "xstar": -1,
+     "ymax": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
