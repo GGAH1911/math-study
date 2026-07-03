@@ -1,0 +1,217 @@
+{
+ "id": "geometry/high-1/도형의_방정식/아폴로니우스_원",
+ "spec": {
+  "title": "아폴로니우스 원: |PA|/|PB| = k",
+  "params": [
+   {
+    "name": "k",
+    "label": "거리비 k = |PA|/|PB|",
+    "type": "slider",
+    "min": 0.4,
+    "max": 2.5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "두 점 간격 d (A=원점, B=(d,0))",
+    "type": "slider",
+    "min": 2,
+    "max": 4,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "phi",
+    "label": "원 위 점 P의 위치각 φ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "kk=k^2; cx=kk*d/(kk-1); r=k*d/abs(kk-1); rad=phi*pi/180; px=cx+r*cos(rad); py=r*sin(rad); PA=sqrt(px^2+py^2); PB=sqrt((px-d)^2+py^2)",
+  "geometry": {
+   "range": [
+    -5,
+    9
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=cx",
+      0
+     ],
+     "radius": "=r",
+     "label": "아폴로니우스 원"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      0
+     ],
+     "label": "중심"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|PA|",
+    "expr": "PA",
+    "digits": 4
+   },
+   {
+    "label": "|PB|",
+    "expr": "PB",
+    "digits": 4
+   },
+   {
+    "label": "|PA|/|PB| (=k 여야 함)",
+    "expr": "PA/PB",
+    "digits": 4
+   },
+   {
+    "label": "원 중심 x",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 2,
+    "d": 3,
+    "phi": 90
+   },
+   {
+    "k": 2,
+    "d": 3,
+    "phi": 0
+   },
+   {
+    "k": 0.5,
+    "d": 4,
+    "phi": 180
+   },
+   {
+    "k": 1.5,
+    "d": 2,
+    "phi": 210
+   }
+  ],
+  "invariants": [
+   "PA-k*PB",
+   "(px-cx)^2+py^2-r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2,
+     "d": 3,
+     "phi": 90
+    },
+    "expect": {
+     "cx": 4,
+     "r": 2,
+     "px": 4,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "k": 2,
+     "d": 3,
+     "phi": 0
+    },
+    "expect": {
+     "cx": 4,
+     "r": 2,
+     "px": 6,
+     "py": 0,
+     "PA": 6,
+     "PB": 3
+    }
+   },
+   {
+    "params": {
+     "k": 0.5,
+     "d": 4,
+     "phi": 180
+    },
+    "expect": {
+     "cx": -1.3333333333,
+     "r": 2.6666666667,
+     "px": -4,
+     "py": 0,
+     "PA": 4,
+     "PB": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

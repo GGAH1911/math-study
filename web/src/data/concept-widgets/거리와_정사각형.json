@@ -1,0 +1,225 @@
+{
+ "id": "거리와_정사각형",
+ "spec": {
+  "title": "거리와 정사각형: 마름모는 언제 정사각형이 되는가",
+  "params": [
+   {
+    "name": "s",
+    "label": "한 변 s",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "끼인각 θ",
+    "type": "slider",
+    "min": 20,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; ax=0; ay=0; bx=s; by=0; cx=s+s*cos(rad); cy=s*sin(rad); dx=s*cos(rad); dy=s*sin(rad); side=s; AB=sqrt((bx-ax)^2+(by-ay)^2); BC=sqrt((cx-bx)^2+(cy-by)^2); CD=sqrt((dx-cx)^2+(dy-cy)^2); DA=sqrt((ax-dx)^2+(ay-dy)^2); diagAC=sqrt((cx-ax)^2+(cy-ay)^2); diagBD=sqrt((dx-bx)^2+(dy-by)^2); diff=diagAC-diagBD",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1.5,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=dx",
+       "=dy"
+      ]
+     ],
+     "label": "ABCD"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "대각선 AC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      "=by"
+     ],
+     "to": [
+      "=dx",
+      "=dy"
+     ],
+     "label": "대각선 BD"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=dx",
+      "=dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변 AB",
+    "expr": "AB",
+    "digits": 3
+   },
+   {
+    "label": "변 BC",
+    "expr": "BC",
+    "digits": 3
+   },
+   {
+    "label": "변 CD",
+    "expr": "CD",
+    "digits": 3
+   },
+   {
+    "label": "변 DA",
+    "expr": "DA",
+    "digits": 3
+   },
+   {
+    "label": "대각선 AC",
+    "expr": "diagAC",
+    "digits": 3
+   },
+   {
+    "label": "대각선 BD",
+    "expr": "diagBD",
+    "digits": 3
+   },
+   {
+    "label": "AC-BD (0이면 정사각형)",
+    "expr": "diff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "s": 1,
+    "theta": 90
+   },
+   {
+    "s": 2,
+    "theta": 60
+   },
+   {
+    "s": 3,
+    "theta": 120
+   },
+   {
+    "s": 2.5,
+    "theta": 90
+   }
+  ],
+  "invariants": [
+   "AB-side",
+   "BC-side",
+   "CD-side",
+   "DA-side",
+   "diagAC^2+diagBD^2-4*side^2",
+   "(cos(rad)==0)*(diagAC-diagBD)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "s": 1,
+     "theta": 90
+    },
+    "expect": {
+     "side": 1,
+     "diagAC": 1.4142135624,
+     "diagBD": 1.4142135624,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "s": 2,
+     "theta": 60
+    },
+    "expect": {
+     "side": 2,
+     "diagAC": 3.4641016151,
+     "diagBD": 2,
+     "diff": 1.4641016151
+    }
+   },
+   {
+    "params": {
+     "s": 2,
+     "theta": 90
+    },
+    "expect": {
+     "side": 2,
+     "diagAC": 2.8284271247,
+     "diagBD": 2.8284271247,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

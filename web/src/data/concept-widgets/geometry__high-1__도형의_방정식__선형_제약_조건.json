@@ -1,0 +1,191 @@
+{
+ "id": "geometry/high-1/도형의_방정식/선형_제약_조건",
+ "spec": {
+  "title": "선형 제약 조건과 실행가능영역 (x≥0, y≥0, ax+by≤c)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x계수)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b (y계수)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c (상수)",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 4,
+    "step": 0.5
+   }
+  ],
+  "scope": "vx=c/a; vy=c/b; area=c^2/(2*a*b)",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=vx",
+       0
+      ],
+      [
+       0,
+       "=vy"
+      ]
+     ],
+     "label": "실행가능영역"
+    },
+    {
+     "type": "line",
+     "points": [
+      [
+       "=vx",
+       0
+      ],
+      [
+       0,
+       "=vy"
+      ]
+     ],
+     "label": "ax+by=c"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O(0,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      0
+     ],
+     "label": "(c/a, 0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=vy"
+     ],
+     "label": "(0, c/b)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x절편 c/a",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "y절편 c/b",
+    "expr": "vy",
+    "digits": 3
+   },
+   {
+    "label": "영역 넓이",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 4
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "c": 6
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 2
+   },
+   {
+    "a": 3,
+    "b": 1.5,
+    "c": 6
+   }
+  ],
+  "invariants": [
+   "a*vx - c",
+   "b*vy - c",
+   "area - 0.5*vx*vy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 4
+    },
+    "expect": {
+     "vx": 4,
+     "vy": 2,
+     "area": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": 6
+    },
+    "expect": {
+     "vx": 3,
+     "vy": 6,
+     "area": 9
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 2
+    },
+    "expect": {
+     "vx": 2,
+     "vy": 2,
+     "area": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

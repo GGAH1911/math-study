@@ -1,0 +1,174 @@
+{
+ "id": "geometry/high-1/도형의_방정식/내분점과_외분점",
+ "spec": {
+  "title": "내분점과 외분점",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (A쪽 비율 분자)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (B쪽 비율 분자)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "x1=-3; y1=-1; x2=3; y2=2; s=m+n; d=m-n; px=(n*x1+m*x2)/s; py=(n*y1+m*y2)/s; qx=(m*x2-n*x1)/d; qy=(m*y2-n*y1)/d",
+  "geometry": {
+   "range": [
+    -5,
+    10
+   ],
+   "yRange": [
+    -4,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y2"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "연장선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A(-3,-1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B(3,2)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P 내분"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q 외분"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내분점 P_x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "내분점 P_y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "외분점 Q_x",
+    "expr": "qx",
+    "digits": 3
+   },
+   {
+    "label": "외분점 Q_y",
+    "expr": "qy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 3,
+    "n": 1
+   },
+   {
+    "m": 2,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 2
+   },
+   {
+    "m": 4,
+    "n": 3
+   }
+  ],
+  "invariants": [
+   "(px-x1)*(y2-y1)-(py-y1)*(x2-x1)",
+   "(qx-x1)*(y2-y1)-(qy-y1)*(x2-x1)",
+   "n*(px-x1)-m*(x2-px)",
+   "n*(py-y1)-m*(y2-py)",
+   "n*(qx-x1)-m*(qx-x2)",
+   "n*(qy-y1)-m*(qy-y2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "px": 1.5,
+     "py": 1.25,
+     "qx": 6,
+     "qy": 3.5
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "px": 1,
+     "py": 1,
+     "qx": 9,
+     "qy": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

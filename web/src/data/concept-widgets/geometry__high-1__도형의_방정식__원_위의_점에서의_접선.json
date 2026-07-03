@@ -1,0 +1,179 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원_위의_점에서의_접선",
+ "spec": {
+  "title": "원 위의 점에서의 접선",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "접점 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); tx=-sin(rad); ty=cos(rad); ax=px+2.5*tx; ay=py+2.5*ty; bx=px-2.5*tx; by=py-2.5*ty; dot=px*tx+py*ty",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "접선"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 P",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P_y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "반지름·접선방향 (수직⇒0)",
+    "expr": "dot",
+    "digits": 6
+   },
+   {
+    "label": "접선식 우변 r²",
+    "expr": "r^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "theta": 0
+   },
+   {
+    "r": 1,
+    "theta": 90
+   },
+   {
+    "r": 2,
+    "theta": 30
+   },
+   {
+    "r": 2.5,
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "tx^2+ty^2-1",
+   "px*tx+py*ty",
+   "px*ax+py*ay-r^2",
+   "px*bx+py*by-r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "theta": 0
+    },
+    "expect": {
+     "px": 2,
+     "py": 0,
+     "tx": 0,
+     "ty": 1
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "tx": -1,
+     "ty": 0
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 30
+    },
+    "expect": {
+     "px": 1.7320508075688772,
+     "py": 1,
+     "tx": -0.5,
+     "ty": 0.8660254037844387
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

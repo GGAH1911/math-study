@@ -1,0 +1,214 @@
+{
+ "id": "geometry/high-1/도형의_방정식/선분의_길이",
+ "spec": {
+  "title": "선분의 길이 — 거리 공식과 피타고라스",
+  "params": [
+   {
+    "name": "x1",
+    "label": "A의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "y1",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "x2",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "y2",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.5
+   }
+  ],
+  "scope": "dx=x2-x1; dy=y2-y1; base=abs(dx); height=abs(dy); L=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ],
+     "color": "#888",
+     "label": "밑변 |x₂−x₁|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#888",
+     "label": "높이 |y₂−y₁|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#e4572e",
+     "label": "선분 AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑변 |x₂−x₁|",
+    "expr": "base",
+    "digits": 2
+   },
+   {
+    "label": "높이 |y₂−y₁|",
+    "expr": "height",
+    "digits": 2
+   },
+   {
+    "label": "선분 AB 길이 √(dx²+dy²)",
+    "expr": "L",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 3,
+    "y2": 4
+   },
+   {
+    "x1": 1,
+    "y1": 1,
+    "x2": 4,
+    "y2": 5
+   },
+   {
+    "x1": -2,
+    "y1": 3,
+    "x2": -2,
+    "y2": -1
+   },
+   {
+    "x1": 2,
+    "y1": -2,
+    "x2": -3,
+    "y2": 10
+   }
+  ],
+  "invariants": [
+   "L^2-(x2-x1)^2-(y2-y1)^2",
+   "L^2-base^2-height^2",
+   "L-sqrt((x2-x1)^2+(y2-y1)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "L": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": 1,
+     "x2": 4,
+     "y2": 5
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "L": 5
+    }
+   },
+   {
+    "params": {
+     "x1": -2,
+     "y1": 3,
+     "x2": -2,
+     "y2": -1
+    },
+    "expect": {
+     "dx": 0,
+     "dy": -4,
+     "L": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

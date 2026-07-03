@@ -1,0 +1,191 @@
+{
+ "id": "geometry/high-1/도형의_방정식/도형의_대칭",
+ "spec": {
+  "title": "점대칭 — 점 P를 중심 C에 대해 대칭이동",
+  "params": [
+   {
+    "name": "px",
+    "label": "P의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "py",
+    "label": "P의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "ax",
+    "label": "대칭중심 C의 x좌표 (a)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "ay",
+    "label": "대칭중심 C의 y좌표 (b)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "qx=2*ax-px; qy=2*ay-py",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "color": "#94a3b8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(x, y)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "C(a, b)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "P'(2a-x, 2b-y)",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "대칭점 P'의 x = 2a-x",
+    "expr": "qx",
+    "digits": 2
+   },
+   {
+    "label": "대칭점 P'의 y = 2b-y",
+    "expr": "qy",
+    "digits": 2
+   },
+   {
+    "label": "중점 x = (x+2a-x)/2",
+    "expr": "(px+qx)/2",
+    "digits": 2
+   },
+   {
+    "label": "중점 y = (y+2b-y)/2",
+    "expr": "(py+qy)/2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 2,
+    "py": 3,
+    "ax": 0,
+    "ay": 0
+   },
+   {
+    "px": 1,
+    "py": 1,
+    "ax": 2,
+    "ay": 1
+   },
+   {
+    "px": -3,
+    "py": 4,
+    "ax": -1,
+    "ay": -1
+   },
+   {
+    "px": 0,
+    "py": -5,
+    "ax": 2.5,
+    "ay": 0
+   }
+  ],
+  "invariants": [
+   "(px+qx)/2 - ax",
+   "(py+qy)/2 - ay"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 2,
+     "py": 3,
+     "ax": 0,
+     "ay": 0
+    },
+    "expect": {
+     "qx": -2,
+     "qy": -3
+    }
+   },
+   {
+    "params": {
+     "px": 1,
+     "py": 1,
+     "ax": 2,
+     "ay": 1
+    },
+    "expect": {
+     "qx": 3,
+     "qy": 1
+    }
+   },
+   {
+    "params": {
+     "px": -3,
+     "py": 4,
+     "ax": -1,
+     "ay": -1
+    },
+    "expect": {
+     "qx": 1,
+     "qy": -6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

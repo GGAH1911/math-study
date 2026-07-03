@@ -1,0 +1,157 @@
+{
+ "id": "geometry/high-1/도형의_방정식/기울기의_곱",
+ "spec": {
+  "title": "기울기의 곱 — 두 직선의 수직 조건 (m₁·m₂ = −1)",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "직선 l₁의 기울기각 α",
+    "type": "slider",
+    "min": 10,
+    "max": 80,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=alpha*pi/180; c=cos(rad); s=sin(rad); m1=s/c; m2=-c/s; prod=m1*m2",
+  "geometry": {
+   "range": [
+    -1.7,
+    1.7
+   ],
+   "yRange": [
+    -1.7,
+    1.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-1.5*c",
+      "=-1.5*s"
+     ],
+     "to": [
+      "=1.5*c",
+      "=1.5*s"
+     ],
+     "color": "#2563eb",
+     "label": "l₁ (기울기 m₁)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1.5*s",
+      "=-1.5*c"
+     ],
+     "to": [
+      "=-1.5*s",
+      "=1.5*c"
+     ],
+     "color": "#dc2626",
+     "label": "l₂ (기울기 m₂ = −1/m₁)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=1.5*c",
+      "=1.5*s"
+     ],
+     "color": "#2563eb",
+     "label": "방향(cosα, sinα)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-1.5*s",
+      "=1.5*c"
+     ],
+     "color": "#dc2626",
+     "label": "방향(−sinα, cosα)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "color": "#111827",
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m₁ = tan α",
+    "expr": "m1",
+    "digits": 3
+   },
+   {
+    "label": "m₂ = −1/m₁",
+    "expr": "m2",
+    "digits": 3
+   },
+   {
+    "label": "m₁ · m₂ (항상 −1)",
+    "expr": "prod",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 20
+   },
+   {
+    "alpha": 30
+   },
+   {
+    "alpha": 45
+   },
+   {
+    "alpha": 60
+   }
+  ],
+  "invariants": [
+   "m1*m2+1",
+   "c^2+s^2-1",
+   "c*(-s)+s*c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 45
+    },
+    "expect": {
+     "m1": 1,
+     "m2": -1,
+     "prod": -1
+    }
+   },
+   {
+    "params": {
+     "alpha": 30
+    },
+    "expect": {
+     "m1": 0.5773502691896257,
+     "m2": -1.7320508075688774,
+     "prod": -1
+    }
+   },
+   {
+    "params": {
+     "alpha": 60
+    },
+    "expect": {
+     "m1": 1.7320508075688772,
+     "m2": -0.5773502691896258,
+     "prod": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

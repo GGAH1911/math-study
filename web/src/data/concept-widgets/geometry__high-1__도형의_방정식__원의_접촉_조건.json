@@ -1,0 +1,188 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원의_접촉_조건",
+ "spec": {
+  "title": "원과 직선의 접촉 조건: d(중심,직선) = r",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "직선 y절편 c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "den=sqrt(m^2+1); d=abs(c)/den; Fx=-m*c/(m^2+1); Fy=c/(m^2+1); onLine=m*Fx-Fy+c; footChk=sqrt(Fx^2+Fy^2)-d; gap=d-r",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "line",
+     "points": [
+      [
+       -6,
+       "=m*(-6)+c"
+      ],
+      [
+       6,
+       "=m*6+c"
+      ]
+     ],
+     "label": "ℓ: y=mx+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "H"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심-직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "d − r (0이면 접선)",
+    "expr": "gap",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "m": 0,
+    "c": 3
+   },
+   {
+    "r": 1,
+    "m": 1,
+    "c": 2
+   },
+   {
+    "r": 3,
+    "m": -2,
+    "c": 5
+   },
+   {
+    "r": 2,
+    "m": 0.5,
+    "c": -3
+   }
+  ],
+  "invariants": [
+   "m*Fx-Fy+c",
+   "sqrt(Fx^2+Fy^2)-d",
+   "d*den-abs(c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "m": 0,
+     "c": 3
+    },
+    "expect": {
+     "d": 3,
+     "Fx": 0,
+     "Fy": 3,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "m": 1,
+     "c": 2
+    },
+    "expect": {
+     "d": 1.4142135624,
+     "Fx": -1,
+     "Fy": 1,
+     "gap": 0.4142135624
+    }
+   },
+   {
+    "params": {
+     "r": 4,
+     "m": 0,
+     "c": -4
+    },
+    "expect": {
+     "d": 4,
+     "Fx": 0,
+     "Fy": -4,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

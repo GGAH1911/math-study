@@ -1,0 +1,153 @@
+{
+ "id": "geometry/high-1/도형의_방정식/기울기와_각도",
+ "spec": {
+  "title": "기울기와 각도: m = tan(θ)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "경사각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 175,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; m=tan(rad); cx=cos(rad); sy=sin(rad)",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -2.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-2*cx",
+      "=-2*sy"
+     ],
+     "to": [
+      "=2*cx",
+      "=2*sy"
+     ],
+     "label": "직선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "방향 (cosθ, sinθ)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       "=1",
+       "=m"
+      ]
+     ],
+     "label": "run=1, rise=m"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      "=1",
+      "=m"
+     ],
+     "label": "rise = tanθ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "경사각 θ (°)",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "기울기 m = tan θ",
+    "expr": "m",
+    "digits": 4
+   },
+   {
+    "label": "rise / run",
+    "expr": "m/1",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "sy - m*cx",
+   "cx^2+sy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "m": 1,
+     "cx": 0.70710678,
+     "sy": 0.70710678
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "m": 0.57735027,
+     "cx": 0.8660254,
+     "sy": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 135
+    },
+    "expect": {
+     "m": -1,
+     "cx": -0.70710678,
+     "sy": 0.70710678
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

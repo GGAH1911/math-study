@@ -1,0 +1,146 @@
+{
+ "id": "geometry/high-1/도형의_방정식/격자점",
+ "spec": {
+  "title": "격자점: 정수계수 이차함수 위의 정수점",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (일차항 계수, 정수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항, 정수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "x0",
+    "label": "x (대입값)",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "y0 = x0^2 + b*x0 + c; fracx = abs(x0 - round(x0)); fracy = abs(y0 - round(y0)); frac = fracx + fracy",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -3,
+    5
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + b*x + c",
+     "label": "y = x² + bx + c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "y",
+    "expr": "y0",
+    "digits": 2
+   },
+   {
+    "label": "x가 정수인가(0이면 정수)",
+    "expr": "fracx",
+    "digits": 3
+   },
+   {
+    "label": "y가 정수인가(0이면 정수)",
+    "expr": "fracy",
+    "digits": 3
+   },
+   {
+    "label": "격자점 이탈도(x,y 둘 다 0이면 격자점)",
+    "expr": "frac",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -2,
+    "c": 1,
+    "x0": 1
+   },
+   {
+    "b": 1,
+    "c": -3,
+    "x0": 2
+   },
+   {
+    "b": 0,
+    "c": 0,
+    "x0": 3
+   },
+   {
+    "b": -4,
+    "c": 5,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "y0 - (x0^2 + b*x0 + c)",
+   "frac"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": -2,
+     "c": 1,
+     "x0": 1
+    },
+    "expect": {
+     "y0": 0,
+     "frac": 0
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "c": -3,
+     "x0": 2
+    },
+    "expect": {
+     "y0": 3,
+     "frac": 0
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": 0,
+     "x0": 3.4
+    },
+    "expect": {
+     "y0": 11.56,
+     "frac": 0.84
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

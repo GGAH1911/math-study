@@ -1,0 +1,209 @@
+{
+ "id": "geometry/high-1/도형의_방정식/좌표_기하를_이용한_계산",
+ "spec": {
+  "title": "좌표 기하: 원과 점의 위치 관계 (거리 공식)",
+  "params": [
+   {
+    "name": "a",
+    "label": "중심 x좌표 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "중심 y좌표 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "d = sqrt((px-a)^2 + (py-b)^2); diff = d - r; power = (px-a)^2 + (py-b)^2 - r^2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=b"
+     ],
+     "radius": "=r",
+     "label": "(x-a)²+(y-b)²=r²"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "O(a,b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=b"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "거리 d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심-P 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "d − r (양수:외부 · 0:원 위 · 음수:내부)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "방정식 대입값 (x-a)²+(y-b)²−r²",
+    "expr": "power",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 0,
+    "r": 1,
+    "px": 3,
+    "py": 4
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "r": 3,
+    "px": 4,
+    "py": 2
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "r": 2,
+    "px": 2,
+    "py": -1
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "r": 2.5,
+    "px": 1.5,
+    "py": 1
+   }
+  ],
+  "invariants": [
+   "d^2 - ((px-a)^2 + (py-b)^2)",
+   "power - ((px-a)^2 + (py-b)^2 - r^2)",
+   "diff - (d - r)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "r": 1,
+     "px": 3,
+     "py": 4
+    },
+    "expect": {
+     "d": 5,
+     "diff": 4,
+     "power": 24
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "r": 3,
+     "px": 4,
+     "py": 2
+    },
+    "expect": {
+     "d": 3,
+     "diff": 0,
+     "power": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -1,
+     "r": 2,
+     "px": 2,
+     "py": -1
+    },
+    "expect": {
+     "d": 0,
+     "diff": -2,
+     "power": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

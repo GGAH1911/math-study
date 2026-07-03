@@ -1,0 +1,193 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원점을_지나는_접선의_기울기",
+ "spec": {
+  "title": "원점을 지나는 접선의 기울기",
+  "params": [
+   {
+    "name": "h",
+    "label": "중심 x좌표 h",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "k",
+    "label": "중심 y좌표 k",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "disc = h^2 + k^2 - r^2; den = h^2 - r^2; sq = r*sqrt(disc); hk = h*k; m1 = (hk + sq)/den; m2 = (hk - sq)/den; tlen = sqrt(disc)",
+  "geometry": {
+   "range": [
+    -6,
+    10
+   ],
+   "yRange": [
+    -6,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=h",
+      "=k"
+     ],
+     "radius": "=r",
+     "label": "원 (x-h)²+(y-k)²=r²"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O(원점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=h",
+      "=k"
+     ],
+     "label": "C(중심)"
+    },
+    {
+     "type": "line",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       "=m1"
+      ]
+     ],
+     "label": "접선 y=m₁x",
+     "color": "#e6194b"
+    },
+    {
+     "type": "line",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       "=m2"
+      ]
+     ],
+     "label": "접선 y=m₂x",
+     "color": "#3cb44b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 m₁",
+    "expr": "m1",
+    "digits": 4
+   },
+   {
+    "label": "기울기 m₂",
+    "expr": "m2",
+    "digits": 4
+   },
+   {
+    "label": "접선의 길이 √(d²-r²)",
+    "expr": "tlen",
+    "digits": 4
+   },
+   {
+    "label": "원점-중심 거리 제곱 d²",
+    "expr": "h^2+k^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": 3,
+    "k": 2,
+    "r": 1
+   },
+   {
+    "h": 0,
+    "k": 2,
+    "r": 1
+   },
+   {
+    "h": 3,
+    "k": 1,
+    "r": 1
+   },
+   {
+    "h": 4,
+    "k": 3,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "(m1*h-k)^2 - r^2*(m1^2+1)",
+   "(m2*h-k)^2 - r^2*(m2^2+1)",
+   "m1+m2 - 2*h*k/(h^2-r^2)",
+   "m1*m2 - (k^2-r^2)/(h^2-r^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 0,
+     "k": 2,
+     "r": 1
+    },
+    "expect": {
+     "m1": -1.7320508,
+     "m2": 1.7320508
+    }
+   },
+   {
+    "params": {
+     "h": 3,
+     "k": 1,
+     "r": 1
+    },
+    "expect": {
+     "m1": 0.75,
+     "m2": 0
+    }
+   },
+   {
+    "params": {
+     "h": 4,
+     "k": 3,
+     "r": 2
+    },
+    "expect": {
+     "m1": 1.76376262,
+     "m2": 0.23623738
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

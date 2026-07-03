@@ -1,0 +1,154 @@
+{
+ "id": "geometry/high-1/도형의_방정식/직선의_위치_관계",
+ "spec": {
+  "title": "두 직선의 위치 관계 (일치·평행·교차)",
+  "params": [
+   {
+    "name": "m1",
+    "label": "l₁ 기울기 m₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k1",
+    "label": "l₁ y절편 k₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "m2",
+    "label": "l₂ 기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "k2",
+    "label": "l₂ y절편 k₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "dm = m1 - m2; ix = (k2 - k1)/dm; iy = m1*ix + k1",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "m1*x+k1",
+     "label": "l₁: y=m₁x+k₁",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m2*x+k2",
+     "label": "l₂: y=m₂x+k₂",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 차 m₁−m₂",
+    "expr": "dm",
+    "digits": 3
+   },
+   {
+    "label": "교점 x (m₁≠m₂일 때)",
+    "expr": "ix",
+    "digits": 3
+   },
+   {
+    "label": "교점 y (m₁≠m₂일 때)",
+    "expr": "iy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "k1": 0,
+    "m2": -1,
+    "k2": 1
+   },
+   {
+    "m1": 2,
+    "k1": 1,
+    "m2": 0,
+    "k2": -1
+   },
+   {
+    "m1": 0.5,
+    "k1": 2,
+    "m2": -0.5,
+    "k2": 0
+   },
+   {
+    "m1": 3,
+    "k1": -1,
+    "m2": 1,
+    "k2": 1
+   }
+  ],
+  "invariants": [
+   "m1*ix + k1 - (m2*ix + k2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "k1": 0,
+     "m2": -1,
+     "k2": 1
+    },
+    "expect": {
+     "ix": 0.5,
+     "iy": 0.5
+    }
+   },
+   {
+    "params": {
+     "m1": 2,
+     "k1": 1,
+     "m2": 0,
+     "k2": -1
+    },
+    "expect": {
+     "ix": -1,
+     "iy": -1
+    }
+   },
+   {
+    "params": {
+     "m1": 0.5,
+     "k1": 2,
+     "m2": -0.5,
+     "k2": 0
+    },
+    "expect": {
+     "ix": -2,
+     "iy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,147 @@
+{
+ "id": "geometry/high-1/도형의_방정식/두_곡선의_교점",
+ "spec": {
+  "title": "두 곡선의 교점: y=x² 과 y=ax+b",
+  "params": [
+   {
+    "name": "a",
+    "label": "직선 기울기 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "직선 y절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "disc = a^2 + 4*b; x1 = (a - sqrt(disc))/2; x2 = (a + sqrt(disc))/2; y1 = x1^2; y2 = x2^2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y=x²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a*x + b",
+     "label": "y=ax+b",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 a²+4b",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "교점 x₁ (disc≥0)",
+    "expr": "x1",
+    "digits": 4
+   },
+   {
+    "label": "교점 x₂ (disc≥0)",
+    "expr": "x2",
+    "digits": 4
+   },
+   {
+    "label": "교점 개수",
+    "expr": "disc>0 ? 2 : (disc==0 ? 1 : 0)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 4
+   },
+   {
+    "a": 1,
+    "b": 0
+   },
+   {
+    "a": -2,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "disc - (a^2 + 4*b)",
+   "x1^2 - (a*x1 + b)",
+   "x2^2 - (a*x2 + b)",
+   "(x1 + x2) - a",
+   "(x1 * x2) + b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "disc": 16,
+     "x1": -1,
+     "x2": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 4
+    },
+    "expect": {
+     "disc": 16,
+     "x1": -2,
+     "x2": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0
+    },
+    "expect": {
+     "disc": 1,
+     "x1": 0,
+     "x2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

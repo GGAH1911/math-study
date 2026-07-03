@@ -1,0 +1,184 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원과_곡선의_교점",
+ "spec": {
+  "title": "원과 직선의 교점 (판별식으로 개수 판정)",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "직선 y절편 c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "disc = r^2*(1+m^2) - c^2; sq = sqrt(max(disc, 0)); x1 = (-m*c + sq)/(1+m^2); y1 = m*x1 + c; x2 = (-m*c - sq)/(1+m^2); y2 = m*x2 + c; d = abs(c)/sqrt(1+m^2)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-4",
+      "=m*(-4)+c"
+     ],
+     "to": [
+      "=4",
+      "=m*4+c"
+     ],
+     "label": "y=mx+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "교점1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "교점2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D (>0:2점, =0:접함, <0:없음)",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "중심-직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "교점1 (x1, y1)",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "교점2 (x2, y2)",
+    "expr": "x2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "m": 1,
+    "c": 0
+   },
+   {
+    "r": 2,
+    "m": 0,
+    "c": 1
+   },
+   {
+    "r": 1,
+    "m": 1,
+    "c": 0
+   },
+   {
+    "r": 2,
+    "m": 0,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "y1 - (m*x1 + c)",
+   "y2 - (m*x2 + c)",
+   "x1^2 + y1^2 - r^2",
+   "x2^2 + y2^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "m": 0,
+     "c": 1
+    },
+    "expect": {
+     "disc": 3,
+     "x1": 1.7320508075688772,
+     "y1": 1,
+     "d": 1
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "m": 1,
+     "c": 0
+    },
+    "expect": {
+     "disc": 2,
+     "x1": 0.7071067811865476,
+     "y1": 0.7071067811865476,
+     "d": 0
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "m": 0,
+     "c": 2
+    },
+    "expect": {
+     "disc": 0,
+     "x1": 0,
+     "y1": 2,
+     "d": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

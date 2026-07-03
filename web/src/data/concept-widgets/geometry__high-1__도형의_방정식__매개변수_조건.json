@@ -1,0 +1,131 @@
+{
+ "id": "geometry/high-1/도형의_방정식/매개변수_조건",
+ "spec": {
+  "title": "매개변수 조건: 직선 y=mx+3와 원 x²+y²=4의 위치 관계",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "d = 3/sqrt(m^2+1); disc = 16*m^2 - 20; r = 2",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -3,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 2,
+     "label": "x²+y²=4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      "=-4*m+3"
+     ],
+     "to": [
+      4,
+      "=4*m+3"
+     ],
+     "label": "y=mx+3",
+     "color": "red"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      3
+     ],
+     "label": "(0,3) 고정"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심~직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "판별식 D=16m²-20",
+    "expr": "disc",
+    "digits": 2
+   }
+  ],
+  "note": "고정점 (0,3)을 지나는 직선을 기울기 m으로 회전시킨다. 원과 두 점에서 만나려면 d<r, 즉 D>0 ⇔ |m|>√5/2≈1.118. 접할 때 d=r=2, D=0."
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0
+   },
+   {
+    "m": 1
+   },
+   {
+    "m": 2
+   },
+   {
+    "m": -3
+   }
+  ],
+  "invariants": [
+   "d^2*(m^2+1) - 9",
+   "disc - 144/d^2 + 36"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0
+    },
+    "expect": {
+     "d": 3,
+     "disc": -20
+    }
+   },
+   {
+    "params": {
+     "m": 1.118033988749895
+    },
+    "expect": {
+     "d": 2,
+     "disc": 0
+    }
+   },
+   {
+    "params": {
+     "m": 2
+    },
+    "expect": {
+     "d": 1.3416407864998738,
+     "disc": 44
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

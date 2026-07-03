@@ -1,0 +1,187 @@
+{
+ "id": "geometry/high-1/도형의_방정식/교점과_기울기",
+ "spec": {
+  "title": "두 직선의 교점과 기울기",
+  "params": [
+   {
+    "name": "m1",
+    "label": "직선1 기울기 m₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b1",
+    "label": "직선1 y절편 b₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "m2",
+    "label": "직선2 기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "b2",
+    "label": "직선2 y절편 b₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "xint=(b2-b1)/(m1-m2); yint=m1*xint+b1; th1=atan(m1)*180/pi; prod=m1*m2",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-10",
+      "=m1*(-10)+b1"
+     ],
+     "to": [
+      "=10",
+      "=m1*10+b1"
+     ],
+     "label": "직선1",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-10",
+      "=m2*(-10)+b2"
+     ],
+     "to": [
+      "=10",
+      "=m2*10+b2"
+     ],
+     "label": "직선2",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xint",
+      "=yint"
+     ],
+     "label": "교점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x",
+    "expr": "xint",
+    "digits": 3
+   },
+   {
+    "label": "교점 y",
+    "expr": "yint",
+    "digits": 3
+   },
+   {
+    "label": "직선1이 x축과 이루는 각 θ₁(°)",
+    "expr": "th1",
+    "digits": 2
+   },
+   {
+    "label": "m₁·m₂ (수직이면 -1)",
+    "expr": "prod",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "b1": 0,
+    "m2": -1,
+    "b2": 2
+   },
+   {
+    "m1": 2,
+    "b1": 1,
+    "m2": 0,
+    "b2": 5
+   },
+   {
+    "m1": 3,
+    "b1": 0,
+    "m2": 1,
+    "b2": 4
+   },
+   {
+    "m1": -2,
+    "b1": 3,
+    "m2": 1,
+    "b2": -3
+   }
+  ],
+  "invariants": [
+   "yint-(m1*xint+b1)",
+   "yint-(m2*xint+b2)",
+   "m1-tan(th1*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "b1": 0,
+     "m2": -1,
+     "b2": 2
+    },
+    "expect": {
+     "xint": 1,
+     "yint": 1
+    }
+   },
+   {
+    "params": {
+     "m1": 2,
+     "b1": 1,
+     "m2": 0,
+     "b2": 5
+    },
+    "expect": {
+     "xint": 2,
+     "yint": 5
+    }
+   },
+   {
+    "params": {
+     "m1": 3,
+     "b1": 0,
+     "m2": 1,
+     "b2": 4
+    },
+    "expect": {
+     "xint": 2,
+     "yint": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

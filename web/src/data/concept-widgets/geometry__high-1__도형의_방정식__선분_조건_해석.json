@@ -1,0 +1,161 @@
+{
+ "id": "geometry/high-1/도형의_방정식/선분_조건_해석",
+ "spec": {
+  "title": "선분의 매개변수 표현 P = A + t(B−A)",
+  "params": [
+   {
+    "name": "t",
+    "label": "t (진행도)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "px=1+4*t; py=1+2*t; AP=sqrt((px-1)^2+(py-1)^2); PB=sqrt((px-5)^2+(py-3)^2); AB=sqrt(20); collinear=(px-1)*2-(py-1)*4; sumdiff=AP+PB-AB",
+  "geometry": {
+   "range": [
+    -1,
+    6
+   ],
+   "yRange": [
+    -1,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      1
+     ],
+     "to": [
+      5,
+      3
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      1
+     ],
+     "label": "A(1,1)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      3
+     ],
+     "label": "B(5,3)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "t",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "P",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "Py",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "|AP|",
+    "expr": "AP",
+    "digits": 3
+   },
+   {
+    "label": "|PB|",
+    "expr": "PB",
+    "digits": 3
+   },
+   {
+    "label": "|AP|+|PB|",
+    "expr": "AP+PB",
+    "digits": 3
+   },
+   {
+    "label": "|AB|",
+    "expr": "AB",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 0.25
+   },
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1
+   }
+  ],
+  "invariants": [
+   "collinear",
+   "sumdiff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 1,
+     "AP": 0
+    }
+   },
+   {
+    "params": {
+     "t": 0.5
+    },
+    "expect": {
+     "px": 3,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "t": 1
+    },
+    "expect": {
+     "px": 5,
+     "py": 3,
+     "PB": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

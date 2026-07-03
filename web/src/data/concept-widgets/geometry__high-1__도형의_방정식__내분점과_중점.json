@@ -1,0 +1,166 @@
+{
+ "id": "geometry/high-1/도형의_방정식/내분점과_중점",
+ "spec": {
+  "title": "내분점과 중점",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (AP 쪽 비)",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (PB 쪽 비)",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "ax=-3; ay=-1; bx=4; by=3; den=m+n; px=(m*bx+n*ax)/den; py=(m*by+n*ay)/den; mx=(ax+bx)/2; my=(ay+by)/2",
+  "geometry": {
+   "range": [
+    -5,
+    6
+   ],
+   "yRange": [
+    -3,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M(중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(m:n)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "비 AP:PB",
+    "expr": "m/n",
+    "digits": 3
+   },
+   {
+    "label": "P_x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P_y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "중점 M",
+    "expr": "mx",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "n": 1
+   },
+   {
+    "m": 3,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 3
+   },
+   {
+    "m": 5,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "n*(px-ax)-m*(bx-px)",
+   "n*(py-ay)-m*(by-py)",
+   "(px-ax)*(by-ay)-(py-ay)*(bx-ax)",
+   "2*mx-ax-bx",
+   "2*my-ay-by"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "px": 0.5,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "px": 2.25,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "px": -1.25,
+     "py": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

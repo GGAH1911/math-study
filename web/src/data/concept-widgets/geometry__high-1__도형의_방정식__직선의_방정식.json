@@ -1,0 +1,130 @@
+{
+ "id": "geometry/high-1/도형의_방정식/직선의_방정식",
+ "spec": {
+  "title": "직선의 방정식 y = mx + n",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "y절편 n",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   }
+  ],
+  "scope": "y0 = n; y1 = m + n; slope = y1 - y0; xint = -n/m",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "m*x+n",
+     "label": "y = mx + n",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 m",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "y절편 n",
+    "expr": "n",
+    "digits": 2
+   },
+   {
+    "label": "x절편",
+    "expr": "xint",
+    "digits": 3
+   },
+   {
+    "label": "(1,·) 지날 때 y",
+    "expr": "y1",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": -3
+   },
+   {
+    "m": 1,
+    "n": 0
+   },
+   {
+    "m": -4,
+    "n": 5
+   },
+   {
+    "m": 0.5,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "slope - m",
+   "y0 - n",
+   "m*xint + n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": -3
+    },
+    "expect": {
+     "y0": -3,
+     "y1": -1,
+     "slope": 2,
+     "xint": 1.5
+    }
+   },
+   {
+    "params": {
+     "m": -4,
+     "n": 5
+    },
+    "expect": {
+     "y0": 5,
+     "y1": 1,
+     "slope": -4,
+     "xint": 1.25
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 0
+    },
+    "expect": {
+     "y0": 0,
+     "y1": 1,
+     "slope": 1,
+     "xint": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

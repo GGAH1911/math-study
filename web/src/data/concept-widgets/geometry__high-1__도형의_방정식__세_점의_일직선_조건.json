@@ -1,0 +1,172 @@
+{
+ "id": "geometry/high-1/도형의_방정식/세_점의_일직선_조건",
+ "spec": {
+  "title": "세 점의 일직선 조건 — 점 C를 움직여 det=0을 찾아라",
+  "params": [
+   {
+    "name": "cx",
+    "label": "C의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "C의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "x1=-2; y1=-1; x2=3; y2=2; m=(y2-y1)/(x2-x1); yline=y1+m*(cx-x1); det=(x2-x1)*(cy-y1)-(cx-x1)*(y2-y1); resid=cy-yline; area=abs(det)/2",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      -2.8
+     ],
+     "to": [
+      5,
+      3.2
+     ],
+     "label": "직선 AB"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -2,
+       -1
+      ],
+      [
+       3,
+       2
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -2,
+      -1
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      2
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "행렬식 det (=0이면 일직선)",
+    "expr": "det",
+    "digits": 3
+   },
+   {
+    "label": "직선 AB에서 C의 수직 이탈 resid",
+    "expr": "resid",
+    "digits": 3
+   },
+   {
+    "label": "삼각형 ABC 넓이 (=|det|/2)",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 0,
+    "cy": 0
+   },
+   {
+    "cx": 0.5,
+    "cy": 0.5
+   },
+   {
+    "cx": 1,
+    "cy": 1
+   },
+   {
+    "cx": -4,
+    "cy": -3.5
+   }
+  ],
+  "invariants": [
+   "det-(x2-x1)*resid",
+   "area-abs(det)/2",
+   "det-((x2-x1)*(cy-y1)-(cx-x1)*(y2-y1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 0,
+     "cy": 0
+    },
+    "expect": {
+     "det": -1,
+     "resid": -0.2,
+     "area": 0.5
+    }
+   },
+   {
+    "params": {
+     "cx": 0.5,
+     "cy": 0.5
+    },
+    "expect": {
+     "det": 0,
+     "resid": 0,
+     "area": 0
+    }
+   },
+   {
+    "params": {
+     "cx": 1,
+     "cy": 1
+    },
+    "expect": {
+     "det": 1,
+     "resid": 0.2,
+     "area": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

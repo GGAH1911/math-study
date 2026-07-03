@@ -1,0 +1,160 @@
+{
+ "id": "geometry/high-1/도형의_방정식/영역",
+ "spec": {
+  "title": "영역: 원의 부등식 x²+y²≤r²로 이해하기",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.3,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.6,
+    "step": 0.05
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.8,
+    "step": 0.05
+   }
+  ],
+  "scope": "d2 = px^2 + py^2; val = d2 - r^2; s = r/sqrt(d2); qx = px*s; qy = py*s",
+  "geometry": {
+   "range": [
+    -2.2,
+    2.2
+   ],
+   "yRange": [
+    -2.2,
+    2.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "경계 x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(테스트점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q(경계 위)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P까지 거리² (px²+py²)",
+    "expr": "d2",
+    "digits": 3
+   },
+   {
+    "label": "r²",
+    "expr": "r^2",
+    "digits": 3
+   },
+   {
+    "label": "판정값 d2−r² (음수:영역 안, 0:경계, 양수:밖)",
+    "expr": "val",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1,
+    "px": 0.6,
+    "py": 0.8
+   },
+   {
+    "r": 1.5,
+    "px": 0.3,
+    "py": 0.4
+   },
+   {
+    "r": 0.5,
+    "px": -0.7,
+    "py": 0.9
+   },
+   {
+    "r": 2,
+    "px": 1.5,
+    "py": 2
+   }
+  ],
+  "invariants": [
+   "qx^2+qy^2 - r^2",
+   "s*sqrt(d2) - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1,
+     "px": 0.3,
+     "py": 0.4
+    },
+    "expect": {
+     "d2": 0.25,
+     "val": -0.75,
+     "qx": 0.6,
+     "qy": 0.8
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "px": 1.5,
+     "py": 2
+    },
+    "expect": {
+     "d2": 6.25,
+     "val": 2.25,
+     "qx": 1.2,
+     "qy": 1.6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

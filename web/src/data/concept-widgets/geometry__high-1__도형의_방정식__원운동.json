@@ -1,0 +1,211 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원운동",
+ "spec": {
+  "title": "원운동 — 회전하는 점의 궤적",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "omega",
+    "label": "각속도 ω",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": "rad/s"
+   },
+   {
+    "name": "phi",
+    "label": "초기위상 φ",
+    "type": "slider",
+    "min": 0,
+    "max": 6.283,
+    "init": 0,
+    "step": 0.01,
+    "unit": "rad"
+   },
+   {
+    "name": "t",
+    "label": "시간 t",
+    "type": "slider",
+    "min": 0,
+    "max": 6.283,
+    "init": 0,
+    "step": 0.01,
+    "unit": "s"
+   }
+  ],
+  "scope": "th=omega*t+phi; px=r*cos(th); py=r*sin(th); vx=-r*omega*sin(th); vy=r*omega*cos(th); v=r*omega",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=px+0.15*vx",
+      "=py+0.15*vy"
+     ],
+     "color": "#e33",
+     "label": "v"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각 θ=ωt+φ",
+    "expr": "th",
+    "digits": 4
+   },
+   {
+    "label": "x=r·cosθ",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y=r·sinθ",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "속력 v=rω",
+    "expr": "v",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "omega": 1,
+    "phi": 0,
+    "t": 0
+   },
+   {
+    "r": 2,
+    "omega": 2,
+    "phi": 1,
+    "t": 1
+   },
+   {
+    "r": 3,
+    "omega": 1.5,
+    "phi": 0.5,
+    "t": 2
+   },
+   {
+    "r": 1,
+    "omega": 3,
+    "phi": 2,
+    "t": 0.7
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "px*vx+py*vy",
+   "sqrt(vx^2+vy^2)-r*omega"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "omega": 3.141592653589793,
+     "phi": 0,
+     "t": 0.16666666666666666
+    },
+    "expect": {
+     "th": 0.5235987755982988,
+     "px": 1.7320508075688774,
+     "py": 1,
+     "v": 6.283185307179586
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "omega": 3.141592653589793,
+     "phi": 0,
+     "t": 0.5
+    },
+    "expect": {
+     "th": 1.5707963267948966,
+     "px": 0,
+     "py": 2,
+     "v": 6.283185307179586
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "omega": 0,
+     "phi": 0,
+     "t": 3
+    },
+    "expect": {
+     "th": 0,
+     "px": 1,
+     "py": 0,
+     "v": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,276 @@
+{
+ "id": "geometry/high-1/도형의_방정식/무게중심",
+ "spec": {
+  "title": "삼각형의 무게중심 — 세 중선의 교점",
+  "params": [
+   {
+    "name": "Ax",
+    "label": "A_x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "Ay",
+    "label": "A_y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "Bx",
+    "label": "B_x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "By",
+    "label": "B_y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "Cx",
+    "label": "C_x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "Cy",
+    "label": "C_y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "Gx=(Ax+Bx+Cx)/3; Gy=(Ay+By+Cy)/3; mBCx=(Bx+Cx)/2; mBCy=(By+Cy)/2; mCAx=(Cx+Ax)/2; mCAy=(Cy+Ay)/2; mABx=(Ax+Bx)/2; mABy=(Ay+By)/2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=mBCx",
+      "=mBCy"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=mCAx",
+      "=mCAy"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=mABx",
+      "=mABy"
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mBCx",
+      "=mBCy"
+     ],
+     "label": "M"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Gx",
+      "=Gy"
+     ],
+     "label": "G",
+     "color": "#ef4444"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "G_x = (A_x+B_x+C_x)/3",
+    "expr": "Gx",
+    "digits": 3
+   },
+   {
+    "label": "G_y = (A_y+B_y+C_y)/3",
+    "expr": "Gy",
+    "digits": 3
+   },
+   {
+    "label": "AG : GM (중선 내분비, 2가 정답)",
+    "expr": "sqrt((Gx-Ax)^2+(Gy-Ay)^2)/sqrt((mBCx-Gx)^2+(mBCy-Gy)^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Ax": -3,
+    "Ay": -2,
+    "Bx": 4,
+    "By": -3,
+    "Cx": 1,
+    "Cy": 4
+   },
+   {
+    "Ax": 0,
+    "Ay": 0,
+    "Bx": 3,
+    "By": 0,
+    "Cx": 0,
+    "Cy": 3
+   },
+   {
+    "Ax": -3,
+    "Ay": -3,
+    "Bx": 3,
+    "By": -3,
+    "Cx": 0,
+    "Cy": 3
+   },
+   {
+    "Ax": 2,
+    "Ay": -4,
+    "Bx": -4,
+    "By": 1,
+    "Cx": 5,
+    "Cy": 5
+   }
+  ],
+  "invariants": [
+   "Gx - (Ax + 2/3*(mBCx-Ax))",
+   "Gy - (Ay + 2/3*(mBCy-Ay))",
+   "(Ax-Gx)+(Bx-Gx)+(Cx-Gx)",
+   "(Ay-Gy)+(By-Gy)+(Cy-Gy)",
+   "sqrt((Gx-Ax)^2+(Gy-Ay)^2) - 2*sqrt((mBCx-Gx)^2+(mBCy-Gy)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Ax": 0,
+     "Ay": 0,
+     "Bx": 3,
+     "By": 0,
+     "Cx": 0,
+     "Cy": 3
+    },
+    "expect": {
+     "Gx": 1,
+     "Gy": 1
+    }
+   },
+   {
+    "params": {
+     "Ax": -3,
+     "Ay": -3,
+     "Bx": 3,
+     "By": -3,
+     "Cx": 0,
+     "Cy": 3
+    },
+    "expect": {
+     "Gx": 0,
+     "Gy": -1
+    }
+   },
+   {
+    "params": {
+     "Ax": -3,
+     "Ay": -2,
+     "Bx": 4,
+     "By": -3,
+     "Cx": 1,
+     "Cy": 4
+    },
+    "expect": {
+     "Gx": 0.6666666667,
+     "Gy": -0.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

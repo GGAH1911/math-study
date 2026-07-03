@@ -1,0 +1,162 @@
+{
+ "id": "각의_변환",
+ "spec": {
+  "title": "각의 변환: 90°+θ 와 θ (단위원)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 90,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; p1x=cos(rad); p1y=sin(rad); rad2=(90+theta)*pi/180; p2x=cos(rad2); p2y=sin(rad2)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=p1x",
+      "=p1y"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p1x",
+      "=p1y"
+     ],
+     "label": "P(θ)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=p2x",
+      "=p2y"
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p2x",
+      "=p2y"
+     ],
+     "label": "P(90°+θ)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin(90°+θ) = P의 y좌표",
+    "expr": "p2y",
+    "digits": 4
+   },
+   {
+    "label": "cos θ (= sin(90°+θ) 이어야)",
+    "expr": "p1x",
+    "digits": 4
+   },
+   {
+    "label": "cos(90°+θ) = P의 x좌표",
+    "expr": "p2x",
+    "digits": 4
+   },
+   {
+    "label": "−sin θ (= cos(90°+θ) 이어야)",
+    "expr": "-p1y",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "p1x^2+p1y^2-1",
+   "p2x+p1y",
+   "p2y-p1x"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "p1x": 1,
+     "p1y": 0,
+     "p2x": 0,
+     "p2y": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "p1x": 0.8660254037844387,
+     "p1y": 0.5,
+     "p2x": -0.5,
+     "p2y": 0.8660254037844387
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "p1x": 0.5,
+     "p1y": 0.8660254037844386,
+     "p2x": -0.8660254037844386,
+     "p2y": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

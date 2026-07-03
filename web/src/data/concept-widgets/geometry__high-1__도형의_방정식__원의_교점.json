@@ -1,0 +1,183 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원의_교점",
+ "spec": {
+  "title": "두 원의 교점과 근축",
+  "params": [
+   {
+    "name": "d",
+    "label": "중심거리 d",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "r1",
+    "label": "반지름 r₁",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r2",
+    "label": "반지름 r₂",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xr = (r1^2 - r2^2 + d^2)/(2*d); disc = r1^2 - xr^2; yr = sqrt(disc)",
+  "geometry": {
+   "range": [
+    -4.5,
+    8
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r1",
+     "label": "원1"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=d",
+      0
+     ],
+     "radius": "=r2",
+     "label": "원2"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xr",
+      -4
+     ],
+     "to": [
+      "=xr",
+      4
+     ],
+     "label": "근축"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=yr"
+     ],
+     "label": "교점1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=-yr"
+     ],
+     "label": "교점2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근축 x = xr",
+    "expr": "xr",
+    "digits": 4
+   },
+   {
+    "label": "교점 높이 yr",
+    "expr": "yr",
+    "digits": 4
+   },
+   {
+    "label": "판별식 disc = r₁²−xr²",
+    "expr": "disc",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 3,
+    "r1": 2.5,
+    "r2": 2
+   },
+   {
+    "d": 2,
+    "r1": 2,
+    "r2": 2
+   },
+   {
+    "d": 4,
+    "r1": 3,
+    "r2": 3
+   },
+   {
+    "d": 2.5,
+    "r1": 2,
+    "r2": 1.5
+   }
+  ],
+  "invariants": [
+   "xr^2 + yr^2 - r1^2",
+   "(xr-d)^2 + yr^2 - r2^2",
+   "2*d*xr - (r1^2 - r2^2 + d^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 2,
+     "r1": 2,
+     "r2": 2
+    },
+    "expect": {
+     "xr": 1,
+     "disc": 3,
+     "yr": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "d": 4,
+     "r1": 3,
+     "r2": 3
+    },
+    "expect": {
+     "xr": 2,
+     "disc": 5,
+     "yr": 2.23606797749979
+    }
+   },
+   {
+    "params": {
+     "d": 2.5,
+     "r1": 2,
+     "r2": 1.5
+    },
+    "expect": {
+     "xr": 1.6,
+     "disc": 1.44,
+     "yr": 1.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "id": "geometry/high-1/도형의_방정식/내분점",
+ "spec": {
+  "title": "내분점 — 선분 AB를 m:n으로 나누기",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (B쪽 가중치)",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (A쪽 가중치)",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "ax=-3; ay=-1; bx=3; by=3; px=(m*bx+n*ax)/(m+n); py=(m*by+n*ay)/(m+n)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      -1
+     ],
+     "to": [
+      3,
+      3
+     ],
+     "label": "AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      -3,
+      -1
+     ],
+     "label": "A(-3,-1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      3
+     ],
+     "label": "B(3,3)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P_x = (m·bx+n·ax)/(m+n)",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P_y = (m·by+n·ay)/(m+n)",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "AP:PB = m:n",
+    "expr": "m/n",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "n": 1
+   },
+   {
+    "m": 3,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 3
+   },
+   {
+    "m": 2,
+    "n": 5
+   }
+  ],
+  "invariants": [
+   "(py-ay)*(bx-ax)-(px-ax)*(by-ay)",
+   "n*(px-ax)-m*(bx-px)",
+   "n*(py-ay)-m*(by-py)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "px": 0,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "px": 1.5,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "px": -1.5,
+     "py": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "id": "geometry/geometry-elective/이차곡선/포물선의_접선",
+ "spec": {
+  "title": "포물선 y=ax²의 접선",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (계수)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "t (접점 x좌표)",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "slope=2*a*t; xp=t; yp=a*t^2; icpt=-a*t^2; disc=4*a^2*t^2-4*a*a*t^2; onpt=2*a*t*t-a*t^2-a*t^2",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -8,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2",
+     "label": "포물선 y=ax²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "slope*x+icpt",
+     "label": "접선 y=2at·x−at²",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 (t, at²)",
+    "expr": "yp",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 2at",
+    "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "y절편 −at²",
+    "expr": "icpt",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "t": 1
+   },
+   {
+    "a": 0.5,
+    "t": -2
+   },
+   {
+    "a": 2,
+    "t": 0
+   },
+   {
+    "a": 1.5,
+    "t": 2
+   }
+  ],
+  "invariants": [
+   "disc",
+   "onpt",
+   "slope-2*a*t"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "t": 2
+    },
+    "expect": {
+     "slope": 4,
+     "yp": 4,
+     "icpt": -4
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "t": -2
+    },
+    "expect": {
+     "slope": -2,
+     "yp": 2,
+     "icpt": -2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "t": 0
+    },
+    "expect": {
+     "slope": 0,
+     "yp": 0,
+     "icpt": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

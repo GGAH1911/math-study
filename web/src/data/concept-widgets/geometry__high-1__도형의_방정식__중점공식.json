@@ -1,0 +1,188 @@
+{
+ "id": "geometry/high-1/도형의_방정식/중점공식",
+ "spec": {
+  "title": "중점공식: 두 점의 중점 M",
+  "params": [
+   {
+    "name": "x1",
+    "label": "A의 x좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "y1",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 8,
+    "step": 1
+   },
+   {
+    "name": "y2",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 10,
+    "step": 1
+   }
+  ],
+  "scope": "mx=(x1+x2)/2; my=(y1+y2)/2",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중점 M의 x = (x1+x2)/2",
+    "expr": "mx",
+    "digits": 2
+   },
+   {
+    "label": "중점 M의 y = (y1+y2)/2",
+    "expr": "my",
+    "digits": 2
+   },
+   {
+    "label": "AM 거리",
+    "expr": "sqrt((mx-x1)^2+(my-y1)^2)",
+    "digits": 3
+   },
+   {
+    "label": "MB 거리",
+    "expr": "sqrt((mx-x2)^2+(my-y2)^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 2,
+    "y1": 4,
+    "x2": 8,
+    "y2": 10
+   },
+   {
+    "x1": -3,
+    "y1": 1,
+    "x2": 5,
+    "y2": -3
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 6,
+    "y2": -8
+   },
+   {
+    "x1": -4,
+    "y1": -6,
+    "x2": 4,
+    "y2": 6
+   }
+  ],
+  "invariants": [
+   "2*mx-x1-x2",
+   "2*my-y1-y2",
+   "(mx-x1)^2+(my-y1)^2-((mx-x2)^2+(my-y2)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 2,
+     "y1": 4,
+     "x2": 8,
+     "y2": 10
+    },
+    "expect": {
+     "mx": 5,
+     "my": 7
+    }
+   },
+   {
+    "params": {
+     "x1": -3,
+     "y1": 1,
+     "x2": 5,
+     "y2": -3
+    },
+    "expect": {
+     "mx": 1,
+     "my": -1
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 6,
+     "y2": -8
+    },
+    "expect": {
+     "mx": 3,
+     "my": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

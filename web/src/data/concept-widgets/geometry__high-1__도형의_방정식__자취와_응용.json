@@ -1,0 +1,170 @@
+{
+ "id": "geometry/high-1/도형의_방정식/자취와_응용",
+ "spec": {
+  "title": "아폴로니우스 원 — 두 점까지 거리의 비가 일정한 점의 자취",
+  "params": [
+   {
+    "name": "k",
+    "label": "거리비 k = PA : PB",
+    "type": "slider",
+    "min": 0.35,
+    "max": 3.05,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "c=2; k2=k^2; cx=-c*(1+k2)/(1-k2); r=2*c*k/abs(1-k2); Px=cx; Py=r; PA=sqrt((Px+c)^2+Py^2); PB=sqrt((Px-c)^2+Py^2); ratio=PA/PB",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=cx",
+      0
+     ],
+     "radius": "=r",
+     "label": "자취(원)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      -2,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      -2,
+      0
+     ],
+     "label": "PA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      2,
+      0
+     ],
+     "label": "PB"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PA",
+    "expr": "PA",
+    "digits": 3
+   },
+   {
+    "label": "PB",
+    "expr": "PB",
+    "digits": 3
+   },
+   {
+    "label": "PA/PB (=k 확인)",
+    "expr": "ratio",
+    "digits": 3
+   },
+   {
+    "label": "원의 중심 x",
+    "expr": "cx",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 0.35
+   }
+  ],
+  "invariants": [
+   "ratio-k",
+   "PA-k*PB",
+   "(Px+c)^2+Py^2 - k2*((Px-c)^2+Py^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "cx": -3.3333333,
+     "r": 2.6666667
+    }
+   },
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "cx": 3.3333333,
+     "r": 2.6666667
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "cx": 2.5,
+     "r": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

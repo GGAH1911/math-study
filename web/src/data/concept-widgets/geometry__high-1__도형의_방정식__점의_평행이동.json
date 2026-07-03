@@ -1,0 +1,181 @@
+{
+ "id": "geometry/high-1/도형의_방정식/점의_평행이동",
+ "spec": {
+  "title": "점의 평행이동 P(x,y) → P'(x+a, y+b)",
+  "params": [
+   {
+    "name": "px",
+    "label": "P의 x좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "py",
+    "label": "P의 y좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "이동 a (→)",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "이동 b (↑)",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": -2,
+    "step": 1
+   }
+  ],
+  "scope": "x2=px+a; y2=py+b; dist=sqrt(a^2+b^2)",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P'"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "v=(a,b)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P",
+    "expr": "px",
+    "digits": 0
+   },
+   {
+    "label": "P'x = x+a",
+    "expr": "x2",
+    "digits": 0
+   },
+   {
+    "label": "P'y = y+b",
+    "expr": "y2",
+    "digits": 0
+   },
+   {
+    "label": "이동거리 |v|",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 2,
+    "py": 3,
+    "a": 4,
+    "b": -2
+   },
+   {
+    "px": -1,
+    "py": 4,
+    "a": 3,
+    "b": 2
+   },
+   {
+    "px": 0,
+    "py": 0,
+    "a": -5,
+    "b": 6
+   },
+   {
+    "px": -8,
+    "py": -8,
+    "a": 8,
+    "b": 8
+   }
+  ],
+  "invariants": [
+   "x2-px-a",
+   "y2-py-b",
+   "dist-sqrt(a^2+b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 2,
+     "py": 3,
+     "a": 1,
+     "b": -2
+    },
+    "expect": {
+     "x2": 3,
+     "y2": 1
+    }
+   },
+   {
+    "params": {
+     "px": -1,
+     "py": 4,
+     "a": 3,
+     "b": 2
+    },
+    "expect": {
+     "x2": 2,
+     "y2": 6
+    }
+   },
+   {
+    "params": {
+     "px": 0,
+     "py": 0,
+     "a": -5,
+     "b": 6
+    },
+    "expect": {
+     "x2": -5,
+     "y2": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

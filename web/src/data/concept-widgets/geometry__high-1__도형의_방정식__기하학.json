@@ -1,0 +1,195 @@
+{
+ "id": "geometry/high-1/도형의_방정식/기하학",
+ "spec": {
+  "title": "원의 방정식: 좌표로 나타낸 도형 (x-a)²+(y-b)²=r²",
+  "params": [
+   {
+    "name": "a",
+    "label": "중심 x좌표 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "중심 y좌표 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "원 위의 점 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; Px=a+r*cos(rad); Py=b+r*sin(rad); lhs=(Px-a)^2+(Py-b)^2",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=b"
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "C(a,b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=b"
+     ],
+     "to": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심 C",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "점 P에서 (Px-a)²+(Py-b)²",
+    "expr": "lhs",
+    "digits": 4
+   },
+   {
+    "label": "r² (항상 일치)",
+    "expr": "r^2",
+    "digits": 4
+   },
+   {
+    "label": "|CP| (=r 이어야)",
+    "expr": "sqrt(lhs)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "r": 3,
+    "theta": 30
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "r": 4,
+    "theta": 210
+   },
+   {
+    "a": -3,
+    "b": 4,
+    "r": 1.5,
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "(Px-a)^2+(Py-b)^2 - r^2",
+   "sqrt((Px-a)^2+(Py-b)^2) - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "Px": 0,
+     "Py": 2,
+     "lhs": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "r": 3,
+     "theta": 0
+    },
+    "expect": {
+     "Px": 4,
+     "Py": 2,
+     "lhs": 9
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -1,
+     "r": 4,
+     "theta": 30
+    },
+    "expect": {
+     "Px": 5.4641016151,
+     "Py": 1,
+     "lhs": 16
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

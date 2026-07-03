@@ -1,0 +1,154 @@
+{
+ "id": "geometry/high-1/도형의_방정식/좌표평면_도형",
+ "spec": {
+  "title": "좌표평면 위의 도형: 원 x²+y²=r²",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "점의 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); lhs=px^2+py^2",
+  "geometry": {
+   "range": [
+    -3.4,
+    3.4
+   ],
+   "yRange": [
+    -3.4,
+    3.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(x,y)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점 P의 x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "점 P의 y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "x²+y² (좌변)",
+    "expr": "lhs",
+    "digits": 4
+   },
+   {
+    "label": "r² (우변)",
+    "expr": "r^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1,
+    "theta": 0
+   },
+   {
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "r": 1,
+    "theta": 30
+   },
+   {
+    "r": 3,
+    "theta": 225
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "sqrt(px^2+py^2)-r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1,
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0,
+     "lhs": 1
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 2,
+     "lhs": 4
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "theta": 30
+    },
+    "expect": {
+     "px": 0.8660254037844387,
+     "py": 0.5,
+     "lhs": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

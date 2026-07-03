@@ -1,0 +1,191 @@
+{
+ "id": "geometry/high-1/도형의_방정식/거리와_최적화",
+ "spec": {
+  "title": "점과 직선 사이의 거리 · 수선의 발",
+  "params": [
+   {
+    "name": "px",
+    "label": "점 P의 x",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "직선 y절편 k",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=m; b=-1; c=k; num=m*px-py+k; den=sqrt(m^2+1); dist=abs(num)/den; t=num/(m^2+1); fx=px-t*m; fy=py+t",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=-6",
+      "=-6*m+k"
+     ],
+     "to": [
+      "=6",
+      "=6*m+k"
+     ],
+     "label": "y=mx+k"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d = |mx₀−y₀+k|/√(m²+1)",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "수선의 발 H_x",
+    "expr": "fx",
+    "digits": 3
+   },
+   {
+    "label": "수선의 발 H_y",
+    "expr": "fy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 3,
+    "py": 4,
+    "m": 0.5,
+    "k": 0
+   },
+   {
+    "px": 0,
+    "py": 0,
+    "m": 1,
+    "k": 2
+   },
+   {
+    "px": 2,
+    "py": -3,
+    "m": 0,
+    "k": 1
+   },
+   {
+    "px": -4,
+    "py": 2,
+    "m": -1,
+    "k": -1
+   }
+  ],
+  "invariants": [
+   "m*fx-fy+k",
+   "(fx-px)+(fy-py)*m",
+   "dist-sqrt((fx-px)^2+(fy-py)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 3,
+     "py": 4,
+     "m": 0.5,
+     "k": 0
+    },
+    "expect": {
+     "dist": 2.2360679775,
+     "fx": 4,
+     "fy": 2
+    }
+   },
+   {
+    "params": {
+     "px": 0,
+     "py": 0,
+     "m": 1,
+     "k": 2
+    },
+    "expect": {
+     "dist": 1.4142135624,
+     "fx": -1,
+     "fy": 1
+    }
+   },
+   {
+    "params": {
+     "px": 2,
+     "py": -3,
+     "m": 0,
+     "k": 1
+    },
+    "expect": {
+     "dist": 4,
+     "fx": 2,
+     "fy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

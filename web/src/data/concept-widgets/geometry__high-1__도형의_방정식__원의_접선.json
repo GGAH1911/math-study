@@ -1,0 +1,178 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원의_접선",
+ "spec": {
+  "title": "원의 접선 — 접점·반지름 수직·d=r",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "접점 각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); dirx=-sin(rad); diry=cos(rad); ax=px+3.5*dirx; ay=py+3.5*diry; bx=px-3.5*dirx; by=py-3.5*diry; dot=px*dirx+py*diry; dist=abs(cos(rad)*0+sin(rad)*0-r); onc=px^2+py^2-r^2; teq=cos(rad)*px+sin(rad)*py-r",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "x²+y²=r²"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "반지름 OP"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(접점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "접선 ℓ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 P",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "중심-접선 거리 d",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "OP·접선방향 (수직→0)",
+    "expr": "dot",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "theta": 0
+   },
+   {
+    "r": 2,
+    "theta": 30
+   },
+   {
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "r": 1.5,
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "onc",
+   "dot",
+   "teq",
+   "dist-r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "theta": 0
+    },
+    "expect": {
+     "px": 2,
+     "py": 0,
+     "dot": 0,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 2,
+     "dot": 0,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 30
+    },
+    "expect": {
+     "px": 1.7320508,
+     "py": 1,
+     "dot": 0,
+     "dist": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

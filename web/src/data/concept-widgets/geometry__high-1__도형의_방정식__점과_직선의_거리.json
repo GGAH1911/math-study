@@ -1,0 +1,212 @@
+{
+ "id": "geometry/high-1/도형의_방정식/점과_직선의_거리",
+ "spec": {
+  "title": "점과 직선의 거리 d = |ax₀+by₀+c|/√(a²+b²)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (법선 x성분)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (법선 y성분)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -15,
+    "max": 15,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "px",
+    "label": "P의 x좌표 x₀",
+    "type": "slider",
+    "min": -9,
+    "max": 9,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "py",
+    "label": "P의 y좌표 y₀",
+    "type": "slider",
+    "min": -9,
+    "max": 9,
+    "init": 4,
+    "step": 0.5
+   }
+  ],
+  "scope": "den=a^2+b^2; t=(a*px+b*py+c)/den; hx=px-a*t; hy=py-b*t; d=abs(a*px+b*py+c)/sqrt(den); mag=sqrt(den); ux=-b/mag; uy=a/mag; bx=-a*c/den; by=-b*c/den; lx0=bx-ux*25; ly0=by-uy*25; lx1=bx+ux*25; ly1=by+uy*25",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=lx0",
+      "=ly0"
+     ],
+     "to": [
+      "=lx1",
+      "=ly1"
+     ],
+     "label": "l: ax+by+c=0",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(x₀,y₀)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "H(수선의 발)",
+     "color": "#059669"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "d",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "H가 직선 위인지 (a·hx+b·hy+c, 0이어야)",
+    "expr": "a*hx+b*hy+c",
+    "digits": 6
+   },
+   {
+    "label": "PH와 직선의 내적 (0이어야 ⟂)",
+    "expr": "-b*(px-hx)+a*(py-hy)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4,
+    "c": -10,
+    "px": 0,
+    "py": 0
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": -2,
+    "px": 4,
+    "py": 4
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "c": 3,
+    "px": -3,
+    "py": 5
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "px": 3,
+    "py": 4
+   }
+  ],
+  "invariants": [
+   "a*hx+b*hy+c",
+   "-b*(px-hx)+a*(py-hy)",
+   "d-sqrt((px-hx)^2+(py-hy)^2)",
+   "d-abs(a*px+b*py+c)/sqrt(a^2+b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c": -10,
+     "px": 0,
+     "py": 0
+    },
+    "expect": {
+     "d": 2,
+     "hx": 1.2,
+     "hy": 1.6
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "px": 3,
+     "py": 4
+    },
+    "expect": {
+     "d": 3,
+     "hx": 0,
+     "hy": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": -2,
+     "px": 4,
+     "py": 4
+    },
+    "expect": {
+     "d": 4.242640687119285,
+     "hx": 1,
+     "hy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

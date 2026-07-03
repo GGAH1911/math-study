@@ -1,0 +1,194 @@
+{
+ "id": "geometry/high-1/도형의_방정식/현의_길이",
+ "spec": {
+  "title": "현의 길이 — 중심거리 d와 반지름 r",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "중심에서 현까지 거리 d",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "half=sqrt(r^2-d^2); L=2*half",
+  "geometry": {
+   "range": [
+    -5.6,
+    5.6
+   ],
+   "yRange": [
+    -5.6,
+    5.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-half",
+      "=d"
+     ],
+     "to": [
+      "=half",
+      "=d"
+     ],
+     "label": "현 L=2√(r²−d²)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-half",
+      "=d"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=half",
+      "=d"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=d"
+     ],
+     "label": "d"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=d"
+     ],
+     "label": "M"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=half",
+      "=d"
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "현의 절반 √(r²−d²)",
+    "expr": "half",
+    "digits": 3
+   },
+   {
+    "label": "현의 길이 L",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "지름(최대) 2r",
+    "expr": "2*r",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 5,
+    "d": 3
+   },
+   {
+    "r": 5,
+    "d": 4
+   },
+   {
+    "r": 2,
+    "d": 0
+   },
+   {
+    "r": 4,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "half^2 + d^2 - r^2",
+   "L - 2*sqrt(r^2 - d^2)",
+   "sqrt(half^2 + d^2) - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 5,
+     "d": 3
+    },
+    "expect": {
+     "half": 4,
+     "L": 8
+    }
+   },
+   {
+    "params": {
+     "r": 5,
+     "d": 4
+    },
+    "expect": {
+     "half": 3,
+     "L": 6
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "d": 0
+    },
+    "expect": {
+     "half": 2,
+     "L": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

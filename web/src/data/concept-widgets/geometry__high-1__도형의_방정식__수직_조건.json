@@ -1,0 +1,107 @@
+{
+ "id": "geometry/high-1/도형의_방정식/수직_조건",
+ "spec": {
+  "title": "수직 조건: 기울기의 곱 = -1",
+  "params": [
+   {
+    "name": "m1",
+    "label": "직선 ℓ₁의 기울기 m₁",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "m2 = -1/m1; prod = m1*m2",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "m1*x",
+     "label": "ℓ₁: y=m₁x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "(-1/m1)*x",
+     "label": "ℓ₂: y=-x/m₁",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m₁",
+    "expr": "m1",
+    "digits": 3
+   },
+   {
+    "label": "m₂ = -1/m₁",
+    "expr": "m2",
+    "digits": 3
+   },
+   {
+    "label": "m₁·m₂",
+    "expr": "prod",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1
+   },
+   {
+    "m1": 2
+   },
+   {
+    "m1": 0.5
+   },
+   {
+    "m1": 4
+   }
+  ],
+  "invariants": [
+   "m1*m2+1",
+   "1*1+m1*m2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1
+    },
+    "expect": {
+     "m2": -1,
+     "prod": -1
+    }
+   },
+   {
+    "params": {
+     "m1": 2
+    },
+    "expect": {
+     "m2": -0.5,
+     "prod": -1
+    }
+   },
+   {
+    "params": {
+     "m1": 0.5
+    },
+    "expect": {
+     "m2": -2,
+     "prod": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

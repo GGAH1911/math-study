@@ -1,0 +1,118 @@
+{
+ "id": "거듭제곱의_미분",
+ "spec": {
+  "title": "거듭제곱의 미분: y=x^n 과 접선의 기울기",
+  "params": [
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "접점 x=a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa = a^n; slope = n*a^(n-1)",
+  "plot": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^n",
+     "label": "y = x^n",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "slope*(x - a) + fa",
+     "label": "x=a 에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a) = a^n",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "f'(a) = n·a^(n-1) (접선 기울기)",
+    "expr": "slope",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "a": 2
+   },
+   {
+    "n": 3,
+    "a": 2
+   },
+   {
+    "n": 4,
+    "a": -1
+   },
+   {
+    "n": 5,
+    "a": 1
+   }
+  ],
+  "invariants": [
+   "a*slope - n*fa",
+   "fa - a^n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "a": 2
+    },
+    "expect": {
+     "fa": 4,
+     "slope": 4
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "a": 2
+    },
+    "expect": {
+     "fa": 8,
+     "slope": 12
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "a": -1
+    },
+    "expect": {
+     "fa": 1,
+     "slope": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

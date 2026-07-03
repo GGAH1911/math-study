@@ -1,0 +1,177 @@
+{
+ "id": "geometry/high-1/도형의_방정식/자취",
+ "spec": {
+  "title": "자취: 초점·준선으로 정의되는 포물선",
+  "params": [
+   {
+    "name": "t",
+    "label": "매개변수 t (점 P의 y좌표)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "py=t; px=t^2/4; PF=sqrt((px-1)^2+py^2); PQ=px+1",
+  "geometry": {
+   "range": [
+    -2,
+    6
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      -4.5
+     ],
+     "to": [
+      -1,
+      4.5
+     ],
+     "label": "준선 x=-1",
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "F(1,0)",
+     "color": "#c0392b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#2c3e50"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      "=py"
+     ],
+     "label": "Q",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "PF",
+     "color": "#c0392b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      -1,
+      "=py"
+     ],
+     "label": "PQ",
+     "color": "#2980b9"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PF (점 P에서 초점 F까지)",
+    "expr": "PF",
+    "digits": 3
+   },
+   {
+    "label": "PQ (점 P에서 준선까지)",
+    "expr": "PQ",
+    "digits": 3
+   },
+   {
+    "label": "조건식 PF - PQ (항상 0)",
+    "expr": "PF-PQ",
+    "digits": 6
+   },
+   {
+    "label": "자취의 방정식 y² - 4x",
+    "expr": "py^2-4*px",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 2
+   },
+   {
+    "t": -3
+   },
+   {
+    "t": 0
+   },
+   {
+    "t": 4
+   }
+  ],
+  "invariants": [
+   "PF-PQ",
+   "py^2-4*px"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 2
+    },
+    "expect": {
+     "px": 1,
+     "py": 2,
+     "PF": 2,
+     "PQ": 2
+    }
+   },
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 0,
+     "py": 0,
+     "PF": 1,
+     "PQ": 1
+    }
+   },
+   {
+    "params": {
+     "t": -4
+    },
+    "expect": {
+     "px": 4,
+     "py": -4,
+     "PF": 5,
+     "PQ": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

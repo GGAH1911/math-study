@@ -1,0 +1,162 @@
+{
+ "id": "geometry/high-1/도형의_방정식/두_직선의_수직_조건",
+ "spec": {
+  "title": "두 직선의 수직 조건 (m₁·m₂ = −1)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "직선1의 기울기각 θ",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; c1=cos(rad); s1=sin(rad); c2=-sin(rad); s2=cos(rad); m1=s1/c1; m2=s2/c2; dot=c1*c2+s1*s2; prod=m1*m2",
+  "geometry": {
+   "range": [
+    -2.4,
+    2.4
+   ],
+   "yRange": [
+    -2.4,
+    2.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-2.2*c1",
+      "=-2.2*s1"
+     ],
+     "to": [
+      "=2.2*c1",
+      "=2.2*s1"
+     ],
+     "color": "#2563eb",
+     "label": "직선1 (기울기 m₁)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-2.2*c2",
+      "=-2.2*s2"
+     ],
+     "to": [
+      "=2.2*c2",
+      "=2.2*s2"
+     ],
+     "color": "#dc2626",
+     "label": "직선2 (기울기 m₂)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c1",
+      "=s1"
+     ],
+     "label": "방향1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c2",
+      "=s2"
+     ],
+     "label": "방향2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m₁ (직선1 기울기)",
+    "expr": "m1",
+    "digits": 4
+   },
+   {
+    "label": "m₂ (직선2 기울기)",
+    "expr": "m2",
+    "digits": 4
+   },
+   {
+    "label": "m₁·m₂",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "방향벡터 내적",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 150
+   }
+  ],
+  "invariants": [
+   "dot",
+   "prod+1",
+   "c1^2+s1^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "m1": 0.5773502691896257,
+     "m2": -1.7320508075688774,
+     "prod": -1,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "m1": 1,
+     "m2": -1,
+     "prod": -1,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 135
+    },
+    "expect": {
+     "m1": -1,
+     "m2": 1,
+     "prod": -1,
+     "dot": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,264 @@
+{
+ "id": "geometry/high-1/도형의_방정식/무게중심_공식",
+ "spec": {
+  "title": "삼각형의 무게중심 — 좌표의 평균",
+  "params": [
+   {
+    "name": "Ax",
+    "label": "A_x",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.5
+   },
+   {
+    "name": "Ay",
+    "label": "A_y",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   },
+   {
+    "name": "Bx",
+    "label": "B_x",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "By",
+    "label": "B_y",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "Cx",
+    "label": "C_x",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "Cy",
+    "label": "C_y",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 5,
+    "step": 0.5
+   }
+  ],
+  "scope": "Gx=(Ax+Bx+Cx)/3; Gy=(Ay+By+Cy)/3; Mbcx=(Bx+Cx)/2; Mbcy=(By+Cy)/2; Macx=(Ax+Cx)/2; Macy=(Ay+Cy)/2; Mabx=(Ax+Bx)/2; Maby=(Ay+By)/2",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Mbcx",
+      "=Mbcy"
+     ],
+     "color": "#bbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Macx",
+      "=Macy"
+     ],
+     "color": "#bbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Mabx",
+      "=Maby"
+     ],
+     "color": "#bbb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Gx",
+      "=Gy"
+     ],
+     "label": "G",
+     "color": "#d00"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "G_x = (A_x+B_x+C_x)/3",
+    "expr": "Gx",
+    "digits": 3
+   },
+   {
+    "label": "G_y = (A_y+B_y+C_y)/3",
+    "expr": "Gy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Ax": 0,
+    "Ay": 0,
+    "Bx": 6,
+    "By": 0,
+    "Cx": 0,
+    "Cy": 6
+   },
+   {
+    "Ax": -3,
+    "Ay": 0,
+    "Bx": 3,
+    "By": 0,
+    "Cx": 0,
+    "Cy": 3
+   },
+   {
+    "Ax": -3,
+    "Ay": -2,
+    "Bx": 4,
+    "By": -1,
+    "Cx": 1,
+    "Cy": 5
+   },
+   {
+    "Ax": 2,
+    "Ay": -4,
+    "Bx": -2,
+    "By": 2,
+    "Cx": 6,
+    "Cy": 5
+   }
+  ],
+  "invariants": [
+   "3*Gx-(Ax+Bx+Cx)",
+   "3*Gy-(Ay+By+Cy)",
+   "Gx-(Ax+(2/3)*(Mbcx-Ax))",
+   "Gy-(Ay+(2/3)*(Mbcy-Ay))",
+   "Gx-(Bx+(2/3)*(Macx-Bx))",
+   "Gy-(Cy+(2/3)*(Maby-Cy))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Ax": 0,
+     "Ay": 0,
+     "Bx": 6,
+     "By": 0,
+     "Cx": 0,
+     "Cy": 6
+    },
+    "expect": {
+     "Gx": 2,
+     "Gy": 2
+    }
+   },
+   {
+    "params": {
+     "Ax": -3,
+     "Ay": 0,
+     "Bx": 3,
+     "By": 0,
+     "Cx": 0,
+     "Cy": 3
+    },
+    "expect": {
+     "Gx": 0,
+     "Gy": 1
+    }
+   },
+   {
+    "params": {
+     "Ax": 2,
+     "Ay": -4,
+     "Bx": -2,
+     "By": 2,
+     "Cx": 6,
+     "Cy": 5
+    },
+    "expect": {
+     "Gx": 2,
+     "Gy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

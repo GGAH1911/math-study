@@ -1,0 +1,162 @@
+{
+ "id": "geometry/high-1/도형의_방정식/내분점의_좌표",
+ "spec": {
+  "title": "내분점의 좌표 — 선분 AB를 m:n으로 나누기",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (A쪽 비율의 반대편 가중치)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "ax=-4; ay=-2; bx=4; by=4; s=m+n; px=(n*ax+m*bx)/s; py=(n*ay+m*by)/s; t=m/s",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -4,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A(-4,-2)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B(4,4)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "비율 m:n",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": " : n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "P의 x좌표 = (n·x₁+m·x₂)/(m+n)",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "P의 y좌표 = (n·y₁+m·y₂)/(m+n)",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "A→P 진행 비율 m/(m+n)",
+    "expr": "t",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 3
+   },
+   {
+    "m": 3,
+    "n": 1
+   },
+   {
+    "m": 2,
+    "n": 5
+   }
+  ],
+  "invariants": [
+   "(bx-ax)*(py-ay)-(by-ay)*(px-ax)",
+   "(px-ax)-(m/(m+n))*(bx-ax)",
+   "(py-ay)-(m/(m+n))*(by-ay)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "px": 0,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "px": -2,
+     "py": -0.5
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "px": 2,
+     "py": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

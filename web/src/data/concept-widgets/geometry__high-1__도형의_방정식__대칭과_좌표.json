@@ -1,0 +1,250 @@
+{
+ "id": "geometry/high-1/도형의_방정식/대칭과_좌표",
+ "spec": {
+  "title": "대칭과 좌표 — 점의 대칭이동",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (P의 x좌표)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b (P의 y좌표)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "px=a; py=b; xrx=a; xry=-b; yrx=-a; yry=b; orx=-a; ory=-b; drx=b; dry=a",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      -5
+     ],
+     "to": [
+      5,
+      5
+     ],
+     "label": "y=x"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(a,b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xrx",
+      "=xry"
+     ],
+     "label": "x축대칭 (a,-b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=yrx",
+      "=yry"
+     ],
+     "label": "y축대칭 (-a,b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=orx",
+      "=ory"
+     ],
+     "label": "원점대칭 (-a,-b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=drx",
+      "=dry"
+     ],
+     "label": "y=x대칭 (b,a)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=xrx",
+      "=xry"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=yrx",
+      "=yry"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=orx",
+      "=ory"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=drx",
+      "=dry"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x축 대칭",
+    "expr": "xrx",
+    "digits": 1
+   },
+   {
+    "label": "x축 대칭 y",
+    "expr": "xry",
+    "digits": 1
+   },
+   {
+    "label": "y축 대칭 x",
+    "expr": "yrx",
+    "digits": 1
+   },
+   {
+    "label": "원점 대칭 x",
+    "expr": "orx",
+    "digits": 1
+   },
+   {
+    "label": "y=x 대칭 x",
+    "expr": "drx",
+    "digits": 1
+   },
+   {
+    "label": "y=x 대칭 y",
+    "expr": "dry",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": -1,
+    "b": 4
+   },
+   {
+    "a": 2.5,
+    "b": -3
+   },
+   {
+    "a": -4,
+    "b": -1.5
+   }
+  ],
+  "invariants": [
+   "px-xrx",
+   "py+xry",
+   "px+yrx",
+   "py-yry",
+   "px+orx",
+   "py+ory",
+   "drx-py",
+   "dry-px"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 2
+    },
+    "expect": {
+     "xrx": 3,
+     "xry": -2,
+     "yrx": -3,
+     "yry": 2,
+     "orx": -3,
+     "ory": -2,
+     "drx": 2,
+     "dry": 3
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 4
+    },
+    "expect": {
+     "xrx": -1,
+     "xry": -4,
+     "yrx": 1,
+     "yry": 4,
+     "orx": 1,
+     "ory": -4,
+     "drx": 4,
+     "dry": -1
+    }
+   },
+   {
+    "params": {
+     "a": 2.5,
+     "b": -3
+    },
+    "expect": {
+     "xrx": 2.5,
+     "xry": 3,
+     "yrx": -2.5,
+     "yry": -3,
+     "orx": -2.5,
+     "ory": 3,
+     "drx": -3,
+     "dry": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,193 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원의_자취",
+ "spec": {
+  "title": "원의 자취: |CP| = r",
+  "params": [
+   {
+    "name": "a",
+    "label": "중심 x좌표 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "중심 y좌표 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "점 P의 위치각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 40,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=a+r*cos(rad); py=b+r*sin(rad); dist=sqrt((px-a)^2+(py-b)^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=b"
+     ],
+     "radius": "=r",
+     "label": "자취 (원)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "C(중심)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=b"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "CP"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 |CP|",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "자취 방정식 좌변 (x-a)²+(y-b)²",
+    "expr": "(px-a)^2+(py-b)^2",
+    "digits": 3
+   },
+   {
+    "label": "r²",
+    "expr": "r^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 0,
+    "r": 2,
+    "theta": 40
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "a": -2,
+    "b": 1,
+    "r": 3,
+    "theta": 210
+   },
+   {
+    "a": 0.5,
+    "b": -1.5,
+    "r": 1.5,
+    "theta": 300
+   }
+  ],
+  "invariants": [
+   "dist - r",
+   "(px-a)^2+(py-b)^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "r": 2,
+     "theta": 0
+    },
+    "expect": {
+     "px": 2,
+     "py": 0,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "px": 1,
+     "py": 3,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 1,
+     "r": 3,
+     "theta": 180
+    },
+    "expect": {
+     "px": -5,
+     "py": 1,
+     "dist": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

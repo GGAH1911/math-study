@@ -36,3 +36,4 @@ updated: 2026-06-28
 | 2026-07-01 08:35 | widget | accept 1 · skip 0 · 100% | cr avg 14647 · max 14647 · Σcr 14647 · Σcc 3983 · save≈$0.06 (n=1) |
 | 2026-07-02 03:45 | widget | accept 80 · skip 0 · 100% | cr avg 15309 · max 19353 · Σcr 1408448 · Σcc 369795 · save≈$5.88 (n=92) |
 | 2026-07-03 03:35 | widget | accept 79 · skip 1 · 99% | cr avg 16825 · max 19349 · Σcr 1615226 · Σcc 239804 · save≈$6.97 (n=96) |
+| 2026-07-04 03:32 | widget | accept 80 · skip 0 · 100% | cr avg 16744 · max 19344 · Σcr 1557180 · Σcc 239991 · save≈$6.71 (n=93) |

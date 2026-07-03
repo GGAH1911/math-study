@@ -1,0 +1,198 @@
+{
+ "id": "geometry/high-1/도형의_방정식/거리_최솟값",
+ "spec": {
+  "title": "점과 직선 사이의 거리 최솟값",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "직선 절편 k",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=m; b=-1; c=k; denom=m^2+1; t=(m*px - py + k)/denom; hx=px - t*m; hy=py + t; d=abs(m*px - py + k)/sqrt(denom)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -6,
+      "=m*(-6)+k"
+     ],
+     "to": [
+      6,
+      "=m*6+k"
+     ],
+     "label": "직선 y=mx+k",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "H(수선의 발)",
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=hx",
+      "=hy"
+     ],
+     "label": "d (최솟값)",
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 최솟값 d",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "수선의 발 H_x",
+    "expr": "hx",
+    "digits": 3
+   },
+   {
+    "label": "수선의 발 H_y",
+    "expr": "hy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "k": 1,
+    "px": 3,
+    "py": -2
+   },
+   {
+    "m": 0,
+    "k": 2,
+    "px": 1,
+    "py": -1
+   },
+   {
+    "m": 2,
+    "k": 0,
+    "px": 2,
+    "py": 1
+   },
+   {
+    "m": -1,
+    "k": 0.5,
+    "px": -3,
+    "py": 2
+   }
+  ],
+  "invariants": [
+   "m*hx - hy + k",
+   "(hx-px) + (hy-py)*m",
+   "sqrt((hx-px)^2+(hy-py)^2) - d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "k": 1,
+     "px": 3,
+     "py": -2
+    },
+    "expect": {
+     "t": 3,
+     "hx": 0,
+     "hy": 1,
+     "d": 4.242640687119285
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "k": 2,
+     "px": 1,
+     "py": -1
+    },
+    "expect": {
+     "t": 3,
+     "hx": 1,
+     "hy": 2,
+     "d": 3
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "k": 0,
+     "px": 2,
+     "py": 1
+    },
+    "expect": {
+     "t": 0.6,
+     "hx": 0.8,
+     "hy": 1.6,
+     "d": 1.3416407864998738
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

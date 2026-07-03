@@ -1,0 +1,195 @@
+{
+ "id": "geometry/high-1/도형의_방정식/직각_조건",
+ "spec": {
+  "title": "직각 조건: 두 직선의 수직 (기울기의 곱 = -1, 내적 = 0)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "ℓ₁의 방향각 θ",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; ax=cos(rad); ay=sin(rad); bx=-sin(rad); by=cos(rad); dot=ax*bx+ay*by; m1=ay/ax; m2=by/bx; mprod=m1*m2",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-1.35*ax",
+      "=-1.35*ay"
+     ],
+     "to": [
+      "=1.35*ax",
+      "=1.35*ay"
+     ],
+     "label": "ℓ₁ (기울기 m₁)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-1.35*bx",
+      "=-1.35*by"
+     ],
+     "to": [
+      "=1.35*bx",
+      "=1.35*by"
+     ],
+     "label": "ℓ₂ (기울기 m₂)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m₁ (ℓ₁ 기울기)",
+    "expr": "m1",
+    "digits": 3
+   },
+   {
+    "label": "m₂ (ℓ₂ 기울기)",
+    "expr": "m2",
+    "digits": 3
+   },
+   {
+    "label": "m₁·m₂ (항상 -1)",
+    "expr": "mprod",
+    "digits": 3
+   },
+   {
+    "label": "내적 OA·OB (항상 0)",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "ax*bx+ay*by",
+   "ax^2+ay^2-1",
+   "bx^2+by^2-1",
+   "m1*m2+1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "ax": 0.7071067811865476,
+     "ay": 0.7071067811865476,
+     "bx": -0.7071067811865476,
+     "by": 0.7071067811865476,
+     "dot": 0,
+     "m1": 1,
+     "m2": -1,
+     "mprod": -1
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "ax": 0.8660254037844387,
+     "ay": 0.5,
+     "bx": -0.5,
+     "by": 0.8660254037844387,
+     "dot": 0,
+     "mprod": -1
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "ax": 0.5,
+     "ay": 0.8660254037844387,
+     "bx": -0.8660254037844387,
+     "by": 0.5,
+     "dot": 0,
+     "mprod": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

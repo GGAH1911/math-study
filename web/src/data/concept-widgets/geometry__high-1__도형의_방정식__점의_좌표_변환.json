@@ -1,0 +1,225 @@
+{
+ "id": "geometry/high-1/도형의_방정식/점의_좌표_변환",
+ "spec": {
+  "title": "점의 좌표 변환 — 평행이동과 대칭이동",
+  "params": [
+   {
+    "name": "px",
+    "label": "P의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "py",
+    "label": "P의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "x축 평행이동 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "y축 평행이동 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "tx=px+a; ty=py+b; xrx=px; xry=-py; yrx=-px; yry=py; orx=-px; ory=-py; lrx=py; lry=px",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -8,
+      -8
+     ],
+     "to": [
+      8,
+      8
+     ],
+     "label": "y=x"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tx",
+      "=ty"
+     ],
+     "label": "평행이동 P'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xrx",
+      "=xry"
+     ],
+     "label": "x축대칭"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=yrx",
+      "=yry"
+     ],
+     "label": "y축대칭"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=orx",
+      "=ory"
+     ],
+     "label": "원점대칭"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=lrx",
+      "=lry"
+     ],
+     "label": "y=x대칭"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평행이동 (x+a, y+b)",
+    "expr": "tx",
+    "digits": 0
+   },
+   {
+    "label": "평행이동 y'",
+    "expr": "ty",
+    "digits": 0
+   },
+   {
+    "label": "y=x대칭 x'",
+    "expr": "lrx",
+    "digits": 0
+   },
+   {
+    "label": "y=x대칭 y'",
+    "expr": "lry",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 2,
+    "py": -3,
+    "a": 4,
+    "b": 1
+   },
+   {
+    "px": 1,
+    "py": 5,
+    "a": -2,
+    "b": 3
+   },
+   {
+    "px": -3,
+    "py": 2,
+    "a": 1,
+    "b": -4
+   },
+   {
+    "px": 0,
+    "py": 4,
+    "a": 2,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "tx-(px+a)",
+   "ty-(py+b)",
+   "xrx-px",
+   "xry+py",
+   "yrx+px",
+   "yry-py",
+   "orx+px",
+   "ory+py",
+   "lrx-py",
+   "lry-px",
+   "(px+orx)/2",
+   "(py+ory)/2",
+   "(py+xry)/2",
+   "(px+yrx)/2",
+   "(px+lrx)-(py+lry)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 2,
+     "py": -3,
+     "a": 4,
+     "b": 1
+    },
+    "expect": {
+     "tx": 6,
+     "ty": -2,
+     "xry": 3,
+     "yrx": -2,
+     "orx": -2,
+     "ory": 3,
+     "lrx": -3,
+     "lry": 2
+    }
+   },
+   {
+    "params": {
+     "px": 1,
+     "py": 5,
+     "a": -2,
+     "b": 3
+    },
+    "expect": {
+     "tx": -1,
+     "ty": 8,
+     "xry": -5,
+     "yrx": -1,
+     "orx": -1,
+     "ory": -5,
+     "lrx": 5,
+     "lry": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

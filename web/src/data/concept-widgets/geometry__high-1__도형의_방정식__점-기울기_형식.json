@@ -1,0 +1,137 @@
+{
+ "id": "geometry/high-1/도형의_방정식/점-기울기_형식",
+ "spec": {
+  "title": "점-기울기 형식: y − y₁ = m(x − x₁)",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁ (지나는 점 x)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "y1",
+    "label": "y₁ (지나는 점 y)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "m (기울기)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "b = y1 - m*x1; yAtX1 = m*x1 + b",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "m*(x - x1) + y1",
+     "label": "y = m(x − x₁) + y₁",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "y절편 b = y₁ − m·x₁",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "점에서의 y값 (=y₁ 이어야)",
+    "expr": "yAtX1",
+    "digits": 3
+   },
+   {
+    "label": "표준형",
+    "expr": "m",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 2,
+    "y1": -1,
+    "m": 3
+   },
+   {
+    "x1": 0,
+    "y1": 5,
+    "m": 2
+   },
+   {
+    "x1": -3,
+    "y1": 4,
+    "m": -1
+   },
+   {
+    "x1": 1.5,
+    "y1": -2,
+    "m": 0.5
+   }
+  ],
+  "invariants": [
+   "b + m*x1 - y1",
+   "yAtX1 - y1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 2,
+     "y1": -1,
+     "m": 3
+    },
+    "expect": {
+     "b": -7,
+     "yAtX1": -1
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 5,
+     "m": 2
+    },
+    "expect": {
+     "b": 5,
+     "yAtX1": 5
+    }
+   },
+   {
+    "params": {
+     "x1": -3,
+     "y1": 4,
+     "m": -1
+    },
+    "expect": {
+     "b": 1,
+     "yAtX1": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

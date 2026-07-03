@@ -1,0 +1,216 @@
+{
+ "id": "geometry/high-1/도형의_방정식/좌표를_이용한_넓이",
+ "spec": {
+  "title": "좌표를 이용한 넓이 — 신발끈 공식",
+  "params": [
+   {
+    "name": "x1",
+    "label": "A의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "y1",
+    "label": "A의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "x2",
+    "label": "B의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "y2",
+    "label": "B의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "x3",
+    "label": "C의 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "y3",
+    "label": "C의 y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "signed=1/2*(x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2)); area=abs(signed); alt=1/2*((x1*y2-x2*y1)+(x2*y3-x3*y2)+(x3*y1-x1*y3))",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ],
+      [
+       "=x3",
+       "=y3"
+      ]
+     ],
+     "label": "ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "부호있는 넓이",
+    "expr": "signed",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 4,
+    "y2": 0,
+    "x3": 1,
+    "y3": 3
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 2,
+    "y2": 0,
+    "x3": 0,
+    "y3": 2
+   },
+   {
+    "x1": 1,
+    "y1": 1,
+    "x2": 5,
+    "y2": 1,
+    "x3": 1,
+    "y3": 4
+   },
+   {
+    "x1": -2,
+    "y1": -1,
+    "x2": 3,
+    "y2": 0,
+    "x3": 0,
+    "y3": 4
+   }
+  ],
+  "invariants": [
+   "signed-alt",
+   "area-abs(signed)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 4,
+     "y2": 0,
+     "x3": 1,
+     "y3": 3
+    },
+    "expect": {
+     "signed": 6,
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 2,
+     "y2": 0,
+     "x3": 0,
+     "y3": 2
+    },
+    "expect": {
+     "signed": 2,
+     "area": 2
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": 1,
+     "x2": 5,
+     "y2": 1,
+     "x3": 1,
+     "y3": 4
+    },
+    "expect": {
+     "signed": 6,
+     "area": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

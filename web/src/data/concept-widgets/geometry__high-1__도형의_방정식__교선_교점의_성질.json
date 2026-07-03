@@ -1,0 +1,209 @@
+{
+ "id": "geometry/high-1/도형의_방정식/교선_교점의_성질",
+ "spec": {
+  "title": "두 원의 교선과 방멱 — 중심선에 수직",
+  "params": [
+   {
+    "name": "d",
+    "label": "중심거리 O₁O₂",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r1",
+    "label": "반지름 r₁",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r2",
+    "label": "반지름 r₂",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xr = (d^2 + r1^2 - r2^2)/(2*d); yp = sqrt(r1^2 - xr^2)",
+  "geometry": {
+   "range": [
+    -5.5,
+    9.5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r1"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=d",
+      0
+     ],
+     "radius": "=r2"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      0
+     ],
+     "label": "O₂"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d",
+      0
+     ],
+     "label": "중심선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xr",
+      "=-yp"
+     ],
+     "to": [
+      "=xr",
+      "=yp"
+     ],
+     "label": "교선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=yp"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=-yp"
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      0
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교선 x = xr",
+    "expr": "xr",
+    "digits": 4
+   },
+   {
+    "label": "교점 높이 yp",
+    "expr": "yp",
+    "digits": 4
+   },
+   {
+    "label": "M의 방멱(원1)  xr²-r1²",
+    "expr": "xr^2 - r1^2",
+    "digits": 4
+   },
+   {
+    "label": "M의 방멱(원2)  (xr-d)²-r2²",
+    "expr": "(xr - d)^2 - r2^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 4,
+    "r1": 3.5,
+    "r2": 2.5
+   },
+   {
+    "d": 4,
+    "r1": 3,
+    "r2": 3
+   },
+   {
+    "d": 3,
+    "r1": 3,
+    "r2": 2
+   },
+   {
+    "d": 5,
+    "r1": 4,
+    "r2": 3
+   }
+  ],
+  "invariants": [
+   "xr^2 + yp^2 - r1^2",
+   "(xr - d)^2 + yp^2 - r2^2",
+   "(xr^2 - r1^2) - ((xr - d)^2 - r2^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 5,
+     "r1": 4,
+     "r2": 3
+    },
+    "expect": {
+     "xr": 3.2,
+     "yp": 2.4
+    }
+   },
+   {
+    "params": {
+     "d": 4,
+     "r1": 3,
+     "r2": 3
+    },
+    "expect": {
+     "xr": 2,
+     "yp": 2.2360679775
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

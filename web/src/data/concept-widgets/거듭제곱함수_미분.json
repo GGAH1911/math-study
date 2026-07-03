@@ -1,0 +1,133 @@
+{
+ "id": "거듭제곱함수_미분",
+ "spec": {
+  "title": "거듭제곱함수의 미분: 접선의 기울기",
+  "params": [
+   {
+    "name": "r",
+    "label": "지수 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "접점 x₀",
+    "type": "slider",
+    "min": 0.25,
+    "max": 4,
+    "init": 2,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fx0 = x0^r; slope = r*x0^(r-1); euler = x0*slope - r*fx0",
+  "geometry": {
+   "range": [
+    -0.2,
+    3.2
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0.05,
+    3.2
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^r",
+     "label": "f(x)=x^r",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fx0 + slope*(x - x0)",
+     "label": "x₀에서의 접선",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)=x₀^r",
+    "expr": "fx0",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₀)=r·x₀^(r-1) (접선 기울기)",
+    "expr": "slope",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "x0": 2
+   },
+   {
+    "r": 0.5,
+    "x0": 4
+   },
+   {
+    "r": 3,
+    "x0": 1
+   },
+   {
+    "r": 1.5,
+    "x0": 2.25
+   }
+  ],
+  "invariants": [
+   "slope - r*x0^(r-1)",
+   "x0*slope - r*fx0",
+   "euler"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "x0": 2
+    },
+    "expect": {
+     "fx0": 4,
+     "slope": 4
+    }
+   },
+   {
+    "params": {
+     "r": 0.5,
+     "x0": 4
+    },
+    "expect": {
+     "fx0": 2,
+     "slope": 0.25
+    }
+   },
+   {
+    "params": {
+     "r": 3,
+     "x0": 1
+    },
+    "expect": {
+     "fx0": 1,
+     "slope": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

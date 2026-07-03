@@ -1,0 +1,182 @@
+{
+ "id": "geometry/high-1/도형의_방정식/교점의_위치_결정",
+ "spec": {
+  "title": "원과 직선의 교점 위치 결정",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "y절편 k",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "den=1+m^2; disc=r^2*den-k^2; sq=sqrt(abs(disc)); x1=(-m*k+sq)/den; y1=m*x1+k; x2=(-m*k-sq)/den; y2=m*x2+k; d=abs(k)/sqrt(den)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-4",
+      "=m*(-4)+k"
+     ],
+     "to": [
+      "=4",
+      "=m*4+k"
+     ],
+     "label": "y=mx+k",
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A",
+     "color": "red"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D/4 = r²(1+m²)−k²",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "중심-직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "교점 개수 (D>0:2, =0:접 1, <0:0)",
+    "expr": "disc>1e-9?2:(disc< -1e-9?0:1)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "m": 1,
+    "k": 0
+   },
+   {
+    "r": 2,
+    "m": 0,
+    "k": 1
+   },
+   {
+    "r": 3,
+    "m": 2,
+    "k": 1
+   },
+   {
+    "r": 1,
+    "m": 0,
+    "k": 0
+   }
+  ],
+  "invariants": [
+   "y1-(m*x1+k)",
+   "y2-(m*x2+k)",
+   "x1^2+y1^2-r^2",
+   "x2^2+y2^2-r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "m": 1,
+     "k": 0
+    },
+    "expect": {
+     "disc": 8,
+     "x1": 1.4142135623730951,
+     "y1": 1.4142135623730951,
+     "x2": -1.4142135623730951,
+     "y2": -1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "m": 0,
+     "k": 1
+    },
+    "expect": {
+     "disc": 3,
+     "x1": 1.7320508075688772,
+     "y1": 1,
+     "x2": -1.7320508075688772,
+     "y2": 1
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "m": 0,
+     "k": 0
+    },
+    "expect": {
+     "disc": 1,
+     "x1": 1,
+     "y1": 0,
+     "x2": -1,
+     "y2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

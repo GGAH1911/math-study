@@ -1,0 +1,181 @@
+{
+ "id": "geometry/high-1/도형의_방정식/거리함수",
+ "spec": {
+  "title": "두 점 사이의 거리 (거리함수)",
+  "params": [
+   {
+    "name": "qx",
+    "label": "Q의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "qy",
+    "label": "Q의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "px=-2; py=-1; dx=qx-px; dy=qy-py; d=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      -2,
+      -1
+     ],
+     "label": "P(-2,-1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      -1
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "d",
+     "color": "#e11"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      -1
+     ],
+     "to": [
+      "=qx",
+      -1
+     ],
+     "label": "|Δx|",
+     "color": "#38a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=qx",
+      -1
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "|Δy|",
+     "color": "#3a6"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      -1
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Δx = x₂-x₁",
+    "expr": "dx",
+    "digits": 3
+   },
+   {
+    "label": "Δy = y₂-y₁",
+    "expr": "dy",
+    "digits": 3
+   },
+   {
+    "label": "d = √(Δx²+Δy²)",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "qx": 2,
+    "qy": 2
+   },
+   {
+    "qx": 1,
+    "qy": 3
+   },
+   {
+    "qx": 2,
+    "qy": 3
+   },
+   {
+    "qx": -4,
+    "qy": 0
+   }
+  ],
+  "invariants": [
+   "d*d - (dx*dx + dy*dy)",
+   "dx - (qx - px)",
+   "dy - (qy - py)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "qx": 2,
+     "qy": 2
+    },
+    "expect": {
+     "dx": 4,
+     "dy": 3,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "qx": 1,
+     "qy": 3
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "qx": -4,
+     "qy": 0
+    },
+    "expect": {
+     "dx": -2,
+     "dy": 1,
+     "d": 2.23606797749979
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,188 @@
+{
+ "id": "geometry/high-1/도형의_방정식/교점조건",
+ "spec": {
+  "title": "직선과 원의 교점조건 — 중심까지의 거리 d와 반지름 r",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "직선 y절편 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "원 반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "m2=m^2+1; d=abs(c)/sqrt(m2); fx=-c*m/m2; fy=c/m2; disc=m2*r^2-c^2",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "원 x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      "=m*(-5)+c"
+     ],
+     "to": [
+      5,
+      "=m*5+c"
+     ],
+     "label": "직선 y=mx+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O(중심)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심~직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "판별식 r²(1+m²)−c² (양수→교점2, 0→접함, 음수→없음)",
+    "expr": "disc",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "c": 2,
+    "r": 2.5
+   },
+   {
+    "m": 0,
+    "c": 3,
+    "r": 2
+   },
+   {
+    "m": -2,
+    "c": 1,
+    "r": 3
+   },
+   {
+    "m": 0.5,
+    "c": -4,
+    "r": 1.5
+   }
+  ],
+  "invariants": [
+   "fy-(m*fx+c)",
+   "d*d*m2-c*c",
+   "sqrt(fx*fx+fy*fy)-d",
+   "disc-m2*(r*r-d*d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0,
+     "c": 3,
+     "r": 2
+    },
+    "expect": {
+     "d": 3,
+     "fx": 0,
+     "fy": 3,
+     "disc": -5
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "c": 0,
+     "r": 2
+    },
+    "expect": {
+     "d": 0,
+     "fx": 0,
+     "fy": 0,
+     "disc": 8
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "c": 2,
+     "r": 2
+    },
+    "expect": {
+     "d": 2,
+     "fx": 0,
+     "fy": 2,
+     "disc": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

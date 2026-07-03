@@ -1,0 +1,183 @@
+{
+ "id": "geometry/high-1/도형의_방정식/원과_직선의_위치관계",
+ "spec": {
+  "title": "원과 직선의 위치관계 (d와 r 비교)",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "직선 y절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "d=abs(b)/sqrt(m^2+1); fx=-m*b/(m^2+1); fy=b/(m^2+1)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      "=m*(-5)+b"
+     ],
+     "to": [
+      5,
+      "=m*5+b"
+     ],
+     "label": "ℓ: y=mx+b"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "d (중심→직선 거리)",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "r (반지름)",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "d − r  (음수:교차·0:접함·양수:외부)",
+    "expr": "d-r",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0,
+    "b": 3,
+    "r": 2
+   },
+   {
+    "m": 1,
+    "b": 2,
+    "r": 2
+   },
+   {
+    "m": 2,
+    "b": -4,
+    "r": 3
+   },
+   {
+    "m": -1.5,
+    "b": 1,
+    "r": 1.5
+   }
+  ],
+  "invariants": [
+   "m*fx-fy+b",
+   "sqrt(fx^2+fy^2)-d",
+   "fx+m*fy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0,
+     "b": 3,
+     "r": 2
+    },
+    "expect": {
+     "d": 3,
+     "fx": 0,
+     "fy": 3
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "b": 2,
+     "r": 2
+    },
+    "expect": {
+     "d": 1.4142135624,
+     "fx": -1,
+     "fy": 1
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "b": -4,
+     "r": 3
+    },
+    "expect": {
+     "d": 1.788854382,
+     "fx": 1.6,
+     "fy": -0.8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,211 @@
+{
+ "id": "geometry/high-1/도형의_방정식/거리와_도형의_넓이",
+ "spec": {
+  "title": "두 점 사이의 거리 — 피타고라스",
+  "params": [
+   {
+    "name": "x1",
+    "label": "P의 x",
+    "type": "slider",
+    "min": -6,
+    "max": 8,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "y1",
+    "label": "P의 y",
+    "type": "slider",
+    "min": -6,
+    "max": 8,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "Q의 x",
+    "type": "slider",
+    "min": -6,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "y2",
+    "label": "Q의 y",
+    "type": "slider",
+    "min": -6,
+    "max": 8,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "dx=x2-x1; dy=y2-y1; dist=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -7,
+    9
+   ],
+   "yRange": [
+    -7,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "d"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "Δx"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "Δy"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "직각"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Δx",
+    "expr": "dx",
+    "digits": 2
+   },
+   {
+    "label": "Δy",
+    "expr": "dy",
+    "digits": 2
+   },
+   {
+    "label": "거리 d",
+    "expr": "dist",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 3,
+    "y2": 4
+   },
+   {
+    "x1": 1,
+    "y1": 2,
+    "x2": 4,
+    "y2": 6
+   },
+   {
+    "x1": -2,
+    "y1": 1,
+    "x2": 4,
+    "y2": -3
+   },
+   {
+    "x1": 5,
+    "y1": 5,
+    "x2": 5,
+    "y2": -1
+   }
+  ],
+  "invariants": [
+   "dist^2 - dx^2 - dy^2",
+   "dx-(x2-x1)",
+   "dy-(y2-y1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "dist": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 6,
+     "y2": 8
+    },
+    "expect": {
+     "dx": 6,
+     "dy": 8,
+     "dist": 10
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": 2,
+     "x2": 4,
+     "y2": 6
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "dist": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

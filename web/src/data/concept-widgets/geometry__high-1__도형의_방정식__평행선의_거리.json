@@ -1,0 +1,205 @@
+{
+ "id": "geometry/high-1/도형의_방정식/평행선의_거리",
+ "spec": {
+  "title": "평행선 사이의 거리",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (y계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "c1",
+    "label": "c₁ (직선1 상수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "c2",
+    "label": "c₂ (직선2 상수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "s=a^2+b^2; n=sqrt(s); p1x=-c1*a/s; p1y=-c1*b/s; p2x=-c2*a/s; p2y=-c2*b/s; ux=b/n; uy=-a/n; L=6; l1ax=p1x-L*ux; l1ay=p1y-L*uy; l1bx=p1x+L*ux; l1by=p1y+L*uy; l2ax=p2x-L*ux; l2ay=p2y-L*uy; l2bx=p2x+L*ux; l2by=p2y+L*uy; d=abs(c1-c2)/n",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=l1ax",
+      "=l1ay"
+     ],
+     "to": [
+      "=l1bx",
+      "=l1by"
+     ],
+     "label": "직선1: ax+by+c₁=0",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=l2ax",
+      "=l2ay"
+     ],
+     "to": [
+      "=l2bx",
+      "=l2by"
+     ],
+     "label": "직선2: ax+by+c₂=0",
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=p1x",
+      "=p1y"
+     ],
+     "to": [
+      "=p2x",
+      "=p2y"
+     ],
+     "label": "거리 d",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p1x",
+      "=p1y"
+     ],
+     "label": "H₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p2x",
+      "=p2y"
+     ],
+     "label": "H₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 계수 제곱합 √(a²+b²)",
+    "expr": "n",
+    "digits": 4
+   },
+   {
+    "label": "거리 d = |c₁−c₂|/√(a²+b²)",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c1": -2,
+    "c2": 4
+   },
+   {
+    "a": 3,
+    "b": 4,
+    "c1": 0,
+    "c2": 10
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c1": -3,
+    "c2": 2
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "c1": 5,
+    "c2": -1
+   }
+  ],
+  "invariants": [
+   "a*p1x+b*p1y+c1",
+   "a*p2x+b*p2y+c2",
+   "(p2x-p1x)*ux+(p2y-p1y)*uy",
+   "sqrt((p2x-p1x)^2+(p2y-p1y)^2)-d",
+   "d-abs(c1-c2)/sqrt(a^2+b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c1": 0,
+     "c2": 10
+    },
+    "expect": {
+     "d": 2,
+     "p1x": 0,
+     "p1y": 0,
+     "p2x": -1.2,
+     "p2y": -1.6
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c1": -3,
+     "c2": 2
+    },
+    "expect": {
+     "d": 5,
+     "p1x": 0,
+     "p1y": 3,
+     "p2x": 0,
+     "p2y": -2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c1": -2,
+     "c2": 4
+    },
+    "expect": {
+     "d": 1.6641005886756874
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

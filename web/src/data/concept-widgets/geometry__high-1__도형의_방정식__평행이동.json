@@ -1,0 +1,188 @@
+{
+ "id": "geometry/high-1/도형의_방정식/평행이동",
+ "spec": {
+  "title": "평행이동: 도형을 (a, b)만큼 밀기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x축 이동)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (y축 이동)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "px=1; py=2; qx=px+a; qy=py+b",
+  "geometry": {
+   "range": [
+    -7,
+    10
+   ],
+   "yRange": [
+    -7,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       1,
+       2
+      ]
+     ],
+     "label": "원래 도형"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0+a",
+       "=0+b"
+      ],
+      [
+       "=3+a",
+       "=0+b"
+      ],
+      [
+       "=1+a",
+       "=2+b"
+      ]
+     ],
+     "label": "이동한 도형"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      2
+     ],
+     "label": "P(1,2)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "P'"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      2
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "이동벡터 (a,b)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "P' x = 1+a",
+    "expr": "qx",
+    "digits": 2
+   },
+   {
+    "label": "P' y = 2+b",
+    "expr": "qy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": -1,
+    "b": 0
+   },
+   {
+    "a": 0,
+    "b": -4
+   },
+   {
+    "a": 4.5,
+    "b": 2.5
+   }
+  ],
+  "invariants": [
+   "qx-px-a",
+   "qy-py-b",
+   "sqrt((3+a-a)^2+(0+b-b)^2)-3",
+   "sqrt((1+a-(0+a))^2+(2+b-(0+b))^2)-sqrt(1^2+2^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "qx": 3,
+     "qy": 5
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0
+    },
+    "expect": {
+     "qx": 0,
+     "qy": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -4
+    },
+    "expect": {
+     "qx": 1,
+     "qy": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

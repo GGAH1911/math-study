@@ -1,0 +1,232 @@
+{
+ "id": "geometry/high-1/도형의_방정식/거리공식",
+ "spec": {
+  "title": "두 점 사이의 거리 (거리공식)",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "y1",
+    "label": "y₁",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "y2",
+    "label": "y₂",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 6,
+    "step": 0.5
+   }
+  ],
+  "scope": "dx=x2-x1; dy=y2-y1; d=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -6.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ]
+     ],
+     "label": "직각삼각형"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "d (빗변)",
+     "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "|x₂-x₁|",
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "|y₂-y₁|",
+     "color": "green"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₂-x₁",
+    "expr": "dx",
+    "digits": 3
+   },
+   {
+    "label": "y₂-y₁",
+    "expr": "dy",
+    "digits": 3
+   },
+   {
+    "label": "거리 d",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 1,
+    "y1": 2,
+    "x2": 4,
+    "y2": 6
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 3,
+    "y2": 4
+   },
+   {
+    "x1": -1,
+    "y1": -1,
+    "x2": 2,
+    "y2": 3
+   },
+   {
+    "x1": 2,
+    "y1": 5,
+    "x2": 2,
+    "y2": 1
+   }
+  ],
+  "invariants": [
+   "d^2 - dx^2 - dy^2",
+   "d - sqrt((x2-x1)^2+(y2-y1)^2)",
+   "dx*dy - (x2-x1)*(y2-y1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 1,
+     "y1": 2,
+     "x2": 4,
+     "y2": 6
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 2,
+     "y1": 5,
+     "x2": 2,
+     "y2": 1
+    },
+    "expect": {
+     "dx": 0,
+     "dy": -4,
+     "d": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,204 @@
+{
+ "id": "geometry/high-1/도형의_방정식/좌표와_도형",
+ "spec": {
+  "title": "이차함수와 직선의 교점으로 만드는 삼각형의 길이·넓이",
+  "params": [
+   {
+    "name": "a",
+    "label": "포물선 계수 a (y=ax²)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "수평선 높이 k (y=k)",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 4,
+    "step": 0.5
+   }
+  ],
+  "scope": "xr = sqrt(k/a); xl = -sqrt(k/a); L = xr - xl; Area = L*k/2",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=xl",
+       "=k"
+      ],
+      [
+       "=xr",
+       "=k"
+      ]
+     ],
+     "label": "△OAB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xl",
+      "=k"
+     ],
+     "to": [
+      "=xr",
+      "=k"
+     ],
+     "label": "현 AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xl",
+      "=k"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xr",
+      "=k"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2",
+     "label": "y=ax²",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "k",
+     "label": "y=k",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 교점 A의 x좌표",
+    "expr": "xl",
+    "digits": 4
+   },
+   {
+    "label": "오른쪽 교점 B의 x좌표",
+    "expr": "xr",
+    "digits": 4
+   },
+   {
+    "label": "현 AB의 길이 L",
+    "expr": "L",
+    "digits": 4
+   },
+   {
+    "label": "삼각형 OAB의 넓이",
+    "expr": "Area",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "k": 4
+   },
+   {
+    "a": 1,
+    "k": 9
+   },
+   {
+    "a": 2,
+    "k": 8
+   },
+   {
+    "a": 0.5,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "a*xr^2 - k",
+   "a*xl^2 - k",
+   "L - 2*sqrt(k/a)",
+   "Area - L*k/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "k": 4
+    },
+    "expect": {
+     "xr": 2,
+     "xl": -2,
+     "L": 4,
+     "Area": 8
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "k": 9
+    },
+    "expect": {
+     "xr": 3,
+     "xl": -3,
+     "L": 6,
+     "Area": 27
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "k": 8
+    },
+    "expect": {
+     "xr": 2,
+     "xl": -2,
+     "L": 4,
+     "Area": 16
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

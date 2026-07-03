@@ -1,0 +1,148 @@
+{
+ "id": "geometry/high-1/도형의_방정식/자취와_궤적",
+ "spec": {
+  "title": "자취와 궤적 — 원점에서 거리 5인 점의 궤적",
+  "params": [
+   {
+    "name": "t",
+    "label": "매개변수 t (각도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=t*pi/180; px=5*cos(rad); py=5*sin(rad); d=sqrt(px^2+py^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 5,
+     "label": "자취: x²+y²=25"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "거리 d"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(t)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P의 x좌표 (5cos t)",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P의 y좌표 (5sin t)",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "원점 O로부터의 거리 d",
+    "expr": "d",
+    "digits": 6
+   },
+   {
+    "label": "조건식 x²+y² (항상 25)",
+    "expr": "px^2+py^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 90
+   },
+   {
+    "t": 180
+   },
+   {
+    "t": 270
+   },
+   {
+    "t": 45
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-25",
+   "d-5"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "px": 5,
+     "py": 0,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "t": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 5,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "t": 30
+    },
+    "expect": {
+     "px": 4.330127018922194,
+     "py": 2.5,
+     "d": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

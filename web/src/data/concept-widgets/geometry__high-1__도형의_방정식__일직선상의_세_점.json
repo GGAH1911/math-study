@@ -1,0 +1,175 @@
+{
+ "id": "geometry/high-1/도형의_방정식/일직선상의_세_점",
+ "spec": {
+  "title": "일직선상의 세 점 — 점 C를 움직여 보기",
+  "params": [
+   {
+    "name": "cx",
+    "label": "C의 x좌표",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "C의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=-2; ay=-1; bx=2; by=1; det=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax); det2=ax*(by-cy)+bx*(cy-ay)+cx*(ay-by); slope1=(by-ay)/(bx-ax); slope2=(cy-ay)/(cx-ax); area=abs(det)/2",
+  "geometry": {
+   "range": [
+    -4.5,
+    4.5
+   ],
+   "yRange": [
+    -3.2,
+    3.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      -2
+     ],
+     "to": [
+      4,
+      2
+     ],
+     "label": "직선 AB",
+     "color": "#888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ],
+     "color": "#f59e0b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "행렬식 det = (x₂-x₁)(y₃-y₁)-(y₂-y₁)(x₃-x₁)",
+    "expr": "det",
+    "digits": 4
+   },
+   {
+    "label": "삼각형 ABC 넓이 (=|det|/2, 0이면 일직선)",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "AB의 기울기",
+    "expr": "slope1",
+    "digits": 4
+   },
+   {
+    "label": "AC의 기울기 (AB와 같으면 일직선)",
+    "expr": "slope2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 1,
+    "cy": 2
+   },
+   {
+    "cx": -3,
+    "cy": 0
+   },
+   {
+    "cx": 2,
+    "cy": -1
+   },
+   {
+    "cx": 0,
+    "cy": 3
+   }
+  ],
+  "invariants": [
+   "det - det2",
+   "slope1 - 0.5"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 0,
+     "cy": 0
+    },
+    "expect": {
+     "det": 0,
+     "area": 0
+    }
+   },
+   {
+    "params": {
+     "cx": 2,
+     "cy": 2
+    },
+    "expect": {
+     "det": 4,
+     "area": 2
+    }
+   },
+   {
+    "params": {
+     "cx": -2,
+     "cy": 1
+    },
+    "expect": {
+     "det": 8,
+     "area": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

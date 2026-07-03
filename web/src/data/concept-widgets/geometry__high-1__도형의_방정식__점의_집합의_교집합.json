@@ -1,0 +1,179 @@
+{
+ "id": "geometry/high-1/도형의_방정식/점의_집합의_교집합",
+ "spec": {
+  "title": "두 직선의 교집합 — 연립방정식의 해",
+  "params": [
+   {
+    "name": "m1",
+    "label": "직선1 기울기 m₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "b1",
+    "label": "직선1 y절편 b₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "m2",
+    "label": "직선2 기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b2",
+    "label": "직선2 y절편 b₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   }
+  ],
+  "scope": "den=m1-m2; px=(b2-b1)/(m1-m2); py=m1*px+b1",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -6,
+      "=m1*(-6)+b1"
+     ],
+     "to": [
+      6,
+      "=m1*6+b1"
+     ],
+     "label": "L₁"
+    },
+    {
+     "type": "line",
+     "from": [
+      -6,
+      "=m2*(-6)+b2"
+     ],
+     "to": [
+      6,
+      "=m2*6+b2"
+     ],
+     "label": "L₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "교점 L₁∩L₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "교점 y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "기울기 차 m₁−m₂ (0이면 평행→해 없음)",
+    "expr": "den",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": -1,
+    "b1": 2,
+    "m2": 2,
+    "b2": -1
+   },
+   {
+    "m1": 1,
+    "b1": 0,
+    "m2": -1,
+    "b2": 4
+   },
+   {
+    "m1": 0,
+    "b1": 3,
+    "m2": 2,
+    "b2": -1
+   },
+   {
+    "m1": -2,
+    "b1": 1,
+    "m2": 1,
+    "b2": -2
+   }
+  ],
+  "invariants": [
+   "py-(m1*px+b1)",
+   "py-(m2*px+b2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": -1,
+     "b1": 2,
+     "m2": 2,
+     "b2": -1
+    },
+    "expect": {
+     "px": 1,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "m1": 1,
+     "b1": 0,
+     "m2": -1,
+     "b2": 4
+    },
+    "expect": {
+     "px": 2,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "m1": 0,
+     "b1": 3,
+     "m2": 2,
+     "b2": -1
+    },
+    "expect": {
+     "px": 2,
+     "py": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

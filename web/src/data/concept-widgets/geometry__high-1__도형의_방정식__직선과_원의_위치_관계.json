@@ -1,0 +1,172 @@
+{
+ "id": "geometry/high-1/도형의_방정식/직선과_원의_위치_관계",
+ "spec": {
+  "title": "직선과 원의 위치 관계 (d와 r 비교)",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "직선 y절편 c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "d = abs(c)/sqrt(m^2+1); fx = -m*c/(m^2+1); fy = c/(m^2+1); dmr = d - r",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "원 C: x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-6",
+      "=-6*m+c"
+     ],
+     "to": [
+      "=6",
+      "=6*m+c"
+     ],
+     "label": "직선 l: y=mx+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "중심 O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H(수선의 발)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "거리 d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심-직선 거리 d",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 4
+   },
+   {
+    "label": "d − r (음수:할선 / 0:접선 / 양수:불만남)",
+    "expr": "dmr",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 3,
+    "m": 0.5,
+    "c": 3
+   },
+   {
+    "r": 2,
+    "m": 0,
+    "c": 3
+   },
+   {
+    "r": 4,
+    "m": 1,
+    "c": 2
+   },
+   {
+    "r": 2.5,
+    "m": -2,
+    "c": -4
+   }
+  ],
+  "invariants": [
+   "m*fx - fy + c",
+   "d^2 - (fx^2 + fy^2)",
+   "d - abs(c)/sqrt(m^2+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "m": 0,
+     "c": 3
+    },
+    "expect": {
+     "d": 3,
+     "fx": 0,
+     "fy": 3
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "m": 1,
+     "c": 2
+    },
+    "expect": {
+     "d": 1.4142135624,
+     "fx": -1,
+     "fy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

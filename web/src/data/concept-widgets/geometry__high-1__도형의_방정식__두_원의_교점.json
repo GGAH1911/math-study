@@ -1,0 +1,192 @@
+{
+ "id": "geometry/high-1/도형의_방정식/두_원의_교점",
+ "spec": {
+  "title": "두 원의 교점과 근축",
+  "params": [
+   {
+    "name": "dx",
+    "label": "두 중심 거리",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r1",
+    "label": "원 C₁ 반지름",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r2",
+    "label": "원 C₂ 반지름",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "cx1=0; cy1=0; cx2=dx; cy2=0; xr=(dx^2+r1^2-r2^2)/(2*dx); disc=r1^2-xr^2; yr=sqrt(disc); px1=xr; py1=yr; px2=xr; py2=-yr",
+  "geometry": {
+   "range": [
+    -6,
+    9
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r1",
+     "label": "C₁"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=dx",
+      0
+     ],
+     "radius": "=r2",
+     "label": "C₂"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xr",
+      -6
+     ],
+     "to": [
+      "=xr",
+      6
+     ],
+     "label": "근축",
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px1",
+      "=py1"
+     ],
+     "label": "P₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px2",
+      "=py2"
+     ],
+     "label": "P₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근축 x=",
+    "expr": "xr",
+    "digits": 3
+   },
+   {
+    "label": "판별식 r₁²-x²",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "교점 개수",
+    "expr": "disc>0.0000001?2:(disc>-0.0000001?1:0)",
+    "digits": 0
+   },
+   {
+    "label": "교점 y=±",
+    "expr": "yr",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "dx": 4,
+    "r1": 3,
+    "r2": 3
+   },
+   {
+    "dx": 5,
+    "r1": 4,
+    "r2": 3
+   },
+   {
+    "dx": 4,
+    "r1": 3,
+    "r2": 2
+   },
+   {
+    "dx": 6,
+    "r1": 4,
+    "r2": 4
+   }
+  ],
+  "invariants": [
+   "px1^2+py1^2-r1^2",
+   "(px1-dx)^2+py1^2-r2^2",
+   "px2^2+py2^2-r1^2",
+   "(px2-dx)^2+py2^2-r2^2",
+   "px1-px2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "dx": 4,
+     "r1": 3,
+     "r2": 3
+    },
+    "expect": {
+     "xr": 2,
+     "disc": 5,
+     "yr": 2.2360679775
+    }
+   },
+   {
+    "params": {
+     "dx": 6,
+     "r1": 4,
+     "r2": 4
+    },
+    "expect": {
+     "xr": 3,
+     "disc": 7,
+     "yr": 2.6457513111
+    }
+   },
+   {
+    "params": {
+     "dx": 4,
+     "r1": 3,
+     "r2": 2
+    },
+    "expect": {
+     "xr": 2.625,
+     "disc": 2.109375,
+     "yr": 1.4523687548
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
