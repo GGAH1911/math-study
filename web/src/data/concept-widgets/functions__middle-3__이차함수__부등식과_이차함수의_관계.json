@@ -1,0 +1,155 @@
+{
+ "id": "functions/middle-3/이차함수/부등식과_이차함수의_관계",
+ "spec": {
+  "title": "부등식과 이차함수의 관계 (y=ax²+bx+c, a>0)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (a>0)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.5
+   }
+  ],
+  "scope": "D = b^2-4*a*c; vx = -b/(2*a); vy = c - b^2/(4*a); alpha = (-b-sqrt(D))/(2*a); beta = (-b+sqrt(D))/(2*a)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "y=ax²+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D=b²-4ac",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 x=-b/2a",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "vy",
+    "digits": 3
+   },
+   {
+    "label": "작은 근 α (D≥0)",
+    "expr": "alpha",
+    "digits": 3
+   },
+   {
+    "label": "큰 근 β (D≥0)",
+    "expr": "beta",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -4
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "c": -3
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "c": -6
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": -6
+   }
+  ],
+  "invariants": [
+   "a*vx^2+b*vx+c - vy",
+   "a*alpha^2+b*alpha+c",
+   "a*beta^2+b*beta+c",
+   "vx - (alpha+beta)/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -4
+    },
+    "expect": {
+     "D": 16,
+     "vx": 0,
+     "vy": -4,
+     "alpha": -2,
+     "beta": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": -3
+    },
+    "expect": {
+     "D": 16,
+     "vx": 1,
+     "vy": -4,
+     "alpha": -1,
+     "beta": 3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "c": -6
+    },
+    "expect": {
+     "D": 64,
+     "vx": -1,
+     "vy": -8,
+     "alpha": -3,
+     "beta": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

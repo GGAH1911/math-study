@@ -1,0 +1,206 @@
+{
+ "id": "geometry/middle-3/원의_성질/원의_외접원",
+ "spec": {
+  "title": "삼각형의 외접원과 외심",
+  "params": [
+   {
+    "name": "cx",
+    "label": "꼭짓점 C의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "cy",
+    "label": "꼭짓점 C의 y좌표",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ax=-2; ay=0; bx=2; by=0; d=2*(ax*(by-cy)+bx*(cy-ay)+cx*(ay-by)); ux=((ax^2+ay^2)*(by-cy)+(bx^2+by^2)*(cy-ay)+(cx^2+cy^2)*(ay-by))/d; uy=((ax^2+ay^2)*(cx-bx)+(bx^2+by^2)*(ax-cx)+(cx^2+cy^2)*(bx-ax))/d; dA=sqrt((ux-ax)^2+(uy-ay)^2); dB=sqrt((ux-bx)^2+(uy-by)^2); dC=sqrt((ux-cx)^2+(uy-cy)^2); R=dA",
+  "geometry": {
+   "range": [
+    -3.6,
+    3.6
+   ],
+   "yRange": [
+    -2.2,
+    4.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -2,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=ux",
+      "=uy"
+     ],
+     "radius": "=R"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ux",
+      "=uy"
+     ],
+     "to": [
+      -2,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ux",
+      "=uy"
+     ],
+     "to": [
+      2,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ux",
+      "=uy"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -2,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ux",
+      "=uy"
+     ],
+     "label": "외심 O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "외접원 반지름 R",
+    "expr": "R",
+    "digits": 3
+   },
+   {
+    "label": "OA (외심→A)",
+    "expr": "dA",
+    "digits": 3
+   },
+   {
+    "label": "OB (외심→B)",
+    "expr": "dB",
+    "digits": 3
+   },
+   {
+    "label": "OC (외심→C)",
+    "expr": "dC",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 0,
+    "cy": 3
+   },
+   {
+    "cx": 2,
+    "cy": 3
+   },
+   {
+    "cx": -2.5,
+    "cy": 2
+   },
+   {
+    "cx": 1,
+    "cy": 1.5
+   }
+  ],
+  "invariants": [
+   "dA-dB",
+   "dA-dC",
+   "dB-dC",
+   "ux"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 0,
+     "cy": 3
+    },
+    "expect": {
+     "ux": 0,
+     "uy": 0.8333333,
+     "R": 2.1666667
+    }
+   },
+   {
+    "params": {
+     "cx": 2,
+     "cy": 3
+    },
+    "expect": {
+     "ux": 0,
+     "uy": 1.5,
+     "R": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

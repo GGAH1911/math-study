@@ -1,0 +1,169 @@
+{
+ "id": "탈레스_정리",
+ "spec": {
+  "title": "탈레스 정리 — 지름에 대한 원주각은 항상 직각",
+  "params": [
+   {
+    "name": "theta",
+    "label": "점 P의 위치(각)",
+    "type": "slider",
+    "min": 5,
+    "max": 175,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=3*cos(rad); py=3*sin(rad); dot=(-3-px)*(3-px)+py*py; pa=sqrt((-3-px)^2+py^2); pb=sqrt((3-px)^2+py^2); ang=acos(dot/(pa*pb))*180/pi",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -1,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 3
+    },
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      0
+     ],
+     "to": [
+      3,
+      0
+     ],
+     "label": "지름 AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "PA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "PB"
+    },
+    {
+     "type": "point",
+     "at": [
+      -3,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠APB",
+    "expr": "ang",
+    "digits": 2
+   },
+   {
+    "label": "PA·PB (내적, 0이면 직각)",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 150
+   }
+  ],
+  "invariants": [
+   "dot",
+   "px^2+py^2-9"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 3,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "px": 1.5,
+     "py": 2.598076211,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 150
+    },
+    "expect": {
+     "px": -2.598076211,
+     "py": 1.5,
+     "dot": 0,
+     "ang": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,147 @@
+{
+ "id": "functions/middle-3/이차함수/이차함수의_판별식",
+ "spec": {
+  "title": "이차함수의 판별식 D=b²-4ac 와 x축 위치관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (a≠0)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -1,
+    "step": 0.5
+   }
+  ],
+  "scope": "D=b^2-4*a*c; xv=-b/(2*a); yv=a*xv^2+b*xv+c",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "y=ax²+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D=b²-4ac",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 x=-b/2a",
+    "expr": "xv",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y (최솟/최댓값)",
+    "expr": "yv",
+    "digits": 3
+   },
+   {
+    "label": "x축과의 교점 개수",
+    "expr": "D>0 ? 2 : (D==0 ? 1 : 0)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 1
+   }
+  ],
+  "invariants": [
+   "D-(b^2-4*a*c)",
+   "D+4*a*yv",
+   "yv-(c-b^2/(4*a))",
+   "a*xv^2+b*xv+c-yv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -1
+    },
+    "expect": {
+     "D": 4,
+     "xv": 0,
+     "yv": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "xv": -1,
+     "yv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 1
+    },
+    "expect": {
+     "D": -3,
+     "xv": -0.5,
+     "yv": 0.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

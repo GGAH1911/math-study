@@ -1,0 +1,129 @@
+{
+ "id": "functions/middle-3/이차함수/정의역_제한",
+ "spec": {
+  "title": "이차함수 y=x²의 정의역 제한 — 구간 [a,b]에서의 최대·최소",
+  "params": [
+   {
+    "name": "a",
+    "label": "정의역 시작 a",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "정의역 끝 b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "fmin = (a<=0 and b>=0) ? 0 : min(a^2, b^2); fmax = max(a^2, b^2); xmin = (a<=0 and b>=0) ? 0 : (a^2 <= b^2 ? a : b); xmax = a^2 >= b^2 ? a : b",
+  "plot": {
+   "range": [
+    "=a",
+    "=b"
+   ],
+   "yRange": [
+    0,
+    16
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y=x² (정의역 [a,b]로 제한)",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최솟값",
+    "expr": "fmin",
+    "digits": 3
+   },
+   {
+    "label": "최솟값이 되는 x",
+    "expr": "xmin",
+    "digits": 3
+   },
+   {
+    "label": "최댓값",
+    "expr": "fmax",
+    "digits": 3
+   },
+   {
+    "label": "최댓값이 되는 x",
+    "expr": "xmax",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 3
+   },
+   {
+    "a": -3,
+    "b": -1
+   },
+   {
+    "a": -2,
+    "b": 0.5
+   }
+  ],
+  "invariants": [
+   "xmin^2 - fmin",
+   "xmax^2 - fmax"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 2
+    },
+    "expect": {
+     "fmin": 0,
+     "fmax": 4,
+     "xmin": 0,
+     "xmax": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3
+    },
+    "expect": {
+     "fmin": 1,
+     "fmax": 9,
+     "xmin": 1,
+     "xmax": 3
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": -1
+    },
+    "expect": {
+     "fmin": 1,
+     "fmax": 9,
+     "xmin": -1,
+     "xmax": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

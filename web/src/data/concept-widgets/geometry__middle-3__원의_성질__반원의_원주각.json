@@ -1,0 +1,168 @@
+{
+ "id": "geometry/middle-3/원의_성질/반원의_원주각",
+ "spec": {
+  "title": "반원의 원주각 (탈레스 정리)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "점 P의 위치 θ",
+    "type": "slider",
+    "min": 1,
+    "max": 359,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=cos(rad); py=sin(rad); dot=(-1-px)*(1-px)+py^2; mPA=sqrt((1+px)^2+py^2); mPB=sqrt((1-px)^2+py^2); ang=acos(dot/(mPA*mPB))*180/pi",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "지름 AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      1,
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원주각 ∠APB",
+    "expr": "ang",
+    "digits": 2
+   },
+   {
+    "label": "PA·PB (수직이면 0)",
+    "expr": "dot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 75
+   },
+   {
+    "theta": 135
+   },
+   {
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-1",
+   "dot",
+   "ang-90"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "px": 0.8660254,
+     "py": 0.5,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "px": -0.5,
+     "py": 0.8660254,
+     "dot": 0,
+     "ang": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

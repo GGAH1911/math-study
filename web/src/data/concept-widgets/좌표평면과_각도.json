@@ -1,0 +1,194 @@
+{
+ "id": "좌표평면과_각도",
+ "spec": {
+  "title": "좌표평면과 각도 — 동경 P(x,y)와 삼각함수",
+  "params": [
+   {
+    "name": "theta",
+    "label": "각 θ (동경 회전량)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "반지름 r (원점~P 거리)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); s=py/r; c=px/r; t=py/px",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#2563eb",
+     "label": "동경 (r)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#dc2626",
+     "label": "y"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      0
+     ],
+     "color": "#059669",
+     "label": "x"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(x,y)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x = r·cosθ",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y = r·sinθ",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "sinθ = y/r",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "cosθ = x/r",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "tanθ = y/x",
+    "expr": "t",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "r": 2
+   },
+   {
+    "theta": 135,
+    "r": 1.5
+   },
+   {
+    "theta": 210,
+    "r": 3
+   },
+   {
+    "theta": 315,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "s^2+c^2-1",
+   "px-r*c",
+   "py-r*s",
+   "t*c-s",
+   "px-r*cos(theta*pi/180)",
+   "py-r*sin(theta*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30,
+     "r": 2
+    },
+    "expect": {
+     "px": 1.7320508075688772,
+     "py": 1,
+     "s": 0.5,
+     "c": 0.8660254037844387,
+     "t": 0.5773502691896257
+    }
+   },
+   {
+    "params": {
+     "theta": 60,
+     "r": 1
+    },
+    "expect": {
+     "px": 0.5,
+     "py": 0.8660254037844386,
+     "s": 0.8660254037844386,
+     "c": 0.5,
+     "t": 1.7320508075688767
+    }
+   },
+   {
+    "params": {
+     "theta": 0,
+     "r": 3
+    },
+    "expect": {
+     "px": 3,
+     "py": 0,
+     "s": 0,
+     "c": 1,
+     "t": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

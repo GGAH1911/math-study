@@ -1,0 +1,157 @@
+{
+ "id": "기함수",
+ "spec": {
+  "title": "기함수 f(-x) = -f(x): 원점대칭과 대칭구간 적분",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "표본점 x₀",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "적분 반경 c",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx0 = a*x0^3 + b*x0; fmx0 = a*(-x0)^3 + b*(-x0); oddcheck = fmx0 + fx0; intval = (a/4*c^4 + b/2*c^2) - (a/4*(-c)^4 + b/2*(-c)^2)",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x",
+     "label": "f(x) = a x³ + b x",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "fx0",
+    "digits": 4
+   },
+   {
+    "label": "f(−x₀)",
+    "expr": "fmx0",
+    "digits": 4
+   },
+   {
+    "label": "f(−x₀) + f(x₀)  (기함수면 0)",
+    "expr": "oddcheck",
+    "digits": 6
+   },
+   {
+    "label": "∫₋꜀ᶜ f(x)dx  (대칭구간 적분 = 0)",
+    "expr": "intval",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -1,
+    "x0": 1.5,
+    "c": 2
+   },
+   {
+    "a": 2,
+    "b": 0.5,
+    "x0": 2,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 3,
+    "x0": 0.7,
+    "c": 1.5
+   },
+   {
+    "a": 0.5,
+    "b": -2,
+    "x0": 1,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "fmx0 + fx0",
+   "(a/4*c^4 + b/2*c^2) - (a/4*(-c)^4 + b/2*(-c)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -1,
+     "x0": 2,
+     "c": 2
+    },
+    "expect": {
+     "fx0": 6,
+     "fmx0": -6,
+     "intval": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "x0": 1,
+     "c": 1
+    },
+    "expect": {
+     "fx0": 1,
+     "fmx0": -1,
+     "oddcheck": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "x0": 1,
+     "c": 1
+    },
+    "expect": {
+     "fx0": 3,
+     "fmx0": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

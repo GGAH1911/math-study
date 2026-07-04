@@ -1,0 +1,185 @@
+{
+ "id": "functions/middle-3/이차함수/이차함수의_최댓값과_최솟값",
+ "spec": {
+  "title": "이차함수의 최댓값과 최솟값 f(x)=a(x-p)²+q",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (볼록 방향·폭)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "p (축 x좌표)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "q (꼭짓점 y·극값)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.5
+   },
+   {
+    "name": "m",
+    "label": "정의역 왼끝 m",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.5
+   },
+   {
+    "name": "n",
+    "label": "정의역 오른끝 n",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "vy=q; fm=a*(m-p)^2+q; fn=a*(n-p)^2+q; inDom=(p>=m) and (p<=n); minVal=(a>0) ? ((inDom) ? q : min(fm,fn)) : min(fm,fn); maxVal=(a>0) ? max(fm,fn) : ((inDom) ? q : max(fm,fn)); domFlag=(inDom) ? 1 : 0",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*(x-p)^2+q",
+     "label": "f(x)=a(x-p)²+q",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 (p, q)",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "극값 q (전체 정의역)",
+    "expr": "vy",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점이 [m,n] 안?(1=예)",
+    "expr": "domFlag",
+    "digits": 0
+   },
+   {
+    "label": "구간 [m,n] 최솟값",
+    "expr": "minVal",
+    "digits": 2
+   },
+   {
+    "label": "구간 [m,n] 최댓값",
+    "expr": "maxVal",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": 0,
+    "q": -2,
+    "m": -3,
+    "n": 3
+   },
+   {
+    "a": 1,
+    "p": 0,
+    "q": -2,
+    "m": 1,
+    "n": 3
+   },
+   {
+    "a": -1,
+    "p": 1,
+    "q": 3,
+    "m": -1,
+    "n": 2
+   },
+   {
+    "a": -2,
+    "p": -1,
+    "q": 4,
+    "m": 0,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "vy-q",
+   "fm-(a*(m-p)^2+q)",
+   "fn-(a*(n-p)^2+q)",
+   "(maxVal-minVal)-abs(maxVal-minVal)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": 0,
+     "q": -2,
+     "m": -3,
+     "n": 3
+    },
+    "expect": {
+     "vy": -2,
+     "minVal": -2,
+     "maxVal": 7,
+     "domFlag": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "p": 0,
+     "q": -2,
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "minVal": -1,
+     "maxVal": 7,
+     "domFlag": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "p": 1,
+     "q": 3,
+     "m": -1,
+     "n": 2
+    },
+    "expect": {
+     "maxVal": 3,
+     "minVal": -1,
+     "domFlag": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,206 @@
+{
+ "id": "functions/middle-2/일차함수/기울기_공식",
+ "spec": {
+  "title": "기울기 공식: 두 점으로 만드는 변화의 비율",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "y1",
+    "label": "y₁",
+    "type": "slider",
+    "min": -10,
+    "max": 14,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "y2",
+    "label": "y₂",
+    "type": "slider",
+    "min": -10,
+    "max": 14,
+    "init": 13,
+    "step": 1
+   }
+  ],
+  "scope": "dx = x2 - x1; dy = y2 - y1; m = dy / dx",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "직선",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "Δx (변화량)",
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "Δy (변화량)",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Δx = x₂ - x₁",
+    "expr": "dx",
+    "digits": 2
+   },
+   {
+    "label": "Δy = y₂ - y₁",
+    "expr": "dy",
+    "digits": 2
+   },
+   {
+    "label": "기울기 m = Δy / Δx",
+    "expr": "m",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 2,
+    "y1": 5,
+    "x2": 6,
+    "y2": 13
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 2,
+    "y2": -6
+   },
+   {
+    "x1": -4,
+    "y1": 1,
+    "x2": 0,
+    "y2": 1
+   },
+   {
+    "x1": -3,
+    "y1": -2,
+    "x2": 5,
+    "y2": 2
+   }
+  ],
+  "invariants": [
+   "m*(x2-x1) - (y2-y1)",
+   "dx - (x2-x1)",
+   "dy - (y2-y1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 2,
+     "y1": 5,
+     "x2": 6,
+     "y2": 13
+    },
+    "expect": {
+     "dx": 4,
+     "dy": 8,
+     "m": 2
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 2,
+     "y2": -6
+    },
+    "expect": {
+     "dx": 2,
+     "dy": -6,
+     "m": -3
+    }
+   },
+   {
+    "params": {
+     "x1": -4,
+     "y1": 1,
+     "x2": 0,
+     "y2": 1
+    },
+    "expect": {
+     "dx": 4,
+     "dy": 0,
+     "m": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,179 @@
+{
+ "id": "geometry/middle-3/삼각비/삼각형의_코사인_법칙",
+ "spec": {
+  "title": "삼각형의 코사인 법칙: c² = a² + b² − 2ab·cos C",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (변 CB)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (변 CA)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "angC",
+    "label": "각 C",
+    "type": "slider",
+    "min": 1,
+    "max": 179,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=angC*pi/180; Bx=a; By=0; Ax=b*cos(rad); Ay=b*sin(rad); c=sqrt(a^2+b^2-2*a*b*cos(rad)); cAB=sqrt((Ax-Bx)^2+(Ay-By)^2)",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Ax",
+       "=Ay"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각 C",
+    "expr": "angC",
+    "digits": 0
+   },
+   {
+    "label": "c (공식값)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "c (실제 거리 AB)",
+    "expr": "cAB",
+    "digits": 4
+   },
+   {
+    "label": "2ab·cosC 항",
+    "expr": "2*a*b*cos(rad)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4,
+    "angC": 90
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "angC": 60
+   },
+   {
+    "a": 5,
+    "b": 3,
+    "angC": 120
+   },
+   {
+    "a": 6,
+    "b": 5,
+    "angC": 45
+   }
+  ],
+  "invariants": [
+   "c - cAB",
+   "c^2 - (a^2+b^2-2*a*b*cos(rad))",
+   "cAB^2 - (a^2+b^2-2*a*b*cos(rad))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "angC": 90
+    },
+    "expect": {
+     "c": 5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "angC": 60
+    },
+    "expect": {
+     "c": 2
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 3,
+     "angC": 120
+    },
+    "expect": {
+     "c": 7
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,217 @@
+{
+ "id": "geometry/middle-3/삼각비/삼각비의_정의",
+ "spec": {
+  "title": "삼각비의 정의 — 직각삼각형의 변의 비",
+  "params": [
+   {
+    "name": "A",
+    "label": "예각 A",
+    "type": "slider",
+    "min": 10,
+    "max": 80,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=A*pi/180; hyp=5; adj=hyp*cos(rad); opp=hyp*sin(rad); s=opp/hyp; c=adj/hyp; t=opp/adj",
+  "geometry": {
+   "range": [
+    -1,
+    6
+   ],
+   "yRange": [
+    -1,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=adj",
+       0
+      ],
+      [
+       "=adj",
+       "=opp"
+      ]
+     ],
+     "label": "직각삼각형"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=adj-0.4",
+       0
+      ],
+      [
+       "=adj-0.4",
+       0.4
+      ],
+      [
+       "=adj",
+       0.4
+      ]
+     ],
+     "label": "직각"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=adj",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=adj",
+      "=opp"
+     ],
+     "label": "C(빗변끝)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=adj",
+      "=opp"
+     ],
+     "label": "빗변"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=adj",
+      0
+     ],
+     "label": "인접변"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=adj",
+      0
+     ],
+     "to": [
+      "=adj",
+      "=opp"
+     ],
+     "label": "대변"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "빗변",
+    "expr": "hyp",
+    "digits": 3
+   },
+   {
+    "label": "대변(높이)",
+    "expr": "opp",
+    "digits": 3
+   },
+   {
+    "label": "인접변(밑변)",
+    "expr": "adj",
+    "digits": 3
+   },
+   {
+    "label": "sin A = 대변/빗변",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "cos A = 인접변/빗변",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "tan A = 대변/인접변",
+    "expr": "t",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 30
+   },
+   {
+    "A": 45
+   },
+   {
+    "A": 60
+   },
+   {
+    "A": 20
+   }
+  ],
+  "invariants": [
+   "s^2+c^2-1",
+   "s-opp/hyp",
+   "c-adj/hyp",
+   "t-opp/adj",
+   "t-s/c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 30
+    },
+    "expect": {
+     "s": 0.5,
+     "c": 0.8660254038,
+     "t": 0.5773502692
+    }
+   },
+   {
+    "params": {
+     "A": 45
+    },
+    "expect": {
+     "s": 0.7071067812,
+     "c": 0.7071067812,
+     "t": 1
+    }
+   },
+   {
+    "params": {
+     "A": 60
+    },
+    "expect": {
+     "s": 0.8660254038,
+     "c": 0.5,
+     "t": 1.7320508076
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

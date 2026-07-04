@@ -1,0 +1,220 @@
+{
+ "id": "geometry/middle-3/원의_성질/현_접선_원주각",
+ "spec": {
+  "title": "현·접선·원주각 — 원주각은 위치가 변해도 일정, 중심각의 절반",
+  "params": [
+   {
+    "name": "phi",
+    "label": "점 P의 위치(각도)",
+    "type": "slider",
+    "min": 160,
+    "max": 380,
+    "init": 270,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "a1=150*pi/180; b1=30*pi/180; ph=phi*pi/180; Ax=cos(a1); Ay=sin(a1); Bx=cos(b1); By=sin(b1); Px=cos(ph); Py=sin(ph); vax=Ax-Px; vay=Ay-Py; vbx=Bx-Px; vby=By-Py; dot=vax*vbx+vay*vby; na=sqrt(vax^2+vay^2); nb=sqrt(vbx^2+vby^2); ang=acos(dot/(na*nb))*180/pi; central=acos(Ax*Bx+Ay*By)*180/pi; tx1=Ax+0.85*Ay; ty1=Ay-0.85*Ax; tx2=Ax-0.85*Ay; ty2=Ay+0.85*Ax",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.4,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "현 AB",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ],
+     "color": "#f97316"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "color": "#f97316"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ],
+     "color": "#94a3b8"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "color": "#94a3b8"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=tx1",
+      "=ty1"
+     ],
+     "to": [
+      "=tx2",
+      "=ty2"
+     ],
+     "label": "점 A의 접선",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원주각 ∠APB",
+    "expr": "ang",
+    "digits": 1
+   },
+   {
+    "label": "중심각 ∠AOB",
+    "expr": "central",
+    "digits": 1
+   },
+   {
+    "label": "원주각 − 중심각÷2 (0이면 절반 성립)",
+    "expr": "ang-central/2",
+    "digits": 4
+   },
+   {
+    "label": "접선⊥반지름 OA 확인 (0이면 수직)",
+    "expr": "Ax*(tx2-tx1)+Ay*(ty2-ty1)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "phi": 180
+   },
+   {
+    "phi": 200
+   },
+   {
+    "phi": 270
+   },
+   {
+    "phi": 340
+   }
+  ],
+  "invariants": [
+   "ang-central/2",
+   "ang-60",
+   "Ax*(tx2-tx1)+Ay*(ty2-ty1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "phi": 270
+    },
+    "expect": {
+     "ang": 60,
+     "central": 120
+    }
+   },
+   {
+    "params": {
+     "phi": 180
+    },
+    "expect": {
+     "ang": 60,
+     "central": 120
+    }
+   },
+   {
+    "params": {
+     "phi": 340
+    },
+    "expect": {
+     "ang": 60,
+     "central": 120
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

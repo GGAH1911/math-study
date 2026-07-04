@@ -1,0 +1,148 @@
+{
+ "id": "functions/middle-3/이차함수/실근의_개수",
+ "spec": {
+  "title": "실근의 개수와 판별식 D=b²-4ac",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   }
+  ],
+  "scope": "D = b^2 - 4*a*c; nroot = (D>0 ? 2 : (D==0 ? 1 : 0)); xv = -b/(2*a); yv = a*xv^2 + b*xv + c",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y=ax²+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "nroot",
+    "digits": 0
+   },
+   {
+    "label": "꼭짓점 x",
+    "expr": "xv",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "yv",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -4
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 1
+   },
+   {
+    "a": 2,
+    "b": -4,
+    "c": -1
+   }
+  ],
+  "invariants": [
+   "2*a*xv + b",
+   "yv + D/(4*a)",
+   "a*xv^2 + b*xv + c - yv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -4
+    },
+    "expect": {
+     "D": 16,
+     "nroot": 2,
+     "xv": 0,
+     "yv": -4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "nroot": 1,
+     "xv": -1,
+     "yv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 1
+    },
+    "expect": {
+     "D": -4,
+     "nroot": 0,
+     "xv": 0,
+     "yv": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

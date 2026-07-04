@@ -1,0 +1,135 @@
+{
+ "id": "functions/middle-2/일차함수/일차함수의_정의",
+ "spec": {
+  "title": "일차함수의 정의 f(x)=ax+b (a≠0)",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a (≠0)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "y0=a*0+b; y1=a*1+b; y2=a*2+b; rate1=y1-y0; rate2=y2-y1; yint=b",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x+b",
+     "label": "f(x)=ax+b",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "y절편 b (=f(0))",
+    "expr": "yint",
+    "digits": 2
+   },
+   {
+    "label": "x가 0→1일 때 y 증가량",
+    "expr": "rate1",
+    "digits": 2
+   },
+   {
+    "label": "x가 1→2일 때 y 증가량 (항상 a로 일정)",
+    "expr": "rate2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": -1,
+    "b": 4
+   },
+   {
+    "a": 0.5,
+    "b": -3
+   },
+   {
+    "a": -3,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "rate1-a",
+   "rate2-a",
+   "rate1-rate2",
+   "y0-b",
+   "(y2-y0)/2-a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "y0": 3,
+     "y1": 5,
+     "y2": 7,
+     "rate1": 2,
+     "rate2": 2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 4
+    },
+    "expect": {
+     "y0": 4,
+     "y1": 3,
+     "y2": 2,
+     "rate1": -1,
+     "rate2": -1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": -2
+    },
+    "expect": {
+     "y0": -2,
+     "y1": -1.5,
+     "y2": -1,
+     "rate1": 0.5,
+     "rate2": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

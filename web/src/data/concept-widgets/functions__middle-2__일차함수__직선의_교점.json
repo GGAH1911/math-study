@@ -1,0 +1,155 @@
+{
+ "id": "functions/middle-2/일차함수/직선의_교점",
+ "spec": {
+  "title": "직선의 교점",
+  "params": [
+   {
+    "name": "m1",
+    "label": "m₁ (직선1 기울기)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b1",
+    "label": "b₁ (직선1 y절편)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "m2",
+    "label": "m₂ (직선2 기울기)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "b2",
+    "label": "b₂ (직선2 y절편)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "x0=(b2-b1)/(m1-m2); y0=m1*x0+b1; dm=m1-m2",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "m1*x+b1",
+     "label": "y = m₁x + b₁",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m2*x+b2",
+     "label": "y = m₂x + b₂",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x₀",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "교점 y₀",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "기울기 차 m₁−m₂ (0이면 교점 없음/무수히)",
+    "expr": "dm",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "b1": 0,
+    "m2": -1,
+    "b2": 2
+   },
+   {
+    "m1": 2,
+    "b1": 1,
+    "m2": 0,
+    "b2": 5
+   },
+   {
+    "m1": 0.5,
+    "b1": 1,
+    "m2": -0.5,
+    "b2": 3
+   },
+   {
+    "m1": -2,
+    "b1": -1,
+    "m2": 1,
+    "b2": 2
+   }
+  ],
+  "invariants": [
+   "y0-(m1*x0+b1)",
+   "y0-(m2*x0+b2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "b1": 0,
+     "m2": -1,
+     "b2": 2
+    },
+    "expect": {
+     "x0": 1,
+     "y0": 1
+    }
+   },
+   {
+    "params": {
+     "m1": 2,
+     "b1": 1,
+     "m2": 0,
+     "b2": 5
+    },
+    "expect": {
+     "x0": 2,
+     "y0": 5
+    }
+   },
+   {
+    "params": {
+     "m1": 0.5,
+     "b1": 1,
+     "m2": -0.5,
+     "b2": 3
+    },
+    "expect": {
+     "x0": 2,
+     "y0": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

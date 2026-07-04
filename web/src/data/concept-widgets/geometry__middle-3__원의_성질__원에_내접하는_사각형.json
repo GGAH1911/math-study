@@ -1,0 +1,230 @@
+{
+ "id": "geometry/middle-3/원의_성질/원에_내접하는_사각형",
+ "spec": {
+  "title": "원에 내접하는 사각형 — 대각의 합은 180°",
+  "params": [
+   {
+    "name": "tB",
+    "label": "B 위치",
+    "type": "slider",
+    "min": 50,
+    "max": 160,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "tC",
+    "label": "C 위치",
+    "type": "slider",
+    "min": 170,
+    "max": 250,
+    "init": 200,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "tD",
+    "label": "D 위치",
+    "type": "slider",
+    "min": 260,
+    "max": 340,
+    "init": 300,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "d2r=pi/180; Ax=cos(20*d2r); Ay=sin(20*d2r); Bx=cos(tB*d2r); By=sin(tB*d2r); Cx=cos(tC*d2r); Cy=sin(tC*d2r); Dx=cos(tD*d2r); Dy=sin(tD*d2r); angA=(tD-tB)/2; angC=(tB+360-tD)/2; angB=(360-tC+20)/2; angD=(tC-20)/2; sumAC=angA+angC; sumBD=angB+angD",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ],
+      [
+       "=Dx",
+       "=Dy"
+      ]
+     ],
+     "label": "ABCD"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠A",
+    "expr": "angA",
+    "digits": 1
+   },
+   {
+    "label": "∠C",
+    "expr": "angC",
+    "digits": 1
+   },
+   {
+    "label": "∠A+∠C",
+    "expr": "sumAC",
+    "digits": 1
+   },
+   {
+    "label": "∠B",
+    "expr": "angB",
+    "digits": 1
+   },
+   {
+    "label": "∠D",
+    "expr": "angD",
+    "digits": 1
+   },
+   {
+    "label": "∠B+∠D",
+    "expr": "sumBD",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "tB": 90,
+    "tC": 200,
+    "tD": 300
+   },
+   {
+    "tB": 60,
+    "tC": 180,
+    "tD": 270
+   },
+   {
+    "tB": 100,
+    "tC": 210,
+    "tD": 280
+   },
+   {
+    "tB": 150,
+    "tC": 230,
+    "tD": 340
+   }
+  ],
+  "invariants": [
+   "sumAC-180",
+   "sumBD-180",
+   "Ax^2+Ay^2-1",
+   "Bx^2+By^2-1",
+   "Cx^2+Cy^2-1",
+   "Dx^2+Dy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "tB": 90,
+     "tC": 200,
+     "tD": 300
+    },
+    "expect": {
+     "angA": 105,
+     "angC": 75,
+     "angB": 90,
+     "angD": 90
+    }
+   },
+   {
+    "params": {
+     "tB": 60,
+     "tC": 180,
+     "tD": 270
+    },
+    "expect": {
+     "angA": 105,
+     "angC": 75,
+     "angB": 100,
+     "angD": 80
+    }
+   },
+   {
+    "params": {
+     "tB": 100,
+     "tC": 210,
+     "tD": 280
+    },
+    "expect": {
+     "angA": 90,
+     "angC": 90,
+     "angB": 85,
+     "angD": 95
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

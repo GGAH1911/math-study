@@ -1,0 +1,182 @@
+{
+ "id": "geometry/middle-3/원의_성질/중심각",
+ "spec": {
+  "title": "중심각과 호의 길이",
+  "params": [
+   {
+    "name": "theta",
+    "label": "중심각 ∠AOB",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 5,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; ax=r; ay=0; bx=r*cos(rad); by=r*sin(rad); arc=theta/360*2*pi*r",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심각(°)",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "호 AB의 길이 = (θ/360)·2πr",
+    "expr": "arc",
+    "digits": 4
+   },
+   {
+    "label": "= r·(라디안)",
+    "expr": "r*rad",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 60,
+    "r": 5
+   },
+   {
+    "theta": 90,
+    "r": 3
+   },
+   {
+    "theta": 180,
+    "r": 4
+   },
+   {
+    "theta": 30,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "bx^2+by^2-r^2",
+   "ax^2+ay^2-r^2",
+   "arc-r*rad",
+   "arc-theta/360*2*pi*r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 60,
+     "r": 5
+    },
+    "expect": {
+     "bx": 2.5,
+     "by": 4.330127018922194,
+     "arc": 5.235987755982989
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "r": 3
+    },
+    "expect": {
+     "bx": 0,
+     "by": 3,
+     "arc": 4.71238898038469
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "r": 4
+    },
+    "expect": {
+     "bx": -4,
+     "by": 4.898587196589413e-16,
+     "arc": 12.566370614359172
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

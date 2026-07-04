@@ -1,0 +1,192 @@
+{
+ "id": "functions/middle-3/이차함수/구간별_최댓값과_최솟값",
+ "spec": {
+  "title": "이차함수의 구간별 최댓값·최솟값",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b (일차항)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "구간 왼끝 p",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "구간 오른끝 q",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "vx = -b/(2*a); fp = a*p^2+b*p+c; fq = a*q^2+b*q+c; fv = a*vx^2+b*vx+c; inR = (vx>=p) and (vx<=q); maxV = inR ? max(fp,fq,fv) : max(fp,fq); minV = inR ? min(fp,fq,fv) : min(fp,fq)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "f(x)=ax²+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 x = -b/2a",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "f(p) 왼끝",
+    "expr": "fp",
+    "digits": 3
+   },
+   {
+    "label": "f(q) 오른끝",
+    "expr": "fq",
+    "digits": 3
+   },
+   {
+    "label": "f(꼭짓점)",
+    "expr": "fv",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점이 구간 안(1)/밖(0)",
+    "expr": "inR*1",
+    "digits": 0
+   },
+   {
+    "label": "최댓값",
+    "expr": "maxV",
+    "digits": 3
+   },
+   {
+    "label": "최솟값",
+    "expr": "minV",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "c": -1,
+    "p": -1,
+    "q": 3
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 4,
+    "p": -1,
+    "q": 3
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "c": -1,
+    "p": 2,
+    "q": 4
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "c": -3,
+    "p": -3,
+    "q": 1
+   }
+  ],
+  "invariants": [
+   "2*a*vx + b",
+   "fv - (c - b^2/(4*a))",
+   "a*vx^2 + b*vx + c - fv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": -1,
+     "p": -1,
+     "q": 3
+    },
+    "expect": {
+     "vx": 1,
+     "fv": -2,
+     "maxV": 2,
+     "minV": -2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 4,
+     "p": -1,
+     "q": 3
+    },
+    "expect": {
+     "vx": 0,
+     "fv": 4,
+     "maxV": 4,
+     "minV": -5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": -1,
+     "p": 2,
+     "q": 4
+    },
+    "expect": {
+     "vx": 1,
+     "maxV": 7,
+     "minV": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

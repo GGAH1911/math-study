@@ -1,0 +1,185 @@
+{
+ "id": "geometry/middle-3/삼각비/삼각형의_넓이_공식",
+ "spec": {
+  "title": "삼각형의 넓이 공식 S = ½ab·sinC",
+  "params": [
+   {
+    "name": "a",
+    "label": "변 a (밑변)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "변 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "C",
+    "label": "끼인각 C",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=C*pi/180; ax=a; ay=0; bx=b*cos(rad); by=b*sin(rad); h=b*sin(rad); area=0.5*a*b*sin(rad)",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ]
+     ],
+     "label": "S"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      "=by"
+     ],
+     "to": [
+      "=bx",
+      0
+     ],
+     "label": "h=b·sinC"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "높이 h = b·sinC",
+    "expr": "h",
+    "digits": 3
+   },
+   {
+    "label": "넓이 S = ½·a·b·sinC",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 6,
+    "C": 30
+   },
+   {
+    "a": 5,
+    "b": 8,
+    "C": 90
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "C": 60
+   },
+   {
+    "a": 7,
+    "b": 3,
+    "C": 120
+   }
+  ],
+  "invariants": [
+   "bx^2+by^2-b^2",
+   "by-b*sin(rad)",
+   "area-0.5*ax*by",
+   "area-0.5*a*b*sin(rad)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 6,
+     "C": 30
+    },
+    "expect": {
+     "by": 3,
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 8,
+     "C": 90
+    },
+    "expect": {
+     "by": 8,
+     "area": 20
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "C": 60
+    },
+    "expect": {
+     "by": 1.7320508075688772,
+     "area": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

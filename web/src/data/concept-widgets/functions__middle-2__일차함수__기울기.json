@@ -1,0 +1,224 @@
+{
+ "id": "functions/middle-2/일차함수/기울기",
+ "spec": {
+  "title": "기울기 = y의 변화량 ÷ x의 변화량",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x2",
+    "label": "두 번째 점의 x",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "x1=0; y1=b; y2=a*x2+b; run=x2-x1; rise=y2-y1; slope=rise/run",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=-6",
+      "=a*-6+b"
+     ],
+     "to": [
+      "=6",
+      "=a*6+b"
+     ],
+     "label": "y=ax+b",
+     "color": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ]
+     ],
+     "color": "#f59e0b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "x변화량=run",
+     "color": "#059669"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "y변화량=rise",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "(x1,y1)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "(x2,y2)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x의 변화량 (run)",
+    "expr": "run",
+    "digits": 2
+   },
+   {
+    "label": "y의 변화량 (rise)",
+    "expr": "rise",
+    "digits": 2
+   },
+   {
+    "label": "기울기 = rise/run",
+    "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "함수식의 a와 일치",
+    "expr": "a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "x2": 2
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "x2": 3
+   },
+   {
+    "a": 3,
+    "b": -2,
+    "x2": 1
+   },
+   {
+    "a": 0.5,
+    "b": 2,
+    "x2": 4
+   }
+  ],
+  "invariants": [
+   "slope-a",
+   "rise/run-a",
+   "y2-(a*x2+b)",
+   "y1-b",
+   "rise-a*run"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "x2": 2
+    },
+    "expect": {
+     "y1": 1,
+     "y2": 5,
+     "run": 2,
+     "rise": 4,
+     "slope": 2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "x2": 3
+    },
+    "expect": {
+     "y1": 0,
+     "y2": -3,
+     "run": 3,
+     "rise": -3,
+     "slope": -1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": -2,
+     "x2": 1
+    },
+    "expect": {
+     "y1": -2,
+     "y2": 1,
+     "run": 1,
+     "rise": 3,
+     "slope": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

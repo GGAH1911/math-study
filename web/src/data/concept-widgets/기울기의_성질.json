@@ -1,0 +1,127 @@
+{
+ "id": "기울기의_성질",
+ "spec": {
+  "title": "기울기의 성질 — 평행·수직 조건",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   }
+  ],
+  "scope": "mp = -1/m",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "m*x + b",
+     "label": "ℓ : y = m·x + b",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + (b+3)",
+     "label": "ℓ와 평행 (기울기 같음, m₁=m₂)",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "mp*x + b",
+     "label": "ℓ와 수직 (기울기 곱 = -1)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "직선 ℓ의 기울기 m",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "수직선의 기울기 (-1/m)",
+    "expr": "mp",
+    "digits": 3
+   },
+   {
+    "label": "두 기울기의 곱 m·(-1/m)",
+    "expr": "m*mp",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "b": 0
+   },
+   {
+    "m": 2,
+    "b": 1
+   },
+   {
+    "m": -4,
+    "b": 2
+   },
+   {
+    "m": 0.5,
+    "b": -3
+   }
+  ],
+  "invariants": [
+   "m*mp + 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "b": 0
+    },
+    "expect": {
+     "mp": -1
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "b": 1
+    },
+    "expect": {
+     "mp": -0.5
+    }
+   },
+   {
+    "params": {
+     "m": -4,
+     "b": 2
+    },
+    "expect": {
+     "mp": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

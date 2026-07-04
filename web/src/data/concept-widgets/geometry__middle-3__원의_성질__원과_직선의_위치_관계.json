@@ -1,0 +1,180 @@
+{
+ "id": "geometry/middle-3/원의_성질/원과_직선의_위치_관계",
+ "spec": {
+  "title": "원과 직선의 위치 관계 (중심-직선 거리 d vs 반지름 r)",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "직선 기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "직선 y절편 k",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "d = abs(k)/sqrt(m^2+1); diff = d - r; fx = -m*k/(m^2+1); fy = k/(m^2+1)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-4",
+      "=m*-4+k"
+     ],
+     "to": [
+      "=4",
+      "=m*4+k"
+     ],
+     "label": "직선 y=mx+k"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "H"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심-직선 거리 d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "d − r (음:두점 / 0:접함 / 양:안만남)",
+    "expr": "diff",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "m": 0,
+    "k": 2
+   },
+   {
+    "r": 1.5,
+    "m": 1,
+    "k": 1
+   },
+   {
+    "r": 1,
+    "m": 0,
+    "k": 2
+   },
+   {
+    "r": 2.5,
+    "m": -2,
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "d*sqrt(m^2+1)-abs(k)",
+   "sqrt(fx^2+fy^2)-d",
+   "m*fx - fy + k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "m": 0,
+     "k": 2
+    },
+    "expect": {
+     "d": 2,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "m": 1,
+     "k": 2
+    },
+    "expect": {
+     "d": 1.4142135623730951,
+     "diff": -0.5857864376269049
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "m": 0,
+     "k": 0
+    },
+    "expect": {
+     "d": 0,
+     "diff": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

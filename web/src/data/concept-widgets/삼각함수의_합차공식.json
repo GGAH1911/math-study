@@ -1,0 +1,194 @@
+{
+ "id": "삼각함수의_합차공식",
+ "spec": {
+  "title": "삼각함수의 합차공식 sin(α+β), cos(α+β)",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "beta",
+    "label": "β",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "ra=alpha*pi/180; rb=beta*pi/180; s=ra+rb; ax=cos(ra); ay=sin(ra); bx=cos(rb); by=sin(rb); sx=cos(s); sy=sin(s); sinDirect=sin(s); sinFormula=sin(ra)*cos(rb)+cos(ra)*sin(rb); cosDirect=cos(s); cosFormula=cos(ra)*cos(rb)-sin(ra)*sin(rb)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#1e88e5"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A(α)",
+     "color": "#1e88e5"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#43a047"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B(β)",
+     "color": "#43a047"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=sx",
+      "=sy"
+     ],
+     "color": "#e53935"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sx",
+      "=sy"
+     ],
+     "label": "C(α+β)",
+     "color": "#e53935"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin(α+β) 직접",
+    "expr": "sinDirect",
+    "digits": 4
+   },
+   {
+    "label": "sin(α+β) 공식",
+    "expr": "sinFormula",
+    "digits": 4
+   },
+   {
+    "label": "cos(α+β) 직접",
+    "expr": "cosDirect",
+    "digits": 4
+   },
+   {
+    "label": "cos(α+β) 공식",
+    "expr": "cosFormula",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 30,
+    "beta": 30
+   },
+   {
+    "alpha": 30,
+    "beta": 60
+   },
+   {
+    "alpha": 45,
+    "beta": 45
+   },
+   {
+    "alpha": 120,
+    "beta": 75
+   }
+  ],
+  "invariants": [
+   "sinDirect-sinFormula",
+   "cosDirect-cosFormula",
+   "sx^2+sy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 30
+    },
+    "expect": {
+     "sinDirect": 0.8660254038,
+     "cosDirect": 0.5
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 60
+    },
+    "expect": {
+     "sinDirect": 1,
+     "cosDirect": 0
+    }
+   },
+   {
+    "params": {
+     "alpha": 45,
+     "beta": 45
+    },
+    "expect": {
+     "sinFormula": 1,
+     "cosFormula": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

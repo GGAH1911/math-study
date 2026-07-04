@@ -1,0 +1,193 @@
+{
+ "id": "geometry/middle-3/원의_성질/호와_현",
+ "spec": {
+  "title": "호와 현 — 중심에서 현에 내린 수선은 현을 이등분한다",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "중심-현 거리 d",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "h=sqrt(r^2-d^2); chord=2*h",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      "=h"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      "=-h"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      0
+     ],
+     "label": "M"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      "=h"
+     ],
+     "to": [
+      "=d",
+      "=-h"
+     ],
+     "label": "현 AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d",
+      0
+     ],
+     "label": "수선 OM=d"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d",
+      "=h"
+     ],
+     "label": "반지름 OA=r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "반현 AM = √(r²−d²)",
+    "expr": "h",
+    "digits": 3
+   },
+   {
+    "label": "현의 길이 AB = 2√(r²−d²)",
+    "expr": "chord",
+    "digits": 3
+   },
+   {
+    "label": "MA − MB (이등분 확인)",
+    "expr": "h-h",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 5,
+    "d": 3
+   },
+   {
+    "r": 10,
+    "d": 6
+   },
+   {
+    "r": 5,
+    "d": 0
+   },
+   {
+    "r": 8,
+    "d": 8
+   }
+  ],
+  "invariants": [
+   "d^2 + h^2 - r^2",
+   "chord - 2*h"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 5,
+     "d": 3
+    },
+    "expect": {
+     "h": 4,
+     "chord": 8
+    }
+   },
+   {
+    "params": {
+     "r": 10,
+     "d": 6
+    },
+    "expect": {
+     "h": 8,
+     "chord": 16
+    }
+   },
+   {
+    "params": {
+     "r": 5,
+     "d": 0
+    },
+    "expect": {
+     "h": 5,
+     "chord": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

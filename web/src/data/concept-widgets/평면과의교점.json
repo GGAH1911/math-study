@@ -1,0 +1,146 @@
+{
+ "id": "평면과의교점",
+ "spec": {
+  "title": "직선과 평면의 교점 — 매개변수 t 대입",
+  "params": [
+   {
+    "name": "c",
+    "label": "평면 상수 c  (2x+y−z=c)",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "직선 위 매개변수 t",
+    "type": "slider",
+    "min": -6,
+    "max": 4,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "nA=1; nd=-1; tstar=(c-nA)/nd; px=1+tstar; py=2-tstar; pz=3+2*tstar; ft=nd*t+(nA-c)",
+  "plot": {
+   "range": [
+    -6,
+    4
+   ],
+   "yRange": [
+    -12,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "nd*x+(nA-c)",
+     "label": "f(t)=n·P(t)−c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n·d (방향·법선 내적, ≠0이라 교점 1개)",
+    "expr": "nd",
+    "digits": 3
+   },
+   {
+    "label": "교점 매개변수 t*  (f(t*)=0)",
+    "expr": "tstar",
+    "digits": 3
+   },
+   {
+    "label": "교점 x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "교점 y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "교점 z",
+    "expr": "pz",
+    "digits": 3
+   },
+   {
+    "label": "현재 t의 평면식 값 f(t)  (0이면 교점)",
+    "expr": "ft",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 4,
+    "t": -3
+   },
+   {
+    "c": 1,
+    "t": 0
+   },
+   {
+    "c": 0,
+    "t": 1
+   },
+   {
+    "c": 6,
+    "t": 2.5
+   }
+  ],
+  "invariants": [
+   "nd*tstar+(nA-c)",
+   "2*px+py-pz-c",
+   "px-(1+tstar)",
+   "py-(2-tstar)",
+   "pz-(3+2*tstar)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 4,
+     "t": -3
+    },
+    "expect": {
+     "tstar": -3,
+     "px": -2,
+     "py": 5,
+     "pz": -3
+    }
+   },
+   {
+    "params": {
+     "c": 1,
+     "t": 0
+    },
+    "expect": {
+     "tstar": 0,
+     "px": 1,
+     "py": 2,
+     "pz": 3
+    }
+   },
+   {
+    "params": {
+     "c": 0,
+     "t": 1
+    },
+    "expect": {
+     "tstar": 1,
+     "px": 2,
+     "py": 1,
+     "pz": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

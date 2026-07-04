@@ -1,0 +1,205 @@
+{
+ "id": "geometry/middle-3/삼각비/사인_정리",
+ "spec": {
+  "title": "사인 정리 — 외접원과 a/sinA = 2R",
+  "params": [
+   {
+    "name": "A",
+    "label": "각 A",
+    "type": "slider",
+    "min": 30,
+    "max": 100,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "B",
+    "label": "각 B",
+    "type": "slider",
+    "min": 30,
+    "max": 100,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "R",
+    "label": "외접원 반지름 R",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ar=A*pi/180; Br=B*pi/180; C=180-A-B; Cr=C*pi/180; t0=pi/2; posC=t0; posA=t0+2*Br; posB=t0+2*Br+2*Cr; Cx=R*cos(posC); Cy=R*sin(posC); Ax=R*cos(posA); Ay=R*sin(posA); Bx=R*cos(posB); By=R*sin(posB); a=sqrt((Bx-Cx)^2+(By-Cy)^2); b=sqrt((Ax-Cx)^2+(Ay-Cy)^2); c=sqrt((Ax-Bx)^2+(Ay-By)^2); ratioA=a/sin(Ar); ratioB=b/sin(Br); ratioC=c/sin(Cr)",
+  "geometry": {
+   "range": [
+    -3.4,
+    3.4
+   ],
+   "yRange": [
+    -3.4,
+    3.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=R",
+     "label": "외접원"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각 C (=180-A-B)",
+    "expr": "C",
+    "digits": 1
+   },
+   {
+    "label": "변 a",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "a / sin A",
+    "expr": "ratioA",
+    "digits": 4
+   },
+   {
+    "label": "b / sin B",
+    "expr": "ratioB",
+    "digits": 4
+   },
+   {
+    "label": "c / sin C",
+    "expr": "ratioC",
+    "digits": 4
+   },
+   {
+    "label": "2R",
+    "expr": "2*R",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 60,
+    "B": 60,
+    "R": 1
+   },
+   {
+    "A": 90,
+    "B": 45,
+    "R": 1
+   },
+   {
+    "A": 30,
+    "B": 60,
+    "R": 2
+   },
+   {
+    "A": 50,
+    "B": 70,
+    "R": 1.5
+   }
+  ],
+  "invariants": [
+   "ratioA-2*R",
+   "ratioB-2*R",
+   "ratioC-2*R",
+   "ratioA-ratioB",
+   "ratioB-ratioC",
+   "Ax^2+Ay^2-R^2",
+   "Bx^2+By^2-R^2",
+   "Cx^2+Cy^2-R^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 90,
+     "B": 45,
+     "R": 1
+    },
+    "expect": {
+     "C": 45,
+     "a": 2,
+     "ratioA": 2,
+     "ratioB": 2
+    }
+   },
+   {
+    "params": {
+     "A": 30,
+     "B": 60,
+     "R": 2
+    },
+    "expect": {
+     "C": 90,
+     "a": 2,
+     "ratioA": 4,
+     "ratioC": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,206 @@
+{
+ "id": "geometry/middle-3/원의_성질/접선-현_정리",
+ "spec": {
+  "title": "접선-현 정리: 접선과 현이 이루는 각 = 원주각",
+  "params": [
+   {
+    "name": "beta",
+    "label": "Q의 위치각 β (호 PQ)",
+    "type": "slider",
+    "min": 20,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "gamma",
+    "label": "R의 위치각 γ (원 위를 이동)",
+    "type": "slider",
+    "min": 100,
+    "max": 340,
+    "init": 200,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rb=beta*pi/180; rg=gamma*pi/180; px=1; py=0; qx=cos(rb); qy=sin(rb); rx=cos(rg); ry=sin(rg); cx=qx-px; cy=qy-py; achord=atan2(cy,cx); tc=(achord-pi/2)*180/pi; rpx=px-rx; rpy=py-ry; rqx=qx-rx; rqy=qy-ry; dotv=rpx*rqx+rpy*rqy; nrp=sqrt(rpx^2+rpy^2); nrq=sqrt(rqx^2+rqy^2); insc=acos(dotv/(nrp*nrq))*180/pi; arc=beta/2",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      -1.35
+     ],
+     "to": [
+      1,
+      1.35
+     ],
+     "label": "접선",
+     "color": "#e11d48"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "현 PQ",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=rx",
+      "=ry"
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=rx",
+      "=ry"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "color": "#16a34a"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rx",
+      "=ry"
+     ],
+     "label": "R"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접선-현 각 (접선과 현 PQ)",
+    "expr": "tc",
+    "digits": 1
+   },
+   {
+    "label": "원주각 ∠PRQ",
+    "expr": "insc",
+    "digits": 1
+   },
+   {
+    "label": "호 PQ의 절반 (β/2)",
+    "expr": "arc",
+    "digits": 1
+   },
+   {
+    "label": "차이 (접선현각 − 원주각)",
+    "expr": "tc-insc",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "beta": 60,
+    "gamma": 200
+   },
+   {
+    "beta": 90,
+    "gamma": 250
+   },
+   {
+    "beta": 120,
+    "gamma": 300
+   },
+   {
+    "beta": 40,
+    "gamma": 180
+   }
+  ],
+  "invariants": [
+   "tc-beta/2",
+   "tc-insc",
+   "qx^2+qy^2-1",
+   "rx^2+ry^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "beta": 60,
+     "gamma": 200
+    },
+    "expect": {
+     "tc": 30,
+     "insc": 30
+    }
+   },
+   {
+    "params": {
+     "beta": 90,
+     "gamma": 250
+    },
+    "expect": {
+     "tc": 45,
+     "insc": 45
+    }
+   },
+   {
+    "params": {
+     "beta": 120,
+     "gamma": 300
+    },
+    "expect": {
+     "tc": 60,
+     "insc": 60
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

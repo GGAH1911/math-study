@@ -1,0 +1,198 @@
+{
+ "id": "수심",
+ "spec": {
+  "title": "삼각형의 수심 (Orthocenter)",
+  "params": [
+   {
+    "name": "cx",
+    "label": "C의 x좌표",
+    "type": "slider",
+    "min": -1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "C의 y좌표",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=0; ay=0; bx=4; by=0; Hx=cx; Hy=cx*(4-cx)/cy; t=(16-4*cx)/((cx-4)^2+cy^2); Fax=4+t*(cx-4); Fay=t*cy; s=4*cx/(cx^2+cy^2); Fbx=s*cx; Fby=s*cy",
+  "geometry": {
+   "range": [
+    -2,
+    6
+   ],
+   "yRange": [
+    -4,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      "=cx",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Fax",
+      "=Fay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      0
+     ],
+     "to": [
+      "=Fbx",
+      "=Fby"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "H(수심)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수심 H의 x좌표",
+    "expr": "Hx",
+    "digits": 3
+   },
+   {
+    "label": "수심 H의 y좌표",
+    "expr": "Hy",
+    "digits": 3
+   },
+   {
+    "label": "AH·BC (수직이면 0)",
+    "expr": "Hx*(cx-4)+Hy*cy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 2,
+    "cy": 2
+   },
+   {
+    "cx": 1,
+    "cy": 1
+   },
+   {
+    "cx": 3,
+    "cy": 2
+   },
+   {
+    "cx": 2,
+    "cy": 3
+   }
+  ],
+  "invariants": [
+   "(Hx-ax)*(cx-bx)+(Hy-ay)*(cy-by)",
+   "(Hx-bx)*(cx-ax)+(Hy-by)*(cy-ay)",
+   "(Hx-cx)*(bx-ax)+(Hy-cy)*(by-ay)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 2,
+     "cy": 2
+    },
+    "expect": {
+     "Hx": 2,
+     "Hy": 2
+    }
+   },
+   {
+    "params": {
+     "cx": 1,
+     "cy": 1
+    },
+    "expect": {
+     "Hx": 1,
+     "Hy": 3
+    }
+   },
+   {
+    "params": {
+     "cx": 3,
+     "cy": 2
+    },
+    "expect": {
+     "Hx": 3,
+     "Hy": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

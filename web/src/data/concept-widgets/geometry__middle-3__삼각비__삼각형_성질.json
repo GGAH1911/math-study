@@ -1,0 +1,228 @@
+{
+ "id": "geometry/middle-3/삼각비/삼각형_성질",
+ "spec": {
+  "title": "정현법칙(사인법칙): 외접원과 변·대각의 관계",
+  "params": [
+   {
+    "name": "A",
+    "label": "각 A",
+    "type": "slider",
+    "min": 10,
+    "max": 150,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "B",
+    "label": "각 B",
+    "type": "slider",
+    "min": 10,
+    "max": 150,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "R",
+    "label": "외접원 반지름 R",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ar=A*pi/180; Br=B*pi/180; Cr=pi-Ar-Br; Cdeg=180-A-B; Ax=R*cos(pi/2); Ay=R*sin(pi/2); tB=pi/2+2*Cr; Bx=R*cos(tB); By=R*sin(tB); tC=pi/2-2*Br; Cx=R*cos(tC); Cy=R*sin(tC); a=sqrt((Bx-Cx)^2+(By-Cy)^2); b=sqrt((Ax-Cx)^2+(Ay-Cy)^2); c=sqrt((Ax-Bx)^2+(Ay-By)^2); ratioA=a/sin(Ar)",
+  "geometry": {
+   "range": [
+    -3.3,
+    3.3
+   ],
+   "yRange": [
+    -3.3,
+    3.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=R",
+     "label": "외접원"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각 C (=180-A-B)",
+    "expr": "Cdeg",
+    "digits": 1
+   },
+   {
+    "label": "변 a (=BC)",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "변 b (=CA)",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "변 c (=AB)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "a / sin A",
+    "expr": "a/sin(Ar)",
+    "digits": 4
+   },
+   {
+    "label": "b / sin B",
+    "expr": "b/sin(Br)",
+    "digits": 4
+   },
+   {
+    "label": "c / sin C",
+    "expr": "c/sin(Cr)",
+    "digits": 4
+   },
+   {
+    "label": "2R",
+    "expr": "2*R",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 60,
+    "B": 60,
+    "R": 1.5
+   },
+   {
+    "A": 90,
+    "B": 45,
+    "R": 1
+   },
+   {
+    "A": 30,
+    "B": 90,
+    "R": 2
+   },
+   {
+    "A": 50,
+    "B": 70,
+    "R": 1.2
+   }
+  ],
+  "invariants": [
+   "a/sin(Ar)-2*R",
+   "b/sin(Br)-2*R",
+   "c/sin(Cr)-2*R",
+   "a/sin(Ar)-b/sin(Br)",
+   "b/sin(Br)-c/sin(Cr)",
+   "Ax*Ax+Ay*Ay-R*R",
+   "Bx*Bx+By*By-R*R",
+   "Cx*Cx+Cy*Cy-R*R"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 60,
+     "B": 60,
+     "R": 1
+    },
+    "expect": {
+     "a": 1.7320508076,
+     "b": 1.7320508076,
+     "c": 1.7320508076,
+     "ratioA": 2
+    }
+   },
+   {
+    "params": {
+     "A": 90,
+     "B": 45,
+     "R": 1
+    },
+    "expect": {
+     "a": 2,
+     "b": 1.4142135624,
+     "c": 1.4142135624,
+     "ratioA": 2
+    }
+   },
+   {
+    "params": {
+     "A": 30,
+     "B": 90,
+     "R": 2
+    },
+    "expect": {
+     "a": 2,
+     "b": 4,
+     "c": 3.4641016151,
+     "ratioA": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

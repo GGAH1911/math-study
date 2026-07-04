@@ -1,0 +1,137 @@
+{
+ "id": "functions/middle-3/이차함수/이차함수의_치역",
+ "spec": {
+  "title": "이차함수의 치역 — 꼭짓점 y좌표 q가 경계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "p (꼭짓점 x)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "q (꼭짓점 y)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   }
+  ],
+  "scope": "vy = q; vc = a*(p-p)^2 + q; f2 = a*(p+2-p)^2 + q; fm2 = a*(p-2-p)^2 + q; sym = f2 - fm2",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*(x-p)^2 + q",
+     "label": "y = a(x-p)²+q",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "q",
+     "label": "y = q (치역의 경계)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 y좌표 q (극값)",
+    "expr": "vy",
+    "digits": 2
+   },
+   {
+    "label": "a>0이면 치역 {y | y ≥ q}, a<0이면 {y | y ≤ q}",
+    "expr": "vy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": 0,
+    "q": -2
+   },
+   {
+    "a": -1,
+    "p": 2,
+    "q": 3
+   },
+   {
+    "a": 2,
+    "p": -1,
+    "q": 1
+   },
+   {
+    "a": 0.5,
+    "p": 1,
+    "q": -3
+   }
+  ],
+  "invariants": [
+   "vc - vy",
+   "sym"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": 0,
+     "q": -2
+    },
+    "expect": {
+     "vy": -2,
+     "sym": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "p": 2,
+     "q": 3
+    },
+    "expect": {
+     "vy": 3,
+     "sym": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": -1,
+     "q": 1
+    },
+    "expect": {
+     "vy": 1,
+     "sym": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

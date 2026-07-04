@@ -1,0 +1,145 @@
+{
+ "id": "functions/middle-3/이차함수/표준형_일반형",
+ "spec": {
+  "title": "이차함수 표준형 ↔ 일반형",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (폭·방향)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "p (꼭짓점 x)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q (꼭짓점 y)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   }
+  ],
+  "scope": "b=-2*a*p; c=a*p^2+q",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*(x-p)^2+q",
+     "label": "표준형 a(x-p)²+q",
+     "color": "#1971c2"
+    },
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "일반형 ax²+bx+c",
+     "color": "#f08c00"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "b = -2ap",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "c = ap²+q",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 x=p",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y=q",
+    "expr": "q",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": 2,
+    "q": -3
+   },
+   {
+    "a": 2,
+    "p": -1,
+    "q": 4
+   },
+   {
+    "a": -1,
+    "p": 3,
+    "q": 5
+   },
+   {
+    "a": 0.5,
+    "p": 0,
+    "q": 1
+   }
+  ],
+  "invariants": [
+   "b+2*a*p",
+   "c-a*p^2-q",
+   "a*p^2+b*p+c-q"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": 2,
+     "q": -3
+    },
+    "expect": {
+     "b": -4,
+     "c": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": -1,
+     "q": 4
+    },
+    "expect": {
+     "b": 4,
+     "c": 6
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "p": 3,
+     "q": 5
+    },
+    "expect": {
+     "b": 6,
+     "c": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

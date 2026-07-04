@@ -1,0 +1,112 @@
+{
+ "id": "함수의_접선",
+ "spec": {
+  "title": "함수의 접선: y=x³−x 위 점 (a, f(a))에서의 접선",
+  "params": [
+   {
+    "name": "a",
+    "label": "접점 x좌표 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^3 - a; m = 3*a^2 - 1; b = fa - m*a",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - x",
+     "label": "f(x)=x³−x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*(x - a) + fa",
+     "label": "접선 y=f'(a)(x−a)+f(a)",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "기울기 f'(a)",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "접선의 방정식 y = f'(a)(x−a)+f(a) 의 절편",
+    "expr": "b",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": -1
+   }
+  ],
+  "invariants": [
+   "m - (3*a^2 - 1)",
+   "(m*(a - a) + fa) - (a^3 - a)",
+   "(m*a + b) - fa"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 0,
+     "m": 2,
+     "b": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": 0,
+     "m": -1,
+     "b": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 6,
+     "m": 11,
+     "b": -16
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

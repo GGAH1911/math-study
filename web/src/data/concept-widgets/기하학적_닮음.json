@@ -1,0 +1,192 @@
+{
+ "id": "기하학적_닮음",
+ "spec": {
+  "title": "기하학적 닮음 — 닮음비와 넓이·부피비",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 k (확대·축소 배율)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": "배"
+   }
+  ],
+  "scope": "bAB=3; bAC=sqrt(5); bBC=sqrt(8); Bpx=3*k; Bpy=0; Cpx=k; Cpy=2*k; sAB=sqrt(Bpx^2+Bpy^2); sAC=sqrt(Cpx^2+Cpy^2); sBC=sqrt((Bpx-Cpx)^2+(Bpy-Cpy)^2); baseArea=3; scaledArea=abs(Bpx*Cpy-Cpx*Bpy)/2; areaRatio=scaledArea/baseArea; volRatio=k^3; ratAB=sAB/bAB; ratAC=sAC/bAC; ratBC=sBC/bBC",
+  "geometry": {
+   "range": [
+    -1,
+    10
+   ],
+   "yRange": [
+    -1,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       1,
+       2
+      ]
+     ],
+     "label": "△ABC (원래)",
+     "color": "#888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Bpx",
+       "=Bpy"
+      ],
+      [
+       "=Cpx",
+       "=Cpy"
+      ]
+     ],
+     "label": "△A'B'C' (닮음, ×k)",
+     "color": "#e4572e"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A=A'"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      2
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bpx",
+      "=Bpy"
+     ],
+     "label": "B'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cpx",
+      "=Cpy"
+     ],
+     "label": "C'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비 (대응변의 길이 비) A'B':AB",
+    "expr": "ratAB",
+    "digits": 3
+   },
+   {
+    "label": "세 변의 비가 모두 같은가? AC비",
+    "expr": "ratAC",
+    "digits": 3
+   },
+   {
+    "label": "넓이의 비 = 닮음비² (m²:n²)",
+    "expr": "areaRatio",
+    "digits": 3
+   },
+   {
+    "label": "부피의 비 = 닮음비³ (m³:n³)",
+    "expr": "volRatio",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 0.5
+   },
+   {
+    "k": 1.5
+   }
+  ],
+  "invariants": [
+   "ratAB-k",
+   "ratAC-k",
+   "ratBC-k",
+   "areaRatio-k^2",
+   "scaledArea-3*k^2",
+   "volRatio-k^3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "ratAB": 2,
+     "areaRatio": 4,
+     "volRatio": 8,
+     "scaledArea": 12
+    }
+   },
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "ratAB": 0.5,
+     "areaRatio": 0.25,
+     "volRatio": 0.125,
+     "scaledArea": 0.75
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "ratAB": 3,
+     "areaRatio": 9,
+     "volRatio": 27
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

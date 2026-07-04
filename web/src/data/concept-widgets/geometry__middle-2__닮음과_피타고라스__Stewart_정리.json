@@ -1,0 +1,223 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/Stewart_정리",
+ "spec": {
+  "title": "Stewart 정리 — 세 변으로 구하는 체바 선분 AD",
+  "params": [
+   {
+    "name": "BC",
+    "label": "밑변 a=BC",
+    "type": "slider",
+    "min": 3,
+    "max": 10,
+    "init": 6,
+    "step": 0.1
+   },
+   {
+    "name": "Ax",
+    "label": "꼭짓점 A의 x",
+    "type": "slider",
+    "min": -1,
+    "max": 8,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "Ay",
+    "label": "꼭짓점 A의 y(높이)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "분할비 t=BD/BC",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "a=BC; m=t*a; n=a-m; c=sqrt(Ax^2+Ay^2); b=sqrt((Ax-a)^2+Ay^2); dgeom=sqrt((Ax-m)^2+Ay^2); dst=sqrt((b^2*m+c^2*n)/a - m*n)",
+  "geometry": {
+   "range": [
+    -2,
+    11
+   ],
+   "yRange": [
+    -1,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=a",
+       "=0"
+      ],
+      [
+       "=Ax",
+       "=Ay"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=m",
+      "=0"
+     ],
+     "label": "AD=d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0",
+      "=0"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=0"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      "=0"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "BD = m",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "DC = n",
+    "expr": "n",
+    "digits": 3
+   },
+   {
+    "label": "AB = c",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "AC = b",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "AD 실측(좌표거리)",
+    "expr": "dgeom",
+    "digits": 4
+   },
+   {
+    "label": "AD Stewart공식 √((b²m+c²n)/a − mn)",
+    "expr": "dst",
+    "digits": 4
+   },
+   {
+    "label": "검증 b²m+c²n − a(d²+mn) (≈0)",
+    "expr": "b^2*m+c^2*n-a*(dgeom^2+m*n)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "BC": 6,
+    "Ax": 2,
+    "Ay": 4,
+    "t": 0.5
+   },
+   {
+    "BC": 8,
+    "Ax": 0,
+    "Ay": 3,
+    "t": 0.25
+   },
+   {
+    "BC": 5,
+    "Ax": 4,
+    "Ay": 2,
+    "t": 0.7
+   },
+   {
+    "BC": 7,
+    "Ax": -1,
+    "Ay": 3,
+    "t": 0.4
+   }
+  ],
+  "invariants": [
+   "b^2*m+c^2*n-a*(dgeom^2+m*n)",
+   "dst-dgeom",
+   "m+n-a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "BC": 6,
+     "Ax": 3,
+     "Ay": 4,
+     "t": 0.5
+    },
+    "expect": {
+     "m": 3,
+     "n": 3,
+     "b": 5,
+     "c": 5,
+     "dgeom": 4,
+     "dst": 4
+    }
+   },
+   {
+    "params": {
+     "BC": 8,
+     "Ax": 0,
+     "Ay": 3,
+     "t": 0.25
+    },
+    "expect": {
+     "m": 2,
+     "n": 6,
+     "dgeom": 3.605551275463989,
+     "dst": 3.605551275463989
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

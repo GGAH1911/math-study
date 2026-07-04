@@ -1,0 +1,201 @@
+{
+ "id": "geometry/middle-3/원의_성질/원주각",
+ "spec": {
+  "title": "원주각 — 같은 호에 대한 원주각과 중심각",
+  "params": [
+   {
+    "name": "cang",
+    "label": "꼭짓점 C 위치",
+    "type": "slider",
+    "min": 5,
+    "max": 175,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "s",
+    "label": "호 AB 크기(중심각의 절반)",
+    "type": "slider",
+    "min": 20,
+    "max": 80,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Aa=270-s; Ba=270+s; Ax=cos(Aa*pi/180); Ay=sin(Aa*pi/180); Bx=cos(Ba*pi/180); By=sin(Ba*pi/180); Cx=cos(cang*pi/180); Cy=sin(cang*pi/180); CAx=Ax-Cx; CAy=Ay-Cy; CBx=Bx-Cx; CBy=By-Cy; dot=CAx*CBx+CAy*CBy; nA=sqrt(CAx^2+CAy^2); nB=sqrt(CBx^2+CBy^2); inscribed=acos(dot/(nA*nB))*180/pi; central=2*s",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원주각 ∠ACB",
+    "expr": "inscribed",
+    "digits": 1
+   },
+   {
+    "label": "중심각 ∠AOB",
+    "expr": "central",
+    "digits": 1
+   },
+   {
+    "label": "중심각 ÷ 원주각",
+    "expr": "central/inscribed",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cang": 90,
+    "s": 50
+   },
+   {
+    "cang": 30,
+    "s": 50
+   },
+   {
+    "cang": 120,
+    "s": 70
+   },
+   {
+    "cang": 60,
+    "s": 30
+   }
+  ],
+  "invariants": [
+   "inscribed - s",
+   "central - 2*inscribed"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cang": 90,
+     "s": 50
+    },
+    "expect": {
+     "inscribed": 50,
+     "central": 100
+    }
+   },
+   {
+    "params": {
+     "cang": 30,
+     "s": 30
+    },
+    "expect": {
+     "inscribed": 30,
+     "central": 60
+    }
+   },
+   {
+    "params": {
+     "cang": 120,
+     "s": 70
+    },
+    "expect": {
+     "inscribed": 70,
+     "central": 140
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

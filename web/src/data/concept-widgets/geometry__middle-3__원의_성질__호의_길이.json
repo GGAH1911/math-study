@@ -1,0 +1,181 @@
+{
+ "id": "geometry/middle-3/원의_성질/호의_길이",
+ "spec": {
+  "title": "호의 길이 — 부채꼴로 보기",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "중심각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 120,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; l=pi*r*theta/180; c=2*pi*r; frac=theta/360; ax0=r; ay0=0; ax1=r*cos(rad*0.25); ay1=r*sin(rad*0.25); ax2=r*cos(rad*0.5); ay2=r*sin(rad*0.5); ax3=r*cos(rad*0.75); ay3=r*sin(rad*0.75); ax4=r*cos(rad); ay4=r*sin(rad)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ax0",
+       "=ay0"
+      ],
+      [
+       "=ax1",
+       "=ay1"
+      ],
+      [
+       "=ax2",
+       "=ay2"
+      ],
+      [
+       "=ax3",
+       "=ay3"
+      ],
+      [
+       "=ax4",
+       "=ay4"
+      ]
+     ],
+     "label": "부채꼴"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax0",
+      "=ay0"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax4",
+      "=ay4"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "중심각 θ",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "호가 원주에서 차지하는 비율 θ/360",
+    "expr": "frac",
+    "digits": 4
+   },
+   {
+    "label": "원주 2πr",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "호의 길이 l = πrθ/180",
+    "expr": "l",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 3,
+    "theta": 180
+   },
+   {
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "r": 1,
+    "theta": 360
+   },
+   {
+    "r": 4,
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "l - c*theta/360",
+   "l - 2*pi*r*theta/360",
+   "ax4^2+ay4^2 - r^2",
+   "ax0^2+ay0^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 3,
+     "theta": 180
+    },
+    "expect": {
+     "l": 9.42477796076938,
+     "c": 18.84955592153876
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "l": 3.141592653589793
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "theta": 360
+    },
+    "expect": {
+     "l": 6.283185307179586
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

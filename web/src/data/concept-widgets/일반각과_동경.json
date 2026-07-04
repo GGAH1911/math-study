@@ -1,0 +1,163 @@
+{
+ "id": "일반각과_동경",
+ "spec": {
+  "title": "일반각과 동경 θ = α + 360°·n",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α (기본 회전각)",
+    "type": "slider",
+    "min": -360,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "n",
+    "label": "n (회전 횟수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 1,
+    "unit": "바퀴"
+   }
+  ],
+  "scope": "theta=alpha+360*n; rad=theta*pi/180; px=cos(rad); py=sin(rad); arad=alpha*pi/180; ax=cos(arad); ay=sin(arad)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "시초선",
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "동경",
+     "color": "#e4572e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "일반각 θ = α + 360·n",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "동경 끝점 cos θ",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "동경 끝점 sin θ",
+    "expr": "py",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 30,
+    "n": 0
+   },
+   {
+    "alpha": 30,
+    "n": 1
+   },
+   {
+    "alpha": -30,
+    "n": -1
+   },
+   {
+    "alpha": 210,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-1",
+   "px-ax",
+   "py-ay"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 30,
+     "n": 0
+    },
+    "expect": {
+     "theta": 30,
+     "px": 0.8660254037844387,
+     "py": 0.5
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "n": 1
+    },
+    "expect": {
+     "theta": 390,
+     "px": 0.8660254037844387,
+     "py": 0.5
+    }
+   },
+   {
+    "params": {
+     "alpha": 90,
+     "n": -1
+    },
+    "expect": {
+     "theta": -270,
+     "px": 0,
+     "py": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,226 @@
+{
+ "id": "geometry/middle-3/원의_성질/원주각의_성질",
+ "spec": {
+  "title": "원주각의 성질 — 원주각은 중심각의 절반 (같은 호)",
+  "params": [
+   {
+    "name": "arc",
+    "label": "호 AB의 중심각",
+    "type": "slider",
+    "min": 20,
+    "max": 180,
+    "init": 100,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "t",
+    "label": "점 P의 위치(큰 호 위)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.01
+   }
+  ],
+  "scope": "aA=(270-arc/2)*pi/180; aB=(270+arc/2)*pi/180; aP=(90+t*(180-arc/2-10))*pi/180; Ax=cos(aA); Ay=sin(aA); Bx=cos(aB); By=sin(aB); Px=cos(aP); Py=sin(aP); ux=Ax-Px; uy=Ay-Py; vx=Bx-Px; vy=By-Py; dot=ux*vx+uy*vy; crs=ux*vy-uy*vx; insc=atan2(abs(crs),dot)*180/pi; central=arc",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ],
+     "color": "#c0392b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "color": "#c0392b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "color": "#2980b9"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원주각 ∠APB",
+    "expr": "insc",
+    "digits": 2
+   },
+   {
+    "label": "중심각 ∠AOB",
+    "expr": "central",
+    "digits": 1
+   },
+   {
+    "label": "중심각 ÷ 원주각",
+    "expr": "central/insc",
+    "digits": 3
+   },
+   {
+    "label": "원주각 − 중심각/2",
+    "expr": "insc-central/2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "arc": 90,
+    "t": 0
+   },
+   {
+    "arc": 120,
+    "t": 0.3
+   },
+   {
+    "arc": 60,
+    "t": -0.5
+   },
+   {
+    "arc": 180,
+    "t": 0.2
+   }
+  ],
+  "invariants": [
+   "insc-central/2",
+   "Ax^2+Ay^2-1",
+   "Bx^2+By^2-1",
+   "Px^2+Py^2-1",
+   "central-arc"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "arc": 90,
+     "t": 0
+    },
+    "expect": {
+     "insc": 45,
+     "central": 90
+    }
+   },
+   {
+    "params": {
+     "arc": 120,
+     "t": 0
+    },
+    "expect": {
+     "insc": 60,
+     "central": 120
+    }
+   },
+   {
+    "params": {
+     "arc": 60,
+     "t": -0.5
+    },
+    "expect": {
+     "insc": 30,
+     "central": 60,
+     "Px": 0.93969262,
+     "Py": 0.34202014
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

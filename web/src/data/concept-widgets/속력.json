@@ -1,0 +1,120 @@
+{
+ "id": "속력",
+ "spec": {
+  "title": "속력 = |속도| — 위치함수의 순간 빠르기",
+  "params": [
+   {
+    "name": "t",
+    "label": "시각 t",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": "초"
+   }
+  ],
+  "scope": "x = t^3 - 6*t^2 + 9*t; v = 3*t^2 - 12*t + 9; sp = abs(v)",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    -4,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 6*x^2 + 9*x",
+     "label": "위치 x(t)",
+     "color": "#888888"
+    },
+    {
+     "fn": "3*x^2 - 12*x + 9",
+     "label": "속도 v(t)=x'(t)",
+     "color": "#2a7fff"
+    },
+    {
+     "fn": "abs(3*x^2 - 12*x + 9)",
+     "label": "속력 |v(t)|",
+     "color": "#e0442f"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위치 x(t)",
+    "expr": "x",
+    "digits": 3
+   },
+   {
+    "label": "속도 v(t)",
+    "expr": "v",
+    "digits": 3
+   },
+   {
+    "label": "속력 |v(t)|",
+    "expr": "sp",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 1
+   },
+   {
+    "t": 2
+   },
+   {
+    "t": 3
+   },
+   {
+    "t": 4
+   }
+  ],
+  "invariants": [
+   "sp - abs(v)",
+   "sp*sp - v*v",
+   "v - (3*t^2 - 12*t + 9)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "x": 0,
+     "v": 9,
+     "sp": 9
+    }
+   },
+   {
+    "params": {
+     "t": 2
+    },
+    "expect": {
+     "x": 2,
+     "v": -3,
+     "sp": 3
+    }
+   },
+   {
+    "params": {
+     "t": 4
+    },
+    "expect": {
+     "x": 4,
+     "v": 9,
+     "sp": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

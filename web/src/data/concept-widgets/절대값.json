@@ -1,0 +1,121 @@
+{
+ "id": "절대값",
+ "spec": {
+  "title": "절대값 |x| — 원점으로부터의 거리",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ax = abs(x)",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O(원점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      0
+     ],
+     "label": "거리=|x|",
+     "color": "#e4572e"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "|x| (원점까지의 거리)",
+    "expr": "ax",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": -3
+   },
+   {
+    "x": 4
+   },
+   {
+    "x": 0
+   },
+   {
+    "x": -0.1
+   }
+  ],
+  "invariants": [
+   "ax - sqrt(x^2)",
+   "ax^2 - x^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": -3
+    },
+    "expect": {
+     "ax": 3
+    }
+   },
+   {
+    "params": {
+     "x": 4
+    },
+    "expect": {
+     "ax": 4
+    }
+   },
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "ax": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

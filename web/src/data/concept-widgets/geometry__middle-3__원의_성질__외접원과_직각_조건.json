@@ -1,0 +1,181 @@
+{
+ "id": "geometry/middle-3/원의_성질/외접원과_직각_조건",
+ "spec": {
+  "title": "외접원과 직각 조건 (탈레스 정리)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "점 C의 위치 θ",
+    "type": "slider",
+    "min": 2,
+    "max": 358,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); ax=-1; ay=0; bx=1; by=0; dot=(ax-cx)*(bx-cx)+(ay-cy)*(by-cy); la=sqrt((ax-cx)^2+(ay-cy)^2); lb=sqrt((bx-cx)^2+(by-cy)^2); ang=acos(dot/(la*lb))*180/pi",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "지름 AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      -1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      1,
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠ACB",
+    "expr": "ang",
+    "digits": 2
+   },
+   {
+    "label": "CA·CB (내적)",
+    "expr": "dot",
+    "digits": 6
+   },
+   {
+    "label": "C가 원 위(cx²+cy²)",
+    "expr": "cx^2+cy^2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "dot",
+   "cx^2+cy^2-1",
+   "ang-90"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "cy": 1,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "cy": 0.5,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 270
+    },
+    "expect": {
+     "cx": 0,
+     "cy": -1,
+     "dot": 0,
+     "ang": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

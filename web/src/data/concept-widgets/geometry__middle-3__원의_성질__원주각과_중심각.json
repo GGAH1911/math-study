@@ -1,0 +1,203 @@
+{
+ "id": "geometry/middle-3/원의_성질/원주각과_중심각",
+ "spec": {
+  "title": "원주각과 중심각 — 원주각은 중심각의 절반",
+  "params": [
+   {
+    "name": "gamma",
+    "label": "중심각 ∠AOB",
+    "type": "slider",
+    "min": 30,
+    "max": 170,
+    "init": 100,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "t",
+    "label": "점 P의 위치",
+    "type": "slider",
+    "min": 5,
+    "max": 95,
+    "init": 50,
+    "step": 1,
+    "unit": "%"
+   }
+  ],
+  "scope": "ga=gamma; phiA=(90+ga/2)*pi/180; phiB=(90-ga/2)*pi/180; phiP=(90+ga/2+(t/100)*(360-ga))*pi/180; Ax=cos(phiA); Ay=sin(phiA); Bx=cos(phiB); By=sin(phiB); Px=cos(phiP); Py=sin(phiP); pax=Ax-Px; pay=Ay-Py; pbx=Bx-Px; pby=By-Py; dot=pax*pbx+pay*pby; magA=sqrt(pax^2+pay^2); magB=sqrt(pbx^2+pby^2); insc=acos(dot/(magA*magB))*180/pi; cen=ga",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심각 ∠AOB",
+    "expr": "cen",
+    "digits": 1
+   },
+   {
+    "label": "원주각 ∠APB",
+    "expr": "insc",
+    "digits": 1
+   },
+   {
+    "label": "중심각 ÷ 2",
+    "expr": "cen/2",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "gamma": 100,
+    "t": 50
+   },
+   {
+    "gamma": 100,
+    "t": 20
+   },
+   {
+    "gamma": 60,
+    "t": 75
+   },
+   {
+    "gamma": 140,
+    "t": 40
+   }
+  ],
+  "invariants": [
+   "insc-cen/2",
+   "insc-gamma/2",
+   "(Ax^2+Ay^2)-1",
+   "(Px^2+Py^2)-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "gamma": 100,
+     "t": 50
+    },
+    "expect": {
+     "insc": 50,
+     "cen": 100
+    }
+   },
+   {
+    "params": {
+     "gamma": 60,
+     "t": 30
+    },
+    "expect": {
+     "insc": 30,
+     "cen": 60
+    }
+   },
+   {
+    "params": {
+     "gamma": 140,
+     "t": 80
+    },
+    "expect": {
+     "insc": 70,
+     "cen": 140
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

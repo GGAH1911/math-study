@@ -1,0 +1,146 @@
+{
+ "id": "functions/middle-3/이차함수/대칭축",
+ "spec": {
+  "title": "이차함수의 대칭축 x = -b/2a",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": -4,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "대칭축에서 거리 d",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "p = -b/(2*a); q = c - b^2/(4*a); yL = a*(p-d)^2 + b*(p-d) + c; yR = a*(p+d)^2 + b*(p+d) + c",
+  "plot": {
+   "range": [
+    -3,
+    7
+   ],
+   "yRange": [
+    -6,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "y=ax²+bx+c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "대칭축 x=-b/2a",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y=q",
+    "expr": "q",
+    "digits": 3
+   },
+   {
+    "label": "y(p-d)",
+    "expr": "yL",
+    "digits": 3
+   },
+   {
+    "label": "y(p+d) (=y(p-d)여야 함)",
+    "expr": "yR",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -4,
+    "c": 3,
+    "d": 1
+   },
+   {
+    "a": 2,
+    "b": 8,
+    "c": 1,
+    "d": 0.5
+   },
+   {
+    "a": 0.5,
+    "b": 2,
+    "c": -1,
+    "d": 2
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -2,
+    "d": 1.5
+   }
+  ],
+  "invariants": [
+   "2*a*p + b",
+   "yL - yR",
+   "q - (a*p^2 + b*p + c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -4,
+     "c": 3,
+     "d": 1
+    },
+    "expect": {
+     "p": 2,
+     "q": -1,
+     "yL": 0,
+     "yR": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 8,
+     "c": 1,
+     "d": 0.5
+    },
+    "expect": {
+     "p": -2,
+     "q": -7
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

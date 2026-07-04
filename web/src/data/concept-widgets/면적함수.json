@@ -1,0 +1,185 @@
+{
+ "id": "면적함수",
+ "spec": {
+  "title": "면적함수 F(x)=∫₀ˣ2t dt — 누적되는 넓이가 곧 함수값",
+  "params": [
+   {
+    "name": "x",
+    "label": "윗끝 x",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fx=2*x; area=0.5*x*fx; Fx=x^2",
+  "geometry": {
+   "range": [
+    -0.3,
+    3.3
+   ],
+   "yRange": [
+    -0.6,
+    6.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      3,
+      6
+     ],
+     "label": "y=f(t)=2t",
+     "color": "#888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x",
+       "=fx"
+      ]
+     ],
+     "label": "누적넓이",
+     "color": "#4f8cff"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=fx"
+     ],
+     "label": "(x, f(x))",
+     "color": "#e0562e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    3
+   ],
+   "yRange": [
+    0,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "t^2",
+     "label": "F(x)=x²  (누적면적함수)",
+     "color": "#2ca02c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x)=2x",
+    "expr": "fx",
+    "digits": 3
+   },
+   {
+    "label": "삼각형 넓이 ½·x·f(x)",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "F(x)=∫₀ˣ2t dt",
+    "expr": "Fx",
+    "digits": 3
+   },
+   {
+    "label": "F'(x) 확인 = f(x)",
+    "expr": "fx",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1.5
+   },
+   {
+    "x": 2
+   },
+   {
+    "x": 3
+   }
+  ],
+  "invariants": [
+   "area - Fx",
+   "Fx - x^2",
+   "fx - 2*x"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "fx": 0,
+     "area": 0,
+     "Fx": 0
+    }
+   },
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "fx": 2,
+     "area": 1,
+     "Fx": 1
+    }
+   },
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "fx": 4,
+     "area": 4,
+     "Fx": 4
+    }
+   },
+   {
+    "params": {
+     "x": 3
+    },
+    "expect": {
+     "fx": 6,
+     "area": 9,
+     "Fx": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

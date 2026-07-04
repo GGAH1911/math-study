@@ -1,0 +1,110 @@
+{
+ "id": "functions/middle-2/일차함수/y절편",
+ "spec": {
+  "title": "y절편: 그래프가 y축과 만나는 높이",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "f0 = m*0 + b; yint = f0",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "m*x + b",
+     "label": "y = m x + b",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(0) = y절편",
+    "expr": "yint",
+    "digits": 2
+   },
+   {
+    "label": "b (식의 상수항)",
+    "expr": "b",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "b": 3
+   },
+   {
+    "m": -1,
+    "b": -5
+   },
+   {
+    "m": 0.5,
+    "b": 0
+   },
+   {
+    "m": -4,
+    "b": 6
+   }
+  ],
+  "invariants": [
+   "f0 - b",
+   "m*0 + b - yint"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "b": 3
+    },
+    "expect": {
+     "yint": 3
+    }
+   },
+   {
+    "params": {
+     "m": -1,
+     "b": -5
+    },
+    "expect": {
+     "yint": -5
+    }
+   },
+   {
+    "params": {
+     "m": 0.5,
+     "b": 0
+    },
+    "expect": {
+     "yint": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

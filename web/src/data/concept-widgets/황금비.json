@@ -1,0 +1,182 @@
+{
+ "id": "황금비",
+ "spec": {
+  "title": "황금비: 선분의 내분과 φ",
+  "params": [
+   {
+    "name": "t",
+    "label": "C의 위치 (AC 길이, AB=1)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.001,
+    "unit": ""
+   }
+  ],
+  "scope": "ac=t; cb=1-t; r1=1/t; r2=t/(1-t); phi=(1+sqrt(5))/2; tg=(sqrt(5)-1)/2; gap=r1-r2",
+  "geometry": {
+   "range": [
+    -0.15,
+    1.15
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ac",
+      0
+     ],
+     "label": "AC",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ac",
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "CB",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ac",
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tg",
+      0.28
+     ],
+     "label": "황금분할점(AC≈0.618)",
+     "color": "#ca8a04"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AC",
+    "expr": "ac",
+    "digits": 4
+   },
+   {
+    "label": "CB",
+    "expr": "cb",
+    "digits": 4
+   },
+   {
+    "label": "AB:AC",
+    "expr": "r1",
+    "digits": 4
+   },
+   {
+    "label": "AC:CB",
+    "expr": "r2",
+    "digits": 4
+   },
+   {
+    "label": "두 비의 차 (0이면 황금비)",
+    "expr": "gap",
+    "digits": 4
+   },
+   {
+    "label": "φ=(1+√5)/2",
+    "expr": "phi",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.5
+   },
+   {
+    "t": 0.25
+   },
+   {
+    "t": 0.6180339887498949
+   },
+   {
+    "t": 0.75
+   }
+  ],
+  "invariants": [
+   "ac + cb - 1",
+   "r1*t - 1",
+   "r2*(1-t) - t",
+   "phi^2 - phi - 1",
+   "tg^2 + tg - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0.5
+    },
+    "expect": {
+     "ac": 0.5,
+     "cb": 0.5,
+     "r1": 2,
+     "r2": 1
+    }
+   },
+   {
+    "params": {
+     "t": 0.25
+    },
+    "expect": {
+     "ac": 0.25,
+     "cb": 0.75,
+     "r1": 4,
+     "r2": 0.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "t": 0.6180339887498949
+    },
+    "expect": {
+     "r1": 1.618033988749895,
+     "r2": 1.618033988749895,
+     "gap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

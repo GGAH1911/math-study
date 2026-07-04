@@ -1,0 +1,189 @@
+{
+ "id": "geometry/middle-3/삼각비/삼각형_넓이_최대화",
+ "spec": {
+  "title": "두 변의 합이 일정할 때 삼각형 넓이 최대화 (a+b=10 고정)",
+  "params": [
+   {
+    "name": "len",
+    "label": "한 변 a (다른 변 b=10−a)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 9.5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "ang",
+    "label": "사잇각 C",
+    "type": "slider",
+    "min": 1,
+    "max": 179,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "k=10; p=len; q=k-len; rad=ang*pi/180; px=p; py=0; qx=q*cos(rad); qy=q*sin(rad); area=0.5*p*q*sin(rad); shoe=0.5*abs(px*qy-qx*py); maxA=k*k/8",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=px",
+       "=py"
+      ],
+      [
+       "=qx",
+       "=qy"
+      ]
+     ],
+     "label": "삼각형"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변 a",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "변 b",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "넓이 S = ½·a·b·sin C",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "최대 넓이(a=b=5, C=90°)",
+    "expr": "maxA",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "len": 3,
+    "ang": 60
+   },
+   {
+    "len": 5,
+    "ang": 90
+   },
+   {
+    "len": 5,
+    "ang": 30
+   },
+   {
+    "len": 7,
+    "ang": 120
+   }
+  ],
+  "invariants": [
+   "p+q-k",
+   "shoe-area"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "len": 5,
+     "ang": 90
+    },
+    "expect": {
+     "area": 12.5,
+     "maxA": 12.5,
+     "p": 5,
+     "q": 5
+    }
+   },
+   {
+    "params": {
+     "len": 3,
+     "ang": 90
+    },
+    "expect": {
+     "area": 10.5,
+     "p": 3,
+     "q": 7
+    }
+   },
+   {
+    "params": {
+     "len": 5,
+     "ang": 30
+    },
+    "expect": {
+     "area": 6.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

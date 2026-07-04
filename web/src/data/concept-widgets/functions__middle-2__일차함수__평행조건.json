@@ -1,0 +1,134 @@
+{
+ "id": "functions/middle-2/일차함수/평행조건",
+ "spec": {
+  "title": "두 일차함수의 평행조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "공통 기울기 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b1",
+    "label": "y절편 b₁ (직선 1)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b2",
+    "label": "y절편 b₂ (직선 2)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 0.5
+   }
+  ],
+  "scope": "gap0=b1-b2; gap3=(a*3+b1)-(a*3+b2); gapDiff=gap0-gap3",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a*x+b1",
+     "label": "y=ax+b₁",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "a*x+b2",
+     "label": "y=ax+b₂",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 직선의 y절편 차 (b₁−b₂)",
+    "expr": "gap0",
+    "digits": 2
+   },
+   {
+    "label": "임의 x에서의 세로 간격 차 (항상 0 → 평행)",
+    "expr": "gapDiff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b1": 2,
+    "b2": -2
+   },
+   {
+    "a": 2,
+    "b1": 3,
+    "b2": 1
+   },
+   {
+    "a": -1,
+    "b1": 0,
+    "b2": 4
+   },
+   {
+    "a": 0.5,
+    "b1": -3,
+    "b2": 5
+   }
+  ],
+  "invariants": [
+   "gapDiff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b1": 3,
+     "b2": 1
+    },
+    "expect": {
+     "gap0": 2,
+     "gapDiff": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b1": 0,
+     "b2": 4
+    },
+    "expect": {
+     "gap0": -4,
+     "gapDiff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b1": 2,
+     "b2": -2
+    },
+    "expect": {
+     "gap0": 4,
+     "gapDiff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

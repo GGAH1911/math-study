@@ -1,0 +1,207 @@
+{
+ "id": "geometry/middle-3/원의_성질/방멱의_정리",
+ "spec": {
+  "title": "방멱의 정리 — 점 P의 원에 대한 방멱 PA·PB",
+  "params": [
+   {
+    "name": "phi",
+    "label": "할선 방향(원 위 점 A의 각)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "px",
+    "label": "점 P의 위치(중심에서 거리)",
+    "type": "slider",
+    "min": 2,
+    "max": 3.5,
+    "init": 2.5,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=phi*pi/180; ax=r*cos(rad); ay=r*sin(rad); dx=ax-px; dy=ay; dd=dx^2+dy^2; tB=(px^2-r^2)/dd; bx=px+tB*dx; by=tB*dy; PA=sqrt(dd); PB=sqrt((bx-px)^2+by^2); power=px^2-r^2; prod=PA*PB",
+  "geometry": {
+   "range": [
+    -2,
+    4
+   ],
+   "yRange": [
+    -2.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      0
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "할선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PA",
+    "expr": "PA",
+    "digits": 3
+   },
+   {
+    "label": "PB",
+    "expr": "PB",
+    "digits": 3
+   },
+   {
+    "label": "PA·PB (방멱)",
+    "expr": "prod",
+    "digits": 3
+   },
+   {
+    "label": "|PO|²−r² (일정)",
+    "expr": "power",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "phi": 0,
+    "px": 2.5,
+    "r": 1
+   },
+   {
+    "phi": 90,
+    "px": 2.5,
+    "r": 1
+   },
+   {
+    "phi": 180,
+    "px": 3,
+    "r": 1.5
+   },
+   {
+    "phi": 45,
+    "px": 2,
+    "r": 0.5
+   }
+  ],
+  "invariants": [
+   "ax^2+ay^2-r^2",
+   "bx^2+by^2-r^2",
+   "prod-power",
+   "(ax-px)*by-ay*(bx-px)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "phi": 0,
+     "px": 2.5,
+     "r": 1
+    },
+    "expect": {
+     "ax": 1,
+     "ay": 0,
+     "bx": -1,
+     "by": 0,
+     "PA": 1.5,
+     "PB": 3.5,
+     "prod": 5.25,
+     "power": 5.25
+    }
+   },
+   {
+    "params": {
+     "phi": 90,
+     "px": 2.5,
+     "r": 1
+    },
+    "expect": {
+     "ax": 0,
+     "ay": 1,
+     "bx": 0.6896552,
+     "by": 0.7241379,
+     "prod": 5.25,
+     "power": 5.25
+    }
+   },
+   {
+    "params": {
+     "phi": 180,
+     "px": 3,
+     "r": 1.5
+    },
+    "expect": {
+     "ax": -1.5,
+     "ay": 0,
+     "bx": 1.5,
+     "by": 0,
+     "PA": 4.5,
+     "PB": 1.5,
+     "prod": 6.75,
+     "power": 6.75
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

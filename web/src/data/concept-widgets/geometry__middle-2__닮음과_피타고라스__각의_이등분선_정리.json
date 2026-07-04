@@ -1,0 +1,191 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/각의_이등분선_정리",
+ "spec": {
+  "title": "각의 이등분선 정리: BD/DC = AB/AC",
+  "params": [
+   {
+    "name": "AB",
+    "label": "AB (변 c)",
+    "type": "slider",
+    "min": 1,
+    "max": 7,
+    "init": 6,
+    "step": 0.1
+   },
+   {
+    "name": "AC",
+    "label": "AC (변 b)",
+    "type": "slider",
+    "min": 1,
+    "max": 7,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "angleA",
+    "label": "∠A",
+    "type": "slider",
+    "min": 30,
+    "max": 140,
+    "init": 80,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "al=angleA*pi/360; Ax=0; Ay=0; Bx=AB*cos(al); By=AB*sin(al); Cx=AC*cos(al); Cy=-AC*sin(al); t=AB/(AB+AC); Dx=Bx+t*(Cx-Bx); Dy=By+t*(Cy-By); BD=sqrt((Bx-Dx)^2+(By-Dy)^2); DC=sqrt((Dx-Cx)^2+(Dy-Cy)^2); ratioBD=BD/DC; ratioAB=AB/AC",
+  "geometry": {
+   "range": [
+    -1.5,
+    8
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "이등분선",
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "BD",
+    "expr": "BD",
+    "digits": 3
+   },
+   {
+    "label": "DC",
+    "expr": "DC",
+    "digits": 3
+   },
+   {
+    "label": "BD/DC",
+    "expr": "ratioBD",
+    "digits": 4
+   },
+   {
+    "label": "AB/AC",
+    "expr": "ratioAB",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "AB": 6,
+    "AC": 4,
+    "angleA": 80
+   },
+   {
+    "AB": 5,
+    "AC": 5,
+    "angleA": 60
+   },
+   {
+    "AB": 7,
+    "AC": 3,
+    "angleA": 100
+   },
+   {
+    "AB": 4,
+    "AC": 6,
+    "angleA": 50
+   }
+  ],
+  "invariants": [
+   "ratioBD - ratioAB",
+   "Dy",
+   "BD*AC - DC*AB"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "AB": 5,
+     "AC": 5,
+     "angleA": 60
+    },
+    "expect": {
+     "ratioBD": 1,
+     "ratioAB": 1,
+     "Dy": 0
+    }
+   },
+   {
+    "params": {
+     "AB": 6,
+     "AC": 4,
+     "angleA": 80
+    },
+    "expect": {
+     "ratioBD": 1.5,
+     "ratioAB": 1.5,
+     "Dy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

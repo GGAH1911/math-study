@@ -1,0 +1,152 @@
+{
+ "id": "분수함수",
+ "spec": {
+  "title": "분수함수 f(x)=k/(x-p)+q",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (모양·부호)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "p (가로 이동)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "q (세로 이동)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "xt = p+2; ft = k/(xt-p)+q; center_x = p; center_y = q; onCurve = (xt-p)*(ft-q)-k; sa = 1.5; sym = (k/sa+q)+(k/(-sa)+q)-2*q",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "k/(x-p)+q",
+     "label": "f(x)=k/(x-p)+q",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "q",
+     "label": "점근선 y=q",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수직 점근선 x=p",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "수평 점근선 y=q",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "대칭중심 x",
+    "expr": "center_x",
+    "digits": 2
+   },
+   {
+    "label": "대칭중심 y",
+    "expr": "center_y",
+    "digits": 2
+   },
+   {
+    "label": "f(p+2)",
+    "expr": "ft",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 2,
+    "p": 1,
+    "q": 3
+   },
+   {
+    "k": -4,
+    "p": -2,
+    "q": 1
+   },
+   {
+    "k": 3,
+    "p": 0,
+    "q": -2
+   },
+   {
+    "k": -1.5,
+    "p": 2,
+    "q": -1
+   }
+  ],
+  "invariants": [
+   "onCurve",
+   "sym"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2,
+     "p": 1,
+     "q": 3
+    },
+    "expect": {
+     "ft": 4,
+     "center_x": 1,
+     "center_y": 3
+    }
+   },
+   {
+    "params": {
+     "k": -4,
+     "p": -2,
+     "q": 1
+    },
+    "expect": {
+     "ft": -1,
+     "center_x": -2,
+     "center_y": 1
+    }
+   },
+   {
+    "params": {
+     "k": 3,
+     "p": 0,
+     "q": -2
+    },
+    "expect": {
+     "ft": -0.5,
+     "center_x": 0,
+     "center_y": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

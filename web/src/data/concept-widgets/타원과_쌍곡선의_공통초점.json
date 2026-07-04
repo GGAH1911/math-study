@@ -1,0 +1,225 @@
+{
+ "id": "타원과_쌍곡선의_공통초점",
+ "spec": {
+  "title": "타원과 쌍곡선의 공통초점 — 점 P에서의 초점거리 관계",
+  "params": [
+   {
+    "name": "A",
+    "label": "타원 장반경 a",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "B",
+    "label": "타원 단반경 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "C",
+    "label": "쌍곡선 주반경 c'",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "f2 = A^2 - B^2; f = sqrt(f2); D2 = f2 - C^2; x2 = (B^2 + D2)/(D2/C^2 + B^2/A^2); px = sqrt(x2); py = sqrt(B^2*(1 - x2/A^2)); pf1 = sqrt((px + f)^2 + py^2); pf2 = sqrt((px - f)^2 + py^2)",
+  "geometry": {
+   "range": [
+    -13,
+    13
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-f",
+      0
+     ],
+     "to": [
+      "=f",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-f",
+      0
+     ],
+     "label": "F₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=f",
+      0
+     ],
+     "label": "F₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=-f",
+      0
+     ],
+     "label": "PF₁"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=f",
+      0
+     ],
+     "label": "PF₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "공통초점 c",
+    "expr": "f",
+    "digits": 3
+   },
+   {
+    "label": "P 좌표 x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P 좌표 y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "PF₁ (= a+c')",
+    "expr": "pf1",
+    "digits": 3
+   },
+   {
+    "label": "PF₂ (= a−c')",
+    "expr": "pf2",
+    "digits": 3
+   },
+   {
+    "label": "PF₁+PF₂ (=2a, 타원)",
+    "expr": "pf1+pf2",
+    "digits": 3
+   },
+   {
+    "label": "PF₁−PF₂ (=2c', 쌍곡선)",
+    "expr": "pf1-pf2",
+    "digits": 3
+   },
+   {
+    "label": "△PF₁F₂ 넓이",
+    "expr": "f*py",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 5,
+    "B": 3,
+    "C": 2
+   },
+   {
+    "A": 5,
+    "B": 3,
+    "C": 3
+   },
+   {
+    "A": 10,
+    "B": 6,
+    "C": 4
+   },
+   {
+    "A": 8,
+    "B": 5,
+    "C": 3
+   }
+  ],
+  "invariants": [
+   "pf1 + pf2 - 2*A",
+   "pf1 - pf2 - 2*C",
+   "px^2/A^2 + py^2/B^2 - 1",
+   "px^2/C^2 - py^2/D2 - 1",
+   "(A^2 - B^2) - (C^2 + D2)",
+   "B^2*D2*px^2 - A^2*C^2*py^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 5,
+     "B": 3,
+     "C": 2
+    },
+    "expect": {
+     "f": 4,
+     "px": 2.5,
+     "pf1": 7,
+     "pf2": 3
+    }
+   },
+   {
+    "params": {
+     "A": 10,
+     "B": 6,
+     "C": 4
+    },
+    "expect": {
+     "f": 8,
+     "px": 5,
+     "pf1": 14,
+     "pf2": 6
+    }
+   },
+   {
+    "params": {
+     "A": 5,
+     "B": 3,
+     "C": 3
+    },
+    "expect": {
+     "f": 4,
+     "px": 3.75,
+     "pf1": 8,
+     "pf2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

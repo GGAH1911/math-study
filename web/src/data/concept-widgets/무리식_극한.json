@@ -1,0 +1,114 @@
+{
+ "id": "무리식_극한",
+ "spec": {
+  "title": "무리식 극한: lim(x→3) (√(x+1)−2)/(x−3) — 0/0 부정형",
+  "params": [
+   {
+    "name": "x",
+    "label": "x (→3 으로 접근)",
+    "type": "slider",
+    "min": 2.01,
+    "max": 3.99,
+    "init": 2.5,
+    "step": 0.02,
+    "unit": ""
+   }
+  ],
+  "scope": "fx = (sqrt(x+1)-2)/(x-3); gx = 1/(sqrt(x+1)+2); L = 1/4",
+  "geometry": null,
+  "plot": {
+   "range": [
+    2,
+    4
+   ],
+   "yRange": [
+    0.2,
+    0.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(sqrt(x+1)-2)/(x-3)",
+     "label": "f(x)=(√(x+1)−2)/(x−3)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "0.25",
+     "label": "극한값 1/4",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "분자 √(x+1)−2 (→0)",
+    "expr": "sqrt(x+1)-2",
+    "digits": 5
+   },
+   {
+    "label": "분모 x−3 (→0)",
+    "expr": "x-3",
+    "digits": 5
+   },
+   {
+    "label": "분수값 f(x)",
+    "expr": "fx",
+    "digits": 6
+   },
+   {
+    "label": "유리화 후 1/(√(x+1)+2)",
+    "expr": "gx",
+    "digits": 6
+   },
+   {
+    "label": "극한값 L",
+    "expr": "L",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 2.01
+   },
+   {
+    "x": 2.5
+   },
+   {
+    "x": 3.5
+   },
+   {
+    "x": 3.99
+   }
+  ],
+  "invariants": [
+   "fx - gx",
+   "gx*(sqrt(x+1)+2) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 2.5
+    },
+    "expect": {
+     "fx": 0.2583426132260587,
+     "gx": 0.2583426132260587,
+     "L": 0.25
+    }
+   },
+   {
+    "params": {
+     "x": 3.5
+    },
+    "expect": {
+     "fx": 0.2426406871192848,
+     "gx": 0.2426406871192848,
+     "L": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

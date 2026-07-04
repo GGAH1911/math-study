@@ -1,0 +1,215 @@
+{
+ "id": "geometry/middle-3/원의_성질/외접원과_내접원",
+ "spec": {
+  "title": "외접원과 내접원 — 외심·내심과 반지름 R·r",
+  "params": [
+   {
+    "name": "base",
+    "label": "밑변 BC (=a)",
+    "type": "slider",
+    "min": 4,
+    "max": 18,
+    "init": 14,
+    "step": 1
+   },
+   {
+    "name": "ax",
+    "label": "꼭짓점 A의 x",
+    "type": "slider",
+    "min": -4,
+    "max": 14,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "ay",
+    "label": "꼭짓점 A의 y",
+    "type": "slider",
+    "min": 1,
+    "max": 14,
+    "init": 12,
+    "step": 1
+   }
+  ],
+  "scope": "Bx=0; By=0; Cx=base; Cy=0; a=base; b=sqrt((ax-base)^2+ay^2); c=sqrt(ax^2+ay^2); peri=a+b+c; s=peri/2; Area=base*ay/2; r=Area/s; Ox=base/2; Oy=((ax^2+ay^2)-ax*base)/(2*ay); R=sqrt(Ox^2+Oy^2); Ix=(a*ax+c*base)/peri; Iy=a*ay/peri",
+  "geometry": {
+   "range": [
+    -8,
+    18
+   ],
+   "yRange": [
+    -6,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       0,
+       0
+      ],
+      [
+       "=base",
+       0
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Ox",
+      "=Oy"
+     ],
+     "radius": "=R",
+     "label": "외접원 R"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Ix",
+      "=Iy"
+     ],
+     "radius": "=r",
+     "label": "내접원 r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ox",
+      "=Oy"
+     ],
+     "label": "외심 O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ix",
+      "=Iy"
+     ],
+     "label": "내심 I"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=base",
+      0
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "외접원 반지름 R",
+    "expr": "R",
+    "digits": 3
+   },
+   {
+    "label": "내접원 반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "넓이 S",
+    "expr": "Area",
+    "digits": 3
+   },
+   {
+    "label": "반둘레 s",
+    "expr": "s",
+    "digits": 3
+   },
+   {
+    "label": "S − r·s (=0 확인)",
+    "expr": "Area-r*s",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "base": 14,
+    "ax": 5,
+    "ay": 12
+   },
+   {
+    "base": 4,
+    "ax": 0,
+    "ay": 3
+   },
+   {
+    "base": 10,
+    "ax": 5,
+    "ay": 8
+   },
+   {
+    "base": 12,
+    "ax": 6,
+    "ay": 9
+   }
+  ],
+  "invariants": [
+   "Ox^2+Oy^2-R^2",
+   "(Ox-ax)^2+(Oy-ay)^2-R^2",
+   "(Ox-base)^2+Oy^2-R^2",
+   "Iy-r",
+   "r*s-Area"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "base": 14,
+     "ax": 5,
+     "ay": 12
+    },
+    "expect": {
+     "r": 4,
+     "R": 8.125,
+     "Ix": 6,
+     "Iy": 4,
+     "Oy": 4.125
+    }
+   },
+   {
+    "params": {
+     "base": 4,
+     "ax": 0,
+     "ay": 3
+    },
+    "expect": {
+     "r": 1,
+     "R": 2.5,
+     "Ix": 1,
+     "Iy": 1,
+     "Oy": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "id": "functions/middle-2/일차함수/일차함수의_성질",
+ "spec": {
+  "title": "일차함수 f(x)=ax+b의 성질",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "y0 = a*0 + b; y1 = a*1 + b; y2 = a*2 + b; slope = (y2 - y1)/(2 - 1)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x + b",
+     "label": "f(x)=ax+b",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 a (x가 1 늘 때 y 변화)",
+    "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "y절편 (0, b)",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "f(1)",
+    "expr": "y1",
+    "digits": 3
+   },
+   {
+    "label": "f(2)",
+    "expr": "y2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": -1,
+    "b": 3
+   },
+   {
+    "a": 0.5,
+    "b": -2
+   },
+   {
+    "a": -3,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "slope - a",
+   "y1 - y0 - a",
+   "y0 - b",
+   "y2 - 2*a - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "y0": 1,
+     "y1": 3,
+     "y2": 5,
+     "slope": 2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 3
+    },
+    "expect": {
+     "y0": 3,
+     "y1": 2,
+     "y2": 1,
+     "slope": -1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": -2
+    },
+    "expect": {
+     "y0": -2,
+     "y1": -1.5,
+     "y2": -1,
+     "slope": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

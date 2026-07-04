@@ -1,0 +1,213 @@
+{
+ "id": "geometry/middle-3/원의_성질/평행선과_원에_내접하는_사각형",
+ "spec": {
+  "title": "평행선과 원에 내접하는 사각형 (등각 사다리꼴)",
+  "params": [
+   {
+    "name": "yTop",
+    "label": "윗변 AB 높이",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "yBot",
+    "label": "아랫변 CD 높이",
+    "type": "slider",
+    "min": -0.95,
+    "max": 0.9,
+    "init": -0.6,
+    "step": 0.01
+   }
+  ],
+  "scope": "xT=sqrt(1-yTop^2); xB=sqrt(1-yBot^2); Ax=-xT; Ay=yTop; Bx=xT; By=yTop; Cx=xB; Cy=yBot; Dx=-xB; Dy=yBot; AB=2*xT; CD=2*xB; AD=sqrt((Ax-Dx)^2+(Ay-Dy)^2); BC=sqrt((Bx-Cx)^2+(By-Cy)^2); diff=AD-BC",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "color": "#94a3b8"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ],
+      [
+       "=Dx",
+       "=Dy"
+      ]
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ],
+     "color": "#dc2626",
+     "label": "AD"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Cx",
+      "=Cy"
+     ],
+     "color": "#16a34a",
+     "label": "BC"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "윗변 AB",
+    "expr": "AB",
+    "digits": 3
+   },
+   {
+    "label": "아랫변 CD",
+    "expr": "CD",
+    "digits": 3
+   },
+   {
+    "label": "왼쪽 다리 AD",
+    "expr": "AD",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 다리 BC",
+    "expr": "BC",
+    "digits": 3
+   },
+   {
+    "label": "AD - BC (항상 0)",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "yTop": 0.6,
+    "yBot": -0.6
+   },
+   {
+    "yTop": 0.8,
+    "yBot": 0
+   },
+   {
+    "yTop": 0.6,
+    "yBot": -0.8
+   },
+   {
+    "yTop": 0.5,
+    "yBot": -0.3
+   }
+  ],
+  "invariants": [
+   "AD-BC",
+   "Ax^2+Ay^2-1",
+   "Bx^2+By^2-1",
+   "Cx^2+Cy^2-1",
+   "Dx^2+Dy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "yTop": 0.6,
+     "yBot": -0.8
+    },
+    "expect": {
+     "AB": 1.6,
+     "CD": 1.2,
+     "AD": 1.4142135623730951,
+     "BC": 1.4142135623730951,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "yTop": 0.8,
+     "yBot": 0
+    },
+    "expect": {
+     "AB": 1.2,
+     "CD": 2,
+     "AD": 0.8944271909999159,
+     "BC": 0.8944271909999159,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

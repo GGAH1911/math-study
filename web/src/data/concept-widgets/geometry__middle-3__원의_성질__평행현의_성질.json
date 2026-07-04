@@ -1,0 +1,243 @@
+{
+ "id": "geometry/middle-3/원의_성질/평행현의_성질",
+ "spec": {
+  "title": "평행현의 성질 — 평행한 두 현이 만드는 호는 같다",
+  "params": [
+   {
+    "name": "psi",
+    "label": "ψ (대칭축 각도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 20,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "u1",
+    "label": "u₁ (현 AB 반각)",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 110,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "u2",
+    "label": "u₂ (현 CD 반각)",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "pr=pi/180; a1=(psi+u1)*pr; a2=(psi-u1)*pr; c1=(psi+u2)*pr; c2=(psi-u2)*pr; Ax=cos(a1); Ay=sin(a1); Bx=cos(a2); By=sin(a2); Cx=cos(c1); Cy=sin(c1); Dx=cos(c2); Dy=sin(c2); arcAC=abs((psi+u1)-(psi+u2)); arcBD=abs((psi-u1)-(psi-u2)); lenAC=sqrt((Ax-Cx)^2+(Ay-Cy)^2); lenBD=sqrt((Bx-Dx)^2+(By-Dy)^2)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "CD"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "현 AC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "현 BD"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "호 AC (중심각)",
+    "expr": "arcAC",
+    "digits": 1
+   },
+   {
+    "label": "호 BD (중심각)",
+    "expr": "arcBD",
+    "digits": 1
+   },
+   {
+    "label": "현 AC 길이",
+    "expr": "lenAC",
+    "digits": 4
+   },
+   {
+    "label": "현 BD 길이",
+    "expr": "lenBD",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "psi": 20,
+    "u1": 110,
+    "u2": 50
+   },
+   {
+    "psi": 0,
+    "u1": 90,
+    "u2": 30
+   },
+   {
+    "psi": 90,
+    "u1": 60,
+    "u2": 30
+   },
+   {
+    "psi": 200,
+    "u1": 140,
+    "u2": 40
+   }
+  ],
+  "invariants": [
+   "(Bx-Ax)*(Dy-Cy) - (By-Ay)*(Dx-Cx)",
+   "arcAC - arcBD",
+   "lenAC - lenBD",
+   "Ax^2+Ay^2-1",
+   "Cx^2+Cy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "psi": 0,
+     "u1": 90,
+     "u2": 30
+    },
+    "expect": {
+     "Ax": 0,
+     "Ay": 1,
+     "arcAC": 60,
+     "arcBD": 60
+    }
+   },
+   {
+    "params": {
+     "psi": 90,
+     "u1": 60,
+     "u2": 30
+    },
+    "expect": {
+     "Ax": -0.8660254037844387,
+     "Ay": 0.5,
+     "Cx": -0.5,
+     "arcAC": 30,
+     "arcBD": 30
+    }
+   },
+   {
+    "params": {
+     "psi": 20,
+     "u1": 110,
+     "u2": 50
+    },
+    "expect": {
+     "arcAC": 60,
+     "arcBD": 60
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
