@@ -1,0 +1,167 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/닮음과_축소_비율",
+ "spec": {
+  "title": "닮음과 축소 비율 — 원래 도형과 축소된 도형",
+  "params": [
+   {
+    "name": "k",
+    "label": "축소 비율 k",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "ax=0; ay=0; bx=4; by=0; cx=1; cy=3; a2x=k*ax; a2y=k*ay; b2x=k*bx; b2y=k*by; c2x=k*cx; c2y=k*cy; origAB=sqrt((bx-ax)^2+(by-ay)^2); redAB=sqrt((b2x-a2x)^2+(b2y-a2y)^2); origAC=sqrt((cx-ax)^2+(cy-ay)^2); redAC=sqrt((c2x-a2x)^2+(c2y-a2y)^2); origArea=abs((bx-ax)*(cy-ay)-(cx-ax)*(by-ay))/2; redArea=abs((b2x-a2x)*(c2y-a2y)-(c2x-a2x)*(b2y-a2y))/2; arearatio=redArea/origArea",
+  "geometry": {
+   "range": [
+    -0.5,
+    4.5
+   ],
+   "yRange": [
+    -0.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       1,
+       3
+      ]
+     ],
+     "label": "원래 도형",
+     "color": "gray"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a2x",
+       "=a2y"
+      ],
+      [
+       "=b2x",
+       "=b2y"
+      ],
+      [
+       "=c2x",
+       "=c2y"
+      ]
+     ],
+     "label": "축소 도형",
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b2x",
+      "=b2y"
+     ],
+     "label": "B'"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a2x",
+      "=a2y"
+     ],
+     "to": [
+      "=b2x",
+      "=b2y"
+     ],
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비 (축소 비율) k",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "원래 대응변 AB 길이",
+    "expr": "origAB",
+    "digits": 3
+   },
+   {
+    "label": "축소된 대응변 A'B' 길이 (= 4k)",
+    "expr": "redAB",
+    "digits": 3
+   },
+   {
+    "label": "넓이비 (= k²)",
+    "expr": "arearatio",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.25
+   },
+   {
+    "k": 0.5
+   },
+   {
+    "k": 0.75
+   },
+   {
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "redAB - k*origAB",
+   "redAB/origAB - redAC/origAC",
+   "redArea - k^2*origArea"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "redAB": 2,
+     "redArea": 1.5,
+     "arearatio": 0.25
+    }
+   },
+   {
+    "params": {
+     "k": 0.25
+    },
+    "expect": {
+     "redAB": 1,
+     "redArea": 0.375,
+     "arearatio": 0.0625
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "redAB": 4,
+     "redArea": 6,
+     "arearatio": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

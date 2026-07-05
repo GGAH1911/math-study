@@ -1,0 +1,124 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/직선과_도형",
+ "spec": {
+  "title": "직선 y = mx + n — 기울기와 절편",
+  "params": [
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "y절편 n",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "yint = n; xint = -n/m; y_at2 = m*2 + n",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "m*x + n",
+     "label": "y = mx + n",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기울기 m",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "y절편 (x=0일 때 y)",
+    "expr": "yint",
+    "digits": 2
+   },
+   {
+    "label": "x절편 (y=0일 때 x)",
+    "expr": "xint",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 0
+   },
+   {
+    "m": -2,
+    "n": 4
+   },
+   {
+    "m": 0.5,
+    "n": -3
+   }
+  ],
+  "invariants": [
+   "m*xint + n",
+   "(y_at2 - yint)/2 - m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "xint": -0.5,
+     "y_at2": 5,
+     "yint": 1
+    }
+   },
+   {
+    "params": {
+     "m": -2,
+     "n": 4
+    },
+    "expect": {
+     "xint": 2,
+     "y_at2": 0,
+     "yint": 4
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 0
+    },
+    "expect": {
+     "xint": 0,
+     "y_at2": 2,
+     "yint": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,157 @@
+{
+ "id": "geometry/middle-1/기본_도형/각도",
+ "spec": {
+  "title": "각도 — 두 반직선이 만드는 벌어짐",
+  "params": [
+   {
+    "name": "theta",
+    "label": "∠AOB",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; bx=cos(rad); by=sin(rad)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "OA"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "OB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각도",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "cos(∠)",
+    "expr": "bx",
+    "digits": 4
+   },
+   {
+    "label": "sin(∠)",
+    "expr": "by",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 180
+   },
+   {
+    "theta": 270
+   }
+  ],
+  "invariants": [
+   "bx^2+by^2-1",
+   "cos(rad)-bx",
+   "sin(rad)-by"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "bx": 0,
+     "by": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "bx": -1,
+     "by": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "bx": 0.5,
+     "by": 0.8660254037844387
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

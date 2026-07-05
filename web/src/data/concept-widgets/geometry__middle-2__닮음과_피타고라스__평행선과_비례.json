@@ -1,0 +1,238 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/평행선과_비례",
+ "spec": {
+  "title": "평행선과 비례 (탈레스의 기본 비례 정리)",
+  "params": [
+   {
+    "name": "t",
+    "label": "중간 평행선 위치 (B의 높이 비)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.4,
+    "step": 0.01
+   },
+   {
+    "name": "mtop",
+    "label": "직선 m의 기울기 (C'의 x좌표)",
+    "type": "slider",
+    "min": 0.8,
+    "max": 2,
+    "init": 1.6,
+    "step": 0.05
+   }
+  ],
+  "scope": "yB = -1.2 + t*2.4; Bx = -1.5 + 1.2*t; Bpx = 0.5 + (mtop-0.5)*t; AB = sqrt((Bx+1.5)^2 + (yB+1.2)^2); BC = sqrt((Bx+0.3)^2 + (yB-1.2)^2); ApBp = sqrt((Bpx-0.5)^2 + (yB+1.2)^2); BpCp = sqrt((Bpx-mtop)^2 + (yB-1.2)^2); rl = AB/BC; rm = ApBp/BpCp",
+  "geometry": {
+   "range": [
+    -2.2,
+    2.4
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      -1.2
+     ],
+     "to": [
+      2.2,
+      -1.2
+     ],
+     "label": "평행선 l₁"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      "=yB"
+     ],
+     "to": [
+      2.2,
+      "=yB"
+     ],
+     "label": "평행선 l₂ (가변)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      1.2
+     ],
+     "to": [
+      2.2,
+      1.2
+     ],
+     "label": "평행선 l₃"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1.5,
+      -1.2
+     ],
+     "to": [
+      -0.3,
+      1.2
+     ],
+     "label": "직선 l"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0.5,
+      -1.2
+     ],
+     "to": [
+      "=mtop",
+      1.2
+     ],
+     "label": "직선 m"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1.5,
+      -1.2
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=yB"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      -0.3,
+      1.2
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      0.5,
+      -1.2
+     ],
+     "label": "A'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bpx",
+      "=yB"
+     ],
+     "label": "B'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mtop",
+      1.2
+     ],
+     "label": "C'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AB : BC",
+    "expr": "rl",
+    "digits": 4
+   },
+   {
+    "label": "A'B' : B'C'",
+    "expr": "rm",
+    "digits": 4
+   },
+   {
+    "label": "t/(1-t) (이론값)",
+    "expr": "t/(1-t)",
+    "digits": 4
+   },
+   {
+    "label": "두 비의 차",
+    "expr": "rl-rm",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.4,
+    "mtop": 1.6
+   },
+   {
+    "t": 0.25,
+    "mtop": 1.2
+   },
+   {
+    "t": 0.7,
+    "mtop": 2
+   },
+   {
+    "t": 0.5,
+    "mtop": 0.8
+   }
+  ],
+  "invariants": [
+   "rl - rm",
+   "rl - t/(1-t)",
+   "rm - t/(1-t)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0.5,
+     "mtop": 1.6
+    },
+    "expect": {
+     "yB": 0,
+     "Bx": -0.9,
+     "Bpx": 1.05,
+     "rl": 1,
+     "rm": 1
+    }
+   },
+   {
+    "params": {
+     "t": 0.25,
+     "mtop": 1.2
+    },
+    "expect": {
+     "yB": -0.6,
+     "Bx": -1.2,
+     "Bpx": 0.675,
+     "rl": 0.3333333333,
+     "rm": 0.3333333333
+    }
+   },
+   {
+    "params": {
+     "t": 0.7,
+     "mtop": 2
+    },
+    "expect": {
+     "yB": 0.48,
+     "Bx": -0.66,
+     "Bpx": 1.55,
+     "rl": 2.3333333333,
+     "rm": 2.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

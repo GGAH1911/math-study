@@ -1,0 +1,213 @@
+{
+ "id": "geometry/middle-2/도형의_성질/높이와_변의_관계",
+ "spec": {
+  "title": "삼각형의 높이와 변의 관계: h = b sin C = c sin B",
+  "params": [
+   {
+    "name": "B",
+    "label": "∠B",
+    "type": "slider",
+    "min": 20,
+    "max": 110,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "C",
+    "label": "∠C",
+    "type": "slider",
+    "min": 20,
+    "max": 110,
+    "init": 70,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "a",
+    "label": "밑변 BC",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 6,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "Bd=B*pi/180; Cd=C*pi/180; Ad=pi-Bd-Cd; b=a*sin(Bd)/sin(Ad); c=a*sin(Cd)/sin(Ad); Ax=c*cos(Bd); Ay=c*sin(Bd); h=Ay; hbC=b*sin(Cd); hcB=c*sin(Bd)",
+  "geometry": {
+   "range": [
+    -1,
+    12
+   ],
+   "yRange": [
+    -2,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=Ax",
+       "=Ay"
+      ]
+     ],
+     "label": "ABC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Ax",
+      0
+     ],
+     "label": "h"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      0
+     ],
+     "label": "H"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "높이 h",
+    "expr": "h",
+    "digits": 4
+   },
+   {
+    "label": "변 b = AC",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "변 c = AB",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "b·sin C",
+    "expr": "hbC",
+    "digits": 4
+   },
+   {
+    "label": "c·sin B",
+    "expr": "hcB",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "B": 50,
+    "C": 70,
+    "a": 6
+   },
+   {
+    "B": 60,
+    "C": 60,
+    "a": 6
+   },
+   {
+    "B": 45,
+    "C": 45,
+    "a": 4
+   },
+   {
+    "B": 30,
+    "C": 90,
+    "a": 6
+   }
+  ],
+  "invariants": [
+   "h-hbC",
+   "h-hcB",
+   "a/sin(Ad)-b/sin(Bd)",
+   "Ay-c*sin(Bd)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "B": 60,
+     "C": 60,
+     "a": 6
+    },
+    "expect": {
+     "b": 6,
+     "c": 6,
+     "h": 5.196152423,
+     "hbC": 5.196152423
+    }
+   },
+   {
+    "params": {
+     "B": 45,
+     "C": 45,
+     "a": 4
+    },
+    "expect": {
+     "b": 2.828427125,
+     "c": 2.828427125,
+     "h": 2,
+     "hbC": 2
+    }
+   },
+   {
+    "params": {
+     "B": 30,
+     "C": 90,
+     "a": 6
+    },
+    "expect": {
+     "b": 3.464101615,
+     "h": 3.464101615,
+     "hbC": 3.464101615
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

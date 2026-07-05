@@ -1,0 +1,200 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/좌표계산",
+ "spec": {
+  "title": "좌표계산: 두 점의 거리·중점·기울기",
+  "params": [
+   {
+    "name": "x1",
+    "label": "P₁의 x",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "y1",
+    "label": "P₁의 y",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "P₂의 x",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "y2",
+    "label": "P₂의 y",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 8,
+    "step": 1
+   }
+  ],
+  "scope": "midx=(x1+x2)/2; midy=(y1+y2)/2; dx=x2-x1; dy=y2-y1; dist=sqrt(dx^2+dy^2); slope=dy/dx",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P₁",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P₂",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=midx",
+      "=midy"
+     ],
+     "label": "M",
+     "color": "#16a34a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "중점 M_x",
+    "expr": "midx",
+    "digits": 2
+   },
+   {
+    "label": "중점 M_y",
+    "expr": "midy",
+    "digits": 2
+   },
+   {
+    "label": "기울기",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 6,
+    "y2": 8
+   },
+   {
+    "x1": -3,
+    "y1": -1,
+    "x2": 1,
+    "y2": 2
+   },
+   {
+    "x1": 2,
+    "y1": 4,
+    "x2": 8,
+    "y2": 4
+   },
+   {
+    "x1": -4,
+    "y1": 3,
+    "x2": 4,
+    "y2": -3
+   }
+  ],
+  "invariants": [
+   "2*midx-(x1+x2)",
+   "2*midy-(y1+y2)",
+   "dist^2-(dx^2+dy^2)",
+   "(midx-x1)-(x2-midx)",
+   "(midy-y1)-(y2-midy)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 6,
+     "y2": 8
+    },
+    "expect": {
+     "midx": 3,
+     "midy": 4,
+     "dist": 10,
+     "slope": 1.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "x1": -3,
+     "y1": -1,
+     "x2": 1,
+     "y2": 2
+    },
+    "expect": {
+     "midx": -1,
+     "midy": 0.5,
+     "dist": 5,
+     "slope": 0.75
+    }
+   },
+   {
+    "params": {
+     "x1": 2,
+     "y1": 4,
+     "x2": 8,
+     "y2": 4
+    },
+    "expect": {
+     "midx": 5,
+     "midy": 4,
+     "dist": 6,
+     "slope": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

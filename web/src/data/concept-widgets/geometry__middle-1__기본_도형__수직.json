@@ -1,0 +1,148 @@
+{
+ "id": "geometry/middle-1/기본_도형/수직",
+ "spec": {
+  "title": "수직 — 점 P에서 직선 l에 내린 수선의 발",
+  "params": [
+   {
+    "name": "theta",
+    "label": "직선 l의 방향각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; dx=cos(rad); dy=sin(rad); Px=2; Py=1; t=Px*dx+Py*dy; Hx=t*dx; Hy=t*dy; PHx=Hx-Px; PHy=Hy-Py; dist=sqrt(PHx^2+PHy^2); perp=PHx*dx+PHy*dy; online=Hx*dy-Hy*dx",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-3.4*dx",
+      "=-3.4*dy"
+     ],
+     "to": [
+      "=3.4*dx",
+      "=3.4*dy"
+     ],
+     "label": "l",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "수선 PH",
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "H(수선의 발)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점과 직선 사이 거리 |PH|",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "직교 판정 (PH·l방향, 0이면 수직)",
+    "expr": "perp",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "perp",
+   "online"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "Hx": 2,
+     "Hy": 0,
+     "dist": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "Hx": 0,
+     "Hy": 1,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "Hx": 1.5,
+     "Hy": 1.5,
+     "dist": 0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

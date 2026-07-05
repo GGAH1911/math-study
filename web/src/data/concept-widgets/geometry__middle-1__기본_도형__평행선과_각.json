@@ -1,0 +1,160 @@
+{
+ "id": "geometry/middle-1/기본_도형/평행선과_각",
+ "spec": {
+  "title": "평행선과 각 — 동위각·엇각·같은쪽 내각",
+  "params": [
+   {
+    "name": "theta",
+    "label": "횡단선 각 θ",
+    "type": "slider",
+    "min": 20,
+    "max": 160,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; tx2=2/tan(rad); txt=3.5/tan(rad); corr=theta; alt=theta; coint=180-theta; sameSum=coint+theta",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -6,
+      2
+     ],
+     "to": [
+      6,
+      2
+     ],
+     "label": "m",
+     "color": "#1565c0"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -6,
+      -2
+     ],
+     "to": [
+      6,
+      -2
+     ],
+     "label": "l",
+     "color": "#1565c0"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=txt",
+      3.5
+     ],
+     "to": [
+      "=-txt",
+      -3.5
+     ],
+     "label": "횡단선",
+     "color": "#c62828"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tx2",
+      2
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-tx2",
+      -2
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A의 동위각(=θ)",
+    "expr": "corr",
+    "digits": 1
+   },
+   {
+    "label": "B의 엇각(=θ)",
+    "expr": "alt",
+    "digits": 1
+   },
+   {
+    "label": "같은쪽 내각의 합",
+    "expr": "sameSum",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "coint+theta-180",
+   "corr-alt",
+   "tx2*sin(rad)-2*cos(rad)",
+   "-tx2*sin(rad)+2*cos(rad)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "tx2": 3.4641016,
+     "coint": 150,
+     "sameSum": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "tx2": 1.1547005,
+     "coint": 120,
+     "sameSum": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 135
+    },
+    "expect": {
+     "tx2": -2,
+     "coint": 45,
+     "sameSum": 180
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

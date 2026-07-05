@@ -1,0 +1,179 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/순서쌍",
+ "spec": {
+  "title": "순서쌍 (a, b)와 (b, a)는 다르다",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (첫 번째 좌표)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (두 번째 좌표)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "px=a; py=b; qx=b; qy=a; dist=sqrt((px-qx)^2+(py-qy)^2)",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      -5
+     ],
+     "to": [
+      5,
+      5
+     ],
+     "label": "y=x (대칭축)",
+     "color": "#bbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "color": "#e07b39"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(a, b)",
+     "color": "#c0392b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q(b, a)",
+     "color": "#2471a3"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P = (첫좌표, 둘째좌표)",
+    "expr": "px",
+    "digits": 0
+   },
+   {
+    "label": "P 둘째좌표",
+    "expr": "py",
+    "digits": 0
+   },
+   {
+    "label": "Q = (b, a) 첫좌표",
+    "expr": "qx",
+    "digits": 0
+   },
+   {
+    "label": "Q 둘째좌표",
+    "expr": "qy",
+    "digits": 0
+   },
+   {
+    "label": "두 점 사이 거리 (0이면 a=b라 같은 점)",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": -1,
+    "b": 4
+   },
+   {
+    "a": 5,
+    "b": -2
+   },
+   {
+    "a": 3,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "px-qy",
+   "py-qx",
+   "px+qx-(py+qy)",
+   "dist-sqrt(2*(a-b)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "px": 2,
+     "py": 3,
+     "qx": 3,
+     "qy": 2,
+     "dist": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 4
+    },
+    "expect": {
+     "px": -1,
+     "py": 4,
+     "qx": 4,
+     "qy": -1,
+     "dist": 7.0710678118654755
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3
+    },
+    "expect": {
+     "px": 3,
+     "py": 3,
+     "qx": 3,
+     "qy": 3,
+     "dist": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

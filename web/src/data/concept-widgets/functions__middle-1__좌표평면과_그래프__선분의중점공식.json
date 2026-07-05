@@ -1,0 +1,192 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/선분의중점공식",
+ "spec": {
+  "title": "선분의 중점공식 — 두 점의 산술평균",
+  "params": [
+   {
+    "name": "x1",
+    "label": "A의 x좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -6,
+    "step": 1
+   },
+   {
+    "name": "y1",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "y2",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "mx=(x1+x2)/2; my=(y1+y2)/2",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중점 M의 x",
+    "expr": "mx",
+    "digits": 2
+   },
+   {
+    "label": "중점 M의 y",
+    "expr": "my",
+    "digits": 2
+   },
+   {
+    "label": "MA 거리",
+    "expr": "sqrt((mx-x1)^2+(my-y1)^2)",
+    "digits": 3
+   },
+   {
+    "label": "MB 거리",
+    "expr": "sqrt((mx-x2)^2+(my-y2)^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": -6,
+    "y1": -2,
+    "x2": 4,
+    "y2": 6
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 8,
+    "y2": -4
+   },
+   {
+    "x1": -10,
+    "y1": 10,
+    "x2": 10,
+    "y2": -10
+   },
+   {
+    "x1": 3,
+    "y1": 5,
+    "x2": 3,
+    "y2": -7
+   }
+  ],
+  "invariants": [
+   "2*mx-(x1+x2)",
+   "2*my-(y1+y2)",
+   "sqrt((mx-x1)^2+(my-y1)^2)-sqrt((mx-x2)^2+(my-y2)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": -6,
+     "y1": -2,
+     "x2": 4,
+     "y2": 6
+    },
+    "expect": {
+     "mx": -1,
+     "my": 2
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 8,
+     "y2": -4
+    },
+    "expect": {
+     "mx": 4,
+     "my": -2
+    }
+   },
+   {
+    "params": {
+     "x1": -10,
+     "y1": 10,
+     "x2": 10,
+     "y2": -10
+    },
+    "expect": {
+     "mx": 0,
+     "my": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

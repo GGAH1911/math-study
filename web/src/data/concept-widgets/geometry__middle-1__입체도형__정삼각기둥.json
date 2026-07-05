@@ -1,0 +1,219 @@
+{
+ "id": "geometry/middle-1/입체도형/정삼각기둥",
+ "spec": {
+  "title": "정삼각기둥의 전개도 · 겉넓이 · 부피",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑변 한 변 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "apex=a*sqrt(3)/2; tri_area=sqrt(3)/4*a^2; lateral=3*a*h; surface=sqrt(3)/2*a^2+3*a*h; volume=sqrt(3)/4*a^2*h",
+  "geometry": {
+   "range": [
+    -1.5,
+    16
+   ],
+   "yRange": [
+    -6,
+    13
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=h"
+      ],
+      [
+       0,
+       "=h"
+      ]
+     ],
+     "label": "옆면1"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=2*a",
+       0
+      ],
+      [
+       "=2*a",
+       "=h"
+      ],
+      [
+       "=a",
+       "=h"
+      ]
+     ],
+     "label": "옆면2"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=2*a",
+       0
+      ],
+      [
+       "=3*a",
+       0
+      ],
+      [
+       "=3*a",
+       "=h"
+      ],
+      [
+       "=2*a",
+       "=h"
+      ]
+     ],
+     "label": "옆면3"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=h"
+      ],
+      [
+       "=a",
+       "=h"
+      ],
+      [
+       "=a/2",
+       "=h+apex"
+      ]
+     ],
+     "label": "밑면(위)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a/2",
+       "=-apex"
+      ]
+     ],
+     "label": "밑면(아래)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑넓이 (√3/4·a²)",
+    "expr": "tri_area",
+    "digits": 3
+   },
+   {
+    "label": "옆넓이 (3ah)",
+    "expr": "lateral",
+    "digits": 3
+   },
+   {
+    "label": "겉넓이 (√3/2·a²+3ah)",
+    "expr": "surface",
+    "digits": 3
+   },
+   {
+    "label": "부피 (밑넓이×h)",
+    "expr": "volume",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "h": 5
+   },
+   {
+    "a": 2,
+    "h": 3
+   },
+   {
+    "a": 5,
+    "h": 6
+   },
+   {
+    "a": 1,
+    "h": 1
+   }
+  ],
+  "invariants": [
+   "surface-2*tri_area-lateral",
+   "volume-tri_area*h",
+   "apex-a*sqrt(3)/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "h": 5
+    },
+    "expect": {
+     "tri_area": 6.928203230275509,
+     "lateral": 60,
+     "surface": 73.85640646055101,
+     "volume": 34.64101615137754
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "h": 3
+    },
+    "expect": {
+     "tri_area": 1.7320508075688772,
+     "lateral": 18,
+     "surface": 21.464101615137753,
+     "volume": 5.196152422706632
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

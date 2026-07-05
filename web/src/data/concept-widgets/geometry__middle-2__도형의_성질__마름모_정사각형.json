@@ -1,0 +1,215 @@
+{
+ "id": "geometry/middle-2/도형의_성질/마름모_정사각형",
+ "spec": {
+  "title": "마름모와 정사각형 — 두 대각선으로 만들기",
+  "params": [
+   {
+    "name": "d1",
+    "label": "대각선 AC",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 6,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "d2",
+    "label": "대각선 BD",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 4,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "hx=d1/2; hy=d2/2; Ax=hx; Ay=0; Bx=0; By=hy; Cx=-hx; Cy=0; Dx=0; Dy=-hy; sideAB=sqrt((Ax-Bx)^2+(Ay-By)^2); sideBC=sqrt((Bx-Cx)^2+(By-Cy)^2); sideCD=sqrt((Cx-Dx)^2+(Cy-Dy)^2); sideDA=sqrt((Dx-Ax)^2+(Dy-Ay)^2); diagDot=(Cx-Ax)*(Dx-Bx)+(Cy-Ay)*(Dy-By); perim=sideAB+sideBC+sideCD+sideDA; area=0.5*d1*d2; angleB=acos((hy^2-hx^2)/(hx^2+hy^2))*180/pi",
+  "geometry": {
+   "range": [
+    -4.6,
+    4.6
+   ],
+   "yRange": [
+    -4.6,
+    4.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ],
+      [
+       "=Dx",
+       "=Dy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Cx",
+      "=Cy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "한 변의 길이",
+    "expr": "sideAB",
+    "digits": 4
+   },
+   {
+    "label": "둘레",
+    "expr": "perim",
+    "digits": 4
+   },
+   {
+    "label": "넓이 = ½·d1·d2",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "한 내각(∠B)",
+    "expr": "angleB",
+    "digits": 2
+   },
+   {
+    "label": "정사각형이면 각=90°, d1=d2",
+    "expr": "d1-d2",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d1": 6,
+    "d2": 4
+   },
+   {
+    "d1": 4,
+    "d2": 4
+   },
+   {
+    "d1": 6,
+    "d2": 8
+   },
+   {
+    "d1": 2,
+    "d2": 7
+   }
+  ],
+  "invariants": [
+   "sideAB - sideBC",
+   "sideBC - sideCD",
+   "sideCD - sideDA",
+   "diagDot",
+   "sideAB^2 - hx^2 - hy^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d1": 6,
+     "d2": 8
+    },
+    "expect": {
+     "sideAB": 5,
+     "area": 24,
+     "perim": 20
+    }
+   },
+   {
+    "params": {
+     "d1": 4,
+     "d2": 4
+    },
+    "expect": {
+     "sideAB": 2.8284271247461903,
+     "area": 8,
+     "angleB": 90
+    }
+   },
+   {
+    "params": {
+     "d1": 6,
+     "d2": 4
+    },
+    "expect": {
+     "sideAB": 3.605551275463989,
+     "area": 12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,203 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/닮음",
+ "spec": {
+  "title": "닮음 — 닮음비 k로 확대·축소",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 k",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2.5,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "sa=4; sb=3; sc=5; sa2=sa*k; sb2=sb*k; sc2=sc*k; rat=sa2/sa; perimBase=sa+sb+sc; perimScaled=sa2+sb2+sc2; areaBase=sa*sb/2; areaScaled=sa2*sb2/2",
+  "geometry": {
+   "range": [
+    -1,
+    16
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       0,
+       3
+      ]
+     ],
+     "label": "원래 도형"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      3
+     ],
+     "label": "C"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       7,
+       0
+      ],
+      [
+       "=7+4*k",
+       0
+      ],
+      [
+       7,
+       "=3*k"
+      ]
+     ],
+     "label": "닮은 도형"
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      0
+     ],
+     "label": "A'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=7+4*k",
+      0
+     ],
+     "label": "B'"
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=3*k"
+     ],
+     "label": "C'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비 k",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "대응변 비 A'B':AB",
+    "expr": "rat",
+    "digits": 3
+   },
+   {
+    "label": "둘레 비 (닮음도형:원래)",
+    "expr": "perimScaled/perimBase",
+    "digits": 3
+   },
+   {
+    "label": "넓이 비 (닮음도형:원래)",
+    "expr": "areaScaled/areaBase",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5
+   },
+   {
+    "k": 1
+   },
+   {
+    "k": 1.5
+   },
+   {
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "rat-k",
+   "sa2/sa-sb2/sb",
+   "sa2/sa-sc2/sc",
+   "sa2^2+sb2^2-sc2^2",
+   "perimScaled/perimBase-k",
+   "areaScaled/areaBase-k^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "sa2": 8,
+     "sb2": 6,
+     "sc2": 10,
+     "rat": 2,
+     "perimScaled": 24,
+     "areaScaled": 24
+    }
+   },
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "sa2": 2,
+     "sb2": 1.5,
+     "sc2": 2.5,
+     "rat": 0.5,
+     "perimScaled": 6,
+     "areaScaled": 1.5
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "sa2": 4,
+     "sb2": 3,
+     "sc2": 5,
+     "rat": 1,
+     "areaScaled": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

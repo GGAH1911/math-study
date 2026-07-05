@@ -1,0 +1,176 @@
+{
+ "id": "geometry/middle-1/기본_도형/엇각과_동위각",
+ "spec": {
+  "title": "엇각과 동위각 — 평행하면 왜 같은가",
+  "params": [
+   {
+    "name": "theta",
+    "label": "교선 t의 기울기 각",
+    "type": "slider",
+    "min": 40,
+    "max": 140,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "tilt",
+    "label": "아래 직선 l₂의 기울임 (0=평행)",
+    "type": "slider",
+    "min": -25,
+    "max": 25,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad_t=theta*pi/180; rad_l2=tilt*pi/180; ct=cos(rad_t); st=sin(rad_t); cl=cos(rad_l2); sl=sin(rad_l2); ax=ct/st; bx=-ct/st; ang1=acos(ct)*180/pi; ang2=acos(ct*cl+st*sl)*180/pi; diff=ang1-ang2",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -2.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -3.2,
+      1
+     ],
+     "to": [
+      3.2,
+      1
+     ],
+     "label": "l₁",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx-3.2*cl",
+      "=-1-3.2*sl"
+     ],
+     "to": [
+      "=bx+3.2*cl",
+      "=-1+3.2*sl"
+     ],
+     "label": "l₂",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-3.2*ct",
+      "=-3.2*st"
+     ],
+     "to": [
+      "=3.2*ct",
+      "=3.2*st"
+     ],
+     "label": "t",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      1
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      -1
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "동위각 (l₁쪽, ∠A)",
+    "expr": "ang1",
+    "digits": 1
+   },
+   {
+    "label": "동위각 (l₂쪽, ∠B)",
+    "expr": "ang2",
+    "digits": 1
+   },
+   {
+    "label": "두 동위각의 차 (0이면 평행)",
+    "expr": "diff",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 90,
+    "tilt": 0
+   },
+   {
+    "theta": 60,
+    "tilt": 20
+   },
+   {
+    "theta": 120,
+    "tilt": -10
+   },
+   {
+    "theta": 40,
+    "tilt": 25
+   }
+  ],
+  "invariants": [
+   "ang1 - theta",
+   "ang2 - abs(theta - tilt)",
+   "diff - tilt"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90,
+     "tilt": 0
+    },
+    "expect": {
+     "ang1": 90,
+     "ang2": 90,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 60,
+     "tilt": 20
+    },
+    "expect": {
+     "ang1": 60,
+     "ang2": 40,
+     "diff": 20
+    }
+   },
+   {
+    "params": {
+     "theta": 120,
+     "tilt": -10
+    },
+    "expect": {
+     "ang1": 120,
+     "ang2": 130,
+     "diff": -10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "id": "geometry/middle-1/기본_도형/평행선",
+ "spec": {
+  "title": "평행선 — 기울기가 같으면 만나지 않는다",
+  "params": [
+   {
+    "name": "m",
+    "label": "공통 기울기 m",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b1",
+    "label": "직선 ℓ₁ 절편",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b2",
+    "label": "직선 ℓ₂ 절편",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   }
+  ],
+  "scope": "dist = abs(b2-b1)/sqrt(1+m^2); d0 = abs(m*0-(m*0+b1)+b2)/sqrt(1+m^2); d5 = abs(m*5-(m*5+b1)+b2)/sqrt(1+m^2)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "m*x+b1",
+     "label": "ℓ₁: y=mx+b₁",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m*x+b2",
+     "label": "ℓ₂: y=mx+b₂",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 평행선 사이 거리",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "ℓ₁ 위 점(x=0)→ℓ₂ 거리",
+    "expr": "d0",
+    "digits": 4
+   },
+   {
+    "label": "ℓ₁ 위 점(x=5)→ℓ₂ 거리",
+    "expr": "d5",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "b1": 1,
+    "b2": 5
+   },
+   {
+    "m": 0,
+    "b1": 0,
+    "b2": 3
+   },
+   {
+    "m": 1,
+    "b1": 0,
+    "b2": 2
+   },
+   {
+    "m": -3,
+    "b1": -2,
+    "b2": 4
+   }
+  ],
+  "invariants": [
+   "d0 - d5",
+   "dist - d0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "b1": 1,
+     "b2": 5
+    },
+    "expect": {
+     "dist": 1.7888543819998317
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "b1": 0,
+     "b2": 3
+    },
+    "expect": {
+     "dist": 3
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "b1": 0,
+     "b2": 2
+    },
+    "expect": {
+     "dist": 1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

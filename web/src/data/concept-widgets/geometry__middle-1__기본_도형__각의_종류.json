@@ -1,0 +1,152 @@
+{
+ "id": "geometry/middle-1/기본_도형/각의_종류",
+ "spec": {
+  "title": "각의 종류 — 예각·직각·둔각·평각·전각",
+  "params": [
+   {
+    "name": "theta",
+    "label": "각의 크기 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; ex=cos(rad); ey=sin(rad); mx=cos(rad/2); my=sin(rad/2)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O(꼭짓점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "기준 반직선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ex",
+      "=ey"
+     ],
+     "label": "회전 반직선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ex",
+      "=ey"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0.35*mx",
+      "=0.35*my"
+     ],
+     "label": "θ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각의 크기 θ",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "cos θ (P의 x좌표)",
+    "expr": "ex",
+    "digits": 4
+   },
+   {
+    "label": "sin θ (P의 y좌표)",
+    "expr": "ey",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 135
+   },
+   {
+    "theta": 180
+   },
+   {
+    "theta": 360
+   }
+  ],
+  "invariants": [
+   "ex^2+ey^2-1",
+   "ex-cos(theta*pi/180)",
+   "ey-sin(theta*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "ex": 0,
+     "ey": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "ex": 0.8660254037844387,
+     "ey": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "ex": -1,
+     "ey": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

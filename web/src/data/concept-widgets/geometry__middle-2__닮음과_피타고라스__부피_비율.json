@@ -1,0 +1,125 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/부피_비율",
+ "spec": {
+  "title": "닮음비와 부피 비율 — 닮음비 m:n이면 부피비 m³:n³",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 (작은쪽=1 기준 배율)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": "배"
+   }
+  ],
+  "scope": "lr = k; sr = k^2; vr = k^3",
+  "geometry": null,
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    64
+   ],
+   "fns": [
+    {
+     "fn": "x",
+     "label": "길이 비 (x)",
+     "color": "#888888"
+    },
+    {
+     "fn": "x^2",
+     "label": "겉넓이 비 (x²)",
+     "color": "#2a9d8f"
+    },
+    {
+     "fn": "x^3",
+     "label": "부피 비 (x³)",
+     "color": "#e63946"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비 (길이 비)",
+    "expr": "lr",
+    "digits": 2
+   },
+   {
+    "label": "겉넓이 비",
+    "expr": "sr",
+    "digits": 2
+   },
+   {
+    "label": "부피 비 = k³",
+    "expr": "vr",
+    "digits": 2
+   },
+   {
+    "label": "작은 입체는 큰 입체의",
+    "expr": "1/vr",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 1.5
+   }
+  ],
+  "invariants": [
+   "vr - k^3",
+   "sr - k^2",
+   "lr - k",
+   "vr - lr^3",
+   "vr - sr*lr"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "lr": 2,
+     "sr": 4,
+     "vr": 8
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "lr": 3,
+     "sr": 9,
+     "vr": 27
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "lr": 1,
+     "sr": 1,
+     "vr": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,175 @@
+{
+ "id": "geometry/middle-1/기본_도형/수선의_발",
+ "spec": {
+  "title": "수선의 발: 점 P에서 직선 ℓ에 내린 수선",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 ℓ의 기울기",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "d=(m*px-py)/(m^2+1); Hx=px-m*d; Hy=py+d; dist=abs(m*px-py)/sqrt(m^2+1)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -6,
+      "=-6*m"
+     ],
+     "to": [
+      6,
+      "=6*m"
+     ],
+     "label": "ℓ",
+     "color": "#333"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#d00"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "H(수선의 발)",
+     "color": "#06c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=Hx",
+      "=Hy"
+     ],
+     "label": "PH ⟂ ℓ",
+     "color": "#d00"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "수선의 발 H의 x좌표",
+    "expr": "Hx",
+    "digits": 3
+   },
+   {
+    "label": "수선의 발 H의 y좌표",
+    "expr": "Hy",
+    "digits": 3
+   },
+   {
+    "label": "점과 직선 사이 거리 PH",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "px": 0,
+    "py": 2
+   },
+   {
+    "m": 0,
+    "px": 3,
+    "py": 4
+   },
+   {
+    "m": 2,
+    "px": -1,
+    "py": 3
+   },
+   {
+    "m": -1,
+    "px": 2,
+    "py": 2
+   }
+  ],
+  "invariants": [
+   "Hy - m*Hx",
+   "(Hx-px) + (Hy-py)*m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "px": 0,
+     "py": 2
+    },
+    "expect": {
+     "Hx": 1,
+     "Hy": 1
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "px": 3,
+     "py": 4
+    },
+    "expect": {
+     "Hx": 3,
+     "Hy": 0
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "px": -1,
+     "py": 3
+    },
+    "expect": {
+     "Hx": 1,
+     "Hy": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

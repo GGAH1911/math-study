@@ -1,0 +1,213 @@
+{
+ "id": "geometry/middle-2/도형의_성질/사다리꼴의_성질",
+ "spec": {
+  "title": "사다리꼴의 중점연결선 m = (a+b)/2",
+  "params": [
+   {
+    "name": "a",
+    "label": "윗변 a",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "아랫변 b",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "offset",
+    "label": "윗변 위치(빗변 기울기)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "x1=0; y1=0; x2=b; y2=0; x3=offset+a; y3=h; x4=offset; y4=h; mlx=(x1+x4)/2; mly=(y1+y4)/2; mrx=(x2+x3)/2; mry=(y2+y3)/2; m=(a+b)/2; mlen=mrx-mlx",
+  "geometry": {
+   "range": [
+    -4,
+    12
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ],
+      [
+       "=x3",
+       "=y3"
+      ],
+      [
+       "=x4",
+       "=y4"
+      ]
+     ],
+     "label": "사다리꼴"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=mlx",
+      "=mly"
+     ],
+     "to": [
+      "=mrx",
+      "=mry"
+     ],
+     "color": "red",
+     "label": "m"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mlx",
+      "=mly"
+     ],
+     "label": "좌다리 중점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mrx",
+      "=mry"
+     ],
+     "label": "우다리 중점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "윗변 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "아랫변 b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "중점연결선 (a+b)/2",
+    "expr": "m",
+    "digits": 3
+   },
+   {
+    "label": "실제 그은 길이",
+    "expr": "mlen",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 4,
+    "h": 3,
+    "offset": 1
+   },
+   {
+    "a": 6,
+    "b": 6,
+    "h": 2,
+    "offset": 0
+   },
+   {
+    "a": 1,
+    "b": 8,
+    "h": 4,
+    "offset": -2
+   },
+   {
+    "a": 5,
+    "b": 3,
+    "h": 5,
+    "offset": 2.5
+   }
+  ],
+  "invariants": [
+   "mlen-(a+b)/2",
+   "mry-mly",
+   "mly-h/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "h": 3,
+     "offset": 1
+    },
+    "expect": {
+     "m": 3,
+     "mlen": 3,
+     "mlx": 0.5,
+     "mrx": 3.5,
+     "mly": 1.5
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "b": 6,
+     "h": 2,
+     "offset": 0
+    },
+    "expect": {
+     "m": 6,
+     "mlen": 6,
+     "mlx": 0,
+     "mrx": 6,
+     "mly": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 8,
+     "h": 4,
+     "offset": -2
+    },
+    "expect": {
+     "m": 4.5,
+     "mlen": 4.5,
+     "mlx": -1,
+     "mrx": 3.5,
+     "mly": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

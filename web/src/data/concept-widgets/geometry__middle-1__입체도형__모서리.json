@@ -1,0 +1,176 @@
+{
+ "id": "geometry/middle-1/입체도형/모서리",
+ "spec": {
+  "title": "모서리(뿔의 모서리 수) — n각뿔",
+  "params": [
+   {
+    "name": "n",
+    "label": "밑면 변의 수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "ang=2*pi/n; x2=cos(ang); y2=sin(ang); V=n+1; E=2*n; F=n+1; euler=V-E+F; side=2*sin(pi/n)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "밑면 외접원"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "꼭대기(투영)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=1",
+      "=0"
+     ],
+     "label": "V1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "V2"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1",
+      "=0"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "밑모서리"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=1",
+      "=0"
+     ],
+     "label": "옆모서리"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "옆모서리"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "모서리 E = 2n",
+    "expr": "E",
+    "digits": 0
+   },
+   {
+    "label": "꼭짓점 V = n+1",
+    "expr": "V",
+    "digits": 0
+   },
+   {
+    "label": "면 F = n+1",
+    "expr": "F",
+    "digits": 0
+   },
+   {
+    "label": "오일러 V−E+F",
+    "expr": "euler",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 8
+   }
+  ],
+  "invariants": [
+   "V-E+F-2",
+   "x2^2+y2^2-1",
+   "side-2*sin(pi/n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "E": 6,
+     "V": 4,
+     "F": 4,
+     "euler": 2,
+     "x2": -0.5,
+     "y2": 0.8660254037844387,
+     "side": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "E": 8,
+     "V": 5,
+     "F": 5,
+     "euler": 2,
+     "x2": 0,
+     "y2": 1,
+     "side": 1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

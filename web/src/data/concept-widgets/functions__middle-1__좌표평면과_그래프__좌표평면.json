@@ -1,0 +1,173 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/좌표평면",
+ "spec": {
+  "title": "좌표평면 위의 점 (x, y)",
+  "params": [
+   {
+    "name": "x",
+    "label": "x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "y",
+    "label": "y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "r = sqrt(x^2+y^2); quad = (x>0 and y>0)*1 + (x<0 and y>0)*2 + (x<0 and y<0)*3 + (x>0 and y<0)*4",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=y"
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "(x, 0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=y"
+     ],
+     "label": "(0, y)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x좌표(횡좌표)",
+    "expr": "x",
+    "digits": 0
+   },
+   {
+    "label": "y좌표(종좌표)",
+    "expr": "y",
+    "digits": 0
+   },
+   {
+    "label": "사분면(축 위면 0)",
+    "expr": "quad",
+    "digits": 0
+   },
+   {
+    "label": "원점 O로부터 거리",
+    "expr": "r",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 3,
+    "y": 4
+   },
+   {
+    "x": -2,
+    "y": 5
+   },
+   {
+    "x": -3,
+    "y": -4
+   },
+   {
+    "x": 4,
+    "y": -1
+   }
+  ],
+  "invariants": [
+   "r^2 - x^2 - y^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 3,
+     "y": 4
+    },
+    "expect": {
+     "r": 5,
+     "quad": 1
+    }
+   },
+   {
+    "params": {
+     "x": -3,
+     "y": -4
+    },
+    "expect": {
+     "r": 5,
+     "quad": 3
+    }
+   },
+   {
+    "params": {
+     "x": 0,
+     "y": 5
+    },
+    "expect": {
+     "r": 5,
+     "quad": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

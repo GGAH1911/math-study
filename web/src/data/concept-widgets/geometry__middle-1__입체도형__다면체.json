@@ -1,0 +1,132 @@
+{
+ "id": "geometry/middle-1/입체도형/다면체",
+ "spec": {
+  "title": "각기둥의 오일러 공식: V − E + F = 2",
+  "params": [
+   {
+    "name": "n",
+    "label": "밑면 다각형의 변의 수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 3,
+    "step": 1,
+    "unit": "각"
+   }
+  ],
+  "scope": "V=2*n; E=3*n; F=n+2; euler=V-E+F",
+  "plot": {
+   "range": [
+    3,
+    12
+   ],
+   "yRange": [
+    0,
+    40
+   ],
+   "fns": [
+    {
+     "fn": "2*x",
+     "label": "꼭짓점 V = 2n",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "3*x",
+     "label": "모서리 E = 3n",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "x+2",
+     "label": "면 F = n+2",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "2",
+     "label": "V − E + F = 2 (항상 일정)",
+     "color": "#7c3aed"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 V",
+    "expr": "V",
+    "digits": 0
+   },
+   {
+    "label": "모서리 E",
+    "expr": "E",
+    "digits": 0
+   },
+   {
+    "label": "면 F",
+    "expr": "F",
+    "digits": 0
+   },
+   {
+    "label": "V − E + F",
+    "expr": "euler",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 10
+   }
+  ],
+  "invariants": [
+   "euler-2",
+   "V-E+F-2",
+   "V-2*n",
+   "E-3*n",
+   "F-(n+2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "V": 6,
+     "E": 9,
+     "F": 5,
+     "euler": 2
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "V": 8,
+     "E": 12,
+     "F": 6,
+     "euler": 2
+    }
+   },
+   {
+    "params": {
+     "n": 6
+    },
+    "expect": {
+     "V": 12,
+     "E": 18,
+     "F": 8,
+     "euler": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,193 @@
+{
+ "id": "geometry/middle-2/도형의_성질/내접원",
+ "spec": {
+  "title": "삼각형의 내접원과 내심",
+  "params": [
+   {
+    "name": "Ax",
+    "label": "꼭짓점 A의 x",
+    "type": "slider",
+    "min": -2,
+    "max": 6,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "Ay",
+    "label": "꼭짓점 A의 y (높이)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "base",
+    "label": "밑변 BC 길이",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=Ax; ay=Ay; cx=base; a=cx; b=sqrt((ax-cx)^2+ay^2); c=sqrt(ax^2+ay^2); p=a+b+c; s=p/2; area=0.5*cx*ay; r=area/s; Ix=(a*ax+c*cx)/p; Iy=a*ay/p",
+  "geometry": {
+   "range": [
+    -3,
+    9
+   ],
+   "yRange": [
+    -1.5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       0,
+       0
+      ],
+      [
+       "=cx",
+       0
+      ]
+     ],
+     "label": "ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Ix",
+      "=Iy"
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ix",
+      "=Iy"
+     ],
+     "label": "I"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내접원 반지름 r",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "넓이 S",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "반둘레 s",
+    "expr": "s",
+    "digits": 3
+   },
+   {
+    "label": "r·s (= S 확인)",
+    "expr": "r*s",
+    "digits": 3
+   },
+   {
+    "label": "내심 높이 Iy (= r)",
+    "expr": "Iy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Ax": 0,
+    "Ay": 3,
+    "base": 4
+   },
+   {
+    "Ax": 2,
+    "Ay": 4,
+    "base": 4
+   },
+   {
+    "Ax": 1,
+    "Ay": 2,
+    "base": 5
+   },
+   {
+    "Ax": 3,
+    "Ay": 5,
+    "base": 6
+   }
+  ],
+  "invariants": [
+   "Iy - r",
+   "abs(ay*Ix - ax*Iy)/c - r",
+   "abs(ay*Ix + (cx-ax)*Iy - ay*cx)/b - r",
+   "area - r*s"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Ax": 0,
+     "Ay": 3,
+     "base": 4
+    },
+    "expect": {
+     "r": 1,
+     "Ix": 1,
+     "Iy": 1
+    }
+   },
+   {
+    "params": {
+     "Ax": 2,
+     "Ay": 4,
+     "base": 4
+    },
+    "expect": {
+     "Ix": 2,
+     "Iy": 1.2360679775,
+     "r": 1.2360679775
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,216 @@
+{
+ "id": "geometry/middle-1/입체도형/부피_동등_조건",
+ "spec": {
+  "title": "카발리에리 원리 — 밀어도 넓이(부피)는 그대로",
+  "params": [
+   {
+    "name": "s",
+    "label": "밀림(전단) s",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "h",
+    "label": "자르는 높이 h",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "w=2; H=3; x0=3; frac=h/H; shiftR=s*frac; L0=0; L1=w; RL=x0+shiftR; RR=x0+w+shiftR; width1=L1-L0; width2=RR-RL; area1=w*H; area2=H*((x0+w)+(x0+w+s)-(x0+s)-x0)/2",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1,
+    4.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=w",
+       0
+      ],
+      [
+       "=w",
+       "=H"
+      ],
+      [
+       0,
+       "=H"
+      ]
+     ],
+     "label": "곧은 기둥"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x0",
+       0
+      ],
+      [
+       "=x0+w",
+       0
+      ],
+      [
+       "=x0+w+s",
+       "=H"
+      ],
+      [
+       "=x0+s",
+       "=H"
+      ]
+     ],
+     "label": "밀린 기둥"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=L0",
+      "=h"
+     ],
+     "to": [
+      "=L1",
+      "=h"
+     ],
+     "label": "단면1"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=RL",
+      "=h"
+     ],
+     "to": [
+      "=RR",
+      "=h"
+     ],
+     "label": "단면2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(L0+L1)/2",
+      "=h"
+     ],
+     "label": "w1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(RL+RR)/2",
+      "=h"
+     ],
+     "label": "w2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "단면 폭(곧은)",
+    "expr": "width1",
+    "digits": 4
+   },
+   {
+    "label": "단면 폭(밀린)",
+    "expr": "width2",
+    "digits": 4
+   },
+   {
+    "label": "넓이(곧은)",
+    "expr": "area1",
+    "digits": 4
+   },
+   {
+    "label": "넓이(밀린)",
+    "expr": "area2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "s": 1.5,
+    "h": 1.5
+   },
+   {
+    "s": -2,
+    "h": 2
+   },
+   {
+    "s": 3,
+    "h": 0.5
+   },
+   {
+    "s": 0,
+    "h": 3
+   }
+  ],
+  "invariants": [
+   "area1-area2",
+   "width1-width2",
+   "area2-w*H",
+   "width2-w"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "s": 2,
+     "h": 1.5
+    },
+    "expect": {
+     "frac": 0.5,
+     "RL": 4,
+     "RR": 6,
+     "width2": 2,
+     "area2": 6,
+     "area1": 6
+    }
+   },
+   {
+    "params": {
+     "s": -3,
+     "h": 3
+    },
+    "expect": {
+     "frac": 1,
+     "RL": 0,
+     "RR": 2,
+     "width2": 2,
+     "area2": 6
+    }
+   },
+   {
+    "params": {
+     "s": 0,
+     "h": 0
+    },
+    "expect": {
+     "RL": 3,
+     "RR": 5,
+     "width2": 2,
+     "area2": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

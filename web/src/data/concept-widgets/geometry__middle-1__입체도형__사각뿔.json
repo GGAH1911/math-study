@@ -1,0 +1,215 @@
+{
+ "id": "geometry/middle-1/입체도형/사각뿔",
+ "spec": {
+  "title": "사각뿔의 부피와 모서리 — 밑변 a·높이 h",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑변 a",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "V = a^2*h/3; prism = a^2*h; l = sqrt(h^2 + (a/2)^2); e = sqrt(h^2 + a^2/2); ax = -a/2*1.35; ay = -0.125*a; bx = a/2*0.65; by = -0.125*a; cx = a/2*1.35; cy = 0.125*a; dx = -a/2*0.65; dy = 0.125*a; tx = 0; ty = h",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -3,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=dx",
+       "=dy"
+      ]
+     ],
+     "label": "밑면"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=tx",
+      "=ty"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      "=by"
+     ],
+     "to": [
+      "=tx",
+      "=ty"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      "=tx",
+      "=ty"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=dx",
+      "=dy"
+     ],
+     "to": [
+      "=tx",
+      "=ty"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=tx",
+      "=ty"
+     ],
+     "label": "높이 h"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=tx",
+      "=ty"
+     ],
+     "label": "꼭짓점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부피 V=⅓a²h",
+    "expr": "V",
+    "digits": 3
+   },
+   {
+    "label": "같은 각기둥 부피 a²h",
+    "expr": "prism",
+    "digits": 3
+   },
+   {
+    "label": "부피비 V/(a²h)",
+    "expr": "V/prism",
+    "digits": 4
+   },
+   {
+    "label": "모서리(측면 삼각형)의 높이 l",
+    "expr": "l",
+    "digits": 4
+   },
+   {
+    "label": "옆모서리 길이 e",
+    "expr": "e",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "h": 4
+   },
+   {
+    "a": 6,
+    "h": 6
+   },
+   {
+    "a": 4,
+    "h": 3
+   },
+   {
+    "a": 2,
+    "h": 5
+   }
+  ],
+  "invariants": [
+   "V - a^2*h/3",
+   "3*V - prism",
+   "l^2 - (h^2 + (a/2)^2)",
+   "e^2 - (h^2 + a^2/2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "h": 4
+    },
+    "expect": {
+     "V": 12,
+     "prism": 36
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "h": 6
+    },
+    "expect": {
+     "V": 72,
+     "prism": 216
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "h": 3
+    },
+    "expect": {
+     "V": 16,
+     "prism": 48
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

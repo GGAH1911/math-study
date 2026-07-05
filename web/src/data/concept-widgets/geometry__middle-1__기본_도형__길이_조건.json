@@ -1,0 +1,204 @@
+{
+ "id": "geometry/middle-1/기본_도형/길이_조건",
+ "spec": {
+  "title": "삼각형의 길이 조건 (삼각부등식)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (변 AC)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (변 BC)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (밑변 AB)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "px=(c^2+a^2-b^2)/(2*c); py=sqrt(a^2-px^2); dAC=sqrt(px^2+py^2); dBC=sqrt((px-c)^2+py^2); margin=min(a+b-c, b+c-a, c+a-b)",
+  "geometry": {
+   "range": [
+    -9,
+    17
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=a",
+     "label": "반지름 a"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=c",
+      0
+     ],
+     "radius": "=b",
+     "label": "반지름 b"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=c",
+       0
+      ],
+      [
+       "=px",
+       "=py"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a+b−c",
+    "expr": "a+b-c",
+    "digits": 2
+   },
+   {
+    "label": "b+c−a",
+    "expr": "b+c-a",
+    "digits": 2
+   },
+   {
+    "label": "c+a−b",
+    "expr": "c+a-b",
+    "digits": 2
+   },
+   {
+    "label": "여유(min)>0이면 삼각형 성립",
+    "expr": "margin",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 C의 높이",
+    "expr": "py",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4,
+    "c": 5
+   },
+   {
+    "a": 5,
+    "b": 5,
+    "c": 6
+   },
+   {
+    "a": 6,
+    "b": 8,
+    "c": 10
+   },
+   {
+    "a": 4,
+    "b": 5,
+    "c": 6
+   }
+  ],
+  "invariants": [
+   "dAC - a",
+   "dBC - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c": 5
+    },
+    "expect": {
+     "px": 1.8,
+     "py": 2.4
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 5,
+     "c": 6
+    },
+    "expect": {
+     "px": 3,
+     "py": 4
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "b": 8,
+     "c": 10
+    },
+    "expect": {
+     "px": 3.6,
+     "py": 4.8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

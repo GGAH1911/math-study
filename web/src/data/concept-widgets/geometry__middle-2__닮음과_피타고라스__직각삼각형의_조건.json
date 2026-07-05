@@ -1,0 +1,180 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/직각삼각형의_조건",
+ "spec": {
+  "title": "직각삼각형의 조건 — 탈레스 정리(지름 위의 원주각)",
+  "params": [
+   {
+    "name": "theta",
+    "label": "점 C 위치 θ",
+    "type": "slider",
+    "min": 2,
+    "max": 358,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); dax=-1-cx; day=-cy; dbx=1-cx; dby=-cy; dot=dax*dbx+day*dby; a2=dax^2+day^2; b2=dbx^2+dby^2; c2=4; ang=acos(dot/(sqrt(a2)*sqrt(b2)))*180/pi",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.3,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "AB(지름=빗변)"
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      -1,
+      0
+     ],
+     "label": "CA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "CB"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠ACB",
+    "expr": "ang",
+    "digits": 2
+   },
+   {
+    "label": "CA·CB (내적)",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "CA²+CB²",
+    "expr": "a2+b2",
+    "digits": 4
+   },
+   {
+    "label": "AB²",
+    "expr": "c2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "dot",
+   "cx^2+cy^2-1",
+   "a2+b2-c2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "cx": 0,
+     "cy": 1,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844387,
+     "cy": 0.5,
+     "dot": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "cx": -0.5,
+     "cy": 0.8660254037844387,
+     "dot": 0,
+     "ang": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

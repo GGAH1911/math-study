@@ -1,0 +1,186 @@
+{
+ "id": "geometry/middle-2/도형의_성질/삼각형의_변과_각",
+ "spec": {
+  "title": "삼각형의 변과 각 — 사인·코사인 법칙 (ASA)",
+  "params": [
+   {
+    "name": "a",
+    "label": "변 BC (a)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 0.1
+   },
+   {
+    "name": "B",
+    "label": "∠B",
+    "type": "slider",
+    "min": 10,
+    "max": 140,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "C",
+    "label": "∠C",
+    "type": "slider",
+    "min": 10,
+    "max": 140,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Arad=(180-B-C)*pi/180; Brad=B*pi/180; Crad=C*pi/180; A_ang=180-B-C; c=a*sin(Crad)/sin(Arad); b=a*sin(Brad)/sin(Arad); ax=c*cos(Brad); ay=c*sin(Brad)",
+  "geometry": {
+   "range": [
+    -2,
+    12
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=ax",
+       "=ay"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변 a = BC",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "변 b = CA",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "변 c = AB",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "∠A",
+    "expr": "A_ang",
+    "digits": 2
+   },
+   {
+    "label": "사인법칙 a/sinA",
+    "expr": "a/sin(Arad)",
+    "digits": 3
+   },
+   {
+    "label": "사인법칙 b/sinB",
+    "expr": "b/sin(Brad)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 6,
+    "B": 60,
+    "C": 60
+   },
+   {
+    "a": 6,
+    "B": 90,
+    "C": 45
+   },
+   {
+    "a": 8,
+    "B": 30,
+    "C": 80
+   },
+   {
+    "a": 5,
+    "B": 45,
+    "C": 45
+   }
+  ],
+  "invariants": [
+   "a^2 - (b^2 + c^2 - 2*b*c*cos(Arad))",
+   "(ax-a)^2 + ay^2 - b^2",
+   "a*sin(Brad) - b*sin(Arad)",
+   "(A_ang + B + C) - 180"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 6,
+     "B": 60,
+     "C": 60
+    },
+    "expect": {
+     "A_ang": 60,
+     "c": 6,
+     "b": 6,
+     "ax": 3,
+     "ay": 5.196152422706632
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "B": 90,
+     "C": 45
+    },
+    "expect": {
+     "A_ang": 45,
+     "c": 6,
+     "b": 8.485281374238571,
+     "ax": 0,
+     "ay": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

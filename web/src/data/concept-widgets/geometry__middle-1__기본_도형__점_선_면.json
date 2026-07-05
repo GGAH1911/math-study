@@ -1,0 +1,185 @@
+{
+ "id": "geometry/middle-1/기본_도형/점_선_면",
+ "spec": {
+  "title": "점·선·면 — 두 점을 지나는 직선은 하나뿐",
+  "params": [
+   {
+    "name": "theta",
+    "label": "방향각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "두 점 사이 거리 r (=AB 길이)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; bx=r*cos(rad); by=r*sin(rad); len=sqrt(bx^2+by^2); mx=bx/2; my=by/2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "A에서 거리 r인 점들"
+    },
+    {
+     "type": "line",
+     "through": [
+      [
+       0,
+       0
+      ],
+      [
+       "=bx",
+       "=by"
+      ]
+     ],
+     "label": "직선 AB (무한히 뻗음)",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "선분 AB (길이 잴 수 있음)",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M(중점)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "선분 AB의 길이",
+    "expr": "len",
+    "digits": 3
+   },
+   {
+    "label": "B의 좌표 (bx, by)",
+    "expr": "bx",
+    "digits": 3
+   },
+   {
+    "label": "중점 M",
+    "expr": "mx",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "r": 3
+   },
+   {
+    "theta": 90,
+    "r": 4
+   },
+   {
+    "theta": 60,
+    "r": 2
+   },
+   {
+    "theta": 180,
+    "r": 2.5
+   }
+  ],
+  "invariants": [
+   "bx^2+by^2 - r^2",
+   "len - r",
+   "sqrt(mx^2+my^2) - sqrt((bx-mx)^2+(by-my)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "r": 3
+    },
+    "expect": {
+     "bx": 3,
+     "by": 0,
+     "len": 3,
+     "mx": 1.5,
+     "my": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 60,
+     "r": 2
+    },
+    "expect": {
+     "bx": 1,
+     "by": 1.7320508075688772,
+     "len": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "r": 2.5
+    },
+    "expect": {
+     "bx": -2.5,
+     "by": 0,
+     "len": 2.5,
+     "mx": -1.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

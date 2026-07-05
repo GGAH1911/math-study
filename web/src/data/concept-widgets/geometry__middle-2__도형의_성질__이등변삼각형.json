@@ -1,0 +1,205 @@
+{
+ "id": "geometry/middle-2/도형의_성질/이등변삼각형",
+ "spec": {
+  "title": "이등변삼각형 (AB=AC): 밑각이 같고 대칭축이 밑변을 이등분",
+  "params": [
+   {
+    "name": "b",
+    "label": "밑변의 반 b",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "Ax=0; Ay=h; Bx=-b; By=0; Cx=b; Cy=0; legAB=sqrt((Ax-Bx)^2+(Ay-By)^2); legAC=sqrt((Ax-Cx)^2+(Ay-Cy)^2); angleB=acos(((Ax-Bx)*(Cx-Bx)+(Ay-By)*(Cy-By))/(legAB*sqrt((Cx-Bx)^2+(Cy-By)^2)))*180/pi; angleC=acos(((Ax-Cx)*(Bx-Cx)+(Ay-Cy)*(By-Cy))/(legAC*sqrt((Bx-Cx)^2+(By-Cy)^2)))*180/pi; apexAngle=acos((h^2-b^2)/(h^2+b^2))*180/pi; angleSum=apexAngle+angleB+angleC; baseLen=2*b; midX=(Bx+Cx)/2",
+  "geometry": {
+   "range": [
+    -4.8,
+    4.8
+   ],
+   "yRange": [
+    -0.8,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ],
+      [
+       "=Ax",
+       "=Ay"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      0,
+      0
+     ],
+     "label": "대칭축(높이)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A(꼭짓점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "M(밑변 중점)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "다리 AB",
+    "expr": "legAB",
+    "digits": 3
+   },
+   {
+    "label": "다리 AC",
+    "expr": "legAC",
+    "digits": 3
+   },
+   {
+    "label": "밑각 ∠B",
+    "expr": "angleB",
+    "digits": 2
+   },
+   {
+    "label": "밑각 ∠C",
+    "expr": "angleC",
+    "digits": 2
+   },
+   {
+    "label": "꼭지각 ∠A",
+    "expr": "apexAngle",
+    "digits": 2
+   },
+   {
+    "label": "밑변 BC",
+    "expr": "baseLen",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 3,
+    "h": 4
+   },
+   {
+    "b": 1,
+    "h": 1
+   },
+   {
+    "b": 4,
+    "h": 3
+   },
+   {
+    "b": 2,
+    "h": 3
+   }
+  ],
+  "invariants": [
+   "legAB - legAC",
+   "angleB - angleC",
+   "apexAngle + angleB + angleC - 180",
+   "midX"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 3,
+     "h": 4
+    },
+    "expect": {
+     "legAB": 5,
+     "legAC": 5,
+     "angleB": 53.13010235415598,
+     "angleC": 53.13010235415598,
+     "apexAngle": 73.73979529168804,
+     "baseLen": 6
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "h": 1
+    },
+    "expect": {
+     "legAB": 1.4142135623730951,
+     "angleB": 45,
+     "angleC": 45,
+     "apexAngle": 90,
+     "baseLen": 2
+    }
+   },
+   {
+    "params": {
+     "b": 4,
+     "h": 3
+    },
+    "expect": {
+     "legAB": 5,
+     "angleB": 36.86989764584402,
+     "angleC": 36.86989764584402,
+     "apexAngle": 106.26020470831196,
+     "baseLen": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

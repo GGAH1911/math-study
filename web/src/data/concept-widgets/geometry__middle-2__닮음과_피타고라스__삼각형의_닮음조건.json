@@ -1,0 +1,252 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/삼각형의_닮음조건",
+ "spec": {
+  "title": "삼각형의 닮음조건 (SAS→SSS): 한 각 공유 + 두 변 k배",
+  "params": [
+   {
+    "name": "A",
+    "label": "공유각 ∠A",
+    "type": "slider",
+    "min": 10,
+    "max": 150,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "b",
+    "label": "변 AC",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "변 AB",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "닮음비 k",
+    "type": "slider",
+    "min": 0.3,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "rad=A*pi/180; Bx=c; By=0; Cx=b*cos(rad); Cy=b*sin(rad); B2x=k*c; B2y=0; C2x=k*b*cos(rad); C2y=k*b*sin(rad); BC=sqrt(c^2+b^2-2*b*c*cos(rad)); B2C2=sqrt((k*c)^2+(k*b)^2-2*(k*b)*(k*c)*cos(rad)); ratioBC=B2C2/BC",
+  "geometry": {
+   "range": [
+    -0.5,
+    8.5
+   ],
+   "yRange": [
+    -0.5,
+    8.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=B2x",
+       "=B2y"
+      ],
+      [
+       "=C2x",
+       "=C2y"
+      ]
+     ],
+     "label": "△A'B'C' (k배)",
+     "color": "#f59e0b"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ],
+     "label": "△ABC",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A=A'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=B2x",
+      "=B2y"
+     ],
+     "label": "B'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=C2x",
+      "=C2y"
+     ],
+     "label": "C'"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=C2x",
+      "=C2y"
+     ],
+     "to": [
+      "=B2x",
+      "=B2y"
+     ],
+     "color": "#f59e0b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AB'/AB",
+    "expr": "B2x/c",
+    "digits": 3
+   },
+   {
+    "label": "AC'/AC",
+    "expr": "sqrt(C2x^2+C2y^2)/b",
+    "digits": 3
+   },
+   {
+    "label": "B'C'/BC (자동으로 k)",
+    "expr": "ratioBC",
+    "digits": 3
+   },
+   {
+    "label": "BC",
+    "expr": "BC",
+    "digits": 3
+   },
+   {
+    "label": "B'C'",
+    "expr": "B2C2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 50,
+    "b": 3,
+    "c": 4,
+    "k": 1.5
+   },
+   {
+    "A": 60,
+    "b": 2,
+    "c": 2,
+    "k": 2
+   },
+   {
+    "A": 90,
+    "b": 3,
+    "c": 4,
+    "k": 0.5
+   },
+   {
+    "A": 120,
+    "b": 2.5,
+    "c": 3,
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "ratioBC - k",
+   "B2x/c - k",
+   "sqrt(C2x^2+C2y^2)/b - k",
+   "B2C2 - k*BC"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 60,
+     "b": 2,
+     "c": 2,
+     "k": 2
+    },
+    "expect": {
+     "BC": 2,
+     "B2C2": 4,
+     "ratioBC": 2
+    }
+   },
+   {
+    "params": {
+     "A": 90,
+     "b": 3,
+     "c": 4,
+     "k": 0.5
+    },
+    "expect": {
+     "BC": 5,
+     "B2C2": 2.5,
+     "ratioBC": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,208 @@
+{
+ "id": "geometry/middle-1/입체도형/공간대각선",
+ "spec": {
+  "title": "직육면체의 공간대각선 — 밑면 대각선과의 직각삼각형",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 a",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "세로 b",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "높이 c",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 12,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "f=sqrt(a^2+b^2); d=sqrt(f^2+c^2)",
+  "geometry": {
+   "range": [
+    -1.5,
+    18
+   ],
+   "yRange": [
+    -1.5,
+    13
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=f",
+       0
+      ],
+      [
+       "=f",
+       "=c"
+      ]
+     ],
+     "label": "직각삼각형"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=f",
+      0
+     ],
+     "label": "밑면대각선 f",
+     "color": "#2a7"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=f",
+      0
+     ],
+     "to": [
+      "=f",
+      "=c"
+     ],
+     "label": "높이 c",
+     "color": "#27a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=f",
+      "=c"
+     ],
+     "label": "공간대각선 d",
+     "color": "#e33"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=f",
+      "=c"
+     ],
+     "label": "G"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑면 대각선 f=√(a²+b²)",
+    "expr": "f",
+    "digits": 4
+   },
+   {
+    "label": "공간대각선 d=√(a²+b²+c²)",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "검증 d²−(a²+b²+c²)",
+    "expr": "d^2-(a^2+b^2+c^2)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4,
+    "c": 12
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "c": 6
+   },
+   {
+    "a": 6,
+    "b": 6,
+    "c": 6
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "f^2-(a^2+b^2)",
+   "d^2-(a^2+b^2+c^2)",
+   "d^2-(f^2+c^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c": 12
+    },
+    "expect": {
+     "f": 5,
+     "d": 13
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 6
+    },
+    "expect": {
+     "f": 3.605551275463989,
+     "d": 7
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 2
+    },
+    "expect": {
+     "f": 2.23606797749979,
+     "d": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

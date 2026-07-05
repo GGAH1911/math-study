@@ -1,0 +1,213 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/두점사이거리",
+ "spec": {
+  "title": "두 점 사이의 거리 = √((x₂−x₁)²+(y₂−y₁)²)",
+  "params": [
+   {
+    "name": "ax",
+    "label": "A의 x₁",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "ay",
+    "label": "A의 y₁",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "bx",
+    "label": "B의 x₂",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "by",
+    "label": "B의 y₂",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "dx=bx-ax; dy=by-ay; dist=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=ay"
+     ],
+     "color": "#888",
+     "label": "|Δx|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#888",
+     "label": "|Δy|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#d33",
+     "label": "AB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=ay"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Δx = x₂−x₁",
+    "expr": "dx",
+    "digits": 0
+   },
+   {
+    "label": "Δy = y₂−y₁",
+    "expr": "dy",
+    "digits": 0
+   },
+   {
+    "label": "거리 AB",
+    "expr": "dist",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ax": 1,
+    "ay": 2,
+    "bx": 4,
+    "by": 6
+   },
+   {
+    "ax": 0,
+    "ay": 0,
+    "bx": 6,
+    "by": 8
+   },
+   {
+    "ax": -3,
+    "ay": -2,
+    "bx": 3,
+    "by": 6
+   },
+   {
+    "ax": 2,
+    "ay": 5,
+    "bx": 2,
+    "by": -3
+   }
+  ],
+  "invariants": [
+   "dist^2-dx^2-dy^2",
+   "dist-sqrt((bx-ax)^2+(by-ay)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ax": 1,
+     "ay": 2,
+     "bx": 4,
+     "by": 6
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "dist": 5
+    }
+   },
+   {
+    "params": {
+     "ax": 0,
+     "ay": 0,
+     "bx": 6,
+     "by": 8
+    },
+    "expect": {
+     "dx": 6,
+     "dy": 8,
+     "dist": 10
+    }
+   },
+   {
+    "params": {
+     "ax": 2,
+     "ay": 5,
+     "bx": 2,
+     "by": -3
+    },
+    "expect": {
+     "dx": 0,
+     "dy": -8,
+     "dist": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

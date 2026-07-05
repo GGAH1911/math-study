@@ -1,0 +1,128 @@
+{
+ "id": "geometry/middle-1/기본_도형/교점에서의_각도",
+ "spec": {
+  "title": "두 직선의 교점에서의 각도",
+  "params": [
+   {
+    "name": "m1",
+    "label": "직선1 기울기 m₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "m2",
+    "label": "직선2 기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "tanth=abs((m1-m2)/(1+m1*m2)); angdeg=atan(tanth)*180/pi",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "m1*x",
+     "label": "직선1: y=m₁x",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "m2*x",
+     "label": "직선2: y=m₂x",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m₁",
+    "expr": "m1",
+    "digits": 2
+   },
+   {
+    "label": "m₂",
+    "expr": "m2",
+    "digits": 2
+   },
+   {
+    "label": "tanθ = |(m₁-m₂)/(1+m₁m₂)|",
+    "expr": "tanth",
+    "digits": 4
+   },
+   {
+    "label": "교점에서의 각도 θ",
+    "expr": "angdeg",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "m2": 0
+   },
+   {
+    "m1": 2,
+    "m2": 0.5
+   },
+   {
+    "m1": -1,
+    "m2": 2
+   },
+   {
+    "m1": 0,
+    "m2": 0
+   }
+  ],
+  "invariants": [
+   "tanth - abs((m1-m2)/(1+m1*m2))",
+   "tan(angdeg*pi/180) - tanth"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "m2": 0
+    },
+    "expect": {
+     "tanth": 1,
+     "angdeg": 45
+    }
+   },
+   {
+    "params": {
+     "m1": 0,
+     "m2": 0
+    },
+    "expect": {
+     "tanth": 0,
+     "angdeg": 0
+    }
+   },
+   {
+    "params": {
+     "m1": 1.7320508075688772,
+     "m2": 0
+    },
+    "expect": {
+     "tanth": 1.7320508075688772,
+     "angdeg": 60
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

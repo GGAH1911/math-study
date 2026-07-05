@@ -1,0 +1,233 @@
+{
+ "id": "geometry/middle-2/도형의_성질/대각선의_교점",
+ "spec": {
+  "title": "평행사변형 대각선의 교점 — 두 대각선은 서로를 이등분한다",
+  "params": [
+   {
+    "name": "b",
+    "label": "밑변 AB",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "dx",
+    "label": "빗변 가로 이동 dx",
+    "type": "slider",
+    "min": -3,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "dy",
+    "label": "높이 dy",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "ax=0; ay=0; bx=b; by=0; cxx=b+dx; cyy=dy; dxx=dx; dyy=dy; pacx=(ax+cxx)/2; pacy=(ay+cyy)/2; pbdx=(bx+dxx)/2; pbdy=(by+dyy)/2",
+  "geometry": {
+   "range": [
+    -4,
+    10
+   ],
+   "yRange": [
+    -2,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=bx",
+       0
+      ],
+      [
+       "=cxx",
+       "=cyy"
+      ],
+      [
+       "=dxx",
+       "=dyy"
+      ]
+     ],
+     "label": "ABCD"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cxx",
+      "=cyy"
+     ],
+     "label": "AC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      0
+     ],
+     "to": [
+      "=dxx",
+      "=dyy"
+     ],
+     "label": "BD"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cxx",
+      "=cyy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=dxx",
+      "=dyy"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pacx",
+      "=pacy"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 P x좌표 (AC 중점)",
+    "expr": "pacx",
+    "digits": 3
+   },
+   {
+    "label": "교점 P y좌표 (AC 중점)",
+    "expr": "pacy",
+    "digits": 3
+   },
+   {
+    "label": "BD 중점 x (P와 일치)",
+    "expr": "pbdx",
+    "digits": 3
+   },
+   {
+    "label": "BD 중점 y (P와 일치)",
+    "expr": "pbdy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 5,
+    "dx": 2,
+    "dy": 3
+   },
+   {
+    "b": 4,
+    "dx": 0,
+    "dy": 2
+   },
+   {
+    "b": 6,
+    "dx": -2,
+    "dy": 4
+   },
+   {
+    "b": 3,
+    "dx": 1,
+    "dy": 1
+   }
+  ],
+  "invariants": [
+   "pacx-pbdx",
+   "pacy-pbdy",
+   "(pacx^2+pacy^2)-((cxx-pacx)^2+(cyy-pacy)^2)",
+   "((bx-pacx)^2+(by-pacy)^2)-((dxx-pacx)^2+(dyy-pacy)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 5,
+     "dx": 2,
+     "dy": 3
+    },
+    "expect": {
+     "pacx": 3.5,
+     "pacy": 1.5,
+     "pbdx": 3.5,
+     "pbdy": 1.5
+    }
+   },
+   {
+    "params": {
+     "b": 4,
+     "dx": 0,
+     "dy": 2
+    },
+    "expect": {
+     "pacx": 2,
+     "pacy": 1,
+     "pbdx": 2,
+     "pbdy": 1
+    }
+   },
+   {
+    "params": {
+     "b": 6,
+     "dx": -2,
+     "dy": 4
+    },
+    "expect": {
+     "pacx": 2,
+     "pacy": 2,
+     "pbdx": 2,
+     "pbdy": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

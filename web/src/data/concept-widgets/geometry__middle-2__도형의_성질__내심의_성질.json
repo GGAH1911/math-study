@@ -1,0 +1,195 @@
+{
+ "id": "geometry/middle-2/도형의_성질/내심의_성질",
+ "spec": {
+  "title": "삼각형의 내심과 내접원 (세 변까지 거리가 모두 r)",
+  "params": [
+   {
+    "name": "Cx",
+    "label": "꼭짓점 C의 x",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "Cy",
+    "label": "꼭짓점 C의 y",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "a=sqrt((Cx-4)^2+Cy^2); b=sqrt(Cx^2+Cy^2); c=4; per=a+b+c; s=per/2; Ix=(b*4+c*Cx)/per; Iy=c*Cy/per; S=abs(2*Cy); r=S/s; distAB=abs(Iy); distBC=abs((Cx-4)*Iy-Cy*(Ix-4))/a; distCA=abs(Cx*Iy-Cy*Ix)/b",
+  "geometry": {
+   "range": [
+    -2,
+    5
+   ],
+   "yRange": [
+    -1,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ],
+     "label": "ABC"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Ix",
+      "=Iy"
+     ],
+     "radius": "=r",
+     "label": "내접원"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ix",
+      "=Iy"
+     ],
+     "label": "I(내심)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내접원 반지름 r = S/s",
+    "expr": "r",
+    "digits": 4
+   },
+   {
+    "label": "내심 x좌표",
+    "expr": "Ix",
+    "digits": 4
+   },
+   {
+    "label": "내심 y좌표",
+    "expr": "Iy",
+    "digits": 4
+   },
+   {
+    "label": "I→변AB 거리",
+    "expr": "distAB",
+    "digits": 4
+   },
+   {
+    "label": "I→변BC 거리",
+    "expr": "distBC",
+    "digits": 4
+   },
+   {
+    "label": "I→변CA 거리",
+    "expr": "distCA",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Cx": 0,
+    "Cy": 3
+   },
+   {
+    "Cx": 4,
+    "Cy": 3
+   },
+   {
+    "Cx": 2,
+    "Cy": 2
+   },
+   {
+    "Cx": 1,
+    "Cy": 4
+   }
+  ],
+  "invariants": [
+   "distAB - r",
+   "distBC - r",
+   "distCA - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Cx": 0,
+     "Cy": 3
+    },
+    "expect": {
+     "Ix": 1,
+     "Iy": 1,
+     "r": 1
+    }
+   },
+   {
+    "params": {
+     "Cx": 4,
+     "Cy": 3
+    },
+    "expect": {
+     "Ix": 3,
+     "Iy": 1,
+     "r": 1
+    }
+   },
+   {
+    "params": {
+     "Cx": 2,
+     "Cy": 2
+    },
+    "expect": {
+     "Ix": 2,
+     "Iy": 0.82842712,
+     "r": 0.82842712
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

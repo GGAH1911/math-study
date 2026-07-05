@@ -1,0 +1,144 @@
+{
+ "id": "geometry/middle-1/기본_도형/수선",
+ "spec": {
+  "title": "수선 — 점에서 직선에 수직으로 내린 최단 경로",
+  "params": [
+   {
+    "name": "m",
+    "label": "직선 l의 기울기 m",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "px=2; py=3; den=1+m^2; proj=(px+m*py)/den; fx=proj; fy=m*proj; dx=fx-px; dy=fy-py; dist=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=-4",
+      "=-4*m"
+     ],
+     "to": [
+      "=4",
+      "=4*m"
+     ],
+     "label": "직선 l",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      3
+     ],
+     "label": "P",
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "수선의 발 H",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      3
+     ],
+     "to": [
+      "=fx",
+      "=fy"
+     ],
+     "label": "수선 (최단거리)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점 P와 직선 l 사이 거리 PH",
+    "expr": "dist",
+    "digits": 3
+   },
+   {
+    "label": "수선의 발 H(x)",
+    "expr": "fx",
+    "digits": 3
+   },
+   {
+    "label": "수선의 발 H(y)",
+    "expr": "fy",
+    "digits": 3
+   },
+   {
+    "label": "l방향·수선방향 내적(수직이면 0)",
+    "expr": "dx+dy*m",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 0
+   },
+   {
+    "m": 1
+   },
+   {
+    "m": 2
+   },
+   {
+    "m": -1
+   }
+  ],
+  "invariants": [
+   "dx+dy*m",
+   "fy-m*fx",
+   "dist*sqrt(m^2+1)-abs(m*px-py)",
+   "dist-sqrt(dx^2+dy^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0
+    },
+    "expect": {
+     "fx": 2,
+     "fy": 0,
+     "dist": 3
+    }
+   },
+   {
+    "params": {
+     "m": 2
+    },
+    "expect": {
+     "fx": 1.6,
+     "fy": 3.2,
+     "dist": 0.4472135955
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,205 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/삼각형의_닮음",
+ "spec": {
+  "title": "삼각형의 닮음 — 닮음비 k와 대응변의 비",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 k (△DEF = k·△ABC)",
+    "type": "slider",
+    "min": 0.3,
+    "max": 2.5,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "꼭짓점 C 위치 (모양 바꾸기)",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ax=0; Ay=0; Bx=3; By=0; Cx=a; Cy=2; Dx=5; Dy=0; Ex=5+3*k; Ey=0; Fx=5+k*a; Fy=2*k; AB=3; BC=sqrt((a-3)^2+4); CA=sqrt(a*a+4); DE=3*k; EF=k*BC; FD=k*CA; rAB=DE/AB; rBC=EF/BC; rCA=FD/CA",
+  "geometry": {
+   "range": [
+    -1,
+    13
+   ],
+   "yRange": [
+    -1,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ],
+     "label": "△ABC",
+     "color": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Dx",
+       "=Dy"
+      ],
+      [
+       "=Ex",
+       "=Ey"
+      ],
+      [
+       "=Fx",
+       "=Fy"
+      ]
+     ],
+     "label": "△DEF",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ex",
+      "=Ey"
+     ],
+     "label": "E"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "F"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비 k",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "DE/AB",
+    "expr": "rAB",
+    "digits": 4
+   },
+   {
+    "label": "EF/BC",
+    "expr": "rBC",
+    "digits": 4
+   },
+   {
+    "label": "FD/CA",
+    "expr": "rCA",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1.5,
+    "a": 1
+   },
+   {
+    "k": 2,
+    "a": 1
+   },
+   {
+    "k": 0.5,
+    "a": 2
+   },
+   {
+    "k": 2.5,
+    "a": -1
+   }
+  ],
+  "invariants": [
+   "rAB-k",
+   "rBC-k",
+   "rCA-k",
+   "rAB-rBC",
+   "rBC-rCA"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2,
+     "a": 1
+    },
+    "expect": {
+     "Fx": 7,
+     "Fy": 4,
+     "DE": 6,
+     "EF": 5.65685424949238,
+     "rBC": 2
+    }
+   },
+   {
+    "params": {
+     "k": 0.5,
+     "a": 2
+    },
+    "expect": {
+     "Fx": 6,
+     "Fy": 1,
+     "DE": 1.5,
+     "EF": 1.11803398874989,
+     "rCA": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

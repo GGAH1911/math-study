@@ -1,0 +1,170 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/넓이_비",
+ "spec": {
+  "title": "닮음과 넓이 비: 닮음비 k → 넓이비 k²",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 k",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": "배"
+   }
+  ],
+  "scope": "base=2; height=1; bw=k*base; bh=k*height; small=base*height; big=bw*bh; ratio=big/small",
+  "geometry": {
+   "range": [
+    -0.6,
+    7
+   ],
+   "yRange": [
+    -0.6,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=bw",
+       0
+      ],
+      [
+       "=bw",
+       "=bh"
+      ],
+      [
+       0,
+       "=bh"
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "label": "큰 도형 (넓이 =big=)",
+     "color": "#e08"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "label": "작은 도형 (넓이 =small=)",
+     "color": "#08c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bw",
+      "=bh"
+     ],
+     "label": "모서리"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "작은 넓이",
+    "expr": "small",
+    "digits": 2
+   },
+   {
+    "label": "큰 넓이",
+    "expr": "big",
+    "digits": 2
+   },
+   {
+    "label": "넓이비 (큰/작은)",
+    "expr": "ratio",
+    "digits": 3
+   },
+   {
+    "label": "k의 제곱",
+    "expr": "k^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 1.5
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "ratio - k^2",
+   "big - k^2*small",
+   "big - bw*bh",
+   "bw - k*base",
+   "bh - k*height"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "small": 2,
+     "bw": 4,
+     "bh": 2,
+     "big": 8,
+     "ratio": 4
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "big": 18,
+     "ratio": 9
+    }
+   },
+   {
+    "params": {
+     "k": 1.5
+    },
+    "expect": {
+     "big": 4.5,
+     "ratio": 2.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

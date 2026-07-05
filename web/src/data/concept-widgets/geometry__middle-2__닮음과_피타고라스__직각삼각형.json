@@ -1,0 +1,188 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/직각삼각형",
+ "spec": {
+  "title": "직각삼각형과 피타고라스 정리",
+  "params": [
+   {
+    "name": "a",
+    "label": "다리 BC (a)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "다리 AC (b)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "c=sqrt(a^2+b^2); midx=a/2; midy=b/2",
+  "geometry": {
+   "range": [
+    -1.5,
+    11
+   ],
+   "yRange": [
+    -1.5,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ],
+     "label": "직각삼각형 ABC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0.6,
+      0
+     ],
+     "to": [
+      0.6,
+      0.6
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0.6,
+      0.6
+     ],
+     "to": [
+      0,
+      0.6
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C (직각)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=b"
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "다리 a (BC)",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "다리 b (AC)",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "빗변 c (AB)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "a² + b²",
+    "expr": "a^2+b^2",
+    "digits": 3
+   },
+   {
+    "label": "c²",
+    "expr": "c^2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 6,
+    "b": 8
+   },
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": 5,
+    "b": 12
+   }
+  ],
+  "invariants": [
+   "a^2+b^2-c^2",
+   "c-sqrt(a^2+b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "c": 5
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "b": 8
+    },
+    "expect": {
+     "c": 10
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "c": 1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

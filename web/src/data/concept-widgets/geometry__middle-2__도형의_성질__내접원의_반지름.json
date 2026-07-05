@@ -1,0 +1,184 @@
+{
+ "id": "geometry/middle-2/도형의_성질/내접원의_반지름",
+ "spec": {
+  "title": "삼각형의 내접원과 반지름 r = S / s",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "∠A (두 변 사이 각)",
+    "type": "slider",
+    "min": 30,
+    "max": 140,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "bb",
+    "label": "변 AC = b",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "cc",
+    "label": "변 AB = c",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "ar=alpha*pi/180; Cx=bb*cos(ar); Cy=bb*sin(ar); a=sqrt(bb^2+cc^2-2*bb*cc*cos(ar)); S=0.5*bb*cc*sin(ar); s=(a+bb+cc)/2; r=S/s; Ix=(bb*cc+cc*Cx)/(a+bb+cc); Iy=cc*Cy/(a+bb+cc)",
+  "geometry": {
+   "range": [
+    -5,
+    7
+   ],
+   "yRange": [
+    -1.5,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=cc",
+       0
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Ix",
+      "=Iy"
+     ],
+     "radius": "=r",
+     "label": "내접원"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ix",
+      "=Iy"
+     ],
+     "label": "내심 I"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ix",
+      "=Iy"
+     ],
+     "to": [
+      "=Ix",
+      0
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = BC",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "넓이 S",
+    "expr": "S",
+    "digits": 3
+   },
+   {
+    "label": "반둘레 s",
+    "expr": "s",
+    "digits": 3
+   },
+   {
+    "label": "내접원 반지름 r = S/s",
+    "expr": "r",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 90,
+    "bb": 3,
+    "cc": 4
+   },
+   {
+    "alpha": 60,
+    "bb": 1,
+    "cc": 1
+   },
+   {
+    "alpha": 120,
+    "bb": 5,
+    "cc": 4
+   },
+   {
+    "alpha": 45,
+    "bb": 3,
+    "cc": 5
+   }
+  ],
+  "invariants": [
+   "r - S/s",
+   "Iy - r",
+   "abs(Ix*sin(ar) - Iy*cos(ar)) - r",
+   "abs((Ix-cc)*Cy - Iy*(Cx-cc))/a - r",
+   "r*s - S"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 90,
+     "bb": 3,
+     "cc": 4
+    },
+    "expect": {
+     "a": 5,
+     "S": 6,
+     "s": 6,
+     "r": 1,
+     "Ix": 1,
+     "Iy": 1
+    }
+   },
+   {
+    "params": {
+     "alpha": 60,
+     "bb": 1,
+     "cc": 1
+    },
+    "expect": {
+     "a": 1,
+     "S": 0.4330127,
+     "s": 1.5,
+     "r": 0.28867513,
+     "Ix": 0.5,
+     "Iy": 0.28867513
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

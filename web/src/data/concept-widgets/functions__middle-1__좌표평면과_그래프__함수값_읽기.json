@@ -1,0 +1,101 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/함수값_읽기",
+ "spec": {
+  "title": "그래프에서 함수값 f(a) 읽기",
+  "params": [
+   {
+    "name": "a",
+    "label": "입력값 x = a",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = 0.25*a^2 - 1",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -2,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "0.25*x^2 - 1",
+     "label": "y = f(x)",
+     "color": "#2563eb"
+    },
+    {
+     "fn": "fa + 0*x",
+     "label": "읽은 값 y = f(a) 의 높이",
+     "color": "#dc2626"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "입력 x = a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "함수값 f(a)",
+    "expr": "fa",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": -2
+   },
+   {
+    "a": 4
+   }
+  ],
+  "invariants": [
+   "fa - (0.25*a^2 - 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "fa": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": -1
+    }
+   },
+   {
+    "params": {
+     "a": -2
+    },
+    "expect": {
+     "fa": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

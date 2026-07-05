@@ -1,0 +1,196 @@
+{
+ "id": "geometry/middle-1/입체도형/정사각뿔",
+ "spec": {
+  "title": "정사각뿔의 부피와 겉넓이",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑변 a",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.5,
+    "unit": "cm"
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 0.5,
+    "unit": "cm"
+   }
+  ],
+  "scope": "ax=-0.7*a; ay=-0.125*a; bx=0.3*a; by=-0.125*a; cx=0.7*a; cy=0.125*a; dx=-0.3*a; dy=0.125*a; px=0; py=h; l=sqrt((a/2)^2+h^2); V=a^2*h/3; S=a^2+2*a*l",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -2,
+    11
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=dx",
+       "=dy"
+      ]
+     ],
+     "label": "밑면(정사각형)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=dx",
+      "=dy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "꼭짓점"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부피 V = a²h/3",
+    "expr": "V",
+    "digits": 2
+   },
+   {
+    "label": "옆면 높이(모선) l",
+    "expr": "l",
+    "digits": 3
+   },
+   {
+    "label": "겉넓이 S = a² + 2al",
+    "expr": "S",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "h": 6
+   },
+   {
+    "a": 6,
+    "h": 8
+   },
+   {
+    "a": 3,
+    "h": 4
+   },
+   {
+    "a": 2,
+    "h": 9
+   }
+  ],
+  "invariants": [
+   "3*V-a^2*h",
+   "l^2-((a/2)^2+h^2)",
+   "S-(a^2+2*a*l)",
+   "(bx-ax)-(cx-dx)",
+   "(by-ay)-(cy-dy)",
+   "(dx-ax)-(cx-bx)",
+   "(dy-ay)-(cy-by)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "h": 6
+    },
+    "expect": {
+     "V": 32,
+     "l": 6.324555320336759
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "h": 8
+    },
+    "expect": {
+     "V": 96,
+     "l": 8.54400374531753
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "h": 4
+    },
+    "expect": {
+     "V": 12,
+     "l": 4.272001872658765
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

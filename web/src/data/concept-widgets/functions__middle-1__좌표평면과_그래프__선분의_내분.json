@@ -1,0 +1,150 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/선분의_내분",
+ "spec": {
+  "title": "선분의 내분점 P (A를 m:n으로 나눔)",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (A쪽 비)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (B쪽 비)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "x1=-4; y1=-2; x2=4; y2=4; px=(n*x1+m*x2)/(m+n); py=(n*y1+m*y2)/(m+n)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -4,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      -2
+     ],
+     "to": [
+      4,
+      4
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -4,
+      -2
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      4
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P의 x좌표",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P의 y좌표",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "AP:PB",
+    "expr": "m/n",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 1,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 3
+   },
+   {
+    "m": 3,
+    "n": 1
+   },
+   {
+    "m": 2,
+    "n": 5
+   }
+  ],
+  "invariants": [
+   "(py-y1)*(x2-x1)-(px-x1)*(y2-y1)",
+   "sqrt((px-x1)^2+(py-y1)^2)*n-sqrt((px-x2)^2+(py-y2)^2)*m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "px": 0,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "px": -2,
+     "py": -0.5
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "px": 2,
+     "py": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

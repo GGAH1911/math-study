@@ -1,0 +1,152 @@
+{
+ "id": "geometry/middle-1/기본_도형/직각",
+ "spec": {
+  "title": "직각: 두 반직선이 이루는 각",
+  "params": [
+   {
+    "name": "theta",
+    "label": "각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; ex=cos(rad); ey=sin(rad); dot=1*ex+0*ey; isRight=abs(theta-90)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -0.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "고정 반직선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ex",
+      "=ey"
+     ],
+     "label": "회전 반직선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ex",
+      "=ey"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각 θ",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "두 반직선의 내적 (0이면 수직)",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "직각과의 차이 |θ-90|",
+    "expr": "isRight",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "ex^2+ey^2-1",
+   "dot-ex",
+   "dot-cos(theta*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "ex": 0,
+     "ey": 1,
+     "dot": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "ex": 0.8660254037844387,
+     "ey": 0.5,
+     "dot": 0.8660254037844387
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "ex": 0.5,
+     "ey": 0.8660254037844387,
+     "dot": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "id": "geometry/middle-1/입체도형/사각뿔대",
+ "spec": {
+  "title": "사각뿔대: 사각뿔을 밑면과 평행하게 자르기 (수직 단면)",
+  "params": [
+   {
+    "name": "h",
+    "label": "자른 높이 h (밑면에서 절단면까지)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1.8,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "w = (2-h)/2; negw = -w; sbot = 2; stop = 2 - h; A1 = 4; A2 = stop^2; V = (h/3)*(A1 + A2 + sqrt(A1*A2))",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -0.3,
+    2.3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -1,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       "=w",
+       "=h"
+      ],
+      [
+       "=negw",
+       "=h"
+      ]
+     ],
+     "label": "사각뿔대 수직단면(사다리꼴)",
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=w",
+      "=h"
+     ],
+     "to": [
+      0,
+      2
+     ],
+     "color": "#9ca3af",
+     "label": "잘려나간 작은 사각뿔"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=negw",
+      "=h"
+     ],
+     "to": [
+      0,
+      2
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      2
+     ],
+     "label": "V(원래 사각뿔 꼭짓점)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=h"
+     ],
+     "color": "#16a34a",
+     "label": "높이 h"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "아랫변(큰 밑면 한 변)",
+    "expr": "sbot",
+    "digits": 2
+   },
+   {
+    "label": "윗변(작은 밑면 한 변)",
+    "expr": "stop",
+    "digits": 3
+   },
+   {
+    "label": "높이 h",
+    "expr": "h",
+    "digits": 2
+   },
+   {
+    "label": "큰 밑면 넓이 A₁",
+    "expr": "A1",
+    "digits": 2
+   },
+   {
+    "label": "작은 밑면 넓이 A₂",
+    "expr": "A2",
+    "digits": 3
+   },
+   {
+    "label": "부피 V = (h/3)(A₁+A₂+√(A₁A₂))",
+    "expr": "V",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": 0.5
+   },
+   {
+    "h": 1
+   },
+   {
+    "h": 1.5
+   },
+   {
+    "h": 0.8
+   }
+  ],
+  "invariants": [
+   "2*w + h - 2",
+   "stop - 2*w",
+   "V - (h/3)*(4 + (2-h)^2 + 2*(2-h))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 1
+    },
+    "expect": {
+     "w": 0.5,
+     "stop": 1,
+     "A2": 1,
+     "V": 2.3333333333
+    }
+   },
+   {
+    "params": {
+     "h": 0.5
+    },
+    "expect": {
+     "w": 0.75,
+     "stop": 1.5,
+     "A2": 2.25,
+     "V": 1.5416666667
+    }
+   },
+   {
+    "params": {
+     "h": 1.5
+    },
+    "expect": {
+     "w": 0.25,
+     "stop": 0.5,
+     "A2": 0.25,
+     "V": 2.625
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

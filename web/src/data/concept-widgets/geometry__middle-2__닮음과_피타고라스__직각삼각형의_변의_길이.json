@@ -1,0 +1,195 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/직각삼각형의_변의_길이",
+ "spec": {
+  "title": "직각삼각형의 변의 길이 (빗변 c, 예각 θ)",
+  "params": [
+   {
+    "name": "c",
+    "label": "빗변 c",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "예각 θ",
+    "type": "slider",
+    "min": 5,
+    "max": 85,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; adj=c*cos(rad); opp=c*sin(rad); chk=adj^2+opp^2",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=adj",
+       0
+      ],
+      [
+       "=adj",
+       "=opp"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=adj",
+      "=opp"
+     ],
+     "label": "c (빗변)",
+     "color": "#d33"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=adj",
+      0
+     ],
+     "label": "인접변 c·cosθ",
+     "color": "#37a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=adj",
+      0
+     ],
+     "to": [
+      "=adj",
+      "=opp"
+     ],
+     "label": "대변 c·sinθ",
+     "color": "#2a7"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "θ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=adj",
+      "=opp"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "인접변 (adjacent) = c·cosθ",
+    "expr": "adj",
+    "digits": 4
+   },
+   {
+    "label": "대변 (opposite) = c·sinθ",
+    "expr": "opp",
+    "digits": 4
+   },
+   {
+    "label": "빗변 c",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "a²+b² (= c² 확인)",
+    "expr": "chk",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 5,
+    "theta": 30
+   },
+   {
+    "c": 2,
+    "theta": 60
+   },
+   {
+    "c": 4,
+    "theta": 45
+   },
+   {
+    "c": 8,
+    "theta": 20
+   }
+  ],
+  "invariants": [
+   "adj^2+opp^2-c^2",
+   "opp-c*sin(theta*pi/180)",
+   "adj-c*cos(theta*pi/180)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 5,
+     "theta": 30
+    },
+    "expect": {
+     "adj": 4.330127018922194,
+     "opp": 2.5
+    }
+   },
+   {
+    "params": {
+     "c": 2,
+     "theta": 60
+    },
+    "expect": {
+     "adj": 1,
+     "opp": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "c": 4,
+     "theta": 45
+    },
+    "expect": {
+     "adj": 2.8284271247461903,
+     "opp": 2.8284271247461903
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

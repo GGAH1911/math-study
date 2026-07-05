@@ -1,0 +1,177 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/좌표",
+ "spec": {
+  "title": "좌표평면 위의 점 P(x, y)",
+  "params": [
+   {
+    "name": "px",
+    "label": "x좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "py",
+    "label": "y좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "X=px; Y=py; r=sqrt(px^2+py^2); dx=abs(px); dy=abs(py)",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=X",
+      0
+     ],
+     "to": [
+      "=X",
+      "=Y"
+     ],
+     "label": "|y|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=Y"
+     ],
+     "to": [
+      "=X",
+      "=Y"
+     ],
+     "label": "|x|"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=X",
+      0
+     ],
+     "label": "(x, 0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=Y"
+     ],
+     "label": "(0, y)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=X",
+      "=Y"
+     ],
+     "label": "P(x, y)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x좌표 (횡좌표)",
+    "expr": "X",
+    "digits": 0
+   },
+   {
+    "label": "y좌표 (종좌표)",
+    "expr": "Y",
+    "digits": 0
+   },
+   {
+    "label": "y축까지 거리 |x|",
+    "expr": "dx",
+    "digits": 0
+   },
+   {
+    "label": "x축까지 거리 |y|",
+    "expr": "dy",
+    "digits": 0
+   },
+   {
+    "label": "원점 O까지 거리",
+    "expr": "r",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 3,
+    "py": 4
+   },
+   {
+    "px": -6,
+    "py": 8
+   },
+   {
+    "px": 0,
+    "py": 0
+   },
+   {
+    "px": -5,
+    "py": -12
+   }
+  ],
+  "invariants": [
+   "r^2 - px^2 - py^2",
+   "dx - abs(X)",
+   "dy - abs(Y)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 3,
+     "py": 4
+    },
+    "expect": {
+     "X": 3,
+     "Y": 4,
+     "r": 5
+    }
+   },
+   {
+    "params": {
+     "px": -6,
+     "py": 8
+    },
+    "expect": {
+     "X": -6,
+     "Y": 8,
+     "r": 10
+    }
+   },
+   {
+    "params": {
+     "px": -5,
+     "py": -12
+    },
+    "expect": {
+     "r": 13,
+     "dx": 5,
+     "dy": 12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

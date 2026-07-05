@@ -1,0 +1,127 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/부피의_비",
+ "spec": {
+  "title": "부피의 비 = 닮음비의 세제곱",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 1:k",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": "배"
+   }
+  ],
+  "scope": "areaRatio=k^2; volRatio=k^3",
+  "geometry": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    64
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    64
+   ],
+   "fns": [
+    {
+     "fn": "x^3",
+     "label": "부피비 = k³",
+     "color": "#e4572e"
+    },
+    {
+     "fn": "x^2",
+     "label": "넓이비 = k² (비교)",
+     "color": "#4a90d9"
+    },
+    {
+     "fn": "x",
+     "label": "닮음비 = k",
+     "color": "#999999"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비 k",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "넓이비 k²",
+    "expr": "areaRatio",
+    "digits": 2
+   },
+   {
+    "label": "부피비 k³",
+    "expr": "volRatio",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 1.5
+   }
+  ],
+  "invariants": [
+   "volRatio - k^3",
+   "areaRatio - k^2",
+   "volRatio - areaRatio*k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "areaRatio": 4,
+     "volRatio": 8
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "areaRatio": 9,
+     "volRatio": 27
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "areaRatio": 1,
+     "volRatio": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

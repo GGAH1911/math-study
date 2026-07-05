@@ -1,0 +1,113 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/반비례함수",
+ "spec": {
+  "title": "반비례함수 y = k/x",
+  "params": [
+   {
+    "name": "k",
+    "label": "비례상수 k",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "x0",
+    "label": "점의 x좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "yv = k/x0; prod = x0*yv",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "k/x",
+     "label": "y = k/x",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "점 (x0, k/x0)의 y값",
+    "expr": "yv",
+    "digits": 3
+   },
+   {
+    "label": "x·y (= k 이어야 함)",
+    "expr": "prod",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 6,
+    "x0": 2
+   },
+   {
+    "k": -8,
+    "x0": 4
+   },
+   {
+    "k": 10,
+    "x0": 5
+   },
+   {
+    "k": 3,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "x0*yv - k",
+   "prod - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 6,
+     "x0": 2
+    },
+    "expect": {
+     "yv": 3,
+     "prod": 6
+    }
+   },
+   {
+    "params": {
+     "k": -8,
+     "x0": 4
+    },
+    "expect": {
+     "yv": -2,
+     "prod": -8
+    }
+   },
+   {
+    "params": {
+     "k": 10,
+     "x0": 5
+    },
+    "expect": {
+     "yv": 2,
+     "prod": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

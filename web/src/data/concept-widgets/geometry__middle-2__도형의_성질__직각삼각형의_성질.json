@@ -1,0 +1,223 @@
+{
+ "id": "geometry/middle-2/도형의_성질/직각삼각형의_성질",
+ "spec": {
+  "title": "직각삼각형과 피타고라스 정리",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑변(직각변) a",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "높이(직각변) b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "c = sqrt(a^2 + b^2); theta = atan2(b, a)*180/pi; sinv = b/c; cosv = a/c; tanv = b/a",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ],
+     "label": "직각삼각형"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0.5,
+       0
+      ],
+      [
+       0.5,
+       0.5
+      ],
+      [
+       0,
+       0.5
+      ]
+     ],
+     "label": "90°"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A(직각)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=b"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      0,
+      "=b"
+     ],
+     "label": "빗변 c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "빗변 c = √(a²+b²)",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "a²+b²",
+    "expr": "a^2+b^2",
+    "digits": 2
+   },
+   {
+    "label": "c²",
+    "expr": "c^2",
+    "digits": 2
+   },
+   {
+    "label": "각 B (θ)",
+    "expr": "theta",
+    "digits": 2
+   },
+   {
+    "label": "sinθ = b/c",
+    "expr": "sinv",
+    "digits": 4
+   },
+   {
+    "label": "cosθ = a/c",
+    "expr": "cosv",
+    "digits": 4
+   },
+   {
+    "label": "tanθ = b/a",
+    "expr": "tanv",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": 5,
+    "b": 12
+   },
+   {
+    "a": 6,
+    "b": 8
+   }
+  ],
+  "invariants": [
+   "a^2 + b^2 - c^2",
+   "sinv^2 + cosv^2 - 1",
+   "tanv - sinv/cosv",
+   "c*sinv - b",
+   "c*cosv - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "c": 5,
+     "sinv": 0.8,
+     "cosv": 0.6,
+     "tanv": 1.3333333333333333,
+     "theta": 53.13010235415598
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 12
+    },
+    "expect": {
+     "c": 13,
+     "sinv": 0.9230769230769231,
+     "cosv": 0.38461538461538464,
+     "tanv": 2.4,
+     "theta": 67.38013505195957
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "c": 1.4142135623730951,
+     "sinv": 0.7071067811865476,
+     "cosv": 0.7071067811865476,
+     "tanv": 1,
+     "theta": 45
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

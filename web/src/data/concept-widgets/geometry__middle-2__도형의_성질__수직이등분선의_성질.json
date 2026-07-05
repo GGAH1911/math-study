@@ -1,0 +1,203 @@
+{
+ "id": "geometry/middle-2/도형의_성질/수직이등분선의_성질",
+ "spec": {
+  "title": "수직이등분선의 성질 — PA = PB",
+  "params": [
+   {
+    "name": "a",
+    "label": "½·AB (반길이)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "P의 위치 (수직이등분선 위)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "Ax=-a; Ay=0; Bx=a; By=0; Mx=0; My=0; Px=0; Py=t; PA=sqrt((Px-Ax)^2+(Py-Ay)^2); PB=sqrt((Px-Bx)^2+(Py-By)^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "AB",
+     "color": "#333"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      -6
+     ],
+     "to": [
+      0,
+      6
+     ],
+     "label": "수직이등분선",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Mx",
+      "=My"
+     ],
+     "label": "M(중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Px",
+      "=Py"
+     ],
+     "label": "P",
+     "color": "#d62728"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "PA",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Px",
+      "=Py"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "PB",
+     "color": "#ff7f0e"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PA",
+    "expr": "PA",
+    "digits": 4
+   },
+   {
+    "label": "PB",
+    "expr": "PB",
+    "digits": 4
+   },
+   {
+    "label": "PA − PB",
+    "expr": "PA-PB",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "t": 4
+   },
+   {
+    "a": 2,
+    "t": 0
+   },
+   {
+    "a": 1,
+    "t": 2
+   },
+   {
+    "a": 5,
+    "t": -3
+   }
+  ],
+  "invariants": [
+   "PA-PB",
+   "PA^2-PB^2",
+   "Px"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "t": 4
+    },
+    "expect": {
+     "PA": 5,
+     "PB": 5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "t": 0
+    },
+    "expect": {
+     "PA": 2,
+     "PB": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "t": 2
+    },
+    "expect": {
+     "PA": 2.23606797749979,
+     "PB": 2.23606797749979
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

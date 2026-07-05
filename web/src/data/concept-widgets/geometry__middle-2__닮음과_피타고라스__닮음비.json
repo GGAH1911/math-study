@@ -1,0 +1,170 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/닮음비",
+ "spec": {
+  "title": "닮음비: 길이·넓이·부피 비",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 k (k:1)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": "배"
+   }
+  ],
+  "scope": "base=2; height=1.5; sw=base*k; sh=height*k; area1=base*height; area2=sw*sh; areaRatio=area2/area1; volRatio=k^3",
+  "geometry": {
+   "range": [
+    -0.5,
+    9.5
+   ],
+   "yRange": [
+    -0.5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       1.5
+      ],
+      [
+       0,
+       1.5
+      ]
+     ],
+     "label": "원래 도형 (2×1.5)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3,
+       0
+      ],
+      [
+       "=3+sw",
+       0
+      ],
+      [
+       "=3+sw",
+       "=sh"
+      ],
+      [
+       3,
+       "=sh"
+      ]
+     ],
+     "label": "닮은 도형 (k배)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=3+sw",
+      "=sh"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비(길이) k",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "가로 sw",
+    "expr": "sw",
+    "digits": 2
+   },
+   {
+    "label": "세로 sh",
+    "expr": "sh",
+    "digits": 2
+   },
+   {
+    "label": "넓이비 (=k^2)",
+    "expr": "areaRatio",
+    "digits": 2
+   },
+   {
+    "label": "부피비 (=k^3)",
+    "expr": "volRatio",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 2.5
+   },
+   {
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "sw/base-k",
+   "sh/height-k",
+   "areaRatio-k^2",
+   "volRatio-k^3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "sw": 2,
+     "sh": 1.5,
+     "areaRatio": 1,
+     "volRatio": 1
+    }
+   },
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "sw": 4,
+     "sh": 3,
+     "areaRatio": 4,
+     "volRatio": 8
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "sw": 6,
+     "sh": 4.5,
+     "areaRatio": 9,
+     "volRatio": 27
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

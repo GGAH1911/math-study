@@ -1,0 +1,228 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/삼각형_넓이_비",
+ "spec": {
+  "title": "삼각형 넓이 비 = 밑변의 비 (높이 공통)",
+  "params": [
+   {
+    "name": "b",
+    "label": "분할점 B의 위치",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5.5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "공통 높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 4.5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "px",
+    "label": "꼭짓점 P의 x좌표",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "AB=b; BC=6-b; S1=0.5*AB*h; S2=0.5*BC*h; baseRatio=AB/BC; areaRatio=S1/S2; diff=areaRatio-baseRatio",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=px",
+       "=h"
+      ]
+     ],
+     "label": "△ABP",
+     "color": "#4e79a7"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=b",
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       "=px",
+       "=h"
+      ]
+     ],
+     "label": "△BCP",
+     "color": "#f28e2b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=h"
+     ],
+     "to": [
+      "=px",
+      0
+     ],
+     "label": "h",
+     "color": "#999999"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=h"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑변 비 AB:BC",
+    "expr": "baseRatio",
+    "digits": 3
+   },
+   {
+    "label": "넓이 비 S1:S2",
+    "expr": "areaRatio",
+    "digits": 3
+   },
+   {
+    "label": "S1 (△ABP)",
+    "expr": "S1",
+    "digits": 3
+   },
+   {
+    "label": "S2 (△BCP)",
+    "expr": "S2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 2,
+    "h": 3,
+    "px": 1
+   },
+   {
+    "b": 4,
+    "h": 2,
+    "px": 5
+   },
+   {
+    "b": 3,
+    "h": 4,
+    "px": 3
+   },
+   {
+    "b": 1.5,
+    "h": 4.5,
+    "px": 6
+   }
+  ],
+  "invariants": [
+   "areaRatio-baseRatio",
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 2,
+     "h": 3,
+     "px": 1
+    },
+    "expect": {
+     "baseRatio": 0.5,
+     "areaRatio": 0.5,
+     "S1": 3,
+     "S2": 6
+    }
+   },
+   {
+    "params": {
+     "b": 4,
+     "h": 2,
+     "px": 5
+    },
+    "expect": {
+     "baseRatio": 2,
+     "areaRatio": 2,
+     "S1": 4,
+     "S2": 2
+    }
+   },
+   {
+    "params": {
+     "b": 3,
+     "h": 4,
+     "px": 3
+    },
+    "expect": {
+     "baseRatio": 1,
+     "areaRatio": 1,
+     "S1": 6,
+     "S2": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

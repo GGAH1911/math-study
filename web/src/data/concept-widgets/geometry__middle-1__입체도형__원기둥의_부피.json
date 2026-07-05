@@ -1,0 +1,167 @@
+{
+ "id": "geometry/middle-1/입체도형/원기둥의_부피",
+ "spec": {
+  "title": "원기둥의 부피 V = πr²h",
+  "params": [
+   {
+    "name": "r",
+    "label": "밑면 반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 0.5,
+    "max": 8,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "base=pi*r^2; V=base*h; d=2*r",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=-r",
+       0
+      ],
+      [
+       "=r",
+       0
+      ],
+      [
+       "=r",
+       "=h"
+      ],
+      [
+       "=-r",
+       "=h"
+      ]
+     ],
+     "label": "원기둥 축단면"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=r",
+      0
+     ],
+     "label": "r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-r",
+      "=h"
+     ],
+     "to": [
+      "=-r",
+      0
+     ],
+     "label": "h"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "중심"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑넓이 πr²",
+    "expr": "base",
+    "digits": 3
+   },
+   {
+    "label": "부피 V=πr²h",
+    "expr": "V",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1,
+    "h": 1
+   },
+   {
+    "r": 2,
+    "h": 3
+   },
+   {
+    "r": 3,
+    "h": 2
+   },
+   {
+    "r": 0.5,
+    "h": 8
+   }
+  ],
+  "invariants": [
+   "base-pi*r^2",
+   "V-pi*r^2*h",
+   "V-base*h"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1,
+     "h": 1
+    },
+    "expect": {
+     "base": 3.14159265358979,
+     "V": 3.14159265358979
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "h": 3
+    },
+    "expect": {
+     "base": 12.5663706143592,
+     "V": 37.6991118430775
+    }
+   },
+   {
+    "params": {
+     "r": 3,
+     "h": 2
+    },
+    "expect": {
+     "base": 28.2743338823081,
+     "V": 56.5486677646163
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

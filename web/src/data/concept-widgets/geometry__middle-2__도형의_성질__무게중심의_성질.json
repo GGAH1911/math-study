@@ -1,0 +1,212 @@
+{
+ "id": "geometry/middle-2/도형의_성질/무게중심의_성질",
+ "spec": {
+  "title": "삼각형의 무게중심 — 세 중선의 교점과 2:1 내분",
+  "params": [
+   {
+    "name": "Cx",
+    "label": "꼭짓점 C의 x좌표",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "Cy",
+    "label": "꼭짓점 C의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ax=-3; Ay=-1; Bx=3; By=-1; Gx=(Ax+Bx+Cx)/3; Gy=(Ay+By+Cy)/3; Max=(Bx+Cx)/2; May=(By+Cy)/2; Mbx=(Ax+Cx)/2; Mby=(Ay+Cy)/2; Mcx=(Ax+Bx)/2; Mcy=(Ay+By)/2; AG=sqrt((Gx-Ax)^2+(Gy-Ay)^2); GMa=sqrt((Max-Gx)^2+(May-Gy)^2)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Max",
+      "=May"
+     ],
+     "color": "#aaaaaa"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Mbx",
+      "=Mby"
+     ],
+     "color": "#aaaaaa"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Mcx",
+      "=Mcy"
+     ],
+     "color": "#aaaaaa"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Max",
+      "=May"
+     ],
+     "label": "M(BC중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Gx",
+      "=Gy"
+     ],
+     "label": "G",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "무게중심 G",
+    "expr": "Gx",
+    "digits": 3
+   },
+   {
+    "label": "G의 y좌표",
+    "expr": "Gy",
+    "digits": 3
+   },
+   {
+    "label": "AG : GM 비율(=2여야)",
+    "expr": "AG/GMa",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Cx": 1,
+    "Cy": 3
+   },
+   {
+    "Cx": 0,
+    "Cy": 0
+   },
+   {
+    "Cx": 3,
+    "Cy": 3
+   },
+   {
+    "Cx": -4,
+    "Cy": -3
+   }
+  ],
+  "invariants": [
+   "Gx-(Ax+Bx+Cx)/3",
+   "Gy-(Ay+By+Cy)/3",
+   "Gx-(Ax+(2/3)*(Max-Ax))",
+   "Gy-(Ay+(2/3)*(May-Ay))",
+   "(Gx-Ax)^2+(Gy-Ay)^2-4*((Max-Gx)^2+(May-Gy)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Cx": 1,
+     "Cy": 3
+    },
+    "expect": {
+     "Gx": 0.3333333333,
+     "Gy": 0.3333333333
+    }
+   },
+   {
+    "params": {
+     "Cx": 0,
+     "Cy": 0
+    },
+    "expect": {
+     "Gx": 0,
+     "Gy": -0.6666666667
+    }
+   },
+   {
+    "params": {
+     "Cx": 3,
+     "Cy": 3
+    },
+    "expect": {
+     "Gx": 1,
+     "Gy": 0.3333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

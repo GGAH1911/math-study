@@ -1,0 +1,190 @@
+{
+ "id": "geometry/middle-1/기본_도형/동측내각",
+ "spec": {
+  "title": "동측내각: 두 직선이 평행하면 합이 180°",
+  "params": [
+   {
+    "name": "theta",
+    "label": "횡선 각 θ",
+    "type": "slider",
+    "min": 40,
+    "max": 140,
+    "init": 65,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "tilt",
+    "label": "ℓ₂ 기울임(평행 깨기)",
+    "type": "slider",
+    "min": -30,
+    "max": 30,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; tr=tan(tilt*pi/180); px=1.5*cos(rad)/sin(rad); py=1.5; sden=sin(rad)-tr*cos(rad); sq=-1.5/sden; qx=sq*cos(rad); qy=sq*sin(rad); angP=theta; angQ=180-theta+tilt; angSum=angP+angQ",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      1.5
+     ],
+     "to": [
+      4,
+      1.5
+     ],
+     "label": "ℓ₁",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      "=-1.5-4*tr"
+     ],
+     "to": [
+      4,
+      "=-1.5+4*tr"
+     ],
+     "label": "ℓ₂",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-4*cos(rad)",
+      "=-4*sin(rad)"
+     ],
+     "to": [
+      "=4*cos(rad)",
+      "=4*sin(rad)"
+     ],
+     "label": "횡선 t",
+     "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      1.5
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "Q"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "동측내각 ∠P",
+    "expr": "angP",
+    "digits": 1
+   },
+   {
+    "label": "동측내각 ∠Q",
+    "expr": "angQ",
+    "digits": 1
+   },
+   {
+    "label": "두 각의 합 ∠P+∠Q",
+    "expr": "angSum",
+    "digits": 1
+   },
+   {
+    "label": "ℓ₂ 기울임(0이면 평행)",
+    "expr": "tilt",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 90,
+    "tilt": 0
+   },
+   {
+    "theta": 60,
+    "tilt": 0
+   },
+   {
+    "theta": 120,
+    "tilt": 0
+   },
+   {
+    "theta": 90,
+    "tilt": 30
+   }
+  ],
+  "invariants": [
+   "px*sin(rad)-py*cos(rad)",
+   "qx*sin(rad)-qy*cos(rad)",
+   "qy-(-1.5+tr*qx)",
+   "angP+angQ-180-tilt"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90,
+     "tilt": 0
+    },
+    "expect": {
+     "px": 0,
+     "qx": 0,
+     "qy": -1.5,
+     "angP": 90,
+     "angQ": 90,
+     "angSum": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 60,
+     "tilt": 0
+    },
+    "expect": {
+     "px": 0.8660254,
+     "qx": -0.8660254,
+     "qy": -1.5,
+     "angP": 60,
+     "angQ": 120,
+     "angSum": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "tilt": 30
+    },
+    "expect": {
+     "qx": 0,
+     "qy": -1.5,
+     "angP": 90,
+     "angQ": 120,
+     "angSum": 210
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

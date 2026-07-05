@@ -1,0 +1,201 @@
+{
+ "id": "geometry/middle-2/닮음과_피타고라스/직각삼각형의_높이",
+ "spec": {
+  "title": "직각삼각형의 높이 (h²=pq)",
+  "params": [
+   {
+    "name": "p",
+    "label": "AH = p",
+    "type": "slider",
+    "min": 1,
+    "max": 16,
+    "init": 9,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "HB = q",
+    "type": "slider",
+    "min": 1,
+    "max": 16,
+    "init": 16,
+    "step": 1
+   }
+  ],
+  "scope": "c=p+q; h=sqrt(p*q); a=sqrt(q*c); b=sqrt(p*c)",
+  "geometry": {
+   "range": [
+    -2,
+    34
+   ],
+   "yRange": [
+    -3,
+    18
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=c",
+       0
+      ],
+      [
+       "=p",
+       "=h"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=p",
+      "=h"
+     ],
+     "to": [
+      "=p",
+      0
+     ],
+     "label": "h"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p",
+      "=h"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p",
+      0
+     ],
+     "label": "H"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "높이 h",
+    "expr": "h",
+    "digits": 4
+   },
+   {
+    "label": "h²",
+    "expr": "h^2",
+    "digits": 4
+   },
+   {
+    "label": "pq",
+    "expr": "p*q",
+    "digits": 4
+   },
+   {
+    "label": "a=BC",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "b=AC",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "c=AB",
+    "expr": "c",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 9,
+    "q": 16
+   },
+   {
+    "p": 2,
+    "q": 8
+   },
+   {
+    "p": 4,
+    "q": 4
+   },
+   {
+    "p": 6,
+    "q": 3
+   }
+  ],
+  "invariants": [
+   "h^2-p*q",
+   "a^2-q*(p+q)",
+   "b^2-p*(p+q)",
+   "a^2+b^2-c^2",
+   "(0-p)*(c-p)+(0-h)*(0-h)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 9,
+     "q": 16
+    },
+    "expect": {
+     "h": 12,
+     "c": 25,
+     "a": 20,
+     "b": 15
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "q": 8
+    },
+    "expect": {
+     "h": 4,
+     "c": 10,
+     "a": 8.94427191,
+     "b": 4.472135955
+    }
+   },
+   {
+    "params": {
+     "p": 4,
+     "q": 4
+    },
+    "expect": {
+     "h": 4,
+     "c": 8,
+     "a": 5.656854249,
+     "b": 5.656854249
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

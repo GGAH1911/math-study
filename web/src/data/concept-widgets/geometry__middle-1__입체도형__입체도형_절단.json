@@ -1,0 +1,145 @@
+{
+ "id": "geometry/middle-1/입체도형/입체도형_절단",
+ "spec": {
+  "title": "정육면체 꼭짓점을 비스듬히 자른 단면 (정삼각형)",
+  "params": [
+   {
+    "name": "t",
+    "label": "모서리 따라 자른 길이",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": "cm"
+   }
+  ],
+  "scope": "s = t*sqrt(2); area = sqrt(3)/4*s^2; peri = 3*s; cr = s/sqrt(3); ix = s/2; iy = s/(2*sqrt(3))",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -3.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=cr"
+      ],
+      [
+       "=-ix",
+       "=-iy"
+      ],
+      [
+       "=ix",
+       "=-iy"
+      ]
+     ],
+     "label": "단면"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0",
+      "=cr"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-ix",
+      "=-iy"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ix",
+      "=-iy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "한 변의 길이 s (=t√2)",
+    "expr": "s",
+    "digits": 3
+   },
+   {
+    "label": "단면 넓이",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "단면 둘레",
+    "expr": "peri",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 2
+   },
+   {
+    "t": 3
+   },
+   {
+    "t": 4
+   },
+   {
+    "t": 6
+   }
+  ],
+  "invariants": [
+   "s^2 - 2*t^2",
+   "area - peri^2*sqrt(3)/36",
+   "cr - 2*iy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 3
+    },
+    "expect": {
+     "s": 4.242640687,
+     "area": 7.794228634,
+     "peri": 12.72792206
+    }
+   },
+   {
+    "params": {
+     "t": 6
+    },
+    "expect": {
+     "s": 8.485281374,
+     "area": 31.17691454,
+     "peri": 25.45584412
+    }
+   },
+   {
+    "params": {
+     "t": 2
+    },
+    "expect": {
+     "s": 2.828427125,
+     "area": 3.464101615
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

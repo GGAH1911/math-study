@@ -1,0 +1,216 @@
+{
+ "id": "geometry/middle-2/도형의_성질/평행사변형",
+ "spec": {
+  "title": "평행사변형 — 두 쌍의 대변이 평행",
+  "params": [
+   {
+    "name": "b",
+    "label": "밑변 AB 길이",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "이웃변 AD 길이",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "alpha",
+    "label": "∠A",
+    "type": "slider",
+    "min": 20,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=alpha*pi/180; dx=d*cos(rad); dy=d*sin(rad); cx=b+dx; cy=dy; dnorm=sqrt(dx^2+dy^2); angleB=acos(-dx/dnorm)*180/pi",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=dx",
+       "=dy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=dx",
+      "=dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠A",
+    "expr": "alpha",
+    "digits": 1
+   },
+   {
+    "label": "∠B",
+    "expr": "angleB",
+    "digits": 1
+   },
+   {
+    "label": "∠A+∠B",
+    "expr": "alpha+angleB",
+    "digits": 1
+   },
+   {
+    "label": "|AB|",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "|DC|",
+    "expr": "sqrt((cx-dx)^2+(cy-dy)^2)",
+    "digits": 3
+   },
+   {
+    "label": "|AD|",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "|BC|",
+    "expr": "dnorm",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 60,
+    "b": 3,
+    "d": 2
+   },
+   {
+    "alpha": 90,
+    "b": 3,
+    "d": 2
+   },
+   {
+    "alpha": 30,
+    "b": 2,
+    "d": 4
+   },
+   {
+    "alpha": 120,
+    "b": 4,
+    "d": 3
+   }
+  ],
+  "invariants": [
+   "b*(cy-dy)",
+   "sqrt((cx-dx)^2+(cy-dy)^2)-b",
+   "dnorm-d",
+   "alpha+angleB-180"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 90,
+     "b": 3,
+     "d": 2
+    },
+    "expect": {
+     "dx": 0,
+     "dy": 2,
+     "cx": 3,
+     "cy": 2,
+     "angleB": 90
+    }
+   },
+   {
+    "params": {
+     "alpha": 60,
+     "b": 4,
+     "d": 2
+    },
+    "expect": {
+     "dx": 1,
+     "dy": 1.7320508076,
+     "cx": 5,
+     "cy": 1.7320508076,
+     "angleB": 120
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "b": 2,
+     "d": 4
+    },
+    "expect": {
+     "dx": 3.4641016151,
+     "dy": 2,
+     "cx": 5.4641016151,
+     "cy": 2,
+     "angleB": 150
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

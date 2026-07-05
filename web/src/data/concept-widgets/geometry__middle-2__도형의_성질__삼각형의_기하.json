@@ -1,0 +1,189 @@
+{
+ "id": "geometry/middle-2/도형의_성질/삼각형의_기하",
+ "spec": {
+  "title": "삼각형의 기하 — 외접원·내각의 합·외각",
+  "params": [
+   {
+    "name": "Cx",
+    "label": "꼭짓점 C의 x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "Cy",
+    "label": "꼭짓점 C의 y",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=-2; ay=0; bx=2; by=0; cx=Cx; cy=Cy; a=sqrt((bx-cx)^2+(by-cy)^2); b=sqrt((cx-ax)^2+(cy-ay)^2); c=sqrt((ax-bx)^2+(ay-by)^2); angA=acos((b^2+c^2-a^2)/(2*b*c))*180/pi; angB=acos((a^2+c^2-b^2)/(2*a*c))*180/pi; angC=acos((a^2+b^2-c^2)/(2*a*b))*180/pi; sumAng=angA+angB+angC; extC=180-angC; dd=2*(ax*(by-cy)+bx*(cy-ay)+cx*(ay-by)); ux=((ax^2+ay^2)*(by-cy)+(bx^2+by^2)*(cy-ay)+(cx^2+cy^2)*(ay-by))/dd; uy=((ax^2+ay^2)*(cx-bx)+(bx^2+by^2)*(ax-cx)+(cx^2+cy^2)*(bx-ax))/dd; R=sqrt((ux-ax)^2+(uy-ay)^2)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=ux",
+      "=uy"
+     ],
+     "radius": "=R",
+     "label": "외접원"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -2,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ],
+     "label": "△ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      -2,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ux",
+      "=uy"
+     ],
+     "label": "O(외심)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠A",
+    "expr": "angA",
+    "digits": 1
+   },
+   {
+    "label": "∠B",
+    "expr": "angB",
+    "digits": 1
+   },
+   {
+    "label": "∠C",
+    "expr": "angC",
+    "digits": 1
+   },
+   {
+    "label": "내각의 합",
+    "expr": "sumAng",
+    "digits": 3
+   },
+   {
+    "label": "C의 외각(=∠A+∠B)",
+    "expr": "extC",
+    "digits": 1
+   },
+   {
+    "label": "외접원 반지름 R",
+    "expr": "R",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Cx": 0,
+    "Cy": 2
+   },
+   {
+    "Cx": 2,
+    "Cy": 2
+   },
+   {
+    "Cx": -1,
+    "Cy": 3
+   },
+   {
+    "Cx": 1.5,
+    "Cy": 1
+   }
+  ],
+  "invariants": [
+   "angA+angB+angC-180",
+   "sqrt((ux-cx)^2+(uy-cy)^2)-R",
+   "sqrt((ux-bx)^2+(uy-by)^2)-R",
+   "(180-angC)-(angA+angB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Cx": 0,
+     "Cy": 2
+    },
+    "expect": {
+     "angA": 45,
+     "angB": 45,
+     "angC": 90,
+     "sumAng": 180,
+     "ux": 0,
+     "uy": 0,
+     "R": 2
+    }
+   },
+   {
+    "params": {
+     "Cx": 2,
+     "Cy": 2
+    },
+    "expect": {
+     "angB": 90,
+     "sumAng": 180,
+     "ux": 0,
+     "uy": 1,
+     "extC": 116.565051
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

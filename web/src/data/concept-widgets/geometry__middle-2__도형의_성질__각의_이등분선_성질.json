@@ -1,0 +1,204 @@
+{
+ "id": "geometry/middle-2/도형의_성질/각의_이등분선_성질",
+ "spec": {
+  "title": "각의 이등분선 위의 점 P에서 두 변까지의 거리",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "반각 α (∠XOY = 2α)",
+    "type": "slider",
+    "min": 10,
+    "max": 80,
+    "init": 40,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "t",
+    "label": "P의 위치 (이등분선 위)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 2,
+    "step": 0.05
+   }
+  ],
+  "scope": "arad=alpha*pi/180; px=t; py=0; ux=cos(arad); uy=sin(arad); vx=cos(arad); vy=-sin(arad); oxx=3*cos(arad); oxy=3*sin(arad); oyx=3*cos(arad); oyy=-3*sin(arad); f1x=t*cos(arad)^2; f1y=t*cos(arad)*sin(arad); f2x=t*cos(arad)^2; f2y=-t*cos(arad)*sin(arad); d1=sqrt((px-f1x)^2+(py-f1y)^2); d2=sqrt((px-f2x)^2+(py-f2y)^2); bx=3; by=0",
+  "geometry": {
+   "range": [
+    -1,
+    4
+   ],
+   "yRange": [
+    -3.2,
+    3.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=oxx",
+      "=oxy"
+     ],
+     "label": "OX"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=oyx",
+      "=oyy"
+     ],
+     "label": "OY"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "이등분선",
+     "color": "#888888"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=f1x",
+      "=f1y"
+     ],
+     "label": "H₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=f2x",
+      "=f2y"
+     ],
+     "label": "H₂"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=f1x",
+      "=f1y"
+     ],
+     "color": "#dd2222"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=f2x",
+      "=f2y"
+     ],
+     "color": "#22aa22"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "d(P, OX)",
+    "expr": "d1",
+    "digits": 3
+   },
+   {
+    "label": "d(P, OY)",
+    "expr": "d2",
+    "digits": 3
+   },
+   {
+    "label": "차이 d1−d2",
+    "expr": "d1-d2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 40,
+    "t": 2
+   },
+   {
+    "alpha": 60,
+    "t": 1.5
+   },
+   {
+    "alpha": 25,
+    "t": 2.5
+   },
+   {
+    "alpha": 70,
+    "t": 1
+   }
+  ],
+  "invariants": [
+   "d1-d2",
+   "f1x*sin(arad)-f1y*cos(arad)",
+   "f2x*sin(arad)+f2y*cos(arad)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 45,
+     "t": 2
+    },
+    "expect": {
+     "d1": 1.4142135624,
+     "d2": 1.4142135624,
+     "f1x": 1,
+     "f1y": 1
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "t": 2
+    },
+    "expect": {
+     "d1": 1,
+     "d2": 1,
+     "f1x": 1.5,
+     "f1y": 0.8660254038
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

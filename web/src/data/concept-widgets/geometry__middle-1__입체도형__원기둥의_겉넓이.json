@@ -1,0 +1,170 @@
+{
+ "id": "geometry/middle-1/입체도형/원기둥의_겉넓이",
+ "spec": {
+  "title": "원기둥의 겉넓이 (전개도)",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 0.1,
+    "unit": "cm"
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.1,
+    "unit": "cm"
+   }
+  ],
+  "scope": "pr=pi*r; w=2*pi*r; base=pi*r^2; lateral=2*pi*r*h; S=2*pi*r*(r+h)",
+  "geometry": {
+   "range": [
+    -14,
+    14
+   ],
+   "yRange": [
+    -9,
+    18
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=-pr",
+       0
+      ],
+      [
+       "=pr",
+       0
+      ],
+      [
+       "=pr",
+       "=h"
+      ],
+      [
+       "=-pr",
+       "=h"
+      ]
+     ],
+     "label": "옆면 (가로=2πr, 세로=h)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      "=-r"
+     ],
+     "radius": "=r",
+     "label": "밑면"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      "=h+r"
+     ],
+     "radius": "=r",
+     "label": "윗면"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "옆면 가로(밑면 둘레) 2πr",
+    "expr": "w",
+    "digits": 3
+   },
+   {
+    "label": "밑면 넓이 πr²",
+    "expr": "base",
+    "digits": 3
+   },
+   {
+    "label": "옆면 넓이 2πrh",
+    "expr": "lateral",
+    "digits": 3
+   },
+   {
+    "label": "겉넓이 S=2πr(r+h)",
+    "expr": "S",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 3,
+    "h": 5
+   },
+   {
+    "r": 2,
+    "h": 4
+   },
+   {
+    "r": 1,
+    "h": 1
+   },
+   {
+    "r": 4,
+    "h": 8
+   }
+  ],
+  "invariants": [
+   "S-(2*base+lateral)",
+   "lateral-w*h",
+   "w-2*pi*r",
+   "base-pi*r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 3,
+     "h": 5
+    },
+    "expect": {
+     "base": 28.274333882,
+     "lateral": 94.247779608,
+     "w": 18.849555922,
+     "S": 150.796447372
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "h": 4
+    },
+    "expect": {
+     "base": 12.566370614,
+     "lateral": 50.265482457,
+     "w": 12.566370614,
+     "S": 75.398223686
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "h": 1
+    },
+    "expect": {
+     "base": 3.141592654,
+     "lateral": 6.283185307,
+     "w": 6.283185307,
+     "S": 12.566370614
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
