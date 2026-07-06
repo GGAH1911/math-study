@@ -1,0 +1,161 @@
+{
+ "id": "geometry/middle-1/평면도형/원의_반지름",
+ "spec": {
+  "title": "원의 반지름 r = |OP|",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "점 P의 위치 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); circ=2*pi*r; area=pi*r^2",
+  "geometry": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "반지름 |OP|",
+    "expr": "sqrt(px^2+py^2)",
+    "digits": 3
+   },
+   {
+    "label": "둘레 2πr",
+    "expr": "circ",
+    "digits": 3
+   },
+   {
+    "label": "넓이 πr²",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 5,
+    "theta": 0
+   },
+   {
+    "r": 3,
+    "theta": 90
+   },
+   {
+    "r": 8,
+    "theta": 30
+   },
+   {
+    "r": 1,
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "sqrt(px^2+py^2)-r",
+   "circ-2*pi*r",
+   "area-pi*r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 5,
+     "theta": 0
+    },
+    "expect": {
+     "px": 5,
+     "py": 0,
+     "circ": 31.41592653589793,
+     "area": 78.53981633974483
+    }
+   },
+   {
+    "params": {
+     "r": 3,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 3,
+     "circ": 18.84955592153876,
+     "area": 28.274333882308138
+    }
+   },
+   {
+    "params": {
+     "r": 8,
+     "theta": 180
+    },
+    "expect": {
+     "px": -8,
+     "py": 0,
+     "circ": 50.26548245743669,
+     "area": 201.06192982974676
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

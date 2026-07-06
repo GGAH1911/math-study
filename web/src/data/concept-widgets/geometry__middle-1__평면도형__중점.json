@@ -1,0 +1,190 @@
+{
+ "id": "geometry/middle-1/평면도형/중점",
+ "spec": {
+  "title": "두 점의 중점",
+  "params": [
+   {
+    "name": "ax",
+    "label": "A의 x좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": -4,
+    "step": 1
+   },
+   {
+    "name": "ay",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "bx",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "by",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "mx=(ax+bx)/2; my=(ay+by)/2; dAM=sqrt((mx-ax)^2+(my-ay)^2); dMB=sqrt((bx-mx)^2+(by-my)^2)",
+  "geometry": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M",
+     "color": "#e2001a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "M의 x = (x₁+x₂)/2",
+    "expr": "mx",
+    "digits": 2
+   },
+   {
+    "label": "M의 y = (y₁+y₂)/2",
+    "expr": "my",
+    "digits": 2
+   },
+   {
+    "label": "거리 AM",
+    "expr": "dAM",
+    "digits": 3
+   },
+   {
+    "label": "거리 MB",
+    "expr": "dMB",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ax": -4,
+    "ay": -2,
+    "bx": 6,
+    "by": 4
+   },
+   {
+    "ax": 2,
+    "ay": 2,
+    "bx": 6,
+    "by": 4
+   },
+   {
+    "ax": -2,
+    "ay": 0,
+    "bx": 4,
+    "by": 6
+   },
+   {
+    "ax": 0,
+    "ay": -6,
+    "bx": 0,
+    "by": 6
+   }
+  ],
+  "invariants": [
+   "2*mx-ax-bx",
+   "2*my-ay-by",
+   "dAM-dMB"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ax": 2,
+     "ay": 2,
+     "bx": 6,
+     "by": 4
+    },
+    "expect": {
+     "mx": 4,
+     "my": 3
+    }
+   },
+   {
+    "params": {
+     "ax": -2,
+     "ay": 0,
+     "bx": 4,
+     "by": 6
+    },
+    "expect": {
+     "mx": 1,
+     "my": 3
+    }
+   },
+   {
+    "params": {
+     "ax": -4,
+     "ay": -2,
+     "bx": 6,
+     "by": 4
+    },
+    "expect": {
+     "mx": 1,
+     "my": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

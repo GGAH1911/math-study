@@ -1,0 +1,170 @@
+{
+ "id": "geometry/middle-1/평면도형/정삼각형",
+ "spec": {
+  "title": "정삼각형 — 한 변의 길이 a로 높이·넓이 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "한 변 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "h=sqrt(3)/2*a; ax=-a/2; ay=0; bx=a/2; by=0; cx=0; cy=h; area=sqrt(3)/4*a^2; peri=3*a; sideAB=sqrt((bx-ax)^2+(by-ay)^2); sideBC=sqrt((cx-bx)^2+(cy-by)^2); sideCA=sqrt((ax-cx)^2+(ay-cy)^2); angleA=acos(((bx-ax)*(cx-ax)+(by-ay)*(cy-ay))/(sideAB*sideCA))*180/pi",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      0,
+      0
+     ],
+     "label": "h"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "한 변 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "높이 h = (√3/2)·a",
+    "expr": "h",
+    "digits": 3
+   },
+   {
+    "label": "넓이 S = (√3/4)·a²",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "둘레 = 3a",
+    "expr": "peri",
+    "digits": 2
+   },
+   {
+    "label": "내각 A (°)",
+    "expr": "angleA",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   },
+   {
+    "a": 4.5
+   }
+  ],
+  "invariants": [
+   "sideAB-a",
+   "sideBC-a",
+   "sideCA-a",
+   "sideBC-sideCA",
+   "h-sqrt(3)/2*a",
+   "area-sqrt(3)/4*a^2",
+   "angleA-60"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "h": 1.7320508,
+     "area": 1.7320508,
+     "cy": 1.7320508,
+     "peri": 6
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "h": 3.4641016,
+     "area": 6.9282032,
+     "angleA": 60
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

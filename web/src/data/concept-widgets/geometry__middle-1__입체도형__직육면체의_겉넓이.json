@@ -1,0 +1,283 @@
+{
+ "id": "geometry/middle-1/입체도형/직육면체의_겉넓이",
+ "spec": {
+  "title": "직육면체의 겉넓이 — 전개도로 이해하기",
+  "params": [
+   {
+    "name": "a",
+    "label": "세로 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "가로 b",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "Sab=2*a*b; Sbh=2*b*h; Sah=2*a*h; S=2*(a*b+b*h+a*h)",
+  "geometry": {
+   "range": [
+    -6,
+    14
+   ],
+   "yRange": [
+    -6,
+    18
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=b",
+       "=h"
+      ],
+      [
+       0,
+       "=h"
+      ]
+     ],
+     "label": "앞 (b×h)",
+     "color": "#4C7BE0"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=b",
+       0
+      ],
+      [
+       "=b+a",
+       0
+      ],
+      [
+       "=b+a",
+       "=h"
+      ],
+      [
+       "=b",
+       "=h"
+      ]
+     ],
+     "label": "우 (a×h)",
+     "color": "#8E44AD"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=-a",
+       0
+      ],
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       "=h"
+      ],
+      [
+       "=-a",
+       "=h"
+      ]
+     ],
+     "label": "좌 (a×h)",
+     "color": "#8E44AD"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=h"
+      ],
+      [
+       "=b",
+       "=h"
+      ],
+      [
+       "=b",
+       "=h+a"
+      ],
+      [
+       0,
+       "=h+a"
+      ]
+     ],
+     "label": "위 (b×a)",
+     "color": "#27AE60"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=-a"
+      ],
+      [
+       "=b",
+       "=-a"
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       0,
+       0
+      ]
+     ],
+     "label": "아래 (b×a)",
+     "color": "#27AE60"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=h+a"
+      ],
+      [
+       "=b",
+       "=h+a"
+      ],
+      [
+       "=b",
+       "=2*h+a"
+      ],
+      [
+       0,
+       "=2*h+a"
+      ]
+     ],
+     "label": "뒤 (b×h)",
+     "color": "#4C7BE0"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위+아래 넓이 2ab",
+    "expr": "Sab",
+    "digits": 2
+   },
+   {
+    "label": "앞+뒤 넓이 2bh",
+    "expr": "Sbh",
+    "digits": 2
+   },
+   {
+    "label": "좌+우 넓이 2ah",
+    "expr": "Sah",
+    "digits": 2
+   },
+   {
+    "label": "겉넓이 S=2(ab+bh+ah)",
+    "expr": "S",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 4,
+    "h": 3
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "h": 1
+   },
+   {
+    "a": 5,
+    "b": 8,
+    "h": 6
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "h": 4
+   }
+  ],
+  "invariants": [
+   "S-(Sab+Sbh+Sah)",
+   "S-2*(a*b+b*h+a*h)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "h": 3
+    },
+    "expect": {
+     "Sab": 16,
+     "Sbh": 24,
+     "Sah": 12,
+     "S": 52
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "h": 1
+    },
+    "expect": {
+     "Sab": 2,
+     "Sbh": 2,
+     "Sah": 2,
+     "S": 6
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 8,
+     "h": 6
+    },
+    "expect": {
+     "Sab": 80,
+     "Sbh": 96,
+     "Sah": 60,
+     "S": 236
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

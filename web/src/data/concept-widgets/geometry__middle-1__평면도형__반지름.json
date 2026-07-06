@@ -1,0 +1,166 @@
+{
+ "id": "geometry/middle-1/평면도형/반지름",
+ "spec": {
+  "title": "반지름 — 원의 크기를 결정하는 거리",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "원 위 점 P의 각도 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 40,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); d=2*r; C=2*pi*r; dist=sqrt(px^2+py^2)",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r=|OP|"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "중심 O에서 P까지 거리 |OP|",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "지름 d = 2r",
+    "expr": "d",
+    "digits": 2
+   },
+   {
+    "label": "둘레 C = 2πr",
+    "expr": "C",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 3,
+    "theta": 0
+   },
+   {
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "r": 5,
+    "theta": 30
+   },
+   {
+    "r": 4,
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "dist-r",
+   "d-2*r",
+   "C-2*pi*r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 3,
+     "theta": 0
+    },
+    "expect": {
+     "px": 3,
+     "py": 0,
+     "d": 6,
+     "dist": 3
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 2,
+     "d": 4,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "r": 5,
+     "theta": 30
+    },
+    "expect": {
+     "px": 4.330127018922194,
+     "py": 2.5,
+     "d": 10,
+     "dist": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

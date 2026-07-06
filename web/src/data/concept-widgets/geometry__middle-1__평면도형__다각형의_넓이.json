@@ -1,0 +1,215 @@
+{
+ "id": "geometry/middle-1/평면도형/다각형의_넓이",
+ "spec": {
+  "title": "다각형의 넓이 — 신발끈 공식 (삼각형)",
+  "params": [
+   {
+    "name": "Ax",
+    "label": "A_x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "Ay",
+    "label": "A_y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "Bx",
+    "label": "B_x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "By",
+    "label": "B_y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "Cx",
+    "label": "C_x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "Cy",
+    "label": "C_y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "sArea = 0.5*(Ax*(By-Cy)+Bx*(Cy-Ay)+Cx*(Ay-By)); cross = 0.5*((Bx-Ax)*(Cy-Ay)-(Cx-Ax)*(By-Ay)); area = abs(sArea)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ],
+     "label": "삼각형 ABC"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부호넓이(신발끈)",
+    "expr": "sArea",
+    "digits": 3
+   },
+   {
+    "label": "넓이 |·|",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "Ax": 0,
+    "Ay": 0,
+    "Bx": 4,
+    "By": 0,
+    "Cx": 0,
+    "Cy": 3
+   },
+   {
+    "Ax": 1,
+    "Ay": 1,
+    "Bx": 5,
+    "By": 1,
+    "Cx": 1,
+    "Cy": 4
+   },
+   {
+    "Ax": -3,
+    "Ay": -2,
+    "Bx": 2,
+    "By": -1,
+    "Cx": 0,
+    "Cy": 4
+   },
+   {
+    "Ax": -4,
+    "Ay": 3,
+    "Bx": 3,
+    "By": 3,
+    "Cx": -1,
+    "Cy": -2
+   }
+  ],
+  "invariants": [
+   "sArea - cross"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "Ax": 0,
+     "Ay": 0,
+     "Bx": 4,
+     "By": 0,
+     "Cx": 0,
+     "Cy": 3
+    },
+    "expect": {
+     "sArea": 6,
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "Ax": 1,
+     "Ay": 1,
+     "Bx": 5,
+     "By": 1,
+     "Cx": 1,
+     "Cy": 4
+    },
+    "expect": {
+     "sArea": 6,
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "Ax": 0,
+     "Ay": 0,
+     "Bx": 2,
+     "By": 0,
+     "Cx": 0,
+     "Cy": 2
+    },
+    "expect": {
+     "sArea": 2,
+     "area": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "id": "geometry/middle-1/작도와_합동/작도",
+ "spec": {
+  "title": "정삼각형 작도 — 컴퍼스로 길이 옮기기",
+  "params": [
+   {
+    "name": "d",
+    "label": "선분 AB의 길이",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "cx=d/2; cy=sqrt(3)/2*d; AC=sqrt(cx^2+cy^2); BC=sqrt((cx-d)^2+cy^2)",
+  "geometry": {
+   "range": [
+    -4.5,
+    8.5
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=d",
+     "label": "중심 A, 반지름 AB"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=d",
+      0
+     ],
+     "radius": "=d",
+     "label": "중심 B, 반지름 AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d",
+      0
+     ],
+     "label": "AB"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=d",
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AB",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "AC",
+    "expr": "AC",
+    "digits": 3
+   },
+   {
+    "label": "BC",
+    "expr": "BC",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 1
+   },
+   {
+    "d": 2
+   },
+   {
+    "d": 3
+   },
+   {
+    "d": 4
+   }
+  ],
+  "invariants": [
+   "AC-d",
+   "BC-d",
+   "AC-BC"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 2
+    },
+    "expect": {
+     "cx": 1,
+     "cy": 1.7320508075688772,
+     "AC": 2,
+     "BC": 2
+    }
+   },
+   {
+    "params": {
+     "d": 4
+    },
+    "expect": {
+     "cx": 2,
+     "cy": 3.4641016151377544,
+     "AC": 4,
+     "BC": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,242 @@
+{
+ "id": "geometry/middle-1/평면도형/오각형",
+ "spec": {
+  "title": "오각형: 정오각형과 5개의 대각선",
+  "params": [
+   {
+    "name": "theta",
+    "label": "회전각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; a0=rad; a1=rad+72*pi/180; a2=rad+144*pi/180; a3=rad+216*pi/180; a4=rad+288*pi/180; x0=cos(a0); y0=sin(a0); x1=cos(a1); y1=sin(a1); x2=cos(a2); y2=sin(a2); x3=cos(a3); y3=sin(a3); x4=cos(a4); y4=sin(a4); angsum=(5-2)*180; oneang=angsum/5; ndiag=5*(5-3)/2",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "color": "#ccc"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x0",
+       "=y0"
+      ],
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ],
+      [
+       "=x3",
+       "=y3"
+      ],
+      [
+       "=x4",
+       "=y4"
+      ]
+     ],
+     "color": "#1565c0"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#e57373"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=x3",
+      "=y3"
+     ],
+     "color": "#e57373"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x3",
+      "=y3"
+     ],
+     "color": "#e57373"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x4",
+      "=y4"
+     ],
+     "color": "#e57373"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y2"
+     ],
+     "to": [
+      "=x4",
+      "=y4"
+     ],
+     "color": "#e57373"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ],
+     "label": "E"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내각의 합",
+    "expr": "angsum",
+    "digits": 0
+   },
+   {
+    "label": "정오각형 한 내각",
+    "expr": "oneang",
+    "digits": 0
+   },
+   {
+    "label": "대각선 개수",
+    "expr": "ndiag",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 36
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 144
+   }
+  ],
+  "invariants": [
+   "x0^2+y0^2-1",
+   "x2^2+y2^2-1",
+   "x0+x1+x2+x3+x4",
+   "y0+y1+y2+y3+y4",
+   "angsum-540",
+   "oneang-108",
+   "ndiag-5"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "x0": 1,
+     "y0": 0,
+     "x1": 0.30901699437,
+     "y1": 0.9510565163
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "x0": 0,
+     "y0": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 36
+    },
+    "expect": {
+     "x0": 0.80901699437,
+     "y0": 0.58778525229
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

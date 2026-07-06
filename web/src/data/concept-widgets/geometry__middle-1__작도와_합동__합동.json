@@ -1,0 +1,260 @@
+{
+ "id": "geometry/middle-1/작도와_합동/합동",
+ "spec": {
+  "title": "합동 — 옮기고·돌리고·뒤집어도 변·각은 그대로",
+  "params": [
+   {
+    "name": "theta",
+    "label": "회전각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 40,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "tx",
+    "label": "가로 이동",
+    "type": "slider",
+    "min": -3,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "ty",
+    "label": "세로 이동",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "sflip",
+    "label": "뒤집기 (1=그대로, -1=반사)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 2
+   }
+  ],
+  "scope": "rad=theta*pi/180; AB=3; BC=sqrt(8); CA=sqrt(5); Ax=0; Ay=0; Bx=3; By=0; Cx=1; Cy=2; Dx=tx; Dy=ty; Ex=3*cos(rad)+tx; Ey=3*sin(rad)+ty; Fx=cos(rad)-2*sflip*sin(rad)+tx; Fy=sin(rad)+2*sflip*cos(rad)+ty; DE=sqrt((Ex-Dx)^2+(Ey-Dy)^2); EF=sqrt((Fx-Ex)^2+(Fy-Ey)^2); FD=sqrt((Dx-Fx)^2+(Dy-Fy)^2)",
+  "geometry": {
+   "range": [
+    -4,
+    9
+   ],
+   "yRange": [
+    -4,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       1,
+       2
+      ]
+     ],
+     "label": "△ABC (원본)",
+     "color": "#888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Dx",
+       "=Dy"
+      ],
+      [
+       "=Ex",
+       "=Ey"
+      ],
+      [
+       "=Fx",
+       "=Fy"
+      ]
+     ],
+     "label": "△DEF (움직인 도형)",
+     "color": "#e4572e"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      2
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ex",
+      "=Ey"
+     ],
+     "label": "E"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "F"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AB (원본)",
+    "expr": "AB",
+    "digits": 3
+   },
+   {
+    "label": "DE (움직인 뒤)",
+    "expr": "DE",
+    "digits": 3
+   },
+   {
+    "label": "BC (원본)",
+    "expr": "BC",
+    "digits": 3
+   },
+   {
+    "label": "EF (움직인 뒤)",
+    "expr": "EF",
+    "digits": 3
+   },
+   {
+    "label": "CA (원본)",
+    "expr": "CA",
+    "digits": 3
+   },
+   {
+    "label": "FD (움직인 뒤)",
+    "expr": "FD",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "tx": 0,
+    "ty": 0,
+    "sflip": 1
+   },
+   {
+    "theta": 90,
+    "tx": 4,
+    "ty": 0,
+    "sflip": 1
+   },
+   {
+    "theta": 210,
+    "tx": -2,
+    "ty": 3,
+    "sflip": -1
+   },
+   {
+    "theta": 45,
+    "tx": 1,
+    "ty": 1,
+    "sflip": 1
+   }
+  ],
+  "invariants": [
+   "DE-AB",
+   "EF-BC",
+   "FD-CA"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "tx": 2,
+     "ty": 1,
+     "sflip": 1
+    },
+    "expect": {
+     "Dx": 2,
+     "Dy": 1,
+     "Ex": 5,
+     "Ey": 1,
+     "DE": 3
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "tx": 4,
+     "ty": 0,
+     "sflip": 1
+    },
+    "expect": {
+     "Ex": 4,
+     "Ey": 3,
+     "Fx": 2,
+     "Fy": 1,
+     "DE": 3,
+     "EF": 2.8284271247
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "tx": 0,
+     "ty": 0,
+     "sflip": 1
+    },
+    "expect": {
+     "Ex": -3,
+     "Ey": 0,
+     "Fx": -1,
+     "Fy": -2,
+     "DE": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

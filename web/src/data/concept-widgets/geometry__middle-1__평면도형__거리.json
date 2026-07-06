@@ -1,0 +1,215 @@
+{
+ "id": "geometry/middle-1/평면도형/거리",
+ "spec": {
+  "title": "두 점 사이의 거리 — 피타고라스로 보기",
+  "params": [
+   {
+    "name": "x1",
+    "label": "A의 x좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "y1",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "y2",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "dx=x2-x1; dy=y2-y1; d=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ],
+     "color": "#e67e22",
+     "label": "|가로|=|dx|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#27ae60",
+     "label": "|세로|=|dy|"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#2c3e50",
+     "label": "|AB|=d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y1"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "가로 |x₂-x₁|",
+    "expr": "abs(dx)",
+    "digits": 2
+   },
+   {
+    "label": "세로 |y₂-y₁|",
+    "expr": "abs(dy)",
+    "digits": 2
+   },
+   {
+    "label": "거리 |AB|",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 1,
+    "y1": 1,
+    "x2": 4,
+    "y2": 5
+   },
+   {
+    "x1": -2,
+    "y1": 3,
+    "x2": 1,
+    "y2": -1
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 0,
+    "y2": 0
+   },
+   {
+    "x1": -5,
+    "y1": -5,
+    "x2": 7,
+    "y2": 0
+   }
+  ],
+  "invariants": [
+   "d^2-(dx^2+dy^2)",
+   "dx-(x2-x1)",
+   "dy-(y2-y1)",
+   "d-sqrt((x2-x1)^2+(y2-y1)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 1,
+     "y1": 1,
+     "x2": 4,
+     "y2": 5
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "x1": -2,
+     "y1": 3,
+     "x2": 1,
+     "y2": -1
+    },
+    "expect": {
+     "dx": 3,
+     "dy": -4,
+     "d": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 0,
+     "y2": 0
+    },
+    "expect": {
+     "dx": 0,
+     "dy": 0,
+     "d": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,169 @@
+{
+ "id": "functions/middle-1/좌표평면과_그래프/원점_대칭이동",
+ "spec": {
+  "title": "원점 대칭이동 P(x,y) → P′(−x,−y)",
+  "params": [
+   {
+    "name": "px",
+    "label": "P의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "py",
+    "label": "P의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.5
+   }
+  ],
+  "scope": "ppx=-px; ppy=-py; midx=(px+ppx)/2; midy=(py+ppy)/2; dP=sqrt(px^2+py^2); dPp=sqrt(ppx^2+ppy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=ppx",
+      "=ppy"
+     ],
+     "color": "#bbb"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ppx",
+      "=ppy"
+     ],
+     "label": "P′",
+     "color": "#d32f2f"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P",
+    "expr": "px",
+    "digits": 1
+   },
+   {
+    "label": "P′ x=−x",
+    "expr": "ppx",
+    "digits": 1
+   },
+   {
+    "label": "P′ y=−y",
+    "expr": "ppy",
+    "digits": 1
+   },
+   {
+    "label": "OP",
+    "expr": "dP",
+    "digits": 3
+   },
+   {
+    "label": "OP′ (같아야)",
+    "expr": "dPp",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 3,
+    "py": -2
+   },
+   {
+    "px": 1,
+    "py": 4
+   },
+   {
+    "px": -2.5,
+    "py": -3.5
+   },
+   {
+    "px": 5,
+    "py": 0
+   }
+  ],
+  "invariants": [
+   "px+ppx",
+   "py+ppy",
+   "midx",
+   "midy",
+   "dP-dPp"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 3,
+     "py": -2
+    },
+    "expect": {
+     "ppx": -3,
+     "ppy": 2,
+     "midx": 0,
+     "midy": 0
+    }
+   },
+   {
+    "params": {
+     "px": 1,
+     "py": 4
+    },
+    "expect": {
+     "ppx": -1,
+     "ppy": -4,
+     "dP": 4.123105625617661
+    }
+   },
+   {
+    "params": {
+     "px": -2,
+     "py": -3
+    },
+    "expect": {
+     "ppx": 2,
+     "ppy": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

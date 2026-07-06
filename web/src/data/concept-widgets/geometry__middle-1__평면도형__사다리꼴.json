@@ -1,0 +1,235 @@
+{
+ "id": "geometry/middle-1/평면도형/사다리꼴",
+ "spec": {
+  "title": "사다리꼴 — 한 쌍의 평행한 대변과 넓이",
+  "params": [
+   {
+    "name": "a",
+    "label": "윗변 a",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "아랫변 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 0.5
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "d",
+    "label": "윗변 밀기 d",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "area=0.5*(a+b)*h; shoe=0.5*(b*h+(d+a)*h-d*h); midlen=(b+d+a)/2-d/2",
+  "geometry": {
+   "range": [
+    -3,
+    13
+   ],
+   "yRange": [
+    -2,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=d+a",
+       "=h"
+      ],
+      [
+       "=d",
+       "=h"
+      ]
+     ],
+     "label": "사다리꼴"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      0
+     ],
+     "to": [
+      "=d",
+      "=h"
+     ],
+     "label": "높이 h",
+     "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d/2",
+      "=h/2"
+     ],
+     "to": [
+      "=(b+d+a)/2",
+      "=h/2"
+     ],
+     "label": "중점 연결",
+     "color": "green"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d+a",
+      "=h"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=d",
+      "=h"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "윗변 a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "아랫변 b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "높이 h",
+    "expr": "h",
+    "digits": 2
+   },
+   {
+    "label": "넓이 = ½(a+b)h",
+    "expr": "area",
+    "digits": 2
+   },
+   {
+    "label": "중점연결 길이 = ½(a+b)",
+    "expr": "midlen",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 6,
+    "h": 3,
+    "d": 1
+   },
+   {
+    "a": 2,
+    "b": 8,
+    "h": 5,
+    "d": 0
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "h": 4,
+    "d": 2
+   },
+   {
+    "a": 5,
+    "b": 7,
+    "h": 2,
+    "d": -1
+   }
+  ],
+  "invariants": [
+   "shoe-area",
+   "midlen-0.5*(a+b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 6,
+     "h": 3,
+     "d": 1
+    },
+    "expect": {
+     "area": 15,
+     "shoe": 15,
+     "midlen": 5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 8,
+     "h": 5,
+     "d": 0
+    },
+    "expect": {
+     "area": 25,
+     "shoe": 25,
+     "midlen": 5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3,
+     "h": 4,
+     "d": 2
+    },
+    "expect": {
+     "area": 12,
+     "midlen": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

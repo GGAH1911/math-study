@@ -1,0 +1,199 @@
+{
+ "id": "geometry/middle-1/평면도형/사각형의_내각의_합",
+ "spec": {
+  "title": "사각형의 내각의 합 = 360°",
+  "params": [
+   {
+    "name": "cx",
+    "label": "꼭짓점 C의 x",
+    "type": "slider",
+    "min": 1.5,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "꼭짓점 C의 y",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "Ax=0;Ay=0;Bx=4;By=0;Dx=1;Dy=3;Cx=cx;Cy=cy;uAx=Ax-Dx;uAy=Ay-Dy;wAx=Bx-Ax;wAy=By-Ay;extA=atan2(uAx*wAy-uAy*wAx, uAx*wAx+uAy*wAy)*180/pi;angA=180-extA;uBx=Bx-Ax;uBy=By-Ay;wBx=Cx-Bx;wBy=Cy-By;extB=atan2(uBx*wBy-uBy*wBx, uBx*wBx+uBy*wBy)*180/pi;angB=180-extB;uCx=Cx-Bx;uCy=Cy-By;wCx=Dx-Cx;wCy=Dy-Cy;extC=atan2(uCx*wCy-uCy*wCx, uCx*wCx+uCy*wCy)*180/pi;angC=180-extC;uDx=Dx-Cx;uDy=Dy-Cy;wDx=Ax-Dx;wDy=Ay-Dy;extD=atan2(uDx*wDy-uDy*wDx, uDx*wDx+uDy*wDy)*180/pi;angD=180-extD;sumA=angA+angB+angC+angD;sumExt=extA+extB+extC+extD",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ],
+      [
+       1,
+       3
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "대각선 AC (두 삼각형으로 분할)"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      3
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠A",
+    "expr": "angA",
+    "digits": 1
+   },
+   {
+    "label": "∠B",
+    "expr": "angB",
+    "digits": 1
+   },
+   {
+    "label": "∠C",
+    "expr": "angC",
+    "digits": 1
+   },
+   {
+    "label": "∠D",
+    "expr": "angD",
+    "digits": 1
+   },
+   {
+    "label": "내각의 합",
+    "expr": "sumA",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 5,
+    "cy": 3
+   },
+   {
+    "cx": 4,
+    "cy": 3
+   },
+   {
+    "cx": 6,
+    "cy": 2
+   },
+   {
+    "cx": 1.5,
+    "cy": 1
+   }
+  ],
+  "invariants": [
+   "sumA - 360",
+   "sumExt - 360"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 5,
+     "cy": 3
+    },
+    "expect": {
+     "angA": 71.565051,
+     "angB": 108.434949,
+     "angC": 71.565051,
+     "angD": 108.434949,
+     "sumA": 360
+    }
+   },
+   {
+    "params": {
+     "cx": 4,
+     "cy": 3
+    },
+    "expect": {
+     "angA": 71.565051,
+     "angB": 90,
+     "angC": 90,
+     "angD": 108.434949,
+     "sumA": 360
+    }
+   },
+   {
+    "params": {
+     "cx": 6,
+     "cy": 2
+    },
+    "expect": {
+     "angA": 71.565051,
+     "angB": 135,
+     "angC": 56.309932,
+     "angD": 97.125016,
+     "sumA": 360
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "id": "geometry/middle-1/평면도형/직사각형의_넓이",
+ "spec": {
+  "title": "직사각형의 넓이 S = a × b",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 a",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.5,
+    "unit": "cm"
+   },
+   {
+    "name": "b",
+    "label": "세로 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 0.5,
+    "unit": "cm"
+   }
+  ],
+  "scope": "S=a*b; P=2*(a+b); d=sqrt(a^2+b^2)",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ],
+     "label": "S=ab"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a/2",
+      "=b/2"
+     ],
+     "label": "넓이 = a·b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=b"
+     ],
+     "label": "대각선 d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이 S = a×b",
+    "expr": "S",
+    "digits": 2
+   },
+   {
+    "label": "둘레 P = 2(a+b)",
+    "expr": "P",
+    "digits": 2
+   },
+   {
+    "label": "대각선 d = √(a²+b²)",
+    "expr": "d",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 5,
+    "b": 2
+   },
+   {
+    "a": 6,
+    "b": 6
+   },
+   {
+    "a": 1,
+    "b": 10
+   }
+  ],
+  "invariants": [
+   "S-a*b",
+   "d^2-(a^2+b^2)",
+   "P-2*(a+b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "S": 12,
+     "d": 5,
+     "P": 14
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "b": 6
+    },
+    "expect": {
+     "S": 36,
+     "d": 8.485281374238571,
+     "P": 24
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 10
+    },
+    "expect": {
+     "S": 10,
+     "d": 10.04987562112089,
+     "P": 22
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

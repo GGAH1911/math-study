@@ -1,0 +1,203 @@
+{
+ "id": "geometry/middle-1/평면도형/사각형의_넓이",
+ "spec": {
+  "title": "사각형의 넓이 — 신발끈 공식",
+  "params": [
+   {
+    "name": "cx",
+    "label": "C의 x좌표",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "cy",
+    "label": "C의 y좌표",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "dx",
+    "label": "D의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "dy",
+    "label": "D의 y좌표",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=0; ay=0; bx=5; by=0; sarea=0.5*(ax*(by-dy)+bx*(cy-ay)+cx*(dy-by)+dx*(ay-cy)); area=abs(sarea); t1=0.5*(ax*(by-cy)+bx*(cy-ay)+cx*(ay-by)); t2=0.5*(ax*(cy-dy)+cx*(dy-ay)+dx*(ay-cy))",
+  "geometry": {
+   "range": [
+    -3,
+    8
+   ],
+   "yRange": [
+    -1,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=bx",
+       "=by"
+      ],
+      [
+       "=cx",
+       "=cy"
+      ],
+      [
+       "=dx",
+       "=dy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A(0,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B(5,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=dx",
+      "=dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이 (신발끈 공식)",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "= 삼각형 ABC + ACD",
+    "expr": "abs(t1)+abs(t2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 5,
+    "cy": 3,
+    "dx": 0,
+    "dy": 3
+   },
+   {
+    "cx": 5,
+    "cy": 2,
+    "dx": 0,
+    "dy": 2
+   },
+   {
+    "cx": 6,
+    "cy": 4,
+    "dx": 1,
+    "dy": 4
+   },
+   {
+    "cx": 7,
+    "cy": 3,
+    "dx": 2,
+    "dy": 5
+   }
+  ],
+  "invariants": [
+   "sarea - t1 - t2",
+   "area - abs(sarea)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 5,
+     "cy": 3,
+     "dx": 0,
+     "dy": 3
+    },
+    "expect": {
+     "area": 15
+    }
+   },
+   {
+    "params": {
+     "cx": 5,
+     "cy": 2,
+     "dx": 0,
+     "dy": 2
+    },
+    "expect": {
+     "area": 10
+    }
+   },
+   {
+    "params": {
+     "cx": 6,
+     "cy": 4,
+     "dx": 1,
+     "dy": 4
+    },
+    "expect": {
+     "area": 20
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

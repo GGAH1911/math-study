@@ -1,0 +1,192 @@
+{
+ "id": "geometry/middle-1/평면도형/원의_중심",
+ "spec": {
+  "title": "원의 중심 C와 반지름 r",
+  "params": [
+   {
+    "name": "a",
+    "label": "중심 x좌표 (a)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "중심 y좌표 (b)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "원 위 점 P의 각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 40,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=a+r*cos(rad); py=b+r*sin(rad); d=sqrt((px-a)^2+(py-b)^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=b"
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "C(중심)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=b"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심 C",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "중심 C.y",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "거리 CP (=항상 r)",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 0,
+    "r": 1,
+    "theta": 0
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "r": 1,
+    "theta": 30
+   },
+   {
+    "a": -2,
+    "b": 1,
+    "r": 2.5,
+    "theta": 210
+   }
+  ],
+  "invariants": [
+   "(px-a)^2+(py-b)^2-r^2",
+   "d-r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "r": 1,
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0,
+     "d": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "px": 1,
+     "py": 4,
+     "d": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "r": 1,
+     "theta": 30
+    },
+    "expect": {
+     "px": 0.8660254037844387,
+     "py": 0.5,
+     "d": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

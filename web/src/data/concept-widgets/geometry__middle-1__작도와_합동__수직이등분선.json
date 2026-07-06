@@ -1,0 +1,228 @@
+{
+ "id": "geometry/middle-1/작도와_합동/수직이등분선",
+ "spec": {
+  "title": "선분 AB의 수직이등분선 — PA=PB 인 점들의 자취",
+  "params": [
+   {
+    "name": "bx",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "by",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "수직이등분선 위 점 P (매개변수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=-2; ay=0; mx=(ax+bx)/2; my=(ay+by)/2; dx=bx-ax; dy=by-ay; L=sqrt(dx^2+dy^2); ux=-dy/L; uy=dx/L; px=mx+t*ux; py=my+t*uy; lx1=mx-5*ux; ly1=my-5*uy; lx2=mx+5*ux; ly2=my+5*uy; PA=sqrt((px-ax)^2+(py-ay)^2); PB=sqrt((px-bx)^2+(py-by)^2); MP=(px-mx)*dx+(py-my)*dy",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=lx1",
+      "=ly1"
+     ],
+     "to": [
+      "=lx2",
+      "=ly2"
+     ],
+     "color": "#c026d3",
+     "label": "수직이등분선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#1e293b",
+     "label": "AB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "color": "#2563eb",
+     "label": "PA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#16a34a",
+     "label": "PB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M(중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PA (P에서 A까지)",
+    "expr": "PA",
+    "digits": 3
+   },
+   {
+    "label": "PB (P에서 B까지)",
+    "expr": "PB",
+    "digits": 3
+   },
+   {
+    "label": "PA − PB (항상 0)",
+    "expr": "PA-PB",
+    "digits": 3
+   },
+   {
+    "label": "MP·AB (수직이면 0)",
+    "expr": "MP",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "bx": 2,
+    "by": 0,
+    "t": 1.5
+   },
+   {
+    "bx": 2,
+    "by": 1,
+    "t": -2
+   },
+   {
+    "bx": 0,
+    "by": 2,
+    "t": 0
+   },
+   {
+    "bx": -1,
+    "by": -2.5,
+    "t": 2.3
+   }
+  ],
+  "invariants": [
+   "PA-PB",
+   "(px-mx)*dx+(py-my)*dy",
+   "2*mx-(ax+bx)",
+   "2*my-(ay+by)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "bx": 2,
+     "by": 0,
+     "t": 1.5
+    },
+    "expect": {
+     "px": 0,
+     "py": 1.5,
+     "PA": 2.5,
+     "PB": 2.5
+    }
+   },
+   {
+    "params": {
+     "bx": 2,
+     "by": 0,
+     "t": 0
+    },
+    "expect": {
+     "px": 0,
+     "py": 0,
+     "PA": 2,
+     "PB": 2
+    }
+   },
+   {
+    "params": {
+     "bx": 0,
+     "by": 2,
+     "t": 0
+    },
+    "expect": {
+     "px": -1,
+     "py": 1,
+     "PA": 1.4142135623730951,
+     "PB": 1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

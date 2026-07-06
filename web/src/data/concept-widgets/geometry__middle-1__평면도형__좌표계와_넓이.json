@@ -1,0 +1,171 @@
+{
+ "id": "geometry/middle-1/평면도형/좌표계와_넓이",
+ "spec": {
+  "title": "신발끈 공식으로 다각형 넓이 구하기",
+  "params": [
+   {
+    "name": "px",
+    "label": "D의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 0,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "py",
+    "label": "D의 y좌표",
+    "type": "slider",
+    "min": 0.5,
+    "max": 6,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "ax=0; ay=0; bx=4; by=0; cx=4; cy=3; s=ax*by-bx*ay + bx*cy-cx*by + cx*py-px*cy + px*ay-ax*py; s1=ax*by-bx*ay + bx*cy-cx*by + cx*ay-ax*cy; s2=ax*cy-cx*ay + cx*py-px*cy + px*ay-ax*py; area=abs(s)/2",
+  "geometry": {
+   "range": [
+    -4,
+    6
+   ],
+   "yRange": [
+    -1.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       3
+      ],
+      [
+       "=px",
+       "=py"
+      ]
+     ],
+     "label": "ABCD"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A(0,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "B(4,0)"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      3
+     ],
+     "label": "C(4,3)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "신발끈 합 s = Σ(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ)",
+    "expr": "s",
+    "digits": 2
+   },
+   {
+    "label": "넓이 A = |s|/2",
+    "expr": "area",
+    "digits": 2
+   },
+   {
+    "label": "밑변 AB × 삼각형 ABC 넓이",
+    "expr": "s1/2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 0,
+    "py": 3
+   },
+   {
+    "px": 0,
+    "py": 5
+   },
+   {
+    "px": 2,
+    "py": 4
+   },
+   {
+    "px": -1,
+    "py": 3
+   }
+  ],
+  "invariants": [
+   "s - s1 - s2",
+   "area - abs(s)/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 0,
+     "py": 3
+    },
+    "expect": {
+     "s": 24,
+     "area": 12
+    }
+   },
+   {
+    "params": {
+     "px": 0,
+     "py": 5
+    },
+    "expect": {
+     "s": 32,
+     "area": 16
+    }
+   },
+   {
+    "params": {
+     "px": 2,
+     "py": 4
+    },
+    "expect": {
+     "s": 22,
+     "area": 11
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,165 @@
+{
+ "id": "geometry/middle-1/입체도형/직육면체의_부피",
+ "spec": {
+  "title": "직육면체의 부피 V = a×b×c",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 a",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "세로 b",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "높이 c",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 1,
+    "unit": "층"
+   }
+  ],
+  "scope": "base=a*b; V=a*b*c",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ],
+     "label": "밑면 a×b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "밑넓이=base"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑넓이 a×b",
+    "expr": "base",
+    "digits": 0
+   },
+   {
+    "label": "높이 c(쌓는 층수)",
+    "expr": "c",
+    "digits": 0
+   },
+   {
+    "label": "부피 V=a×b×c",
+    "expr": "V",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2,
+    "c": 4
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": 2
+   },
+   {
+    "a": 5,
+    "b": 3,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 6
+   }
+  ],
+  "invariants": [
+   "V-a*b*c",
+   "base-a*b",
+   "V-base*c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 4
+    },
+    "expect": {
+     "base": 6,
+     "V": 24
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": 2
+    },
+    "expect": {
+     "base": 4,
+     "V": 8
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 1
+    },
+    "expect": {
+     "base": 1,
+     "V": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

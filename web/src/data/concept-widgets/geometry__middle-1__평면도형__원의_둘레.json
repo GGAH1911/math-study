@@ -1,0 +1,138 @@
+{
+ "id": "geometry/middle-1/평면도형/원의_둘레",
+ "spec": {
+  "title": "원의 둘레 C = 2πr",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "d=2*r; C=2*pi*r; ratio=C/d",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=r",
+      0
+     ],
+     "label": "r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r",
+      0
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "반지름 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "지름 d",
+    "expr": "d",
+    "digits": 2
+   },
+   {
+    "label": "둘레 C=2πr",
+    "expr": "C",
+    "digits": 3
+   },
+   {
+    "label": "둘레÷지름 (=π)",
+    "expr": "ratio",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 0.5
+   },
+   {
+    "r": 1
+   },
+   {
+    "r": 2
+   },
+   {
+    "r": 3.5
+   }
+  ],
+  "invariants": [
+   "C-2*pi*r",
+   "C-pi*d",
+   "ratio-pi",
+   "d-2*r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1
+    },
+    "expect": {
+     "d": 2,
+     "C": 6.283185307179586,
+     "ratio": 3.141592653589793
+    }
+   },
+   {
+    "params": {
+     "r": 2
+    },
+    "expect": {
+     "d": 4,
+     "C": 12.566370614359172,
+     "ratio": 3.141592653589793
+    }
+   },
+   {
+    "params": {
+     "r": 3.5
+    },
+    "expect": {
+     "d": 7,
+     "C": 21.991148575128552,
+     "ratio": 3.141592653589793
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,222 @@
+{
+ "id": "geometry/middle-1/작도와_합동/각의_이등분선",
+ "spec": {
+  "title": "각의 이등분선 — 반반으로 나누기 · 두 변에서 등거리",
+  "params": [
+   {
+    "name": "ang",
+    "label": "∠AOB",
+    "type": "slider",
+    "min": 20,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "점 P의 위치 (O에서 거리)",
+    "type": "slider",
+    "min": 0.4,
+    "max": 2,
+    "init": 1.4,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "rad=ang*pi/180; half=rad/2; px=r*cos(half); py=r*sin(half); ax=2; ay=0; bx=2*cos(rad); by=2*sin(rad); proj=px*cos(rad)+py*sin(rad); fbx=proj*cos(rad); fby=proj*sin(rad); dA=abs(py); dB=abs(px*sin(rad)-py*cos(rad))",
+  "geometry": {
+   "range": [
+    -2.2,
+    2.5
+   ],
+   "yRange": [
+    -0.6,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "OA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "OB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=2.3*cos(half)",
+      "=2.3*sin(half)"
+     ],
+     "label": "이등분선 OP"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=px",
+      0
+     ],
+     "label": "dA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=fbx",
+      "=fby"
+     ],
+     "label": "dB"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      0
+     ],
+     "label": "H1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=fbx",
+      "=fby"
+     ],
+     "label": "H2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠AOP",
+    "expr": "half*180/pi",
+    "digits": 1
+   },
+   {
+    "label": "∠BOP",
+    "expr": "(rad-half)*180/pi",
+    "digits": 1
+   },
+   {
+    "label": "P→변 OA 거리 dA",
+    "expr": "dA",
+    "digits": 4
+   },
+   {
+    "label": "P→변 OB 거리 dB",
+    "expr": "dB",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ang": 60,
+    "r": 1
+   },
+   {
+    "ang": 90,
+    "r": 2
+   },
+   {
+    "ang": 120,
+    "r": 1
+   },
+   {
+    "ang": 40,
+    "r": 1.5
+   }
+  ],
+  "invariants": [
+   "dB-dA",
+   "py-px*tan(half)",
+   "proj-r*cos(half)",
+   "(half*180/pi)-((rad-half)*180/pi)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ang": 60,
+     "r": 1
+    },
+    "expect": {
+     "px": 0.8660254038,
+     "py": 0.5,
+     "dA": 0.5,
+     "dB": 0.5
+    }
+   },
+   {
+    "params": {
+     "ang": 90,
+     "r": 2
+    },
+    "expect": {
+     "px": 1.4142135624,
+     "py": 1.4142135624,
+     "dA": 1.4142135624,
+     "dB": 1.4142135624
+    }
+   },
+   {
+    "params": {
+     "ang": 120,
+     "r": 1
+    },
+    "expect": {
+     "px": 0.5,
+     "py": 0.8660254038,
+     "dA": 0.8660254038,
+     "dB": 0.8660254038
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

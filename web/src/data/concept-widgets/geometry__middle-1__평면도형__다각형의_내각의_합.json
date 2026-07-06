@@ -1,0 +1,104 @@
+{
+ "id": "geometry/middle-1/평면도형/다각형의_내각의_합",
+ "spec": {
+  "title": "다각형의 내각의 합 = (n−2)×180°",
+  "params": [
+   {
+    "name": "n",
+    "label": "변의 개수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 5,
+    "step": 1,
+    "unit": "각형"
+   }
+  ],
+  "scope": "tri = n-2; total = tri*180",
+  "plot": {
+   "range": [
+    3,
+    12
+   ],
+   "yRange": [
+    0,
+    1900
+   ],
+   "fns": [
+    {
+     "fn": "(x-2)*180",
+     "label": "내각의 합 = (n−2)·180°",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "만들어지는 삼각형 개수 (n−2)",
+    "expr": "tri",
+    "digits": 0
+   },
+   {
+    "label": "내각의 합(°)",
+    "expr": "total",
+    "digits": 0
+   },
+   {
+    "label": "n 하나 늘 때 증가량(°)",
+    "expr": "180",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 8
+   }
+  ],
+  "invariants": [
+   "total - (n-2)*180",
+   "total - tri*180",
+   "tri - (n-2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "tri": 1,
+     "total": 180
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "tri": 3,
+     "total": 540
+    }
+   },
+   {
+    "params": {
+     "n": 6
+    },
+    "expect": {
+     "tri": 4,
+     "total": 720
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

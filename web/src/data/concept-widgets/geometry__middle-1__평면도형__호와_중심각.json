@@ -1,0 +1,185 @@
+{
+ "id": "geometry/middle-1/평면도형/호와_중심각",
+ "spec": {
+  "title": "호와 중심각",
+  "params": [
+   {
+    "name": "theta",
+    "label": "중심각 ∠AOB",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "rad=theta*pi/180; ax=r; ay=0; bx=r*cos(rad); by=r*sin(rad); frac=theta/360; circ=2*pi*r; arclen=frac*circ",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "OA"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "OB"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심각(°)",
+    "expr": "theta",
+    "digits": 0
+   },
+   {
+    "label": "원 둘레 2πr",
+    "expr": "circ",
+    "digits": 3
+   },
+   {
+    "label": "호 AB의 길이",
+    "expr": "arclen",
+    "digits": 3
+   },
+   {
+    "label": "호/둘레 비율 (θ/360)",
+    "expr": "frac",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 90,
+    "r": 2
+   },
+   {
+    "theta": 180,
+    "r": 1
+   },
+   {
+    "theta": 120,
+    "r": 3
+   },
+   {
+    "theta": 270,
+    "r": 2
+   }
+  ],
+  "invariants": [
+   "bx^2+by^2-r^2",
+   "ax^2+ay^2-r^2",
+   "arclen-r*rad",
+   "arclen-frac*circ"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90,
+     "r": 2
+    },
+    "expect": {
+     "by": 2,
+     "frac": 0.25,
+     "arclen": 3.14159265,
+     "circ": 12.56637061
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "r": 1
+    },
+    "expect": {
+     "bx": -1,
+     "frac": 0.5,
+     "arclen": 3.14159265
+    }
+   },
+   {
+    "params": {
+     "theta": 120,
+     "r": 3
+    },
+    "expect": {
+     "bx": -1.5,
+     "by": 2.59807621,
+     "frac": 0.33333333,
+     "arclen": 6.28318531
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

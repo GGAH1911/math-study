@@ -1,0 +1,185 @@
+{
+ "id": "geometry/middle-1/평면도형/삼각형의_넓이",
+ "spec": {
+  "title": "삼각형의 넓이: S = ½ab·sin C",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑변 a (변 CA)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "변 b (변 CB)",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "ang",
+    "label": "끼인각 C",
+    "type": "slider",
+    "min": 1,
+    "max": 179,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=ang*pi/180; Ax=a; Bx=b*cos(rad); By=b*sin(rad); height=b*sin(rad); area=0.5*a*b*sin(rad)",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=Ax",
+       0
+      ],
+      [
+       "=Bx",
+       "=By"
+      ]
+     ],
+     "label": "△CAB"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Bx",
+      0
+     ],
+     "label": "h=b·sinC"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "높이 h = b·sinC",
+    "expr": "height",
+    "digits": 3
+   },
+   {
+    "label": "넓이 S = ½ab·sinC",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 5,
+    "ang": 30
+   },
+   {
+    "a": 6,
+    "b": 6,
+    "ang": 90
+   },
+   {
+    "a": 3,
+    "b": 4,
+    "ang": 90
+   },
+   {
+    "a": 5,
+    "b": 7,
+    "ang": 120
+   }
+  ],
+  "invariants": [
+   "area-0.5*a*b*sin(rad)",
+   "area-0.5*(Ax*By)",
+   "height-b*sin(rad)",
+   "By-height"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 5,
+     "ang": 30
+    },
+    "expect": {
+     "height": 2.5,
+     "area": 5
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "b": 6,
+     "ang": 90
+    },
+    "expect": {
+     "height": 6,
+     "area": 18
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "ang": 90
+    },
+    "expect": {
+     "height": 4,
+     "area": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,181 @@
+{
+ "id": "geometry/middle-1/평면도형/부채꼴의_호의_길이",
+ "spec": {
+  "title": "부채꼴의 호의 길이 l = rθ",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "alpha",
+    "label": "중심각 α",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=alpha*pi/180; px=r*cos(rad); py=r*sin(rad); l=r*rad; ldeg=pi*r*alpha/180",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=r",
+      "0"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r",
+      "0"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심각(라디안) θ",
+    "expr": "rad",
+    "digits": 4
+   },
+   {
+    "label": "호의 길이 l = rθ",
+    "expr": "l",
+    "digits": 4
+   },
+   {
+    "label": "각도법 l = πrα/180",
+    "expr": "ldeg",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 3,
+    "alpha": 90
+   },
+   {
+    "r": 2,
+    "alpha": 180
+   },
+   {
+    "r": 5,
+    "alpha": 270
+   },
+   {
+    "r": 1,
+    "alpha": 360
+   }
+  ],
+  "invariants": [
+   "l - r*rad",
+   "l - pi*r*alpha/180",
+   "px^2+py^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 3,
+     "alpha": 180
+    },
+    "expect": {
+     "rad": 3.141592653589793,
+     "l": 9.42477796076938,
+     "px": -3,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "alpha": 90
+    },
+    "expect": {
+     "rad": 1.5707963267948966,
+     "l": 3.141592653589793,
+     "px": 0,
+     "py": 2
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "alpha": 360
+    },
+    "expect": {
+     "rad": 6.283185307179586,
+     "l": 6.283185307179586,
+     "px": 1,
+     "py": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

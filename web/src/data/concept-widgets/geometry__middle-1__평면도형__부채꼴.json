@@ -1,0 +1,222 @@
+{
+ "id": "geometry/middle-1/평면도형/부채꼴",
+ "spec": {
+  "title": "부채꼴: 중심각과 반지름으로 넓이·호의 길이 탐구",
+  "params": [
+   {
+    "name": "theta",
+    "label": "중심각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "rad=theta*pi/180; ex=r*cos(rad); ey=r*sin(rad); q1x=r*cos(rad/6); q1y=r*sin(rad/6); q2x=r*cos(2*rad/6); q2y=r*sin(2*rad/6); q3x=r*cos(3*rad/6); q3y=r*sin(3*rad/6); q4x=r*cos(4*rad/6); q4y=r*sin(4*rad/6); q5x=r*cos(5*rad/6); q5y=r*sin(5*rad/6); ratio=theta/360; area=ratio*pi*r^2; arc=ratio*2*pi*r",
+  "geometry": {
+   "range": [
+    -6.5,
+    6.5
+   ],
+   "yRange": [
+    -6.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "color": "#cccccc"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=r",
+       0
+      ],
+      [
+       "=q1x",
+       "=q1y"
+      ],
+      [
+       "=q2x",
+       "=q2y"
+      ],
+      [
+       "=q3x",
+       "=q3y"
+      ],
+      [
+       "=q4x",
+       "=q4y"
+      ],
+      [
+       "=q5x",
+       "=q5y"
+      ],
+      [
+       "=ex",
+       "=ey"
+      ]
+     ],
+     "color": "#4f83cc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=r",
+      0
+     ],
+     "color": "#333333"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ex",
+      "=ey"
+     ],
+     "color": "#333333"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r",
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ex",
+      "=ey"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원에서 차지하는 비율 θ/360",
+    "expr": "ratio",
+    "digits": 4
+   },
+   {
+    "label": "부채꼴 넓이 S = (θ/360)·πr²",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "호의 길이 l = (θ/360)·2πr",
+    "expr": "arc",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 90,
+    "r": 6
+   },
+   {
+    "theta": 180,
+    "r": 5
+   },
+   {
+    "theta": 60,
+    "r": 3
+   },
+   {
+    "theta": 270,
+    "r": 4
+   }
+  ],
+  "invariants": [
+   "ex^2+ey^2-r^2",
+   "q3x^2+q3y^2-r^2",
+   "area/arc-r/2",
+   "arc/(2*pi*r)-theta/360"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 90,
+     "r": 6
+    },
+    "expect": {
+     "ex": 0,
+     "ey": 6,
+     "ratio": 0.25,
+     "area": 28.2743338823,
+     "arc": 9.4247779608
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "r": 5
+    },
+    "expect": {
+     "ex": -5,
+     "ey": 0,
+     "ratio": 0.5,
+     "area": 39.2699081699,
+     "arc": 15.7079632679
+    }
+   },
+   {
+    "params": {
+     "theta": 60,
+     "r": 3
+    },
+    "expect": {
+     "ex": 1.5,
+     "ey": 2.5980762114,
+     "ratio": 0.1666666667,
+     "area": 4.7123889804,
+     "arc": 3.1415926536
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

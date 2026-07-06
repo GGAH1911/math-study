@@ -1,0 +1,234 @@
+{
+ "id": "geometry/middle-1/평면도형/삼각부등식",
+ "spec": {
+  "title": "삼각부등식: 세 변으로 삼각형이 되나?",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (변 BC)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (변 CA)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (밑변 AB)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "cx=(c^2+b^2-a^2)/(2*c); disc=b^2-cx^2; cy=sqrt(max(disc,0))",
+  "geometry": {
+   "range": [
+    -8,
+    16
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=b",
+     "label": "반지름 b"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=c",
+      0
+     ],
+     "radius": "=a",
+     "label": "반지름 a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=c",
+      0
+     ],
+     "label": "c"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=c",
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AC (=b)",
+    "expr": "sqrt(cx^2+cy^2)",
+    "digits": 3
+   },
+   {
+    "label": "BC (=a)",
+    "expr": "sqrt((cx-c)^2+cy^2)",
+    "digits": 3
+   },
+   {
+    "label": "a+b-c",
+    "expr": "a+b-c",
+    "digits": 2
+   },
+   {
+    "label": "b+c-a",
+    "expr": "b+c-a",
+    "digits": 2
+   },
+   {
+    "label": "c+a-b",
+    "expr": "c+a-b",
+    "digits": 2
+   },
+   {
+    "label": "성립판정 disc (>0이면 삼각형)",
+    "expr": "disc",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4,
+    "c": 5
+   },
+   {
+    "a": 5,
+    "b": 5,
+    "c": 6
+   },
+   {
+    "a": 4,
+    "b": 5,
+    "c": 6
+   },
+   {
+    "a": 6,
+    "b": 7,
+    "c": 8
+   }
+  ],
+  "invariants": [
+   "cx^2+cy^2-b^2",
+   "(cx-c)^2+cy^2-a^2",
+   "2*c*cx-(c^2+b^2-a^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c": 5
+    },
+    "expect": {
+     "cx": 3.2,
+     "cy": 2.4,
+     "disc": 5.76
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 5,
+     "c": 6
+    },
+    "expect": {
+     "cx": 3,
+     "cy": 4,
+     "disc": 16
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

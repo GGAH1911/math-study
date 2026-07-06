@@ -1,0 +1,155 @@
+{
+ "id": "geometry/middle-1/평면도형/정다각형",
+ "spec": {
+  "title": "정다각형: 변의 수 n을 바꾸며 (외접원·내접원·각)",
+  "params": [
+   {
+    "name": "n",
+    "label": "변의 수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 5,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "ia=(n-2)*180/n; ext=360/n; central=360/n; isum=(n-2)*180; ap=cos(pi/n); s=2*sin(pi/n); P=map(range(0,n), g(k)=[cos(2*pi*k/n+pi/2), sin(2*pi*k/n+pi/2)])",
+  "geometry": {
+   "range": [
+    -1.35,
+    1.35
+   ],
+   "yRange": [
+    -1.35,
+    1.35
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "외접원(반지름1)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=ap",
+     "label": "내접원(반지름=cos(π/n))"
+    },
+    {
+     "type": "polygon",
+     "points": "=P",
+     "label": "정n각형"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "중심 O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "한 내각",
+    "expr": "ia",
+    "digits": 2
+   },
+   {
+    "label": "한 외각",
+    "expr": "ext",
+    "digits": 2
+   },
+   {
+    "label": "중심각",
+    "expr": "central",
+    "digits": 2
+   },
+   {
+    "label": "내각의 합",
+    "expr": "isum",
+    "digits": 1
+   },
+   {
+    "label": "한 변의 길이(외접원 R=1)",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "내접원 반지름(apothem)",
+    "expr": "ap",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 12
+   }
+  ],
+  "invariants": [
+   "ia + ext - 180",
+   "central - ext",
+   "isum - ia*n",
+   "ia - (n-2)*180/n",
+   "ap^2 + (s/2)^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "ia": 60,
+     "ext": 120,
+     "central": 120,
+     "isum": 180
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "ia": 90,
+     "ext": 90,
+     "central": 90,
+     "isum": 360
+    }
+   },
+   {
+    "params": {
+     "n": 6
+    },
+    "expect": {
+     "ia": 120,
+     "ext": 60,
+     "central": 60,
+     "isum": 720
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "id": "geometry/middle-1/평면도형/삼각형의_각의_성질",
+ "spec": {
+  "title": "삼각형의 각의 성질: 내각의 합과 외각",
+  "params": [
+   {
+    "name": "A",
+    "label": "∠A",
+    "type": "slider",
+    "min": 20,
+    "max": 120,
+    "init": 70,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "B",
+    "label": "∠B",
+    "type": "slider",
+    "min": 20,
+    "max": 120,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rA=A*pi/180; rB=B*pi/180; Cang=180-A-B; rC=Cang*pi/180; Bx=0; By=0; Cx=4; Cy=0; Ax=4*tan(rC)/(tan(rB)+tan(rC)); Ay=tan(rB)*Ax; Dx=6; Dy=0; ABx=Bx-Ax; ABy=By-Ay; ACx=Cx-Ax; ACy=Cy-Ay; angA=acos((ABx*ACx+ABy*ACy)/(sqrt(ABx^2+ABy^2)*sqrt(ACx^2+ACy^2))); CAx=Ax-Cx; CAy=Ay-Cy; extC=acos((CAx*1+CAy*0)/sqrt(CAx^2+CAy^2))*180/pi",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Ax",
+       "=Ay"
+      ],
+      [
+       "=Bx",
+       "=By"
+      ],
+      [
+       "=Cx",
+       "=Cy"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠A",
+    "expr": "A",
+    "digits": 0
+   },
+   {
+    "label": "∠B",
+    "expr": "B",
+    "digits": 0
+   },
+   {
+    "label": "∠C = 180−A−B",
+    "expr": "Cang",
+    "digits": 0
+   },
+   {
+    "label": "내각의 합",
+    "expr": "A+B+Cang",
+    "digits": 0
+   },
+   {
+    "label": "외각 ∠ACD = ∠A+∠B",
+    "expr": "extC",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 70,
+    "B": 60
+   },
+   {
+    "A": 90,
+    "B": 45
+   },
+   {
+    "A": 40,
+    "B": 100
+   },
+   {
+    "A": 55,
+    "B": 40
+   }
+  ],
+  "invariants": [
+   "angA-rA",
+   "extC-(A+B)",
+   "A+B+Cang-180"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 60,
+     "B": 60
+    },
+    "expect": {
+     "Cang": 60,
+     "Ax": 2,
+     "Ay": 3.464101615
+    }
+   },
+   {
+    "params": {
+     "A": 90,
+     "B": 45
+    },
+    "expect": {
+     "Cang": 45,
+     "Ax": 2,
+     "Ay": 2
+    }
+   },
+   {
+    "params": {
+     "A": 75,
+     "B": 60
+    },
+    "expect": {
+     "Cang": 45,
+     "Ax": 1.464101615,
+     "Ay": 2.535898385
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

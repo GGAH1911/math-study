@@ -1,0 +1,178 @@
+{
+ "id": "geometry/middle-1/평면도형/반원",
+ "spec": {
+  "title": "반원 — 지름으로 이등분한 원의 절반",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "점 P의 각 θ (반원 위, 0°–180°)",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); area=pi*r^2/2; arc=pi*r",
+  "geometry": {
+   "range": [
+    -3.4,
+    3.4
+   ],
+   "yRange": [
+    -0.6,
+    3.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "원 x²+y²=r²"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-r",
+      0
+     ],
+     "to": [
+      "=r",
+      0
+     ],
+     "label": "지름"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "중심 O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "반지름"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P(r cosθ, r sinθ)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P 좌표 x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P 좌표 y (=√(r²−x²) ≥ 0)",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "반원 넓이 = πr²/2",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "반원 호의 길이 = πr",
+    "expr": "arc",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 2,
+    "theta": 90
+   },
+   {
+    "r": 1,
+    "theta": 0
+   },
+   {
+    "r": 2,
+    "theta": 60
+   },
+   {
+    "r": 3,
+    "theta": 180
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2",
+   "py-r*sin(theta*pi/180)",
+   "area-pi*r^2/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 2,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 2,
+     "area": 6.283185307,
+     "arc": 6.283185307
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0,
+     "area": 1.570796327,
+     "arc": 3.141592654
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 60
+    },
+    "expect": {
+     "px": 1,
+     "py": 1.732050808,
+     "area": 6.283185307,
+     "arc": 6.283185307
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,239 @@
+{
+ "id": "geometry/middle-1/평면도형/정육각형",
+ "spec": {
+  "title": "정육각형 — 6개의 합동인 정삼각형",
+  "params": [
+   {
+    "name": "a",
+    "label": "한 변의 길이 a",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "R=a; x0=a*cos(0); y0=a*sin(0); x1=a*cos(pi/3); y1=a*sin(pi/3); x2=a*cos(2*pi/3); y2=a*sin(2*pi/3); x3=a*cos(pi); y3=a*sin(pi); x4=a*cos(4*pi/3); y4=a*sin(4*pi/3); x5=a*cos(5*pi/3); y5=a*sin(5*pi/3); peri=6*a; area=3*sqrt(3)/2*a^2; ang=120",
+  "geometry": {
+   "range": [
+    -4.5,
+    4.5
+   ],
+   "yRange": [
+    -4.5,
+    4.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=R",
+     "label": "외접원"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x0",
+       "=y0"
+      ],
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ],
+      [
+       "=x3",
+       "=y3"
+      ],
+      [
+       "=x4",
+       "=y4"
+      ],
+      [
+       "=x5",
+       "=y5"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x0",
+      "=y0"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x1",
+      "=y1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x3",
+      "=y3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x4",
+      "=y4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x5",
+      "=y5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "외접원 반지름 R (= a)",
+    "expr": "R",
+    "digits": 3
+   },
+   {
+    "label": "둘레 6a",
+    "expr": "peri",
+    "digits": 3
+   },
+   {
+    "label": "넓이 (3√3/2)a²",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "한 내각",
+    "expr": "ang",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3
+   },
+   {
+    "a": 2.5
+   }
+  ],
+  "invariants": [
+   "x0^2+y0^2-R^2",
+   "x2^2+y2^2-R^2",
+   "x4^2+y4^2-R^2",
+   "(x1-x0)^2+(y1-y0)^2-a^2",
+   "(x2-x1)^2+(y2-y1)^2-a^2",
+   "area-6*(sqrt(3)/4)*a^2",
+   "peri-6*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "R": 1,
+     "x0": 1,
+     "y0": 0,
+     "x1": 0.5,
+     "y1": 0.86602540378,
+     "peri": 6,
+     "area": 2.59807621135,
+     "ang": 120
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "R": 2,
+     "x1": 1,
+     "y1": 1.73205080757,
+     "peri": 12,
+     "area": 10.3923048454,
+     "ang": 120
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,242 @@
+{
+ "id": "geometry/middle-1/평면도형/대각선",
+ "spec": {
+  "title": "칠각형의 대각선 — 한 꼭짓점에서 몇 개?",
+  "params": [
+   {
+    "name": "v",
+    "label": "활성 꼭짓점 번호",
+    "type": "slider",
+    "min": 1,
+    "max": 7,
+    "init": 1,
+    "step": 1,
+    "unit": "번"
+   }
+  ],
+  "scope": "k=v-1; d=360/7; A=(90+k*d)*pi/180; ax=cos(A); ay=sin(A); n1=mod(k+1,7); nx1=cos((90+n1*d)*pi/180); ny1=sin((90+n1*d)*pi/180); n6=mod(k+6,7); nx6=cos((90+n6*d)*pi/180); ny6=sin((90+n6*d)*pi/180); j2=mod(k+2,7); x2=cos((90+j2*d)*pi/180); y2=sin((90+j2*d)*pi/180); j3=mod(k+3,7); x3=cos((90+j3*d)*pi/180); y3=sin((90+j3*d)*pi/180); j4=mod(k+4,7); x4=cos((90+j4*d)*pi/180); y4=sin((90+j4*d)*pi/180); j5=mod(k+5,7); x5=cos((90+j5*d)*pi/180); y5=sin((90+j5*d)*pi/180); perVertex=7-3; total=7*(7-3)/2",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "color": "#cbd5e1"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       1
+      ],
+      [
+       -0.781831,
+       0.62349
+      ],
+      [
+       -0.974928,
+       -0.222521
+      ],
+      [
+       -0.433884,
+       -0.900969
+      ],
+      [
+       0.433884,
+       -0.900969
+      ],
+      [
+       0.974928,
+       -0.222521
+      ],
+      [
+       0.781831,
+       0.62349
+      ]
+     ],
+     "color": "#334155"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=nx1",
+      "=ny1"
+     ],
+     "color": "#94a3b8",
+     "label": "변"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=nx6",
+      "=ny6"
+     ],
+     "color": "#94a3b8"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#e11d48",
+     "label": "대각선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=x3",
+      "=y3"
+     ],
+     "color": "#e11d48"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=x4",
+      "=y4"
+     ],
+     "color": "#e11d48"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=x5",
+      "=y5"
+     ],
+     "color": "#e11d48"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "활성 꼭짓점",
+    "expr": "v",
+    "digits": 0
+   },
+   {
+    "label": "이웃(변)으로 빠지는 연결",
+    "expr": "2",
+    "digits": 0
+   },
+   {
+    "label": "한 꼭짓점의 대각선 수 (n-3)",
+    "expr": "perVertex",
+    "digits": 0
+   },
+   {
+    "label": "칠각형 전체 대각선 수 n(n-3)/2",
+    "expr": "total",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "v": 1
+   },
+   {
+    "v": 2
+   },
+   {
+    "v": 4
+   },
+   {
+    "v": 6
+   }
+  ],
+  "invariants": [
+   "ax^2+ay^2-1",
+   "x2^2+y2^2-1",
+   "x3^2+y3^2-1",
+   "x4^2+y4^2-1",
+   "x5^2+y5^2-1",
+   "sqrt((ax-x2)^2+(ay-y2)^2)-2*sin(2*pi/7)",
+   "sqrt((ax-x3)^2+(ay-y3)^2)-2*sin(3*pi/7)",
+   "perVertex-4",
+   "total-14"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "v": 1
+    },
+    "expect": {
+     "ax": 0,
+     "ay": 1,
+     "perVertex": 4,
+     "total": 14
+    }
+   },
+   {
+    "params": {
+     "v": 2
+    },
+    "expect": {
+     "ax": -0.7818315,
+     "ay": 0.6234898
+    }
+   },
+   {
+    "params": {
+     "v": 5
+    },
+    "expect": {
+     "ax": 0.4338837,
+     "ay": -0.9009689,
+     "x2": 0.7818315,
+     "y2": 0.6234898
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "id": "geometry/middle-1/평면도형/다각형",
+ "spec": {
+  "title": "다각형 — 원에 내접하는 정n각형",
+  "params": [
+   {
+    "name": "n",
+    "label": "변의 수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 20,
+    "init": 5,
+    "step": 1,
+    "unit": "각"
+   }
+  ],
+  "scope": "ang=2*pi/n; f(k)=[cos(ang*k), sin(ang*k)]; verts=map(range(0,n), f); int_sum=(n-2)*180; one_ang=(n-2)*180/n; ext_one=360/n; perim=2*n*sin(pi/n)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "label": "외접원"
+    },
+    {
+     "type": "polygon",
+     "points": "=verts",
+     "label": "정n각형"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "중심"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변의 수 n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "내각의 합 (n-2)·180°",
+    "expr": "int_sum",
+    "digits": 0
+   },
+   {
+    "label": "한 내각",
+    "expr": "one_ang",
+    "digits": 2
+   },
+   {
+    "label": "내접 n각형 둘레",
+    "expr": "perim",
+    "digits": 4
+   },
+   {
+    "label": "외접원 둘레 2π",
+    "expr": "2*pi",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 12
+   }
+  ],
+  "invariants": [
+   "one_ang + ext_one - 180",
+   "(n-2)*180 - int_sum",
+   "ext_one*n - 360",
+   "cos(ang)^2 + sin(ang)^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "int_sum": 180,
+     "one_ang": 60
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "int_sum": 360,
+     "one_ang": 90,
+     "perim": 5.656854249
+    }
+   },
+   {
+    "params": {
+     "n": 6
+    },
+    "expect": {
+     "int_sum": 720,
+     "one_ang": 120,
+     "perim": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

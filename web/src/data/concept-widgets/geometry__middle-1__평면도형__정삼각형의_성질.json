@@ -1,0 +1,169 @@
+{
+ "id": "geometry/middle-1/평면도형/정삼각형의_성질",
+ "spec": {
+  "title": "정삼각형의 성질 — 높이와 넓이",
+  "params": [
+   {
+    "name": "a",
+    "label": "한 변의 길이 a",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "h=sqrt(3)/2*a; area=sqrt(3)/4*a^2; peri=3*a; ax=-a/2; bx=a/2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -1.5,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=ax",
+       0
+      ],
+      [
+       "=bx",
+       0
+      ],
+      [
+       0,
+       "=h"
+      ]
+     ],
+     "label": "정삼각형"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=h"
+     ],
+     "to": [
+      0,
+      0
+     ],
+     "label": "h"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=h"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "높이 h = (√3/2)a",
+    "expr": "h",
+    "digits": 4
+   },
+   {
+    "label": "넓이 S = (√3/4)a²",
+    "expr": "area",
+    "digits": 4
+   },
+   {
+    "label": "둘레 3a",
+    "expr": "peri",
+    "digits": 3
+   },
+   {
+    "label": "한 내각",
+    "expr": "60",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2
+   },
+   {
+    "a": 4
+   },
+   {
+    "a": 6
+   },
+   {
+    "a": 8
+   }
+  ],
+  "invariants": [
+   "h - sqrt(3)/2*a",
+   "area - sqrt(3)/4*a^2",
+   "h^2 + (a/2)^2 - a^2",
+   "(bx-ax) - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "h": 1.7320508075688772,
+     "area": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "h": 3.4641016151377544,
+     "area": 6.928203230275509
+    }
+   },
+   {
+    "params": {
+     "a": 6
+    },
+    "expect": {
+     "h": 5.196152422706632,
+     "area": 15.588457268119896
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "id": "geometry/middle-1/평면도형/내각_외각",
+ "spec": {
+  "title": "내각과 외각 (한 꼭짓점)",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "내각 α",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=alpha*pi/180; bx=cos(rad); by=sin(rad); ext=180-alpha",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -0.5,
+    1.3
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ],
+     "label": "변1",
+     "color": "#333"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "label": "변2",
+     "color": "#333"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      -1,
+      0
+     ],
+     "label": "변1의 연장",
+     "color": "#bbb"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "V"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0.32*cos(rad/2)",
+      "=0.32*sin(rad/2)"
+     ],
+     "label": "내각 α"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0.32*cos((pi+rad)/2)",
+      "=0.32*sin((pi+rad)/2)"
+     ],
+     "label": "외각 180-α"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "내각",
+    "expr": "alpha",
+    "digits": 0
+   },
+   {
+    "label": "외각",
+    "expr": "ext",
+    "digits": 0
+   },
+   {
+    "label": "내각+외각",
+    "expr": "alpha+ext",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 30
+   },
+   {
+    "alpha": 60
+   },
+   {
+    "alpha": 90
+   },
+   {
+    "alpha": 135
+   }
+  ],
+  "invariants": [
+   "bx^2+by^2-1",
+   "alpha+ext-180"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 60
+    },
+    "expect": {
+     "bx": 0.5,
+     "by": 0.8660254037844387,
+     "ext": 120
+    }
+   },
+   {
+    "params": {
+     "alpha": 90
+    },
+    "expect": {
+     "bx": 0,
+     "by": 1,
+     "ext": 90
+    }
+   },
+   {
+    "params": {
+     "alpha": 30
+    },
+    "expect": {
+     "bx": 0.8660254037844387,
+     "by": 0.5,
+     "ext": 150
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

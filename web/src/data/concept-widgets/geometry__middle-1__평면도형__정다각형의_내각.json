@@ -1,0 +1,122 @@
+{
+ "id": "geometry/middle-1/평면도형/정다각형의_내각",
+ "spec": {
+  "title": "정다각형의 내각",
+  "params": [
+   {
+    "name": "n",
+    "label": "변의 개수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 5,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "ang=(n-2)*180/n; ext=360/n; sumang=(n-2)*180; f(k)=[cos(pi/2 + 2*pi*k/n), sin(pi/2 + 2*pi*k/n)]; verts=map(range(0,n-1), f)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": "=verts",
+     "label": "정n각형"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(pi/2)",
+      "=sin(pi/2)"
+     ],
+     "label": "한 내각"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변의 개수 n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "한 내각 (n-2)·180/n",
+    "expr": "ang",
+    "digits": 2,
+    "unit": "°"
+   },
+   {
+    "label": "한 외각 360/n",
+    "expr": "ext",
+    "digits": 2,
+    "unit": "°"
+   },
+   {
+    "label": "내각의 합 (n-2)·180",
+    "expr": "sumang",
+    "digits": 0,
+    "unit": "°"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 6
+   },
+   {
+    "n": 12
+   }
+  ],
+  "invariants": [
+   "ang + ext - 180",
+   "n*ang - sumang",
+   "ext*n - 360"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "ang": 60,
+     "ext": 120
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "ang": 90,
+     "ext": 90
+    }
+   },
+   {
+    "params": {
+     "n": 6
+    },
+    "expect": {
+     "ang": 120,
+     "ext": 60
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

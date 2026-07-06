@@ -1,0 +1,218 @@
+{
+ "id": "geometry/middle-1/입체도형/회전체",
+ "spec": {
+  "title": "회전체: 평면도형을 회전축으로 돌려 원기둥·원뿔·원뿔대 만들기",
+  "params": [
+   {
+    "name": "r1",
+    "label": "왼쪽 반지름 r₁",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 0.5,
+    "unit": "cm"
+   },
+   {
+    "name": "r2",
+    "label": "오른쪽 반지름 r₂",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 3,
+    "step": 0.5,
+    "unit": "cm"
+   },
+   {
+    "name": "h",
+    "label": "높이 h",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 5,
+    "step": 0.5,
+    "unit": "cm"
+   }
+  ],
+  "scope": "m=(r2-r1)/h; slant=sqrt((r2-r1)^2+h^2); vol=(1/3)*pi*h*(r1^2+r1*r2+r2^2); rmid=r1+m*(h/2)",
+  "geometry": {
+   "range": [
+    -1.5,
+    9
+   ],
+   "yRange": [
+    -4.8,
+    4.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=h",
+      0
+     ],
+     "label": "회전축",
+     "color": "#888888"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       "=r1"
+      ],
+      [
+       "=h",
+       "=r2"
+      ],
+      [
+       "=h",
+       0
+      ]
+     ],
+     "label": "회전할 평면도형",
+     "color": "#e07b39"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=r1"
+      ],
+      [
+       "=h",
+       "=r2"
+      ],
+      [
+       "=h",
+       "=-r2"
+      ],
+      [
+       0,
+       "=-r1"
+      ]
+     ],
+     "label": "회전체 단면",
+     "color": "#4a90d9"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=r1"
+     ],
+     "label": "r₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=h",
+      "=r2"
+     ],
+     "label": "r₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 반지름 r₁",
+    "expr": "r1",
+    "digits": 2
+   },
+   {
+    "label": "오른쪽 반지름 r₂",
+    "expr": "r2",
+    "digits": 2
+   },
+   {
+    "label": "모선 길이",
+    "expr": "slant",
+    "digits": 3
+   },
+   {
+    "label": "부피",
+    "expr": "vol",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 2,
+    "r2": 2,
+    "h": 5
+   },
+   {
+    "r1": 0,
+    "r2": 3,
+    "h": 4
+   },
+   {
+    "r1": 1,
+    "r2": 3,
+    "h": 6
+   },
+   {
+    "r1": 1.5,
+    "r2": 1.5,
+    "h": 3
+   }
+  ],
+  "invariants": [
+   "slant^2 - ((r2-r1)^2 + h^2)",
+   "rmid - (r1+r2)/2",
+   "r1 + m*h - r2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 2,
+     "r2": 2,
+     "h": 5
+    },
+    "expect": {
+     "m": 0,
+     "slant": 5,
+     "vol": 62.83185307179586
+    }
+   },
+   {
+    "params": {
+     "r1": 0,
+     "r2": 3,
+     "h": 4
+    },
+    "expect": {
+     "m": 0.75,
+     "slant": 5,
+     "vol": 37.69911184307752
+    }
+   },
+   {
+    "params": {
+     "r1": 1,
+     "r2": 3,
+     "h": 6
+    },
+    "expect": {
+     "m": 0.3333333333333333,
+     "slant": 6.324555320336759,
+     "vol": 81.68140899333463
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

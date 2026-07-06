@@ -1,0 +1,237 @@
+{
+ "id": "geometry/middle-1/입체도형/직육면체",
+ "spec": {
+  "title": "직육면체 — 세 모서리 a·b·c로 부피·겉넓이 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 a",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 4,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "세로 b",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "높이 c",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 5,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "d=b*0.35355339; V=a*b*c; S=2*(a*b+b*c+c*a); diag=sqrt(a^2+b^2+c^2)",
+  "geometry": {
+   "range": [
+    -1,
+    9
+   ],
+   "yRange": [
+    -1,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       0,
+       "=c"
+      ]
+     ],
+     "label": "앞면 a×c"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a+d",
+       "=d"
+      ],
+      [
+       "=a+d",
+       "=c+d"
+      ],
+      [
+       "=a",
+       "=c"
+      ]
+     ],
+     "label": "옆면 b×c"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=c"
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a+d",
+       "=c+d"
+      ],
+      [
+       "=d",
+       "=c+d"
+      ]
+     ],
+     "label": "윗면 a×b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=d",
+      "=d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      "=d"
+     ],
+     "to": [
+      "=a+d",
+      "=d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      "=d"
+     ],
+     "to": [
+      "=d",
+      "=c+d"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부피 V=abc",
+    "expr": "V",
+    "digits": 2
+   },
+   {
+    "label": "겉넓이 S=2(ab+bc+ca)",
+    "expr": "S",
+    "digits": 2
+   },
+   {
+    "label": "대각선 √(a²+b²+c²)",
+    "expr": "diag",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 4
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1
+   },
+   {
+    "a": 5,
+    "b": 2,
+    "c": 3
+   },
+   {
+    "a": 4,
+    "b": 3,
+    "c": 5
+   }
+  ],
+  "invariants": [
+   "V-a*b*c",
+   "S-2*(a*b+b*c+c*a)",
+   "diag^2-(a^2+b^2+c^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 4
+    },
+    "expect": {
+     "V": 24,
+     "S": 52,
+     "diag": 5.385164807
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 1
+    },
+    "expect": {
+     "V": 1,
+     "S": 6,
+     "diag": 1.732050808
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 2,
+     "c": 3
+    },
+    "expect": {
+     "V": 30,
+     "S": 62,
+     "diag": 6.164414003
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

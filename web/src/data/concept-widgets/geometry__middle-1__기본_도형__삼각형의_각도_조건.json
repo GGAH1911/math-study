@@ -1,0 +1,166 @@
+{
+ "id": "geometry/middle-1/기본_도형/삼각형의_각도_조건",
+ "spec": {
+  "title": "삼각형의 세 내각의 합은 180°",
+  "params": [
+   {
+    "name": "A",
+    "label": "∠A",
+    "type": "slider",
+    "min": 10,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "B",
+    "label": "∠B",
+    "type": "slider",
+    "min": 10,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Arad=A*pi/180; Brad=B*pi/180; Cc=180-A-B; Crad=Cc*pi/180; AC=sin(Brad)/sin(Crad); cx=AC*cos(Arad); cy=AC*sin(Arad); angA=atan2(cy,cx)*180/pi; sumang=A+B+Cc",
+  "geometry": {
+   "range": [
+    -1.2,
+    2.2
+   ],
+   "yRange": [
+    -0.6,
+    2.2
+   ],
+   "showAxes": false,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       "=cx",
+       "=cy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠A",
+    "expr": "A",
+    "digits": 0
+   },
+   {
+    "label": "∠B",
+    "expr": "B",
+    "digits": 0
+   },
+   {
+    "label": "∠C = 180−A−B",
+    "expr": "Cc",
+    "digits": 1
+   },
+   {
+    "label": "세 각의 합",
+    "expr": "sumang",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 60,
+    "B": 60
+   },
+   {
+    "A": 90,
+    "B": 45
+   },
+   {
+    "A": 30,
+    "B": 60
+   },
+   {
+    "A": 50,
+    "B": 70
+   }
+  ],
+  "invariants": [
+   "sumang-180",
+   "angA-A"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 60,
+     "B": 60
+    },
+    "expect": {
+     "Cc": 60,
+     "cx": 0.5,
+     "cy": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "A": 90,
+     "B": 45
+    },
+    "expect": {
+     "Cc": 45,
+     "cx": 0,
+     "cy": 1
+    }
+   },
+   {
+    "params": {
+     "A": 30,
+     "B": 60
+    },
+    "expect": {
+     "Cc": 90,
+     "cx": 0.75,
+     "cy": 0.4330127018922193
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

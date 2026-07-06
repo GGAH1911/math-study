@@ -1,0 +1,218 @@
+{
+ "id": "geometry/middle-1/작도와_합동/삼각형의_합동",
+ "spec": {
+  "title": "삼각형의 합동 — 이동·회전으로 겹쳐보기",
+  "params": [
+   {
+    "name": "rot",
+    "label": "회전각 φ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 90,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "tx",
+    "label": "가로 이동",
+    "type": "slider",
+    "min": -4,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "ty",
+    "label": "세로 이동",
+    "type": "slider",
+    "min": -4,
+    "max": 6,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "phi=rot*pi/180; Dx=tx; Dy=ty; Ex=3*cos(phi)+tx; Ey=3*sin(phi)+ty; Fx=cos(phi)-2*sin(phi)+tx; Fy=sin(phi)+2*cos(phi)+ty; DE=sqrt((Ex-Dx)^2+(Ey-Dy)^2); EF=sqrt((Fx-Ex)^2+(Fy-Ey)^2); FD=sqrt((Dx-Fx)^2+(Dy-Fy)^2)",
+  "geometry": {
+   "range": [
+    -6,
+    11
+   ],
+   "yRange": [
+    -6,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       1,
+       2
+      ]
+     ],
+     "label": "△ABC",
+     "color": "#888"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      2
+     ],
+     "label": "C"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=Dx",
+       "=Dy"
+      ],
+      [
+       "=Ex",
+       "=Ey"
+      ],
+      [
+       "=Fx",
+       "=Fy"
+      ]
+     ],
+     "label": "△DEF",
+     "color": "#e4572e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ex",
+      "=Ey"
+     ],
+     "label": "E"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Fx",
+      "=Fy"
+     ],
+     "label": "F"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "DE (=AB=3)",
+    "expr": "DE",
+    "digits": 3
+   },
+   {
+    "label": "EF (=BC=√8)",
+    "expr": "EF",
+    "digits": 3
+   },
+   {
+    "label": "FD (=CA=√5)",
+    "expr": "FD",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "rot": 0,
+    "tx": 0,
+    "ty": 0
+   },
+   {
+    "rot": 90,
+    "tx": 5,
+    "ty": 0
+   },
+   {
+    "rot": 180,
+    "tx": 0,
+    "ty": 6
+   },
+   {
+    "rot": 45,
+    "tx": 2,
+    "ty": 2
+   }
+  ],
+  "invariants": [
+   "DE-3",
+   "EF-sqrt(8)",
+   "FD-sqrt(5)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "rot": 0,
+     "tx": 0,
+     "ty": 0
+    },
+    "expect": {
+     "Ex": 3,
+     "Ey": 0,
+     "Fx": 1,
+     "Fy": 2,
+     "DE": 3,
+     "EF": 2.8284271247461903,
+     "FD": 2.23606797749979
+    }
+   },
+   {
+    "params": {
+     "rot": 90,
+     "tx": 5,
+     "ty": 0
+    },
+    "expect": {
+     "Ex": 5,
+     "Ey": 3,
+     "Fx": 3,
+     "Fy": 1,
+     "DE": 3,
+     "EF": 2.8284271247461903,
+     "FD": 2.23606797749979
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

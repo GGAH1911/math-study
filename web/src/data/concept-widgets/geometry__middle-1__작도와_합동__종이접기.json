@@ -1,0 +1,207 @@
+{
+ "id": "geometry/middle-1/작도와_합동/종이접기",
+ "spec": {
+  "title": "종이접기 — 직선 l에 대한 대칭이동",
+  "params": [
+   {
+    "name": "theta",
+    "label": "접기선 각도 α",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "px",
+    "label": "P의 x",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "py",
+    "label": "P의 y",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.3,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; c2=cos(2*rad); s2=sin(2*rad); qx=c2*px+s2*py; qy=s2*px-c2*py; midx=(px+qx)/2; midy=(py+qy)/2; nx=-sin(rad); ny=cos(rad); onLine=nx*midx+ny*midy; perp=(qx-px)*cos(rad)+(qy-py)*sin(rad); distdiff=px^2+py^2-(qx^2+qy^2)",
+  "geometry": {
+   "range": [
+    -1.7,
+    1.7
+   ],
+   "yRange": [
+    -1.7,
+    1.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=-1.6*cos(rad)",
+      "=-1.6*sin(rad)"
+     ],
+     "to": [
+      "=1.6*cos(rad)",
+      "=1.6*sin(rad)"
+     ],
+     "label": "l (접기선)",
+     "color": "#111"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=qx",
+      "=qy"
+     ],
+     "color": "#e11",
+     "label": "PP'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#06c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qx",
+      "=qy"
+     ],
+     "label": "P'",
+     "color": "#e11"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=midx",
+      "=midy"
+     ],
+     "label": "M",
+     "color": "#111"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P'",
+    "expr": "qx",
+    "digits": 3
+   },
+   {
+    "label": "P'y",
+    "expr": "qy",
+    "digits": 3
+   },
+   {
+    "label": "|OP|",
+    "expr": "sqrt(px^2+py^2)",
+    "digits": 3
+   },
+   {
+    "label": "|OP'|",
+    "expr": "sqrt(qx^2+qy^2)",
+    "digits": 3
+   },
+   {
+    "label": "M이 l 위(≈0)",
+    "expr": "onLine",
+    "digits": 4
+   },
+   {
+    "label": "PP'⊥l(≈0)",
+    "expr": "perp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 60,
+    "px": 1,
+    "py": 0.3
+   },
+   {
+    "theta": 30,
+    "px": -0.8,
+    "py": 1.2
+   },
+   {
+    "theta": 120,
+    "px": 0.5,
+    "py": -1
+   },
+   {
+    "theta": 15,
+    "px": 1.4,
+    "py": 0.9
+   }
+  ],
+  "invariants": [
+   "onLine",
+   "perp",
+   "distdiff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "px": 1,
+     "py": 0.3
+    },
+    "expect": {
+     "qx": 1,
+     "qy": -0.3,
+     "midx": 1,
+     "midy": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 45,
+     "px": 1,
+     "py": 0.3
+    },
+    "expect": {
+     "qx": 0.3,
+     "qy": 1,
+     "midx": 0.65,
+     "midy": 0.65
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "px": 1,
+     "py": 0.3
+    },
+    "expect": {
+     "qx": -1,
+     "qy": 0.3,
+     "midx": 0,
+     "midy": 0.3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
