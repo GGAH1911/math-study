@@ -5,7 +5,7 @@
 //   ※렌더게이트(/dev/interactive-test)는 후속. 현재 수학게이트(린치핀)만 — 좌표 finite·불변식·오라클.
 // 사용: node web/scripts/widget_spec_loop.mjs [--n 15]
 import { spawn, execSync } from 'node:child_process';
-import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, appendFileSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, appendFileSync, copyFileSync, rmSync } from 'node:fs';
 import { validate } from './widget_validate.mjs';
 import { fileURLToPath } from 'node:url';
 // ★REPO 는 이 스크립트 자기 위치 기준(web/scripts/.. 의 부모)으로 도출 — 하드코딩 절대경로는
@@ -46,8 +46,13 @@ try {
 // 캐시 히트 추적 가능하게(이전엔 stdout='ignore'라 캐시 실측이 버려졌음). 연속 호출서 cr 상승=캐시 생존.
 const crVals = [];   // 캐시 히트 추적용 — genOnce 가 수집, 종료 시 다이제스트로 cron-runs.md 에 누적.
 const ccVals = [];   // cache_creation(쓰기) 추적 — net 절감(쓰기 프리미엄) 정확 계산용.
-const genOnce = (id) => new Promise((res) => {
-  const c = spawn('node', [`${REPO}/web/scripts/${GEN}`, id], { stdio: ['ignore', 'pipe', 'ignore'], timeout: 600000 });
+// prevFail: 직전 시도의 검증 실패 사유. 생성기가 프롬프트에 실어 "그 지점만 고쳐" 재생성한다(repair).
+// 이걸 안 넘기면 완전히 같은 입력으로 주사위만 다시 굴리게 되고, 실패 대부분이 기계적 오류
+// (mathjs API 오인·오라클 정밀도)라 같은 실패를 3번 반복하고 끝난다.
+const genOnce = (id, prevFail) => new Promise((res) => {
+  const args = [`${REPO}/web/scripts/${GEN}`, id];
+  if (prevFail) args.push('--prev-fail', prevFail);
+  const c = spawn('node', args, { stdio: ['ignore', 'pipe', 'ignore'], timeout: 600000 });
   let out = '';
   c.stdout.on('data', (d) => { out += d; });
   c.on('close', (code) => {
@@ -65,7 +70,11 @@ async function worker() {
     const { id } = queue[qi++]; const sf = `${TMP}/${safe(id)}.json`;
     let ok = false, lastFail = '';
     for (let t = 1; t <= MAXTRY && !ok; t++) {
-      await genOnce(id);
+      if (t > 1 && lastFail) log(`  ↻ ${id} 재시도 ${t}/${MAXTRY} — 실패사유 되먹임: ${lastFail.slice(0, 90)}`);
+      // ★생성 전 잔여 spec 제거: 안 지우면 생성 실패 시 **이전 실행(다른 모델·프롬프트일 수도)의 산출물**이
+      //   그대로 검증·수락된다. 실제로 --par 버그 때 그 경로로 13건이 안착했다.
+      try { if (existsSync(sf)) rmSync(sf); } catch { /* 지우기 실패는 무시(어차피 아래서 재검증) */ }
+      await genOnce(id, t > 1 ? lastFail : '');
       if (!existsSync(sf)) { lastFail = '생성출력 없음'; continue; }
       try { const o = JSON.parse(readFileSync(sf, 'utf8')); const r = validate(o.spec, o.recipe); if (r.ok) ok = true; else lastFail = r.fails[0] || '검증 실패'; } catch (e) { lastFail = '파싱: ' + e.message; }
     }

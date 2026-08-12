@@ -34,6 +34,8 @@ h1{font-size:15px;margin:0;font-weight:600}
 .chip{font-size:11px;padding:1px 7px;border-radius:20px;white-space:nowrap;font-weight:600}
 .c-run{background:#3d2f0d;color:var(--run)}.c-ok{background:#0f2f18;color:var(--ok)}.c-no{background:#3d1418;color:var(--no)}
 .meta{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.meta.warn{color:var(--run);font-weight:600}
+.rt{font-size:10px;color:var(--run);border:1px solid var(--run);border-radius:4px;padding:0 4px;margin-left:4px}
 .tabs{display:flex;gap:2px;padding:6px 10px;border-bottom:1px solid var(--bd)}
 .tab{font-size:12px;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--dim)}
 .tab.on{background:#1f2937;color:var(--tx)}
@@ -68,9 +70,13 @@ function chip(s){return s==='run'?'<span class="chip c-run">생성중</span>':s=
 function renderList(){
  const L=$('list'); if(!order.length){L.innerHTML='<div class="empty">아직 실행 없음</div>';return}
  L.innerHTML=order.map(id=>{const s=S[id];const u=s.usage||{};
+  // 실행중이면 "경과s · 유휴s" 를 보여준다 — 이 모델은 정상도 2-3분이라 총시간만으론
+  // 느린 것과 멈춘 것이 구분 안 된다. 유휴가 계속 커지면 그게 stuck.
+  const m = s.st==='run'
+   ? '<span class="meta'+(s.idle>=25?' warn':'')+'">'+(s.el??0)+'s'+(s.idle>=10?' · 유휴'+s.idle+'s':'')+'</span>'
+   : '<span class="meta">'+(s.secs?s.secs+'s ':'')+(u.completion_tokens?u.completion_tokens+'tok':'')+'</span>';
   return '<div class="item'+(id===sel?' sel':'')+'" data-id="'+encodeURIComponent(id)+'">'+chip(s.st)+
-   '<span class="nm" title="'+esc(id)+'">'+esc(id.split('/').pop())+'</span>'+
-   '<span class="meta">'+(s.secs?s.secs+'s ':'')+(u.completion_tokens?u.completion_tokens+'tok':'')+'</span></div>'}).join('');
+   '<span class="nm" title="'+esc(id)+'">'+esc(id.split('/').pop())+(s.retry?' <span class="rt">재시도</span>':'')+'</span>'+m+'</div>'}).join('');
  [...L.querySelectorAll('.item')].forEach(e=>e.onclick=()=>{sel=decodeURIComponent(e.dataset.id);renderList();renderBody()});
 }
 function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
@@ -96,12 +102,13 @@ es.onmessage=(m)=>{
  let e; try{e=JSON.parse(m.data)}catch{return}   // 동시 append 로 깨진 줄은 버린다
 
  if(e.ev==='run'){total=e.total;$('model').textContent=e.model+(e.par?' ×'+e.par:'');pass=fail=0;cost=0;for(const k in S)delete S[k];order.length=0;renderList();stats();return}
- if(e.ev==='start'){S[e.id]={st:'run',reason:'',content:'',why:'',usage:{}};if(!order.includes(e.id))order.push(e.id);
+ if(e.ev==='start'){S[e.id]={st:'run',reason:'',content:'',why:'',usage:{},idle:0,el:0,retry:e.retry};if(!order.includes(e.id))order.push(e.id);
   if(!sel||S[sel]?.st!=='run')sel=e.id;
   if(e.model&&$('model').textContent==='-')$('model').textContent=e.model;   // 루프 모드엔 run 이벤트가 없다
   if(e.total>total)total=e.total; renderList();renderBody();stats();return}
  const s=S[e.id]; if(!s)return;
- if(e.ev==='reason'){s.reason+=e.d; if(e.id===sel)renderBody()}
+ if(e.ev==='beat'){s.idle=e.idle;s.el=e.el;renderList()}
+ else if(e.ev==='reason'){s.reason+=e.d; if(e.id===sel)renderBody()}
  else if(e.ev==='content'){s.content+=e.d; if(e.id===sel&&tab==='content')renderBody()}
  else if(e.ev==='done'){s.st=e.ok?'ok':'no';s.why=e.why||'';s.secs=e.secs;s.usage=e.usage||{};s.spec=e.spec;
   e.ok?pass++:fail++; cost+=(e.usage&&e.usage.cost)||0; renderList();renderBody();stats()}

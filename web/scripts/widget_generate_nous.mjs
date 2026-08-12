@@ -21,6 +21,10 @@ const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1
 // ★reasoning 토큰이 completion 예산을 같이 먹는다(이 모델은 default_effort=high, 끌 수 없음).
 //   4000 으로 잡았더니 추론만 하다 JSON 이 절단돼 4/4 전멸했다. 넉넉히 준다 — 출력 $0.224/1M 이라 싸다.
 const MAX_TOKENS = +(process.env.NOUS_MAX_TOKENS || 30000);
+// stuck 가드: 유휴(델타 끊김) 60s → 중단, 총 소요 300s → 중단. 실측 정상범위는 40-155s 이므로
+// 여유가 충분하고, 죽은 슬롯을 10분(워커풀 spawn 타임아웃)씩 붙잡지 않는다.
+const IDLE_MS = +(process.env.NOUS_IDLE_MS || 60000);
+const DEADLINE_MS = +(process.env.NOUS_DEADLINE_MS || 300000);
 
 const EV = `${MON}/events.ndjson`;
 // ★워커풀에서 자식 여러 개가 같은 파일에 append 한다. O_APPEND 는 PIPE_BUF(4096) 이하 쓰기만
@@ -36,7 +40,9 @@ const emit = (o) => {
 };
 
 // ── 프롬프트: widget_generate.mjs 와 동일해야 비교가 성립한다(수정 시 양쪽 같이) ──────────
-const HEAD = `너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
+const HEAD = `Think and reason in English. 사용자에게 보이는 문자열(title·label·readout label)만 한국어로 쓴다.
+
+너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
 
 InteractiveSpec 형식:
 { "title", "params":[{"name","label","type":"slider","min","max","init","step","unit"}], "scope":"mathjs ;구분 대입식(슬라이더값→보조변수)", "geometry":{"range":[x0,x1],"yRange":[y0,y1],"showAxes":true,"showGrid":true,"shapes":[{"type":"circle|point|segment|line|polygon", ...좌표/값에 \\"=식\\" 가능}]}, "plot":{"range","yRange","fns":[{"fn","label","color"}]}, "readout":[{"label","expr","digits"}] }
@@ -66,11 +72,29 @@ function bodyOf(id) {
   return '';
 }
 
-async function gen(id, idx, total) {
+// ★재시도는 반드시 이전 실패를 먹여야 한다(repair). 실패의 대부분이 창의성 문제가 아니라
+//   기계적 오류(mathjs API 오인·오라클 정밀도)라, 검증기가 뽑아준 fails 를 그대로 되먹이면
+//   같은 주사위를 다시 굴리는 대신 그 지점만 고쳐 온다. 없이 재시도하면 같은 실패를 반복한다.
+const repairNote = (prev) => prev ? `\n\n**직전 시도는 검증에 실패했다. 아래 사유를 반드시 고쳐서 다시 만들어라(같은 실수 반복 금지):**\n${prev.split(' | ').slice(0, 4).map((f) => '- ' + f).join('\n')}\n` : '';
+
+async function gen(id, idx, total, prevFail) {
   const body = bodyOf(id);
-  emit({ ev: 'start', id, idx, total, model: MODEL });
+  emit({ ev: 'start', id, idx, total, model: MODEL, retry: prevFail ? 1 : 0 });
   if (!body) { emit({ ev: 'done', id, ok: false, why: '본문없음' }); return { id, ok: false, why: '본문없음' }; }
   const t0 = Date.now();
+
+  // ★stuck 대책. 이 모델은 출력의 85-90%가 추론 토큰이라 정상도 2-3분 걸린다 → "총 시간"만으로는
+  //   느린 것과 멈춘 것을 구분 못 한다. 그래서 **유휴(마지막 델타 이후 경과)** 를 1차 기준으로 삼고,
+  //   총 데드라인은 슬롯 회수용 상한으로만 둔다. 없으면 fetch 가 무한 대기해 워커 슬롯이 죽는다.
+  const ac = new AbortController();
+  let lastDelta = Date.now(), aborted = '';
+  const idleT = setInterval(() => {
+    const idle = Date.now() - lastDelta;
+    if (idle > IDLE_MS) { aborted = `유휴 ${Math.round(idle / 1000)}s (델타 끊김)`; ac.abort(); }
+    else if (Date.now() - t0 > DEADLINE_MS) { aborted = `데드라인 ${Math.round(DEADLINE_MS / 1000)}s 초과`; ac.abort(); }
+    else emit({ ev: 'beat', id, idle: Math.round(idle / 1000), el: Math.round((Date.now() - t0) / 1000) });
+  }, 5000);
+  const stop = () => clearInterval(idleT);
 
   let r;
   try {
@@ -79,15 +103,21 @@ async function gen(id, idx, total) {
       headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: MODEL,
-        messages: [{ role: 'user', content: `${HEAD}\n[${id}]\n${body}` }],
+        messages: [{ role: 'user', content: `${HEAD}\n[${id}]\n${body}${repairNote(prevFail)}` }],
         response_format: { type: 'json_object' },
         max_tokens: MAX_TOKENS,
         stream: true,
         stream_options: { include_usage: true },
       }),
+      signal: ac.signal,
     });
-  } catch (e) { emit({ ev: 'done', id, ok: false, why: `네트워크: ${e.message}` }); return { id, ok: false, why: `네트워크: ${e.message}` }; }
+  } catch (e) {
+    stop();
+    const why = aborted || `네트워크: ${e.message}`;
+    emit({ ev: 'done', id, ok: false, why }); return { id, ok: false, why };
+  }
   if (!r.ok) {
+    stop();
     const why = `HTTP ${r.status}: ${(await r.text()).slice(0, 200)}`;
     emit({ ev: 'done', id, ok: false, why }); return { id, ok: false, why };
   }
@@ -103,21 +133,32 @@ async function gen(id, idx, total) {
     lastFlush = now;
   };
   const dec = new TextDecoder();
-  for await (const chunk of r.body) {
-    buf += dec.decode(chunk, { stream: true });
-    const lines = buf.split('\n'); buf = lines.pop();
-    for (const ln of lines) {
-      if (!ln.startsWith('data:')) continue;
-      const p = ln.slice(5).trim();
-      if (!p || p === '[DONE]') continue;
-      let j; try { j = JSON.parse(p); } catch { continue; }
-      if (j.usage) usage = j.usage;
-      const d = j.choices?.[0]?.delta || {};
-      if (d.reasoning) { reasoning += d.reasoning; pendR += d.reasoning; }
-      if (d.content) { content += d.content; pendC += d.content; }
+  try {
+    for await (const chunk of r.body) {
+      lastDelta = Date.now();   // ★유휴 판정 기준점 — 청크가 오는 한 살아있는 것
+      buf += dec.decode(chunk, { stream: true });
+      const lines = buf.split('\n'); buf = lines.pop();
+      for (const ln of lines) {
+        if (!ln.startsWith('data:')) continue;
+        const p = ln.slice(5).trim();
+        if (!p || p === '[DONE]') continue;
+        let j; try { j = JSON.parse(p); } catch { continue; }
+        if (j.usage) usage = j.usage;
+        const d = j.choices?.[0]?.delta || {};
+        if (d.reasoning) { reasoning += d.reasoning; pendR += d.reasoning; }
+        if (d.content) { content += d.content; pendC += d.content; }
+      }
+      flush(false);
     }
-    flush(false);
+  } catch (e) {
+    // abort 로 끊긴 경우 aborted 에 사유가 들어있다. 그 외는 진짜 스트림 오류.
+    stop(); flush(true);
+    const why = aborted || `스트림 중단: ${e.message}`;
+    const secs0 = +((Date.now() - t0) / 1000).toFixed(1);
+    emit({ ev: 'done', id, ok: false, why, secs: secs0, usage });
+    return { id, ok: false, why, secs: secs0, usage };
   }
+  stop();
   flush(true);
   const secs = +((Date.now() - t0) / 1000).toFixed(1);
 
@@ -140,9 +181,12 @@ async function gen(id, idx, total) {
 const argv = process.argv.slice(2);
 const pi = argv.indexOf('--par');
 const PAR = pi >= 0 ? Math.max(1, +argv[pi + 1] || 1) : +(process.env.NOUS_PAR || 4);
-// ★pi<0 가드 필수: --par 가 없으면 pi=-1 → pi+1=0 이 되어 **첫 번째 id 를 잘라먹는다**.
-//   워커풀은 건별로 id 하나만 넘기므로 그 하나가 사라져 전건 즉시 실패했다(105건 무한 스킵).
-const ids = argv.filter((a, i) => !a.startsWith('--') && (pi < 0 || i !== pi + 1));
+const fi = argv.indexOf('--prev-fail');
+const PREV_FAIL = fi >= 0 ? (argv[fi + 1] || '') : '';
+// ★플래그 값 인덱스는 전부 제외해야 한다. pi<0 가드 없이 pi+1 을 쓰면 -1+1=0 이라
+//   **첫 번째 id 를 잘라먹는다**(워커풀은 id 하나만 넘기므로 전건 즉시 실패했던 버그).
+const skipIdx = new Set([pi >= 0 ? pi + 1 : -99, fi >= 0 ? fi + 1 : -99]);
+const ids = argv.filter((a, i) => !a.startsWith('--') && !skipIdx.has(i));
 
 // ★'run' 은 대시보드를 리셋한다. 워커풀(widget_spec_loop)이 건별로 이 스크립트를 1건씩 호출할 땐
 //   매번 리셋되면 화면이 못 쌓이므로, 자체 배치(2건 이상)일 때만 보낸다.
@@ -152,7 +196,7 @@ let pass = 0, cost = 0, qi = 0;
 async function worker() {
   while (qi < ids.length) {
     const i = qi++;
-    const r = await gen(ids[i], i + 1, ids.length);
+    const r = await gen(ids[i], i + 1, ids.length, PREV_FAIL);
     if (r.ok) pass++;
     cost += r.usage?.cost || 0;
     const u = r.usage || {};

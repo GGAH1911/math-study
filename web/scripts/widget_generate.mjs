@@ -19,7 +19,9 @@ function bodyOf(id) {
   return '';
 }
 
-const HEAD = `너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
+const HEAD = `Think and reason in English. 사용자에게 보이는 문자열(title·label·readout label)만 한국어로 쓴다.
+
+너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
 
 InteractiveSpec 형식:
 { "title", "params":[{"name","label","type":"slider","min","max","init","step","unit"}], "scope":"mathjs ;구분 대입식(슬라이더값→보조변수)", "geometry":{"range":[x0,x1],"yRange":[y0,y1],"showAxes":true,"showGrid":true,"shapes":[{"type":"circle|point|segment|line|polygon", ...좌표/값에 \\"=식\\" 가능}]}, "plot":{"range","yRange","fns":[{"fn","label","color"}]}, "readout":[{"label","expr","digits"}] }
