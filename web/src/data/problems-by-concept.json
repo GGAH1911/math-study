@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-23T00:48:50.624Z",
+  "generatedAt": "2026-07-27T03:12:20.796Z",
   "totalProblems": 4164,
-  "conceptsWithProblems": 1321,
+  "conceptsWithProblems": 1319,
   "totalMappings": 13848,
-  "propagatedMappings": 4508,
+  "propagatedMappings": 4509,
   "byConcept": {
     "geometry/geometry-elective/평면벡터": [
       {
@@ -3229,6 +3229,20 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
+      },
+      {
+        "slug": "2021/수능/2021_수능_나형_03",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 3,
+        "score": 2,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
       },
       {
         "slug": "2020/6월모평/2020_6월모평_나형_07",
@@ -183923,6 +183937,20 @@
     ],
     "functions/math-1/수열/시그마_합기호": [
       {
+        "slug": "2019/수능/2019_수능_나형_29",
+        "year": 2019,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2028/예시/2028_예시_단일_24",
         "year": 2028,
         "exam_type": "수능",
@@ -184028,6 +184056,20 @@
         "grade": null,
         "subject": "공통",
         "number": 3,
+        "score": 3,
+        "killer_tier": "early",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2020/9월모평/2020_9월모평_나형_12",
+        "year": 2020,
+        "exam_type": "모의평가",
+        "session": "9월",
+        "grade": null,
+        "subject": "나형",
+        "number": 12,
         "score": 3,
         "killer_tier": "early",
         "format": "choice",
@@ -184318,6 +184360,20 @@
         "number": 20,
         "score": 4,
         "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2021/수능/2021_수능_나형_03",
+        "year": 2021,
+        "exam_type": "수능",
+        "session": "None",
+        "grade": null,
+        "subject": "나형",
+        "number": 3,
+        "score": 2,
+        "killer_tier": "early",
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -195057,36 +195113,6 @@
         "year": 2021,
         "exam_type": "모의평가",
         "session": "6월",
-        "grade": null,
-        "subject": "나형",
-        "number": 12,
-        "score": 3,
-        "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "합_표기(시그마)": [
-      {
-        "slug": "2019/수능/2019_수능_나형_29",
-        "year": 2019,
-        "exam_type": "수능",
-        "session": "None",
-        "grade": null,
-        "subject": "나형",
-        "number": 29,
-        "score": 4,
-        "killer_tier": "killer",
-        "format": "numeric",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2020/9월모평/2020_9월모평_나형_12",
-        "year": 2020,
-        "exam_type": "모의평가",
-        "session": "9월",
         "grade": null,
         "subject": "나형",
         "number": 12,
@@ -248106,22 +248132,6 @@
         "grade": null,
         "subject": "나형",
         "number": 1,
-        "score": 2,
-        "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      }
-    ],
-    "부정형_극한_(0/0_꼴)": [
-      {
-        "slug": "2021/수능/2021_수능_나형_03",
-        "year": 2021,
-        "exam_type": "수능",
-        "session": "None",
-        "grade": null,
-        "subject": "나형",
-        "number": 3,
         "score": 2,
         "killer_tier": "early",
         "format": "choice",

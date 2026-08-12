@@ -17,6 +17,8 @@ updated: 2026-06-28
 - `chat.ts` — 등록 자산
 - `due-today.ts` — 등록 자산
 - `figure-triage.ts` — 등록 자산
+- `graph-history.ts` — 등록 자산
+- `handwriting.ts` — 등록 자산
 - `health.ts` — 등록 자산
 - `mastery-promote.ts` — 등록 자산
 - `openrouter.ts` — 등록 자산
