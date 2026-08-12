@@ -40,3 +40,40 @@ updated: 2026-06-28
 | 2026-07-05 03:36 | widget | accept 78 · skip 2 · 98% | cr avg 16803 · max 19346 · Σcr 1579453 · Σcc 236647 · save≈$6.81 (n=94) |
 | 2026-07-06 03:36 | widget | accept 77 · skip 3 · 96% | cr avg 16825 · max 19363 · Σcr 1615246 · Σcc 241109 · save≈$6.97 (n=96) |
 | 2026-07-07 03:18 | widget | accept 48 · skip 0 · 100% | cr avg 16530 · max 19340 · Σcr 859559 · Σcc 145585 · save≈$3.69 (n=52) |
+| 2026-07-08 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-09 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-10 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-11 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-12 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-13 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-14 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-15 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-16 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-17 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-18 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-19 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-20 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-21 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-22 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-23 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-24 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-25 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-26 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-27 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-28 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-29 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-30 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-07-31 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-01 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-02 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-03 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-04 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-05 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-06 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-07 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-08 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-09 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-10 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-11 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-12 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-12 22:59 | widget | accept 0 · skip 0 · 0% | cr 없음 |
