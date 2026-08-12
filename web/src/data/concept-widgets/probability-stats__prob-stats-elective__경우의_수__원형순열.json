@@ -1,0 +1,200 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/원형순열",
+ "spec": {
+  "title": "원형순열",
+  "params": [
+   {
+    "name": "n",
+    "label": "원소 개수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "theta",
+    "label": "회전 각도",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 0,
+    "step": 5,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; p1x=cos(rad); p1y=sin(rad); p2x=cos(rad+2*pi/n); p2y=sin(rad+2*pi/n); p3x=cos(rad+4*pi/n); p3y=sin(rad+4*pi/n); p4x=cos(rad+6*pi/n); p4y=sin(rad+6*pi/n); p5x=cos(rad+8*pi/n); p5y=sin(rad+8*pi/n); p6x=cos(rad+10*pi/n); p6y=sin(rad+10*pi/n); count=factorial(n-1); linear=factorial(n)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=p1x",
+      "=p1y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p1x",
+      "=p1y"
+     ],
+     "label": "= (1<=n) ? 'A' : ''"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p2x",
+      "=p2y"
+     ],
+     "label": "= (2<=n) ? 'B' : ''"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p3x",
+      "=p3y"
+     ],
+     "label": "= (3<=n) ? 'C' : ''"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p4x",
+      "=p4y"
+     ],
+     "label": "= (4<=n) ? 'D' : ''"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p5x",
+      "=p5y"
+     ],
+     "label": "= (5<=n) ? 'E' : ''"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p6x",
+      "=p6y"
+     ],
+     "label": "= (6<=n) ? 'F' : ''"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원형순열 수",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "일렬순열 수",
+    "expr": "linear",
+    "digits": 0
+   },
+   {
+    "label": "회전 중복 횟수(=n)",
+    "expr": "n",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "theta": 0
+   },
+   {
+    "n": 3,
+    "theta": 45
+   },
+   {
+    "n": 5,
+    "theta": 180
+   },
+   {
+    "n": 6,
+    "theta": 275
+   }
+  ],
+  "invariants": [
+   "count - linear/n",
+   "p1x^2+p1y^2-1",
+   "p2x^2+p2y^2-1",
+   "p3x^2+p3y^2-1",
+   "p4x^2+p4y^2-1",
+   "p5x^2+p5y^2-1",
+   "p6x^2+p6y^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "theta": 0
+    },
+    "expect": {
+     "count": 2,
+     "linear": 6,
+     "p1x": 1,
+     "p1y": 0,
+     "p2x": -0.5,
+     "p2y": 0.8660254038
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "theta": 90
+    },
+    "expect": {
+     "count": 6,
+     "linear": 24,
+     "p1x": 0,
+     "p1y": 1,
+     "p2x": -1,
+     "p2y": 0
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "theta": 0
+    },
+    "expect": {
+     "count": 24,
+     "linear": 120,
+     "p1x": 1,
+     "p1y": 0,
+     "p2x": 0.3090169944,
+     "p2y": 0.9510565163
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

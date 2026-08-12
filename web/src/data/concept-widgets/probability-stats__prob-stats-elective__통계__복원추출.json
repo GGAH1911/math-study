@@ -1,0 +1,369 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/복원추출",
+ "spec": {
+  "title": "복원추출(독립시행)과 이항분포",
+  "params": [
+   {
+    "name": "n",
+    "label": "시행 횟수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "성공 확률 p",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "p0=n>=0?combinations(n,0)*p^0*(1-p)^n:0; p1=n>=1?combinations(n,1)*p^1*(1-p)^(n-1):0; p2=n>=2?combinations(n,2)*p^2*(1-p)^(n-2):0; p3=n>=3?combinations(n,3)*p^3*(1-p)^(n-3):0; p4=n>=4?combinations(n,4)*p^4*(1-p)^(n-4):0; p5=n>=5?combinations(n,5)*p^5*(1-p)^(n-5):0; p6=n>=6?combinations(n,6)*p^6*(1-p)^(n-6):0; p7=n>=7?combinations(n,7)*p^7*(1-p)^(n-7):0; p8=n>=8?combinations(n,8)*p^8*(1-p)^(n-8):0; p9=n>=9?combinations(n,9)*p^9*(1-p)^(n-9):0; p10=n>=10?combinations(n,10)*p^10*(1-p)^(n-10):0; probs=[p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]; mean_expr=sum([0*p0,1*p1,2*p2,3*p3,4*p4,5*p5,6*p6,7*p7,8*p8,9*p9,10*p10]); var_expr=sum([0*p0,1*p1,4*p2,9*p3,16*p4,25*p5,36*p6,49*p7,64*p8,81*p9,100*p10])-mean_expr^2",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=0",
+       "=p0"
+      ],
+      [
+       "=1",
+       "=p0"
+      ],
+      [
+       "=1",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=0"
+      ],
+      [
+       "=1",
+       "=p1"
+      ],
+      [
+       "=2",
+       "=p1"
+      ],
+      [
+       "=2",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=2",
+       "=0"
+      ],
+      [
+       "=2",
+       "=p2"
+      ],
+      [
+       "=3",
+       "=p2"
+      ],
+      [
+       "=3",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=3",
+       "=0"
+      ],
+      [
+       "=3",
+       "=p3"
+      ],
+      [
+       "=4",
+       "=p3"
+      ],
+      [
+       "=4",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=4",
+       "=0"
+      ],
+      [
+       "=4",
+       "=p4"
+      ],
+      [
+       "=5",
+       "=p4"
+      ],
+      [
+       "=5",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=5",
+       "=0"
+      ],
+      [
+       "=5",
+       "=p5"
+      ],
+      [
+       "=6",
+       "=p5"
+      ],
+      [
+       "=6",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=6",
+       "=0"
+      ],
+      [
+       "=6",
+       "=p6"
+      ],
+      [
+       "=7",
+       "=p6"
+      ],
+      [
+       "=7",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=7",
+       "=0"
+      ],
+      [
+       "=7",
+       "=p7"
+      ],
+      [
+       "=8",
+       "=p7"
+      ],
+      [
+       "=8",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=8",
+       "=0"
+      ],
+      [
+       "=8",
+       "=p8"
+      ],
+      [
+       "=9",
+       "=p8"
+      ],
+      [
+       "=9",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=9",
+       "=0"
+      ],
+      [
+       "=9",
+       "=p9"
+      ],
+      [
+       "=10",
+       "=p9"
+      ],
+      [
+       "=10",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=10",
+       "=0"
+      ],
+      [
+       "=10",
+       "=p10"
+      ],
+      [
+       "=11",
+       "=p10"
+      ],
+      [
+       "=11",
+       "=0"
+      ]
+     ]
+    },
+    {
+     "type": "line",
+     "points": [
+      [
+       "=mean_expr",
+       "=0"
+      ],
+      [
+       "=mean_expr",
+       "=1"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Σ P(X=k)",
+    "expr": "sum(probs)",
+    "digits": 6
+   },
+   {
+    "label": "E(X) = np",
+    "expr": "mean_expr",
+    "digits": 3
+   },
+   {
+    "label": "V(X) = np(1-p)",
+    "expr": "var_expr",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "p": 0.5
+   },
+   {
+    "n": 5,
+    "p": 0.2
+   },
+   {
+    "n": 10,
+    "p": 0.7
+   },
+   {
+    "n": 1,
+    "p": 0.5
+   }
+  ],
+  "invariants": [
+   "sum(probs)-1",
+   "mean_expr - n*p",
+   "var_expr - n*p*(1-p)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "p": 0.5
+    },
+    "expect": {
+     "p0": 0.25,
+     "p1": 0.5,
+     "p2": 0.25,
+     "mean_expr": 1,
+     "var_expr": 0.5
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "p": 0.25
+    },
+    "expect": {
+     "p0": 0.421875,
+     "p1": 0.421875,
+     "p2": 0.140625,
+     "p3": 0.015625,
+     "mean_expr": 0.75,
+     "var_expr": 0.5625
+    }
+   },
+   {
+    "params": {
+     "n": 1,
+     "p": 0.4
+    },
+    "expect": {
+     "p0": 0.6,
+     "p1": 0.4,
+     "mean_expr": 0.4,
+     "var_expr": 0.24
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

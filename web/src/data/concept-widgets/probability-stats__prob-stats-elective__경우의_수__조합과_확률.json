@@ -1,0 +1,378 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/조합과_확률",
+ "spec": {
+  "title": "조합(Combination)의 의미",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 원소 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "선택 원소 수 r",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "choose=(r>=0 and r<=n)?factorial(n)/(factorial(r)*factorial(n-r)):0; sym=(n-r>=0 and n-r<=n)?factorial(n)/(factorial(n-r)*factorial(r)):0; c0=(0<=n)?factorial(n)/(factorial(0)*factorial(n)):0; c1=(1<=n)?factorial(n)/(factorial(1)*factorial(n-1)):0; c2=(2<=n)?factorial(n)/(factorial(2)*factorial(n-2)):0; c3=(3<=n)?factorial(n)/(factorial(3)*factorial(n-3)):0; c4=(4<=n)?factorial(n)/(factorial(4)*factorial(n-4)):0; c5=(5<=n)?factorial(n)/(factorial(5)*factorial(n-5)):0; c6=(6<=n)?factorial(n)/(factorial(6)*factorial(n-6)):0; c7=(7<=n)?factorial(n)/(factorial(7)*factorial(n-7)):0; c8=(8<=n)?factorial(n)/(factorial(8)*factorial(n-8)):0; c9=(9<=n)?factorial(n)/(factorial(9)*factorial(n-9)):0; c10=(10<=n)?factorial(n)/(factorial(10)*factorial(n-10)):0; sumc=c0+c1+c2+c3+c4+c5+c6+c7+c8+c9+c10; p=choose; q=(r-1>=0 and r-1<=n-1)?factorial(n-1)/(factorial(r-1)*factorial(n-r)):0; s=(r>=0 and r<=n-1)?factorial(n-1)/(factorial(r)*factorial(n-1-r)):0; pascal_diff=p-(q+s);",
+  "geometry": {
+   "range": [
+    -1.2,
+    11.2
+   ],
+   "yRange": [
+    -5,
+    270
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=-0.4",
+       "=0"
+      ],
+      [
+       "=0.4",
+       "=0"
+      ],
+      [
+       "=0.4",
+       "=c0"
+      ],
+      [
+       "=-0.4",
+       "=c0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0.6",
+       "=0"
+      ],
+      [
+       "=1.4",
+       "=0"
+      ],
+      [
+       "=1.4",
+       "=c1"
+      ],
+      [
+       "=0.6",
+       "=c1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1.6",
+       "=0"
+      ],
+      [
+       "=2.4",
+       "=0"
+      ],
+      [
+       "=2.4",
+       "=c2"
+      ],
+      [
+       "=1.6",
+       "=c2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=2.6",
+       "=0"
+      ],
+      [
+       "=3.4",
+       "=0"
+      ],
+      [
+       "=3.4",
+       "=c3"
+      ],
+      [
+       "=2.6",
+       "=c3"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=3.6",
+       "=0"
+      ],
+      [
+       "=4.4",
+       "=0"
+      ],
+      [
+       "=4.4",
+       "=c4"
+      ],
+      [
+       "=3.6",
+       "=c4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=4.6",
+       "=0"
+      ],
+      [
+       "=5.4",
+       "=0"
+      ],
+      [
+       "=5.4",
+       "=c5"
+      ],
+      [
+       "=4.6",
+       "=c5"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=5.6",
+       "=0"
+      ],
+      [
+       "=6.4",
+       "=0"
+      ],
+      [
+       "=6.4",
+       "=c6"
+      ],
+      [
+       "=5.6",
+       "=c6"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=6.6",
+       "=0"
+      ],
+      [
+       "=7.4",
+       "=0"
+      ],
+      [
+       "=7.4",
+       "=c7"
+      ],
+      [
+       "=6.6",
+       "=c7"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=7.6",
+       "=0"
+      ],
+      [
+       "=8.4",
+       "=0"
+      ],
+      [
+       "=8.4",
+       "=c8"
+      ],
+      [
+       "=7.6",
+       "=c8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=8.6",
+       "=0"
+      ],
+      [
+       "=9.4",
+       "=0"
+      ],
+      [
+       "=9.4",
+       "=c9"
+      ],
+      [
+       "=8.6",
+       "=c9"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=9.6",
+       "=0"
+      ],
+      [
+       "=10.4",
+       "=0"
+      ],
+      [
+       "=10.4",
+       "=c10"
+      ],
+      [
+       "=9.6",
+       "=c10"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r",
+      "=choose"
+     ],
+     "label": "C(n,r)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "r",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "C(n,r)",
+    "expr": "choose",
+    "digits": 0
+   },
+   {
+    "label": "C(n,n−r)",
+    "expr": "sym",
+    "digits": 0
+   },
+   {
+    "label": "Σ C(n,r)",
+    "expr": "sumc",
+    "digits": 0
+   },
+   {
+    "label": "2^n",
+    "expr": "2^n",
+    "digits": 0
+   },
+   {
+    "label": "Pascal 오차",
+    "expr": "abs(pascal_diff)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "r": 2
+   },
+   {
+    "n": 4,
+    "r": 4
+   },
+   {
+    "n": 7,
+    "r": 3
+   },
+   {
+    "n": 6,
+    "r": 0
+   }
+  ],
+  "invariants": [
+   "abs(sumc - 2^n)",
+   "abs(choose - sym)",
+   "abs(pascal_diff)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "r": 2
+    },
+    "expect": {
+     "choose": 10,
+     "sumc": 32,
+     "pascal_diff": 0
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 4
+    },
+    "expect": {
+     "choose": 1,
+     "sumc": 16,
+     "pascal_diff": 0
+    }
+   },
+   {
+    "params": {
+     "n": 7,
+     "r": 3
+    },
+    "expect": {
+     "choose": 35,
+     "sumc": 128,
+     "pascal_diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

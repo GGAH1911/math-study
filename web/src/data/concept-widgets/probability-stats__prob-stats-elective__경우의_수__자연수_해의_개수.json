@@ -1,0 +1,127 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/자연수_해의_개수",
+ "spec": {
+  "title": "자연수 해의 개수 (x1+...+xn=k)",
+  "params": [
+   {
+    "name": "n",
+    "label": "변수의 개수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "방정식의 합 k",
+    "type": "slider",
+    "min": 1,
+    "max": 15,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "cnt = k >= n ? combinations(k-1,n-1) : 0",
+  "plot": {
+   "range": [
+    1,
+    15
+   ],
+   "yRange": [
+    0,
+    5000
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x >= n ? combinations(floor(x-1), floor(n-1)) : 0",
+     "label": "해의 개수",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "변수 개수 n",
+    "expr": "n"
+   },
+   {
+    "label": "합 k",
+    "expr": "k"
+   },
+   {
+    "label": "자연수 해의 개수",
+    "expr": "cnt"
+   },
+   {
+    "label": "k-n (치환 후 합)",
+    "expr": "k-n"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3,
+    "k": 6
+   },
+   {
+    "n": 2,
+    "k": 5
+   },
+   {
+    "n": 4,
+    "k": 4
+   },
+   {
+    "n": 4,
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "cnt - (k >= n ? combinations(k-1,n-1) : 0)",
+   "cnt - round(cnt)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "k": 6
+    },
+    "expect": {
+     "cnt": 10
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "k": 5
+    },
+    "expect": {
+     "cnt": 4
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 4
+    },
+    "expect": {
+     "cnt": 1
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 3
+    },
+    "expect": {
+     "cnt": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

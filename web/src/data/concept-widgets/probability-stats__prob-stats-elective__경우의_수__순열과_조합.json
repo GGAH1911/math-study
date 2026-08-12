@@ -1,0 +1,210 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/순열과_조합",
+ "spec": {
+  "title": "순열과 조합: P(n,r)와 C(n,r) 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (전체 원소)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r (선택 개수)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "r_eff = r > n ? n : r; perm = factorial(n) / factorial(n - r_eff); comb = factorial(n) / (factorial(r_eff) * factorial(n - r_eff)); x1 = 1 <= n ? cos(0) : 100; y1 = 1 <= n ? sin(0) : 100; x2 = 2 <= n ? cos(2*pi/n) : 100; y2 = 2 <= n ? sin(2*pi/n) : 100; x3 = 3 <= n ? cos(4*pi/n) : 100; y3 = 3 <= n ? sin(4*pi/n) : 100; x4 = 4 <= n ? cos(6*pi/n) : 100; y4 = 4 <= n ? sin(6*pi/n) : 100; x5 = 5 <= n ? cos(8*pi/n) : 100; y5 = 5 <= n ? sin(8*pi/n) : 100; s1x1 = 1 < r_eff ? x1 : 100; s1y1 = 1 < r_eff ? y1 : 100; s1x2 = 1 < r_eff ? x2 : 100; s1y2 = 1 < r_eff ? y2 : 100; s2x1 = 2 < r_eff ? x2 : 100; s2y1 = 2 < r_eff ? y2 : 100; s2x2 = 2 < r_eff ? x3 : 100; s2y2 = 2 < r_eff ? y3 : 100; s3x1 = 3 < r_eff ? x3 : 100; s3y1 = 3 < r_eff ? y3 : 100; s3x2 = 3 < r_eff ? x4 : 100; s3y2 = 3 < r_eff ? y4 : 100; s4x1 = 4 < r_eff ? x4 : 100; s4y1 = 4 < r_eff ? y4 : 100; s4x2 = 4 < r_eff ? x5 : 100; s4y2 = 4 < r_eff ? y5 : 100",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "3"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ],
+     "label": "4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      "=y5"
+     ],
+     "label": "5"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=s1x1",
+      "=s1y1"
+     ],
+     "to": [
+      "=s1x2",
+      "=s1y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=s2x1",
+      "=s2y1"
+     ],
+     "to": [
+      "=s2x2",
+      "=s2y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=s3x1",
+      "=s3y1"
+     ],
+     "to": [
+      "=s3x2",
+      "=s3y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=s4x1",
+      "=s4y1"
+     ],
+     "to": [
+      "=s4x2",
+      "=s4y2"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "적용 r (r≤n)",
+    "expr": "r_eff",
+    "digits": 0
+   },
+   {
+    "label": "P(n,r)",
+    "expr": "perm",
+    "digits": 0
+   },
+   {
+    "label": "C(n,r)",
+    "expr": "comb",
+    "digits": 0
+   },
+   {
+    "label": "r!×C(n,r)",
+    "expr": "factorial(r_eff)*comb",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "r": 2
+   },
+   {
+    "n": 5,
+    "r": 3
+   },
+   {
+    "n": 3,
+    "r": 5
+   }
+  ],
+  "invariants": [
+   "perm - factorial(n)/factorial(n-r_eff)",
+   "comb - factorial(n)/(factorial(r_eff)*factorial(n-r_eff))",
+   "comb*factorial(r_eff) - perm",
+   "r_eff - (r > n ? n : r)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4,
+     "r": 2
+    },
+    "expect": {
+     "perm": 12,
+     "comb": 6
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "r": 3
+    },
+    "expect": {
+     "perm": 60,
+     "comb": 10
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 5
+    },
+    "expect": {
+     "perm": 6,
+     "comb": 1
+    }
+   }
+  ],
+  "tol": 1e-9
+ }
+}

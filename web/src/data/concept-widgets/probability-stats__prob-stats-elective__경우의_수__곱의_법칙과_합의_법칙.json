@@ -1,0 +1,170 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/곱의_법칙과_합의_법칙",
+ "spec": {
+  "title": "곱의 법칙과 합의 법칙: 직사각형 비교",
+  "params": [
+   {
+    "name": "m",
+    "label": "사건 A의 경우의 수",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "사건 B의 경우의 수",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "prod=m*n; sum=m+n; x1min=0; x1max=m; y1min=0; y1max=n; area1=(x1max-x1min)*(y1max-y1min); x2min=m+1; x2max=m+2; y2min=0; y2max=sum; area2=(x2max-x2min)*(y2max-y2min);",
+  "geometry": {
+   "range": [
+    0,
+    12
+   ],
+   "yRange": [
+    0,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=m",
+       0
+      ],
+      [
+       "=m",
+       "=n"
+      ],
+      [
+       0,
+       "=n"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=m+1",
+       0
+      ],
+      [
+       "=m+2",
+       0
+      ],
+      [
+       "=m+2",
+       "=sum"
+      ],
+      [
+       "=m+1",
+       "=sum"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "곱의 법칙 (m×n)",
+    "expr": "prod",
+    "digits": 0
+   },
+   {
+    "label": "합의 법칙 (m+n)",
+    "expr": "sum",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 3
+   },
+   {
+    "m": 5,
+    "n": 2
+   },
+   {
+    "m": 1,
+    "n": 10
+   },
+   {
+    "m": 4,
+    "n": 4
+   }
+  ],
+  "invariants": [
+   "area1-prod",
+   "area2-sum",
+   "prod-m*n",
+   "sum-m-n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 3
+    },
+    "expect": {
+     "prod": 6,
+     "sum": 5,
+     "area1": 6,
+     "area2": 5
+    }
+   },
+   {
+    "params": {
+     "m": 5,
+     "n": 2
+    },
+    "expect": {
+     "prod": 10,
+     "sum": 7,
+     "area1": 10,
+     "area2": 7
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "prod": 1,
+     "sum": 2,
+     "area1": 1,
+     "area2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

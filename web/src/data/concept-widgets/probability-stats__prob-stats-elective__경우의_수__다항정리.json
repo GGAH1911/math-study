@@ -1,0 +1,351 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/다항정리",
+ "spec": {
+  "title": "다항정리의 계수 (삼변수 전개)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (거듭제곱)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "maxC=factorial(n)/(factorial(floor(n/3))*factorial(floor((n+1)/3))*factorial(floor((n+2)/3))); c00=factorial(n)/(factorial(0)*factorial(0)*factorial(n)); c01=((1<=n)?factorial(n)/(factorial(0)*factorial(1)*factorial(n-1)):0); c02=((2<=n)?factorial(n)/(factorial(0)*factorial(2)*factorial(n-2)):0); c03=((3<=n)?factorial(n)/(factorial(0)*factorial(3)*factorial(n-3)):0); c04=((4<=n)?factorial(n)/(factorial(0)*factorial(4)*factorial(n-4)):0); c05=((5<=n)?factorial(n)/(factorial(0)*factorial(5)*factorial(n-5)):0); c06=((6<=n)?factorial(n)/(factorial(0)*factorial(6)*factorial(n-6)):0); c10=((1<=n)?factorial(n)/(factorial(1)*factorial(0)*factorial(n-1)):0); c11=((2<=n)?factorial(n)/(factorial(1)*factorial(1)*factorial(n-2)):0); c12=((3<=n)?factorial(n)/(factorial(1)*factorial(2)*factorial(n-3)):0); c13=((4<=n)?factorial(n)/(factorial(1)*factorial(3)*factorial(n-4)):0); c14=((5<=n)?factorial(n)/(factorial(1)*factorial(4)*factorial(n-5)):0); c15=((6<=n)?factorial(n)/(factorial(1)*factorial(5)*factorial(n-6)):0); c20=((2<=n)?factorial(n)/(factorial(2)*factorial(0)*factorial(n-2)):0); c21=((3<=n)?factorial(n)/(factorial(2)*factorial(1)*factorial(n-3)):0); c22=((4<=n)?factorial(n)/(factorial(2)*factorial(2)*factorial(n-4)):0); c23=((5<=n)?factorial(n)/(factorial(2)*factorial(3)*factorial(n-5)):0); c24=((6<=n)?factorial(n)/(factorial(2)*factorial(4)*factorial(n-6)):0); c30=((3<=n)?factorial(n)/(factorial(3)*factorial(0)*factorial(n-3)):0); c31=((4<=n)?factorial(n)/(factorial(3)*factorial(1)*factorial(n-4)):0); c32=((5<=n)?factorial(n)/(factorial(3)*factorial(2)*factorial(n-5)):0); c33=((6<=n)?factorial(n)/(factorial(3)*factorial(3)*factorial(n-6)):0); c40=((4<=n)?factorial(n)/(factorial(4)*factorial(0)*factorial(n-4)):0); c41=((5<=n)?factorial(n)/(factorial(4)*factorial(1)*factorial(n-5)):0); c42=((6<=n)?factorial(n)/(factorial(4)*factorial(2)*factorial(n-6)):0); c50=((5<=n)?factorial(n)/(factorial(5)*factorial(0)*factorial(n-5)):0); c51=((6<=n)?factorial(n)/(factorial(5)*factorial(1)*factorial(n-6)):0); c60=((6<=n)?factorial(n)/(factorial(6)*factorial(0)*factorial(n-6)):0); coefSum=sum([c00,c01,c02,c03,c04,c05,c06,c10,c11,c12,c13,c14,c15,c20,c21,c22,c23,c24,c30,c31,c32,c33,c40,c41,c42,c50,c51,c60])",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    6
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "0",
+       "0"
+      ],
+      [
+       "=n",
+       "0"
+      ],
+      [
+       "=n/2",
+       "=n*sqrt(3)/2"
+      ]
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=0.35*sqrt(c00/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0.5,
+      "=sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c01/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1,
+      "=sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c02/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1.5,
+      "=3*sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c03/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2,
+      "=2*sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c04/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2.5,
+      "=5*sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c05/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3,
+      "=3*sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c06/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1,
+      0
+     ],
+     "radius": "=0.35*sqrt(c10/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1.5,
+      "=sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c11/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2,
+      "=sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c12/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2.5,
+      "=3*sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c13/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3,
+      "=2*sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c14/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3.5,
+      "=5*sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c15/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2,
+      0
+     ],
+     "radius": "=0.35*sqrt(c20/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2.5,
+      "=sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c21/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3,
+      "=sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c22/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3.5,
+      "=3*sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c23/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      4,
+      "=2*sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c24/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3,
+      0
+     ],
+     "radius": "=0.35*sqrt(c30/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3.5,
+      "=sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c31/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      4,
+      "=sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c32/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      4.5,
+      "=3*sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c33/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      4,
+      0
+     ],
+     "radius": "=0.35*sqrt(c40/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      4.5,
+      "=sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c41/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      5,
+      "=sqrt(3)"
+     ],
+     "radius": "=0.35*sqrt(c42/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      5,
+      0
+     ],
+     "radius": "=0.35*sqrt(c50/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      5.5,
+      "=sqrt(3)/2"
+     ],
+     "radius": "=0.35*sqrt(c51/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      6,
+      0
+     ],
+     "radius": "=0.35*sqrt(c60/maxC)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "3^n",
+    "expr": "3^n",
+    "digits": 0
+   },
+   {
+    "label": "최대 계수",
+    "expr": "maxC",
+    "digits": 0
+   },
+   {
+    "label": "계수 합",
+    "expr": "coefSum",
+    "digits": 0
+   },
+   {
+    "label": "c₁₁",
+    "expr": "c11",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 2
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 6
+   }
+  ],
+  "invariants": [
+   "coefSum - 3^n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "c10": 2,
+     "c20": 1,
+     "maxC": 2
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "c11": 6,
+     "c30": 1,
+     "maxC": 6
+    }
+   },
+   {
+    "params": {
+     "n": 6
+    },
+    "expect": {
+     "c22": 90,
+     "maxC": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

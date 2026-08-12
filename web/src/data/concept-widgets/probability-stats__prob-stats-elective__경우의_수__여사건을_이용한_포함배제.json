@@ -1,0 +1,158 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/여사건을_이용한_포함배제",
+ "spec": {
+  "title": "여사건을 이용한 포함배제",
+  "params": [
+   {
+    "name": "U",
+    "label": "전체 경우의 수 U",
+    "type": "slider",
+    "min": 10,
+    "max": 100,
+    "init": 50,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "p",
+    "label": "여사건 비율 p",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "C=round(p*U); A=U-C; r=0.2*sqrt(A);",
+  "geometry": {
+   "range": [
+    -0.5,
+    10.5
+   ],
+   "yRange": [
+    -0.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=U/10",
+       0
+      ],
+      [
+       "=U/10",
+       5
+      ],
+      [
+       0,
+       5
+      ]
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      5,
+      2.5
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      2.5
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "U",
+    "expr": "U",
+    "digits": 0
+   },
+   {
+    "label": "A^c",
+    "expr": "C",
+    "digits": 0
+   },
+   {
+    "label": "A = U - A^c",
+    "expr": "A",
+    "digits": 0
+   },
+   {
+    "label": "A + A^c - U",
+    "expr": "A+C-U",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "U": 50,
+    "p": 0.3
+   },
+   {
+    "U": 100,
+    "p": 0.5
+   },
+   {
+    "U": 73,
+    "p": 0.21
+   },
+   {
+    "U": 20,
+    "p": 1
+   }
+  ],
+  "invariants": [
+   "A+C-U"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "U": 50,
+     "p": 0.3
+    },
+    "expect": {
+     "C": 15,
+     "A": 35
+    }
+   },
+   {
+    "params": {
+     "U": 73,
+     "p": 0.21
+    },
+    "expect": {
+     "C": 15,
+     "A": 58
+    }
+   },
+   {
+    "params": {
+     "U": 100,
+     "p": 0.05
+    },
+    "expect": {
+     "C": 5,
+     "A": 95
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

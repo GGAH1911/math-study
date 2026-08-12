@@ -1,0 +1,171 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/조합을_이용한_확률",
+ "spec": {
+  "title": "조합을 이용한 확률",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 개수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "사건 A 개수 a",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "선택 개수 k",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "s",
+    "label": "선택된 A 개수 s",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "an = min(a,n); ak = min(k,n); total = combinations(n, ak); fav = s>=0 ? (s<=an ? (ak-s>=0 ? (ak-s<=n-an ? combinations(an, s)*combinations(n-an, ak-s) : 0) : 0) : 0) : 0; p = total>0 ? fav/total : 0;",
+  "plot": {
+   "range": [
+    "=0",
+    "=max(ak,1)"
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "fns": [
+    {
+     "fn": "(round(x)>=0 ? (round(x)<=an ? (ak-round(x)>=0 ? (ak-round(x)<=n-an ? combinations(an, round(x))*combinations(n-an, ak-round(x))/combinations(n, ak) : 0) : 0) : 0) : 0)",
+     "label": "P(X=x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(X=s)",
+    "expr": "p",
+    "digits": 6
+   },
+   {
+    "label": "전체 경우의 수",
+    "expr": "total",
+    "digits": 0
+   },
+   {
+    "label": "유리한 경우의 수",
+    "expr": "fav",
+    "digits": 0
+   },
+   {
+    "label": "유효 a",
+    "expr": "an",
+    "digits": 0
+   },
+   {
+    "label": "유효 k",
+    "expr": "ak",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 10,
+    "a": 4,
+    "k": 3,
+    "s": 1
+   },
+   {
+    "n": 5,
+    "a": 2,
+    "k": 2,
+    "s": 0
+   },
+   {
+    "n": 4,
+    "a": 2,
+    "k": 2,
+    "s": 2
+   },
+   {
+    "n": 10,
+    "a": 0,
+    "k": 3,
+    "s": 0
+   },
+   {
+    "n": 6,
+    "a": 6,
+    "k": 4,
+    "s": 4
+   }
+  ],
+  "invariants": [
+   "((p>=0) ? ((p<=1) ? 0 : 1) : 1)",
+   "((an==0) ? ((s==0) ? (p-1) : p) : 0)",
+   "((an==n) ? ((s==ak) ? (p-1) : p) : 0)",
+   "p*total - fav"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 10,
+     "a": 4,
+     "k": 3,
+     "s": 1
+    },
+    "expect": {
+     "p": 0.5,
+     "total": 120,
+     "fav": 60
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "a": 2,
+     "k": 2,
+     "s": 0
+    },
+    "expect": {
+     "p": 0.3,
+     "total": 10,
+     "fav": 3
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "a": 2,
+     "k": 2,
+     "s": 2
+    },
+    "expect": {
+     "p": 0.16666666666666666,
+     "total": 6,
+     "fav": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

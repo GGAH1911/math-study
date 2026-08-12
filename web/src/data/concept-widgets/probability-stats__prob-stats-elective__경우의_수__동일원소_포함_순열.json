@@ -1,0 +1,125 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/동일원소_포함_순열",
+ "spec": {
+  "title": "동일원소 포함 순열",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 개수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "a",
+    "label": "같은 원소 개수 a",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "a_eff=min(a,n); count=factorial(n)/factorial(a_eff); distinct=n-a_eff;",
+  "plot": {
+   "range": [
+    "=0",
+    "=n"
+   ],
+   "yRange": [
+    "=0",
+    "=factorial(n)"
+   ],
+   "fns": [
+    {
+     "fn": "factorial(n) / factorial(x)",
+     "label": "n! / a!",
+     "color": "#2196f3"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "서로 다른 배열 수",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "같은 원소 개수(유효)",
+    "expr": "a_eff",
+    "digits": 0
+   },
+   {
+    "label": "나머지 서로 다른 원소 수",
+    "expr": "distinct",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "a": 2
+   },
+   {
+    "n": 5,
+    "a": 1
+   },
+   {
+    "n": 6,
+    "a": 0
+   },
+   {
+    "n": 3,
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "count - factorial(n) / factorial(a_eff)",
+   "count * factorial(a_eff) - factorial(n)",
+   "a_eff - min(a,n)",
+   "distinct - (n - a_eff)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4,
+     "a": 2
+    },
+    "expect": {
+     "count": 12,
+     "a_eff": 2,
+     "distinct": 2
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "a": 1
+    },
+    "expect": {
+     "count": 120,
+     "a_eff": 1,
+     "distinct": 4
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "a": 3
+    },
+    "expect": {
+     "count": 1,
+     "a_eff": 3,
+     "distinct": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

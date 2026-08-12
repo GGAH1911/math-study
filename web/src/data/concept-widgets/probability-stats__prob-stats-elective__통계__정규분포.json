@@ -1,0 +1,112 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/정규분포",
+ "spec": {
+  "title": "정규분포 확률밀도함수",
+  "params": [
+   {
+    "name": "mu",
+    "label": "μ",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "sigma",
+    "label": "σ",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "xmin=mu-4*sigma; xmax=mu+4*sigma; ymax=1.2/(sigma*sqrt(2*pi)); fmu=1/(sigma*sqrt(2*pi)); fplus=fmu*exp(-1/2); fminus=fplus; symdiff=fplus-fminus; norm=fmu*sigma*sqrt(2*pi)-1; ratio=fplus-fmu*exp(-1/2);",
+  "plot": {
+   "range": [
+    "=xmin",
+    "=xmax"
+   ],
+   "yRange": [
+    0,
+    "=ymax"
+   ],
+   "fns": [
+    {
+     "fn": "1/(sigma*sqrt(2*pi))*exp(-((x-mu)^2)/(2*sigma^2))",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(μ)",
+    "expr": "fmu",
+    "digits": 5
+   },
+   {
+    "label": "f(μ±σ)",
+    "expr": "fplus",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mu": 0,
+    "sigma": 1
+   },
+   {
+    "mu": 2,
+    "sigma": 0.5
+   },
+   {
+    "mu": -1,
+    "sigma": 3
+   },
+   {
+    "mu": 1.5,
+    "sigma": 2
+   }
+  ],
+  "invariants": [
+   "abs(norm)",
+   "abs(symdiff)",
+   "abs(ratio)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mu": 0,
+     "sigma": 1
+    },
+    "expect": {
+     "fmu": 0.3989422804,
+     "fplus": 0.2419707245
+    }
+   },
+   {
+    "params": {
+     "mu": 0,
+     "sigma": 2
+    },
+    "expect": {
+     "fmu": 0.1994711402
+    }
+   },
+   {
+    "params": {
+     "mu": -1,
+     "sigma": 0.5
+    },
+    "expect": {
+     "fmu": 0.7978845608
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

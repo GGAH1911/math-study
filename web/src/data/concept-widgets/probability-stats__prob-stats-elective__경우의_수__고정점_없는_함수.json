@@ -1,0 +1,97 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/고정점_없는_함수",
+ "spec": {
+  "title": "고정점 없는 함수 (완전순열)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (원소 개수)",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 5,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "d_n = round(factorial(n)/e); d_nm1 = (n-1) > 0 ? round(factorial(n-1)/e) : 1; d_nm2 = (n-2) > 0 ? round(factorial(n-2)/e) : 1; p = d_n / factorial(n); approx = 1/e",
+  "plot": {
+   "range": [
+    1,
+    12
+   ],
+   "yRange": [
+    0,
+    200000000
+   ],
+   "fns": [
+    {
+     "fn": "round(factorial(floor(x))/e)",
+     "label": "D(n)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "완전순열 수 D(n)",
+    "expr": "d_n",
+    "digits": 0
+   },
+   {
+    "label": "확률 P(n)",
+    "expr": "p",
+    "digits": 6
+   },
+   {
+    "label": "1/e (극한)",
+    "expr": "approx",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 8
+   }
+  ],
+  "invariants": [
+   "abs(d_n - (n-1)*(d_nm1 + d_nm2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "d_n": 2,
+     "d_nm1": 1,
+     "d_nm2": 0,
+     "p": 0.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "d_n": 44,
+     "d_nm1": 9,
+     "d_nm2": 2,
+     "p": 0.36666666666666664
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

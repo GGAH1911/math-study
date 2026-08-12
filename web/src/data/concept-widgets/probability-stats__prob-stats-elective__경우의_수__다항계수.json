@@ -1,0 +1,187 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/다항계수",
+ "spec": {
+  "title": "다항계수 (3개 그룹)",
+  "params": [
+   {
+    "name": "n1",
+    "label": "n1",
+    "type": "slider",
+    "min": 0,
+    "max": 7,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n2",
+    "label": "n2",
+    "type": "slider",
+    "min": 0,
+    "max": 7,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n3",
+    "label": "n3",
+    "type": "slider",
+    "min": 0,
+    "max": 7,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "n = n1 + n2 + n3; coeff = factorial(n) / (factorial(n1) * factorial(n2) * factorial(n3));",
+  "geometry": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.6,
+       0
+      ],
+      [
+       1.4,
+       0
+      ],
+      [
+       1.4,
+       "=n1"
+      ],
+      [
+       0.6,
+       "=n1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1.6,
+       0
+      ],
+      [
+       2.4,
+       0
+      ],
+      [
+       2.4,
+       "=n2"
+      ],
+      [
+       1.6,
+       "=n2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2.6,
+       0
+      ],
+      [
+       3.4,
+       0
+      ],
+      [
+       3.4,
+       "=n3"
+      ],
+      [
+       2.6,
+       "=n3"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n (전체 원소 수)",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "다항계수",
+    "expr": "coeff",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n1": 2,
+    "n2": 3,
+    "n3": 1
+   },
+   {
+    "n1": 1,
+    "n2": 1,
+    "n3": 1
+   },
+   {
+    "n1": 4,
+    "n2": 2,
+    "n3": 0
+   }
+  ],
+  "invariants": [
+   "n - (n1 + n2 + n3)",
+   "coeff * factorial(n1) * factorial(n2) * factorial(n3) - factorial(n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n1": 1,
+     "n2": 1,
+     "n3": 1
+    },
+    "expect": {
+     "n": 3,
+     "coeff": 6
+    }
+   },
+   {
+    "params": {
+     "n1": 2,
+     "n2": 1,
+     "n3": 1
+    },
+    "expect": {
+     "n": 4,
+     "coeff": 12
+    }
+   },
+   {
+    "params": {
+     "n1": 2,
+     "n2": 2,
+     "n3": 2
+    },
+    "expect": {
+     "n": 6,
+     "coeff": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

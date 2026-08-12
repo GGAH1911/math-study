@@ -1,0 +1,210 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/산점도",
+ "spec": {
+  "title": "산점도: 두 변수의 관계와 상관계수",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "절편 b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "eps",
+    "label": "흩어짐 ε",
+    "type": "slider",
+    "min": 0,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "x1=1; x2=2; x3=3; x4=4; x5=5; x6=6; x7=7; x8=8; x9=9; x10=10; r1=1; r2=-2; r3=1; r4=1; r5=-2; r6=1; r7=1; r8=-2; r9=1; r10=0; y1=b+a*x1+eps*r1; y2=b+a*x2+eps*r2; y3=b+a*x3+eps*r3; y4=b+a*x4+eps*r4; y5=b+a*x5+eps*r5; y6=b+a*x6+eps*r6; y7=b+a*x7+eps*r7; y8=b+a*x8+eps*r8; y9=b+a*x9+eps*r9; y10=b+a*x10+eps*r10; n=10; mx=sum([x1,x2,x3,x4,x5,x6,x7,x8,x9,x10])/n; my=sum([y1,y2,y3,y4,y5,y6,y7,y8,y9,y10])/n; sxx=sum([(x1-mx)^2,(x2-mx)^2,(x3-mx)^2,(x4-mx)^2,(x5-mx)^2,(x6-mx)^2,(x7-mx)^2,(x8-mx)^2,(x9-mx)^2,(x10-mx)^2]); syy=sum([(y1-my)^2,(y2-my)^2,(y3-my)^2,(y4-my)^2,(y5-my)^2,(y6-my)^2,(y7-my)^2,(y8-my)^2,(y9-my)^2,(y10-my)^2]); sxy=sum([(x1-mx)*(y1-my),(x2-mx)*(y2-my),(x3-mx)*(y3-my),(x4-mx)*(y4-my),(x5-mx)*(y5-my),(x6-mx)*(y6-my),(x7-mx)*(y7-my),(x8-mx)*(y8-my),(x9-mx)*(y9-my),(x10-mx)*(y10-my)]); a_hat=sxy/sxx; b_hat=my-a_hat*mx; corr=syy>0 ? sxy/sqrt(sxx*syy) : 0",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      "=y5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x6",
+      "=y6"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x7",
+      "=y7"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x8",
+      "=y8"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x9",
+      "=y9"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x10",
+      "=y10"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "추세선 기울기 â",
+    "expr": "a_hat",
+    "digits": 4
+   },
+   {
+    "label": "추세선 절편 b̂",
+    "expr": "b_hat",
+    "digits": 4
+   },
+   {
+    "label": "상관계수 r",
+    "expr": "corr",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "eps": 1
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "eps": 1
+   },
+   {
+    "a": 0.5,
+    "b": 2,
+    "eps": 0
+   },
+   {
+    "a": -1.5,
+    "b": -2,
+    "eps": 1.5
+   }
+  ],
+  "invariants": [
+   "abs(a_hat-a)",
+   "abs(b_hat-b)",
+   "abs(sxy-a*sxx)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "eps": 0
+    },
+    "expect": {
+     "a_hat": 1,
+     "b_hat": 0,
+     "corr": 1,
+     "y3": 3
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2,
+     "eps": 0
+    },
+    "expect": {
+     "a_hat": -1,
+     "b_hat": 2,
+     "corr": -1,
+     "y3": -1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0,
+     "eps": 1
+    },
+    "expect": {
+     "a_hat": 0.5,
+     "b_hat": 0,
+     "y3": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

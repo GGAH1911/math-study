@@ -1,0 +1,186 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/기댓값_분산",
+ "spec": {
+  "title": "기댓값과 분산 (이산확률변수)",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "p (P(X=x₁))",
+    "type": "slider",
+    "min": 0.01,
+    "max": 0.99,
+    "init": 0.4,
+    "step": 0.01
+   }
+  ],
+  "scope": "q=1-p; E=x1*p+x2*q; E2=x1^2*p+x2^2*q; V=E2-E^2; SD=sqrt(V); V2=(x1-E)^2*p+(x2-E)^2*q",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      0
+     ],
+     "to": [
+      "=x2",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      0
+     ],
+     "label": "x₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      0
+     ],
+     "label": "x₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=E",
+      0
+     ],
+     "label": "E(X)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "E(X)",
+    "expr": "E",
+    "digits": 3
+   },
+   {
+    "label": "V(X)",
+    "expr": "V",
+    "digits": 3
+   },
+   {
+    "label": "σ(X)",
+    "expr": "SD",
+    "digits": 3
+   },
+   {
+    "label": "P(X=x₁)",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "P(X=x₂)",
+    "expr": "q",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": -1,
+    "x2": 3,
+    "p": 0.4
+   },
+   {
+    "x1": 0,
+    "x2": 4,
+    "p": 0.5
+   },
+   {
+    "x1": -3,
+    "x2": 3,
+    "p": 0.5
+   },
+   {
+    "x1": 1,
+    "x2": 1,
+    "p": 0.8
+   }
+  ],
+  "invariants": [
+   "p+q-1",
+   "V - V2",
+   "SD^2 - V"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "x2": 4,
+     "p": 0.5
+    },
+    "expect": {
+     "E": 2,
+     "E2": 8,
+     "V": 4,
+     "SD": 2,
+     "q": 0.5
+    }
+   },
+   {
+    "params": {
+     "x1": -3,
+     "x2": 3,
+     "p": 0.5
+    },
+    "expect": {
+     "E": 0,
+     "E2": 9,
+     "V": 9,
+     "SD": 3,
+     "q": 0.5
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "x2": 1,
+     "p": 0.8
+    },
+    "expect": {
+     "E": 1,
+     "E2": 1,
+     "V": 0,
+     "SD": 0,
+     "q": 0.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

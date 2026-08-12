@@ -1,0 +1,138 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/중복조합",
+ "spec": {
+  "title": "중복조합 H(n,r) = C(n+r-1,r) (n=2,3 시각화)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (원소의 종류)",
+    "type": "slider",
+    "min": 2,
+    "max": 3,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r (택하는 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "H=combinations(n+r-1,r); cnt=n==2 ? (r+1) : ((r+1)*(r+2)/2)",
+  "geometry": {
+   "range": [
+    -0.5,
+    9.5
+   ],
+   "yRange": [
+    -0.5,
+    9.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "= n==2 ? r : 0",
+       "= n==2 ? 0 : 0"
+      ],
+      [
+       "= n==2 ? 0 : r",
+       "= n==2 ? r : 0"
+      ],
+      [
+       "= n==2 ? 0 : 0",
+       "= n==2 ? r : r"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "H(n,r)",
+    "expr": "H",
+    "digits": 0
+   },
+   {
+    "label": "n+r-1",
+    "expr": "n+r-1",
+    "digits": 0
+   },
+   {
+    "label": "r",
+    "expr": "r",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "r": 0
+   },
+   {
+    "n": 2,
+    "r": 5
+   },
+   {
+    "n": 3,
+    "r": 0
+   },
+   {
+    "n": 3,
+    "r": 4
+   }
+  ],
+  "invariants": [
+   "abs(H - cnt)",
+   "abs(H - combinations(n+r-1,r))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "r": 0
+    },
+    "expect": {
+     "H": 1
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "r": 3
+    },
+    "expect": {
+     "H": 4
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 2
+    },
+    "expect": {
+     "H": 6
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 4
+    },
+    "expect": {
+     "H": 15
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

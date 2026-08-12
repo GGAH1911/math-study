@@ -1,0 +1,307 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/경우의_분류",
+ "spec": {
+  "title": "경우의 분류 (합의 법칙) - 주사위 두 개",
+  "params": [
+   {
+    "name": "t",
+    "label": "기준값 t (합이 t 이상인 경우)",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "c2=1;c3=2;c4=3;c5=4;c6=5;c7=6;c8=5;c9=4;c10=3;c11=2;c12=1;countA=(2>=t?c2:0)+(3>=t?c3:0)+(4>=t?c4:0)+(5>=t?c5:0)+(6>=t?c6:0)+(7>=t?c7:0)+(8>=t?c8:0)+(9>=t?c9:0)+(10>=t?c10:0)+(11>=t?c11:0)+(12>=t?c12:0);countB=(2<t?c2:0)+(3<t?c3:0)+(4<t?c4:0)+(5<t?c5:0)+(6<t?c6:0)+(7<t?c7:0)+(8<t?c8:0)+(9<t?c9:0)+(10<t?c10:0)+(11<t?c11:0)+(12<t?c12:0);total=countA+countB",
+  "geometry": {
+   "range": [
+    1,
+    13
+   ],
+   "yRange": [
+    0,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      2,
+      0
+     ],
+     "to": [
+      2,
+      "=c2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      0
+     ],
+     "to": [
+      3,
+      "=c3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      0
+     ],
+     "to": [
+      4,
+      "=c4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      0
+     ],
+     "to": [
+      5,
+      "=c5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      6,
+      0
+     ],
+     "to": [
+      6,
+      "=c6"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      7,
+      0
+     ],
+     "to": [
+      7,
+      "=c7"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      8,
+      0
+     ],
+     "to": [
+      8,
+      "=c8"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      9,
+      0
+     ],
+     "to": [
+      9,
+      "=c9"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      10,
+      0
+     ],
+     "to": [
+      10,
+      "=c10"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      11,
+      0
+     ],
+     "to": [
+      11,
+      "=c11"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      12,
+      0
+     ],
+     "to": [
+      12,
+      "=c12"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=c2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=c3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=c4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=c5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=c6"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=c7"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=c8"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      "=c9"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      "=c10"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      11,
+      "=c11"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      12,
+      "=c12"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=t-0.5",
+      0
+     ],
+     "to": [
+      "=t-0.5",
+      6
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A (합≥t)",
+    "expr": "countA"
+   },
+   {
+    "label": "B (합<t)",
+    "expr": "countB"
+   },
+   {
+    "label": "전체",
+    "expr": "total"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 2
+   },
+   {
+    "t": 5
+   },
+   {
+    "t": 8
+   },
+   {
+    "t": 12
+   }
+  ],
+  "invariants": [
+   "countA+countB-36"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 4
+    },
+    "expect": {
+     "countA": 33,
+     "countB": 3,
+     "total": 36
+    }
+   },
+   {
+    "params": {
+     "t": 7
+    },
+    "expect": {
+     "countA": 21,
+     "countB": 15,
+     "total": 36
+    }
+   },
+   {
+    "params": {
+     "t": 11
+    },
+    "expect": {
+     "countA": 3,
+     "countB": 33,
+     "total": 36
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

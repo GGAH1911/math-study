@@ -1,0 +1,107 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/음이_아닌_정수해",
+ "spec": {
+  "title": "음이 아닌 정수해의 수 (중복조합)",
+  "params": [
+   {
+    "name": "n",
+    "label": "변수의 개수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "합의 값 k",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "count = combinations(n+k-1,k); totalSlots = n+k-1",
+  "plot": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    0,
+    "=combinations(n+9,10)"
+   ],
+   "fns": [
+    {
+     "fn": "factorial(n+x-1)/(factorial(x)*factorial(n-1))",
+     "label": "C(n+x-1, x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "음이 아닌 정수해의 수",
+    "expr": "count"
+   },
+   {
+    "label": "C(n+k-1, k) = C(n+k-1, n-1)",
+    "expr": "count"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "k": 4
+   },
+   {
+    "n": 3,
+    "k": 0
+   },
+   {
+    "n": 4,
+    "k": 5
+   },
+   {
+    "n": 3,
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "count - combinations(n+k-1,n-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "k": 4
+    },
+    "expect": {
+     "count": 5
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "k": 0
+    },
+    "expect": {
+     "count": 1
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 5
+    },
+    "expect": {
+     "count": 56
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

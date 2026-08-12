@@ -1,0 +1,161 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/비감소_수열",
+ "spec": {
+  "title": "비감소 수열 탐구",
+  "params": [
+   {
+    "name": "a1",
+    "label": "a₁",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "a2",
+    "label": "a₂",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "a3",
+    "label": "a₃",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "a4",
+    "label": "a₄",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "a5",
+    "label": "a₅",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 7,
+    "step": 1
+   }
+  ],
+  "scope": "diff1=a2-a1; diff2=a3-a2; diff3=a4-a3; diff4=a5-a4; min_diff=min(diff1,diff2,diff3,diff4); is_nondecreasing = min_diff >= 0 ? 1 : 0",
+  "plot": {
+   "range": [
+    0.5,
+    5.5
+   ],
+   "yRange": [
+    -0.5,
+    10.5
+   ],
+   "fns": [
+    {
+     "fn": "x>=1 && x<2 ? a1 : x>=2 && x<3 ? a2 : x>=3 && x<4 ? a3 : x>=4 && x<5 ? a4 : a5",
+     "label": "aₙ",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최소 차이",
+    "expr": "min_diff",
+    "digits": 2
+   },
+   {
+    "label": "비감소 여부",
+    "expr": "is_nondecreasing",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "a2": 3,
+    "a3": 5,
+    "a4": 5,
+    "a5": 7
+   },
+   {
+    "a1": 5,
+    "a2": 3,
+    "a3": 3,
+    "a4": 2,
+    "a5": 1
+   },
+   {
+    "a1": 2,
+    "a2": 2,
+    "a3": 2,
+    "a4": 2,
+    "a5": 2
+   },
+   {
+    "a1": 0,
+    "a2": 4,
+    "a3": 4,
+    "a4": 10,
+    "a5": 10
+   }
+  ],
+  "invariants": [
+   "min_diff - min([a2-a1, a3-a2, a4-a3, a5-a4])",
+   "is_nondecreasing - (min_diff >= 0 ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 1,
+     "a2": 3,
+     "a3": 5,
+     "a4": 5,
+     "a5": 7
+    },
+    "expect": {
+     "min_diff": 0,
+     "is_nondecreasing": 1
+    }
+   },
+   {
+    "params": {
+     "a1": 5,
+     "a2": 3,
+     "a3": 3,
+     "a4": 2,
+     "a5": 1
+    },
+    "expect": {
+     "min_diff": -2,
+     "is_nondecreasing": 0
+    }
+   },
+   {
+    "params": {
+     "a1": 2,
+     "a2": 2,
+     "a3": 2,
+     "a4": 2,
+     "a5": 2
+    },
+    "expect": {
+     "min_diff": 0,
+     "is_nondecreasing": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

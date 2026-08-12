@@ -1,0 +1,140 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/수의_곱_조건",
+ "spec": {
+  "title": "곱의 법칙 (수의 곱 조건)",
+  "params": [
+   {
+    "name": "m",
+    "label": "사건 A의 경우의 수 (m)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "사건 B의 경우의 수 (n)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "area = m * n",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=m",
+       0
+      ],
+      [
+       "=m",
+       "=n"
+      ],
+      [
+       0,
+       "=n"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      "=n"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "m",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "전체 경우의 수 = m × n",
+    "expr": "area",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 3,
+    "n": 2
+   },
+   {
+    "m": 5,
+    "n": 4
+   },
+   {
+    "m": 7,
+    "n": 3
+   },
+   {
+    "m": 10,
+    "n": 10
+   }
+  ],
+  "invariants": [
+   "area - m*n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 3,
+     "n": 2
+    },
+    "expect": {
+     "area": 6
+    }
+   },
+   {
+    "params": {
+     "m": 5,
+     "n": 4
+    },
+    "expect": {
+     "area": 20
+    }
+   },
+   {
+    "params": {
+     "m": 7,
+     "n": 3
+    },
+    "expect": {
+     "area": 21
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

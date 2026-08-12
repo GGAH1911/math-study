@@ -1,0 +1,295 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/중복순열",
+ "spec": {
+  "title": "중복순열",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "offx=(r+1)/2; offy=(n+1)/2; count=n^r",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "= (1 <= r ? 1 - offx : -100)",
+      "= (1 <= n ? offy - 1 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (1 <= r ? 1 - offx : -100)",
+      "= (2 <= n ? offy - 2 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (1 <= r ? 1 - offx : -100)",
+      "= (3 <= n ? offy - 3 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (1 <= r ? 1 - offx : -100)",
+      "= (4 <= n ? offy - 4 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (1 <= r ? 1 - offx : -100)",
+      "= (5 <= n ? offy - 5 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (2 <= r ? 2 - offx : -100)",
+      "= (1 <= n ? offy - 1 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (2 <= r ? 2 - offx : -100)",
+      "= (2 <= n ? offy - 2 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (2 <= r ? 2 - offx : -100)",
+      "= (3 <= n ? offy - 3 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (2 <= r ? 2 - offx : -100)",
+      "= (4 <= n ? offy - 4 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (2 <= r ? 2 - offx : -100)",
+      "= (5 <= n ? offy - 5 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (3 <= r ? 3 - offx : -100)",
+      "= (1 <= n ? offy - 1 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (3 <= r ? 3 - offx : -100)",
+      "= (2 <= n ? offy - 2 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (3 <= r ? 3 - offx : -100)",
+      "= (3 <= n ? offy - 3 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (3 <= r ? 3 - offx : -100)",
+      "= (4 <= n ? offy - 4 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (3 <= r ? 3 - offx : -100)",
+      "= (5 <= n ? offy - 5 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (4 <= r ? 4 - offx : -100)",
+      "= (1 <= n ? offy - 1 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (4 <= r ? 4 - offx : -100)",
+      "= (2 <= n ? offy - 2 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (4 <= r ? 4 - offx : -100)",
+      "= (3 <= n ? offy - 3 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (4 <= r ? 4 - offx : -100)",
+      "= (4 <= n ? offy - 4 : -100)"
+     ],
+     "radius": 0.2
+    },
+    {
+     "type": "circle",
+     "center": [
+      "= (4 <= r ? 4 - offx : -100)",
+      "= (5 <= n ? offy - 5 : -100)"
+     ],
+     "radius": 0.2
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "r",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "중복순열의 수 (n^r)",
+    "expr": "count",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "r": 1
+   },
+   {
+    "n": 3,
+    "r": 2
+   },
+   {
+    "n": 4,
+    "r": 3
+   },
+   {
+    "n": 1,
+    "r": 3
+   },
+   {
+    "n": 4,
+    "r": 1
+   }
+  ],
+  "invariants": [
+   "count - n^r",
+   "n == 1 ? count - 1 : 0",
+   "r == 1 ? count - n : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "r": 1
+    },
+    "expect": {
+     "count": 2
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 2
+    },
+    "expect": {
+     "count": 9
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 3
+    },
+    "expect": {
+     "count": 64
+    }
+   },
+   {
+    "params": {
+     "n": 1,
+     "r": 3
+    },
+    "expect": {
+     "count": 1
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 1
+    },
+    "expect": {
+     "count": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

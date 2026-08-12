@@ -1,0 +1,162 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/신뢰구간",
+ "spec": {
+  "title": "신뢰구간 이해하기",
+  "params": [
+   {
+    "name": "n",
+    "label": "표본크기 n",
+    "type": "slider",
+    "min": 5,
+    "max": 100,
+    "init": 30,
+    "step": 1
+   },
+   {
+    "name": "conf",
+    "label": "신뢰수준 (%)",
+    "type": "slider",
+    "min": 80,
+    "max": 95,
+    "init": 95,
+    "step": 5
+   }
+  ],
+  "scope": "mu=100; sigma=10; xbar=103; alpha=1-conf/100; z=(conf==80 ? 1.28 : (conf==85 ? 1.44 : (conf==90 ? 1.645 : 1.96))); se=sigma/sqrt(n); margin=z*se; ciL=xbar-margin; ciU=xbar+margin; width=2*margin;",
+  "geometry": {
+   "range": [
+    90,
+    115
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=mu",
+      0
+     ],
+     "label": "μ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xbar",
+      0
+     ],
+     "label": "x̄"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ciL",
+      0
+     ],
+     "to": [
+      "=ciU",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "표본평균 (x̄)",
+    "expr": "xbar",
+    "digits": 2
+   },
+   {
+    "label": "표준오차 (SE)",
+    "expr": "se",
+    "digits": 4
+   },
+   {
+    "label": "z*",
+    "expr": "z",
+    "digits": 3
+   },
+   {
+    "label": "오차한계",
+    "expr": "margin",
+    "digits": 4
+   },
+   {
+    "label": "하한",
+    "expr": "ciL",
+    "digits": 4
+   },
+   {
+    "label": "상한",
+    "expr": "ciU",
+    "digits": 4
+   },
+   {
+    "label": "구간 폭",
+    "expr": "width",
+    "digits": 4
+   },
+   {
+    "label": "μ 포함?",
+    "expr": "((mu>=ciL) ? ((mu<=ciU) ? 1 : 0) : 0)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "conf": 95
+   },
+   {
+    "n": 25,
+    "conf": 90
+   },
+   {
+    "n": 100,
+    "conf": 95
+   },
+   {
+    "n": 10,
+    "conf": 80
+   }
+  ],
+  "invariants": [
+   "ciU - ciL - 2*z*se",
+   "ciL - xbar + z*se",
+   "ciU - xbar - z*se"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 25,
+     "conf": 90
+    },
+    "expect": {
+     "se": 2,
+     "ciL": 99.71,
+     "ciU": 106.29,
+     "width": 6.58
+    }
+   },
+   {
+    "params": {
+     "n": 100,
+     "conf": 95
+    },
+    "expect": {
+     "se": 1,
+     "ciL": 101.04,
+     "ciU": 104.96,
+     "width": 3.92
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

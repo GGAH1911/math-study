@@ -1,0 +1,128 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/비복원_추출",
+ "spec": {
+  "title": "비복원 추출 vs 복원 추출: 포함 확률 비교",
+  "params": [
+   {
+    "name": "N",
+    "label": "모집단 크기 N",
+    "type": "slider",
+    "min": 10,
+    "max": 100,
+    "init": 50,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "표본 크기 n",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1
+   }
+  ],
+  "scope": "nn = min(n, N); p_wo = nn / N; p_w = 1 - (1 - 1/N)^nn",
+  "plot": {
+   "range": [
+    0,
+    100
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x <= N ? x / N : 0",
+     "label": "비복원 (without replacement)",
+     "color": "blue"
+    },
+    {
+     "fn": "1 - (1 - 1/N)^x",
+     "label": "복원 (with replacement)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "표본 크기 (조정)",
+    "expr": "nn",
+    "digits": 0
+   },
+   {
+    "label": "비복원 포함확률",
+    "expr": "p_wo",
+    "digits": 6
+   },
+   {
+    "label": "복원 포함확률",
+    "expr": "p_w",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 50,
+    "n": 10
+   },
+   {
+    "N": 100,
+    "n": 20
+   },
+   {
+    "N": 20,
+    "n": 5
+   },
+   {
+    "N": 100,
+    "n": 100
+   }
+  ],
+  "invariants": [
+   "p_wo + (N - nn) / N - 1",
+   "p_w + (1 - 1/N)^nn - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 50,
+     "n": 10
+    },
+    "expect": {
+     "nn": 10,
+     "p_wo": 0.2,
+     "p_w": 0.1829271931124531
+    }
+   },
+   {
+    "params": {
+     "N": 100,
+     "n": 20
+    },
+    "expect": {
+     "nn": 20,
+     "p_wo": 0.2,
+     "p_w": 0.1820930624027692
+    }
+   },
+   {
+    "params": {
+     "N": 20,
+     "n": 5
+    },
+    "expect": {
+     "nn": 5,
+     "p_wo": 0.25,
+     "p_w": 0.2262190625
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

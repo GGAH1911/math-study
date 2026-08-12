@@ -1,0 +1,156 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/연속확률변수",
+ "spec": {
+  "title": "연속확률변수: 확률 = 확률밀도함수의 면적",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "lo = min(a,b); hi = max(a,b); prob = (hi*hi - lo*lo)/4",
+  "geometry": {
+   "range": [
+    0,
+    2
+   ],
+   "yRange": [
+    0,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=lo",
+       0
+      ],
+      [
+       "=lo",
+       "=lo/2"
+      ],
+      [
+       "=hi",
+       "=hi/2"
+      ],
+      [
+       "=hi",
+       0
+      ]
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    2
+   ],
+   "yRange": [
+    0,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "x/2",
+     "label": "f(x)=x/2",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(lo ≤ X ≤ hi)",
+    "expr": "prob",
+    "digits": 4
+   },
+   {
+    "label": "구간 길이",
+    "expr": "hi - lo",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5,
+    "b": 1.5
+   },
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": 0,
+    "b": 2
+   },
+   {
+    "a": 1.2,
+    "b": 0.3
+   }
+  ],
+  "invariants": [
+   "abs(prob - (hi*hi - lo*lo)/4)",
+   "abs(prob - ((hi-lo)*(lo+hi))/4)",
+   "abs(lo - min(a,b)) + abs(hi - max(a,b))",
+   "max(0,prob) - prob"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5,
+     "b": 1.5
+    },
+    "expect": {
+     "prob": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "prob": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2
+    },
+    "expect": {
+     "prob": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1.2,
+     "b": 0.3
+    },
+    "expect": {
+     "prob": 0.3375
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
