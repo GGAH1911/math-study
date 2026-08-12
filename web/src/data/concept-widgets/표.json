@@ -1,0 +1,325 @@
+{
+ "id": "표",
+ "spec": {
+  "title": "분할표와 조건부 확률 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "A∩B",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 30,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "A∩B^c",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 20,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "A^c∩B",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "A^c∩B^c",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 40,
+    "step": 1
+   }
+  ],
+  "scope": "n=a+b+c+d; r1=a+b; r2=c+d; c1=a+c; c2=b+d; pA=r1/n; pB=c1/n; pAandB=a/n; pAgivenB=a/c1; pBgivenA=a/r1; pNotA=r2/n; pNotB=c2/n; indiff=pAandB-pA*pB; x1=c1/n; h1=a/c1; h2=c/c2",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x1",
+       0
+      ],
+      [
+       "=x1",
+       "=h1"
+      ],
+      [
+       0,
+       "=h1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=h1"
+      ],
+      [
+       "=x1",
+       "=h1"
+      ],
+      [
+       "=x1",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       "=h2"
+      ],
+      [
+       "=x1",
+       "=h2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       "=h2"
+      ],
+      [
+       1,
+       "=h2"
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       "=x1",
+       1
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1/2",
+      "=h1/2"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1/2",
+      "=(1+h1)/2"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(1+x1)/2",
+      "=h2/2"
+     ],
+     "label": "c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(1+x1)/2",
+      "=(1+h2)/2"
+     ],
+     "label": "d"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "전체 n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 4
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 4
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pAandB",
+    "digits": 4
+   },
+   {
+    "label": "P(A|B)",
+    "expr": "pAgivenB",
+    "digits": 4
+   },
+   {
+    "label": "P(B|A)",
+    "expr": "pBgivenA",
+    "digits": 4
+   },
+   {
+    "label": "P(A)P(B)",
+    "expr": "pA*pB",
+    "digits": 4
+   },
+   {
+    "label": "독립성 (P(A∩B)-P(A)P(B))",
+    "expr": "indiff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "d": 4
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": 2,
+    "d": 2
+   },
+   {
+    "a": 10,
+    "b": 20,
+    "c": 30,
+    "d": 40
+   },
+   {
+    "a": 4,
+    "b": 1,
+    "c": 1,
+    "d": 4
+   }
+  ],
+  "invariants": [
+   "r1+r2-n",
+   "c1+c2-n",
+   "pA+pNotA-1",
+   "pB+pNotB-1",
+   "pAgivenB*pB-pAandB",
+   "pBgivenA*pA-pAandB"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": 2,
+     "d": 2
+    },
+    "expect": {
+     "n": 8,
+     "r1": 4,
+     "r2": 4,
+     "c1": 4,
+     "c2": 4,
+     "pA": 0.5,
+     "pB": 0.5,
+     "pAandB": 0.25,
+     "pAgivenB": 0.5,
+     "pBgivenA": 0.5,
+     "pNotA": 0.5,
+     "pNotB": 0.5,
+     "indiff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 10,
+     "b": 20,
+     "c": 30,
+     "d": 40
+    },
+    "expect": {
+     "n": 100,
+     "r1": 30,
+     "r2": 70,
+     "c1": 40,
+     "c2": 60,
+     "pA": 0.3,
+     "pB": 0.4,
+     "pAandB": 0.1,
+     "pAgivenB": 0.25,
+     "pBgivenA": 0.3333333333333333,
+     "pNotA": 0.7,
+     "pNotB": 0.6,
+     "indiff": -0.02
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 1,
+     "c": 1,
+     "d": 4
+    },
+    "expect": {
+     "n": 10,
+     "r1": 5,
+     "r2": 5,
+     "c1": 5,
+     "c2": 5,
+     "pA": 0.5,
+     "pB": 0.5,
+     "pAandB": 0.4,
+     "pAgivenB": 0.8,
+     "pBgivenA": 0.8,
+     "pNotA": 0.5,
+     "pNotB": 0.5,
+     "indiff": 0.15
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

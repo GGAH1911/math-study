@@ -1,0 +1,176 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/도수분포다각형",
+ "spec": {
+  "title": "도수분포다각형 탐구",
+  "params": [
+   {
+    "name": "f1",
+    "label": "계급값 10의 도수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "f2",
+    "label": "계급값 20의 도수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "f3",
+    "label": "계급값 30의 도수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 7,
+    "step": 1
+   },
+   {
+    "name": "f4",
+    "label": "계급값 40의 도수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "f5",
+    "label": "계급값 50의 도수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "total=f1+f2+f3+f4+f5; poly_area=5*((0+f1)+(f1+f2)+(f2+f3)+(f3+f4)+(f4+f5)+(f5+0)); weighted_sum=10*f1+20*f2+30*f3+40*f4+50*f5; avg=weighted_sum/max(total,1)",
+  "geometry": {
+   "range": [
+    -2,
+    62
+   ],
+   "yRange": [
+    -0.5,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    62
+   ],
+   "yRange": [
+    -0.5,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "((x>=0) and (x<10)) ? (f1/10)*x : ((x>=10) and (x<20)) ? f1+((f2-f1)/10)*(x-10) : ((x>=20) and (x<30)) ? f2+((f3-f2)/10)*(x-20) : ((x>=30) and (x<40)) ? f3+((f4-f3)/10)*(x-30) : ((x>=40) and (x<50)) ? f4+((f5-f4)/10)*(x-40) : ((x>=50) and (x<=60)) ? f5+((0-f5)/10)*(x-50) : 0",
+     "label": "도수분포다각형",
+     "color": "#c0392b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "총 도수",
+    "expr": "total",
+    "digits": 0
+   },
+   {
+    "label": "평균(계급값 기준)",
+    "expr": "avg",
+    "digits": 2
+   },
+   {
+    "label": "다각형 아래 넓이",
+    "expr": "poly_area",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "f1": 3,
+    "f2": 5,
+    "f3": 7,
+    "f4": 4,
+    "f5": 2
+   },
+   {
+    "f1": 0,
+    "f2": 1,
+    "f3": 4,
+    "f4": 2,
+    "f5": 1
+   },
+   {
+    "f1": 2,
+    "f2": 2,
+    "f3": 2,
+    "f4": 2,
+    "f5": 2
+   }
+  ],
+  "invariants": [
+   "abs(total-(f1+f2+f3+f4+f5))",
+   "abs(poly_area-10*total)",
+   "abs(avg-((10*f1+20*f2+30*f3+40*f4+50*f5)/max(total,1)))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "f1": 1,
+     "f2": 2,
+     "f3": 3,
+     "f4": 2,
+     "f5": 2
+    },
+    "expect": {
+     "total": 10,
+     "poly_area": 100,
+     "avg": 32
+    }
+   },
+   {
+    "params": {
+     "f1": 1,
+     "f2": 2,
+     "f3": 4,
+     "f4": 2,
+     "f5": 1
+    },
+    "expect": {
+     "total": 10,
+     "poly_area": 100,
+     "avg": 30
+    }
+   },
+   {
+    "params": {
+     "f1": 0,
+     "f2": 5,
+     "f3": 5,
+     "f4": 5,
+     "f5": 0
+    },
+    "expect": {
+     "total": 15,
+     "poly_area": 150,
+     "avg": 30
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

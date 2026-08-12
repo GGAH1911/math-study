@@ -1,0 +1,98 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/팩토리얼",
+ "spec": {
+  "title": "팩토리얼 (n!)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "fact = factorial(n); ratio = factorial(n+1) / fact;",
+  "plot": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    0,
+    4000000
+   ],
+   "fns": [
+    {
+     "fn": "factorial(x)",
+     "label": "n!",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n!",
+    "expr": "fact"
+   },
+   {
+    "label": "(n+1)! / n!",
+    "expr": "ratio"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 0
+   },
+   {
+    "n": 1
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 10
+   }
+  ],
+  "invariants": [
+   "n>=1 ? fact - n*factorial(n-1) : fact-1",
+   "ratio - (n+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 0
+    },
+    "expect": {
+     "fact": 1,
+     "ratio": 1
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "fact": 6,
+     "ratio": 4
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "fact": 120,
+     "ratio": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/평균_중앙값_최빈값",
+ "spec": {
+  "title": "평균·중앙값·최빈값",
+  "params": [
+   {
+    "name": "x1",
+    "label": "값 1",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x2",
+    "label": "값 2",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x3",
+    "label": "값 3",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 7,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "mean=(x1+x2+x3)/3; med=x1+x2+x3-min(x1,x2,x3)-max(x1,x2,x3); mod=x1==x2 ? x1 : (x1==x3 ? x1 : (x2==x3 ? x2 : -1))",
+  "geometry": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    -1,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      0
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mean",
+      0.5
+     ],
+     "label": "평균"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=med",
+      1
+     ],
+     "label": "중앙값"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균",
+    "expr": "mean",
+    "digits": 2
+   },
+   {
+    "label": "중앙값",
+    "expr": "med",
+    "digits": 1
+   },
+   {
+    "label": "최빈값",
+    "expr": "mod",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "x2": 4,
+    "x3": 10
+   },
+   {
+    "x1": 2,
+    "x2": 5,
+    "x3": 5
+   },
+   {
+    "x1": 1,
+    "x2": 1,
+    "x3": 3
+   },
+   {
+    "x1": 7,
+    "x2": 7,
+    "x3": 7
+   }
+  ],
+  "invariants": [
+   "mean*3 - (x1+x2+x3)",
+   "med - (x1+x2+x3 - min(x1,x2,x3) - max(x1,x2,x3))",
+   "((x1==x2 or x1==x3 or x2==x3) ? ((mod==x1 ? 1 : (mod==x2 ? 1 : (mod==x3 ? 1 : 0))) - 1) : (mod==-1 ? 0 : 1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "x2": 4,
+     "x3": 10
+    },
+    "expect": {
+     "mean": 4.666666666666667,
+     "med": 4,
+     "mod": -1
+    }
+   },
+   {
+    "params": {
+     "x1": 2,
+     "x2": 5,
+     "x3": 5
+    },
+    "expect": {
+     "mean": 4,
+     "med": 5,
+     "mod": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "x2": 1,
+     "x3": 3
+    },
+    "expect": {
+     "mean": 1.6666666666666667,
+     "med": 1,
+     "mod": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

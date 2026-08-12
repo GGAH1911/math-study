@@ -1,0 +1,289 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/독립시행",
+ "spec": {
+  "title": "독립시행과 이항분포",
+  "params": [
+   {
+    "name": "n",
+    "label": "시행 횟수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "성공 확률 p",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.05
+   },
+   {
+    "name": "k",
+    "label": "성공 횟수 k",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "pmf(t) = t <= n ? combinations(n,t)*p^t*(1-p)^(n-t) : 0; yoff(t) = t <= n ? pmf(t) : -1000; pk = pmf(k); mean = n*p; sd = sqrt(n*p*(1-p))",
+  "geometry": {
+   "range": [
+    -0.5,
+    20.5
+   ],
+   "yRange": [
+    0,
+    1.1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=yoff(0)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=yoff(1)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=yoff(2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=yoff(3)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=yoff(4)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=yoff(5)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=yoff(6)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=yoff(7)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=yoff(8)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      "=yoff(9)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      "=yoff(10)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      11,
+      "=yoff(11)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      12,
+      "=yoff(12)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      13,
+      "=yoff(13)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      14,
+      "=yoff(14)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      15,
+      "=yoff(15)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      16,
+      "=yoff(16)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      17,
+      "=yoff(17)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      18,
+      "=yoff(18)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      19,
+      "=yoff(19)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      20,
+      "=yoff(20)"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=k",
+      0
+     ],
+     "to": [
+      "=k",
+      "=pk"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=k",
+      "=pk"
+     ],
+     "label": "P(X=k)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(X=k)",
+    "expr": "pk",
+    "digits": 6
+   },
+   {
+    "label": "평균 np",
+    "expr": "mean",
+    "digits": 2
+   },
+   {
+    "label": "표준편차",
+    "expr": "sd",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "p": 0.5,
+    "k": 2
+   },
+   {
+    "n": 10,
+    "p": 0.3,
+    "k": 3
+   },
+   {
+    "n": 20,
+    "p": 0.9,
+    "k": 18
+   }
+  ],
+  "invariants": [
+   "sum([pmf(0), pmf(1), pmf(2), pmf(3), pmf(4), pmf(5), pmf(6), pmf(7), pmf(8), pmf(9), pmf(10), pmf(11), pmf(12), pmf(13), pmf(14), pmf(15), pmf(16), pmf(17), pmf(18), pmf(19), pmf(20)]) - 1",
+   "(k < n) ? (pmf(k+1)/pmf(k) - (n-k)/(k+1)*p/(1-p)) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "p": 0.5,
+     "k": 2
+    },
+    "expect": {
+     "pk": 0.3125
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "p": 0.3,
+     "k": 3
+    },
+    "expect": {
+     "pk": 0.266827932
+    }
+   },
+   {
+    "params": {
+     "n": 20,
+     "p": 0.9,
+     "k": 18
+    },
+    "expect": {
+     "pk": 0.2851798070642983
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

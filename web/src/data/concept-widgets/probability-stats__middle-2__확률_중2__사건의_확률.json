@@ -1,0 +1,310 @@
+{
+ "id": "probability-stats/middle-2/확률_중2/사건의_확률",
+ "spec": {
+  "title": "사건의 확률 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 경우의 수",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "사건의 경우의 수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "kk=min(k,n); p=kk/n; q=1-p;",
+  "geometry": {
+   "range": [
+    -0.5,
+    11.5
+   ],
+   "yRange": [
+    -0.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=n",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=n",
+      0
+     ],
+     "to": [
+      "=n",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=n",
+      1
+     ],
+     "to": [
+      0,
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      1
+     ],
+     "to": [
+      0,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1 < n ? 1 : 100",
+      0
+     ],
+     "to": [
+      "=1 < n ? 1 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=2 < n ? 2 : 100",
+      0
+     ],
+     "to": [
+      "=2 < n ? 2 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=3 < n ? 3 : 100",
+      0
+     ],
+     "to": [
+      "=3 < n ? 3 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=4 < n ? 4 : 100",
+      0
+     ],
+     "to": [
+      "=4 < n ? 4 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=5 < n ? 5 : 100",
+      0
+     ],
+     "to": [
+      "=5 < n ? 5 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=6 < n ? 6 : 100",
+      0
+     ],
+     "to": [
+      "=6 < n ? 6 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=7 < n ? 7 : 100",
+      0
+     ],
+     "to": [
+      "=7 < n ? 7 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=8 < n ? 8 : 100",
+      0
+     ],
+     "to": [
+      "=8 < n ? 8 : 100",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=9 < n ? 9 : 100",
+      0
+     ],
+     "to": [
+      "=9 < n ? 9 : 100",
+      1
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=kk",
+       0
+      ],
+      [
+       "=kk",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "color": "#e74c3c",
+     "opacity": 0.5
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "전체 경우의 수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "사건의 경우의 수(입력)",
+    "expr": "k",
+    "digits": 0
+   },
+   {
+    "label": "실제 사건의 경우의 수",
+    "expr": "kk",
+    "digits": 0
+   },
+   {
+    "label": "확률 P(A)",
+    "expr": "p",
+    "digits": 4
+   },
+   {
+    "label": "여사건 확률",
+    "expr": "q",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 6,
+    "k": 0
+   },
+   {
+    "n": 6,
+    "k": 3
+   },
+   {
+    "n": 5,
+    "k": 2
+   },
+   {
+    "n": 4,
+    "k": 5
+   }
+  ],
+  "invariants": [
+   "kk - min(k,n)",
+   "p - kk/n",
+   "p + q - 1",
+   "abs(p) - p",
+   "1 - p - abs(1-p)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 6,
+     "k": 0
+    },
+    "expect": {
+     "kk": 0,
+     "p": 0,
+     "q": 1
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "k": 3
+    },
+    "expect": {
+     "kk": 3,
+     "p": 0.5,
+     "q": 0.5
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "k": 2
+    },
+    "expect": {
+     "kk": 2,
+     "p": 0.4,
+     "q": 0.6
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 5
+    },
+    "expect": {
+     "kk": 4,
+     "p": 1,
+     "q": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

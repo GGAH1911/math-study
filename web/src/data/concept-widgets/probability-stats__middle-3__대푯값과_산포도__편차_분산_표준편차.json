@@ -1,0 +1,249 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/편차_분산_표준편차",
+ "spec": {
+  "title": "편차·분산·표준편차",
+  "params": [
+   {
+    "name": "x1",
+    "label": "데이터 1",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "데이터 2",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "x3",
+    "label": "데이터 3",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "x4",
+    "label": "데이터 4",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 8,
+    "step": 1
+   }
+  ],
+  "scope": "mean=(x1+x2+x3+x4)/4; d1=x1-mean; d2=x2-mean; d3=x3-mean; d4=x4-mean; var=(d1^2+d2^2+d3^2+d4^2)/4; std=sqrt(var)",
+  "geometry": {
+   "range": [
+    -0.5,
+    10.5
+   ],
+   "yRange": [
+    -0.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      0.7
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      1.1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      1.5
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      0.3
+     ],
+     "to": [
+      "=mean",
+      0.3
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      0.7
+     ],
+     "to": [
+      "=mean",
+      0.7
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x3",
+      1.1
+     ],
+     "to": [
+      "=mean",
+      1.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x4",
+      1.5
+     ],
+     "to": [
+      "=mean",
+      1.5
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=mean",
+      0.2
+     ],
+     "to": [
+      "=mean",
+      1.6
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=mean-std",
+      -0.3
+     ],
+     "to": [
+      "=mean+std",
+      -0.3
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균",
+    "expr": "mean",
+    "digits": 2
+   },
+   {
+    "label": "분산",
+    "expr": "var",
+    "digits": 2
+   },
+   {
+    "label": "표준편차",
+    "expr": "std",
+    "digits": 3
+   },
+   {
+    "label": "편차의 합",
+    "expr": "d1+d2+d3+d4",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 2,
+    "x2": 4,
+    "x3": 6,
+    "x4": 8
+   },
+   {
+    "x1": 0,
+    "x2": 0,
+    "x3": 10,
+    "x4": 10
+   },
+   {
+    "x1": 5,
+    "x2": 5,
+    "x3": 5,
+    "x4": 5
+   },
+   {
+    "x1": 1,
+    "x2": 2,
+    "x3": 3,
+    "x4": 4
+   }
+  ],
+  "invariants": [
+   "abs(d1+d2+d3+d4)",
+   "abs((x1^2+x2^2+x3^2+x4^2)/4 - mean^2 - var)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 2,
+     "x2": 2,
+     "x3": 6,
+     "x4": 6
+    },
+    "expect": {
+     "mean": 4,
+     "var": 4,
+     "std": 2
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "x2": 0,
+     "x3": 10,
+     "x4": 10
+    },
+    "expect": {
+     "mean": 5,
+     "var": 25,
+     "std": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 3,
+     "x2": 5,
+     "x3": 7,
+     "x4": 9
+    },
+    "expect": {
+     "mean": 6,
+     "var": 5,
+     "std": 2.2360679775
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

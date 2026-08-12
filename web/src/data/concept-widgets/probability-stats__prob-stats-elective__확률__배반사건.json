@@ -1,0 +1,234 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/배반사건",
+ "spec": {
+  "title": "배반사건",
+  "params": [
+   {
+    "name": "a",
+    "label": "A의 오른쪽 끝 (a)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01
+   },
+   {
+    "name": "b",
+    "label": "B의 왼쪽 끝 (b)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.01
+   }
+  ],
+  "scope": "pa=a; pb=1-b; pint=max(0,a-b); punion=a<b ? a+1-b : 1; disjoint=a<b ? 1 : 0",
+  "geometry": {
+   "range": [
+    -0.1,
+    1.1
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0.2
+     ],
+     "to": [
+      "=a",
+      0.2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      -0.2
+     ],
+     "to": [
+      1,
+      -0.2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=a",
+      0.2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      0
+     ],
+     "to": [
+      "=b",
+      -0.2
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0.2
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0.2
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      -0.2
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      -0.2
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pa",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "pb",
+    "digits": 3
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pint",
+    "digits": 3
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "punion",
+    "digits": 3
+   },
+   {
+    "label": "배반?",
+    "expr": "disjoint",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.3,
+    "b": 0.6
+   },
+   {
+    "a": 0.7,
+    "b": 0.2
+   },
+   {
+    "a": 0.5,
+    "b": 0.5
+   },
+   {
+    "a": 0.1,
+    "b": 0.9
+   }
+  ],
+  "invariants": [
+   "punion - (pa + pb - pint)",
+   "disjoint * pint"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.3,
+     "b": 0.6
+    },
+    "expect": {
+     "pa": 0.3,
+     "pb": 0.4,
+     "pint": 0,
+     "punion": 0.7,
+     "disjoint": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.7,
+     "b": 0.2
+    },
+    "expect": {
+     "pa": 0.7,
+     "pb": 0.8,
+     "pint": 0.5,
+     "punion": 1,
+     "disjoint": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0.5
+    },
+    "expect": {
+     "pa": 0.5,
+     "pb": 0.5,
+     "pint": 0,
+     "punion": 1,
+     "disjoint": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.1,
+     "b": 0.9
+    },
+    "expect": {
+     "pa": 0.1,
+     "pb": 0.1,
+     "pint": 0,
+     "punion": 0.2,
+     "disjoint": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

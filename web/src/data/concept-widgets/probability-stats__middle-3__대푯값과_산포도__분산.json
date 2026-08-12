@@ -1,0 +1,229 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/분산",
+ "spec": {
+  "title": "분산의 정의",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "x3",
+    "label": "x₃",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "x4",
+    "label": "x₄",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 8,
+    "step": 1
+   }
+  ],
+  "scope": "n=4; mu=(x1+x2+x3+x4)/n; variance=((x1-mu)^2+(x2-mu)^2+(x3-mu)^2+(x4-mu)^2)/n; sumdev=(x1-mu)+(x2-mu)+(x3-mu)+(x4-mu); varcheck=variance-((x1^2+x2^2+x3^2+x4^2)/n-mu^2);",
+  "geometry": {
+   "range": [
+    -0.5,
+    4.5
+   ],
+   "yRange": [
+    -0.5,
+    10.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=x1"
+     ],
+     "label": "x₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=x2"
+     ],
+     "label": "x₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=x3"
+     ],
+     "label": "x₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=x4"
+     ],
+     "label": "x₄"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0.5,
+      "=mu"
+     ],
+     "to": [
+      4.5,
+      "=mu"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=x1"
+     ],
+     "to": [
+      1,
+      "=mu"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=x2"
+     ],
+     "to": [
+      2,
+      "=mu"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=x3"
+     ],
+     "to": [
+      3,
+      "=mu"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=x4"
+     ],
+     "to": [
+      4,
+      "=mu"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균",
+    "expr": "mu",
+    "digits": 4
+   },
+   {
+    "label": "분산",
+    "expr": "variance",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 1,
+    "x2": 2,
+    "x3": 3,
+    "x4": 4
+   },
+   {
+    "x1": 0,
+    "x2": 0,
+    "x3": 0,
+    "x4": 0
+   },
+   {
+    "x1": 1,
+    "x2": 1,
+    "x3": 1,
+    "x4": 4
+   },
+   {
+    "x1": 10,
+    "x2": 10,
+    "x3": 10,
+    "x4": 10
+   }
+  ],
+  "invariants": [
+   "sumdev",
+   "varcheck"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 1,
+     "x2": 2,
+     "x3": 3,
+     "x4": 4
+    },
+    "expect": {
+     "mu": 2.5,
+     "variance": 1.25
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "x2": 0,
+     "x3": 0,
+     "x4": 0
+    },
+    "expect": {
+     "mu": 0,
+     "variance": 0
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "x2": 1,
+     "x3": 1,
+     "x4": 4
+    },
+    "expect": {
+     "mu": 1.75,
+     "variance": 1.6875
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

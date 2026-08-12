@@ -1,0 +1,236 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/중앙값",
+ "spec": {
+  "title": "중앙값 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "자료 개수",
+    "type": "slider",
+    "min": 5,
+    "max": 6,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "a1",
+    "label": "간격 1",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a2",
+    "label": "간격 2",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a3",
+    "label": "간격 3",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a4",
+    "label": "간격 4",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a5",
+    "label": "간격 5",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "x1=0; x2=x1+a1; x3=x2+a2; x4=x3+a3; x5=x4+a4; x6=x5+a5; x6_disp = n==5 ? -100 : x6; med = n==5 ? x3 : (x3+x4)/2; leq5=sum([x1<=med,x2<=med,x3<=med,x4<=med,x5<=med]); leq6=sum([x1<=med,x2<=med,x3<=med,x4<=med,x5<=med,x6<=med]); geq5=sum([x1>=med,x2>=med,x3>=med,x4>=med,x5>=med]); geq6=sum([x1>=med,x2>=med,x3>=med,x4>=med,x5>=med,x6>=med]); leq=n==5 ? leq5 : leq6; geq=n==5 ? geq5 : geq6",
+  "geometry": {
+   "range": [
+    -1,
+    26
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      0
+     ],
+     "label": "x₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      0
+     ],
+     "label": "x₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      0
+     ],
+     "label": "x₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      0
+     ],
+     "label": "x₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      0
+     ],
+     "label": "x₅"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x6_disp",
+      0
+     ],
+     "label": "x₆"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=med",
+      -0.3
+     ],
+     "to": [
+      "=med",
+      0.3
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중앙값",
+    "expr": "med",
+    "digits": 2
+   },
+   {
+    "label": "자료 개수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "중앙값 위치",
+    "expr": "n==5 ? 3 : (3+4)/2",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "a1": 1,
+    "a2": 1,
+    "a3": 1,
+    "a4": 1,
+    "a5": 1
+   },
+   {
+    "n": 5,
+    "a1": 2,
+    "a2": 0.5,
+    "a3": 3,
+    "a4": 1.5,
+    "a5": 2
+   },
+   {
+    "n": 6,
+    "a1": 1,
+    "a2": 2,
+    "a3": 3,
+    "a4": 4,
+    "a5": 1
+   },
+   {
+    "n": 6,
+    "a1": 0,
+    "a2": 0,
+    "a3": 0,
+    "a4": 0,
+    "a5": 0
+   }
+  ],
+  "invariants": [
+   "abs(med - (n==5 ? x3 : (x3+x4)/2))",
+   "max(0, ceil(n/2) - leq)",
+   "max(0, ceil(n/2) - geq)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "a1": 1,
+     "a2": 1,
+     "a3": 1,
+     "a4": 1,
+     "a5": 1
+    },
+    "expect": {
+     "med": 2
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "a1": 0,
+     "a2": 0,
+     "a3": 0,
+     "a4": 0,
+     "a5": 0
+    },
+    "expect": {
+     "med": 0
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "a1": 1,
+     "a2": 1,
+     "a3": 1,
+     "a4": 1,
+     "a5": 3
+    },
+    "expect": {
+     "med": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

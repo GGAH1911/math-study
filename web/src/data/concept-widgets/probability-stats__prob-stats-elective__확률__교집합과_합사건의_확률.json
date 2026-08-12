@@ -1,0 +1,213 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/교집합과_합사건의_확률",
+ "spec": {
+  "title": "교집합과 합사건의 확률",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "pB",
+    "label": "P(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "v",
+    "label": "교집합 정도",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "c_min = max(0, pA+pB-1); c_max = min(pA,pB); pAB = c_min + v*(c_max-c_min); pAuB = pA+pB-pAB; L = pA-pAB; R = L+pB",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.3,
+    1
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0.25
+      ],
+      [
+       "=pA",
+       0.25
+      ],
+      [
+       "=pA",
+       0.5
+      ],
+      [
+       0,
+       0.5
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=L",
+       0.25
+      ],
+      [
+       "=R",
+       0.25
+      ],
+      [
+       "=R",
+       0.5
+      ],
+      [
+       "=L",
+       0.5
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pA/2",
+      0.375
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(L+R)/2",
+      0.375
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(L+pA)/2",
+      0.375
+     ],
+     "label": "A∩B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 4
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 4
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pAB",
+    "digits": 4
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "pAuB",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.6,
+    "pB": 0.5,
+    "v": 0.5
+   },
+   {
+    "pA": 0.8,
+    "pB": 0.8,
+    "v": 0
+   },
+   {
+    "pA": 0.3,
+    "pB": 0.4,
+    "v": 1
+   },
+   {
+    "pA": 0.2,
+    "pB": 0.7,
+    "v": 0.3
+   }
+  ],
+  "invariants": [
+   "pAuB - pA - pB + pAB",
+   "pAB - (c_min + v*(c_max - c_min))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.6,
+     "pB": 0.5,
+     "v": 0.5
+    },
+    "expect": {
+     "pAB": 0.3,
+     "pAuB": 0.8
+    }
+   },
+   {
+    "params": {
+     "pA": 0.8,
+     "pB": 0.8,
+     "v": 0
+    },
+    "expect": {
+     "pAB": 0.6,
+     "pAuB": 1
+    }
+   },
+   {
+    "params": {
+     "pA": 0.3,
+     "pB": 0.4,
+     "v": 1
+    },
+    "expect": {
+     "pAB": 0.3,
+     "pAuB": 0.4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

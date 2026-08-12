@@ -1,0 +1,140 @@
+{
+ "id": "표본비율의_분포",
+ "spec": {
+  "title": "표본비율의 분포",
+  "params": [
+   {
+    "name": "p",
+    "label": "모비율 p",
+    "type": "slider",
+    "min": 0.1,
+    "max": 0.9,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "n",
+    "label": "표본 크기 n",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 30,
+    "step": 1
+   }
+  ],
+  "scope": "mean=p; var=p*(1-p)/n; sd=sqrt(var); npv=n*p; nqv=n*(1-p)",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "1/sqrt(2*pi*var) * exp(-((x-mean)^2)/(2*var))",
+     "label": "확률밀도함수 f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "E(p̂)",
+    "expr": "mean",
+    "digits": 4
+   },
+   {
+    "label": "V(p̂)",
+    "expr": "var",
+    "digits": 6
+   },
+   {
+    "label": "σ(p̂)",
+    "expr": "sd",
+    "digits": 6
+   },
+   {
+    "label": "np",
+    "expr": "npv",
+    "digits": 2
+   },
+   {
+    "label": "n(1-p)",
+    "expr": "nqv",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 0.5,
+    "n": 4
+   },
+   {
+    "p": 0.5,
+    "n": 16
+   },
+   {
+    "p": 0.3,
+    "n": 10
+   },
+   {
+    "p": 0.7,
+    "n": 20
+   }
+  ],
+  "invariants": [
+   "var - p*(1-p)/n",
+   "sd - sqrt(var)",
+   "mean - p",
+   "npv - n*p",
+   "nqv - n*(1-p)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 0.5,
+     "n": 4
+    },
+    "expect": {
+     "mean": 0.5,
+     "var": 0.0625,
+     "sd": 0.25,
+     "npv": 2,
+     "nqv": 2
+    }
+   },
+   {
+    "params": {
+     "p": 0.5,
+     "n": 16
+    },
+    "expect": {
+     "mean": 0.5,
+     "var": 0.015625,
+     "sd": 0.125,
+     "npv": 8,
+     "nqv": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

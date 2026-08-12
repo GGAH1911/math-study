@@ -1,0 +1,230 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/도수",
+ "spec": {
+  "title": "도수의 합",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 도수 n",
+    "type": "slider",
+    "min": 20,
+    "max": 30,
+    "init": 25,
+    "step": 1
+   },
+   {
+    "name": "fA",
+    "label": "A의 도수 f_A",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 7,
+    "step": 1
+   },
+   {
+    "name": "fB",
+    "label": "B의 도수 f_B",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "fC = n - fA - fB; pA = fA/n; pB = fB/n; pC = fC/n",
+  "geometry": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    0,
+    32
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       "=fA"
+      ],
+      [
+       0,
+       "=fA"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       "=fB"
+      ],
+      [
+       1,
+       "=fB"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       "=fC"
+      ],
+      [
+       2,
+       "=fC"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0.5,
+      "=fA"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1.5,
+      "=fB"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      2.5,
+      "=fC"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(A)",
+    "expr": "fA"
+   },
+   {
+    "label": "f(B)",
+    "expr": "fB"
+   },
+   {
+    "label": "f(C)",
+    "expr": "fC"
+   },
+   {
+    "label": "합계",
+    "expr": "fA+fB+fC"
+   },
+   {
+    "label": "A의 비율",
+    "expr": "pA",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 20,
+    "fA": 3,
+    "fB": 4
+   },
+   {
+    "n": 25,
+    "fA": 7,
+    "fB": 6
+   },
+   {
+    "n": 30,
+    "fA": 10,
+    "fB": 10
+   },
+   {
+    "n": 22,
+    "fA": 5,
+    "fB": 8
+   }
+  ],
+  "invariants": [
+   "fA+fB+fC-n",
+   "pA+pB+pC-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 20,
+     "fA": 3,
+     "fB": 4
+    },
+    "expect": {
+     "fC": 13,
+     "pA": 0.15,
+     "pB": 0.2,
+     "pC": 0.65
+    }
+   },
+   {
+    "params": {
+     "n": 25,
+     "fA": 7,
+     "fB": 6
+    },
+    "expect": {
+     "fC": 12,
+     "pA": 0.28,
+     "pB": 0.24,
+     "pC": 0.48
+    }
+   },
+   {
+    "params": {
+     "n": 30,
+     "fA": 10,
+     "fB": 10
+    },
+    "expect": {
+     "fC": 10,
+     "pA": 0.3333333333333333,
+     "pB": 0.3333333333333333,
+     "pC": 0.3333333333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

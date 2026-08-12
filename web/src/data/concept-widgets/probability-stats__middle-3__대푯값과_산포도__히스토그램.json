@@ -1,0 +1,253 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/히스토그램",
+ "spec": {
+  "title": "히스토그램",
+  "params": [
+   {
+    "name": "w",
+    "label": "계급의 크기",
+    "type": "slider",
+    "min": 0.8,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "lo=2.1; hi=6.8; N=8; cnt(a,b)=sum([2.1>=a and 2.1<b ? 1 : 0, 2.6>=a and 2.6<b ? 1 : 0, 3.0>=a and 3.0<b ? 1 : 0, 3.4>=a and 3.4<b ? 1 : 0, 4.2>=a and 4.2<b ? 1 : 0, 4.8>=a and 4.8<b ? 1 : 0, 5.5>=a and 5.5<b ? 1 : 0, 6.8>=a and 6.8<b ? 1 : 0]); a1=lo; b1=a1+w; c1=cnt(a1,b1); a2=a1+w; b2=a2+w; c2=cnt(a2,b2); a3=a2+w; b3=a3+w; c3=cnt(a3,b3); a4=a3+w; b4=a4+w; c4=cnt(a4,b4); a5=a4+w; b5=a5+w; c5=cnt(a5,b5); a6=a5+w; b6=a6+w; c6=cnt(a6,b6); rf1=c1/N; rf2=c2/N; rf3=c3/N; rf4=c4/N; rf5=c5/N; rf6=c6/N; sum_rf=rf1+rf2+rf3+rf4+rf5+rf6; n=ceil((hi-lo)/w)",
+  "geometry": {
+   "range": [
+    1.5,
+    7.3
+   ],
+   "yRange": [
+    0,
+    0.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a1",
+       0
+      ],
+      [
+       "=b1",
+       0
+      ],
+      [
+       "=b1",
+       "=rf1"
+      ],
+      [
+       "=a1",
+       "=rf1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a2",
+       0
+      ],
+      [
+       "=b2",
+       0
+      ],
+      [
+       "=b2",
+       "=rf2"
+      ],
+      [
+       "=a2",
+       "=rf2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a3",
+       0
+      ],
+      [
+       "=b3",
+       0
+      ],
+      [
+       "=b3",
+       "=rf3"
+      ],
+      [
+       "=a3",
+       "=rf3"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a4",
+       0
+      ],
+      [
+       "=b4",
+       0
+      ],
+      [
+       "=b4",
+       "=rf4"
+      ],
+      [
+       "=a4",
+       "=rf4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a5",
+       0
+      ],
+      [
+       "=b5",
+       0
+      ],
+      [
+       "=b5",
+       "=rf5"
+      ],
+      [
+       "=a5",
+       "=rf5"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a6",
+       0
+      ],
+      [
+       "=b6",
+       0
+      ],
+      [
+       "=b6",
+       "=rf6"
+      ],
+      [
+       "=a6",
+       "=rf6"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상대도수의 합",
+    "expr": "sum_rf",
+    "digits": 6
+   },
+   {
+    "label": "계급의 수",
+    "expr": "n",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "w": 0.8
+   },
+   {
+    "w": 1
+   },
+   {
+    "w": 1.5
+   },
+   {
+    "w": 2.5
+   }
+  ],
+  "invariants": [
+   "sum_rf - 1",
+   "c1+c2+c3+c4+c5+c6 - 8"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "w": 0.8
+    },
+    "expect": {
+     "c1": 2,
+     "c2": 2,
+     "c3": 1,
+     "c4": 1,
+     "c5": 1,
+     "c6": 1,
+     "sum_rf": 1,
+     "n": 6
+    }
+   },
+   {
+    "params": {
+     "w": 1
+    },
+    "expect": {
+     "c1": 3,
+     "c2": 1,
+     "c3": 2,
+     "c4": 1,
+     "c5": 1,
+     "c6": 0,
+     "sum_rf": 1,
+     "n": 5
+    }
+   },
+   {
+    "params": {
+     "w": 1.5
+    },
+    "expect": {
+     "c1": 4,
+     "c2": 2,
+     "c3": 1,
+     "c4": 1,
+     "c5": 0,
+     "c6": 0,
+     "sum_rf": 1,
+     "n": 4
+    }
+   },
+   {
+    "params": {
+     "w": 2.5
+    },
+    "expect": {
+     "c1": 5,
+     "c2": 3,
+     "c3": 0,
+     "c4": 0,
+     "c5": 0,
+     "c6": 0,
+     "sum_rf": 1,
+     "n": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

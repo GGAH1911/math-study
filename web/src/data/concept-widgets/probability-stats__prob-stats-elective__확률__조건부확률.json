@@ -1,0 +1,278 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/조건부확률",
+ "spec": {
+  "title": "조건부확률 시각화",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0.01,
+    "max": 1,
+    "init": 0.4,
+    "step": 0.01
+   },
+   {
+    "name": "pBA",
+    "label": "P(B|A)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.25,
+    "step": 0.01
+   },
+   {
+    "name": "pBAc",
+    "label": "P(B|Aᶜ)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.01
+   }
+  ],
+  "scope": "pAB=pA*pBA; pABc=pA*(1-pBA); pAcB=(1-pA)*pBAc; pAcBc=(1-pA)*(1-pBAc); pB=pAB+pAcB; pBc=1-pB;",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "fill": "none",
+     "stroke": "black"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=pA",
+       0
+      ],
+      [
+       "=pA",
+       "=pBA"
+      ],
+      [
+       0,
+       "=pBA"
+      ]
+     ],
+     "fill": "rgba(52,152,219,0.4)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=pBA"
+      ],
+      [
+       "=pA",
+       "=pBA"
+      ],
+      [
+       "=pA",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "fill": "rgba(231,76,60,0.3)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=pA",
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       "=pBAc"
+      ],
+      [
+       "=pA",
+       "=pBAc"
+      ]
+     ],
+     "fill": "rgba(46,204,113,0.3)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=pA",
+       "=pBAc"
+      ],
+      [
+       1,
+       "=pBAc"
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       "=pA",
+       1
+      ]
+     ],
+     "fill": "rgba(149,165,166,0.3)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pA",
+      0
+     ],
+     "to": [
+      "=pA",
+      1
+     ],
+     "stroke": "black"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=pBA"
+     ],
+     "to": [
+      "=pA",
+      "=pBA"
+     ],
+     "stroke": "black"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pA",
+      "=pBAc"
+     ],
+     "to": [
+      1,
+      "=pBAc"
+     ],
+     "stroke": "black"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pA/2",
+      "=pBA/2"
+     ],
+     "label": "A∩B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A∩B)",
+    "expr": "pAB",
+    "digits": 4
+   },
+   {
+    "label": "P(B|A) = P(A∩B)/P(A)",
+    "expr": "pAB/pA",
+    "digits": 4
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.3,
+    "pBA": 0.8,
+    "pBAc": 0.2
+   },
+   {
+    "pA": 0.5,
+    "pBA": 0.5,
+    "pBAc": 0.5
+   },
+   {
+    "pA": 0.8,
+    "pBA": 0.1,
+    "pBAc": 0.9
+   }
+  ],
+  "invariants": [
+   "pAB+pABc+pAcB+pAcBc-1",
+   "pAB-pA*pBA",
+   "pAcB-(1-pA)*pBAc",
+   "pB-(pAB+pAcB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.4,
+     "pBA": 0.25,
+     "pBAc": 0.6
+    },
+    "expect": {
+     "pAB": 0.1,
+     "pABc": 0.3,
+     "pAcB": 0.36,
+     "pAcBc": 0.24,
+     "pB": 0.46
+    }
+   },
+   {
+    "params": {
+     "pA": 0.6,
+     "pBA": 0.5,
+     "pBAc": 0.2
+    },
+    "expect": {
+     "pAB": 0.3,
+     "pABc": 0.3,
+     "pAcB": 0.08,
+     "pAcBc": 0.32,
+     "pB": 0.38
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

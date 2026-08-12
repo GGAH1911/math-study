@@ -1,0 +1,246 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/독립사건",
+ "spec": {
+  "title": "독립사건",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "pB",
+    "label": "P(B)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "d",
+    "label": "의존도 d",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.01
+   }
+  ],
+  "scope": "lower=max(0,pA+pB-1); upper=min(pA,pB); prod=pA*pB; dev_pos=upper-prod; dev_neg=prod-lower; pAB=prod+(d>=0 ? d*dev_pos : d*dev_neg); cond=pAB/pA",
+  "geometry": {
+   "range": [
+    0,
+    1.1
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=pA",
+       "=0"
+      ],
+      [
+       "=pA",
+       "=0.8"
+      ],
+      [
+       "=0",
+       "=0.8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=1"
+      ],
+      [
+       "=pB",
+       "=1"
+      ],
+      [
+       "=pB",
+       "=1.8"
+      ],
+      [
+       "=0",
+       "=1.8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=2"
+      ],
+      [
+       "=pAB",
+       "=2"
+      ],
+      [
+       "=pAB",
+       "=2.8"
+      ],
+      [
+       "=0",
+       "=2.8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=3"
+      ],
+      [
+       "=prod",
+       "=3"
+      ],
+      [
+       "=prod",
+       "=3.8"
+      ],
+      [
+       "=0",
+       "=3.8"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "points": [
+      [
+       "=prod",
+       "=2"
+      ],
+      [
+       "=prod",
+       "=2.8"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 3
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pAB",
+    "digits": 3
+   },
+   {
+    "label": "P(A)P(B)",
+    "expr": "prod",
+    "digits": 3
+   },
+   {
+    "label": "P(B|A)",
+    "expr": "cond",
+    "digits": 3
+   },
+   {
+    "label": "|P(A∩B)-P(A)P(B)|",
+    "expr": "abs(pAB-prod)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.5,
+    "pB": 0.5,
+    "d": 0
+   },
+   {
+    "pA": 0.5,
+    "pB": 0.5,
+    "d": 1
+   },
+   {
+    "pA": 0.5,
+    "pB": 0.5,
+    "d": -1
+   },
+   {
+    "pA": 0.3,
+    "pB": 0.6,
+    "d": 0.5
+   }
+  ],
+  "invariants": [
+   "max(lower-pAB,0)+max(pAB-upper,0)",
+   "cond*pA-pAB"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.5,
+     "pB": 0.5,
+     "d": 0
+    },
+    "expect": {
+     "pAB": 0.25,
+     "cond": 0.5,
+     "prod": 0.25
+    }
+   },
+   {
+    "params": {
+     "pA": 0.5,
+     "pB": 0.5,
+     "d": 1
+    },
+    "expect": {
+     "pAB": 0.5,
+     "cond": 1,
+     "prod": 0.25
+    }
+   },
+   {
+    "params": {
+     "pA": 0.3,
+     "pB": 0.6,
+     "d": 0.5
+    },
+    "expect": {
+     "pAB": 0.24,
+     "cond": 0.8,
+     "prod": 0.18
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

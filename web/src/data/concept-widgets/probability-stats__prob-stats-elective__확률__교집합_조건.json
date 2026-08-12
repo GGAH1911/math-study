@@ -1,0 +1,253 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/교집합_조건",
+ "spec": {
+  "title": "교집합의 확률과 곱셈정리",
+  "params": [
+   {
+    "name": "a",
+    "label": "사건 A의 확률",
+    "type": "slider",
+    "min": 0.1,
+    "max": 0.9,
+    "init": 0.4,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "P(B|A) — A에서 B의 조건부 확률",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "P(B|A^c) — A^c에서 B의 조건부 확률",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.05,
+    "unit": ""
+   }
+  ],
+  "scope": "pA=a; pB_given_A=c; pB_given_notA=d; pIntersection=pA*pB_given_A; pB=pA*pB_given_A + (1-pA)*pB_given_notA; pUnion=pA+pB-pIntersection",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=1",
+       "=0"
+      ],
+      [
+       "=1",
+       "=1"
+      ],
+      [
+       "=0",
+       "=1"
+      ]
+     ],
+     "label": "S",
+     "fill": "rgba(200,200,200,0.3)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=a",
+       "=0"
+      ],
+      [
+       "=a",
+       "=1"
+      ],
+      [
+       "=0",
+       "=1"
+      ]
+     ],
+     "label": "A",
+     "fill": "rgba(0,0,255,0.1)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=0",
+       "=c"
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a",
+       "=d"
+      ],
+      [
+       "=1",
+       "=d"
+      ],
+      [
+       "=1",
+       "=0"
+      ]
+     ],
+     "label": "B",
+     "fill": "rgba(255,0,0,0.1)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=a",
+       "=0"
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=0",
+       "=c"
+      ]
+     ],
+     "label": "A∩B",
+     "fill": "rgba(0,255,0,0.5)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "사건 A의 확률",
+    "expr": "pA",
+    "digits": 3
+   },
+   {
+    "label": "P(B|A)",
+    "expr": "pB_given_A",
+    "digits": 3
+   },
+   {
+    "label": "교집합 확률 P(A∩B)",
+    "expr": "pIntersection",
+    "digits": 3
+   },
+   {
+    "label": "사건 B의 확률",
+    "expr": "pB",
+    "digits": 3
+   },
+   {
+    "label": "P(A|B)",
+    "expr": "pIntersection/pB",
+    "digits": 3
+   },
+   {
+    "label": "합집합 확률 P(A∪B)",
+    "expr": "pUnion",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.4,
+    "c": 0.6,
+    "d": 0.3
+   },
+   {
+    "a": 0.7,
+    "c": 0.5,
+    "d": 0.2
+   },
+   {
+    "a": 0.2,
+    "c": 0.8,
+    "d": 0.9
+   },
+   {
+    "a": 0.5,
+    "c": 0,
+    "d": 0.1
+   }
+  ],
+  "invariants": [
+   "pIntersection - pA*pB_given_A",
+   "pB - (pA*pB_given_A + (1-pA)*pB_given_notA)",
+   "pUnion - (pA + pB - pIntersection)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5,
+     "c": 0.4,
+     "d": 0.2
+    },
+    "expect": {
+     "pIntersection": 0.2,
+     "pB": 0.3,
+     "pUnion": 0.6
+    }
+   },
+   {
+    "params": {
+     "a": 0.3,
+     "c": 0.8,
+     "d": 0.5
+    },
+    "expect": {
+     "pIntersection": 0.24,
+     "pB": 0.59,
+     "pUnion": 0.65
+    }
+   },
+   {
+    "params": {
+     "a": 0.7,
+     "c": 0.6,
+     "d": 0.1
+    },
+    "expect": {
+     "pIntersection": 0.42,
+     "pB": 0.45,
+     "pUnion": 0.73
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

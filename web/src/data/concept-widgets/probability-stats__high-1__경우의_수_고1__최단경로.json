@@ -1,0 +1,141 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/최단경로",
+ "spec": {
+  "title": "최단경로",
+  "params": [
+   {
+    "name": "m",
+    "label": "가로 m",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "세로 n",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "ways=combinations(m+n, m); total=m+n",
+  "geometry": {
+   "range": [
+    -0.5,
+    8.5
+   ],
+   "yRange": [
+    -0.5,
+    8.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=m",
+       "=0"
+      ],
+      [
+       "=m",
+       "=n"
+      ],
+      [
+       "=0",
+       "=n"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0",
+      "=0"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      "=n"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최단경로 수",
+    "expr": "ways"
+   },
+   {
+    "label": "전체 이동 횟수",
+    "expr": "total"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 3
+   },
+   {
+    "m": 3,
+    "n": 2
+   },
+   {
+    "m": 4,
+    "n": 4
+   },
+   {
+    "m": 5,
+    "n": 1
+   }
+  ],
+  "invariants": [
+   "ways - combinations(m+n, n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 3
+    },
+    "expect": {
+     "ways": 10
+    }
+   },
+   {
+    "params": {
+     "m": 4,
+     "n": 4
+    },
+    "expect": {
+     "ways": 70
+    }
+   },
+   {
+    "params": {
+     "m": 5,
+     "n": 1
+    },
+    "expect": {
+     "ways": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

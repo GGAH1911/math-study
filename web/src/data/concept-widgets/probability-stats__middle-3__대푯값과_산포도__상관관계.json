@@ -1,0 +1,154 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/상관관계",
+ "spec": {
+  "title": "상관관계 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기(a)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "흩어짐(n)",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "x0=0; x1=1; x2=2; x3=3; x4=4; p0=-1; p1=2; p2=-2; p3=1; p4=0; y0=a*x0+n*p0; y1=a*x1+n*p1; y2=a*x2+n*p2; y3=a*x3+n*p3; y4=a*x4+n*p4; mx=(x0+x1+x2+x3+x4)/5; my=(y0+y1+y2+y3+y4)/5; cx0=x0-mx; cx1=x1-mx; cx2=x2-mx; cx3=x3-mx; cx4=x4-mx; cy0=y0-my; cy1=y1-my; cy2=y2-my; cy3=y3-my; cy4=y4-my; sxy=cx0*cy0+cx1*cy1+cx2*cy2+cx3*cy3+cx4*cy4; sxx=cx0*cx0+cx1*cx1+cx2*cx2+cx3*cx3+cx4*cx4; syy=cy0*cy0+cy1*cy1+cy2*cy2+cy3*cy3+cy4*cy4; r=sxy/sqrt(sxx*syy); y10=2*y0+100; y11=2*y1+100; y12=2*y2+100; y13=2*y3+100; y14=2*y4+100; my1=(y10+y11+y12+y13+y14)/5; cy10=y10-my1; cy11=y11-my1; cy12=y12-my1; cy13=y13-my1; cy14=y14-my1; sxy1=cx0*cy10+cx1*cy11+cx2*cy12+cx3*cy13+cx4*cy14; syy1=cy10*cy10+cy11*cy11+cy12*cy12+cy13*cy13+cy14*cy14; r2=sxy1/sqrt(sxx*syy1);",
+  "geometry": {
+   "range": [
+    -0.5,
+    4.5
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      4,
+      "=a*4"
+     ],
+     "color": "#888888",
+     "dash": true
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "P1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P3"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "P4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ],
+     "label": "P5"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상관계수(r)",
+    "expr": "r",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "n": 0.5
+   },
+   {
+    "a": -1,
+    "n": 1
+   },
+   {
+    "a": 0.5,
+    "n": 2
+   },
+   {
+    "a": 1.5,
+    "n": 0
+   }
+  ],
+  "invariants": [
+   "abs(r-r2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "n": 1
+    },
+    "expect": {
+     "r": 0.7416198487
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "n": 0
+    },
+    "expect": {
+     "r": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "n": 0
+    },
+    "expect": {
+     "r": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

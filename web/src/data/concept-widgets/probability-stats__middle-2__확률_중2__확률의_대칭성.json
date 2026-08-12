@@ -1,0 +1,468 @@
+{
+ "id": "probability-stats/middle-2/확률_중2/확률의_대칭성",
+ "spec": {
+  "title": "확률의 대칭성",
+  "params": [
+   {
+    "name": "N",
+    "label": "전체 결과 수 |S|",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "K",
+    "label": "사건 결과 수 |A|",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "k = min(K, N); p = k / N; p_single = 1 / N",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "color": "#bbbbbb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 1 <= N ? 0 : 99",
+      "= 1 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 1 <= N ? cos(2*pi*0/N) : 99",
+      "= 1 <= N ? sin(2*pi*0/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 2 <= N ? 0 : 99",
+      "= 2 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 2 <= N ? cos(2*pi*1/N) : 99",
+      "= 2 <= N ? sin(2*pi*1/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 3 <= N ? 0 : 99",
+      "= 3 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 3 <= N ? cos(2*pi*2/N) : 99",
+      "= 3 <= N ? sin(2*pi*2/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 4 <= N ? 0 : 99",
+      "= 4 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 4 <= N ? cos(2*pi*3/N) : 99",
+      "= 4 <= N ? sin(2*pi*3/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 5 <= N ? 0 : 99",
+      "= 5 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 5 <= N ? cos(2*pi*4/N) : 99",
+      "= 5 <= N ? sin(2*pi*4/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 6 <= N ? 0 : 99",
+      "= 6 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 6 <= N ? cos(2*pi*5/N) : 99",
+      "= 6 <= N ? sin(2*pi*5/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 7 <= N ? 0 : 99",
+      "= 7 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 7 <= N ? cos(2*pi*6/N) : 99",
+      "= 7 <= N ? sin(2*pi*6/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 8 <= N ? 0 : 99",
+      "= 8 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 8 <= N ? cos(2*pi*7/N) : 99",
+      "= 8 <= N ? sin(2*pi*7/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 9 <= N ? 0 : 99",
+      "= 9 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 9 <= N ? cos(2*pi*8/N) : 99",
+      "= 9 <= N ? sin(2*pi*8/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 10 <= N ? 0 : 99",
+      "= 10 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 10 <= N ? cos(2*pi*9/N) : 99",
+      "= 10 <= N ? sin(2*pi*9/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 11 <= N ? 0 : 99",
+      "= 11 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 11 <= N ? cos(2*pi*10/N) : 99",
+      "= 11 <= N ? sin(2*pi*10/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "= 12 <= N ? 0 : 99",
+      "= 12 <= N ? 0 : 99"
+     ],
+     "to": [
+      "= 12 <= N ? cos(2*pi*11/N) : 99",
+      "= 12 <= N ? sin(2*pi*11/N) : 99"
+     ],
+     "color": "#9e9e9e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 1 <= N ? cos(2*pi*0/N) : 99",
+      "= 1 <= N ? sin(2*pi*0/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 2 <= N ? cos(2*pi*1/N) : 99",
+      "= 2 <= N ? sin(2*pi*1/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 3 <= N ? cos(2*pi*2/N) : 99",
+      "= 3 <= N ? sin(2*pi*2/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 4 <= N ? cos(2*pi*3/N) : 99",
+      "= 4 <= N ? sin(2*pi*3/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 5 <= N ? cos(2*pi*4/N) : 99",
+      "= 5 <= N ? sin(2*pi*4/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 6 <= N ? cos(2*pi*5/N) : 99",
+      "= 6 <= N ? sin(2*pi*5/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 7 <= N ? cos(2*pi*6/N) : 99",
+      "= 7 <= N ? sin(2*pi*6/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 8 <= N ? cos(2*pi*7/N) : 99",
+      "= 8 <= N ? sin(2*pi*7/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 9 <= N ? cos(2*pi*8/N) : 99",
+      "= 9 <= N ? sin(2*pi*8/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 10 <= N ? cos(2*pi*9/N) : 99",
+      "= 10 <= N ? sin(2*pi*9/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 11 <= N ? cos(2*pi*10/N) : 99",
+      "= 11 <= N ? sin(2*pi*10/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 12 <= N ? cos(2*pi*11/N) : 99",
+      "= 12 <= N ? sin(2*pi*11/N) : 99"
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 1 <= k ? cos(2*pi*0/N) : 99",
+      "= 1 <= k ? sin(2*pi*0/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 2 <= k ? cos(2*pi*1/N) : 99",
+      "= 2 <= k ? sin(2*pi*1/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 3 <= k ? cos(2*pi*2/N) : 99",
+      "= 3 <= k ? sin(2*pi*2/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 4 <= k ? cos(2*pi*3/N) : 99",
+      "= 4 <= k ? sin(2*pi*3/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 5 <= k ? cos(2*pi*4/N) : 99",
+      "= 5 <= k ? sin(2*pi*4/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 6 <= k ? cos(2*pi*5/N) : 99",
+      "= 6 <= k ? sin(2*pi*5/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 7 <= k ? cos(2*pi*6/N) : 99",
+      "= 7 <= k ? sin(2*pi*6/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 8 <= k ? cos(2*pi*7/N) : 99",
+      "= 8 <= k ? sin(2*pi*7/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 9 <= k ? cos(2*pi*8/N) : 99",
+      "= 9 <= k ? sin(2*pi*8/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 10 <= k ? cos(2*pi*9/N) : 99",
+      "= 10 <= k ? sin(2*pi*9/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 11 <= k ? cos(2*pi*10/N) : 99",
+      "= 11 <= k ? sin(2*pi*10/N) : 99"
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 12 <= k ? cos(2*pi*11/N) : 99",
+      "= 12 <= k ? sin(2*pi*11/N) : 99"
+     ],
+     "color": "#d32f2f"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A) = |A|/|S|",
+    "expr": "p",
+    "digits": 4
+   },
+   {
+    "label": "각 결과의 확률",
+    "expr": "p_single",
+    "digits": 4
+   },
+   {
+    "label": "전체 결과 수 |S|",
+    "expr": "N",
+    "digits": 0
+   },
+   {
+    "label": "사건 결과 수 |A|",
+    "expr": "k",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 6,
+    "K": 2
+   },
+   {
+    "N": 12,
+    "K": 12
+   },
+   {
+    "N": 2,
+    "K": 0
+   },
+   {
+    "N": 5,
+    "K": 3
+   }
+  ],
+  "invariants": [
+   "p - k / N",
+   "p_single * N - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 6,
+     "K": 3
+    },
+    "expect": {
+     "k": 3,
+     "p": 0.5,
+     "p_single": 0.16666666666666666
+    }
+   },
+   {
+    "params": {
+     "N": 12,
+     "K": 4
+    },
+    "expect": {
+     "k": 4,
+     "p": 0.3333333333333333,
+     "p_single": 0.08333333333333333
+    }
+   },
+   {
+    "params": {
+     "N": 2,
+     "K": 5
+    },
+    "expect": {
+     "k": 2,
+     "p": 1,
+     "p_single": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

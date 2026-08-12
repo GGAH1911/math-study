@@ -1,0 +1,107 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/누적분포함수",
+ "spec": {
+  "title": "누적분포함수 (이항분포)",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (성공확률)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "a",
+    "label": "a (누적한계)",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "n=5; prob0=combinations(n,0)*p^0*(1-p)^5; prob1=combinations(n,1)*p^1*(1-p)^4; prob2=combinations(n,2)*p^2*(1-p)^3; prob3=combinations(n,3)*p^3*(1-p)^2; prob4=combinations(n,4)*p^4*(1-p)^1; prob5=combinations(n,5)*p^5*(1-p)^0; psum=prob0+prob1+prob2+prob3+prob4+prob5; Fvalue=prob0*(a>=0?1:0)+prob1*(a>=1?1:0)+prob2*(a>=2?1:0)+prob3*(a>=3?1:0)+prob4*(a>=4?1:0)+prob5*(a>=5?1:0);",
+  "plot": {
+   "range": [
+    -0.5,
+    5.5
+   ],
+   "yRange": [
+    0,
+    1.1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "prob0*(x>=0?1:0) + prob1*(x>=1?1:0) + prob2*(x>=2?1:0) + prob3*(x>=3?1:0) + prob4*(x>=4?1:0) + prob5*(x>=5?1:0)",
+     "label": "F(x) = P(X≤x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "F(a)",
+    "expr": "Fvalue",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 0.2,
+    "a": 5
+   },
+   {
+    "p": 0.5,
+    "a": 5
+   },
+   {
+    "p": 0.8,
+    "a": 5
+   },
+   {
+    "p": 0.4,
+    "a": 5
+   }
+  ],
+  "invariants": [
+   "psum - 1",
+   "Fvalue - psum"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 0.5,
+     "a": 2
+    },
+    "expect": {
+     "Fvalue": 0.5
+    }
+   },
+   {
+    "params": {
+     "p": 0.2,
+     "a": 1
+    },
+    "expect": {
+     "Fvalue": 0.73728
+    }
+   },
+   {
+    "params": {
+     "p": 0.8,
+     "a": 4
+    },
+    "expect": {
+     "Fvalue": 0.67232
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

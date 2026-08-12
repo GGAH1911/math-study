@@ -1,0 +1,300 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/편차",
+ "spec": {
+  "title": "편차",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 70,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 80,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x3",
+    "label": "x₃",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 90,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x4",
+    "label": "x₄",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 100,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x5",
+    "label": "x₅",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 60,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "m=(x1+x2+x3+x4+x5)/5; d1=x1-m; d2=x2-m; d3=x3-m; d4=x4-m; d5=x5-m; sumd=d1+d2+d3+d4+d5",
+  "geometry": {
+   "range": [
+    -5,
+    105
+   ],
+   "yRange": [
+    -0.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      -0.2
+     ],
+     "label": "평균"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      0.2
+     ],
+     "to": [
+      "=m",
+      3.2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      0.8
+     ],
+     "to": [
+      "=x1",
+      0.8
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      0.8
+     ],
+     "label": "x₁"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      1.3
+     ],
+     "to": [
+      "=x2",
+      1.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      1.3
+     ],
+     "label": "x₂"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      1.8
+     ],
+     "to": [
+      "=x3",
+      1.8
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      1.8
+     ],
+     "label": "x₃"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      2.3
+     ],
+     "to": [
+      "=x4",
+      2.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      2.3
+     ],
+     "label": "x₄"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      2.8
+     ],
+     "to": [
+      "=x5",
+      2.8
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      2.8
+     ],
+     "label": "x₅"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "x₁의 편차",
+    "expr": "d1",
+    "digits": 2
+   },
+   {
+    "label": "x₂의 편차",
+    "expr": "d2",
+    "digits": 2
+   },
+   {
+    "label": "x₃의 편차",
+    "expr": "d3",
+    "digits": 2
+   },
+   {
+    "label": "x₄의 편차",
+    "expr": "d4",
+    "digits": 2
+   },
+   {
+    "label": "x₅의 편차",
+    "expr": "d5",
+    "digits": 2
+   },
+   {
+    "label": "편차의 합",
+    "expr": "sumd",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 70,
+    "x2": 80,
+    "x3": 90,
+    "x4": 100,
+    "x5": 60
+   },
+   {
+    "x1": 50,
+    "x2": 60,
+    "x3": 70,
+    "x4": 80,
+    "x5": 90
+   },
+   {
+    "x1": 0,
+    "x2": 25,
+    "x3": 50,
+    "x4": 75,
+    "x5": 100
+   },
+   {
+    "x1": 60,
+    "x2": 60,
+    "x3": 60,
+    "x4": 60,
+    "x5": 60
+   }
+  ],
+  "invariants": [
+   "d1+d2+d3+d4+d5",
+   "m-(x1+x2+x3+x4+x5)/5",
+   "abs(d1-(x1-m))+abs(d2-(x2-m))+abs(d3-(x3-m))+abs(d4-(x4-m))+abs(d5-(x5-m))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 70,
+     "x2": 80,
+     "x3": 90,
+     "x4": 100,
+     "x5": 60
+    },
+    "expect": {
+     "m": 80,
+     "d1": -10,
+     "d2": 0,
+     "d3": 10,
+     "d4": 20,
+     "d5": -20,
+     "sumd": 0
+    }
+   },
+   {
+    "params": {
+     "x1": 0,
+     "x2": 25,
+     "x3": 50,
+     "x4": 75,
+     "x5": 100
+    },
+    "expect": {
+     "m": 50,
+     "d1": -50,
+     "d2": -25,
+     "d3": 0,
+     "d4": 25,
+     "d5": 50,
+     "sumd": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

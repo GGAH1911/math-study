@@ -1,0 +1,188 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/최빈값",
+ "spec": {
+  "title": "최빈값 (Mode) 탐구",
+  "params": [
+   {
+    "name": "k",
+    "label": "1의 개수",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "f0=10-k; f1=k; maxf=max(f0,f1); is0=(f0>=f1)?1:0; is1=(f1>=f0)?1:0",
+  "geometry": {
+   "range": [
+    -0.6,
+    1.6
+   ],
+   "yRange": [
+    -1,
+    10.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "-0.4",
+       "0"
+      ],
+      [
+       "-0.4",
+       "=f0"
+      ],
+      [
+       "0.4",
+       "=f0"
+      ],
+      [
+       "0.4",
+       "0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "0.6",
+       "0"
+      ],
+      [
+       "0.6",
+       "=f1"
+      ],
+      [
+       "1.4",
+       "=f1"
+      ],
+      [
+       "1.4",
+       "0"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "-0.5",
+      "=maxf"
+     ],
+     "to": [
+      "1.5",
+      "=maxf"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "-0.5"
+     ],
+     "label": "0"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "-0.5"
+     ],
+     "label": "1"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "0의 빈도",
+    "expr": "f0",
+    "digits": 0
+   },
+   {
+    "label": "1의 빈도",
+    "expr": "f1",
+    "digits": 0
+   },
+   {
+    "label": "최고 빈도",
+    "expr": "maxf",
+    "digits": 0
+   },
+   {
+    "label": "0이 최빈값?",
+    "expr": "is0",
+    "digits": 0
+   },
+   {
+    "label": "1이 최빈값?",
+    "expr": "is1",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 5
+   },
+   {
+    "k": 10
+   }
+  ],
+  "invariants": [
+   "f0+f1-10",
+   "(is0 - (f0>=f1?1:0))^2 + (is1 - (f1>=f0?1:0))^2",
+   "is0*(1-is0) + is1*(1-is1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "f0": 10,
+     "f1": 0,
+     "maxf": 10,
+     "is0": 1,
+     "is1": 0
+    }
+   },
+   {
+    "params": {
+     "k": 5
+    },
+    "expect": {
+     "f0": 5,
+     "f1": 5,
+     "maxf": 5,
+     "is0": 1,
+     "is1": 1
+    }
+   },
+   {
+    "params": {
+     "k": 10
+    },
+    "expect": {
+     "f0": 0,
+     "f1": 10,
+     "maxf": 10,
+     "is0": 0,
+     "is1": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

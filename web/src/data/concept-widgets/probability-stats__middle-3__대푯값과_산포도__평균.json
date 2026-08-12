@@ -1,0 +1,153 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/평균",
+ "spec": {
+  "title": "평균의 정의",
+  "params": [
+   {
+    "name": "x",
+    "label": "다섯 번째 자료값",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 0.1
+   }
+  ],
+  "scope": "s=2+4+6+8+x; avg=s/5",
+  "geometry": {
+   "range": [
+    0,
+    12
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ],
+     "label": "2"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "4"
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      0
+     ],
+     "label": "6"
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      0
+     ],
+     "label": "8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=avg",
+      0
+     ],
+     "label": "평균"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=avg",
+      -0.2
+     ],
+     "to": [
+      "=avg",
+      0.2
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "합계",
+    "expr": "s",
+    "digits": 2
+   },
+   {
+    "label": "평균",
+    "expr": "avg",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0
+   },
+   {
+    "x": 2.5
+   },
+   {
+    "x": 5
+   },
+   {
+    "x": 10
+   }
+  ],
+  "invariants": [
+   "avg*5 - s",
+   "(2-avg)+(4-avg)+(6-avg)+(8-avg)+(x-avg)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 5
+    },
+    "expect": {
+     "s": 25,
+     "avg": 5
+    }
+   },
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "s": 20,
+     "avg": 4
+    }
+   },
+   {
+    "params": {
+     "x": 10
+    },
+    "expect": {
+     "s": 30,
+     "avg": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

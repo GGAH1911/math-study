@@ -1,0 +1,177 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/회전_대칭",
+ "spec": {
+  "title": "회전 대칭 - 정사각형의 회전",
+  "params": [
+   {
+    "name": "theta",
+    "label": "회전각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 0,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "r=1; rad=theta*pi/180; rx0=r*cos(rad); ry0=r*sin(rad); rx1=r*cos(rad+pi/2); ry1=r*sin(rad+pi/2); rx2=r*cos(rad+pi); ry2=r*sin(rad+pi); rx3=r*cos(rad+3*pi/2); ry3=r*sin(rad+3*pi/2); direct=mod(theta,90); sym_dist=min(direct, 90-direct)",
+  "geometry": {
+   "range": [
+    -1.7,
+    1.7
+   ],
+   "yRange": [
+    -1.7,
+    1.7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1,
+       0
+      ],
+      [
+       0,
+       1
+      ],
+      [
+       -1,
+       0
+      ],
+      [
+       0,
+       -1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=rx0",
+       "=ry0"
+      ],
+      [
+       "=rx1",
+       "=ry1"
+      ],
+      [
+       "=rx2",
+       "=ry2"
+      ],
+      [
+       "=rx3",
+       "=ry3"
+      ]
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=rx0",
+      "=ry0"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "θ (도)",
+    "expr": "theta"
+   },
+   {
+    "label": "대칭 오차 (°)",
+    "expr": "sym_dist",
+    "digits": 2
+   },
+   {
+    "label": "일치 (1) / 불일치 (0)",
+    "expr": "sym_dist == 0 ? 1 : 0"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "rx0^2 + ry0^2 - 1",
+   "(rx1-rx0)^2 + (ry1-ry0)^2 - 2",
+   "rx0 + rx1 + rx2 + rx3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "rx0": 1,
+     "ry0": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "rx0": 0.7071067811865476,
+     "ry0": 0.7071067811865476
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "rx0": 0,
+     "ry0": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "rx0": -1,
+     "ry0": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

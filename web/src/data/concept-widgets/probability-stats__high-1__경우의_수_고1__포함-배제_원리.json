@@ -1,0 +1,241 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/포함-배제_원리",
+ "spec": {
+  "title": "포함-배제 원리 (두 집합)",
+  "params": [
+   {
+    "name": "nA",
+    "label": "집합 A의 크기",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "nB",
+    "label": "집합 B의 크기",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 7,
+    "step": 1
+   },
+   {
+    "name": "overlap",
+    "label": "겹침 비율",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01
+   }
+  ],
+  "scope": "ab=round(overlap*min(nA,nB)); a0=nA-ab; b0=nB-ab; union=nA+nB-ab;",
+  "geometry": {
+   "range": [
+    0,
+    20
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=nA",
+       "=0"
+      ],
+      [
+       "=nA",
+       "=1"
+      ],
+      [
+       "=0",
+       "=1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=nA-ab",
+       "=1.5"
+      ],
+      [
+       "=nA-ab+nB",
+       "=1.5"
+      ],
+      [
+       "=nA-ab+nB",
+       "=2.5"
+      ],
+      [
+       "=nA-ab",
+       "=2.5"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=3"
+      ],
+      [
+       "=union",
+       "=3"
+      ],
+      [
+       "=union",
+       "=4"
+      ],
+      [
+       "=0",
+       "=4"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=nA/2",
+      "=0.5"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(nA-ab+nB/2)",
+      "=2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=union/2",
+      "=3.5"
+     ],
+     "label": "A∪B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|A|",
+    "expr": "nA",
+    "digits": 0
+   },
+   {
+    "label": "|B|",
+    "expr": "nB",
+    "digits": 0
+   },
+   {
+    "label": "|A∩B|",
+    "expr": "ab",
+    "digits": 0
+   },
+   {
+    "label": "|A∪B|",
+    "expr": "union",
+    "digits": 0
+   },
+   {
+    "label": "A만",
+    "expr": "a0",
+    "digits": 0
+   },
+   {
+    "label": "B만",
+    "expr": "b0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "nA": 6,
+    "nB": 7,
+    "overlap": 0.3
+   },
+   {
+    "nA": 4,
+    "nB": 9,
+    "overlap": 0.5
+   },
+   {
+    "nA": 10,
+    "nB": 10,
+    "overlap": 0
+   },
+   {
+    "nA": 5,
+    "nB": 5,
+    "overlap": 1
+   }
+  ],
+  "invariants": [
+   "union - (nA + nB - ab)",
+   "union - (a0 + b0 + ab)",
+   "a0 - (nA - ab)",
+   "b0 - (nB - ab)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "nA": 6,
+     "nB": 7,
+     "overlap": 0.3
+    },
+    "expect": {
+     "ab": 2,
+     "union": 11,
+     "a0": 4,
+     "b0": 5
+    }
+   },
+   {
+    "params": {
+     "nA": 4,
+     "nB": 9,
+     "overlap": 0.5
+    },
+    "expect": {
+     "ab": 2,
+     "union": 11,
+     "a0": 2,
+     "b0": 7
+    }
+   },
+   {
+    "params": {
+     "nA": 10,
+     "nB": 10,
+     "overlap": 0
+    },
+    "expect": {
+     "ab": 0,
+     "union": 20,
+     "a0": 10,
+     "b0": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,222 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/확률의_덧셈정리",
+ "spec": {
+  "title": "확률의 덧셈정리",
+  "params": [
+   {
+    "name": "pa",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "pb",
+    "label": "P(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.4,
+    "step": 0.01
+   },
+   {
+    "name": "ps",
+    "label": "B의 시작점",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.2,
+    "step": 0.01
+   }
+  ],
+  "scope": "a=pa; b=pb; s=min(1-b, max(0, ps)); endB=s+b; o=(s > a) ? 0 : (min(a, endB)-s); u=(s > a) ? (a+b) : ((endB > a) ? endB : a); sum=a+b-o; diff=u-sum; oEnd=max(s, min(a, endB));",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    0.6
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0.05
+      ],
+      [
+       "=a",
+       0.05
+      ],
+      [
+       "=a",
+       0.35
+      ],
+      [
+       0,
+       0.35
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=s",
+       0.05
+      ],
+      [
+       "=endB",
+       0.05
+      ],
+      [
+       "=endB",
+       0.35
+      ],
+      [
+       "=s",
+       0.35
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=s",
+       0.05
+      ],
+      [
+       "=oEnd",
+       0.05
+      ],
+      [
+       "=oEnd",
+       0.35
+      ],
+      [
+       "=s",
+       0.35
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "o",
+    "digits": 3
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "u",
+    "digits": 3
+   },
+   {
+    "label": "P(A)+P(B)−P(A∩B)",
+    "expr": "sum",
+    "digits": 3
+   },
+   {
+    "label": "검산 (차이)",
+    "expr": "diff",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pa": 0.5,
+    "pb": 0.4,
+    "ps": 0.2
+   },
+   {
+    "pa": 0.3,
+    "pb": 0.3,
+    "ps": 0.8
+   },
+   {
+    "pa": 0.6,
+    "pb": 0.4,
+    "ps": 0.2
+   },
+   {
+    "pa": 0.7,
+    "pb": 0.2,
+    "ps": 0.1
+   }
+  ],
+  "invariants": [
+   "u - (a + b - o)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pa": 0.5,
+     "pb": 0.4,
+     "ps": 0.2
+    },
+    "expect": {
+     "u": 0.6,
+     "o": 0.3,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "pa": 0.3,
+     "pb": 0.3,
+     "ps": 0.8
+    },
+    "expect": {
+     "u": 0.6,
+     "o": 0,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "pa": 0.6,
+     "pb": 0.4,
+     "ps": 0.2
+    },
+    "expect": {
+     "u": 0.6,
+     "o": 0.4,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

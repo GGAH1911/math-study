@@ -1,0 +1,363 @@
+{
+ "id": "probability-stats/prob-stats-elective/경우의_수/이항계수",
+ "spec": {
+  "title": "이항계수 nCk의 값",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (전체 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "k (선택 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "c = (k <= n) ? factorial(n) / (factorial(k) * factorial(n - k)) : 0; h0 = (0 <= n) ? factorial(n) / (factorial(0) * factorial(n - 0)) : 0; h1 = (1 <= n) ? factorial(n) / (factorial(1) * factorial(n - 1)) : 0; h2 = (2 <= n) ? factorial(n) / (factorial(2) * factorial(n - 2)) : 0; h3 = (3 <= n) ? factorial(n) / (factorial(3) * factorial(n - 3)) : 0; h4 = (4 <= n) ? factorial(n) / (factorial(4) * factorial(n - 4)) : 0; h5 = (5 <= n) ? factorial(n) / (factorial(5) * factorial(n - 5)) : 0; h6 = (6 <= n) ? factorial(n) / (factorial(6) * factorial(n - 6)) : 0; h7 = (7 <= n) ? factorial(n) / (factorial(7) * factorial(n - 7)) : 0; h8 = (8 <= n) ? factorial(n) / (factorial(8) * factorial(n - 8)) : 0; h9 = (9 <= n) ? factorial(n) / (factorial(9) * factorial(n - 9)) : 0; h10 = (10 <= n) ? factorial(n) / (factorial(10) * factorial(n - 10)) : 0;",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    0,
+    260
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -0.4,
+       0
+      ],
+      [
+       0.4,
+       0
+      ],
+      [
+       0.4,
+       "=h0"
+      ],
+      [
+       -0.4,
+       "=h0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.6,
+       0
+      ],
+      [
+       1.4,
+       0
+      ],
+      [
+       1.4,
+       "=h1"
+      ],
+      [
+       0.6,
+       "=h1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1.6,
+       0
+      ],
+      [
+       2.4,
+       0
+      ],
+      [
+       2.4,
+       "=h2"
+      ],
+      [
+       1.6,
+       "=h2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2.6,
+       0
+      ],
+      [
+       3.4,
+       0
+      ],
+      [
+       3.4,
+       "=h3"
+      ],
+      [
+       2.6,
+       "=h3"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3.6,
+       0
+      ],
+      [
+       4.4,
+       0
+      ],
+      [
+       4.4,
+       "=h4"
+      ],
+      [
+       3.6,
+       "=h4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       4.6,
+       0
+      ],
+      [
+       5.4,
+       0
+      ],
+      [
+       5.4,
+       "=h5"
+      ],
+      [
+       4.6,
+       "=h5"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       5.6,
+       0
+      ],
+      [
+       6.4,
+       0
+      ],
+      [
+       6.4,
+       "=h6"
+      ],
+      [
+       5.6,
+       "=h6"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       6.6,
+       0
+      ],
+      [
+       7.4,
+       0
+      ],
+      [
+       7.4,
+       "=h7"
+      ],
+      [
+       6.6,
+       "=h7"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       7.6,
+       0
+      ],
+      [
+       8.4,
+       0
+      ],
+      [
+       8.4,
+       "=h8"
+      ],
+      [
+       7.6,
+       "=h8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       8.6,
+       0
+      ],
+      [
+       9.4,
+       0
+      ],
+      [
+       9.4,
+       "=h9"
+      ],
+      [
+       8.6,
+       "=h9"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       9.6,
+       0
+      ],
+      [
+       10.4,
+       0
+      ],
+      [
+       10.4,
+       "=h10"
+      ],
+      [
+       9.6,
+       "=h10"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=k",
+      0
+     ],
+     "to": [
+      "=k",
+      "=c"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=k",
+      "=c"
+     ],
+     "label": "선택"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "nCk 값",
+    "expr": "c",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "k": 2
+   },
+   {
+    "n": 10,
+    "k": 5
+   },
+   {
+    "n": 5,
+    "k": 0
+   },
+   {
+    "n": 4,
+    "k": 6
+   }
+  ],
+  "invariants": [
+   "((k >= 1) and (k <= n-1)) ? c - (factorial(n-1)/(factorial(k-1)*factorial(n-k)) + factorial(n-1)/(factorial(k)*factorial(n-1-k))) : 0",
+   "((k == 0) or (k == n)) ? c - 1 : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "k": 2
+    },
+    "expect": {
+     "c": 10
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "k": 5
+    },
+    "expect": {
+     "c": 252
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "k": 0
+    },
+    "expect": {
+     "c": 1
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 6
+    },
+    "expect": {
+     "c": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

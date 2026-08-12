@@ -1,0 +1,247 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/베이즈정리",
+ "spec": {
+  "title": "베이즈 정리 시각화",
+  "params": [
+   {
+    "name": "x",
+    "label": "P(A) 사전확률",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01
+   },
+   {
+    "name": "sens",
+    "label": "P(B|A) 민감도",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.7,
+    "step": 0.01
+   },
+   {
+    "name": "fp",
+    "label": "P(B|¬A) 오탐률",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.2,
+    "step": 0.01
+   }
+  ],
+  "scope": "post=(x*sens)/(x*sens+(1-x)*fp);",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x",
+       "=sens"
+      ],
+      [
+       0,
+       "=sens"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=sens"
+      ],
+      [
+       "=x",
+       "=sens"
+      ],
+      [
+       "=x",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x",
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       "=fp"
+      ],
+      [
+       "=x",
+       "=fp"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x",
+       "=fp"
+      ],
+      [
+       1,
+       "=fp"
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       "=x",
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "x",
+    "digits": 3
+   },
+   {
+    "label": "P(B|A)",
+    "expr": "sens",
+    "digits": 3
+   },
+   {
+    "label": "P(B|¬A)",
+    "expr": "fp",
+    "digits": 3
+   },
+   {
+    "label": "P(A|B)",
+    "expr": "post",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.3,
+    "sens": 0.7,
+    "fp": 0.2
+   },
+   {
+    "x": 0.5,
+    "sens": 0.5,
+    "fp": 0.5
+   },
+   {
+    "x": 0.8,
+    "sens": 0.9,
+    "fp": 0.1
+   },
+   {
+    "x": 0.1,
+    "sens": 0.2,
+    "fp": 0.8
+   }
+  ],
+  "invariants": [
+   "x*sens + x*(1-sens) + (1-x)*fp + (1-x)*(1-fp) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 0.5,
+     "sens": 0.5,
+     "fp": 0.5
+    },
+    "expect": {
+     "post": 0.5
+    }
+   },
+   {
+    "params": {
+     "x": 0.2,
+     "sens": 0.9,
+     "fp": 0.1
+    },
+    "expect": {
+     "post": 0.6923076923076923
+    }
+   },
+   {
+    "params": {
+     "x": 1,
+     "sens": 0.3,
+     "fp": 0.5
+    },
+    "expect": {
+     "post": 1
+    }
+   },
+   {
+    "params": {
+     "x": 0,
+     "sens": 0.3,
+     "fp": 0.5
+    },
+    "expect": {
+     "post": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

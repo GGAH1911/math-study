@@ -1,0 +1,314 @@
+{
+ "id": "probability-stats/prob-stats-elective/확률/확률의_기본_성질",
+ "spec": {
+  "title": "확률의 기본 성질 탐구",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "pB",
+    "label": "P(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01
+   },
+   {
+    "name": "pAB",
+    "label": "P(A∩B)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.1,
+    "step": 0.01
+   }
+  ],
+  "scope": "pAonly = pA - pAB; pBonly = pB - pAB; pUnion = pA + pB - pAB; pNeither = 1 - pUnion; pAc = 1 - pA; pBc = 1 - pB; wBoth = max(0, pAB); wAonly = max(0, pAonly); wBonly = max(0, pBonly); wNeither = max(0, pNeither); x1 = wBoth; x2 = x1 + wAonly; x3 = x2 + wBonly; x4 = x3 + wNeither; mid1 = x1 * 0.5; mid2 = x1 + wAonly * 0.5; mid3 = x2 + wBonly * 0.5; mid4 = x3 + wNeither * 0.5",
+  "geometry": {
+   "range": [
+    0,
+    2.2
+   ],
+   "yRange": [
+    -0.3,
+    1.3
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x1",
+       0
+      ],
+      [
+       "=x1",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       0
+      ],
+      [
+       "=x2",
+       0
+      ],
+      [
+       "=x2",
+       1
+      ],
+      [
+       "=x1",
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x2",
+       0
+      ],
+      [
+       "=x3",
+       0
+      ],
+      [
+       "=x3",
+       1
+      ],
+      [
+       "=x2",
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x3",
+       0
+      ],
+      [
+       "=x4",
+       0
+      ],
+      [
+       "=x4",
+       1
+      ],
+      [
+       "=x3",
+       1
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mid1",
+      0.5
+     ],
+     "label": "A∩B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mid2",
+      0.5
+     ],
+     "label": "A만"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mid3",
+      0.5
+     ],
+     "label": "B만"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mid4",
+      0.5
+     ],
+     "label": "둘 다 아님"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 3
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pAB",
+    "digits": 3
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "pUnion",
+    "digits": 3
+   },
+   {
+    "label": "P(A만)",
+    "expr": "pAonly",
+    "digits": 3
+   },
+   {
+    "label": "P(B만)",
+    "expr": "pBonly",
+    "digits": 3
+   },
+   {
+    "label": "P(A^c)",
+    "expr": "pAc",
+    "digits": 3
+   },
+   {
+    "label": "P(B^c)",
+    "expr": "pBc",
+    "digits": 3
+   },
+   {
+    "label": "P(둘 다 아님)",
+    "expr": "pNeither",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.5,
+    "pB": 0.3,
+    "pAB": 0.1
+   },
+   {
+    "pA": 0.25,
+    "pB": 0.5,
+    "pAB": 0
+   },
+   {
+    "pA": 1,
+    "pB": 1,
+    "pAB": 1
+   },
+   {
+    "pA": 0.8,
+    "pB": 0.8,
+    "pAB": 0.2
+   }
+  ],
+  "invariants": [
+   "abs(pAonly + pBonly + pAB + pNeither - 1)",
+   "abs(pUnion - (pA + pB - pAB))",
+   "abs(pAc + pA - 1)",
+   "abs(pBc + pB - 1)",
+   "abs(pAonly + pAB - pA)",
+   "abs(pBonly + pAB - pB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.5,
+     "pB": 0.3,
+     "pAB": 0.1
+    },
+    "expect": {
+     "pAonly": 0.4,
+     "pBonly": 0.2,
+     "pUnion": 0.7,
+     "pNeither": 0.3,
+     "pAc": 0.5,
+     "pBc": 0.7
+    }
+   },
+   {
+    "params": {
+     "pA": 0.25,
+     "pB": 0.5,
+     "pAB": 0
+    },
+    "expect": {
+     "pAonly": 0.25,
+     "pBonly": 0.5,
+     "pUnion": 0.75,
+     "pNeither": 0.25,
+     "pAc": 0.75,
+     "pBc": 0.5
+    }
+   },
+   {
+    "params": {
+     "pA": 1,
+     "pB": 1,
+     "pAB": 1
+    },
+    "expect": {
+     "pAonly": 0,
+     "pBonly": 0,
+     "pUnion": 1,
+     "pNeither": 0,
+     "pAc": 0,
+     "pBc": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

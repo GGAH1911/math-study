@@ -1,0 +1,352 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/도수분포",
+ "spec": {
+  "title": "도수분포 탐구",
+  "params": [
+   {
+    "name": "N",
+    "label": "계급 수",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "cls",
+    "label": "계급 번호",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "data=[1,2,3,4,5,6,7,8,9,10]; minX=0.5; maxX=10.5; width=(maxX-minX)/N; c=min(cls,N); j=c-1; l=minX+j*width; u=minX+(j+1)*width; f=max(0,floor(u-0.000001)-ceil(l+0.000001)+1); f0=(0<N)?max(0,floor(minX+1*width-0.000001)-ceil(minX+0*width+0.000001)+1):0; f1=(1<N)?max(0,floor(minX+2*width-0.000001)-ceil(minX+1*width+0.000001)+1):0; f2=(2<N)?max(0,floor(minX+3*width-0.000001)-ceil(minX+2*width+0.000001)+1):0; f3=(3<N)?max(0,floor(minX+4*width-0.000001)-ceil(minX+3*width+0.000001)+1):0; f4=(4<N)?max(0,floor(minX+5*width-0.000001)-ceil(minX+4*width+0.000001)+1):0; f5=(5<N)?max(0,floor(minX+6*width-0.000001)-ceil(minX+5*width+0.000001)+1):0; f6=(6<N)?max(0,floor(minX+7*width-0.000001)-ceil(minX+6*width+0.000001)+1):0; f7=(7<N)?max(0,floor(minX+8*width-0.000001)-ceil(minX+7*width+0.000001)+1):0; f8=(8<N)?max(0,floor(minX+9*width-0.000001)-ceil(minX+8*width+0.000001)+1):0; f9=(9<N)?max(0,floor(minX+10*width-0.000001)-ceil(minX+9*width+0.000001)+1):0;",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 0*width",
+       0
+      ],
+      [
+       "=minX + 1*width",
+       0
+      ],
+      [
+       "=minX + 1*width",
+       "=f0"
+      ],
+      [
+       "=minX + 0*width",
+       "=f0"
+      ]
+     ],
+     "label": "1"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 1*width",
+       0
+      ],
+      [
+       "=minX + 2*width",
+       0
+      ],
+      [
+       "=minX + 2*width",
+       "=f1"
+      ],
+      [
+       "=minX + 1*width",
+       "=f1"
+      ]
+     ],
+     "label": "2"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 2*width",
+       0
+      ],
+      [
+       "=minX + 3*width",
+       0
+      ],
+      [
+       "=minX + 3*width",
+       "=f2"
+      ],
+      [
+       "=minX + 2*width",
+       "=f2"
+      ]
+     ],
+     "label": "3"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 3*width",
+       0
+      ],
+      [
+       "=minX + 4*width",
+       0
+      ],
+      [
+       "=minX + 4*width",
+       "=f3"
+      ],
+      [
+       "=minX + 3*width",
+       "=f3"
+      ]
+     ],
+     "label": "4"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 4*width",
+       0
+      ],
+      [
+       "=minX + 5*width",
+       0
+      ],
+      [
+       "=minX + 5*width",
+       "=f4"
+      ],
+      [
+       "=minX + 4*width",
+       "=f4"
+      ]
+     ],
+     "label": "5"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 5*width",
+       0
+      ],
+      [
+       "=minX + 6*width",
+       0
+      ],
+      [
+       "=minX + 6*width",
+       "=f5"
+      ],
+      [
+       "=minX + 5*width",
+       "=f5"
+      ]
+     ],
+     "label": "6"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 6*width",
+       0
+      ],
+      [
+       "=minX + 7*width",
+       0
+      ],
+      [
+       "=minX + 7*width",
+       "=f6"
+      ],
+      [
+       "=minX + 6*width",
+       "=f6"
+      ]
+     ],
+     "label": "7"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 7*width",
+       0
+      ],
+      [
+       "=minX + 8*width",
+       0
+      ],
+      [
+       "=minX + 8*width",
+       "=f7"
+      ],
+      [
+       "=minX + 7*width",
+       "=f7"
+      ]
+     ],
+     "label": "8"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 8*width",
+       0
+      ],
+      [
+       "=minX + 9*width",
+       0
+      ],
+      [
+       "=minX + 9*width",
+       "=f8"
+      ],
+      [
+       "=minX + 8*width",
+       "=f8"
+      ]
+     ],
+     "label": "9"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=minX + 9*width",
+       0
+      ],
+      [
+       "=minX + 10*width",
+       0
+      ],
+      [
+       "=minX + 10*width",
+       "=f9"
+      ],
+      [
+       "=minX + 9*width",
+       "=f9"
+      ]
+     ],
+     "label": "10"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(l+u)/2",
+      "=f"
+     ],
+     "label": "선택"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "계급의 시작",
+    "expr": "l",
+    "digits": 2
+   },
+   {
+    "label": "계급의 끝",
+    "expr": "u",
+    "digits": 2
+   },
+   {
+    "label": "계급값",
+    "expr": "(l+u)/2",
+    "digits": 2
+   },
+   {
+    "label": "도수",
+    "expr": "f",
+    "digits": 0
+   },
+   {
+    "label": "계급의 크기",
+    "expr": "width",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 1,
+    "cls": 1
+   },
+   {
+    "N": 2,
+    "cls": 1
+   },
+   {
+    "N": 5,
+    "cls": 3
+   },
+   {
+    "N": 10,
+    "cls": 7
+   }
+  ],
+  "invariants": [
+   "f0+f1+f2+f3+f4+f5+f6+f7+f8+f9-10",
+   "f - (c==1 ? f0 : c==2 ? f1 : c==3 ? f2 : c==4 ? f3 : c==5 ? f4 : c==6 ? f5 : c==7 ? f6 : c==8 ? f7 : c==9 ? f8 : f9)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 2,
+     "cls": 1
+    },
+    "expect": {
+     "f": 5,
+     "l": 0.5,
+     "u": 5.5,
+     "width": 5,
+     "f0": 5,
+     "f1": 5
+    }
+   },
+   {
+    "params": {
+     "N": 5,
+     "cls": 3
+    },
+    "expect": {
+     "f": 2,
+     "l": 4.5,
+     "u": 6.5,
+     "width": 2,
+     "f0": 2,
+     "f1": 2,
+     "f2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
