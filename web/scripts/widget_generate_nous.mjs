@@ -40,7 +40,7 @@ const emit = (o) => {
 };
 
 // ── 프롬프트: widget_generate.mjs 와 동일해야 비교가 성립한다(수정 시 양쪽 같이) ──────────
-const HEAD = `Think and reason in English. 사용자에게 보이는 문자열(title·label·readout label)만 한국어로 쓴다.
+const HEAD = `**Reasoning language: English ONLY.** Every word of your internal reasoning must be in English — never Chinese, never Korean, not even for quoted terms (translate them to English instead). Only the user-facing strings in the final JSON (title, label, readout label) are written in Korean.
 
 너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
 
@@ -56,6 +56,7 @@ recipe(검증용 — 매우 중요): {"samples":[{슬라이더값}×3~4],"invari
 
 **mathjs 문법(scope·readout·invariants·"=식" 전부 해당). 벗어나면 검증기가 즉시 reject 한다:**
 - 조건분기는 삼항연산자 "조건 ? a : b" 만. **if(...) 함수는 없다.**
+- 논리연산은 and · or · not (**&& || ! 는 파싱 실패한다**). 비교는 == != < <= > >=.
 - 화살표함수("x -> ...")·JS 문법 없음. map/filter 콜백도 쓰지 마라. 합은 닫힌 식이나 sum([a,b,c]) 로.
 - 조합·순열은 combinations(n,r) · permutations(n,r) · factorial(n). **comb·nCr·C(n,r) 은 없다.**
 - 쓸 수 있는 것: ^(거듭제곱) mod(a,b) sqrt abs exp log(x)=자연로그 log(x,b) log10 round(x,n) floor ceil max min sum mean sign
@@ -75,7 +76,9 @@ function bodyOf(id) {
 // ★재시도는 반드시 이전 실패를 먹여야 한다(repair). 실패의 대부분이 창의성 문제가 아니라
 //   기계적 오류(mathjs API 오인·오라클 정밀도)라, 검증기가 뽑아준 fails 를 그대로 되먹이면
 //   같은 주사위를 다시 굴리는 대신 그 지점만 고쳐 온다. 없이 재시도하면 같은 실패를 반복한다.
-const repairNote = (prev) => prev ? `\n\n**직전 시도는 검증에 실패했다. 아래 사유를 반드시 고쳐서 다시 만들어라(같은 실수 반복 금지):**\n${prev.split(' | ').slice(0, 4).map((f) => '- ' + f).join('\n')}\n` : '';
+//   힌트는 워커풀(widget_spec_loop.buildHint)이 이미 정제해서 준다 — 오라클 계산값은 가려져 있고
+//   (모델이 정답을 베껴 통과시키는 걸 막기 위함), 어느 검사가 통과했는지도 함께 온다. 그대로 싣는다.
+const repairNote = (prev) => prev ? `\n\n**직전 시도는 검증에 실패했다. 아래를 고쳐서 다시 만들어라(같은 실수 반복 금지):**\n${prev}\n` : '';
 
 async function gen(id, idx, total, prevFail) {
   const body = bodyOf(id);

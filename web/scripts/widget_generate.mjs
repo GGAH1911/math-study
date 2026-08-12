@@ -19,7 +19,7 @@ function bodyOf(id) {
   return '';
 }
 
-const HEAD = `Think and reason in English. 사용자에게 보이는 문자열(title·label·readout label)만 한국어로 쓴다.
+const HEAD = `**Reasoning language: English ONLY.** Every word of your internal reasoning must be in English — never Chinese, never Korean, not even for quoted terms (translate them to English instead). Only the user-facing strings in the final JSON (title, label, readout label) are written in Korean.
 
 너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
 
@@ -35,6 +35,7 @@ recipe(검증용 — 매우 중요): {"samples":[{슬라이더값}×3~4],"invari
 
 **mathjs 문법(scope·readout·invariants·"=식" 전부 해당). 벗어나면 검증기가 즉시 reject 한다:**
 - 조건분기는 삼항연산자 "조건 ? a : b" 만. **if(...) 함수는 없다.**
+- 논리연산은 and · or · not (**&& || ! 는 파싱 실패한다**). 비교는 == != < <= > >=.
 - 화살표함수("x -> ...")·JS 문법 없음. map/filter 콜백도 쓰지 마라. 합은 닫힌 식이나 sum([a,b,c]) 로.
 - 조합·순열은 combinations(n,r) · permutations(n,r) · factorial(n). **comb·nCr·C(n,r) 은 없다.**
 - 쓸 수 있는 것: ^(거듭제곱) mod(a,b) sqrt abs exp log(x)=자연로그 log(x,b) log10 round(x,n) floor ceil max min sum mean sign

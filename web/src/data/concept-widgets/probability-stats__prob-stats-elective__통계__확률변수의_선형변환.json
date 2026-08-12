@@ -1,0 +1,256 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/확률변수의_선형변환",
+ "spec": {
+  "title": "확률변수의 선형변환 (Y = aX + b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "이동량 b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "x1=1;x2=2;x3=4;p1=0.2;p2=0.5;p3=0.3;ex=x1*p1+x2*p2+x3*p3;ex2=x1^2*p1+x2^2*p2+x3^2*p3;vx=ex2-ex^2;y1=a*x1+b;y2=a*x2+b;y3=a*x3+b;ey=y1*p1+y2*p2+y3*p3;ey2=y1^2*p1+y2^2*p2+y3^2*p3;vy=ey2-ey^2;",
+  "geometry": {
+   "range": [
+    -5,
+    16
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      0
+     ],
+     "to": [
+      "=x1",
+      "=p1"
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      0
+     ],
+     "to": [
+      "=x2",
+      "=p2"
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x3",
+      0
+     ],
+     "to": [
+      "=x3",
+      "=p3"
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=p1"
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=p2"
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=p3"
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=y1",
+      0
+     ],
+     "to": [
+      "=y1",
+      "=p1"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=y2",
+      0
+     ],
+     "to": [
+      "=y2",
+      "=p2"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=y3",
+      0
+     ],
+     "to": [
+      "=y3",
+      "=p3"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=y1",
+      "=p1"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=y2",
+      "=p2"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=y3",
+      "=p3"
+     ],
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기댓값 E(X)",
+    "expr": "ex",
+    "digits": 4
+   },
+   {
+    "label": "분산 V(X)",
+    "expr": "vx",
+    "digits": 4
+   },
+   {
+    "label": "기댓값 E(Y)",
+    "expr": "ey",
+    "digits": 4
+   },
+   {
+    "label": "분산 V(Y)",
+    "expr": "vy",
+    "digits": 4
+   },
+   {
+    "label": "aE(X)+b",
+    "expr": "a*ex+b",
+    "digits": 4
+   },
+   {
+    "label": "a²V(X)",
+    "expr": "a^2*vx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0
+   },
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 0.5,
+    "b": -1
+   },
+   {
+    "a": 1.5,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "abs(ey - (a*ex + b))",
+   "abs(vy - (a^2*vx))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0
+    },
+    "expect": {
+     "ex": 2.4,
+     "vx": 1.24,
+     "ey": 2.4,
+     "vy": 1.24
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "ex": 2.4,
+     "vx": 1.24,
+     "ey": 7.8,
+     "vy": 4.96
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": -1
+    },
+    "expect": {
+     "ex": 2.4,
+     "vx": 1.24,
+     "ey": 0.2,
+     "vy": 0.31
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

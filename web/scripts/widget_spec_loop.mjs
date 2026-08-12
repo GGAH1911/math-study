@@ -64,19 +64,65 @@ const genOnce = (id, prevFail) => new Promise((res) => {
   c.on('error', res);
 });
 
-let accepted = 0, skipped = 0, qi = 0;
+// ── 오라클 무결성 (A·B·C) ────────────────────────────────────────────────────────
+// 오라클 불일치는 "spec 계산값 ≠ 손계산값"일 뿐 **어느 쪽이 틀렸는지 말해주지 않는다**.
+//   ① spec 틀림 → 정상 기각  ② 오라클 틀림 → 멀쩡한 위젯을 버림  ③ 둘 다 같이 틀림 → 조용히 통과
+// 순진하게 실패 문자열을 그대로 되먹이면 모델이 **공식 대신 정답(expect)을 계산값으로 복사**해
+// 통과시킨다 = 시험지를 고쳐 합격하는 것 = ②를 고치는 대신 ③을 제조한다. 그래서:
+//   A. 계산값을 가린다(복사할 숫자를 안 준다)
+//   B. 다른 검사 통과 여부를 알려준다(불변식은 손계산과 무관한 독립 검증 — 이게 다 통과했으면
+//      spec 이 맞고 손계산이 틀렸을 공산이 크다는 근거가 된다)
+//   C. 공식을 안 고치고 정답만 바꾼 시도를 결정적으로 기각한다
+const kindOf = (f) => f.startsWith('오라클') ? 'oracle' : f.startsWith('불변식') ? 'invariant'
+  : f.startsWith('scope') ? 'scope' : f.startsWith('readout') ? 'readout' : f.startsWith('shape') ? 'shape' : 'etc';
+
+// A: "오라클 v=0.63078 ≠ 0.63095 @{...}" → "오라클 불일치: v @{...}" (계산값·기대값 모두 제거)
+const maskOracle = (f) => f.replace(/^오라클\s+(\S+)=.*?\s+≠\s+.*?\s+@(.*)$/, '오라클 불일치: $1 @$2');
+
+function buildHint(fails, recipe) {
+  const kinds = fails.map(kindOf);
+  const uniq = [...new Set(fails.map(maskOracle))].slice(0, 4);
+  const lines = uniq.map((f) => '- ' + f);
+  const nInv = (recipe?.invariants || []).length;
+  // B: 판단 근거 제공
+  if (kinds.includes('oracle') && !kinds.includes('invariant') && nInv > 0) {
+    lines.push(`- (참고) 불변식 ${nInv}개는 전부 통과했다. 불변식은 손계산과 무관한 독립 검증이므로, **spec 공식이 맞고 oracle 의 손계산이 틀렸을 가능성이 높다** — 그 파라미터에서 값을 처음부터 다시 유도해 보라. 무리수라 1e-6 을 못 맞추겠으면 **정수·유리수로 딱 떨어지는 파라미터로 oracle 을 교체**하라.`);
+  } else if (kinds.includes('oracle') && kinds.includes('invariant')) {
+    lines.push('- (참고) 불변식도 함께 깨졌다. oracle 이 아니라 **spec 의 공식 자체가 틀렸을 가능성이 높다.**');
+  }
+  return lines.join('\n');
+}
+
+// C: 공식(params+scope)이 그대로인데 oracle 만 바뀌었으면 = 답만 고친 것
+const formulaKey = (o) => JSON.stringify([(o.spec?.params || []).map((p) => [p.name, p.min, p.max, p.init, p.step]), (o.spec?.scope || '').replace(/\s+/g, ' ').trim()]);
+const oracleKey = (o) => JSON.stringify(o.recipe?.oracle || []);
+
+let accepted = 0, skipped = 0, qi = 0, goalpost = 0;
 async function worker() {
   while (qi < queue.length) {
     const { id } = queue[qi++]; const sf = `${TMP}/${safe(id)}.json`;
-    let ok = false, lastFail = '';
+    let ok = false, lastFail = '', prev = null;
     for (let t = 1; t <= MAXTRY && !ok; t++) {
-      if (t > 1 && lastFail) log(`  ↻ ${id} 재시도 ${t}/${MAXTRY} — 실패사유 되먹임: ${lastFail.slice(0, 90)}`);
+      if (t > 1 && lastFail) log(`  ↻ ${id} 재시도 ${t}/${MAXTRY} — 되먹임: ${lastFail.replace(/\n/g, ' ').slice(0, 100)}`);
       // ★생성 전 잔여 spec 제거: 안 지우면 생성 실패 시 **이전 실행(다른 모델·프롬프트일 수도)의 산출물**이
       //   그대로 검증·수락된다. 실제로 --par 버그 때 그 경로로 13건이 안착했다.
       try { if (existsSync(sf)) rmSync(sf); } catch { /* 지우기 실패는 무시(어차피 아래서 재검증) */ }
       await genOnce(id, t > 1 ? lastFail : '');
-      if (!existsSync(sf)) { lastFail = '생성출력 없음'; continue; }
-      try { const o = JSON.parse(readFileSync(sf, 'utf8')); const r = validate(o.spec, o.recipe); if (r.ok) ok = true; else lastFail = r.fails[0] || '검증 실패'; } catch (e) { lastFail = '파싱: ' + e.message; }
+      if (!existsSync(sf)) { lastFail = '- 직전 시도는 출력이 없었다(토큰 예산 절단 의심). 더 짧고 단순한 spec 으로 만들어라.'; continue; }
+      let o;
+      try { o = JSON.parse(readFileSync(sf, 'utf8')); } catch (e) { lastFail = '- 직전 출력이 JSON 파싱 실패: ' + e.message; continue; }
+      // C: 골대 옮기기 탐지 — 공식은 그대로 두고 정답만 갈아끼운 시도는 기각한다.
+      if (prev && formulaKey(prev) === formulaKey(o) && oracleKey(prev) !== oracleKey(o)) {
+        goalpost++;
+        log(`  ⚠ ${id} 골대이동 기각 — params·scope 동일한데 oracle 만 변경`);
+        lastFail = '- **금지된 수정을 했다: 공식(params·scope)은 그대로 두고 oracle 의 정답만 계산값에 맞춰 바꿨다.** oracle 은 spec 을 검증하는 독립 기준이지 spec 의 출력이 아니다. 공식이 맞다고 확신하면 oracle 을 **처음부터 다시 손으로 유도**하고(값 베끼기 금지), 아니면 공식을 고쳐라.';
+        prev = o; continue;
+      }
+      prev = o;
+      try {
+        const r = validate(o.spec, o.recipe);
+        if (r.ok) ok = true; else lastFail = buildHint(r.fails, o.recipe);
+      } catch (e) { lastFail = '- 검증기 예외: ' + e.message; }
     }
     if (ok) {
       // 안전망: plot이 있는데 geometry가 곡선 없이 점·선분뿐이면 중복·혼란 → 제거(plot만 영속)
@@ -91,7 +137,7 @@ async function worker() {
 (async () => {
   await Promise.all(Array.from({ length: PAR }, worker));
   const rate = queue.length ? Math.round(accepted / queue.length * 100) : 0;
-  log(`══ 종료: accept ${accepted} · skip ${skipped} · 영속 ${OUT} · 합격률 ${rate}%`);
+  log(`══ 종료: accept ${accepted} · skip ${skipped} · 골대이동기각 ${goalpost} · 영속 ${OUT} · 합격률 ${rate}%`);
   // ★실행 다이제스트를 레포 추적 문서에 누적(00_STATUS 인덱스로 traverse). /tmp 로그는 휘발성이라.
   //   cache=cr 평균/최대(연속 호출서 상승=프롬프트 캐시 생존). 캐시 셋업 검증은 cron-runs.md 참조.
   try {

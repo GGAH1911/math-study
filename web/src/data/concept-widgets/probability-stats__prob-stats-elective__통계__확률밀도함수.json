@@ -1,0 +1,148 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/확률밀도함수",
+ "spec": {
+  "title": "확률밀도함수와 확률 (연속확률변수)",
+  "params": [
+   {
+    "name": "mu",
+    "label": "중심(μ)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "center",
+    "label": "구간 중심",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "width",
+    "label": "구간 너비",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "a = center - width/2; b = center + width/2; t0 = a - mu; t1 = b - mu; Fa = t0 < -1 ? 0 : (t0 > 1 ? 1 : 0.5 + 0.75*t0 - 0.25*t0^3); Fb = t1 < -1 ? 0 : (t1 > 1 ? 1 : 0.5 + 0.75*t1 - 0.25*t1^3); prob = Fb - Fa; fa = abs(t0) <= 1 ? 0.75*(1 - t0^2) : 0; fb = abs(t1) <= 1 ? 0.75*(1 - t1^2) : 0; upper = mu + 1; lower = mu - 1; tu = upper - mu; tl = lower - mu; Fu = tu < -1 ? 0 : (tu > 1 ? 1 : 0.5 + 0.75*tu - 0.25*tu^3); Fl = tl < -1 ? 0 : (tl > 1 ? 1 : 0.5 + 0.75*tl - 0.25*tl^3); tm = mu - mu; Fm = tm < -1 ? 0 : (tm > 1 ? 1 : 0.5 + 0.75*tm - 0.25*tm^3);",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "fns": [
+    {
+     "fn": "abs(x-mu) <= 1 ? 0.75*(1-(x-mu)^2) : 0",
+     "label": "f(x) (밀도함수)",
+     "color": "steelblue"
+    },
+    {
+     "fn": "x >= a ? (x <= b ? (abs(x-mu) <= 1 ? 0.75*(1-(x-mu)^2) : 0) : 0) : 0",
+     "label": "P(a≤X≤b) (넓이)",
+     "color": "orange"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(a ≤ X ≤ b)",
+    "expr": "prob",
+    "digits": 4
+   },
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "f(b)",
+    "expr": "fb",
+    "digits": 4
+   },
+   {
+    "label": "전체 적분 ∫f = 1",
+    "expr": "Fu - Fl",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mu": 0,
+    "center": 0,
+    "width": 1
+   },
+   {
+    "mu": 0,
+    "center": 0.5,
+    "width": 1
+   },
+   {
+    "mu": 1,
+    "center": 0,
+    "width": 1.5
+   },
+   {
+    "mu": -1,
+    "center": 1,
+    "width": 0.5
+   }
+  ],
+  "invariants": [
+   "Fu - Fl - 1",
+   "Fm - 0.5",
+   "Fa + prob + (1 - Fb) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mu": 0,
+     "center": 0,
+     "width": 1
+    },
+    "expect": {
+     "prob": 0.6875,
+     "fa": 0.5625,
+     "fb": 0.5625
+    }
+   },
+   {
+    "params": {
+     "mu": 0,
+     "center": 0,
+     "width": 2
+    },
+    "expect": {
+     "prob": 1,
+     "fa": 0,
+     "fb": 0
+    }
+   },
+   {
+    "params": {
+     "mu": 0,
+     "center": 0.5,
+     "width": 1
+    },
+    "expect": {
+     "prob": 0.5,
+     "fa": 0.75,
+     "fb": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/표준화",
+ "spec": {
+  "title": "표준화 (표준점수 Z)",
+  "params": [
+   {
+    "name": "mu",
+    "label": "μ (평균)",
+    "type": "slider",
+    "min": 50,
+    "max": 100,
+    "init": 70,
+    "step": 1
+   },
+   {
+    "name": "sigma",
+    "label": "σ (표준편차)",
+    "type": "slider",
+    "min": 5,
+    "max": 20,
+    "init": 12,
+    "step": 0.5
+   },
+   {
+    "name": "z",
+    "label": "Z (표준화 값)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "xv = mu + z*sigma; phi = exp(-z^2/2)/sqrt(2*pi); fx = phi/sigma",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    0,
+    0.5
+   ],
+   "fns": [
+    {
+     "fn": "exp(-x^2/2)/sqrt(2*pi)",
+     "label": "표준정규 N(0,1)",
+     "color": "blue"
+    },
+    {
+     "fn": "exp(-x^2/2)/(sqrt(2*pi)*sigma)",
+     "label": "원래 분포 N(μ,σ²)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "X (원점수)",
+    "expr": "xv",
+    "digits": 2
+   },
+   {
+    "label": "Z (표준점수)",
+    "expr": "z",
+    "digits": 2
+   },
+   {
+    "label": "φ(z)",
+    "expr": "phi",
+    "digits": 4
+   },
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mu": 70,
+    "sigma": 12,
+    "z": 1
+   },
+   {
+    "mu": 50,
+    "sigma": 5,
+    "z": 0
+   },
+   {
+    "mu": 100,
+    "sigma": 20,
+    "z": -1
+   },
+   {
+    "mu": 80,
+    "sigma": 10,
+    "z": 1.5
+   }
+  ],
+  "invariants": [
+   "xv - (mu + z*sigma)",
+   "phi - exp(-z^2/2)/sqrt(2*pi)",
+   "fx - phi/sigma"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mu": 70,
+     "sigma": 12,
+     "z": 1
+    },
+    "expect": {
+     "xv": 82,
+     "phi": 0.2419707245,
+     "fx": 0.02016422704
+    }
+   },
+   {
+    "params": {
+     "mu": 50,
+     "sigma": 5,
+     "z": 0
+    },
+    "expect": {
+     "xv": 50,
+     "phi": 0.3989422804,
+     "fx": 0.07978845608
+    }
+   },
+   {
+    "params": {
+     "mu": 100,
+     "sigma": 20,
+     "z": -1
+    },
+    "expect": {
+     "xv": 80,
+     "phi": 0.2419707245,
+     "fx": 0.01209853622
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

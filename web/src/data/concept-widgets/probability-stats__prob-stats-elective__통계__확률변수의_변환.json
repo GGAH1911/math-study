@@ -1,0 +1,120 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/확률변수의_변환",
+ "spec": {
+  "title": "확률변수의 변환: Y = Xⁿ (X~균등분포)",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "meanY=1/(n+1); fYhalf=(1/n)*(0.5)^(1/n-1); cdfhalf=0.5^(1/n);",
+  "plot": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "1",
+     "label": "f_X(x) (X~균등분포)",
+     "color": "blue"
+    },
+    {
+     "fn": "x^n",
+     "label": "y = g(x) = xⁿ",
+     "color": "green"
+    },
+    {
+     "fn": "(1/n)*x^(1/n-1)",
+     "label": "f_Y(y) (변환된 밀도)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "E[X]",
+    "expr": "0.5",
+    "digits": 3
+   },
+   {
+    "label": "E[Y]=1/(n+1)",
+    "expr": "meanY",
+    "digits": 3
+   },
+   {
+    "label": "f_Y(0.5)",
+    "expr": "fYhalf",
+    "digits": 3
+   },
+   {
+    "label": "P(Y≤0.5)",
+    "expr": "cdfhalf",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 0.5
+   },
+   {
+    "n": 1
+   },
+   {
+    "n": 2
+   },
+   {
+    "n": 3
+   }
+  ],
+  "invariants": [
+   "meanY*(n+1)-1",
+   "cdfhalf^n - 0.5"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 0.5
+    },
+    "expect": {
+     "meanY": 0.6666666666666666,
+     "fYhalf": 1,
+     "cdfhalf": 0.25
+    }
+   },
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "meanY": 0.5,
+     "fYhalf": 1,
+     "cdfhalf": 0.5
+    }
+   },
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "meanY": 0.3333333333333333,
+     "fYhalf": 0.7071067811865476,
+     "cdfhalf": 0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

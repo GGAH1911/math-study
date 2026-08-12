@@ -1,0 +1,100 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/표준오차",
+ "spec": {
+  "title": "표본평균의 표준오차",
+  "params": [
+   {
+    "name": "sigma",
+    "label": "모표준편차 σ",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "표본 크기 n",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1
+   }
+  ],
+  "scope": "SE = sigma / sqrt(n)",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    0,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "1/(SE*sqrt(2*pi))*exp(-(x^2)/(2*SE^2))",
+     "label": "표본평균의 분포",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "표준오차 SE",
+    "expr": "SE",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "sigma": 1,
+    "n": 4
+   },
+   {
+    "sigma": 2,
+    "n": 9
+   },
+   {
+    "sigma": 0.5,
+    "n": 16
+   }
+  ],
+  "invariants": [
+   "abs(SE^2 * n - sigma^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "sigma": 1,
+     "n": 4
+    },
+    "expect": {
+     "SE": 0.5
+    }
+   },
+   {
+    "params": {
+     "sigma": 2,
+     "n": 16
+    },
+    "expect": {
+     "SE": 0.5
+    }
+   },
+   {
+    "params": {
+     "sigma": 3,
+     "n": 9
+    },
+    "expect": {
+     "SE": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

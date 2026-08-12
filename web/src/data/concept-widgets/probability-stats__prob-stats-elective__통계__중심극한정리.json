@@ -1,0 +1,122 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/중심극한정리",
+ "spec": {
+  "title": "중심극한정리: 표준화된 표본평균의 분포",
+  "params": [
+   {
+    "name": "n",
+    "label": "표본 크기 n",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "mu=1; sigma=sqrt(1/n); shape=n; scale=1/n; mean_bar=shape*scale; var_bar=shape*scale^2; mean_Z=sqrt(n)*(mean_bar-mu); var_Z=n*var_bar; x_test=0; exact_at_0 = x_test > -sqrt(n) ? (1/sqrt(n)*n^n/factorial(n-1)*(1+x_test/sqrt(n))^(n-1)*exp(-n*(1+x_test/sqrt(n)))) : 0; normal_at_0 = 1/sqrt(2*pi)*exp(-x_test^2/2);",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "fns": [
+    {
+     "fn": "x > -sqrt(n) ? (1/sqrt(n)*n^n/factorial(n-1)*(1+x/sqrt(n))^(n-1)*exp(-n*(1+x/sqrt(n)))) : 0",
+     "label": "표본평균의 표준화된 분포",
+     "color": "blue"
+    },
+    {
+     "fn": "1/sqrt(2*pi)*exp(-x^2/2)",
+     "label": "표준정규분포 N(0,1)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Z의 평균",
+    "expr": "mean_Z",
+    "digits": 2
+   },
+   {
+    "label": "Z의 분산",
+    "expr": "var_Z",
+    "digits": 2
+   },
+   {
+    "label": "정확한 밀도 (z=0)",
+    "expr": "exact_at_0",
+    "digits": 6
+   },
+   {
+    "label": "정규근사 밀도 (z=0)",
+    "expr": "normal_at_0",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 10
+   },
+   {
+    "n": 30
+   }
+  ],
+  "invariants": [
+   "mean_Z",
+   "var_Z - 1",
+   "mean_bar - mu",
+   "var_bar - sigma^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "mean_Z": 0,
+     "var_Z": 1,
+     "exact_at_0": 0.3678794412,
+     "normal_at_0": 0.3989422804
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "mean_Z": 0,
+     "var_Z": 1,
+     "exact_at_0": 0.3907336296,
+     "normal_at_0": 0.3989422804
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
