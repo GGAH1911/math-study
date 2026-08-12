@@ -1,0 +1,147 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/표본평균의확률분포",
+ "spec": {
+  "title": "표본평균의 확률분포",
+  "params": [
+   {
+    "name": "mu",
+    "label": "μ",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "sigma",
+    "label": "σ",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "se = sigma / sqrt(n);",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "1/(sigma*sqrt(2*pi))*exp(-(x-mu)^2/(2*sigma^2))",
+     "label": "모집단 분포",
+     "color": "blue"
+    },
+    {
+     "fn": "1/(se*sqrt(2*pi))*exp(-(x-mu)^2/(2*se^2))",
+     "label": "표본평균 분포",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "E(X̄) = μ",
+    "expr": "mu",
+    "digits": 2
+   },
+   {
+    "label": "Var(X̄) = σ²/n",
+    "expr": "sigma^2/n",
+    "digits": 4
+   },
+   {
+    "label": "σ/√n (표준오차)",
+    "expr": "se",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mu": 0,
+    "sigma": 1,
+    "n": 1
+   },
+   {
+    "mu": 0,
+    "sigma": 1,
+    "n": 4
+   },
+   {
+    "mu": 1,
+    "sigma": 2,
+    "n": 4
+   },
+   {
+    "mu": -1,
+    "sigma": 0.5,
+    "n": 4
+   }
+  ],
+  "invariants": [
+   "se - sigma/sqrt(n)",
+   "se^2 - sigma^2/n",
+   "n==1 ? se-sigma : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mu": 0,
+     "sigma": 1,
+     "n": 1
+    },
+    "expect": {
+     "se": 1
+    }
+   },
+   {
+    "params": {
+     "mu": 0,
+     "sigma": 1,
+     "n": 4
+    },
+    "expect": {
+     "se": 0.5
+    }
+   },
+   {
+    "params": {
+     "mu": 1,
+     "sigma": 2,
+     "n": 4
+    },
+    "expect": {
+     "se": 1
+    }
+   },
+   {
+    "params": {
+     "mu": -1,
+     "sigma": 0.5,
+     "n": 4
+    },
+    "expect": {
+     "se": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

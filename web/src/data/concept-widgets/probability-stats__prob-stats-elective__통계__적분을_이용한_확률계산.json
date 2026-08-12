@@ -1,0 +1,168 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/적분을_이용한_확률계산",
+ "spec": {
+  "title": "적분을 이용한 확률계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (구간 시작)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.2,
+    "step": 0.01
+   },
+   {
+    "name": "b",
+    "label": "b (구간 끝)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.01
+   }
+  ],
+  "scope": "alow=min(a,b); ahigh=max(a,b); prob=ahigh^2-alow^2; mid=(alow+ahigh)/2; fmid=2*mid",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    2.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=alow",
+       0
+      ],
+      [
+       "=ahigh",
+       0
+      ],
+      [
+       "=ahigh",
+       "=2*ahigh"
+      ],
+      [
+       "=alow",
+       "=2*alow"
+      ]
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    2.2
+   ],
+   "fns": [
+    {
+     "fn": "2*x",
+     "label": "f(x)=2x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(a≤X≤b)",
+    "expr": "prob",
+    "digits": 6
+   },
+   {
+    "label": "b²-a²",
+    "expr": "prob",
+    "digits": 6
+   },
+   {
+    "label": "구간 길이",
+    "expr": "ahigh-alow",
+    "digits": 4
+   },
+   {
+    "label": "f(중점)",
+    "expr": "fmid",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.2,
+    "b": 0.6
+   },
+   {
+    "a": 0.5,
+    "b": 0.5
+   },
+   {
+    "a": 0.8,
+    "b": 0.1
+   },
+   {
+    "a": 0,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "prob - (ahigh^2 - alow^2)",
+   "ahigh>alow ? (prob/(ahigh-alow) - 2*mid) : prob",
+   "alow^2 + (1 - ahigh^2) + prob - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.2,
+     "b": 0.6
+    },
+    "expect": {
+     "alow": 0.2,
+     "ahigh": 0.6,
+     "mid": 0.4,
+     "fmid": 0.8,
+     "prob": 0.32
+    }
+   },
+   {
+    "params": {
+     "a": 0.8,
+     "b": 0.1
+    },
+    "expect": {
+     "alow": 0.1,
+     "ahigh": 0.8,
+     "mid": 0.45,
+     "fmid": 0.9,
+     "prob": 0.63
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1
+    },
+    "expect": {
+     "alow": 0,
+     "ahigh": 1,
+     "mid": 0.5,
+     "fmid": 1,
+     "prob": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

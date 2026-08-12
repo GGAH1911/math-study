@@ -1,0 +1,137 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/정규근사",
+ "spec": {
+  "title": "정규근사 (이항분포의 정규근사)",
+  "params": [
+   {
+    "name": "n",
+    "label": "시행횟수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 100,
+    "init": 20,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "성공확률 p",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "mu = n*p; sigma = sqrt(n*p*(1-p)); pmf0 = combinations(n,0)*p^0*(1-p)^(n-0); pmfn = combinations(n,n)*p^n*(1-p)^(n-n); pmf_mu = combinations(n,round(mu))*p^round(mu)*(1-p)^(n-round(mu)); ymax = max(1/(sigma*sqrt(2*pi)), pmf_mu)*1.5; xmin = max(0, mu - 4*sigma); xmax = min(n, mu + 4*sigma)",
+  "geometry": null,
+  "plot": {
+   "range": [
+    "=xmin",
+    "=xmax"
+   ],
+   "yRange": [
+    0,
+    "=ymax"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "1/(sigma*sqrt(2*pi))*exp(-(x-mu)^2/(2*sigma^2))",
+     "label": "정규분포",
+     "color": "blue"
+    },
+    {
+     "fn": "((floor(x+0.5)>=0 && floor(x+0.5)<=n) ? combinations(n,floor(x+0.5))*p^(floor(x+0.5))*(1-p)^(n-floor(x+0.5)) : 0)",
+     "label": "이항분포",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균 μ",
+    "expr": "mu",
+    "digits": 4
+   },
+   {
+    "label": "표준편차 σ",
+    "expr": "sigma",
+    "digits": 4
+   },
+   {
+    "label": "P(X=μ) 근사",
+    "expr": "pmf_mu",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 10,
+    "p": 0.5
+   },
+   {
+    "n": 30,
+    "p": 0.3
+   },
+   {
+    "n": 100,
+    "p": 0.1
+   },
+   {
+    "n": 50,
+    "p": 0.7
+   }
+  ],
+  "invariants": [
+   "mu - n*p",
+   "sigma^2 - n*p*(1-p)",
+   "pmf0 - (1-p)^n",
+   "pmfn - p^n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 16,
+     "p": 0.5
+    },
+    "expect": {
+     "mu": 8,
+     "sigma": 2,
+     "pmf0": 0.0000152587890625,
+     "pmfn": 0.0000152587890625,
+     "pmf_mu": 0.196380615234375
+    }
+   },
+   {
+    "params": {
+     "n": 20,
+     "p": 0.3
+    },
+    "expect": {
+     "mu": 6,
+     "sigma": 2.04939015319192,
+     "pmf0": 0.00079792266297612,
+     "pmfn": 3.486784401e-11,
+     "pmf_mu": 0.19163898275344
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "p": 0.5
+    },
+    "expect": {
+     "mu": 5,
+     "sigma": 1.58113883008419,
+     "pmf0": 0.0009765625,
+     "pmfn": 0.0009765625,
+     "pmf_mu": 0.24609375
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

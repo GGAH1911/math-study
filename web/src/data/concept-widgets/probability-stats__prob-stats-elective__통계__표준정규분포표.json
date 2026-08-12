@@ -1,0 +1,96 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/표준정규분포표",
+ "spec": {
+  "title": "표준정규분포표",
+  "params": [
+   {
+    "name": "z",
+    "label": "z",
+    "type": "slider",
+    "min": -3.5,
+    "max": 3.5,
+    "init": 0,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "x_z=z/sqrt(2); s=x_z>=0 ? 1 : -1; ax=abs(x_z); t=1/(1+0.3275911*ax); poly=((((1.061405429*t - 1.453152027)*t + 1.421413741)*t - 0.284496736)*t + 0.254829592)*t; erfv=s*(1-poly*exp(-ax*ax)); pz=0.5*(1+erfv); pz_mirror=0.5*(1-erfv)",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    0,
+    0.45
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "1/sqrt(2*pi)*exp(-x^2/2)",
+     "label": "N(0,1) pdf",
+     "color": "steelblue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "z =",
+    "expr": "z",
+    "digits": 2
+   },
+   {
+    "label": "P(Z≤z) =",
+    "expr": "pz",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "z": 1.96
+   },
+   {
+    "z": 0
+   },
+   {
+    "z": -1.96
+   },
+   {
+    "z": 3.49
+   }
+  ],
+  "invariants": [
+   "pz + pz_mirror - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "z": 0
+    },
+    "expect": {
+     "pz": 0.5
+    }
+   },
+   {
+    "params": {
+     "z": 1.96
+    },
+    "expect": {
+     "pz": 0.9750021048517796
+    }
+   },
+   {
+    "params": {
+     "z": -1.96
+    },
+    "expect": {
+     "pz": 0.0249978951482204
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
