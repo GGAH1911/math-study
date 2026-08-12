@@ -140,7 +140,9 @@ async function gen(id, idx, total) {
 const argv = process.argv.slice(2);
 const pi = argv.indexOf('--par');
 const PAR = pi >= 0 ? Math.max(1, +argv[pi + 1] || 1) : +(process.env.NOUS_PAR || 4);
-const ids = argv.filter((a, i) => !a.startsWith('--') && i !== pi + 1);
+// ★pi<0 가드 필수: --par 가 없으면 pi=-1 → pi+1=0 이 되어 **첫 번째 id 를 잘라먹는다**.
+//   워커풀은 건별로 id 하나만 넘기므로 그 하나가 사라져 전건 즉시 실패했다(105건 무한 스킵).
+const ids = argv.filter((a, i) => !a.startsWith('--') && (pi < 0 || i !== pi + 1));
 
 // ★'run' 은 대시보드를 리셋한다. 워커풀(widget_spec_loop)이 건별로 이 스크립트를 1건씩 호출할 땐
 //   매번 리셋되면 화면이 못 쌓이므로, 자체 배치(2건 이상)일 때만 보낸다.
