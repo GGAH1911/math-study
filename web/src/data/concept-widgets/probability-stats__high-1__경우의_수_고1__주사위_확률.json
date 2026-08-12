@@ -1,0 +1,252 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/주사위_확률",
+ "spec": {
+  "title": "주사위 확률 (정의)",
+  "params": [
+   {
+    "name": "k",
+    "label": "k (k 이상이 나올)",
+    "type": "slider",
+    "min": 1,
+    "max": 7,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "n=7-k; prob=n/6; unfav=(k-1)/6",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -0.2,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "label": "전체"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=k-1",
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       "=k-1",
+       1
+      ]
+     ],
+     "label": "A"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      1,
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      0
+     ],
+     "to": [
+      2,
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      0
+     ],
+     "to": [
+      3,
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      0
+     ],
+     "to": [
+      4,
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      0
+     ],
+     "to": [
+      5,
+      1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0.5,
+      0.5
+     ],
+     "label": "1"
+    },
+    {
+     "type": "point",
+     "at": [
+      1.5,
+      0.5
+     ],
+     "label": "2"
+    },
+    {
+     "type": "point",
+     "at": [
+      2.5,
+      0.5
+     ],
+     "label": "3"
+    },
+    {
+     "type": "point",
+     "at": [
+      3.5,
+      0.5
+     ],
+     "label": "4"
+    },
+    {
+     "type": "point",
+     "at": [
+      4.5,
+      0.5
+     ],
+     "label": "5"
+    },
+    {
+     "type": "point",
+     "at": [
+      5.5,
+      0.5
+     ],
+     "label": "6"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "k",
+    "expr": "k",
+    "digits": 0
+   },
+   {
+    "label": "n (사건의 경우의 수)",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "P(A)",
+    "expr": "prob",
+    "digits": 3
+   },
+   {
+    "label": "P(A^c)",
+    "expr": "unfav",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 5
+   },
+   {
+    "k": 7
+   }
+  ],
+  "invariants": [
+   "prob - n/6",
+   "prob + unfav - 1",
+   "n - (7-k)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 4
+    },
+    "expect": {
+     "n": 3,
+     "prob": 0.5
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "n": 6,
+     "prob": 1
+    }
+   },
+   {
+    "params": {
+     "k": 6
+    },
+    "expect": {
+     "n": 1,
+     "prob": 0.16666666666666666
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

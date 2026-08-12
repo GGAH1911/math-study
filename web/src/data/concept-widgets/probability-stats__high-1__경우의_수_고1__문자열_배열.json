@@ -1,0 +1,114 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/문자열_배열",
+ "spec": {
+  "title": "문자열 배열의 순열 수 (nPr)",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 문자 수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "r",
+    "label": "선택할 문자 수 r",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 2,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "N=n; R=r; P = R<=N ? factorial(N)/factorial(N-R) : 0;",
+  "plot": {
+   "range": [
+    "=0",
+    "=N"
+   ],
+   "yRange": [
+    "=0",
+    "=factorial(N)"
+   ],
+   "fns": [
+    {
+     "fn": "x <= N ? factorial(N)/factorial(N-x) : 0",
+     "label": "P(n,r)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "N"
+   },
+   {
+    "label": "r",
+    "expr": "R"
+   },
+   {
+    "label": "P(n,r)",
+    "expr": "P",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "r": 2
+   },
+   {
+    "n": 5,
+    "r": 3
+   },
+   {
+    "n": 3,
+    "r": 4
+   },
+   {
+    "n": 6,
+    "r": 6
+   }
+  ],
+  "invariants": [
+   "R<=N ? (P - factorial(R)*combinations(N,R)) : P"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4,
+     "r": 2
+    },
+    "expect": {
+     "P": 12
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "r": 3
+    },
+    "expect": {
+     "P": 60
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 4
+    },
+    "expect": {
+     "P": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,241 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/인접_조건",
+ "spec": {
+  "title": "인접 조건 (이웃하여 배열하는 경우의 수)",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 대상 수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "m",
+    "label": "이웃해야 하는 대상 수 m",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "pos",
+    "label": "블록의 시작 위치",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "m = min(m, n); pos = min(max(pos, 1), n - m + 1); placements = n - m + 1; inner = factorial(m); total = inner * factorial(placements); bx0 = pos - 0.5; bx1 = pos + m - 0.5; by0 = -0.3; by1 = 0.3;",
+  "geometry": {
+   "range": [
+    "= -0.5",
+    "= n + 0.5"
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "start": [
+      0,
+      0
+     ],
+     "end": [
+      "=n",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      0
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=bx0",
+       "=by0"
+      ],
+      [
+       "=bx1",
+       "=by0"
+      ],
+      [
+       "=bx1",
+       "=by1"
+      ],
+      [
+       "=bx0",
+       "=by1"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "전체 대상 수 n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "이웃 대상 수 m",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": "블록 배치 방법 수",
+    "expr": "placements",
+    "digits": 0
+   },
+   {
+    "label": "블록 내부 순열 수",
+    "expr": "inner",
+    "digits": 0
+   },
+   {
+    "label": "전체 경우의 수",
+    "expr": "total",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "m": 2,
+    "pos": 1
+   },
+   {
+    "n": 5,
+    "m": 2,
+    "pos": 4
+   },
+   {
+    "n": 6,
+    "m": 3,
+    "pos": 2
+   },
+   {
+    "n": 4,
+    "m": 6,
+    "pos": 2
+   }
+  ],
+  "invariants": [
+   "m - min(m,n)",
+   "pos - min(max(pos,1), n-m+1)",
+   "placements - (n - m + 1)",
+   "inner - factorial(m)",
+   "total - factorial(m)*factorial(n-m+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "m": 2,
+     "pos": 1
+    },
+    "expect": {
+     "total": 48,
+     "placements": 4,
+     "inner": 2,
+     "m": 2,
+     "pos": 1
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "m": 3,
+     "pos": 2
+    },
+    "expect": {
+     "total": 144,
+     "placements": 4,
+     "inner": 6,
+     "m": 3,
+     "pos": 2
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "m": 6,
+     "pos": 2
+    },
+    "expect": {
+     "total": 24,
+     "placements": 1,
+     "inner": 24,
+     "m": 4,
+     "pos": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

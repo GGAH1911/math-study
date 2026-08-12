@@ -1,0 +1,349 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/조합의_계산",
+ "spec": {
+  "title": "조합의 계산",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "rr=min(r,n); h0=n>=0?factorial(n)/(factorial(0)*factorial(n)):0; h1=n>=1?factorial(n)/(factorial(1)*factorial(n-1)):0; h2=n>=2?factorial(n)/(factorial(2)*factorial(n-2)):0; h3=n>=3?factorial(n)/(factorial(3)*factorial(n-3)):0; h4=n>=4?factorial(n)/(factorial(4)*factorial(n-4)):0; h5=n>=5?factorial(n)/(factorial(5)*factorial(n-5)):0; h6=n>=6?factorial(n)/(factorial(6)*factorial(n-6)):0; h7=n>=7?factorial(n)/(factorial(7)*factorial(n-7)):0; h8=n>=8?factorial(n)/(factorial(8)*factorial(n-8)):0; h9=n>=9?factorial(n)/(factorial(9)*factorial(n-9)):0; h10=n>=10?factorial(n)/(factorial(10)*factorial(n-10)):0; comb=combinations(n,rr); comb2=combinations(n,n-rr)",
+  "geometry": {
+   "range": [
+    -0.5,
+    10.5
+   ],
+   "yRange": [
+    -10,
+    260
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0.4,
+       0
+      ],
+      [
+       0.4,
+       "=h0"
+      ],
+      [
+       0,
+       "=h0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1,
+       0
+      ],
+      [
+       1.4,
+       0
+      ],
+      [
+       1.4,
+       "=h1"
+      ],
+      [
+       1,
+       "=h1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2,
+       0
+      ],
+      [
+       2.4,
+       0
+      ],
+      [
+       2.4,
+       "=h2"
+      ],
+      [
+       2,
+       "=h2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3,
+       0
+      ],
+      [
+       3.4,
+       0
+      ],
+      [
+       3.4,
+       "=h3"
+      ],
+      [
+       3,
+       "=h3"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       4,
+       0
+      ],
+      [
+       4.4,
+       0
+      ],
+      [
+       4.4,
+       "=h4"
+      ],
+      [
+       4,
+       "=h4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       5,
+       0
+      ],
+      [
+       5.4,
+       0
+      ],
+      [
+       5.4,
+       "=h5"
+      ],
+      [
+       5,
+       "=h5"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       6,
+       0
+      ],
+      [
+       6.4,
+       0
+      ],
+      [
+       6.4,
+       "=h6"
+      ],
+      [
+       6,
+       "=h6"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       7,
+       0
+      ],
+      [
+       7.4,
+       0
+      ],
+      [
+       7.4,
+       "=h7"
+      ],
+      [
+       7,
+       "=h7"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       8,
+       0
+      ],
+      [
+       8.4,
+       0
+      ],
+      [
+       8.4,
+       "=h8"
+      ],
+      [
+       8,
+       "=h8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       9,
+       0
+      ],
+      [
+       9.4,
+       0
+      ],
+      [
+       9.4,
+       "=h9"
+      ],
+      [
+       9,
+       "=h9"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       10,
+       0
+      ],
+      [
+       10.4,
+       0
+      ],
+      [
+       10.4,
+       "=h10"
+      ],
+      [
+       10,
+       "=h10"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rr",
+      "=comb"
+     ],
+     "label": "C(n,r)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "C(n,r)",
+    "expr": "comb",
+    "digits": 0
+   },
+   {
+    "label": "C(n,n-r)",
+    "expr": "comb2",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "r": 2
+   },
+   {
+    "n": 7,
+    "r": 3
+   },
+   {
+    "n": 10,
+    "r": 5
+   },
+   {
+    "n": 3,
+    "r": 9
+   }
+  ],
+  "invariants": [
+   "comb - factorial(n)/(factorial(rr)*factorial(n-rr))",
+   "comb - comb2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "r": 2
+    },
+    "expect": {
+     "comb": 10,
+     "comb2": 10
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "r": 3
+    },
+    "expect": {
+     "comb": 20,
+     "comb2": 20
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 7
+    },
+    "expect": {
+     "comb": 1,
+     "comb2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

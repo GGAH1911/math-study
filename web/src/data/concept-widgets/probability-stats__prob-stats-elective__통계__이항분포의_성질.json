@@ -1,0 +1,127 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/이항분포의_성질",
+ "spec": {
+  "title": "이항분포의 성질",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": 0.01,
+    "max": 0.99,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "pmf(k) = k < 0 ? 0 : (k > n ? 0 : combinations(n,k) * p^k * (1-p)^(n-k)); sumP = pmf(0)+pmf(1)+pmf(2)+pmf(3)+pmf(4)+pmf(5)+pmf(6)+pmf(7)+pmf(8)+pmf(9)+pmf(10)+pmf(11)+pmf(12)+pmf(13)+pmf(14)+pmf(15)+pmf(16)+pmf(17)+pmf(18)+pmf(19)+pmf(20); sumK = 0*pmf(0)+1*pmf(1)+2*pmf(2)+3*pmf(3)+4*pmf(4)+5*pmf(5)+6*pmf(6)+7*pmf(7)+8*pmf(8)+9*pmf(9)+10*pmf(10)+11*pmf(11)+12*pmf(12)+13*pmf(13)+14*pmf(14)+15*pmf(15)+16*pmf(16)+17*pmf(17)+18*pmf(18)+19*pmf(19)+20*pmf(20); sumK2 = 0*pmf(0)+1*pmf(1)+4*pmf(2)+9*pmf(3)+16*pmf(4)+25*pmf(5)+36*pmf(6)+49*pmf(7)+64*pmf(8)+81*pmf(9)+100*pmf(10)+121*pmf(11)+144*pmf(12)+169*pmf(13)+196*pmf(14)+225*pmf(15)+256*pmf(16)+289*pmf(17)+324*pmf(18)+361*pmf(19)+400*pmf(20); varSum = sumK2 - sumK^2",
+  "plot": {
+   "range": [
+    -1,
+    21
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "fns": [
+    {
+     "fn": "pmf(round(x))",
+     "label": "P(X=x)",
+     "color": "steelblue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "평균 E(X) (실측)",
+    "expr": "sumK",
+    "digits": 4
+   },
+   {
+    "label": "분산 V(X) (실측)",
+    "expr": "varSum",
+    "digits": 4
+   },
+   {
+    "label": "이론 평균 np",
+    "expr": "n*p",
+    "digits": 4
+   },
+   {
+    "label": "이론 분산 np(1-p)",
+    "expr": "n*p*(1-p)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 10,
+    "p": 0.5
+   },
+   {
+    "n": 10,
+    "p": 0.2
+   },
+   {
+    "n": 20,
+    "p": 0.5
+   },
+   {
+    "n": 5,
+    "p": 0.8
+   }
+  ],
+  "invariants": [
+   "sumP-1",
+   "sumK - n*p",
+   "varSum - n*p*(1-p)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 10,
+     "p": 0.5
+    },
+    "expect": {
+     "sumK": 5,
+     "varSum": 2.5,
+     "sumP": 1
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "p": 0.2
+    },
+    "expect": {
+     "sumK": 2,
+     "varSum": 1.6,
+     "sumP": 1
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "p": 0.5
+    },
+    "expect": {
+     "sumK": 2.5,
+     "varSum": 1.25,
+     "sumP": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

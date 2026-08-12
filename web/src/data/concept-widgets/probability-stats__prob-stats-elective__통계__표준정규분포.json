@@ -1,0 +1,97 @@
+{
+ "id": "probability-stats/prob-stats-elective/통계/표준정규분포",
+ "spec": {
+  "title": "표준정규분포의 확률밀도함수",
+  "params": [
+   {
+    "name": "z",
+    "label": "z",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "fz=1/sqrt(2*pi)*exp(-z^2/2); fzNeg=1/sqrt(2*pi)*exp(-(-z)^2/2); phiVal=0.5*(1+erf(z/sqrt(2))); phiValNeg=0.5*(1+erf(-z/sqrt(2)))",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    0,
+    0.45
+   ],
+   "fns": [
+    {
+     "fn": "1/sqrt(2*pi)*exp(-x^2/2)",
+     "label": "f(z)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밀도 f(z)",
+    "expr": "fz",
+    "digits": 6
+   },
+   {
+    "label": "누적확률 P(Z≤z)",
+    "expr": "phiVal",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "z": -2
+   },
+   {
+    "z": 0
+   },
+   {
+    "z": 1
+   },
+   {
+    "z": 2
+   }
+  ],
+  "invariants": [
+   "fz - fzNeg",
+   "phiVal + phiValNeg - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "z": 0
+    },
+    "expect": {
+     "fz": 0.3989422804014327,
+     "phiVal": 0.5
+    }
+   },
+   {
+    "params": {
+     "z": 1
+    },
+    "expect": {
+     "fz": 0.24197072451914337,
+     "phiVal": 0.8413447460685429
+    }
+   },
+   {
+    "params": {
+     "z": 2
+    },
+    "expect": {
+     "fz": 0.05399096651318806,
+     "phiVal": 0.9772498680518208
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

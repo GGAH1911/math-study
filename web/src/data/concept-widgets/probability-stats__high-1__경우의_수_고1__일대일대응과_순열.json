@@ -1,0 +1,86 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/일대일대응과_순열",
+ "spec": {
+  "title": "일대일대응과 순열: n!의 증가",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (원소의 개수)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "fact = factorial(n)",
+  "plot": {
+   "range": [
+    1,
+    6
+   ],
+   "yRange": [
+    0,
+    750
+   ],
+   "fns": [
+    {
+     "fn": "factorial(x)",
+     "label": "n!",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n! (일대일대응/순열의 수)",
+    "expr": "fact",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 6
+   }
+  ],
+  "invariants": [
+   "abs(fact - n * factorial(n-1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "fact": 2
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "fact": 24
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "fact": 120
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

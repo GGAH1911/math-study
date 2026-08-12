@@ -1,0 +1,375 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/조합의_기본_계산",
+ "spec": {
+  "title": "조합의 기본 계산",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (전체 개수)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r (선택 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "comb(n,k)=k>=0 and k<=n ? n!/(k!*(n-k)!) : 0; re = min(r,n); c_r = comb(n,re); c_sym = comb(n,n-re); n_fact = n!; r_fact = re!; n_minus_r_fact = (n-re)!;",
+  "geometry": {
+   "range": [
+    -0.5,
+    10.5
+   ],
+   "yRange": [
+    0,
+    280
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       -0.4,
+       0
+      ],
+      [
+       -0.4,
+       "=comb(n,0)"
+      ],
+      [
+       0.4,
+       "=comb(n,0)"
+      ],
+      [
+       0.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.6,
+       0
+      ],
+      [
+       0.6,
+       "=comb(n,1)"
+      ],
+      [
+       1.4,
+       "=comb(n,1)"
+      ],
+      [
+       1.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1.6,
+       0
+      ],
+      [
+       1.6,
+       "=comb(n,2)"
+      ],
+      [
+       2.4,
+       "=comb(n,2)"
+      ],
+      [
+       2.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2.6,
+       0
+      ],
+      [
+       2.6,
+       "=comb(n,3)"
+      ],
+      [
+       3.4,
+       "=comb(n,3)"
+      ],
+      [
+       3.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3.6,
+       0
+      ],
+      [
+       3.6,
+       "=comb(n,4)"
+      ],
+      [
+       4.4,
+       "=comb(n,4)"
+      ],
+      [
+       4.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       4.6,
+       0
+      ],
+      [
+       4.6,
+       "=comb(n,5)"
+      ],
+      [
+       5.4,
+       "=comb(n,5)"
+      ],
+      [
+       5.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       5.6,
+       0
+      ],
+      [
+       5.6,
+       "=comb(n,6)"
+      ],
+      [
+       6.4,
+       "=comb(n,6)"
+      ],
+      [
+       6.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       6.6,
+       0
+      ],
+      [
+       6.6,
+       "=comb(n,7)"
+      ],
+      [
+       7.4,
+       "=comb(n,7)"
+      ],
+      [
+       7.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       7.6,
+       0
+      ],
+      [
+       7.6,
+       "=comb(n,8)"
+      ],
+      [
+       8.4,
+       "=comb(n,8)"
+      ],
+      [
+       8.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       8.6,
+       0
+      ],
+      [
+       8.6,
+       "=comb(n,9)"
+      ],
+      [
+       9.4,
+       "=comb(n,9)"
+      ],
+      [
+       9.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       9.6,
+       0
+      ],
+      [
+       9.6,
+       "=comb(n,10)"
+      ],
+      [
+       10.4,
+       "=comb(n,10)"
+      ],
+      [
+       10.4,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=re",
+      "=c_r"
+     ],
+     "label": "C(n,r)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n-re",
+      "=c_sym"
+     ],
+     "label": "C(n,n-r)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "C(n,r)",
+    "expr": "c_r",
+    "digits": 0
+   },
+   {
+    "label": "C(n,n-r)",
+    "expr": "c_sym",
+    "digits": 0
+   },
+   {
+    "label": "n!",
+    "expr": "n_fact",
+    "digits": 0
+   },
+   {
+    "label": "r!",
+    "expr": "r_fact",
+    "digits": 0
+   },
+   {
+    "label": "(n-r)!",
+    "expr": "n_minus_r_fact",
+    "digits": 0
+   },
+   {
+    "label": "n!/(r!(n-r)!)",
+    "expr": "n_fact/(r_fact*n_minus_r_fact)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 6,
+    "r": 2
+   },
+   {
+    "n": 10,
+    "r": 5
+   },
+   {
+    "n": 5,
+    "r": 0
+   },
+   {
+    "n": 7,
+    "r": 3
+   }
+  ],
+  "invariants": [
+   "comb(n,re) - n!/(re!*(n-re)!)",
+   "comb(n,re) - comb(n,n-re)",
+   "c_r - c_sym"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 6,
+     "r": 2
+    },
+    "expect": {
+     "c_r": 15
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "r": 5
+    },
+    "expect": {
+     "c_r": 252
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "r": 0
+    },
+    "expect": {
+     "c_r": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

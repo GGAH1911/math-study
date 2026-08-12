@@ -77,3 +77,5 @@ updated: 2026-06-28
 | 2026-08-11 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-12 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-12 22:59 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-13 00:10 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-13 00:13 | widget | accept 13 · skip 92 · 12% | cr 없음 |

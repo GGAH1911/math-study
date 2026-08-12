@@ -1,0 +1,215 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/같은_것이_있을_때의_순열",
+ "spec": {
+  "title": "같은 것이 있을 때의 순열",
+  "params": [
+   {
+    "name": "a",
+    "label": "A의 개수",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "B의 개수",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "C의 개수",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "n=a+b+c; P=factorial(n)/(factorial(a)*factorial(b)*factorial(c))",
+  "geometry": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    0,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.7,
+       0
+      ],
+      [
+       1.3,
+       0
+      ],
+      [
+       1.3,
+       "=a"
+      ],
+      [
+       0.7,
+       "=a"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1.7,
+       0
+      ],
+      [
+       2.3,
+       0
+      ],
+      [
+       2.3,
+       "=b"
+      ],
+      [
+       1.7,
+       "=b"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2.7,
+       0
+      ],
+      [
+       3.3,
+       0
+      ],
+      [
+       3.3,
+       "=c"
+      ],
+      [
+       2.7,
+       "=c"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=b"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=c"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A의 개수",
+    "expr": "a"
+   },
+   {
+    "label": "B의 개수",
+    "expr": "b"
+   },
+   {
+    "label": "C의 개수",
+    "expr": "c"
+   },
+   {
+    "label": "전체 n",
+    "expr": "n"
+   },
+   {
+    "label": "서로 다른 순열 수",
+    "expr": "P"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1,
+    "c": 0
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1
+   },
+   {
+    "a": 2,
+    "b": 2,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "P*factorial(a)*factorial(b)*factorial(c) - factorial(n)",
+   "n - (a+b+c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": 0
+    },
+    "expect": {
+     "P": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 1
+    },
+    "expect": {
+     "P": 6
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2,
+     "c": 0
+    },
+    "expect": {
+     "P": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

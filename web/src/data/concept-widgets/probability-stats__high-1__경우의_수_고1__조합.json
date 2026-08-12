@@ -1,0 +1,128 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/조합",
+ "spec": {
+  "title": "조합(nCr)의 개수 곡선",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "r_eff = min(r,n); c = combinations(n, r_eff); sym = c - combinations(n, n - r_eff)",
+  "plot": {
+   "range": [
+    0,
+    12
+   ],
+   "yRange": [
+    0,
+    1000
+   ],
+   "fns": [
+    {
+     "fn": "x <= n ? gamma(n+1)/(gamma(x+1)*gamma(n-x+1)) : 0",
+     "label": "C(n,k)",
+     "color": "steelblue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "r(유효)",
+    "expr": "r_eff",
+    "digits": 0
+   },
+   {
+    "label": "C(n,r)",
+    "expr": "c",
+    "digits": 0
+   },
+   {
+    "label": "C(n,n-r)",
+    "expr": "combinations(n, n-r_eff)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 6,
+    "r": 2
+   },
+   {
+    "n": 5,
+    "r": 5
+   },
+   {
+    "n": 10,
+    "r": 4
+   },
+   {
+    "n": 2,
+    "r": 5
+   },
+   {
+    "n": 3,
+    "r": 0
+   }
+  ],
+  "invariants": [
+   "abs(sym)",
+   "abs(c - floor(c))",
+   "abs(r_eff - min(r,n))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 6,
+     "r": 2
+    },
+    "expect": {
+     "r_eff": 2,
+     "c": 15
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "r": 5
+    },
+    "expect": {
+     "r_eff": 5,
+     "c": 1
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "r": 4
+    },
+    "expect": {
+     "r_eff": 4,
+     "c": 210
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

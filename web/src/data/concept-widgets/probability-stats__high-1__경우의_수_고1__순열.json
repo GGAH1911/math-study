@@ -1,0 +1,263 @@
+{
+ "id": "probability-stats/high-1/경우의_수_고1/순열",
+ "spec": {
+  "title": "순열 nPr의 기하적 의미: 선택 단계별 경우의 수",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (전체 원소 수)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r (선택 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "r_eff = min(r,n); P = factorial(n) / factorial(n - r_eff); prod = 1; prod = r_eff>=1 ? prod*n : prod; prod = r_eff>=2 ? prod*(n-1) : prod; prod = r_eff>=3 ? prod*(n-2) : prod; prod = r_eff>=4 ? prod*(n-3) : prod; prod = r_eff>=5 ? prod*(n-4) : prod; prod = r_eff>=6 ? prod*(n-5) : prod; w1 = r_eff>=1 ? n : 0; w2 = r_eff>=2 ? max(0,n-1) : 0; w3 = r_eff>=3 ? max(0,n-2) : 0; w4 = r_eff>=4 ? max(0,n-3) : 0; w5 = r_eff>=5 ? max(0,n-4) : 0; w6 = r_eff>=6 ? max(0,n-5) : 0;",
+  "geometry": {
+   "range": [
+    -0.5,
+    7.5
+   ],
+   "yRange": [
+    -0.5,
+    7.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=0.6"
+      ],
+      [
+       "=1+w1",
+       "=0.6"
+      ],
+      [
+       "=1+w1",
+       "=1.4"
+      ],
+      [
+       "=1",
+       "=1.4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=1.6"
+      ],
+      [
+       "=1+w2",
+       "=1.6"
+      ],
+      [
+       "=1+w2",
+       "=2.4"
+      ],
+      [
+       "=1",
+       "=2.4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=2.6"
+      ],
+      [
+       "=1+w3",
+       "=2.6"
+      ],
+      [
+       "=1+w3",
+       "=3.4"
+      ],
+      [
+       "=1",
+       "=3.4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=3.6"
+      ],
+      [
+       "=1+w4",
+       "=3.6"
+      ],
+      [
+       "=1+w4",
+       "=4.4"
+      ],
+      [
+       "=1",
+       "=4.4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=4.6"
+      ],
+      [
+       "=1+w5",
+       "=4.6"
+      ],
+      [
+       "=1+w5",
+       "=5.4"
+      ],
+      [
+       "=1",
+       "=5.4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=1",
+       "=5.6"
+      ],
+      [
+       "=1+w6",
+       "=5.6"
+      ],
+      [
+       "=1+w6",
+       "=6.4"
+      ],
+      [
+       "=1",
+       "=6.4"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "r",
+    "expr": "r_eff",
+    "digits": 0
+   },
+   {
+    "label": "nPr",
+    "expr": "P",
+    "digits": 0
+   },
+   {
+    "label": "곱의 계산",
+    "expr": "prod",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "r": 3
+   },
+   {
+    "n": 4,
+    "r": 2
+   },
+   {
+    "n": 6,
+    "r": 6
+   },
+   {
+    "n": 2,
+    "r": 1
+   },
+   {
+    "n": 3,
+    "r": 0
+   }
+  ],
+  "invariants": [
+   "abs(P-prod)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "r": 3
+    },
+    "expect": {
+     "P": 60,
+     "prod": 60,
+     "r_eff": 3
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 2
+    },
+    "expect": {
+     "P": 12,
+     "prod": 12,
+     "r_eff": 2
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "r": 6
+    },
+    "expect": {
+     "P": 720,
+     "prod": 720,
+     "r_eff": 6
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 0
+    },
+    "expect": {
+     "P": 1,
+     "prod": 1,
+     "r_eff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
