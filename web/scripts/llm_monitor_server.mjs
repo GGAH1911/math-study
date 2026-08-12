@@ -93,10 +93,13 @@ const es=new EventSource('/events');
 es.onopen=()=>{$('conn').textContent='연결됨';$('live').classList.add('on')};
 es.onerror=()=>{$('conn').textContent='끊김';$('live').classList.remove('on')};
 es.onmessage=(m)=>{
- const e=JSON.parse(m.data);
+ let e; try{e=JSON.parse(m.data)}catch{return}   // 동시 append 로 깨진 줄은 버린다
+
  if(e.ev==='run'){total=e.total;$('model').textContent=e.model+(e.par?' ×'+e.par:'');pass=fail=0;cost=0;for(const k in S)delete S[k];order.length=0;renderList();stats();return}
  if(e.ev==='start'){S[e.id]={st:'run',reason:'',content:'',why:'',usage:{}};if(!order.includes(e.id))order.push(e.id);
-  if(!sel||S[sel]?.st!=='run')sel=e.id; total=e.total||total; renderList();renderBody();stats();return}
+  if(!sel||S[sel]?.st!=='run')sel=e.id;
+  if(e.model&&$('model').textContent==='-')$('model').textContent=e.model;   // 루프 모드엔 run 이벤트가 없다
+  if(e.total>total)total=e.total; renderList();renderBody();stats();return}
  const s=S[e.id]; if(!s)return;
  if(e.ev==='reason'){s.reason+=e.d; if(e.id===sel)renderBody()}
  else if(e.ev==='content'){s.content+=e.d; if(e.id===sel&&tab==='content')renderBody()}

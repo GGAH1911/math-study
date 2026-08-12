@@ -23,7 +23,17 @@ const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1
 const MAX_TOKENS = +(process.env.NOUS_MAX_TOKENS || 30000);
 
 const EV = `${MON}/events.ndjson`;
-const emit = (o) => { try { appendFileSync(EV, JSON.stringify({ t: Date.now(), ...o }) + '\n'); } catch { /* 모니터는 best-effort */ } };
+// ★워커풀에서 자식 여러 개가 같은 파일에 append 한다. O_APPEND 는 PIPE_BUF(4096) 이하 쓰기만
+//   원자적이라, 그보다 큰 델타는 줄이 섞여 JSON 이 깨진다 → 1200자 단위로 쪼개 emit.
+const emit = (o) => {
+  try {
+    if (typeof o.d === 'string' && o.d.length > 1200) {
+      for (let i = 0; i < o.d.length; i += 1200) emit({ ...o, d: o.d.slice(i, i + 1200) });
+      return;
+    }
+    appendFileSync(EV, JSON.stringify({ t: Date.now(), ...o }) + '\n');
+  } catch { /* 모니터는 best-effort */ }
+};
 
 // ── 프롬프트: widget_generate.mjs 와 동일해야 비교가 성립한다(수정 시 양쪽 같이) ──────────
 const HEAD = `너는 한국 수학 개념을 **인터랙티브 시각화(InteractiveSpec)**로 만든다. 출력은 {"spec":..., "recipe":...} JSON 하나만(코드펜스 없이).
@@ -36,6 +46,15 @@ InteractiveSpec 형식:
 recipe(검증용 — 매우 중요): {"samples":[{슬라이더값}×3~4],"invariants":["scope변수로 쓴 수학 항등식; 모든 샘플서 절댓값 ≈0이어야"],"oracle":[{"params":{슬라이더값},"expect":{"scope변수":손계산값}}×2~3],"tol":1e-6}
 - invariants는 개념의 **수학적 사실에서 유도**: 단위원→"cx^2+sy^2-1", 곡선 위 점이면 그 점이 식 만족, 접선기울기=도함수 등.
 - oracle의 expect는 **네가 독립적으로 손계산한 정답**(예 theta=30°면 sy=0.5).
+- expect는 tol=1e-6 으로 대조한다. 어림값 금지 — 소수 8자리 이상 정확히 쓰거나, **정수·유리수로 딱 떨어지는 파라미터를 골라라**.
+
+**mathjs 문법(scope·readout·invariants·"=식" 전부 해당). 벗어나면 검증기가 즉시 reject 한다:**
+- 조건분기는 삼항연산자 "조건 ? a : b" 만. **if(...) 함수는 없다.**
+- 화살표함수("x -> ...")·JS 문법 없음. map/filter 콜백도 쓰지 마라. 합은 닫힌 식이나 sum([a,b,c]) 로.
+- 조합·순열은 combinations(n,r) · permutations(n,r) · factorial(n). **comb·nCr·C(n,r) 은 없다.**
+- 쓸 수 있는 것: ^(거듭제곱) mod(a,b) sqrt abs exp log(x)=자연로그 log(x,b) log10 round(x,n) floor ceil max min sum mean sign
+- 상수는 pi · e. 삼각함수는 **라디안**(sin cos tan asin acos atan atan2) — 도수는 deg*pi/180 으로 직접 변환.
+- 변수명은 영문·숫자·밑줄만(한글 변수 금지). scope 문장 구분자는 ; 이다.
 
 개념의 핵심을 슬라이더로 탐구하게 하는 spec + 그 정답을 강제하는 recipe를 만들어라. 본문:
 `;
@@ -123,7 +142,9 @@ const pi = argv.indexOf('--par');
 const PAR = pi >= 0 ? Math.max(1, +argv[pi + 1] || 1) : +(process.env.NOUS_PAR || 4);
 const ids = argv.filter((a, i) => !a.startsWith('--') && i !== pi + 1);
 
-emit({ ev: 'run', total: ids.length, model: MODEL, maxTokens: MAX_TOKENS, par: PAR });
+// ★'run' 은 대시보드를 리셋한다. 워커풀(widget_spec_loop)이 건별로 이 스크립트를 1건씩 호출할 땐
+//   매번 리셋되면 화면이 못 쌓이므로, 자체 배치(2건 이상)일 때만 보낸다.
+if (ids.length > 1) emit({ ev: 'run', total: ids.length, model: MODEL, maxTokens: MAX_TOKENS, par: PAR });
 const t0 = Date.now();
 let pass = 0, cost = 0, qi = 0;
 async function worker() {

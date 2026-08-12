@@ -29,6 +29,15 @@ InteractiveSpec 형식:
 recipe(검증용 — 매우 중요): {"samples":[{슬라이더값}×3~4],"invariants":["scope변수로 쓴 수학 항등식; 모든 샘플서 절댓값 ≈0이어야"],"oracle":[{"params":{슬라이더값},"expect":{"scope변수":손계산값}}×2~3],"tol":1e-6}
 - invariants는 개념의 **수학적 사실에서 유도**: 단위원→"cx^2+sy^2-1", 곡선 위 점이면 그 점이 식 만족, 접선기울기=도함수 등.
 - oracle의 expect는 **네가 독립적으로 손계산한 정답**(예 theta=30°면 sy=0.5).
+- expect는 tol=1e-6 으로 대조한다. 어림값 금지 — 소수 8자리 이상 정확히 쓰거나, **정수·유리수로 딱 떨어지는 파라미터를 골라라**.
+
+**mathjs 문법(scope·readout·invariants·"=식" 전부 해당). 벗어나면 검증기가 즉시 reject 한다:**
+- 조건분기는 삼항연산자 "조건 ? a : b" 만. **if(...) 함수는 없다.**
+- 화살표함수("x -> ...")·JS 문법 없음. map/filter 콜백도 쓰지 마라. 합은 닫힌 식이나 sum([a,b,c]) 로.
+- 조합·순열은 combinations(n,r) · permutations(n,r) · factorial(n). **comb·nCr·C(n,r) 은 없다.**
+- 쓸 수 있는 것: ^(거듭제곱) mod(a,b) sqrt abs exp log(x)=자연로그 log(x,b) log10 round(x,n) floor ceil max min sum mean sign
+- 상수는 pi · e. 삼각함수는 **라디안**(sin cos tan asin acos atan atan2) — 도수는 deg*pi/180 으로 직접 변환.
+- 변수명은 영문·숫자·밑줄만(한글 변수 금지). scope 문장 구분자는 ; 이다.
 
 개념의 핵심을 슬라이더로 탐구하게 하는 spec + 그 정답을 강제하는 recipe를 만들어라. 본문:
 `;
