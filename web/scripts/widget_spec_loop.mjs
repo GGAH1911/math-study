@@ -84,12 +84,40 @@ async function worker() {
     const crStr = crVals.length ? `cr avg ${Math.round(sum(crVals) / crVals.length)} · max ${Math.max(...crVals)} · Σcr ${sum(crVals)} · Σcc ${sum(ccVals)} · save≈$${saveUsd.toFixed(2)} (n=${crVals.length})` : 'cr 없음';
     appendFileSync(`${REPO}/docs/ops/status/cron-runs.md`, `| ${ts} | widget | accept ${accepted} · skip ${skipped} · ${rate}% | ${crStr} |\n`);
   } catch (e) { log(`다이제스트 기록 실패: ${String(e.message).slice(0, 80)}`); }
-  if (COMMIT && accepted > 0) {
-    try { execSync('node web/scripts/gen_widget_index.mjs', { cwd: REPO, stdio: 'pipe' }); } catch { /* 인덱스(SSOT) 재생성 best-effort */ }
-    try { execSync(`git add web/src/data/concept-widgets/ web/src/data/concept-widgets-index.json docs/ops/status/cron-runs.md && git commit -q -m "data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증 + 인덱스 갱신 + 크론 다이제스트"`, { cwd: REPO, stdio: 'pipe' }); log(`커밋 완료 (+${accepted})`); }
+  // ★커밋 게이트는 accepted 가 아니라 "워킹트리가 더러운가"로 판단한다.
+  //   예전엔 `accepted > 0` 이라 큐가 마르면(고가치 후보 소진, 2026-07-07~) 커밋이 영영 안 걸렸고,
+  //   그동안 무조건 append 되는 다이제스트(cron-runs.md)와 그림 크론 산출물(concept-illustrations.json,
+  //   gen_daily_illustration.mjs 는 자체 커밋이 없다)이 미커밋으로 37일치 쌓였다. 3시 크론이 데이터 스위퍼 역할.
+  const DATA_PATHS = [
+    'web/src/data/concept-widgets/',
+    'web/src/data/concept-widgets-index.json',
+    'web/src/data/concept-illustrations.json',
+    'docs/ops/status/cron-runs.md',
+  ];
+  if (COMMIT) {
+    if (accepted > 0) { try { execSync('node web/scripts/gen_widget_index.mjs', { cwd: REPO, stdio: 'pipe' }); } catch { /* 인덱스(SSOT) 재생성 best-effort */ } }
+    let dirty = false;
+    try { execSync(`git add -- ${DATA_PATHS.join(' ')}`, { cwd: REPO, stdio: 'pipe' }); dirty = execSync(`git diff --cached --name-only -- ${DATA_PATHS.join(' ')}`, { cwd: REPO, encoding: 'utf8' }).trim().length > 0; }
+    catch (e) { log(`스테이징 실패: ${String(e.message).slice(0, 120)}`); }
+    if (!dirty) log('커밋할 데이터 변경 없음 — 스킵');
+    else try {
+      const msg = accepted > 0
+        ? `data(widget): 일일 고가치 위젯 ${accepted}건 자동생성·검증 + 인덱스 갱신 + 크론 다이제스트`
+        : 'data(cron): 일일 그림 캐시 + 크론 다이제스트 갱신';
+      execSync(`git commit -q -m "${msg}"`, { cwd: REPO, stdio: 'pipe' }); log(`커밋 완료 (+${accepted})`);
+      // ★컨테이너는 root 로 도는데 여기서 만들어지는 .git 산물(objects/ 팬아웃 디렉터리 755,
+      //   COMMIT_EDITMSG 644)이 전부 root:root 로 남는다. 그러면 **호스트 사용자의 git 이
+      //   "insufficient permission for adding an object" / "Permission denied" 로 통째 막힌다**
+      //   (실제로 704개가 쌓여 막혀 있었음). 레포 루트 소유자로 되돌린다 — .git 은 857엔트리라 저렴.
+      //   root 가 아니면 chown 이 실패하는데, 그 경우엔 애초에 오염이 없다(|| true).
+      try { execSync('chown -R --reference=. .git 2>/dev/null || true', { cwd: REPO, stdio: 'pipe', shell: '/bin/sh' }); } catch { /* best-effort */ }
+    }
     catch (e) { log(`커밋 실패: ${String(e.message).slice(0, 120)}`); }
     // --no-verify: 데이터(json)만 커밋이라 pre-push 타입체크 불필요 + 3am astro check가 dev 서버 dep 캐시 stale 시키는 footgun 회피
-    try { execSync('git push -q --no-verify', { cwd: REPO, stdio: 'pipe' }); log('푸시 완료'); }
-    catch (e) { log(`푸시 실패(로컬 커밋 유지): ${String(e.message).slice(0, 80)}`); }
+    // (컨테이너엔 SSH 키가 없어 대개 실패 → 크론이 호스트에서 다시 push 한다. 커밋 없을 땐 시도조차 안 함.)
+    if (dirty) {
+      try { execSync('git push -q --no-verify', { cwd: REPO, stdio: 'pipe' }); log('푸시 완료'); }
+      catch (e) { log(`푸시 실패(로컬 커밋 유지): ${String(e.message).slice(0, 80)}`); }
+    }
   }
 })();
