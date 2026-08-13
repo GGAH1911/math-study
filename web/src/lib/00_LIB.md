@@ -20,6 +20,7 @@ updated: 2026-06-28
 - `chat-context.ts` — 등록 자산
 - `concept-fs.ts` — 등록 자산
 - `concept-meta.ts` — 등록 자산
+- `concept-misconceptions-server.ts` — 등록 자산
 - `concept-widgets-server.ts` — 등록 자산
 - `concept-widgets.ts` — 등록 자산
 - `dag-layout.ts` — 등록 자산
