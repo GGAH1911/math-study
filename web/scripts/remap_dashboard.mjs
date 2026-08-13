@@ -61,6 +61,7 @@ const PAGE = `<!doctype html><meta charset="utf-8"><title>개념 재매핑 진�
  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
  .ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
  .before{color:var(--dim);text-decoration:none}
+ .spoke{color:var(--dim);font-size:12px;padding-left:6px}
  .pill{display:inline-block;background:#1b1f27;border:1px solid var(--line);border-radius:20px;
    padding:2px 9px;margin:2px 4px 2px 0;font-size:12px}
 </style>
@@ -70,7 +71,7 @@ const PAGE = `<!doctype html><meta charset="utf-8"><title>개념 재매핑 진�
 <div class="sub" id="pct"></div>
 <div class="grid" id="cards"></div>
 <div id="grades"></div>
-<table><thead><tr><th>문제</th><th>이전</th><th>이후</th><th>초</th></tr></thead><tbody id="rows"></tbody></table>
+<table><thead><tr><th>문제</th><th>이전</th><th>이후 (단원 + 하위 개념)</th><th>초</th></tr></thead><tbody id="rows"></tbody></table>
 <script>
 const el=(id)=>document.getElementById(id);
 function card(v,l,c=''){return \`<div class="card"><b class="\${c}">\${v}</b><span>\${l}</span></div>\`}
@@ -94,7 +95,8 @@ async function tick(){
   el('rows').innerHTML=recent.map(r=>\`<tr>
     <td><code>\${r.slug}</code></td>
     <td class="before"><code>\${(r.before||'').slice(0,60)}</code></td>
-    <td class="\${r.status==='ok'?'ok':'warn'}"><code>\${r.unit||r.status}</code>\${r.concepts?' +'+r.concepts.length:''}</td>
+    <td class="\${r.status==='ok'?'ok':'warn'}"><code>\${r.unit||r.status}</code>
+        \${(r.concepts||[]).map(c=>'<div class="spoke">└ '+c.split('/').pop()+'</div>').join('')}</td>
     <td>\${r.sec??''}</td></tr>\`).join('');
 }
 tick(); setInterval(tick,4000);
