@@ -11,6 +11,7 @@ updated: 2026-06-28
 
 <!-- AUTO_INDEX_SECTION -->
 - 📁 [[00_INGEST_KICE|ingest_kice/]]
+- `ab_concept_mapping.py` — 등록 자산
 - `ab_path_leak.py` — 등록 자산
 - `audit_searchable_ocr.py` — 등록 자산
 - `audit_solvers.py` — 등록 자산
@@ -54,6 +55,7 @@ updated: 2026-06-28
 - `refine_opus.py` — 등록 자산
 - `regenerate_searchable.py` — 등록 자산
 - `relabel_text_verified.py` — 등록 자산
+- `remap_concepts.py` — 등록 자산
 - `retry_timeout_killers.py` — 등록 자산
 - `scan_impossible_math.py` — 등록 자산
 - `selfcheck_crop.py` — 등록 자산

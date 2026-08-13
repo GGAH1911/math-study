@@ -20,6 +20,11 @@ services:
       #   node_modules 만 named volume 으로 오버라이드(바인드에 안 가려지게, 호스트오염 방지).
       - ..:/app
       - ms_devnode:/app/web/node_modules
+      # ★.venv 도 named volume 으로 가려 준다. 안 그러면 레포 바인드가 이미지에 구워 둔
+      #   /app/.venv 를 덮어 /api/sympy 가 'spawn /app/.venv/bin/python ENOENT' 로 죽는다.
+      #   브라우저 Pyodide 가 1차라 평소엔 안 드러나지만, Pyodide 로딩이 실패하는 기기에서는
+      #   이 폴백으로 넘어오고 그때 좌표 계산이 통째로 실패한다.
+      - ms_devvenv:/app/.venv
       # 튜터 구독 인증(dev 컨테이너는 root 실행 → /root/.claude).
       - ${MS_CLAUDE_DIR}:/root/.claude
       # ★git push(SSH)는 컨테이너 안에서 안 한다 — 호스트 ~/.ssh 를 마운트하면 OpenSSH 가 파일
@@ -40,3 +45,4 @@ services:
 
 volumes:
   ms_devnode:
+  ms_devvenv:
