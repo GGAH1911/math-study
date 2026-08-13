@@ -38,6 +38,9 @@ import concept_remap as CR         # noqa: E402
 PROGRESS = Path('/tmp/remap_concepts.jsonl')
 
 
+FLAT_ONLY = False
+
+
 def targets() -> list[dict]:
     """평면 참조(교육과정 트리 밖)를 하나라도 가진 문제. 그것이 이번 사고의 흔적이다."""
     out = []
@@ -46,10 +49,15 @@ def targets() -> list[dict]:
         m = re.search(r'^concepts: \[(.*?)\]', t, re.M)
         if not m or not m.group(1).strip():
             continue
-        refs = [r.strip() for r in m.group(1).split(',') if r.strip()]
-        rels = [r.replace('docs/concepts/', '').replace('.md', '') for r in refs]
-        if not any('/' not in r for r in rels):
-            continue
+        # ★대상 = **개념이 달린 문제 전부**(기본). 예전엔 '평면 참조 보유' 로 좁혔는데,
+        #   한 번 재매핑한 문제는 평면 참조가 사라져 **다시는 대상이 되지 않는다.**
+        #   프롬프트를 고쳐도 옛 결과가 그대로 남는다는 뜻이라 기준을 넓혔다.
+        #   좁히려면 --flat-only.
+        if FLAT_ONLY:
+            rels = [r.replace('docs/concepts/', '').replace('.md', '')
+                    for r in m.group(1).split(',') if r.strip()]
+            if not any('/' not in r for r in rels):
+                continue
         g = lambda p, d='': (re.search(p, t, re.M).group(1).strip() if re.search(p, t, re.M) else d)  # noqa: E731
         # 고등 회차인지 — 경로로 판정(수능·모평·고3·예시). grade 가 비어도 중학 후보는 막는다.
         is_high = any(k in str(f) for k in ('수능', '모평', '고3', '예시'))
@@ -70,7 +78,10 @@ def main() -> int:
     # ★대상 지정 — `--limit` 만으로는 '어떤 30건' 인지 통제할 수 없다. 2028 예시만 다시
     #   돌리려다 엉뚱한 30건을 처리한 적이 있다(2026-08-13).
     ap.add_argument('--only', default='', help='슬러그에 이 문자열이 포함된 것만')
+    ap.add_argument('--flat-only', action='store_true', help='평면 참조를 가진 문제만(기본은 전부)')
     args = ap.parse_args()
+    global FLAT_ONLY
+    FLAT_ONLY = args.flat_only
 
     if args.apply:
         dirty = subprocess.run(['git', 'status', '--porcelain', '--', 'docs/problems'],
