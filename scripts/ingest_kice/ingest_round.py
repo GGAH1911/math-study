@@ -584,7 +584,13 @@ SUBJECT_SCOPE: dict[str, list[str]] = {
     '확률과통계': ['prob-stats-elective', 'high-1'],
     '기하':       ['geometry-elective', 'high-1'],
     '가형':       ['calculus', 'geometry-elective', 'prob-stats-elective', 'math-1', 'math-2', 'high-1'],
-    '나형':       ['math-1', 'math-2', 'high-1', 'prob-stats-elective'],
+    # ★나형(2021 이전 문과)은 미적분Ⅰ 을 포함했다 — **수열의 극한·급수가 출제 범위**다.
+    #   calculus 를 통째로 빼면 무한등비급수 문항의 정답 단원이 후보에서 사라져,
+    #   모델이 무엇을 고르든 틀리게 된다(실측: 2019 고3 3월 나형 5번에서 두 모델 모두
+    #   메뉴에 있는 math-1/수열 을 골랐고 둘 다 오답 처리됐다 — 모델이 아니라 표가 틀렸다).
+    #   초월함수 미적분(미적분Ⅱ)은 나형 범위가 아니므로 **단원 하나만** 허용한다.
+    '나형':       ['math-1', 'math-2', 'high-1', 'prob-stats-elective',
+                  'functions/calculus/수열의_극한'],
 }
 # 과목이 '단일'(고1·고2 학평, 검정고시 등)일 때는 학년으로 정한다.
 GRADE_SCOPE: dict[str, list[str]] = {
@@ -598,7 +604,11 @@ GRADE_SCOPE: dict[str, list[str]] = {
 
 
 def scope_for(subject: str | None = None, grade: str | None = None) -> list[str] | None:
-    """이 문제에 허용할 학년 디렉터리. 판단 근거가 없으면 None(=전체 허용)."""
+    """이 문제에 허용할 범위. 학년 디렉터리(`math-1`) 또는 **단원 경로**(`a/b/단원`) 혼용 가능.
+
+    ★단원 단위 허용이 필요한 이유: 옛 가/나형처럼 한 과목이 어떤 영역의 **일부만** 포함하는
+      경우가 있다. 학년 디렉터리로만 자르면 전부 넣거나 전부 빼야 해서, 어느 쪽이든 틀린다.
+    """
     if subject and subject in SUBJECT_SCOPE:
         return SUBJECT_SCOPE[subject]
     if grade:
@@ -660,7 +670,9 @@ def load_concept_index(scope: list[str] | None = None) -> dict[str, list[str]]:
         if (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1] == 'unit':
             units[_rel(p)] = []
     if scope:
-        units = {u: v for u, v in units.items() if any(f'/{g}/' in f'/{u}' for g in scope)}
+        # 학년 디렉터리(`/math-1/`) 또는 단원 경로 자체(`functions/calculus/수열의_극한`) 매칭.
+        units = {u: v for u, v in units.items()
+                 if any((f'/{g}/' in f'/{u}') or (u == g) for g in scope)}
     if not units:
         return {}
 

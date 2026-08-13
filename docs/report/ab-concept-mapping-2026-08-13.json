@@ -1,0 +1,674 @@
+[
+ {
+  "slug": "2023_6월모평_공통_10",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/geometry/middle-3/원의_성질.md, docs/concepts/geometry/middle-3/원의_성질/외접원.md, docs/concepts/geometry/middle-3/원의_성질/방멱의_정리.md, docs/concepts/geometry/middle-1/평면도형/중점.md",
+  "props": {
+   "haiku": {
+    "unit": "geometry/high-1/도형의_방정식",
+    "concepts": [
+     "geometry/high-1/도형의_방정식/원의_방정식",
+     "geometry/high-1/도형의_방정식/곡선과_원의_교점",
+     "geometry/high-1/도형의_방정식/거리공식"
+    ],
+    "sec": 69.9
+   },
+   "sonnet": {
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+     "functions/math-1/삼각함수/사인_코사인_법칙_적용",
+     "functions/math-1/삼각함수/기하학적_조건과_넓이",
+     "functions/math-1/삼각함수/외접원의_반지름"
+    ],
+    "sec": 17.0
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "코사인법칙으로 AC=4를 구하고 중선 BM을 다시 코사인법칙으로 구하는 수학I 삼각함수 정통 문제 — 첫 개념이 핵심을 정확히 짚었으나 '넓이'는 쓰이지 않고 외접원도 반지름이 아니라 원의 성질(방멱/원주각)로 쓰여 두 보조 개념이 약간 빗나감"
+   },
+   "B": {
+    "unit_ok": false,
+    "concept_score": 1,
+    "why": "좌표평면·원의 방정식·교점 계산이 전혀 등장하지 않는 순수 삼각비 문제로 고1 도형의 방정식은 학년·내용 모두 어긋남(외접원이 나온다는 표면적 단어 일치뿐)"
+   },
+   "winner": "A"
+  }
+ },
+ {
+  "slug": "2024_고3_3월모의고사_공통_17",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/algebra/middle-2/식의_계산.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-2/적분",
+    "concepts": [
+     "functions/math-2/적분/정적분_계산",
+     "functions/math-2/적분/다항함수의_적분"
+    ],
+    "sec": 28.9
+   },
+   "sonnet": {
+    "unit": "functions/math-2/적분",
+    "concepts": [
+     "functions/math-2/적분/정적분_계산",
+     "functions/math-2/적분/정적분의_성질"
+    ],
+    "sec": 14.6
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "적분구간을 뒤집어(∫₂⁰=-∫₀²) 두 정적분을 한 구간으로 합치는 정적분의 성질이 이 문제의 핵심이라 정확히 짚음"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "다항함수 적분 계산은 맞지만 구간 뒤집기·구간 결합이라는 결정적 장치를 개념으로 담지 못함"
+   },
+   "winner": "A"
+  }
+ },
+ {
+  "slug": "2025_고3_10월모의고사_공통_15",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/functions/middle-3/이차함수.md, docs/concepts/algebra/middle-1/정수와_유리수/절댓값.md, docs/concepts/equations/middle-3/이차방정식.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-2/적분",
+    "concepts": [
+     "functions/math-2/적분/정적분",
+     "functions/math-2/적분/구간별_적분"
+    ],
+    "sec": 286.0
+   },
+   "sonnet": {
+    "unit": "functions/math-2/적분",
+    "concepts": [
+     "functions/math-2/적분/넓이_함수",
+     "functions/math-2/적분/조건부상수결정",
+     "functions/math-2/적분/정적분의_성질"
+    ],
+    "sec": 18.3
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "적분으로 정의된 함수(누적/넓이 함수)와 (가)(나) 조건으로 이차함수 계수를 역결정하는 구조를 정확히 짚음, 다만 '넓이_함수'는 절댓값 부호 분기 처리를 다소 흐림"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 3,
+    "why": "|f(t)| 때문에 구간별 적분은 핵심이 맞으나 '정적분'이 지나치게 포괄적이고 조건에서 f를 결정하는 역추론 축이 빠짐"
+   },
+   "winner": "A"
+  }
+ },
+ {
+  "slug": "2024_고3_7월모의고사_공통_13",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/geometry/middle-3/원의_성질.md, docs/concepts/geometry/middle-3/원의_성질/외접원.md, docs/concepts/geometry/middle-1/평면도형/원의_중심.md, docs/concepts/geometry/middle-2/도형의_성질/삼각형의_기하.md, docs/concepts/geometry/middle-3/원의_성질.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+     "functions/math-1/삼각함수/사인_법칙",
+     "functions/math-1/삼각함수/외접원의_반지름",
+     "functions/math-1/삼각함수/기하학적_조건과_넓이"
+    ],
+    "sec": 45.1
+   },
+   "sonnet": {
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+     "functions/math-1/삼각함수/사인_법칙",
+     "functions/math-1/삼각함수/외접원의_반지름",
+     "functions/math-1/삼각함수/기하학적_조건과_넓이"
+    ],
+    "sec": 17.0
+   }
+  },
+  "order": [
+   "haiku",
+   "sonnet"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "사인법칙으로 두 외접원 반지름(R, R')을 구하는 것이 핵심이라 정확하나 '넓이'보다 코사인법칙·중심각 활용이 실제 핵심이라 소폭 감점"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "A와 완전히 동일한 매핑이므로 동일 평가"
+   },
+   "winner": "tie"
+  }
+ },
+ {
+  "slug": "2025_고3_5월모의고사_기하_23",
+  "subject": "기하",
+  "was_mis": true,
+  "current": "docs/concepts/geometry/middle-1/평면도형.md, docs/concepts/geometry/middle-2/도형의_성질/마름모_정사각형.md, docs/concepts/geometry/middle-1/평면도형/거리.md",
+  "props": {
+   "haiku": {
+    "unit": "geometry/geometry-elective/평면벡터",
+    "concepts": [
+     "geometry/geometry-elective/평면벡터/벡터의_성분",
+     "geometry/geometry-elective/평면벡터/벡터의_합과_실수배",
+     "geometry/geometry-elective/평면벡터/벡터의_크기"
+    ],
+    "sec": 30.4
+   },
+   "sonnet": {
+    "unit": "geometry/geometry-elective/평면벡터",
+    "concepts": [
+     "geometry/geometry-elective/평면벡터/벡터의_크기",
+     "geometry/geometry-elective/평면벡터/벡터의_합과_실수배",
+     "geometry/geometry-elective/평면벡터/벡터의_성분"
+    ],
+    "sec": 16.9
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "정사각형에서 AC+(1/3)CD의 크기(√13)를 묻는 문제로, 벡터의 실수배·합과 크기 계산이 정확히 핵심이며 성분 좌표화는 표준 풀이다"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "A와 개념 집합이 완전히 동일하고 나열 순서만 다르므로 교육과정상 적합성·핵심 포착도가 같다"
+   },
+   "winner": "tie"
+  }
+ },
+ {
+  "slug": "2026_고3_3월모의고사_공통_01",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/algebra/middle-3/실수와_그_계산.md, docs/concepts/algebra/middle-3/실수와_그_계산.md, docs/concepts/algebra/middle-3/실수와_그_계산/근호의_성질.md",
+  "props": {
+   "haiku": {
+    "unit": "algebra/math-1/지수와_로그",
+    "concepts": [
+     "algebra/math-1/지수와_로그/유리지수",
+     "algebra/math-1/지수와_로그/지수_법칙",
+     "algebra/math-1/지수와_로그/지수_확장"
+    ],
+    "sec": 32.6
+   },
+   "sonnet": {
+    "unit": "algebra/math-1/지수와_로그",
+    "concepts": [
+     "algebra/math-1/지수와_로그/유리지수",
+     "algebra/math-1/지수와_로그/지수_법칙"
+    ],
+    "sec": 16.7
+   }
+  },
+  "order": [
+   "haiku",
+   "sonnet"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "4^(2/3)×2^(-1/3)=2^1=2로 유리지수·지수법칙이 핵심이며 지수_확장은 음의 지수 때문에 무관하진 않으나 유리지수와 중복되는 군더더기다."
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "밑을 2로 통일해 유리수 지수를 더하는 것이 전부이므로 유리지수+지수_법칙 두 개가 2점 문항의 핵심을 정확히 짚었다."
+   },
+   "winner": "B"
+  }
+ },
+ {
+  "slug": "2023_고3_7월모의고사_공통_13",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/geometry/middle-2/도형의_성질.md, docs/concepts/geometry/middle-3/원의_성질/외접원.md, docs/concepts/geometry/middle-2/도형의_성질/평행사변형.md, docs/concepts/functions/middle-3/이차함수.md, docs/concepts/geometry/middle-3/삼각비.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+     "functions/math-1/삼각함수/사인_법칙",
+     "functions/math-1/삼각함수/기하학적_조건과_넓이",
+     "functions/math-1/삼각함수/삼각함수의_계산"
+    ],
+    "sec": 42.7
+   },
+   "sonnet": {
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+     "functions/math-1/삼각함수/사인_법칙",
+     "functions/math-1/삼각함수/기하학적_조건과_넓이",
+     "functions/math-1/삼각함수/삼각함수의_계산"
+    ],
+    "sec": 16.0
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "외접원 반지름 5√2로 사인법칙, cos∠AFC=√10/10에서 sin 값 계산, 최종적으로 삼각형 AFE 넓이를 구하는 수학 I 삼각함수 문제와 정확히 일치"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "A와 완전히 동일한 단원·개념 매핑이며 사인법칙·삼각비 계산·넓이 조합이 문제 핵심을 그대로 짚음"
+   },
+   "winner": "tie"
+  }
+ },
+ {
+  "slug": "2025_고3_5월모의고사_공통_01",
+  "subject": "공통",
+  "was_mis": true,
+  "current": "docs/concepts/algebra/middle-2/식의_계산.md, docs/concepts/algebra/middle-3/실수와_그_계산/제곱근.md, docs/concepts/algebra/middle-3/실수와_그_계산/유리화.md",
+  "props": {
+   "haiku": {
+    "unit": "algebra/math-1/지수와_로그",
+    "concepts": [
+     "algebra/math-1/지수와_로그/지수_법칙",
+     "algebra/math-1/지수와_로그/거듭제곱의_계산"
+    ],
+    "sec": 36.0
+   },
+   "sonnet": {
+    "unit": "algebra/math-1/지수와_로그",
+    "concepts": [
+     "algebra/math-1/지수와_로그/지수_확장",
+     "algebra/math-1/지수와_로그/지수_법칙"
+    ],
+    "sec": 15.6
+   }
+  },
+  "order": [
+   "haiku",
+   "sonnet"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 3,
+    "why": "지수_법칙은 정확하나 '거듭제곱의_계산'은 교육과정 용어가 아닌 중복성 항목이라 무리수 지수라는 문제 특성을 못 짚음"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "√2라는 실수(무리수) 지수 → 지수_확장, 이를 지수법칙으로 정리해 3^2=9를 얻는 풀이 구조를 정확히 포착"
+   },
+   "winner": "B"
+  }
+ },
+ {
+  "slug": "2019_고3_3월모의고사_나형_05",
+  "subject": "나형",
+  "was_mis": false,
+  "current": "docs/concepts/수열의_극한.md, docs/concepts/등비급수.md, docs/concepts/등비급수_합_계산.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-1/수열",
+    "concepts": [
+     "functions/math-1/수열/등비수열",
+     "functions/math-1/수열/등비수열의_합"
+    ],
+    "sec": 32.7
+   },
+   "sonnet": {
+    "unit": "functions/math-1/수열",
+    "concepts": [
+     "functions/math-1/수열/등비수열의_합",
+     "functions/math-1/수열/공비",
+     "functions/math-1/수열/첫째항"
+    ],
+    "sec": 19.1
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": false,
+    "concept_score": 3,
+    "why": "무한등비급수(수렴)는 수학Ⅰ 수열이 아니라 미적분 '수열의 극한·급수' 소관이라 단원이 어긋나지만, 첫째항·공비·등비합으로 풀이 요소는 비교적 구체적으로 짚음"
+   },
+   "B": {
+    "unit_ok": false,
+    "concept_score": 2,
+    "why": "단원 오배정은 A와 동일하고 개념도 '등비수열/등비수열의 합'으로 뭉뚱그려져 첫째항·공비 조건도 무한급수 수렴(|r|<1)도 명시하지 못함"
+   },
+   "winner": "A"
+  }
+ },
+ {
+  "slug": "2022_수능_공통_09",
+  "subject": "공통",
+  "was_mis": false,
+  "current": "docs/concepts/functions/high-1/함수와_그래프.md, docs/concepts/functions/high-1/함수와_그래프/교점.md, docs/concepts/geometry/middle-1/평면도형/거리.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-1/지수함수와_로그함수",
+    "concepts": [
+     "함수의_교점_판정",
+     "지수함수의_성질과_그래프",
+     "좌표평면의_거리"
+    ],
+    "sec": 43.3
+   },
+   "sonnet": {
+    "unit": "functions/math-1/지수함수와_로그함수",
+    "concepts": [
+     "functions/math-1/지수함수와_로그함수/지수함수와_로그함수의_교점",
+     "functions/math-1/지수함수와_로그함수/함수_그래프의_교점",
+     "좌표평면의_거리"
+    ],
+    "sec": 19.0
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 2,
+    "why": "단원(수학I 지수함수)은 맞지만 로그함수는 등장하지 않는데 '지수함수와_로그함수의_교점'을 핵심으로 잡았고 '함수_그래프의_교점'과 중복되어 지수함수 평행이동 성질이라는 실제 급소를 놓쳤다"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "직선과 지수함수 그래프의 교점 + 두 곡선이 평행이동 관계라는 지수함수의 성질 + 기울기 2와 PQ=√5로 Δx=1을 얻는 좌표평면 거리까지 풀이 급소를 정확히 짚었다(다만 '교점_판정'은 존재판정 뉘앙스라 '교점 계산'이 더 적확)"
+   },
+   "winner": "B"
+  }
+ },
+ {
+  "slug": "2025_고3_3월모의고사_미적분_30",
+  "subject": "미적분",
+  "was_mis": false,
+  "current": "docs/concepts/functions/calculus/도함수의_활용_심화.md, docs/concepts/functions/calculus/수열의_극한/등비수열의_수렴.md, docs/concepts/functions/math-1/삼각함수/삼각함수의_최댓값과_최솟값.md, docs/concepts/functions/calculus/수열의_극한/수열의_수렴_발산.md, docs/concepts/functions/calculus/도함수의_활용_심화.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/calculus/수열의_극한",
+    "concepts": [
+     "functions/calculus/수열의_극한/등비수열의_수렴",
+     "functions/calculus/수열의_극한/경계값_계산"
+    ],
+    "sec": 81.4
+   },
+   "sonnet": {
+    "unit": "functions/calculus/수열의_극한",
+    "concepts": [
+     "functions/calculus/수열의_극한/등비수열의_수렴",
+     "functions/calculus/수열의_극한/극한의_성질",
+     "functions/calculus/수열의_극한/조건부_정의"
+    ],
+    "sec": 22.5
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "미적분 '수열의 극한' 단원 정확, 등비수열 수렴조건(|r|<1 또는 r=1)·분수꼴 극한 계산·주기 조건부 정의 함수의 극값 판정이라는 세 축을 모두 짚음"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 2,
+    "why": "단원은 맞으나 수렴조건 외에 '경계값_계산' 하나뿐이라 a1a_{n+1}+a_{2n} 극한 계산과 주기함수 극값 조건이라는 핵심을 놓침"
+   },
+   "winner": "A"
+  }
+ },
+ {
+  "slug": "2023_수능_공통_20",
+  "subject": "공통",
+  "was_mis": false,
+  "current": "docs/concepts/functions/calculus/정적분의_활용.md, docs/concepts/functions/math-2/적분/정적분.md, docs/concepts/functions/calculus/정적분의_활용/거리와_변위.md, docs/concepts/functions/high-1/함수와_그래프/구간별_함수.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-2/적분",
+    "concepts": [
+     "functions/math-2/적분/속도_거리_적분",
+     "구간별_정적분"
+    ],
+    "sec": 46.2
+   },
+   "sonnet": {
+    "unit": "functions/math-2/적분",
+    "concepts": [
+     "functions/math-2/적분/속도_거리_적분",
+     "functions/math-2/적분/구간별_적분"
+    ],
+    "sec": 15.7
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "수학II 정적분의 활용(속도와 거리) 문제로 단원·학년이 정확하며, 0≤t≤2와 t≥2로 나눠 |v(t)| 적분하는 핵심을 '속도_거리_적분+구간별_적분'이 정확한 경로로 짚음(a→v 복원만 미반영)"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 3,
+    "why": "개념 내용은 A와 사실상 동일하나 둘째 개념 '구간별_정적분'이 단원 경로 없는 맨 이름이라 functions/math-2/적분 트리에 매핑되지 않는 불완전 ID"
+   },
+   "winner": "A"
+  }
+ },
+ {
+  "slug": "2023_고3_4월모의고사_미적분_30",
+  "subject": "미적분",
+  "was_mis": false,
+  "current": "docs/concepts/functions/calculus/여러가지함수의_미분.md, docs/concepts/functions/calculus/여러가지_적분법/미분방정식.md, docs/concepts/functions/calculus/수열의_극한/수열의_수렴_발산.md, docs/concepts/functions/math-2/미분/미분가능성.md, docs/concepts/functions/math-2/함수의_극한과_연속/연속함수.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/calculus/여러가지함수의_미분",
+    "concepts": [
+     "functions/calculus/여러가지함수의_미분/지수함수_미분",
+     "functions/calculus/여러가지함수의_미분/함수의_미분가능성",
+     "functions/calculus/여러가지함수의_미분/절댓값함수의_미분"
+    ],
+    "sec": 54.9
+   },
+   "sonnet": {
+    "unit": "functions/calculus/여러가지함수의_미분",
+    "concepts": [
+     "functions/calculus/여러가지함수의_미분/지수함수_미분",
+     "functions/calculus/여러가지함수의_미분/함수의_미분가능성",
+     "functions/calculus/여러가지함수의_미분/절댓값과_경우_분석"
+    ],
+    "sec": 16.1
+   }
+  },
+  "order": [
+   "haiku",
+   "sonnet"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 3,
+    "why": "지수함수 미분·미분가능성은 정확하나 문제에 절댓값 함수가 전혀 없어 세 번째 개념이 오답이고, 핵심인 f(x+2)=-½f(x) 관계식·구간별 경우 분석을 놓쳤다"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 4,
+    "why": "지수함수 미분과 좌·우미분계수(대칭차분 g(x)=f'(x+)+f'(x-)) 판정이 핵심이고 자연수 n의 구간·주기 경우 분석까지 짚었으나, '절댓값' 표현은 이 문항에 불필요한 군더더기다"
+   },
+   "winner": "B"
+  }
+ },
+ {
+  "slug": "2025_9월모평_기하_23",
+  "subject": "기하",
+  "was_mis": false,
+  "current": "docs/concepts/geometry/geometry-elective/평면벡터.md, docs/concepts/geometry/geometry-elective/평면벡터.md, docs/concepts/geometry/geometry-elective/평면벡터/벡터의_성분.md",
+  "props": {
+   "haiku": {
+    "unit": "geometry/geometry-elective/평면벡터",
+    "concepts": [
+     "geometry/geometry-elective/평면벡터/벡터의_합과_실수배",
+     "geometry/geometry-elective/평면벡터/벡터의_성분"
+    ],
+    "sec": 33.6
+   },
+   "sonnet": {
+    "unit": "geometry/geometry-elective/평면벡터",
+    "concepts": [
+     "geometry/geometry-elective/평면벡터/벡터의_합과_실수배",
+     "geometry/geometry-elective/평면벡터/벡터의_성분"
+    ],
+    "sec": 16.7
+   }
+  },
+  "order": [
+   "haiku",
+   "sonnet"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "성분으로 주어진 두 벡터의 실수배와 합을 계산해 k=3을 구하는 문제로, 기하 선택과목 평면벡터 단원과 두 개념이 정확히 일치한다"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "후보 A와 단원·개념이 완전히 동일하므로 동일하게 정확하다"
+   },
+   "winner": "tie"
+  }
+ },
+ {
+  "slug": "2021_고3_4월모의고사_확률과통계_25",
+  "subject": "확률과통계",
+  "was_mis": false,
+  "current": "docs/concepts/경우의_수.md, docs/concepts/중복조합.md, docs/concepts/경우의_수.md",
+  "props": {
+   "haiku": {
+    "unit": "probability-stats/prob-stats-elective/경우의_수",
+    "concepts": [
+     "probability-stats/prob-stats-elective/경우의_수/중복조합",
+     "probability-stats/prob-stats-elective/경우의_수/곱의_법칙과_합의_법칙"
+    ],
+    "sec": 44.9
+   },
+   "sonnet": {
+    "unit": "probability-stats/prob-stats-elective/경우의_수",
+    "concepts": [
+     "probability-stats/prob-stats-elective/경우의_수/중복조합",
+     "probability-stats/prob-stats-elective/경우의_수/곱의_법칙과_합의_법칙"
+    ],
+    "sec": 17.0
+   }
+  },
+  "order": [
+   "sonnet",
+   "haiku"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "같은 색 볼펜 분배는 중복조합 H(4,5)·H(4,2)를 곱의 법칙으로 결합하는 확통 선택과목 경우의 수 문항으로 단원·개념이 정확히 일치한다"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "A와 단원·개념이 문자 그대로 동일하므로 동일하게 정확하다"
+   },
+   "winner": "tie"
+  }
+ },
+ {
+  "slug": "2024_고3_3월모의고사_공통_02",
+  "subject": "공통",
+  "was_mis": false,
+  "current": "docs/concepts/functions/math-2/미분.md, docs/concepts/functions/math-2/미분/도함수의_정의.md, docs/concepts/functions/math-2/함수의_극한과_연속/함수의_극한.md",
+  "props": {
+   "haiku": {
+    "unit": "functions/math-2/미분",
+    "concepts": [
+     "functions/math-2/미분/미분계수",
+     "functions/math-2/미분/도함수의_정의"
+    ],
+    "sec": 40.1
+   },
+   "sonnet": {
+    "unit": "functions/math-2/미분",
+    "concepts": [
+     "functions/math-2/미분/미분계수",
+     "functions/math-2/미분/극한과_도함수"
+    ],
+    "sec": 16.8
+   }
+  },
+  "order": [
+   "haiku",
+   "sonnet"
+  ],
+  "judge": {
+   "A": {
+    "unit_ok": true,
+    "concept_score": 5,
+    "why": "lim[f(3+h)-f(3)]/2h는 미분계수의 정의식 그 자체이고 f'(3)=10 계산에 도함수 정의(다항함수 미분)가 정확히 쓰여 수학II 미분 단원과 완전 일치"
+   },
+   "B": {
+    "unit_ok": true,
+    "concept_score": 3,
+    "why": "미분계수는 맞으나 '극한과_도함수'는 교육과정 표준 용어가 아닌 모호한 조어로, 정의식 극한을 미분계수로 환원하는 핵심을 A보다 덜 정확히 짚음"
+   },
+   "winner": "A"
+  }
+ }
+]
