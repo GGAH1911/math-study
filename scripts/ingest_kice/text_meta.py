@@ -19,7 +19,7 @@ import fitz  # PyMuPDF
 
 _HERE = Path(__file__).parent
 sys.path.insert(0, str(_HERE))
-from ingest_round import claude_p  # noqa: E402
+from ingest_round import claude_p, load_concept_index, scope_for, validate_mapping  # noqa: E402
 
 
 def _first_json_object(s: str) -> str | None:
@@ -126,19 +126,40 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
                      units_index: dict[str, list[str]],
                      cache_dir: Path | None = None,
                      cache_key: str | None = None,
-                     timeout: int = 60) -> dict | None:
-    """Hybrid metadata: PDF text + Haiku. Drop-in replacement for the
-    vision-based extract_metadata — same return shape so ingest_v2 doesn't
-    care which one is used.
+                     timeout: int = 60,
+                     image_path: Path | None = None,
+                     grade: str | None = None,
+                     year: int | None = None,
+                     model: str = 'sonnet') -> dict | None:
+    """문제 1개의 메타데이터. **개념 매핑은 이미지 직독 + 스코프 + 게이트**를 거친다.
 
-    cache_key: stable filename stem (e.g. '단일_27'). Cache invalidates by
-    sha1 of the extracted text — if PDF text changes (e.g. PUA decode
-    table updated), cache misses naturally."""
+    ★2026-08-13 개편. 이전에는 여기서 단원 **이름만** 나열하고 concepts 는 "unit 하위
+      spoke 1-4개" 라고 말로만 요구했다 — 스포크는 사실상 **창작**이었고 게이트가 없어
+      지어낸 개념이 그대로 frontmatter 로 나가 stub 을 양산했다(평면 개념 274개의 출처).
+      게다가 입력이 PDF 텍스트레이어라 지수가 근호로 뭉개져(4^(2/3) → 4√3/2) 수능 문제가
+      중3 무리수 문제로 보였다.
+
+    ★그래서 매핑 본체는 run_stage1.map_problem_once **한 벌만** 쓴다. 오늘 load_concept_index
+      가 두 벌이라 각각 다른 이유로 같은 사고를 냈다 — 구현이 갈리면 반드시 어긋난다.
+
+    ★searchable_text 는 여전히 PDF 텍스트에서 뽑는다(검색·본문용). 다만 **개념 매핑의
+      근거로는 쓰지 않는다** — 손상된 텍스트가 판단을 끌어당기기 때문이다.
+
+    cache_key: stable filename stem. 캐시는 텍스트 sha + **스코프 지문**으로 무효화된다 —
+    스코프가 바뀌었는데 옛 캐시를 재사용하면 고친 규칙이 적용되지 않는다.
+    """
     body_text = _extract_problem_text(pdf_path, page_num, bbox_pdf)
     if not body_text:
         return None
 
-    text_sha = hashlib.sha1(body_text.encode('utf-8')).hexdigest()[:12]
+    scope = scope_for(subject, grade, is_high=bool(year and int(year) >= 2019), year=year)
+    index = load_concept_index(scope) if scope else (units_index or load_concept_index())
+    if not index:
+        print(f'  ! #{number} {subject}: 개념 후보 0개 — 매핑 중단(스코프/경로 확인)', flush=True)
+        return None
+
+    scope_sig = hashlib.sha1(('|'.join(sorted(index))).encode()).hexdigest()[:8]
+    text_sha = hashlib.sha1((body_text + scope_sig).encode('utf-8')).hexdigest()[:12]
     cache_file = None
     if cache_dir and cache_key:
         cache_dir.mkdir(parents=True, exist_ok=True)
@@ -151,8 +172,39 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
             except Exception:
                 pass
 
-    units_str = ', '.join(sorted(units_index.keys()))
+    # ── 개념 매핑: 이미지가 있으면 공용 매퍼(이미지 직독 + 스포크 목록 + 게이트) ──────
+    if image_path and Path(image_path).exists():
+        from run_stage1 import map_problem_once   # 지연 import — 순환 방지
+        mapped = map_problem_once('', number, 0, index, subject=subject, grade=grade,
+                                  model=model, image=image_path)
+        if mapped and mapped.get('unit'):
+            ok, why = validate_mapping(mapped['unit'], mapped.get('concepts'), index)
+            if not ok:
+                allowed = set(index.get(mapped['unit'], []))
+                mapped['concepts'] = [c for c in (mapped.get('concepts') or []) if c in allowed]
+                print(f'  ~ #{number} {subject}: 후보 밖 개념 정리 ({why})', flush=True)
+            normalized = _normalize(mapped)
+            normalized['searchable_text'] = body_text[:3000]
+            if cache_file:
+                try:
+                    cache_file.write_text(
+                        json.dumps({'text_sha': text_sha, 'meta': normalized}, ensure_ascii=False, indent=2),
+                        encoding='utf-8')
+                except Exception:
+                    pass
+            return normalized
+        print(f'  ! #{number} {subject}: 이미지 매핑 실패 — 텍스트로 폴백', flush=True)
+
+    # ── 폴백: 텍스트 기반. 이때도 **스포크 목록과 게이트**는 건다 ────────────────────
+    units_str = '\n'.join(f'- {u}' for u in sorted(index))
+    spokes_str = '\n'.join(f'  · {c}' for u in sorted(index) for c in sorted(index[u])[:6])
     base_user = f"""문제 번호: {number}, 영역: {subject}
+
+사용 가능한 단원(경로 그대로 하나 선택):
+{units_str}
+
+각 단원의 개념 일부(concepts 는 반드시 이 형식의 **경로**로, 목록 밖은 지어내지 마라):
+{spokes_str[:6000]}
 
 본문 (PDF text-layer, PUA digits decoded, 수식 글리프는 ⋄):
 {body_text[:3000]}
@@ -192,6 +244,11 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
             last_err = f'non-dict (try {attempt+1})'
             continue
         normalized = _normalize(parsed)
+        # ★텍스트 폴백에도 게이트를 건다 — 지어낸 개념이 frontmatter 로 나가면 stub 이 생긴다.
+        ok, why = validate_mapping(normalized.get('unit'), normalized.get('concepts'), index)
+        if not ok:
+            allowed = set(index.get(normalized.get('unit') or '', []))
+            normalized['concepts'] = [c for c in (normalized.get('concepts') or []) if c in allowed]
         # searchable_text 는 기하 디코드(정확)를 그대로 사용 — Haiku 재작성 환각 방지.
         # (Haiku 는 format/tier/unit 분류용으로만 신뢰)
         normalized['searchable_text'] = body_text[:3000]

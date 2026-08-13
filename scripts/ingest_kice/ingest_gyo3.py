@@ -87,7 +87,10 @@ def ingest(year: int, session: str, grade: str = '고3', limit: int | None = Non
             m = IV.extract_metadata(
                 pdf_path=e['_pdf'], page_num=e['page_num'], bbox_pdf=e['bbox_pdf'],
                 number=e['number'], subject=e['subject'], units_index=units,
-                cache_dir=meta_cache, cache_key=f'{e["subject"]}_{e["number"]:02d}', timeout=60)
+                cache_dir=meta_cache, cache_key=f'{e["subject"]}_{e["number"]:02d}', timeout=60,
+                                # ★이미지 직독 + 과목/학년/연도 스코프 — 텍스트레이어는 지수를 뭉갠다
+                                image_path=Path(e['image_path']) if e.get('image_path') else None,
+                                grade=e.get('grade'), year=e.get('year'))
             # PUA 특수기호(벡터 화살표 등)로 텍스트 메타가 searchable_text를 비우면 → 이미지 vision 폴백
             if not (isinstance(m, dict) and len((m.get('searchable_text') or '').strip()) >= 10):
                 import vision_meta

@@ -506,6 +506,8 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
 
     # Step 4: PDF-text + Haiku metadata (parallel, cached). The PNG is
     # already the user-facing body; this step just classifies.
+    # ★스코프는 문제마다 다르므로(과목·학년·연도) 여기서 통째로 만들지 않는다.
+    #   extract_metadata 가 각 문제의 과목/학년/연도로 직접 좁힌다.
     units = load_concept_index()
     meta_cache = raw / 'meta_cache'
 
@@ -522,6 +524,11 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
             cache_dir=meta_cache,
             cache_key=cache_key,
             timeout=60,
+            # ★개념 매핑은 **이미지**를 근거로 한다. PDF 텍스트레이어는 지수를 근호로
+            #   뭉개서(4^(2/3) → 4√3/2) 수능 문제를 중3 문제로 보이게 만든다.
+            image_path=Path(entry['image_fs']) if entry.get('image_fs') else None,
+            grade=grade,
+            year=year,
         )
         return entry, m, time.time() - t0
 
