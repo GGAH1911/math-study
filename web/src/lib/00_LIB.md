@@ -34,6 +34,7 @@ updated: 2026-06-28
 - `image-utils.ts` — 등록 자산
 - `katex-normalize.mjs` — 등록 자산
 - `learner.ts` — 등록 자산
+- `learning-events.ts` — 등록 자산
 - `learning-path.ts` — 등록 자산
 - `markdown.ts` — 등록 자산
 - `mastery.ts` — 등록 자산

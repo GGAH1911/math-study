@@ -5,12 +5,15 @@ import type { APIRoute } from 'astro';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { promoteMastery, MASTERY_LEVELS, type MasteryLevel } from '../../lib/mastery.ts';
+import { recordEvent } from '../../lib/learning-events.ts';
 
 export const prerender = false;
 
 const CONCEPTS_DIR = resolve(process.cwd(), '..', 'docs', 'concepts');
 
-type Body = { slug: string; to: MasteryLevel; reason?: string; evidence?: string[] };
+type Body = { slug: string; to: MasteryLevel; reason?: string; evidence?: string[];
+  // 오프라인 큐 재전송 대비 멱등키 + 기기에서 일어난 시각(learning_events 로 그대로 간다).
+  eventId?: string; occurredAt?: string };
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), { status, headers: { 'content-type': 'application/json' } });
@@ -45,6 +48,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   try {
     const { from, to } = await promoteMastery(userId, body.slug, body.to, newEvidence);
+    // ★evidence 는 시도 기록에서 유도되는 값이 아니라 **판단의 산물**이라, 재계산으로는
+    //   절대 복원되지 않는다. concept_mastery 를 다시 만들 수 있으려면 여기 남아 있어야 한다.
+    //   승급 실패 시엔 기록하지 않는다(promoteMastery 가 던지면 여기까지 오지 않는다).
+    await recordEvent({
+      userId, kind: 'concept.mastery_promote', target: body.slug,
+      payload: { from, to, evidence: newEvidence },
+      eventId: body.eventId, occurredAt: body.occurredAt,
+    });
     return json({ ok: true, from, to, slug: body.slug });
   } catch (e) {
     return json({ error: (e as Error).message }, 500);

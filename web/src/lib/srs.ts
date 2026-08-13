@@ -34,8 +34,11 @@ export interface SrsTransition {
 // local-time `current_date` due check). Stepping the local calendar date and
 // formatting the local Y-M-D keeps generation and the due-today comparison in
 // the same timezone.
-function todayPlusDays(days: number): string {
-  const d = new Date();
+// ★`from` 을 받는다: 이벤트 재생(problem_attempts 로부터 상태 재계산)은 **그 시도가 있었던
+//   시각** 기준으로 next_review 를 매겨야 한다. 호출 시각을 쓰면 과거 시도를 재생할 때마다
+//   전부 오늘 기준으로 밀려, 재계산 결과가 실제 상태와 영영 어긋난다.
+function todayPlusDays(days: number, from: Date = new Date()): string {
+  const d = new Date(from);
   d.setHours(0, 0, 0, 0);
   d.setDate(d.getDate() + days);
   const y = d.getFullYear();
@@ -54,6 +57,8 @@ function todayPlusDays(days: number): string {
 export function nextSrsState(
   current: { review_state: ReviewState; attempt_count: number } | null,
   correct: boolean,
+  /** 이 시도가 **일어난** 시각. 생략하면 지금 — 재생할 때는 반드시 넘겨라. */
+  at: Date = new Date(),
 ): SrsTransition {
   const prev: ReviewState = current?.review_state ?? 'new';
 
@@ -62,7 +67,7 @@ export function nextSrsState(
     return {
       status: 'review',
       reviewState: 'new',
-      nextReview: todayPlusDays(1),
+      nextReview: todayPlusDays(1, at),
       intervalDays: 1,
     };
   }
@@ -77,7 +82,7 @@ export function nextSrsState(
   return {
     status: 'solved',
     reviewState: nextLevel,
-    nextReview: todayPlusDays(interval),
+    nextReview: todayPlusDays(interval, at),
     intervalDays: interval,
   };
 }

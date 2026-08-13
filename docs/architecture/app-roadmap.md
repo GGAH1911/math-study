@@ -186,9 +186,33 @@ Phase 2~7 은 그대로 진행 가능하고, **주소가 공개되는 건 Phase 
 
 ## Phase 4 — 데이터 재설계 (Phase 3 과 병렬 가능)
 
-- [ ] ★**선행**: `problem-state.ts:67-80` 의 `reset`·`mark-mastered`·`skip` 과
-      `mastery-promote.ts:43` 의 evidence 를 **이벤트로 전환**.
-      이걸 안 하고 재계산하면 **지운 상태가 되살아나고 evidence 가 사라진다**
+- [x] ★**선행: 상태 변경의 이벤트화** ✅ 2026-08-13
+      (`db/migrations/0008_learning_events.sql` · `web/src/lib/learning-events.ts`)
+
+      `reset`·`mark-mastered`·`skip` 과 개념 승급 evidence 를 append-only `learning_events` 에 남긴다.
+      이벤트와 파생 상태는 **같은 트랜잭션**에서 쓴다 — 나누면 "이벤트는 남았는데 화면은 그대로"
+      가 생기고 그게 정확히 재계산으로도 못 고치는 불일치다.
+
+      `seq`(서버 단조 증가)와 `occurred_at`(기기 시각)을 **나눴다**. 오프라인 기기가 3일 뒤
+      합류하면 둘이 벌어진다 — **재계산 순서는 occurred_at, 동기화 커서는 seq**. 하나로 합치면
+      둘 중 하나가 반드시 틀린다. `event_id` 는 클라이언트 멱등키(오프라인 큐 재전송 대비).
+
+      **실물 증명** — 로드맵이 경고한 실패 모드를 그대로 재현해 막혔음을 확인:
+      ```
+      시도(정답) → 상태 solved/learning/2026-08-16/1 생성
+      reset      → 상태 삭제. 단 problem_attempts 1건은 그대로 남음
+      재생       → "재생에만 있음 0"  ← 시도 기록이 남았는데도 상태가 되살아나지 않음
+      멱등       → 같은 eventId 로 reset 2회 → 이벤트 1건
+      ```
+      재현: `docker compose -f deploy/docker-compose.yml exec -T web node --experimental-strip-types
+      --import ./scripts/ts-resolve-hook.mjs scripts/verify_event_replay.mjs`
+
+      ★**곁들여 잡은 선행 결함**: `nextSrsState` 가 `next_review` 를 **호출 시각**으로 계산했다.
+      그대로면 과거 시도를 재생할 때마다 전부 오늘 기준으로 밀려 재계산이 영영 어긋난다.
+      → `at` 인자를 받게 고쳤다(생략 시 지금 — 기존 호출부는 무변경).
+
+      ⚠️ 로그 개시(2026-08-13) **이전** 이력은 복원 대상이 아니다. 그때는 이벤트를 남기지 않았다.
+      검증기는 이걸 "불일치(로그 개시 이전)" 로 따로 세어 진짜 결함이 묻히지 않게 한다.
 - [ ] `problem_attempts` 를 정본으로, mastery·problem_state 는 재계산
 - [ ] 필기 문서 **v2 → v3** — 레이어 tombstone 포함 구조
       `{v:3, layers:[{id,name,visible,deleted?}], strokes:{layerId:[{id,...}]}, deletedStrokes:[id]}`

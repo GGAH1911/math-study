@@ -5,6 +5,7 @@
 //   body: { slug, action: 'reset' | 'mark-mastered' | 'skip' }
 import type { APIRoute } from 'astro';
 import sql from '../../lib/db.ts';
+import { recordEvent } from '../../lib/learning-events.ts';
 
 export const prerender = false;
 
@@ -56,34 +57,49 @@ export const GET: APIRoute = async ({ url, locals }) => {
 export const POST: APIRoute = async ({ request, locals }) => {
   const userId = locals.user?.id;
   if (!userId) return j({ error: 'unauthorized' }, 401);
-  let body: { slug: string; action: string };
+  let body: { slug: string; action: string; eventId?: string; occurredAt?: string };
   try { body = await request.json(); } catch { return j({ error: 'invalid json' }, 400); }
-  const { slug, action } = body;
+  const { slug, action, eventId, occurredAt } = body;
   if (!SLUG_RE.test(slug ?? '')) return j({ error: 'invalid slug' }, 400);
   const pid = await findProblemId(slug);
   if (!pid) return j({ error: 'problem not found' }, 404);
 
+  // ★이벤트와 파생 상태를 **한 트랜잭션에서** 쓴다. 나누면 "이벤트는 남았는데 화면은 그대로"
+  //   (또는 그 반대)가 생기고, 그게 정확히 재계산으로도 못 고치는 불일치다.
+  //   `reset` 이 DELETE 인 게 핵심 이유다 — 시도 기록만 보고 재계산하면 지운 상태가 되살아난다.
+  const meta = { eventId, occurredAt } as const;
+  const ev = { userId, target: slug, payload: { problemId: pid }, ...meta };
+
   if (action === 'reset') {
-    await sql`DELETE FROM problem_state WHERE user_id = ${userId} AND problem_id = ${pid}`;
+    await sql.begin(async (tx) => {
+      await recordEvent({ ...ev, kind: 'problem.reset' }, tx);
+      await tx`DELETE FROM problem_state WHERE user_id = ${userId} AND problem_id = ${pid}`;
+    });
     return j({ ok: true, action: 'reset' });
   }
   if (action === 'mark-mastered') {
     const next = new Date(Date.now() + 60 * 86_400_000).toISOString().slice(0, 10);
-    await sql`
-      INSERT INTO problem_state (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
-      VALUES (${userId}, ${pid}, 'solved', 'mature', ${next}, now(), 1)
-      ON CONFLICT (user_id, problem_id) DO UPDATE SET
-        status='solved', review_state='mature', next_review=EXCLUDED.next_review, last_attempted=now()
-    `;
+    await sql.begin(async (tx) => {
+      await recordEvent({ ...ev, kind: 'problem.mark_mastered', payload: { problemId: pid, nextReview: next } }, tx);
+      await tx`
+        INSERT INTO problem_state (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
+        VALUES (${userId}, ${pid}, 'solved', 'mature', ${next}, now(), 1)
+        ON CONFLICT (user_id, problem_id) DO UPDATE SET
+          status='solved', review_state='mature', next_review=EXCLUDED.next_review, last_attempted=now()
+      `;
+    });
     return j({ ok: true, action: 'mark-mastered' });
   }
   if (action === 'skip') {
     const next = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
-    await sql`
-      INSERT INTO problem_state (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
-      VALUES (${userId}, ${pid}, 'review', 'new', ${next}, now(), 0)
-      ON CONFLICT (user_id, problem_id) DO UPDATE SET next_review=EXCLUDED.next_review
-    `;
+    await sql.begin(async (tx) => {
+      await recordEvent({ ...ev, kind: 'problem.skip', payload: { problemId: pid, nextReview: next } }, tx);
+      await tx`
+        INSERT INTO problem_state (user_id, problem_id, status, review_state, next_review, last_attempted, attempt_count)
+        VALUES (${userId}, ${pid}, 'review', 'new', ${next}, now(), 0)
+        ON CONFLICT (user_id, problem_id) DO UPDATE SET next_review=EXCLUDED.next_review
+      `;
+    });
     return j({ ok: true, action: 'skip' });
   }
   return j({ error: 'unknown action' }, 400);
