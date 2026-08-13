@@ -1,0 +1,232 @@
+{
+ "id": "로그의_정의_와_계산",
+ "spec": {
+  "title": "로그의 정의와 계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "M",
+    "label": "진수 M",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "N",
+    "label": "진수 N",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "x",
+    "label": "지수 x",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "logM=log(M,a); logN=log(N,a); logMN=log(M*N,a); diff=logM+logN-logMN; Nexp=a^x; logNexp=log(Nexp,a); invTest=a^logM-M;",
+  "geometry": {
+   "range": [
+    0,
+    8
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      8,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=logM",
+      0
+     ],
+     "label": "log_a(M)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=logN",
+      0
+     ],
+     "label": "log_a(N)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=logMN",
+      0
+     ],
+     "label": "log_a(MN)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=logM",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=logM",
+      0
+     ],
+     "to": [
+      "=logMN",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log_a(M)",
+    "expr": "logM",
+    "digits": 6
+   },
+   {
+    "label": "log_a(N)",
+    "expr": "logN",
+    "digits": 6
+   },
+   {
+    "label": "log_a(MN)",
+    "expr": "logMN",
+    "digits": 6
+   },
+   {
+    "label": "log_a(M)+log_a(N)-log_a(MN)",
+    "expr": "diff",
+    "digits": 6
+   },
+   {
+    "label": "log_a(a^x)",
+    "expr": "logNexp",
+    "digits": 6
+   },
+   {
+    "label": "a^{log_a M}",
+    "expr": "a^logM",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "M": 4,
+    "N": 2,
+    "x": 2
+   },
+   {
+    "a": 2,
+    "M": 8,
+    "N": 4,
+    "x": 3
+   },
+   {
+    "a": 5,
+    "M": 5,
+    "N": 5,
+    "x": 1
+   },
+   {
+    "a": 10,
+    "M": 10,
+    "N": 10,
+    "x": 2
+   }
+  ],
+  "invariants": [
+   "abs(diff)",
+   "abs(logNexp - x)",
+   "abs(invTest)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "M": 4,
+     "N": 2,
+     "x": 2
+    },
+    "expect": {
+     "logM": 2,
+     "logN": 1,
+     "logMN": 3,
+     "diff": 0,
+     "logNexp": 2,
+     "invTest": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "M": 9,
+     "N": 3,
+     "x": 3
+    },
+    "expect": {
+     "logM": 2,
+     "logN": 1,
+     "logMN": 3,
+     "diff": 0,
+     "logNexp": 3,
+     "invTest": 0
+    }
+   },
+   {
+    "params": {
+     "a": 10,
+     "M": 10,
+     "N": 10,
+     "x": 1
+    },
+    "expect": {
+     "logM": 1,
+     "logN": 1,
+     "logMN": 2,
+     "diff": 0,
+     "logNexp": 1,
+     "invTest": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

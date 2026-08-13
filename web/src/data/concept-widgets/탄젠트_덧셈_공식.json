@@ -1,0 +1,189 @@
+{
+ "id": "탄젠트_덧셈_공식",
+ "spec": {
+  "title": "탄젠트 덧셈 공식",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α (°)",
+    "type": "slider",
+    "min": 0,
+    "max": 80,
+    "init": 30,
+    "step": 1
+   },
+   {
+    "name": "beta",
+    "label": "β (°)",
+    "type": "slider",
+    "min": 0,
+    "max": 80,
+    "init": 20,
+    "step": 1
+   }
+  ],
+  "scope": "alphaRad=alpha*pi/180; betaRad=beta*pi/180; t1=tan(alphaRad); t2=tan(betaRad); denom=1-t1*t2; lhs=tan(alphaRad+betaRad); rhs=(t1+t2)/denom",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(alphaRad)",
+      "=sin(alphaRad)"
+     ],
+     "label": "α"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(betaRad)",
+      "=sin(betaRad)"
+     ],
+     "label": "β"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(alphaRad+betaRad)",
+      "=sin(alphaRad+betaRad)"
+     ],
+     "label": "α+β"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos(alphaRad)",
+      "=sin(alphaRad)"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos(betaRad)",
+      "=sin(betaRad)"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos(alphaRad+betaRad)",
+      "=sin(alphaRad+betaRad)"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "tan(α)",
+    "expr": "t1",
+    "digits": 6
+   },
+   {
+    "label": "tan(β)",
+    "expr": "t2",
+    "digits": 6
+   },
+   {
+    "label": "tan(α+β) (좌변)",
+    "expr": "lhs",
+    "digits": 6
+   },
+   {
+    "label": "우변 : (tanα+tanβ)/(1-tanαtanβ)",
+    "expr": "rhs",
+    "digits": 6
+   },
+   {
+    "label": "오차 |좌변-우변|",
+    "expr": "abs(lhs-rhs)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 30,
+    "beta": 20
+   },
+   {
+    "alpha": 40,
+    "beta": 25
+   },
+   {
+    "alpha": 10,
+    "beta": 70
+   },
+   {
+    "alpha": 60,
+    "beta": 45
+   }
+  ],
+  "invariants": [
+   "abs(lhs-rhs)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 0,
+     "beta": 45
+    },
+    "expect": {
+     "lhs": 1,
+     "rhs": 1
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 45
+    },
+    "expect": {
+     "lhs": 3.732050807568877,
+     "rhs": 3.732050807568877
+    }
+   },
+   {
+    "params": {
+     "alpha": 30,
+     "beta": 30
+    },
+    "expect": {
+     "lhs": 1.7320508075688772,
+     "rhs": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

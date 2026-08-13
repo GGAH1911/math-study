@@ -1,0 +1,150 @@
+{
+ "id": "equations/high-1/방정식과_부등식/절댓값_부등식",
+ "spec": {
+  "title": "절댓값 부등식 |x-b|<a",
+  "params": [
+   {
+    "name": "a",
+    "label": "거리 a (a>0)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "중심 b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "left=b-a; right=b+a; center=b",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=left",
+      0
+     ],
+     "label": "b-a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=right",
+      0
+     ],
+     "label": "b+a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=left",
+      0
+     ],
+     "to": [
+      "=right",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 경계 (b-a)",
+    "expr": "left",
+    "digits": 1
+   },
+   {
+    "label": "오른쪽 경계 (b+a)",
+    "expr": "right",
+    "digits": 1
+   },
+   {
+    "label": "해의 폭",
+    "expr": "right-left",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 0
+   },
+   {
+    "a": 1.5,
+    "b": 2
+   },
+   {
+    "a": 3,
+    "b": -1
+   },
+   {
+    "a": 0.5,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "right-left-2*a",
+   "(left+right)/2-b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "left": -1,
+     "right": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": -2
+    },
+    "expect": {
+     "left": -2.5,
+     "right": -1.5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 0
+    },
+    "expect": {
+     "left": -3,
+     "right": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

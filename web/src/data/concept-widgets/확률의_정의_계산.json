@@ -1,0 +1,158 @@
+{
+ "id": "확률의_정의_계산",
+ "spec": {
+  "title": "확률의 정의 계산",
+  "params": [
+   {
+    "name": "fav",
+    "label": "사건의 경우의 수 n(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "oth",
+    "label": "나머지 경우의 수 n(S)-n(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 7,
+    "step": 1
+   }
+  ],
+  "scope": "total=fav+oth; p=total>0 ? fav/total : 0",
+  "geometry": {
+   "range": [
+    0,
+    41
+   ],
+   "yRange": [
+    -0.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=total",
+       0
+      ],
+      [
+       "=total",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "label": "n(S)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       2
+      ],
+      [
+       "=fav",
+       2
+      ],
+      [
+       "=fav",
+       3
+      ],
+      [
+       0,
+       3
+      ]
+     ],
+     "label": "n(A)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n(A)",
+    "expr": "fav",
+    "digits": 0
+   },
+   {
+    "label": "n(S)",
+    "expr": "total",
+    "digits": 0
+   },
+   {
+    "label": "P(A)",
+    "expr": "p",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "fav": 3,
+    "oth": 7
+   },
+   {
+    "fav": 0,
+    "oth": 5
+   },
+   {
+    "fav": 5,
+    "oth": 0
+   },
+   {
+    "fav": 1,
+    "oth": 1
+   }
+  ],
+  "invariants": [
+   "abs(p*total - fav)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "fav": 2,
+     "oth": 8
+    },
+    "expect": {
+     "total": 10,
+     "p": 0.2
+    }
+   },
+   {
+    "params": {
+     "fav": 1,
+     "oth": 0
+    },
+    "expect": {
+     "total": 1,
+     "p": 1
+    }
+   },
+   {
+    "params": {
+     "fav": 0,
+     "oth": 5
+    },
+    "expect": {
+     "total": 5,
+     "p": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

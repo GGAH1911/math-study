@@ -1,0 +1,181 @@
+{
+ "id": "equations/high-1/방정식과_부등식/대칭식",
+ "spec": {
+  "title": "대칭식 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "s = a + b; p = a * b; q1 = a^2 + b^2; q2 = s^2 - 2 * p; r1 = a^3 + b^3; r2 = s^3 - 3 * p * s; d = a - b; d_swap = b - a;",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -6,
+      -6
+     ],
+     "to": [
+      6,
+      6
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=a"
+     ],
+     "label": "Q"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a+b",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "ab",
+    "expr": "p",
+    "digits": 4
+   },
+   {
+    "label": "a²+b²",
+    "expr": "q1",
+    "digits": 4
+   },
+   {
+    "label": "(a+b)²-2ab",
+    "expr": "q2",
+    "digits": 4
+   },
+   {
+    "label": "a³+b³",
+    "expr": "r1",
+    "digits": 4
+   },
+   {
+    "label": "(a+b)³-3ab(a+b)",
+    "expr": "r2",
+    "digits": 4
+   },
+   {
+    "label": "a-b (비대칭)",
+    "expr": "d",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": -2,
+    "b": 3
+   },
+   {
+    "a": 4,
+    "b": -1
+   },
+   {
+    "a": 0.5,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "q1 - q2",
+   "r1 - r2",
+   "d + d_swap"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "s": 5,
+     "p": 6,
+     "q1": 13,
+     "q2": 13,
+     "r1": 35,
+     "r2": 35,
+     "d": -1,
+     "d_swap": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 4
+    },
+    "expect": {
+     "s": 3,
+     "p": -4,
+     "q1": 17,
+     "q2": 17,
+     "r1": 63,
+     "r2": 63,
+     "d": -5,
+     "d_swap": 5
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "s": 0,
+     "p": 0,
+     "q1": 0,
+     "q2": 0,
+     "r1": 0,
+     "r2": 0,
+     "d": 0,
+     "d_swap": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

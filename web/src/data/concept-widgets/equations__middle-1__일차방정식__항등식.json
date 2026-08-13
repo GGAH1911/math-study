@@ -1,0 +1,220 @@
+{
+ "id": "equations/middle-1/일차방정식/항등식",
+ "spec": {
+  "title": "항등식 (a+b)² = a² + 2ab + b²",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "total=a+b; area_total=total^2; area_parts=a^2+2*a*b+b^2; diff=area_total-area_parts",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=a"
+      ],
+      [
+       0,
+       "=a"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=total",
+       0
+      ],
+      [
+       "=total",
+       "=a"
+      ],
+      [
+       "=a",
+       "=a"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=a"
+      ],
+      [
+       "=a",
+       "=a"
+      ],
+      [
+       "=a",
+       "=total"
+      ],
+      [
+       0,
+       "=total"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=a",
+       "=a"
+      ],
+      [
+       "=total",
+       "=a"
+      ],
+      [
+       "=total",
+       "=total"
+      ],
+      [
+       "=a",
+       "=total"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a/2",
+      "=a/2"
+     ],
+     "label": "a²"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a+b/2",
+      "=a/2"
+     ],
+     "label": "ab"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a/2",
+      "=a+b/2"
+     ],
+     "label": "ab"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a+b/2",
+      "=a+b/2"
+     ],
+     "label": "b²"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "(a+b)²  좌변",
+    "expr": "area_total",
+    "digits": 4
+   },
+   {
+    "label": "a²+2ab+b²  우변",
+    "expr": "area_parts",
+    "digits": 4
+   },
+   {
+    "label": "차이 (좌변-우변)",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 1.5,
+    "b": 2.5
+   },
+   {
+    "a": 4,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "area_total": 25,
+     "area_parts": 25,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "b": 2.5
+    },
+    "expect": {
+     "area_total": 16,
+     "area_parts": 16,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

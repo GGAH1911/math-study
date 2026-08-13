@@ -1,0 +1,166 @@
+{
+ "id": "algebra/high-1/다항식/유리근_정리",
+ "spec": {
+  "title": "유리근 정리",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (상수항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "p (정수근 후보)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "f_p = p^3 + a*p + b; is_root = abs(f_p) < 1e-6 ? 1 : 0; p_div_b = (p == 0) ? (b == 0 ? 1 : 0) : (mod(b, abs(p)) == 0 ? 1 : 0)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -50,
+    50
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=p",
+      0
+     ],
+     "radius": 0.15
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p",
+      0
+     ],
+     "label": "p"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -50,
+    50
+   ],
+   "fns": [
+    {
+     "fn": "x^3 + a*x + b",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(p)",
+    "expr": "f_p",
+    "digits": 6
+   },
+   {
+    "label": "p가 b의 약수?",
+    "expr": "p_div_b",
+    "digits": 0
+   },
+   {
+    "label": "근인가?",
+    "expr": "is_root",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -3,
+    "b": 2,
+    "p": 1
+   },
+   {
+    "a": -3,
+    "b": 2,
+    "p": 2
+   },
+   {
+    "a": -3,
+    "b": 2,
+    "p": 3
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "p": 0
+   }
+  ],
+  "invariants": [
+   "abs(is_root * (1 - p_div_b))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -3,
+     "b": 2,
+     "p": 1
+    },
+    "expect": {
+     "f_p": 0,
+     "is_root": 1,
+     "p_div_b": 1
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 2,
+     "p": 2
+    },
+    "expect": {
+     "f_p": 4,
+     "is_root": 0,
+     "p_div_b": 1
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 2,
+     "p": 3
+    },
+    "expect": {
+     "f_p": 20,
+     "is_root": 0,
+     "p_div_b": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

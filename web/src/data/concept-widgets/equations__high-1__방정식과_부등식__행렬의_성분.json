@@ -1,0 +1,110 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬의_성분",
+ "spec": {
+  "title": "행렬의 성분",
+  "params": [
+   {
+    "name": "i",
+    "label": "행 i",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "j",
+    "label": "열 j",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "val=10*i+j; x=j; y=i",
+  "geometry": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "성분 a_ij",
+    "expr": "val"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "i": 1,
+    "j": 1
+   },
+   {
+    "i": 2,
+    "j": 3
+   },
+   {
+    "i": 3,
+    "j": 1
+   },
+   {
+    "i": 2,
+    "j": 2
+   }
+  ],
+  "invariants": [
+   "val - (10*i+j)",
+   "x - j",
+   "y - i"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "i": 2,
+     "j": 3
+    },
+    "expect": {
+     "val": 23
+    }
+   },
+   {
+    "params": {
+     "i": 1,
+     "j": 2
+    },
+    "expect": {
+     "val": 12
+    }
+   },
+   {
+    "params": {
+     "i": 3,
+     "j": 3
+    },
+    "expect": {
+     "val": 33
+    }
+   }
+  ],
+  "tol": 0
+ }
+}

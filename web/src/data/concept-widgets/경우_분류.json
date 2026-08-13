@@ -1,0 +1,201 @@
+{
+ "id": "경우_분류",
+ "spec": {
+  "title": "경우 분류: 포함/불포함으로 나누어 세기",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (전체 인원)",
+    "type": "slider",
+    "min": 4,
+    "max": 10,
+    "init": 7,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "k (선택 인원)",
+    "type": "slider",
+    "min": 2,
+    "max": 4,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "case_in=combinations(n-1,k-1); case_out=combinations(n-1,k); total=combinations(n,k); sum_cases=case_in+case_out;",
+  "geometry": {
+   "range": [
+    0,
+    2.5
+   ],
+   "yRange": [
+    0,
+    220
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0.3,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       "=case_out"
+      ],
+      [
+       0.3,
+       "=case_out"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0.3,
+       "=case_out"
+      ],
+      [
+       1,
+       "=case_out"
+      ],
+      [
+       1,
+       "=sum_cases"
+      ],
+      [
+       0.3,
+       "=sum_cases"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       1.6,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       "=total"
+      ],
+      [
+       1.6,
+       "=total"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "선택 포함 (case_in)",
+    "expr": "case_in",
+    "digits": 0
+   },
+   {
+    "label": "선택 불포함 (case_out)",
+    "expr": "case_out",
+    "digits": 0
+   },
+   {
+    "label": "전체 (total)",
+    "expr": "total",
+    "digits": 0
+   },
+   {
+    "label": "합계 (case_in+case_out)",
+    "expr": "sum_cases",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "k": 2
+   },
+   {
+    "n": 10,
+    "k": 4
+   },
+   {
+    "n": 7,
+    "k": 3
+   },
+   {
+    "n": 5,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "total - sum_cases",
+   "combinations(n,k) - combinations(n-1,k) - combinations(n-1,k-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4,
+     "k": 2
+    },
+    "expect": {
+     "case_in": 3,
+     "case_out": 3,
+     "total": 6,
+     "sum_cases": 6
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "k": 4
+    },
+    "expect": {
+     "case_in": 84,
+     "case_out": 126,
+     "total": 210,
+     "sum_cases": 210
+    }
+   },
+   {
+    "params": {
+     "n": 7,
+     "k": 3
+    },
+    "expect": {
+     "case_in": 15,
+     "case_out": 20,
+     "total": 35,
+     "sum_cases": 35
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "k": 2
+    },
+    "expect": {
+     "case_in": 4,
+     "case_out": 6,
+     "total": 10,
+     "sum_cases": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

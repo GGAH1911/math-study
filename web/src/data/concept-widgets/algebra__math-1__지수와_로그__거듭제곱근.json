@@ -1,0 +1,144 @@
+{
+ "id": "algebra/math-1/지수와_로그/거듭제곱근",
+ "spec": {
+  "title": "거듭제곱근 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 8,
+    "step": 0.5
+   }
+  ],
+  "scope": "magRoot = nthRoot(abs(a), n); realRootCount = (mod(n,2)==0) ? (a>0 ? 2 : (a==0 ? 1 : 0)) : 1; mainRoot = (mod(n,2)==1) ? nthRoot(a,n) : (a>=0 ? nthRoot(a,n) : 0); otherRoot = (a>0 and mod(n,2)==0) ? -nthRoot(a,n) : 0",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^n",
+     "label": "y = x^n",
+     "color": "blue"
+    },
+    {
+     "fn": "a",
+     "label": "y = a",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "실수 근의 개수",
+    "expr": "realRootCount",
+    "digits": 0
+   },
+   {
+    "label": "근의 절댓값",
+    "expr": "magRoot",
+    "digits": 4
+   },
+   {
+    "label": "대표 근 (없으면 0)",
+    "expr": "mainRoot",
+    "digits": 4
+   },
+   {
+    "label": "다른 실근 (없으면 0)",
+    "expr": "otherRoot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "a": 4
+   },
+   {
+    "n": 3,
+    "a": -8
+   },
+   {
+    "n": 4,
+    "a": 16
+   },
+   {
+    "n": 5,
+    "a": -32
+   }
+  ],
+  "invariants": [
+   "magRoot^n - abs(a)",
+   "realRootCount - ((mod(n,2)==0) ? (a>0 ? 2 : (a==0 ? 1 : 0)) : 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "a": 4
+    },
+    "expect": {
+     "magRoot": 2,
+     "realRootCount": 2,
+     "mainRoot": 2,
+     "otherRoot": -2
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "a": -8
+    },
+    "expect": {
+     "magRoot": 2,
+     "realRootCount": 1,
+     "mainRoot": -2,
+     "otherRoot": 0
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "a": 16
+    },
+    "expect": {
+     "magRoot": 2,
+     "realRootCount": 2,
+     "mainRoot": 2,
+     "otherRoot": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

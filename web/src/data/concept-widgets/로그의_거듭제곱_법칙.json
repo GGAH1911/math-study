@@ -1,0 +1,140 @@
+{
+ "id": "로그의_거듭제곱_법칙",
+ "spec": {
+  "title": "로그의 거듭제곱 법칙: log_a(b^n) = n·log_a b",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "진수 b",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 8,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "L = log(b^n, a); R = n * log(b, a); diff = L - R",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "log(b^x, a)",
+     "label": "log_a(b^x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x * log(b, a)",
+     "label": "x·log_a b",
+     "color": "orange"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌변 log_a(b^n)",
+    "expr": "L",
+    "digits": 6
+   },
+   {
+    "label": "우변 n·log_a b",
+    "expr": "R",
+    "digits": 6
+   },
+   {
+    "label": "좌변 - 우변",
+    "expr": "diff",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 8,
+    "n": 2
+   },
+   {
+    "a": 4,
+    "b": 2,
+    "n": 3
+   },
+   {
+    "a": 10,
+    "b": 10,
+    "n": -1
+   },
+   {
+    "a": 3,
+    "b": 9,
+    "n": 0.5
+   }
+  ],
+  "invariants": [
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 8,
+     "n": 2
+    },
+    "expect": {
+     "L": 6,
+     "R": 6
+    }
+   },
+   {
+    "params": {
+     "a": 10,
+     "b": 10,
+     "n": -1
+    },
+    "expect": {
+     "L": -1,
+     "R": -1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2,
+     "n": 3
+    },
+    "expect": {
+     "L": 1.5,
+     "R": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

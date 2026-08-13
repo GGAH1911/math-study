@@ -1,0 +1,151 @@
+{
+ "id": "판별식과_부등식",
+ "spec": {
+  "title": "판별식과 이차부등식",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항 계수)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 2,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (일차항 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "D=b^2 - 4*a*c; x0 = -b/(2*a); y0 = c - b^2/(4*a); nreal = D>0 ? 2 : (D==0 ? 1 : 0)",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -6,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y = ax²+bx+c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 x",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "y0",
+    "digits": 2
+   },
+   {
+    "label": "실근 개수",
+    "expr": "nreal",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -4
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 4
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": -4
+   }
+  ],
+  "invariants": [
+   "D - (b^2 - 4*a*c)",
+   "x0 + b/(2*a)",
+   "y0 - (c - b^2/(4*a))",
+   "a*(1 - x0)^2 - (a*1^2 + b*1 + c - y0)",
+   "D >= 0 ? (a*((-b+sqrt(D))/(2*a))^2 + b*((-b+sqrt(D))/(2*a)) + c) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -4
+    },
+    "expect": {
+     "D": 16,
+     "x0": 0,
+     "y0": -4,
+     "nreal": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "x0": -1,
+     "y0": 0,
+     "nreal": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 4
+    },
+    "expect": {
+     "D": -16,
+     "x0": 0,
+     "y0": 4,
+     "nreal": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

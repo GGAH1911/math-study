@@ -1,0 +1,133 @@
+{
+ "id": "기댓값",
+ "spec": {
+  "title": "기댓값",
+  "params": [
+   {
+    "name": "p",
+    "label": "p = P(X=2)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.01
+   }
+  ],
+  "scope": "q=1-p; E=2*p+8*q",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      2,
+      0
+     ],
+     "to": [
+      2,
+      "=p"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      8,
+      0
+     ],
+     "to": [
+      8,
+      "=q"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=p"
+     ],
+     "label": "P(X=2)"
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=q"
+     ],
+     "label": "P(X=8)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=E",
+      0
+     ],
+     "label": "E(X)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기댓값 E(X)",
+    "expr": "E",
+    "digits": 2
+   },
+   {
+    "label": "P(X=2)",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "P(X=8)",
+    "expr": "q",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 0.3
+   },
+   {
+    "p": 0.5
+   },
+   {
+    "p": 0.8
+   }
+  ],
+  "invariants": [
+   "p+q-1",
+   "p*(E-2)+q*(E-8)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 0.5
+    },
+    "expect": {
+     "q": 0.5,
+     "E": 5
+    }
+   },
+   {
+    "params": {
+     "p": 0.25
+    },
+    "expect": {
+     "q": 0.75,
+     "E": 6.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

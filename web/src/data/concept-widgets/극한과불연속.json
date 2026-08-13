@@ -1,0 +1,169 @@
+{
+ "id": "극한과불연속",
+ "spec": {
+  "title": "극한과불연속",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (점의 위치)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "j",
+    "label": "j (점프 크기)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (f(a) 값)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "left_limit = a; right_limit = a + j; f_a = c; limit_exists = abs(left_limit - right_limit) < 1e-6 ? 1 : 0; continuous = (limit_exists == 1 and abs(f_a - left_limit) < 1e-6) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x < a ? x : (x > a ? x + j : c)",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한",
+    "expr": "left_limit",
+    "digits": 2
+   },
+   {
+    "label": "우극한",
+    "expr": "right_limit",
+    "digits": 2
+   },
+   {
+    "label": "f(a)",
+    "expr": "f_a",
+    "digits": 2
+   },
+   {
+    "label": "극한 존재",
+    "expr": "limit_exists",
+    "digits": 0
+   },
+   {
+    "label": "연속",
+    "expr": "continuous",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "j": 1,
+    "c": 0.5
+   },
+   {
+    "a": -1,
+    "j": 0,
+    "c": -1
+   },
+   {
+    "a": 1.5,
+    "j": 0.5,
+    "c": 1.5
+   },
+   {
+    "a": 0,
+    "j": 0,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "abs(left_limit - a)",
+   "abs(right_limit - (a + j))",
+   "abs(f_a - c)",
+   "abs(limit_exists - (abs(j) < 1e-6 ? 1 : 0))",
+   "abs(continuous - ((abs(j) < 1e-6 and abs(c - a) < 1e-6) ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "j": 1,
+     "c": 0.5
+    },
+    "expect": {
+     "left_limit": 0,
+     "right_limit": 1,
+     "f_a": 0.5,
+     "limit_exists": 0,
+     "continuous": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "j": 0,
+     "c": 1
+    },
+    "expect": {
+     "left_limit": 1,
+     "right_limit": 1,
+     "f_a": 1,
+     "limit_exists": 1,
+     "continuous": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "j": 0.5,
+     "c": -1
+    },
+    "expect": {
+     "left_limit": -1,
+     "right_limit": -0.5,
+     "f_a": -1,
+     "limit_exists": 0,
+     "continuous": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,188 @@
+{
+ "id": "스칼라배",
+ "spec": {
+  "title": "스칼라배",
+  "params": [
+   {
+    "name": "k",
+    "label": "스칼라 k",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "a1",
+    "label": "벡터 성분 a₁",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "a2",
+    "label": "벡터 성분 a₂",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "ax=a1; ay=a2; sx=k*a1; sy=k*a2; len_a=sqrt(a1^2+a2^2); len_ka=sqrt(sx^2+sy^2)",
+  "geometry": {
+   "range": [
+    -14,
+    14
+   ],
+   "yRange": [
+    -14,
+    14
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=sx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sx",
+      "=sy"
+     ],
+     "label": "ka"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|a|",
+    "expr": "len_a",
+    "digits": 3
+   },
+   {
+    "label": "|ka|",
+    "expr": "len_ka",
+    "digits": 3
+   },
+   {
+    "label": "k|a|",
+    "expr": "abs(k)*len_a",
+    "digits": 3
+   },
+   {
+    "label": "방향 부호",
+    "expr": "sign(k)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 2,
+    "a1": 3,
+    "a2": 4
+   },
+   {
+    "k": -1,
+    "a1": 3,
+    "a2": 4
+   },
+   {
+    "k": 0,
+    "a1": 3,
+    "a2": 4
+   },
+   {
+    "k": 0.5,
+    "a1": 2,
+    "a2": -2
+   }
+  ],
+  "invariants": [
+   "sx - k*ax",
+   "sy - k*ay",
+   "ax*sy - ay*sx",
+   "len_ka - abs(k)*len_a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2,
+     "a1": 3,
+     "a2": 4
+    },
+    "expect": {
+     "ax": 3,
+     "ay": 4,
+     "sx": 6,
+     "sy": 8,
+     "len_a": 5,
+     "len_ka": 10
+    }
+   },
+   {
+    "params": {
+     "k": -1,
+     "a1": 3,
+     "a2": 4
+    },
+    "expect": {
+     "ax": 3,
+     "ay": 4,
+     "sx": -3,
+     "sy": -4,
+     "len_a": 5,
+     "len_ka": 5
+    }
+   },
+   {
+    "params": {
+     "k": 0,
+     "a1": 3,
+     "a2": 4
+    },
+    "expect": {
+     "ax": 3,
+     "ay": 4,
+     "sx": 0,
+     "sy": 0,
+     "len_a": 5,
+     "len_ka": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

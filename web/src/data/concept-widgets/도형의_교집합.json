@@ -1,0 +1,145 @@
+{
+ "id": "도형의_교집합",
+ "spec": {
+  "title": "직선과 원의 교집합",
+  "params": [
+   {
+    "name": "b",
+    "label": "y-절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.01
+   }
+  ],
+  "scope": "d=10-b^2; x1=(-b+sqrt(d))/2; y1=x1+b; x2=(-b-sqrt(d))/2; y2=x2+b; cnt=(d>0 ? 2 : (d==0 ? 1 : 0))",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=sqrt(5)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P2"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "x + b",
+     "label": "y=x+b",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 개수",
+    "expr": "cnt"
+   },
+   {
+    "label": "x1",
+    "expr": "x1",
+    "digits": 6
+   },
+   {
+    "label": "y1",
+    "expr": "y1",
+    "digits": 6
+   },
+   {
+    "label": "x2",
+    "expr": "x2",
+    "digits": 6
+   },
+   {
+    "label": "y2",
+    "expr": "y2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0
+   },
+   {
+    "b": 1
+   },
+   {
+    "b": -1
+   },
+   {
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "(y1-(x1+b))^2+(x1^2+y1^2-5)^2+(y2-(x2+b))^2+(x2^2+y2^2-5)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1
+    },
+    "expect": {
+     "x1": 1,
+     "y1": 2,
+     "x2": -2,
+     "y2": -1,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "b": -1
+    },
+    "expect": {
+     "x1": 2,
+     "y1": 1,
+     "x2": -1,
+     "y2": -2,
+     "cnt": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

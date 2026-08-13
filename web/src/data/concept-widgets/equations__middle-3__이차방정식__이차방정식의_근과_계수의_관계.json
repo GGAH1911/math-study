@@ -1,0 +1,152 @@
+{
+ "id": "equations/middle-3/이차방정식/이차방정식의_근과_계수의_관계",
+ "spec": {
+  "title": "이차방정식의 근과 계수의 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "α",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "β",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "a=a==0?1:a; b=-a*(p+q); c=a*p*q; sum_roots=p+q; prod_roots=p*q; ratio_sum=-b/a; ratio_prod=c/a; vertexY=c-b*b/(4*a); x0=min(p,q)-1; x1=max(p,q)+1; y0=min(0,vertexY)-1; y1=max(0,vertexY)+1;",
+  "plot": {
+   "range": [
+    "=x0",
+    "=x1"
+   ],
+   "yRange": [
+    "=y0",
+    "=y1"
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y = ax² + bx + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "α+β",
+    "expr": "sum_roots",
+    "digits": 2
+   },
+   {
+    "label": "α×β",
+    "expr": "prod_roots",
+    "digits": 2
+   },
+   {
+    "label": "-b/a",
+    "expr": "ratio_sum",
+    "digits": 2
+   },
+   {
+    "label": "c/a",
+    "expr": "ratio_prod",
+    "digits": 2
+   },
+   {
+    "label": "a (실제)",
+    "expr": "a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": -1,
+    "q": 2
+   },
+   {
+    "a": -1,
+    "p": -3,
+    "q": 4
+   },
+   {
+    "a": 2,
+    "p": 0,
+    "q": 0.5
+   },
+   {
+    "a": 0,
+    "p": 1,
+    "q": 2
+   }
+  ],
+  "invariants": [
+   "sum_roots - ratio_sum",
+   "prod_roots - ratio_prod",
+   "a*p^2 + b*p + c",
+   "a*q^2 + b*q + c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": -1,
+     "q": 2
+    },
+    "expect": {
+     "sum_roots": 1,
+     "prod_roots": -2,
+     "ratio_sum": 1,
+     "ratio_prod": -2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": -3,
+     "q": 4
+    },
+    "expect": {
+     "sum_roots": 1,
+     "prod_roots": -12,
+     "ratio_sum": 1,
+     "ratio_prod": -12
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "p": 0,
+     "q": 5
+    },
+    "expect": {
+     "sum_roots": 5,
+     "prod_roots": 0,
+     "ratio_sum": 5,
+     "ratio_prod": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

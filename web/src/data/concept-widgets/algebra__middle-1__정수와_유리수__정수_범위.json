@@ -1,0 +1,214 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/정수_범위",
+ "spec": {
+  "title": "정수와 수직선",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "isInt = floor(x)==x ? 1 : 0; f = floor(x); c = ceil(x);",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      0
+     ],
+     "to": [
+      5,
+      0
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      -5,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      -4,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      -3,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      -2,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      -1,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      1,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      2,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      3,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      4,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "circle",
+     "center": [
+      5,
+      0
+     ],
+     "radius": 0.07
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "정수 여부 (1=정수)",
+    "expr": "isInt",
+    "digits": 0
+   },
+   {
+    "label": "내림(floor)",
+    "expr": "f",
+    "digits": 0
+   },
+   {
+    "label": "올림(ceil)",
+    "expr": "c",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": -2
+   },
+   {
+    "x": 0.5
+   },
+   {
+    "x": 3
+   },
+   {
+    "x": -4.5
+   }
+  ],
+  "invariants": [
+   "abs((c - f) - (1 - isInt))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "isInt": 1,
+     "f": 2,
+     "c": 2
+    }
+   },
+   {
+    "params": {
+     "x": -1.5
+    },
+    "expect": {
+     "isInt": 0,
+     "f": -2,
+     "c": -1
+    }
+   },
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "isInt": 1,
+     "f": 0,
+     "c": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

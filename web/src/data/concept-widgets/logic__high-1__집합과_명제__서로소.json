@@ -1,0 +1,157 @@
+{
+ "id": "logic/high-1/집합과_명제/서로소",
+ "spec": {
+  "title": "서로소 (두 사건의 배타성)",
+  "params": [
+   {
+    "name": "a",
+    "label": "A의 끝 (0~1)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "b",
+    "label": "B의 시작 (0~1)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.4,
+    "step": 0.01
+   }
+  ],
+  "scope": "pA = a; pB = 1 - b; pInter = max(0, a - b); pUnion = b <= a ? 1 : pA + pB; disjoint = b > a ? 1 : 0",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "start": [
+      0,
+      0.1
+     ],
+     "end": [
+      "=a",
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "start": [
+      "=b",
+      -0.1
+     ],
+     "end": [
+      1,
+      -0.1
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 3
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pInter",
+    "digits": 3
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "pUnion",
+    "digits": 3
+   },
+   {
+    "label": "서로소?",
+    "expr": "disjoint",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.2,
+    "b": 0.8
+   },
+   {
+    "a": 0.6,
+    "b": 0.4
+   },
+   {
+    "a": 0.5,
+    "b": 0.5
+   },
+   {
+    "a": 0.9,
+    "b": 0.1
+   }
+  ],
+  "invariants": [
+   "pUnion - (pA + pB - pInter)",
+   "disjoint * pInter",
+   "disjoint * (pUnion - (pA + pB))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.3,
+     "b": 0.7
+    },
+    "expect": {
+     "pA": 0.3,
+     "pB": 0.3,
+     "pInter": 0,
+     "pUnion": 0.6,
+     "disjoint": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.7,
+     "b": 0.3
+    },
+    "expect": {
+     "pA": 0.7,
+     "pB": 0.7,
+     "pInter": 0.4,
+     "pUnion": 1,
+     "disjoint": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0.5
+    },
+    "expect": {
+     "pA": 0.5,
+     "pB": 0.5,
+     "pInter": 0,
+     "pUnion": 1,
+     "disjoint": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

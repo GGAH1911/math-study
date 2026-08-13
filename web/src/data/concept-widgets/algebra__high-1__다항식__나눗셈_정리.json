@@ -1,0 +1,188 @@
+{
+ "id": "algebra/high-1/다항식/나눗셈_정리",
+ "spec": {
+  "title": "다항식 나눗셈 정리: f(x)=g(x)q(x)+r(x)",
+  "params": [
+   {
+    "name": "a",
+    "label": "f의 x² 계수 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "f의 x 계수 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "f의 상수항 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "g의 x 계수 d",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "e0",
+    "label": "g의 상수항 e",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "p = a/d; s = (b*d - a*e0)/(d*d); r = c - e0*s;",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -50,
+    50
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -50,
+    50
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "(d*x + e0)*(p*x + s)",
+     "label": "g(x)·q(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "몫의 x 계수 p",
+    "expr": "p",
+    "digits": 4
+   },
+   {
+    "label": "몫의 상수항 s",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "나머지 r",
+    "expr": "r",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 1,
+    "d": 2,
+    "e0": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -5,
+    "d": 2,
+    "e0": 1
+   },
+   {
+    "a": 0,
+    "b": 2,
+    "c": 3,
+    "d": 2,
+    "e0": 1
+   },
+   {
+    "a": -2,
+    "b": 1,
+    "c": 4,
+    "d": 3,
+    "e0": -2
+   }
+  ],
+  "invariants": [
+   "a - d*p",
+   "b - (d*s + e0*p)",
+   "c - (e0*s + r)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 1,
+     "d": 2,
+     "e0": 1
+    },
+    "expect": {
+     "p": 1,
+     "s": 1,
+     "r": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -5,
+     "d": 2,
+     "e0": 1
+    },
+    "expect": {
+     "p": 0.5,
+     "s": -0.25,
+     "r": -4.75
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2,
+     "c": 3,
+     "d": 2,
+     "e0": 1
+    },
+    "expect": {
+     "p": 0,
+     "s": 1,
+     "r": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/실수",
+ "spec": {
+  "title": "실수 – 수직선 위의 모든 점",
+  "params": [
+   {
+    "name": "n",
+    "label": "소수 자리 수 (n)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "a=sqrt(2); p=10^n; lo=floor(a*p)/p; hi=(floor(a*p)+1)/p; xmin=lo-0.02; xmax=hi+0.02",
+  "geometry": {
+   "range": [
+    "=xmin",
+    "=xmax"
+   ],
+   "yRange": [
+    -0.2,
+    0.2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=lo",
+      0
+     ],
+     "to": [
+      "=hi",
+      0
+     ],
+     "stroke": "#1976d2",
+     "strokeWidth": 4
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "√2",
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=lo",
+      0
+     ],
+     "color": "#1976d2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=hi",
+      0
+     ],
+     "color": "#1976d2"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "√2",
+    "expr": "a",
+    "digits": 8
+   },
+   {
+    "label": "아래 근삿값",
+    "expr": "lo",
+    "digits": 8
+   },
+   {
+    "label": "위 근삿값",
+    "expr": "hi",
+    "digits": 8
+   },
+   {
+    "label": "구간 길이",
+    "expr": "hi-lo",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 2
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 4
+   }
+  ],
+  "invariants": [
+   "a^2-2",
+   "hi-lo-10^(-n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "lo": 1.4,
+     "hi": 1.5
+    }
+   },
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "lo": 1.41,
+     "hi": 1.42
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "lo": 1.414,
+     "hi": 1.415
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

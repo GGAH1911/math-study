@@ -1,0 +1,143 @@
+{
+ "id": "라이프니츠_규칙",
+ "spec": {
+  "title": "라이프니츠 규칙 시각화",
+  "params": [
+   {
+    "name": "s",
+    "label": "x",
+    "type": "slider",
+    "min": 0.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.01
+   }
+  ],
+  "scope": "a=s; b=s^2; f_a=s*a^2; f_b=s*b^2; da=1; db=2*s; term_b=f_b*db; term_a=-f_a*da; interior=(b^3-a^3)/3; total=term_b+term_a+interior",
+  "plot": {
+   "range": [
+    0.5,
+    1.5
+   ],
+   "yRange": [
+    -5,
+    25
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "2*x^6",
+     "label": "b 경계항 f(x,b)·b'",
+     "color": "red"
+    },
+    {
+     "fn": "-x^3",
+     "label": "a 경계항 −f(x,a)·a'",
+     "color": "blue"
+    },
+    {
+     "fn": "(x^6-x^3)/3",
+     "label": "내부항 ∫∂f/∂x dt",
+     "color": "green"
+    },
+    {
+     "fn": "(7*x^6-4*x^3)/3",
+     "label": "총 도함수 dF/dx",
+     "color": "purple"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a(x)",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "b(x)",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "b 경계항",
+    "expr": "term_b",
+    "digits": 4
+   },
+   {
+    "label": "a 경계항",
+    "expr": "term_a",
+    "digits": 4
+   },
+   {
+    "label": "내부항",
+    "expr": "interior",
+    "digits": 4
+   },
+   {
+    "label": "총 도함수",
+    "expr": "total",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "s": 0.5
+   },
+   {
+    "s": 1
+   },
+   {
+    "s": 1.5
+   },
+   {
+    "s": 2
+   }
+  ],
+  "invariants": [
+   "total - (term_b + term_a + interior)",
+   "interior - (b^3 - a^3)/3",
+   "term_b - 2*s^6",
+   "term_a - (-s^3)",
+   "total - (7*s^6 - 4*s^3)/3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "s": 0.5
+    },
+    "expect": {
+     "term_b": 0.03125,
+     "term_a": -0.125,
+     "interior": -0.0364583333333,
+     "total": -0.1302083333333
+    }
+   },
+   {
+    "params": {
+     "s": 1
+    },
+    "expect": {
+     "term_b": 2,
+     "term_a": -1,
+     "interior": 0,
+     "total": 1
+    }
+   },
+   {
+    "params": {
+     "s": 1.5
+    },
+    "expect": {
+     "term_b": 22.78125,
+     "term_a": -3.375,
+     "interior": 2.671875,
+     "total": 22.078125
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,179 @@
+{
+ "id": "logic/high-1/집합과_명제/교집합",
+ "spec": {
+  "title": "교집합",
+  "params": [
+   {
+    "name": "centerB",
+    "label": "B의 중심",
+    "type": "slider",
+    "min": -1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "widthB",
+    "label": "B의 폭",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "b1=centerB-widthB/2; c1=centerB+widthB/2; left=max(0,b1); right=min(3,c1); hasInt=left<=right?1:0; xi1=hasInt?left:-100; xi2=hasInt?right:-100",
+  "geometry": {
+   "range": [
+    -1,
+    5
+   ],
+   "yRange": [
+    -0.8,
+    0.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0.2
+     ],
+     "to": [
+      3,
+      0.2
+     ],
+     "color": "blue",
+     "label": "A"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b1",
+      -0.2
+     ],
+     "to": [
+      "=c1",
+      -0.2
+     ],
+     "color": "red",
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xi1",
+      0.5
+     ],
+     "to": [
+      "=xi2",
+      0.5
+     ],
+     "color": "green",
+     "label": "A∩B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "B의 시작",
+    "expr": "b1",
+    "digits": 2
+   },
+   {
+    "label": "B의 끝",
+    "expr": "c1",
+    "digits": 2
+   },
+   {
+    "label": "교집합 왼쪽",
+    "expr": "left",
+    "digits": 2
+   },
+   {
+    "label": "교집합 오른쪽",
+    "expr": "right",
+    "digits": 2
+   },
+   {
+    "label": "교집합 길이",
+    "expr": "hasInt ? (right-left) : 0",
+    "digits": 2
+   },
+   {
+    "label": "교집합 존재",
+    "expr": "hasInt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "centerB": 2,
+    "widthB": 1
+   },
+   {
+    "centerB": 1.5,
+    "widthB": 1
+   },
+   {
+    "centerB": -0.5,
+    "widthB": 0.4
+   },
+   {
+    "centerB": 4,
+    "widthB": 1
+   }
+  ],
+  "invariants": [
+   "left - max(0,b1)",
+   "right - min(3,c1)",
+   "hasInt - (left<=right ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "centerB": 2,
+     "widthB": 1
+    },
+    "expect": {
+     "b1": 1.5,
+     "c1": 2.5,
+     "left": 1.5,
+     "right": 2.5,
+     "hasInt": 1
+    }
+   },
+   {
+    "params": {
+     "centerB": 1.5,
+     "widthB": 1
+    },
+    "expect": {
+     "b1": 1,
+     "c1": 2,
+     "left": 1,
+     "right": 2,
+     "hasInt": 1
+    }
+   },
+   {
+    "params": {
+     "centerB": -0.5,
+     "widthB": 0.4
+    },
+    "expect": {
+     "b1": -0.7,
+     "c1": -0.3,
+     "left": 0,
+     "right": -0.3,
+     "hasInt": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

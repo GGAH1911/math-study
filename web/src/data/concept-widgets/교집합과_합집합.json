@@ -1,0 +1,228 @@
+{
+ "id": "교집합과_합집합",
+ "spec": {
+  "title": "교집합과 합집합의 확률",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 0.5,
+    "init": 0.3,
+    "step": 0.01
+   },
+   {
+    "name": "pB",
+    "label": "P(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 0.5,
+    "init": 0.4,
+    "step": 0.01
+   },
+   {
+    "name": "k",
+    "label": "교집합 비율",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "L=k*min(pA,pB); U=pA+pB-L",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "stroke": "#333",
+     "fill": "rgba(240,240,240,0.3)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=pA",
+       0
+      ],
+      [
+       "=pA",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "stroke": "red",
+     "fill": "rgba(255,0,0,0.2)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=pA-L",
+       0
+      ],
+      [
+       "=U",
+       0
+      ],
+      [
+       "=U",
+       1
+      ],
+      [
+       "=pA-L",
+       1
+      ]
+     ],
+     "stroke": "blue",
+     "fill": "rgba(0,0,255,0.2)"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=pA-L",
+       0
+      ],
+      [
+       "=pA",
+       0
+      ],
+      [
+       "=pA",
+       1
+      ],
+      [
+       "=pA-L",
+       1
+      ]
+     ],
+     "stroke": "purple",
+     "fill": "rgba(128,0,128,0.4)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 3
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "U",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.3,
+    "pB": 0.4,
+    "k": 0.5
+   },
+   {
+    "pA": 0.5,
+    "pB": 0.5,
+    "k": 1
+   },
+   {
+    "pA": 0.2,
+    "pB": 0.3,
+    "k": 0
+   },
+   {
+    "pA": 0.1,
+    "pB": 0.5,
+    "k": 0.8
+   }
+  ],
+  "invariants": [
+   "U-(pA+pB-L)",
+   "L-k*min(pA,pB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.3,
+     "pB": 0.4,
+     "k": 0.5
+    },
+    "expect": {
+     "L": 0.15,
+     "U": 0.55
+    }
+   },
+   {
+    "params": {
+     "pA": 0.5,
+     "pB": 0.5,
+     "k": 1
+    },
+    "expect": {
+     "L": 0.5,
+     "U": 0.5
+    }
+   },
+   {
+    "params": {
+     "pA": 0.2,
+     "pB": 0.3,
+     "k": 0
+    },
+    "expect": {
+     "L": 0,
+     "U": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

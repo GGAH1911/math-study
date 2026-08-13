@@ -1,0 +1,111 @@
+{
+ "id": "equations/high-1/방정식과_부등식/함수의_근과_영점",
+ "spec": {
+  "title": "함수의 근과 영점: 이차함수의 실근 탐구",
+  "params": [
+   {
+    "name": "c",
+    "label": "상수항 c",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "d=4-c; root1=2-sqrt(d); root2=2+sqrt(d)",
+  "plot": {
+   "range": [
+    -1,
+    5
+   ],
+   "yRange": [
+    -7,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^2 - 4*x + c",
+     "label": "f(x) = x² - 4x + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근 1 (x절편)",
+    "expr": "root1",
+    "digits": 4
+   },
+   {
+    "label": "근 2 (x절편)",
+    "expr": "root2",
+    "digits": 4
+   },
+   {
+    "label": "f(근 1) (검산)",
+    "expr": "root1^2 - 4*root1 + c",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": -2
+   },
+   {
+    "c": -0.5
+   },
+   {
+    "c": 0
+   },
+   {
+    "c": 1.5
+   },
+   {
+    "c": 3
+   },
+   {
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "root1^2 - 4*root1 + c",
+   "root2^2 - 4*root2 + c",
+   "root1 + root2 - 4",
+   "root1 * root2 - c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "root1": 0,
+     "root2": 4
+    }
+   },
+   {
+    "params": {
+     "c": 3
+    },
+    "expect": {
+     "root1": 1,
+     "root2": 3
+    }
+   },
+   {
+    "params": {
+     "c": 4
+    },
+    "expect": {
+     "root1": 2,
+     "root2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

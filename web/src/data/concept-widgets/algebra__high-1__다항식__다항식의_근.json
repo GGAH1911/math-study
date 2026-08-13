@@ -1,0 +1,124 @@
+{
+ "id": "algebra/high-1/다항식/다항식의_근",
+ "spec": {
+  "title": "다항식의 근 – 이차함수의 근 탐구",
+  "params": [
+   {
+    "name": "r1",
+    "label": "근 α",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "r2",
+    "label": "근 β",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "f(x) = (x - r1)*(x - r2); val0 = f(0); val_r1 = f(r1); val_r2 = f(r2)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "f(x)",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(α)",
+    "expr": "val_r1",
+    "digits": 0
+   },
+   {
+    "label": "f(β)",
+    "expr": "val_r2",
+    "digits": 0
+   },
+   {
+    "label": "f(0)",
+    "expr": "val0",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 2,
+    "r2": 3
+   },
+   {
+    "r1": -1,
+    "r2": 4
+   },
+   {
+    "r1": 0,
+    "r2": 0
+   },
+   {
+    "r1": 2,
+    "r2": -3
+   }
+  ],
+  "invariants": [
+   "f(r1)",
+   "f(r2)",
+   "f(0) - r1*r2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 2,
+     "r2": 3
+    },
+    "expect": {
+     "val0": 6,
+     "val_r1": 0,
+     "val_r2": 0
+    }
+   },
+   {
+    "params": {
+     "r1": -1,
+     "r2": 4
+    },
+    "expect": {
+     "val0": -4,
+     "val_r1": 0,
+     "val_r2": 0
+    }
+   },
+   {
+    "params": {
+     "r1": 0,
+     "r2": 0
+    },
+    "expect": {
+     "val0": 0,
+     "val_r1": 0,
+     "val_r2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

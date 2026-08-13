@@ -1,0 +1,181 @@
+{
+ "id": "equations/high-1/방정식과_부등식/다항방정식의_근",
+ "spec": {
+  "title": "다항방정식의 근",
+  "params": [
+   {
+    "name": "r1",
+    "label": "근 r₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "r2",
+    "label": "근 r₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "대입값 t",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "f=(t-r1)*(t-r2); fr1=(r1-r1)*(r1-r2); fr2=(r2-r1)*(r2-r2); vertex_x=(r1+r2)/2; vertex_y=(vertex_x-r1)*(vertex_x-r2); sum_roots=r1+r2; prod_roots=r1*r2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "(x-r1)*(x-r2)",
+     "label": "y=(x-r₁)(x-r₂)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(t) = (t-r₁)(t-r₂)",
+    "expr": "f",
+    "digits": 3
+   },
+   {
+    "label": "f(r₁)",
+    "expr": "fr1",
+    "digits": 3
+   },
+   {
+    "label": "f(r₂)",
+    "expr": "fr2",
+    "digits": 3
+   },
+   {
+    "label": "근의 합 (r₁+r₂)",
+    "expr": "sum_roots",
+    "digits": 3
+   },
+   {
+    "label": "근의 곱 (r₁×r₂)",
+    "expr": "prod_roots",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 x",
+    "expr": "vertex_x",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "vertex_y",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 1,
+    "r2": 2,
+    "t": 0
+   },
+   {
+    "r1": -1,
+    "r2": 1,
+    "t": 2
+   },
+   {
+    "r1": 3,
+    "r2": -2,
+    "t": -1
+   }
+  ],
+  "invariants": [
+   "fr1",
+   "fr2",
+   "vertex_y + (r1-r2)^2/4",
+   "f - (t^2 - sum_roots*t + prod_roots)",
+   "sum_roots - (r1+r2)",
+   "prod_roots - (r1*r2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 1,
+     "r2": 2,
+     "t": 0
+    },
+    "expect": {
+     "f": 2,
+     "fr1": 0,
+     "fr2": 0,
+     "sum_roots": 3,
+     "prod_roots": 2,
+     "vertex_x": 1.5,
+     "vertex_y": -0.25
+    }
+   },
+   {
+    "params": {
+     "r1": -1,
+     "r2": 1,
+     "t": 2
+    },
+    "expect": {
+     "f": 3,
+     "fr1": 0,
+     "fr2": 0,
+     "sum_roots": 0,
+     "prod_roots": -1,
+     "vertex_x": 0,
+     "vertex_y": -1
+    }
+   },
+   {
+    "params": {
+     "r1": 3,
+     "r2": -2,
+     "t": -1
+    },
+    "expect": {
+     "f": -4,
+     "fr1": 0,
+     "fr2": 0,
+     "sum_roots": 1,
+     "prod_roots": -6,
+     "vertex_x": 0.5,
+     "vertex_y": -6.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

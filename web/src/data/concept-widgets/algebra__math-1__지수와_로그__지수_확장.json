@@ -1,0 +1,168 @@
+{
+ "id": "algebra/math-1/지수와_로그/지수_확장",
+ "spec": {
+  "title": "지수 확장: 지수법칙 시각화",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "지수 m",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "am = a^m; an = a^n; amn = a^(m+n); product = am*an; diff = amn - product; a_neg = a^(-n); inv_prod = an * a_neg",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^m",
+    "expr": "am",
+    "digits": 6
+   },
+   {
+    "label": "a^n",
+    "expr": "an",
+    "digits": 6
+   },
+   {
+    "label": "a^(m+n)",
+    "expr": "amn",
+    "digits": 6
+   },
+   {
+    "label": "a^m × a^n",
+    "expr": "product",
+    "digits": 6
+   },
+   {
+    "label": "오차",
+    "expr": "diff",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "m": 1,
+    "n": 0.5
+   },
+   {
+    "a": 4,
+    "m": 0.5,
+    "n": 0.5
+   },
+   {
+    "a": 3,
+    "m": -1,
+    "n": 2
+   },
+   {
+    "a": 0.5,
+    "m": 1,
+    "n": -1
+   }
+  ],
+  "invariants": [
+   "diff",
+   "inv_prod - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "m": 1,
+     "n": 0.5
+    },
+    "expect": {
+     "am": 2,
+     "an": 1.41421356,
+     "amn": 2.82842712,
+     "diff": 0,
+     "a_neg": 0.70710678,
+     "inv_prod": 1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "m": 0.5,
+     "n": 0.5
+    },
+    "expect": {
+     "am": 2,
+     "an": 2,
+     "amn": 4,
+     "product": 4,
+     "diff": 0,
+     "inv_prod": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "m": -1,
+     "n": 2
+    },
+    "expect": {
+     "am": 0.33333333,
+     "an": 9,
+     "amn": 3,
+     "diff": 0,
+     "inv_prod": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

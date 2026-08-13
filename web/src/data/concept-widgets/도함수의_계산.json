@@ -1,0 +1,179 @@
+{
+ "id": "도함수의_계산",
+ "spec": {
+  "title": "도함수의 계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "y0 = a*x0^3 + b*x0^2 + c*x0 + d; slope = 3*a*x0^2 + 2*b*x0 + c; x1 = x0 - 0.5; y1 = y0 + slope*(x1 - x0); x2 = x0 + 0.5; y2 = y0 + slope*(x2 - x0)",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "f'(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "y0",
+    "digits": 3
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
+    "x0": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
+    "x0": -1.5
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "c": 0.5,
+    "d": -0.5,
+    "x0": 0.7
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 2,
+    "d": 3,
+    "x0": 2
+   }
+  ],
+  "invariants": [
+   "abs((y2-y1)/(x2-x1) - (3*a*x0^2 + 2*b*x0 + c))",
+   "abs(y0 - (a*x0^3 + b*x0^2 + c*x0 + d))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "x0": 1
+    },
+    "expect": {
+     "y0": -2,
+     "slope": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "x0": -1.5
+    },
+    "expect": {
+     "y0": 1.125,
+     "slope": 3.75
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2,
+     "c": 0.5,
+     "d": -0.5,
+     "x0": 0.7
+    },
+    "expect": {
+     "y0": 0.487,
+     "slope": 1.83
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 2,
+     "d": 3,
+     "x0": 2
+    },
+    "expect": {
+     "y0": 11,
+     "slope": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

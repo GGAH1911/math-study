@@ -1,0 +1,153 @@
+{
+ "id": "equations/high-1/방정식과_부등식/방정식_풀이",
+ "spec": {
+  "title": "방정식 풀이: 두 직선의 교점",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (첫 번째 직선의 y절편)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (두 번째 직선의 y절편)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "x_sol=(c-b)/2; y_sol=x_sol+b;",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -10,
+      "= -10+b"
+     ],
+     "to": [
+      10,
+      "= 10+b"
+     ],
+     "label": "y=x+b"
+    },
+    {
+     "type": "line",
+     "from": [
+      -10,
+      "= 10+c"
+     ],
+     "to": [
+      10,
+      "= -10+c"
+     ],
+     "label": "y=-x+c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "= x_sol",
+      "= y_sol"
+     ],
+     "label": "해"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근 x",
+    "expr": "x_sol",
+    "digits": 2
+   },
+   {
+    "label": "함숫값 y",
+    "expr": "y_sol",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -1,
+    "c": 2
+   },
+   {
+    "b": 2,
+    "c": -1
+   },
+   {
+    "b": 0,
+    "c": 0
+   },
+   {
+    "b": 3,
+    "c": 3
+   }
+  ],
+  "invariants": [
+   "y_sol-(x_sol+b)",
+   "y_sol-(-x_sol+c)",
+   "2*x_sol-(c-b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": -1,
+     "c": 2
+    },
+    "expect": {
+     "x_sol": 1.5,
+     "y_sol": 0.5
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": -1
+    },
+    "expect": {
+     "x_sol": -1.5,
+     "y_sol": 0.5
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": 0
+    },
+    "expect": {
+     "x_sol": 0,
+     "y_sol": 0
+    }
+   },
+   {
+    "params": {
+     "b": 3,
+     "c": 3
+    },
+    "expect": {
+     "x_sol": 0,
+     "y_sol": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

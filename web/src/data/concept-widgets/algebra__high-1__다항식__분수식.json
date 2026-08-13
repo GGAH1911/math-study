@@ -1,0 +1,113 @@
+{
+ "id": "algebra/high-1/다항식/분수식",
+ "spec": {
+  "title": "분수식의 정의 (약분과 정의역)",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "f=(x^2-1)/(x-1);",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "x < 1 ? (x^2-1)/(x-1) : NaN",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x > 1 ? (x^2-1)/(x-1) : NaN",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x+1",
+     "label": "x+1 (약분)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x)",
+    "expr": "f",
+    "digits": 3
+   },
+   {
+    "label": "분자 P(x)",
+    "expr": "x^2-1",
+    "digits": 3
+   },
+   {
+    "label": "분모 Q(x)",
+    "expr": "x-1",
+    "digits": 3
+   },
+   {
+    "label": "x+1 (약분)",
+    "expr": "x+1",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": -2
+   },
+   {
+    "x": 0
+   },
+   {
+    "x": 0.5
+   },
+   {
+    "x": 2
+   }
+  ],
+  "invariants": [
+   "f-(x+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "f": 3
+    }
+   },
+   {
+    "params": {
+     "x": 0
+    },
+    "expect": {
+     "f": 1
+    }
+   },
+   {
+    "params": {
+     "x": -2
+    },
+    "expect": {
+     "f": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

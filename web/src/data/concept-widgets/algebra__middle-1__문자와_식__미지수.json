@@ -1,0 +1,222 @@
+{
+ "id": "algebra/middle-1/문자와_식/미지수",
+ "spec": {
+  "title": "미지수 x를 찾아 균형을 맞춰라: x + 3 = 7",
+  "params": [
+   {
+    "name": "x",
+    "label": "미지수 x",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "left_total = x + 3; right_total = 7; diff = left_total - right_total; angle = max(min(diff * 0.05, 0.3), -0.3); Lx = -2 * cos(angle); Ly = -2 * sin(angle); Rx = 2 * cos(angle); Ry = 2 * sin(angle); Lpx = Lx; Lpy = Ly - 0.8; Rpx = Rx; Rpy = Ry - 0.8; wL = 0.08 * left_total; wR = 0.08 * right_total",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=Lx",
+      "=Ly"
+     ],
+     "to": [
+      "=Rx",
+      "=Ry"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Lx",
+      "=Ly"
+     ],
+     "to": [
+      "=Lpx",
+      "=Lpy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Rx",
+      "=Ry"
+     ],
+     "to": [
+      "=Rpx",
+      "=Rpy"
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       -0.2,
+       -0.1
+      ],
+      [
+       0.2,
+       -0.1
+      ],
+      [
+       0,
+       -0.4
+      ]
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Lpx",
+      "=Lpy"
+     ],
+     "radius": "=wL"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=Rpx",
+      "=Rpy"
+     ],
+     "radius": "=wR"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Lpx",
+      "=Lpy"
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌변 (x+3)",
+    "expr": "left_total",
+    "digits": 2
+   },
+   {
+    "label": "우변",
+    "expr": "right_total",
+    "digits": 2
+   },
+   {
+    "label": "차이 (좌-우)",
+    "expr": "diff",
+    "digits": 2
+   },
+   {
+    "label": "기울기",
+    "expr": "angle",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0
+   },
+   {
+    "x": 2
+   },
+   {
+    "x": 4
+   },
+   {
+    "x": 6
+   },
+   {
+    "x": 10
+   }
+  ],
+  "invariants": [
+   "Lx^2+Ly^2-4",
+   "Rx^2+Ry^2-4",
+   "Lx+Rx",
+   "Ly+Ry",
+   "Lpx-Lx",
+   "Rpx-Rx",
+   "sqrt((Rx-Lx)^2+(Ry-Ly)^2)-4"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 4
+    },
+    "expect": {
+     "left_total": 7,
+     "right_total": 7,
+     "diff": 0,
+     "angle": 0,
+     "Lx": -2,
+     "Ly": 0,
+     "Rx": 2,
+     "Ry": 0,
+     "Lpx": -2,
+     "Lpy": -0.8,
+     "Rpx": 2,
+     "Rpy": -0.8,
+     "wL": 0.56,
+     "wR": 0.56
+    }
+   },
+   {
+    "params": {
+     "x": 6
+    },
+    "expect": {
+     "left_total": 9,
+     "right_total": 7,
+     "diff": 2,
+     "angle": 0.1,
+     "Lx": -1.9900083306,
+     "Ly": -0.1996668333,
+     "Rx": 1.9900083306,
+     "Ry": 0.1996668333,
+     "Lpx": -1.9900083306,
+     "Lpy": -0.9996668333,
+     "Rpx": 1.9900083306,
+     "Rpy": -0.6003331667,
+     "wL": 0.72,
+     "wR": 0.56
+    }
+   },
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "left_total": 5,
+     "right_total": 7,
+     "diff": -2,
+     "angle": -0.1,
+     "Lx": -1.9900083306,
+     "Ly": 0.1996668333,
+     "Rx": 1.9900083306,
+     "Ry": -0.1996668333,
+     "Lpx": -1.9900083306,
+     "Lpy": -0.6003331667,
+     "Rpx": 1.9900083306,
+     "Rpy": -0.9996668333,
+     "wL": 0.4,
+     "wR": 0.56
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

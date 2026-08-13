@@ -1,0 +1,182 @@
+{
+ "id": "algebra/middle-2/식의_계산/복합분수",
+ "spec": {
+  "title": "복합분수의 계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "num=a*d; den=b*c; res=num/den",
+  "geometry": {
+   "range": [
+    0,
+    16
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=res",
+      0
+     ],
+     "label": "값"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b 값",
+    "expr": "a/b",
+    "digits": 3
+   },
+   {
+    "label": "c/d 값",
+    "expr": "c/d",
+    "digits": 3
+   },
+   {
+    "label": "복합분수 값",
+    "expr": "res",
+    "digits": 4
+   },
+   {
+    "label": "간단화 분자",
+    "expr": "num",
+    "digits": 0
+   },
+   {
+    "label": "간단화 분모",
+    "expr": "den",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "d": 4
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "c": 2,
+    "d": 3
+   },
+   {
+    "a": 1,
+    "b": 4,
+    "c": 1,
+    "d": 2
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "c": 1,
+    "d": 2
+   }
+  ],
+  "invariants": [
+   "num - a*d",
+   "den - b*c",
+   "res - (a/b)/(c/d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": 4
+    },
+    "expect": {
+     "num": 4,
+     "den": 2,
+     "res": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 2,
+     "d": 3
+    },
+    "expect": {
+     "num": 6,
+     "den": 6,
+     "res": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 4,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "num": 2,
+     "den": 4,
+     "res": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "num": 6,
+     "den": 2,
+     "res": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

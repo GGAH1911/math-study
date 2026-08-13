@@ -1,0 +1,228 @@
+{
+ "id": "삼각함수_부등식",
+ "spec": {
+  "title": "삼각함수 부등식: sin x ≥ k",
+  "params": [
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "alpha=asin(k); beta=pi-alpha; da=(beta-alpha)/8; x1=cos(alpha); y1=sin(alpha); x2=cos(beta); y2=sin(beta); degalpha=alpha*180/pi; degbeta=beta*180/pi",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1.4,
+      "=k"
+     ],
+     "to": [
+      1.4,
+      "=k"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x1",
+      "=y1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=cos(alpha+0*da)",
+       "=sin(alpha+0*da)"
+      ],
+      [
+       "=cos(alpha+1*da)",
+       "=sin(alpha+1*da)"
+      ],
+      [
+       "=cos(alpha+2*da)",
+       "=sin(alpha+2*da)"
+      ],
+      [
+       "=cos(alpha+3*da)",
+       "=sin(alpha+3*da)"
+      ],
+      [
+       "=cos(alpha+4*da)",
+       "=sin(alpha+4*da)"
+      ],
+      [
+       "=cos(alpha+5*da)",
+       "=sin(alpha+5*da)"
+      ],
+      [
+       "=cos(alpha+6*da)",
+       "=sin(alpha+6*da)"
+      ],
+      [
+       "=cos(alpha+7*da)",
+       "=sin(alpha+7*da)"
+      ],
+      [
+       "=cos(alpha+8*da)",
+       "=sin(alpha+8*da)"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "α (deg)",
+    "expr": "degalpha",
+    "digits": 2
+   },
+   {
+    "label": "β (deg)",
+    "expr": "degbeta",
+    "digits": 2
+   },
+   {
+    "label": "sin α",
+    "expr": "sin(alpha)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": -0.5
+   },
+   {
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "sin(alpha)-k",
+   "x1*x1+y1*y1-1",
+   "x2*x2+y2*y2-1",
+   "alpha+beta-pi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "alpha": 0.5235987755982988,
+     "beta": 2.6179938779914944,
+     "x1": 0.8660254037844387,
+     "y1": 0.5,
+     "x2": -0.8660254037844387,
+     "y2": 0.5,
+     "degalpha": 30,
+     "degbeta": 150
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "alpha": 0,
+     "beta": 3.141592653589793,
+     "x1": 1,
+     "y1": 0,
+     "x2": -1,
+     "y2": 0,
+     "degalpha": 0,
+     "degbeta": 180
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "alpha": 1.5707963267948966,
+     "beta": 1.5707963267948966,
+     "x1": 0,
+     "y1": 1,
+     "x2": 0,
+     "y2": 1,
+     "degalpha": 90,
+     "degbeta": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

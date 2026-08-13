@@ -1,0 +1,147 @@
+{
+ "id": "집합의_부분집합",
+ "spec": {
+  "title": "집합의 부분집합",
+  "params": [
+   {
+    "name": "k",
+    "label": "A의 원소 수",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "n=6; m=k; rB=2.5; aCx=-0.5; aCy=0.2; rA=1.5*m/n; subsetsA=2^m; containDist=rA+sqrt(aCx^2+aCy^2)-rB",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=rB"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=aCx",
+      "=aCy"
+     ],
+     "radius": "=rA"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=aCx",
+      "=aCy"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1.2,
+      1.2
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|A| (A의 원소 수)",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": "|B| (B의 원소 수)",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "A⊆B 성립 (1=참)",
+    "expr": "(m<=n)?1:0",
+    "digits": 0
+   },
+   {
+    "label": "A의 부분집합 수",
+    "expr": "subsetsA",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 4
+   },
+   {
+    "k": 6
+   }
+  ],
+  "invariants": [
+   "abs(max(m-n,0))",
+   "max(containDist,0)",
+   "abs(subsetsA-2^m)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "m": 0,
+     "subsetsA": 1
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "m": 1,
+     "subsetsA": 2
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "m": 3,
+     "subsetsA": 8
+    }
+   },
+   {
+    "params": {
+     "k": 6
+    },
+    "expect": {
+     "m": 6,
+     "subsetsA": 64
+    }
+   }
+  ],
+  "tol": 1e-9
+ }
+}

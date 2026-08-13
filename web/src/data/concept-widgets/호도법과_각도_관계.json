@@ -1,0 +1,120 @@
+{
+ "id": "호도법과_각도_관계",
+ "spec": {
+  "title": "호도법과 각도 관계",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (°)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; x=cos(rad); y=sin(rad)",
+  "geometry": {
+   "range": [
+    -1.2,
+    1.2
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "라디안",
+    "expr": "rad",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 180
+   }
+  ],
+  "invariants": [
+   "x^2+y^2-1",
+   "rad-theta*pi/180"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "rad": 0,
+     "x": 1,
+     "y": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "rad": 0.5235987755982988,
+     "x": 0.8660254037844386,
+     "y": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "rad": 3.141592653589793,
+     "x": -1,
+     "y": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "id": "집합의_차집합",
+ "spec": {
+  "title": "집합의 차집합 (A - B)",
+  "params": [
+   {
+    "name": "c",
+    "label": "B의 왼쪽 끝점 c",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -3,
+    "step": 1
+   },
+   {
+    "name": "w",
+    "label": "B의 길이 w",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "B_left=c; B_right=c+w; L1=-5; R1=min(5,B_left); len1=(R1>L1)?(R1-L1):0; L2=max(-5,B_right); R2=5; len2=(R2>L2)?(R2-L2):0; diffLen=len1+len2; overlapLen=max(0,min(5,B_right)-max(-5,B_left))",
+  "plot": {
+   "range": [
+    -12,
+    22
+   ],
+   "yRange": [
+    -0.2,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(x>=-5 and x<=5)?1:0",
+     "label": "A",
+     "color": "blue"
+    },
+    {
+     "fn": "(x>=c and x<=c+w)?1:0",
+     "label": "B",
+     "color": "green"
+    },
+    {
+     "fn": "(x>=-5 and x<=5 and not(x>=c and x<=c+w))?1:0",
+     "label": "A-B",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "차집합의 길이 |A-B|",
+    "expr": "diffLen",
+    "digits": 2
+   },
+   {
+    "label": "교집합의 길이 |A∩B|",
+    "expr": "overlapLen",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": -10,
+    "w": 4
+   },
+   {
+    "c": -1,
+    "w": 4
+   },
+   {
+    "c": 3,
+    "w": 2
+   },
+   {
+    "c": 6,
+    "w": 4
+   }
+  ],
+  "invariants": [
+   "diffLen + overlapLen - 10"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": -10,
+     "w": 4
+    },
+    "expect": {
+     "diffLen": 10,
+     "overlapLen": 0
+    }
+   },
+   {
+    "params": {
+     "c": -1,
+     "w": 4
+    },
+    "expect": {
+     "diffLen": 6,
+     "overlapLen": 4
+    }
+   },
+   {
+    "params": {
+     "c": 3,
+     "w": 2
+    },
+    "expect": {
+     "diffLen": 8,
+     "overlapLen": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

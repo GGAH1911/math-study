@@ -1,0 +1,187 @@
+{
+ "id": "대칭성",
+ "spec": {
+  "title": "선대칭 반사 탐구",
+  "params": [
+   {
+    "name": "theta",
+    "label": "대칭축 각도 θ°",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "py",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "th = theta*pi/180; rx = px*cos(2*th) + py*sin(2*th); ry = px*sin(2*th) - py*cos(2*th); mx = (px+rx)/2; my = (py+ry)/2; d1 = abs(-sin(th)*px + cos(th)*py); d2 = abs(-sin(th)*rx + cos(th)*ry); rrx = rx*cos(2*th) + ry*sin(2*th); rry = rx*sin(2*th) - ry*cos(2*th)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "start": [
+      "=-6*cos(th)",
+      "=-6*sin(th)"
+     ],
+     "end": [
+      "=6*cos(th)",
+      "=6*sin(th)"
+     ],
+     "label": "대칭축"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rx",
+      "=ry"
+     ],
+     "label": "P'"
+    },
+    {
+     "type": "segment",
+     "start": [
+      "=px",
+      "=py"
+     ],
+     "end": [
+      "=rx",
+      "=ry"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P'의 x좌표",
+    "expr": "rx",
+    "digits": 3
+   },
+   {
+    "label": "P'의 y좌표",
+    "expr": "ry",
+    "digits": 3
+   },
+   {
+    "label": "중점 M의 x좌표",
+    "expr": "mx",
+    "digits": 3
+   },
+   {
+    "label": "중점 M의 y좌표",
+    "expr": "my",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "px": 1.2,
+    "py": -3
+   },
+   {
+    "theta": 120,
+    "px": -2,
+    "py": 0.5
+   },
+   {
+    "theta": 0,
+    "px": 4,
+    "py": 4
+   },
+   {
+    "theta": 60,
+    "px": -1,
+    "py": -2
+   }
+  ],
+  "invariants": [
+   "abs(-sin(th)*mx + cos(th)*my)",
+   "abs(d1 - d2)",
+   "abs(rrx - px) + abs(rry - py)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "px": 3,
+     "py": 2
+    },
+    "expect": {
+     "rx": 3,
+     "ry": -2
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "px": 1,
+     "py": -4
+    },
+    "expect": {
+     "rx": -1,
+     "ry": -4
+    }
+   },
+   {
+    "params": {
+     "theta": 45,
+     "px": 2,
+     "py": 5
+    },
+    "expect": {
+     "rx": 5,
+     "ry": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

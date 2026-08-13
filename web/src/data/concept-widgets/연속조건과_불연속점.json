@@ -1,0 +1,165 @@
+{
+ "id": "연속조건과_불연속점",
+ "spec": {
+  "title": "연속조건과 불연속점",
+  "params": [
+   {
+    "name": "a",
+    "label": "점 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "점프 크기 b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "v",
+    "label": "함숫값 f(a)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "leftLimit = a; rightLimit = a + b; limitExists = (leftLimit == rightLimit) ? 1 : 0; isContinuous = ((limitExists == 1) and (v == leftLimit)) ? 1 : 0;",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "(x < a) ? x : ((x > a) ? x + b : v)",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한",
+    "expr": "leftLimit",
+    "digits": 2
+   },
+   {
+    "label": "우극한",
+    "expr": "rightLimit",
+    "digits": 2
+   },
+   {
+    "label": "함숫값",
+    "expr": "v",
+    "digits": 2
+   },
+   {
+    "label": "극한값 존재",
+    "expr": "limitExists",
+    "digits": 0
+   },
+   {
+    "label": "연속",
+    "expr": "isContinuous",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 0,
+    "v": 0
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "v": 1
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "v": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "v": 1
+   }
+  ],
+  "invariants": [
+   "leftLimit - a",
+   "rightLimit - (a + b)",
+   "limitExists - (b == 0 ? 1 : 0)",
+   "isContinuous - (((b == 0) and (v == a)) ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "v": 0
+    },
+    "expect": {
+     "leftLimit": 0,
+     "rightLimit": 0,
+     "limitExists": 1,
+     "isContinuous": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "v": 1
+    },
+    "expect": {
+     "leftLimit": 0,
+     "rightLimit": 0,
+     "limitExists": 1,
+     "isContinuous": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "v": 0
+    },
+    "expect": {
+     "leftLimit": 0,
+     "rightLimit": 1,
+     "limitExists": 0,
+     "isContinuous": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "v": 1
+    },
+    "expect": {
+     "leftLimit": 1,
+     "rightLimit": 1,
+     "limitExists": 1,
+     "isContinuous": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

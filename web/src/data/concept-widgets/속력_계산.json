@@ -1,0 +1,124 @@
+{
+ "id": "속력_계산",
+ "spec": {
+  "title": "속력 계산",
+  "params": [
+   {
+    "name": "t",
+    "label": "시간 t",
+    "type": "slider",
+    "min": 0,
+    "max": 6.283185307179586,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "pos = sin(2*t) + t; v = 2*cos(2*t) + 1; speed = abs(v)",
+  "plot": {
+   "range": [
+    0,
+    6.283185307179586
+   ],
+   "yRange": [
+    -1.5,
+    6.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "sin(2*x)+x",
+     "label": "위치 x(t)",
+     "color": "blue"
+    },
+    {
+     "fn": "2*cos(2*x)+1",
+     "label": "속도 v(t)",
+     "color": "red"
+    },
+    {
+     "fn": "abs(2*cos(2*x)+1)",
+     "label": "속력 |v(t)|",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "시각 t",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "위치 x(t)",
+    "expr": "pos",
+    "digits": 3
+   },
+   {
+    "label": "속도 v(t)",
+    "expr": "v",
+    "digits": 3
+   },
+   {
+    "label": "속력 |v(t)|",
+    "expr": "speed",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0
+   },
+   {
+    "t": 1.0471975511965976
+   },
+   {
+    "t": 1.5707963267948966
+   },
+   {
+    "t": 3.141592653589793
+   }
+  ],
+  "invariants": [
+   "speed^2 - v^2",
+   "speed - max(v,-v)",
+   "pos - (sin(2*t)+t)",
+   "v - (2*cos(2*t)+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 0
+    },
+    "expect": {
+     "pos": 0,
+     "v": 3,
+     "speed": 3
+    }
+   },
+   {
+    "params": {
+     "t": 1.5707963267948966
+    },
+    "expect": {
+     "pos": 1.5707963267948966,
+     "v": -1,
+     "speed": 1
+    }
+   },
+   {
+    "params": {
+     "t": 1.0471975511965976
+    },
+    "expect": {
+     "pos": 1.9132229549810362,
+     "v": 0,
+     "speed": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

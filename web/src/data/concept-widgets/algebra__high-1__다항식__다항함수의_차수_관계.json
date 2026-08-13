@@ -1,0 +1,192 @@
+{
+ "id": "algebra/high-1/다항식/다항함수의_차수_관계",
+ "spec": {
+  "title": "다항함수의 차수 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "차수 f",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "차수 g",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "g의 최고차 계수",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "op",
+    "label": "연산 (0=덧셈, 1=뺄셈)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "s = op == 0 ? 1 : -1; df = a; dg = c != 0 ? b : (b > 1 ? b - 1 : 0); dmax = max(df, dg); lgc = c != 0 ? c : (b > 1 ? 1 : 0); leadSum = df == dg ? 1 + s * lgc : 0; dh = df != dg ? dmax : (leadSum == 0 ? df - 1 : df); dfg = df + dg",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^a + 2*x^(a-1)",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "c*x^b + x^(b-1)",
+     "label": "g(x)",
+     "color": "red"
+    },
+    {
+     "fn": "x^a + 2*x^(a-1) + s*(c*x^b + x^(b-1))",
+     "label": "h(x)=f±g",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f의 차수",
+    "expr": "df",
+    "digits": 0
+   },
+   {
+    "label": "g의 차수",
+    "expr": "dg",
+    "digits": 0
+   },
+   {
+    "label": "h의 차수",
+    "expr": "dh",
+    "digits": 0
+   },
+   {
+    "label": "f·g의 차수",
+    "expr": "dfg",
+    "digits": 0
+   },
+   {
+    "label": "max(deg f, deg g)",
+    "expr": "dmax",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 1.5,
+    "op": 0
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "c": -1,
+    "op": 0
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "c": 1,
+    "op": 1
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": -1,
+    "op": 0
+   }
+  ],
+  "invariants": [
+   "dfg - (df + dg)",
+   "dh - (df != dg ? dmax : (leadSum == 0 ? df - 1 : df))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 1.5,
+     "op": 0
+    },
+    "expect": {
+     "df": 2,
+     "dg": 3,
+     "dh": 3,
+     "dfg": 5,
+     "dmax": 3
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3,
+     "c": -1,
+     "op": 0
+    },
+    "expect": {
+     "df": 3,
+     "dg": 3,
+     "dh": 2,
+     "dfg": 6,
+     "dmax": 3
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3,
+     "c": 1,
+     "op": 1
+    },
+    "expect": {
+     "df": 3,
+     "dg": 3,
+     "dh": 2,
+     "dfg": 6,
+     "dmax": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

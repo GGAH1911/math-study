@@ -1,0 +1,215 @@
+{
+ "id": "중점과_외분점",
+ "spec": {
+  "title": "중점과 외분점",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "y1",
+    "label": "y₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "y2",
+    "label": "y₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "mx=(x1+x2)/2; my=(y1+y2)/2; px=(m*x2-n*x1)/(m-n); py=(m*y2-n*y1)/(m-n);",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "#999"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B",
+     "color": "#1f77b4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M",
+     "color": "#2ca02c"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Mₓ",
+    "expr": "mx",
+    "digits": 2
+   },
+   {
+    "label": "M_y",
+    "expr": "my",
+    "digits": 2
+   },
+   {
+    "label": "Pₓ",
+    "expr": "px",
+    "digits": 2
+   },
+   {
+    "label": "P_y",
+    "expr": "py",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": -2,
+    "y1": 1,
+    "x2": 4,
+    "y2": 3,
+    "m": 3,
+    "n": 1
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 6,
+    "y2": 6,
+    "m": 2,
+    "n": 1
+   },
+   {
+    "x1": 1,
+    "y1": -1,
+    "x2": 5,
+    "y2": 2,
+    "m": 1,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "sqrt((mx-x1)^2+(my-y1)^2) - sqrt((mx-x2)^2+(my-y2)^2)",
+   "(px-x1)*(y2-y1) - (py-y1)*(x2-x1)",
+   "sqrt((px-x1)^2+(py-y1)^2)*n - sqrt((px-x2)^2+(py-y2)^2)*m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": -2,
+     "y1": 1,
+     "x2": 4,
+     "y2": 3,
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "mx": 1,
+     "my": 2,
+     "px": 7,
+     "py": 4
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": -1,
+     "x2": 5,
+     "y2": 2,
+     "m": 1,
+     "n": 2
+    },
+    "expect": {
+     "mx": 3,
+     "my": 0.5,
+     "px": -3,
+     "py": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

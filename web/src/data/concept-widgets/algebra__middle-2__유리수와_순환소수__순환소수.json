@@ -1,0 +1,136 @@
+{
+ "id": "algebra/middle-2/유리수와_순환소수/순환소수",
+ "spec": {
+  "title": "순환소수: 나머지의 순환",
+  "params": [
+   {
+    "name": "d",
+    "label": "분모 d",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 7,
+    "step": 1
+   }
+  ],
+  "scope": "r0=mod(1,d); r1=mod(10*r0,d); r2=mod(10*r1,d); r3=mod(10*r2,d); r4=mod(10*r3,d); r5=mod(10*r4,d); r6=mod(10*r5,d); r7=mod(10*r6,d); r8=mod(10*r7,d); r9=mod(10*r8,d); r10=mod(10*r9,d); r11=mod(10*r10,d); dgt0=floor(10*r0/d); dgt1=floor(10*r1/d); dgt2=floor(10*r2/d); dgt3=floor(10*r3/d); dgt4=floor(10*r4/d); dgt5=floor(10*r5/d); dgt6=floor(10*r6/d); dgt7=floor(10*r7/d); v0=[cos(2*pi*r0/d), sin(2*pi*r0/d)]; v1=[cos(2*pi*r1/d), sin(2*pi*r1/d)]; v2=[cos(2*pi*r2/d), sin(2*pi*r2/d)]; v3=[cos(2*pi*r3/d), sin(2*pi*r3/d)]; v4=[cos(2*pi*r4/d), sin(2*pi*r4/d)]; v5=[cos(2*pi*r5/d), sin(2*pi*r5/d)]; v6=[cos(2*pi*r6/d), sin(2*pi*r6/d)]; v7=[cos(2*pi*r7/d), sin(2*pi*r7/d)]; v8=[cos(2*pi*r8/d), sin(2*pi*r8/d)]; v9=[cos(2*pi*r9/d), sin(2*pi*r9/d)]; v10=[cos(2*pi*r10/d), sin(2*pi*r10/d)]; v11=[cos(2*pi*r11/d), sin(2*pi*r11/d)]; vlist=[v0,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11]; dec=dgt0/10+dgt1/100+dgt2/1000+dgt3/10000+dgt4/100000+dgt5/1000000+dgt6/10000000+dgt7/100000000",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "polygon",
+     "points": "=vlist"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(2*pi*r0/d)",
+      "=sin(2*pi*r0/d)"
+     ],
+     "label": "시작"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "1/d",
+    "expr": "1/d",
+    "digits": 4
+   },
+   {
+    "label": "나머지 r1",
+    "expr": "r1",
+    "digits": 0
+   },
+   {
+    "label": "6단계 후 r6",
+    "expr": "r6",
+    "digits": 0
+   },
+   {
+    "label": "처음 8자리",
+    "expr": "dec",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 2
+   },
+   {
+    "d": 3
+   },
+   {
+    "d": 7
+   },
+   {
+    "d": 11
+   }
+  ],
+  "invariants": [
+   "abs(r1 - (10*r0 - dgt0*d))",
+   "abs(r2 - (10*r1 - dgt1*d))",
+   "abs(r3 - (10*r2 - dgt2*d))",
+   "abs(r6 - mod(10^6, d))",
+   "abs(r1 - mod(10, d))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 3
+    },
+    "expect": {
+     "r0": 1,
+     "r1": 1,
+     "dgt0": 3,
+     "dgt1": 3,
+     "r6": 1
+    }
+   },
+   {
+    "params": {
+     "d": 7
+    },
+    "expect": {
+     "r1": 3,
+     "r2": 2,
+     "r3": 6,
+     "dgt0": 1,
+     "dgt1": 4
+    }
+   },
+   {
+    "params": {
+     "d": 4
+    },
+    "expect": {
+     "r1": 2,
+     "r2": 0,
+     "dgt0": 2,
+     "dgt1": 5,
+     "dec": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

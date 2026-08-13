@@ -1,0 +1,180 @@
+{
+ "id": "원의_접선_방정식",
+ "spec": {
+  "title": "원의 접선 방정식",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); a=cos(rad); b=sin(rad); c=r; L=10; lx1=px-L*b; ly1=py+L*a; lx2=px+L*b; ly2=py-L*a",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "line",
+     "from": [
+      "=lx1",
+      "=ly1"
+     ],
+     "to": [
+      "=lx2",
+      "=ly2"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접점 x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "접점 y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "접선의 법선 벡터 a",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "접선의 법선 벡터 b",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "접선의 상수 c",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "중심-접선 거리",
+    "expr": "c / sqrt(a^2 + b^2)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "r": 2
+   },
+   {
+    "theta": 30,
+    "r": 2
+   },
+   {
+    "theta": 90,
+    "r": 1
+   },
+   {
+    "theta": 180,
+    "r": 3
+   }
+  ],
+  "invariants": [
+   "px^2 + py^2 - r^2",
+   "a*px + b*py - c",
+   "c / sqrt(a^2 + b^2) - r",
+   "a^2 + b^2 - 1",
+   "px*(-b) + py*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "r": 2
+    },
+    "expect": {
+     "px": 2,
+     "py": 0,
+     "a": 1,
+     "b": 0,
+     "c": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "r": 1
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "a": 0,
+     "b": 1,
+     "c": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "r": 2
+    },
+    "expect": {
+     "px": 1.7320508075688772,
+     "py": 1,
+     "a": 0.8660254037844386,
+     "b": 0.5,
+     "c": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "id": "표본평균의_표준편차",
+ "spec": {
+  "title": "표본평균의 표준편차",
+  "params": [
+   {
+    "name": "sigma",
+    "label": "σ (모표준편차)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "n (표본 크기)",
+    "type": "slider",
+    "min": 1,
+    "max": 50,
+    "init": 10,
+    "step": 1
+   }
+  ],
+  "scope": "mu=0; root_n=sqrt(n); sd=sigma/root_n",
+  "plot": {
+   "range": [
+    -12,
+    12
+   ],
+   "yRange": [
+    0,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "1/(sqrt(2*pi)*sigma)*exp(-0.5*((x-mu)/sigma)^2)",
+     "label": "모집단 분포",
+     "color": "gray"
+    },
+    {
+     "fn": "1/(sqrt(2*pi)*sd)*exp(-0.5*((x-mu)/sd)^2)",
+     "label": "표본평균 분포",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "σ(X̄) = σ/√n",
+    "expr": "sd",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "sigma": 2,
+    "n": 4
+   },
+   {
+    "sigma": 2,
+    "n": 16
+   },
+   {
+    "sigma": 3,
+    "n": 9
+   },
+   {
+    "sigma": 1,
+    "n": 20
+   }
+  ],
+  "invariants": [
+   "sd*sqrt(n)-sigma",
+   "sd^2*n - sigma^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "sigma": 2,
+     "n": 4
+    },
+    "expect": {
+     "sd": 1
+    }
+   },
+   {
+    "params": {
+     "sigma": 2,
+     "n": 16
+    },
+    "expect": {
+     "sd": 0.5
+    }
+   },
+   {
+    "params": {
+     "sigma": 3,
+     "n": 9
+    },
+    "expect": {
+     "sd": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

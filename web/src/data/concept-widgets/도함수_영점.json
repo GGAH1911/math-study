@@ -1,0 +1,146 @@
+{
+ "id": "도함수_영점",
+ "spec": {
+  "title": "도함수의 영점",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 0,
+    "init": -1,
+    "step": 0.1
+   }
+  ],
+  "scope": "D=b^2-3*c; x1=(-b-sqrt(D))/3; x2=(-b+sqrt(D))/3; y1=x1^3+b*x1^2+c*x1; y2=x2^3+b*x2^2+c*x2; d1=3*x1^2+2*b*x1+c; d2=3*x2^2+2*b*x2+c; dd1=6*x1+2*b; dd2=6*x2+2*b",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "x^3 + b*x^2 + c*x",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "3*x^2 + 2*b*x + c",
+     "label": "f'(x)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₁",
+    "expr": "x1",
+    "digits": 4
+   },
+   {
+    "label": "x₂",
+    "expr": "x2",
+    "digits": 4
+   },
+   {
+    "label": "f(x₁)",
+    "expr": "y1",
+    "digits": 4
+   },
+   {
+    "label": "f(x₂)",
+    "expr": "y2",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₁)",
+    "expr": "d1",
+    "digits": 4
+   },
+   {
+    "label": "f''(x₁)",
+    "expr": "dd1",
+    "digits": 4
+   },
+   {
+    "label": "f''(x₂)",
+    "expr": "dd2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "c": -3
+   },
+   {
+    "b": 1,
+    "c": -1
+   },
+   {
+    "b": -1,
+    "c": -1
+   },
+   {
+    "b": -2,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "abs(d1)",
+   "abs(d2)",
+   "abs(x1+x2+2*b/3)",
+   "abs(x1*x2-c/3)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "c": -3
+    },
+    "expect": {
+     "x1": -1,
+     "x2": 1
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "c": -1
+    },
+    "expect": {
+     "x1": -1,
+     "x2": 0.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "b": -1,
+     "c": -1
+    },
+    "expect": {
+     "x1": -0.3333333333333333,
+     "x2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

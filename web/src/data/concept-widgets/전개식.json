@@ -1,0 +1,214 @@
+{
+ "id": "전개식",
+ "spec": {
+  "title": "전개식 (넓이 모델)",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "x2=x*x; ax=a*x; xb=x*b; ab=a*b; total=(x+a)*(x+b); expanded=x^2+(a+b)*x+a*b",
+  "geometry": {
+   "range": [
+    -1,
+    12
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x+a",
+       0
+      ],
+      [
+       "=x+a",
+       "=x+b"
+      ],
+      [
+       0,
+       "=x+b"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=x+b"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=x"
+     ],
+     "to": [
+      "=x+a",
+      "=x"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x²",
+    "expr": "x2",
+    "digits": 2
+   },
+   {
+    "label": "a·x",
+    "expr": "ax",
+    "digits": 2
+   },
+   {
+    "label": "x·b",
+    "expr": "xb",
+    "digits": 2
+   },
+   {
+    "label": "a·b",
+    "expr": "ab",
+    "digits": 2
+   },
+   {
+    "label": "전체 넓이",
+    "expr": "total",
+    "digits": 2
+   },
+   {
+    "label": "전개식 값",
+    "expr": "expanded",
+    "digits": 2
+   },
+   {
+    "label": "x의 계수 (a+b)",
+    "expr": "a+b",
+    "digits": 2
+   },
+   {
+    "label": "상수항 (ab)",
+    "expr": "a*b",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 1,
+    "a": 2,
+    "b": 3
+   },
+   {
+    "x": 2,
+    "a": 1,
+    "b": 1
+   },
+   {
+    "x": 3,
+    "a": 4,
+    "b": 5
+   },
+   {
+    "x": 4,
+    "a": 0,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "((x+a)*(x+b)) - (x^2 + (a+b)*x + a*b)",
+   "total - (x2 + ax + xb + ab)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1,
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "x2": 1,
+     "ax": 2,
+     "xb": 3,
+     "ab": 6,
+     "total": 12,
+     "expanded": 12
+    }
+   },
+   {
+    "params": {
+     "x": 2,
+     "a": 1,
+     "b": 4
+    },
+    "expect": {
+     "x2": 4,
+     "ax": 2,
+     "xb": 8,
+     "ab": 4,
+     "total": 18,
+     "expanded": 18
+    }
+   },
+   {
+    "params": {
+     "x": 3,
+     "a": 3,
+     "b": 0
+    },
+    "expect": {
+     "x2": 9,
+     "ax": 9,
+     "xb": 0,
+     "ab": 0,
+     "total": 18,
+     "expanded": 18
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

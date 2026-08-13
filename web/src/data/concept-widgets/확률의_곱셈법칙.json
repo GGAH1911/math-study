@@ -1,0 +1,233 @@
+{
+ "id": "확률의_곱셈법칙",
+ "spec": {
+  "title": "확률의 곱셈법칙",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0.01,
+    "max": 0.99,
+    "init": 0.4,
+    "step": 0.01
+   },
+   {
+    "name": "qA",
+    "label": "P(B|A)",
+    "type": "slider",
+    "min": 0.01,
+    "max": 0.99,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "qN",
+    "label": "P(B|¬A)",
+    "type": "slider",
+    "min": 0.01,
+    "max": 0.99,
+    "init": 0.3,
+    "step": 0.01
+   }
+  ],
+  "scope": "pBoth=pA*qA; pOnlyB=(1-pA)*qN; pB=pBoth+pOnlyB",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pA",
+      "=0"
+     ],
+     "to": [
+      "=pA",
+      "=1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=0",
+      "=qA"
+     ],
+     "to": [
+      "=pA",
+      "=qA"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pA",
+      "=qA"
+     ],
+     "to": [
+      "=pA",
+      "=qN"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pA",
+      "=qN"
+     ],
+     "to": [
+      "=1",
+      "=qN"
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=pA",
+       "=0"
+      ],
+      [
+       "=pA",
+       "=qA"
+      ],
+      [
+       "=0",
+       "=qA"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(A)",
+    "expr": "pA",
+    "digits": 2
+   },
+   {
+    "label": "P(B|A)",
+    "expr": "qA",
+    "digits": 2
+   },
+   {
+    "label": "P(B|¬A)",
+    "expr": "qN",
+    "digits": 2
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pBoth",
+    "digits": 3
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 3
+   },
+   {
+    "label": "P(B|A)-P(B)",
+    "expr": "qA - pB",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.4,
+    "qA": 0.6,
+    "qN": 0.3
+   },
+   {
+    "pA": 0.2,
+    "qA": 0.9,
+    "qN": 0.1
+   },
+   {
+    "pA": 0.7,
+    "qA": 0.25,
+    "qN": 0.5
+   },
+   {
+    "pA": 0.5,
+    "qA": 0.5,
+    "qN": 0.5
+   }
+  ],
+  "invariants": [
+   "pBoth - pA*qA",
+   "pOnlyB - (1-pA)*qN",
+   "pB - (pBoth + pOnlyB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.4,
+     "qA": 0.6,
+     "qN": 0.3
+    },
+    "expect": {
+     "pBoth": 0.24,
+     "pB": 0.42
+    }
+   },
+   {
+    "params": {
+     "pA": 0.2,
+     "qA": 0.9,
+     "qN": 0.1
+    },
+    "expect": {
+     "pBoth": 0.18,
+     "pB": 0.26
+    }
+   },
+   {
+    "params": {
+     "pA": 0.7,
+     "qA": 0.25,
+     "qN": 0.5
+    },
+    "expect": {
+     "pBoth": 0.175,
+     "pB": 0.325
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

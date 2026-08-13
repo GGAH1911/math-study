@@ -1,0 +1,208 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬_조건식",
+ "spec": {
+  "title": "행렬 조건식 - 행렬식과 평행사변형 넓이",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "det = a*d - b*c; area = abs(det); crossNorm = sqrt((a^2+c^2)*(b^2+d^2) - (a*b + c*d)^2)",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a+b",
+       "=c+d"
+      ],
+      [
+       "=b",
+       "=d"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=c"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=b",
+      "=d"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "det",
+    "expr": "det",
+    "digits": 3
+   },
+   {
+    "label": "넓이",
+    "expr": "area",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1,
+    "d": 1
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "c": 1,
+    "d": 2
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "d": 4
+   }
+  ],
+  "invariants": [
+   "area - crossNorm"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 1
+    },
+    "expect": {
+     "det": 1,
+     "area": 1,
+     "crossNorm": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 1,
+     "d": 1
+    },
+    "expect": {
+     "det": 0,
+     "area": 0,
+     "crossNorm": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "det": 1,
+     "area": 1,
+     "crossNorm": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3,
+     "d": 4
+    },
+    "expect": {
+     "det": -2,
+     "area": 2,
+     "crossNorm": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

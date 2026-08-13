@@ -1,0 +1,382 @@
+{
+ "id": "3차원_거리_공식",
+ "spec": {
+  "title": "3차원 공간에서 두 점 사이의 거리",
+  "params": [
+   {
+    "name": "x",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "y",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "z",
+    "label": "B의 z좌표",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "x1=0; y1=0; z1=0; dx=x-x1; dy=y-y1; dz=z-z1; dist=sqrt(dx^2+dy^2+dz^2); dist2=dx^2+dy^2+dz^2; k=0.5;",
+  "geometry": {
+   "range": [
+    -1,
+    8
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      5.5,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      5.5
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      2.75,
+      2.75
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5.5,
+      0
+     ],
+     "label": "x"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      5.5
+     ],
+     "label": "y"
+    },
+    {
+     "type": "point",
+     "at": [
+      2.75,
+      2.75
+     ],
+     "label": "z"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      0,
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=k*z",
+      "=k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x+k*z",
+      "=k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=y"
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=y"
+     ],
+     "to": [
+      "=k*z",
+      "=y+k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=k*z",
+      "=k*z"
+     ],
+     "to": [
+      "=x+k*z",
+      "=k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=k*z",
+      "=k*z"
+     ],
+     "to": [
+      "=k*z",
+      "=y+k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      "=y"
+     ],
+     "to": [
+      "=x+k*z",
+      "=y+k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x+k*z",
+      "=k*z"
+     ],
+     "to": [
+      "=x+k*z",
+      "=y+k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=k*z",
+      "=y+k*z"
+     ],
+     "to": [
+      "=x+k*z",
+      "=y+k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x+k*z",
+      "=y+k*z"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x+k*z",
+      "=y+k*z"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "E"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x좌표 차이 (dx)",
+    "expr": "dx",
+    "digits": 2
+   },
+   {
+    "label": "y좌표 차이 (dy)",
+    "expr": "dy",
+    "digits": 2
+   },
+   {
+    "label": "z좌표 차이 (dz)",
+    "expr": "dz",
+    "digits": 2
+   },
+   {
+    "label": "거리의 제곱 (d²)",
+    "expr": "dist2",
+    "digits": 2
+   },
+   {
+    "label": "거리 d",
+    "expr": "dist",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 3,
+    "y": 4,
+    "z": 0
+   },
+   {
+    "x": 1,
+    "y": 2,
+    "z": 2
+   },
+   {
+    "x": 2,
+    "y": 4,
+    "z": 4
+   },
+   {
+    "x": 0,
+    "y": 0,
+    "z": 5
+   }
+  ],
+  "invariants": [
+   "dist^2 - (dx^2+dy^2+dz^2)",
+   "dist - sqrt(dx^2+dy^2+dz^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 3,
+     "y": 4,
+     "z": 0
+    },
+    "expect": {
+     "dist": 5,
+     "dx": 3,
+     "dy": 4,
+     "dz": 0
+    }
+   },
+   {
+    "params": {
+     "x": 1,
+     "y": 2,
+     "z": 2
+    },
+    "expect": {
+     "dist": 3,
+     "dx": 1,
+     "dy": 2,
+     "dz": 2
+    }
+   },
+   {
+    "params": {
+     "x": 2,
+     "y": 4,
+     "z": 4
+    },
+    "expect": {
+     "dist": 6,
+     "dx": 2,
+     "dy": 4,
+     "dz": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "id": "algebra/middle-1/문자와_식/문자식_표현",
+ "spec": {
+  "title": "문자식 표현 - 직사각형의 넓이",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "세로 b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "area = a*b; perimeter = 2*(a+b)",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "넓이",
+    "expr": "area",
+    "digits": 2
+   },
+   {
+    "label": "둘레",
+    "expr": "perimeter",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 3,
+    "b": 3
+   },
+   {
+    "a": 4,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "area - a*b",
+   "perimeter - 2*(a+b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "area": 6,
+     "perimeter": 10
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 5
+    },
+    "expect": {
+     "area": 5,
+     "perimeter": 12
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2
+    },
+    "expect": {
+     "area": 8,
+     "perimeter": 12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

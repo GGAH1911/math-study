@@ -1,0 +1,223 @@
+{
+ "id": "equations/middle-2/일차부등식/부등호의_성질",
+ "spec": {
+  "title": "부등호의 성질 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "b와 a의 차 d",
+    "type": "slider",
+    "min": 0.1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "변형값 c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "op",
+    "label": "연산 (0:덧셈,1:곱셈)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "b=a+d; a1=(op==0 ? a+c : a*c); b1=(op==0 ? b+c : b*c); diff1=b1-a1",
+  "geometry": {
+   "range": [
+    -20,
+    20
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=0.3"
+     ],
+     "to": [
+      "=b",
+      "=0.3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a1",
+      "=-0.3"
+     ],
+     "to": [
+      "=b1",
+      "=-0.3"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=0.3"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=0.3"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a1",
+      "=-0.3"
+     ],
+     "label": "a'"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b1",
+      "=-0.3"
+     ],
+     "label": "b'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "a'",
+    "expr": "a1",
+    "digits": 2
+   },
+   {
+    "label": "b'",
+    "expr": "b1",
+    "digits": 2
+   },
+   {
+    "label": "b'-a'",
+    "expr": "diff1",
+    "digits": 2
+   },
+   {
+    "label": "대소 부호 (1:<, -1:>)",
+    "expr": "sign(diff1)",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2,
+    "d": 3,
+    "c": 2,
+    "op": 0
+   },
+   {
+    "a": -2,
+    "d": 3,
+    "c": -1,
+    "op": 0
+   },
+   {
+    "a": -2,
+    "d": 3,
+    "c": 1.5,
+    "op": 1
+   },
+   {
+    "a": -2,
+    "d": 3,
+    "c": -2,
+    "op": 1
+   }
+  ],
+  "invariants": [
+   "abs(diff1 - (op==0 ? d : c*d))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "d": 2,
+     "c": 3,
+     "op": 0
+    },
+    "expect": {
+     "a1": 4,
+     "b1": 6,
+     "diff1": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "d": 2,
+     "c": -3,
+     "op": 1
+    },
+    "expect": {
+     "a1": -3,
+     "b1": -9,
+     "diff1": -6
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "d": 2,
+     "c": 0.5,
+     "op": 1
+    },
+    "expect": {
+     "a1": 0.5,
+     "b1": 1.5,
+     "diff1": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

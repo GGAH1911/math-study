@@ -1,0 +1,137 @@
+{
+ "id": "equations/middle-2/일차부등식/일차부등식의_풀이",
+ "spec": {
+  "title": "일차부등식의 풀이",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 7,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "x0=(c-b)/a; s=sign(a); eps=(a>0)?-1:1; x_in=x0+eps; x_out=x0-eps",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "a*x+b",
+     "label": "ax+b",
+     "color": "blue"
+    },
+    {
+     "fn": "c",
+     "label": "c",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "경계 x₀",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "a의 부호",
+    "expr": "s",
+    "digits": 0
+   },
+   {
+    "label": "검산 ax₀+b-c",
+    "expr": "a*x0+b-c",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 7
+   },
+   {
+    "a": -2,
+    "b": 3,
+    "c": 7
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 5
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": -5
+   }
+  ],
+  "invariants": [
+   "a*x0+b-c",
+   "a*x_in+b-c+abs(a)",
+   "a*x_out+b-c-abs(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 7
+    },
+    "expect": {
+     "x0": 2,
+     "s": 1,
+     "x_in": 1,
+     "x_out": 3
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 3,
+     "c": 7
+    },
+    "expect": {
+     "x0": -2,
+     "s": -1,
+     "x_in": -1,
+     "x_out": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

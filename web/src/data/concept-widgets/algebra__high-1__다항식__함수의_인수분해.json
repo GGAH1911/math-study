@@ -1,0 +1,181 @@
+{
+ "id": "algebra/high-1/다항식/함수의_인수분해",
+ "spec": {
+  "title": "함수의 인수분해",
+  "params": [
+   {
+    "name": "a",
+    "label": "α (근)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "β (근)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "γ (근)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "k (최고차 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "p3=k; p2=-k*(a+b+c); p1=k*(a*b+b*c+c*a); p0=-k*a*b*c; fa=k*(a-a)*(a-b)*(a-c); fb=k*(b-a)*(b-b)*(b-c); fc=k*(c-a)*(c-b)*(c-c);",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "k*(x-a)*(x-b)*(x-c)",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x³ 계수",
+    "expr": "p3",
+    "digits": 2
+   },
+   {
+    "label": "x² 계수",
+    "expr": "p2",
+    "digits": 2
+   },
+   {
+    "label": "x 계수",
+    "expr": "p1",
+    "digits": 2
+   },
+   {
+    "label": "상수항",
+    "expr": "p0",
+    "digits": 2
+   },
+   {
+    "label": "f(α)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(β)",
+    "expr": "fb",
+    "digits": 3
+   },
+   {
+    "label": "f(γ)",
+    "expr": "fc",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 0,
+    "c": 1,
+    "k": 1
+   },
+   {
+    "a": 0.5,
+    "b": -1.5,
+    "c": 2,
+    "k": -1
+   },
+   {
+    "a": -2,
+    "b": -2,
+    "c": -2,
+    "k": 0.5
+   },
+   {
+    "a": 1.2,
+    "b": -0.8,
+    "c": 0.3,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "k*(1-a)*(1-b)*(1-c) - (p3 + p2 + p1 + p0)",
+   "k*(-1-a)*(-1-b)*(-1-c) - (-p3 + p2 - p1 + p0)",
+   "k*(0-a)*(0-b)*(0-c) - p0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 1,
+     "k": 2
+    },
+    "expect": {
+     "p3": 2,
+     "p2": 0,
+     "p1": -2,
+     "p0": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3,
+     "k": 1
+    },
+    "expect": {
+     "p3": 1,
+     "p2": -6,
+     "p1": 11,
+     "p0": -6
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "c": 0,
+     "k": 5
+    },
+    "expect": {
+     "p3": 5,
+     "p2": 0,
+     "p1": 0,
+     "p0": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

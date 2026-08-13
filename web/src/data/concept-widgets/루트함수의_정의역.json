@@ -1,0 +1,92 @@
+{
+ "id": "루트함수의_정의역",
+ "spec": {
+  "title": "루트함수의 정의역: y = √(R²−x²)",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 R",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "xmid = r/2; ymid = sqrt(r^2 - xmid^2);",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(r^2 - x^2)",
+     "label": "y = √(R²−x²)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정의역 왼쪽",
+    "expr": "-r",
+    "digits": 2
+   },
+   {
+    "label": "정의역 오른쪽",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "x = R/2일 때 y",
+    "expr": "ymid",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1
+   },
+   {
+    "r": 2.5
+   },
+   {
+    "r": 4
+   },
+   {
+    "r": 5
+   }
+  ],
+  "invariants": [
+   "xmid^2 + ymid^2 - r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 3
+    },
+    "expect": {
+     "xmid": 1.5,
+     "ymid": 2.59807621135
+    }
+   },
+   {
+    "params": {
+     "r": 2
+    },
+    "expect": {
+     "xmid": 1,
+     "ymid": 1.73205080757
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

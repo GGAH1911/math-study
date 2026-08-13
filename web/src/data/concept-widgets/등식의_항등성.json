@@ -1,0 +1,178 @@
+{
+ "id": "등식의_항등성",
+ "spec": {
+  "title": "등식의 항등성: 계수비교와 수치대입",
+  "params": [
+   {
+    "name": "a",
+    "label": "계수 a",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "계수 b",
+    "type": "slider",
+    "min": -8,
+    "max": -2,
+    "init": -5,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "계수 c",
+    "type": "slider",
+    "min": -1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "da=a-3; db=b+5; dc=c-2; d1=(a+b+c)-(3-5+2); dminus1=(a-b+c)-(3+5+2)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -25,
+    25
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -25,
+    25
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "f(x) = ax²+bx+c",
+     "color": "blue"
+    },
+    {
+     "fn": "3*x^2 - 5*x + 2",
+     "label": "g(x) = 3x²−5x+2",
+     "color": "red"
+    },
+    {
+     "fn": "(a-3)*x^2 + (b+5)*x + (c-2)",
+     "label": "f(x)−g(x)",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a−3",
+    "expr": "da",
+    "digits": 2
+   },
+   {
+    "label": "b+5",
+    "expr": "db",
+    "digits": 2
+   },
+   {
+    "label": "c−2",
+    "expr": "dc",
+    "digits": 2
+   },
+   {
+    "label": "f(1)−g(1)",
+    "expr": "d1",
+    "digits": 2
+   },
+   {
+    "label": "f(−1)−g(−1)",
+    "expr": "dminus1",
+    "digits": 2
+   },
+   {
+    "label": "모든 계수 일치?",
+    "expr": "(da==0 and db==0 and dc==0) ? 1 : 0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": -8,
+    "c": -1
+   },
+   {
+    "a": 3,
+    "b": -5,
+    "c": 2
+   },
+   {
+    "a": 6,
+    "b": -2,
+    "c": 5
+   },
+   {
+    "a": 1,
+    "b": -4,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "((a+b+c)-(3-5+2)) - ((a-3)+(b+5)+(c-2))",
+   "((a-b+c)-(3+5+2)) - ((a-3)-(b+5)+(c-2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": -5,
+     "c": 2
+    },
+    "expect": {
+     "da": 0,
+     "db": 0,
+     "dc": 0,
+     "d1": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -8,
+     "c": -1
+    },
+    "expect": {
+     "da": -3,
+     "db": -3,
+     "dc": -3,
+     "d1": -9
+    }
+   },
+   {
+    "params": {
+     "a": 6,
+     "b": -2,
+     "c": 5
+    },
+    "expect": {
+     "da": 3,
+     "db": 3,
+     "dc": 3,
+     "d1": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

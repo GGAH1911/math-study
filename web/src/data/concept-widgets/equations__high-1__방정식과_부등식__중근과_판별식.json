@@ -1,0 +1,122 @@
+{
+ "id": "equations/high-1/방정식과_부등식/중근과_판별식",
+ "spec": {
+  "title": "중근과 판별식",
+  "params": [
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "a=1; b=2; D=b^2-4*a*c; vx=-b/(2*a); vy=c-b^2/(4*a);",
+  "geometry": {
+   "range": [
+    -4,
+    2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -4,
+    2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + 2*x + c",
+     "label": "y = x² + 2x + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실근 개수",
+    "expr": "D>0 ? 2 : (D==0 ? 1 : 0)",
+    "digits": 0
+   },
+   {
+    "label": "꼭짓점 x",
+    "expr": "vx",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "vy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0
+   },
+   {
+    "c": 1
+   },
+   {
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "D + 4*a*vy",
+   "vx + b/(2*a)",
+   "D - (b^2 - 4*a*c)",
+   "D==0 ? vy : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "D": 4,
+     "vx": -1,
+     "vy": -1
+    }
+   },
+   {
+    "params": {
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "vx": -1,
+     "vy": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2
+    },
+    "expect": {
+     "D": -4,
+     "vx": -1,
+     "vy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

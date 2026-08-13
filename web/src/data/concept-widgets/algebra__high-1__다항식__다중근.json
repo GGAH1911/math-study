@@ -1,0 +1,136 @@
+{
+ "id": "algebra/high-1/다항식/다중근",
+ "spec": {
+  "title": "다중근의 그래프",
+  "params": [
+   {
+    "name": "n",
+    "label": "중복도 n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "근 a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "근 b",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "p0=(a-a)^n*(a-b); d1=n*(a-a)^(n-1)*(a-b)+(a-a)^n; d2=2*n*(a-a)^(n-1)+(n>=2 ? n*(n-1)*(a-a)^(n-2)*(a-b) : 0); eps=0.1; left=(-eps)^n*(a-eps-b); right=eps^n*(a+eps-b); LR=left*right",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "(x-a)^n * (x-b)",
+     "label": "P(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(a)",
+    "expr": "p0"
+   },
+   {
+    "label": "P'(a)",
+    "expr": "d1"
+   },
+   {
+    "label": "P''(a)",
+    "expr": "d2"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1,
+    "a": 0,
+    "b": 1
+   },
+   {
+    "n": 2,
+    "a": 1,
+    "b": -1
+   },
+   {
+    "n": 3,
+    "a": 1,
+    "b": -1
+   },
+   {
+    "n": 4,
+    "a": -1,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "p0",
+   "n >= 2 ? d1 : 0",
+   "n >= 3 ? d2 : 0",
+   "mod(n,2)==0 ? abs(min(0,LR)) : abs(max(0,LR))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1,
+     "a": 0,
+     "b": 1
+    },
+    "expect": {
+     "p0": 0,
+     "d1": -1,
+     "d2": 2
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "a": 1,
+     "b": -1
+    },
+    "expect": {
+     "p0": 0,
+     "d1": 0,
+     "d2": 4
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "a": 1,
+     "b": -1
+    },
+    "expect": {
+     "p0": 0,
+     "d1": 0,
+     "d2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "id": "equations/middle-3/이차방정식/근_중근",
+ "spec": {
+  "title": "이차방정식의 중근",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   },
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": -5,
+    "max": 0,
+    "init": -2,
+    "step": 0.05
+   }
+  ],
+  "scope": "b=-2*a*p; c=a*p^2+q; D=-4*a*q; s=sqrt(-q/a); x1=p-s; x2=p+s",
+  "plot": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "a*(x-p)^2+q",
+     "label": "y = a(x-p)²+q",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근 x₁",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "근 x₂",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": 0,
+    "q": -4
+   },
+   {
+    "a": 1,
+    "p": 1,
+    "q": -1
+   },
+   {
+    "a": 2,
+    "p": -1,
+    "q": 0
+   },
+   {
+    "a": 1.5,
+    "p": -2,
+    "q": -0.5
+   }
+  ],
+  "invariants": [
+   "a*(x1-p)^2+q",
+   "a*(x2-p)^2+q",
+   "x1+x2-2*p",
+   "D + 4*a*q"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": 0,
+     "q": -4
+    },
+    "expect": {
+     "x1": -2,
+     "x2": 2,
+     "D": 16
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "p": 1,
+     "q": -1
+    },
+    "expect": {
+     "x1": 0,
+     "x2": 2,
+     "D": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": -1,
+     "q": 0
+    },
+    "expect": {
+     "x1": -1,
+     "x2": -1,
+     "D": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

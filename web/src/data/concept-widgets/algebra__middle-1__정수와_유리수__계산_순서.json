@@ -1,0 +1,167 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/계산_순서",
+ "spec": {
+  "title": "계산 순서 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.5
+   }
+  ],
+  "scope": "correct = a + b*c; wrong = (a+b)*c; diff = wrong - correct",
+  "geometry": {
+   "range": [
+    -40,
+    40
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=correct",
+      0
+     ],
+     "label": "정답"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=wrong",
+      0
+     ],
+     "label": "오답"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=correct",
+      0
+     ],
+     "to": [
+      "=wrong",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "b × c =",
+    "expr": "b*c",
+    "digits": 2
+   },
+   {
+    "label": "a + b × c (정답) =",
+    "expr": "correct",
+    "digits": 2
+   },
+   {
+    "label": "(a+b) × c (오답) =",
+    "expr": "wrong",
+    "digits": 2
+   },
+   {
+    "label": "차이 =",
+    "expr": "diff",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 4
+   },
+   {
+    "a": -1,
+    "b": 0.5,
+    "c": 2
+   },
+   {
+    "a": 0,
+    "b": -2,
+    "c": 5
+   },
+   {
+    "a": 1.5,
+    "b": -4,
+    "c": 3
+   }
+  ],
+  "invariants": [
+   "abs(correct - (a + b*c))",
+   "abs(wrong - (a+b)*c)",
+   "abs(diff - a*(c-1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 4
+    },
+    "expect": {
+     "correct": 14,
+     "wrong": 20,
+     "diff": 6
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0.5,
+     "c": 2
+    },
+    "expect": {
+     "correct": 0,
+     "wrong": -1,
+     "diff": -1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -2,
+     "c": 5
+    },
+    "expect": {
+     "correct": -10,
+     "wrong": -10,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,188 @@
+{
+ "id": "algebra/high-1/다항식/다항함수",
+ "spec": {
+  "title": "다항함수의 그래프와 계수",
+  "params": [
+   {
+    "name": "a0",
+    "label": "상수항 a0",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "a1",
+    "label": "일차항 계수 a1",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "a2",
+    "label": "이차항 계수 a2",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a3",
+    "label": "삼차항 계수 a3",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "a4",
+    "label": "사차항 계수 a4",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "deg = a4 != 0 ? 4 : a3 != 0 ? 3 : a2 != 0 ? 2 : a1 != 0 ? 1 : 0; lead = deg == 4 ? a4 : deg == 3 ? a3 : deg == 2 ? a2 : deg == 1 ? a1 : a0; f0 = a0; f1 = a0 + a1 + a2 + a3 + a4; valm1 = a0 - a1 + a2 - a3 + a4;",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "a0+a1*x+a2*x^2+a3*x^3+a4*x^4",
+     "label": "f(x)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "차수",
+    "expr": "deg",
+    "digits": 0
+   },
+   {
+    "label": "최고차항 계수",
+    "expr": "lead",
+    "digits": 2
+   },
+   {
+    "label": "f(0)",
+    "expr": "f0",
+    "digits": 2
+   },
+   {
+    "label": "f(1)",
+    "expr": "f1",
+    "digits": 2
+   },
+   {
+    "label": "f(-1)",
+    "expr": "valm1",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a0": 0,
+    "a1": 0,
+    "a2": 1,
+    "a3": 0,
+    "a4": 0
+   },
+   {
+    "a0": 1,
+    "a1": 0,
+    "a2": 0,
+    "a3": 0,
+    "a4": 0
+   },
+   {
+    "a0": 0,
+    "a1": 1,
+    "a2": 0,
+    "a3": 0,
+    "a4": 0
+   },
+   {
+    "a0": -0.3,
+    "a1": 0.5,
+    "a2": -0.2,
+    "a3": 0.4,
+    "a4": -1
+   }
+  ],
+  "invariants": [
+   "f0 - a0",
+   "f1 - (a0+a1+a2+a3+a4)",
+   "valm1 - (a0-a1+a2-a3+a4)",
+   "lead - (deg==0 ? a0 : deg==1 ? a1 : deg==2 ? a2 : deg==3 ? a3 : a4)",
+   "and(deg > 0, lead == 0) ? 1 : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a0": 0,
+     "a1": 0,
+     "a2": 1,
+     "a3": 0,
+     "a4": 0
+    },
+    "expect": {
+     "deg": 2,
+     "lead": 1,
+     "f0": 0,
+     "f1": 1,
+     "valm1": 1
+    }
+   },
+   {
+    "params": {
+     "a0": 1,
+     "a1": -1,
+     "a2": 2,
+     "a3": 0,
+     "a4": 0.5
+    },
+    "expect": {
+     "deg": 4,
+     "lead": 0.5,
+     "f0": 1,
+     "f1": 2.5,
+     "valm1": 4.5
+    }
+   },
+   {
+    "params": {
+     "a0": 0,
+     "a1": 1,
+     "a2": 0,
+     "a3": 0,
+     "a4": 0
+    },
+    "expect": {
+     "deg": 1,
+     "lead": 1,
+     "f0": 0,
+     "f1": 1,
+     "valm1": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

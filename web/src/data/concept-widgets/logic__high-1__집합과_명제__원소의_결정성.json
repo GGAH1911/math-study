@@ -1,0 +1,115 @@
+{
+ "id": "logic/high-1/집합과_명제/원소의_결정성",
+ "spec": {
+  "title": "원소의 결정성: 명확한 조건의 지시함수",
+  "params": [
+   {
+    "name": "n",
+    "label": "경계값 n",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "판별할 원소 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "ind = (x0 <= n) ? 1 : 0",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "x <= n ? 1 : 0",
+     "label": "집합의 지시함수",
+     "color": "#d32f2f"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x∈A?",
+    "expr": "ind",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 0,
+    "x0": 1
+   },
+   {
+    "n": 0,
+    "x0": -1
+   },
+   {
+    "n": 3,
+    "x0": 3
+   },
+   {
+    "n": -2,
+    "x0": 0
+   }
+  ],
+  "invariants": [
+   "ind*(ind-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 0,
+     "x0": 1
+    },
+    "expect": {
+     "ind": 0
+    }
+   },
+   {
+    "params": {
+     "n": 0,
+     "x0": -1
+    },
+    "expect": {
+     "ind": 1
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "x0": 3
+    },
+    "expect": {
+     "ind": 1
+    }
+   },
+   {
+    "params": {
+     "n": -2,
+     "x0": 0
+    },
+    "expect": {
+     "ind": 0
+    }
+   }
+  ],
+  "tol": 1e-9
+ }
+}

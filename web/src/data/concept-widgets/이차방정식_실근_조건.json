@@ -1,0 +1,137 @@
+{
+ "id": "이차방정식_실근_조건",
+ "spec": {
+  "title": "이차방정식 실근 조건",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=1; D=b^2-4*a*c; xv=-b/(2*a); yv=a*xv^2+b*xv+c; nroots=D>1e-6?2:(D>-1e-6?1:0); r1=D>=0?(-b-sqrt(D))/(2*a):999; r2=D>=0?(-b+sqrt(D))/(2*a):999;",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "y=ax²+bx+c",
+     "color": "steelblue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 4
+   },
+   {
+    "label": "실근 개수",
+    "expr": "nroots",
+    "digits": 0
+   },
+   {
+    "label": "꼭짓점 x",
+    "expr": "xv",
+    "digits": 4
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "yv",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "c": -1
+   },
+   {
+    "b": 2,
+    "c": 1
+   },
+   {
+    "b": 0,
+    "c": 1
+   },
+   {
+    "b": 3,
+    "c": -2
+   }
+  ],
+  "invariants": [
+   "D-(b^2-4*c)",
+   "(D>=0)?(r1+r2+b):0",
+   "(D>=0)?(r1*r2-c):0",
+   "(D>=0)?((r1-r2)^2-D):0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "c": -1
+    },
+    "expect": {
+     "D": 4,
+     "nroots": 2,
+     "xv": 0,
+     "yv": -1,
+     "r1": -1,
+     "r2": 1
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "nroots": 1,
+     "xv": -1,
+     "yv": 0,
+     "r1": -1,
+     "r2": -1
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": 1
+    },
+    "expect": {
+     "D": -4,
+     "nroots": 0,
+     "xv": 0,
+     "yv": 1,
+     "r1": 999,
+     "r2": 999
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

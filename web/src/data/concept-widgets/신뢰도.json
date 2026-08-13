@@ -1,0 +1,151 @@
+{
+ "id": "신뢰도",
+ "spec": {
+  "title": "신뢰도와 정규분포",
+  "params": [
+   {
+    "name": "z",
+    "label": "z* (임계값)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.96,
+    "step": 0.01
+   }
+  ],
+  "scope": "p = erf(z/sqrt(2))",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    0,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=-z",
+       0
+      ],
+      [
+       "=-z+0.2*z",
+       "=exp(-(-z+0.2*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=-z+0.4*z",
+       "=exp(-(-z+0.4*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=-z+0.6*z",
+       "=exp(-(-z+0.6*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=-z+0.8*z",
+       "=exp(-(-z+0.8*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=0",
+       "=exp(0)/sqrt(2*pi)"
+      ],
+      [
+       "=z-0.8*z",
+       "=exp(-(z-0.8*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=z-0.6*z",
+       "=exp(-(z-0.6*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=z-0.4*z",
+       "=exp(-(z-0.4*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=z-0.2*z",
+       "=exp(-(z-0.2*z)^2/2)/sqrt(2*pi)"
+      ],
+      [
+       "=z",
+       0
+      ]
+     ],
+     "label": "신뢰 영역"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "신뢰 수준 (%)",
+    "expr": "p*100",
+    "digits": 2
+   },
+   {
+    "label": "임계값 z*",
+    "expr": "z",
+    "digits": 2
+   },
+   {
+    "label": "구간 길이",
+    "expr": "2*z",
+    "digits": 2
+   },
+   {
+    "label": "꼬리 확률 (%)",
+    "expr": "(1-p)*50",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "z": 1
+   },
+   {
+    "z": 1.96
+   },
+   {
+    "z": 2.576
+   },
+   {
+    "z": 3
+   }
+  ],
+  "invariants": [
+   "p - erf(z/sqrt(2))",
+   "z - sqrt(z^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "z": 1
+    },
+    "expect": {
+     "p": 0.6826894921370859
+    }
+   },
+   {
+    "params": {
+     "z": 2
+    },
+    "expect": {
+     "p": 0.9544997361036416
+    }
+   },
+   {
+    "params": {
+     "z": 3
+    },
+    "expect": {
+     "p": 0.9973002039367398
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

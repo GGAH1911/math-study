@@ -1,0 +1,191 @@
+{
+ "id": "유리식_부등식",
+ "spec": {
+  "title": "유리식 부등식",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자 영점 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "분모 영점 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "탐구 지점 x₀",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "fval = (x0-a)/(x0-b); left = min(a,b); right = max(a,b)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      0
+     ],
+     "radius": 0.1
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=b",
+      0
+     ],
+     "radius": 0.1
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=x0",
+      "=fval"
+     ],
+     "radius": 0.12
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "(x-a)/(x-b)",
+     "label": "f(x) = (x-a)/(x-b)",
+     "color": "steelblue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀) 값",
+    "expr": "fval",
+    "digits": 3
+   },
+   {
+    "label": "분자 (x₀-a) 부호",
+    "expr": "sign(x0-a)",
+    "digits": 0
+   },
+   {
+    "label": "분모 (x₀-b) 부호",
+    "expr": "sign(x0-b)",
+    "digits": 0
+   },
+   {
+    "label": "f(x₀)>0 ?",
+    "expr": "fval > 0 ? 1 : 0",
+    "digits": 0
+   },
+   {
+    "label": "해의 좌측 경계",
+    "expr": "left",
+    "digits": 3
+   },
+   {
+    "label": "해의 우측 경계",
+    "expr": "right",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "x0": 0
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "x0": 3
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "x0": 0
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "x0": -3
+   }
+  ],
+  "invariants": [
+   "fval*(x0-b) - (x0-a)",
+   "sign(fval) - sign(x0-a)*sign(x0-b)",
+   "((fval > 0) ? 1 : 0) - (((x0 < left) or (x0 > right)) ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "x0": 0
+    },
+    "expect": {
+     "fval": -0.5,
+     "left": -2,
+     "right": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "x0": 3
+    },
+    "expect": {
+     "fval": 0.4,
+     "left": -2,
+     "right": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -1,
+     "x0": 0
+    },
+    "expect": {
+     "fval": -2,
+     "left": -1,
+     "right": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

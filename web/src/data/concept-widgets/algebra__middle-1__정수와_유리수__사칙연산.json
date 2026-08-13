@@ -1,0 +1,168 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/사칙연산",
+ "spec": {
+  "title": "정수와 유리수의 사칙연산",
+  "params": [
+   {
+    "name": "a",
+    "label": "수 a",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "수 b",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 4,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "sum=a+b; diff=a-b; prod=a*b; quot=b==0 ? 0/0 : a/b",
+  "geometry": {
+   "range": [
+    -12,
+    12
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -11,
+      0
+     ],
+     "to": [
+      11,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a + b (합)",
+    "expr": "sum",
+    "digits": 2
+   },
+   {
+    "label": "a - b (차)",
+    "expr": "diff",
+    "digits": 2
+   },
+   {
+    "label": "a × b (곱)",
+    "expr": "prod",
+    "digits": 2
+   },
+   {
+    "label": "a ÷ b (몫)",
+    "expr": "quot",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": -5,
+    "b": 2
+   },
+   {
+    "a": 4,
+    "b": -3
+   },
+   {
+    "a": -1,
+    "b": -2
+   }
+  ],
+  "invariants": [
+   "abs(sum*diff - (a^2 - b^2))",
+   "abs(quot*b - a)",
+   "abs(sum - (a+b))",
+   "abs(prod - a*b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "sum": 7,
+     "diff": -1,
+     "prod": 12,
+     "quot": 0.75
+    }
+   },
+   {
+    "params": {
+     "a": -6,
+     "b": 2
+    },
+    "expect": {
+     "sum": -4,
+     "diff": -8,
+     "prod": -12,
+     "quot": -3
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 5
+    },
+    "expect": {
+     "sum": 10,
+     "diff": 0,
+     "prod": 25,
+     "quot": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "id": "함수의_개수",
+ "spec": {
+  "title": "함수의 개수",
+  "params": [
+   {
+    "name": "n",
+    "label": "정의역 원소 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "m",
+    "label": "공역 원소 수 m",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "count = m^n; inj = m >= n ? factorial(m)/factorial(m-n) : 0",
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    1100
+   ],
+   "fns": [
+    {
+     "fn": "m^x",
+     "label": "m^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "전체 함수의 개수",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "단사 함수의 개수",
+    "expr": "inj",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3,
+    "m": 2
+   },
+   {
+    "n": 4,
+    "m": 3
+   },
+   {
+    "n": 2,
+    "m": 4
+   },
+   {
+    "n": 1,
+    "m": 1
+   }
+  ],
+  "invariants": [
+   "count - m^n",
+   "count - m * m^(n-1)",
+   "inj - (m >= n ? factorial(m)/factorial(m-n) : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "m": 4
+    },
+    "expect": {
+     "count": 64,
+     "inj": 24
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "m": 3
+    },
+    "expect": {
+     "count": 9,
+     "inj": 6
+    }
+   },
+   {
+    "params": {
+     "n": 1,
+     "m": 4
+    },
+    "expect": {
+     "count": 4,
+     "inj": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

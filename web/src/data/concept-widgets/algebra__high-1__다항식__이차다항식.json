@@ -1,0 +1,134 @@
+{
+ "id": "algebra/high-1/다항식/이차다항식",
+ "spec": {
+  "title": "이차다항식의 그래프 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (최고차항 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (1차항 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "xv = abs(a) > 1e-9 ? -b/(2*a) : 0; yv = a*xv^2 + b*xv + c; d = 1; x1 = xv - d; x2 = xv + d; y1 = a*x1^2 + b*x1 + c; y2 = a*x2^2 + b*x2 + c; D = b^2 - 4*a*c",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "P(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "꼭짓점 x",
+    "expr": "xv",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "yv",
+    "digits": 2
+   },
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0
+   },
+   {
+    "a": 2,
+    "b": -4,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "c": -3
+   },
+   {
+    "a": 0.5,
+    "b": 1,
+    "c": -2
+   }
+  ],
+  "invariants": [
+   "yv - (a*xv^2 + b*xv + c)",
+   "y1 - y2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0
+    },
+    "expect": {
+     "xv": 0,
+     "yv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -4,
+     "c": 1
+    },
+    "expect": {
+     "xv": 1,
+     "yv": -1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2,
+     "c": -3
+    },
+    "expect": {
+     "xv": 1,
+     "yv": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

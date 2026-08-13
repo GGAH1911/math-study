@@ -1,0 +1,148 @@
+{
+ "id": "합",
+ "spec": {
+  "title": "합 (덧셈)",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫 번째 수",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "두 번째 수",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "s=a+b",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=s",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "0"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=s",
+      0
+     ],
+     "label": "a+b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "합",
+    "expr": "s",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": -2,
+    "b": 5
+   },
+   {
+    "a": 0,
+    "b": 4
+   },
+   {
+    "a": -3,
+    "b": -2
+   }
+  ],
+  "invariants": [
+   "s-(a+b)",
+   "(a+b)-(b+a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "s": 5
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 4
+    },
+    "expect": {
+     "s": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "s": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

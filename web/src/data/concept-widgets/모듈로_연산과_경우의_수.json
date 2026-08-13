@@ -1,0 +1,156 @@
+{
+ "id": "모듈로_연산과_경우의_수",
+ "spec": {
+  "title": "모듈로 연산: 나머지로 경우의 수 세기",
+  "params": [
+   {
+    "name": "n",
+    "label": "나누는 수 n",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "기준 수 a",
+    "type": "slider",
+    "min": 0,
+    "max": 59,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "N=60; r=mod(a,n); cnt=floor((N-1-r)/n)+1",
+  "geometry": {
+   "range": [
+    0,
+    60
+   ],
+   "yRange": [
+    -0.5,
+    12.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    60
+   ],
+   "yRange": [
+    -0.5,
+    12.5
+   ],
+   "fns": [
+    {
+     "fn": "mod(x,n)",
+     "label": "x mod n",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "r",
+     "label": "나머지 r",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "나머지 r",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "경우의 수",
+    "expr": "cnt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "a": 5
+   },
+   {
+    "n": 4,
+    "a": 10
+   },
+   {
+    "n": 6,
+    "a": 12
+   },
+   {
+    "n": 7,
+    "a": 20
+   },
+   {
+    "n": 12,
+    "a": 59
+   }
+  ],
+  "invariants": [
+   "mod(a-r,n)",
+   "mod(r,n)-r",
+   "cnt-(floor((59-r)/n)+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4,
+     "a": 5
+    },
+    "expect": {
+     "r": 1,
+     "cnt": 15
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "a": 12
+    },
+    "expect": {
+     "r": 0,
+     "cnt": 10
+    }
+   },
+   {
+    "params": {
+     "n": 7,
+     "a": 20
+    },
+    "expect": {
+     "r": 6,
+     "cnt": 8
+    }
+   },
+   {
+    "params": {
+     "n": 12,
+     "a": 59
+    },
+    "expect": {
+     "r": 11,
+     "cnt": 5
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "a": 3
+    },
+    "expect": {
+     "r": 1,
+     "cnt": 30
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

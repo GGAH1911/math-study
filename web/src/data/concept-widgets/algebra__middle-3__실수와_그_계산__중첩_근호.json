@@ -1,0 +1,239 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/중첩_근호",
+ "spec": {
+  "title": "중첩 근호: √(a+√b) = √p + √q",
+  "params": [
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "sp=sqrt(p); sq=sqrt(q); a=p+q; b=4*p*q; simple=sp+sq; diff=abs(sp-sq)",
+  "geometry": {
+   "range": [
+    0,
+    7
+   ],
+   "yRange": [
+    0,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=sp+sq",
+       0
+      ],
+      [
+       "=sp+sq",
+       "=sp+sq"
+      ],
+      [
+       0,
+       "=sp+sq"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=sp",
+       0
+      ],
+      [
+       "=sp",
+       "=sp"
+      ],
+      [
+       0,
+       "=sp"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=sp",
+       0
+      ],
+      [
+       "=sp+sq",
+       0
+      ],
+      [
+       "=sp+sq",
+       "=sp"
+      ],
+      [
+       "=sp",
+       "=sp"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=sp"
+      ],
+      [
+       "=sp",
+       "=sp"
+      ],
+      [
+       "=sp",
+       "=sp+sq"
+      ],
+      [
+       0,
+       "=sp+sq"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=sp",
+       "=sp"
+      ],
+      [
+       "=sp+sq",
+       "=sp"
+      ],
+      [
+       "=sp+sq",
+       "=sp+sq"
+      ],
+      [
+       "=sp",
+       "=sp+sq"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = p + q",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "√b = 2√(pq)",
+    "expr": "sqrt(b)",
+    "digits": 6
+   },
+   {
+    "label": "√(a+√b)",
+    "expr": "sqrt(a+sqrt(b))",
+    "digits": 6
+   },
+   {
+    "label": "√p + √q",
+    "expr": "simple",
+    "digits": 6
+   },
+   {
+    "label": "√(a-√b)",
+    "expr": "sqrt(a-sqrt(b))",
+    "digits": 6
+   },
+   {
+    "label": "|√p - √q|",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "q": 1
+   },
+   {
+    "p": 4,
+    "q": 1
+   },
+   {
+    "p": 9,
+    "q": 4
+   },
+   {
+    "p": 2,
+    "q": 3
+   }
+  ],
+  "invariants": [
+   "simple^2 - (a + sqrt(b))",
+   "diff^2 - (a - sqrt(b))",
+   "sqrt(a+sqrt(b)) - simple",
+   "sqrt(a-sqrt(b)) - diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 4,
+     "q": 1
+    },
+    "expect": {
+     "p": 4,
+     "q": 1,
+     "sp": 2,
+     "sq": 1,
+     "a": 5,
+     "b": 16,
+     "simple": 3,
+     "diff": 1
+    }
+   },
+   {
+    "params": {
+     "p": 9,
+     "q": 4
+    },
+    "expect": {
+     "p": 9,
+     "q": 4,
+     "sp": 3,
+     "sq": 2,
+     "a": 13,
+     "b": 144,
+     "simple": 5,
+     "diff": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

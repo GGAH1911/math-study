@@ -1,0 +1,156 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/약수_조건",
+ "spec": {
+  "title": "약수 조건 (a | b)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (약수 후보)",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -24,
+    "max": 24,
+    "init": 12,
+    "step": 1
+   }
+  ],
+  "scope": "q = floor(b/a); r = b - a*q; isDiv = (r == 0 ? 1 : 0); qa = q*a;",
+  "geometry": {
+   "range": [
+    -40,
+    40
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qa",
+      0
+     ],
+     "label": "q·a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=qa",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "몫 q",
+    "expr": "q",
+    "digits": 0
+   },
+   {
+    "label": "나머지 r",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "약수 여부 (1=예)",
+    "expr": "isDiv",
+    "digits": 0
+   },
+   {
+    "label": "실수 몫 b/a",
+    "expr": "b/a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 12
+   },
+   {
+    "a": 2,
+    "b": -5
+   },
+   {
+    "a": 4,
+    "b": 10
+   },
+   {
+    "a": 3,
+    "b": -9
+   }
+  ],
+  "invariants": [
+   "b - (a*q + r)",
+   "r - (b - a*q)",
+   "isDiv - (r == 0 ? 1 : 0)",
+   "max(r,0) - r",
+   "min(r,a-1) - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 12
+    },
+    "expect": {
+     "q": 4,
+     "r": 0,
+     "isDiv": 1,
+     "qa": 12
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -5
+    },
+    "expect": {
+     "q": -3,
+     "r": 1,
+     "isDiv": 0,
+     "qa": -6
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 10
+    },
+    "expect": {
+     "q": 2,
+     "r": 2,
+     "isDiv": 0,
+     "qa": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

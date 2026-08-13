@@ -1,0 +1,144 @@
+{
+ "id": "지수함수의_미분",
+ "spec": {
+  "title": "지수함수의 미분",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "접선 위치 x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0 = a^x0; d0 = f0 * log(a); f1 = a^(x0+1); d1 = f1 * log(a)",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "f(x)=aˣ",
+     "color": "blue"
+    },
+    {
+     "fn": "a^x*log(a)",
+     "label": "f'(x)=aˣ ln a",
+     "color": "red"
+    },
+    {
+     "fn": "f0 + d0*(x-x0)",
+     "label": "접선",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 6
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "d0",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x0": 0
+   },
+   {
+    "a": 2,
+    "x0": 1
+   },
+   {
+    "a": 0.5,
+    "x0": -1
+   },
+   {
+    "a": 3,
+    "x0": 2
+   }
+  ],
+  "invariants": [
+   "abs(f0 - a^x0)",
+   "abs(d0 - f0*log(a))",
+   "abs(f1 - a*f0)",
+   "abs(d1 - a*d0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x0": 0
+    },
+    "expect": {
+     "f0": 1,
+     "d0": 0.6931471805599453,
+     "f1": 2,
+     "d1": 1.3862943611198906
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": 1
+    },
+    "expect": {
+     "f0": 2,
+     "d0": 1.3862943611198906,
+     "f1": 4,
+     "d1": 2.772588722239781
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x0": -1
+    },
+    "expect": {
+     "f0": 2,
+     "d0": -1.3862943611198906,
+     "f1": 1,
+     "d1": -0.6931471805599453
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

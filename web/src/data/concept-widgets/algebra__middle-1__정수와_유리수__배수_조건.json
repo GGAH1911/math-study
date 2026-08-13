@@ -1,0 +1,241 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/배수_조건",
+ "spec": {
+  "title": "배수 조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 30,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "k=a/b; r=mod(a,b); isMultiple = r==0 ? 1 : 0;",
+  "geometry": {
+   "range": [
+    -1,
+    31
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=b*1",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*2",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*3",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*4",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*5",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*6",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*7",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*8",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*9",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*10",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*11",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*12",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*13",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*14",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*15",
+      "=0"
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=0"
+     ],
+     "radius": 0.18
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=0"
+     ],
+     "label": "a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a ÷ b (k)",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "나머지",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "배수 여부 (1=예)",
+    "expr": "isMultiple",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 6,
+    "b": 3
+   },
+   {
+    "a": 7,
+    "b": 3
+   },
+   {
+    "a": 15,
+    "b": 5
+   },
+   {
+    "a": 10,
+    "b": 7
+   }
+  ],
+  "invariants": [
+   "mod(b*7,b)",
+   "mod(b*13,b)",
+   "a-(b*floor(a/b)+mod(a,b))",
+   "mod(a,b)*isMultiple"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 6,
+     "b": 3
+    },
+    "expect": {
+     "k": 2,
+     "r": 0,
+     "isMultiple": 1
+    }
+   },
+   {
+    "params": {
+     "a": 7,
+     "b": 3
+    },
+    "expect": {
+     "k": 2.3333333333333335,
+     "r": 1,
+     "isMultiple": 0
+    }
+   },
+   {
+    "params": {
+     "a": 8,
+     "b": 5
+    },
+    "expect": {
+     "k": 1.6,
+     "r": 3,
+     "isMultiple": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

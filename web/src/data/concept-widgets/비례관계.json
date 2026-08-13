@@ -1,0 +1,140 @@
+{
+ "id": "비례관계",
+ "spec": {
+  "title": "비례관계",
+  "params": [
+   {
+    "name": "mode",
+    "label": "정비례(0) / 반비례(1)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "비례상수 k",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "xval",
+    "label": "x 값",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "yval = mode == 0 ? k*xval : k/xval",
+  "plot": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    0,
+    35
+   ],
+   "fns": [
+    {
+     "fn": "mode == 0 ? k*x : k/x",
+     "label": "y",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "y",
+    "expr": "yval",
+    "digits": 3
+   },
+   {
+    "label": "y/x (정비례 확인)",
+    "expr": "yval/xval",
+    "digits": 3
+   },
+   {
+    "label": "x·y (반비례 확인)",
+    "expr": "xval*yval",
+    "digits": 3
+   },
+   {
+    "label": "|y/x - k|",
+    "expr": "abs(yval/xval - k)",
+    "digits": 3
+   },
+   {
+    "label": "|x·y - k|",
+    "expr": "abs(xval*yval - k)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mode": 0,
+    "k": 2,
+    "xval": 3
+   },
+   {
+    "mode": 1,
+    "k": 3,
+    "xval": 2
+   },
+   {
+    "mode": 0,
+    "k": 0.5,
+    "xval": 10
+   },
+   {
+    "mode": 1,
+    "k": 1,
+    "xval": 4
+   }
+  ],
+  "invariants": [
+   "mode == 0 ? yval - k*xval : yval*xval - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mode": 0,
+     "k": 2,
+     "xval": 3
+    },
+    "expect": {
+     "yval": 6
+    }
+   },
+   {
+    "params": {
+     "mode": 1,
+     "k": 3,
+     "xval": 2
+    },
+    "expect": {
+     "yval": 1.5
+    }
+   },
+   {
+    "params": {
+     "mode": 1,
+     "k": 0.5,
+     "xval": 4
+    },
+    "expect": {
+     "yval": 0.125
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

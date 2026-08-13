@@ -1,0 +1,144 @@
+{
+ "id": "Taylor_근사",
+ "spec": {
+  "title": "Taylor 근사",
+  "params": [
+   {
+    "name": "n",
+    "label": "차수 n",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "x0",
+    "label": "x",
+    "type": "slider",
+    "min": -0.9,
+    "max": 0.9,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "T = (1 - x0^(n+1))/(1 - x0); exact = 1/(1 - x0); err = exact - T; inv = (1 - x0)*T + x0^(n+1) - 1",
+  "geometry": {
+   "range": [
+    -0.9,
+    0.9
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -0.9,
+    0.9
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "1/(1-x)",
+     "label": "f(x)=1/(1-x)",
+     "color": "blue"
+    },
+    {
+     "fn": "(1 - x^(n+1))/(1 - x)",
+     "label": "T_n(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "T_n(x)",
+    "expr": "T",
+    "digits": 6
+   },
+   {
+    "label": "f(x)",
+    "expr": "exact",
+    "digits": 6
+   },
+   {
+    "label": "오차",
+    "expr": "err",
+    "digits": 6
+   },
+   {
+    "label": "검증식",
+    "expr": "inv",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 0,
+    "x0": -0.5
+   },
+   {
+    "n": 2,
+    "x0": 0.3
+   },
+   {
+    "n": 5,
+    "x0": 0.7
+   },
+   {
+    "n": 8,
+    "x0": 0.9
+   }
+  ],
+  "invariants": [
+   "inv",
+   "err - x0^(n+1)/(1 - x0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 0,
+     "x0": 0.5
+    },
+    "expect": {
+     "T": 1,
+     "exact": 2,
+     "err": 1
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "x0": 0.5
+    },
+    "expect": {
+     "T": 1.875,
+     "exact": 2,
+     "err": 0.125
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "x0": -0.5
+    },
+    "expect": {
+     "T": 0.75,
+     "exact": 0.66666667,
+     "err": -0.08333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

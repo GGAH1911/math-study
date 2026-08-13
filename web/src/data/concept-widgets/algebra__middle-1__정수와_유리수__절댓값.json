@@ -1,0 +1,118 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/절댓값",
+ "spec": {
+  "title": "절댓값 (수직선 위에서 원점까지의 거리)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "absa = a>=0 ? a : -a",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      0
+     ],
+     "color": "#d32f2f"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a"
+   },
+   {
+    "label": "|a|",
+    "expr": "absa"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2
+   },
+   {
+    "a": -3
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 4
+   }
+  ],
+  "invariants": [
+   "absa - abs(a)",
+   "abs(a) - abs(-a)",
+   "absa^2 - a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "absa": 2
+    }
+   },
+   {
+    "params": {
+     "a": -3
+    },
+    "expect": {
+     "absa": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "absa": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "id": "equations/high-1/방정식과_부등식/켤레복소수",
+ "spec": {
+  "title": "켤레복소수 | 복소평면에서의 켤레",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "cx=a; cy=-b; prod=a^2+b^2; mod=sqrt(prod)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=mod"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "z"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "z̄"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=b"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "실수부 a",
+    "expr": "a"
+   },
+   {
+    "label": "허수부 b",
+    "expr": "b"
+   },
+   {
+    "label": "켤레 실수부",
+    "expr": "cx"
+   },
+   {
+    "label": "켤레 허수부",
+    "expr": "cy"
+   },
+   {
+    "label": "z·z̄",
+    "expr": "prod"
+   },
+   {
+    "label": "|z|",
+    "expr": "mod"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": -1,
+    "b": 0.5
+   },
+   {
+    "a": 0,
+    "b": -2
+   },
+   {
+    "a": 2,
+    "b": -3
+   }
+  ],
+  "invariants": [
+   "a^2+b^2-(cx^2+cy^2)",
+   "cy+b",
+   "cx-a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "cx": 3,
+     "cy": -4,
+     "prod": 25,
+     "mod": 5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0
+    },
+    "expect": {
+     "cx": 1,
+     "cy": 0,
+     "prod": 1,
+     "mod": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -2
+    },
+    "expect": {
+     "cx": 0,
+     "cy": 2,
+     "prod": 4,
+     "mod": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

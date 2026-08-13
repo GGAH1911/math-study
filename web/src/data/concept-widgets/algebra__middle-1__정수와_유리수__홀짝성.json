@@ -1,0 +1,127 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/홀짝성",
+ "spec": {
+  "title": "홀짝성 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "k=floor(n/2); r=n-2*k",
+  "geometry": {
+   "range": [
+    -10.5,
+    10.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=2*k",
+      0
+     ],
+     "label": "2k"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      0
+     ],
+     "label": "n"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=2*k",
+      0
+     ],
+     "to": [
+      "=n",
+      0
+     ],
+     "label": "r"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "몫 k",
+    "expr": "k",
+    "digits": 0
+   },
+   {
+    "label": "나머지 r",
+    "expr": "r",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": -10
+   },
+   {
+    "n": -3
+   },
+   {
+    "n": 0
+   },
+   {
+    "n": 7
+   }
+  ],
+  "invariants": [
+   "n-(2*k+r)",
+   "r*(r-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "k": 2,
+     "r": 0
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "k": 2,
+     "r": 1
+    }
+   },
+   {
+    "params": {
+     "n": -3
+    },
+    "expect": {
+     "k": -2,
+     "r": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

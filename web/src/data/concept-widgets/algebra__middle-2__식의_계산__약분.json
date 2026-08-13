@@ -1,0 +1,163 @@
+{
+ "id": "algebra/middle-2/식의_계산/약분",
+ "spec": {
+  "title": "약분: 분모·분자에 같은 수를 곱해도 분수의 크기는 같다",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "약분 인수 k",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "origX=b*k; origY=a*k; redX=b; redY=a; frac=a/b; origFrac=(a*k)/(b*k)",
+  "geometry": {
+   "range": [
+    0,
+    16
+   ],
+   "yRange": [
+    0,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=origX",
+      "=origY"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=redX",
+      "=redY"
+     ],
+     "label": "a/b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=origX",
+      "=origY"
+     ],
+     "label": "(a·k)/(b·k)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b 값",
+    "expr": "frac",
+    "digits": 4
+   },
+   {
+    "label": "(a·k)/(b·k) 값",
+    "expr": "origFrac",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4,
+    "k": 2
+   },
+   {
+    "a": 1,
+    "b": 5,
+    "k": 1
+   },
+   {
+    "a": 5,
+    "b": 2,
+    "k": 2
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "frac - origFrac",
+   "redX*k - origX",
+   "origX*redY - origY*redX"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "k": 2
+    },
+    "expect": {
+     "redX": 4,
+     "redY": 3,
+     "origX": 8,
+     "origY": 6,
+     "frac": 0.75
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 5,
+     "k": 1
+    },
+    "expect": {
+     "redX": 5,
+     "redY": 1,
+     "origX": 5,
+     "origY": 1,
+     "frac": 0.2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "k": 2
+    },
+    "expect": {
+     "redX": 2,
+     "redY": 1,
+     "origX": 4,
+     "origY": 2,
+     "frac": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

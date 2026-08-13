@@ -1,0 +1,112 @@
+{
+ "id": "equations/high-1/방정식과_부등식/삼차방정식",
+ "spec": {
+  "title": "삼차방정식의 실근의 개수",
+  "params": [
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "f_1 = d - 2; f_m1 = d + 2; prod = f_1 * f_m1; disc = d^2 - 4; root_count = prod < 0 ? 3 : (prod == 0 ? 2 : 1)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -25,
+    25
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x + d",
+     "label": "y = x³ - 3x + d",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(-1)",
+    "expr": "f_m1",
+    "digits": 2
+   },
+   {
+    "label": "f(1)",
+    "expr": "f_1",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "root_count",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 0
+   },
+   {
+    "d": 1
+   },
+   {
+    "d": 2
+   },
+   {
+    "d": 3
+   }
+  ],
+  "invariants": [
+   "prod - (d^2 - 4)",
+   "f_1 - (d - 2)",
+   "f_m1 - (d + 2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 0
+    },
+    "expect": {
+     "f_1": -2,
+     "f_m1": 2,
+     "prod": -4,
+     "disc": -4,
+     "root_count": 3
+    }
+   },
+   {
+    "params": {
+     "d": 2
+    },
+    "expect": {
+     "f_1": 0,
+     "f_m1": 4,
+     "prod": 0,
+     "disc": 0,
+     "root_count": 2
+    }
+   },
+   {
+    "params": {
+     "d": 3
+    },
+    "expect": {
+     "f_1": 1,
+     "f_m1": 5,
+     "prod": 5,
+     "disc": 5,
+     "root_count": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

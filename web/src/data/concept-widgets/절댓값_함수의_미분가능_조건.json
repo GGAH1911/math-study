@@ -1,0 +1,112 @@
+{
+ "id": "절댓값_함수의_미분가능_조건",
+ "spec": {
+  "title": "절댓값 함수의 미분가능 조건",
+  "params": [
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "leftDeriv = -abs(m); rightDeriv = abs(m); diffable = (leftDeriv == rightDeriv ? 1 : 0)",
+  "plot": {
+   "range": [
+    -1,
+    1
+   ],
+   "yRange": [
+    -0.5,
+    2.5
+   ],
+   "fns": [
+    {
+     "fn": "abs(x^2 + m*x)",
+     "label": "f(x)=|g(x)|",
+     "color": "red"
+    },
+    {
+     "fn": "x^2 + m*x",
+     "label": "g(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌미분계수",
+    "expr": "leftDeriv",
+    "digits": 3
+   },
+   {
+    "label": "우미분계수",
+    "expr": "rightDeriv",
+    "digits": 3
+   },
+   {
+    "label": "미분가능 여부",
+    "expr": "diffable",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": -1
+   },
+   {
+    "m": -0.5
+   },
+   {
+    "m": 0
+   },
+   {
+    "m": 0.5
+   }
+  ],
+  "invariants": [
+   "leftDeriv + abs(m)",
+   "rightDeriv - abs(m)",
+   "diffable - (m == 0 ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0
+    },
+    "expect": {
+     "leftDeriv": 0,
+     "rightDeriv": 0,
+     "diffable": 1
+    }
+   },
+   {
+    "params": {
+     "m": 0.5
+    },
+    "expect": {
+     "leftDeriv": -0.5,
+     "rightDeriv": 0.5,
+     "diffable": 0
+    }
+   },
+   {
+    "params": {
+     "m": -1
+    },
+    "expect": {
+     "leftDeriv": -1,
+     "rightDeriv": 1,
+     "diffable": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

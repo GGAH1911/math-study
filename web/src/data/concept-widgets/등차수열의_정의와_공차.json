@@ -1,0 +1,219 @@
+{
+ "id": "등차수열의_정의와_공차",
+ "spec": {
+  "title": "등차수열의 정의와 공차",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "공차 d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "항 번호 n",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "t1=a1; t2=a1+d; t3=a1+2*d; t4=a1+3*d; t5=a1+4*d; t6=a1+5*d; term=a1+(n-1)*d",
+  "geometry": {
+   "range": [
+    0.5,
+    6.5
+   ],
+   "yRange": [
+    -14,
+    14
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=t1"
+     ],
+     "to": [
+      6,
+      "=t6"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=t1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=t2"
+     ],
+     "label": "a₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=t3"
+     ],
+     "label": "a₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=t4"
+     ],
+     "label": "a₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=t5"
+     ],
+     "label": "a₅"
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=t6"
+     ],
+     "label": "a₆"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=term"
+     ],
+     "label": "aₙ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "첫째항 a₁",
+    "expr": "t1"
+   },
+   {
+    "label": "선택한 항 a_n",
+    "expr": "term"
+   },
+   {
+    "label": "공차 d",
+    "expr": "d"
+   },
+   {
+    "label": "a_{n+1} - a_n",
+    "expr": "(a1+n*d)-term"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "d": 0.5,
+    "n": 3
+   },
+   {
+    "a1": -2,
+    "d": 1.5,
+    "n": 5
+   },
+   {
+    "a1": 0.5,
+    "d": -1,
+    "n": 2
+   },
+   {
+    "a1": -1,
+    "d": 0,
+    "n": 6
+   }
+  ],
+  "invariants": [
+   "t2-t1-d",
+   "t3-t2-d",
+   "t4-t3-d",
+   "t5-t4-d",
+   "t6-t5-d",
+   "((a1+n*d)-term)-d",
+   "term-(a1+(n-1)*d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 1,
+     "d": 0.5,
+     "n": 3
+    },
+    "expect": {
+     "t1": 1,
+     "t2": 1.5,
+     "t3": 2,
+     "t4": 2.5,
+     "t5": 3,
+     "t6": 3.5,
+     "term": 2
+    }
+   },
+   {
+    "params": {
+     "a1": -2,
+     "d": 1.5,
+     "n": 5
+    },
+    "expect": {
+     "t1": -2,
+     "t2": -0.5,
+     "t3": 1,
+     "t4": 2.5,
+     "t5": 4,
+     "t6": 5.5,
+     "term": 4
+    }
+   },
+   {
+    "params": {
+     "a1": 0.5,
+     "d": -1,
+     "n": 2
+    },
+    "expect": {
+     "t1": 0.5,
+     "t2": -0.5,
+     "t3": -1.5,
+     "t4": -2.5,
+     "t5": -3.5,
+     "t6": -4.5,
+     "term": -0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

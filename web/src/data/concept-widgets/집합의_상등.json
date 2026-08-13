@@ -1,0 +1,243 @@
+{
+ "id": "집합의_상등",
+ "spec": {
+  "title": "집합의 상등",
+  "params": [
+   {
+    "name": "a1",
+    "label": "1∈A",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "a2",
+    "label": "2∈A",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "a3",
+    "label": "3∈A",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b1",
+    "label": "1∈B",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b2",
+    "label": "2∈B",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b3",
+    "label": "3∈B",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "s1=a1==b1 ? 1 : 0; s2=a2==b2 ? 1 : 0; s3=a3==b3 ? 1 : 0; same=s1*s2*s3; subsetAB=(a1<=b1 and a2<=b2 and a3<=b3) ? 1 : 0; subsetBA=(b1<=a1 and b2<=a2 and b3<=a3) ? 1 : 0; eq=subsetAB*subsetBA; nA=a1+a2+a3; nB=b1+b2+b3; xa1=(a1==1) ? 1 : 100; xa2=(a2==1) ? 2 : 100; xa3=(a3==1) ? 3 : 100; xb1=(b1==1) ? 1 : 100; xb2=(b2==1) ? 2 : 100; xb3=(b3==1) ? 3 : 100",
+  "geometry": {
+   "range": [
+    -0.5,
+    3.5
+   ],
+   "yRange": [
+    -0.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=xa1",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xa2",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xa3",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xb1",
+      1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xb2",
+      1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xb3",
+      1
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n(A)",
+    "expr": "nA",
+    "digits": 0
+   },
+   {
+    "label": "n(B)",
+    "expr": "nB",
+    "digits": 0
+   },
+   {
+    "label": "A⊆B",
+    "expr": "subsetAB",
+    "digits": 0
+   },
+   {
+    "label": "B⊆A",
+    "expr": "subsetBA",
+    "digits": 0
+   },
+   {
+    "label": "A=B",
+    "expr": "eq",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "a2": 0,
+    "a3": 1,
+    "b1": 1,
+    "b2": 0,
+    "b3": 1
+   },
+   {
+    "a1": 1,
+    "a2": 1,
+    "a3": 0,
+    "b1": 1,
+    "b2": 0,
+    "b3": 0
+   },
+   {
+    "a1": 0,
+    "a2": 1,
+    "a3": 0,
+    "b1": 0,
+    "b2": 1,
+    "b3": 0
+   },
+   {
+    "a1": 0,
+    "a2": 0,
+    "a3": 1,
+    "b1": 1,
+    "b2": 0,
+    "b3": 1
+   }
+  ],
+  "invariants": [
+   "abs(eq - same)",
+   "abs(eq*(a1-b1)) + abs(eq*(a2-b2)) + abs(eq*(a3-b3))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 1,
+     "a2": 0,
+     "a3": 1,
+     "b1": 1,
+     "b2": 0,
+     "b3": 1
+    },
+    "expect": {
+     "same": 1,
+     "subsetAB": 1,
+     "subsetBA": 1,
+     "eq": 1,
+     "nA": 2,
+     "nB": 2
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "a2": 1,
+     "a3": 0,
+     "b1": 1,
+     "b2": 0,
+     "b3": 0
+    },
+    "expect": {
+     "same": 0,
+     "subsetAB": 0,
+     "subsetBA": 1,
+     "eq": 0,
+     "nA": 2,
+     "nB": 1
+    }
+   },
+   {
+    "params": {
+     "a1": 0,
+     "a2": 1,
+     "a3": 0,
+     "b1": 0,
+     "b2": 1,
+     "b3": 0
+    },
+    "expect": {
+     "same": 1,
+     "subsetAB": 1,
+     "subsetBA": 1,
+     "eq": 1,
+     "nA": 1,
+     "nB": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

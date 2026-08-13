@@ -1,0 +1,225 @@
+{
+ "id": "등비수열의_공비",
+ "spec": {
+  "title": "등비수열의 공비",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째 항 a₁",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 0.5,
+    "step": 0.2
+   }
+  ],
+  "scope": "t1=a1; t2=a1*r; t3=a1*r^2; t4=a1*r^3; t5=a1*r^4",
+  "geometry": {
+   "range": [
+    0.5,
+    5.5
+   ],
+   "yRange": [
+    -40,
+    40
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=1",
+      "=t1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=2",
+      "=t2"
+     ],
+     "label": "a₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=3",
+      "=t3"
+     ],
+     "label": "a₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=4",
+      "=t4"
+     ],
+     "label": "a₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=5",
+      "=t5"
+     ],
+     "label": "a₅"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1",
+      "=t1"
+     ],
+     "to": [
+      "=2",
+      "=t2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=2",
+      "=t2"
+     ],
+     "to": [
+      "=3",
+      "=t3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=3",
+      "=t3"
+     ],
+     "to": [
+      "=4",
+      "=t4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=4",
+      "=t4"
+     ],
+     "to": [
+      "=5",
+      "=t5"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a₁",
+    "expr": "t1",
+    "digits": 4
+   },
+   {
+    "label": "a₂",
+    "expr": "t2",
+    "digits": 4
+   },
+   {
+    "label": "a₃",
+    "expr": "t3",
+    "digits": 4
+   },
+   {
+    "label": "a₄",
+    "expr": "t4",
+    "digits": 4
+   },
+   {
+    "label": "a₅",
+    "expr": "t5",
+    "digits": 4
+   },
+   {
+    "label": "공비 (a₂/a₁)",
+    "expr": "t2/t1",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 0.5,
+    "r": 0.5
+   },
+   {
+    "a1": 1,
+    "r": -0.5
+   },
+   {
+    "a1": 0.2,
+    "r": 1.5
+   }
+  ],
+  "invariants": [
+   "t2 - a1*r",
+   "t3 - a1*r^2",
+   "t4 - a1*r^3",
+   "t5 - a1*r^4",
+   "t2/t1 - r",
+   "t3/t2 - r",
+   "t4/t3 - r",
+   "t5/t4 - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 0.5,
+     "r": 0.5
+    },
+    "expect": {
+     "t1": 0.5,
+     "t2": 0.25,
+     "t3": 0.125,
+     "t4": 0.0625,
+     "t5": 0.03125
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "r": -0.5
+    },
+    "expect": {
+     "t1": 1,
+     "t2": -0.5,
+     "t3": 0.25,
+     "t4": -0.125,
+     "t5": 0.0625
+    }
+   },
+   {
+    "params": {
+     "a1": 0.2,
+     "r": 1.5
+    },
+    "expect": {
+     "t1": 0.2,
+     "t2": 0.3,
+     "t3": 0.45,
+     "t4": 0.675,
+     "t5": 1.0125
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

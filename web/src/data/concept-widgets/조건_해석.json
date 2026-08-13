@@ -1,0 +1,187 @@
+{
+ "id": "조건_해석",
+ "spec": {
+  "title": "조건 해석: 절댓값 부등식 |x-c|<r의 진리집합",
+  "params": [
+   {
+    "name": "c",
+    "label": "중심 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "판별점 x₀",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "L = c - r; R = c + r; truth = ((x0 > L) and (x0 < R)) ? 1 : 0;",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=L",
+       -0.15
+      ],
+      [
+       "=R",
+       -0.15
+      ],
+      [
+       "=R",
+       0.15
+      ],
+      [
+       "=L",
+       0.15
+      ]
+     ],
+     "fill": "rgba(0, 100, 255, 0.2)",
+     "stroke": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=L",
+      0.3
+     ],
+     "label": "L"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=R",
+      0.3
+     ],
+     "label": "R"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      -0.3
+     ],
+     "label": "x₀"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌끝 L",
+    "expr": "L",
+    "digits": 3
+   },
+   {
+    "label": "우끝 R",
+    "expr": "R",
+    "digits": 3
+   },
+   {
+    "label": "길이 (R-L)",
+    "expr": "R-L",
+    "digits": 3
+   },
+   {
+    "label": "진리값",
+    "expr": "truth",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0,
+    "r": 2,
+    "x0": 1
+   },
+   {
+    "c": 1,
+    "r": 1.5,
+    "x0": 2.5
+   },
+   {
+    "c": -2,
+    "r": 3,
+    "x0": -5
+   },
+   {
+    "c": 3,
+    "r": 0.5,
+    "x0": 3
+   }
+  ],
+  "invariants": [
+   "abs((L+R)/2 - c)",
+   "abs((R-L)/2 - r)",
+   "abs(truth - ((abs(x0 - c) < r) ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0,
+     "r": 2,
+     "x0": 1
+    },
+    "expect": {
+     "L": -2,
+     "R": 2,
+     "truth": 1
+    }
+   },
+   {
+    "params": {
+     "c": 1,
+     "r": 1.5,
+     "x0": 2.5
+    },
+    "expect": {
+     "L": -0.5,
+     "R": 2.5,
+     "truth": 0
+    }
+   },
+   {
+    "params": {
+     "c": 3,
+     "r": 0.5,
+     "x0": 3
+    },
+    "expect": {
+     "L": 2.5,
+     "R": 3.5,
+     "truth": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

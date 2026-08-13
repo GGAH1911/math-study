@@ -1,0 +1,124 @@
+{
+ "id": "지수함수의_성질과_그래프",
+ "spec": {
+  "title": "지수함수의 성질과 그래프",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "y0=1; y1=a; ym1=1/a; y2=a^2; inv1=y1*ym1-1; inv2=y2*ym1-y1",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(0)",
+    "expr": "y0",
+    "digits": 2
+   },
+   {
+    "label": "f(1)",
+    "expr": "y1",
+    "digits": 2
+   },
+   {
+    "label": "f(-1)",
+    "expr": "ym1",
+    "digits": 2
+   },
+   {
+    "label": "f(2)-f(1)",
+    "expr": "y2-y1",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 4
+   }
+  ],
+  "invariants": [
+   "y1*ym1-1",
+   "y2*ym1-y1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "y1": 0.5,
+     "ym1": 2,
+     "y2": 0.25,
+     "y0": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "y1": 2,
+     "ym1": 0.5,
+     "y2": 4,
+     "y0": 1
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "y1": 4,
+     "ym1": 0.25,
+     "y2": 16,
+     "y0": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

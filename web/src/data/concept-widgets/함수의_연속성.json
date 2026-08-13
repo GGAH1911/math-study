@@ -1,0 +1,133 @@
+{
+ "id": "함수의_연속성",
+ "spec": {
+  "title": "함수의 연속성",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "v",
+    "label": "f(a)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "lim=2*a; fa=v; cont=(abs(fa-lim)<1e-9?1:0)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x + a",
+     "label": "f(x) = x+a (x≠a)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "lim_{x→a} f(x)",
+    "expr": "lim",
+    "digits": 4
+   },
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "연속",
+    "expr": "cont",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "v": 2
+   },
+   {
+    "a": 1,
+    "v": 3
+   },
+   {
+    "a": -2,
+    "v": -4
+   },
+   {
+    "a": -2,
+    "v": 0
+   }
+  ],
+  "invariants": [
+   "abs(lim - 2*a)",
+   "abs(fa - v)",
+   "abs(cont - (abs(v - lim) < 1e-9 ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "v": 2
+    },
+    "expect": {
+     "lim": 2,
+     "fa": 2,
+     "cont": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "v": 3
+    },
+    "expect": {
+     "lim": 2,
+     "fa": 3,
+     "cont": 0
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "v": -4
+    },
+    "expect": {
+     "lim": -4,
+     "fa": -4,
+     "cont": 1
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "v": 0
+    },
+    "expect": {
+     "lim": -4,
+     "fa": 0,
+     "cont": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

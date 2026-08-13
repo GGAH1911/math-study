@@ -1,0 +1,289 @@
+{
+ "id": "조건부_재귀",
+ "spec": {
+  "title": "조건부 재귀 탐구: Collatz 수열",
+  "params": [
+   {
+    "name": "init",
+    "label": "초기값 a₁",
+    "type": "slider",
+    "min": 1,
+    "max": 15,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "a1=init; a2=(mod(a1,2)==0 ? a1/2 : 3*a1+1); a3=(mod(a2,2)==0 ? a2/2 : 3*a2+1); a4=(mod(a3,2)==0 ? a3/2 : 3*a3+1); a5=(mod(a4,2)==0 ? a4/2 : 3*a4+1); a6=(mod(a5,2)==0 ? a5/2 : 3*a5+1); a7=(mod(a6,2)==0 ? a6/2 : 3*a6+1); a8=(mod(a7,2)==0 ? a7/2 : 3*a7+1)",
+  "geometry": {
+   "range": [
+    0.5,
+    8.5
+   ],
+   "yRange": [
+    0,
+    200
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=a1"
+     ],
+     "label": "a₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=a2"
+     ],
+     "label": "a₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=a3"
+     ],
+     "label": "a₃"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=a4"
+     ],
+     "label": "a₄"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=a5"
+     ],
+     "label": "a₅"
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=a6"
+     ],
+     "label": "a₆"
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=a7"
+     ],
+     "label": "a₇"
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=a8"
+     ],
+     "label": "a₈"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      "=a1"
+     ],
+     "to": [
+      2,
+      "=a2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      "=a2"
+     ],
+     "to": [
+      3,
+      "=a3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      "=a3"
+     ],
+     "to": [
+      4,
+      "=a4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      4,
+      "=a4"
+     ],
+     "to": [
+      5,
+      "=a5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      5,
+      "=a5"
+     ],
+     "to": [
+      6,
+      "=a6"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      6,
+      "=a6"
+     ],
+     "to": [
+      7,
+      "=a7"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      7,
+      "=a7"
+     ],
+     "to": [
+      8,
+      "=a8"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a₁",
+    "expr": "a1",
+    "digits": 0
+   },
+   {
+    "label": "a₂",
+    "expr": "a2",
+    "digits": 0
+   },
+   {
+    "label": "a₃",
+    "expr": "a3",
+    "digits": 0
+   },
+   {
+    "label": "a₄",
+    "expr": "a4",
+    "digits": 0
+   },
+   {
+    "label": "a₅",
+    "expr": "a5",
+    "digits": 0
+   },
+   {
+    "label": "a₆",
+    "expr": "a6",
+    "digits": 0
+   },
+   {
+    "label": "a₇",
+    "expr": "a7",
+    "digits": 0
+   },
+   {
+    "label": "a₈",
+    "expr": "a8",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "init": 3
+   },
+   {
+    "init": 5
+   },
+   {
+    "init": 7
+   },
+   {
+    "init": 10
+   }
+  ],
+  "invariants": [
+   "a2-(mod(a1,2)==0 ? a1/2 : 3*a1+1)",
+   "a3-(mod(a2,2)==0 ? a2/2 : 3*a2+1)",
+   "a4-(mod(a3,2)==0 ? a3/2 : 3*a3+1)",
+   "a5-(mod(a4,2)==0 ? a4/2 : 3*a4+1)",
+   "a6-(mod(a5,2)==0 ? a5/2 : 3*a5+1)",
+   "a7-(mod(a6,2)==0 ? a6/2 : 3*a6+1)",
+   "a8-(mod(a7,2)==0 ? a7/2 : 3*a7+1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "init": 3
+    },
+    "expect": {
+     "a1": 3,
+     "a2": 10,
+     "a3": 5,
+     "a4": 16,
+     "a5": 8,
+     "a6": 4,
+     "a7": 2,
+     "a8": 1
+    }
+   },
+   {
+    "params": {
+     "init": 5
+    },
+    "expect": {
+     "a1": 5,
+     "a2": 16,
+     "a3": 8,
+     "a4": 4,
+     "a5": 2,
+     "a6": 1,
+     "a7": 4,
+     "a8": 2
+    }
+   },
+   {
+    "params": {
+     "init": 7
+    },
+    "expect": {
+     "a1": 7,
+     "a2": 22,
+     "a3": 11,
+     "a4": 34,
+     "a5": 17,
+     "a6": 52,
+     "a7": 26,
+     "a8": 13
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

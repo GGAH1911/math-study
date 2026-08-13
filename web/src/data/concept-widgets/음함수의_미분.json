@@ -1,0 +1,154 @@
+{
+ "id": "음함수의_미분",
+ "spec": {
+  "title": "음함수의 미분",
+  "params": [
+   {
+    "name": "px",
+    "label": "x좌표",
+    "type": "slider",
+    "min": -0.99,
+    "max": 0.99,
+    "init": 0.6,
+    "step": 0.01
+   }
+  ],
+  "scope": "py=sqrt(1-px^2); m=-px/py; fx=2*px; fy=2*py; h=0.6/sqrt(1+m^2); tx1=px-h; ty1=py-m*h; tx2=px+h; ty2=py+m*h",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=tx1",
+      "=ty1"
+     ],
+     "to": [
+      "=tx2",
+      "=ty2"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "dy/dx",
+    "expr": "m",
+    "digits": 4
+   },
+   {
+    "label": "f_x",
+    "expr": "fx",
+    "digits": 2
+   },
+   {
+    "label": "f_y",
+    "expr": "fy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "px": 0.6
+   },
+   {
+    "px": -0.6
+   },
+   {
+    "px": 0
+   },
+   {
+    "px": 0.9
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-1",
+   "m*py+px",
+   "fx+fy*m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "px": 0.6
+    },
+    "expect": {
+     "py": 0.8,
+     "m": -0.75,
+     "fx": 1.2,
+     "fy": 1.6
+    }
+   },
+   {
+    "params": {
+     "px": -0.6
+    },
+    "expect": {
+     "py": 0.8,
+     "m": 0.75,
+     "fx": -1.2,
+     "fy": 1.6
+    }
+   },
+   {
+    "params": {
+     "px": 0
+    },
+    "expect": {
+     "py": 1,
+     "m": 0,
+     "fx": 0,
+     "fy": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

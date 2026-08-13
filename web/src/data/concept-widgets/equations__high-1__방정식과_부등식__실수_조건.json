@@ -1,0 +1,122 @@
+{
+ "id": "equations/high-1/방정식과_부등식/실수_조건",
+ "spec": {
+  "title": "실수 조건: 이차방정식의 판별식",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "D=b^2-4*c; nRoots=D>0?2:(D==0?1:0); root1=D>=0?(-b-sqrt(D))/2:0; root2=D>=0?(-b+sqrt(D))/2:0",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + b*x + c",
+     "label": "y = x^2 + bx + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "nRoots",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "c": 1
+   },
+   {
+    "b": 2,
+    "c": 1
+   },
+   {
+    "b": 3,
+    "c": 2
+   },
+   {
+    "b": -1,
+    "c": -2
+   }
+  ],
+  "invariants": [
+   "D>=0?(root1^2+b*root1+c):0",
+   "D>=0?(root2^2+b*root2+c):0",
+   "D>=0?(root1+root2+b):0",
+   "D>=0?(root1*root2-c):0",
+   "D>=0?((root1-root2)^2-D):0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "c": -1
+    },
+    "expect": {
+     "D": 4,
+     "nRoots": 2,
+     "root1": -1,
+     "root2": 1
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "nRoots": 1,
+     "root1": -1,
+     "root2": -1
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": 1
+    },
+    "expect": {
+     "D": -4,
+     "nRoots": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "id": "logic/high-1/집합과_명제/조건부_집합",
+ "spec": {
+  "title": "조건부 집합: 슈퍼타원 |x|^n + |y|^n = r^n",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (지수)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "r (크기)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "x0 = r/2; y0 = (r^n - abs(x0)^n)^(1/n); check = abs(x0)^n + y0^n - r^n",
+  "plot": {
+   "range": [
+    "=-(r+0.5)",
+    "=r+0.5"
+   ],
+   "yRange": [
+    "=-(r+0.5)",
+    "=r+0.5"
+   ],
+   "fns": [
+    {
+     "fn": "(r^n - abs(x)^n)^(1/n)",
+     "label": "y=(r^n-|x|^n)^{1/n}",
+     "color": "blue"
+    },
+    {
+     "fn": "-(r^n - abs(x)^n)^(1/n)",
+     "label": "y=-(r^n-|x|^n)^{1/n}",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 2
+   },
+   {
+    "label": "r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "x0=r/2",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "y0",
+    "expr": "y0",
+    "digits": 4
+   },
+   {
+    "label": "|x0|^n + y0^n",
+    "expr": "abs(x0)^n + y0^n",
+    "digits": 4
+   },
+   {
+    "label": "r^n",
+    "expr": "r^n",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1,
+    "r": 2
+   },
+   {
+    "n": 2,
+    "r": 2
+   },
+   {
+    "n": 3,
+    "r": 2
+   },
+   {
+    "n": 2,
+    "r": 1
+   }
+  ],
+  "invariants": [
+   "abs(check)",
+   "abs(y0 - (r^n - (r/2)^n)^(1/n))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1,
+     "r": 2
+    },
+    "expect": {
+     "y0": 1,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "r": 2
+    },
+    "expect": {
+     "y0": 1.7320508075688772,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 2
+    },
+    "expect": {
+     "y0": 1.912931182772389,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "r": 1
+    },
+    "expect": {
+     "y0": 0.8660254037844386,
+     "check": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

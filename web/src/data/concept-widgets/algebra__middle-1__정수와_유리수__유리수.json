@@ -1,0 +1,148 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/유리수",
+ "spec": {
+  "title": "유리수의 정의: a/b",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자 a",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "배율 k",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "val=a/b; a2=a*k; b2=b*k; val2=a2/b2; diff=val2-val",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -10,
+      0
+     ],
+     "to": [
+      10,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=val",
+      0
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b 값",
+    "expr": "val",
+    "digits": 4
+   },
+   {
+    "label": "(a×k)/(b×k) 값",
+    "expr": "val2",
+    "digits": 4
+   },
+   {
+    "label": "차이",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "k": 1
+   },
+   {
+    "a": -3,
+    "b": 5,
+    "k": 2
+   },
+   {
+    "a": 7,
+    "b": 4,
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "abs(diff)",
+   "abs(a - b*val)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "k": 1
+    },
+    "expect": {
+     "val": 0.5,
+     "val2": 0.5,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 5,
+     "k": 2
+    },
+    "expect": {
+     "val": -0.6,
+     "val2": -0.6,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 7,
+     "b": 4,
+     "k": 3
+    },
+    "expect": {
+     "val": 1.75,
+     "val2": 1.75,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

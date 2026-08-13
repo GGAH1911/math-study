@@ -1,0 +1,124 @@
+{
+ "id": "equations/middle-2/연립일차방정식/연립방정식의_해",
+ "spec": {
+  "title": "연립방정식의 해 (두 직선의 교점)",
+  "params": [
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.2
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.2
+   }
+  ],
+  "scope": "x0=(p+q)/2; y0=(p-q)/2",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "-x + p",
+     "label": "x+y=p",
+     "color": "blue"
+    },
+    {
+     "fn": "x - q",
+     "label": "x-y=q",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "y",
+    "expr": "y0",
+    "digits": 2
+   },
+   {
+    "label": "검산 (x+y=p)",
+    "expr": "x0+y0-p",
+    "digits": 0
+   },
+   {
+    "label": "검산 (x-y=q)",
+    "expr": "x0-y0-q",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 3,
+    "q": 1
+   },
+   {
+    "p": 0,
+    "q": 0
+   },
+   {
+    "p": -2,
+    "q": 4
+   },
+   {
+    "p": 5,
+    "q": -3
+   }
+  ],
+  "invariants": [
+   "x0+y0-p",
+   "x0-y0-q"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 3,
+     "q": 1
+    },
+    "expect": {
+     "x0": 2,
+     "y0": 1
+    }
+   },
+   {
+    "params": {
+     "p": 0,
+     "q": 0
+    },
+    "expect": {
+     "x0": 0,
+     "y0": 0
+    }
+   },
+   {
+    "params": {
+     "p": -2,
+     "q": 4
+    },
+    "expect": {
+     "x0": 1,
+     "y0": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

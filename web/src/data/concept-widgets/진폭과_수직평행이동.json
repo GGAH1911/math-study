@@ -1,0 +1,141 @@
+{
+ "id": "진폭과_수직평행이동",
+ "spec": {
+  "title": "진폭과 수직평행이동",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "amp=abs(a); mx=b+amp; mn=b-amp; mid=b",
+  "plot": {
+   "range": [
+    -6.283,
+    6.283
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "a*sin(x)+b",
+     "label": "y=a sin x + b",
+     "color": "blue"
+    },
+    {
+     "fn": "mid",
+     "label": "중심선 y=b",
+     "color": "green"
+    },
+    {
+     "fn": "mx",
+     "label": "최댓값 y=b+|a|",
+     "color": "red"
+    },
+    {
+     "fn": "mn",
+     "label": "최솟값 y=b-|a|",
+     "color": "orange"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "진폭 |a|",
+    "expr": "amp"
+   },
+   {
+    "label": "최댓값",
+    "expr": "mx"
+   },
+   {
+    "label": "최솟값",
+    "expr": "mn"
+   },
+   {
+    "label": "중심선",
+    "expr": "mid"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": -1.5,
+    "b": -2
+   },
+   {
+    "a": 0.7,
+    "b": -0.3
+   },
+   {
+    "a": -3,
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "amp - (mx-mn)/2",
+   "mid - (mx+mn)/2",
+   "mx - mn - 2*amp"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "amp": 2,
+     "mx": 3,
+     "mn": -1,
+     "mid": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1.5,
+     "b": -2
+    },
+    "expect": {
+     "amp": 1.5,
+     "mx": -0.5,
+     "mn": -3.5,
+     "mid": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0.7,
+     "b": -0.3
+    },
+    "expect": {
+     "amp": 0.7,
+     "mx": 0.4,
+     "mn": -1,
+     "mid": -0.3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,200 @@
+{
+ "id": "algebra/middle-2/식의_계산/분수의_계산",
+ "spec": {
+  "title": "분수의 계산",
+  "params": [
+   {
+    "name": "op",
+    "label": "연산",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "분자 a",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 b",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "분자 c",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "분모 d",
+    "type": "slider",
+    "min": 1,
+    "max": 9,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "f1=a/b; f2=c/d; result=op==0?f1+f2:(op==1?f1-f2:(op==2?f1*f2:f1/f2)); minV=min(0,f1,f2,result)-0.5; maxV=max(1,f1,f2,result)+0.5",
+  "geometry": {
+   "range": [
+    "=minV",
+    "=maxV"
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=minV",
+      0
+     ],
+     "to": [
+      "=maxV",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=f1",
+      0
+     ],
+     "label": "a/b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=f2",
+      0
+     ],
+     "label": "c/d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=result",
+      0
+     ],
+     "label": "결과"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b",
+    "expr": "f1",
+    "digits": 4
+   },
+   {
+    "label": "c/d",
+    "expr": "f2",
+    "digits": 4
+   },
+   {
+    "label": "결과",
+    "expr": "result",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "op": 0,
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "d": 3
+   },
+   {
+    "op": 1,
+    "a": 3,
+    "b": 4,
+    "c": 1,
+    "d": 2
+   },
+   {
+    "op": 2,
+    "a": 2,
+    "b": 3,
+    "c": 3,
+    "d": 5
+   },
+   {
+    "op": 3,
+    "a": 4,
+    "b": 5,
+    "c": 2,
+    "d": 3
+   }
+  ],
+  "invariants": [
+   "op==0 ? abs(result - (a*d+b*c)/(b*d)) : (op==1 ? abs(result - (a*d-b*c)/(b*d)) : (op==2 ? abs(result - (a*c)/(b*d)) : abs(result - (a*d)/(b*c))))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "op": 0,
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "f1": 0.5,
+     "f2": 0.5,
+     "result": 1
+    }
+   },
+   {
+    "params": {
+     "op": 2,
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": 2
+    },
+    "expect": {
+     "f1": 0.5,
+     "f2": 0.5,
+     "result": 0.25
+    }
+   },
+   {
+    "params": {
+     "op": 3,
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": 4
+    },
+    "expect": {
+     "f1": 0.5,
+     "f2": 0.25,
+     "result": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

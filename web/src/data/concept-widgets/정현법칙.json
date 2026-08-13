@@ -1,0 +1,225 @@
+{
+ "id": "정현법칙",
+ "spec": {
+  "title": "정현법칙 탐구",
+  "params": [
+   {
+    "name": "angleA",
+    "label": "각 A",
+    "type": "slider",
+    "min": 10,
+    "max": 160,
+    "init": 50,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "angleB",
+    "label": "각 B",
+    "type": "slider",
+    "min": 10,
+    "max": 160,
+    "init": 60,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "Adeg = angleA; Bdeg = min(angleB, 170 - angleA); Arad = Adeg * pi / 180; Brad = Bdeg * pi / 180; Cdeg = 180 - Adeg - Bdeg; Crad = Cdeg * pi / 180; R = 1; a = 2 * R * sin(Arad); b = 2 * R * sin(Brad); c = 2 * R * sin(Crad); xA = R; yA = 0; Bpos = 2 * Crad; xB = R * cos(Bpos); yB = R * sin(Bpos); Cpos = 2 * Crad + 2 * Arad; xC = R * cos(Cpos); yC = R * sin(Cpos);",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=R"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=xA",
+       "=yA"
+      ],
+      [
+       "=xB",
+       "=yB"
+      ],
+      [
+       "=xC",
+       "=yC"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xA",
+      "=yA"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xB",
+      "=yB"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xC",
+      "=yC"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "각 A",
+    "expr": "Adeg",
+    "digits": 1
+   },
+   {
+    "label": "각 B",
+    "expr": "Bdeg",
+    "digits": 1
+   },
+   {
+    "label": "각 C",
+    "expr": "Cdeg",
+    "digits": 1
+   },
+   {
+    "label": "변 a",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "변 b",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "변 c",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "sin A",
+    "expr": "sin(Arad)",
+    "digits": 4
+   },
+   {
+    "label": "sin B",
+    "expr": "sin(Brad)",
+    "digits": 4
+   },
+   {
+    "label": "sin C",
+    "expr": "sin(Crad)",
+    "digits": 4
+   },
+   {
+    "label": "a/sin A",
+    "expr": "a / sin(Arad)",
+    "digits": 4
+   },
+   {
+    "label": "b/sin B",
+    "expr": "b / sin(Brad)",
+    "digits": 4
+   },
+   {
+    "label": "c/sin C",
+    "expr": "c / sin(Crad)",
+    "digits": 4
+   },
+   {
+    "label": "2R",
+    "expr": "2 * R",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "angleA": 30,
+    "angleB": 60
+   },
+   {
+    "angleA": 50,
+    "angleB": 50
+   },
+   {
+    "angleA": 120,
+    "angleB": 100
+   },
+   {
+    "angleA": 160,
+    "angleB": 10
+   }
+  ],
+  "invariants": [
+   "a / sin(Arad) - b / sin(Brad)",
+   "a / sin(Arad) - c / sin(Crad)",
+   "sqrt((xB-xC)^2 + (yB-yC)^2) - a",
+   "sqrt((xC-xA)^2 + (yC-yA)^2) - b",
+   "sqrt((xA-xB)^2 + (yA-yB)^2) - c",
+   "xA^2 + yA^2 - R^2",
+   "xB^2 + yB^2 - R^2",
+   "xC^2 + yC^2 - R^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "angleA": 30,
+     "angleB": 60
+    },
+    "expect": {
+     "a": 1,
+     "b": 1.7320508075688772,
+     "c": 2
+    }
+   },
+   {
+    "params": {
+     "angleA": 30,
+     "angleB": 30
+    },
+    "expect": {
+     "a": 1,
+     "b": 1,
+     "c": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "angleA": 90,
+     "angleB": 45
+    },
+    "expect": {
+     "a": 2,
+     "b": 1.4142135623730951,
+     "c": 1.4142135623730951
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

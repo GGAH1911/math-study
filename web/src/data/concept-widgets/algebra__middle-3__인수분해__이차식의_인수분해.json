@@ -1,0 +1,171 @@
+{
+ "id": "algebra/middle-3/인수분해/이차식의_인수분해",
+ "spec": {
+  "title": "이차식의 인수분해 (근을 이용한 인수분해)",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "beta",
+    "label": "β",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "a0=a; a = a0 == 0 ? 0.01 : a0; b = -a*(alpha+beta); c = a*alpha*beta; disc = b^2 - 4*a*c; falpha = a*alpha^2 + b*alpha + c; fbeta = a*beta^2 + b*beta + c; xmin = min(alpha,beta)-2; xmax = max(alpha,beta)+2; vx = -b/(2*a); vy = -disc/(4*a); ymin = min(0, vy)-2; ymax = max(0, vy)+2;",
+  "geometry": {
+   "range": [
+    "=xmin",
+    "=xmax"
+   ],
+   "yRange": [
+    "=ymin",
+    "=ymax"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    "=xmin",
+    "=xmax"
+   ],
+   "yRange": [
+    "=ymin",
+    "=ymax"
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "D",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "f(α)",
+    "expr": "falpha",
+    "digits": 6
+   },
+   {
+    "label": "f(β)",
+    "expr": "fbeta",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": 2,
+    "beta": 3,
+    "a": 1
+   },
+   {
+    "alpha": -2,
+    "beta": 1,
+    "a": -1
+   },
+   {
+    "alpha": -1,
+    "beta": -1,
+    "a": 2
+   },
+   {
+    "alpha": 1.5,
+    "beta": -2.5,
+    "a": 0.5
+   }
+  ],
+  "invariants": [
+   "disc - a^2*(alpha-beta)^2",
+   "a*alpha^2 + b*alpha + c",
+   "a*beta^2 + b*beta + c",
+   "b + a*(alpha+beta)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": 2,
+     "beta": 3,
+     "a": 1
+    },
+    "expect": {
+     "b": -5,
+     "c": 6,
+     "disc": 1,
+     "falpha": 0,
+     "fbeta": 0
+    }
+   },
+   {
+    "params": {
+     "alpha": -1,
+     "beta": 2,
+     "a": 2
+    },
+    "expect": {
+     "b": -2,
+     "c": -4,
+     "disc": 36,
+     "falpha": 0,
+     "fbeta": 0
+    }
+   },
+   {
+    "params": {
+     "alpha": 1,
+     "beta": 1,
+     "a": -1
+    },
+    "expect": {
+     "b": 2,
+     "c": -1,
+     "disc": 0,
+     "falpha": 0,
+     "fbeta": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

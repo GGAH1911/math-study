@@ -1,0 +1,127 @@
+{
+ "id": "조건부_점화식",
+ "spec": {
+  "title": "조건부 점화식 탐구",
+  "params": [
+   {
+    "name": "a0",
+    "label": "초기값 a₀",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.2,
+    "step": 0.01
+   },
+   {
+    "name": "mu",
+    "label": "매개변수 μ",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "a1 = a0 < 0.5 ? mu*a0 : mu*(1-a0); a2 = a1 < 0.5 ? mu*a1 : mu*(1-a1); a3 = a2 < 0.5 ? mu*a2 : mu*(1-a2); a4 = a3 < 0.5 ? mu*a3 : mu*(1-a3)",
+  "plot": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "fns": [
+    {
+     "fn": "x < 0.5 ? mu*x : mu*(1-x)",
+     "label": "f(x)"
+    },
+    {
+     "fn": "x",
+     "label": "y=x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a₀",
+    "expr": "a0",
+    "digits": 4
+   },
+   {
+    "label": "a₁",
+    "expr": "a1",
+    "digits": 4
+   },
+   {
+    "label": "a₂",
+    "expr": "a2",
+    "digits": 4
+   },
+   {
+    "label": "a₃",
+    "expr": "a3",
+    "digits": 4
+   },
+   {
+    "label": "a₄",
+    "expr": "a4",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a0": 0.1,
+    "mu": 0.8
+   },
+   {
+    "a0": 0.6,
+    "mu": 1.2
+   },
+   {
+    "a0": 0.35,
+    "mu": 1.9
+   },
+   {
+    "a0": 0.9,
+    "mu": 0.5
+   }
+  ],
+  "invariants": [
+   "a1 - (a0 < 0.5 ? mu*a0 : mu*(1-a0))",
+   "a2 - (a1 < 0.5 ? mu*a1 : mu*(1-a1))",
+   "a3 - (a2 < 0.5 ? mu*a2 : mu*(1-a2))",
+   "a4 - (a3 < 0.5 ? mu*a3 : mu*(1-a3))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a0": 0.2,
+     "mu": 1.5
+    },
+    "expect": {
+     "a1": 0.3,
+     "a2": 0.45,
+     "a3": 0.675,
+     "a4": 0.4875
+    }
+   },
+   {
+    "params": {
+     "a0": 0.8,
+     "mu": 2
+    },
+    "expect": {
+     "a1": 0.4,
+     "a2": 0.8,
+     "a3": 0.4,
+     "a4": 0.8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

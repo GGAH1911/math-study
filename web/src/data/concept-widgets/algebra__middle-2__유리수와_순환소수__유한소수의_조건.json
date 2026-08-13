@@ -1,0 +1,147 @@
+{
+ "id": "algebra/middle-2/유리수와_순환소수/유한소수의_조건",
+ "spec": {
+  "title": "유한소수의 조건",
+  "params": [
+   {
+    "name": "num",
+    "label": "분자",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "den",
+    "label": "분모",
+    "type": "slider",
+    "min": 2,
+    "max": 20,
+    "init": 7,
+    "step": 1
+   }
+  ],
+  "scope": "g = gcd(num, den); ra = num / g; rb = den / g; term = mod(1000000, rb) == 0 ? 1 : 0; frac = num/den - floor(num/den);",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    -0.2,
+    0.2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=frac",
+      0
+     ],
+     "label": "분수"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "기약분자",
+    "expr": "ra",
+    "digits": 0
+   },
+   {
+    "label": "기약분모",
+    "expr": "rb",
+    "digits": 0
+   },
+   {
+    "label": "유한소수?",
+    "expr": "term",
+    "digits": 0
+   },
+   {
+    "label": "소수값",
+    "expr": "num/den",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "num": 1,
+    "den": 2
+   },
+   {
+    "num": 1,
+    "den": 3
+   },
+   {
+    "num": 2,
+    "den": 4
+   },
+   {
+    "num": 7,
+    "den": 8
+   }
+  ],
+  "invariants": [
+   "ra*den - num*rb",
+   "(mod(1000000, rb)==0 ? 1 : 0) - term",
+   "frac - (num/den - floor(num/den))",
+   "term * mod(num*1000000, den)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "num": 1,
+     "den": 2
+    },
+    "expect": {
+     "ra": 1,
+     "rb": 2,
+     "term": 1,
+     "frac": 0.5
+    }
+   },
+   {
+    "params": {
+     "num": 1,
+     "den": 3
+    },
+    "expect": {
+     "ra": 1,
+     "rb": 3,
+     "term": 0,
+     "frac": 0.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "num": 2,
+     "den": 4
+    },
+    "expect": {
+     "ra": 1,
+     "rb": 2,
+     "term": 1,
+     "frac": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

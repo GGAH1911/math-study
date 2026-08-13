@@ -1,0 +1,128 @@
+{
+ "id": "equations/middle-1/일차방정식/선형방정식",
+ "spec": {
+  "title": "일차방정식 ax+by+c=0",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 2,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 2,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -4,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "x0=-c/a",
+  "plot": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -11,
+    11
+   ],
+   "fns": [
+    {
+     "fn": "-(a*x+c)/b",
+     "label": "ax+by+c=0",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x절편",
+    "expr": "x0",
+    "digits": 3
+   },
+   {
+    "label": "a·x₀+c",
+    "expr": "a*x0+c",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1,
+    "c": -4
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 2
+   },
+   {
+    "a": -1,
+    "b": 3,
+    "c": 5
+   },
+   {
+    "a": 3,
+    "b": -1,
+    "c": -6
+   }
+  ],
+  "invariants": [
+   "a*x0+c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": -4
+    },
+    "expect": {
+     "x0": 4
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 3,
+     "c": 5
+    },
+    "expect": {
+     "x0": 5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": -1,
+     "c": -6
+    },
+    "expect": {
+     "x0": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

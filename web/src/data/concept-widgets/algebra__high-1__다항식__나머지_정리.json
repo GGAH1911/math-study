@@ -1,0 +1,150 @@
+{
+ "id": "algebra/high-1/다항식/나머지_정리",
+ "spec": {
+  "title": "나머지 정리",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x−a의 상수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "x² 계수 p",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "x 계수 q",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "상수항 r",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 1
+   }
+  ],
+  "scope": "fa = p*a^2 + q*a + r; b = q + p*a; c = r + a*b",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "p*x^2 + q*x + r",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "fa",
+     "label": "y = f(a)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a) = 나머지",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "나머지 (나눗셈 전개)",
+    "expr": "c",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "p": 1,
+    "q": 0,
+    "r": -1
+   },
+   {
+    "a": -2,
+    "p": 2,
+    "q": 1,
+    "r": -2
+   },
+   {
+    "a": 3,
+    "p": -1,
+    "q": -1,
+    "r": 2
+   },
+   {
+    "a": 0,
+    "p": 1,
+    "q": -1,
+    "r": 0
+   }
+  ],
+  "invariants": [
+   "fa - c",
+   "fa - (p*a^2 + q*a + r)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "p": 1,
+     "q": 0,
+     "r": -1
+    },
+    "expect": {
+     "fa": 0,
+     "c": 0
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "p": 2,
+     "q": 1,
+     "r": -2
+    },
+    "expect": {
+     "fa": 4,
+     "c": 4
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "p": -1,
+     "q": -1,
+     "r": 2
+    },
+    "expect": {
+     "fa": -10,
+     "c": -10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

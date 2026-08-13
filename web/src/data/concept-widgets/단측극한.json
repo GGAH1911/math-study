@@ -1,0 +1,155 @@
+{
+ "id": "단측극한",
+ "spec": {
+  "title": "단측극한 (One-sided Limits)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "left = a^2; right = 2*a - 1; diff = right - left; exists = (abs(diff) < 1e-9) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=left"
+     ],
+     "radius": 0.06,
+     "label": "L- (좌극한)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=right"
+     ],
+     "label": "f(a) = L+ (우극한)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x < a ? x^2 : NaN",
+     "label": "y=x² (x<a)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "x >= a ? 2*x - 1 : NaN",
+     "label": "y=2x-1 (x≥a)",
+     "color": "#ff7f0e"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한 L⁻",
+    "expr": "left",
+    "digits": 4
+   },
+   {
+    "label": "우극한 L⁺",
+    "expr": "right",
+    "digits": 4
+   },
+   {
+    "label": "|L⁺-L⁻|",
+    "expr": "abs(diff)",
+    "digits": 4
+   },
+   {
+    "label": "극한 존재 (1=예, 0=아니오)",
+    "expr": "exists",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "left - a^2",
+   "right - (2*a - 1)",
+   "diff - (right - left)",
+   "exists - (a == 1 ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "left": 1,
+     "right": 1,
+     "diff": 0,
+     "exists": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "left": 0,
+     "right": -1,
+     "diff": -1,
+     "exists": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "left": 4,
+     "right": 3,
+     "diff": -1,
+     "exists": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

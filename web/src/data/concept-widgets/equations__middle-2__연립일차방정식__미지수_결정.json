@@ -1,0 +1,168 @@
+{
+ "id": "equations/middle-2/연립일차방정식/미지수_결정",
+ "spec": {
+  "title": "미지수 결정: 두 직선의 교점",
+  "params": [
+   {
+    "name": "m1",
+    "label": "기울기 m₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b1",
+    "label": "y절편 b₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "m2",
+    "label": "기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 1
+   },
+   {
+    "name": "b2",
+    "label": "y절편 b₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "denom=m1-m2; x_sol=denom==0 ? NaN : (b2-b1)/denom; y_sol=denom==0 ? NaN : m1*x_sol+b1",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "m1*x+b1",
+     "label": "L₁",
+     "color": "blue"
+    },
+    {
+     "fn": "m2*x+b2",
+     "label": "L₂",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x",
+    "expr": "x_sol",
+    "digits": 3
+   },
+   {
+    "label": "교점 y",
+    "expr": "y_sol",
+    "digits": 3
+   },
+   {
+    "label": "유일해",
+    "expr": "denom == 0 ? 0 : 1",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "b1": 1,
+    "m2": -1,
+    "b2": 3
+   },
+   {
+    "m1": 0,
+    "b1": 2,
+    "m2": 1,
+    "b2": 0
+   },
+   {
+    "m1": 2,
+    "b1": 0,
+    "m2": 1,
+    "b2": 1
+   },
+   {
+    "m1": 1,
+    "b1": 0,
+    "m2": 2,
+    "b2": -1
+   }
+  ],
+  "invariants": [
+   "y_sol - (m1*x_sol + b1)",
+   "y_sol - (m2*x_sol + b2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "b1": 1,
+     "m2": -1,
+     "b2": 3
+    },
+    "expect": {
+     "x_sol": 1,
+     "y_sol": 2
+    }
+   },
+   {
+    "params": {
+     "m1": 0,
+     "b1": 2,
+     "m2": 1,
+     "b2": 0
+    },
+    "expect": {
+     "x_sol": 2,
+     "y_sol": 2
+    }
+   },
+   {
+    "params": {
+     "m1": 2,
+     "b1": 0,
+     "m2": 1,
+     "b2": 1
+    },
+    "expect": {
+     "x_sol": 1,
+     "y_sol": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

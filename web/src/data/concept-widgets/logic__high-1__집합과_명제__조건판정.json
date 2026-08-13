@@ -1,0 +1,200 @@
+{
+ "id": "logic/high-1/집합과_명제/조건판정",
+ "spec": {
+  "title": "조건판정: 두 조건 P, Q의 포함 관계",
+  "params": [
+   {
+    "name": "pc",
+    "label": "P의 중심",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "pr",
+    "label": "P의 반지름(폭/2)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "qc",
+    "label": "Q의 중심",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "qr",
+    "label": "Q의 반지름(폭/2)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "p1=pc-pr; p2=pc+pr; q1=qc-qr; q2=qc+qr; p_sub_q = (p1 >= q1 and p2 <= q2) ? 1 : 0; q_sub_p = (q1 >= p1 and q2 <= p2) ? 1 : 0;",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "start": [
+      "=p1",
+      0
+     ],
+     "end": [
+      "=p2",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "start": [
+      "=q1",
+      -0.5
+     ],
+     "end": [
+      "=q2",
+      -0.5
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pc",
+      0
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=qc",
+      -0.5
+     ],
+     "label": "Q"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P⊂Q (P⇒Q, 충분조건)",
+    "expr": "p_sub_q",
+    "digits": 0
+   },
+   {
+    "label": "Q⊂P (Q⇒P, 필요조건)",
+    "expr": "q_sub_p",
+    "digits": 0
+   },
+   {
+    "label": "필요충분조건 (P⇔Q)",
+    "expr": "p_sub_q * q_sub_p",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pc": -1,
+    "pr": 1,
+    "qc": -1,
+    "qr": 2
+   },
+   {
+    "pc": -1,
+    "pr": 1,
+    "qc": 1,
+    "qr": 2
+   },
+   {
+    "pc": -1,
+    "pr": 1,
+    "qc": -1,
+    "qr": 1
+   },
+   {
+    "pc": 0,
+    "pr": 2,
+    "qc": 0,
+    "qr": 1
+   }
+  ],
+  "invariants": [
+   "p2-p1-2*pr",
+   "q2-q1-2*qr",
+   "p_sub_q*(max(0,q1-p1)+max(0,p2-q2))",
+   "q_sub_p*(max(0,p1-q1)+max(0,q2-p2))",
+   "p_sub_q*q_sub_p*((pc-qc)^2+(pr-qr)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pc": -1,
+     "pr": 1,
+     "qc": -1,
+     "qr": 2
+    },
+    "expect": {
+     "p1": -2,
+     "p2": 0,
+     "q1": -3,
+     "q2": 1,
+     "p_sub_q": 1,
+     "q_sub_p": 0
+    }
+   },
+   {
+    "params": {
+     "pc": -1,
+     "pr": 1,
+     "qc": 1,
+     "qr": 2
+    },
+    "expect": {
+     "p1": -2,
+     "p2": 0,
+     "q1": -1,
+     "q2": 3,
+     "p_sub_q": 0,
+     "q_sub_p": 0
+    }
+   },
+   {
+    "params": {
+     "pc": -1,
+     "pr": 1,
+     "qc": -1,
+     "qr": 1
+    },
+    "expect": {
+     "p1": -2,
+     "p2": 0,
+     "q1": -2,
+     "q2": 0,
+     "p_sub_q": 1,
+     "q_sub_p": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

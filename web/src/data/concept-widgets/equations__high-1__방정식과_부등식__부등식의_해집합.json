@@ -1,0 +1,141 @@
+{
+ "id": "equations/high-1/방정식과_부등식/부등식의_해집합",
+ "spec": {
+  "title": "부등식의 해집합",
+  "params": [
+   {
+    "name": "c",
+    "label": "중심 c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "반길이 d",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "L = c - d; R = c + d; eps = 0.06; segStart = L + eps; segEnd = R; testX = (L + R)/2; valid = (testX > L ? 1 : 0) * (testX <= R ? 1 : 0)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=segStart",
+      0
+     ],
+     "to": [
+      "=segEnd",
+      0
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=L",
+      0
+     ],
+     "radius": 0.12
+    },
+    {
+     "type": "point",
+     "at": [
+      "=R",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "왼쪽 경계 L",
+    "expr": "L",
+    "digits": 2
+   },
+   {
+    "label": "오른쪽 경계 R",
+    "expr": "R",
+    "digits": 2
+   },
+   {
+    "label": "구간 길이",
+    "expr": "R - L",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0,
+    "d": 1
+   },
+   {
+    "c": 1.5,
+    "d": 0.5
+   },
+   {
+    "c": -1,
+    "d": 2.5
+   },
+   {
+    "c": 0.2,
+    "d": 0.2
+   }
+  ],
+  "invariants": [
+   "abs((R - L) - 2*d)",
+   "abs(valid - 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0,
+     "d": 1
+    },
+    "expect": {
+     "L": -1,
+     "R": 1
+    }
+   },
+   {
+    "params": {
+     "c": 1.5,
+     "d": 0.5
+    },
+    "expect": {
+     "L": 1,
+     "R": 2
+    }
+   },
+   {
+    "params": {
+     "c": -1,
+     "d": 2.5
+    },
+    "expect": {
+     "L": -3.5,
+     "R": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

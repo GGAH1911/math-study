@@ -1,0 +1,165 @@
+{
+ "id": "약수의합",
+ "spec": {
+  "title": "약수의 합",
+  "params": [
+   {
+    "name": "a",
+    "label": "2의 지수 a",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "3의 지수 b",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "p1=2; p2=3; n=p1^a*p2^b; s1=(p1^(a+1)-1)/(p1-1); s2=(p2^(b+1)-1)/(p2-1); sigma=s1*s2; divcnt=(a+1)*(b+1); sigma_enum=sum([((0<=a) and (0<=b)) ? 1 : 0, ((0<=a) and (1<=b)) ? 3 : 0, ((0<=a) and (2<=b)) ? 9 : 0, ((1<=a) and (0<=b)) ? 2 : 0, ((1<=a) and (1<=b)) ? 6 : 0, ((1<=a) and (2<=b)) ? 18 : 0, ((2<=a) and (0<=b)) ? 4 : 0, ((2<=a) and (1<=b)) ? 12 : 0, ((2<=a) and (2<=b)) ? 36 : 0, ((3<=a) and (0<=b)) ? 8 : 0, ((3<=a) and (1<=b)) ? 24 : 0, ((3<=a) and (2<=b)) ? 72 : 0])",
+  "geometry": {
+   "range": [
+    0,
+    20
+   ],
+   "yRange": [
+    0,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=s1",
+       0
+      ],
+      [
+       "=s1",
+       "=s2"
+      ],
+      [
+       0,
+       "=s2"
+      ]
+     ],
+     "label": "σ(n)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "σ(n)",
+    "expr": "sigma",
+    "digits": 0
+   },
+   {
+    "label": "n",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "σ(2^a)",
+    "expr": "s1",
+    "digits": 0
+   },
+   {
+    "label": "σ(3^b)",
+    "expr": "s2",
+    "digits": 0
+   },
+   {
+    "label": "약수의 개수",
+    "expr": "divcnt",
+    "digits": 0
+   },
+   {
+    "label": "직접 더한 합",
+    "expr": "sigma_enum",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 0
+   },
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": 3,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "sigma_enum - sigma"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "sigma": 1,
+     "sigma_enum": 1,
+     "s1": 1,
+     "s2": 1,
+     "n": 1,
+     "divcnt": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1
+    },
+    "expect": {
+     "sigma": 12,
+     "sigma_enum": 12,
+     "s1": 3,
+     "s2": 4,
+     "n": 6,
+     "divcnt": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "sigma": 28,
+     "sigma_enum": 28,
+     "s1": 7,
+     "s2": 4,
+     "n": 12,
+     "divcnt": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

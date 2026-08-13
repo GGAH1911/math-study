@@ -1,0 +1,183 @@
+{
+ "id": "logic/high-1/집합과_명제/여집합",
+ "spec": {
+  "title": "여집합",
+  "params": [
+   {
+    "name": "t",
+    "label": "경계값 t",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "midA=t/2; midC=(t+10)/2; lenA=t; lenC=10-t",
+  "geometry": {
+   "range": [
+    -0.5,
+    10.5
+   ],
+   "yRange": [
+    -0.8,
+    0.8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       -0.3
+      ],
+      [
+       10,
+       -0.3
+      ],
+      [
+       10,
+       0.3
+      ],
+      [
+       0,
+       0.3
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       -0.3
+      ],
+      [
+       "=t",
+       -0.3
+      ],
+      [
+       "=t",
+       0.3
+      ],
+      [
+       0,
+       0.3
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=t",
+       -0.3
+      ],
+      [
+       10,
+       -0.3
+      ],
+      [
+       10,
+       0.3
+      ],
+      [
+       "=t",
+       0.3
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=midA",
+      0.45
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=midC",
+      0.45
+     ],
+     "label": "A^c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A의 길이",
+    "expr": "lenA"
+   },
+   {
+    "label": "A^c의 길이",
+    "expr": "lenC"
+   },
+   {
+    "label": "전체 길이",
+    "expr": "lenA+lenC"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 1
+   },
+   {
+    "t": 3.5
+   },
+   {
+    "t": 6.2
+   },
+   {
+    "t": 9.4
+   }
+  ],
+  "invariants": [
+   "lenA+lenC-10",
+   "(t > 0 ? ((midA >= 0 and midA < t) ? 1 : 0) - 1 : 0)",
+   "((midC >= t and midC <= 10) ? 1 : 0) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 2.5
+    },
+    "expect": {
+     "lenA": 2.5,
+     "lenC": 7.5,
+     "midA": 1.25,
+     "midC": 6.25
+    }
+   },
+   {
+    "params": {
+     "t": 7
+    },
+    "expect": {
+     "lenA": 7,
+     "lenC": 3,
+     "midA": 3.5,
+     "midC": 8.5
+    }
+   },
+   {
+    "params": {
+     "t": 8.5
+    },
+    "expect": {
+     "lenA": 8.5,
+     "lenC": 1.5,
+     "midA": 4.25,
+     "midC": 9.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

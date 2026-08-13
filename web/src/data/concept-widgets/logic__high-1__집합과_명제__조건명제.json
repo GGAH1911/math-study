@@ -1,0 +1,110 @@
+{
+ "id": "logic/high-1/집합과_명제/조건명제",
+ "spec": {
+  "title": "조건명제 p→q",
+  "params": [
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "imp = 1 - p*(1-q)",
+  "geometry": {
+   "range": [
+    -1,
+    1
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": []
+  },
+  "readout": [
+   {
+    "label": "p",
+    "expr": "p",
+    "digits": 0
+   },
+   {
+    "label": "q",
+    "expr": "q",
+    "digits": 0
+   },
+   {
+    "label": "p→q",
+    "expr": "imp",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 0,
+    "q": 0
+   },
+   {
+    "p": 0,
+    "q": 1
+   },
+   {
+    "p": 1,
+    "q": 0
+   },
+   {
+    "p": 1,
+    "q": 1
+   }
+  ],
+  "invariants": [
+   "abs(imp - (1 - p*(1-q)))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "q": 0
+    },
+    "expect": {
+     "imp": 0
+    }
+   },
+   {
+    "params": {
+     "p": 0,
+     "q": 0
+    },
+    "expect": {
+     "imp": 1
+    }
+   },
+   {
+    "params": {
+     "p": 0,
+     "q": 1
+    },
+    "expect": {
+     "imp": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

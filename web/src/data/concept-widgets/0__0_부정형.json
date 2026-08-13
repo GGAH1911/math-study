@@ -1,0 +1,165 @@
+{
+ "id": "0/0_부정형",
+ "spec": {
+  "title": "0/0 부정형: 인수분해로 극한 구하기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "h",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "eval_x = a + h; eval_y = (eval_x^2 - a^2)/(eval_x - a); lim = 2*a",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=lim"
+     ],
+     "radius": 0.15
+    },
+    {
+     "type": "point",
+     "at": [
+      "=eval_x",
+      "=eval_y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x + a",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a+h)",
+    "expr": "eval_y",
+    "digits": 6
+   },
+   {
+    "label": "극한값",
+    "expr": "lim",
+    "digits": 6
+   },
+   {
+    "label": "차이",
+    "expr": "eval_y - lim",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -2,
+    "h": 1
+   },
+   {
+    "a": 0.5,
+    "h": 0.2
+   },
+   {
+    "a": 3,
+    "h": 1.5
+   }
+  ],
+  "invariants": [
+   "eval_y - 2*a - h",
+   "eval_y - lim - h",
+   "lim - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "eval_x": 1.5,
+     "eval_y": 2.5,
+     "lim": 2
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "h": 1
+    },
+    "expect": {
+     "eval_x": -1,
+     "eval_y": -3,
+     "lim": -4
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "h": 0.2
+    },
+    "expect": {
+     "eval_x": 0.7,
+     "eval_y": 1.2,
+     "lim": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "h": 1.5
+    },
+    "expect": {
+     "eval_x": 4.5,
+     "eval_y": 7.5,
+     "lim": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

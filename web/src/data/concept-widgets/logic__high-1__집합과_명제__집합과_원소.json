@@ -1,0 +1,155 @@
+{
+ "id": "logic/high-1/집합과_명제/집합과_원소",
+ "spec": {
+  "title": "집합과 원소",
+  "params": [
+   {
+    "name": "x",
+    "label": "원소 x",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "member = (x >= 1 and x <= 5) ? 1 : 0;",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0.5,
+       -0.8
+      ],
+      [
+       5.5,
+       -0.8
+      ],
+      [
+       5.5,
+       0.8
+      ],
+      [
+       0.5,
+       0.8
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "1"
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ],
+     "label": "2"
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ],
+     "label": "3"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ],
+     "label": "4"
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      0
+     ],
+     "label": "5"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0.6
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x ∈ A (1=참, 0=거짓)",
+    "expr": "member",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 1
+   },
+   {
+    "x": 3
+   },
+   {
+    "x": 5
+   },
+   {
+    "x": 7
+   }
+  ],
+  "invariants": [
+   "member * (member - 1)",
+   "abs(member - ((x >= 1 and x <= 5) ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "member": 1
+    }
+   },
+   {
+    "params": {
+     "x": 5
+    },
+    "expect": {
+     "member": 1
+    }
+   },
+   {
+    "params": {
+     "x": 6
+    },
+    "expect": {
+     "member": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

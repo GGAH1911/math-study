@@ -1,0 +1,181 @@
+{
+ "id": "logic/high-1/집합과_명제/합동식",
+ "spec": {
+  "title": "합동식 탐구: a ≡ b (mod m)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 7,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 16,
+    "step": 1
+   },
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "remA=mod(a,m); remB=mod(b,m); angA=(remA/m)*2*pi - pi/2; angB=(remB/m)*2*pi - pi/2; pxA=cos(angA); pyA=sin(angA); pxB=cos(angB); pyB=sin(angB); cong=mod(a-b,m)==0 ? 1 : 0",
+  "geometry": {
+   "range": [
+    -1.3,
+    1.3
+   ],
+   "yRange": [
+    -1.3,
+    1.3
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=pxA",
+      "=pyA"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=pxB",
+      "=pyB"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pxA",
+      "=pyA"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pxB",
+      "=pyB"
+     ],
+     "label": "b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a mod m",
+    "expr": "remA",
+    "digits": 0
+   },
+   {
+    "label": "b mod m",
+    "expr": "remB",
+    "digits": 0
+   },
+   {
+    "label": "합동 (1이면 참)",
+    "expr": "cong",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 7,
+    "b": 16,
+    "m": 3
+   },
+   {
+    "a": 7,
+    "b": 17,
+    "m": 3
+   },
+   {
+    "a": 10,
+    "b": 10,
+    "m": 5
+   },
+   {
+    "a": 5,
+    "b": 7,
+    "m": 3
+   }
+  ],
+  "invariants": [
+   "pxA^2+pyA^2-1",
+   "pxB^2+pyB^2-1",
+   "mod(a-b,m)-mod(remA-remB,m)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 7,
+     "b": 16,
+     "m": 3
+    },
+    "expect": {
+     "remA": 1,
+     "remB": 1,
+     "cong": 1
+    }
+   },
+   {
+    "params": {
+     "a": 7,
+     "b": 17,
+     "m": 3
+    },
+    "expect": {
+     "remA": 1,
+     "remB": 2,
+     "cong": 0
+    }
+   },
+   {
+    "params": {
+     "a": 10,
+     "b": 10,
+     "m": 5
+    },
+    "expect": {
+     "remA": 0,
+     "remB": 0,
+     "cong": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

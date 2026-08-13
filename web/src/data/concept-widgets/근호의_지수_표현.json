@@ -1,0 +1,142 @@
+{
+ "id": "근호의_지수_표현",
+ "spec": {
+  "title": "근호의 지수 표현: n제곱근과 분수 지수",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (밑)",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 16,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (근의 차수)",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "root = a^(1/n); check = root^n - a;",
+  "geometry": {
+   "range": [
+    0,
+    110
+   ],
+   "yRange": [
+    -0.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      110,
+      0
+     ],
+     "label": "수직선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=root",
+      0
+     ],
+     "label": "n제곱근"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^(1/n)",
+    "expr": "root",
+    "digits": 6
+   },
+   {
+    "label": "n제곱근 확인 (root^n)",
+    "expr": "root^n",
+    "digits": 6
+   },
+   {
+    "label": "차이 (root^n - a)",
+    "expr": "check",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 16,
+    "n": 2
+   },
+   {
+    "a": 27,
+    "n": 3
+   },
+   {
+    "a": 32,
+    "n": 5
+   },
+   {
+    "a": 64,
+    "n": 3
+   }
+  ],
+  "invariants": [
+   "root^n - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 16,
+     "n": 2
+    },
+    "expect": {
+     "root": 4,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "a": 27,
+     "n": 3
+    },
+    "expect": {
+     "root": 3,
+     "check": 0
+    }
+   },
+   {
+    "params": {
+     "a": 32,
+     "n": 5
+    },
+    "expect": {
+     "root": 2,
+     "check": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,342 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬의_곱셈",
+ "spec": {
+  "title": "행렬의 곱셈",
+  "params": [
+   {
+    "name": "a11",
+    "label": "a₁₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "a12",
+    "label": "a₁₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 1
+   },
+   {
+    "name": "a21",
+    "label": "a₂₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "a22",
+    "label": "a₂₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b11",
+    "label": "b₁₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b12",
+    "label": "b₁₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b21",
+    "label": "b₂₁",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b22",
+    "label": "b₂₂",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "basis",
+    "label": "기저 벡터",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "vx = basis==1 ? 1 : 0; vy = basis==1 ? 0 : 1; c11 = a11*b11 + a12*b21; c12 = a11*b12 + a12*b22; c21 = a21*b11 + a22*b21; c22 = a21*b12 + a22*b22; detA = a11*a22 - a12*a21; detB = b11*b22 - b12*b21; detC = c11*c22 - c12*c21; u_x = basis==1 ? b11 : b12; u_y = basis==1 ? b21 : b22; w_x = a11*u_x + a12*u_y; w_y = a21*u_x + a22*u_y;",
+  "geometry": {
+   "range": [
+    -9,
+    9
+   ],
+   "yRange": [
+    -9,
+    9
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "start": [
+      0,
+      0
+     ],
+     "end": [
+      "=vx",
+      "=vy"
+     ]
+    },
+    {
+     "type": "segment",
+     "start": [
+      0,
+      0
+     ],
+     "end": [
+      "=u_x",
+      "=u_y"
+     ]
+    },
+    {
+     "type": "segment",
+     "start": [
+      0,
+      0
+     ],
+     "end": [
+      "=w_x",
+      "=w_y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "v"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=u_x",
+      "=u_y"
+     ],
+     "label": "Bv"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=w_x",
+      "=w_y"
+     ],
+     "label": "ABv"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "AB의 (1,1) 성분",
+    "expr": "c11",
+    "digits": 2
+   },
+   {
+    "label": "AB의 (1,2) 성분",
+    "expr": "c12",
+    "digits": 2
+   },
+   {
+    "label": "AB의 (2,1) 성분",
+    "expr": "c21",
+    "digits": 2
+   },
+   {
+    "label": "AB의 (2,2) 성분",
+    "expr": "c22",
+    "digits": 2
+   },
+   {
+    "label": "Bv의 x좌표",
+    "expr": "u_x",
+    "digits": 2
+   },
+   {
+    "label": "Bv의 y좌표",
+    "expr": "u_y",
+    "digits": 2
+   },
+   {
+    "label": "ABv의 x좌표",
+    "expr": "w_x",
+    "digits": 2
+   },
+   {
+    "label": "ABv의 y좌표",
+    "expr": "w_y",
+    "digits": 2
+   },
+   {
+    "label": "det(AB)-det(A)det(B)",
+    "expr": "detC - detA*detB",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a11": 0,
+    "a12": -1,
+    "a21": 1,
+    "a22": 0,
+    "b11": 1,
+    "b12": 1,
+    "b21": 0,
+    "b22": 1,
+    "basis": 1
+   },
+   {
+    "a11": 0,
+    "a12": -1,
+    "a21": 1,
+    "a22": 0,
+    "b11": 1,
+    "b12": 1,
+    "b21": 0,
+    "b22": 1,
+    "basis": 2
+   },
+   {
+    "a11": 1,
+    "a12": 0,
+    "a21": 0,
+    "a22": 2,
+    "b11": 2,
+    "b12": 1,
+    "b21": 0,
+    "b22": 1,
+    "basis": 1
+   },
+   {
+    "a11": 0,
+    "a12": -1,
+    "a21": 1,
+    "a22": 0,
+    "b11": 2,
+    "b12": 1,
+    "b21": 1,
+    "b22": 1,
+    "basis": 1
+   }
+  ],
+  "invariants": [
+   "abs(w_x - (basis==1 ? c11 : c12))",
+   "abs(w_y - (basis==1 ? c21 : c22))",
+   "abs(detC - detA*detB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a11": 1,
+     "a12": 0,
+     "a21": 0,
+     "a22": 2,
+     "b11": 2,
+     "b12": 1,
+     "b21": 0,
+     "b22": 1,
+     "basis": 1
+    },
+    "expect": {
+     "c11": 2,
+     "c12": 1,
+     "c21": 0,
+     "c22": 2,
+     "u_x": 2,
+     "u_y": 0,
+     "w_x": 2,
+     "w_y": 0,
+     "detA": 2,
+     "detB": 2,
+     "detC": 4
+    }
+   },
+   {
+    "params": {
+     "a11": 1,
+     "a12": 0,
+     "a21": 0,
+     "a22": 2,
+     "b11": 2,
+     "b12": 1,
+     "b21": 0,
+     "b22": 1,
+     "basis": 2
+    },
+    "expect": {
+     "c11": 2,
+     "c12": 1,
+     "c21": 0,
+     "c22": 2,
+     "u_x": 1,
+     "u_y": 1,
+     "w_x": 1,
+     "w_y": 2,
+     "detA": 2,
+     "detB": 2,
+     "detC": 4
+    }
+   },
+   {
+    "params": {
+     "a11": 0,
+     "a12": -1,
+     "a21": 1,
+     "a22": 0,
+     "b11": 2,
+     "b12": 1,
+     "b21": 1,
+     "b22": 1,
+     "basis": 1
+    },
+    "expect": {
+     "c11": -1,
+     "c12": -1,
+     "c21": 2,
+     "c22": 1,
+     "u_x": 2,
+     "u_y": 1,
+     "w_x": -1,
+     "w_y": 2,
+     "detA": 1,
+     "detB": 1,
+     "detC": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,212 @@
+{
+ "id": "내분점_조건",
+ "spec": {
+  "title": "내분점 조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 8,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "loga=log(a); logc=log(c); logb=(n*loga+m*logc)/(m+n); b=exp(logb);",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=loga",
+      0
+     ],
+     "to": [
+      "=logc",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=loga",
+      0
+     ],
+     "label": "log a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=logb",
+      0
+     ],
+     "label": "log b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=logc",
+      0
+     ],
+     "label": "log c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log a",
+    "expr": "loga",
+    "digits": 6
+   },
+   {
+    "label": "log b",
+    "expr": "logb",
+    "digits": 6
+   },
+   {
+    "label": "log c",
+    "expr": "logc",
+    "digits": 6
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 6
+   },
+   {
+    "label": "b^(m+n)",
+    "expr": "b^(m+n)",
+    "digits": 6
+   },
+   {
+    "label": "a^n * c^m",
+    "expr": "a^n * c^m",
+    "digits": 6
+   },
+   {
+    "label": "차이",
+    "expr": "b^(m+n) - a^n*c^m",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "c": 8,
+    "m": 1,
+    "n": 1
+   },
+   {
+    "a": 1,
+    "c": 8,
+    "m": 1,
+    "n": 2
+   },
+   {
+    "a": 2,
+    "c": 16,
+    "m": 1,
+    "n": 2
+   },
+   {
+    "a": 3,
+    "c": 5,
+    "m": 2,
+    "n": 3
+   }
+  ],
+  "invariants": [
+   "abs((m+n)*logb - (n*loga + m*logc))",
+   "abs(b^(m+n) - a^n*c^m)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "c": 8,
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "loga": 0.6931471805599453,
+     "logc": 2.0794415416798357,
+     "logb": 1.3862943611198906,
+     "b": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "c": 8,
+     "m": 1,
+     "n": 2
+    },
+    "expect": {
+     "loga": 0,
+     "logc": 2.0794415416798357,
+     "logb": 0.6931471805599453,
+     "b": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "c": 16,
+     "m": 1,
+     "n": 2
+    },
+    "expect": {
+     "loga": 0.6931471805599453,
+     "logc": 2.772588722239781,
+     "logb": 1.3862943611198906,
+     "b": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

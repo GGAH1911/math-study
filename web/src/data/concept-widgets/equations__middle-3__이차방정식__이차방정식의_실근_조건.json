@@ -1,0 +1,124 @@
+{
+ "id": "equations/middle-3/이차방정식/이차방정식의_실근_조건",
+ "spec": {
+  "title": "이차방정식의 실근 조건",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = b*b - 4*c; nreal = D > 1e-9 ? 2 : (D < -1e-9 ? 0 : 1); r1 = D >= 0 ? (-b - sqrt(D))/2 : 0; r2 = D >= 0 ? (-b + sqrt(D))/2 : 0;",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "x*x + b*x + c",
+     "label": "y = x² + bx + c",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 4
+   },
+   {
+    "label": "실근 개수",
+    "expr": "nreal"
+   },
+   {
+    "label": "근 x₁",
+    "expr": "r1",
+    "digits": 4
+   },
+   {
+    "label": "근 x₂",
+    "expr": "r2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -3,
+    "c": 2
+   },
+   {
+    "b": -4,
+    "c": 4
+   },
+   {
+    "b": 0,
+    "c": -1
+   }
+  ],
+  "invariants": [
+   "abs((r1 + r2) + b)",
+   "abs(r1*r2 - c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": -3,
+     "c": 2
+    },
+    "expect": {
+     "D": 1,
+     "nreal": 2,
+     "r1": 1,
+     "r2": 2
+    }
+   },
+   {
+    "params": {
+     "b": -4,
+     "c": 4
+    },
+    "expect": {
+     "D": 0,
+     "nreal": 1,
+     "r1": 2,
+     "r2": 2
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 5
+    },
+    "expect": {
+     "D": -16,
+     "nreal": 0,
+     "r1": 0,
+     "r2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "id": "equations/middle-1/일차방정식/해_근",
+ "spec": {
+  "title": "일차방정식의 해",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "y절편 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.5
+   }
+  ],
+  "scope": "root = -b/a; f_root = a*root + b",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x + b",
+     "label": "y = ax + b",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해 x",
+    "expr": "root",
+    "digits": 3
+   },
+   {
+    "label": "f(해)",
+    "expr": "f_root",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2
+   },
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 0.5,
+    "b": 4
+   },
+   {
+    "a": 3,
+    "b": -5
+   }
+  ],
+  "invariants": [
+   "a*root + b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": -3
+    },
+    "expect": {
+     "root": 1.5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "root": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": -1
+    },
+    "expect": {
+     "root": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

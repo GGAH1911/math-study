@@ -1,0 +1,156 @@
+{
+ "id": "경우의_수_분석",
+ "spec": {
+  "title": "경우의 수 분석: n=6일 때 서로 다른 직선의 개수",
+  "params": [
+   {
+    "name": "m",
+    "label": "한 직선 위의 점의 개수 m",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "x1=0; y1=0; x2=1; y2=0; x3=m>=3 ? 2 : 0; y3=m>=3 ? 0 : 2; x4=3; y4=m>=4 ? 0 : 1; x5=m>=5 ? 4 : 5; y5=m>=5 ? 0 : 4; x6=m>=6 ? 5 : 2; y6=m>=6 ? 0 : 5; dup=combinations(m,2)-1; lines=combinations(6,2)-combinations(m,2)+1",
+  "geometry": {
+   "range": [
+    -0.5,
+    5.5
+   ],
+   "yRange": [
+    -0.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      "=-0.5",
+      "=0"
+     ],
+     "to": [
+      "=5.5",
+      "=0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "P1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "P2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "P3"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ],
+     "label": "P4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      "=y5"
+     ],
+     "label": "P5"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x6",
+      "=y6"
+     ],
+     "label": "P6"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "모든 점 쌍의 수 C(6,2)",
+    "expr": "combinations(6,2)",
+    "digits": 0
+   },
+   {
+    "label": "중복되는 직선 수 C(m,2)-1",
+    "expr": "dup",
+    "digits": 0
+   },
+   {
+    "label": "서로 다른 직선의 수",
+    "expr": "lines",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2
+   },
+   {
+    "m": 3
+   },
+   {
+    "m": 4
+   },
+   {
+    "m": 6
+   }
+  ],
+  "invariants": [
+   "lines + dup - combinations(6,2)",
+   "lines - (combinations(6,2) - combinations(m,2) + 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2
+    },
+    "expect": {
+     "lines": 15
+    }
+   },
+   {
+    "params": {
+     "m": 4
+    },
+    "expect": {
+     "lines": 10
+    }
+   },
+   {
+    "params": {
+     "m": 6
+    },
+    "expect": {
+     "lines": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

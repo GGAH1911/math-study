@@ -1,0 +1,147 @@
+{
+ "id": "함수값의_부등식",
+ "spec": {
+  "title": "함수값의 부등식",
+  "params": [
+   {
+    "name": "a",
+    "label": "기울기 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "f1 = a*x1; f2 = a*x2; less = f1 < f2 ? 1 : 0; mono = a>0 ? 1 : (a<0 ? -1 : 0);",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x",
+     "label": "f(x)=ax",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₁)",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "f(x₁)<f(x₂) (1:참,0:거짓)",
+    "expr": "less",
+    "digits": 0
+   },
+   {
+    "label": "단조성 (1:증가,-1:감소)",
+    "expr": "mono",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.5,
+    "x1": -2,
+    "x2": 2
+   },
+   {
+    "a": -0.5,
+    "x1": 1,
+    "x2": -3
+   },
+   {
+    "a": 2.3,
+    "x1": 0,
+    "x2": 1.2
+   },
+   {
+    "a": -1,
+    "x1": -1,
+    "x2": -2
+   }
+  ],
+  "invariants": [
+   "f1 - a*x1",
+   "f2 - a*x2",
+   "less - (a*(x1-x2) < 0 ? 1 : 0)",
+   "mono - (a>0?1:(a<0?-1:0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x1": 1,
+     "x2": 3
+    },
+    "expect": {
+     "f1": 2,
+     "f2": 6,
+     "less": 1,
+     "mono": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "x1": 2,
+     "x2": 1
+    },
+    "expect": {
+     "f1": -2,
+     "f2": -1,
+     "less": 1,
+     "mono": -1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x1": 3,
+     "x2": 1
+    },
+    "expect": {
+     "f1": 6,
+     "f2": 2,
+     "less": 0,
+     "mono": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

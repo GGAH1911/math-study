@@ -1,0 +1,138 @@
+{
+ "id": "equations/high-1/방정식과_부등식/복소수",
+ "spec": {
+  "title": "복소수의 정의",
+  "params": [
+   {
+    "name": "a",
+    "label": "실부 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "허부 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "re=a; im=b; zmod=sqrt(a^2+b^2)",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=b"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "z = a+bi"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Re(z) (실수부)",
+    "expr": "re",
+    "digits": 0
+   },
+   {
+    "label": "Im(z) (허수부)",
+    "expr": "im",
+    "digits": 0
+   },
+   {
+    "label": "|z| (절댓값)",
+    "expr": "zmod",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": -2,
+    "b": 5
+   },
+   {
+    "a": 0,
+    "b": -1
+   },
+   {
+    "a": 1,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "re-a",
+   "im-b",
+   "zmod^2 - (a^2+b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "re": 3,
+     "im": 4,
+     "zmod": 5
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": -1
+    },
+    "expect": {
+     "re": 0,
+     "im": -1,
+     "zmod": 1
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 0
+    },
+    "expect": {
+     "re": -3,
+     "im": 0,
+     "zmod": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

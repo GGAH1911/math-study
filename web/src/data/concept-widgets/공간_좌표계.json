@@ -1,0 +1,273 @@
+{
+ "id": "공간_좌표계",
+ "spec": {
+  "title": "공간 좌표계 탐구",
+  "params": [
+   {
+    "name": "x",
+    "label": "x 좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "y",
+    "label": "y 좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "z",
+    "label": "z 좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "alpha = pi/6; cosA = cos(alpha); sinA = sin(alpha); px = (x - y)*cosA; py = z - (x + y)*sinA; xyPx = (x - y)*cosA; xyPy = 0 - (x + y)*sinA; xzPx = x*cosA; xzPy = z - x*sinA; yzPx = -y*cosA; yzPy = z - y*sinA; ax = 7; xAxisPosX = ax*cosA; xAxisPosY = -ax*sinA; xAxisNegX = -ax*cosA; xAxisNegY = ax*sinA; yAxisPosX = -ax*cosA; yAxisPosY = -ax*sinA; yAxisNegX = ax*cosA; yAxisNegY = ax*sinA; zAxisPosX = 0; zAxisPosY = ax; zAxisNegX = 0; zAxisNegY = -ax; dist = sqrt(x^2 + y^2 + z^2);",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=xAxisNegX",
+      "=xAxisNegY"
+     ],
+     "to": [
+      "=xAxisPosX",
+      "=xAxisPosY"
+     ],
+     "color": "darkgray",
+     "label": "x"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=yAxisNegX",
+      "=yAxisNegY"
+     ],
+     "to": [
+      "=yAxisPosX",
+      "=yAxisPosY"
+     ],
+     "color": "darkgray",
+     "label": "y"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=zAxisNegX",
+      "=zAxisNegY"
+     ],
+     "to": [
+      "=zAxisPosX",
+      "=zAxisPosY"
+     ],
+     "color": "darkgray",
+     "label": "z"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "color": "red",
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=xyPy"
+     ],
+     "color": "blue",
+     "label": "Pxy"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xzPx",
+      "=xzPy"
+     ],
+     "color": "blue",
+     "label": "Pxz"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=yzPx",
+      "=yzPy"
+     ],
+     "color": "blue",
+     "label": "Pyz"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=px",
+      "=xyPy"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=xzPx",
+      "=xzPy"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=yzPx",
+      "=yzPy"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=xyPy"
+     ],
+     "color": "gray"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x"
+   },
+   {
+    "label": "y",
+    "expr": "y"
+   },
+   {
+    "label": "z",
+    "expr": "z"
+   },
+   {
+    "label": "원점까지 거리",
+    "expr": "dist",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 1,
+    "y": 2,
+    "z": 3
+   },
+   {
+    "x": -2,
+    "y": 3,
+    "z": -1
+   },
+   {
+    "x": 0,
+    "y": 0,
+    "z": 5
+   },
+   {
+    "x": 2,
+    "y": -3,
+    "z": 0
+   }
+  ],
+  "invariants": [
+   "dist^2 - (x^2 + y^2 + z^2)",
+   "(px - xyPx)^2 + (py - xyPy)^2 - z^2",
+   "(px - xzPx)^2 + (py - xzPy)^2 - y^2",
+   "(px - yzPx)^2 + (py - yzPy)^2 - x^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1,
+     "y": 2,
+     "z": 3
+    },
+    "expect": {
+     "px": -0.8660254037844386,
+     "py": 1.5,
+     "dist": 3.7416573867739413
+    }
+   },
+   {
+    "params": {
+     "x": -2,
+     "y": 3,
+     "z": -1
+    },
+    "expect": {
+     "px": -4.330127018922193,
+     "py": -1.5,
+     "dist": 3.7416573867739413
+    }
+   },
+   {
+    "params": {
+     "x": 0,
+     "y": 0,
+     "z": 5
+    },
+    "expect": {
+     "px": 0,
+     "py": 5,
+     "dist": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

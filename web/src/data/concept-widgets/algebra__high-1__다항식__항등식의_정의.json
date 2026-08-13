@@ -1,0 +1,131 @@
+{
+ "id": "algebra/high-1/다항식/항등식의_정의",
+ "spec": {
+  "title": "항등식의 정의",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (x의 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "q (상수항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "diff0=(0+1)^2-(0^2+p*0+q); diff1=(1+1)^2-(1^2+p*1+q); diff2=(2+1)^2-(2^2+p*2+q)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    22
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(x+1)^2",
+     "label": "f(x)=(x+1)²",
+     "color": "blue"
+    },
+    {
+     "fn": "x^2+p*x+q",
+     "label": "g(x)=x²+px+q",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(0)-g(0)",
+    "expr": "diff0",
+    "digits": 3
+   },
+   {
+    "label": "f(1)-g(1)",
+    "expr": "diff1",
+    "digits": 3
+   },
+   {
+    "label": "f(2)-g(2)",
+    "expr": "diff2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "q": 0
+   },
+   {
+    "p": 2,
+    "q": 1
+   },
+   {
+    "p": -1,
+    "q": 3
+   },
+   {
+    "p": 0,
+    "q": -2
+   }
+  ],
+  "invariants": [
+   "diff2-2*diff1+diff0",
+   "diff0-(1-q)",
+   "diff1-(3-p-q)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "q": 0
+    },
+    "expect": {
+     "diff0": 1,
+     "diff1": 2,
+     "diff2": 3
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "q": 1
+    },
+    "expect": {
+     "diff0": 0,
+     "diff1": 0,
+     "diff2": 0
+    }
+   },
+   {
+    "params": {
+     "p": -1,
+     "q": 3
+    },
+    "expect": {
+     "diff0": -2,
+     "diff1": 1,
+     "diff2": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

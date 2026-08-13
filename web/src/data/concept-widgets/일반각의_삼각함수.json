@@ -1,0 +1,153 @@
+{
+ "id": "일반각의_삼각함수",
+ "spec": {
+  "title": "일반각의 삼각함수",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (도)",
+    "type": "slider",
+    "min": -360,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "거리 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); cv=px/r; sv=py/r; tv=py/px",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -2.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=px",
+       0
+      ],
+      [
+       "=px",
+       "=py"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin θ",
+    "expr": "sv",
+    "digits": 3
+   },
+   {
+    "label": "cos θ",
+    "expr": "cv",
+    "digits": 3
+   },
+   {
+    "label": "tan θ",
+    "expr": "tv",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "r": 1
+   },
+   {
+    "theta": 120,
+    "r": 1.5
+   },
+   {
+    "theta": -45,
+    "r": 2
+   },
+   {
+    "theta": 210,
+    "r": 0.8
+   }
+  ],
+  "invariants": [
+   "sv^2+cv^2-1",
+   "px^2+py^2-r^2",
+   "tv*cv-sv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "r": 1
+    },
+    "expect": {
+     "sv": 0,
+     "cv": 1,
+     "tv": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 45,
+     "r": 1
+    },
+    "expect": {
+     "sv": 0.7071067811865476,
+     "cv": 0.7071067811865476,
+     "tv": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "r": 2
+    },
+    "expect": {
+     "sv": 0,
+     "cv": -1,
+     "tv": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

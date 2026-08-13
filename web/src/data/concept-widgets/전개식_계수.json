@@ -1,0 +1,369 @@
+{
+ "id": "전개식_계수",
+ "spec": {
+  "title": "전개식 계수",
+  "params": [
+   {
+    "name": "n",
+    "label": "차수 n",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "차수 k",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "상수 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "coeff=(k>=0 and k<=n)?combinations(n,k)*a^(n-k):0; bar0=(0<=n)?combinations(n,0)*a^n:0; bar1=(1<=n)?combinations(n,1)*a^(n-1):0; bar2=(2<=n)?combinations(n,2)*a^(n-2):0; bar3=(3<=n)?combinations(n,3)*a^(n-3):0; bar4=(4<=n)?combinations(n,4)*a^(n-4):0; bar5=(5<=n)?combinations(n,5)*a^(n-5):0; bar6=(6<=n)?combinations(n,6)*a^(n-6):0; bar7=(7<=n)?combinations(n,7)*a^(n-7):0; bar8=(8<=n)?combinations(n,8)*a^(n-8):0; bar9=(9<=n)?combinations(n,9)*a^(n-9):0; bar10=(10<=n)?combinations(n,10)*a^(n-10):0; yMax=(abs(a)+1)^n; yMin=min(0,bar0,bar1,bar2,bar3,bar4,bar5,bar6,bar7,bar8,bar9,bar10); sumBars=bar0+bar1+bar2+bar3+bar4+bar5+bar6+bar7+bar8+bar9+bar10; barK=(k>=0 and k<=n)?combinations(n,k)*a^(n-k):0;",
+  "geometry": {
+   "range": [
+    -0.5,
+    11.5
+   ],
+   "yRange": [
+    "=yMin-0.5",
+    "=yMax+0.5"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       "=bar0"
+      ],
+      [
+       0,
+       "=bar0"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       "=bar1"
+      ],
+      [
+       1,
+       "=bar1"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       "=bar2"
+      ],
+      [
+       2,
+       "=bar2"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       "=bar3"
+      ],
+      [
+       3,
+       "=bar3"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       "=bar4"
+      ],
+      [
+       4,
+       "=bar4"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       6,
+       "=bar5"
+      ],
+      [
+       5,
+       "=bar5"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       6,
+       0
+      ],
+      [
+       7,
+       0
+      ],
+      [
+       7,
+       "=bar6"
+      ],
+      [
+       6,
+       "=bar6"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       7,
+       0
+      ],
+      [
+       8,
+       0
+      ],
+      [
+       8,
+       "=bar7"
+      ],
+      [
+       7,
+       "=bar7"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       8,
+       0
+      ],
+      [
+       9,
+       0
+      ],
+      [
+       9,
+       "=bar8"
+      ],
+      [
+       8,
+       "=bar8"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       9,
+       0
+      ],
+      [
+       10,
+       0
+      ],
+      [
+       10,
+       "=bar9"
+      ],
+      [
+       9,
+       "=bar9"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       10,
+       0
+      ],
+      [
+       11,
+       0
+      ],
+      [
+       11,
+       "=bar10"
+      ],
+      [
+       10,
+       "=bar10"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=k",
+      "=coeff"
+     ],
+     "label": "계수"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "계수",
+    "expr": "coeff",
+    "digits": 4
+   },
+   {
+    "label": "합",
+    "expr": "sumBars",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "k": 3,
+    "a": 2
+   },
+   {
+    "n": 2,
+    "k": 1,
+    "a": 2
+   },
+   {
+    "n": 3,
+    "k": 0,
+    "a": -1
+   },
+   {
+    "n": 4,
+    "k": 5,
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "abs(sumBars - (1+a)^n)",
+   "abs(coeff - barK)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "k": 3,
+     "a": 2
+    },
+    "expect": {
+     "coeff": 40,
+     "barK": 40,
+     "bar3": 40,
+     "sumBars": 243
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "k": 1,
+     "a": 2
+    },
+    "expect": {
+     "coeff": 4,
+     "barK": 4,
+     "sumBars": 9
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "k": 0,
+     "a": -1
+    },
+    "expect": {
+     "coeff": -1,
+     "barK": -1,
+     "sumBars": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

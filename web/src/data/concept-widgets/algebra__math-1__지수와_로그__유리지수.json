@@ -1,0 +1,143 @@
+{
+ "id": "algebra/math-1/지수와_로그/유리지수",
+ "spec": {
+  "title": "유리지수 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "분자 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "분모 n",
+    "type": "slider",
+    "min": 2,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "val = a^(m/n); check1 = (a^m)^(1/n); check2 = (a^(1/n))^m",
+  "plot": {
+   "range": [
+    0.1,
+    4
+   ],
+   "yRange": [
+    0,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^(m/n)",
+     "label": "x^(m/n)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^(m/n)",
+    "expr": "val",
+    "digits": 6
+   },
+   {
+    "label": "√[n](a^m)",
+    "expr": "check1",
+    "digits": 6
+   },
+   {
+    "label": "(√[n]a)^m",
+    "expr": "check2",
+    "digits": 6
+   },
+   {
+    "label": "차이",
+    "expr": "abs(check1-check2)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "m": 1,
+    "n": 2
+   },
+   {
+    "a": 4,
+    "m": 3,
+    "n": 2
+   },
+   {
+    "a": 8,
+    "m": 2,
+    "n": 3
+   },
+   {
+    "a": 0.25,
+    "m": -1,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "abs(val - check1)",
+   "abs(val - check2)",
+   "abs(val^n - a^m)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "m": 1,
+     "n": 2
+    },
+    "expect": {
+     "val": 2,
+     "check1": 2,
+     "check2": 2
+    }
+   },
+   {
+    "params": {
+     "a": 27,
+     "m": 2,
+     "n": 3
+    },
+    "expect": {
+     "val": 9,
+     "check1": 9,
+     "check2": 9
+    }
+   },
+   {
+    "params": {
+     "a": 0.25,
+     "m": -1,
+     "n": 2
+    },
+    "expect": {
+     "val": 2,
+     "check1": 2,
+     "check2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

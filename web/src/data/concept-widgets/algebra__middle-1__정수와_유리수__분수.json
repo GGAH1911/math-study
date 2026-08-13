@@ -1,0 +1,131 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/분수",
+ "spec": {
+  "title": "분수 a/b 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "value=a/b; sgn=sign(a);",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=value",
+      0
+     ],
+     "label": "a/b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=value",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b",
+    "expr": "value",
+    "digits": 4
+   },
+   {
+    "label": "분자",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "분모",
+    "expr": "b",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -3,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 4
+   },
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": 0,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "a-b*value",
+   "sign(b)-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "value": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 4
+    },
+    "expect": {
+     "value": -0.75
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "value": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

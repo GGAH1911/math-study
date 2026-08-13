@@ -1,0 +1,157 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/나머지_판정",
+ "spec": {
+  "title": "나머지 판정 (a = mq + r)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (나뉘는 수)",
+    "type": "slider",
+    "min": -20,
+    "max": 20,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "m",
+    "label": "m (나누는 수)",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "q=floor(a/m); r=a-m*q; mq=q*m; nxt=(q+1)*m;",
+  "geometry": {
+   "range": [
+    -25,
+    25
+   ],
+   "yRange": [
+    -0.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=mq",
+      0.4
+     ],
+     "to": [
+      "=a",
+      0.4
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mq",
+      0
+     ],
+     "label": "mq"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=nxt",
+      0
+     ],
+     "label": "(q+1)m"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "몫 q",
+    "expr": "q"
+   },
+   {
+    "label": "나머지 r",
+    "expr": "r"
+   },
+   {
+    "label": "a = mq + r",
+    "expr": "m*q + r"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 10,
+    "m": 3
+   },
+   {
+    "a": -7,
+    "m": 3
+   },
+   {
+    "a": 0,
+    "m": 4
+   },
+   {
+    "a": 20,
+    "m": 12
+   }
+  ],
+  "invariants": [
+   "max(0, r - (m-1)) + max(0, -r)",
+   "a - (m*q + r)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 10,
+     "m": 3
+    },
+    "expect": {
+     "q": 3,
+     "r": 1
+    }
+   },
+   {
+    "params": {
+     "a": -7,
+     "m": 3
+    },
+    "expect": {
+     "q": -3,
+     "r": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "m": 4
+    },
+    "expect": {
+     "q": 0,
+     "r": 0
+    }
+   },
+   {
+    "params": {
+     "a": 20,
+     "m": 12
+    },
+    "expect": {
+     "q": 1,
+     "r": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

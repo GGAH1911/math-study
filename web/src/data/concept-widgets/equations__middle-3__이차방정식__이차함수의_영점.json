@@ -1,0 +1,160 @@
+{
+ "id": "equations/middle-3/이차방정식/이차함수의_영점",
+ "spec": {
+  "title": "이차함수의 영점",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = b^2 - 4*a*c; x1 = D >= 0 ? (-b + sqrt(D))/(2*a) : 0/0; x2 = D >= 0 ? (-b - sqrt(D))/(2*a) : 0/0; n = D > 0 ? 2 : (D == 0 ? 1 : 0)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "영점 x1",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "영점 x2",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "영점 개수",
+    "expr": "n",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -3,
+    "c": 2
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "c": 1
+   },
+   {
+    "a": 2,
+    "b": 1,
+    "c": -1
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "c": 6
+   }
+  ],
+  "invariants": [
+   "abs(a*x1^2 + b*x1 + c)",
+   "abs(a*x2^2 + b*x2 + c)",
+   "abs(x1 + x2 + b/a)",
+   "abs(x1*x2 - c/a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 2
+    },
+    "expect": {
+     "D": 1,
+     "x1": 2,
+     "x2": 1,
+     "n": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "x1": 1,
+     "x2": 1,
+     "n": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1,
+     "c": -1
+    },
+    "expect": {
+     "D": 9,
+     "x1": 0.5,
+     "x2": -1,
+     "n": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

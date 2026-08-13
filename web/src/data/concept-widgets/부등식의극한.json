@@ -1,0 +1,165 @@
+{
+ "id": "부등식의극한",
+ "spec": {
+  "title": "부등식의 극한과 샌드위치 정리",
+  "params": [
+   {
+    "name": "c",
+    "label": "중간 함수 계수 c",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "관찰점 x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "f0=-x0^2; g0=c*x0^2; h0=x0^2; viol=max([0, f0-g0, g0-h0])",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "-x^2",
+     "label": "f(x) = -x²",
+     "color": "#e74c3c"
+    },
+    {
+     "fn": "c*x^2",
+     "label": "g(x) = c x²",
+     "color": "#2ecc71"
+    },
+    {
+     "fn": "x^2",
+     "label": "h(x) = x²",
+     "color": "#3498db"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₀",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "g(x₀)",
+    "expr": "g0",
+    "digits": 4
+   },
+   {
+    "label": "h(x₀)",
+    "expr": "h0",
+    "digits": 4
+   },
+   {
+    "label": "h(x₀)-f(x₀)",
+    "expr": "h0-f0",
+    "digits": 4
+   },
+   {
+    "label": "f≤g≤h 위반량",
+    "expr": "viol",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0.3,
+    "x0": 0.8
+   },
+   {
+    "c": -0.7,
+    "x0": -1.2
+   },
+   {
+    "c": 1,
+    "x0": 0.4
+   },
+   {
+    "c": -1,
+    "x0": 1.5
+   }
+  ],
+  "invariants": [
+   "max([0, f0-g0, g0-h0])",
+   "h0 - f0 - 2*x0^2",
+   "g0 - c*x0^2",
+   "f0 + x0^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0.5,
+     "x0": 1
+    },
+    "expect": {
+     "f0": -1,
+     "g0": 0.5,
+     "h0": 1,
+     "viol": 0
+    }
+   },
+   {
+    "params": {
+     "c": -0.5,
+     "x0": 2
+    },
+    "expect": {
+     "f0": -4,
+     "g0": -2,
+     "h0": 4,
+     "viol": 0
+    }
+   },
+   {
+    "params": {
+     "c": 1,
+     "x0": 0.5
+    },
+    "expect": {
+     "f0": -0.25,
+     "g0": 0.25,
+     "h0": 0.25,
+     "viol": 0
+    }
+   },
+   {
+    "params": {
+     "c": -1,
+     "x0": -1
+    },
+    "expect": {
+     "f0": -1,
+     "g0": -1,
+     "h0": 1,
+     "viol": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

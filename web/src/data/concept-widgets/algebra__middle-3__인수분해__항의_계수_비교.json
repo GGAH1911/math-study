@@ -1,0 +1,151 @@
+{
+ "id": "algebra/middle-3/인수분해/항의_계수_비교",
+ "spec": {
+  "title": "항의 계수 비교",
+  "params": [
+   {
+    "name": "k",
+    "label": "x의 계수 k",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "x 대입값 t",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "p=(t+1)*(t+3); q=t^2 + k*t + 3; diff=p - q; coef_diff=4 - k",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "(x+1)*(x+3)",
+     "label": "P(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x^2 + k*x + 3",
+     "label": "Q(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(t)",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "Q(t)",
+    "expr": "q",
+    "digits": 3
+   },
+   {
+    "label": "P-Q",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "계수차(4-k)",
+    "expr": "coef_diff",
+    "digits": 3
+   },
+   {
+    "label": "계수차×t",
+    "expr": "coef_diff * t",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 4,
+    "t": 2
+   },
+   {
+    "k": 2,
+    "t": -3
+   },
+   {
+    "k": 0,
+    "t": 1.5
+   },
+   {
+    "k": 5,
+    "t": 0
+   }
+  ],
+  "invariants": [
+   "diff - coef_diff * t"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 3,
+     "t": 2
+    },
+    "expect": {
+     "p": 15,
+     "q": 13,
+     "diff": 2,
+     "coef_diff": 1
+    }
+   },
+   {
+    "params": {
+     "k": 4,
+     "t": -1
+    },
+    "expect": {
+     "p": 0,
+     "q": 0,
+     "diff": 0,
+     "coef_diff": 0
+    }
+   },
+   {
+    "params": {
+     "k": 0,
+     "t": 0.5
+    },
+    "expect": {
+     "p": 5.25,
+     "q": 3.25,
+     "diff": 2,
+     "coef_diff": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

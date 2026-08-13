@@ -1,0 +1,127 @@
+{
+ "id": "표본크기_결정",
+ "spec": {
+  "title": "표본크기 결정 (모평균 추정)",
+  "params": [
+   {
+    "name": "sigma",
+    "label": "σ (모표준편차)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 20,
+    "init": 5,
+    "step": 0.5
+   },
+   {
+    "name": "E",
+    "label": "E (허용오차)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "n0 = (1.96*sigma/E)^2; nMin = ceil(n0); prev_n = max(1, nMin-1); err_n = 1.96*sigma/sqrt(nMin); err_prev = 1.96*sigma/sqrt(prev_n); maxX = max(100, 2*nMin+10); maxY = max(1.96*sigma*1.1, E*1.2);",
+  "plot": {
+   "range": [
+    1,
+    "=maxX"
+   ],
+   "yRange": [
+    0,
+    "=maxY"
+   ],
+   "fns": [
+    {
+     "fn": "1.96*sigma/sqrt(x)",
+     "label": "오차 한계",
+     "color": "blue"
+    },
+    {
+     "fn": "E",
+     "label": "허용 오차 E",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "필요 표본크기 n",
+    "expr": "nMin",
+    "digits": 0
+   },
+   {
+    "label": "계산값 n0",
+    "expr": "n0",
+    "digits": 2
+   },
+   {
+    "label": "오차한계 (n)",
+    "expr": "err_n",
+    "digits": 4
+   },
+   {
+    "label": "허용오차 E",
+    "expr": "E",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "sigma": 5,
+    "E": 1
+   },
+   {
+    "sigma": 1,
+    "E": 1
+   },
+   {
+    "sigma": 2,
+    "E": 1
+   },
+   {
+    "sigma": 3,
+    "E": 2
+   }
+  ],
+  "invariants": [
+   "(err_n <= E ? 0 : 1) + (prev_n == 1 ? 0 : (err_prev > E ? 0 : 1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "sigma": 5,
+     "E": 1
+    },
+    "expect": {
+     "nMin": 97,
+     "n0": 96.04
+    }
+   },
+   {
+    "params": {
+     "sigma": 1,
+     "E": 1
+    },
+    "expect": {
+     "nMin": 4,
+     "n0": 3.8416
+    }
+   },
+   {
+    "params": {
+     "sigma": 2,
+     "E": 1
+    },
+    "expect": {
+     "nMin": 16,
+     "n0": 15.3664
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

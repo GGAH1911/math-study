@@ -1,0 +1,181 @@
+{
+ "id": "equations/middle-2/일차부등식/부등식",
+ "spec": {
+  "title": "부등식의 정의: 수직선 위의 대소 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "점 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "점 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "lt = a < b ? 1 : 0; le = a <= b ? 1 : 0; gt = a > b ? 1 : 0; ge = a >= b ? 1 : 0; eq = abs(a-b) < 0.000000001 ? 1 : 0; diff = a - b;",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=a",
+       -0.15
+      ],
+      [
+       "=a",
+       -0.05
+      ],
+      [
+       "=b",
+       -0.05
+      ],
+      [
+       "=b",
+       -0.15
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a < b",
+    "expr": "lt",
+    "digits": 0
+   },
+   {
+    "label": "a ≤ b",
+    "expr": "le",
+    "digits": 0
+   },
+   {
+    "label": "a > b",
+    "expr": "gt",
+    "digits": 0
+   },
+   {
+    "label": "a ≥ b",
+    "expr": "ge",
+    "digits": 0
+   },
+   {
+    "label": "a = b",
+    "expr": "eq",
+    "digits": 0
+   },
+   {
+    "label": "a - b",
+    "expr": "diff",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2,
+    "b": 3
+   },
+   {
+    "a": 3,
+    "b": -2
+   },
+   {
+    "a": 3,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "abs(lt + gt + eq - 1)",
+   "abs(le + gt - 1)",
+   "abs(ge + lt - 1)",
+   "abs(sign(a - b) - (gt - lt))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -2,
+     "b": 3
+    },
+    "expect": {
+     "lt": 1,
+     "le": 1,
+     "gt": 0,
+     "ge": 0,
+     "eq": 0,
+     "diff": -5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": -2
+    },
+    "expect": {
+     "lt": 0,
+     "le": 0,
+     "gt": 1,
+     "ge": 1,
+     "eq": 0,
+     "diff": 5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3
+    },
+    "expect": {
+     "lt": 0,
+     "le": 1,
+     "gt": 0,
+     "ge": 1,
+     "eq": 1,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "id": "속도_벡터",
+ "spec": {
+  "title": "속도 벡터",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=cos(rad); py=sin(rad); vx=-sin(rad); vy=cos(rad)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=px+vx",
+      "=py+vy"
+     ],
+     "label": "v"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "v_x",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "v_y",
+    "expr": "vy",
+    "digits": 3
+   },
+   {
+    "label": "|v|",
+    "expr": "sqrt(vx^2+vy^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 180
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-1",
+   "px*vx+py*vy",
+   "vx^2+vy^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "px": 0.8660254037844386,
+     "py": 0.5,
+     "vx": -0.5,
+     "vy": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "px": 0.7071067811865476,
+     "py": 0.7071067811865476,
+     "vx": -0.7071067811865476,
+     "vy": 0.7071067811865476
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "vx": -1,
+     "vy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

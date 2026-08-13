@@ -1,0 +1,199 @@
+{
+ "id": "equations/high-1/방정식과_부등식/제약_조건_최적화",
+ "spec": {
+  "title": "제약 조건 최적화 (선형계획법)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 0.1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "v0=0; v1=6*a; v2=4*a+2*b; v3=4*b; vals=[v0,v1,v2,v3]; maxv=max(vals); minv=min(vals); x_max = (v0==maxv) ? 0 : ((v1==maxv) ? 6 : ((v2==maxv) ? 4 : 0)); y_max = (v0==maxv) ? 0 : ((v1==maxv) ? 0 : ((v2==maxv) ? 2 : 4)); x_min = (v0==minv) ? 0 : ((v1==minv) ? 6 : ((v2==minv) ? 4 : 0)); y_min = (v0==minv) ? 0 : ((v1==minv) ? 0 : ((v2==minv) ? 2 : 4)); m = -a/b; c_max = maxv/b; c_min = minv/b; xL=-2; xR=8; yLmax=m*xL+c_max; yRmax=m*xR+c_max; yLmin=m*xL+c_min; yRmin=m*xR+c_min;",
+  "geometry": {
+   "range": [
+    -1,
+    7
+   ],
+   "yRange": [
+    -1,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       4,
+       2
+      ],
+      [
+       0,
+       4
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x_max",
+      "=y_max"
+     ],
+     "label": "최대"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x_min",
+      "=y_min"
+     ],
+     "label": "최소"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xL",
+      "=yLmax"
+     ],
+     "to": [
+      "=xR",
+      "=yRmax"
+     ],
+     "label": "최대선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xL",
+      "=yLmin"
+     ],
+     "to": [
+      "=xR",
+      "=yRmin"
+     ],
+     "label": "최소선"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최대값",
+    "expr": "maxv"
+   },
+   {
+    "label": "최소값",
+    "expr": "minv"
+   },
+   {
+    "label": "최대점 x",
+    "expr": "x_max"
+   },
+   {
+    "label": "최대점 y",
+    "expr": "y_max"
+   },
+   {
+    "label": "최소점 x",
+    "expr": "x_min"
+   },
+   {
+    "label": "최소점 y",
+    "expr": "y_min"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": -1,
+    "b": 2
+   },
+   {
+    "a": 0,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "a*x_max + b*y_max - maxv",
+   "a*x_min + b*y_min - minv",
+   "((x_max>=0) and (y_max>=0) and (x_max+y_max<=6) and (x_max+2*y_max<=8)) ? 0 : 1",
+   "((x_min>=0) and (y_min>=0) and (x_min+y_min<=6) and (x_min+2*y_min<=8)) ? 0 : 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "maxv": 8,
+     "minv": 0,
+     "x_max": 4,
+     "y_max": 2,
+     "x_min": 0,
+     "y_min": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "maxv": 12,
+     "minv": 0,
+     "x_max": 6,
+     "y_max": 0,
+     "x_min": 0,
+     "y_min": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2
+    },
+    "expect": {
+     "maxv": 8,
+     "minv": -6,
+     "x_max": 0,
+     "y_max": 4,
+     "x_min": 6,
+     "y_min": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

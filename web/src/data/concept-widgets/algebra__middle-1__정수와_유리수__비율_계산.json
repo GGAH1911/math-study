@@ -1,0 +1,156 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/비율_계산",
+ "spec": {
+  "title": "비율 계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "배율(k)",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "c=k*a; d=k*b; ratio=a/b; ratio2=c/d; cross=a*d-b*c",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=c",
+      "=d"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "(a,b)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      "=d"
+     ],
+     "label": "(ka,kb)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "비율 a/b",
+    "expr": "ratio",
+    "digits": 4
+   },
+   {
+    "label": "비율 (ka)/(kb)",
+    "expr": "ratio2",
+    "digits": 4
+   },
+   {
+    "label": "외항×내항 차 (ad-bc)",
+    "expr": "cross",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "k": 2
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "k": 1
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "k": 2
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "k": 1
+   }
+  ],
+  "invariants": [
+   "ratio2-ratio",
+   "cross",
+   "a-ratio*b",
+   "c-ratio2*d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "k": 2
+    },
+    "expect": {
+     "c": 4,
+     "d": 6,
+     "ratio": 0.6666666666666666,
+     "ratio2": 0.6666666666666666,
+     "cross": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "k": 1
+    },
+    "expect": {
+     "c": 3,
+     "d": 2,
+     "ratio": 1.5,
+     "ratio2": 1.5,
+     "cross": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

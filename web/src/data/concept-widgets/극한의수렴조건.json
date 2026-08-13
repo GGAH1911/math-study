@@ -1,0 +1,126 @@
+{
+ "id": "극한의수렴조건",
+ "spec": {
+  "title": "극한의 수렴 조건 (ε-δ)",
+  "params": [
+   {
+    "name": "epsilon",
+    "label": "ε (허용 오차)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   },
+   {
+    "name": "delta",
+    "label": "δ (근접 반경)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1,
+    "init": 0.3,
+    "step": 0.05
+   }
+  ],
+  "scope": "a=1; L=1; maxdev=max(abs((a-delta)^2-L),abs((a+delta)^2-L)); satisfied=(maxdev<epsilon)?1:0; cond=(delta<sqrt(1+epsilon)-1)?1:0",
+  "plot": {
+   "range": [
+    -0.5,
+    2.5
+   ],
+   "yRange": [
+    -0.5,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x²",
+     "color": "blue"
+    },
+    {
+     "fn": "L+epsilon",
+     "label": "L+ε",
+     "color": "red"
+    },
+    {
+     "fn": "L-epsilon",
+     "label": "L-ε",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "δ 구간에서 최대 편차",
+    "expr": "maxdev",
+    "digits": 3
+   },
+   {
+    "label": "ε-δ 조건 만족",
+    "expr": "satisfied",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "epsilon": 0.5,
+    "delta": 0.2
+   },
+   {
+    "epsilon": 0.5,
+    "delta": 0.3
+   },
+   {
+    "epsilon": 0.2,
+    "delta": 0.05
+   },
+   {
+    "epsilon": 0.2,
+    "delta": 0.2
+   }
+  ],
+  "invariants": [
+   "satisfied - cond",
+   "maxdev - ((a+delta)^2 - L)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "epsilon": 0.5,
+     "delta": 0.2
+    },
+    "expect": {
+     "maxdev": 0.44,
+     "satisfied": 1,
+     "cond": 1
+    }
+   },
+   {
+    "params": {
+     "epsilon": 0.5,
+     "delta": 0.3
+    },
+    "expect": {
+     "maxdev": 0.69,
+     "satisfied": 0,
+     "cond": 0
+    }
+   },
+   {
+    "params": {
+     "epsilon": 0.2,
+     "delta": 0.05
+    },
+    "expect": {
+     "maxdev": 0.1025,
+     "satisfied": 1,
+     "cond": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

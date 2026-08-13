@@ -1,0 +1,186 @@
+{
+ "id": "도함수의_조건",
+ "spec": {
+  "title": "도함수의 조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "좌측 직선의 기울기 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   },
+   {
+    "name": "b",
+    "label": "좌측 직선의 절편 b",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.05
+   },
+   {
+    "name": "h",
+    "label": "할선 위치 h (h→0)",
+    "type": "slider",
+    "min": 0.01,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "left_lim = b; right_lim = 0; continuous = (left_lim == right_lim) ? 1 : 0; f_neg_h = a*(-h) + b; f_h = sin(h); left_sec = (f_neg_h - 0)/(-h); right_sec = (f_h - 0)/h; right_der = 1; left_der_if_cont = a; deriv_exists = (b == 0 and a == 1) ? 1 : 0;",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "x>=0 ? sin(x) : a*x + b",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "x<=0 ? left_sec*x : 0/0",
+     "label": "좌측 할선",
+     "color": "#ff7f0e"
+    },
+    {
+     "fn": "x>=0 ? right_sec*x : 0/0",
+     "label": "우측 할선",
+     "color": "#2ca02c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한값",
+    "expr": "left_lim",
+    "digits": 2
+   },
+   {
+    "label": "우극한값",
+    "expr": "right_lim",
+    "digits": 2
+   },
+   {
+    "label": "연속(1=예)",
+    "expr": "continuous",
+    "digits": 0
+   },
+   {
+    "label": "좌측 할선 기울기",
+    "expr": "left_sec",
+    "digits": 3
+   },
+   {
+    "label": "우측 할선 기울기",
+    "expr": "right_sec",
+    "digits": 3
+   },
+   {
+    "label": "우미분계수",
+    "expr": "right_der",
+    "digits": 2
+   },
+   {
+    "label": "좌미분계수 후보",
+    "expr": "left_der_if_cont",
+    "digits": 2
+   },
+   {
+    "label": "미분가능(1=예)",
+    "expr": "deriv_exists",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "h": 0.5
+   },
+   {
+    "a": 2,
+    "b": 0,
+    "h": 0.5
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1,
+    "b": -0.5,
+    "h": 0.25
+   }
+  ],
+  "invariants": [
+   "abs(left_sec - f_neg_h/(-h))",
+   "abs(right_sec - f_h/h)",
+   "abs(continuous - (left_lim == right_lim ? 1 : 0))",
+   "abs(deriv_exists - (b == 0 and a == 1 ? 1 : 0))",
+   "abs(f_neg_h - (a*(-h)+b))",
+   "abs(f_h - sin(h))",
+   "abs(left_sec - (a - b/h))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "left_lim": 0,
+     "right_lim": 0,
+     "continuous": 1,
+     "left_sec": 1,
+     "right_sec": 0.9588510772,
+     "deriv_exists": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "left_lim": 0,
+     "right_lim": 0,
+     "continuous": 1,
+     "left_sec": 2,
+     "right_sec": 0.9588510772,
+     "deriv_exists": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "left_lim": 1,
+     "right_lim": 0,
+     "continuous": 0,
+     "left_sec": -1,
+     "right_sec": 0.9588510772,
+     "deriv_exists": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

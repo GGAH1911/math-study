@@ -1,0 +1,234 @@
+{
+ "id": "조합론",
+ "spec": {
+  "title": "조합의 수 C(n,r) 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "r_val = min(r, n); comb_selected = combinations(n, r_val); c0 = (0 <= n) ? combinations(n,0) : 0; c1 = (1 <= n) ? combinations(n,1) : 0; c2 = (2 <= n) ? combinations(n,2) : 0; c3 = (3 <= n) ? combinations(n,3) : 0; c4 = (4 <= n) ? combinations(n,4) : 0; c5 = (5 <= n) ? combinations(n,5) : 0; c6 = (6 <= n) ? combinations(n,6) : 0; c7 = (7 <= n) ? combinations(n,7) : 0; c8 = (8 <= n) ? combinations(n,8) : 0; c9 = (9 <= n) ? combinations(n,9) : 0; c10 = (10 <= n) ? combinations(n,10) : 0;",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -5,
+    270
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       "=c0"
+      ],
+      [
+       1,
+       "=c0"
+      ],
+      [
+       1,
+       "=c1"
+      ],
+      [
+       2,
+       "=c1"
+      ],
+      [
+       2,
+       "=c2"
+      ],
+      [
+       3,
+       "=c2"
+      ],
+      [
+       3,
+       "=c3"
+      ],
+      [
+       4,
+       "=c3"
+      ],
+      [
+       4,
+       "=c4"
+      ],
+      [
+       5,
+       "=c4"
+      ],
+      [
+       5,
+       "=c5"
+      ],
+      [
+       6,
+       "=c5"
+      ],
+      [
+       6,
+       "=c6"
+      ],
+      [
+       7,
+       "=c6"
+      ],
+      [
+       7,
+       "=c7"
+      ],
+      [
+       8,
+       "=c7"
+      ],
+      [
+       8,
+       "=c8"
+      ],
+      [
+       9,
+       "=c8"
+      ],
+      [
+       9,
+       "=c9"
+      ],
+      [
+       10,
+       "=c9"
+      ],
+      [
+       10,
+       "=c10"
+      ],
+      [
+       10,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=r_val",
+      0
+     ],
+     "to": [
+      "=r_val",
+      "=comb_selected"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r_val",
+      "=comb_selected"
+     ],
+     "label": "C(n,r)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "C(n,r)",
+    "expr": "comb_selected"
+   },
+   {
+    "label": "n!/(r!(n-r)!)",
+    "expr": "factorial(n)/(factorial(r_val)*factorial(n-r_val))"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "r": 2
+   },
+   {
+    "n": 6,
+    "r": 3
+   },
+   {
+    "n": 4,
+    "r": 4
+   },
+   {
+    "n": 7,
+    "r": 0
+   }
+  ],
+  "invariants": [
+   "abs(comb_selected - combinations(n, n - r_val))",
+   "abs((r_val > 0 and r_val < n) ? comb_selected - (combinations(n-1, r_val-1) + combinations(n-1, r_val)) : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 5,
+     "r": 2
+    },
+    "expect": {
+     "comb_selected": 10,
+     "r_val": 2
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "r": 3
+    },
+    "expect": {
+     "comb_selected": 20,
+     "r_val": 3
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 4
+    },
+    "expect": {
+     "comb_selected": 1,
+     "r_val": 4
+    }
+   },
+   {
+    "params": {
+     "n": 7,
+     "r": 0
+    },
+    "expect": {
+     "comb_selected": 1,
+     "r_val": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

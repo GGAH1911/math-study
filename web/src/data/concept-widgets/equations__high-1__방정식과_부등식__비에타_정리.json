@@ -1,0 +1,157 @@
+{
+ "id": "equations/high-1/방정식과_부등식/비에타_정리",
+ "spec": {
+  "title": "비에타 정리: 근과 계수의 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "alpha",
+    "label": "α",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "beta",
+    "label": "β",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "b=-a*(alpha+beta); c=a*alpha*beta; s=alpha+beta; p=alpha*beta; disc=b^2-4*a*c",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "α + β",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "-b/a",
+    "expr": "-b/a",
+    "digits": 4
+   },
+   {
+    "label": "α·β",
+    "expr": "p",
+    "digits": 4
+   },
+   {
+    "label": "c/a",
+    "expr": "c/a",
+    "digits": 4
+   },
+   {
+    "label": "f(α)",
+    "expr": "a*alpha^2 + b*alpha + c",
+    "digits": 4
+   },
+   {
+    "label": "f(β)",
+    "expr": "a*beta^2 + b*beta + c",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "alpha": 1,
+    "beta": 2
+   },
+   {
+    "a": 1,
+    "alpha": -3,
+    "beta": 0.5
+   },
+   {
+    "a": 2,
+    "alpha": 0,
+    "beta": 0
+   },
+   {
+    "a": 0.5,
+    "alpha": 2,
+    "beta": -2
+   }
+  ],
+  "invariants": [
+   "s + b/a",
+   "p - c/a",
+   "a*alpha^2 + b*alpha + c",
+   "a*beta^2 + b*beta + c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "alpha": 1,
+     "beta": 2
+    },
+    "expect": {
+     "b": -3,
+     "c": 2,
+     "s": 3,
+     "p": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "alpha": -1,
+     "beta": 0.5
+    },
+    "expect": {
+     "b": 1,
+     "c": -1,
+     "s": -0.5,
+     "p": -0.5
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "alpha": 2,
+     "beta": -3
+    },
+    "expect": {
+     "b": 0.5,
+     "c": -3,
+     "s": -1,
+     "p": -6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

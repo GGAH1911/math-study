@@ -1,0 +1,150 @@
+{
+ "id": "algebra/high-1/다항식/대칭다항식",
+ "spec": {
+  "title": "대칭다항식",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "y",
+    "label": "y",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "Pxy = x^2 + x*y + y^2; Pyx = y^2 + y*x + x^2; Qxy = x^2 - y; Qyx = y^2 - x",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -5,
+      -5
+     ],
+     "to": [
+      5,
+      5
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P(x,y)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=y",
+      "=x"
+     ],
+     "label": "P(y,x)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(x,y) = x²+xy+y²",
+    "expr": "Pxy",
+    "digits": 4
+   },
+   {
+    "label": "P(y,x) = y²+yx+x²",
+    "expr": "Pyx",
+    "digits": 4
+   },
+   {
+    "label": "Q(x,y) = x²−y",
+    "expr": "Qxy",
+    "digits": 4
+   },
+   {
+    "label": "Q(y,x) = y²−x",
+    "expr": "Qyx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 1,
+    "y": 2
+   },
+   {
+    "x": -3,
+    "y": 2.5
+   },
+   {
+    "x": 0.5,
+    "y": -1.2
+   }
+  ],
+  "invariants": [
+   "Pxy - Pyx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1,
+     "y": 2
+    },
+    "expect": {
+     "Pxy": 7,
+     "Pyx": 7,
+     "Qxy": -1,
+     "Qyx": 3
+    }
+   },
+   {
+    "params": {
+     "x": 3,
+     "y": -1
+    },
+    "expect": {
+     "Pxy": 7,
+     "Pyx": 7,
+     "Qxy": 10,
+     "Qyx": -2
+    }
+   },
+   {
+    "params": {
+     "x": 0,
+     "y": 0
+    },
+    "expect": {
+     "Pxy": 0,
+     "Pyx": 0,
+     "Qxy": 0,
+     "Qyx": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "id": "equations/high-1/방정식과_부등식/방정식의_근의_개수",
+ "spec": {
+  "title": "방정식의 근의 개수 (삼차함수)",
+  "params": [
+   {
+    "name": "k",
+    "label": "상수항 k",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "delta=27*(4 - k^2); ymax=k+2; ymin=k-2; prod=ymax*ymin; cnt=(prod<0 ? 3 : (prod>0 ? 1 : 2));",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x + k",
+     "label": "f(x)",
+     "color": "#2196F3"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "실근의 개수",
+    "expr": "cnt"
+   },
+   {
+    "label": "판별식",
+    "expr": "delta"
+   },
+   {
+    "label": "극댓값",
+    "expr": "ymax"
+   },
+   {
+    "label": "극솟값",
+    "expr": "ymin"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": -3
+   },
+   {
+    "k": -2
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "delta + 27*prod",
+   "cnt - (delta>0 ? 3 : (delta<0 ? 1 : 2))",
+   "cnt - (prod<0 ? 3 : (prod>0 ? 1 : 2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": -3
+    },
+    "expect": {
+     "cnt": 1
+    }
+   },
+   {
+    "params": {
+     "k": -2
+    },
+    "expect": {
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "cnt": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

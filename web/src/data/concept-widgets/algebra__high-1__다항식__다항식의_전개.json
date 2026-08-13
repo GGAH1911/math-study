@@ -1,0 +1,259 @@
+{
+ "id": "algebra/high-1/다항식/다항식의_전개",
+ "spec": {
+  "title": "다항식의 전개 (면적 모델)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "area_x2 = x*x; area_ax = a*x; area_bx = b*x; area_ab = a*b; linear_sum = area_ax + area_bx; total = (x+a)*(x+b); expanded_total = area_x2 + linear_sum + area_ab;",
+  "geometry": {
+   "range": [
+    0,
+    12
+   ],
+   "yRange": [
+    0,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x",
+       "=x"
+      ],
+      [
+       0,
+       "=x"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=x",
+       0
+      ],
+      [
+       "=x+a",
+       0
+      ],
+      [
+       "=x+a",
+       "=x"
+      ],
+      [
+       "=x",
+       "=x"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       "=x"
+      ],
+      [
+       "=x",
+       "=x"
+      ],
+      [
+       "=x",
+       "=x+b"
+      ],
+      [
+       0,
+       "=x+b"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=x",
+       "=x"
+      ],
+      [
+       "=x+a",
+       "=x"
+      ],
+      [
+       "=x+a",
+       "=x+b"
+      ],
+      [
+       "=x",
+       "=x+b"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=x+b"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=x"
+     ],
+     "to": [
+      "=x+a",
+      "=x"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x²",
+    "expr": "area_x2",
+    "digits": 0
+   },
+   {
+    "label": "a·x",
+    "expr": "area_ax",
+    "digits": 0
+   },
+   {
+    "label": "b·x",
+    "expr": "area_bx",
+    "digits": 0
+   },
+   {
+    "label": "a·b",
+    "expr": "area_ab",
+    "digits": 0
+   },
+   {
+    "label": "(a+b)x",
+    "expr": "linear_sum",
+    "digits": 0
+   },
+   {
+    "label": "총합 (x+a)(x+b)",
+    "expr": "total",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "x": 4
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "x": 3
+   },
+   {
+    "a": 4,
+    "b": 2,
+    "x": 5
+   },
+   {
+    "a": 3,
+    "b": 3,
+    "x": 2
+   }
+  ],
+  "invariants": [
+   "(x+a)*(x+b) - (x*x + a*x + b*x + a*b)",
+   "linear_sum - (a+b)*x",
+   "expanded_total - total"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "x": 4
+    },
+    "expect": {
+     "area_x2": 16,
+     "linear_sum": 20,
+     "area_ab": 6,
+     "total": 42
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "x": 3
+    },
+    "expect": {
+     "area_x2": 9,
+     "linear_sum": 6,
+     "area_ab": 1,
+     "total": 16
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2,
+     "x": 5
+    },
+    "expect": {
+     "area_x2": 25,
+     "linear_sum": 30,
+     "area_ab": 8,
+     "total": 63
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,193 @@
+{
+ "id": "equations/high-1/방정식과_부등식/자연수해_조건",
+ "spec": {
+  "title": "자연수해의 개수: 2x - 1 ≤ k",
+  "params": [
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "B=(k+1)/2; count=floor(B)",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -0.5,
+      0
+     ],
+     "to": [
+      "=B",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=B",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "B",
+    "expr": "B",
+    "digits": 2
+   },
+   {
+    "label": "자연수해의 개수",
+    "expr": "count",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0
+   },
+   {
+    "k": 1
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 10
+   }
+  ],
+  "invariants": [
+   "B - (k+1)/2",
+   "count - sum([1<=B?1:0,2<=B?1:0,3<=B?1:0,4<=B?1:0,5<=B?1:0,6<=B?1:0,7<=B?1:0,8<=B?1:0,9<=B?1:0,10<=B?1:0])"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "B": 1,
+     "count": 1
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "B": 2,
+     "count": 2
+    }
+   },
+   {
+    "params": {
+     "k": 10
+    },
+    "expect": {
+     "B": 5.5,
+     "count": 5
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "B": 0.5,
+     "count": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

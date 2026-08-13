@@ -1,0 +1,124 @@
+{
+ "id": "적분_조건식",
+ "spec": {
+  "title": "적분 조건식 (초기 조건)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "y0",
+    "label": "y₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "C = y0 - 2*x0",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "2*x + C",
+     "label": "특수해 y = 2x + C",
+     "color": "#e74c3c"
+    },
+    {
+     "fn": "2*x - 2",
+     "label": "C = -2 (일반해)",
+     "color": "#cccccc"
+    },
+    {
+     "fn": "2*x",
+     "label": "C = 0 (일반해)",
+     "color": "#cccccc"
+    },
+    {
+     "fn": "2*x + 2",
+     "label": "C = 2 (일반해)",
+     "color": "#cccccc"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "C = y₀ - 2x₀",
+    "expr": "C",
+    "digits": 2
+   },
+   {
+    "label": "초기조건 검증",
+    "expr": "y0 - (2*x0 + C)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 0,
+    "y0": 1
+   },
+   {
+    "x0": 1,
+    "y0": 3
+   },
+   {
+    "x0": -2,
+    "y0": -1
+   },
+   {
+    "x0": 1.5,
+    "y0": -2.5
+   }
+  ],
+  "invariants": [
+   "y0 - (2*x0 + C)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 0,
+     "y0": 1
+    },
+    "expect": {
+     "C": 1
+    }
+   },
+   {
+    "params": {
+     "x0": 1,
+     "y0": 3
+    },
+    "expect": {
+     "C": 1
+    }
+   },
+   {
+    "params": {
+     "x0": -1,
+     "y0": -2
+    },
+    "expect": {
+     "C": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

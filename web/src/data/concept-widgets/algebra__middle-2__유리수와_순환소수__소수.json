@@ -1,0 +1,114 @@
+{
+ "id": "algebra/middle-2/유리수와_순환소수/소수",
+ "spec": {
+  "title": "소수 판별: 약수의 개수와 나머지 그래프",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 2,
+    "max": 50,
+    "init": 15,
+    "step": 1
+   }
+  ],
+  "scope": "divs=range(1,n); count=sum(mod(n, divs)==0); ism=count==2?1:0; sqrtn=sqrt(n)",
+  "plot": {
+   "range": [
+    "=1",
+    "=n"
+   ],
+   "yRange": [
+    "=0",
+    "=n"
+   ],
+   "fns": [
+    {
+     "fn": "mod(n,x)",
+     "label": "n mod x",
+     "color": "blue"
+    },
+    {
+     "fn": "0",
+     "label": "y=0",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "약수의 개수",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "소수 여부",
+    "expr": "ism",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 15
+   },
+   {
+    "n": 23
+   },
+   {
+    "n": 48
+   }
+  ],
+  "invariants": [
+   "abs(count - sum(mod(n, range(1,n))==0))",
+   "abs(ism - (count==2?1:0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "count": 2,
+     "ism": 1
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "count": 2,
+     "ism": 1
+    }
+   },
+   {
+    "params": {
+     "n": 15
+    },
+    "expect": {
+     "count": 4,
+     "ism": 0
+    }
+   },
+   {
+    "params": {
+     "n": 23
+    },
+    "expect": {
+     "count": 2,
+     "ism": 1
+    }
+   }
+  ],
+  "tol": 1e-9
+ }
+}

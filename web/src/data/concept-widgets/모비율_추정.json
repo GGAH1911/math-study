@@ -1,0 +1,157 @@
+{
+ "id": "모비율_추정",
+ "spec": {
+  "title": "모비율 추정",
+  "params": [
+   {
+    "name": "phat",
+    "label": "표본비율 p̂",
+    "type": "slider",
+    "min": 0.1,
+    "max": 0.9,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "n",
+    "label": "표본크기 n",
+    "type": "slider",
+    "min": 10,
+    "max": 200,
+    "init": 50,
+    "step": 1
+   },
+   {
+    "name": "conf",
+    "label": "신뢰도(%)",
+    "type": "slider",
+    "min": 95,
+    "max": 99,
+    "init": 95,
+    "step": 4
+   }
+  ],
+  "scope": "z = conf == 99 ? 2.58 : 1.96; se = sqrt(phat*(1-phat)/n); margin = z*se; lo = phat - margin; hi = phat + margin",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=lo",
+      0
+     ],
+     "to": [
+      "=hi",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=phat",
+      0
+     ],
+     "label": "p̂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "하한",
+    "expr": "lo",
+    "digits": 4
+   },
+   {
+    "label": "상한",
+    "expr": "hi",
+    "digits": 4
+   },
+   {
+    "label": "오차한계",
+    "expr": "margin",
+    "digits": 4
+   },
+   {
+    "label": "표준오차",
+    "expr": "se",
+    "digits": 4
+   },
+   {
+    "label": "z값",
+    "expr": "z",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "phat": 0.5,
+    "n": 100,
+    "conf": 95
+   },
+   {
+    "phat": 0.2,
+    "n": 100,
+    "conf": 99
+   },
+   {
+    "phat": 0.8,
+    "n": 30,
+    "conf": 95
+   },
+   {
+    "phat": 0.3,
+    "n": 10,
+    "conf": 99
+   }
+  ],
+  "invariants": [
+   "abs((lo+hi)/2 - phat)",
+   "abs((hi-lo) - 2*margin)",
+   "abs(margin - z*se)",
+   "abs(se - sqrt(phat*(1-phat)/n))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "phat": 0.5,
+     "n": 100,
+     "conf": 95
+    },
+    "expect": {
+     "lo": 0.402,
+     "hi": 0.598,
+     "margin": 0.098,
+     "se": 0.05,
+     "z": 1.96
+    }
+   },
+   {
+    "params": {
+     "phat": 0.2,
+     "n": 100,
+     "conf": 99
+    },
+    "expect": {
+     "lo": 0.0968,
+     "hi": 0.3032,
+     "margin": 0.1032,
+     "se": 0.04,
+     "z": 2.58
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

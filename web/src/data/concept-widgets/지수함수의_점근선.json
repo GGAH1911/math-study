@@ -1,0 +1,154 @@
+{
+ "id": "지수함수의_점근선",
+ "spec": {
+  "title": "지수함수의 점근선",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "세로 평행이동 k",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "yL = a^(-2) + k; yR = a^(2) + k; asym = k; gapL = a^(-2); gapR = a^(2)",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -5,
+    30
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -5,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "a^x + k",
+     "label": "y = a^x + k",
+     "color": "blue"
+    },
+    {
+     "fn": "k",
+     "label": "y = k (점근선)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x=-2에서 y",
+    "expr": "yL",
+    "digits": 4
+   },
+   {
+    "label": "x=2에서 y",
+    "expr": "yR",
+    "digits": 4
+   },
+   {
+    "label": "점근선 y",
+    "expr": "asym",
+    "digits": 4
+   },
+   {
+    "label": "점근선과의 차이 (x=-2)",
+    "expr": "gapL",
+    "digits": 4
+   },
+   {
+    "label": "점근선과의 차이 (x=2)",
+    "expr": "gapR",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "k": 1
+   },
+   {
+    "a": 0.5,
+    "k": -1
+   },
+   {
+    "a": 3,
+    "k": 0
+   }
+  ],
+  "invariants": [
+   "gapL*gapR-1",
+   "yL-k-gapL",
+   "yR-k-gapR"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "k": 1
+    },
+    "expect": {
+     "yL": 1.25,
+     "yR": 5,
+     "asym": 1,
+     "gapL": 0.25,
+     "gapR": 4
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "k": -1
+    },
+    "expect": {
+     "yL": 3,
+     "yR": -0.75,
+     "asym": -1,
+     "gapL": 4,
+     "gapR": 0.25
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "k": 0
+    },
+    "expect": {
+     "yL": 0.1111111111111111,
+     "yR": 9,
+     "asym": 0,
+     "gapL": 0.1111111111111111,
+     "gapR": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

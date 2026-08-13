@@ -1,0 +1,139 @@
+{
+ "id": "미분을_이용한_최적화",
+ "spec": {
+  "title": "미분을 이용한 최적화",
+  "params": [
+   {
+    "name": "k",
+    "label": "계수 k",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   },
+   {
+    "name": "t",
+    "label": "탐색 x",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "xm=-1/sqrt(3*k); xp=1/sqrt(3*k); fm=k*xm^3-xm; fp=k*xp^3-xp; ft=k*t^3-t; dt=3*k*t^2-1",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "fns": [
+    {
+     "fn": "k*x^3 - x",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*k*x^2 - 1",
+     "label": "f'(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(t)",
+    "expr": "ft",
+    "digits": 4
+   },
+   {
+    "label": "f'(t)",
+    "expr": "dt",
+    "digits": 4
+   },
+   {
+    "label": "x (극대)",
+    "expr": "xm",
+    "digits": 4
+   },
+   {
+    "label": "f(극대)",
+    "expr": "fm",
+    "digits": 4
+   },
+   {
+    "label": "x (극소)",
+    "expr": "xp",
+    "digits": 4
+   },
+   {
+    "label": "f(극소)",
+    "expr": "fp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5,
+    "t": 0
+   },
+   {
+    "k": 1,
+    "t": 0.3
+   },
+   {
+    "k": 1.5,
+    "t": -0.2
+   },
+   {
+    "k": 2,
+    "t": 1
+   }
+  ],
+  "invariants": [
+   "3*k*xm^2 - 1",
+   "3*k*xp^2 - 1",
+   "xm + xp",
+   "fm - 2/(3*sqrt(3*k))",
+   "fp + 2/(3*sqrt(3*k))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0.75,
+     "t": 1
+    },
+    "expect": {
+     "xm": -0.66666667,
+     "xp": 0.66666667,
+     "fm": 0.44444444,
+     "fp": -0.44444444,
+     "ft": -0.25,
+     "dt": 1.25
+    }
+   },
+   {
+    "params": {
+     "k": 1.2,
+     "t": 0.5
+    },
+    "expect": {
+     "xm": -0.5270462767,
+     "xp": 0.5270462767,
+     "fm": 0.3513641828,
+     "fp": -0.3513641828,
+     "ft": -0.35,
+     "dt": -0.1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

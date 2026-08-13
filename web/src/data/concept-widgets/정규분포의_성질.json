@@ -1,0 +1,137 @@
+{
+ "id": "정규분포의_성질",
+ "spec": {
+  "title": "정규분포의 성질 탐구",
+  "params": [
+   {
+    "name": "mu",
+    "label": "μ (평균)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "sigma",
+    "label": "σ (표준편차)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "x (관찰 지점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "sd=sigma*sqrt(2*pi); f_mu=1/sd; f_x=exp(-0.5*((x-mu)/sigma)^2)/sd; f_mirror=exp(-0.5*((mu-x)/sigma)^2)/sd; f_alt=f_mu*exp(-0.5*((x-mu)/sigma)^2); x_mirror=2*mu-x",
+  "plot": {
+   "range": [
+    "mu-4*sigma",
+    "mu+4*sigma"
+   ],
+   "yRange": [
+    0,
+    "1.2/(sigma*sqrt(2*pi))"
+   ],
+   "fns": [
+    {
+     "fn": "exp(-0.5*((x-mu)/sigma)^2)/(sigma*sqrt(2*pi))",
+     "label": "정규분포 f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x) (확률밀도)",
+    "expr": "f_x",
+    "digits": 4
+   },
+   {
+    "label": "f(μ) (최댓값)",
+    "expr": "f_mu",
+    "digits": 4
+   },
+   {
+    "label": "x의 대칭점",
+    "expr": "x_mirror",
+    "digits": 2
+   },
+   {
+    "label": "대칭점 확률밀도",
+    "expr": "f_mirror",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "mu": 0,
+    "sigma": 1,
+    "x": 0
+   },
+   {
+    "mu": 0,
+    "sigma": 1,
+    "x": 1
+   },
+   {
+    "mu": 1,
+    "sigma": 2,
+    "x": 2
+   }
+  ],
+  "invariants": [
+   "f_x - f_mirror",
+   "f_x - f_alt"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "mu": 0,
+     "sigma": 1,
+     "x": 0
+    },
+    "expect": {
+     "f_x": 0.3989422804,
+     "f_mu": 0.3989422804,
+     "x_mirror": 0
+    }
+   },
+   {
+    "params": {
+     "mu": 0,
+     "sigma": 1,
+     "x": 1
+    },
+    "expect": {
+     "f_x": 0.2419707245,
+     "f_mu": 0.3989422804,
+     "x_mirror": -1
+    }
+   },
+   {
+    "params": {
+     "mu": 1,
+     "sigma": 2,
+     "x": 2
+    },
+    "expect": {
+     "f_x": 0.1760326634,
+     "f_mu": 0.1994711402,
+     "x_mirror": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

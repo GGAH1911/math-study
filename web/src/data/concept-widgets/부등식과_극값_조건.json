@@ -1,0 +1,123 @@
+{
+ "id": "부등식과_극값_조건",
+ "spec": {
+  "title": "극값 조건 탐구: f'(a)=0과 임계점",
+  "params": [
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = -12*k; n_crit = k < 0 ? 2 : (k > 0 ? 0 : 1); xc = k < 0 ? sqrt(-k/3) : 0;",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^3 + k*x",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "3*x^2 + k",
+     "label": "f'(x)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "임계점 개수",
+    "expr": "n_crit",
+    "digits": 0
+   },
+   {
+    "label": "극값 존재 (0=아니오, 1=예)",
+    "expr": "k < 0 ? 1 : 0",
+    "digits": 0
+   },
+   {
+    "label": "D (f'=0 판별식)",
+    "expr": "D",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": -2
+   },
+   {
+    "k": -1
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "n_crit - (D > 0 ? 2 : (D < 0 ? 0 : 1))",
+   "k < 0 ? (3*xc^2 + k) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": -3
+    },
+    "expect": {
+     "D": 36,
+     "n_crit": 2,
+     "xc": 1
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "D": 0,
+     "n_crit": 1,
+     "xc": 0
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "D": -36,
+     "n_crit": 0,
+     "xc": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "id": "algebra/math-1/지수와_로그/근과_지수의_관계",
+ "spec": {
+  "title": "근과 지수의 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (밑)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "m (지수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (근의 차수)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "pow=a^(m/n); root=(a^m)^(1/n);",
+  "plot": {
+   "range": [
+    0.1,
+    2
+   ],
+   "yRange": [
+    0,
+    40
+   ],
+   "fns": [
+    {
+     "fn": "x^(m/n)",
+     "label": "x^(m/n)",
+     "color": "blue"
+    },
+    {
+     "fn": "(x^m)^(1/n)",
+     "label": "n√(x^m)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^(m/n)",
+    "expr": "pow",
+    "digits": 6
+   },
+   {
+    "label": "n√(a^m)",
+    "expr": "root",
+    "digits": 6
+   },
+   {
+    "label": "차이",
+    "expr": "abs(pow-root)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "m": 3,
+    "n": 2
+   },
+   {
+    "a": 0.5,
+    "m": -2,
+    "n": 3
+   },
+   {
+    "a": 4,
+    "m": 1,
+    "n": 1
+   },
+   {
+    "a": 3,
+    "m": 4,
+    "n": 4
+   }
+  ],
+  "invariants": [
+   "abs(pow-root)",
+   "abs(pow^n - a^m)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "m": 2,
+     "n": 2
+    },
+    "expect": {
+     "pow": 2,
+     "root": 2
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "m": 3,
+     "n": 2
+    },
+    "expect": {
+     "pow": 8,
+     "root": 8
+    }
+   },
+   {
+    "params": {
+     "a": 8,
+     "m": 2,
+     "n": 3
+    },
+    "expect": {
+     "pow": 4,
+     "root": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,300 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/최소공배수",
+ "spec": {
+  "title": "최소공배수",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "e2=(mod(a,2)==0 and mod(b,2)==0)?2:0; e3=(mod(a,3)==0 and mod(b,3)==0)?3:0; e4=(mod(a,4)==0 and mod(b,4)==0)?4:0; e5=(mod(a,5)==0 and mod(b,5)==0)?5:0; e6=(mod(a,6)==0 and mod(b,6)==0)?6:0; e7=(mod(a,7)==0 and mod(b,7)==0)?7:0; e8=(mod(a,8)==0 and mod(b,8)==0)?8:0; e9=(mod(a,9)==0 and mod(b,9)==0)?9:0; e10=(mod(a,10)==0 and mod(b,10)==0)?10:0; e11=(mod(a,11)==0 and mod(b,11)==0)?11:0; e12=(mod(a,12)==0 and mod(b,12)==0)?12:0; gcd=max(1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12); lcm=a*b/gcd;",
+  "geometry": {
+   "range": [
+    0,
+    140
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a*1",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*2",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*3",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*4",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*5",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*6",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*7",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*8",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*9",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*10",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*11",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*12",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*1",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*2",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*3",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*4",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*5",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*6",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*7",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*8",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*9",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*10",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*11",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*12",
+      -0.3
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=lcm",
+      0
+     ],
+     "radius": 0.4
+    },
+    {
+     "type": "point",
+     "at": [
+      "=lcm",
+      0
+     ],
+     "label": "LCM"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "LCM",
+    "expr": "lcm",
+    "digits": 0
+   },
+   {
+    "label": "GCD",
+    "expr": "gcd",
+    "digits": 0
+   },
+   {
+    "label": "a×b",
+    "expr": "a*b",
+    "digits": 0
+   },
+   {
+    "label": "lcm×gcd",
+    "expr": "lcm*gcd",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 6
+   },
+   {
+    "a": 7,
+    "b": 5
+   },
+   {
+    "a": 9,
+    "b": 12
+   }
+  ],
+  "invariants": [
+   "mod(lcm,a) + mod(lcm,b)",
+   "lcm*gcd - a*b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 6
+    },
+    "expect": {
+     "lcm": 12,
+     "gcd": 2
+    }
+   },
+   {
+    "params": {
+     "a": 7,
+     "b": 5
+    },
+    "expect": {
+     "lcm": 35,
+     "gcd": 1
+    }
+   },
+   {
+    "params": {
+     "a": 9,
+     "b": 12
+    },
+    "expect": {
+     "lcm": 36,
+     "gcd": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

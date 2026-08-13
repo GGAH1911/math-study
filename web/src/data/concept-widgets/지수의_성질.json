@@ -1,0 +1,167 @@
+{
+ "id": "지수의_성질",
+ "spec": {
+  "title": "지수의 성질 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 1.2,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "am=a^m; an=a^n; asum=a^(m+n); adiff=a^(m-n); prod=am*an; quot=am/an; err_prod=asum-prod; err_quot=adiff-quot",
+  "plot": {
+   "range": [
+    -2,
+    4
+   ],
+   "yRange": [
+    0,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y=a^x",
+     "color": "blue"
+    },
+    {
+     "fn": "prod",
+     "label": "a^m × a^n",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^m",
+    "expr": "am",
+    "digits": 4
+   },
+   {
+    "label": "a^n",
+    "expr": "an",
+    "digits": 4
+   },
+   {
+    "label": "a^(m+n)",
+    "expr": "asum",
+    "digits": 4
+   },
+   {
+    "label": "a^m × a^n",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "오차(곱셈)",
+    "expr": "err_prod",
+    "digits": 8
+   },
+   {
+    "label": "a^(m-n)",
+    "expr": "adiff",
+    "digits": 4
+   },
+   {
+    "label": "a^m ÷ a^n",
+    "expr": "quot",
+    "digits": 4
+   },
+   {
+    "label": "오차(나눗셈)",
+    "expr": "err_quot",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.2,
+    "m": -1,
+    "n": 0.5
+   },
+   {
+    "a": 1.5,
+    "m": 0.5,
+    "n": 1
+   },
+   {
+    "a": 1.8,
+    "m": -0.5,
+    "n": -1
+   },
+   {
+    "a": 2,
+    "m": 1,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "err_prod",
+   "err_quot"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "m": 1,
+     "n": 2
+    },
+    "expect": {
+     "am": 2,
+     "an": 4,
+     "asum": 8,
+     "adiff": 0.5,
+     "prod": 8,
+     "quot": 0.5,
+     "err_prod": 0,
+     "err_quot": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "am": 2.25,
+     "an": 1.5,
+     "asum": 3.375,
+     "adiff": 1.5,
+     "prod": 3.375,
+     "quot": 1.5,
+     "err_prod": 0,
+     "err_quot": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

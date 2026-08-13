@@ -1,0 +1,146 @@
+{
+ "id": "equations/high-1/방정식과_부등식/실수부분과_허수부분",
+ "spec": {
+  "title": "실수부분과 허수부분",
+  "params": [
+   {
+    "name": "aVal",
+    "label": "실수부분 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "bVal",
+    "label": "허수부분 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "z=aVal + bVal*i; reZ = re(z); imZ = im(z); absZ = abs(z)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=aVal",
+      "=bVal"
+     ],
+     "label": "z"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=aVal",
+      "=bVal"
+     ],
+     "to": [
+      "=aVal",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=aVal",
+      "=bVal"
+     ],
+     "to": [
+      0,
+      "=bVal"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Re(z)",
+    "expr": "reZ"
+   },
+   {
+    "label": "Im(z)",
+    "expr": "imZ"
+   },
+   {
+    "label": "|z|",
+    "expr": "absZ"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "aVal": 3,
+    "bVal": 2
+   },
+   {
+    "aVal": -1,
+    "bVal": 4
+   },
+   {
+    "aVal": 0,
+    "bVal": -3
+   },
+   {
+    "aVal": 2.5,
+    "bVal": -1.5
+   }
+  ],
+  "invariants": [
+   "reZ - aVal",
+   "imZ - bVal",
+   "absZ^2 - (aVal^2 + bVal^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "aVal": 3,
+     "bVal": 4
+    },
+    "expect": {
+     "reZ": 3,
+     "imZ": 4,
+     "absZ": 5
+    }
+   },
+   {
+    "params": {
+     "aVal": -3,
+     "bVal": 4
+    },
+    "expect": {
+     "reZ": -3,
+     "imZ": 4,
+     "absZ": 5
+    }
+   },
+   {
+    "params": {
+     "aVal": 5,
+     "bVal": 12
+    },
+    "expect": {
+     "reZ": 5,
+     "imZ": 12,
+     "absZ": 13
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

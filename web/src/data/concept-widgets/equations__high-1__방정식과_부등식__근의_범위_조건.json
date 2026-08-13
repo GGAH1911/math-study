@@ -1,0 +1,210 @@
+{
+ "id": "equations/high-1/방정식과_부등식/근의_범위_조건",
+ "spec": {
+  "title": "근의 범위 조건",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -4,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=1; p1=min(p,q); q1=max(p,q); D=b^2-4*a*c; axis=-b/(2*a); fp=p1^2+b*p1+c; fq=q1^2+b*q1+c; root1=D>=0 ? (-b-sqrt(D))/(2*a) : NaN; root2=D>=0 ? (-b+sqrt(D))/(2*a) : NaN; c1 = D>=0 ? 1 : 0; c2 = (axis>p1 and axis<q1) ? 1 : 0; c3 = (a>0 ? (fp>0 and fq>0) : (fp<0 and fq<0)) ? 1 : 0; allCond = (c1 and c2 and c3) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    "=min(p1-2, -6)",
+    "=max(q1+2, 6)"
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + b*x + c",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "p",
+    "expr": "p1",
+    "digits": 2
+   },
+   {
+    "label": "q",
+    "expr": "q1",
+    "digits": 2
+   },
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "축 x",
+    "expr": "axis",
+    "digits": 2
+   },
+   {
+    "label": "f(p)",
+    "expr": "fp",
+    "digits": 2
+   },
+   {
+    "label": "f(q)",
+    "expr": "fq",
+    "digits": 2
+   },
+   {
+    "label": "근 α",
+    "expr": "root1",
+    "digits": 2
+   },
+   {
+    "label": "근 β",
+    "expr": "root2",
+    "digits": 2
+   },
+   {
+    "label": "조건 충족",
+    "expr": "allCond",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "c": -4,
+    "p": -3,
+    "q": 3
+   },
+   {
+    "b": 0,
+    "c": -4,
+    "p": -1,
+    "q": 1
+   },
+   {
+    "b": 2,
+    "c": 0,
+    "p": -3,
+    "q": 3
+   },
+   {
+    "b": 2,
+    "c": 1,
+    "p": -2,
+    "q": 2
+   }
+  ],
+  "invariants": [
+   "root1 + root2 + b",
+   "root1 * root2 - c",
+   "root1^2 + b*root1 + c",
+   "allCond - (p1 < root1 and root1 < q1 and p1 < root2 and root2 < q1 ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 2,
+     "c": 0,
+     "p": -3,
+     "q": 3
+    },
+    "expect": {
+     "D": 4,
+     "axis": -1,
+     "fp": 3,
+     "fq": 15,
+     "root1": -2,
+     "root2": 0,
+     "allCond": 1
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": -4,
+     "p": -1,
+     "q": 1
+    },
+    "expect": {
+     "D": 16,
+     "axis": 0,
+     "fp": -3,
+     "fq": -3,
+     "root1": -2,
+     "root2": 2,
+     "allCond": 0
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 1,
+     "p": -2,
+     "q": 2
+    },
+    "expect": {
+     "D": 0,
+     "axis": -1,
+     "fp": 1,
+     "fq": 9,
+     "root1": -1,
+     "root2": -1,
+     "allCond": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

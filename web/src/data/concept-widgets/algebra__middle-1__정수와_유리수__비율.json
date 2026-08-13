@@ -1,0 +1,158 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/비율",
+ "spec": {
+  "title": "비율 탐구",
+  "params": [
+   {
+    "name": "A",
+    "label": "비교하는 양",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "B",
+    "label": "기준량",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "r = A / B; pct = r * 100",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    -0.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=B",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      1
+     ],
+     "to": [
+      "=A",
+      1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=B",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=A",
+      1
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A (비교하는 양)",
+    "expr": "A",
+    "digits": 0
+   },
+   {
+    "label": "B (기준량)",
+    "expr": "B",
+    "digits": 0
+   },
+   {
+    "label": "비율",
+    "expr": "r",
+    "digits": 4
+   },
+   {
+    "label": "백분율",
+    "expr": "pct",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "A": 3,
+    "B": 5
+   },
+   {
+    "A": 7,
+    "B": 3
+   },
+   {
+    "A": 4,
+    "B": 4
+   },
+   {
+    "A": 1,
+    "B": 10
+   }
+  ],
+  "invariants": [
+   "A - B*r",
+   "pct - 100*r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "A": 3,
+     "B": 5
+    },
+    "expect": {
+     "r": 0.6,
+     "pct": 60
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "B": 2
+    },
+    "expect": {
+     "r": 0.5,
+     "pct": 50
+    }
+   },
+   {
+    "params": {
+     "A": 2,
+     "B": 4
+    },
+    "expect": {
+     "r": 0.5,
+     "pct": 50
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

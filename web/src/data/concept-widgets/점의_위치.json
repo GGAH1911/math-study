@@ -1,0 +1,243 @@
+{
+ "id": "점의_위치",
+ "spec": {
+  "title": "점의 위치와 위치벡터",
+  "params": [
+   {
+    "name": "ax",
+    "label": "A의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "ay",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "bx",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "by",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "vx = bx - ax; vy = by - ay",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=vx",
+      "=vy"
+     ],
+     "label": "D"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=vx",
+      "=vy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A의 x",
+    "expr": "ax",
+    "digits": 2
+   },
+   {
+    "label": "A의 y",
+    "expr": "ay",
+    "digits": 2
+   },
+   {
+    "label": "B의 x",
+    "expr": "bx",
+    "digits": 2
+   },
+   {
+    "label": "B의 y",
+    "expr": "by",
+    "digits": 2
+   },
+   {
+    "label": "AB의 x",
+    "expr": "vx",
+    "digits": 2
+   },
+   {
+    "label": "AB의 y",
+    "expr": "vy",
+    "digits": 2
+   },
+   {
+    "label": "|AB|",
+    "expr": "sqrt(vx^2+vy^2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ax": 1,
+    "ay": 2,
+    "bx": 3,
+    "by": 1
+   },
+   {
+    "ax": -2,
+    "ay": 3,
+    "bx": 1,
+    "by": -1
+   },
+   {
+    "ax": 0,
+    "ay": 0,
+    "bx": 0,
+    "by": 0
+   },
+   {
+    "ax": -3,
+    "ay": -3,
+    "bx": 3,
+    "by": 3
+   }
+  ],
+  "invariants": [
+   "vx - (bx - ax)",
+   "vy - (by - ay)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ax": 1,
+     "ay": 2,
+     "bx": 3,
+     "by": 1
+    },
+    "expect": {
+     "vx": 2,
+     "vy": -1
+    }
+   },
+   {
+    "params": {
+     "ax": -2,
+     "ay": 3,
+     "bx": 1,
+     "by": -1
+    },
+    "expect": {
+     "vx": 3,
+     "vy": -4
+    }
+   },
+   {
+    "params": {
+     "ax": 0,
+     "ay": 0,
+     "bx": 0,
+     "by": 0
+    },
+    "expect": {
+     "vx": 0,
+     "vy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

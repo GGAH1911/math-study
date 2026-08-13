@@ -1,0 +1,158 @@
+{
+ "id": "충분조건과_필요조건",
+ "spec": {
+  "title": "충분조건과 필요조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (p의 경계)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (q의 경계)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -1,
+    "step": 0.1
+   }
+  ],
+  "scope": "p_sufficient = (a >= b) ? 1 : 0; q_necessary = p_sufficient",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0.5
+     ],
+     "to": [
+      5,
+      0.5
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      -0.5
+     ],
+     "to": [
+      5,
+      -0.5
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0.5
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      -0.5
+     ],
+     "label": "Q"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a (p: x>a)",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b (q: x>b)",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "P⊆Q (충분조건)",
+    "expr": "p_sufficient",
+    "digits": 0
+   },
+   {
+    "label": "필요조건",
+    "expr": "q_necessary",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -1
+   },
+   {
+    "a": -2,
+    "b": -2
+   },
+   {
+    "a": 0,
+    "b": 1
+   },
+   {
+    "a": 1,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "p_sufficient*(a-b) - max(0,a-b)",
+   "q_necessary - p_sufficient"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -1
+    },
+    "expect": {
+     "p_sufficient": 1,
+     "q_necessary": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1
+    },
+    "expect": {
+     "p_sufficient": 0,
+     "q_necessary": 0
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": -2
+    },
+    "expect": {
+     "p_sufficient": 1,
+     "q_necessary": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

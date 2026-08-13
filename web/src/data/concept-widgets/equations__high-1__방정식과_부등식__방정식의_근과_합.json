@@ -1,0 +1,147 @@
+{
+ "id": "equations/high-1/방정식과_부등식/방정식의_근과_합",
+ "spec": {
+  "title": "방정식의 근과 합 (근과 계수의 관계)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항 계수)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (일차항 계수)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -3,
+    "step": 0.1
+   }
+  ],
+  "scope": "d = b^2 - 4*a*c; sqrtD = sqrt(max(d,0)); alpha = d >= 0 ? (-b + sqrtD)/(2*a) : NaN; beta = d >= 0 ? (-b - sqrtD)/(2*a) : NaN; sumFormula = -b/a; prodFormula = c/a;",
+  "plot": {
+   "range": [
+    -25,
+    25
+   ],
+   "yRange": [
+    -50,
+    50
+   ],
+   "fns": [
+    {
+     "fn": "a*x*x + b*x + c",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의 합 α+β",
+    "expr": "sumFormula",
+    "digits": 4
+   },
+   {
+    "label": "근의 곱 αβ",
+    "expr": "prodFormula",
+    "digits": 4
+   },
+   {
+    "label": "판별식 D",
+    "expr": "d",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "c": -3
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "c": -6
+   },
+   {
+    "a": 1,
+    "b": 4,
+    "c": 4
+   },
+   {
+    "a": 1.5,
+    "b": -4.5,
+    "c": 3
+   }
+  ],
+  "invariants": [
+   "abs(alpha+beta - sumFormula)",
+   "abs(alpha*beta - prodFormula)",
+   "abs(a*alpha^2 + b*alpha + c)",
+   "abs(a*beta^2 + b*beta + c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": -3
+    },
+    "expect": {
+     "sumFormula": 2,
+     "prodFormula": -3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "c": -6
+    },
+    "expect": {
+     "sumFormula": -2,
+     "prodFormula": -3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 4,
+     "c": 4
+    },
+    "expect": {
+     "sumFormula": -4,
+     "prodFormula": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "b": -4.5,
+     "c": 3
+    },
+    "expect": {
+     "sumFormula": 3,
+     "prodFormula": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

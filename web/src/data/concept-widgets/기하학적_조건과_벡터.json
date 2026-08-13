@@ -1,0 +1,185 @@
+{
+ "id": "기하학적_조건과_벡터",
+ "spec": {
+  "title": "원의 벡터 조건 |p-c|=r",
+  "params": [
+   {
+    "name": "cx",
+    "label": "C_x",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "cy",
+    "label": "C_y",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "r",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad = theta * pi / 180; px = cx + r * cos(rad); py = cy + r * sin(rad); dist = sqrt((px - cx)^2 + (py - cy)^2); diff = dist - r",
+  "geometry": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=cx",
+      "=cy"
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|p-c|",
+    "expr": "dist"
+   },
+   {
+    "label": "r",
+    "expr": "r"
+   },
+   {
+    "label": "|p-c|-r",
+    "expr": "diff"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "cx": 0,
+    "cy": 0,
+    "r": 1,
+    "theta": 30
+   },
+   {
+    "cx": 1,
+    "cy": -1,
+    "r": 2,
+    "theta": 60
+   },
+   {
+    "cx": -1,
+    "cy": 2,
+    "r": 0.5,
+    "theta": 90
+   },
+   {
+    "cx": 0.5,
+    "cy": 0.5,
+    "r": 1.5,
+    "theta": 135
+   }
+  ],
+  "invariants": [
+   "dist - r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "cx": 0,
+     "cy": 0,
+     "r": 1,
+     "theta": 30
+    },
+    "expect": {
+     "dist": 1,
+     "px": 0.8660254037844386,
+     "py": 0.5
+    }
+   },
+   {
+    "params": {
+     "cx": 1,
+     "cy": -1,
+     "r": 2,
+     "theta": 60
+    },
+    "expect": {
+     "dist": 2,
+     "px": 2,
+     "py": 0.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "cx": -1,
+     "cy": 2,
+     "r": 0.5,
+     "theta": 90
+    },
+    "expect": {
+     "dist": 0.5,
+     "px": -1,
+     "py": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

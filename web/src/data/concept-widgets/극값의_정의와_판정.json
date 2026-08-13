@@ -1,0 +1,150 @@
+{
+ "id": "극값의_정의와_판정",
+ "spec": {
+  "title": "극값의 정의와 판정",
+  "params": [
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1,
+    "step": 0.01,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "c=sqrt(p); max_val=2*p*c; min_val=-2*p*c; f0=x0^3-3*p*x0; fp0=3*x0^2-3*p; eps=0.01; left_der=3*(x0-eps)^2-3*p; right_der=3*(x0+eps)^2-3*p; classification=(abs(fp0)<0.001 and left_der>0 and right_der<0) ? 1 : ((abs(fp0)<0.001 and left_der<0 and right_der>0) ? -1 : 0); sml=3*(-c-eps)^2-3*p; smr=3*(-c+eps)^2-3*p; snl=3*(c-eps)^2-3*p; snr=3*(c+eps)^2-3*p;",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^3-3*p*x",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "fp0",
+    "digits": 4
+   },
+   {
+    "label": "극댓값",
+    "expr": "max_val",
+    "digits": 4
+   },
+   {
+    "label": "극솟값",
+    "expr": "min_val",
+    "digits": 4
+   },
+   {
+    "label": "판정 (1:극대, -1:극소, 0:아님)",
+    "expr": "classification",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "x0": -1
+   },
+   {
+    "p": 0.25,
+    "x0": 0.5
+   },
+   {
+    "p": 0.64,
+    "x0": 1
+   }
+  ],
+  "invariants": [
+   "sign(sml) - sign(smr) - 2",
+   "sign(snl) - sign(snr) + 2",
+   "max_val + min_val",
+   "3*c^2 - 3*p"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "x0": -1
+    },
+    "expect": {
+     "max_val": 2,
+     "min_val": -2,
+     "f0": 2,
+     "fp0": 0,
+     "classification": 1
+    }
+   },
+   {
+    "params": {
+     "p": 0.25,
+     "x0": 0.5
+    },
+    "expect": {
+     "max_val": 0.25,
+     "min_val": -0.25,
+     "f0": -0.25,
+     "fp0": 0,
+     "classification": -1
+    }
+   },
+   {
+    "params": {
+     "p": 0.64,
+     "x0": 1
+    },
+    "expect": {
+     "max_val": 1.024,
+     "min_val": -1.024,
+     "f0": -0.92,
+     "fp0": 1.08,
+     "classification": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

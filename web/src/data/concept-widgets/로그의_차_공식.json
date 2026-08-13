@@ -1,0 +1,196 @@
+{
+ "id": "로그의_차_공식",
+ "spec": {
+  "title": "로그의 차 공식",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "M",
+    "label": "M",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "N",
+    "label": "N",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "logM=log(M,a); logN=log(N,a); diff=logM-logN; ratio=M/N; logRatio=log(ratio,a)",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=M",
+      "=logM"
+     ],
+     "label": "log_a M"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=N",
+      "=logN"
+     ],
+     "label": "log_a N"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ratio",
+      "=logRatio"
+     ],
+     "label": "log_a(M/N)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=M",
+      0
+     ],
+     "to": [
+      "=M",
+      "=logM"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=N",
+      0
+     ],
+     "to": [
+      "=N",
+      "=logN"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ratio",
+      0
+     ],
+     "to": [
+      "=ratio",
+      "=logRatio"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log_a M - log_a N",
+    "expr": "diff",
+    "digits": 6
+   },
+   {
+    "label": "log_a(M/N)",
+    "expr": "logRatio",
+    "digits": 6
+   },
+   {
+    "label": "차이 (0)",
+    "expr": "diff-logRatio",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "M": 4,
+    "N": 2
+   },
+   {
+    "a": 10,
+    "M": 10,
+    "N": 1
+   },
+   {
+    "a": 3,
+    "M": 9,
+    "N": 3
+   },
+   {
+    "a": 5,
+    "M": 7,
+    "N": 2.5
+   }
+  ],
+  "invariants": [
+   "abs(diff-logRatio)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "M": 4,
+     "N": 2
+    },
+    "expect": {
+     "logM": 2,
+     "logN": 1,
+     "diff": 1,
+     "ratio": 2,
+     "logRatio": 1
+    }
+   },
+   {
+    "params": {
+     "a": 10,
+     "M": 10,
+     "N": 1
+    },
+    "expect": {
+     "logM": 1,
+     "logN": 0,
+     "diff": 1,
+     "ratio": 10,
+     "logRatio": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "M": 9,
+     "N": 3
+    },
+    "expect": {
+     "logM": 2,
+     "logN": 1,
+     "diff": 1,
+     "ratio": 3,
+     "logRatio": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "id": "미적분_기본정리",
+ "spec": {
+  "title": "미적분 기본정리",
+  "params": [
+   {
+    "name": "t",
+    "label": "t",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "eps=0.00001; G=t^2/2+t; f_t=t+1; G_plus=(t+eps)^2/2+(t+eps); G_minus=(t-eps)^2/2+(t-eps); deriv_approx=(G_plus-G_minus)/(2*eps); riemann=(t/4)*((t/8+1)+(3*t/8+1)+(5*t/8+1)+(7*t/8+1))",
+  "geometry": {
+   "range": [
+    0,
+    5.5
+   ],
+   "yRange": [
+    -5,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       1
+      ],
+      [
+       "=t",
+       "=t+1"
+      ],
+      [
+       "=t",
+       0
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=t",
+      "=G"
+     ],
+     "label": "(t,G(t))"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    5.5
+   ],
+   "yRange": [
+    -5,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "x+1",
+     "label": "f(x)=x+1",
+     "color": "blue"
+    },
+    {
+     "fn": "x^2/2+x",
+     "label": "G(x)=∫₀ˣ f",
+     "color": "green"
+    },
+    {
+     "fn": "G + f_t*(x - t)",
+     "label": "tangent",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∫₀ᵗ f(x)dx = F(t)-F(0)",
+    "expr": "G",
+    "digits": 4
+   },
+   {
+    "label": "Riemann sum (n=4)",
+    "expr": "riemann",
+    "digits": 4
+   },
+   {
+    "label": "f(t)",
+    "expr": "f_t",
+    "digits": 3
+   },
+   {
+    "label": "G'(t)",
+    "expr": "deriv_approx",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "t": 0.5
+   },
+   {
+    "t": 1.5
+   },
+   {
+    "t": 3
+   },
+   {
+    "t": 4.5
+   }
+  ],
+  "invariants": [
+   "G - riemann",
+   "deriv_approx - f_t"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "t": 1
+    },
+    "expect": {
+     "G": 1.5,
+     "f_t": 2,
+     "deriv_approx": 2,
+     "riemann": 1.5
+    }
+   },
+   {
+    "params": {
+     "t": 0.5
+    },
+    "expect": {
+     "G": 0.625,
+     "f_t": 1.5,
+     "deriv_approx": 1.5,
+     "riemann": 0.625
+    }
+   },
+   {
+    "params": {
+     "t": 2
+    },
+    "expect": {
+     "G": 4,
+     "f_t": 3,
+     "deriv_approx": 3,
+     "riemann": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

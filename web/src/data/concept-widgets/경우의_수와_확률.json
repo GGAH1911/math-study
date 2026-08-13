@@ -1,0 +1,162 @@
+{
+ "id": "경우의_수와_확률",
+ "spec": {
+  "title": "확률: 경우의 수의 비율",
+  "params": [
+   {
+    "name": "n",
+    "label": "전체 경우의 수",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 6,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "사건 경우의 수",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "K = min(k,n); prob = K/n; angle = 2*pi*prob;",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos(angle)",
+      "=sin(angle)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(angle)",
+      "=sin(angle)"
+     ],
+     "label": "E"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "전체 경우의 수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "사건 경우의 수",
+    "expr": "K",
+    "digits": 0
+   },
+   {
+    "label": "확률",
+    "expr": "prob",
+    "digits": 4
+   },
+   {
+    "label": "각도(도)",
+    "expr": "angle*180/pi",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 6,
+    "k": 3
+   },
+   {
+    "n": 4,
+    "k": 2
+   },
+   {
+    "n": 5,
+    "k": 2
+   },
+   {
+    "n": 3,
+    "k": 5
+   }
+  ],
+  "invariants": [
+   "prob + (1-prob) - 1",
+   "cos(angle)^2 + sin(angle)^2 - 1",
+   "K - min(k,n)",
+   "angle - 2*pi*prob"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 6,
+     "k": 3
+    },
+    "expect": {
+     "K": 3,
+     "prob": 0.5
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "k": 2
+    },
+    "expect": {
+     "K": 2,
+     "prob": 0.4
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "k": 5
+    },
+    "expect": {
+     "K": 3,
+     "prob": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

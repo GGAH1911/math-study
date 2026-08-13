@@ -1,0 +1,157 @@
+{
+ "id": "삼각함수_상호관계",
+ "spec": {
+  "title": "삼각함수 상호관계",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); tv=cy/cx",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=cy"
+     ],
+     "to": [
+      "=cx",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      0
+     ],
+     "to": [
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin θ",
+    "expr": "cy",
+    "digits": 6
+   },
+   {
+    "label": "cos θ",
+    "expr": "cx",
+    "digits": 6
+   },
+   {
+    "label": "tan θ",
+    "expr": "tv",
+    "digits": 6
+   },
+   {
+    "label": "sin²+cos²",
+    "expr": "cx^2+cy^2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 120
+   },
+   {
+    "theta": 240
+   }
+  ],
+  "invariants": [
+   "cx^2+cy^2-1",
+   "cx*tv-cy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "cx": 1,
+     "cy": 0,
+     "tv": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "cx": 0.7071067811865475,
+     "cy": 0.7071067811865475,
+     "tv": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 120
+    },
+    "expect": {
+     "cx": -0.5,
+     "cy": 0.8660254037844386,
+     "tv": -1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

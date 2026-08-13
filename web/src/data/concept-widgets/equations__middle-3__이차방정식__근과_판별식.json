@@ -1,0 +1,151 @@
+{
+ "id": "equations/middle-3/이차방정식/근과_판별식",
+ "spec": {
+  "title": "근과 판별식",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 1
+   }
+  ],
+  "scope": "D = b^2 - 4*a*c; count = D > 0 ? 2 : (D == 0 ? 1 : 0)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y=ax²+bx+c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "D = b²-4ac",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실근 개수",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "근 x₁ (실근일 때)",
+    "expr": "D >= 0 ? (-b - sqrt(D)) / (2*a) : 0",
+    "digits": 3
+   },
+   {
+    "label": "근 x₂ (실근일 때)",
+    "expr": "D >= 0 ? (-b + sqrt(D)) / (2*a) : 0",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "c": -3
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 1
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "sign(D) - (count == 2 ? 1 : (count == 1 ? 0 : -1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": -3
+    },
+    "expect": {
+     "D": 16,
+     "count": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "count": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 1
+    },
+    "expect": {
+     "D": -4,
+     "count": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

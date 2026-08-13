@@ -1,0 +1,200 @@
+{
+ "id": "원과_호의_넓이",
+ "spec": {
+  "title": "원과 호의 넓이",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "a/r",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.01
+   }
+  ],
+  "scope": "theta0=acos(t); sinth=sin(theta0); costh=cos(theta0); a=r*costh; y=r*sinth; S=r^2*(theta0 - sinth*costh); S_alt=r^2*(pi/2 - t*sqrt(1 - t^2) - asin(t)); S_left=r^2*(pi/2 + t*sqrt(1 - t^2) + asin(t)); x0=r*cos(theta0); y0=y; x1=r*cos(3*theta0/4); y1=r*sin(3*theta0/4); x2=r*cos(theta0/2); y2=r*sin(theta0/2); x3=r*cos(theta0/4); y3=r*sin(theta0/4); x4=r; y4=0; x5=r*cos(-theta0/4); y5=-r*sin(theta0/4); x6=r*cos(theta0/2); y6=-r*sin(theta0/2); x7=r*cos(3*theta0/4); y7=-r*sin(3*theta0/4); x8=r*cos(theta0); y8=-y;",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x0",
+       "=y0"
+      ],
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ],
+      [
+       "=x3",
+       "=y3"
+      ],
+      [
+       "=x4",
+       "=y4"
+      ],
+      [
+       "=x5",
+       "=y5"
+      ],
+      [
+       "=x6",
+       "=y6"
+      ],
+      [
+       "=x7",
+       "=y7"
+      ],
+      [
+       "=x8",
+       "=y8"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=y8"
+     ],
+     "to": [
+      "=a",
+      "=y0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=0"
+     ],
+     "label": "x=a"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "활꼴 넓이 S",
+    "expr": "S",
+    "digits": 4
+   },
+   {
+    "label": "원 전체 넓이 πr²",
+    "expr": "pi*r^2",
+    "digits": 4
+   },
+   {
+    "label": "S/r²",
+    "expr": "S/r^2",
+    "digits": 4
+   },
+   {
+    "label": "θ (rad)",
+    "expr": "theta0",
+    "digits": 3
+   },
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1,
+    "t": 0
+   },
+   {
+    "r": 2,
+    "t": 0.5
+   },
+   {
+    "r": 1,
+    "t": -0.5
+   },
+   {
+    "r": 0.5,
+    "t": 0.25
+   }
+  ],
+  "invariants": [
+   "S-S_alt",
+   "a^2+y^2-r^2",
+   "S+S_left-pi*r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1,
+     "t": 0
+    },
+    "expect": {
+     "S": 1.5707963267948966,
+     "theta0": 1.5707963267948966,
+     "a": 0,
+     "y": 1
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "t": 0.5
+    },
+    "expect": {
+     "S": 2.4567393972175133,
+     "theta0": 1.0471975511965976,
+     "a": 1,
+     "y": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "r": 1,
+     "t": -0.5
+    },
+    "expect": {
+     "S": 2.5274078042854144,
+     "theta0": 2.0943951023931953,
+     "a": -0.5,
+     "y": 0.8660254037844386
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

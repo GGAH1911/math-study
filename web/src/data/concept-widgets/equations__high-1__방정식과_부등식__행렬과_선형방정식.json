@@ -1,0 +1,149 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬과_선형방정식",
+ "spec": {
+  "title": "행렬과 선형방정식: AX = B",
+  "params": [
+   {
+    "name": "u",
+    "label": "B₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "v",
+    "label": "B₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "a=1; b=2; c=3; d=4; det=a*d-b*c; sx=(u*d-b*v)/det; sy=(a*v-u*c)/det;",
+  "geometry": {
+   "range": [
+    -15,
+    15
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "points": [
+      [
+       0,
+       "=u/2"
+      ],
+      [
+       1,
+       "=(u-1)/2"
+      ]
+     ]
+    },
+    {
+     "type": "line",
+     "points": [
+      [
+       0,
+       "=v/4"
+      ],
+      [
+       1,
+       "=(v-3)/4"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sx",
+      "=sy"
+     ],
+     "label": "X"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "행렬식 det(A)",
+    "expr": "det",
+    "digits": 2
+   },
+   {
+    "label": "x의 값",
+    "expr": "sx",
+    "digits": 3
+   },
+   {
+    "label": "y의 값",
+    "expr": "sy",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "u": -2,
+    "v": 3
+   },
+   {
+    "u": 1,
+    "v": 2
+   },
+   {
+    "u": 4,
+    "v": -1
+   },
+   {
+    "u": 0,
+    "v": 0
+   }
+  ],
+  "invariants": [
+   "a*sx + b*sy - u",
+   "c*sx + d*sy - v"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "u": -2,
+     "v": 3
+    },
+    "expect": {
+     "sx": 7,
+     "sy": -4.5
+    }
+   },
+   {
+    "params": {
+     "u": 1,
+     "v": 2
+    },
+    "expect": {
+     "sx": 0,
+     "sy": 0.5
+    }
+   },
+   {
+    "params": {
+     "u": 4,
+     "v": -1
+    },
+    "expect": {
+     "sx": -9,
+     "sy": 6.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/유리화",
+ "spec": {
+  "title": "유리화: 분모의 무리수 없애기",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (분모의 √b)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "x0=4; v_orig=1/(sqrt(x0)+sqrt(b)); v_rat=(sqrt(x0)-sqrt(b))/(x0-b); diff=abs(v_orig-v_rat); den_rat=x0-b",
+  "plot": {
+   "range": [
+    0.5,
+    10
+   ],
+   "yRange": [
+    0,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "1/(sqrt(x)+sqrt(b))",
+     "label": "1/(√x+√b)",
+     "color": "blue"
+    },
+    {
+     "fn": "(sqrt(x)-sqrt(b))/(x-b)",
+     "label": "(√x-√b)/(x-b)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원래 식 (x=4)",
+    "expr": "v_orig",
+    "digits": 6
+   },
+   {
+    "label": "유리화한 식 (x=4)",
+    "expr": "v_rat",
+    "digits": 6
+   },
+   {
+    "label": "차이",
+    "expr": "diff",
+    "digits": 6
+   },
+   {
+    "label": "유리화 후 분모",
+    "expr": "den_rat",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 1.5
+   },
+   {
+    "b": 2
+   },
+   {
+    "b": 2.5
+   },
+   {
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "abs(v_orig-v_rat)",
+   "abs((sqrt(x0)-sqrt(b))*(sqrt(x0)+sqrt(b)) - (x0-b))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1
+    },
+    "expect": {
+     "v_orig": 0.3333333333333333,
+     "v_rat": 0.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "b": 2
+    },
+    "expect": {
+     "v_orig": 0.2928932188134524,
+     "v_rat": 0.2928932188134524
+    }
+   },
+   {
+    "params": {
+     "b": 3
+    },
+    "expect": {
+     "v_orig": 0.2679491924311227,
+     "v_rat": 0.2679491924311227
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

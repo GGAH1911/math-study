@@ -1,0 +1,339 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/근호의_성질",
+ "spec": {
+  "title": "근호의 성질 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -2,
+    "step": 0.1
+   }
+  ],
+  "scope": "ab=a*b; sqrta=sqrt(a); sqrtb=sqrt(b); lhs_mul=sqrta*sqrtb; rhs_mul=sqrt(ab); lhs_div=sqrta/sqrtb; rhs_div=sqrt(a/b); lhs_sq=sqrta^2; val_abs=sqrt(x^2); absx=abs(x);",
+  "geometry": {
+   "range": [
+    -1,
+    6
+   ],
+   "yRange": [
+    0,
+    10.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "p1": [
+      0,
+      0
+     ],
+     "p2": [
+      0,
+      "=lhs_mul"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=lhs_mul"
+     ],
+     "label": "√a×√b"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      0.5,
+      0
+     ],
+     "p2": [
+      0.5,
+      "=rhs_mul"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0.5,
+      "=rhs_mul"
+     ],
+     "label": "√(ab)"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      1.5,
+      0
+     ],
+     "p2": [
+      1.5,
+      "=lhs_div"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1.5,
+      "=lhs_div"
+     ],
+     "label": "√a÷√b"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      2,
+      0
+     ],
+     "p2": [
+      2,
+      "=rhs_div"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=rhs_div"
+     ],
+     "label": "√(a÷b)"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      3,
+      0
+     ],
+     "p2": [
+      3,
+      "=lhs_sq"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=lhs_sq"
+     ],
+     "label": "(√a)²"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      3.5,
+      0
+     ],
+     "p2": [
+      3.5,
+      "=a"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3.5,
+      "=a"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      4.5,
+      0
+     ],
+     "p2": [
+      4.5,
+      "=val_abs"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4.5,
+      "=val_abs"
+     ],
+     "label": "√(x²)"
+    },
+    {
+     "type": "segment",
+     "p1": [
+      5,
+      0
+     ],
+     "p2": [
+      5,
+      "=absx"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=absx"
+     ],
+     "label": "|x|"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "√a × √b",
+    "expr": "lhs_mul",
+    "digits": 4
+   },
+   {
+    "label": "√(ab)",
+    "expr": "rhs_mul",
+    "digits": 4
+   },
+   {
+    "label": "√a ÷ √b",
+    "expr": "lhs_div",
+    "digits": 4
+   },
+   {
+    "label": "√(a÷b)",
+    "expr": "rhs_div",
+    "digits": 4
+   },
+   {
+    "label": "(√a)²",
+    "expr": "lhs_sq",
+    "digits": 4
+   },
+   {
+    "label": "√(x²)",
+    "expr": "val_abs",
+    "digits": 4
+   },
+   {
+    "label": "|x|",
+    "expr": "absx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 4,
+    "b": 4,
+    "x": -2
+   },
+   {
+    "a": 1,
+    "b": 4,
+    "x": 0
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "x": -1
+   },
+   {
+    "a": 0.25,
+    "b": 0.16,
+    "x": 0.5
+   }
+  ],
+  "invariants": [
+   "lhs_mul-rhs_mul",
+   "lhs_div-rhs_div",
+   "lhs_sq-a",
+   "val_abs-absx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 4,
+     "x": -2
+    },
+    "expect": {
+     "ab": 16,
+     "sqrta": 2,
+     "sqrtb": 2,
+     "lhs_mul": 4,
+     "rhs_mul": 4,
+     "lhs_div": 1,
+     "rhs_div": 1,
+     "lhs_sq": 4,
+     "val_abs": 2,
+     "absx": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 4,
+     "x": 0
+    },
+    "expect": {
+     "ab": 4,
+     "sqrta": 1,
+     "sqrtb": 2,
+     "lhs_mul": 2,
+     "rhs_mul": 2,
+     "lhs_div": 0.5,
+     "rhs_div": 0.5,
+     "lhs_sq": 1,
+     "val_abs": 0,
+     "absx": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.25,
+     "b": 0.16,
+     "x": -0.5
+    },
+    "expect": {
+     "ab": 0.04,
+     "sqrta": 0.5,
+     "sqrtb": 0.4,
+     "lhs_mul": 0.2,
+     "rhs_mul": 0.2,
+     "lhs_div": 1.25,
+     "rhs_div": 1.25,
+     "lhs_sq": 0.25,
+     "val_abs": 0.5,
+     "absx": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

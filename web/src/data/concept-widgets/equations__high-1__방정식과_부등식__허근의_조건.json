@@ -1,0 +1,163 @@
+{
+ "id": "equations/high-1/방정식과_부등식/허근의_조건",
+ "spec": {
+  "title": "허근의 조건 탐구: 이차방정식의 판별식",
+  "params": [
+   {
+    "name": "aa",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "D = b^2 - 4*aa*c; sqrtD = sqrt(abs(D))/(2*aa); r1_re = -b/(2*aa) + (D >= 0 ? sqrt(D)/(2*aa) : 0); r2_re = -b/(2*aa) - (D >= 0 ? sqrt(D)/(2*aa) : 0); r1_im = D < 0 ? sqrtD : 0; r2_im = D < 0 ? -sqrtD : 0; has_nonreal = D < 0 ? 1 : 0",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -10,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "aa*x^2 + b*x + c",
+     "label": "y = ax² + bx + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "허근 여부 (1=예, 0=아니오)",
+    "expr": "has_nonreal",
+    "digits": 0
+   },
+   {
+    "label": "근1 실수부",
+    "expr": "r1_re",
+    "digits": 4
+   },
+   {
+    "label": "근1 허수부",
+    "expr": "r1_im",
+    "digits": 4
+   },
+   {
+    "label": "근2 실수부",
+    "expr": "r2_re",
+    "digits": 4
+   },
+   {
+    "label": "근2 허수부",
+    "expr": "r2_im",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "aa": 1,
+    "b": 0,
+    "c": 5
+   },
+   {
+    "aa": 1,
+    "b": 2,
+    "c": 5
+   },
+   {
+    "aa": 1,
+    "b": 4,
+    "c": 4
+   },
+   {
+    "aa": 1,
+    "b": 4,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "D - (b^2 - 4*aa*c)",
+   "(r1_re + r2_re) - (-b/aa)",
+   "(r1_re*r2_re - r1_im*r2_im) - (c/aa)",
+   "r1_im + r2_im"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "aa": 1,
+     "b": 2,
+     "c": 5
+    },
+    "expect": {
+     "D": -16,
+     "r1_re": -1,
+     "r1_im": 2,
+     "r2_re": -1,
+     "r2_im": -2,
+     "has_nonreal": 1
+    }
+   },
+   {
+    "params": {
+     "aa": 2,
+     "b": -8,
+     "c": 10
+    },
+    "expect": {
+     "D": -16,
+     "r1_re": 2,
+     "r1_im": 1,
+     "r2_re": 2,
+     "r2_im": -1,
+     "has_nonreal": 1
+    }
+   },
+   {
+    "params": {
+     "aa": 1,
+     "b": 4,
+     "c": 0
+    },
+    "expect": {
+     "D": 16,
+     "r1_re": 0,
+     "r1_im": 0,
+     "r2_re": -4,
+     "r2_im": 0,
+     "has_nonreal": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

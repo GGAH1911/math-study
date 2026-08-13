@@ -1,0 +1,118 @@
+{
+ "id": "equations/middle-2/연립일차방정식/미지의_상수_결정",
+ "spec": {
+  "title": "미지의 상수 결정",
+  "params": [
+   {
+    "name": "a",
+    "label": "미지의 계수 a",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "xint = 8/(6-a); yint = (18-7*a)/(6-a); y2atP = 3 - a; diffP = 2*a - 4",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    -6,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "7 - 3*x",
+     "label": "y=7-3x",
+     "color": "blue"
+    },
+    {
+     "fn": "(6 - a*x)/2",
+     "label": "y=(6-ax)/2",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점 x*",
+    "expr": "xint",
+    "digits": 3
+   },
+   {
+    "label": "교점 y*",
+    "expr": "yint",
+    "digits": 3
+   },
+   {
+    "label": "line2의 x=2에서 y",
+    "expr": "y2atP",
+    "digits": 3
+   },
+   {
+    "label": "P를 line2에 대입한 좌변-우변",
+    "expr": "diffP",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 3.5
+   }
+  ],
+  "invariants": [
+   "abs(3*xint + yint - 7)",
+   "abs(a*xint + 2*yint - 6)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "xint": 1.333333333,
+     "yint": 3,
+     "y2atP": 3,
+     "diffP": -4
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "xint": 2,
+     "yint": 1,
+     "y2atP": 1,
+     "diffP": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "xint": 4,
+     "yint": -5,
+     "y2atP": -1,
+     "diffP": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

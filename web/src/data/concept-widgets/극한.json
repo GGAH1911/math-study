@@ -1,0 +1,129 @@
+{
+ "id": "극한",
+ "spec": {
+  "title": "극한의 개념",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 1.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "a=2; L=4; fx=(x^2-4)/(x-2); gx=x+2; actual_diff=abs(fx-L); expected_diff=abs(x-a)",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    0,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "(x^2-4)/(x-2)",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x+2",
+     "label": "g(x)=x+2",
+     "color": "red"
+    },
+    {
+     "fn": "4",
+     "label": "L=4",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 4
+   },
+   {
+    "label": "g(x)=x+2",
+    "expr": "gx",
+    "digits": 4
+   },
+   {
+    "label": "|f(x)-4|",
+    "expr": "actual_diff",
+    "digits": 4
+   },
+   {
+    "label": "|x-2|",
+    "expr": "expected_diff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 1.5
+   },
+   {
+    "x": 1.99
+   },
+   {
+    "x": 2.01
+   },
+   {
+    "x": 2.5
+   }
+  ],
+  "invariants": [
+   "abs(actual_diff - expected_diff)",
+   "abs(fx - gx)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1.5
+    },
+    "expect": {
+     "fx": 3.5,
+     "gx": 3.5,
+     "actual_diff": 0.5,
+     "expected_diff": 0.5
+    }
+   },
+   {
+    "params": {
+     "x": 1.99
+    },
+    "expect": {
+     "fx": 3.99,
+     "gx": 3.99,
+     "actual_diff": 0.01,
+     "expected_diff": 0.01
+    }
+   },
+   {
+    "params": {
+     "x": 2.5
+    },
+    "expect": {
+     "fx": 4.5,
+     "gx": 4.5,
+     "actual_diff": 0.5,
+     "expected_diff": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "id": "함수의_미분",
+ "spec": {
+  "title": "함수의 미분 (접선의 기울기)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "h",
+    "label": "h",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "fa = a^2; fah = (a+h)^2; sec_slope = h==0 ? 2*a : (fah-fa)/h; tan_slope = 2*a; tx1 = a-2; ty1 = fa + tan_slope*(tx1-a); tx2 = a+2; ty2 = fa + tan_slope*(tx2-a);",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -4,
+    9
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x^2",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 3
+   },
+   {
+    "label": "f(a+h)",
+    "expr": "fah",
+    "digits": 3
+   },
+   {
+    "label": "할선 기울기",
+    "expr": "sec_slope",
+    "digits": 3
+   },
+   {
+    "label": "접선 기울기 (f'(a))",
+    "expr": "tan_slope",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "h": 0.5
+   },
+   {
+    "a": 1,
+    "h": 0.5
+   },
+   {
+    "a": -1,
+    "h": -0.5
+   },
+   {
+    "a": 1.5,
+    "h": 0.01
+   }
+  ],
+  "invariants": [
+   "sec_slope - (2*a + h)",
+   "tan_slope - 2*a",
+   "fa - a^2",
+   "fah - (a+h)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 0,
+     "fah": 0.25,
+     "sec_slope": 0.5,
+     "tan_slope": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 1,
+     "fah": 2.25,
+     "sec_slope": 2.5,
+     "tan_slope": 2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "h": -0.5
+    },
+    "expect": {
+     "fa": 1,
+     "fah": 2.25,
+     "sec_slope": -2.5,
+     "tan_slope": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

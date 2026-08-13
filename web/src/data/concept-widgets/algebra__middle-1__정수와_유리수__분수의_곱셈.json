@@ -1,0 +1,311 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/분수의_곱셈",
+ "spec": {
+  "title": "분수의 곱셈",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자 a",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 b",
+    "type": "slider",
+    "min": 4,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "분자 c",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "분모 d",
+    "type": "slider",
+    "min": 4,
+    "max": 6,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "ab=a/b; cd=c/d; prod=ab*cd; ac=a*c; bd=b*d;",
+  "geometry": {
+   "range": [
+    -0.1,
+    1.1
+   ],
+   "yRange": [
+    -0.1,
+    1.1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ab",
+       0
+      ],
+      [
+       "=ab",
+       "=cd"
+      ],
+      [
+       0,
+       "=cd"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1/b",
+      0
+     ],
+     "to": [
+      "=1/b",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=2/b",
+      0
+     ],
+     "to": [
+      "=2/b",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=3/b",
+      0
+     ],
+     "to": [
+      "=3/b",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=4/b",
+      0
+     ],
+     "to": [
+      "=4/b",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=5/b",
+      0
+     ],
+     "to": [
+      "=5/b",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=1/d"
+     ],
+     "to": [
+      1,
+      "=1/d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=2/d"
+     ],
+     "to": [
+      1,
+      "=2/d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=3/d"
+     ],
+     "to": [
+      1,
+      "=3/d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=4/d"
+     ],
+     "to": [
+      1,
+      "=4/d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=5/d"
+     ],
+     "to": [
+      1,
+      "=5/d"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b",
+    "expr": "ab",
+    "digits": 2
+   },
+   {
+    "label": "c/d",
+    "expr": "cd",
+    "digits": 2
+   },
+   {
+    "label": "분자 끼리 곱",
+    "expr": "ac",
+    "digits": 0
+   },
+   {
+    "label": "분모 끼리 곱",
+    "expr": "bd",
+    "digits": 0
+   },
+   {
+    "label": "곱 (a/b×c/d)",
+    "expr": "prod",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 4,
+    "c": 3,
+    "d": 5
+   },
+   {
+    "a": 1,
+    "b": 5,
+    "c": 2,
+    "d": 4
+   },
+   {
+    "a": 4,
+    "b": 6,
+    "c": 0,
+    "d": 6
+   },
+   {
+    "a": 3,
+    "b": 6,
+    "c": 4,
+    "d": 6
+   }
+  ],
+  "invariants": [
+   "prod - (a*c)/(b*d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "c": 3,
+     "d": 5
+    },
+    "expect": {
+     "ab": 0.5,
+     "cd": 0.6,
+     "prod": 0.3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 5,
+     "c": 2,
+     "d": 4
+    },
+    "expect": {
+     "ab": 0.2,
+     "cd": 0.5,
+     "prod": 0.1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 6,
+     "c": 4,
+     "d": 6
+    },
+    "expect": {
+     "ab": 0.5,
+     "cd": 0.6666666666666666,
+     "prod": 0.3333333333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

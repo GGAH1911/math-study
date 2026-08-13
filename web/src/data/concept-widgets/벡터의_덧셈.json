@@ -1,0 +1,226 @@
+{
+ "id": "벡터의_덧셈",
+ "spec": {
+  "title": "벡터의 덧셈",
+  "params": [
+   {
+    "name": "ax",
+    "label": "a_x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "ay",
+    "label": "a_y",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "bx",
+    "label": "b_x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "by",
+    "label": "b_y",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "sumx=ax+bx; sumy=ay+by; mag=sqrt(sumx^2+sumy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ax",
+       "=ay"
+      ],
+      [
+       "=sumx",
+       "=sumy"
+      ],
+      [
+       "=bx",
+       "=by"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=sumx",
+      "=sumy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sumx",
+      "=sumy"
+     ],
+     "label": "a+b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a+b x",
+    "expr": "sumx",
+    "digits": 2
+   },
+   {
+    "label": "a+b y",
+    "expr": "sumy",
+    "digits": 2
+   },
+   {
+    "label": "|a+b|",
+    "expr": "mag",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "ax": 1,
+    "ay": 2,
+    "bx": 3,
+    "by": 4
+   },
+   {
+    "ax": -2,
+    "ay": 1,
+    "bx": 0,
+    "by": 5
+   },
+   {
+    "ax": 3,
+    "ay": -1,
+    "bx": -4,
+    "by": 2
+   },
+   {
+    "ax": 0,
+    "ay": 0,
+    "bx": 1,
+    "by": 1
+   }
+  ],
+  "invariants": [
+   "sumx-(ax+bx)",
+   "sumy-(ay+by)",
+   "mag^2-(ax^2+ay^2+bx^2+by^2+2*(ax*bx+ay*by))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "ax": 1,
+     "ay": 2,
+     "bx": 3,
+     "by": 4
+    },
+    "expect": {
+     "sumx": 4,
+     "sumy": 6
+    }
+   },
+   {
+    "params": {
+     "ax": -1,
+     "ay": 0,
+     "bx": 2,
+     "by": -3
+    },
+    "expect": {
+     "sumx": 1,
+     "sumy": -3
+    }
+   },
+   {
+    "params": {
+     "ax": 0,
+     "ay": 0,
+     "bx": 5,
+     "by": 5
+    },
+    "expect": {
+     "sumx": 5,
+     "sumy": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

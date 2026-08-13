@@ -1,0 +1,120 @@
+{
+ "id": "소수_판정",
+ "spec": {
+  "title": "소수 판정",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 2,
+    "max": 100,
+    "init": 30,
+    "step": 1
+   }
+  ],
+  "scope": "s=floor(sqrt(n)); i2=(2<=s and mod(n,2)==0)?1:0; i3=(3<=s and mod(n,3)==0)?1:0; i4=(4<=s and mod(n,4)==0)?1:0; i5=(5<=s and mod(n,5)==0)?1:0; i6=(6<=s and mod(n,6)==0)?1:0; i7=(7<=s and mod(n,7)==0)?1:0; i8=(8<=s and mod(n,8)==0)?1:0; i9=(9<=s and mod(n,9)==0)?1:0; i10=(10<=s and mod(n,10)==0)?1:0; sumDiv=i2+i3+i4+i5+i6+i7+i8+i9+i10; isPrime=(n>=2 and sumDiv==0)?1:0; p2x=(i2==1)?2:999; p2y=(i2==1)?n/2:999; p3x=(i3==1)?3:999; p3y=(i3==1)?n/3:999; p4x=(i4==1)?4:999; p4y=(i4==1)?n/4:999; p5x=(i5==1)?5:999; p5y=(i5==1)?n/5:999; p6x=(i6==1)?6:999; p6y=(i6==1)?n/6:999; p7x=(i7==1)?7:999; p7y=(i7==1)?n/7:999; p8x=(i8==1)?8:999; p8y=(i8==1)?n/8:999; p9x=(i9==1)?9:999; p9y=(i9==1)?n/9:999; p10x=(i10==1)?10:999; p10y=(i10==1)?n/10:999",
+  "plot": {
+   "range": [
+    0.5,
+    12
+   ],
+   "yRange": [
+    0,
+    60
+   ],
+   "fns": [
+    {
+     "fn": "n/x",
+     "label": "y = n/x",
+     "color": "#4a90d9"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n",
+    "expr": "n"
+   },
+   {
+    "label": "⌊√n⌋",
+    "expr": "s",
+    "digits": 0
+   },
+   {
+    "label": "약수 개수 (2~√n)",
+    "expr": "sumDiv",
+    "digits": 0
+   },
+   {
+    "label": "소수 여부 (1=소수)",
+    "expr": "isPrime",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 7
+   },
+   {
+    "n": 9
+   },
+   {
+    "n": 13
+   },
+   {
+    "n": 100
+   }
+  ],
+  "invariants": [
+   "max(0, s^2 - n) + max(0, n - (s+1)^2)",
+   "abs((p2x==999 ? 0 : p2x*p2y - n)) + abs((p3x==999 ? 0 : p3x*p3y - n)) + abs((p4x==999 ? 0 : p4x*p4y - n)) + abs((p5x==999 ? 0 : p5x*p5y - n)) + abs((p6x==999 ? 0 : p6x*p6y - n)) + abs((p7x==999 ? 0 : p7x*p7y - n)) + abs((p8x==999 ? 0 : p8x*p8y - n)) + abs((p9x==999 ? 0 : p9x*p9y - n)) + abs((p10x==999 ? 0 : p10x*p10y - n))",
+   "abs(i2*(i2-1)) + abs(i3*(i3-1)) + abs(i4*(i4-1)) + abs(i5*(i5-1)) + abs(i6*(i6-1)) + abs(i7*(i7-1)) + abs(i8*(i8-1)) + abs(i9*(i9-1)) + abs(i10*(i10-1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 7
+    },
+    "expect": {
+     "s": 2,
+     "sumDiv": 0,
+     "isPrime": 1
+    }
+   },
+   {
+    "params": {
+     "n": 9
+    },
+    "expect": {
+     "s": 3,
+     "sumDiv": 1,
+     "isPrime": 0
+    }
+   },
+   {
+    "params": {
+     "n": 13
+    },
+    "expect": {
+     "s": 3,
+     "sumDiv": 0,
+     "isPrime": 1
+    }
+   },
+   {
+    "params": {
+     "n": 100
+    },
+    "expect": {
+     "s": 10,
+     "sumDiv": 4,
+     "isPrime": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

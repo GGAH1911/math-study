@@ -1,0 +1,102 @@
+{
+ "id": "적분상수",
+ "spec": {
+  "title": "적분상수",
+  "params": [
+   {
+    "name": "C",
+    "label": "C",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "x0=1; h=0.000001; F1=x0^2+C; slope=(((x0+h)^2+C)-((x0-h)^2+C))/(2*h)",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -6,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2+C",
+     "label": "F(x)+C (원시함수)",
+     "color": "blue"
+    },
+    {
+     "fn": "2*x",
+     "label": "f(x)=2x (도함수)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "F(1)+C",
+    "expr": "F1",
+    "digits": 2
+   },
+   {
+    "label": "F'(1) 근사",
+    "expr": "slope",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "C": -3
+   },
+   {
+    "C": 0
+   },
+   {
+    "C": 1.5
+   },
+   {
+    "C": 3
+   }
+  ],
+  "invariants": [
+   "slope - 2*x0",
+   "F1 - (C + x0^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "C": -2
+    },
+    "expect": {
+     "F1": -1,
+     "slope": 2
+    }
+   },
+   {
+    "params": {
+     "C": 0.5
+    },
+    "expect": {
+     "F1": 1.5,
+     "slope": 2
+    }
+   },
+   {
+    "params": {
+     "C": 3
+    },
+    "expect": {
+     "F1": 4,
+     "slope": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

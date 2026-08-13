@@ -1,0 +1,140 @@
+{
+ "id": "equations/middle-2/연립일차방정식/연립일차방정식의_풀이",
+ "spec": {
+  "title": "연립일차방정식의 풀이",
+  "params": [
+   {
+    "name": "c1",
+    "label": "c₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "c2",
+    "label": "c₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "xA=-8; xB=8; y1A=-xA+c1; y1B=-xB+c1; y2A=xA-c2; y2B=xB-c2; x=(c1+c2)/2; y=(c1-c2)/2",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=xA",
+      "=y1A"
+     ],
+     "to": [
+      "=xB",
+      "=y1B"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xA",
+      "=y2A"
+     ],
+     "to": [
+      "=xB",
+      "=y2B"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x의 값",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "y의 값",
+    "expr": "y",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c1": 5,
+    "c2": 4
+   },
+   {
+    "c1": -2,
+    "c2": 3
+   },
+   {
+    "c1": 1,
+    "c2": 1
+   },
+   {
+    "c1": 0,
+    "c2": -1
+   }
+  ],
+  "invariants": [
+   "x+y-c1",
+   "x-y-c2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c1": 5,
+     "c2": 4
+    },
+    "expect": {
+     "x": 4.5,
+     "y": 0.5
+    }
+   },
+   {
+    "params": {
+     "c1": -2,
+     "c2": 3
+    },
+    "expect": {
+     "x": 0.5,
+     "y": -2.5
+    }
+   },
+   {
+    "params": {
+     "c1": 1,
+     "c2": 1
+    },
+    "expect": {
+     "x": 1,
+     "y": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

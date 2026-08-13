@@ -1,0 +1,104 @@
+{
+ "id": "1차방정식",
+ "spec": {
+  "title": "1차방정식 ax+b=0의 해",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -6,
+    "step": 0.5
+   }
+  ],
+  "scope": "x0 = -b/a",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x + b",
+     "label": "y = ax + b",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x = -b/a",
+    "expr": "x0",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": 2,
+    "b": -6
+   },
+   {
+    "a": -3,
+    "b": 4
+   },
+   {
+    "a": 0.5,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "a*x0 + b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "x0": -2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -6
+    },
+    "expect": {
+     "x0": 3
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 4
+    },
+    "expect": {
+     "x0": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

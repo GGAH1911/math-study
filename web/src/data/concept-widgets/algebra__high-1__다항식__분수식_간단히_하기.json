@@ -1,0 +1,100 @@
+{
+ "id": "algebra/high-1/다항식/분수식_간단히_하기",
+ "spec": {
+  "title": "분수식 간단히 하기 (약분과 정의역)",
+  "params": [
+   {
+    "name": "a",
+    "label": "약분되는 근",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "x0=0; den0=x0-a; num0=x0^2-a^2; orig0=den0==0 ? 0/0 : num0/den0; simp0=x0+a; diff0=simp0-orig0",
+  "plot": {
+   "range": [
+    -3,
+    5
+   ],
+   "yRange": [
+    -3,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x+a",
+     "label": "간단히 한 식 y=x+a",
+     "color": "red"
+    },
+    {
+     "fn": "(x^2-a^2)/(x-a)",
+     "label": "원래 분수식",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원래 분수식(x=0)",
+    "expr": "orig0",
+    "digits": 4
+   },
+   {
+    "label": "간단히 한 식(x=0)",
+    "expr": "simp0",
+    "digits": 4
+   },
+   {
+    "label": "차이",
+    "expr": "diff0",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.2
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 2.8
+   }
+  ],
+  "invariants": [
+   "diff0",
+   "orig0 - a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "orig0": 2,
+     "simp0": 2,
+     "diff0": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "orig0": 1,
+     "simp0": 1,
+     "diff0": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "id": "분수_지수",
+ "spec": {
+  "title": "분수 지수 탐구",
+  "params": [
+   {
+    "name": "base",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "분자 m",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "분모 n",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "val = base^(m/n); root_val = (base^(1/n))^m; pow_val = (base^m)^(1/n);",
+  "plot": {
+   "range": [
+    0,
+    2
+   ],
+   "yRange": [
+    0,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^(m/n)",
+     "label": "y = x^(m/n)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^(m/n)",
+    "expr": "val",
+    "digits": 4
+   },
+   {
+    "label": "(a^(1/n))^m",
+    "expr": "root_val",
+    "digits": 4
+   },
+   {
+    "label": "(a^m)^(1/n)",
+    "expr": "pow_val",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "base": 1,
+    "m": 2,
+    "n": 3
+   },
+   {
+    "base": 2,
+    "m": 3,
+    "n": 1
+   },
+   {
+    "base": 0.5,
+    "m": 1,
+    "n": 2
+   },
+   {
+    "base": 1.5,
+    "m": 2,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "val - root_val",
+   "val - pow_val",
+   "val^n - base^m",
+   "root_val^n - base^m",
+   "pow_val^n - base^m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "base": 1,
+     "m": 2,
+     "n": 3
+    },
+    "expect": {
+     "val": 1,
+     "root_val": 1,
+     "pow_val": 1
+    }
+   },
+   {
+    "params": {
+     "base": 2,
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "val": 8,
+     "root_val": 8,
+     "pow_val": 8
+    }
+   },
+   {
+    "params": {
+     "base": 2,
+     "m": 2,
+     "n": 2
+    },
+    "expect": {
+     "val": 2,
+     "root_val": 2,
+     "pow_val": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

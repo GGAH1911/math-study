@@ -1,0 +1,201 @@
+{
+ "id": "equations/high-1/방정식과_부등식/선형_디오판토스_방정식",
+ "spec": {
+  "title": "선형 디오판토스 방정식의 정수 해 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "t",
+    "label": "t (직선 위 점의 매개변수)",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "a0=abs(a); b0=abs(b); q1=b0==0?0:mod(a0,b0); q2=q1==0?0:mod(b0,q1); q3=q2==0?0:mod(q1,q2); q4=q3==0?0:mod(q2,q3); q5=q4==0?0:mod(q3,q4); gcd_val=q5!=0?q5:(q4!=0?q4:(q3!=0?q3:(q2!=0?q2:(q1!=0?q1:(b0!=0?b0:a0))))); zero_both=a0==0 and b0==0; exists=zero_both?(c==0?1:0):(mod(abs(c),gcd_val)==0?1:0); x_min=-10; x_max=10; y_min=-10; y_max=10; p1x=b!=0?x_min:(a!=0?c/a:0); p1y=b!=0?((c-a*x_min)/b):(a!=0?y_min:0); p2x=b!=0?x_max:(a!=0?c/a:0); p2y=b!=0?((c-a*x_max)/b):(a!=0?y_max:0); px=b!=0?t:(a!=0?c/a:0); py=b!=0?((c-a*t)/b):(a!=0?t:0); isInt=(floor(px)==px and floor(py)==py)?1:0;",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=p1x",
+      "=p1y"
+     ],
+     "to": [
+      "=p2x",
+      "=p2y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최대공약수",
+    "expr": "gcd_val",
+    "digits": 0
+   },
+   {
+    "label": "정수해 존재",
+    "expr": "exists",
+    "digits": 0
+   },
+   {
+    "label": "점 x",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "점 y",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "정수점",
+    "expr": "isInt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 1,
+    "t": -1
+   },
+   {
+    "a": 4,
+    "b": 6,
+    "c": 2,
+    "t": 2
+   },
+   {
+    "a": 4,
+    "b": 6,
+    "c": 1,
+    "t": 1
+   },
+   {
+    "a": 0,
+    "b": 3,
+    "c": 6,
+    "t": -2
+   }
+  ],
+  "invariants": [
+   "abs(a*px + b*py - c)",
+   "abs(mod(abs(a),gcd_val)) + abs(mod(abs(b),gcd_val))",
+   "abs(exists - (mod(abs(c), gcd_val)==0 ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 1,
+     "t": -1
+    },
+    "expect": {
+     "gcd_val": 1,
+     "exists": 1,
+     "px": -1,
+     "py": 1,
+     "isInt": 1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 6,
+     "c": 2,
+     "t": 2
+    },
+    "expect": {
+     "gcd_val": 2,
+     "exists": 1,
+     "px": 2,
+     "py": -1,
+     "isInt": 1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 6,
+     "c": 1,
+     "t": 1
+    },
+    "expect": {
+     "gcd_val": 2,
+     "exists": 0,
+     "px": 1,
+     "py": -0.5,
+     "isInt": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 3,
+     "c": 6,
+     "t": -2
+    },
+    "expect": {
+     "gcd_val": 3,
+     "exists": 1,
+     "px": -2,
+     "py": 2,
+     "isInt": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

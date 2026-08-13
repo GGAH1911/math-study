@@ -1,0 +1,170 @@
+{
+ "id": "equations/middle-3/이차방정식/계수_관계식",
+ "spec": {
+  "title": "근과 계수의 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "r1",
+    "label": "α",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "r2",
+    "label": "β",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "b = -a*(r1+r2); c = a*r1*r2; vx = -b/(2*a); vy = a*vx^2 + b*vx + c",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y = ax² + bx + c",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "α+β",
+    "expr": "r1+r2",
+    "digits": 3
+   },
+   {
+    "label": "-b/a",
+    "expr": "-b/a",
+    "digits": 3
+   },
+   {
+    "label": "αβ",
+    "expr": "r1*r2",
+    "digits": 3
+   },
+   {
+    "label": "c/a",
+    "expr": "c/a",
+    "digits": 3
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "c",
+    "expr": "c",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "r1": 2,
+    "r2": 3
+   },
+   {
+    "a": 1.5,
+    "r1": -1,
+    "r2": 4
+   },
+   {
+    "a": 0.5,
+    "r1": 0,
+    "r2": 0
+   },
+   {
+    "a": 2,
+    "r1": -2,
+    "r2": -2
+   }
+  ],
+  "invariants": [
+   "r1 + r2 + b/a",
+   "r1*r2 - c/a",
+   "a*r1^2 + b*r1 + c",
+   "a*r2^2 + b*r2 + c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "r1": 2,
+     "r2": 3
+    },
+    "expect": {
+     "b": -5,
+     "c": 6,
+     "vx": 2.5,
+     "vy": -0.25
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "r1": -1,
+     "r2": 4
+    },
+    "expect": {
+     "b": -4.5,
+     "c": -6,
+     "vx": 1.5,
+     "vy": -9.375
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "r1": 0,
+     "r2": 0
+    },
+    "expect": {
+     "b": 0,
+     "c": 0,
+     "vx": 0,
+     "vy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

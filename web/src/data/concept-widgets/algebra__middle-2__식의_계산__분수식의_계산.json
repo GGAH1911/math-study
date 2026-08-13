@@ -1,0 +1,125 @@
+{
+ "id": "algebra/middle-2/식의_계산/분수식의_계산",
+ "spec": {
+  "title": "분수식의 덧셈: 통분",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "orig = 1/(x0+3)+a/(x0+4); simp = ((a+1)*x0 + (3*a+4))/(x0^2+7*x0+12); diff = orig - simp",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "1/(x+3)+a/(x+4)",
+     "label": "원래 식",
+     "color": "blue"
+    },
+    {
+     "fn": "((a+1)*x + (3*a+4))/(x^2+7*x+12)",
+     "label": "통분 결과",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "원래 식 값",
+    "expr": "orig",
+    "digits": 4
+   },
+   {
+    "label": "통분 결과 값",
+    "expr": "simp",
+    "digits": 4
+   },
+   {
+    "label": "차이",
+    "expr": "diff",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "x0": 0
+   },
+   {
+    "a": -1,
+    "x0": 1
+   },
+   {
+    "a": 2,
+    "x0": -1.5
+   },
+   {
+    "a": -2,
+    "x0": 0.5
+   }
+  ],
+  "invariants": [
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "x0": 0
+    },
+    "expect": {
+     "orig": 0.5833333333333334,
+     "simp": 0.5833333333333334,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "x0": 1
+    },
+    "expect": {
+     "orig": 0.05,
+     "simp": 0.05,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": -1.5
+    },
+    "expect": {
+     "orig": 1.4666666666666666,
+     "simp": 1.4666666666666666,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

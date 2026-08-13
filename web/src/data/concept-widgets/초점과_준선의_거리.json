@@ -1,0 +1,130 @@
+{
+ "id": "초점과_준선의_거리",
+ "spec": {
+  "title": "초점과 준선의 거리",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (초점·준선 거리 2p)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "t",
+    "label": "t (포물선 위 점)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "x=p*t^2; y=2*p*t; distF=sqrt((x-p)^2+y^2); distD=x+p; diff=distF-distD",
+  "plot": {
+   "range": [
+    0,
+    3
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "fns": [
+    {
+     "fn": "2*sqrt(p*x)",
+     "label": "y=2√(px)",
+     "color": "blue"
+    },
+    {
+     "fn": "-2*sqrt(p*x)",
+     "label": "y=-2√(px)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PF (초점까지 거리)",
+    "expr": "distF",
+    "digits": 3
+   },
+   {
+    "label": "준선까지 거리",
+    "expr": "distD",
+    "digits": 3
+   },
+   {
+    "label": "차이 (PF - 준선거리)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "초점-준선 거리 (2p)",
+    "expr": "2*p",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "t": 0.5
+   },
+   {
+    "p": 1.5,
+    "t": -0.8
+   },
+   {
+    "p": 0.7,
+    "t": 0.2
+   }
+  ],
+  "invariants": [
+   "y^2 - 4*p*x",
+   "distF - distD"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "t": 0.5
+    },
+    "expect": {
+     "x": 0.25,
+     "y": 1,
+     "distF": 1.25,
+     "distD": 1.25
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "t": 1
+    },
+    "expect": {
+     "x": 2,
+     "y": 4,
+     "distF": 4,
+     "distD": 4
+    }
+   },
+   {
+    "params": {
+     "p": 0.5,
+     "t": -0.5
+    },
+    "expect": {
+     "x": 0.125,
+     "y": -0.5,
+     "distF": 0.625,
+     "distD": 0.625
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

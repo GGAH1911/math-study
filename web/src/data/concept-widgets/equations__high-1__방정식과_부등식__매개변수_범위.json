@@ -1,0 +1,115 @@
+{
+ "id": "equations/high-1/방정식과_부등식/매개변수_범위",
+ "spec": {
+  "title": "매개변수 범위: 이차방정식의 실근 조건",
+  "params": [
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "D = 4*m^2 - 16; vy = -m^2 + 4",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -25,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -25,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2 - 2*m*x + 4",
+     "label": "f(x) = x² - 2mx + 4",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "꼭짓점 y값",
+    "expr": "vy",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": -5
+   },
+   {
+    "m": -1.5
+   },
+   {
+    "m": 0
+   },
+   {
+    "m": 2
+   },
+   {
+    "m": 4
+   }
+  ],
+  "invariants": [
+   "D - (4*m^2 - 16)",
+   "vy - (-m^2 + 4)",
+   "4 - m^2 - vy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 0
+    },
+    "expect": {
+     "D": -16,
+     "vy": 4
+    }
+   },
+   {
+    "params": {
+     "m": -2
+    },
+    "expect": {
+     "D": 0,
+     "vy": 0
+    }
+   },
+   {
+    "params": {
+     "m": 3
+    },
+    "expect": {
+     "D": 20,
+     "vy": -5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

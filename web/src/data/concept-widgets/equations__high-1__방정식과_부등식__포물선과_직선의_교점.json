@@ -1,0 +1,197 @@
+{
+ "id": "equations/high-1/방정식과_부등식/포물선과_직선의_교점",
+ "spec": {
+  "title": "포물선과 직선의 교점",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -3,
+    "step": 0.5
+   },
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "s=b-m; t=c-n; D=s^2-4*a*t; x1=(-s+sqrt(D))/(2*a); x2=(-s-sqrt(D))/(2*a); y1=m*x1+n; y2=m*x2+n;",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "포물선",
+     "color": "blue"
+    },
+    {
+     "fn": "m*x+n",
+     "label": "직선",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "교점 개수",
+    "expr": "D>0 ? 2 : (D==0 ? 1 : 0)",
+    "digits": 0
+   },
+   {
+    "label": "x1",
+    "expr": "x1",
+    "digits": 2
+   },
+   {
+    "label": "y1",
+    "expr": "y1",
+    "digits": 2
+   },
+   {
+    "label": "x2",
+    "expr": "x2",
+    "digits": 2
+   },
+   {
+    "label": "y2",
+    "expr": "y2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "m": 0,
+    "n": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1,
+    "m": 0,
+    "n": -1
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1,
+    "m": -2,
+    "n": 1
+   },
+   {
+    "a": 2,
+    "b": 0,
+    "c": -8,
+    "m": 0,
+    "n": 0
+   }
+  ],
+  "invariants": [
+   "D>=0 ? abs(a*x1^2+s*x1+t)+abs(a*x2^2+s*x2+t) : 0",
+   "D>=0 ? abs(x1+x2+s/a)+abs(x1*x2-t/a) : 0",
+   "D>=0 ? abs(a*x1^2+b*x1+c-y1)+abs(a*x2^2+b*x2+c-y2) : 0",
+   "D>=0 ? abs(m*x1+n-y1)+abs(m*x2+n-y2) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "m": 0,
+     "n": 1
+    },
+    "expect": {
+     "x1": 2,
+     "x2": -2,
+     "y1": 1,
+     "y2": 1,
+     "D": 16
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -1,
+     "m": 0,
+     "n": -1
+    },
+    "expect": {
+     "x1": 0,
+     "x2": 0,
+     "y1": -1,
+     "y2": -1,
+     "D": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "m": 1,
+     "n": -1
+    },
+    "expect": {
+     "x1": 2,
+     "x2": -1,
+     "y1": 1,
+     "y2": -2,
+     "D": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

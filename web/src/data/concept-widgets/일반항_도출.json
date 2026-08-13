@@ -1,0 +1,137 @@
+{
+ "id": "일반항_도출",
+ "spec": {
+  "title": "일반항 도출 – 등차수열",
+  "params": [
+   {
+    "name": "a1",
+    "label": "첫째항 a₁",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "공차 d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "항 번호 n",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "an=a1+(n-1)*d; prev=a1+(n-2)*d; an2=a1+(n-3)*d",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      0,
+      "=a1-d"
+     ],
+     "to": [
+      11,
+      "=a1+10*d"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=an"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a_n",
+    "expr": "an",
+    "digits": 2
+   },
+   {
+    "label": "a_n - a_(n-1)",
+    "expr": "n>1 ? an-prev : 0",
+    "digits": 2
+   },
+   {
+    "label": "이계차",
+    "expr": "n>2 ? an-2*prev+an2 : 0",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 1,
+    "d": 1,
+    "n": 5
+   },
+   {
+    "a1": -2,
+    "d": 0.5,
+    "n": 3
+   },
+   {
+    "a1": 2,
+    "d": -1,
+    "n": 10
+   },
+   {
+    "a1": 0.3,
+    "d": 1.2,
+    "n": 7
+   }
+  ],
+  "invariants": [
+   "n>2 ? (an - 2*prev + an2) : 0",
+   "n>1 ? (an - prev - d) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 2,
+     "d": 3,
+     "n": 5
+    },
+    "expect": {
+     "an": 14
+    }
+   },
+   {
+    "params": {
+     "a1": -1,
+     "d": 0.5,
+     "n": 4
+    },
+    "expect": {
+     "an": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "id": "삼각함수의_미분",
+ "spec": {
+  "title": "삼각함수의 미분: sin(x)의 도함수",
+  "params": [
+   {
+    "name": "x0",
+    "label": "x₀ (rad)",
+    "type": "slider",
+    "min": -6.28,
+    "max": 6.28,
+    "init": 1,
+    "step": 0.01
+   }
+  ],
+  "scope": "h=1e-4; y0=sin(x0); m=cos(x0); num_deriv=(sin(x0+h)-sin(x0-h))/(2*h); x1=x0-1; y1=m*(x1-x0)+y0; x2=x0+1; y2=m*(x2-x0)+y0",
+  "plot": {
+   "range": [
+    -6.28,
+    6.28
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y=sin(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "cos(x)",
+     "label": "y=cos(x) (도함수)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₀",
+    "expr": "x0",
+    "digits": 2
+   },
+   {
+    "label": "sin(x₀)",
+    "expr": "y0",
+    "digits": 4
+   },
+   {
+    "label": "접선 기울기 = cos(x₀)",
+    "expr": "m",
+    "digits": 4
+   },
+   {
+    "label": "수치 미분",
+    "expr": "num_deriv",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 0
+   },
+   {
+    "x0": 0.5235987755982988
+   },
+   {
+    "x0": 0.7853981633974483
+   },
+   {
+    "x0": 1.0471975511965976
+   }
+  ],
+  "invariants": [
+   "y0 - sin(x0)",
+   "num_deriv - m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 0
+    },
+    "expect": {
+     "y0": 0,
+     "m": 1,
+     "num_deriv": 1
+    }
+   },
+   {
+    "params": {
+     "x0": 0.5235987755982988
+    },
+    "expect": {
+     "y0": 0.5,
+     "m": 0.8660254037844386,
+     "num_deriv": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "x0": 0.7853981633974483
+    },
+    "expect": {
+     "y0": 0.7071067811865476,
+     "m": 0.7071067811865476,
+     "num_deriv": 0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

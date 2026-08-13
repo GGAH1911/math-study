@@ -1,0 +1,164 @@
+{
+ "id": "타원의_초점",
+ "spec": {
+  "title": "타원의 초점",
+  "params": [
+   {
+    "name": "a",
+    "label": "장반경 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "e",
+    "label": "이심률 e",
+    "type": "slider",
+    "min": 0,
+    "max": 0.9,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "theta",
+    "label": "점 P 각도 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1
+   }
+  ],
+  "scope": "b=a*sqrt(1-e^2); c=a*e; x=a*cos(theta*pi/180); y=b*sin(theta*pi/180); d1=sqrt((x-c)^2+y^2); d2=sqrt((x+c)^2+y^2); sum=d1+d2;",
+  "plot": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "fns": [
+    {
+     "fn": "b*sqrt(1-(x/a)^2)",
+     "label": "y = b√(1-x²/a²)",
+     "color": "blue"
+    },
+    {
+     "fn": "-b*sqrt(1-(x/a)^2)",
+     "label": "y = -b√(1-x²/a²)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "단반경 b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "초점거리 c",
+    "expr": "c",
+    "digits": 2
+   },
+   {
+    "label": "PF₁",
+    "expr": "d1",
+    "digits": 2
+   },
+   {
+    "label": "PF₂",
+    "expr": "d2",
+    "digits": 2
+   },
+   {
+    "label": "PF₁+PF₂",
+    "expr": "sum",
+    "digits": 2
+   },
+   {
+    "label": "2a",
+    "expr": "2*a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "e": 0.6,
+    "theta": 0
+   },
+   {
+    "a": 3,
+    "e": 0.6,
+    "theta": 90
+   },
+   {
+    "a": 5,
+    "e": 0,
+    "theta": 45
+   },
+   {
+    "a": 2,
+    "e": 0.8,
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "sum-2*a",
+   "x^2/a^2 + y^2/b^2 - 1",
+   "c^2 + b^2 - a^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 5,
+     "e": 0.6,
+     "theta": 0
+    },
+    "expect": {
+     "c": 3,
+     "b": 4,
+     "d1": 2,
+     "d2": 8,
+     "sum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "e": 0.6,
+     "theta": 90
+    },
+    "expect": {
+     "b": 4,
+     "c": 3,
+     "d1": 5,
+     "d2": 5,
+     "sum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "e": 0,
+     "theta": 45
+    },
+    "expect": {
+     "c": 0,
+     "b": 3,
+     "d1": 3,
+     "d2": 3,
+     "sum": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

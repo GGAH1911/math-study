@@ -1,0 +1,137 @@
+{
+ "id": "로그함수의_성질과_응용",
+ "spec": {
+  "title": "로그함수의 그래프와 밑의 변화",
+  "params": [
+   {
+    "name": "a_raw",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a = (abs(a_raw - 1) < 0.001) ? 1.001 : a_raw; y1 = log(1,a); ya = log(a,a); y3 = log(3,a); inv = a^y3 - 3; p4 = log(4,a) - 2*log(2,a); slope2 = 1/(2*log(a))",
+  "geometry": {
+   "range": [
+    0.1,
+    5
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0.1,
+    5
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "log(x,a)",
+     "label": "y = log_a x",
+     "color": "#d32f2f"
+    },
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "#1976d2"
+    },
+    {
+     "fn": "x",
+     "label": "y = x",
+     "color": "#888888"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑 a",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "log_a(1)",
+    "expr": "y1",
+    "digits": 3
+   },
+   {
+    "label": "log_a(a)",
+    "expr": "ya",
+    "digits": 3
+   },
+   {
+    "label": "log_a(4) - 2log_a(2)",
+    "expr": "p4",
+    "digits": 3
+   },
+   {
+    "label": "기울기 (x=2)",
+    "expr": "slope2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a_raw": 0.5
+   },
+   {
+    "a_raw": 1.1
+   },
+   {
+    "a_raw": 2
+   },
+   {
+    "a_raw": 4
+   }
+  ],
+  "invariants": [
+   "y1",
+   "ya - 1",
+   "inv",
+   "p4",
+   "slope2*2*log(a) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a_raw": 2
+    },
+    "expect": {
+     "y1": 0,
+     "ya": 1,
+     "y3": 1.584962500721156,
+     "inv": 0,
+     "p4": 0,
+     "slope2": 0.7213475204444817
+    }
+   },
+   {
+    "params": {
+     "a_raw": 0.5
+    },
+    "expect": {
+     "y1": 0,
+     "ya": 1,
+     "y3": -1.584962500721156,
+     "inv": 0,
+     "p4": 0,
+     "slope2": -0.7213475204444817
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

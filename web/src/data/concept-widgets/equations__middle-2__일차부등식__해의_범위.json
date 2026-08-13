@@ -1,0 +1,200 @@
+{
+ "id": "equations/middle-2/일차부등식/해의_범위",
+ "spec": {
+  "title": "일차부등식의 해의 범위",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x의 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (상수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "op",
+    "label": "부등호 (0: >, 1: ≥)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "t",
+    "label": "x (테스트 값)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "p = a == 0 ? 0 : -b/a; all_solution = (a == 0 and (op == 1 ? b >= 0 : b > 0)) ? 1 : 0; satisfies = (op == 1 ? (a*t + b >= 0 ? 1 : 0) : (a*t + b > 0 ? 1 : 0)); range_condition = (a == 0) ? satisfies : (a > 0 ? (op == 1 ? (t >= p ? 1 : 0) : (t > p ? 1 : 0)) : (op == 1 ? (t <= p ? 1 : 0) : (t < p ? 1 : 0))); rx0 = a > 0 ? p : (all_solution == 1 ? -6 : 1000); rx1 = a > 0 ? 6 : (all_solution == 1 ? 6 : 1001); lx0 = a < 0 ? -6 : 1002; lx1 = a < 0 ? p : 1003; bx = (a != 0 and op == 1) ? p : 1004; bcx = (a != 0 and op == 0) ? p : 1005;",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=rx0",
+      0
+     ],
+     "to": [
+      "=rx1",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=lx0",
+      0
+     ],
+     "to": [
+      "=lx1",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      0
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=bcx",
+      0
+     ],
+     "radius": 0.08
+    },
+    {
+     "type": "point",
+     "at": [
+      "=t",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "경계값 p",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "ax+b 값",
+    "expr": "a*t + b",
+    "digits": 2
+   },
+   {
+    "label": "만족 여부",
+    "expr": "satisfies",
+    "digits": 0
+   },
+   {
+    "label": "해의 방향(오른쪽=1,왼쪽=-1)",
+    "expr": "a > 0 ? 1 : a < 0 ? -1 : 0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "op": 1,
+    "t": 3
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "op": 1,
+    "t": 3
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "op": 0,
+    "t": -1
+   },
+   {
+    "a": 0,
+    "b": 3,
+    "op": 1,
+    "t": 5
+   }
+  ],
+  "invariants": [
+   "satisfies - range_condition",
+   "a == 0 ? 0 : abs(a*p + b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "op": 1,
+     "t": 3
+    },
+    "expect": {
+     "p": 2,
+     "satisfies": 1,
+     "range_condition": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2,
+     "op": 1,
+     "t": 3
+    },
+    "expect": {
+     "p": 2,
+     "satisfies": 0,
+     "range_condition": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "op": 0,
+     "t": -1
+    },
+    "expect": {
+     "p": -2,
+     "satisfies": 1,
+     "range_condition": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

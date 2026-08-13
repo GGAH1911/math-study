@@ -1,0 +1,140 @@
+{
+ "id": "로그함수의_교점",
+ "spec": {
+  "title": "로그함수의 교점",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 1.1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "수평 이동 c",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "수직 이동 d",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "xinter = c * a^d / (a^d - 1); yinter = log(xinter, a); dx = xinter - c; margin = max(1, dx * 0.5); xmin = max(0.01, c + 0.05 * dx); xmax = xinter + margin; ymin = yinter - 3; ymax = yinter + 3;",
+  "plot": {
+   "range": [
+    "=xmin",
+    "=xmax"
+   ],
+   "yRange": [
+    "=ymin",
+    "=ymax"
+   ],
+   "fns": [
+    {
+     "fn": "log(x, a)",
+     "label": "y=log_a x",
+     "color": "blue"
+    },
+    {
+     "fn": "log(x - c, a) + d",
+     "label": "y=log_a(x-c)+d",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "교점의 x좌표",
+    "expr": "xinter",
+    "digits": 4
+   },
+   {
+    "label": "교점의 y좌표",
+    "expr": "yinter",
+    "digits": 4
+   },
+   {
+    "label": "진수 x-c",
+    "expr": "xinter - c",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "c": 1,
+    "d": 1
+   },
+   {
+    "a": 4,
+    "c": 3,
+    "d": 1
+   },
+   {
+    "a": 2,
+    "c": 2,
+    "d": 2
+   },
+   {
+    "a": 3,
+    "c": 0.5,
+    "d": 0.5
+   }
+  ],
+  "invariants": [
+   "abs(log(xinter, a) - (log(xinter - c, a) + d))",
+   "abs((xinter > c ? 0 : 1))",
+   "abs((a^d > 1 ? 0 : 1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "c": 1,
+     "d": 1
+    },
+    "expect": {
+     "xinter": 2,
+     "yinter": 1
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "c": 3,
+     "d": 1
+    },
+    "expect": {
+     "xinter": 4,
+     "yinter": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "c": 2,
+     "d": 1
+    },
+    "expect": {
+     "xinter": 3,
+     "yinter": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

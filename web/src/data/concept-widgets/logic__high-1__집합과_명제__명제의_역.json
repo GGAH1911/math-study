@@ -1,0 +1,208 @@
+{
+ "id": "logic/high-1/집합과_명제/명제의_역",
+ "spec": {
+  "title": "명제 p→q와 그 역의 진리값 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (p의 기준)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (q의 기준)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x",
+    "label": "x (탐색 값)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "p = x > a ? 1 : 0; q = x > b ? 1 : 0; orig = a >= b ? 1 : 0; inv = b >= a ? 1 : 0;",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0.2
+     ],
+     "to": [
+      5,
+      0.2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      -0.2
+     ],
+     "to": [
+      5,
+      -0.2
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    },
+    {
+     "type": "point",
+     "at": [
+      4.6,
+      0.2
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      4.6,
+      -0.2
+     ],
+     "label": "Q"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "현재 x에서 p: x > a",
+    "expr": "p",
+    "digits": 0
+   },
+   {
+    "label": "현재 x에서 q: x > b",
+    "expr": "q",
+    "digits": 0
+   },
+   {
+    "label": "원명제 p→q (P⊆Q)",
+    "expr": "orig",
+    "digits": 0
+   },
+   {
+    "label": "역 q→p (Q⊆P)",
+    "expr": "inv",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 1,
+    "x": 0
+   },
+   {
+    "a": 1,
+    "b": -1,
+    "x": 2
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "x": 1
+   },
+   {
+    "a": 2,
+    "b": 0.5,
+    "x": 1.5
+   }
+  ],
+  "invariants": [
+   "orig + inv - (1 + (1 - abs(sign(a-b))))",
+   "orig == 1 ? (p <= q ? 0 : 1) : 0",
+   "inv == 1 ? (q <= p ? 0 : 1) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 1,
+     "x": 0
+    },
+    "expect": {
+     "p": 1,
+     "q": 0,
+     "orig": 0,
+     "inv": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -1,
+     "x": 2
+    },
+    "expect": {
+     "p": 1,
+     "q": 1,
+     "orig": 1,
+     "inv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "x": 1
+    },
+    "expect": {
+     "p": 1,
+     "q": 1,
+     "orig": 1,
+     "inv": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

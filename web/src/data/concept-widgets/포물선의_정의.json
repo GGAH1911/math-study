@@ -1,0 +1,120 @@
+{
+ "id": "포물선의_정의",
+ "spec": {
+  "title": "포물선의 정의",
+  "params": [
+   {
+    "name": "p",
+    "label": "p (초점 거리)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "px",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "y = px^2/(4*p); dist_focus = sqrt(px^2 + (y-p)^2); dist_directrix = y + p",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "x^2/(4*p)",
+     "label": "y = x²/(4p)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "PF (초점까지 거리)",
+    "expr": "dist_focus",
+    "digits": 3
+   },
+   {
+    "label": "P에서 준선까지 거리",
+    "expr": "dist_directrix",
+    "digits": 3
+   },
+   {
+    "label": "차이 (PF - 준선거리)",
+    "expr": "dist_focus - dist_directrix",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "p": 1,
+    "px": 1
+   },
+   {
+    "p": 2,
+    "px": 1.5
+   },
+   {
+    "p": 0.5,
+    "px": -2
+   },
+   {
+    "p": 1.5,
+    "px": 0
+   }
+  ],
+  "invariants": [
+   "abs(dist_focus - dist_directrix)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "p": 1,
+     "px": 1
+    },
+    "expect": {
+     "y": 0.25,
+     "dist_focus": 1.25,
+     "dist_directrix": 1.25
+    }
+   },
+   {
+    "params": {
+     "p": 0.5,
+     "px": 1
+    },
+    "expect": {
+     "y": 0.5,
+     "dist_focus": 1,
+     "dist_directrix": 1
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "px": 0
+    },
+    "expect": {
+     "y": 0,
+     "dist_focus": 2,
+     "dist_directrix": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

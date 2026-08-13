@@ -1,0 +1,146 @@
+{
+ "id": "equations/high-1/방정식과_부등식/부등식과_함수",
+ "spec": {
+  "title": "단조성과 부등식",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "간격 d",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "계수 c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "b=a+d; fa=c*a^2; fb=c*b^2; diff=fb-fa",
+  "geometry": {},
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -72,
+    72
+   ],
+   "fns": [
+    {
+     "fn": "c*x^2",
+     "label": "f(x)=c x^2",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "f(b)",
+    "expr": "fb",
+    "digits": 4
+   },
+   {
+    "label": "f(b)-f(a)",
+    "expr": "diff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "d": 1,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "d": 1,
+    "c": -1
+   },
+   {
+    "a": 2,
+    "d": 2,
+    "c": 1
+   }
+  ],
+  "invariants": [
+   "diff - c*(b^2-a^2)",
+   "c>0 ? (diff > 0 ? 0 : 1) : (c<0 ? (diff < 0 ? 0 : 1) : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "d": 1,
+     "c": 1
+    },
+    "expect": {
+     "b": 2,
+     "fa": 1,
+     "fb": 4,
+     "diff": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "d": 1,
+     "c": -1
+    },
+    "expect": {
+     "b": 2,
+     "fa": -1,
+     "fb": -4,
+     "diff": -3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "d": 2,
+     "c": 1
+    },
+    "expect": {
+     "b": 4,
+     "fa": 4,
+     "fb": 16,
+     "diff": 12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

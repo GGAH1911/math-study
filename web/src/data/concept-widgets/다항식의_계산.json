@@ -1,0 +1,193 @@
+{
+ "id": "다항식의_계산",
+ "spec": {
+  "title": "다항식의 곱셈 (x+a)(x+b) 전개",
+  "params": [
+   {
+    "name": "a",
+    "label": "a 값",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b 값",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "x",
+    "label": "x 값",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "sa=a+b; sp=a*b; lhs=(x+a)*(x+b); rhs=x^2+sa*x+sp; ar1=x*x; ar2=x*b; ar3=a*x; ar4=a*b; total=ar1+ar2+ar3+ar4",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=x+a",
+       "=0"
+      ],
+      [
+       "=x+a",
+       "=x+b"
+      ],
+      [
+       "=0",
+       "=x+b"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      "=0"
+     ],
+     "to": [
+      "=x",
+      "=x+b"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=0",
+      "=x"
+     ],
+     "to": [
+      "=x+a",
+      "=x"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "(x+a)(x+b) =",
+    "expr": "lhs",
+    "digits": 2
+   },
+   {
+    "label": "x²+(a+b)x+ab =",
+    "expr": "rhs",
+    "digits": 2
+   },
+   {
+    "label": "a+b =",
+    "expr": "sa",
+    "digits": 0
+   },
+   {
+    "label": "a×b =",
+    "expr": "sp",
+    "digits": 0
+   },
+   {
+    "label": "총넓이 =",
+    "expr": "total",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "x": 2
+   },
+   {
+    "a": 1,
+    "b": 4,
+    "x": 3
+   },
+   {
+    "a": 0,
+    "b": 5,
+    "x": 1
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "x": 5
+   }
+  ],
+  "invariants": [
+   "abs(lhs - rhs)",
+   "abs(total - lhs)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "x": 2
+    },
+    "expect": {
+     "lhs": 20,
+     "rhs": 20,
+     "sa": 5,
+     "sp": 6,
+     "total": 20
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 4,
+     "x": 3
+    },
+    "expect": {
+     "lhs": 28,
+     "rhs": 28,
+     "sa": 5,
+     "sp": 4,
+     "total": 28
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 5,
+     "x": 1
+    },
+    "expect": {
+     "lhs": 6,
+     "rhs": 6,
+     "sa": 5,
+     "sp": 0,
+     "total": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

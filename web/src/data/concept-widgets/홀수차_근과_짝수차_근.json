@@ -1,0 +1,126 @@
+{
+ "id": "홀수차_근과_짝수차_근",
+ "spec": {
+  "title": "홀수차 근과 짝수차 근",
+  "params": [
+   {
+    "name": "k",
+    "label": "근의 차수 k",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "left=(-0.5)^k; right=(0.5)^k; prod=sign(left)*sign(right); parity=(-1)^k",
+  "geometry": {
+   "range": [
+    -1.2,
+    1.2
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.2,
+    1.2
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "x^k",
+     "label": "f(x) = x^k",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(-0.5)",
+    "expr": "left",
+    "digits": 4
+   },
+   {
+    "label": "f(0.5)",
+    "expr": "right",
+    "digits": 4
+   },
+   {
+    "label": "부호 곱",
+    "expr": "prod",
+    "digits": 0
+   },
+   {
+    "label": "(-1)^k",
+    "expr": "parity",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   },
+   {
+    "k": 4
+   }
+  ],
+  "invariants": [
+   "prod - parity",
+   "left - parity*right"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "left": -0.5,
+     "right": 0.5,
+     "prod": -1,
+     "parity": -1
+    }
+   },
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "left": 0.25,
+     "right": 0.25,
+     "prod": 1,
+     "parity": 1
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "left": -0.125,
+     "right": 0.125,
+     "prod": -1,
+     "parity": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

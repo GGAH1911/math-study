@@ -1,0 +1,123 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/약수_관계",
+ "spec": {
+  "title": "약수 관계 a|b",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -20,
+    "max": 20,
+    "init": 12,
+    "step": 1
+   }
+  ],
+  "scope": "r=b-a*floor(b/a); q=floor(b/a); isdiv=(r==0)?1:0",
+  "plot": {
+   "range": [
+    -20,
+    20
+   ],
+   "yRange": [
+    -1,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x-a*floor(x/a)",
+     "label": "나머지 r(x)",
+     "color": "#4caf50"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a|b (1=참, 0=거짓)",
+    "expr": "isdiv",
+    "digits": 0
+   },
+   {
+    "label": "몫 q",
+    "expr": "q",
+    "digits": 0
+   },
+   {
+    "label": "나머지 r",
+    "expr": "r",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 12
+   },
+   {
+    "a": 4,
+    "b": 14
+   },
+   {
+    "a": 5,
+    "b": -7
+   },
+   {
+    "a": 1,
+    "b": 10
+   }
+  ],
+  "invariants": [
+   "b-(a*q+r)",
+   "isdiv*(b-a*q)",
+   "q-floor(b/a)",
+   "isdiv-((r==0)?1:0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 12
+    },
+    "expect": {
+     "q": 4,
+     "r": 0,
+     "isdiv": 1
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": -7
+    },
+    "expect": {
+     "q": -2,
+     "r": 3,
+     "isdiv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 14
+    },
+    "expect": {
+     "q": 3,
+     "r": 2,
+     "isdiv": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

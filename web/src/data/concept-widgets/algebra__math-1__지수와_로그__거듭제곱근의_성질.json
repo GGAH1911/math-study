@@ -1,0 +1,154 @@
+{
+ "id": "algebra/math-1/지수와_로그/거듭제곱근의_성질",
+ "spec": {
+  "title": "거듭제곱근의 성질: √[n]{a} · √[n]{b} = √[n]{ab}",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 9,
+    "step": 0.1
+   }
+  ],
+  "scope": "rootA = a^(1/n); rootB = b^(1/n); rootAB = (a*b)^(1/n); lhs = rootA * rootB; rhs = rootAB",
+  "plot": {
+   "range": [
+    0,
+    110
+   ],
+   "yRange": [
+    0,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^(1/n)",
+     "label": "y = x^(1/n)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "√[n]{a}",
+    "expr": "rootA",
+    "digits": 4
+   },
+   {
+    "label": "√[n]{b}",
+    "expr": "rootB",
+    "digits": 4
+   },
+   {
+    "label": "√[n]{ab}",
+    "expr": "rootAB",
+    "digits": 4
+   },
+   {
+    "label": "LHS = √[n]{a}·√[n]{b}",
+    "expr": "lhs",
+    "digits": 4
+   },
+   {
+    "label": "RHS = √[n]{ab}",
+    "expr": "rhs",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "a": 4,
+    "b": 9
+   },
+   {
+    "n": 3,
+    "a": 8,
+    "b": 1
+   },
+   {
+    "n": 2,
+    "a": 2,
+    "b": 3
+   },
+   {
+    "n": 4,
+    "a": 16,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "lhs - rhs",
+   "rootA^n - a",
+   "rootB^n - b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "a": 4,
+     "b": 9
+    },
+    "expect": {
+     "rootA": 2,
+     "rootB": 3,
+     "rootAB": 6,
+     "lhs": 6,
+     "rhs": 6
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "a": 8,
+     "b": 1
+    },
+    "expect": {
+     "rootA": 2,
+     "rootB": 1,
+     "rootAB": 2,
+     "lhs": 2,
+     "rhs": 2
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "a": 16,
+     "b": 1
+    },
+    "expect": {
+     "rootA": 2,
+     "rootB": 1,
+     "rootAB": 2,
+     "lhs": 2,
+     "rhs": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

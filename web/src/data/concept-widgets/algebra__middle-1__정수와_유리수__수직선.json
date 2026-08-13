@@ -1,0 +1,139 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/수직선",
+ "spec": {
+  "title": "수직선 위의 점과 거리",
+  "params": [
+   {
+    "name": "a",
+    "label": "A의 좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "B의 좌표",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "d=abs(b-a)",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A의 좌표",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "B의 좌표",
+    "expr": "b",
+    "digits": 0
+   },
+   {
+    "label": "거리 |b-a|",
+    "expr": "d",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2,
+    "b": 5
+   },
+   {
+    "a": 3,
+    "b": 3
+   },
+   {
+    "a": -7,
+    "b": 2
+   },
+   {
+    "a": 5,
+    "b": -3
+   }
+  ],
+  "invariants": [
+   "abs(b-a)-abs(a-b)",
+   "abs(b-a)-sqrt((b-a)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -2,
+     "b": 5
+    },
+    "expect": {
+     "d": 7
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3
+    },
+    "expect": {
+     "d": 0
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": -3
+    },
+    "expect": {
+     "d": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

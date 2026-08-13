@@ -1,0 +1,229 @@
+{
+ "id": "부채꼴의_성질",
+ "spec": {
+  "title": "부채꼴의 성질",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 1,
+    "max": 70,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "th = theta * pi / 180; sin_th = sin(th); cos_th = cos(th); tan_th = sin_th / cos_th; area_tri = 0.5 * sin_th; area_sector = 0.5 * th; area_tan = 0.5 * tan_th; arc_len = th;",
+  "geometry": {
+   "range": [
+    -1.5,
+    2.5
+   ],
+   "yRange": [
+    -1.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos_th",
+      "=sin_th"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      "=cos_th",
+      "=sin_th"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      1,
+      "=tan_th"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      "=tan_th"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos_th",
+      "=sin_th"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=tan_th"
+     ],
+     "label": "T"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중심각(rad)",
+    "expr": "th",
+    "digits": 4
+   },
+   {
+    "label": "호의 길이",
+    "expr": "arc_len",
+    "digits": 4
+   },
+   {
+    "label": "내부 삼각형 넓이",
+    "expr": "area_tri",
+    "digits": 4
+   },
+   {
+    "label": "부채꼴 넓이",
+    "expr": "area_sector",
+    "digits": 4
+   },
+   {
+    "label": "외부 삼각형 넓이",
+    "expr": "area_tan",
+    "digits": 4
+   },
+   {
+    "label": "θ/sinθ",
+    "expr": "th/sin_th",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 10
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "th - theta*pi/180",
+   "sin_th^2 + cos_th^2 - 1",
+   "tan_th - sin_th/cos_th",
+   "area_tri - 0.5*sin_th",
+   "area_sector - 0.5*th",
+   "area_tan - 0.5*tan_th"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "th": 0.5235987755982988,
+     "sin_th": 0.5,
+     "cos_th": 0.8660254037844386,
+     "tan_th": 0.5773502691896257,
+     "area_tri": 0.25,
+     "area_sector": 0.2617993877991494,
+     "area_tan": 0.2886751345948129
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "th": 0.7853981633974483,
+     "sin_th": 0.7071067811865476,
+     "cos_th": 0.7071067811865476,
+     "tan_th": 1,
+     "area_tri": 0.3535533905932738,
+     "area_sector": 0.39269908169872414,
+     "area_tan": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "th": 1.0471975511965976,
+     "sin_th": 0.8660254037844386,
+     "cos_th": 0.5,
+     "tan_th": 1.7320508075688772,
+     "area_tri": 0.4330127018922193,
+     "area_sector": 0.5235987755982988,
+     "area_tan": 0.8660254037844386
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

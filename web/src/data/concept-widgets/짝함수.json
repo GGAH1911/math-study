@@ -1,0 +1,120 @@
+{
+ "id": "짝함수",
+ "spec": {
+  "title": "짝함수",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx=a^x+a^(-x); fmx=a^(-x)+a^x; diff=fx-fmx",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    0,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a^x + a^(-x)",
+     "label": "f(x)=a^x+a^{-x}",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x)",
+    "expr": "fx",
+    "digits": 4
+   },
+   {
+    "label": "f(-x)",
+    "expr": "fmx",
+    "digits": 4
+   },
+   {
+    "label": "f(x)-f(-x)",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.5,
+    "x": 1
+   },
+   {
+    "a": 2,
+    "x": 2
+   },
+   {
+    "a": 0.5,
+    "x": -1.5
+   },
+   {
+    "a": 1,
+    "x": 0.5
+   }
+  ],
+  "invariants": [
+   "fx - fmx"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x": 1
+    },
+    "expect": {
+     "fx": 2.5,
+     "fmx": 2.5,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x": 2
+    },
+    "expect": {
+     "fx": 4.25,
+     "fmx": 4.25,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "x": 3
+    },
+    "expect": {
+     "fx": 2,
+     "fmx": 2,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

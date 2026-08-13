@@ -1,0 +1,142 @@
+{
+ "id": "equations/high-1/방정식과_부등식/허근",
+ "spec": {
+  "title": "이차방정식의 허근",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 5,
+    "max": 8,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "D = b^2 - 4*c; real = -b/2; imag = D < 0 ? sqrt(-D)/2 : 0",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -2.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=real",
+      "=imag"
+     ],
+     "label": "허근1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=real",
+      "=-imag"
+     ],
+     "label": "허근2"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=real",
+      "=-imag"
+     ],
+     "to": [
+      "=real",
+      "=imag"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 0
+   },
+   {
+    "label": "실수부",
+    "expr": "real",
+    "digits": 2
+   },
+   {
+    "label": "허수부 크기",
+    "expr": "imag",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "c": 5
+   },
+   {
+    "b": 2,
+    "c": 5
+   },
+   {
+    "b": 4,
+    "c": 5
+   }
+  ],
+  "invariants": [
+   "2*real + b",
+   "real^2 - imag^2 + b*real + c",
+   "4*imag^2 + D"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "c": 5
+    },
+    "expect": {
+     "D": -20,
+     "real": 0,
+     "imag": 2.23606797749979
+    }
+   },
+   {
+    "params": {
+     "b": 2,
+     "c": 5
+    },
+    "expect": {
+     "D": -16,
+     "real": -1,
+     "imag": 2
+    }
+   },
+   {
+    "params": {
+     "b": 4,
+     "c": 5
+    },
+    "expect": {
+     "D": -4,
+     "real": -2,
+     "imag": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

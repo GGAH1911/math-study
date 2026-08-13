@@ -1,0 +1,178 @@
+{
+ "id": "equations/high-1/방정식과_부등식/연립부등식",
+ "spec": {
+  "title": "연립부등식의 해",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "leftEnd = (a < b) ? a : 0; rightEnd = (a < b) ? b : 0; visL = (a < b) ? a : -10; visR = (a < b) ? b : -10; sol = (a < b) ? 1 : 0; mid = (a+b)/2; midInBoth = ((mid > a) and (mid < b)) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      10,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      -10,
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=visL",
+      0
+     ],
+     "to": [
+      "=visR",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해 존재",
+    "expr": "sol",
+    "digits": 0
+   },
+   {
+    "label": "공통 하한",
+    "expr": "leftEnd",
+    "digits": 2
+   },
+   {
+    "label": "공통 상한",
+    "expr": "rightEnd",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1,
+    "b": 3
+   },
+   {
+    "a": 2,
+    "b": 5
+   },
+   {
+    "a": 3,
+    "b": -1
+   },
+   {
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "sol - ((a < b) ? 1 : 0)",
+   "rightEnd - leftEnd - max(0, b-a)",
+   "visR - visL - max(0, b-a)",
+   "midInBoth - sol"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1,
+     "b": 3
+    },
+    "expect": {
+     "sol": 1,
+     "leftEnd": -1,
+     "rightEnd": 3,
+     "visL": -1,
+     "visR": 3,
+     "midInBoth": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": -1
+    },
+    "expect": {
+     "sol": 0,
+     "leftEnd": 0,
+     "rightEnd": 0,
+     "visL": -10,
+     "visR": -10,
+     "midInBoth": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "sol": 0,
+     "leftEnd": 0,
+     "rightEnd": 0,
+     "visL": -10,
+     "visR": -10,
+     "midInBoth": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

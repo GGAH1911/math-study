@@ -1,0 +1,178 @@
+{
+ "id": "algebra/middle-2/식의_계산/곱셈",
+ "spec": {
+  "title": "곱셈의 기하적 의미: 직사각형 넓이와 분배법칙",
+  "params": [
+   {
+    "name": "a",
+    "label": "가로 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "아랫높이 b",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "윗높이 c",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "area_total=a*(b+c); area_b=a*b; area_c=a*c",
+  "geometry": {
+   "range": [
+    -0.5,
+    5.5
+   ],
+   "yRange": [
+    -0.5,
+    10.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       "=b"
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       "=a",
+       "=b+c"
+      ],
+      [
+       0,
+       "=b+c"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "전체 넓이 a(b+c)",
+    "expr": "area_total",
+    "digits": 2
+   },
+   {
+    "label": "아랫부분 넓이 ab",
+    "expr": "area_b",
+    "digits": 2
+   },
+   {
+    "label": "윗부분 넓이 ac",
+    "expr": "area_c",
+    "digits": 2
+   },
+   {
+    "label": "분배법칙 확인 (ab+ac)",
+    "expr": "area_b + area_c",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "c": 4
+   },
+   {
+    "a": 4.5,
+    "b": 0.5,
+    "c": 2.5
+   }
+  ],
+  "invariants": [
+   "area_total - a*(b+c)",
+   "area_b - a*b",
+   "area_c - a*c",
+   "area_total - (area_b + area_c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "c": 4
+    },
+    "expect": {
+     "area_total": 18,
+     "area_b": 6,
+     "area_c": 12
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "area_total": 4.5,
+     "area_b": 3,
+     "area_c": 1.5
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 0.5,
+     "c": 0.5
+    },
+    "expect": {
+     "area_total": 5,
+     "area_b": 2.5,
+     "area_c": 2.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

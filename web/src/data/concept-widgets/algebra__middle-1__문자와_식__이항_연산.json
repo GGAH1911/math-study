@@ -1,0 +1,179 @@
+{
+ "id": "algebra/middle-1/문자와_식/이항_연산",
+ "spec": {
+  "title": "이항 연산 - 뺄셈이 닫혀 있나요?",
+  "params": [
+   {
+    "name": "a",
+    "label": "a의 값",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b의 값",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "c = a - b; inSet = (c >= 1 and c <= 5) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0.3
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      -0.3
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a의 값",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "b의 값",
+    "expr": "b",
+    "digits": 0
+   },
+   {
+    "label": "결과 a-b",
+    "expr": "c",
+    "digits": 0
+   },
+   {
+    "label": "집합에 속함?",
+    "expr": "inSet",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 5
+   },
+   {
+    "a": 4,
+    "b": 3
+   },
+   {
+    "a": 2,
+    "b": 4
+   }
+  ],
+  "invariants": [
+   "abs(c - (a - b))",
+   "abs(inSet - ((c >= 1 and c <= 5) ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4,
+     "b": 2
+    },
+    "expect": {
+     "c": 2,
+     "inSet": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 5
+    },
+    "expect": {
+     "c": -4,
+     "inSet": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3
+    },
+    "expect": {
+     "c": 0,
+     "inSet": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

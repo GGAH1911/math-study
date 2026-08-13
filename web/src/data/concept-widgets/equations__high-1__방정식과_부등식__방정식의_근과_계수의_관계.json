@@ -1,0 +1,165 @@
+{
+ "id": "equations/high-1/방정식과_부등식/방정식의_근과_계수의_관계",
+ "spec": {
+  "title": "방정식의 근과 계수의 관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항 계수)",
+    "type": "slider",
+    "min": 0.25,
+    "max": 1,
+    "init": 1,
+    "step": 0.25,
+    "unit": ""
+   },
+   {
+    "name": "r1",
+    "label": "α (첫 번째 근)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r2",
+    "label": "β (두 번째 근)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "b=-a*(r1+r2); c=a*r1*r2; s_roots=r1+r2; p_roots=r1*r2; s_coeff=-b/a; p_coeff=c/a; axis=-b/(2*a); vy=a*axis^2+b*axis+c;",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y = ax² + bx + c",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의 합 (α+β)",
+    "expr": "s_roots",
+    "digits": 5
+   },
+   {
+    "label": "계수로 계산한 합 (-b/a)",
+    "expr": "s_coeff",
+    "digits": 5
+   },
+   {
+    "label": "근의 곱 (αβ)",
+    "expr": "p_roots",
+    "digits": 5
+   },
+   {
+    "label": "계수로 계산한 곱 (c/a)",
+    "expr": "p_coeff",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "r1": 2,
+    "r2": 3
+   },
+   {
+    "a": 0.5,
+    "r1": -1,
+    "r2": 4
+   },
+   {
+    "a": 0.25,
+    "r1": 0,
+    "r2": 2
+   },
+   {
+    "a": 0.75,
+    "r1": -2,
+    "r2": 1
+   }
+  ],
+  "invariants": [
+   "b + a*(r1+r2)",
+   "c - a*r1*r2",
+   "a*r1^2 + b*r1 + c",
+   "a*r2^2 + b*r2 + c",
+   "s_coeff - s_roots",
+   "p_coeff - p_roots",
+   "axis - (r1+r2)/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "r1": 2,
+     "r2": 3
+    },
+    "expect": {
+     "b": -5,
+     "c": 6,
+     "s_roots": 5,
+     "p_roots": 6,
+     "s_coeff": 5,
+     "p_coeff": 6,
+     "axis": 2.5,
+     "vy": -0.25
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "r1": -1,
+     "r2": 4
+    },
+    "expect": {
+     "b": -1.5,
+     "c": -2,
+     "s_roots": 3,
+     "p_roots": -4,
+     "s_coeff": 3,
+     "p_coeff": -4,
+     "axis": 1.5,
+     "vy": -3.125
+    }
+   },
+   {
+    "params": {
+     "a": 0.25,
+     "r1": 0,
+     "r2": 2
+    },
+    "expect": {
+     "b": -0.5,
+     "c": 0,
+     "s_roots": 2,
+     "p_roots": 0,
+     "s_coeff": 2,
+     "p_coeff": 0,
+     "axis": 1,
+     "vy": -0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

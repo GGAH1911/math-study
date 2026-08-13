@@ -1,0 +1,158 @@
+{
+ "id": "algebra/math-1/지수와_로그/지수_법칙",
+ "spec": {
+  "title": "지수 법칙 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 1.1,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.05
+   },
+   {
+    "name": "m",
+    "label": "지수 m",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "am = a^m; an = a^n; amn = a^(m+n); amd = a^(m-n); amp = a^(m*n); left_mult = am*an; right_mult = amn; left_div = am/an; right_div = amd; left_power = am^n; right_power = amp",
+  "plot": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    0,
+    70
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "a^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^m",
+    "expr": "am",
+    "digits": 4
+   },
+   {
+    "label": "a^n",
+    "expr": "an",
+    "digits": 4
+   },
+   {
+    "label": "a^m × a^n",
+    "expr": "left_mult",
+    "digits": 4
+   },
+   {
+    "label": "a^(m+n)",
+    "expr": "amn",
+    "digits": 4
+   },
+   {
+    "label": "a^m ÷ a^n",
+    "expr": "left_div",
+    "digits": 4
+   },
+   {
+    "label": "a^(m-n)",
+    "expr": "amd",
+    "digits": 4
+   },
+   {
+    "label": "(a^m)^n",
+    "expr": "left_power",
+    "digits": 4
+   },
+   {
+    "label": "a^(mn)",
+    "expr": "amp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.5,
+    "m": 2,
+    "n": 1
+   },
+   {
+    "a": 1.2,
+    "m": -1,
+    "n": 0.5
+   },
+   {
+    "a": 1.8,
+    "m": 3,
+    "n": -2
+   }
+  ],
+  "invariants": [
+   "left_mult - right_mult",
+   "left_div - right_div",
+   "left_power - right_power"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "am": 4,
+     "an": 2,
+     "amn": 8,
+     "left_mult": 8,
+     "right_mult": 8,
+     "left_div": 2,
+     "right_div": 2,
+     "left_power": 4,
+     "right_power": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "m": 3,
+     "n": 1
+    },
+    "expect": {
+     "am": 3.375,
+     "an": 1.5,
+     "amn": 5.0625,
+     "left_mult": 5.0625,
+     "right_mult": 5.0625,
+     "left_div": 2.25,
+     "right_div": 2.25,
+     "left_power": 3.375,
+     "right_power": 3.375
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

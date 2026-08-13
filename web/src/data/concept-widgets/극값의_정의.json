@@ -1,0 +1,115 @@
+{
+ "id": "극값의_정의",
+ "spec": {
+  "title": "극값의 정의 (국소 최대·최소)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "f0 = x0^3 - 3*x0; df = 3*x0^2 - 3; d2f = 6*x0; h = 0.1; fL = (x0-h)^3 - 3*(x0-h); fR = (x0+h)^3 - 3*(x0+h); isMax = (f0 > fL and f0 > fR) ? 1 : 0; isMin = (f0 < fL and f0 < fR) ? 1 : 0; type = isMax - isMin",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x",
+     "label": "f(x) = x³ - 3x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "df",
+    "digits": 4
+   },
+   {
+    "label": "f''(x₀)",
+    "expr": "d2f",
+    "digits": 4
+   },
+   {
+    "label": "type (1=극대, -1=극소, 0=아님)",
+    "expr": "type",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": -2
+   },
+   {
+    "x0": -1
+   },
+   {
+    "x0": 0.5
+   },
+   {
+    "x0": 1.5
+   }
+  ],
+  "invariants": [
+   "f0 - (x0^3 - 3*x0)",
+   "df - (3*x0^2 - 3)",
+   "max(type*d2f, 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": -1
+    },
+    "expect": {
+     "f0": 2,
+     "df": 0,
+     "d2f": -6,
+     "type": 1
+    }
+   },
+   {
+    "params": {
+     "x0": 0.5
+    },
+    "expect": {
+     "f0": -1.375,
+     "df": -2.25,
+     "d2f": 3,
+     "type": 0
+    }
+   },
+   {
+    "params": {
+     "x0": 1
+    },
+    "expect": {
+     "f0": -2,
+     "df": 0,
+     "d2f": 6,
+     "type": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

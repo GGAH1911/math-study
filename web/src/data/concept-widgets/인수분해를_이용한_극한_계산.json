@@ -1,0 +1,133 @@
+{
+ "id": "인수분해를_이용한_극한_계산",
+ "spec": {
+  "title": "인수분해를 이용한 극한 계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (접근 지점)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (분자의 다른 근)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "lim_val = a - b; x_near = a + 1; f_near = ((x_near-a)*(x_near-b))/(x_near-a); g_near = x_near - b; num_a = (a-a)*(a-b); den_a = a - a;",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "((x-a)*(x-b))/(x-a)",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x-b",
+     "label": "약분 후: x-b",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한값 (x→a)",
+    "expr": "lim_val",
+    "digits": 4
+   },
+   {
+    "label": "분자 f(a)",
+    "expr": "num_a",
+    "digits": 4
+   },
+   {
+    "label": "분모 g(a)",
+    "expr": "den_a",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": -1,
+    "b": 3
+   },
+   {
+    "a": 2,
+    "b": -2
+   },
+   {
+    "a": 0.5,
+    "b": 0.5
+   }
+  ],
+  "invariants": [
+   "abs(f_near - g_near)",
+   "abs(num_a)",
+   "abs(den_a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "lim_val": -1,
+     "f_near": 0,
+     "g_near": 0,
+     "num_a": 0,
+     "den_a": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 3
+    },
+    "expect": {
+     "lim_val": -4,
+     "f_near": -3,
+     "g_near": -3,
+     "num_a": 0,
+     "den_a": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0.5
+    },
+    "expect": {
+     "lim_val": 0,
+     "f_near": 1,
+     "g_near": 1,
+     "num_a": 0,
+     "den_a": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

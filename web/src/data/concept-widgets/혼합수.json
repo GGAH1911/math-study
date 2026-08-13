@@ -1,0 +1,180 @@
+{
+ "id": "혼합수",
+ "spec": {
+  "title": "혼합수 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "정수 부분",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분자",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "분모",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "bn = b < c ? b : c - 1; val = a + bn / c; imp_num = a * c + bn; imp = imp_num / c;",
+  "geometry": {
+   "range": [
+    -0.5,
+    6.5
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      0
+     ],
+     "label": "정수 부분"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=val",
+      0
+     ],
+     "label": "분수 부분"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=val",
+      0
+     ],
+     "label": "혼합수"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "혼합수 값",
+    "expr": "val",
+    "digits": 4
+   },
+   {
+    "label": "분수 부분 (분자)",
+    "expr": "bn",
+    "digits": 0
+   },
+   {
+    "label": "분모",
+    "expr": "c",
+    "digits": 0
+   },
+   {
+    "label": "가분수 분자",
+    "expr": "imp_num",
+    "digits": 0
+   },
+   {
+    "label": "가분수 값",
+    "expr": "imp",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 5
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": 2
+   },
+   {
+    "a": 1,
+    "b": 4,
+    "c": 3
+   },
+   {
+    "a": 3,
+    "b": 7,
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "val - (a + bn / c)",
+   "imp_num - (a * c + bn)",
+   "imp - val"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 5
+    },
+    "expect": {
+     "bn": 3,
+     "val": 2.6,
+     "imp_num": 13,
+     "imp": 2.6
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "c": 2
+    },
+    "expect": {
+     "bn": 0,
+     "val": 0,
+     "imp_num": 0,
+     "imp": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 4,
+     "c": 3
+    },
+    "expect": {
+     "bn": 2,
+     "val": 1.6666666667,
+     "imp_num": 5,
+     "imp": 1.6666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

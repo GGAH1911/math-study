@@ -1,0 +1,197 @@
+{
+ "id": "논리_조건",
+ "spec": {
+  "title": "조건명제 p⇒q와 진리집합 포함 관계",
+  "params": [
+   {
+    "name": "pc",
+    "label": "p의 중심",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "pw",
+    "label": "p의 반폭",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "qc",
+    "label": "q의 중심",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "qw",
+    "label": "q의 반폭",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "pl=pc-pw; pr=pc+pw; ql=qc-qw; qr=qc+qw; violation=max(ql-pl, pr-qr, 0); subset=(pl>=ql and pr<=qr) ? 1 : 0; truth=(violation==0) ? 1 : 0;",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=pl",
+      0.3
+     ],
+     "to": [
+      "=pr",
+      0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(pl+pr)/2",
+      0.3
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ql",
+      -0.3
+     ],
+     "to": [
+      "=qr",
+      -0.3
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=(ql+qr)/2",
+      -0.3
+     ],
+     "label": "Q"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P 왼쪽",
+    "expr": "pl",
+    "digits": 2
+   },
+   {
+    "label": "P 오른쪽",
+    "expr": "pr",
+    "digits": 2
+   },
+   {
+    "label": "Q 왼쪽",
+    "expr": "ql",
+    "digits": 2
+   },
+   {
+    "label": "Q 오른쪽",
+    "expr": "qr",
+    "digits": 2
+   },
+   {
+    "label": "P⊆Q (1=참)",
+    "expr": "subset",
+    "digits": 0
+   },
+   {
+    "label": "p⇒q (1=참)",
+    "expr": "truth",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pc": 0,
+    "pw": 1,
+    "qc": 0,
+    "qw": 2
+   },
+   {
+    "pc": 1,
+    "pw": 1,
+    "qc": 0,
+    "qw": 2
+   },
+   {
+    "pc": 2,
+    "pw": 1,
+    "qc": 0,
+    "qw": 2
+   },
+   {
+    "pc": -2,
+    "pw": 0.5,
+    "qc": 0,
+    "qw": 1
+   }
+  ],
+  "invariants": [
+   "abs(truth - subset)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pc": 0,
+     "pw": 1,
+     "qc": 0,
+     "qw": 2
+    },
+    "expect": {
+     "pl": -1,
+     "pr": 1,
+     "ql": -2,
+     "qr": 2,
+     "subset": 1,
+     "truth": 1,
+     "violation": 0
+    }
+   },
+   {
+    "params": {
+     "pc": 2,
+     "pw": 1,
+     "qc": 0,
+     "qw": 2
+    },
+    "expect": {
+     "pl": 1,
+     "pr": 3,
+     "ql": -2,
+     "qr": 2,
+     "subset": 0,
+     "truth": 0,
+     "violation": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

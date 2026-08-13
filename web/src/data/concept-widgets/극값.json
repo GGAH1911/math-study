@@ -1,0 +1,133 @@
+{
+ "id": "극값",
+ "spec": {
+  "title": "삼차함수의 극값: f(x)=x³-3ax",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "xp=sqrt(a); xm=-sqrt(a); ymax=2*a^(3/2); ymin=-2*a^(3/2)",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*a*x",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*x^2 - 3*a",
+     "label": "f'(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극대 x",
+    "expr": "xm",
+    "digits": 4
+   },
+   {
+    "label": "극대값",
+    "expr": "ymax",
+    "digits": 4
+   },
+   {
+    "label": "극소 x",
+    "expr": "xp",
+    "digits": 4
+   },
+   {
+    "label": "극소값",
+    "expr": "ymin",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "3*xp^2 - 3*a",
+   "3*xm^2 - 3*a",
+   "xp^3 - 3*a*xp - ymin",
+   "xm^3 - 3*a*xm - ymax"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "xp": 1,
+     "xm": -1,
+     "ymax": 2,
+     "ymin": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0.25
+    },
+    "expect": {
+     "xp": 0.5,
+     "xm": -0.5,
+     "ymax": 0.25,
+     "ymin": -0.25
+    }
+   },
+   {
+    "params": {
+     "a": 1.44
+    },
+    "expect": {
+     "xp": 1.2,
+     "xm": -1.2,
+     "ymax": 3.456,
+     "ymin": -3.456
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

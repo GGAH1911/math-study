@@ -1,0 +1,125 @@
+{
+ "id": "equations/high-1/방정식과_부등식/사차방정식",
+ "spec": {
+  "title": "사차방정식의 그래프와 실근",
+  "params": [
+   {
+    "name": "k",
+    "label": "상수항 k",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0 = k; f1 = 1 - 2 + k; fm1 = 1 - 2 + k; fsqrt2 = 4 - 4 + k",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -3,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x^4 - 2*x^2 + k",
+     "label": "y = x⁴ - 2x² + k",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(0)",
+    "expr": "f0",
+    "digits": 2
+   },
+   {
+    "label": "f(1) = f(-1)",
+    "expr": "f1",
+    "digits": 2
+   },
+   {
+    "label": "f(√2)",
+    "expr": "fsqrt2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": -1.5
+   },
+   {
+    "k": -0.5
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 0.5
+   },
+   {
+    "k": 1.5
+   }
+  ],
+  "invariants": [
+   "f1 - fm1",
+   "fsqrt2 - f0",
+   "f0 - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": -1
+    },
+    "expect": {
+     "f0": -1,
+     "f1": -2,
+     "fm1": -2,
+     "fsqrt2": -1
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "f0": 0,
+     "f1": -1,
+     "fm1": -1,
+     "fsqrt2": 0
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "f0": 1,
+     "f1": 0,
+     "fm1": 0,
+     "fsqrt2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

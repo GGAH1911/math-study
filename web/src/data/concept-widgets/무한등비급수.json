@@ -1,0 +1,161 @@
+{
+ "id": "무한등비급수",
+ "spec": {
+  "title": "무한등비급수 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫째항 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -0.9,
+    "max": 0.9,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "항 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "S_n = a*(1-r^n)/(1-r); term = a*r^(n-1); limit = a/(1-r);",
+  "geometry": {
+   "range": [
+    0,
+    20
+   ],
+   "yRange": [
+    -1,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=limit"
+     ],
+     "to": [
+      20,
+      "=limit"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=S_n"
+     ],
+     "label": "S_n"
+    },
+    {
+     "type": "point",
+     "at": [
+      20,
+      "=limit"
+     ],
+     "label": "L"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분합 S_n",
+    "expr": "S_n",
+    "digits": 4
+   },
+   {
+    "label": "제n항",
+    "expr": "term",
+    "digits": 4
+   },
+   {
+    "label": "무한급수(수렴값)",
+    "expr": "limit",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "r": 0.5,
+    "n": 3
+   },
+   {
+    "a": 1.5,
+    "r": 0.5,
+    "n": 10
+   },
+   {
+    "a": 1,
+    "r": -0.5,
+    "n": 4
+   },
+   {
+    "a": 0.8,
+    "r": 0.8,
+    "n": 6
+   }
+  ],
+  "invariants": [
+   "abs((1-r)*limit - a)",
+   "abs((1-r)*S_n - a*(1-r^n))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "r": 0.5,
+     "n": 3
+    },
+    "expect": {
+     "S_n": 1.75,
+     "term": 0.25,
+     "limit": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "r": 0.5,
+     "n": 3
+    },
+    "expect": {
+     "S_n": 2.625,
+     "term": 0.375,
+     "limit": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "r": -0.5,
+     "n": 4
+    },
+    "expect": {
+     "S_n": 0.625,
+     "term": -0.125,
+     "limit": 0.6666666667
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

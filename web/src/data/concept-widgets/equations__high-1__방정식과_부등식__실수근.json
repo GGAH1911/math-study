@@ -1,0 +1,132 @@
+{
+ "id": "equations/high-1/방정식과_부등식/실수근",
+ "spec": {
+  "title": "실수근과 판별식",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   }
+  ],
+  "scope": "D = b^2 - 4*c; root1 = D >= 0 ? (-b - sqrt(D))/2 : -1000; root2 = D >= 0 ? (-b + sqrt(D))/2 : -1000; root_count = D > 0 ? 2 : (D == 0 ? 1 : 0)",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + b*x + c",
+     "label": "y = x² + bx + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실수근 x₁",
+    "expr": "root1",
+    "digits": 2
+   },
+   {
+    "label": "실수근 x₂",
+    "expr": "root2",
+    "digits": 2
+   },
+   {
+    "label": "실수근 개수",
+    "expr": "root_count",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "c": -4
+   },
+   {
+    "b": -2,
+    "c": 1
+   },
+   {
+    "b": 0,
+    "c": 1
+   },
+   {
+    "b": 3,
+    "c": 0
+   }
+  ],
+  "invariants": [
+   "D - (b^2 - 4*c)",
+   "D >= 0 ? (root1^2 + b*root1 + c) : 0",
+   "D >= 0 ? (root2^2 + b*root2 + c) : 0",
+   "D >= 0 ? (root1 + root2 + b) : 0",
+   "D >= 0 ? (root1 * root2 - c) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "c": -4
+    },
+    "expect": {
+     "D": 16,
+     "root1": -2,
+     "root2": 2,
+     "root_count": 2
+    }
+   },
+   {
+    "params": {
+     "b": -2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "root1": 1,
+     "root2": 1,
+     "root_count": 1
+    }
+   },
+   {
+    "params": {
+     "b": 0,
+     "c": 1
+    },
+    "expect": {
+     "D": -4,
+     "root1": -1000,
+     "root2": -1000,
+     "root_count": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

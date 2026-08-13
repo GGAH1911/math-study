@@ -1,0 +1,123 @@
+{
+ "id": "algebra/high-1/다항식/계수_비교법",
+ "spec": {
+  "title": "계수 비교법 – 항등식의 계수 결정",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "A = a + b; B = a - b",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "a*(x+1)+b*(x-1)",
+     "label": "f(x)=a(x+1)+b(x-1)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*x+1",
+     "label": "g(x)=3x+1",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌변 x의 계수 = a+b",
+    "expr": "A",
+    "digits": 3
+   },
+   {
+    "label": "좌변 상수항 = a-b",
+    "expr": "B",
+    "digits": 3
+   },
+   {
+    "label": "계수 오차 = |A-3|+|B-1|",
+    "expr": "abs(A-3)+abs(B-1)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 0
+   },
+   {
+    "a": 2,
+    "b": 1
+   },
+   {
+    "a": -1,
+    "b": 3
+   },
+   {
+    "a": 1,
+    "b": -2
+   }
+  ],
+  "invariants": [
+   "A - B - 2*b",
+   "A + B - 2*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "A": 3,
+     "B": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "A": 3,
+     "B": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

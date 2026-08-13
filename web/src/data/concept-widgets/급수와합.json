@@ -1,0 +1,116 @@
+{
+ "id": "급수와합",
+ "spec": {
+  "title": "급수와 합 (부분합의 수렴)",
+  "params": [
+   {
+    "name": "n",
+    "label": "항의 개수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 50,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "sn = n/(n+1); limit_val = 1",
+  "geometry": {
+   "range": [
+    0,
+    55
+   ],
+   "yRange": [
+    0,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=n",
+      "=sn"
+     ],
+     "label": "S_n"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      1
+     ],
+     "to": [
+      55,
+      1
+     ],
+     "label": "S=1"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분합 S_n",
+    "expr": "sn",
+    "digits": 6
+   },
+   {
+    "label": "극한값 S",
+    "expr": "limit_val",
+    "digits": 6
+   },
+   {
+    "label": "오차 |S_n - S|",
+    "expr": "abs(sn - limit_val)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 10
+   },
+   {
+    "n": 50
+   }
+  ],
+  "invariants": [
+   "(sn - 1)*(n+1) + 1",
+   "limit_val - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "sn": 0.6666666667,
+     "limit_val": 1
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "sn": 0.8,
+     "limit_val": 1
+    }
+   },
+   {
+    "params": {
+     "n": 9
+    },
+    "expect": {
+     "sn": 0.9,
+     "limit_val": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

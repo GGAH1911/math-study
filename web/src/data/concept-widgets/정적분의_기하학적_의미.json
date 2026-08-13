@@ -1,0 +1,106 @@
+{
+ "id": "정적분의_기하학적_의미",
+ "spec": {
+  "title": "정적분의 기하학적 의미",
+  "params": [
+   {
+    "name": "b",
+    "label": "b (적분 상한)",
+    "type": "slider",
+    "min": 0,
+    "max": 6.283185307179586,
+    "init": 3.141592653589793,
+    "step": 0.1,
+    "unit": "rad"
+   }
+  ],
+  "scope": "height = sin(b); integral = 1 - cos(b); pos_area = b < pi ? (1 - cos(b)) : 2; neg_area = b < pi ? 0 : (cos(b) + 1)",
+  "plot": {
+   "range": [
+    0,
+    6.283185307179586
+   ],
+   "yRange": [
+    -1.2,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "sin(x)",
+     "label": "y = sin(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정적분 ∫₀ᵇ sin(x)dx",
+    "expr": "integral",
+    "digits": 4
+   },
+   {
+    "label": "양의 영역 넓이",
+    "expr": "pos_area",
+    "digits": 4
+   },
+   {
+    "label": "음의 영역 넓이(절댓값)",
+    "expr": "neg_area",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0
+   },
+   {
+    "b": 1.5707963267948966
+   },
+   {
+    "b": 3.141592653589793
+   },
+   {
+    "b": 4.71238898038469
+   }
+  ],
+  "invariants": [
+   "integral - (1 - cos(b))",
+   "integral - (pos_area - neg_area)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1.5707963267948966
+    },
+    "expect": {
+     "integral": 1,
+     "pos_area": 1,
+     "neg_area": 0
+    }
+   },
+   {
+    "params": {
+     "b": 3.141592653589793
+    },
+    "expect": {
+     "integral": 2,
+     "pos_area": 2,
+     "neg_area": 0
+    }
+   },
+   {
+    "params": {
+     "b": 4.71238898038469
+    },
+    "expect": {
+     "integral": 1,
+     "pos_area": 2,
+     "neg_area": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

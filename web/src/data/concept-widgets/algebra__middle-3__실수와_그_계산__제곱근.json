@@ -1,0 +1,107 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/제곱근",
+ "spec": {
+  "title": "제곱근의 정의",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "sr=sqrt(a)",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "y=x²",
+     "color": "blue"
+    },
+    {
+     "fn": "a",
+     "label": "y=a",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "√a",
+    "expr": "sr",
+    "digits": 6
+   },
+   {
+    "label": "-√a",
+    "expr": "-sr",
+    "digits": 6
+   },
+   {
+    "label": "(√a)²",
+    "expr": "sr^2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 4
+   },
+   {
+    "a": 9
+   }
+  ],
+  "invariants": [
+   "sr^2-a",
+   "abs(sr)-sr"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 4
+    },
+    "expect": {
+     "sr": 2
+    }
+   },
+   {
+    "params": {
+     "a": 9
+    },
+    "expect": {
+     "sr": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "sr": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "id": "algebra/high-1/다항식/미지상수_결정",
+ "spec": {
+  "title": "미지상수 결정 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "b = -1 - a; y2 = 4 + 2*a + b; err = y2 - 2;",
+  "plot": {
+   "range": [
+    -2,
+    3
+   ],
+   "yRange": [
+    -10,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + a*x + b",
+     "label": "P(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "2",
+     "label": "y=2",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "P(2)",
+    "expr": "y2",
+    "digits": 2
+   },
+   {
+    "label": "오차",
+    "expr": "err",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "1 + a + b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -1
+    },
+    "expect": {
+     "b": 0,
+     "y2": 2,
+     "err": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "b": -2,
+     "y2": 4,
+     "err": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

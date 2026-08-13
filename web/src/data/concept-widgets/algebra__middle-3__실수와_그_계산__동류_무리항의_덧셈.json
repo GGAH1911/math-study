@@ -1,0 +1,218 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/동류_무리항의_덧셈",
+ "spec": {
+  "title": "동류 무리항의 덧셈",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "root=sqrt(b); term1=a*root; term2=c*root; coeff=a+c; sum=coeff*root",
+  "geometry": {
+   "range": [
+    0,
+    40
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=term1",
+      0
+     ],
+     "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=term1",
+      0
+     ],
+     "to": [
+      "=sum",
+      0
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      -1
+     ],
+     "to": [
+      "=root",
+      -1
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "0"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=term1",
+      0
+     ],
+     "label": "a√b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sum",
+      0
+     ],
+     "label": "(a+c)√b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=root",
+      -1
+     ],
+     "label": "√b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "√b",
+    "expr": "root",
+    "digits": 4
+   },
+   {
+    "label": "a√b",
+    "expr": "term1",
+    "digits": 4
+   },
+   {
+    "label": "c√b",
+    "expr": "term2",
+    "digits": 4
+   },
+   {
+    "label": "a+c",
+    "expr": "coeff",
+    "digits": 0
+   },
+   {
+    "label": "(a+c)√b",
+    "expr": "sum",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "c": 3,
+    "b": 3
+   },
+   {
+    "a": 1,
+    "c": 1,
+    "b": 5
+   },
+   {
+    "a": 4,
+    "c": 0,
+    "b": 2
+   },
+   {
+    "a": 0,
+    "c": 2,
+    "b": 8
+   }
+  ],
+  "invariants": [
+   "term1+term2-sum",
+   "coeff*root-sum"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "c": 3,
+     "b": 4
+    },
+    "expect": {
+     "root": 2,
+     "term1": 4,
+     "term2": 6,
+     "coeff": 5,
+     "sum": 10
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "c": 1,
+     "b": 9
+    },
+    "expect": {
+     "root": 3,
+     "term1": 3,
+     "term2": 3,
+     "coeff": 2,
+     "sum": 6
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "c": 2,
+     "b": 2
+    },
+    "expect": {
+     "root": 1.4142135623730951,
+     "term1": 4.242640687119286,
+     "term2": 2.8284271247461903,
+     "coeff": 5,
+     "sum": 7.0710678118654755
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

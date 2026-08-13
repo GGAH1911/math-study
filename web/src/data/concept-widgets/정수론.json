@@ -1,0 +1,148 @@
+{
+ "id": "정수론",
+ "spec": {
+  "title": "최대공약수와 최소공배수 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 12,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 18,
+    "step": 1
+   }
+  ],
+  "scope": "g=gcd(a,b); l=lcm(a,b); prod=a*b; check=g*l-prod; ra=mod(l,a); rb=mod(l,b);",
+  "plot": {
+   "range": [
+    0,
+    400
+   ],
+   "yRange": [
+    0,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "mod(x,a)",
+     "label": "a로 나눈 나머지",
+     "color": "blue"
+    },
+    {
+     "fn": "mod(x,b)",
+     "label": "b로 나눈 나머지",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최대공약수",
+    "expr": "g",
+    "digits": 0
+   },
+   {
+    "label": "최소공배수",
+    "expr": "l",
+    "digits": 0
+   },
+   {
+    "label": "a × b",
+    "expr": "prod",
+    "digits": 0
+   },
+   {
+    "label": "gcd × lcm",
+    "expr": "g*l",
+    "digits": 0
+   },
+   {
+    "label": "차이 (0이면 성립)",
+    "expr": "check",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 12,
+    "b": 18
+   },
+   {
+    "a": 4,
+    "b": 6
+   },
+   {
+    "a": 7,
+    "b": 11
+   },
+   {
+    "a": 20,
+    "b": 15
+   }
+  ],
+  "invariants": [
+   "g*l - prod",
+   "mod(a,g)",
+   "mod(b,g)",
+   "mod(l,a)",
+   "mod(l,b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 12,
+     "b": 18
+    },
+    "expect": {
+     "g": 6,
+     "l": 36,
+     "prod": 216,
+     "check": 0,
+     "ra": 0,
+     "rb": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 6
+    },
+    "expect": {
+     "g": 2,
+     "l": 12,
+     "prod": 24,
+     "check": 0,
+     "ra": 0,
+     "rb": 0
+    }
+   },
+   {
+    "params": {
+     "a": 7,
+     "b": 11
+    },
+    "expect": {
+     "g": 1,
+     "l": 77,
+     "prod": 77,
+     "check": 0,
+     "ra": 0,
+     "rb": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

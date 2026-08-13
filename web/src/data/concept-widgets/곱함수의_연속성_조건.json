@@ -1,0 +1,147 @@
+{
+ "id": "곱함수의_연속성_조건",
+ "spec": {
+  "title": "곱함수의 연속성 조건",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "mode_f",
+    "label": "f 불연속",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "mode_g",
+    "label": "g 불연속",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "fa = sin(a); ga = cos(a); prod = fa * ga; eps = 0.000000001; hl = (mode_f == 1 ? ((a-eps) <= a ? sin(a-eps) : sin(a-eps)+1) : sin(a-eps)) * (mode_g == 1 ? ((a-eps) <= a ? cos(a-eps) : cos(a-eps)+1) : cos(a-eps)); hr = (mode_f == 1 ? ((a+eps) <= a ? sin(a+eps) : sin(a+eps)+1) : sin(a+eps)) * (mode_g == 1 ? ((a+eps) <= a ? cos(a+eps) : cos(a+eps)+1) : cos(a+eps)); xt = a + 0.7; f_xt = (mode_f == 1 ? (xt <= a ? sin(xt) : sin(xt)+1) : sin(xt)); g_xt = (mode_g == 1 ? (xt <= a ? cos(xt) : cos(xt)+1) : cos(xt)); h_xt = f_xt * g_xt;",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "mode_f == 1 ? (x <= a ? sin(x) : sin(x)+1) : sin(x)",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "mode_g == 1 ? (x <= a ? cos(x) : cos(x)+1) : cos(x)",
+     "label": "g(x)",
+     "color": "green"
+    },
+    {
+     "fn": "(mode_f == 1 ? (x <= a ? sin(x) : sin(x)+1) : sin(x)) * (mode_g == 1 ? (x <= a ? cos(x) : cos(x)+1) : cos(x))",
+     "label": "f(x)g(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(a)",
+    "expr": "fa",
+    "digits": 4
+   },
+   {
+    "label": "g(a)",
+    "expr": "ga",
+    "digits": 4
+   },
+   {
+    "label": "(f·g)(a)",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "h(a−)",
+    "expr": "hl",
+    "digits": 6
+   },
+   {
+    "label": "h(a+)",
+    "expr": "hr",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "mode_f": 0,
+    "mode_g": 0
+   },
+   {
+    "a": 1.5707963267948966,
+    "mode_f": 1,
+    "mode_g": 0
+   },
+   {
+    "a": 0,
+    "mode_f": 1,
+    "mode_g": 1
+   },
+   {
+    "a": -1.2,
+    "mode_f": 0,
+    "mode_g": 1
+   }
+  ],
+  "invariants": [
+   "prod - fa*ga",
+   "h_xt - f_xt*g_xt",
+   "(1-mode_f)*(1-mode_g)*(abs(hl-prod)+abs(hr-prod))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "mode_f": 0,
+     "mode_g": 0
+    },
+    "expect": {
+     "fa": 0,
+     "ga": 1,
+     "prod": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1.5707963267948966,
+     "mode_f": 1,
+     "mode_g": 0
+    },
+    "expect": {
+     "fa": 1,
+     "ga": 0,
+     "prod": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/무리수의_크기_비교",
+ "spec": {
+  "title": "무리수의 크기 비교",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (근호 안)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (근호 안)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "ra=sqrt(a); rb=sqrt(b); diff=ra-rb",
+  "geometry": {
+   "range": [
+    0,
+    4.5
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=ra",
+      0
+     ],
+     "label": "√a",
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rb",
+      0
+     ],
+     "label": "√b",
+     "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ra",
+      0
+     ],
+     "to": [
+      0,
+      0
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=rb",
+      0
+     ],
+     "to": [
+      0,
+      0
+     ],
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "√a",
+    "expr": "ra",
+    "digits": 4
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "√b",
+    "expr": "rb",
+    "digits": 4
+   },
+   {
+    "label": "√a - √b",
+    "expr": "diff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 3,
+    "b": 2
+   },
+   {
+    "a": 1,
+    "b": 4
+   },
+   {
+    "a": 0.25,
+    "b": 0.36
+   }
+  ],
+  "invariants": [
+   "a - b - (ra - rb)*(ra + rb)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "ra": 1.4142135623730951,
+     "rb": 1.7320508075688772
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 9
+    },
+    "expect": {
+     "ra": 2,
+     "rb": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0.25,
+     "b": 2.25
+    },
+    "expect": {
+     "ra": 0.5,
+     "rb": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

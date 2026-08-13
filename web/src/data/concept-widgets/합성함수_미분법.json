@@ -1,0 +1,168 @@
+{
+ "id": "합성함수_미분법",
+ "spec": {
+  "title": "합성함수 미분법 (연쇄법칙)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x²의 계수)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (평행이동)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀ (접선 위치)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "u0 = a*x0^2 + b; du_dx = 2*a*x0; dy_du = cos(u0); dy_dx = du_dx * dy_du; h0 = sin(u0); step = 1e-6; hnum = (sin(a*(x0+step)^2+b) - sin(a*(x0-step)^2+b))/(2*step);",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "sin(a*x^2+b)",
+     "label": "y = f(g(x))",
+     "color": "blue"
+    },
+    {
+     "fn": "2*a*x*cos(a*x^2+b)",
+     "label": "y' (연쇄법칙)",
+     "color": "red"
+    },
+    {
+     "fn": "sin(a*x0^2+b) + 2*a*x0*cos(a*x0^2+b)*(x-x0)",
+     "label": "접선",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "u₀ = g(x₀)",
+    "expr": "u0",
+    "digits": 6
+   },
+   {
+    "label": "g'(x₀)",
+    "expr": "du_dx",
+    "digits": 6
+   },
+   {
+    "label": "f'(u₀)",
+    "expr": "dy_du",
+    "digits": 6
+   },
+   {
+    "label": "dy/dx = f'·g'",
+    "expr": "dy_dx",
+    "digits": 6
+   },
+   {
+    "label": "h(x₀)",
+    "expr": "sin(a*x0^2+b)",
+    "digits": 6
+   },
+   {
+    "label": "수치미분",
+    "expr": "hnum",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "x0": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "x0": 1
+   },
+   {
+    "a": 0.5,
+    "b": 0.5,
+    "x0": 2
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "abs(dy_dx - hnum)",
+   "abs(dy_dx - (2*a*x0*cos(a*x0^2+b)))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "x0": 0
+    },
+    "expect": {
+     "u0": 0,
+     "du_dx": 0,
+     "dy_du": 1,
+     "dy_dx": 0,
+     "h0": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "x0": 1
+    },
+    "expect": {
+     "u0": 1,
+     "du_dx": 2,
+     "dy_du": 0.5403023058681398,
+     "dy_dx": 1.0806046117362795,
+     "h0": 0.8414709848078965
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0.5,
+     "x0": 2
+    },
+    "expect": {
+     "u0": 2.5,
+     "du_dx": 2,
+     "dy_du": -0.8011436155469337,
+     "dy_dx": -1.6022872310938674,
+     "h0": 0.5984721441039564
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

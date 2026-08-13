@@ -1,0 +1,140 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/약수",
+ "spec": {
+  "title": "약수와 나머지",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 2,
+    "max": 30,
+    "init": 12,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "rval=n-a*floor(n/a); isdiv=(mod(n,a)==0)?1:0; quot=(isdiv==1)?(n/a):0",
+  "geometry": {},
+  "plot": {
+   "range": [
+    1,
+    30
+   ],
+   "yRange": [
+    0,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "n - x*floor(n/x)",
+     "label": "나머지",
+     "color": "blue"
+    },
+    {
+     "fn": "0",
+     "label": "0",
+     "color": "gray"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "나머지",
+    "expr": "rval"
+   },
+   {
+    "label": "a | n",
+    "expr": "isdiv"
+   },
+   {
+    "label": "몫 (a|n일 때)",
+    "expr": "quot"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 12,
+    "a": 4
+   },
+   {
+    "n": 12,
+    "a": 5
+   },
+   {
+    "n": 7,
+    "a": 7
+   },
+   {
+    "n": 6,
+    "a": 9
+   },
+   {
+    "n": 2,
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "rval - mod(n,a)",
+   "(mod(n,a)==0?1:0) - isdiv",
+   "isdiv*(n - a*quot)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 12,
+     "a": 4
+    },
+    "expect": {
+     "rval": 0,
+     "isdiv": 1,
+     "quot": 3
+    }
+   },
+   {
+    "params": {
+     "n": 12,
+     "a": 5
+    },
+    "expect": {
+     "rval": 2,
+     "isdiv": 0,
+     "quot": 0
+    }
+   },
+   {
+    "params": {
+     "n": 7,
+     "a": 7
+    },
+    "expect": {
+     "rval": 0,
+     "isdiv": 1,
+     "quot": 1
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "a": 9
+    },
+    "expect": {
+     "rval": 6,
+     "isdiv": 0,
+     "quot": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

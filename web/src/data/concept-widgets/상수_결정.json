@@ -1,0 +1,111 @@
+{
+ "id": "상수_결정",
+ "spec": {
+  "title": "상수 결정 - f(x)=x²+c",
+  "params": [
+   {
+    "name": "c",
+    "label": "상수 c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "x0=2; y0=3; f0=x0^2+c; err=f0-y0; xa=1; xb=3; fa=xa^2+c; fb=xb^2+c; diff=fb-fa; idiff=diff-8",
+  "plot": {
+   "range": [
+    -2,
+    4
+   ],
+   "yRange": [
+    -4,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + c",
+     "label": "f(x)"
+    },
+    {
+     "fn": "3",
+     "label": "y=3"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(2)",
+    "expr": "f0",
+    "digits": 3
+   },
+   {
+    "label": "오차",
+    "expr": "err",
+    "digits": 3
+   },
+   {
+    "label": "f(3)-f(1)",
+    "expr": "diff",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0
+   },
+   {
+    "c": -1
+   },
+   {
+    "c": 1
+   },
+   {
+    "c": -2
+   }
+  ],
+  "invariants": [
+   "abs(idiff)",
+   "abs(f0 - (x0^2+c))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "f0": 4,
+     "err": 1,
+     "diff": 8,
+     "idiff": 0
+    }
+   },
+   {
+    "params": {
+     "c": -1
+    },
+    "expect": {
+     "f0": 3,
+     "err": 0,
+     "diff": 8,
+     "idiff": 0
+    }
+   },
+   {
+    "params": {
+     "c": 2
+    },
+    "expect": {
+     "f0": 6,
+     "err": 3,
+     "diff": 8,
+     "idiff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

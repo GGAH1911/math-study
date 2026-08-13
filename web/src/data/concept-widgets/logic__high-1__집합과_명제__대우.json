@@ -1,0 +1,185 @@
+{
+ "id": "logic/high-1/집합과_명제/대우",
+ "spec": {
+  "title": "대우 (Contrapositive)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (p: x≥a)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (q: x≥b)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "impl = a>=b ? 1 : 0; contra = b<=a ? 1 : 0;",
+  "geometry": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    -0.5,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      1.2
+     ],
+     "to": [
+      10,
+      1.2
+     ],
+     "label": "p: x≥a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0.9
+     ],
+     "to": [
+      "=a",
+      0.9
+     ],
+     "label": "~p: x<a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b",
+      0.6
+     ],
+     "to": [
+      10,
+      0.6
+     ],
+     "label": "q: x≥b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0.3
+     ],
+     "to": [
+      "=b",
+      0.3
+     ],
+     "label": "~q: x<b"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "p→q",
+    "expr": "impl",
+    "digits": 0
+   },
+   {
+    "label": "~q→~p",
+    "expr": "contra",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 5
+   },
+   {
+    "a": 5,
+    "b": 3
+   },
+   {
+    "a": 3,
+    "b": 3
+   },
+   {
+    "a": 0,
+    "b": 10
+   }
+  ],
+  "invariants": [
+   "abs(impl-contra)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 5
+    },
+    "expect": {
+     "impl": 0,
+     "contra": 0
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 3
+    },
+    "expect": {
+     "impl": 1,
+     "contra": 1
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3
+    },
+    "expect": {
+     "impl": 1,
+     "contra": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 10
+    },
+    "expect": {
+     "impl": 0,
+     "contra": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

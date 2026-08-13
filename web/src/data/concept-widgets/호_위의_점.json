@@ -1,0 +1,165 @@
+{
+ "id": "호_위의_점",
+ "spec": {
+  "title": "호 위의 점",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "rad=theta*pi/180; x=r*cos(rad); y=r*sin(rad); sinv=y/r; cosv=x/r",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r",
+     "label": "r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ],
+     "label": "동경"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin θ",
+    "expr": "sinv",
+    "digits": 6
+   },
+   {
+    "label": "cos θ",
+    "expr": "cosv",
+    "digits": 6
+   },
+   {
+    "label": "tan θ",
+    "expr": "tan(rad)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30,
+    "r": 2
+   },
+   {
+    "theta": 90,
+    "r": 2
+   },
+   {
+    "theta": 180,
+    "r": 3
+   },
+   {
+    "theta": 225,
+    "r": 1.5
+   }
+  ],
+  "invariants": [
+   "x^2 + y^2 - r^2",
+   "sinv^2 + cosv^2 - 1",
+   "x/r - cosv",
+   "y/r - sinv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30,
+     "r": 2
+    },
+    "expect": {
+     "x": 1.7320508075688772,
+     "y": 1,
+     "sinv": 0.5,
+     "cosv": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "r": 2
+    },
+    "expect": {
+     "x": 0,
+     "y": 2,
+     "sinv": 1,
+     "cosv": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 180,
+     "r": 3
+    },
+    "expect": {
+     "x": -3,
+     "y": 0,
+     "sinv": 0,
+     "cosv": -1
+    }
+   },
+   {
+    "params": {
+     "theta": 225,
+     "r": 1.5
+    },
+    "expect": {
+     "x": -1.0606601717798212,
+     "y": -1.0606601717798212,
+     "sinv": -0.7071067811865476,
+     "cosv": -0.7071067811865476
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

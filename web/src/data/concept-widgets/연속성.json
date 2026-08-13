@@ -1,0 +1,168 @@
+{
+ "id": "연속성",
+ "spec": {
+  "title": "연속성 (Continuity)",
+  "params": [
+   {
+    "name": "a",
+    "label": "접근점 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "L",
+    "label": "함숫값 f(a)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "limit=2*a; gap=L-limit; cont=(abs(gap)<1e-9 ? 1 : 0)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=limit"
+     ],
+     "radius": 0.05
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=L"
+     ],
+     "label": "f(a)"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "x+a",
+     "label": "y=x+a (limit graph)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극한값 lim_{x→a} f(x)",
+    "expr": "limit",
+    "digits": 2
+   },
+   {
+    "label": "함숫값 f(a)",
+    "expr": "L",
+    "digits": 2
+   },
+   {
+    "label": "차이 |f(a)-극한|",
+    "expr": "abs(L-limit)",
+    "digits": 2
+   },
+   {
+    "label": "연속 (1=연속,0=불연속)",
+    "expr": "cont",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "L": 2
+   },
+   {
+    "a": 1,
+    "L": 0
+   },
+   {
+    "a": -1,
+    "L": -2
+   },
+   {
+    "a": 0.5,
+    "L": 1
+   }
+  ],
+  "invariants": [
+   "abs(limit - 2*a)",
+   "abs(gap - (L - limit))",
+   "abs(cont - (abs(gap)<1e-9 ? 1 : 0))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "L": 2
+    },
+    "expect": {
+     "limit": 2,
+     "gap": 0,
+     "cont": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "L": 0
+    },
+    "expect": {
+     "limit": 2,
+     "gap": -2,
+     "cont": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "L": -2
+    },
+    "expect": {
+     "limit": -2,
+     "gap": 0,
+     "cont": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "L": 1
+    },
+    "expect": {
+     "limit": 1,
+     "gap": 0,
+     "cont": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

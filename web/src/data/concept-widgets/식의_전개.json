@@ -1,0 +1,297 @@
+{
+ "id": "식의_전개",
+ "spec": {
+  "title": "식의 전개 - 다항식의 곱셈 (분배법칙)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "W=a*x+b; H=c*x+d; ax=a*x; cx=c*x; s1=a*c*x^2; s2=a*d*x; s3=b*c*x; s4=b*d; expanded=s1+s2+s3+s4; prod=W*H; lhs=(a*x+b)*(c*x+d); rhs=a*c*x^2+(a*d+b*c)*x+b*d; diff=abs(lhs-rhs)",
+  "geometry": {
+   "range": [
+    0,
+    "=max(W,H)*1.15"
+   ],
+   "yRange": [
+    0,
+    "=max(W,H)*1.15"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ax",
+       0
+      ],
+      [
+       "=ax",
+       "=cx"
+      ],
+      [
+       0,
+       "=cx"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=ax",
+       0
+      ],
+      [
+       "=W",
+       0
+      ],
+      [
+       "=W",
+       "=cx"
+      ],
+      [
+       "=ax",
+       "=cx"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       "=cx"
+      ],
+      [
+       "=ax",
+       "=cx"
+      ],
+      [
+       "=ax",
+       "=H"
+      ],
+      [
+       0,
+       "=H"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       "=ax",
+       "=cx"
+      ],
+      [
+       "=W",
+       "=cx"
+      ],
+      [
+       "=W",
+       "=H"
+      ],
+      [
+       "=ax",
+       "=H"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "가로 (ax+b)",
+    "expr": "W",
+    "digits": 4
+   },
+   {
+    "label": "세로 (cx+d)",
+    "expr": "H",
+    "digits": 4
+   },
+   {
+    "label": "acx²",
+    "expr": "s1",
+    "digits": 4
+   },
+   {
+    "label": "adx",
+    "expr": "s2",
+    "digits": 4
+   },
+   {
+    "label": "bcx",
+    "expr": "s3",
+    "digits": 4
+   },
+   {
+    "label": "bd",
+    "expr": "s4",
+    "digits": 4
+   },
+   {
+    "label": "넓이 (ax+b)(cx+d)",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "전개 결과 acx²+(ad+bc)x+bd",
+    "expr": "expanded",
+    "digits": 4
+   },
+   {
+    "label": "차이 (0이면 일치)",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1,
+    "d": 1,
+    "x": 1
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "c": 2,
+    "d": 1,
+    "x": 2
+   },
+   {
+    "a": 4,
+    "b": 2,
+    "c": 1,
+    "d": 3,
+    "x": 2
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "d": 4,
+    "x": 3
+   }
+  ],
+  "invariants": [
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 2,
+     "d": 1,
+     "x": 2
+    },
+    "expect": {
+     "W": 7,
+     "H": 5,
+     "s1": 16,
+     "s2": 4,
+     "s3": 12,
+     "s4": 3,
+     "prod": 35,
+     "expanded": 35,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "c": 1,
+     "d": 1,
+     "x": 3
+    },
+    "expect": {
+     "W": 4,
+     "H": 4,
+     "s1": 9,
+     "s2": 3,
+     "s3": 3,
+     "s4": 1,
+     "prod": 16,
+     "expanded": 16,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2,
+     "c": 1,
+     "d": 3,
+     "x": 2
+    },
+    "expect": {
+     "W": 10,
+     "H": 5,
+     "s1": 16,
+     "s2": 24,
+     "s3": 4,
+     "s4": 6,
+     "prod": 50,
+     "expanded": 50,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

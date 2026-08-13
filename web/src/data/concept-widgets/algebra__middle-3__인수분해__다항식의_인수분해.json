@@ -1,0 +1,111 @@
+{
+ "id": "algebra/middle-3/인수분해/다항식의_인수분해",
+ "spec": {
+  "title": "다항식의 인수분해와 근",
+  "params": [
+   {
+    "name": "r1",
+    "label": "첫 번째 근 (r1)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "r2",
+    "label": "두 번째 근 (r2)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "s = r1 + r2; p = r1 * r2; x0 = 2.5; v = x0^2 - s*x0 + p",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "(x - r1) * (x - r2)",
+     "label": "y = (x - r1)(x - r2)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의 합 (r1 + r2)",
+    "expr": "s",
+    "digits": 4
+   },
+   {
+    "label": "근의 곱 (r1 × r2)",
+    "expr": "p",
+    "digits": 4
+   },
+   {
+    "label": "f(2.5)의 값",
+    "expr": "v",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 2,
+    "r2": 3
+   },
+   {
+    "r1": -1,
+    "r2": 4
+   },
+   {
+    "r1": 0,
+    "r2": 0
+   },
+   {
+    "r1": -3,
+    "r2": -3
+   }
+  ],
+  "invariants": [
+   "x0^2 - s*x0 + p - (x0-r1)*(x0-r2)",
+   "r1^2 - s*r1 + p",
+   "r2^2 - s*r2 + p"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 2,
+     "r2": 3
+    },
+    "expect": {
+     "s": 5,
+     "p": 6,
+     "v": -0.25
+    }
+   },
+   {
+    "params": {
+     "r1": -1,
+     "r2": 4
+    },
+    "expect": {
+     "s": 3,
+     "p": -4,
+     "v": -5.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

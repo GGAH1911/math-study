@@ -1,0 +1,219 @@
+{
+ "id": "기하_삼각함수_응용",
+ "spec": {
+  "title": "삼각함수로 삼각형 풀기 (사인·코사인 법칙)",
+  "params": [
+   {
+    "name": "b",
+    "label": "변 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "변 c",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 6,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "각 A (°)",
+    "type": "slider",
+    "min": 10,
+    "max": 170,
+    "init": 60,
+    "step": 1
+   }
+  ],
+  "scope": "rad = theta * pi / 180; xC = b * cos(rad); yC = b * sin(rad); a = sqrt(b^2 + c^2 - 2*b*c*cos(rad)); area = 0.5*b*c*sin(rad); R = a/(2*sin(rad)); cosB = (a^2 + c^2 - b^2)/(2*a*c); B = acos(cosB); C = pi - rad - B;",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=c",
+       0
+      ],
+      [
+       "=xC",
+       "=yC"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xC",
+      "=yC"
+     ],
+     "label": "C"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a (BC)",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "b (CA)",
+    "expr": "b",
+    "digits": 3
+   },
+   {
+    "label": "c (AB)",
+    "expr": "c",
+    "digits": 3
+   },
+   {
+    "label": "A (°)",
+    "expr": "theta",
+    "digits": 1
+   },
+   {
+    "label": "B (°)",
+    "expr": "B*180/pi",
+    "digits": 1
+   },
+   {
+    "label": "C (°)",
+    "expr": "C*180/pi",
+    "digits": 1
+   },
+   {
+    "label": "넓이 S",
+    "expr": "area",
+    "digits": 3
+   },
+   {
+    "label": "외접원 R",
+    "expr": "R",
+    "digits": 3
+   },
+   {
+    "label": "a/sin A",
+    "expr": "a/sin(rad)",
+    "digits": 3
+   },
+   {
+    "label": "2R",
+    "expr": "2*R",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 3,
+    "c": 4,
+    "theta": 90
+   },
+   {
+    "b": 6,
+    "c": 8,
+    "theta": 90
+   },
+   {
+    "b": 5,
+    "c": 12,
+    "theta": 90
+   },
+   {
+    "b": 4,
+    "c": 7,
+    "theta": 110
+   }
+  ],
+  "invariants": [
+   "abs(a^2 - (b^2 + c^2 - 2*b*c*cos(rad)))",
+   "abs(area - 0.5*b*c*sin(rad))",
+   "abs(R - a/(2*sin(rad)))",
+   "abs(a/sin(rad) - b/sin(B))",
+   "abs(rad + B + C - pi)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 3,
+     "c": 4,
+     "theta": 90
+    },
+    "expect": {
+     "a": 5,
+     "area": 6,
+     "R": 2.5,
+     "B": 0.643501108793,
+     "C": 0.927295218001
+    }
+   },
+   {
+    "params": {
+     "b": 6,
+     "c": 8,
+     "theta": 90
+    },
+    "expect": {
+     "a": 10,
+     "area": 24,
+     "R": 5,
+     "B": 0.643501108793,
+     "C": 0.927295218001
+    }
+   },
+   {
+    "params": {
+     "b": 5,
+     "c": 12,
+     "theta": 90
+    },
+    "expect": {
+     "a": 13,
+     "area": 30,
+     "R": 6.5,
+     "B": 0.3947911197,
+     "C": 1.176005207091
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

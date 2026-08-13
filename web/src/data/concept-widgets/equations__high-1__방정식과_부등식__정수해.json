@@ -1,0 +1,137 @@
+{
+ "id": "equations/high-1/방정식과_부등식/정수해",
+ "spec": {
+  "title": "정수해",
+  "params": [
+   {
+    "name": "root1",
+    "label": "근 1",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "root2",
+    "label": "근 2",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "sol1 = min(root1, root2); sol2 = max(root1, root2); f1 = (sol1 - root1)*(sol1 - root2); f2 = (sol2 - root1)*(sol2 - root2);",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "(x - root1)*(x - root2)",
+     "label": "y=(x-근1)(x-근2)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "정수해 1",
+    "expr": "sol1",
+    "digits": 0
+   },
+   {
+    "label": "정수해 2",
+    "expr": "sol2",
+    "digits": 0
+   },
+   {
+    "label": "중근",
+    "expr": "sol1 == sol2 ? 1 : 0",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "root1": 1,
+    "root2": 3
+   },
+   {
+    "root1": 3,
+    "root2": 1
+   },
+   {
+    "root1": 2,
+    "root2": 2
+   },
+   {
+    "root1": -2,
+    "root2": 4
+   }
+  ],
+  "invariants": [
+   "f1 + f2",
+   "sol1 + sol2 - root1 - root2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "root1": 2,
+     "root2": 5
+    },
+    "expect": {
+     "sol1": 2,
+     "sol2": 5,
+     "f1": 0,
+     "f2": 0
+    }
+   },
+   {
+    "params": {
+     "root1": 4,
+     "root2": 2
+    },
+    "expect": {
+     "sol1": 2,
+     "sol2": 4,
+     "f1": 0,
+     "f2": 0
+    }
+   },
+   {
+    "params": {
+     "root1": -3,
+     "root2": -1
+    },
+    "expect": {
+     "sol1": -3,
+     "sol2": -1,
+     "f1": 0,
+     "f2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

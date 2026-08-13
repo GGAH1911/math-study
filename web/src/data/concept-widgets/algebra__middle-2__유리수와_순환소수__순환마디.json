@@ -1,0 +1,406 @@
+{
+ "id": "algebra/middle-2/유리수와_순환소수/순환마디",
+ "spec": {
+  "title": "순환마디 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자",
+    "type": "slider",
+    "min": 1,
+    "max": 12,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 7,
+    "step": 1
+   }
+  ],
+  "scope": "aa=min(a,b-1); r0=mod(aa,b); r1=mod(10*aa,b); r2=mod(100*aa,b); r3=mod(1000*aa,b); r4=mod(10000*aa,b); r5=mod(100000*aa,b); r6=mod(1000000*aa,b); r7=mod(10000000*aa,b); r8=mod(100000000*aa,b); r9=mod(1000000000*aa,b); r10=mod(10000000000*aa,b); r11=mod(100000000000*aa,b); r12=mod(1000000000000*aa,b); r13=mod(10000000000000*aa,b); r14=mod(100000000000000*aa,b); x0=cos(2*pi*r0/b); y0=sin(2*pi*r0/b); x1=cos(2*pi*r1/b); y1=sin(2*pi*r1/b); x2=cos(2*pi*r2/b); y2=sin(2*pi*r2/b); x3=cos(2*pi*r3/b); y3=sin(2*pi*r3/b); x4=cos(2*pi*r4/b); y4=sin(2*pi*r4/b); x5=cos(2*pi*r5/b); y5=sin(2*pi*r5/b); x6=cos(2*pi*r6/b); y6=sin(2*pi*r6/b); x7=cos(2*pi*r7/b); y7=sin(2*pi*r7/b); x8=cos(2*pi*r8/b); y8=sin(2*pi*r8/b); x9=cos(2*pi*r9/b); y9=sin(2*pi*r9/b); x10=cos(2*pi*r10/b); y10=sin(2*pi*r10/b); x11=cos(2*pi*r11/b); y11=sin(2*pi*r11/b); x12=cos(2*pi*r12/b); y12=sin(2*pi*r12/b); x13=cos(2*pi*r13/b); y13=sin(2*pi*r13/b); x14=cos(2*pi*r14/b); y14=sin(2*pi*r14/b)",
+  "geometry": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=y0"
+     ],
+     "label": "0"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "3"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ],
+     "label": "4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      "=y5"
+     ],
+     "label": "5"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x6",
+      "=y6"
+     ],
+     "label": "6"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x7",
+      "=y7"
+     ],
+     "label": "7"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x8",
+      "=y8"
+     ],
+     "label": "8"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x9",
+      "=y9"
+     ],
+     "label": "9"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x10",
+      "=y10"
+     ],
+     "label": "10"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x11",
+      "=y11"
+     ],
+     "label": "11"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x12",
+      "=y12"
+     ],
+     "label": "12"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x13",
+      "=y13"
+     ],
+     "label": "13"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x14",
+      "=y14"
+     ],
+     "label": "14"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=y0"
+     ],
+     "to": [
+      "=x1",
+      "=y1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y2"
+     ],
+     "to": [
+      "=x3",
+      "=y3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x3",
+      "=y3"
+     ],
+     "to": [
+      "=x4",
+      "=y4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x4",
+      "=y4"
+     ],
+     "to": [
+      "=x5",
+      "=y5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x5",
+      "=y5"
+     ],
+     "to": [
+      "=x6",
+      "=y6"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x6",
+      "=y6"
+     ],
+     "to": [
+      "=x7",
+      "=y7"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x7",
+      "=y7"
+     ],
+     "to": [
+      "=x8",
+      "=y8"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x8",
+      "=y8"
+     ],
+     "to": [
+      "=x9",
+      "=y9"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x9",
+      "=y9"
+     ],
+     "to": [
+      "=x10",
+      "=y10"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x10",
+      "=y10"
+     ],
+     "to": [
+      "=x11",
+      "=y11"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x11",
+      "=y11"
+     ],
+     "to": [
+      "=x12",
+      "=y12"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x12",
+      "=y12"
+     ],
+     "to": [
+      "=x13",
+      "=y13"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x13",
+      "=y13"
+     ],
+     "to": [
+      "=x14",
+      "=y14"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "분자",
+    "expr": "aa",
+    "digits": 0
+   },
+   {
+    "label": "분모",
+    "expr": "b",
+    "digits": 0
+   },
+   {
+    "label": "소수",
+    "expr": "aa/b",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 7
+   },
+   {
+    "a": 1,
+    "b": 6
+   },
+   {
+    "a": 2,
+    "b": 5
+   },
+   {
+    "a": 1,
+    "b": 11
+   }
+  ],
+  "invariants": [
+   "sqrt(x0^2+y0^2)-1",
+   "sqrt(x14^2+y14^2)-1",
+   "mod(10*r0,b)-r1",
+   "mod(10*r13,b)-r14"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 7
+    },
+    "expect": {
+     "r0": 1,
+     "r1": 3,
+     "r2": 2,
+     "r3": 6,
+     "r4": 4,
+     "r5": 5,
+     "r6": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 6
+    },
+    "expect": {
+     "r0": 1,
+     "r1": 4,
+     "r2": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 11
+    },
+    "expect": {
+     "r0": 1,
+     "r1": 10,
+     "r2": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

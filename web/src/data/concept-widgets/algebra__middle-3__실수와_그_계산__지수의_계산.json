@@ -1,0 +1,178 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/지수의_계산",
+ "spec": {
+  "title": "지수의 계산 (같은 밑)",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 1.2,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "지수 m",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "prod = a^m * a^n; prod_alt = a^(m+n); prod_check = prod - prod_alt; quot = a^m / a^n; quot_alt = a^(m-n); quot_check = quot - quot_alt; pow = (a^m)^n; pow_alt = a^(m*n); pow_check = pow - pow_alt",
+  "plot": {
+   "range": [
+    -2,
+    6
+   ],
+   "yRange": [
+    0,
+    80
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^m",
+    "expr": "a^m",
+    "digits": 4
+   },
+   {
+    "label": "a^n",
+    "expr": "a^n",
+    "digits": 4
+   },
+   {
+    "label": "a^m × a^n",
+    "expr": "prod",
+    "digits": 4
+   },
+   {
+    "label": "a^(m+n)",
+    "expr": "prod_alt",
+    "digits": 4
+   },
+   {
+    "label": "곱셈 법칙 차이",
+    "expr": "prod_check",
+    "digits": 6
+   },
+   {
+    "label": "a^m ÷ a^n",
+    "expr": "quot",
+    "digits": 4
+   },
+   {
+    "label": "a^(m-n)",
+    "expr": "quot_alt",
+    "digits": 4
+   },
+   {
+    "label": "나눗셈 법칙 차이",
+    "expr": "quot_check",
+    "digits": 6
+   },
+   {
+    "label": "(a^m)^n",
+    "expr": "pow",
+    "digits": 4
+   },
+   {
+    "label": "a^(mn)",
+    "expr": "pow_alt",
+    "digits": 4
+   },
+   {
+    "label": "거듭제곱 법칙 차이",
+    "expr": "pow_check",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.5,
+    "m": 2,
+    "n": 3
+   },
+   {
+    "a": 2,
+    "m": 1,
+    "n": 2
+   },
+   {
+    "a": 1.2,
+    "m": 3,
+    "n": 1
+   },
+   {
+    "a": 1.8,
+    "m": 2,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "abs(prod_check)",
+   "abs(quot_check)",
+   "abs(pow_check)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "m": 2,
+     "n": 3
+    },
+    "expect": {
+     "prod": 32,
+     "prod_alt": 32,
+     "prod_check": 0,
+     "quot": 0.5,
+     "quot_alt": 0.5,
+     "quot_check": 0,
+     "pow": 64,
+     "pow_alt": 64,
+     "pow_check": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "prod": 3.375,
+     "prod_alt": 3.375,
+     "prod_check": 0,
+     "quot": 1.5,
+     "quot_alt": 1.5,
+     "quot_check": 0,
+     "pow": 2.25,
+     "pow_alt": 2.25,
+     "pow_check": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

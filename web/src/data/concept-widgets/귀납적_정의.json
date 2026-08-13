@@ -1,0 +1,253 @@
+{
+ "id": "귀납적_정의",
+ "spec": {
+  "title": "귀납적 정의: 점화식 aₙ₊₁ = r aₙ + d 탐구",
+  "params": [
+   {
+    "name": "init",
+    "label": "a₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "ratio",
+    "label": "r",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "add",
+    "label": "d",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "a1=init; a2=ratio*a1+add; a3=ratio*a2+add; a4=ratio*a3+add; a5=ratio*a4+add",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "from": [
+      -5,
+      "=add - ratio*5"
+     ],
+     "to": [
+      5,
+      "=add + ratio*5"
+     ]
+    },
+    {
+     "type": "line",
+     "from": [
+      -5,
+      -5
+     ],
+     "to": [
+      5,
+      5
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a1",
+      0
+     ],
+     "to": [
+      "=a1",
+      "=a2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a1",
+      "=a2"
+     ],
+     "to": [
+      "=a2",
+      "=a2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a2",
+      "=a2"
+     ],
+     "to": [
+      "=a2",
+      "=a3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a2",
+      "=a3"
+     ],
+     "to": [
+      "=a3",
+      "=a3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a3",
+      "=a3"
+     ],
+     "to": [
+      "=a3",
+      "=a4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a3",
+      "=a4"
+     ],
+     "to": [
+      "=a4",
+      "=a4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a4",
+      "=a4"
+     ],
+     "to": [
+      "=a4",
+      "=a5"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a4",
+      "=a5"
+     ],
+     "to": [
+      "=a5",
+      "=a5"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a1",
+      0
+     ],
+     "label": "a₁"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a₁",
+    "expr": "a1",
+    "digits": 3
+   },
+   {
+    "label": "a₂",
+    "expr": "a2",
+    "digits": 3
+   },
+   {
+    "label": "a₃",
+    "expr": "a3",
+    "digits": 3
+   },
+   {
+    "label": "a₄",
+    "expr": "a4",
+    "digits": 3
+   },
+   {
+    "label": "a₅",
+    "expr": "a5",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "init": 1,
+    "ratio": 0.5,
+    "add": 1
+   },
+   {
+    "init": 0,
+    "ratio": 1.5,
+    "add": -0.5
+   },
+   {
+    "init": 2,
+    "ratio": -0.8,
+    "add": 1
+   },
+   {
+    "init": 1,
+    "ratio": 1,
+    "add": 0.5
+   }
+  ],
+  "invariants": [
+   "abs(a2 - (ratio*a1+add)) + abs(a3 - (ratio*a2+add)) + abs(a4 - (ratio*a3+add)) + abs(a5 - (ratio*a4+add))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "init": 1,
+     "ratio": 0.5,
+     "add": 1
+    },
+    "expect": {
+     "a1": 1,
+     "a2": 1.5,
+     "a3": 1.75,
+     "a4": 1.875,
+     "a5": 1.9375
+    }
+   },
+   {
+    "params": {
+     "init": 2,
+     "ratio": -0.8,
+     "add": 1
+    },
+    "expect": {
+     "a1": 2,
+     "a2": -0.6,
+     "a3": 1.48,
+     "a4": -0.184,
+     "a5": 1.1472
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

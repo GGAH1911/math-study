@@ -1,0 +1,186 @@
+{
+ "id": "algebra/high-1/다항식/다항식의_연산",
+ "spec": {
+  "title": "다항식의 덧셈과 곱셈",
+  "params": [
+   {
+    "name": "a0",
+    "label": "f의 상수항",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a1",
+    "label": "f의 x 계수",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b0",
+    "label": "g의 상수항",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b1",
+    "label": "g의 x 계수",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "s0=a0+b0; s1=a1+b1; p0=a0*b0; p1=a0*b1+a1*b0; p2=a1*b1;",
+  "plot": {
+   "range": [
+    -1.5,
+    1.5
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "a0+a1*x",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "b0+b1*x",
+     "label": "g(x)",
+     "color": "green"
+    },
+    {
+     "fn": "s0+s1*x",
+     "label": "f+g",
+     "color": "red"
+    },
+    {
+     "fn": "p0+p1*x+p2*x^2",
+     "label": "f*g",
+     "color": "purple"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f+g의 상수항",
+    "expr": "s0",
+    "digits": 3
+   },
+   {
+    "label": "f+g의 x 계수",
+    "expr": "s1",
+    "digits": 3
+   },
+   {
+    "label": "f*g의 상수항",
+    "expr": "p0",
+    "digits": 3
+   },
+   {
+    "label": "f*g의 x 계수",
+    "expr": "p1",
+    "digits": 3
+   },
+   {
+    "label": "f*g의 x² 계수",
+    "expr": "p2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a0": 1,
+    "a1": 2,
+    "b0": 3,
+    "b1": 4
+   },
+   {
+    "a0": -1,
+    "a1": 0,
+    "b0": 2,
+    "b1": -2
+   },
+   {
+    "a0": 0,
+    "a1": 1,
+    "b0": 1,
+    "b1": 0
+   },
+   {
+    "a0": 1.5,
+    "a1": -0.5,
+    "b0": -1,
+    "b1": 2
+   }
+  ],
+  "invariants": [
+   "abs((a0+a1)+(b0+b1)-(s0+s1))",
+   "abs((a0-a1)+(b0-b1)-(s0-s1))",
+   "abs((a0+a1)*(b0+b1)-(p0+p1+p2))",
+   "abs((a0-a1)*(b0-b1)-(p0-p1+p2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a0": 1,
+     "a1": 2,
+     "b0": 3,
+     "b1": 4
+    },
+    "expect": {
+     "s0": 4,
+     "s1": 6,
+     "p0": 3,
+     "p1": 10,
+     "p2": 8
+    }
+   },
+   {
+    "params": {
+     "a0": -1,
+     "a1": 0,
+     "b0": 2,
+     "b1": -2
+    },
+    "expect": {
+     "s0": 1,
+     "s1": -2,
+     "p0": -2,
+     "p1": 2,
+     "p2": 0
+    }
+   },
+   {
+    "params": {
+     "a0": 0,
+     "a1": 1,
+     "b0": 1,
+     "b1": 0
+    },
+    "expect": {
+     "s0": 1,
+     "s1": 1,
+     "p0": 0,
+     "p1": 1,
+     "p2": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

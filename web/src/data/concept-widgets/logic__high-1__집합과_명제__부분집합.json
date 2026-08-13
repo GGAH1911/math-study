@@ -1,0 +1,238 @@
+{
+ "id": "logic/high-1/집합과_명제/부분집합",
+ "spec": {
+  "title": "부분집합 (구간 포함 관계)",
+  "params": [
+   {
+    "name": "aCenter",
+    "label": "A 중심",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "aHalf",
+    "label": "A 반너비",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "bCenter",
+    "label": "B 중심",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "bHalf",
+    "label": "B 반너비",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "x",
+    "label": "검사 점 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "aLeft = aCenter - aHalf; aRight = aCenter + aHalf; bLeft = bCenter - bHalf; bRight = bCenter + bHalf; inA = (x >= aLeft and x <= aRight) ? 1 : 0; inB = (x >= bLeft and x <= bRight) ? 1 : 0; subset = (aLeft >= bLeft and aRight <= bRight) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=aLeft",
+      1
+     ],
+     "to": [
+      "=aRight",
+      1
+     ],
+     "label": "A"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bLeft",
+      -1
+     ],
+     "to": [
+      "=bRight",
+      -1
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x∈A",
+    "expr": "inA",
+    "digits": 0
+   },
+   {
+    "label": "x∈B",
+    "expr": "inB",
+    "digits": 0
+   },
+   {
+    "label": "A⊆B",
+    "expr": "subset",
+    "digits": 0
+   },
+   {
+    "label": "A의 왼쪽",
+    "expr": "aLeft",
+    "digits": 2
+   },
+   {
+    "label": "A의 오른쪽",
+    "expr": "aRight",
+    "digits": 2
+   },
+   {
+    "label": "B의 왼쪽",
+    "expr": "bLeft",
+    "digits": 2
+   },
+   {
+    "label": "B의 오른쪽",
+    "expr": "bRight",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "aCenter": 0,
+    "aHalf": 2,
+    "bCenter": 0,
+    "bHalf": 4,
+    "x": 0
+   },
+   {
+    "aCenter": 3,
+    "aHalf": 2,
+    "bCenter": 0,
+    "bHalf": 1,
+    "x": 0
+   },
+   {
+    "aCenter": -2,
+    "aHalf": 1,
+    "bCenter": -3,
+    "bHalf": 2,
+    "x": -2
+   },
+   {
+    "aCenter": 0,
+    "aHalf": 1,
+    "bCenter": 5,
+    "bHalf": 1,
+    "x": 0
+   }
+  ],
+  "invariants": [
+   "aLeft + aRight - 2*aCenter",
+   "bLeft + bRight - 2*bCenter",
+   "subset * inA * (1 - inB)",
+   "inA * (1 - inA)",
+   "inB * (1 - inB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "aCenter": 0,
+     "aHalf": 2,
+     "bCenter": 0,
+     "bHalf": 4,
+     "x": 0
+    },
+    "expect": {
+     "aLeft": -2,
+     "aRight": 2,
+     "bLeft": -4,
+     "bRight": 4,
+     "inA": 1,
+     "inB": 1,
+     "subset": 1
+    }
+   },
+   {
+    "params": {
+     "aCenter": 3,
+     "aHalf": 2,
+     "bCenter": 0,
+     "bHalf": 1,
+     "x": 0
+    },
+    "expect": {
+     "aLeft": 1,
+     "aRight": 5,
+     "bLeft": -1,
+     "bRight": 1,
+     "inA": 0,
+     "inB": 1,
+     "subset": 0
+    }
+   },
+   {
+    "params": {
+     "aCenter": 0,
+     "aHalf": 1,
+     "bCenter": 5,
+     "bHalf": 1,
+     "x": 0
+    },
+    "expect": {
+     "aLeft": -1,
+     "aRight": 1,
+     "bLeft": 4,
+     "bRight": 6,
+     "inA": 1,
+     "inB": 0,
+     "subset": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

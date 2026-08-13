@@ -1,0 +1,199 @@
+{
+ "id": "algebra/middle-3/인수분해/공통_인수",
+ "spec": {
+  "title": "공통인수로 묶기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 4,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "area1=a*b; area2=a*c; total=area1+area2; factored=a*(b+c); h=b+c;",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       "=b"
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       "=a",
+       "=h"
+      ],
+      [
+       0,
+       "=h"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "points": [
+      [
+       0,
+       "=b"
+      ],
+      [
+       "=a",
+       "=b"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a×b",
+    "expr": "area1",
+    "digits": 2
+   },
+   {
+    "label": "a×c",
+    "expr": "area2",
+    "digits": 2
+   },
+   {
+    "label": "a(b+c)",
+    "expr": "factored",
+    "digits": 2
+   },
+   {
+    "label": "ab+ac",
+    "expr": "total",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "c": 4
+   },
+   {
+    "a": 3,
+    "b": 2,
+    "c": 4
+   },
+   {
+    "a": 5,
+    "b": 1,
+    "c": 3
+   },
+   {
+    "a": 1,
+    "b": 5,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "a*b+a*c-a*(b+c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": 4
+    },
+    "expect": {
+     "area1": 6,
+     "area2": 8,
+     "total": 14,
+     "factored": 14
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 2,
+     "c": 4
+    },
+    "expect": {
+     "area1": 6,
+     "area2": 12,
+     "total": 18,
+     "factored": 18
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 1,
+     "c": 3
+    },
+    "expect": {
+     "area1": 5,
+     "area2": 15,
+     "total": 20,
+     "factored": 20
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

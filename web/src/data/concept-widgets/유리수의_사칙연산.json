@@ -1,0 +1,200 @@
+{
+ "id": "유리수의_사칙연산",
+ "spec": {
+  "title": "유리수의 사칙연산",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모 b",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "분자 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "분모 d",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "op",
+    "label": "연산",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "frac1=a/b; frac2=c/d; result=(op==1 ? (a*d+b*c)/(b*d) : (op==2 ? (a*d-b*c)/(b*d) : (op==3 ? (a*c)/(b*d) : (a*d)/(b*c))))",
+  "geometry": {
+   "range": [
+    -30,
+    30
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -30,
+      0
+     ],
+     "to": [
+      30,
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=frac1",
+      0
+     ],
+     "label": "a/b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=frac2",
+      0
+     ],
+     "label": "c/d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=result",
+      0
+     ],
+     "label": "결과"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a/b",
+    "expr": "frac1",
+    "digits": 4
+   },
+   {
+    "label": "c/d",
+    "expr": "frac2",
+    "digits": 4
+   },
+   {
+    "label": "결과",
+    "expr": "result",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "d": 2,
+    "op": 1
+   },
+   {
+    "a": 3,
+    "b": 4,
+    "c": 1,
+    "d": 2,
+    "op": 2
+   },
+   {
+    "a": 2,
+    "b": 3,
+    "c": 3,
+    "d": 4,
+    "op": 3
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "d": 4,
+    "op": 4
+   }
+  ],
+  "invariants": [
+   "abs(op==1 ? (result*b*d - (a*d+b*c)) : (op==2 ? (result*b*d - (a*d-b*c)) : (op==3 ? (result*b*d - (a*c)) : (result*b*c - (a*d)))))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": 2,
+     "op": 1
+    },
+    "expect": {
+     "result": 1,
+     "frac1": 0.5,
+     "frac2": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 4,
+     "c": 1,
+     "d": 2,
+     "op": 2
+    },
+    "expect": {
+     "result": 0.25,
+     "frac1": 0.75,
+     "frac2": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "d": 4,
+     "op": 4
+    },
+    "expect": {
+     "result": 2,
+     "frac1": 0.5,
+     "frac2": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

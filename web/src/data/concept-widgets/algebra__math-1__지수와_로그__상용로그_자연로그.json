@@ -1,0 +1,106 @@
+{
+ "id": "algebra/math-1/지수와_로그/상용로그_자연로그",
+ "spec": {
+  "title": "상용로그와 자연로그의 비교",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": 0.1,
+    "max": 10,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "l10=log(x,10); lnx=log(x)",
+  "plot": {
+   "range": [
+    0.1,
+    10
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "log(x,10)",
+     "label": "상용로그 (log₁₀ x)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "log(x)",
+     "label": "자연로그 (ln x)",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상용로그 값",
+    "expr": "l10",
+    "digits": 4
+   },
+   {
+    "label": "자연로그 값",
+    "expr": "lnx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0.5
+   },
+   {
+    "x": 1
+   },
+   {
+    "x": 5
+   },
+   {
+    "x": 10
+   }
+  ],
+  "invariants": [
+   "10^log(x,10)-x",
+   "e^log(x)-x",
+   "log(x,10)-log(x)/log(10)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "l10": 0,
+     "lnx": 0
+    }
+   },
+   {
+    "params": {
+     "x": 10
+    },
+    "expect": {
+     "l10": 1,
+     "lnx": 2.302585092994046
+    }
+   },
+   {
+    "params": {
+     "x": 2.718281828459045
+    },
+    "expect": {
+     "l10": 0.4342944819032518,
+     "lnx": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

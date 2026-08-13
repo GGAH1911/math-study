@@ -1,0 +1,174 @@
+{
+ "id": "비율과_방정식",
+ "spec": {
+  "title": "비율과 방정식",
+  "params": [
+   {
+    "name": "m",
+    "label": "m (비의 앞항)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (비의 뒷항)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "k (배율)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "t=10/max(m,n); px=t*m; py=t*n; A=k*m; B=k*n",
+  "geometry": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    0,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=A",
+      "=B"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=A",
+      0
+     ],
+     "to": [
+      "=A",
+      "=B"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=B"
+     ],
+     "to": [
+      "=A",
+      "=B"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A",
+    "expr": "A"
+   },
+   {
+    "label": "B",
+    "expr": "B"
+   },
+   {
+    "label": "기울기 (n/m)",
+    "expr": "n/m"
+   },
+   {
+    "label": "nA − mB",
+    "expr": "n*A - m*B"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 3,
+    "k": 1
+   },
+   {
+    "m": 5,
+    "n": 2,
+    "k": 0.5
+   },
+   {
+    "m": 4,
+    "n": 4,
+    "k": 1.5
+   },
+   {
+    "m": 1,
+    "n": 5,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "n*A - m*B",
+   "A/m - B/n",
+   "k - A/m"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 3,
+     "k": 1
+    },
+    "expect": {
+     "A": 2,
+     "B": 3
+    }
+   },
+   {
+    "params": {
+     "m": 4,
+     "n": 5,
+     "k": 1.5
+    },
+    "expect": {
+     "A": 6,
+     "B": 7.5
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 2,
+     "k": 2
+    },
+    "expect": {
+     "A": 6,
+     "B": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

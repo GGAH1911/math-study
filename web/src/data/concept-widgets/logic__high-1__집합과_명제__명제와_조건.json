@@ -1,0 +1,187 @@
+{
+ "id": "logic/high-1/집합과_명제/명제와_조건",
+ "spec": {
+  "title": "명제와 조건",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "cond = x > a ? 1 : 0; propT = 1; propF = 0; left = max(a, -5);",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -0.4,
+    0.4
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      0
+     ],
+     "to": [
+      5,
+      0
+     ],
+     "color": "#cccccc"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=left",
+      0.15
+     ],
+     "to": [
+      5,
+      0.15
+     ],
+     "color": "#3498db"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a",
+     "color": "#2ecc71"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x",
+     "color": "#e74c3c"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "명제 '2는 소수이다'",
+    "expr": "propT",
+    "digits": 0
+   },
+   {
+    "label": "명제 '2는 홀수이다'",
+    "expr": "propF",
+    "digits": 0
+   },
+   {
+    "label": "조건 p(x): x > a (참=1)",
+    "expr": "cond",
+    "digits": 0
+   },
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0,
+    "a": 2
+   },
+   {
+    "x": 3,
+    "a": 2
+   },
+   {
+    "x": -1,
+    "a": -3
+   },
+   {
+    "x": 2,
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "abs(cond - (x > a ? 1 : 0))",
+   "abs(propT - 1)",
+   "abs(propF)",
+   "abs(left - max(a, -5))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 1,
+     "a": 2
+    },
+    "expect": {
+     "cond": 0,
+     "propT": 1,
+     "propF": 0,
+     "left": 2
+    }
+   },
+   {
+    "params": {
+     "x": 3,
+     "a": 2
+    },
+    "expect": {
+     "cond": 1,
+     "propT": 1,
+     "propF": 0,
+     "left": 2
+    }
+   },
+   {
+    "params": {
+     "x": -4,
+     "a": -5
+    },
+    "expect": {
+     "cond": 1,
+     "propT": 1,
+     "propF": 0,
+     "left": -5
+    }
+   },
+   {
+    "params": {
+     "x": -5,
+     "a": -5
+    },
+    "expect": {
+     "cond": 0,
+     "propT": 1,
+     "propF": 0,
+     "left": -5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

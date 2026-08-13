@@ -1,0 +1,157 @@
+{
+ "id": "함수의_곱의_연속성",
+ "spec": {
+  "title": "함수의 곱의 연속성",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "fx = x0^2 + b; gx = x0 + d; hx = fx*gx; h_direct = x0^3 + d*x0^2 + b*x0 + b*d",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -60,
+    60
+   ],
+   "fns": [
+    {
+     "fn": "x^2 + b",
+     "label": "f(x)=x²+b",
+     "color": "red"
+    },
+    {
+     "fn": "x + d",
+     "label": "g(x)=x+d",
+     "color": "blue"
+    },
+    {
+     "fn": "(x^2 + b)*(x + d)",
+     "label": "h(x)=f(x)g(x)",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "fx"
+   },
+   {
+    "label": "g(x₀)",
+    "expr": "gx"
+   },
+   {
+    "label": "h(x₀)",
+    "expr": "hx"
+   },
+   {
+    "label": "h(x₀)-f(x₀)g(x₀)",
+    "expr": "hx - fx*gx"
+   },
+   {
+    "label": "h(x₀) (전개)",
+    "expr": "h_direct"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 0,
+    "d": 0,
+    "x0": 1
+   },
+   {
+    "b": 1,
+    "d": -1,
+    "x0": 2
+   },
+   {
+    "b": -2,
+    "d": 2,
+    "x0": -1
+   },
+   {
+    "b": 2,
+    "d": 1,
+    "x0": 0
+   }
+  ],
+  "invariants": [
+   "hx - fx*gx",
+   "fx - (x0^2 + b)",
+   "gx - (x0 + d)",
+   "hx - (x0^3 + d*x0^2 + b*x0 + b*d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 0,
+     "d": 0,
+     "x0": 1
+    },
+    "expect": {
+     "fx": 1,
+     "gx": 1,
+     "hx": 1,
+     "h_direct": 1
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "d": -1,
+     "x0": 2
+    },
+    "expect": {
+     "fx": 5,
+     "gx": 1,
+     "hx": 5,
+     "h_direct": 5
+    }
+   },
+   {
+    "params": {
+     "b": -2,
+     "d": 2,
+     "x0": -1
+    },
+    "expect": {
+     "fx": -1,
+     "gx": 1,
+     "hx": -1,
+     "h_direct": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

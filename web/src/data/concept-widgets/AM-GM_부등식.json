@@ -1,0 +1,165 @@
+{
+ "id": "AM-GM_부등식",
+ "spec": {
+  "title": "AM-GM 부등식",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 0.2,
+    "max": 5,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "am=(a+b)/2; gm=sqrt(a*b); diff=am-gm",
+  "geometry": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    -0.6,
+    0.6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=gm",
+      0
+     ],
+     "label": "기하평균"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=am",
+      0
+     ],
+     "label": "산술평균"
+    },
+    {
+     "type": "segment",
+     "endpoints": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=b",
+       0
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "산술평균",
+    "expr": "am",
+    "digits": 3
+   },
+   {
+    "label": "기하평균",
+    "expr": "gm",
+    "digits": 3
+   },
+   {
+    "label": "산술평균 - 기하평균",
+    "expr": "diff",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1
+   },
+   {
+    "a": 1,
+    "b": 4
+   },
+   {
+    "a": 3,
+    "b": 5
+   },
+   {
+    "a": 0.5,
+    "b": 2
+   }
+  ],
+  "invariants": [
+   "am-gm-abs(am-gm)",
+   "am-gm-((sqrt(a)-sqrt(b))^2)/2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 4
+    },
+    "expect": {
+     "am": 2.5,
+     "gm": 2,
+     "diff": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 2
+    },
+    "expect": {
+     "am": 1.25,
+     "gm": 1,
+     "diff": 0.25
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2
+    },
+    "expect": {
+     "am": 2,
+     "gm": 2,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

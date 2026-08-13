@@ -1,0 +1,136 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/무리수_판별",
+ "spec": {
+  "title": "무리수 판별: √n이 유리수일 조건",
+  "params": [
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 2,
+    "max": 20,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "r=sqrt(n); is_rat=(floor(r)^2==n ? 1 : 0)",
+  "geometry": {
+   "range": [
+    0,
+    5
+   ],
+   "yRange": [
+    0,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=r",
+       0
+      ],
+      [
+       "=r",
+       "=r"
+      ],
+      [
+       0,
+       "=r"
+      ]
+     ],
+     "label": "넓이 n"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=r",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=r",
+      0
+     ],
+     "label": "√n"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "√n",
+    "expr": "r",
+    "digits": 5
+   },
+   {
+    "label": "유리수(1)/무리수(0)",
+    "expr": "is_rat",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 9
+   },
+   {
+    "n": 16
+   }
+  ],
+  "invariants": [
+   "r^2 - n",
+   "is_rat - (r == floor(r) ? 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "r": 1.4142135623730951,
+     "is_rat": 0
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "r": 2,
+     "is_rat": 1
+    }
+   },
+   {
+    "params": {
+     "n": 9
+    },
+    "expect": {
+     "r": 3,
+     "is_rat": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

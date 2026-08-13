@@ -1,0 +1,128 @@
+{
+ "id": "equations/middle-2/연립일차방정식/연립방정식",
+ "spec": {
+  "title": "연립일차방정식의 해와 그래프",
+  "params": [
+   {
+    "name": "c1",
+    "label": "c₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   },
+   {
+    "name": "c2",
+    "label": "c₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   }
+  ],
+  "scope": "solx = (c1 + c2)/2; soly = (c1 - c2)/2;",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "-x + c1",
+     "label": "x + y = c1",
+     "color": "blue"
+    },
+    {
+     "fn": "x - c2",
+     "label": "x - y = c2",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해 x",
+    "expr": "solx",
+    "digits": 3
+   },
+   {
+    "label": "해 y",
+    "expr": "soly",
+    "digits": 3
+   },
+   {
+    "label": "식1 (x+y)",
+    "expr": "solx + soly",
+    "digits": 3
+   },
+   {
+    "label": "식2 (x-y)",
+    "expr": "solx - soly",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c1": 3,
+    "c2": 1
+   },
+   {
+    "c1": -2,
+    "c2": 4
+   },
+   {
+    "c1": 0,
+    "c2": 0
+   },
+   {
+    "c1": 2,
+    "c2": -3
+   }
+  ],
+  "invariants": [
+   "abs(solx + soly - c1)",
+   "abs(solx - soly - c2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c1": 3,
+     "c2": 1
+    },
+    "expect": {
+     "solx": 2,
+     "soly": 1
+    }
+   },
+   {
+    "params": {
+     "c1": -2,
+     "c2": 4
+    },
+    "expect": {
+     "solx": 1,
+     "soly": -3
+    }
+   },
+   {
+    "params": {
+     "c1": 0,
+     "c2": 0
+    },
+    "expect": {
+     "solx": 0,
+     "soly": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

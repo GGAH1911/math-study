@@ -1,0 +1,198 @@
+{
+ "id": "좌표평면의_거리",
+ "spec": {
+  "title": "좌표평면의 거리",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "y1",
+    "label": "y₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "y2",
+    "label": "y₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "dx=x2-x1; dy=y2-y1; dist=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x 좌표 차",
+    "expr": "dx",
+    "digits": 2
+   },
+   {
+    "label": "y 좌표 차",
+    "expr": "dy",
+    "digits": 2
+   },
+   {
+    "label": "거리",
+    "expr": "dist",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 3,
+    "y2": 4
+   },
+   {
+    "x1": -2,
+    "y1": 1,
+    "x2": 2,
+    "y2": 4
+   },
+   {
+    "x1": 5,
+    "y1": 3,
+    "x2": 2,
+    "y2": -1
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 0,
+    "y2": 0
+   }
+  ],
+  "invariants": [
+   "dx^2 + dy^2 - dist^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "dist": 5
+    }
+   },
+   {
+    "params": {
+     "x1": -1,
+     "y1": 2,
+     "x2": 2,
+     "y2": 6
+    },
+    "expect": {
+     "dx": 3,
+     "dy": 4,
+     "dist": 5
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": 1,
+     "x2": 1,
+     "y2": 1
+    },
+    "expect": {
+     "dx": 0,
+     "dy": 0,
+     "dist": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,141 @@
+{
+ "id": "밑변환",
+ "spec": {
+  "title": "로그의 밑변환 공식",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "진수 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 8,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "새 밑 c",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "val1=log(b,a); val2=log(b,c)/log(a,c); diff=val1-val2",
+  "plot": {
+   "range": [
+    0.5,
+    10
+   ],
+   "yRange": [
+    -2,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "log(x,a)",
+     "label": "log_a x",
+     "color": "blue"
+    },
+    {
+     "fn": "log(x,c)/log(a,c)",
+     "label": "log_c x / log_c a",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log_a b",
+    "expr": "val1",
+    "digits": 3
+   },
+   {
+    "label": "log_c b / log_c a",
+    "expr": "val2",
+    "digits": 3
+   },
+   {
+    "label": "차이",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 8,
+    "c": 4
+   },
+   {
+    "a": 4,
+    "b": 2,
+    "c": 2
+   },
+   {
+    "a": 9,
+    "b": 3,
+    "c": 27
+   },
+   {
+    "a": 10,
+    "b": 10,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "abs(diff)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 8,
+     "c": 4
+    },
+    "expect": {
+     "val1": 3,
+     "val2": 3,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 2,
+     "c": 2
+    },
+    "expect": {
+     "val1": 0.5,
+     "val2": 0.5,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": 9,
+     "b": 3,
+     "c": 27
+    },
+    "expect": {
+     "val1": 0.5,
+     "val2": 0.5,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "id": "계수_조건",
+ "spec": {
+  "title": "계수 조건: 항등식의 계수 비교",
+  "params": [
+   {
+    "name": "r1",
+    "label": "근 r₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "r2",
+    "label": "근 r₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=-(r1+r2); b=r1*r2",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "(x-r1)*(x-r2)",
+     "label": "f(x)=(x-r₁)(x-r₂)",
+     "color": "blue"
+    },
+    {
+     "fn": "x^2 - 4*x + 3",
+     "label": "g(x)=x²-4x+3",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f의 x 계수",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "f의 상수항",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "g의 x 계수",
+    "expr": "-4",
+    "digits": 2
+   },
+   {
+    "label": "g의 상수항",
+    "expr": "3",
+    "digits": 2
+   },
+   {
+    "label": "x 계수 차",
+    "expr": "4 - r1 - r2",
+    "digits": 2
+   },
+   {
+    "label": "상수항 차",
+    "expr": "r1*r2 - 3",
+    "digits": 2
+   },
+   {
+    "label": "제곱 오차",
+    "expr": "(4 - r1 - r2)^2 + (r1*r2 - 3)^2",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 0,
+    "r2": 0
+   },
+   {
+    "r1": 1,
+    "r2": 3
+   },
+   {
+    "r1": -2,
+    "r2": 4
+   },
+   {
+    "r1": 2,
+    "r2": 5
+   }
+  ],
+  "invariants": [
+   "r1^2 - (r1+r2)*r1 + r1*r2",
+   "r2^2 - (r1+r2)*r2 + r1*r2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 1,
+     "r2": 3
+    },
+    "expect": {
+     "a": -4,
+     "b": 3
+    }
+   },
+   {
+    "params": {
+     "r1": 2,
+     "r2": 5
+    },
+    "expect": {
+     "a": -7,
+     "b": 10
+    }
+   },
+   {
+    "params": {
+     "r1": 0,
+     "r2": 0
+    },
+    "expect": {
+     "a": 0,
+     "b": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

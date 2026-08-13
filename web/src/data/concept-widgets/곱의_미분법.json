@@ -1,0 +1,202 @@
+{
+ "id": "곱의_미분법",
+ "spec": {
+  "title": "곱의 미분법",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (f의 기울기)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (g의 기울기)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "fval=a*x0+1; gval=b*x0+1; hval=fval*gval; df=a; dg=b; hprime=2*a*b*x0+a+b; term1=df*gval; term2=fval*dg; prod_rule=term1+term2",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    35
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -5,
+    35
+   ],
+   "fns": [
+    {
+     "fn": "a*x+1",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "b*x+1",
+     "label": "g(x)",
+     "color": "green"
+    },
+    {
+     "fn": "(a*x+1)*(b*x+1)",
+     "label": "h(x)=f(x)g(x)",
+     "color": "red"
+    },
+    {
+     "fn": "hval + hprime*(x - x0)",
+     "label": "접선 (x₀)",
+     "color": "purple"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "fval",
+    "digits": 4
+   },
+   {
+    "label": "g(x₀)",
+    "expr": "gval",
+    "digits": 4
+   },
+   {
+    "label": "h(x₀)",
+    "expr": "hval",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₀)·g(x₀)",
+    "expr": "term1",
+    "digits": 4
+   },
+   {
+    "label": "f(x₀)·g'(x₀)",
+    "expr": "term2",
+    "digits": 4
+   },
+   {
+    "label": "f'g+fg'",
+    "expr": "prod_rule",
+    "digits": 4
+   },
+   {
+    "label": "h'(x₀)",
+    "expr": "hprime",
+    "digits": 4
+   },
+   {
+    "label": "f'g+fg' - h'",
+    "expr": "prod_rule-hprime",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 1,
+    "x0": 1
+   },
+   {
+    "a": 1.5,
+    "b": 0.8,
+    "x0": -1.2
+   },
+   {
+    "a": 0.3,
+    "b": 1.2,
+    "x0": 1.5
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "x0": -0.5
+   }
+  ],
+  "invariants": [
+   "term1+term2-hprime",
+   "hval-fval*gval"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 1,
+     "x0": 1
+    },
+    "expect": {
+     "fval": 2,
+     "gval": 2,
+     "hval": 4,
+     "hprime": 4,
+     "term1": 2,
+     "term2": 2,
+     "prod_rule": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 1.5,
+     "x0": -1
+    },
+    "expect": {
+     "fval": -1,
+     "gval": -0.5,
+     "hval": 0.5,
+     "hprime": -2.5,
+     "term1": -1,
+     "term2": -1.5,
+     "prod_rule": -2.5
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 2,
+     "x0": 2
+    },
+    "expect": {
+     "fval": 2,
+     "gval": 5,
+     "hval": 10,
+     "hprime": 6.5,
+     "term1": 2.5,
+     "term2": 4,
+     "prod_rule": 6.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

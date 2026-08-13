@@ -1,0 +1,158 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬의_의미",
+ "spec": {
+  "title": "행렬의 의미: 회전 변환 탐구",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1
+   }
+  ],
+  "scope": "rad = theta * pi / 180; a = cos(rad); b = -sin(rad); c = sin(rad); d = cos(rad)",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=0",
+       "=0"
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a+b",
+       "=c+d"
+      ],
+      [
+       "=b",
+       "=d"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 4
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 4
+   },
+   {
+    "label": "c",
+    "expr": "c",
+    "digits": 4
+   },
+   {
+    "label": "d",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "det",
+    "expr": "a*d - b*c",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 90
+   }
+  ],
+  "invariants": [
+   "a^2 + c^2 - 1",
+   "b^2 + d^2 - 1",
+   "a*d - b*c - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "a": 0.8660254038,
+     "b": -0.5,
+     "c": 0.5,
+     "d": 0.8660254038
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "a": 0,
+     "b": -1,
+     "c": 1,
+     "d": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

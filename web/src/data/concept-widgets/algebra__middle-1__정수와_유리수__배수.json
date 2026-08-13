@@ -1,0 +1,138 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/배수",
+ "spec": {
+  "title": "배수의 시각화 (a = k × b)",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "a = b*k",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    11
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=b",
+       0
+      ],
+      [
+       "=b",
+       "=k"
+      ],
+      [
+       0,
+       "=k"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=k"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a = b × k",
+    "expr": "a"
+   },
+   {
+    "label": "b",
+    "expr": "b"
+   },
+   {
+    "label": "k",
+    "expr": "k"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 3,
+    "k": 4
+   },
+   {
+    "b": 5,
+    "k": 2
+   },
+   {
+    "b": 7,
+    "k": 1
+   },
+   {
+    "b": 2,
+    "k": 9
+   }
+  ],
+  "invariants": [
+   "mod(a,b)",
+   "a/b - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 3,
+     "k": 4
+    },
+    "expect": {
+     "a": 12
+    }
+   },
+   {
+    "params": {
+     "b": 5,
+     "k": 2
+    },
+    "expect": {
+     "a": 10
+    }
+   },
+   {
+    "params": {
+     "b": 7,
+     "k": 3
+    },
+    "expect": {
+     "a": 21
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

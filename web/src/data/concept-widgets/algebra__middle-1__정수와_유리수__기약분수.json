@@ -1,0 +1,147 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/기약분수",
+ "spec": {
+  "title": "기약분수 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "분자",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "분모",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "g = gcd(abs(a), b); na = a / g; nb = b / g; val = a / b; isRed = g == 1;",
+  "geometry": {
+   "range": [
+    -7,
+    7
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=val",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=val",
+      0
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최대공약수 (G)",
+    "expr": "g",
+    "digits": 0
+   },
+   {
+    "label": "기약 분자",
+    "expr": "na",
+    "digits": 0
+   },
+   {
+    "label": "기약 분모",
+    "expr": "nb",
+    "digits": 0
+   },
+   {
+    "label": "기약분수 여부 (1=예)",
+    "expr": "isRed ? 1 : 0",
+    "digits": 0
+   },
+   {
+    "label": "값",
+    "expr": "val",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": 4,
+    "b": 6
+   },
+   {
+    "a": -4,
+    "b": 6
+   },
+   {
+    "a": 0,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "abs(a*nb - na*b)",
+   "gcd(abs(na), nb) - 1",
+   "(na*g - a)^2 + (nb*g - b)^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "g": 1,
+     "na": 2,
+     "nb": 3
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 6
+    },
+    "expect": {
+     "g": 2,
+     "na": 2,
+     "nb": 3
+    }
+   },
+   {
+    "params": {
+     "a": -4,
+     "b": 6
+    },
+    "expect": {
+     "g": 2,
+     "na": -2,
+     "nb": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

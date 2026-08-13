@@ -1,0 +1,139 @@
+{
+ "id": "equations/high-1/방정식과_부등식/복소수의_절댓값",
+ "spec": {
+  "title": "복소수의 절댓값",
+  "params": [
+   {
+    "name": "a",
+    "label": "실수부 a",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "허수부 b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "r = sqrt(a^2 + b^2); r2 = a^2 + b^2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "z"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|z| = √(a²+b²)",
+    "expr": "r",
+    "digits": 3
+   },
+   {
+    "label": "a² + b²",
+    "expr": "r2",
+    "digits": 1
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": -3,
+    "b": 4
+   },
+   {
+    "a": 0,
+    "b": 0
+   },
+   {
+    "a": 2,
+    "b": -2
+   }
+  ],
+  "invariants": [
+   "r^2 - (a^2 + b^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "r": 5
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2
+    },
+    "expect": {
+     "r": 2
+    }
+   },
+   {
+    "params": {
+     "a": -3,
+     "b": 4
+    },
+    "expect": {
+     "r": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

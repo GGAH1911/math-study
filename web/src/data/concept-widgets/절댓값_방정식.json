@@ -1,0 +1,133 @@
+{
+ "id": "절댓값_방정식",
+ "spec": {
+  "title": "절댓값 방정식 |x-a|=k",
+  "params": [
+   {
+    "name": "a",
+    "label": "중심 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "거리 k",
+    "type": "slider",
+    "min": -2,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "x1 = k >= 0 ? a - k : 0/0; x2 = k >= 0 ? a + k : 0/0; cnt = k > 0 ? 2 : (k == 0 ? 1 : 0)",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -3,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "abs(x-a)",
+     "label": "y=|x-a|",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "k",
+     "label": "y=k",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해의 개수",
+    "expr": "cnt",
+    "digits": 0
+   },
+   {
+    "label": "x1",
+    "expr": "x1",
+    "digits": 3
+   },
+   {
+    "label": "x2",
+    "expr": "x2",
+    "digits": 3
+   },
+   {
+    "label": "x1+x2",
+    "expr": "x1+x2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "k": 2
+   },
+   {
+    "a": -3,
+    "k": 1
+   },
+   {
+    "a": 2,
+    "k": 0
+   },
+   {
+    "a": 4,
+    "k": 2
+   }
+  ],
+  "invariants": [
+   "abs(abs(x1-a)-k)",
+   "abs(abs(x2-a)-k)",
+   "abs((x1+x2)-2*a)",
+   "abs((x2-x1)-2*k)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "k": 2
+    },
+    "expect": {
+     "x1": -2,
+     "x2": 2,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "k": 3
+    },
+    "expect": {
+     "x1": -4,
+     "x2": 2,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "k": 0
+    },
+    "expect": {
+     "x1": 2,
+     "x2": 2,
+     "cnt": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,174 @@
+{
+ "id": "이차함수의_대칭성",
+ "spec": {
+  "title": "이차함수의 대칭성",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -1.8,
+    "max": 1.8,
+    "init": 1,
+    "step": 0.4,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "t (축에서 거리)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "p=-b/(2*a); q=a*p^2+b*p+c; y_sym=a*t^2+q; f_left=a*(p-t)^2+b*(p-t)+c; f_right=a*(p+t)^2+b*(p+t)+c",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "y = ax² + bx + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "축의 방정식 x",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "q",
+    "digits": 3
+   },
+   {
+    "label": "f(p-t)",
+    "expr": "f_left",
+    "digits": 3
+   },
+   {
+    "label": "f(p+t)",
+    "expr": "f_right",
+    "digits": 3
+   },
+   {
+    "label": "대칭점 y",
+    "expr": "y_sym",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "t": 1
+   },
+   {
+    "a": 0.6,
+    "b": 1.2,
+    "c": -0.5,
+    "t": 0.5
+   },
+   {
+    "a": -1.4,
+    "b": 2.8,
+    "c": 0,
+    "t": 0.2
+   },
+   {
+    "a": 0.2,
+    "b": -0.4,
+    "c": 3,
+    "t": 1.5
+   }
+  ],
+  "invariants": [
+   "f_left-f_right",
+   "((p-t)+(p+t))/2-p",
+   "p+b/(2*a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "t": 1
+    },
+    "expect": {
+     "p": -1,
+     "q": 0,
+     "f_left": 1,
+     "f_right": 1,
+     "y_sym": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.6,
+     "b": 1.2,
+     "c": -0.5,
+     "t": 0.5
+    },
+    "expect": {
+     "p": -1,
+     "q": -1.1,
+     "f_left": -0.95,
+     "f_right": -0.95,
+     "y_sym": -0.95
+    }
+   },
+   {
+    "params": {
+     "a": -1.4,
+     "b": 2.8,
+     "c": 0,
+     "t": 0.2
+    },
+    "expect": {
+     "p": 1,
+     "q": 1.4,
+     "f_left": 1.344,
+     "f_right": 1.344,
+     "y_sym": 1.344
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

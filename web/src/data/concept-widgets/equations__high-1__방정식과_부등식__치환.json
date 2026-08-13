@@ -1,0 +1,111 @@
+{
+ "id": "equations/high-1/방정식과_부등식/치환",
+ "spec": {
+  "title": "치환으로 방정식 단순화하기",
+  "params": [
+   {
+    "name": "a",
+    "label": "x",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "t = a^2; orig = a^4 - 3*a^2 + 2; subs = t^2 - 3*t + 2;",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^4 - 3*x^2 + 2",
+     "label": "원래 식 f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "x^2 - 3*x + 2",
+     "label": "치환식 g(t)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "t = x²",
+    "expr": "t",
+    "digits": 2
+   },
+   {
+    "label": "f(x)",
+    "expr": "orig",
+    "digits": 4
+   },
+   {
+    "label": "g(t)",
+    "expr": "subs",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "orig - subs"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "t": 0,
+     "orig": 2,
+     "subs": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "t": 1,
+     "orig": 0,
+     "subs": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "t": 4,
+     "orig": 6,
+     "subs": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "id": "접선의_기울기",
+ "spec": {
+  "title": "접선의 기울기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "fa = a^2; slope_deriv = 2*a; dx = 2; x1 = a - dx; y1 = fa + slope_deriv*(x1 - a); x2 = a + dx; y2 = fa + slope_deriv*(x2 - a); slope_line = (y2 - y1)/(x2 - x1)",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -2,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x)=x^2",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "접선의 기울기",
+    "expr": "slope_line",
+    "digits": 4
+   },
+   {
+    "label": "f'(a)",
+    "expr": "slope_deriv",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1.5
+   }
+  ],
+  "invariants": [
+   "fa - a^2",
+   "slope_line - slope_deriv"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "fa": 0,
+     "slope_deriv": 0,
+     "slope_line": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "fa": 0.25,
+     "slope_deriv": 1,
+     "slope_line": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "fa": 1,
+     "slope_deriv": 2,
+     "slope_line": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

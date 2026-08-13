@@ -1,0 +1,154 @@
+{
+ "id": "도함수의_활용",
+ "spec": {
+  "title": "도함수의 활용 - 접선과 극값",
+  "params": [
+   {
+    "name": "a",
+    "label": "계수 a",
+    "type": "slider",
+    "min": -3,
+    "max": 0,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "접점 x0",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "fx0 = x0^3 + a*x0; dfx0 = 3*x0^2 + a; cp = sqrt(-a/3); xmax = -cp; xmin = cp; fmax = xmax^3 + a*xmax; fmin = xmin^3 + a*xmin",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3 + a*x",
+     "label": "f(x)",
+     "color": "#2196F3"
+    },
+    {
+     "fn": "3*x^2 + a",
+     "label": "f'(x)",
+     "color": "#FF5722"
+    },
+    {
+     "fn": "dfx0*(x - x0) + fx0",
+     "label": "접선",
+     "color": "#4CAF50"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "fx0",
+    "digits": 4
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "dfx0",
+    "digits": 4
+   },
+   {
+    "label": "극대 x",
+    "expr": "xmax",
+    "digits": 4
+   },
+   {
+    "label": "극소 x",
+    "expr": "xmin",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -3,
+    "x0": 0
+   },
+   {
+    "a": -3,
+    "x0": 1.5
+   },
+   {
+    "a": -1,
+    "x0": 0.5
+   },
+   {
+    "a": 0,
+    "x0": 1
+   }
+  ],
+  "invariants": [
+   "fx0 - (x0^3 + a*x0)",
+   "dfx0 - (3*x0^2 + a)",
+   "3*cp^2 + a",
+   "fmax + fmin",
+   "(-cp)*cp - a/3",
+   "xmax + xmin"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": -3,
+     "x0": 0
+    },
+    "expect": {
+     "fx0": 0,
+     "dfx0": -3,
+     "cp": 1,
+     "xmax": -1,
+     "xmin": 1,
+     "fmax": 2,
+     "fmin": -2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "x0": 0.5
+    },
+    "expect": {
+     "fx0": -0.375,
+     "dfx0": -0.25,
+     "cp": 0.5773502691896258,
+     "xmax": -0.5773502691896258,
+     "xmin": 0.5773502691896258,
+     "fmax": 0.3849001794597505,
+     "fmin": -0.3849001794597505
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "x0": 1
+    },
+    "expect": {
+     "fx0": 1,
+     "dfx0": 3,
+     "cp": 0,
+     "xmax": 0,
+     "xmin": 0,
+     "fmax": 0,
+     "fmin": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,151 @@
+{
+ "id": "곡선의_방정식",
+ "spec": {
+  "title": "곡선의 방정식 – 원 위의 점",
+  "params": [
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "theta",
+    "label": "각 θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1
+   }
+  ],
+  "scope": "rad=theta*pi/180; px=r*cos(rad); py=r*sin(rad); lhs=px^2+py^2; rhs=r^2; diff=lhs-rhs",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -3.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x 좌표",
+    "expr": "px",
+    "digits": 4
+   },
+   {
+    "label": "y 좌표",
+    "expr": "py",
+    "digits": 4
+   },
+   {
+    "label": "x²+y²",
+    "expr": "lhs",
+    "digits": 4
+   },
+   {
+    "label": "r²",
+    "expr": "rhs",
+    "digits": 4
+   },
+   {
+    "label": "x²+y²-r²",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": 1,
+    "theta": 0
+   },
+   {
+    "r": 2,
+    "theta": 30
+   },
+   {
+    "r": 1.5,
+    "theta": 90
+   },
+   {
+    "r": 3,
+    "theta": 45
+   }
+  ],
+  "invariants": [
+   "px^2+py^2-r^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 1,
+     "theta": 0
+    },
+    "expect": {
+     "px": 1,
+     "py": 0
+    }
+   },
+   {
+    "params": {
+     "r": 2,
+     "theta": 30
+    },
+    "expect": {
+     "px": 1.7320508075688772,
+     "py": 1
+    }
+   },
+   {
+    "params": {
+     "r": 1.5,
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

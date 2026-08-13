@@ -1,0 +1,142 @@
+{
+ "id": "영역의_최적화",
+ "spec": {
+  "title": "영역의 최적화",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "th=theta*pi/180; a=cos(th); b=sin(th); k=max(0,3*a,2*b); x_opt=(3*a>0 and 3*a>=2*b)?3:(2*b>0?0:0); y_opt=(3*a>0 and 3*a>=2*b)?0:(2*b>0?2:0); L=4; px1=a*k-b*L; py1=b*k+a*L; px2=a*k+b*L; py2=b*k-a*L",
+  "geometry": {
+   "range": [
+    -2,
+    6
+   ],
+   "yRange": [
+    -2,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       0,
+       2
+      ]
+     ],
+     "label": "영역"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px1",
+      "=py1"
+     ],
+     "to": [
+      "=px2",
+      "=py2"
+     ],
+     "label": "등위선"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x_opt",
+      "=y_opt"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 k",
+    "expr": "k",
+    "digits": 4
+   },
+   {
+    "label": "최적점 x",
+    "expr": "x_opt",
+    "digits": 0
+   },
+   {
+    "label": "최적점 y",
+    "expr": "y_opt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 150
+   },
+   {
+    "theta": 240
+   },
+   {
+    "theta": 330
+   }
+  ],
+  "invariants": [
+   "a*x_opt+b*y_opt-k",
+   "(px2-px1)*a+(py2-py1)*b",
+   "a*a*k+b*b*k-k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "k": 3,
+     "x_opt": 3,
+     "y_opt": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "k": 2,
+     "x_opt": 0,
+     "y_opt": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "k": 0,
+     "x_opt": 0,
+     "y_opt": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

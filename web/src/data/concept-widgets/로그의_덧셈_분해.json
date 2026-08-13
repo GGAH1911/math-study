@@ -1,0 +1,134 @@
+{
+ "id": "로그의_덧셈_분해",
+ "spec": {
+  "title": "로그의 덧셈 분해",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 10,
+    "step": 0.1
+   },
+   {
+    "name": "M",
+    "label": "M",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "N",
+    "label": "N",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "lM=log(M)/log(a); lN=log(N)/log(a); lMN=log(M*N)/log(a)",
+  "plot": {
+   "range": [
+    0,
+    100
+   ],
+   "yRange": [
+    -0.5,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "log(x)/log(a)",
+     "label": "y = logₐ x",
+     "color": "#2196f3"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "logₐ M",
+    "expr": "lM",
+    "digits": 4
+   },
+   {
+    "label": "logₐ N",
+    "expr": "lN",
+    "digits": 4
+   },
+   {
+    "label": "logₐ M + logₐ N",
+    "expr": "lM+lN",
+    "digits": 4
+   },
+   {
+    "label": "logₐ (MN)",
+    "expr": "lMN",
+    "digits": 4
+   },
+   {
+    "label": "오차",
+    "expr": "abs(lM+lN-lMN)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 10,
+    "M": 1,
+    "N": 1
+   },
+   {
+    "a": 10,
+    "M": 2,
+    "N": 5
+   },
+   {
+    "a": 2,
+    "M": 4,
+    "N": 8
+   },
+   {
+    "a": 5,
+    "M": 5,
+    "N": 5
+   }
+  ],
+  "invariants": [
+   "lM+lN-lMN"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 10,
+     "M": 10,
+     "N": 10
+    },
+    "expect": {
+     "lM": 1,
+     "lN": 1,
+     "lMN": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "M": 4,
+     "N": 8
+    },
+    "expect": {
+     "lM": 2,
+     "lN": 3,
+     "lMN": 5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

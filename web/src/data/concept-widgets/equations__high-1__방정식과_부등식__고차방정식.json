@@ -1,0 +1,167 @@
+{
+ "id": "equations/high-1/방정식과_부등식/고차방정식",
+ "spec": {
+  "title": "삼차방정식의 그래프와 근",
+  "params": [
+   {
+    "name": "a",
+    "label": "근 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "근 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "근 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "coef_x2 = -(a+b+c); coef_const = -a*b*c; s2 = a*b + b*c + c*a; f_a = (a-a)*(a-b)*(a-c); f_b = (b-a)*(b-b)*(b-c); f_c = (c-a)*(c-b)*(c-c)",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -100,
+    100
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -100,
+    100
+   ],
+   "fns": [
+    {
+     "fn": "(x-a)*(x-b)*(x-c)",
+     "label": "y=(x-a)(x-b)(x-c)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의 합 (a+b+c)",
+    "expr": "a+b+c",
+    "digits": 2
+   },
+   {
+    "label": "x² 계수 ( -(a+b+c) )",
+    "expr": "coef_x2",
+    "digits": 2
+   },
+   {
+    "label": "근의 곱 (abc)",
+    "expr": "a*b*c",
+    "digits": 2
+   },
+   {
+    "label": "상수항 ( -abc )",
+    "expr": "coef_const",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -2,
+    "b": 1,
+    "c": 3
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "(a+b+c)+coef_x2",
+   "(a*b*c)+coef_const",
+   "f_a",
+   "f_b",
+   "f_c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3
+    },
+    "expect": {
+     "coef_x2": -6,
+     "coef_const": -6,
+     "s2": 11,
+     "f_a": 0,
+     "f_b": 0,
+     "f_c": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0,
+     "c": 1
+    },
+    "expect": {
+     "coef_x2": -1,
+     "coef_const": 0,
+     "s2": 0,
+     "f_a": 0,
+     "f_b": 0,
+     "f_c": 0
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 1,
+     "c": 4
+    },
+    "expect": {
+     "coef_x2": -3,
+     "coef_const": 8,
+     "s2": -6,
+     "f_a": 0,
+     "f_b": 0,
+     "f_c": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

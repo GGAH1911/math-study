@@ -1,0 +1,131 @@
+{
+ "id": "부분곱",
+ "spec": {
+  "title": "부분곱 P_n = a^n",
+  "params": [
+   {
+    "name": "n",
+    "label": "항 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "항의 값 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 1.5,
+    "init": 1.2,
+    "step": 0.1
+   }
+  ],
+  "scope": "P = a^n; prev = a^(n-1);",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    60
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    60
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분곱 P_n",
+    "expr": "P",
+    "digits": 6
+   },
+   {
+    "label": "이전 부분곱 P_{n-1}",
+    "expr": "prev",
+    "digits": 6
+   },
+   {
+    "label": "비율 P_n/P_{n-1}",
+    "expr": "P/prev",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 4,
+    "a": 1.2
+   },
+   {
+    "n": 7,
+    "a": 0.7
+   },
+   {
+    "n": 10,
+    "a": 1.5
+   },
+   {
+    "n": 1,
+    "a": 0.8
+   }
+  ],
+  "invariants": [
+   "P - a*prev",
+   "log(P) - n*log(a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "a": 1.5
+    },
+    "expect": {
+     "P": 3.375,
+     "prev": 2.25
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "a": 0.8
+    },
+    "expect": {
+     "P": 0.32768,
+     "prev": 0.4096
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "a": 1.2
+    },
+    "expect": {
+     "P": 6.1917364224,
+     "prev": 5.159780352
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

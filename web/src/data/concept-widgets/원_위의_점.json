@@ -1,0 +1,163 @@
+{
+ "id": "원_위의_점",
+ "spec": {
+  "title": "원 위의 점",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "rad=theta*pi/180; x=r*cos(rad); y=r*sin(rad); dist=sqrt(x^2+y^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=r"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x 좌표",
+    "expr": "x",
+    "digits": 4
+   },
+   {
+    "label": "y 좌표",
+    "expr": "y",
+    "digits": 4
+   },
+   {
+    "label": "중심부터 거리",
+    "expr": "dist",
+    "digits": 4
+   },
+   {
+    "label": "반지름",
+    "expr": "r",
+    "digits": 1
+   },
+   {
+    "label": "방정식 잔차",
+    "expr": "x^2+y^2-r^2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0,
+    "r": 2
+   },
+   {
+    "theta": 30,
+    "r": 2
+   },
+   {
+    "theta": 90,
+    "r": 3
+   },
+   {
+    "theta": 180,
+    "r": 1
+   }
+  ],
+  "invariants": [
+   "x^2+y^2-r^2",
+   "dist-r"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0,
+     "r": 2
+    },
+    "expect": {
+     "x": 2,
+     "y": 0,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "r": 2
+    },
+    "expect": {
+     "x": 1.7320508075688772,
+     "y": 1,
+     "dist": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "r": 3
+    },
+    "expect": {
+     "x": 0,
+     "y": 3,
+     "dist": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

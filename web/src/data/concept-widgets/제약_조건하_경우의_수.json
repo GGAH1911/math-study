@@ -1,0 +1,130 @@
+{
+ "id": "제약_조건하_경우의_수",
+ "spec": {
+  "title": "제약 조건하 경우의 수: 특정 두 사람이 이웃하는 경우",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (사람 수)",
+    "type": "slider",
+    "min": 2,
+    "max": 8,
+    "init": 4,
+    "step": 1
+   }
+  ],
+  "scope": "cnt = 2*factorial(n-1); total = factorial(n)",
+  "geometry": {
+   "range": [
+    0,
+    9
+   ],
+   "yRange": [
+    0,
+    45000
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=n-0.2",
+      0
+     ],
+     "to": [
+      "=n-0.2",
+      "=total"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=n+0.2",
+      0
+     ],
+     "to": [
+      "=n+0.2",
+      "=cnt"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n-0.2",
+      "=total"
+     ],
+     "label": "전체"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=n+0.2",
+      "=cnt"
+     ],
+     "label": "이웃"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "이웃하는 경우의 수",
+    "expr": "cnt"
+   },
+   {
+    "label": "전체 경우의 수",
+    "expr": "total"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   },
+   {
+    "n": 8
+   }
+  ],
+  "invariants": [
+   "total - n*(cnt/2)",
+   "cnt - 2*factorial(n-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2
+    },
+    "expect": {
+     "cnt": 2,
+     "total": 2
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "cnt": 4,
+     "total": 6
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "cnt": 12,
+     "total": 24
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

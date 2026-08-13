@@ -1,0 +1,167 @@
+{
+ "id": "logic/high-1/집합과_명제/진리집합",
+ "spec": {
+  "title": "조건 x²≤a의 진리집합",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "lval = -sqrt(a); rval = sqrt(a); member = (x^2 <= a) ? 1 : 0",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=lval",
+      0
+     ],
+     "to": [
+      "=rval",
+      0
+     ],
+     "label": "T"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=lval",
+      0
+     ],
+     "label": "−√a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rval",
+      0
+     ],
+     "label": "√a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "T의 왼쪽 끝",
+    "expr": "lval",
+    "digits": 6
+   },
+   {
+    "label": "T의 오른쪽 끝",
+    "expr": "rval",
+    "digits": 6
+   },
+   {
+    "label": "x ∈ T (1=참, 0=거짓)",
+    "expr": "member",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "x": 0
+   },
+   {
+    "a": 1,
+    "x": 0.5
+   },
+   {
+    "a": 1,
+    "x": 1.5
+   },
+   {
+    "a": 4,
+    "x": -2
+   }
+  ],
+  "invariants": [
+   "abs(lval + rval)",
+   "abs(rval^2 - a)",
+   "abs(lval^2 - a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "x": 0.5
+    },
+    "expect": {
+     "lval": -1,
+     "rval": 1,
+     "member": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "x": 1.5
+    },
+    "expect": {
+     "lval": -1,
+     "rval": 1,
+     "member": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "x": -2
+    },
+    "expect": {
+     "lval": -2,
+     "rval": 2,
+     "member": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

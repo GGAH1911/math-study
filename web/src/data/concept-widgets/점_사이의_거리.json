@@ -1,0 +1,204 @@
+{
+ "id": "점_사이의_거리",
+ "spec": {
+  "title": "두 점 사이의 거리",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "y1",
+    "label": "y₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "y2",
+    "label": "y₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "dx=x2-x1; dy=y2-y1; d=sqrt(dx^2+dy^2)",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "d"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x1",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y1"
+      ],
+      [
+       "=x2",
+       "=y2"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Δx",
+    "expr": "dx",
+    "digits": 2
+   },
+   {
+    "label": "Δy",
+    "expr": "dy",
+    "digits": 2
+   },
+   {
+    "label": "d",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "dx²+dy²",
+    "expr": "dx^2+dy^2",
+    "digits": 2
+   },
+   {
+    "label": "d²",
+    "expr": "d^2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 3,
+    "y2": 4
+   },
+   {
+    "x1": -1,
+    "y1": 2,
+    "x2": 4,
+    "y2": -3
+   },
+   {
+    "x1": 2,
+    "y1": -1,
+    "x2": 2,
+    "y2": 1
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 0,
+    "y2": 0
+   }
+  ],
+  "invariants": [
+   "d^2 - (dx^2+dy^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4
+    },
+    "expect": {
+     "d": 5,
+     "dx": 3,
+     "dy": 4
+    }
+   },
+   {
+    "params": {
+     "x1": -2,
+     "y1": 1,
+     "x2": 1,
+     "y2": 5
+    },
+    "expect": {
+     "d": 5,
+     "dx": 3,
+     "dy": 4
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": 2,
+     "x2": 7,
+     "y2": 10
+    },
+    "expect": {
+     "d": 10,
+     "dx": 6,
+     "dy": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

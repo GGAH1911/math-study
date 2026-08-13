@@ -1,0 +1,113 @@
+{
+ "id": "algebra/middle-1/문자와_식/거듭제곱",
+ "spec": {
+  "title": "거듭제곱의 값",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "val = a^n; x0 = n; y0 = val",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    0,
+    100
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y=a^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^n =",
+    "expr": "val",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "n": 3
+   },
+   {
+    "a": 0.5,
+    "n": -2
+   },
+   {
+    "a": 1.5,
+    "n": 0
+   },
+   {
+    "a": 3,
+    "n": -1
+   }
+  ],
+  "invariants": [
+   "val * a^(-n) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "n": 3
+    },
+    "expect": {
+     "val": 8
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "n": -2
+    },
+    "expect": {
+     "val": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "n": 0
+    },
+    "expect": {
+     "val": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "n": -1
+    },
+    "expect": {
+     "val": 0.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

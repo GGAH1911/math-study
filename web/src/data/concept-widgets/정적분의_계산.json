@@ -1,0 +1,115 @@
+{
+ "id": "정적분의_계산",
+ "spec": {
+  "title": "정적분의 계산",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (하한)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (상한)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "fa=a^2; fb=b^2; Fa=a^3/3; Fb=b^3/3; integral=Fb-Fa",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x) = x²",
+     "color": "blue"
+    },
+    {
+     "fn": "x^3/3",
+     "label": "F(x) = x³/3",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "F(b)",
+    "expr": "Fb",
+    "digits": 4
+   },
+   {
+    "label": "F(a)",
+    "expr": "Fa",
+    "digits": 4
+   },
+   {
+    "label": "∫ₐᵇ f(x)dx",
+    "expr": "integral",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "b": 3
+   },
+   {
+    "a": -3,
+    "b": 3
+   },
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": -2,
+    "b": 1
+   }
+  ],
+  "invariants": [
+   "integral - (b^3 - a^3)/3",
+   "integral - ((b-a)*(a^2 + a*b + b^2))/3"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "b": 3
+    },
+    "expect": {
+     "integral": 9,
+     "Fb": 9,
+     "Fa": 0
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 1
+    },
+    "expect": {
+     "integral": 3,
+     "Fb": 0.3333333333333333,
+     "Fa": -2.6666666666666665
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

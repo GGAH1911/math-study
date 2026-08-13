@@ -1,0 +1,215 @@
+{
+ "id": "여각과_보각_공식",
+ "spec": {
+  "title": "여각과 보각 공식",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 90,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; rc=(90-theta)*pi/180; rs=(180-theta)*pi/180; cx=cos(rad); sy=sin(rad); cc=cos(rc); sc=sin(rc); cs=cos(rs); ss=sin(rs)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "θ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cc",
+      "=sc"
+     ],
+     "label": "90°-θ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cs",
+      "=ss"
+     ],
+     "label": "180°-θ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cc",
+      "=sc"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cs",
+      "=ss"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin(90°-θ)",
+    "expr": "sc",
+    "digits": 4
+   },
+   {
+    "label": "cosθ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "cos(90°-θ)",
+    "expr": "cc",
+    "digits": 4
+   },
+   {
+    "label": "sinθ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "sin(180°-θ)",
+    "expr": "ss",
+    "digits": 4
+   },
+   {
+    "label": "cos(180°-θ)",
+    "expr": "cs",
+    "digits": 4
+   },
+   {
+    "label": "-cosθ",
+    "expr": "-cx",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "sc-cx",
+   "cc-sy",
+   "ss-sy",
+   "cs+cx",
+   "cx^2+sy^2-1",
+   "cc^2+sc^2-1",
+   "cs^2+ss^2-1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "cx": 1,
+     "sy": 0,
+     "cc": 0,
+     "sc": 1,
+     "cs": -1,
+     "ss": 0
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254038,
+     "sy": 0.5,
+     "cc": 0.5,
+     "sc": 0.8660254038,
+     "cs": -0.8660254038,
+     "ss": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "cx": 0.7071067812,
+     "sy": 0.7071067812,
+     "cc": 0.7071067812,
+     "sc": 0.7071067812,
+     "cs": -0.7071067812,
+     "ss": 0.7071067812
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254038,
+     "cc": 0.8660254038,
+     "sc": 0.5,
+     "cs": -0.5,
+     "ss": 0.8660254038
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

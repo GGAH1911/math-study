@@ -1,0 +1,141 @@
+{
+ "id": "equations/high-1/방정식과_부등식/중근과_단순근",
+ "spec": {
+  "title": "중근과 단순근",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   }
+  ],
+  "scope": "av=a==0?0.001:a; D=b*b-4*av*c; sD=sqrt(abs(D)); r1=D>=0?(-b+sD)/(2*av):-9999; r2=D>=0?(-b-sD)/(2*av):-9999;",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "av*x^2 + b*x + c",
+     "label": "y = ax²+bx+c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "근 x₁",
+    "expr": "r1",
+    "digits": 3
+   },
+   {
+    "label": "근 x₂",
+    "expr": "r2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 2
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "c": 0
+   },
+   {
+    "a": -2,
+    "b": 0,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "abs(av*r1^2 + b*r1 + c)",
+   "abs(av*r2^2 + b*r2 + c)",
+   "abs(abs(r1-r2) - sqrt(D)/abs(av))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "r1": -1,
+     "r2": -1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 2
+    },
+    "expect": {
+     "D": 1,
+     "r1": -1,
+     "r2": -2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 2,
+     "c": 0
+    },
+    "expect": {
+     "D": 4,
+     "r1": 0,
+     "r2": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

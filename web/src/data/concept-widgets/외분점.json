@@ -1,0 +1,198 @@
+{
+ "id": "외분점",
+ "spec": {
+  "title": "외분점",
+  "params": [
+   {
+    "name": "x1",
+    "label": "A의 좌표 x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "B의 좌표 x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "m (AP:PB의 비율 m:n)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n (AP:PB의 비율 m:n)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "denom=m-n; x_ext=(denom==0)?100:((m*x2-n*x1)/denom); x_int=(m*x2+n*x1)/(m+n); AP=abs(x_ext-x1); PB=abs(x_ext-x2); ratioAP=AP/PB; ratioMN=m/n;",
+  "geometry": {
+   "range": [
+    -100,
+    100
+   ],
+   "yRange": [
+    -3,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      0
+     ],
+     "to": [
+      "=x2",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x_ext",
+      0
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P의 좌표 x",
+    "expr": "x_ext",
+    "digits": 3
+   },
+   {
+    "label": "AP",
+    "expr": "AP",
+    "digits": 3
+   },
+   {
+    "label": "PB",
+    "expr": "PB",
+    "digits": 3
+   },
+   {
+    "label": "AP/PB",
+    "expr": "ratioAP",
+    "digits": 3
+   },
+   {
+    "label": "m:n",
+    "expr": "ratioMN",
+    "digits": 3
+   },
+   {
+    "label": "m-n",
+    "expr": "denom",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "x2": 2,
+    "m": 5,
+    "n": 2
+   },
+   {
+    "x1": -3,
+    "x2": 3,
+    "m": 2,
+    "n": 5
+   },
+   {
+    "x1": 1,
+    "x2": -2,
+    "m": 4,
+    "n": 3
+   },
+   {
+    "x1": 0,
+    "x2": 5,
+    "m": 10,
+    "n": 9
+   }
+  ],
+  "invariants": [
+   "n*abs(x_ext-x1)-m*abs(x_ext-x2)",
+   "min((x_ext-x1)*(x_ext-x2),0)",
+   "n*abs(x_int-x1)-m*abs(x_int-x2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "x2": 6,
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "x_ext": 12,
+     "x_int": 4
+    }
+   },
+   {
+    "params": {
+     "x1": -2,
+     "x2": 4,
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "x_ext": -5,
+     "x_int": -0.5
+    }
+   },
+   {
+    "params": {
+     "x1": 3,
+     "x2": 5,
+     "m": 3,
+     "n": 2
+    },
+    "expect": {
+     "x_ext": 9,
+     "x_int": 4.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

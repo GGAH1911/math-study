@@ -1,0 +1,223 @@
+{
+ "id": "모평균과_모분산",
+ "spec": {
+  "title": "모평균과 모분산",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁ (값1)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂ (값2)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x3",
+    "label": "x₃ (값3)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "p1",
+    "label": "p₁",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.2,
+    "step": 0.01
+   },
+   {
+    "name": "q",
+    "label": "p₂ 비율 q",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "p2 = (1 - p1) * q; p3 = (1 - p1) * (1 - q); mu = x1 * p1 + x2 * p2 + x3 * p3; ex2 = x1^2 * p1 + x2^2 * p2 + x3^2 * p3; variance = ex2 - mu^2; sigma = sqrt(variance); var_direct = (x1 - mu)^2 * p1 + (x2 - mu)^2 * p2 + (x3 - mu)^2 * p3",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      0
+     ],
+     "to": [
+      "=x1",
+      "=p1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x2",
+      0
+     ],
+     "to": [
+      "=x2",
+      "=p2"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x3",
+      0
+     ],
+     "to": [
+      "=x3",
+      "=p3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=mu",
+      -0.1
+     ],
+     "to": [
+      "=mu",
+      1.1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mu",
+      0
+     ],
+     "label": "μ"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "모평균 μ",
+    "expr": "mu",
+    "digits": 4
+   },
+   {
+    "label": "모분산 σ²",
+    "expr": "variance",
+    "digits": 4
+   },
+   {
+    "label": "E(X²)",
+    "expr": "ex2",
+    "digits": 4
+   },
+   {
+    "label": "표준편차 σ",
+    "expr": "sigma",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": -2,
+    "x2": 0,
+    "x3": 2,
+    "p1": 0.2,
+    "q": 0.5
+   },
+   {
+    "x1": 0,
+    "x2": 1,
+    "x3": 2,
+    "p1": 0.5,
+    "q": 0
+   },
+   {
+    "x1": -1,
+    "x2": 0,
+    "x3": 1,
+    "p1": 0.5,
+    "q": 0.5
+   },
+   {
+    "x1": 3,
+    "x2": 3,
+    "x3": 3,
+    "p1": 0.7,
+    "q": 0.3
+   }
+  ],
+  "invariants": [
+   "p1 + p2 + p3 - 1",
+   "variance - var_direct"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "x2": 1,
+     "x3": 2,
+     "p1": 0.5,
+     "q": 0
+    },
+    "expect": {
+     "mu": 1,
+     "variance": 1,
+     "sigma": 1
+    }
+   },
+   {
+    "params": {
+     "x1": -2,
+     "x2": 0,
+     "x3": 2,
+     "p1": 0.25,
+     "q": 0.5
+    },
+    "expect": {
+     "mu": 0.25,
+     "variance": 2.4375,
+     "sigma": 1.5612495
+    }
+   },
+   {
+    "params": {
+     "x1": 3,
+     "x2": 3,
+     "x3": 3,
+     "p1": 0.4,
+     "q": 0.6
+    },
+    "expect": {
+     "mu": 3,
+     "variance": 0,
+     "sigma": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

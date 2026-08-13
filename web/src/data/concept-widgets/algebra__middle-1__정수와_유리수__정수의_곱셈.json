@@ -1,0 +1,124 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/정수의_곱셈",
+ "spec": {
+  "title": "정수의 곱셈: 직사각형으로 보는 부호 규칙",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "p=a*b; absa=abs(a); absb=abs(b)",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ],
+      [
+       0,
+       "=b"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a × b",
+    "expr": "p",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3
+   },
+   {
+    "a": -2,
+    "b": 3
+   },
+   {
+    "a": -2,
+    "b": -3
+   },
+   {
+    "a": 0,
+    "b": 5
+   }
+  ],
+  "invariants": [
+   "p - a*b",
+   "abs(p) - absa*absb",
+   "p - b*a"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3
+    },
+    "expect": {
+     "p": 6
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": 3
+    },
+    "expect": {
+     "p": -6
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "b": -3
+    },
+    "expect": {
+     "p": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

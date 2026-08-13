@@ -1,0 +1,196 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/자연수와_정수",
+ "spec": {
+  "title": "자연수와 정수의 정의",
+  "params": [
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xr=round(x); is_int=(abs(x-xr)<1e-9)?1:0; is_nat=(x>0 and is_int)?1:0",
+  "geometry": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      0
+     ],
+     "to": [
+      3,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      -3,
+      -0.1
+     ],
+     "to": [
+      -3,
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      -0.1
+     ],
+     "to": [
+      -2,
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      -0.1
+     ],
+     "to": [
+      -1,
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      -0.1
+     ],
+     "to": [
+      0,
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      -0.1
+     ],
+     "to": [
+      1,
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      2,
+      -0.1
+     ],
+     "to": [
+      2,
+      0.1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      3,
+      -0.1
+     ],
+     "to": [
+      3,
+      0.1
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 1
+   },
+   {
+    "label": "정수(Z)",
+    "expr": "is_int",
+    "digits": 0
+   },
+   {
+    "label": "자연수(N)",
+    "expr": "is_nat",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": -2
+   },
+   {
+    "x": 0
+   },
+   {
+    "x": 1
+   },
+   {
+    "x": 0.5
+   }
+  ],
+  "invariants": [
+   "is_nat*(1-is_int)",
+   "(x>0?1:0)*is_int*(1-is_nat)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": -1
+    },
+    "expect": {
+     "is_int": 1,
+     "is_nat": 0
+    }
+   },
+   {
+    "params": {
+     "x": 1
+    },
+    "expect": {
+     "is_int": 1,
+     "is_nat": 1
+    }
+   },
+   {
+    "params": {
+     "x": 0.5
+    },
+    "expect": {
+     "is_int": 0,
+     "is_nat": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

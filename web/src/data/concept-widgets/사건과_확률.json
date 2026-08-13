@@ -1,0 +1,201 @@
+{
+ "id": "사건과_확률",
+ "spec": {
+  "title": "사건과 확률",
+  "params": [
+   {
+    "name": "k",
+    "label": "사건의 원소 수 (k)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "n_total=10; favorable=k; p=favorable/n_total",
+  "geometry": {
+   "range": [
+    -1,
+    11
+   ],
+   "yRange": [
+    -1,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      10,
+      0
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      0.5,
+      0
+     ],
+     "radius": "=1 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      1.5,
+      0
+     ],
+     "radius": "=2 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      2.5,
+      0
+     ],
+     "radius": "=3 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      3.5,
+      0
+     ],
+     "radius": "=4 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      4.5,
+      0
+     ],
+     "radius": "=5 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      5.5,
+      0
+     ],
+     "radius": "=6 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      6.5,
+      0
+     ],
+     "radius": "=7 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      7.5,
+      0
+     ],
+     "radius": "=8 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      8.5,
+      0
+     ],
+     "radius": "=9 <= k ? 0.3 : 0.08"
+    },
+    {
+     "type": "circle",
+     "center": [
+      9.5,
+      0
+     ],
+     "radius": "=10 <= k ? 0.3 : 0.08"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "사건의 원소 수",
+    "expr": "favorable",
+    "digits": 0
+   },
+   {
+    "label": "전체 경우의 수",
+    "expr": "n_total",
+    "digits": 0
+   },
+   {
+    "label": "확률 P(A)",
+    "expr": "p",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 3
+   },
+   {
+    "k": 5
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 10
+   }
+  ],
+  "invariants": [
+   "p - k/10",
+   "favorable - k",
+   "n_total - 10",
+   "max(0,-p)+max(0,p-1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "p": 0.3,
+     "favorable": 3
+    }
+   },
+   {
+    "params": {
+     "k": 5
+    },
+    "expect": {
+     "p": 0.5,
+     "favorable": 5
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "p": 0,
+     "favorable": 0
+    }
+   },
+   {
+    "params": {
+     "k": 10
+    },
+    "expect": {
+     "p": 1,
+     "favorable": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

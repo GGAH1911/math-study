@@ -1,0 +1,128 @@
+{
+ "id": "equations/high-1/방정식과_부등식/실수의_개수",
+ "spec": {
+  "title": "이차방정식의 실근의 개수",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 2,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "D = b^2 - 4*a*c; numRoots = D > 0 ? 2 : (D < 0 ? 0 : 1); xv = -b/(2*a); yv = c - b^2/(4*a)",
+  "plot": {
+   "range": [
+    -8,
+    8
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y = ax²+bx+c",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "numRoots",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": -3
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3
+   }
+  ],
+  "invariants": [
+   "abs(yv - (a*xv^2 + b*xv + c))",
+   "D >= 0 ? abs(a*((-b + sqrt(D))/(2*a))^2 + b*((-b + sqrt(D))/(2*a)) + c) : 0",
+   "D >= 0 ? abs(a*((-b - sqrt(D))/(2*a))^2 + b*((-b - sqrt(D))/(2*a)) + c) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": -3
+    },
+    "expect": {
+     "D": 16,
+     "numRoots": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "numRoots": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3
+    },
+    "expect": {
+     "D": -8,
+     "numRoots": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

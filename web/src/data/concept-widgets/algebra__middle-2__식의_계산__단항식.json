@@ -1,0 +1,150 @@
+{
+ "id": "algebra/middle-2/식의_계산/단항식",
+ "spec": {
+  "title": "단항식의 정의와 차수",
+  "params": [
+   {
+    "name": "a",
+    "label": "계수 a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "m",
+    "label": "x의 지수 m",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "y의 지수 n",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "deg=m+n; x0=2; y0=3; val2=a*x0^m*y0^n",
+  "geometry": {
+   "range": [
+    -0.5,
+    5.5
+   ],
+   "yRange": [
+    -0.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      "=n"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=m",
+      "=n"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "차수",
+    "expr": "deg",
+    "digits": 0
+   },
+   {
+    "label": "계수",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "x=2,y=3에서의 값",
+    "expr": "val2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "m": 1,
+    "n": 1
+   },
+   {
+    "a": 1,
+    "m": 2,
+    "n": 3
+   },
+   {
+    "a": 3,
+    "m": 0,
+    "n": 4
+   },
+   {
+    "a": 2,
+    "m": 5,
+    "n": 0
+   }
+  ],
+  "invariants": [
+   "abs(deg - (m+n))",
+   "abs(val2 - a * x0^m * y0^n)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "m": 1,
+     "n": 1
+    },
+    "expect": {
+     "deg": 2,
+     "val2": 12
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "m": 0,
+     "n": 4
+    },
+    "expect": {
+     "deg": 4,
+     "val2": 243
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "m": 5,
+     "n": 0
+    },
+    "expect": {
+     "deg": 5,
+     "val2": 64
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

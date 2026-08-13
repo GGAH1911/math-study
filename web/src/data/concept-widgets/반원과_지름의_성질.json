@@ -1,0 +1,189 @@
+{
+ "id": "반원과_지름의_성질",
+ "spec": {
+  "title": "반원과 지름의 성질",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 5,
+    "max": 175,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad = theta*pi/180; px = cos(rad); py = sin(rad); vax = -1 - px; vay = 0 - py; vbx = 1 - px; vby = 0 - py; la = sqrt(vax^2 + vay^2); lb = sqrt(vbx^2 + vby^2); uax = vax/la; uay = vay/la; ubx = vbx/lb; uby = vby/lb; s = 0.15; q1x = px + s*uax; q1y = py + s*uay; q3x = px + s*ubx; q3y = py + s*uby; dot = vax*vbx + vay*vby; angle_deg = acos(dot/(la*lb))*180/pi",
+  "geometry": {
+   "range": [
+    -1.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      -1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=q1x",
+      "=q1y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=q3x",
+      "=q3y"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠APB",
+    "expr": "angle_deg",
+    "digits": 2
+   },
+   {
+    "label": "PA·PB",
+    "expr": "dot",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "dot",
+   "angle_deg - 90",
+   "px^2 + py^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "px": 0.8660254037844386,
+     "py": 0.5,
+     "dot": 0,
+     "angle_deg": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "px": 0.5,
+     "py": 0.8660254037844386,
+     "dot": 0,
+     "angle_deg": 90
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "px": 0,
+     "py": 1,
+     "dot": 0,
+     "angle_deg": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

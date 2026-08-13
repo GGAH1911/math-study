@@ -1,0 +1,111 @@
+{
+ "id": "분배_문제",
+ "spec": {
+  "title": "분배 문제: 서로 다른 n개의 물건을 k개의 서로 다른 상자에 담는 방법의 수",
+  "params": [
+   {
+    "name": "n",
+    "label": "물건 수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 2,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "k",
+    "label": "상자 수 k",
+    "type": "slider",
+    "min": 2,
+    "max": 6,
+    "init": 2,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "count = k^n; logratio = log(count)/log(k)",
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    1500
+   ],
+   "fns": [
+    {
+     "fn": "x^n",
+     "label": "방법의 수",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "방법의 수",
+    "expr": "count",
+    "digits": 0
+   },
+   {
+    "label": "log_k(방법의 수)",
+    "expr": "logratio",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1,
+    "k": 2
+   },
+   {
+    "n": 2,
+    "k": 3
+   },
+   {
+    "n": 3,
+    "k": 2
+   },
+   {
+    "n": 4,
+    "k": 6
+   }
+  ],
+  "invariants": [
+   "log(count)/log(k)-n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1,
+     "k": 2
+    },
+    "expect": {
+     "count": 2
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "k": 3
+    },
+    "expect": {
+     "count": 9
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 6
+    },
+    "expect": {
+     "count": 1296
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

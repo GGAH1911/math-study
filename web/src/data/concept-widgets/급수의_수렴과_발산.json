@@ -1,0 +1,110 @@
+{
+ "id": "급수의_수렴과_발산",
+ "spec": {
+  "title": "급수의 수렴과 발산 (등비급수)",
+  "params": [
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "lim = abs(r)<1 ? r/(1-r) : NaN; s10 = r==1 ? 10 : r*(1-r^10)/(1-r)",
+  "geometry": {
+   "range": [
+    1,
+    10
+   ],
+   "yRange": [
+    -2,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    1,
+    10
+   ],
+   "yRange": [
+    -2,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "r==1 ? floor(x) : r*(1-r^floor(x))/(1-r)",
+     "label": "부분합 S_n",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "공비 r",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "S_10",
+    "expr": "s10",
+    "digits": 6
+   },
+   {
+    "label": "수렴값 (|r|<1)",
+    "expr": "lim",
+    "digits": 6
+   },
+   {
+    "label": "오차 |S_10 - 수렴값|",
+    "expr": "abs(lim - s10)",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r": -0.8
+   },
+   {
+    "r": -0.2
+   },
+   {
+    "r": 0.3
+   },
+   {
+    "r": 0.7
+   }
+  ],
+  "invariants": [
+   "abs(lim - s10 - r^11/(1-r))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r": 0.5
+    },
+    "expect": {
+     "s10": 0.9990234375,
+     "lim": 1
+    }
+   },
+   {
+    "params": {
+     "r": -0.5
+    },
+    "expect": {
+     "s10": -0.3330078125,
+     "lim": -0.3333333333333333
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

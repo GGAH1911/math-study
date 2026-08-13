@@ -1,0 +1,126 @@
+{
+ "id": "무한급수와_수렴",
+ "spec": {
+  "title": "무한급수와 수렴",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (항 수)",
+    "type": "slider",
+    "min": 1,
+    "max": 100,
+    "init": 10,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r (공비)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.05
+   }
+  ],
+  "scope": "Sn = r*(1-r^n)/(1-r); S = r/(1-r); Sn0 = n==1 ? 0 : r*(1-r^(n-1))/(1-r); diff = S - Sn",
+  "plot": {
+   "range": [
+    0,
+    100
+   ],
+   "yRange": [
+    0,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "r*(1-r^x)/(1-r)",
+     "label": "S_n (부분합)",
+     "color": "blue"
+    },
+    {
+     "fn": "S",
+     "label": "S (극한)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분합 S_n",
+    "expr": "Sn",
+    "digits": 6
+   },
+   {
+    "label": "극한 S",
+    "expr": "S",
+    "digits": 6
+   },
+   {
+    "label": "차이 S - S_n",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1,
+    "r": 0.5
+   },
+   {
+    "n": 10,
+    "r": 0.5
+   },
+   {
+    "n": 50,
+    "r": 0.9
+   },
+   {
+    "n": 5,
+    "r": 0.2
+   }
+  ],
+  "invariants": [
+   "Sn - S*(1-r^n)",
+   "Sn - Sn0 - r^n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "r": 0.5
+    },
+    "expect": {
+     "Sn": 0.875,
+     "S": 1,
+     "diff": 0.125
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "r": 0.25
+    },
+    "expect": {
+     "Sn": 0.3125,
+     "S": 0.3333333333333333,
+     "diff": 0.0208333333333333
+    }
+   },
+   {
+    "params": {
+     "n": 1,
+     "r": 0.1
+    },
+    "expect": {
+     "Sn": 0.1,
+     "S": 0.1111111111111111,
+     "diff": 0.0111111111111111
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

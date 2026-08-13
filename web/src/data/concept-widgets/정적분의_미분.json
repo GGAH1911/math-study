@@ -1,0 +1,109 @@
+{
+ "id": "정적분의_미분",
+ "spec": {
+  "title": "정적분의 미분 (미적분의 기본정리)",
+  "params": [
+   {
+    "name": "x0",
+    "label": "x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "a=0; h=1e-5; F0=(x0^3-a^3)/3; f0=x0^2; dxSeg=0.7; xL=x0-dxSeg; yL=F0-f0*dxSeg; xR=x0+dxSeg; yR=F0+f0*dxSeg; numDeriv=((x0+h)^3-(x0-h)^3)/(6*h);",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(t)=t^2",
+     "color": "red"
+    },
+    {
+     "fn": "x^3/3",
+     "label": "F(x)=∫₀^x f(t)dt",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "F(x)",
+    "expr": "F0",
+    "digits": 4
+   },
+   {
+    "label": "f(x)=F'(x)",
+    "expr": "f0",
+    "digits": 4
+   },
+   {
+    "label": "수치미분 F'(x)",
+    "expr": "numDeriv",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x0": 0
+   },
+   {
+    "x0": 1
+   },
+   {
+    "x0": 2
+   },
+   {
+    "x0": -1
+   }
+  ],
+  "invariants": [
+   "numDeriv - f0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x0": 0
+    },
+    "expect": {
+     "F0": 0,
+     "f0": 0,
+     "numDeriv": 0
+    }
+   },
+   {
+    "params": {
+     "x0": 3
+    },
+    "expect": {
+     "F0": 9,
+     "f0": 9,
+     "numDeriv": 9
+    }
+   },
+   {
+    "params": {
+     "x0": -3
+    },
+    "expect": {
+     "F0": -9,
+     "f0": 9,
+     "numDeriv": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

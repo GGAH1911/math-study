@@ -1,0 +1,160 @@
+{
+ "id": "구간별_정적분",
+ "spec": {
+  "title": "구간별 정적분",
+  "params": [
+   {
+    "name": "c",
+    "label": "분할점 c",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4.5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "I1 = c^2/2; I2 = c*(5-c); total = I1+I2",
+  "geometry": {
+   "range": [
+    0,
+    5
+   ],
+   "yRange": [
+    0,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=c",
+       "=c"
+      ],
+      [
+       "=c",
+       0
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=c",
+       0
+      ],
+      [
+       "=c",
+       "=c"
+      ],
+      [
+       5,
+       "=c"
+      ],
+      [
+       5,
+       0
+      ]
+     ]
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    5
+   ],
+   "yRange": [
+    0,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "x < c ? x : c",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∫₀^c x dx",
+    "expr": "I1",
+    "digits": 4
+   },
+   {
+    "label": "∫_c^5 c dx",
+    "expr": "I2",
+    "digits": 4
+   },
+   {
+    "label": "∫₀^5 f(x) dx",
+    "expr": "total",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 1
+   },
+   {
+    "c": 2
+   },
+   {
+    "c": 3
+   },
+   {
+    "c": 4
+   }
+  ],
+  "invariants": [
+   "I1 + I2 - total",
+   "total - (5*c - c^2/2)",
+   "I1 - c^2/2",
+   "I2 - c*(5-c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 1
+    },
+    "expect": {
+     "I1": 0.5,
+     "I2": 4,
+     "total": 4.5
+    }
+   },
+   {
+    "params": {
+     "c": 2
+    },
+    "expect": {
+     "I1": 2,
+     "I2": 6,
+     "total": 8
+    }
+   },
+   {
+    "params": {
+     "c": 3
+    },
+    "expect": {
+     "I1": 4.5,
+     "I2": 6,
+     "total": 10.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

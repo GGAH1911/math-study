@@ -1,0 +1,106 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/세제곱근",
+ "spec": {
+  "title": "세제곱근 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 8,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "root = sign(a) * abs(a)^(1/3); cube = root^3;",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^3",
+     "label": "y = x³",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "∛a (a의 세제곱근)",
+    "expr": "root",
+    "digits": 4
+   },
+   {
+    "label": "(∛a)^3",
+    "expr": "cube",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": -8
+   },
+   {
+    "a": -1
+   },
+   {
+    "a": 0
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 8
+   }
+  ],
+  "invariants": [
+   "root^3 - a",
+   "sign(a) - sign(root)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 8
+    },
+    "expect": {
+     "root": 2,
+     "cube": 8
+    }
+   },
+   {
+    "params": {
+     "a": -8
+    },
+    "expect": {
+     "root": -2,
+     "cube": -8
+    }
+   },
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "root": 1,
+     "cube": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

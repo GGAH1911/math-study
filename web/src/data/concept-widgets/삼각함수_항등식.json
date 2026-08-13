@@ -1,0 +1,187 @@
+{
+ "id": "삼각함수_항등식",
+ "spec": {
+  "title": "삼각함수 항등식",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; x=cos(rad); y=sin(rad); tan_t=y/x; sec_t=1/x; cot_t=x/y; csc_t=1/y",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      0
+     ],
+     "to": [
+      "=x",
+      "=y"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=x",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sinθ",
+    "expr": "y",
+    "digits": 4
+   },
+   {
+    "label": "cosθ",
+    "expr": "x",
+    "digits": 4
+   },
+   {
+    "label": "tanθ",
+    "expr": "tan_t",
+    "digits": 4
+   },
+   {
+    "label": "sin²+cos²",
+    "expr": "x^2+y^2",
+    "digits": 8
+   },
+   {
+    "label": "tan²+1",
+    "expr": "tan_t^2+1",
+    "digits": 8
+   },
+   {
+    "label": "sec²",
+    "expr": "sec_t^2",
+    "digits": 8
+   },
+   {
+    "label": "1+cot²",
+    "expr": "1+cot_t^2",
+    "digits": 8
+   },
+   {
+    "label": "csc²",
+    "expr": "csc_t^2",
+    "digits": 8
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 60
+   },
+   {
+    "theta": 120
+   }
+  ],
+  "invariants": [
+   "x^2+y^2-1",
+   "tan_t^2+1-sec_t^2",
+   "1+cot_t^2-csc_t^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "x": 0.8660254037844386,
+     "y": 0.5,
+     "tan_t": 0.5773502691896257,
+     "sec_t": 1.1547005383792515,
+     "cot_t": 1.7320508075688772,
+     "csc_t": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "x": 0.7071067811865476,
+     "y": 0.7071067811865476,
+     "tan_t": 1,
+     "sec_t": 1.4142135623730951,
+     "cot_t": 1,
+     "csc_t": 1.4142135623730951
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "x": 0.5,
+     "y": 0.8660254037844386,
+     "tan_t": 1.7320508075688772,
+     "sec_t": 2,
+     "cot_t": 0.5773502691896257,
+     "csc_t": 1.1547005383792515
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

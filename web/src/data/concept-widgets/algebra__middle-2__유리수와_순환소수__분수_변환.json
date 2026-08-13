@@ -1,0 +1,198 @@
+{
+ "id": "algebra/middle-2/유리수와_순환소수/분수_변환",
+ "spec": {
+  "title": "순환소수 0.\\overline{d} 를 분수로",
+  "params": [
+   {
+    "name": "d",
+    "label": "반복 숫자 d",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 3,
+    "step": 1
+   }
+  ],
+  "scope": "value=d/9; repeated4=d*1111; nineXminusD=9*value-d",
+  "geometry": {
+   "range": [
+    0,
+    1
+   ],
+   "yRange": [
+    -0.15,
+    0.15
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      1,
+      0
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1/9",
+      -0.05
+     ],
+     "to": [
+      "=1/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=2/9",
+      -0.05
+     ],
+     "to": [
+      "=2/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=3/9",
+      -0.05
+     ],
+     "to": [
+      "=3/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=4/9",
+      -0.05
+     ],
+     "to": [
+      "=4/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=5/9",
+      -0.05
+     ],
+     "to": [
+      "=5/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=6/9",
+      -0.05
+     ],
+     "to": [
+      "=6/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=7/9",
+      -0.05
+     ],
+     "to": [
+      "=7/9",
+      0.05
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=8/9",
+      -0.05
+     ],
+     "to": [
+      "=8/9",
+      0.05
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=value",
+      0
+     ],
+     "label": "d/9"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "d (분자)",
+    "expr": "d",
+    "digits": 0
+   },
+   {
+    "label": "분수 값 (소수)",
+    "expr": "value",
+    "digits": 6
+   },
+   {
+    "label": "반복 네 자리",
+    "expr": "repeated4",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "d": 1
+   },
+   {
+    "d": 3
+   },
+   {
+    "d": 6
+   },
+   {
+    "d": 8
+   }
+  ],
+  "invariants": [
+   "nineXminusD",
+   "floor(10*value)-d",
+   "mod(floor(100*value),10)-d"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "d": 3
+    },
+    "expect": {
+     "value": 0.3333333333333333,
+     "repeated4": 3333
+    }
+   },
+   {
+    "params": {
+     "d": 6
+    },
+    "expect": {
+     "value": 0.6666666666666666,
+     "repeated4": 6666
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

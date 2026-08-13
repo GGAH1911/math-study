@@ -1,0 +1,118 @@
+{
+ "id": "equations/high-1/방정식과_부등식/집합과_방정식",
+ "spec": {
+  "title": "방정식의 해집합: x² - 5x + c = 0",
+  "params": [
+   {
+    "name": "c",
+    "label": "상수항 c",
+    "type": "slider",
+    "min": 0,
+    "max": 6.25,
+    "init": 6,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "d=25-4*c; r1=(5-sqrt(d))/2; r2=(5+sqrt(d))/2; f1=r1^2-5*r1+c; f2=r2^2-5*r2+c",
+  "plot": {
+   "range": [
+    -1,
+    6
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^2 - 5*x + c",
+     "label": "y = x^2 - 5x + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "근 x₁",
+    "expr": "r1",
+    "digits": 4
+   },
+   {
+    "label": "근 x₂",
+    "expr": "r2",
+    "digits": 4
+   },
+   {
+    "label": "f(근1)",
+    "expr": "f1",
+    "digits": 6
+   },
+   {
+    "label": "f(근2)",
+    "expr": "f2",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "c": 0
+   },
+   {
+    "c": 4
+   },
+   {
+    "c": 6
+   },
+   {
+    "c": 6.25
+   }
+  ],
+  "invariants": [
+   "abs(f1)",
+   "abs(f2)",
+   "abs(r1+r2-5)",
+   "abs(r1*r2-c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "c": 6
+    },
+    "expect": {
+     "r1": 2,
+     "r2": 3,
+     "d": 1
+    }
+   },
+   {
+    "params": {
+     "c": 4
+    },
+    "expect": {
+     "r1": 1,
+     "r2": 4,
+     "d": 9
+    }
+   },
+   {
+    "params": {
+     "c": 0
+    },
+    "expect": {
+     "r1": 0,
+     "r2": 5,
+     "d": 25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

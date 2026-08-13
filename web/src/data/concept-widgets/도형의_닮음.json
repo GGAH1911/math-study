@@ -1,0 +1,183 @@
+{
+ "id": "도형의_닮음",
+ "spec": {
+  "title": "도형의 닮음",
+  "params": [
+   {
+    "name": "k",
+    "label": "닮음비 k",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "ox=3; oy=4; a1=ox; b1=oy; c1=sqrt(ox^2+oy^2); sx=ox*k; sy=oy*k; a2=sx; b2=sy; c2=sqrt(sx^2+sy^2); area1=0.5*ox*oy; area2=0.5*sx*sy; len_ratio=a2/a1; area_ratio=area2/area1;",
+  "geometry": {
+   "range": [
+    -1,
+    10
+   ],
+   "yRange": [
+    -1,
+    13
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=ox",
+       0
+      ],
+      [
+       0,
+       "=oy"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=sx",
+       0
+      ],
+      [
+       0,
+       "=sy"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ox",
+      0
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=oy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sx",
+      0
+     ],
+     "label": "B'"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=sy"
+     ],
+     "label": "C'"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "닮음비",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "대응변 길이비",
+    "expr": "len_ratio",
+    "digits": 3
+   },
+   {
+    "label": "넓이비",
+    "expr": "area_ratio",
+    "digits": 3
+   },
+   {
+    "label": "원본 넓이",
+    "expr": "area1",
+    "digits": 3
+   },
+   {
+    "label": "닮은 도형 넓이",
+    "expr": "area2",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0.5
+   },
+   {
+    "k": 1
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "len_ratio - b2/b1",
+   "len_ratio - c2/c1",
+   "area_ratio - len_ratio^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 2
+    },
+    "expect": {
+     "a2": 6,
+     "b2": 8,
+     "c2": 10,
+     "area2": 24,
+     "len_ratio": 2,
+     "area_ratio": 4
+    }
+   },
+   {
+    "params": {
+     "k": 0.5
+    },
+    "expect": {
+     "a2": 1.5,
+     "b2": 2,
+     "c2": 2.5,
+     "area2": 1.5,
+     "len_ratio": 0.5,
+     "area_ratio": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

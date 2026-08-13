@@ -1,0 +1,117 @@
+{
+ "id": "로그함수의_성질과_그래프",
+ "spec": {
+  "title": "로그함수의 성질과 그래프",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 2,
+    "step": 0.15
+   }
+  ],
+  "scope": "log_a2=log(2)/log(a); log_a3=log(3)/log(a);",
+  "geometry": {
+   "range": [
+    -2,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    4
+   ],
+   "yRange": [
+    -4,
+    4
+   ],
+   "fns": [
+    {
+     "fn": "log(x)/log(a)",
+     "label": "y=log_a(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "a^x",
+     "label": "y=a^x",
+     "color": "red"
+    },
+    {
+     "fn": "x",
+     "label": "y=x",
+     "color": "gray"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log_a(2)",
+    "expr": "log_a2",
+    "digits": 3
+   },
+   {
+    "label": "log_a(3)",
+    "expr": "log_a3",
+    "digits": 3
+   },
+   {
+    "label": "log_a(1/a)",
+    "expr": "log(1/a)/log(a)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 0.8
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 2.6
+   }
+  ],
+  "invariants": [
+   "a^log_a2 - 2",
+   "a^log_a3 - 3",
+   "log(1/a)/log(a) + 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "log_a2": 1,
+     "log_a3": 1.584962500721156
+    }
+   },
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "log_a2": -1,
+     "log_a3": -1.584962500721156
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

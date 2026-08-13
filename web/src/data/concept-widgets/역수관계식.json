@@ -1,0 +1,184 @@
+{
+ "id": "역수관계식",
+ "spec": {
+  "title": "역수관계식",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 20,
+    "max": 70,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad=theta*pi/180; s=sin(rad); c=cos(rad); t=s/c; csc=1/s; sec=1/c; cot=c/s",
+  "geometry": {
+   "range": [
+    -1.5,
+    3.5
+   ],
+   "yRange": [
+    -1.5,
+    3.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      "=s"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=1",
+      "=t"
+     ],
+     "label": "tanθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cot",
+      "=1"
+     ],
+     "label": "cotθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sec",
+      "=0"
+     ],
+     "label": "secθ"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=0",
+      "=csc"
+     ],
+     "label": "cscθ"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=1",
+      "=t"
+     ],
+     "to": [
+      "=cot",
+      "=1"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=sec",
+      "=0"
+     ],
+     "to": [
+      "=0",
+      "=csc"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sinθ·cscθ",
+    "expr": "s*csc"
+   },
+   {
+    "label": "cosθ·secθ",
+    "expr": "c*sec"
+   },
+   {
+    "label": "tanθ·cotθ",
+    "expr": "t*cot"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 20
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 45
+   },
+   {
+    "theta": 70
+   }
+  ],
+  "invariants": [
+   "s*csc-1",
+   "c*sec-1",
+   "t*cot-1",
+   "t-s/c",
+   "cot-c/s",
+   "csc-1/s",
+   "sec-1/c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "s": 0.5,
+     "c": 0.8660254,
+     "t": 0.57735027,
+     "csc": 2,
+     "sec": 1.15470054,
+     "cot": 1.73205081
+    }
+   },
+   {
+    "params": {
+     "theta": 45
+    },
+    "expect": {
+     "s": 0.70710678,
+     "c": 0.70710678,
+     "t": 1,
+     "csc": 1.41421356,
+     "sec": 1.41421356,
+     "cot": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "s": 0.8660254,
+     "c": 0.5,
+     "t": 1.73205081,
+     "csc": 1.15470054,
+     "sec": 2,
+     "cot": 0.57735027
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

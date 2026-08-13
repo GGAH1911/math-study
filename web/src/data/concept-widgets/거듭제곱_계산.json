@@ -1,0 +1,107 @@
+{
+ "id": "거듭제곱_계산",
+ "spec": {
+  "title": "거듭제곱 그래프 탐구",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 (a)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 2.5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x",
+    "label": "지수 (x)",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "val = a^x;",
+  "plot": {
+   "range": [
+    -2,
+    4
+   ],
+   "yRange": [
+    0,
+    45
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "y = a^x",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a^x 값",
+    "expr": "val",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "x": 1
+   },
+   {
+    "a": 1.5,
+    "x": -1
+   },
+   {
+    "a": 2.5,
+    "x": 2
+   },
+   {
+    "a": 0.8,
+    "x": 3
+   }
+  ],
+  "invariants": [
+   "a^(x+1) - a^x * a",
+   "a^x - exp(x*log(a))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "x": 3
+    },
+    "expect": {
+     "val": 8
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "x": 1
+    },
+    "expect": {
+     "val": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 1.5,
+     "x": 2
+    },
+    "expect": {
+     "val": 2.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

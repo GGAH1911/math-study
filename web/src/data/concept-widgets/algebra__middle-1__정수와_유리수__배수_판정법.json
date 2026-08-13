@@ -1,0 +1,226 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/배수_판정법",
+ "spec": {
+  "title": "배수 판정법 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "N",
+    "type": "slider",
+    "min": 0,
+    "max": 9999,
+    "init": 1234,
+    "step": 1
+   }
+  ],
+  "scope": "ones=mod(n,10); tens=mod(floor(n/10),10); hundreds=mod(floor(n/100),10); thousands=mod(floor(n/1000),10); sumD=ones+tens+hundreds+thousands; altSum=ones-tens+hundreds-thousands; r9=mod(n,9); r9sum=mod(sumD,9); r11=mod(n,11); r11alt=mod(altSum,11); div2=mod(ones,2)==0?1:0; div5=(ones==0 or ones==5)?1:0; div3=mod(sumD,3)==0?1:0; div9=mod(sumD,9)==0?1:0; div11=mod(altSum,11)==0?1:0",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      -1.2,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-1.2+cos(2*pi*r9/9-pi/2)",
+      "=sin(2*pi*r9/9-pi/2)"
+     ],
+     "label": "mod 9"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -1.2,
+      0
+     ],
+     "to": [
+      "=-1.2+cos(2*pi*r9/9-pi/2)",
+      "=sin(2*pi*r9/9-pi/2)"
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      1.2,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      "=1.2+cos(2*pi*r11/11-pi/2)",
+      "=sin(2*pi*r11/11-pi/2)"
+     ],
+     "label": "mod 11"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1.2,
+      0
+     ],
+     "to": [
+      "=1.2+cos(2*pi*r11/11-pi/2)",
+      "=sin(2*pi*r11/11-pi/2)"
+     ]
+    }
+   ]
+  },
+  "plot": null,
+  "readout": [
+   {
+    "label": "N",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "각 자리 합",
+    "expr": "sumD",
+    "digits": 0
+   },
+   {
+    "label": "교대 합",
+    "expr": "altSum",
+    "digits": 0
+   },
+   {
+    "label": "2의 배수",
+    "expr": "div2",
+    "digits": 0
+   },
+   {
+    "label": "3의 배수",
+    "expr": "div3",
+    "digits": 0
+   },
+   {
+    "label": "5의 배수",
+    "expr": "div5",
+    "digits": 0
+   },
+   {
+    "label": "9의 배수",
+    "expr": "div9",
+    "digits": 0
+   },
+   {
+    "label": "11의 배수",
+    "expr": "div11",
+    "digits": 0
+   },
+   {
+    "label": "N mod 9",
+    "expr": "r9",
+    "digits": 0
+   },
+   {
+    "label": "자리합 mod 9",
+    "expr": "r9sum",
+    "digits": 0
+   },
+   {
+    "label": "N mod 11",
+    "expr": "r11",
+    "digits": 0
+   },
+   {
+    "label": "교대합 mod 11",
+    "expr": "r11alt",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1234
+   },
+   {
+    "n": 567
+   },
+   {
+    "n": 99
+   }
+  ],
+  "invariants": [
+   "mod(n,2)-mod(ones,2)",
+   "mod(n,5)-mod(ones,5)",
+   "mod(n,3)-mod(sumD,3)",
+   "mod(n,9)-mod(sumD,9)",
+   "mod(n,11)-mod(altSum,11)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1234
+    },
+    "expect": {
+     "sumD": 10,
+     "altSum": 2,
+     "r9": 1,
+     "r9sum": 1,
+     "r11": 2,
+     "r11alt": 2,
+     "div2": 1,
+     "div3": 0,
+     "div5": 0,
+     "div9": 0,
+     "div11": 0
+    }
+   },
+   {
+    "params": {
+     "n": 567
+    },
+    "expect": {
+     "sumD": 18,
+     "altSum": 6,
+     "r9": 0,
+     "r9sum": 0,
+     "r11": 6,
+     "r11alt": 6,
+     "div2": 0,
+     "div3": 1,
+     "div5": 0,
+     "div9": 1,
+     "div11": 0
+    }
+   },
+   {
+    "params": {
+     "n": 99
+    },
+    "expect": {
+     "sumD": 18,
+     "altSum": 0,
+     "r9": 0,
+     "r9sum": 0,
+     "r11": 0,
+     "r11alt": 0,
+     "div2": 0,
+     "div3": 1,
+     "div5": 0,
+     "div9": 1,
+     "div11": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

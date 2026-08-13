@@ -1,0 +1,121 @@
+{
+ "id": "표본합의_분포",
+ "spec": {
+  "title": "표본합의 분포",
+  "params": [
+   {
+    "name": "n",
+    "label": "표본 크기 n",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "mu=1; sigma=1; E_T=n*mu; V_T=n*sigma^2; SD_T=sqrt(V_T); exact0=sqrt(n)*n^(n-1)*exp(-n)/factorial(n-1); normal0=1/sqrt(2*pi)",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    0,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "sqrt(n) * (x > -sqrt(n) ? (n + sqrt(n)*x)^(n-1)*exp(-(n + sqrt(n)*x))/factorial(n-1) : 0)",
+     "label": "표본합 표준화 분포",
+     "color": "blue"
+    },
+    {
+     "fn": "exp(-x^2/2)/sqrt(2*pi)",
+     "label": "표준정규분포",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "E(T)",
+    "expr": "E_T",
+    "digits": 4
+   },
+   {
+    "label": "V(T)",
+    "expr": "V_T",
+    "digits": 4
+   },
+   {
+    "label": "σ(T)",
+    "expr": "SD_T",
+    "digits": 4
+   },
+   {
+    "label": "정확밀도(0)",
+    "expr": "exact0",
+    "digits": 5
+   },
+   {
+    "label": "정규밀도(0)",
+    "expr": "normal0",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 9
+   },
+   {
+    "n": 25
+   }
+  ],
+  "invariants": [
+   "abs(E_T - n)",
+   "abs(V_T - n)",
+   "abs(SD_T - sqrt(n))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "E_T": 1,
+     "V_T": 1,
+     "SD_T": 1
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "E_T": 4,
+     "V_T": 4,
+     "SD_T": 2
+    }
+   },
+   {
+    "params": {
+     "n": 9
+    },
+    "expect": {
+     "E_T": 9,
+     "V_T": 9,
+     "SD_T": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

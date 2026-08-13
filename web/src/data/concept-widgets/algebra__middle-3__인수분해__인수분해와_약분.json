@@ -1,0 +1,170 @@
+{
+ "id": "algebra/middle-3/인수분해/인수분해와_약분",
+ "spec": {
+  "title": "인수분해와 약분으로 극한 구하기",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "x",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "f=(x^2 - a^2)/(x - a); g=x+a; factor_error=(x^2 - a^2) - (x-a)*(x+a); diff=f-g; limit=2*a",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=g"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      "=limit"
+     ],
+     "radius": 0.05,
+     "label": "구멍"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "(x^2 - a^2)/(x - a)",
+     "label": "원래 식 f(x)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "x+a",
+     "label": "약분 후 g(x)",
+     "color": "#ff7f0e"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 2
+   },
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "f(x) = (x²-a²)/(x-a)",
+    "expr": "f",
+    "digits": 4
+   },
+   {
+    "label": "g(x) = x+a",
+    "expr": "g",
+    "digits": 4
+   },
+   {
+    "label": "극한값 L",
+    "expr": "limit",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "x": 0.5
+   },
+   {
+    "a": -2,
+    "x": 0
+   },
+   {
+    "a": 2,
+    "x": 3
+   },
+   {
+    "a": 0,
+    "x": 1
+   }
+  ],
+  "invariants": [
+   "factor_error",
+   "diff"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "x": 0.5
+    },
+    "expect": {
+     "f": 1.5,
+     "g": 1.5,
+     "factor_error": 0,
+     "limit": 2
+    }
+   },
+   {
+    "params": {
+     "a": -2,
+     "x": 0
+    },
+    "expect": {
+     "f": -2,
+     "g": -2,
+     "factor_error": 0,
+     "limit": -4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x": 3
+    },
+    "expect": {
+     "f": 5,
+     "g": 5,
+     "factor_error": 0,
+     "limit": 4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

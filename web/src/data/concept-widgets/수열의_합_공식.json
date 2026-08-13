@@ -1,0 +1,160 @@
+{
+ "id": "수열의_합_공식",
+ "spec": {
+  "title": "등차수열의 합: 사다리꼴 모델",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (항의 개수)",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "a1",
+    "label": "a₁ (첫째항)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (공차)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "an = a1 + (n-1)*d; avg = (a1 + an)/2; S = n*avg; x0 = 0.5; x1 = n + 0.5; t1 = a1; t2 = a1 + d; t3 = a1 + 2*d; t4 = a1 + 3*d; t5 = a1 + 4*d; t6 = a1 + 5*d; t7 = a1 + 6*d; t8 = a1 + 7*d; t9 = a1 + 8*d; t10 = a1 + 9*d; S_direct = (n>=1?t1:0)+(n>=2?t2:0)+(n>=3?t3:0)+(n>=4?t4:0)+(n>=5?t5:0)+(n>=6?t6:0)+(n>=7?t7:0)+(n>=8?t8:0)+(n>=9?t9:0)+(n>=10?t10:0);",
+  "geometry": {
+   "range": [
+    0,
+    11
+   ],
+   "yRange": [
+    0,
+    14
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       "=x0",
+       0
+      ],
+      [
+       "=x1",
+       0
+      ],
+      [
+       "=x1",
+       "=an"
+      ],
+      [
+       "=x0",
+       "=a1"
+      ]
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "S (공식)",
+    "expr": "S",
+    "digits": 3
+   },
+   {
+    "label": "S (직접 항 합)",
+    "expr": "S_direct",
+    "digits": 3
+   },
+   {
+    "label": "평균 (a₁+aₙ)/2",
+    "expr": "avg",
+    "digits": 3
+   },
+   {
+    "label": "aₙ (마지막 항)",
+    "expr": "an",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 5,
+    "a1": 1,
+    "d": 0.5
+   },
+   {
+    "n": 10,
+    "a1": 3,
+    "d": 1
+   },
+   {
+    "n": 2,
+    "a1": 0,
+    "d": 0
+   },
+   {
+    "n": 7,
+    "a1": 2,
+    "d": 0.2
+   }
+  ],
+  "invariants": [
+   "S_direct - S",
+   "an - (a1 + (n-1)*d)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "a1": 1,
+     "d": 1
+    },
+    "expect": {
+     "S": 6,
+     "an": 3,
+     "S_direct": 6
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "a1": 2,
+     "d": 0.5
+    },
+    "expect": {
+     "S": 11,
+     "an": 3.5,
+     "S_direct": 11
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "a1": 0,
+     "d": 1
+    },
+    "expect": {
+     "S": 1,
+     "an": 1,
+     "S_direct": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

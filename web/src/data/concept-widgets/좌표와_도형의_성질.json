@@ -1,0 +1,174 @@
+{
+ "id": "좌표와_도형의_성질",
+ "spec": {
+  "title": "두 점 사이의 거리와 중점",
+  "params": [
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "y1",
+    "label": "y₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "y2",
+    "label": "y₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "d=sqrt((x2-x1)^2+(y2-y1)^2); mx=(x1+x2)/2; my=(y1+y2)/2",
+  "geometry": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x1",
+      "=y1"
+     ],
+     "to": [
+      "=x2",
+      "=y2"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mx",
+      "=my"
+     ],
+     "label": "M"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리 d",
+    "expr": "d",
+    "digits": 4
+   },
+   {
+    "label": "중점 M_x",
+    "expr": "mx",
+    "digits": 4
+   },
+   {
+    "label": "중점 M_y",
+    "expr": "my",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 3,
+    "y2": 4
+   },
+   {
+    "x1": 1,
+    "y1": 2,
+    "x2": 4,
+    "y2": 6
+   },
+   {
+    "x1": -2,
+    "y1": 5,
+    "x2": 3,
+    "y2": -1
+   },
+   {
+    "x1": 0,
+    "y1": 0,
+    "x2": 0,
+    "y2": 5
+   }
+  ],
+  "invariants": [
+   "d^2 - ((x2-x1)^2+(y2-y1)^2)",
+   "2*mx - x1 - x2",
+   "2*my - y1 - y2",
+   "sqrt((mx-x1)^2+(my-y1)^2) - sqrt((x2-mx)^2+(y2-my)^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x1": 0,
+     "y1": 0,
+     "x2": 3,
+     "y2": 4
+    },
+    "expect": {
+     "d": 5,
+     "mx": 1.5,
+     "my": 2
+    }
+   },
+   {
+    "params": {
+     "x1": 1,
+     "y1": 1,
+     "x2": 1,
+     "y2": 1
+    },
+    "expect": {
+     "d": 0,
+     "mx": 1,
+     "my": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

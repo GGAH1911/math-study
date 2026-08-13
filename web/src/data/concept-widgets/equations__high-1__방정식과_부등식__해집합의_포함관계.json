@@ -1,0 +1,184 @@
+{
+ "id": "equations/high-1/방정식과_부등식/해집합의_포함관계",
+ "spec": {
+  "title": "해집합의 포함관계",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (A의 반지름)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (B의 반지름)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xA1=-a; xA2=a; xB1=-b; xB2=b; widthA=2*a; widthB=2*b; isSubset=a<=b?1:0; isEqual=a==b?1:0",
+  "geometry": {
+   "range": [
+    -4.5,
+    4.5
+   ],
+   "yRange": [
+    -0.5,
+    2.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=xB1",
+      1
+     ],
+     "to": [
+      "=xB2",
+      1
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=xA1",
+      2
+     ],
+     "to": [
+      "=xA2",
+      2
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xB1",
+      1
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xA1",
+      2
+     ],
+     "label": "A"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A⊆B",
+    "expr": "isSubset",
+    "digits": 0
+   },
+   {
+    "label": "A=B",
+    "expr": "isEqual",
+    "digits": 0
+   },
+   {
+    "label": "|A| 길이",
+    "expr": "widthA",
+    "digits": 2
+   },
+   {
+    "label": "|B| 길이",
+    "expr": "widthB",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2
+   },
+   {
+    "a": 2.5,
+    "b": 1.5
+   },
+   {
+    "a": 2,
+    "b": 2
+   },
+   {
+    "a": 0.5,
+    "b": 3.5
+   }
+  ],
+  "invariants": [
+   "widthA - 2*a",
+   "widthB - 2*b",
+   "xA1 + xA2",
+   "xB1 + xB2",
+   "xA2 - xA1 - widthA",
+   "xB2 - xB1 - widthB",
+   "isSubset - (a<=b?1:0)",
+   "isEqual - (a==b?1:0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2
+    },
+    "expect": {
+     "xA1": -1,
+     "xA2": 1,
+     "xB1": -2,
+     "xB2": 2,
+     "widthA": 2,
+     "widthB": 4,
+     "isSubset": 1,
+     "isEqual": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2.5,
+     "b": 1.5
+    },
+    "expect": {
+     "xA1": -2.5,
+     "xA2": 2.5,
+     "xB1": -1.5,
+     "xB2": 1.5,
+     "widthA": 5,
+     "widthB": 3,
+     "isSubset": 0,
+     "isEqual": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 2
+    },
+    "expect": {
+     "xA1": -2,
+     "xA2": 2,
+     "xB1": -2,
+     "xB2": 2,
+     "widthA": 4,
+     "widthB": 4,
+     "isSubset": 1,
+     "isEqual": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

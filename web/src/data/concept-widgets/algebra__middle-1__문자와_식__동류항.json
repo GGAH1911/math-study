@@ -1,0 +1,187 @@
+{
+ "id": "algebra/middle-1/문자와_식/동류항",
+ "spec": {
+  "title": "동류항",
+  "params": [
+   {
+    "name": "a",
+    "label": "계수 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "계수 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "지수 m",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "x0=2; v1=a*x0^n; v2=b*x0^m; vSum=v1+v2; vAttempt=(a+b)*x0^n; diff=vSum-vAttempt",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "a*x^n",
+     "label": "a·xⁿ",
+     "color": "#e74c3c"
+    },
+    {
+     "fn": "b*x^m",
+     "label": "b·xᵐ",
+     "color": "#3498db"
+    },
+    {
+     "fn": "(a+b)*x^n",
+     "label": "(a+b)·xⁿ",
+     "color": "#2ecc71"
+    },
+    {
+     "fn": "a*x^n + b*x^m",
+     "label": "a·xⁿ + b·xᵐ",
+     "color": "#e67e22"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a·xⁿ (x₀=2)",
+    "expr": "v1",
+    "digits": 6
+   },
+   {
+    "label": "b·xᵐ (x₀=2)",
+    "expr": "v2",
+    "digits": 6
+   },
+   {
+    "label": "합 (a·xⁿ + b·xᵐ)",
+    "expr": "vSum",
+    "digits": 6
+   },
+   {
+    "label": "동류항 결합 ((a+b)·xⁿ)",
+    "expr": "vAttempt",
+    "digits": 6
+   },
+   {
+    "label": "차이",
+    "expr": "diff",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": 3,
+    "n": 1,
+    "m": 1
+   },
+   {
+    "a": -1,
+    "b": 4,
+    "n": 2,
+    "m": 1
+   },
+   {
+    "a": 3,
+    "b": -2,
+    "n": 2,
+    "m": 2
+   },
+   {
+    "a": 0,
+    "b": 5,
+    "n": 1,
+    "m": 2
+   }
+  ],
+  "invariants": [
+   "abs(diff - b*(x0^m - x0^n))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "n": 1,
+     "m": 1
+    },
+    "expect": {
+     "v1": 4,
+     "v2": 6,
+     "vSum": 10,
+     "vAttempt": 10,
+     "diff": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 4,
+     "n": 2,
+     "m": 1
+    },
+    "expect": {
+     "v1": -4,
+     "v2": 8,
+     "vSum": 4,
+     "vAttempt": 12,
+     "diff": -8
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": -2,
+     "n": 2,
+     "m": 2
+    },
+    "expect": {
+     "v1": 12,
+     "v2": -8,
+     "vSum": 4,
+     "vAttempt": 4,
+     "diff": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

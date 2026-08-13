@@ -1,0 +1,154 @@
+{
+ "id": "logic/high-1/집합과_명제/차집합",
+ "spec": {
+  "title": "차집합 A - B",
+  "params": [
+   {
+    "name": "x",
+    "label": "점 P의 x좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.01
+   },
+   {
+    "name": "y",
+    "label": "점 P의 y좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.01
+   }
+  ],
+  "scope": "ax=-0.5; ay=0; ar=1; bx=0.5; by=0; br=1; dA=sqrt((x-ax)^2+(y-ay)^2); dB=sqrt((x-bx)^2+(y-by)^2); inA=(dA<=ar?1:0); inB=(dB<=br?1:0); inA_notB=inA*(1-inB); inB_notA=inB*(1-inA); inBoth=inA*inB;",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=ax",
+      "=ay"
+     ],
+     "radius": "=ar"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=bx",
+      "=by"
+     ],
+     "radius": "=br"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=y"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A-B에 속함",
+    "expr": "inA_notB",
+    "digits": 0
+   },
+   {
+    "label": "A에 속함",
+    "expr": "inA",
+    "digits": 0
+   },
+   {
+    "label": "B에 속함",
+    "expr": "inB",
+    "digits": 0
+   },
+   {
+    "label": "B-A에 속함",
+    "expr": "inB_notA",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": -1,
+    "y": 0
+   },
+   {
+    "x": 0,
+    "y": 0
+   },
+   {
+    "x": 1.5,
+    "y": 0
+   },
+   {
+    "x": 1.5,
+    "y": 1.5
+   }
+  ],
+  "invariants": [
+   "inA_notB+inBoth-inA",
+   "inB_notA+inBoth-inB",
+   "inA_notB-inA*(1-inB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": -1,
+     "y": 0
+    },
+    "expect": {
+     "inA": 1,
+     "inB": 0,
+     "inA_notB": 1,
+     "inB_notA": 0,
+     "inBoth": 0
+    }
+   },
+   {
+    "params": {
+     "x": 0,
+     "y": 0
+    },
+    "expect": {
+     "inA": 1,
+     "inB": 1,
+     "inA_notB": 0,
+     "inB_notA": 0,
+     "inBoth": 1
+    }
+   },
+   {
+    "params": {
+     "x": 1.5,
+     "y": 0
+    },
+    "expect": {
+     "inA": 0,
+     "inB": 1,
+     "inA_notB": 0,
+     "inB_notA": 1,
+     "inBoth": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "id": "홀짝성_판별",
+ "spec": {
+  "title": "홀짝성 판별 (합과 곱의 홀짝 규칙)",
+  "params": [
+   {
+    "name": "N",
+    "label": "전체 선택 수 N",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "kIn",
+    "label": "홀수 선택 수",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "k = min(kIn,N); m = N - k; sumParity = mod(k,2)==1 ? 1 : 0; prodParity = m==0 ? 1 : 0; actualSum = k*k + m*(m+1); actualSumParity = mod(actualSum,2)",
+  "plot": {
+   "range": [
+    -0.5,
+    5.5
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "fns": [
+    {
+     "fn": "mod(x,2)==1 ? 1 : 0",
+     "label": "합이 홀수인 조건",
+     "color": "blue"
+    },
+    {
+     "fn": "x == N ? 1 : 0",
+     "label": "곱이 홀수인 조건",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "유효 홀수 개수 (k)",
+    "expr": "k",
+    "digits": 0
+   },
+   {
+    "label": "짝수 개수 (m)",
+    "expr": "m",
+    "digits": 0
+   },
+   {
+    "label": "실제 합 (예시)",
+    "expr": "actualSum",
+    "digits": 0
+   },
+   {
+    "label": "합의 홀짝 (1=홀수)",
+    "expr": "actualSumParity",
+    "digits": 0
+   },
+   {
+    "label": "곱의 홀짝 (1=홀수)",
+    "expr": "prodParity",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 3,
+    "kIn": 0
+   },
+   {
+    "N": 3,
+    "kIn": 2
+   },
+   {
+    "N": 5,
+    "kIn": 5
+   },
+   {
+    "N": 2,
+    "kIn": 5
+   }
+  ],
+  "invariants": [
+   "actualSumParity - sumParity",
+   "mod(m*(m+1),2)",
+   "prodParity * m",
+   "k + m - N",
+   "mod(k,2) - mod(k*k,2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 3,
+     "kIn": 2
+    },
+    "expect": {
+     "k": 2,
+     "m": 1,
+     "sumParity": 0,
+     "prodParity": 0,
+     "actualSum": 6,
+     "actualSumParity": 0
+    }
+   },
+   {
+    "params": {
+     "N": 5,
+     "kIn": 5
+    },
+    "expect": {
+     "k": 5,
+     "m": 0,
+     "sumParity": 1,
+     "prodParity": 1,
+     "actualSum": 25,
+     "actualSumParity": 1
+    }
+   },
+   {
+    "params": {
+     "N": 2,
+     "kIn": 5
+    },
+    "expect": {
+     "k": 2,
+     "m": 0,
+     "sumParity": 0,
+     "prodParity": 1,
+     "actualSum": 4,
+     "actualSumParity": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

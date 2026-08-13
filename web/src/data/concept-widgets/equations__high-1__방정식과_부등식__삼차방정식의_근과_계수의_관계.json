@@ -1,0 +1,150 @@
+{
+ "id": "equations/high-1/방정식과_부등식/삼차방정식의_근과_계수의_관계",
+ "spec": {
+  "title": "삼차방정식의 근과 계수의 관계",
+  "params": [
+   {
+    "name": "alpha",
+    "label": "α",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -2,
+    "step": 0.1
+   },
+   {
+    "name": "beta",
+    "label": "β",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "gamma",
+    "label": "γ",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "S=alpha+beta+gamma; T=alpha*beta+beta*gamma+gamma*alpha; U=alpha*beta*gamma; p=-S; q=T; r=-U",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^3+p*x^2+q*x+r",
+     "label": "y = x³ + px² + qx + r",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "α+β+γ",
+    "expr": "S",
+    "digits": 2
+   },
+   {
+    "label": "p (x²계수)",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "αβ+βγ+γα",
+    "expr": "T",
+    "digits": 2
+   },
+   {
+    "label": "q (x계수)",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "αβγ",
+    "expr": "U",
+    "digits": 2
+   },
+   {
+    "label": "r (상수항)",
+    "expr": "r",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "alpha": -2,
+    "beta": 1,
+    "gamma": 3
+   },
+   {
+    "alpha": 0,
+    "beta": 0,
+    "gamma": 0
+   },
+   {
+    "alpha": -3,
+    "beta": 0,
+    "gamma": 3
+   },
+   {
+    "alpha": 1,
+    "beta": 1,
+    "gamma": -2
+   }
+  ],
+  "invariants": [
+   "abs(p+S)",
+   "abs(q-T)",
+   "abs(r+U)",
+   "abs((8+4*p+2*q+r) - (2-alpha)*(2-beta)*(2-gamma))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "alpha": -2,
+     "beta": 1,
+     "gamma": 3
+    },
+    "expect": {
+     "S": 2,
+     "T": -5,
+     "U": -6,
+     "p": -2,
+     "q": -5,
+     "r": 6
+    }
+   },
+   {
+    "params": {
+     "alpha": 1,
+     "beta": 1,
+     "gamma": -2
+    },
+    "expect": {
+     "S": 0,
+     "T": -3,
+     "U": -2,
+     "p": 0,
+     "q": -3,
+     "r": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

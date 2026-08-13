@@ -1,0 +1,150 @@
+{
+ "id": "algebra/middle-2/유리수와_순환소수/나머지",
+ "spec": {
+  "title": "나머지 이해",
+  "params": [
+   {
+    "name": "a",
+    "label": "나눠지는 수 a",
+    "type": "slider",
+    "min": -20,
+    "max": 20,
+    "init": 17,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "나누는 수 b",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "q=floor(a/b); r=a-b*q",
+  "geometry": {
+   "range": [
+    -30,
+    30
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=b*q",
+      "0.4"
+     ],
+     "to": [
+      "=b*(q+1)",
+      "0.4"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b*q",
+      "0"
+     ],
+     "to": [
+      "=a",
+      "0"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "0"
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b*q",
+      "0"
+     ],
+     "label": "bq"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "몫 q",
+    "expr": "q"
+   },
+   {
+    "label": "나머지 r",
+    "expr": "r"
+   },
+   {
+    "label": "0 ≤ r < b",
+    "expr": "max(0,-r)+max(0,r-(b-1))"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 17,
+    "b": 5
+   },
+   {
+    "a": -17,
+    "b": 5
+   },
+   {
+    "a": 20,
+    "b": 1
+   },
+   {
+    "a": -20,
+    "b": 10
+   }
+  ],
+  "invariants": [
+   "a-(b*q+r)",
+   "max(0,-r)+max(0,r-(b-1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 17,
+     "b": 5
+    },
+    "expect": {
+     "q": 3,
+     "r": 2
+    }
+   },
+   {
+    "params": {
+     "a": -17,
+     "b": 5
+    },
+    "expect": {
+     "q": -4,
+     "r": 3
+    }
+   },
+   {
+    "params": {
+     "a": 20,
+     "b": 1
+    },
+    "expect": {
+     "q": 20,
+     "r": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

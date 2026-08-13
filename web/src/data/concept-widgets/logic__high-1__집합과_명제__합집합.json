@@ -1,0 +1,170 @@
+{
+ "id": "logic/high-1/집합과_명제/합집합",
+ "spec": {
+  "title": "합집합의 넓이 탐구",
+  "params": [
+   {
+    "name": "rA",
+    "label": "A의 반지름",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "rB",
+    "label": "B의 반지름",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "dist",
+    "label": "중심 거리",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 3,
+    "step": 0.1
+   }
+  ],
+  "scope": "areaA = pi * rA^2; areaB = pi * rB^2; inter = dist >= rA + rB ? 0 : (dist <= abs(rA - rB) ? pi * min(rA, rB)^2 : rA^2 * acos((dist^2 + rA^2 - rB^2)/(2*dist*rA)) + rB^2 * acos((dist^2 + rB^2 - rA^2)/(2*dist*rB)) - 0.5 * sqrt((-dist+rA+rB)*(dist+rA-rB)*(dist-rA+rB)*(dist+rA+rB))); unionArea = areaA + areaB - inter; cx1 = -dist/2; cx2 = dist/2; cy = 0",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      "=cx1",
+      "=cy"
+     ],
+     "radius": "=rA"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=cx2",
+      "=cy"
+     ],
+     "radius": "=rB"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx1",
+      "=cy"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx2",
+      "=cy"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A의 넓이",
+    "expr": "areaA",
+    "digits": 4
+   },
+   {
+    "label": "B의 넓이",
+    "expr": "areaB",
+    "digits": 4
+   },
+   {
+    "label": "교집합 넓이",
+    "expr": "inter",
+    "digits": 4
+   },
+   {
+    "label": "합집합 넓이 (A∪B)",
+    "expr": "unionArea",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "rA": 3,
+    "rB": 2,
+    "dist": 3
+   },
+   {
+    "rA": 2,
+    "rB": 2,
+    "dist": 0
+   },
+   {
+    "rA": 1,
+    "rB": 1,
+    "dist": 3
+   },
+   {
+    "rA": 4,
+    "rB": 2,
+    "dist": 1
+   }
+  ],
+  "invariants": [
+   "unionArea - (areaA + areaB - inter)",
+   "dist >= rA + rB ? unionArea - (areaA + areaB) : 0",
+   "dist <= abs(rA - rB) ? unionArea - max(areaA, areaB) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "rA": 1,
+     "rB": 1,
+     "dist": 0
+    },
+    "expect": {
+     "unionArea": 3.141592653589793,
+     "inter": 3.141592653589793,
+     "areaA": 3.141592653589793
+    }
+   },
+   {
+    "params": {
+     "rA": 2,
+     "rB": 1,
+     "dist": 5
+    },
+    "expect": {
+     "unionArea": 15.707963267948966,
+     "inter": 0
+    }
+   },
+   {
+    "params": {
+     "rA": 3,
+     "rB": 1,
+     "dist": 0
+    },
+    "expect": {
+     "unionArea": 28.274333882308138,
+     "inter": 3.141592653589793
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "id": "algebra/middle-2/식의_계산/복소수_기본",
+ "spec": {
+  "title": "복소수의 정의",
+  "params": [
+   {
+    "name": "a",
+    "label": "실수부 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "허수부 b",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1
+   }
+  ],
+  "scope": "r=sqrt(a^2+b^2)",
+  "geometry": {
+   "range": [
+    -5.5,
+    5.5
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "z"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=b"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=a",
+      "=b"
+     ],
+     "color": "lightgray"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      "=b"
+     ],
+     "to": [
+      "=a",
+      "=b"
+     ],
+     "color": "lightgray"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Re(z)",
+    "expr": "a"
+   },
+   {
+    "label": "Im(z)",
+    "expr": "b"
+   },
+   {
+    "label": "|z|",
+    "expr": "r",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 4
+   },
+   {
+    "a": 0,
+    "b": 0
+   },
+   {
+    "a": -2,
+    "b": 1
+   },
+   {
+    "a": 5,
+    "b": 0
+   }
+  ],
+  "invariants": [
+   "r^2 - a^2 - b^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 4
+    },
+    "expect": {
+     "r": 5
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1
+    },
+    "expect": {
+     "r": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 0
+    },
+    "expect": {
+     "r": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

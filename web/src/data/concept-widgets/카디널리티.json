@@ -1,0 +1,182 @@
+{
+ "id": "카디널리티",
+ "spec": {
+  "title": "카디널리티 (집합의 크기)",
+  "params": [
+   {
+    "name": "nA",
+    "label": "n(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "nB",
+    "label": "n(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "nAB",
+    "label": "n(A∩B)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "a=nA; b=nB; ab=min(nAB,nA,nB); onlyA=a-ab; onlyB=b-ab; union=a+b-ab",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      -0.5,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "circle",
+     "center": [
+      0.5,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "A만"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B만"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A∩B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n(A)",
+    "expr": "a"
+   },
+   {
+    "label": "n(B)",
+    "expr": "b"
+   },
+   {
+    "label": "n(A∩B) (유효값)",
+    "expr": "ab"
+   },
+   {
+    "label": "A만",
+    "expr": "onlyA"
+   },
+   {
+    "label": "B만",
+    "expr": "onlyB"
+   },
+   {
+    "label": "n(A∪B)",
+    "expr": "union"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "nA": 5,
+    "nB": 4,
+    "nAB": 2
+   },
+   {
+    "nA": 3,
+    "nB": 3,
+    "nAB": 3
+   },
+   {
+    "nA": 0,
+    "nB": 0,
+    "nAB": 0
+   },
+   {
+    "nA": 7,
+    "nB": 2,
+    "nAB": 10
+   }
+  ],
+  "invariants": [
+   "union-(a+b-ab)",
+   "onlyA+onlyB+ab-union",
+   "onlyA-(a-ab)",
+   "onlyB-(b-ab)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "nA": 5,
+     "nB": 4,
+     "nAB": 2
+    },
+    "expect": {
+     "ab": 2,
+     "union": 7
+    }
+   },
+   {
+    "params": {
+     "nA": 5,
+     "nB": 4,
+     "nAB": 10
+    },
+    "expect": {
+     "ab": 4,
+     "union": 5
+    }
+   },
+   {
+    "params": {
+     "nA": 3,
+     "nB": 3,
+     "nAB": 3
+    },
+    "expect": {
+     "ab": 3,
+     "union": 3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

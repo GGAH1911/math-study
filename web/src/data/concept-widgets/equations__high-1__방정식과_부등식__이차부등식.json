@@ -1,0 +1,189 @@
+{
+ "id": "equations/high-1/방정식과_부등식/이차부등식",
+ "spec": {
+  "title": "이차부등식",
+  "params": [
+   {
+    "name": "r1",
+    "label": "근 ₁ (r₁)",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "r2",
+    "label": "근 ₂ (r₂)",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "a_mag",
+    "label": "|a| (이차항 계수 크기)",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "a_sign",
+    "label": "a의 부호 (−1 또는 1)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 2
+   }
+  ],
+  "scope": "s1 = min(r1, r2); s2 = max(r1, r2); a = a_sign * a_mag; b = -a * (s1 + s2); c = a * s1 * s2; D = b^2 - 4 * a * c; vx = (s1 + s2) / 2; vy = a * (vx - s1) * (vx - s2)",
+  "plot": {
+   "range": [
+    -4,
+    4
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a * (x - s1) * (x - s2)",
+     "label": "f(x) = a(x-r₁)(x-r₂)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "작은 근 s₁",
+    "expr": "s1",
+    "digits": 3
+   },
+   {
+    "label": "큰 근 s₂",
+    "expr": "s2",
+    "digits": 3
+   },
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점의 x값",
+    "expr": "vx",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점의 y값",
+    "expr": "vy",
+    "digits": 3
+   },
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": -1,
+    "r2": 2,
+    "a_mag": 1,
+    "a_sign": 1
+   },
+   {
+    "r1": 2,
+    "r2": -0.5,
+    "a_mag": 0.5,
+    "a_sign": -1
+   },
+   {
+    "r1": 0,
+    "r2": 0,
+    "a_mag": 1.2,
+    "a_sign": 1
+   },
+   {
+    "r1": -2,
+    "r2": -2.5,
+    "a_mag": 0.8,
+    "a_sign": -1
+   }
+  ],
+  "invariants": [
+   "s2 - s1 - abs(s2 - s1)",
+   "a * s1^2 + b * s1 + c",
+   "a * s2^2 + b * s2 + c",
+   "b + a * (s1 + s2)",
+   "c - a * s1 * s2",
+   "vy + a * (s2 - s1)^2 / 4"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": -1,
+     "r2": 2,
+     "a_mag": 1,
+     "a_sign": 1
+    },
+    "expect": {
+     "s1": -1,
+     "s2": 2,
+     "a": 1,
+     "b": -1,
+     "c": -2,
+     "D": 9,
+     "vx": 0.5,
+     "vy": -2.25
+    }
+   },
+   {
+    "params": {
+     "r1": 2,
+     "r2": -0.5,
+     "a_mag": 0.5,
+     "a_sign": -1
+    },
+    "expect": {
+     "s1": -0.5,
+     "s2": 2,
+     "a": -0.5,
+     "b": 0.75,
+     "c": 0.5,
+     "D": 1.5625,
+     "vx": 0.75,
+     "vy": 0.78125
+    }
+   },
+   {
+    "params": {
+     "r1": -1.5,
+     "r2": -1.5,
+     "a_mag": 0.8,
+     "a_sign": 1
+    },
+    "expect": {
+     "s1": -1.5,
+     "s2": -1.5,
+     "a": 0.8,
+     "b": 2.4,
+     "c": 1.8,
+     "D": 0,
+     "vx": -1.5,
+     "vy": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

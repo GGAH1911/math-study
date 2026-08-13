@@ -1,0 +1,200 @@
+{
+ "id": "내접_도형",
+ "spec": {
+  "title": "내접 사각형의 성질",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": 0,
+    "max": 70,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad = theta * pi / 180; Ax = cos(rad); Ay = sin(rad); Bx = cos(80*pi/180); By = sin(80*pi/180); Cx = cos(160*pi/180); Cy = sin(160*pi/180); Dx = cos(280*pi/180); Dy = sin(280*pi/180); BAx = Ax - Bx; BAy = Ay - By; BCx = Cx - Bx; BCy = Cy - By; dotB = BAx*BCx + BAy*BCy; magB = sqrt(BAx^2 + BAy^2); magBC = sqrt(BCx^2 + BCy^2); cosB = dotB / (magB * magBC); angleB_deg = acos(cosB) * 180 / pi; DAx = Ax - Dx; DAy = Ay - Dy; DCx = Cx - Dx; DCy = Cy - Dy; dotD = DAx*DCx + DAy*DCy; magDA = sqrt(DAx^2 + DAy^2); magDC = sqrt(DCx^2 + DCy^2); cosD = dotD / (magDA * magDC); angleD_deg = acos(cosD) * 180 / pi; sum_deg = angleB_deg + angleD_deg;",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Ax",
+      "=Ay"
+     ],
+     "to": [
+      "=Bx",
+      "=By"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Bx",
+      "=By"
+     ],
+     "to": [
+      "=Cx",
+      "=Cy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Cx",
+      "=Cy"
+     ],
+     "to": [
+      "=Dx",
+      "=Dy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=Dx",
+      "=Dy"
+     ],
+     "to": [
+      "=Ax",
+      "=Ay"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Ax",
+      "=Ay"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Bx",
+      "=By"
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Cx",
+      "=Cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=Dx",
+      "=Dy"
+     ],
+     "label": "D"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "∠B",
+    "expr": "angleB_deg",
+    "digits": 2
+   },
+   {
+    "label": "∠D",
+    "expr": "angleD_deg",
+    "digits": 2
+   },
+   {
+    "label": "∠B+∠D",
+    "expr": "sum_deg",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": 0
+   },
+   {
+    "theta": 20
+   },
+   {
+    "theta": 40
+   },
+   {
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "angleB_deg + angleD_deg - 180",
+   "Ax^2 + Ay^2 - 1",
+   "Bx^2 + By^2 - 1",
+   "Cx^2 + Cy^2 - 1",
+   "Dx^2 + Dy^2 - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 0
+    },
+    "expect": {
+     "angleB_deg": 100,
+     "angleD_deg": 80,
+     "sum_deg": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 20
+    },
+    "expect": {
+     "angleB_deg": 110,
+     "angleD_deg": 70,
+     "sum_deg": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 40
+    },
+    "expect": {
+     "angleB_deg": 120,
+     "angleD_deg": 60,
+     "sum_deg": 180
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "angleB_deg": 130,
+     "angleD_deg": 50,
+     "sum_deg": 180
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/백분율_계산",
+ "spec": {
+  "title": "백분율 계산 (부분의 크기)",
+  "params": [
+   {
+    "name": "W",
+    "label": "전체 W",
+    "type": "slider",
+    "min": 1,
+    "max": 500,
+    "init": 200,
+    "step": 1
+   },
+   {
+    "name": "r",
+    "label": "백분율 r(%)",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 20,
+    "step": 1
+   }
+  ],
+  "scope": "p=W*r/100; ratio=r/100",
+  "geometry": {
+   "range": [
+    0,
+    110
+   ],
+   "yRange": [
+    -0.5,
+    1.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      100,
+      0
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=r",
+       0
+      ],
+      [
+       "=r",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=r",
+      0
+     ],
+     "to": [
+      "=r",
+      1
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "부분 P",
+    "expr": "p",
+    "digits": 2
+   },
+   {
+    "label": "비율 P/W",
+    "expr": "p/W",
+    "digits": 5
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "W": 200,
+    "r": 20
+   },
+   {
+    "W": 150,
+    "r": 40
+   },
+   {
+    "W": 80,
+    "r": 25
+   },
+   {
+    "W": 300,
+    "r": 75
+   }
+  ],
+  "invariants": [
+   "p - W*r/100",
+   "p/W - r/100"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "W": 200,
+     "r": 20
+    },
+    "expect": {
+     "p": 40
+    }
+   },
+   {
+    "params": {
+     "W": 150,
+     "r": 40
+    },
+    "expect": {
+     "p": 60
+    }
+   },
+   {
+    "params": {
+     "W": 80,
+     "r": 25
+    },
+    "expect": {
+     "p": 20
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

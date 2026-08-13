@@ -1,0 +1,162 @@
+{
+ "id": "외분점_공식",
+ "spec": {
+  "title": "외분점 공식",
+  "params": [
+   {
+    "name": "m",
+    "label": "m",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "x1=0; y1=0; x2=4; y2=2; den=m-n; px=(m*x2-n*x1)/den; py=(m*y2-n*y1)/den",
+  "geometry": {
+   "range": [
+    -5,
+    25
+   ],
+   "yRange": [
+    -3,
+    13
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "line",
+     "point1": [
+      0,
+      0
+     ],
+     "point2": [
+      4,
+      2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      4,
+      2
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      2
+     ],
+     "label": "B"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P_x",
+    "expr": "px",
+    "digits": 3
+   },
+   {
+    "label": "P_y",
+    "expr": "py",
+    "digits": 3
+   },
+   {
+    "label": "m/n",
+    "expr": "m/n",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m": 2,
+    "n": 1
+   },
+   {
+    "m": 1,
+    "n": 3
+   },
+   {
+    "m": 3,
+    "n": 2
+   },
+   {
+    "m": 5,
+    "n": 4
+   }
+  ],
+  "invariants": [
+   "4*py - 2*px",
+   "sqrt((px-x1)^2+(py-y1)^2)*n - sqrt((px-x2)^2+(py-y2)^2)*m",
+   "(px-x1)*(px-x2) - abs((px-x1)*(px-x2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m": 2,
+     "n": 1
+    },
+    "expect": {
+     "px": 8,
+     "py": 4
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3
+    },
+    "expect": {
+     "px": -2,
+     "py": -1
+    }
+   },
+   {
+    "params": {
+     "m": 3,
+     "n": 2
+    },
+    "expect": {
+     "px": 12,
+     "py": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

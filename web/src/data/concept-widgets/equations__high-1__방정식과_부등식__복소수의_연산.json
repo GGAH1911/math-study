@@ -1,0 +1,231 @@
+{
+ "id": "equations/high-1/방정식과_부등식/복소수의_연산",
+ "spec": {
+  "title": "복소수의 곱셈: 회전과 확대",
+  "params": [
+   {
+    "name": "r1",
+    "label": "r₁",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta1",
+    "label": "θ₁",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "r2",
+    "label": "r₂",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "theta2",
+    "label": "θ₂",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 45,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "t1=theta1*pi/180; t2=theta2*pi/180; a=r1*cos(t1); b=r1*sin(t1); c=r2*cos(t2); d=r2*sin(t2); prodRe=a*c-b*d; prodIm=a*d+b*c; prodAbs=r1*r2; pAng=atan2(prodIm,prodRe)*180/pi",
+  "geometry": {
+   "range": [
+    -30,
+    30
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "coords": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       "=b"
+      ]
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "coords": [
+      [
+       0,
+       0
+      ],
+      [
+       "=c",
+       "=d"
+      ]
+     ],
+     "color": "green"
+    },
+    {
+     "type": "segment",
+     "coords": [
+      [
+       0,
+       0
+      ],
+      [
+       "=prodRe",
+       "=prodIm"
+      ]
+     ],
+     "color": "red"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=b"
+     ],
+     "label": "z₁",
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      "=d"
+     ],
+     "label": "z₂",
+     "color": "green"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=prodRe",
+      "=prodIm"
+     ],
+     "label": "z₁·z₂",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "|z₁·z₂|",
+    "expr": "prodAbs",
+    "digits": 2
+   },
+   {
+    "label": "arg(z₁·z₂)°",
+    "expr": "pAng",
+    "digits": 1
+   },
+   {
+    "label": "Re(z₁·z₂)",
+    "expr": "prodRe",
+    "digits": 3
+   },
+   {
+    "label": "Im(z₁·z₂)",
+    "expr": "prodIm",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "r1": 1,
+    "theta1": 0,
+    "r2": 1,
+    "theta2": 0
+   },
+   {
+    "r1": 2,
+    "theta1": 30,
+    "r2": 3,
+    "theta2": 45
+   },
+   {
+    "r1": 2,
+    "theta1": 90,
+    "r2": 1,
+    "theta2": 180
+   },
+   {
+    "r1": 1,
+    "theta1": 120,
+    "r2": 2,
+    "theta2": 240
+   }
+  ],
+  "invariants": [
+   "prodRe - r1*r2*cos(t1+t2)",
+   "prodIm - r1*r2*sin(t1+t2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "r1": 2,
+     "theta1": 0,
+     "r2": 3,
+     "theta2": 90
+    },
+    "expect": {
+     "prodRe": 0,
+     "prodIm": 6,
+     "prodAbs": 6,
+     "pAng": 90
+    }
+   },
+   {
+    "params": {
+     "r1": 1,
+     "theta1": 180,
+     "r2": 1,
+     "theta2": 180
+    },
+    "expect": {
+     "prodRe": 1,
+     "prodIm": 0,
+     "prodAbs": 1,
+     "pAng": 0
+    }
+   },
+   {
+    "params": {
+     "r1": 2,
+     "theta1": 60,
+     "r2": 2,
+     "theta2": 30
+    },
+    "expect": {
+     "prodRe": 0,
+     "prodIm": 4,
+     "prodAbs": 4,
+     "pAng": 90
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

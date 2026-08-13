@@ -1,0 +1,113 @@
+{
+ "id": "equations/high-1/방정식과_부등식/고차_부등식",
+ "spec": {
+  "title": "고차 부등식의 부호 판별",
+  "params": [
+   {
+    "name": "k",
+    "label": "x=-1의 중복도",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "x0",
+    "label": "탐구 위치 x",
+    "type": "slider",
+    "min": -4,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   }
+  ],
+  "scope": "P=(x0+1)^k*(x0-2)^2; s=sign(P); left=(-1-0.1+1)^k*(-1-0.1-2)^2; right=(-1+0.1+1)^k*(-1+0.1-2)^2; left2=(2-0.1+1)^k*(2-0.1-2)^2; right2=(2+0.1+1)^k*(2+0.1-2)^2",
+  "plot": {
+   "range": [
+    -4,
+    5
+   ],
+   "yRange": [
+    -20,
+    20
+   ],
+   "fns": [
+    {
+     "fn": "(x+1)^k*(x-2)^2",
+     "label": "P(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(x)",
+    "expr": "P",
+    "digits": 3
+   },
+   {
+    "label": "부호",
+    "expr": "s",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 1,
+    "x0": 0
+   },
+   {
+    "k": 2,
+    "x0": 1
+   },
+   {
+    "k": 3,
+    "x0": -2
+   },
+   {
+    "k": 1,
+    "x0": 3
+   }
+  ],
+  "invariants": [
+   "sign(left*right) - (-1)^k",
+   "sign(left2*right2) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 1,
+     "x0": 0
+    },
+    "expect": {
+     "P": 4,
+     "s": 1
+    }
+   },
+   {
+    "params": {
+     "k": 2,
+     "x0": 2
+    },
+    "expect": {
+     "P": 0,
+     "s": 0
+    }
+   },
+   {
+    "params": {
+     "k": 3,
+     "x0": 1
+    },
+    "expect": {
+     "P": 8,
+     "s": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

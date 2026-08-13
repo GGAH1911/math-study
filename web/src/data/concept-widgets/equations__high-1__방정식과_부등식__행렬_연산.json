@@ -1,0 +1,324 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬_연산",
+ "spec": {
+  "title": "행렬 연산 탐구 – B = [[1,2],[3,4]]",
+  "params": [
+   {
+    "name": "a",
+    "label": "A(1,1)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "A(1,2)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "A(2,1)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "A(2,2)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "스칼라 k",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "B1=1; B2=2; B3=3; B4=4; s11=a+B1; s12=b+B2; s21=c+B3; s22=d+B4; k11=k*a; k12=k*b; k21=k*c; k22=k*d; p11=a*B1+b*B3; p12=a*B2+b*B4; p21=c*B1+d*B3; p22=c*B2+d*B4",
+  "geometry": {
+   "range": [
+    -12,
+    12
+   ],
+   "yRange": [
+    -12,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=c"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=b*B3",
+      "=d*B3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=c"
+     ],
+     "to": [
+      "=a*B1+b*B3",
+      "=c*B1+d*B3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=b*B3",
+      "=d*B3"
+     ],
+     "to": [
+      "=a*B1+b*B3",
+      "=c*B1+d*B3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a*B1+b*B3",
+      "=c*B1+d*B3"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a*B2+b*B4",
+      "=c*B2+d*B4"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=c"
+     ],
+     "label": "A₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=d"
+     ],
+     "label": "A₂"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*B1+b*B3",
+      "=c*B1+d*B3"
+     ],
+     "label": "(AB)₁"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a*B2+b*B4",
+      "=c*B2+d*B4"
+     ],
+     "label": "(AB)₂"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A+B (1,1)",
+    "expr": "s11",
+    "digits": 2
+   },
+   {
+    "label": "A+B (1,2)",
+    "expr": "s12",
+    "digits": 2
+   },
+   {
+    "label": "A+B (2,1)",
+    "expr": "s21",
+    "digits": 2
+   },
+   {
+    "label": "A+B (2,2)",
+    "expr": "s22",
+    "digits": 2
+   },
+   {
+    "label": "kA (1,1)",
+    "expr": "k11",
+    "digits": 2
+   },
+   {
+    "label": "kA (1,2)",
+    "expr": "k12",
+    "digits": 2
+   },
+   {
+    "label": "kA (2,1)",
+    "expr": "k21",
+    "digits": 2
+   },
+   {
+    "label": "kA (2,2)",
+    "expr": "k22",
+    "digits": 2
+   },
+   {
+    "label": "AB (1,1)",
+    "expr": "p11",
+    "digits": 2
+   },
+   {
+    "label": "AB (1,2)",
+    "expr": "p12",
+    "digits": 2
+   },
+   {
+    "label": "AB (2,1)",
+    "expr": "p21",
+    "digits": 2
+   },
+   {
+    "label": "AB (2,2)",
+    "expr": "p22",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "d": 4,
+    "k": 2
+   },
+   {
+    "a": -0.5,
+    "b": 1.5,
+    "c": 0,
+    "d": 2.5,
+    "k": 3
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": 1,
+    "d": -2,
+    "k": -1
+   },
+   {
+    "a": 1,
+    "b": -1,
+    "c": 2,
+    "d": -3,
+    "k": 0.5
+   }
+  ],
+  "invariants": [
+   "s11-(a+B1)",
+   "s12-(b+B2)",
+   "s21-(c+B3)",
+   "s22-(d+B4)",
+   "k11-k*a",
+   "k12-k*b",
+   "k21-k*c",
+   "k22-k*d",
+   "p11-(a*B1+b*B3)",
+   "p12-(a*B2+b*B4)",
+   "p21-(c*B1+d*B3)",
+   "p22-(c*B2+d*B4)",
+   "k*(a+B1)-(k*a+k*B1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 1,
+     "k": 2
+    },
+    "expect": {
+     "s11": 2,
+     "s12": 2,
+     "s21": 3,
+     "s22": 5,
+     "k11": 2,
+     "k12": 0,
+     "k21": 0,
+     "k22": 2,
+     "p11": 1,
+     "p12": 2,
+     "p21": 3,
+     "p22": 4
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 3,
+     "c": -1,
+     "d": 5,
+     "k": -1
+    },
+    "expect": {
+     "s11": 3,
+     "s12": 5,
+     "s21": 2,
+     "s22": 9,
+     "k11": -2,
+     "k12": -3,
+     "k21": 1,
+     "k22": -5,
+     "p11": 11,
+     "p12": 16,
+     "p21": 14,
+     "p22": 18
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

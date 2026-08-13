@@ -1,0 +1,175 @@
+{
+ "id": "명제의_부정",
+ "spec": {
+  "title": "명제의 부정",
+  "params": [
+   {
+    "name": "a",
+    "label": "경계 a",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x",
+    "label": "점 x",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "p = x > a ? 1 : 0; np = x <= a ? 1 : 0; nnp = np == 1 ? 0 : 1; orv = p + np - p*np; andv = p*np",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0.1
+     ],
+     "to": [
+      5,
+      0.1
+     ],
+     "label": "p (x>a)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -5,
+      -0.1
+     ],
+     "to": [
+      "=a",
+      -0.1
+     ],
+     "label": "~p (x≤a)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ],
+     "label": "a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "x"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "p 진리값",
+    "expr": "p",
+    "digits": 0
+   },
+   {
+    "label": "~p 진리값",
+    "expr": "np",
+    "digits": 0
+   },
+   {
+    "label": "~(~p) 진리값",
+    "expr": "nnp",
+    "digits": 0
+   },
+   {
+    "label": "p∨~p",
+    "expr": "orv",
+    "digits": 0
+   },
+   {
+    "label": "p∧~p",
+    "expr": "andv",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "x": 2
+   },
+   {
+    "a": 0,
+    "x": -2
+   },
+   {
+    "a": 1,
+    "x": 1
+   },
+   {
+    "a": -1,
+    "x": 0
+   }
+  ],
+  "invariants": [
+   "np + p - 1",
+   "nnp - p",
+   "andv",
+   "orv - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "x": 2
+    },
+    "expect": {
+     "p": 1,
+     "np": 0,
+     "nnp": 1,
+     "orv": 1,
+     "andv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "x": -2
+    },
+    "expect": {
+     "p": 0,
+     "np": 1,
+     "nnp": 0,
+     "orv": 1,
+     "andv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "x": 1
+    },
+    "expect": {
+     "p": 0,
+     "np": 1,
+     "nnp": 0,
+     "orv": 1,
+     "andv": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,358 @@
+{
+ "id": "algebra/middle-1/정수와_유리수/배수의_성질",
+ "spec": {
+  "title": "배수의 성질",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 6,
+    "step": 1
+   }
+  ],
+  "scope": "r=mod(b,a); is_mult=(r==0?1:0); q=b/a;",
+  "geometry": {
+   "range": [
+    -15,
+    15
+   ],
+   "yRange": [
+    -1,
+    1
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "= -15*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -14*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -13*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -12*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -11*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -10*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -9*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -8*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -7*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -6*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -5*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -4*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -3*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -2*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= -1*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 0*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 1*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 2*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 3*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 4*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 5*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 6*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 7*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 8*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 9*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 10*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 11*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 12*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 13*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 14*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "= 15*a",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0
+     ],
+     "label": "b"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=is_mult ? b : 999",
+      0
+     ],
+     "radius": 0.2
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 0
+   },
+   {
+    "label": "b÷a",
+    "expr": "q",
+    "digits": 2
+   },
+   {
+    "label": "나머지",
+    "expr": "r",
+    "digits": 0
+   },
+   {
+    "label": "a|b",
+    "expr": "is_mult",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 3,
+    "b": 6
+   },
+   {
+    "a": 2,
+    "b": 5
+   },
+   {
+    "a": 4,
+    "b": -8
+   }
+  ],
+  "invariants": [
+   "b - (a*floor(b/a) + r)",
+   "is_mult * abs(round(b/a) - b/a)",
+   "(r >= 0 and r < a) ? 0 : 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 3,
+     "b": 6
+    },
+    "expect": {
+     "r": 0,
+     "is_mult": 1,
+     "q": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 5
+    },
+    "expect": {
+     "r": 1,
+     "is_mult": 0,
+     "q": 2.5
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": -8
+    },
+    "expect": {
+     "r": 0,
+     "is_mult": 1,
+     "q": -2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

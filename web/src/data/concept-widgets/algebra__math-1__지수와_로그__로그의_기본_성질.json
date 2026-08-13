@@ -1,0 +1,193 @@
+{
+ "id": "algebra/math-1/지수와_로그/로그의_기본_성질",
+ "spec": {
+  "title": "로그의 기본 성질",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 2,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "p",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "n",
+    "type": "slider",
+    "min": -2,
+    "max": 5,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "pq=p*q; p_over_q=p/q; pn=p^n; lp=log(p,a); lq=log(q,a); lpq=log(pq,a); lp_over_q=log(p_over_q,a); lpn=log(pn,a); sum_lp_lq=lp+lq; diff_lp_lq=lp-lq; n_times_lp=n*lp",
+  "plot": {
+   "range": [
+    0.05,
+    25
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "log(x, a)",
+     "label": "y = log_a(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "log_a(pq)",
+    "expr": "lpq",
+    "digits": 6
+   },
+   {
+    "label": "log_a(p)+log_a(q)",
+    "expr": "sum_lp_lq",
+    "digits": 6
+   },
+   {
+    "label": "오차(곱셈→덧셈)",
+    "expr": "lpq - sum_lp_lq",
+    "digits": 6
+   },
+   {
+    "label": "log_a(p/q)",
+    "expr": "lp_over_q",
+    "digits": 6
+   },
+   {
+    "label": "log_a(p)-log_a(q)",
+    "expr": "diff_lp_lq",
+    "digits": 6
+   },
+   {
+    "label": "오차(나눗셈→뺄셈)",
+    "expr": "lp_over_q - diff_lp_lq",
+    "digits": 6
+   },
+   {
+    "label": "log_a(p^n)",
+    "expr": "lpn",
+    "digits": 6
+   },
+   {
+    "label": "n·log_a(p)",
+    "expr": "n_times_lp",
+    "digits": 6
+   },
+   {
+    "label": "오차(거듭제곱→곱)",
+    "expr": "lpn - n_times_lp",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "p": 2,
+    "q": 4,
+    "n": 2
+   },
+   {
+    "a": 2,
+    "p": 1,
+    "q": 2,
+    "n": 3
+   },
+   {
+    "a": 3,
+    "p": 3,
+    "q": 3,
+    "n": 2
+   }
+  ],
+  "invariants": [
+   "lpq - sum_lp_lq",
+   "lp_over_q - diff_lp_lq",
+   "lpn - n_times_lp"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2,
+     "p": 2,
+     "q": 4,
+     "n": 2
+    },
+    "expect": {
+     "lp": 1,
+     "lq": 2,
+     "lpq": 3,
+     "sum_lp_lq": 3,
+     "lp_over_q": -1,
+     "diff_lp_lq": -1,
+     "lpn": 2,
+     "n_times_lp": 2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "p": 1,
+     "q": 2,
+     "n": 3
+    },
+    "expect": {
+     "lp": 0,
+     "lq": 1,
+     "lpq": 1,
+     "sum_lp_lq": 1,
+     "lp_over_q": -1,
+     "diff_lp_lq": -1,
+     "lpn": 0,
+     "n_times_lp": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "p": 3,
+     "q": 3,
+     "n": 2
+    },
+    "expect": {
+     "lp": 1,
+     "lq": 1,
+     "lpq": 2,
+     "sum_lp_lq": 2,
+     "lp_over_q": 0,
+     "diff_lp_lq": 0,
+     "lpn": 2,
+     "n_times_lp": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

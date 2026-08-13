@@ -1,0 +1,160 @@
+{
+ "id": "속도와_거리",
+ "spec": {
+  "title": "속도와 거리",
+  "params": [
+   {
+    "name": "v0",
+    "label": "초기 속도 v₀",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": "m/s"
+   },
+   {
+    "name": "a",
+    "label": "가속도 a",
+    "type": "slider",
+    "min": 0,
+    "max": 0.5,
+    "init": 0.2,
+    "step": 0.1,
+    "unit": "m/s²"
+   },
+   {
+    "name": "t0",
+    "label": "시간 t",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 0.1,
+    "unit": "s"
+   }
+  ],
+  "scope": "pos_t = v0*t0 + 0.5*a*t0^2; vel_t = v0 + a*t0",
+  "geometry": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    -30,
+    60
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    -30,
+    60
+   ],
+   "fns": [
+    {
+     "fn": "v0*x + 0.5*a*x^2",
+     "label": "x(t) 위치",
+     "color": "blue"
+    },
+    {
+     "fn": "pos_t + vel_t*(x - t0)",
+     "label": "접선",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "위치 x(t)",
+    "expr": "pos_t",
+    "digits": 3
+   },
+   {
+    "label": "속도 v(t)",
+    "expr": "vel_t",
+    "digits": 3
+   },
+   {
+    "label": "가속도 a",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "이동 거리 s",
+    "expr": "pos_t",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "v0": 1,
+    "a": 0.2,
+    "t0": 2
+   },
+   {
+    "v0": 0,
+    "a": 0.5,
+    "t0": 5
+   },
+   {
+    "v0": 3,
+    "a": 0,
+    "t0": 3
+   },
+   {
+    "v0": 2,
+    "a": 0.5,
+    "t0": 8
+   }
+  ],
+  "invariants": [
+   "pos_t - (v0*t0 + 0.5*a*t0^2)",
+   "vel_t - (v0 + a*t0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "v0": 2,
+     "a": 0.5,
+     "t0": 4
+    },
+    "expect": {
+     "pos_t": 12,
+     "vel_t": 4
+    }
+   },
+   {
+    "params": {
+     "v0": 3,
+     "a": 0,
+     "t0": 5
+    },
+    "expect": {
+     "pos_t": 15,
+     "vel_t": 3
+    }
+   },
+   {
+    "params": {
+     "v0": 1,
+     "a": 0.5,
+     "t0": 2
+    },
+    "expect": {
+     "pos_t": 3,
+     "vel_t": 2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

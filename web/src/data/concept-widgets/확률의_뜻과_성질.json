@@ -1,0 +1,99 @@
+{
+ "id": "확률의_뜻과_성질",
+ "spec": {
+  "title": "확률의 뜻과 성질",
+  "params": [
+   {
+    "name": "nA",
+    "label": "사건 A의 경우의 수 n(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "nS=6; p=nA/nS;",
+  "plot": {
+   "range": [
+    0,
+    6
+   ],
+   "yRange": [
+    0,
+    1
+   ],
+   "fns": [
+    {
+     "fn": "x/nS",
+     "label": "P(A) = n(A)/n(S)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "사건 A의 경우의 수 n(A)",
+    "expr": "nA",
+    "digits": 0
+   },
+   {
+    "label": "전체 경우의 수 n(S)",
+    "expr": "nS",
+    "digits": 0
+   },
+   {
+    "label": "확률 P(A)",
+    "expr": "p",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "nA": 0
+   },
+   {
+    "nA": 1
+   },
+   {
+    "nA": 3
+   },
+   {
+    "nA": 6
+   }
+  ],
+  "invariants": [
+   "abs(p - nA/nS)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "nA": 0
+    },
+    "expect": {
+     "p": 0
+    }
+   },
+   {
+    "params": {
+     "nA": 2
+    },
+    "expect": {
+     "p": 0.3333333333333333
+    }
+   },
+   {
+    "params": {
+     "nA": 5
+    },
+    "expect": {
+     "p": 0.8333333333333334
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

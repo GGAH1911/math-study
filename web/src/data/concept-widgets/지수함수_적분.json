@@ -1,0 +1,105 @@
+{
+ "id": "지수함수_적분",
+ "spec": {
+  "title": "지수함수 적분 탐구: ∫aˣ dx = aˣ / ln a",
+  "params": [
+   {
+    "name": "a",
+    "label": "밑 a",
+    "type": "slider",
+    "min": 1.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "lna=log(a); F1=a/lna; h=1e-7; Fh=a^(1+h)/lna; der=(Fh-F1)/h;",
+  "geometry": null,
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "a^x",
+     "label": "f(x)=aˣ",
+     "color": "blue"
+    },
+    {
+     "fn": "a^x/lna",
+     "label": "F(x)=∫aˣ dx",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "밑 a",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "ln a",
+    "expr": "lna",
+    "digits": 5
+   },
+   {
+    "label": "F(1)=a/ln a",
+    "expr": "F1",
+    "digits": 5
+   },
+   {
+    "label": "수치미분 dF/dx(1)",
+    "expr": "der",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 2.7
+   },
+   {
+    "a": 3
+   }
+  ],
+  "invariants": [
+   "abs(der-a)",
+   "abs(F1*lna - a)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 2
+    },
+    "expect": {
+     "lna": 0.693147180559945,
+     "F1": 2.885390081777927
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "lna": 1.09861228866811,
+     "F1": 2.73071768
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

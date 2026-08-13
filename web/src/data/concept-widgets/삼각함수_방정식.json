@@ -1,0 +1,177 @@
+{
+ "id": "삼각함수_방정식",
+ "spec": {
+  "title": "삼각함수 방정식: sin x = a",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01
+   }
+  ],
+  "scope": "xc=sqrt(1-a^2); s=asin(a); x1=s; x2=pi-s; x1deg=x1*180/pi; x2deg=x2*180/pi",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-xc",
+      "=a"
+     ],
+     "to": [
+      "=xc",
+      "=a"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=xc",
+      "=a"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=-xc",
+      "=a"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=xc",
+      "=a"
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=-xc",
+      "=a"
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 3
+   },
+   {
+    "label": "해1 (rad)",
+    "expr": "x1",
+    "digits": 6
+   },
+   {
+    "label": "해2 (rad)",
+    "expr": "x2",
+    "digits": 6
+   },
+   {
+    "label": "해1 (deg)",
+    "expr": "x1deg",
+    "digits": 2
+   },
+   {
+    "label": "해2 (deg)",
+    "expr": "x2deg",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 0.5
+   },
+   {
+    "a": -0.5
+   },
+   {
+    "a": 1
+   }
+  ],
+  "invariants": [
+   "sin(x1)-a",
+   "sin(x2)-a",
+   "xc^2+a^2-1",
+   "x1+x2-pi"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "x1": 0,
+     "x2": 3.141592653589793,
+     "xc": 1,
+     "x1deg": 0,
+     "x2deg": 180
+    }
+   },
+   {
+    "params": {
+     "a": 0.5
+    },
+    "expect": {
+     "x1": 0.5235987755982988,
+     "x2": 2.617993877991494,
+     "xc": 0.8660254037844386,
+     "x1deg": 30,
+     "x2deg": 150
+    }
+   },
+   {
+    "params": {
+     "a": -0.5
+    },
+    "expect": {
+     "x1": -0.5235987755982988,
+     "x2": 3.665191429188092,
+     "xc": 0.8660254037844386,
+     "x1deg": -30,
+     "x2deg": 210
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

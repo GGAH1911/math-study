@@ -1,0 +1,229 @@
+{
+ "id": "선형변환",
+ "spec": {
+  "title": "선형변환",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "det=a*d-b*c; v1x=0; v1y=0; v2x=a; v2y=c; v3x=a+b; v3y=c+d; v4x=b; v4y=d; area_shoelace=0.5*abs((v1x*v2y-v2x*v1y)+(v2x*v3y-v3x*v2y)+(v3x*v4y-v4x*v3y)+(v4x*v1y-v1x*v4y)); tvx=2*a+3*b; tvy=2*c+3*d",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a+b",
+       "=c+d"
+      ],
+      [
+       "=b",
+       "=d"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=c"
+     ],
+     "label": "T(e₁)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      "=d"
+     ],
+     "label": "T(e₂)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a+b",
+      "=c+d"
+     ],
+     "label": "T(1,1)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=a",
+      "=c"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=b",
+      "=d"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "행렬식 det(T)",
+    "expr": "det",
+    "digits": 3
+   },
+   {
+    "label": "T(1,1) x",
+    "expr": "v3x",
+    "digits": 3
+   },
+   {
+    "label": "T(1,1) y",
+    "expr": "v3y",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3,
+    "d": 4
+   },
+   {
+    "a": -1,
+    "b": 0.5,
+    "c": 2,
+    "d": -1
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": -1,
+    "d": 0
+   }
+  ],
+  "invariants": [
+   "abs(area_shoelace - abs(a*d-b*c))",
+   "abs(v3x - (a+b))",
+   "abs(v3y - (c+d))",
+   "abs(tvx - (2*a+3*b))",
+   "abs(tvy - (2*c+3*d))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3,
+     "d": 4
+    },
+    "expect": {
+     "det": -2,
+     "area_shoelace": 2,
+     "v3x": 3,
+     "v3y": 7,
+     "tvx": 8,
+     "tvy": 18
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": -1,
+     "d": 0
+    },
+    "expect": {
+     "det": 1,
+     "area_shoelace": 1,
+     "v3x": 1,
+     "v3y": -1,
+     "tvx": 3,
+     "tvy": -2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0.5,
+     "c": 2,
+     "d": -1
+    },
+    "expect": {
+     "det": 0,
+     "area_shoelace": 0,
+     "v3x": -0.5,
+     "v3y": 1,
+     "tvx": -0.5,
+     "tvy": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

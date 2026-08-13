@@ -1,0 +1,94 @@
+{
+ "id": "함숫값",
+ "spec": {
+  "title": "함숫값 f(x) 탐구",
+  "params": [
+   {
+    "name": "xval",
+    "label": "x",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "y = xval^2",
+  "plot": {
+   "range": [
+    -3.5,
+    3.5
+   ],
+   "yRange": [
+    -1,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "x^2",
+     "label": "f(x) = x^2",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "xval",
+    "digits": 2
+   },
+   {
+    "label": "f(x)",
+    "expr": "y",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "xval": -2
+   },
+   {
+    "xval": 0
+   },
+   {
+    "xval": 1.5
+   },
+   {
+    "xval": 3
+   }
+  ],
+  "invariants": [
+   "y - xval^2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "xval": 1
+    },
+    "expect": {
+     "y": 1
+    }
+   },
+   {
+    "params": {
+     "xval": 2
+    },
+    "expect": {
+     "y": 4
+    }
+   },
+   {
+    "params": {
+     "xval": -3
+    },
+    "expect": {
+     "y": 9
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,153 @@
+{
+ "id": "사인함수의_성질",
+ "spec": {
+  "title": "사인함수의 성질",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ (°)",
+    "type": "slider",
+    "min": -360,
+    "max": 360,
+    "init": 30,
+    "step": 1
+   }
+  ],
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); sy_neg=sin(-rad); sy_period=sin(rad+2*pi)",
+  "geometry": {
+   "range": [
+    -1.4,
+    1.4
+   ],
+   "yRange": [
+    -1.4,
+    1.4
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cx",
+      "=sy"
+     ],
+     "to": [
+      "=cx",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin θ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "cos θ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "sin(-θ)",
+    "expr": "sy_neg",
+    "digits": 4
+   },
+   {
+    "label": "sin(θ+2π)",
+    "expr": "sy_period",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": -180
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 90
+   },
+   {
+    "theta": 200
+   }
+  ],
+  "invariants": [
+   "cx^2 + sy^2 - 1",
+   "sy - sin(rad)",
+   "sy_period - sy",
+   "sy_neg + sy"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "rad": 0.5235987755982988,
+     "cx": 0.8660254037844386,
+     "sy": 0.5,
+     "sy_neg": -0.5,
+     "sy_period": 0.5
+    }
+   },
+   {
+    "params": {
+     "theta": 90
+    },
+    "expect": {
+     "rad": 1.5707963267948966,
+     "cx": 0,
+     "sy": 1,
+     "sy_neg": -1,
+     "sy_period": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 180
+    },
+    "expect": {
+     "rad": 3.141592653589793,
+     "cx": -1,
+     "sy": 0,
+     "sy_neg": 0,
+     "sy_period": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

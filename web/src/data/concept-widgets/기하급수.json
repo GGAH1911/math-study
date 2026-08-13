@@ -1,0 +1,146 @@
+{
+ "id": "기하급수",
+ "spec": {
+  "title": "기하급수: 부분합과 수렴",
+  "params": [
+   {
+    "name": "a",
+    "label": "첫째항 a",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "r",
+    "label": "공비 r",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   },
+   {
+    "name": "n",
+    "label": "항의 개수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 20,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "Sn = r == 1 ? a*n : a*(1-r^n)/(1-r); Sinf = abs(r) < 1 ? a/(1-r) : 0; ymax = max(abs(Sn), abs(Sinf), 1) * 1.1",
+  "geometry": {
+   "range": [
+    0,
+    "=n"
+   ],
+   "yRange": [
+    "=-ymax",
+    "=ymax"
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    0,
+    "=n"
+   ],
+   "yRange": [
+    "=-ymax",
+    "=ymax"
+   ],
+   "fns": [
+    {
+     "fn": "r == 1 ? a*x : a*(1-r^x)/(1-r)",
+     "label": "부분합 S(n)",
+     "color": "blue"
+    },
+    {
+     "fn": "abs(r) < 1 ? a/(1-r) : 1e308",
+     "label": "무한합 S∞",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "S_n",
+    "expr": "Sn",
+    "digits": 4
+   },
+   {
+    "label": "a_n",
+    "expr": "a*r^(n-1)",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "r": 0.5,
+    "n": 3
+   },
+   {
+    "a": 1,
+    "r": 2,
+    "n": 3
+   },
+   {
+    "a": 2,
+    "r": 1,
+    "n": 4
+   },
+   {
+    "a": 1,
+    "r": 0.8,
+    "n": 10
+   }
+  ],
+  "invariants": [
+   "Sn*(1-r) - a*(1-r^n)",
+   "Sn - (r == 1 ? a*(n-1) : a*(1-r^(n-1))/(1-r)) - a*r^(n-1)",
+   "abs(r) < 1 ? Sinf - a/(1-r) : 0"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "r": 0.5,
+     "n": 3
+    },
+    "expect": {
+     "Sn": 1.75,
+     "Sinf": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "r": 2,
+     "n": 3
+    },
+    "expect": {
+     "Sn": 7
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "r": 1,
+     "n": 4
+    },
+    "expect": {
+     "Sn": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

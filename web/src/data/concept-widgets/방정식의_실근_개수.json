@@ -1,0 +1,147 @@
+{
+ "id": "방정식의_실근_개수",
+ "spec": {
+  "title": "방정식의 실근 개수 (삼차함수 y=x³-3x+k)",
+  "params": [
+   {
+    "name": "k",
+    "label": "상수항 k",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "yMax = k+2; yMin = k-2; product = yMax*yMin; disc = 108 - 27*k^2; rootCount = (disc > 0) ? 3 : ((disc < 0) ? 1 : 2)",
+  "geometry": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*x + k",
+     "label": "f(x) = x³ - 3x + k",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "k",
+    "expr": "k",
+    "digits": 2
+   },
+   {
+    "label": "극댓값",
+    "expr": "yMax",
+    "digits": 2
+   },
+   {
+    "label": "극솟값",
+    "expr": "yMin",
+    "digits": 2
+   },
+   {
+    "label": "극값의 곱",
+    "expr": "product",
+    "digits": 2
+   },
+   {
+    "label": "판별식 Δ",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "rootCount",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": -3
+   },
+   {
+    "k": -2
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 2
+   },
+   {
+    "k": 3
+   }
+  ],
+  "invariants": [
+   "yMax - (k+2)",
+   "yMin - (k-2)",
+   "product - (k^2 - 4)",
+   "disc - (108 - 27*k^2)",
+   "product + disc/27",
+   "rootCount - ((product < 0) ? 3 : ((product > 0) ? 1 : 2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": -2
+    },
+    "expect": {
+     "yMax": 0,
+     "yMin": -4,
+     "product": 0,
+     "disc": 0,
+     "rootCount": 2
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "yMax": 2,
+     "yMin": -2,
+     "product": -4,
+     "disc": 108,
+     "rootCount": 3
+    }
+   },
+   {
+    "params": {
+     "k": 3
+    },
+    "expect": {
+     "yMax": 5,
+     "yMin": 1,
+     "product": 5,
+     "disc": -135,
+     "rootCount": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

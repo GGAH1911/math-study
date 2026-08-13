@@ -1,0 +1,149 @@
+{
+ "id": "equations/middle-2/연립일차방정식/그래프를_이용한_연립방정식의_풀이",
+ "spec": {
+  "title": "그래프를 이용한 연립방정식의 풀이",
+  "params": [
+   {
+    "name": "m1",
+    "label": "기울기 m₁",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b1",
+    "label": "y절편 b₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "m2",
+    "label": "기울기 m₂",
+    "type": "slider",
+    "min": -3,
+    "max": -0.5,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "b2",
+    "label": "y절편 b₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "x=(b2-b1)/(m1-m2); y=m1*x+b1;",
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "fns": [
+    {
+     "fn": "m1*x+b1",
+     "label": "y = m₁x + b₁",
+     "color": "blue"
+    },
+    {
+     "fn": "m2*x+b2",
+     "label": "y = m₂x + b₂",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "해 x",
+    "expr": "x",
+    "digits": 4
+   },
+   {
+    "label": "해 y",
+    "expr": "y",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "m1": 1,
+    "b1": 2,
+    "m2": -1,
+    "b2": 4
+   },
+   {
+    "m1": 0.5,
+    "b1": -1,
+    "m2": -2,
+    "b2": 1
+   },
+   {
+    "m1": 2,
+    "b1": 0,
+    "m2": -0.5,
+    "b2": -3
+   },
+   {
+    "m1": 1.5,
+    "b1": 1,
+    "m2": -1,
+    "b2": 2
+   }
+  ],
+  "invariants": [
+   "abs(y - (m1*x + b1)) + abs(y - (m2*x + b2))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "m1": 1,
+     "b1": 2,
+     "m2": -1,
+     "b2": 4
+    },
+    "expect": {
+     "x": 1,
+     "y": 3
+    }
+   },
+   {
+    "params": {
+     "m1": 1,
+     "b1": 1,
+     "m2": -2,
+     "b2": 4
+    },
+    "expect": {
+     "x": 1,
+     "y": 2
+    }
+   },
+   {
+    "params": {
+     "m1": 2,
+     "b1": -3,
+     "m2": -1,
+     "b2": 0
+    },
+    "expect": {
+     "x": 1,
+     "y": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "id": "최댓값_구하기",
+ "spec": {
+  "title": "최댓값 구하기",
+  "params": [
+   {
+    "name": "b",
+    "label": "오른쪽 끝점 b",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3.5,
+    "init": 1.5,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "xmax = (b <= 2) ? b : 2; M = (b <= 2) ? (b - 1) : 1",
+  "plot": {
+   "range": [
+    0,
+    "=b"
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "fns": [
+    {
+     "fn": "1 - abs(x - 2)",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "M",
+     "label": "최댓값",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 위치 x",
+    "expr": "xmax",
+    "digits": 3
+   },
+   {
+    "label": "최댓값 f(x)",
+    "expr": "M",
+    "digits": 3
+   },
+   {
+    "label": "우측 끝점 f(b)",
+    "expr": "1 - abs(b - 2)",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 1.2
+   },
+   {
+    "b": 1.8
+   },
+   {
+    "b": 2
+   },
+   {
+    "b": 3
+   }
+  ],
+  "invariants": [
+   "M - max([-1, 1 - abs(b - 2), (b > 2 ? 1 : -100)])"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1.5
+    },
+    "expect": {
+     "xmax": 1.5,
+     "M": 0.5
+    }
+   },
+   {
+    "params": {
+     "b": 2
+    },
+    "expect": {
+     "xmax": 2,
+     "M": 1
+    }
+   },
+   {
+    "params": {
+     "b": 3
+    },
+    "expect": {
+     "xmax": 2,
+     "M": 1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

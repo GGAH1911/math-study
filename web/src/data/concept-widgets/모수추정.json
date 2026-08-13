@@ -1,0 +1,124 @@
+{
+ "id": "모수추정",
+ "spec": {
+  "title": "모수추정: 표본평균의 분포",
+  "params": [
+   {
+    "name": "n",
+    "label": "표본 크기 n",
+    "type": "slider",
+    "min": 1,
+    "max": 50,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "sigma=1; mu=0; d_pop=1/(sigma*sqrt(2*pi)); d_samp=sqrt(n)/(sigma*sqrt(2*pi))",
+  "geometry": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    0,
+    3
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    0,
+    3
+   ],
+   "fns": [
+    {
+     "fn": "1/(sigma*sqrt(2*pi))*exp(-(x-mu)^2/(2*sigma^2))",
+     "label": "모집단 분포",
+     "color": "blue"
+    },
+    {
+     "fn": "1/((sigma/sqrt(n))*sqrt(2*pi))*exp(-(x-mu)^2/(2*(sigma/sqrt(n))^2))",
+     "label": "표본평균의 분포",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "모평균 μ",
+    "expr": "mu",
+    "digits": 2
+   },
+   {
+    "label": "표준오차 σ/√n",
+    "expr": "sigma/sqrt(n)",
+    "digits": 4
+   },
+   {
+    "label": "모분포의 f(μ)",
+    "expr": "d_pop",
+    "digits": 6
+   },
+   {
+    "label": "표본평균 분포의 f(μ)",
+    "expr": "d_samp",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 4
+   },
+   {
+    "n": 9
+   },
+   {
+    "n": 16
+   }
+  ],
+  "invariants": [
+   "d_samp - sqrt(n)*d_pop"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "d_samp": 0.3989422804,
+     "d_pop": 0.3989422804
+    }
+   },
+   {
+    "params": {
+     "n": 4
+    },
+    "expect": {
+     "d_samp": 0.7978845608,
+     "d_pop": 0.3989422804
+    }
+   },
+   {
+    "params": {
+     "n": 9
+    },
+    "expect": {
+     "d_samp": 1.1968268412,
+     "d_pop": 0.3989422804
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

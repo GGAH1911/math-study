@@ -1,0 +1,116 @@
+{
+ "id": "역추적",
+ "spec": {
+  "title": "역추적",
+  "params": [
+   {
+    "name": "y",
+    "label": "최종 결과값",
+    "type": "slider",
+    "min": 0,
+    "max": 20,
+    "init": 10,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "m = y / 2; x = m - 3",
+  "geometry": {
+   "range": [
+    -5,
+    15
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      "=y",
+      0
+     ],
+     "label": "결과값"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      0
+     ],
+     "label": "중간값"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      0
+     ],
+     "label": "초기값"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "중간값 (y/2)",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "초기값 (y/2 - 3)",
+    "expr": "x",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "y": 4
+   },
+   {
+    "y": 10
+   },
+   {
+    "y": 20
+   }
+  ],
+  "invariants": [
+   "m - (x + 3)",
+   "y - (m * 2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "y": 20
+    },
+    "expect": {
+     "m": 10,
+     "x": 7
+    }
+   },
+   {
+    "params": {
+     "y": 6
+    },
+    "expect": {
+     "m": 3,
+     "x": 0
+    }
+   },
+   {
+    "params": {
+     "y": 0
+    },
+    "expect": {
+     "m": 0,
+     "x": -3
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

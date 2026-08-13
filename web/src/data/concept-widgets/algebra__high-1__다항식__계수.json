@@ -1,0 +1,158 @@
+{
+ "id": "algebra/high-1/다항식/계수",
+ "spec": {
+  "title": "다항식의 계수와 그래프",
+  "params": [
+   {
+    "name": "a",
+    "label": "x²의 계수 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "x의 계수 b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "상수항 c",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 1
+   }
+  ],
+  "scope": "f_0 = c; f_1 = a + b + c; f_m1 = a - b + c",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -15,
+    15
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2",
+     "label": "이차항 a x²",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "b*x",
+     "label": "일차항 b x",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "c",
+     "label": "상수항 c",
+     "color": "#9333ea"
+    },
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "전체 f(x) = a x² + b x + c",
+     "color": "#2563eb"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "상수항 f(0)",
+    "expr": "f_0",
+    "digits": 2
+   },
+   {
+    "label": "f(1) = a+b+c",
+    "expr": "f_1",
+    "digits": 2
+   },
+   {
+    "label": "f(-1) = a-b+c",
+    "expr": "f_m1",
+    "digits": 2
+   },
+   {
+    "label": "f(1)-2f(0)+f(-1) = 2a",
+    "expr": "f_1 - 2*f_0 + f_m1",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 2,
+    "b": -3,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 4
+   },
+   {
+    "a": 0,
+    "b": 3,
+    "c": -2
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": -3
+   }
+  ],
+  "invariants": [
+   "f_1 - 2*f_0 + f_m1 - 2*a",
+   "f_1 - f_m1 - 2*b",
+   "f_0 - c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": 1
+    },
+    "expect": {
+     "f_0": 1,
+     "f_1": 0,
+     "f_m1": 4
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 4
+    },
+    "expect": {
+     "f_0": 4,
+     "f_1": 3,
+     "f_m1": 3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -3,
+     "c": 1
+    },
+    "expect": {
+     "f_0": 1,
+     "f_1": 0,
+     "f_m1": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

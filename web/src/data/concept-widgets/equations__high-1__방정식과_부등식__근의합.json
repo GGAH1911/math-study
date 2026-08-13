@@ -1,0 +1,153 @@
+{
+ "id": "equations/high-1/방정식과_부등식/근의합",
+ "spec": {
+  "title": "근의합 (이차방정식 근과 계수의 관계)",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (이차항 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "alpha",
+    "label": "α (첫 번째 근)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "beta",
+    "label": "β (두 번째 근)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.5
+   }
+  ],
+  "scope": "b=-a*(alpha+beta); c=a*alpha*beta; sum_root=alpha+beta; sum_coeff=-b/a; product_root=alpha*beta; product_coeff=c/a; mid=(alpha+beta)/2;",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -50,
+    50
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "근의합 (α+β)",
+    "expr": "sum_root",
+    "digits": 4
+   },
+   {
+    "label": "근의합 (계수: -b/a)",
+    "expr": "sum_coeff",
+    "digits": 4
+   },
+   {
+    "label": "근의곱 (αβ)",
+    "expr": "product_root",
+    "digits": 4
+   },
+   {
+    "label": "근의곱 (계수: c/a)",
+    "expr": "product_coeff",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "alpha": 2,
+    "beta": 3
+   },
+   {
+    "a": 2,
+    "alpha": 1,
+    "beta": -4
+   },
+   {
+    "a": -1,
+    "alpha": 2,
+    "beta": 5
+   },
+   {
+    "a": 1,
+    "alpha": -2,
+    "beta": -3
+   }
+  ],
+  "invariants": [
+   "sum_root-sum_coeff",
+   "product_root-product_coeff",
+   "a*alpha^2+b*alpha+c",
+   "a*beta^2+b*beta+c"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "alpha": 2,
+     "beta": 3
+    },
+    "expect": {
+     "b": -5,
+     "c": 6,
+     "sum_root": 5,
+     "sum_coeff": 5,
+     "product_root": 6,
+     "product_coeff": 6
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "alpha": 1,
+     "beta": -4
+    },
+    "expect": {
+     "b": 6,
+     "c": -8,
+     "sum_root": -3,
+     "sum_coeff": -3,
+     "product_root": -4,
+     "product_coeff": -4
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "alpha": 2,
+     "beta": 5
+    },
+    "expect": {
+     "b": 7,
+     "c": -10,
+     "sum_root": 7,
+     "sum_coeff": 7,
+     "product_root": 10,
+     "product_coeff": 10
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

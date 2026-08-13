@@ -1,0 +1,117 @@
+{
+ "id": "함수의_최대최소값",
+ "spec": {
+  "title": "함수의 최댓값과 최솟값",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (계수)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "v1=(-2)^3-a*(-2); v2=2^3-a*2; v3=(-sqrt(a/3))^3-a*(-sqrt(a/3)); v4=(sqrt(a/3))^3-a*sqrt(a/3); max_val=max([v1,v2,v3,v4]); min_val=min([v1,v2,v3,v4]); x_max=(v3==max_val)?-sqrt(a/3):((v4==max_val)?sqrt(a/3):((v1==max_val)?-2:2)); x_min=(v4==min_val)?sqrt(a/3):((v3==min_val)?-sqrt(a/3):((v1==min_val)?-2:2))",
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -7,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - a*x",
+     "label": "f(x)",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "최댓값 M",
+    "expr": "max_val",
+    "digits": 4
+   },
+   {
+    "label": "최솟값 m",
+    "expr": "min_val",
+    "digits": 4
+   },
+   {
+    "label": "x (최댓값)",
+    "expr": "x_max",
+    "digits": 4
+   },
+   {
+    "label": "x (최솟값)",
+    "expr": "x_min",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 0.75
+   },
+   {
+    "a": 3
+   },
+   {
+    "a": 4.32
+   }
+  ],
+  "invariants": [
+   "max_val - (x_max^3 - a*x_max)",
+   "min_val - (x_min^3 - a*x_min)",
+   "3*(sqrt(a/3))^2 - a",
+   "max_val - max([v1,v2,v3,v4])",
+   "min_val - min([v1,v2,v3,v4])"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "max_val": 8,
+     "min_val": -8,
+     "x_max": 2,
+     "x_min": -2
+    }
+   },
+   {
+    "params": {
+     "a": 3
+    },
+    "expect": {
+     "max_val": 2,
+     "min_val": -2,
+     "x_max": -1,
+     "x_min": 1
+    }
+   },
+   {
+    "params": {
+     "a": 4.32
+    },
+    "expect": {
+     "max_val": 3.456,
+     "min_val": -3.456,
+     "x_max": -1.2,
+     "x_min": 1.2
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

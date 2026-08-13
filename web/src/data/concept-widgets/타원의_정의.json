@@ -1,0 +1,160 @@
+{
+ "id": "타원의_정의",
+ "spec": {
+  "title": "타원의 정의: 두 초점으로부터의 거리의 합이 일정한 점의 자취",
+  "params": [
+   {
+    "name": "a",
+    "label": "장축 반지름 a",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 5,
+    "step": 0.1
+   },
+   {
+    "name": "ecc",
+    "label": "이심률 e",
+    "type": "slider",
+    "min": 0,
+    "max": 0.9,
+    "init": 0.6,
+    "step": 0.05
+   },
+   {
+    "name": "theta",
+    "label": "각도 θ (도)",
+    "type": "slider",
+    "min": 0,
+    "max": 360,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "rad = theta * pi / 180; c = a * ecc; b = sqrt(a*a - c*c); px = a * cos(rad); py = b * sin(rad); d1 = sqrt((px - c)^2 + py^2); d2 = sqrt((px + c)^2 + py^2); sumd = d1 + d2",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "b * sqrt(1 - (x/a)^2)",
+     "label": "타원",
+     "color": "blue"
+    },
+    {
+     "fn": "-b * sqrt(1 - (x/a)^2)",
+     "label": "타원",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "거리의 합 d₁+d₂",
+    "expr": "sumd",
+    "digits": 4
+   },
+   {
+    "label": "d₁",
+    "expr": "d1",
+    "digits": 4
+   },
+   {
+    "label": "d₂",
+    "expr": "d2",
+    "digits": 4
+   },
+   {
+    "label": "반단축 b",
+    "expr": "b",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 5,
+    "ecc": 0.6,
+    "theta": 0
+   },
+   {
+    "a": 5,
+    "ecc": 0.6,
+    "theta": 90
+   },
+   {
+    "a": 3,
+    "ecc": 0.5,
+    "theta": 180
+   },
+   {
+    "a": 4,
+    "ecc": 0,
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "c*c + b*b - a*a",
+   "sumd - 2*a",
+   "px*px/(a*a) + py*py/(b*b) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 5,
+     "ecc": 0.6,
+     "theta": 0
+    },
+    "expect": {
+     "c": 3,
+     "b": 4,
+     "px": 5,
+     "py": 0,
+     "d1": 2,
+     "d2": 8,
+     "sumd": 10
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "ecc": 0.6,
+     "theta": 90
+    },
+    "expect": {
+     "c": 3,
+     "b": 4,
+     "px": 0,
+     "py": 4,
+     "d1": 5,
+     "d2": 5,
+     "sumd": 10
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "ecc": 0.5,
+     "theta": 180
+    },
+    "expect": {
+     "c": 1.5,
+     "b": 2.598076211353316,
+     "px": -3,
+     "py": 0,
+     "d1": 4.5,
+     "d2": 1.5,
+     "sumd": 6
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,310 @@
+{
+ "id": "시그마의_선형성",
+ "spec": {
+  "title": "시그마의 선형성",
+  "params": [
+   {
+    "name": "n",
+    "label": "n (항의 개수)",
+    "type": "slider",
+    "min": 1,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "c (상수)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 5,
+    "init": 2,
+    "step": 0.5
+   }
+  ],
+  "scope": "sumA = n*(n+1)/2; sumB = n*(n+1)*(2*n+1)/6; sumAB = sumA + sumB; cSumA = c*sumA; sumCA = c*sumA;",
+  "geometry": {
+   "range": [
+    -1,
+    7.5
+   ],
+   "yRange": [
+    0,
+    450
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0.4,
+       0
+      ],
+      [
+       0.4,
+       "=sumA"
+      ],
+      [
+       0,
+       "=sumA"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       1,
+       0
+      ],
+      [
+       1.4,
+       0
+      ],
+      [
+       1.4,
+       "=cSumA"
+      ],
+      [
+       1,
+       "=cSumA"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       2,
+       0
+      ],
+      [
+       2.4,
+       0
+      ],
+      [
+       2.4,
+       "=sumCA"
+      ],
+      [
+       2,
+       "=sumCA"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       4,
+       0
+      ],
+      [
+       4.4,
+       0
+      ],
+      [
+       4.4,
+       "=sumA"
+      ],
+      [
+       4,
+       "=sumA"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       5,
+       0
+      ],
+      [
+       5.4,
+       0
+      ],
+      [
+       5.4,
+       "=sumB"
+      ],
+      [
+       5,
+       "=sumB"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       6,
+       0
+      ],
+      [
+       6.4,
+       0
+      ],
+      [
+       6.4,
+       "=sumAB"
+      ],
+      [
+       6,
+       "=sumAB"
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0.2,
+      "=sumA"
+     ],
+     "label": "Σa"
+    },
+    {
+     "type": "point",
+     "at": [
+      1.2,
+      "=cSumA"
+     ],
+     "label": "cΣa"
+    },
+    {
+     "type": "point",
+     "at": [
+      2.2,
+      "=sumCA"
+     ],
+     "label": "Σ(ca)"
+    },
+    {
+     "type": "point",
+     "at": [
+      4.2,
+      "=sumA"
+     ],
+     "label": "Σa"
+    },
+    {
+     "type": "point",
+     "at": [
+      5.2,
+      "=sumB"
+     ],
+     "label": "Σb"
+    },
+    {
+     "type": "point",
+     "at": [
+      6.2,
+      "=sumAB"
+     ],
+     "label": "Σ(a+b)"
+    }
+   ]
+  },
+  "plot": null,
+  "readout": [
+   {
+    "label": "Σa",
+    "expr": "sumA",
+    "digits": 6
+   },
+   {
+    "label": "Σb",
+    "expr": "sumB",
+    "digits": 6
+   },
+   {
+    "label": "cΣa",
+    "expr": "cSumA",
+    "digits": 6
+   },
+   {
+    "label": "Σ(ca)",
+    "expr": "sumCA",
+    "digits": 6
+   },
+   {
+    "label": "Σ(a+b)",
+    "expr": "sumAB",
+    "digits": 6
+   },
+   {
+    "label": "Σa+Σb",
+    "expr": "sumA+sumB",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 3,
+    "c": 2
+   },
+   {
+    "n": 5,
+    "c": 3
+   },
+   {
+    "n": 2,
+    "c": 0.5
+   }
+  ],
+  "invariants": [
+   "sumCA - cSumA",
+   "sumAB - (sumA + sumB)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 3,
+     "c": 2
+    },
+    "expect": {
+     "sumA": 6,
+     "sumB": 14,
+     "sumAB": 20,
+     "cSumA": 12,
+     "sumCA": 12
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "c": 3
+    },
+    "expect": {
+     "sumA": 15,
+     "sumB": 55,
+     "sumAB": 70,
+     "cSumA": 45,
+     "sumCA": 45
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "c": 0.5
+    },
+    "expect": {
+     "sumA": 3,
+     "sumB": 5,
+     "sumAB": 8,
+     "cSumA": 1.5,
+     "sumCA": 1.5
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

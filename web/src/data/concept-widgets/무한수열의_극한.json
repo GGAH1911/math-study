@@ -1,0 +1,105 @@
+{
+ "id": "무한수열의_극한",
+ "spec": {
+  "title": "무한수열의 극한: a_n = 1 + 1/n",
+  "params": [
+   {
+    "name": "N",
+    "label": "N (자연수)",
+    "type": "slider",
+    "min": 1,
+    "max": 30,
+    "init": 5,
+    "step": 1
+   }
+  ],
+  "scope": "L=1; eps=1/(N+1); an=1+1/(N+1)",
+  "plot": {
+   "range": [
+    1,
+    35
+   ],
+   "yRange": [
+    0.4,
+    2.2
+   ],
+   "fns": [
+    {
+     "fn": "1+1/x",
+     "label": "a_n = 1 + 1/n",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "N",
+    "expr": "N"
+   },
+   {
+    "label": "ε = 1/(N+1)",
+    "expr": "eps"
+   },
+   {
+    "label": "a_{N+1}",
+    "expr": "an"
+   },
+   {
+    "label": "|a_{N+1} - L|",
+    "expr": "abs(an-1)"
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "N": 1
+   },
+   {
+    "N": 5
+   },
+   {
+    "N": 10
+   },
+   {
+    "N": 20
+   }
+  ],
+  "invariants": [
+   "abs(an - (1+1/(N+1)))",
+   "abs(eps - 1/(N+1))",
+   "abs(an - L - eps)",
+   "abs((N+1)*eps - 1)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "N": 1
+    },
+    "expect": {
+     "eps": 0.5,
+     "an": 1.5
+    }
+   },
+   {
+    "params": {
+     "N": 5
+    },
+    "expect": {
+     "eps": 0.16666666666666666,
+     "an": 1.1666666666666667
+    }
+   },
+   {
+    "params": {
+     "N": 10
+    },
+    "expect": {
+     "eps": 0.09090909090909091,
+     "an": 1.0909090909090908
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

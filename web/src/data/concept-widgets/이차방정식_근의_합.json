@@ -1,0 +1,170 @@
+{
+ "id": "이차방정식_근의_합",
+ "spec": {
+  "title": "이차방정식 근의 합",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": -3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -10,
+    "max": 10,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "sum=-b/a; avg=-b/(2*a); disc=b^2-4*a*c; r1=(-b+sqrt(disc))/(2*a); r2=(-b-sqrt(disc))/(2*a);",
+  "geometry": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -40,
+    40
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -10,
+    10
+   ],
+   "yRange": [
+    -40,
+    40
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "label": "y=ax^2+bx+c",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "두 근의 합 α+β",
+    "expr": "sum",
+    "digits": 2
+   },
+   {
+    "label": "대칭축 x",
+    "expr": "avg",
+    "digits": 2
+   },
+   {
+    "label": "판별식 D",
+    "expr": "disc",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -3,
+    "c": 2
+   },
+   {
+    "a": 2,
+    "b": -8,
+    "c": 6
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -4
+   },
+   {
+    "a": 2,
+    "b": 4,
+    "c": 2
+   }
+  ],
+  "invariants": [
+   "abs(r1 + r2 + b/a)",
+   "abs(a*r1^2 + b*r1 + c)",
+   "abs(a*r2^2 + b*r2 + c)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "c": 2
+    },
+    "expect": {
+     "sum": 3,
+     "avg": 1.5,
+     "r1": 2,
+     "r2": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -8,
+     "c": 6
+    },
+    "expect": {
+     "sum": 4,
+     "avg": 2,
+     "r1": 3,
+     "r2": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -4
+    },
+    "expect": {
+     "sum": 0,
+     "avg": 0,
+     "r1": 2,
+     "r2": -2
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 4,
+     "c": 2
+    },
+    "expect": {
+     "sum": -2,
+     "avg": -1,
+     "r1": -1,
+     "r2": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

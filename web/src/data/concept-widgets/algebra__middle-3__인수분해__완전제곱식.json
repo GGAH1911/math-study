@@ -1,0 +1,135 @@
+{
+ "id": "algebra/middle-3/인수분해/완전제곱식",
+ "spec": {
+  "title": "완전제곱식과 이차함수",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -2,
+    "max": 6.5,
+    "init": 1,
+    "step": 0.25,
+    "unit": ""
+   }
+  ],
+  "scope": "D = b^2 - 4*c; h = -b/2; k = c - b^2/4; p = b/2; isPerf = D == 0 ? 1 : 0;",
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -10,
+    10
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "x^2 + b*x + c",
+     "label": "y = x² + bx + c",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 x",
+    "expr": "h",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 y",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "b/2",
+    "expr": "p",
+    "digits": 3
+   },
+   {
+    "label": "완전제곱식?",
+    "expr": "isPerf",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": 2,
+    "c": 1
+   },
+   {
+    "b": -3,
+    "c": 2.25
+   },
+   {
+    "b": 0,
+    "c": 0
+   },
+   {
+    "b": 1,
+    "c": -2
+   }
+  ],
+  "invariants": [
+   "D + 4*k",
+   "2*h + b"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 2,
+     "c": 1
+    },
+    "expect": {
+     "D": 0,
+     "h": -1,
+     "k": 0
+    }
+   },
+   {
+    "params": {
+     "b": -4,
+     "c": 4
+    },
+    "expect": {
+     "D": 0,
+     "h": 2,
+     "k": 0
+    }
+   },
+   {
+    "params": {
+     "b": 1,
+     "c": 0
+    },
+    "expect": {
+     "D": 1,
+     "h": -0.5,
+     "k": -0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,180 @@
+{
+ "id": "tan함수",
+ "spec": {
+  "title": "tan 함수 탐구",
+  "params": [
+   {
+    "name": "theta",
+    "label": "θ",
+    "type": "slider",
+    "min": -360,
+    "max": 360,
+    "init": 30,
+    "step": 1,
+    "unit": "°"
+   }
+  ],
+  "scope": "rad = theta*pi/180; cx = cos(rad); sy = sin(rad); ty = tan(rad);",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -2,
+    2
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=sy"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cx",
+      "=sy"
+     ],
+     "label": "P"
+    },
+    {
+     "type": "line",
+     "from": [
+      1,
+      -2
+     ],
+     "to": [
+      1,
+      2
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0
+     ],
+     "to": [
+      1,
+      "=ty"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=ty"
+     ],
+     "label": "tanθ"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -360,
+    360
+   ],
+   "yRange": [
+    -5,
+    5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "tan(x*pi/180)",
+     "label": "y = tan θ",
+     "color": "blue"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "sin θ",
+    "expr": "sy",
+    "digits": 4
+   },
+   {
+    "label": "cos θ",
+    "expr": "cx",
+    "digits": 4
+   },
+   {
+    "label": "tan θ",
+    "expr": "ty",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "theta": -45
+   },
+   {
+    "theta": 0
+   },
+   {
+    "theta": 30
+   },
+   {
+    "theta": 60
+   }
+  ],
+  "invariants": [
+   "cx^2 + sy^2 - 1",
+   "ty - sy/cx",
+   "tan((theta+180)*pi/180) - ty"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "theta": -45
+    },
+    "expect": {
+     "cx": 0.7071067811865476,
+     "sy": -0.7071067811865476,
+     "ty": -1
+    }
+   },
+   {
+    "params": {
+     "theta": 30
+    },
+    "expect": {
+     "cx": 0.8660254037844386,
+     "sy": 0.5,
+     "ty": 0.5773502691896257
+    }
+   },
+   {
+    "params": {
+     "theta": 60
+    },
+    "expect": {
+     "cx": 0.5,
+     "sy": 0.8660254037844386,
+     "ty": 1.7320508075688772
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

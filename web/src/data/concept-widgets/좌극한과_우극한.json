@@ -1,0 +1,163 @@
+{
+ "id": "좌극한과_우극한",
+ "spec": {
+  "title": "좌극한과 우극한",
+  "params": [
+   {
+    "name": "k",
+    "label": "점프 크기 k",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "eps",
+    "label": "접근 거리 ε",
+    "type": "slider",
+    "min": 0.01,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "lLimit=0; rLimit=k; fL=(-eps)^2; fR=(eps)^2+k;",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -3,
+    7
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -3,
+    7
+   ],
+   "fns": [
+    {
+     "fn": "x < 0 ? x^2 : x^2 + k",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "0",
+     "label": "좌극한",
+     "color": "green"
+    },
+    {
+     "fn": "k",
+     "label": "우극한",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌극한",
+    "expr": "lLimit",
+    "digits": 4
+   },
+   {
+    "label": "우극한",
+    "expr": "rLimit",
+    "digits": 4
+   },
+   {
+    "label": "f(-ε)",
+    "expr": "fL",
+    "digits": 4
+   },
+   {
+    "label": "f(ε)",
+    "expr": "fR",
+    "digits": 4
+   },
+   {
+    "label": "우-좌 극한 차",
+    "expr": "rLimit-lLimit",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": 0,
+    "eps": 0.2
+   },
+   {
+    "k": 1,
+    "eps": 0.5
+   },
+   {
+    "k": -1,
+    "eps": 0.1
+   },
+   {
+    "k": 0.5,
+    "eps": 0.01
+   }
+  ],
+  "invariants": [
+   "lLimit - 0",
+   "rLimit - k",
+   "fL - eps^2",
+   "fR - (eps^2 + k)",
+   "rLimit - lLimit - k",
+   "fR - fL - k"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": 0,
+     "eps": 0.2
+    },
+    "expect": {
+     "fL": 0.04,
+     "fR": 0.04,
+     "lLimit": 0,
+     "rLimit": 0
+    }
+   },
+   {
+    "params": {
+     "k": 1,
+     "eps": 0.5
+    },
+    "expect": {
+     "fL": 0.25,
+     "fR": 1.25,
+     "lLimit": 0,
+     "rLimit": 1
+    }
+   },
+   {
+    "params": {
+     "k": -1,
+     "eps": 0.1
+    },
+    "expect": {
+     "fL": 0.01,
+     "fR": -0.99,
+     "lLimit": 0,
+     "rLimit": -1
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

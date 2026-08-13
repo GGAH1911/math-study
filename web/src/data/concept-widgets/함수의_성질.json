@@ -1,0 +1,168 @@
+{
+ "id": "함수의_성질",
+ "spec": {
+  "title": "함수의 증가와 감소",
+  "params": [
+   {
+    "name": "a",
+    "label": "계수 a",
+    "type": "slider",
+    "min": -1,
+    "max": 2,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "x1",
+    "label": "x₁",
+    "type": "slider",
+    "min": -1.5,
+    "max": -0.1,
+    "init": -1,
+    "step": 0.1
+   },
+   {
+    "name": "x2",
+    "label": "x₂",
+    "type": "slider",
+    "min": 0.1,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   }
+  ],
+  "scope": "f1=x1^3 - a*x1; f2=x2^3 - a*x2; diff=f2-f1; m=diff/(x2-x1); b=f1 - m*x1;",
+  "geometry": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.6,
+    1.6
+   ],
+   "yRange": [
+    -5.5,
+    5.5
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - a*x",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "m*x + b",
+     "label": "평균변화율",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₁에서의 함숫값",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "x₂에서의 함숫값",
+    "expr": "f2",
+    "digits": 3
+   },
+   {
+    "label": "f(x₂)-f(x₁)",
+    "expr": "diff",
+    "digits": 3
+   },
+   {
+    "label": "평균변화율",
+    "expr": "m",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0,
+    "x1": -1,
+    "x2": 1
+   },
+   {
+    "a": 2,
+    "x1": -1,
+    "x2": 1
+   },
+   {
+    "a": -1,
+    "x1": -0.5,
+    "x2": 0.5
+   },
+   {
+    "a": 2,
+    "x1": -0.5,
+    "x2": 0.5
+   }
+  ],
+  "invariants": [
+   "m - (x1^2 + x1*x2 + x2^2 - a)",
+   "sign(diff) - sign(m)",
+   "m*x1 + b - f1",
+   "m*x2 + b - f2"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0,
+     "x1": -1,
+     "x2": 1
+    },
+    "expect": {
+     "f1": -1,
+     "f2": 1,
+     "diff": 2,
+     "m": 1,
+     "b": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x1": -1,
+     "x2": 1
+    },
+    "expect": {
+     "f1": 1,
+     "f2": -1,
+     "diff": -2,
+     "m": -1,
+     "b": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "x1": -1,
+     "x2": 0.5
+    },
+    "expect": {
+     "f1": -2,
+     "f2": 0.625,
+     "diff": 2.625,
+     "m": 1.75,
+     "b": -0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

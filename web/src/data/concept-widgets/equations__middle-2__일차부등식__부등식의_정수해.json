@@ -1,0 +1,322 @@
+{
+ "id": "equations/middle-2/일차부등식/부등식의_정수해",
+ "spec": {
+  "title": "부등식의 정수해 (a ≤ x < b)",
+  "params": [
+   {
+    "name": "center",
+    "label": "중심 c",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "width",
+    "label": "폭 w",
+    "type": "slider",
+    "min": 0.1,
+    "max": 5,
+    "init": 2,
+    "step": 0.1
+   }
+  ],
+  "scope": "c=center; w=width; a=c-w; b=c+w; lower=ceil(a); upper=ceil(b)-1; cnt=max(0, upper-lower+1)",
+  "geometry": {
+   "range": [
+    -11,
+    11
+   ],
+   "yRange": [
+    -0.5,
+    0.5
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=b",
+      0
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      0
+     ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=b",
+      0
+     ],
+     "radius": 0.08
+    },
+    {
+     "type": "point",
+     "at": [
+      -10,
+      "=(a <= -10 and -10 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -9,
+      "=(a <= -9 and -9 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -8,
+      "=(a <= -8 and -8 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -7,
+      "=(a <= -7 and -7 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -6,
+      "=(a <= -6 and -6 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -5,
+      "=(a <= -5 and -5 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -4,
+      "=(a <= -4 and -4 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -3,
+      "=(a <= -3 and -3 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -2,
+      "=(a <= -2 and -2 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      "=(a <= -1 and -1 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      "=(a <= 0 and 0 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      "=(a <= 1 and 1 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2,
+      "=(a <= 2 and 2 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      3,
+      "=(a <= 3 and 3 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      4,
+      "=(a <= 4 and 4 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      5,
+      "=(a <= 5 and 5 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      6,
+      "=(a <= 6 and 6 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      7,
+      "=(a <= 7 and 7 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      8,
+      "=(a <= 8 and 8 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      "=(a <= 9 and 9 < b ? 0 : 2)"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      "=(a <= 10 and 10 < b ? 0 : 2)"
+     ]
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "b",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "정수해 개수",
+    "expr": "cnt",
+    "digits": 0
+   },
+   {
+    "label": "가장 작은 정수",
+    "expr": "lower",
+    "digits": 0
+   },
+   {
+    "label": "가장 큰 정수",
+    "expr": "upper",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "center": 0.5,
+    "width": 1.5
+   },
+   {
+    "center": 2,
+    "width": 1
+   },
+   {
+    "center": -2,
+    "width": 1.2
+   },
+   {
+    "center": 0.5,
+    "width": 0.3
+   }
+  ],
+  "invariants": [
+   "b - a - 2*w",
+   "((lower >= a and lower - 1 < a) ? 0 : 1)",
+   "((upper < b and upper + 1 >= b) ? 0 : 1)",
+   "cnt - (upper >= lower ? upper - lower + 1 : 0)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "center": 0.5,
+     "width": 1.5
+    },
+    "expect": {
+     "a": -1,
+     "b": 2,
+     "lower": -1,
+     "upper": 1,
+     "cnt": 3
+    }
+   },
+   {
+    "params": {
+     "center": 2,
+     "width": 1
+    },
+    "expect": {
+     "a": 1,
+     "b": 3,
+     "lower": 1,
+     "upper": 2,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "center": -2,
+     "width": 1.2
+    },
+    "expect": {
+     "a": -3.2,
+     "b": -0.8,
+     "lower": -3,
+     "upper": -1,
+     "cnt": 3
+    }
+   },
+   {
+    "params": {
+     "center": 0.5,
+     "width": 0.3
+    },
+    "expect": {
+     "a": 0.2,
+     "b": 0.8,
+     "lower": 1,
+     "upper": 0,
+     "cnt": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

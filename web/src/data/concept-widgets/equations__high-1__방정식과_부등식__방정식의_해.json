@@ -1,0 +1,122 @@
+{
+ "id": "equations/high-1/방정식과_부등식/방정식의_해",
+ "spec": {
+  "title": "방정식의 해 (x절편과 실근)",
+  "params": [
+   {
+    "name": "h",
+    "label": "h (꼭짓점 x좌표)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "k (꼭짓점 y좌표)",
+    "type": "slider",
+    "min": -3,
+    "max": 0,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "x1 = h - sqrt(-k); x2 = h + sqrt(-k)",
+  "plot": {
+   "range": [
+    -5,
+    5
+   ],
+   "yRange": [
+    -4,
+    5
+   ],
+   "fns": [
+    {
+     "fn": "(x-h)^2 + k",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x₁",
+    "expr": "x1",
+    "digits": 2
+   },
+   {
+    "label": "x₂",
+    "expr": "x2",
+    "digits": 2
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "(k == 0) ? 1 : 2",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "h": -2,
+    "k": -1
+   },
+   {
+    "h": 0,
+    "k": -3
+   },
+   {
+    "h": 1,
+    "k": 0
+   },
+   {
+    "h": 3,
+    "k": -2
+   }
+  ],
+  "invariants": [
+   "(x1-h)^2 + k",
+   "(x2-h)^2 + k",
+   "x1 + x2 - 2*h",
+   "x1*x2 - (h^2 + k)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "h": 1,
+     "k": -1
+    },
+    "expect": {
+     "x1": 0,
+     "x2": 2
+    }
+   },
+   {
+    "params": {
+     "h": -2,
+     "k": -2
+    },
+    "expect": {
+     "x1": -3.41421356,
+     "x2": -0.58578644
+    }
+   },
+   {
+    "params": {
+     "h": 2,
+     "k": -3
+    },
+    "expect": {
+     "x1": 0.26794919,
+     "x2": 3.73205081
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

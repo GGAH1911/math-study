@@ -82,3 +82,5 @@ updated: 2026-06-28
 | 2026-08-13 01:06 | widget | accept 49 · skip 1 · 98% | cr 없음 |
 | 2026-08-13 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-13 10:14 | widget | accept 1 · skip 0 · 100% | cr 없음 |
+| 2026-08-13 10:26 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-13 13:01 | widget | accept 386 · skip 4 · 99% | cr 없음 |

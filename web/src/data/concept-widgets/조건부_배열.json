@@ -1,0 +1,285 @@
+{
+ "id": "조건부_배열",
+ "spec": {
+  "title": "조건부 확률",
+  "params": [
+   {
+    "name": "pA",
+    "label": "P(A)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.01,
+    "unit": ""
+   },
+   {
+    "name": "hA",
+    "label": "P(B|A)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.7,
+    "step": 0.01,
+    "unit": ""
+   },
+   {
+    "name": "hNotA",
+    "label": "P(B|A^c)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0.2,
+    "step": 0.01,
+    "unit": ""
+   }
+  ],
+  "scope": "pAc=1-pA; pAB=pA*hA; pAcB=(1-pA)*hNotA; pB=pAB+pAcB; pBA=pB > 0 ? pAB/pB : 0; pAnotB=pA*(1-hA); pAcNotB=(1-pA)*(1-hNotA)",
+  "geometry": {
+   "range": [
+    -0.2,
+    1.2
+   ],
+   "yRange": [
+    -0.2,
+    1.2
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "color": "gray"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=pA",
+       0
+      ],
+      [
+       "=pA",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       "=hA"
+      ],
+      [
+       "=pA",
+       "=hA"
+      ],
+      [
+       "=pA",
+       "=hNotA"
+      ],
+      [
+       1,
+       "=hNotA"
+      ],
+      [
+       1,
+       0
+      ]
+     ],
+     "color": "red"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       0,
+       "=hA"
+      ],
+      [
+       "=pA",
+       "=hA"
+      ],
+      [
+       "=pA",
+       0
+      ]
+     ],
+     "color": "purple"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=pA",
+      0
+     ],
+     "to": [
+      "=pA",
+      1
+     ],
+     "color": "black"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pA/2",
+      0.5
+     ],
+     "label": "A",
+     "color": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      0.8,
+      "=hNotA/2"
+     ],
+     "label": "B",
+     "color": "red"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=pA/2",
+      "=hA/2"
+     ],
+     "label": "A∩B",
+     "color": "purple"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "P(B|A)",
+    "expr": "hA",
+    "digits": 4
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pAB",
+    "digits": 4
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 4
+   },
+   {
+    "label": "P(A|B)",
+    "expr": "pBA",
+    "digits": 4
+   },
+   {
+    "label": "독립 확인: P(A)P(B)-P(A∩B)",
+    "expr": "pA*pB-pAB",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "pA": 0.5,
+    "hA": 0.7,
+    "hNotA": 0.2
+   },
+   {
+    "pA": 0.3,
+    "hA": 0.4,
+    "hNotA": 0.8
+   },
+   {
+    "pA": 0.8,
+    "hA": 0.1,
+    "hNotA": 0.9
+   },
+   {
+    "pA": 0.6,
+    "hA": 0.5,
+    "hNotA": 0.5
+   }
+  ],
+  "invariants": [
+   "pAB - pA*hA",
+   "pB - (pAB + pAcB)",
+   "pBA * pB - pAB",
+   "pAnotB - pA*(1-hA)",
+   "pA + (1-pA) - 1"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "pA": 0.5,
+     "hA": 0.75,
+     "hNotA": 0.25
+    },
+    "expect": {
+     "pAB": 0.375,
+     "pB": 0.5,
+     "pBA": 0.75
+    }
+   },
+   {
+    "params": {
+     "pA": 0.2,
+     "hA": 0.4,
+     "hNotA": 0.6
+    },
+    "expect": {
+     "pAB": 0.08,
+     "pB": 0.56,
+     "pBA": 0.14285714285714285
+    }
+   },
+   {
+    "params": {
+     "pA": 0.8,
+     "hA": 0.5,
+     "hNotA": 0.5
+    },
+    "expect": {
+     "pAB": 0.4,
+     "pB": 0.5,
+     "pBA": 0.8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "id": "algebra/middle-3/실수와_그_계산/제곱근의_계산",
+ "spec": {
+  "title": "제곱근의 정의",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 100,
+    "init": 9,
+    "step": 1,
+    "unit": ""
+   }
+  ],
+  "scope": "sq=sqrt(a); nsq=-sq;",
+  "geometry": {
+   "range": [
+    -12,
+    12
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "segment",
+     "points": [
+      [
+       -11,
+       0
+      ],
+      [
+       11,
+       0
+      ]
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "0"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=sq",
+      0
+     ],
+     "label": "√a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=nsq",
+      0
+     ],
+     "label": "-√a"
+    },
+    {
+     "type": "polygon",
+     "points": [
+      [
+       0,
+       0
+      ],
+      [
+       "=sq",
+       0
+      ],
+      [
+       "=sq",
+       "=sq"
+      ],
+      [
+       0,
+       "=sq"
+      ]
+     ],
+     "fill": "rgba(0,0,255,0.2)"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "a",
+    "expr": "a",
+    "digits": 2
+   },
+   {
+    "label": "√a",
+    "expr": "sq",
+    "digits": 4
+   },
+   {
+    "label": "-√a",
+    "expr": "nsq",
+    "digits": 4
+   },
+   {
+    "label": "√a × √a",
+    "expr": "sq^2",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0
+   },
+   {
+    "a": 2
+   },
+   {
+    "a": 9
+   },
+   {
+    "a": 16
+   }
+  ],
+  "invariants": [
+   "sq^2 - a",
+   "(-sq)^2 - a",
+   "sq + nsq",
+   "abs(sq)-sq"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 0
+    },
+    "expect": {
+     "sq": 0,
+     "nsq": 0
+    }
+   },
+   {
+    "params": {
+     "a": 9
+    },
+    "expect": {
+     "sq": 3,
+     "nsq": -3
+    }
+   },
+   {
+    "params": {
+     "a": 16
+    },
+    "expect": {
+     "sq": 4,
+     "nsq": -4
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

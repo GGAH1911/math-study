@@ -1,0 +1,207 @@
+{
+ "id": "다항함수의_구조",
+ "spec": {
+  "title": "다항함수의 구조",
+  "params": [
+   {
+    "name": "a",
+    "label": "a (x² 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (x 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "y = a*x0^2 + b*x0 + c; t1 = a*x0^2; t2 = b*x0; t3 = c; sum_terms = t1 + t2 + t3; y_nested = (a*x0+b)*x0+c",
+  "plot": {
+   "range": [
+    -3,
+    3
+   ],
+   "yRange": [
+    -30,
+    30
+   ],
+   "fns": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "label": "f(x)",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "a*x^2",
+     "label": "a*x²",
+     "color": "#ff7f0e"
+    },
+    {
+     "fn": "b*x",
+     "label": "b*x",
+     "color": "#2ca02c"
+    },
+    {
+     "fn": "c",
+     "label": "c",
+     "color": "#d62728"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "y",
+    "digits": 4
+   },
+   {
+    "label": "a x₀²",
+    "expr": "t1",
+    "digits": 4
+   },
+   {
+    "label": "b x₀",
+    "expr": "t2",
+    "digits": 4
+   },
+   {
+    "label": "c",
+    "expr": "t3",
+    "digits": 4
+   },
+   {
+    "label": "합",
+    "expr": "sum_terms",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 1,
+    "b": -2,
+    "c": 1,
+    "x0": 3
+   },
+   {
+    "a": 0,
+    "b": 2,
+    "c": -1,
+    "x0": 2
+   },
+   {
+    "a": 2,
+    "b": 0,
+    "c": 2,
+    "x0": -1
+   },
+   {
+    "a": -1,
+    "b": 1,
+    "c": 0,
+    "x0": 0.5
+   }
+  ],
+  "invariants": [
+   "abs(y - sum_terms)",
+   "abs(y_nested - y)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1,
+     "b": -2,
+     "c": 1,
+     "x0": 3
+    },
+    "expect": {
+     "y": 4,
+     "t1": 9,
+     "t2": -6,
+     "t3": 1,
+     "sum_terms": 4,
+     "y_nested": 4
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2,
+     "c": -1,
+     "x0": 2
+    },
+    "expect": {
+     "y": 3,
+     "t1": 0,
+     "t2": 4,
+     "t3": -1,
+     "sum_terms": 3,
+     "y_nested": 3
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": 0,
+     "c": 2,
+     "x0": -1
+    },
+    "expect": {
+     "y": 4,
+     "t1": 2,
+     "t2": 0,
+     "t3": 2,
+     "sum_terms": 4,
+     "y_nested": 4
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 1,
+     "c": 0,
+     "x0": 0.5
+    },
+    "expect": {
+     "y": 0.25,
+     "t1": -0.25,
+     "t2": 0.5,
+     "t3": 0,
+     "sum_terms": 0.25,
+     "y_nested": 0.25
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

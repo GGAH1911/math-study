@@ -1,0 +1,124 @@
+{
+ "id": "삼차함수와_극값",
+ "spec": {
+  "title": "삼차함수와 극값",
+  "params": [
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.1
+   }
+  ],
+  "scope": "xcrit = k < 0 ? sqrt(-k/3) : 0; has_ext = k < 0 ? 1 : 0; disc = -12*k",
+  "geometry": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -22,
+    22
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "yRange": [
+    -22,
+    22
+   ],
+   "fns": [
+    {
+     "fn": "x^3 + k*x",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*x^2 + k",
+     "label": "f'(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "극값 존재",
+    "expr": "has_ext",
+    "digits": 0
+   },
+   {
+    "label": "판별식 (f')",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "극점 x (양수)",
+    "expr": "xcrit",
+    "digits": 4
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "k": -2
+   },
+   {
+    "k": -0.5
+   },
+   {
+    "k": 0
+   },
+   {
+    "k": 1.5
+   }
+  ],
+  "invariants": [
+   "k < 0 ? abs(3*xcrit^2 + k) : 0",
+   "abs(has_ext - (k < 0 ? 1 : 0))",
+   "abs(disc + 12*k)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "k": -0.75
+    },
+    "expect": {
+     "xcrit": 0.5,
+     "has_ext": 1,
+     "disc": 9
+    }
+   },
+   {
+    "params": {
+     "k": 0
+    },
+    "expect": {
+     "xcrit": 0,
+     "has_ext": 0,
+     "disc": 0
+    }
+   },
+   {
+    "params": {
+     "k": 1
+    },
+    "expect": {
+     "xcrit": 0,
+     "has_ext": 0,
+     "disc": -12
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

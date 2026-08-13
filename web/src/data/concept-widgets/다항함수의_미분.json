@@ -1,0 +1,163 @@
+{
+ "id": "다항함수의_미분",
+ "spec": {
+  "title": "다항함수의 미분 (거듭제곱 법칙)",
+  "params": [
+   {
+    "name": "n",
+    "label": "지수 n",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "계수 a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "상수항 c",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "x0",
+    "label": "x₀",
+    "type": "slider",
+    "min": -1.2,
+    "max": 1.2,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "f0 = a * x0^n + c; df0 = a * n * x0^(n-1)",
+  "geometry": {
+   "range": [
+    -1.2,
+    1.2
+   ],
+   "yRange": [
+    -16,
+    16
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "shapes": []
+  },
+  "plot": {
+   "range": [
+    -1.2,
+    1.2
+   ],
+   "yRange": [
+    -16,
+    16
+   ],
+   "fns": [
+    {
+     "fn": "a * x^n + c",
+     "label": "f(x) = a·xⁿ + c",
+     "color": "blue"
+    },
+    {
+     "fn": "a * n * x^(n-1)",
+     "label": "f'(x) = a·n·xⁿ⁻¹",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f(x₀)",
+    "expr": "f0",
+    "digits": 6
+   },
+   {
+    "label": "f'(x₀)",
+    "expr": "df0",
+    "digits": 6
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 2,
+    "a": 1,
+    "c": 0.5,
+    "x0": 1
+   },
+   {
+    "n": 3,
+    "a": 2,
+    "c": -1,
+    "x0": 0.5
+   },
+   {
+    "n": 5,
+    "a": -1,
+    "c": 1.5,
+    "x0": -0.5
+   },
+   {
+    "n": 6,
+    "a": 0.5,
+    "c": -0.5,
+    "x0": 1
+   }
+  ],
+  "invariants": [
+   "f0 - (a * x0^n + c)",
+   "df0 - (a * n * x0^(n-1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 2,
+     "a": 1,
+     "c": 0.5,
+     "x0": 1
+    },
+    "expect": {
+     "f0": 1.5,
+     "df0": 2
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "a": 2,
+     "c": -1,
+     "x0": 0.5
+    },
+    "expect": {
+     "f0": -0.75,
+     "df0": 1.5
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "a": -1,
+     "c": 1.5,
+     "x0": -0.5
+    },
+    "expect": {
+     "f0": 1.53125,
+     "df0": -0.3125
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

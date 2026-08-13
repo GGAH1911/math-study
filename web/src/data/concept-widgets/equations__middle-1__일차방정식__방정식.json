@@ -1,0 +1,125 @@
+{
+ "id": "equations/middle-1/일차방정식/방정식",
+ "spec": {
+  "title": "방정식의 정의",
+  "params": [
+   {
+    "name": "x",
+    "label": "x 값",
+    "type": "slider",
+    "min": -5,
+    "max": 10,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   }
+  ],
+  "scope": "lhs = x + 3; rhs = 7; diff = lhs - rhs; is_sol = abs(diff) < 0.000001 ? 1 : 0",
+  "plot": {
+   "range": [
+    -5,
+    10
+   ],
+   "yRange": [
+    -2,
+    12
+   ],
+   "fns": [
+    {
+     "fn": "x + 3",
+     "label": "x + 3",
+     "color": "blue"
+    },
+    {
+     "fn": "7",
+     "label": "7",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "x",
+    "expr": "x",
+    "digits": 1
+   },
+   {
+    "label": "좌변 (x+3)",
+    "expr": "lhs",
+    "digits": 2
+   },
+   {
+    "label": "우변 (7)",
+    "expr": "rhs",
+    "digits": 1
+   },
+   {
+    "label": "좌변 - 우변",
+    "expr": "diff",
+    "digits": 2
+   },
+   {
+    "label": "해인가? (1=예)",
+    "expr": "is_sol",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "x": 0
+   },
+   {
+    "x": 2
+   },
+   {
+    "x": 4
+   },
+   {
+    "x": 7
+   }
+  ],
+  "invariants": [
+   "diff - (x - 4)",
+   "lhs - (x + 3)",
+   "rhs - 7"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "x": 2
+    },
+    "expect": {
+     "lhs": 5,
+     "rhs": 7,
+     "diff": -2,
+     "is_sol": 0
+    }
+   },
+   {
+    "params": {
+     "x": 4
+    },
+    "expect": {
+     "lhs": 7,
+     "rhs": 7,
+     "diff": 0,
+     "is_sol": 1
+    }
+   },
+   {
+    "params": {
+     "x": 7
+    },
+    "expect": {
+     "lhs": 10,
+     "rhs": 7,
+     "diff": 3,
+     "is_sol": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

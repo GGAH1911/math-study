@@ -1,0 +1,209 @@
+{
+ "id": "logic/high-1/집합과_명제/원소의_개수",
+ "spec": {
+  "title": "원소의 개수: 포함과 배제의 원리",
+  "params": [
+   {
+    "name": "nA",
+    "label": "n(A)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "nB",
+    "label": "n(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "nAB",
+    "label": "n(A∩B)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 1
+   }
+  ],
+  "scope": "ab = min(nAB, nA, nB); a = nA - ab; b = nB - ab; u1 = nA + nB - ab; u2 = a + b + ab; u = u1",
+  "geometry": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -1.5,
+    1.5
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      -0.65,
+      0
+     ],
+     "radius": 0.9
+    },
+    {
+     "type": "circle",
+     "center": [
+      0.65,
+      0
+     ],
+     "radius": 0.9
+    },
+    {
+     "type": "point",
+     "at": [
+      -1,
+      0
+     ],
+     "label": "A만"
+    },
+    {
+     "type": "point",
+     "at": [
+      1,
+      0
+     ],
+     "label": "B만"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0
+     ],
+     "label": "A∩B"
+    },
+    {
+     "type": "point",
+     "at": [
+      -0.65,
+      0.55
+     ],
+     "label": "A"
+    },
+    {
+     "type": "point",
+     "at": [
+      0.65,
+      0.55
+     ],
+     "label": "B"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "n(A)",
+    "expr": "nA",
+    "digits": 0
+   },
+   {
+    "label": "n(B)",
+    "expr": "nB",
+    "digits": 0
+   },
+   {
+    "label": "n(A∩B)",
+    "expr": "ab",
+    "digits": 0
+   },
+   {
+    "label": "n(A\\B)",
+    "expr": "a",
+    "digits": 0
+   },
+   {
+    "label": "n(B\\A)",
+    "expr": "b",
+    "digits": 0
+   },
+   {
+    "label": "n(A∪B)",
+    "expr": "u",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "nA": 5,
+    "nB": 4,
+    "nAB": 2
+   },
+   {
+    "nA": 3,
+    "nB": 2,
+    "nAB": 5
+   },
+   {
+    "nA": 0,
+    "nB": 4,
+    "nAB": 1
+   },
+   {
+    "nA": 7,
+    "nB": 7,
+    "nAB": 7
+   }
+  ],
+  "invariants": [
+   "nA - (a + ab)",
+   "nB - (b + ab)",
+   "(nA + nB - ab) - (a + b + ab)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "nA": 5,
+     "nB": 4,
+     "nAB": 2
+    },
+    "expect": {
+     "a": 3,
+     "b": 2,
+     "u": 7,
+     "ab": 2
+    }
+   },
+   {
+    "params": {
+     "nA": 3,
+     "nB": 2,
+     "nAB": 5
+    },
+    "expect": {
+     "a": 1,
+     "b": 0,
+     "u": 3,
+     "ab": 2
+    }
+   },
+   {
+    "params": {
+     "nA": 0,
+     "nB": 4,
+     "nAB": 1
+    },
+    "expect": {
+     "a": 0,
+     "b": 4,
+     "u": 4,
+     "ab": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

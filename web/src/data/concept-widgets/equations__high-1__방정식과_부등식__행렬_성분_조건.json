@@ -1,0 +1,230 @@
+{
+ "id": "equations/high-1/방정식과_부등식/행렬_성분_조건",
+ "spec": {
+  "title": "행렬 성분 조건",
+  "params": [
+   {
+    "name": "a1",
+    "label": "A₁₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "a2",
+    "label": "A₁₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "a3",
+    "label": "A₂₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "a4",
+    "label": "A₂₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b1",
+    "label": "B₁₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b2",
+    "label": "B₁₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b3",
+    "label": "B₂₁",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "b4",
+    "label": "B₂₂",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "d1=a1-b1; d2=a2-b2; d3=a3-b3; d4=a4-b4; sumsq=d1^2+d2^2+d3^2+d4^2; equal=(a1==b1 and a2==b2 and a3==b3 and a4==b4) ? 1 : 0",
+  "plot": {
+   "range": [
+    0,
+    4
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "(x<1) ? a1 : (x<2) ? a2 : (x<3) ? a3 : a4",
+     "label": "A",
+     "color": "blue"
+    },
+    {
+     "fn": "(x<1) ? b1 : (x<2) ? b2 : (x<3) ? b3 : b4",
+     "label": "B",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "Σ(aᵢ-bᵢ)²",
+    "expr": "sumsq",
+    "digits": 4
+   },
+   {
+    "label": "같음 (1=예)",
+    "expr": "equal",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1": 0,
+    "a2": 0,
+    "a3": 0,
+    "a4": 0,
+    "b1": 0,
+    "b2": 0,
+    "b3": 0,
+    "b4": 0
+   },
+   {
+    "a1": 1,
+    "a2": 2,
+    "a3": 3,
+    "a4": 4,
+    "b1": 1,
+    "b2": 2,
+    "b3": 3,
+    "b4": 4
+   },
+   {
+    "a1": 1,
+    "a2": 2,
+    "a3": 3,
+    "a4": 4,
+    "b1": 4,
+    "b2": 3,
+    "b3": 2,
+    "b4": 1
+   },
+   {
+    "a1": -2,
+    "a2": -1,
+    "a3": 0,
+    "a4": 1,
+    "b1": 2,
+    "b2": 1,
+    "b3": 0,
+    "b4": -1
+   }
+  ],
+  "invariants": [
+   "abs(((sumsq==0) ? 1 : 0) - ((equal==1) ? 1 : 0))",
+   "sumsq - (d1^2+d2^2+d3^2+d4^2)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1": 0,
+     "a2": 0,
+     "a3": 0,
+     "a4": 0,
+     "b1": 0,
+     "b2": 0,
+     "b3": 0,
+     "b4": 0
+    },
+    "expect": {
+     "sumsq": 0,
+     "equal": 1
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "a2": 2,
+     "a3": 3,
+     "a4": 4,
+     "b1": 1,
+     "b2": 2,
+     "b3": 3,
+     "b4": 4
+    },
+    "expect": {
+     "sumsq": 0,
+     "equal": 1
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "a2": 2,
+     "a3": 3,
+     "a4": 4,
+     "b1": 4,
+     "b2": 3,
+     "b3": 2,
+     "b4": 1
+    },
+    "expect": {
+     "sumsq": 20,
+     "equal": 0
+    }
+   },
+   {
+    "params": {
+     "a1": 1,
+     "a2": 2,
+     "a3": 3,
+     "a4": 4,
+     "b1": 1,
+     "b2": 2,
+     "b3": 0,
+     "b4": 4
+    },
+    "expect": {
+     "sumsq": 9,
+     "equal": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

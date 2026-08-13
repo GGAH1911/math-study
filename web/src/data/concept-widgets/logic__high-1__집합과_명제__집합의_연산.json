@@ -1,0 +1,228 @@
+{
+ "id": "logic/high-1/집합과_명제/집합의_연산",
+ "spec": {
+  "title": "집합의 연산",
+  "params": [
+   {
+    "name": "a1raw",
+    "label": "A 시작",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "a2raw",
+    "label": "A 끝",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 6,
+    "step": 0.1
+   },
+   {
+    "name": "b1raw",
+    "label": "B 시작",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 4,
+    "step": 0.1
+   },
+   {
+    "name": "b2raw",
+    "label": "B 끝",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 9,
+    "step": 0.1
+   },
+   {
+    "name": "mode",
+    "label": "연산 (0:합집합,1:교집합,2:차집합,3:여집합)",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 0,
+    "step": 1
+   }
+  ],
+  "scope": "a1=min(a1raw,a2raw); a2=max(a1raw,a2raw); b1=min(b1raw,b2raw); b2=max(b1raw,b2raw); lenA=a2-a1; lenB=b2-b1; overlap=(a1<=b2 and b1<=a2)?min(a2,b2)-max(a1,b1):0; lenUnion=lenA+lenB-overlap; resLen=(mode==0?lenUnion:mode==1?overlap:mode==2?lenA-overlap:10-lenA);",
+  "plot": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    -0.5,
+    1.5
+   ],
+   "fns": [
+    {
+     "fn": "(x>=a1 and x<=a2)?1:0",
+     "label": "A",
+     "color": "blue"
+    },
+    {
+     "fn": "(x>=b1 and x<=b2)?1:0",
+     "label": "B",
+     "color": "red"
+    },
+    {
+     "fn": "((mode==0)?(((x>=a1 and x<=a2) or (x>=b1 and x<=b2))?1:0):((mode==1)?(((x>=a1 and x<=a2) and (x>=b1 and x<=b2))?1:0):((mode==2)?(((x>=a1 and x<=a2) and not((x>=b1 and x<=b2)))?1:0):(((x>=0 and x<=10) and not((x>=a1 and x<=a2)))?1:0))))",
+     "label": "결과",
+     "color": "green"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "A 길이",
+    "expr": "lenA",
+    "digits": 2
+   },
+   {
+    "label": "B 길이",
+    "expr": "lenB",
+    "digits": 2
+   },
+   {
+    "label": "교집합 길이",
+    "expr": "overlap",
+    "digits": 2
+   },
+   {
+    "label": "합집합 길이",
+    "expr": "lenUnion",
+    "digits": 2
+   },
+   {
+    "label": "결과 길이",
+    "expr": "resLen",
+    "digits": 2
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a1raw": 2,
+    "a2raw": 6,
+    "b1raw": 4,
+    "b2raw": 9,
+    "mode": 0
+   },
+   {
+    "a1raw": 1,
+    "a2raw": 3,
+    "b1raw": 5,
+    "b2raw": 8,
+    "mode": 2
+   },
+   {
+    "a1raw": 0,
+    "a2raw": 10,
+    "b1raw": 0,
+    "b2raw": 10,
+    "mode": 1
+   },
+   {
+    "a1raw": 4,
+    "a2raw": 2,
+    "b1raw": 8,
+    "b2raw": 5,
+    "mode": 3
+   }
+  ],
+  "invariants": [
+   "lenA+lenB-overlap-lenUnion",
+   "overlap-max(0,min(a2,b2)-max(a1,b1))",
+   "lenUnion-((a2<b1 or b2<a1)?lenA+lenB:max(a2,b2)-min(a1,b1))"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a1raw": 2,
+     "a2raw": 6,
+     "b1raw": 4,
+     "b2raw": 9,
+     "mode": 0
+    },
+    "expect": {
+     "a1": 2,
+     "a2": 6,
+     "b1": 4,
+     "b2": 9,
+     "lenA": 4,
+     "lenB": 5,
+     "overlap": 2,
+     "lenUnion": 7,
+     "resLen": 7
+    }
+   },
+   {
+    "params": {
+     "a1raw": 1,
+     "a2raw": 3,
+     "b1raw": 5,
+     "b2raw": 8,
+     "mode": 2
+    },
+    "expect": {
+     "a1": 1,
+     "a2": 3,
+     "b1": 5,
+     "b2": 8,
+     "lenA": 2,
+     "lenB": 3,
+     "overlap": 0,
+     "lenUnion": 5,
+     "resLen": 2
+    }
+   },
+   {
+    "params": {
+     "a1raw": 0,
+     "a2raw": 10,
+     "b1raw": 0,
+     "b2raw": 10,
+     "mode": 1
+    },
+    "expect": {
+     "a1": 0,
+     "a2": 10,
+     "b1": 0,
+     "b2": 10,
+     "lenA": 10,
+     "lenB": 10,
+     "overlap": 10,
+     "lenUnion": 10,
+     "resLen": 10
+    }
+   },
+   {
+    "params": {
+     "a1raw": 4,
+     "a2raw": 2,
+     "b1raw": 8,
+     "b2raw": 5,
+     "mode": 3
+    },
+    "expect": {
+     "a1": 2,
+     "a2": 4,
+     "b1": 5,
+     "b2": 8,
+     "lenA": 2,
+     "lenB": 3,
+     "overlap": 0,
+     "lenUnion": 5,
+     "resLen": 8
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
