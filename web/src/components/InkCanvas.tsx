@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, useCallback, type CSSProperties } from 'react';
 import { recognizeShape, shapeToPoints } from '../lib/shape-recognize'; // 도형 모드: 손그림→깔끔한 도형 스냅
+import { normalizeInkDoc, INK_DOC_VERSION } from '../lib/ink-doc.ts';
 
 // 저지연 필기 캔버스 + 레이어 — 애플펜슬/S펜/터치/마우스. 채점·LLM·API 무관.
 //   저지연: desynchronized · getCoalescedEvents · getPredictedEvents · 진행 overlay · 압력 · 팜리젝션
@@ -68,6 +69,9 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
   const uiRef = useRef<HTMLCanvasElement>(null);   // UI 전용(지우개 커서·올가미·선택박스) — 비desynchronized(iOS 정적표시 안전)
   const uiCtx = useRef<CanvasRenderingContext2D | null>(null);
   const strokesOf = useRef(new Map<string, Stroke[]>());                 // layerId → strokes
+  // 지워진 스트로크 묘비. 삭제를 '없앰' 이 아니라 '표시' 로 남겨야 다른 기기의 합류가
+  // 지운 획을 되살리지 않는다(v3).
+  const deletedRef = useRef<string[]>([]);
   const elOf = useRef(new Map<string, { c: HTMLCanvasElement; ctx: CanvasRenderingContext2D | null }>());
   const cur = useRef<Stroke | null>(null);
   const removed = useRef<Stroke[]>([]);
@@ -142,7 +146,9 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
   const save = useCallback(() => {
     const strokes: Record<string, Stroke[]> = {};
     for (const l of layersRef.current) strokes[l.id] = strokesOf.current.get(l.id) ?? [];
-    const doc = { v: 2, layers: layersRef.current, strokes, activeId: live.current.activeId };
+    // ★쓰기는 v3 로만. 읽기는 v1·v2·v3 전부(ink-doc.ts) — 사장님 필기가 이미 v2 로 있다.
+    const doc = { v: INK_DOC_VERSION, layers: layersRef.current, strokes,
+                  deletedStrokes: deletedRef.current, activeId: live.current.activeId };
     try { localStorage.setItem(KEY, JSON.stringify(doc)); } catch { /* quota */ }
     // 계정 DB 동기화(디바운스 1.5s — 획마다 POST 방지). 비로그인=401·offline=무시. 4MB 초과 스킵.
     if (dbTimer.current) clearTimeout(dbTimer.current);
@@ -193,9 +199,15 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) {
-        const d = JSON.parse(raw);
-        if (Array.isArray(d)) { strokesOf.current.set('L1', d); } // v1(단일) → 마이그레이션
-        else if (d?.v === 2) { strokesOf.current.clear(); for (const l of d.layers) strokesOf.current.set(l.id, d.strokes[l.id] ?? []); setLayers(d.layers); setActiveId(d.activeId ?? d.layers[0].id); }
+        // v1(배열)·v2·v3 를 전부 v3 로 정규화해서 받는다 — 버전 분기를 여기 두면
+        // 로드 지점이 늘 때마다 갈라진다(로컬·DB 두 곳이 이미 있다).
+        const doc = normalizeInkDoc(JSON.parse(raw));
+        if (doc) {
+          strokesOf.current.clear();
+          for (const l of doc.layers) strokesOf.current.set(l.id, doc.strokes[l.id] ?? []);
+          deletedRef.current = doc.deletedStrokes;
+          setLayers(doc.layers); setActiveId(doc.activeId ?? doc.layers[0].id);
+        }
       }
     } catch { /* */ }
     if (!strokesOf.current.has('L1') && strokesOf.current.size === 0) strokesOf.current.set('L1', []);
@@ -209,12 +221,14 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     fetch(`/api/handwriting?key=${encodeURIComponent(storageKey)}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        const doc = d?.doc;
-        if (cancelled || !doc || doc.v !== 2 || !Array.isArray(doc.layers)) return;
+        const doc = normalizeInkDoc(d?.doc);
+        if (cancelled || !doc) return;
         strokesOf.current.clear();
-        for (const l of doc.layers) strokesOf.current.set(l.id, doc.strokes?.[l.id] ?? []);
+        for (const l of doc.layers) strokesOf.current.set(l.id, doc.strokes[l.id] ?? []);
+        deletedRef.current = doc.deletedStrokes;
         setLayers(doc.layers);
         setActiveId(doc.activeId ?? doc.layers[0]?.id);
+        // 로컬에는 **정규화된 v3** 를 넣는다(받은 원문이 아니라) — 다음 로드가 또 변환하지 않게.
         try { localStorage.setItem(KEY, JSON.stringify(doc)); } catch { /* quota */ }
         for (const l of doc.layers) drawLayer(l.id);       // 캔버스 준비됐으면 즉시 그림
       })

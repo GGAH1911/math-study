@@ -18,6 +18,8 @@ import { normalizeKatex, KATEX_STRICT, KATEX_ERROR_COLOR } from './src/lib/katex
 // (`/concepts/functions/middle-3/이차함수`)이라 통째로 404 나는 시스템 와이드 버그가
 // 있다. 렌더 시 leaf 를 실제 slug 로 해석해 고친다(아래 remarkRewritePaths).
 // readdir 은 macOS-origin 파일명이 NFD 라 세그먼트마다 NFC 정규화(Astro content id 와 일치).
+/** 실제 존재하는 개념 full slug 집합 — 본문 링크 경로가 맞는지 검증하는 데 쓴다. */
+const CONCEPT_FULL_SET = new Set();
 const CONCEPT_LEAF_MAP = (() => {
   /** @type {Map<string, string>} */
   const map = new Map();
@@ -38,6 +40,7 @@ const CONCEPT_LEAF_MAP = (() => {
       } else if (ent.name.endsWith('.md')) {
         const leaf = nfc.replace(/\.md$/, '');
         const full = prefix ? `${prefix}/${leaf}` : leaf;
+        CONCEPT_FULL_SET.add(full);
         // 첫 매칭 우선. 같은 leaf 가 여러 경로에 있으면(드묾) 카운트해 경고.
         if (map.has(leaf)) dups.set(leaf, (dups.get(leaf) ?? 1) + 1);
         else map.set(leaf, full);
@@ -98,7 +101,11 @@ function remarkRewritePaths() {
       const m = node.url.match(/(?:\.\.\/)+assets\/(.+)$/);
       if (m) node.url = '/assets/' + m[1];
     });
-    visit(tree, 'link', (node) => {
+    // 해석 실패한 개념 링크를 담아 뒀다가 마지막에 **평문으로 떨군다**.
+    //   (visit 도중 트리를 바꾸면 순회가 꼬인다)
+    /** @type {Array<{parent:any,index:number,node:any}>} */
+    const unresolved = [];
+    visit(tree, 'link', (node, index, parent) => {
       if (typeof node.url !== 'string') return;
       // `/concepts/<leaf>` (flat 단일 세그먼트) → 실제 중첩 slug 로 해석. 개념 본문
       // 링크가 flat 인데 라우트는 중첩이라 404 나는 시스템 와이드 버그 보정.
@@ -114,10 +121,27 @@ function remarkRewritePaths() {
       }
       // External / anchor / absolute — skip
       if (/^(https?:|mailto:|#|\/)/.test(node.url)) return;
-      // ../<col>/<slug>.md or similar cross-collection
-      const inter = node.url.match(/^(?:\.\.\/)+(concepts|problems|mistakes|tools|syntheses)\/([^/]+)\.md$/);
+      // ../<col>/<slug…>.md — 크로스 컬렉션. ★slug 는 **여러 세그먼트**일 수 있다.
+      //   예전엔 `([^/]+)` 로 한 세그먼트만 잡아서 `../concepts/algebra/middle-3/제곱근.md`
+      //   같은 중첩 경로가 통째로 매칭 실패 → 깨진 상대경로 그대로 렌더됐다.
+      //   (문제 4,164개 중 2,583개가 이 형태였다. 링크를 눌러도 아무 데도 못 갔다.)
+      const inter = node.url.match(/^(?:\.\.\/)+(concepts|problems|mistakes|tools|syntheses)\/(.+)\.md$/);
       if (inter) {
-        node.url = `/${inter[1]}/${encodeURIComponent(inter[2])}`;
+        const col = inter[1];
+        let rest = inter[2];
+        try { rest = decodeURIComponent(rest); } catch { /* already raw */ }
+        rest = rest.normalize('NFC');
+        // ★본문에 적힌 경로가 실제와 다른 경우가 있다(중간 디렉터리 한 칸이 빠진 링크 등).
+        //   존재하지 않으면 leaf 로 재해석한다 — 없는 경로로 보내느니 이름으로 찾는 게 낫다.
+        if (col === 'concepts' && !CONCEPT_FULL_SET.has(rest)) {
+          const full = CONCEPT_LEAF_MAP.get(rest.split('/').pop() ?? '');
+          // ★그래도 없으면 **링크를 만들지 않는다.** 2026-06 노드 정리로 사라진 개념을
+          //   본문이 아직 가리킨다 — 죽은 링크로 두면 눌렀을 때 404 를 보게 된다.
+          if (!full) { if (parent && typeof index === 'number') unresolved.push({ parent, index, node }); return; }
+          rest = full;
+        }
+        // 세그먼트별로 인코딩 — 통째로 하면 `/` 까지 %2F 가 돼 경로가 무너진다.
+        node.url = `/${col}/${rest.split('/').map(encodeURIComponent).join('/')}`;
         return;
       }
       // ./<slug>.md or bare <slug>.md — sibling within current collection
@@ -127,8 +151,13 @@ function remarkRewritePaths() {
         return;
       }
     });
+    // 뒤에서부터 바꿔야 앞 인덱스가 밀리지 않는다.
+    for (const { parent, index, node } of unresolved.reverse()) {
+      parent.children.splice(index, 1, ...(node.children ?? [{ type: 'text', value: '' }]));
+    }
   };
 }
+
 
 /**
  * Remark plugin: strip the legacy `## 풀이 (학습 시 채워짐)` placeholder section

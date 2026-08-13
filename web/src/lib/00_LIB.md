@@ -32,6 +32,7 @@ updated: 2026-06-28
 - `fonts.ts` — 등록 자산
 - `health.ts` — 등록 자산
 - `image-utils.ts` — 등록 자산
+- `ink-doc.ts` — 등록 자산
 - `katex-normalize.mjs` — 등록 자산
 - `learner.ts` — 등록 자산
 - `learning-events.ts` — 등록 자산
@@ -45,6 +46,7 @@ updated: 2026-06-28
 - `problem-meta.ts` — 등록 자산
 - `pyodide-client.ts` — 등록 자산
 - `rate-limit.ts` — 등록 자산
+- `recompute.ts` — 등록 자산
 - `reconstruct.ts` — 등록 자산
 - `shape-recognize.ts` — 등록 자산
 - `srs.ts` — 등록 자산
