@@ -26,10 +26,8 @@ const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1
 
 // 후보(전부 비전 가능). baseline=현행 튜터와 같은 계열(Haiku).
 const CANDIDATES = [
-  // ★모델 비교가 아니라 **오개념 목록 주입 효과** 측정. 같은 모델(luna)로 ON/OFF 만 다르게 한다.
-  //   블라인드 심판은 둘이 같은 모델인 줄 모르고 채점하므로, 차이가 나면 그건 주입 효과다.
-  { key: 'luna-오개념OFF', model: 'openai/gpt-5.6-luna', misconceptions: false, baseline: true },
-  { key: 'luna-오개념ON', model: 'openai/gpt-5.6-luna', misconceptions: true },
+  // 확정 모델. 추가 후보 탐색은 종료(모델 선정 완료) — 이 하네스는 이제 회귀검증용.
+  { key: 'luna', model: 'openai/gpt-5.6-luna', baseline: true },
 ];
 
 const A = process.argv.slice(2);
@@ -66,7 +64,13 @@ async function ask(cand, c, idx) {
       headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: cand.model,
-        messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
+        // ★캐싱: 시스템 프롬프트(개념별 고정 27k자)를 cache_control 로 못박는다.
+        //   안 붙이면 매 호출 전량 과금 — 실측에서 A/B 캐시적중이 39%에 그쳐 입력 1,175만 토큰을
+        //   생돈으로 태웠다(약 \$3.9). 제품 튜터엔 캐싱을 강조해놓고 측정 도구엔 안 넣었던 구멍.
+        messages: [
+          { role: 'system', content: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }] },
+          { role: 'user', content: userPrompt },
+        ],
         max_tokens: 3000, stream: true, stream_options: { include_usage: true },
         // 추론형 모델이 예산을 추론으로 다 태워 답이 0자가 되는 사고 방지(qwen3.7-flash 실측).
         // 단, 추론을 끌 수 없는 모델(gpt-5-nano)은 이 필드를 보내면 400 이라 생략한다.
@@ -102,23 +106,38 @@ async function ask(cand, c, idx) {
     cand: cand.key, model: cand.model, slug: c.slug, collection: c.collection, q: c.q,
     answer: out, ttftMs: ttft, totalS: secs,
     inTok: usage.prompt_tokens ?? 0, outTok: usage.completion_tokens ?? 0, cost: usage.cost ?? 0,
+    cachedTok: usage.prompt_tokens_details?.cached_tokens ?? 0,
   };
 }
 
-const jobs = [];
-for (const c of cases) for (const cand of CANDIDATES) jobs.push({ c, cand });
+// ★작업 순서가 캐시 수명을 결정한다. 시스템 프롬프트는 **개념(slug)별로 다르므로**, 문항을 뒤섞어
+//   돌리면 매번 prefix 가 바뀌어 캐시가 죽는다. 같은 slug 를 연속으로 붙여 캐시 창(보통 5분) 안에
+//   재사용되게 한다. 모델도 slug 안에서 함께 돌려 같은 prefix 를 공유한다.
+const bySlug = new Map();
+for (const c of cases) { if (!bySlug.has(c.slug)) bySlug.set(c.slug, []); bySlug.get(c.slug).push(c); }
+// 워커에 **개념 그룹 단위**로 배분한다. 개별 job 단위로 나눠주면 워커들이 서로 다른 개념을 동시에
+// 처리해 prefix 가 엇갈리고 캐시가 죽는다(실측 47%). 한 워커가 한 개념을 끝까지 잡으면
+// 그 개념의 첫 호출만 캐시 쓰기이고 나머지는 전부 적중한다.
+const slugGroups = [...bySlug.values()].map((group) => {
+  const js = [];
+  for (const c of group) for (const cand of CANDIDATES) js.push({ c, cand });
+  return js;
+});
+const jobs = slugGroups.flat();
 emit({ ev: 'run', total: jobs.length, model: `튜터 A/B · ${CANDIDATES.length}모델 × ${cases.length}문항`, par: PAR });
 
-const results = []; let qi = 0;
+const results = []; let gi = 0;
 async function worker() {
-  while (qi < jobs.length) {
-    const i = qi++; const { c, cand } = jobs[i];
-    const r = await ask(cand, c, i + 1);
-    results.push(r);
-    console.log(`[${results.length}/${jobs.length}] ${cand.key.padEnd(14)} ${(c.slug.split('/').pop() ?? '').slice(0, 18).padEnd(19)} ${r.error ? '오류 ' + r.error.slice(0, 60) : `${r.answer.length}자 TTFT ${r.ttftMs ?? '-'}ms $${(r.cost ?? 0).toFixed(5)}`}`);
+  while (gi < slugGroups.length) {
+    const group = slugGroups[gi++];
+    for (const { c, cand } of group) {           // 한 개념을 끝까지 — 캐시 창 안에서 prefix 재사용
+      const r = await ask(cand, c, results.length + 1);
+      results.push(r);
+      console.log(`[${results.length}/${jobs.length}] ${cand.key.padEnd(14)} ${(c.slug.split('/').pop() ?? '').slice(0, 18).padEnd(19)} ${r.error ? '오류 ' + r.error.slice(0, 60) : `${r.answer.length}자 TTFT ${r.ttftMs ?? '-'}ms 캐시${r.cachedTok ? Math.round(100 * r.cachedTok / Math.max(1, r.inTok)) : 0}% $${(r.cost ?? 0).toFixed(5)}`}`);
+    }
   }
 }
-await Promise.all(Array.from({ length: PAR }, worker));
+await Promise.all(Array.from({ length: Math.min(PAR, slugGroups.length) }, worker));
 writeFileSync(`${MON}/ab_results.json`, JSON.stringify(results, null, 1));
 emit({ ev: 'summary', pass: results.filter((r) => r.answer).length, total: jobs.length, cost: results.reduce((s, r) => s + (r.cost || 0), 0) });
 
@@ -127,6 +146,7 @@ for (const cand of CANDIDATES) {
   const rs = results.filter((r) => r.cand === cand.key);
   const okr = rs.filter((r) => r.answer);
   const avg = (f) => okr.length ? (okr.reduce((s, r) => s + (f(r) || 0), 0) / okr.length) : 0;
-  console.log(`${cand.key.padEnd(14)} 응답 ${okr.length}/${rs.length} · TTFT ${Math.round(avg((r) => r.ttftMs))}ms · 평균 ${Math.round(avg((r) => r.answer.length))}자 · 총 $${rs.reduce((s, r) => s + (r.cost || 0), 0).toFixed(4)}`);
+  const cin = okr.reduce((s, r) => s + (r.inTok || 0), 0), cch = okr.reduce((s, r) => s + (r.cachedTok || 0), 0);
+  console.log(`${cand.key.padEnd(14)} 응답 ${okr.length}/${rs.length} · TTFT ${Math.round(avg((r) => r.ttftMs))}ms · 평균 ${Math.round(avg((r) => r.answer.length))}자 · 캐시 ${cin ? Math.round(100 * cch / cin) : 0}% · 총 $${rs.reduce((s, r) => s + (r.cost || 0), 0).toFixed(4)}`);
 }
 console.log(`\n→ ${MON}/ab_results.json (채점: tutor_ab_judge.mjs)`);
