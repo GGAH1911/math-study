@@ -603,7 +603,15 @@ GRADE_SCOPE: dict[str, list[str]] = {
 }
 
 
-def scope_for(subject: str | None = None, grade: str | None = None) -> list[str] | None:
+# 고등 문제인데 과목·학년으로 못 좁힐 때의 기본값 — **중학은 뺀다.**
+# (2028 예시문항처럼 grade 가 없는 30건이 여기 해당한다. 전 범위를 열면 중학 개념이
+#  후보에 남아 이번 사고와 같은 유형이 다시 가능해진다.)
+HIGH_DEFAULT = ['high-1', 'math-1', 'math-2', 'calculus',
+                'geometry-elective', 'prob-stats-elective']
+
+
+def scope_for(subject: str | None = None, grade: str | None = None,
+              is_high: bool = False) -> list[str] | None:
     """이 문제에 허용할 범위. 학년 디렉터리(`math-1`) 또는 **단원 경로**(`a/b/단원`) 혼용 가능.
 
     ★단원 단위 허용이 필요한 이유: 옛 가/나형처럼 한 과목이 어떤 영역의 **일부만** 포함하는
@@ -615,7 +623,7 @@ def scope_for(subject: str | None = None, grade: str | None = None) -> list[str]
         for g, sc in GRADE_SCOPE.items():
             if g in str(grade):
                 return sc
-    return None
+    return HIGH_DEFAULT if is_high else None
 
 
 # ── 매핑 프롬프트 조립 + 검증 게이트 ────────────────────────────────────────────

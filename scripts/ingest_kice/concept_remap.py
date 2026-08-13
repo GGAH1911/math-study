@@ -81,7 +81,11 @@ def apply_map(md, meta):
         txt = re.sub(r'(?m)^killer_tier: .*$', f'killer_tier: {meta["killer_tier"]}', txt, count=1)
     if meta.get('cognitive_type'):
         txt = re.sub(r'(?m)^cognitive_type: .*$', f'cognitive_type: {meta["cognitive_type"]}', txt, count=1)
-    links = '\n'.join(f'- [{_slug(c).replace("_", " ")}](../concepts/{_slug(c)}.md)' for c in ([us] + concepts))
+    # 링크 주소는 **전체 상대경로**(학년이 들어 있어야 렌더러가 올바로 해석한다), 라벨은 **잎 이름**.
+    # 라벨에 전체 경로를 쓰면 "algebra math 1 지수와 로그 …" 처럼 읽을 수 없는 글자가 된다.
+    links = '\n'.join(
+        f'- [{_slug(c).rsplit("/", 1)[-1].replace("_", " ")}](../concepts/{_slug(c)}.md)'
+        for c in ([us] + concepts))
     txt = re.sub(r'(?ms)^## 매핑된 개념\n(?:- .*\n)*', f'## 매핑된 개념\n{links}\n', txt, count=1)
     if txt != orig:
         open(md, 'w', encoding='utf-8').write(txt)

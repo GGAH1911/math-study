@@ -261,13 +261,17 @@ def map_problem_once(prob_body: str, number: int, score: int, units_index: dict,
     body = ('아래 이미지를 Read 로 **직접 열어** 문제를 읽어라. 이미지가 유일한 근거다.\n'
             + '\n'.join(str(t) for t in tiles)) if tiles else prob_body[:2500]
     ctx = f'문제 번호: {number}, 배점: {score}점' + (f', 영역: {subject}' if subject else '')
+    # ★메뉴는 **시스템 프롬프트**에 둔다. 유저 메시지에 두면 — 앞에 놓아도 — 호출 간 재사용이
+    #   안 된다(실측: create 26k 고정, read 불변). 시스템으로 옮기면 두 번째 호출부터
+    #   create 26k→10k, read 72k→88k 로 우리 메뉴 약 16k 토큰이 캐시에서 읽힌다.
+    #   그래서 **같은 과목끼리 묶어 돌려야** 한다 — 과목이 바뀌면 메뉴가 바뀌어 캐시가 깨진다.
+    system = f'{ONCE_SYSTEM}\n\n[선택 가능한 단원·개념 목록]\n{full_menu(index)}'
     user = f"""{ctx}
 
 {body}
 
-아래 목록에서 **단원 1개와 그 단원에 속한 개념 1-3개**를 고르라. 목록 밖은 지어내지 마라.
-{full_menu(index)}"""
-    out = claude_p(ONCE_SYSTEM, user, model=model,
+위 목록에서 **단원 1개와 그 단원에 속한 개념 1-3개**를 고르라. 목록 밖은 지어내지 마라."""
+    out = claude_p(system, user, model=model,
                    max_turns=6 if tiles else 1, timeout=300 if tiles else 90,
                    no_tools=not tiles, allow_read=bool(tiles),
                    add_dir=str(Path(tiles[0]).parent) if tiles else None)
