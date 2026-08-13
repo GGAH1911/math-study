@@ -46,9 +46,13 @@ def targets() -> list[dict]:
     out = []
     for f in ROOT.glob('docs/problems/**/*.md'):
         t = f.read_text(encoding='utf-8')[:6000]
-        m = re.search(r'^concepts: \[(.*?)\]', t, re.M)
-        if not m or not m.group(1).strip():
+        # ★concepts 가 비어 있거나 키가 없는 문제도 **대상이다.** 인제스트가 반쪽으로 끝나
+        #   개념이 안 붙은 문제가 실제로 있는데(2021 고3 4월 미적분 27), 예전 필터는
+        #   "비지 않은 것" 만 골라서 그런 문제를 영영 건너뛰었다 — 가장 고쳐야 할 것이 빠졌다.
+        m = re.search(r'^concepts:', t, re.M)
+        if not m:
             continue
+        inner = re.search(r'^concepts: \[(.*?)\]', t, re.M)
         # ★대상 = **개념이 달린 문제 전부**(기본). 예전엔 '평면 참조 보유' 로 좁혔는데,
         #   한 번 재매핑한 문제는 평면 참조가 사라져 **다시는 대상이 되지 않는다.**
         #   프롬프트를 고쳐도 옛 결과가 그대로 남는다는 뜻이라 기준을 넓혔다.
@@ -65,7 +69,8 @@ def targets() -> list[dict]:
                     'subject': g(r'^  subject: (.+)$'),
                     'grade': g(r'^  grade: (.+)$'), 'number': g(r'^  number: (\d+)$', '0'),
                     'score': g(r'^  score: (\d+)$', '3'),
-                    'image': g(r'^problem_image: (.+)$'), 'before': m.group(1)[:120]})
+                    'image': g(r'^problem_image: (.+)$'),
+                    'before': (inner.group(1)[:120] if inner else '(개념 없음)')})
     return out
 
 

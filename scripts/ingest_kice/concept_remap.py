@@ -74,7 +74,12 @@ def apply_map(md, meta):
     orig = txt
     paths = list(dict.fromkeys([f'docs/concepts/{us}.md'] + [f'docs/concepts/{c}.md' for c in concepts]))
     txt = re.sub(r'(?m)^unit: .*$', f'unit: {us}', txt, count=1)
-    txt = re.sub(r'(?m)^concepts: \[.*?\]$', 'concepts: [' + ', '.join(paths) + ']', txt, count=1)
+    # ★키가 아예 없는 파일이 있다(인제스트가 반쪽으로 끝난 흔적). sub 만 쓰면 조용히 아무것도
+    #   안 하고 지나가므로, 없으면 unit 줄 뒤에 만들어 넣는다.
+    if re.search(r'(?m)^concepts: ', txt):
+        txt = re.sub(r'(?m)^concepts: \[.*?\]$', 'concepts: [' + ', '.join(paths) + ']', txt, count=1)
+    else:
+        txt = re.sub(r'(?m)^(unit: .*)$', r'\1\nconcepts: [' + ', '.join(paths) + ']', txt, count=1)
     if meta.get('exam_intent'):
         txt = re.sub(r'(?m)^exam_intent: ".*?"$', f'exam_intent: "{_esc_yaml(meta["exam_intent"])}"', txt, count=1)
     if meta.get('killer_tier'):
