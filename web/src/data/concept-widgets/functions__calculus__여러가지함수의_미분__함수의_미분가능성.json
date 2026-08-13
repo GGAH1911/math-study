@@ -50,7 +50,22 @@
      "label": "좌할선 (좌미분계수)",
      "color": "#16a34a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a-hh",
+     "=fl"
+    ],
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=a+hh",
+     "=fr"
+    ]
+   ],
+   "pointsLabel": "$h$"
   },
   "readout": [
    {

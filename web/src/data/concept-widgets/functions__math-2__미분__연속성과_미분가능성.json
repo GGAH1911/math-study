@@ -25,12 +25,12 @@
   "scope": "fa = abs(a); fL = abs(a - h); fR = abs(a + h); slopeR = (fR - fa)/h; slopeL = (fa - fL)/h; gap = slopeR - slopeL",
   "plot": {
    "range": [
-    -2.2,
-    2.2
+    -3.2,
+    3.2
    ],
    "yRange": [
-    -2.5,
-    2.5
+    -3.5,
+    3.5
    ],
    "fns": [
     {
@@ -48,7 +48,22 @@
      "label": "왼쪽 기울기 f'(a⁻)",
      "color": "#16a34a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a - h",
+     "=fL"
+    ],
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=a + h",
+     "=fR"
+    ]
+   ],
+   "pointsLabel": "$(a-h,f(a-h)),\\,(a,f(a)),\\,(a+h,f(a+h))$"
   },
   "readout": [
    {

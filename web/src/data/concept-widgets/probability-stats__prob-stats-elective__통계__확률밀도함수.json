@@ -52,7 +52,18 @@
      "label": "P(a≤X≤b) (넓이)",
      "color": "orange"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ]
+   ],
+   "pointsLabel": "$a,\\ b$"
   },
   "readout": [
    {

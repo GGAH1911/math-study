@@ -52,6 +52,25 @@
      "label": "q·a"
     },
     {
+     "type": "point",
+     "at": [
+      "=a",
+      0.5
+     ],
+     "label": "a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      0
+     ],
+     "to": [
+      "=a",
+      0.5
+     ]
+    },
+    {
      "type": "segment",
      "from": [
       "=qa",

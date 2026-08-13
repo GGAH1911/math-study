@@ -52,7 +52,18 @@
      "label": "좌할선 (h→0⁻, 좌미분계수)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a+h",
+     "=aR"
+    ],
+    [
+     "=a-h",
+     "=aL"
+    ]
+   ],
+   "pointsLabel": "$(a+h,\\,f(a+h)),\\ (a-h,\\,f(a-h))$"
   },
   "readout": [
    {

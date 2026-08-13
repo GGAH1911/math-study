@@ -47,6 +47,40 @@
     {
      "type": "segment",
      "from": [
+      0,
+      1.2
+     ],
+     "to": [
+      "=n",
+      1.2
+     ],
+     "color": "#1c7ed6",
+     "label": "|A|=n"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      -0.9
+     ],
+     "to": [
+      "=m",
+      -0.9
+     ],
+     "color": "#e8590c",
+     "label": "|B|=m"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      -0.9
+     ],
+     "label": "공역 크기 끝점"
+    },
+    {
+     "type": "segment",
+     "from": [
       "=lb",
       0
      ],

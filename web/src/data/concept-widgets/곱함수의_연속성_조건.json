@@ -58,7 +58,22 @@
      "label": "f(x)g(x)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=a",
+     "=ga"
+    ],
+    [
+     "=a",
+     "=prod"
+    ]
+   ],
+   "pointsLabel": "$(a,f(a)),\\,(a,g(a)),\\,(a,(fg)(a))$"
   },
   "readout": [
    {

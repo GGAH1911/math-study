@@ -50,7 +50,18 @@
      "label": "최솟값 m",
      "color": "#16a34a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ]
+   ],
+   "pointsLabel": "$(a,f(a)),\\ (b,f(b))$"
   },
   "readout": [
    {
