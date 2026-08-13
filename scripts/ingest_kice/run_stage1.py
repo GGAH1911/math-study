@@ -77,6 +77,15 @@ ANSWER_SYSTEM = dedent("""
     객관식 정답은 "1"~"5", 단답형은 수치 그대로. 출력은 JSON만.
 """).strip()
 
+ONCE_SYSTEM = dedent("""
+    한국 수능 수학 문제를 읽고, 주어진 목록에서 단원 1개와 그 단원의 개념 1-3개를 고른다.
+    목록에 없는 것을 지어내지 마라 — 지어낸 것은 버려진다.
+    출력 JSON: {"unit":"<단원경로>","concepts":["<개념경로>", ...],
+                "exam_intent":"<한 줄>","killer_tier":"early|mid|high|killer",
+                "cognitive_type":"계산|개념|응용|추론|통합","expected_time_sec":<정수>}
+    JSON 만 출력. 설명 금지.
+""").strip()
+
 UNIT_SYSTEM = dedent("""
     한국 수능 수학 문제를 읽고, 주어진 단원 경로 목록에서 **가장 적합한 하나**를 고른다.
     출력은 경로 문자열 하나뿐. 설명·따옴표·코드펜스 일절 금지.
@@ -204,7 +213,7 @@ def split_problems(all_md: str) -> list[dict]:
 
 
 from ingest_round import (  # noqa: E402  구현은 한 곳에만 — 두 벌이면 반드시 갈라진다
-    load_concept_index, scope_for, unit_menu, spoke_menu, validate_mapping,
+    load_concept_index, scope_for, unit_menu, spoke_menu, full_menu, validate_mapping,
 )
 
 
@@ -239,6 +248,45 @@ def vision_tiles(image_path: Path) -> list[Path]:
             im.crop((0, y0, w, y1)).save(t)
         out.append(t)
     return out
+
+
+def map_problem_once(prob_body: str, number: int, score: int, units_index: dict,
+                     subject: str | None = None, grade: str | None = None,
+                     model: str = 'sonnet', image: Path | str | None = None) -> dict | None:
+    """단원+개념을 **한 번에** 묻는 1회안. 이미지 읽기가 절반이라 2회안보다 빠르고 싸다."""
+    index = units_index or {}
+    if not index:
+        return None
+    tiles = vision_tiles(Path(image)) if image and Path(image).exists() else []
+    body = ('아래 이미지를 Read 로 **직접 열어** 문제를 읽어라. 이미지가 유일한 근거다.\n'
+            + '\n'.join(str(t) for t in tiles)) if tiles else prob_body[:2500]
+    ctx = f'문제 번호: {number}, 배점: {score}점' + (f', 영역: {subject}' if subject else '')
+    user = f"""{ctx}
+
+{body}
+
+아래 목록에서 **단원 1개와 그 단원에 속한 개념 1-3개**를 고르라. 목록 밖은 지어내지 마라.
+{full_menu(index)}"""
+    out = claude_p(ONCE_SYSTEM, user, model=model,
+                   max_turns=6 if tiles else 1, timeout=300 if tiles else 90,
+                   no_tools=not tiles, allow_read=bool(tiles),
+                   add_dir=str(Path(tiles[0]).parent) if tiles else None)
+    if not out:
+        return None
+    out = re.sub(r'^```(?:json)?\s*|\s*```$', '', out.strip(), flags=re.MULTILINE)
+    m = re.search(r'\{.*\}', out, re.S)
+    try:
+        meta = json.loads(m.group(0)) if m else None
+    except Exception:
+        return None
+    if not meta:
+        return None
+    meta['concepts'] = [c for c in (meta.get('concepts') or []) if isinstance(c, str)]
+    ok, why = validate_mapping(meta.get('unit'), meta['concepts'], index)
+    if not ok:
+        allowed = set(index.get(meta.get('unit'), []))
+        meta['concepts'] = [c for c in meta['concepts'] if c in allowed]
+    return meta
 
 
 def map_problem(prob_body: str, number: int, score: int, units_index: dict,

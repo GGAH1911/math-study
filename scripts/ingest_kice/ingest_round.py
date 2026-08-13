@@ -635,6 +635,20 @@ def spoke_menu(index: dict[str, list[str]], unit: str, limit: int = 220) -> str:
     return '\n'.join(f'- {s}' for s in spokes[:limit])
 
 
+def full_menu(index: dict[str, list[str]]) -> str:
+    """1회 호출용 — 단원과 그 안의 개념을 한 번에. 과목 안에서 내용이 같아 프롬프트 캐시가 걸린다.
+
+    ★2단계로 나눈 건 선택을 작게 쪼개려던 것인데, 진짜 비싼 건 메뉴가 아니라 **이미지**다
+      (메뉴는 캐시되고 이미지는 문제마다 달라 캐시가 안 된다). 1회로 합치면 이미지 읽기가
+      절반이 된다 — 정확도가 유지되는지만 확인하면 된다.
+    """
+    out = []
+    for u in sorted(index):
+        out.append(f'## {u}')
+        out += [f'- {s}' for s in sorted(index[u])]
+    return '\n'.join(out)
+
+
 def validate_mapping(unit: str | None, concepts: list[str] | None,
                      index: dict[str, list[str]]) -> tuple[bool, str]:
     """매핑이 **후보 안에서** 나왔는지 확인한다.
