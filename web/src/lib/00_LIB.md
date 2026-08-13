@@ -50,6 +50,7 @@ updated: 2026-06-28
 - `tutor-usage.ts` — 등록 자산
 - `user-claim.ts` — 등록 자산
 - `vision.ts` — 등록 자산
+- `webp-serve.ts` — 등록 자산
 
 ---
 ## 🔗 지식망 연결

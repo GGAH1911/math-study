@@ -44,3 +44,6 @@ web/scripts/_*
 
 # LLM 튜터 전용 OpenRouter 키 — 레포 안에 두면 커밋 사고가 난다(레포 밖 ~/.config/math-study/openrouter.key 가 정본)
 openrouterkey.txt
+
+# 서빙 계층 WebP 변환 캐시(요청 시 생성 — 리포에 5,728개 파일을 더하지 않기 위해)
+web/.cache/

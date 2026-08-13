@@ -3,6 +3,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { resolveUser, isSameOrigin, type User } from './lib/auth.ts';
 import { rateLimit, sweep } from './lib/rate-limit.ts';
+import { tryServeWebp } from './lib/webp-serve.ts';
 
 // 남용방지: 비싼 POST 엔드포인트 per-user 분당 한도(429). 스팸/DoS 방지(빌링 아님).
 const RATE_LIMITS: Array<[RegExp, number]> = [
@@ -111,6 +112,18 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
     const returnTo = encodeURIComponent(pathname + url.search);
     return context.redirect(`/login?returnTo=${returnTo}`);
+  }
+
+  // 기출 이미지: 인증을 통과한 뒤에만 WebP 로 바꿔 준다(경로는 .png 그대로 — 개명은 Phase 5).
+  // 실측 무손실 39.6%. 변환 실패·미지원 클라이언트면 null 이 와서 원본 PNG 가 그대로 나간다.
+  //
+  // ⛔ **지금 이 블록은 실제 이미지 요청에 닿지 않는다.** `public/` 안에 **있는** 파일은
+  //    정적 핸들러가 미들웨어보다 먼저 응답한다(무인증 200 실측). 없는 파일만 여기까지 내려온다.
+  //    같은 이유로 위 54-56 줄의 "무인증 스크래핑 차단" 도 작동하지 않는다 —
+  //    `/problem-images/` 를 정적 서빙에서 떼어내는 변경(Phase 3)이 선행돼야 둘 다 살아난다.
+  if (method === 'GET' && pathname.startsWith('/problem-images/')) {
+    const webp = await tryServeWebp(pathname, request);
+    if (webp) return webp;
   }
 
   // 남용방지: 인증된 사용자라도 비싼 엔드포인트는 분당 한도 초과 시 429.
