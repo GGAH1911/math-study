@@ -58,7 +58,7 @@
     "step": 0.1
    }
   ],
-  "scope": "x1=0; x2=x1+a1; x3=x2+a2; x4=x3+a3; x5=x4+a4; x6=x5+a5; x6_disp = n==5 ? -100 : x6; med = n==5 ? x3 : (x3+x4)/2; leq5=sum([x1<=med,x2<=med,x3<=med,x4<=med,x5<=med]); leq6=sum([x1<=med,x2<=med,x3<=med,x4<=med,x5<=med,x6<=med]); geq5=sum([x1>=med,x2>=med,x3>=med,x4>=med,x5>=med]); geq6=sum([x1>=med,x2>=med,x3>=med,x4>=med,x5>=med,x6>=med]); leq=n==5 ? leq5 : leq6; geq=n==5 ? geq5 : geq6",
+  "scope": "x1=0; x2=x1+a1; x3=x2+a2; x4=x3+a3; x5=x4+a4; x6=x5+a5; med = n==5 ? x3 : (x3+x4)/2; leq5=sum([x1<=med,x2<=med,x3<=med,x4<=med,x5<=med]); leq6=sum([x1<=med,x2<=med,x3<=med,x4<=med,x5<=med,x6<=med]); geq5=sum([x1>=med,x2>=med,x3>=med,x4>=med,x5>=med]); geq6=sum([x1>=med,x2>=med,x3>=med,x4>=med,x5>=med,x6>=med]); leq=n==5 ? leq5 : leq6; geq=n==5 ? geq5 : geq6",
   "geometry": {
    "range": [
     -1,
@@ -114,10 +114,11 @@
     {
      "type": "point",
      "at": [
-      "=x6_disp",
+      "=x6",
       0
      ],
-     "label": "x₆"
+     "label": "x₆",
+     "color": "=n==5 ? \"#a1a1aa\" : \"#fb7185\""
     },
     {
      "type": "segment",

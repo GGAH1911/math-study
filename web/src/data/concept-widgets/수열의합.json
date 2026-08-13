@@ -47,7 +47,14 @@
      "label": "누적합 S_k",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=Sn"
+    ]
+   ],
+   "pointsLabel": "$S_n$"
   },
   "readout": [
    {

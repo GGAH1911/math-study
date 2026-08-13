@@ -60,10 +60,19 @@ const visualOf = (params) => {
 };
 let ref; try { ref = visualOf(base); } catch (e) { out.errors.push('visual: ' + e.message); }
 for (const p of (spec.params || [])) {
-  const lo = p.min ?? -1, hi = p.max ?? 1;
-  const alt = { ...base, [p.name]: (base[p.name] === hi ? lo : hi) };
-  try { out.visualVaries[p.name] = visualOf(alt) !== ref; }
-  catch (e) { out.visualVaries[p.name] = false; out.errors.push(`visual(${p.name}): ${e.message}`); }
+  // ★한 값만 흔들면 **우연히 같은 결과**가 나올 수 있다(실측: 1/2+1/2 와 1/2÷1/2 가 둘 다 1
+  //   이라 op 를 1→4 로 바꿔도 그림이 같았다). 여러 값을 시도해 하나라도 달라지면 살아 있다.
+  const lo = p.min ?? -1, hi = p.max ?? 1, st = p.step || (hi - lo) / 8 || 1;
+  const cand = [];
+  for (let v = lo; v <= hi + 1e-9; v += st) { cand.push(v); if (cand.length > 40) break; }
+  if (!cand.length) cand.push(lo, hi);
+  let varies = false;
+  for (const v of cand) {
+    if (v === base[p.name]) continue;
+    try { if (visualOf({ ...base, [p.name]: v }) !== ref) { varies = true; break; } }
+    catch (e) { out.errors.push(`visual(${p.name}): ${e.message}`); break; }
+  }
+  out.visualVaries[p.name] = varies;
 }
 console.log(JSON.stringify(out));
 '''

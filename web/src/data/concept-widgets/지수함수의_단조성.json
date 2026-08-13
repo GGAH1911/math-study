@@ -27,10 +27,23 @@
    "fns": [
     {
      "fn": "a^x",
-     "label": "y=a^x",
-     "color": "blue"
+     "label": "$y=a^x$",
+     "color": "#1f77b4"
+    },
+    {
+     "fn": "1",
+     "label": "$y=1$",
+     "color": "#9ca3af",
+     "dashed": true
     }
-   ]
+   ],
+   "points": [
+    [
+     "=1",
+     "=a"
+    ]
+   ],
+   "pointsLabel": "$(1,\\ a)$ — $a>1$ 이면 증가, $0<a<1$ 이면 감소"
   },
   "readout": [
    {
@@ -57,10 +70,18 @@
  },
  "recipe": {
   "samples": [
-   0.5,
-   0.75,
-   1.5,
-   2
+   {
+    "a": 0.5
+   },
+   {
+    "a": 0.75
+   },
+   {
+    "a": 1.5
+   },
+   {
+    "a": 2
+   }
   ],
   "invariants": [
    "sign(diff) - trend",
@@ -101,6 +122,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }
