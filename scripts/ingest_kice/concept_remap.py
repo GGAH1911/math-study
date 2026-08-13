@@ -76,10 +76,23 @@ def apply_map(md, meta):
     txt = re.sub(r'(?m)^unit: .*$', f'unit: {us}', txt, count=1)
     # ★키가 아예 없는 파일이 있다(인제스트가 반쪽으로 끝난 흔적). sub 만 쓰면 조용히 아무것도
     #   안 하고 지나가므로, 없으면 unit 줄 뒤에 만들어 넣는다.
-    if re.search(r'(?m)^concepts: ', txt):
-        txt = re.sub(r'(?m)^concepts: \[.*?\]$', 'concepts: [' + ', '.join(paths) + ']', txt, count=1)
-    else:
-        txt = re.sub(r'(?m)^(unit: .*)$', r'\1\nconcepts: [' + ', '.join(paths) + ']', txt, count=1)
+    # ★concepts 는 세 형태가 있다: `concepts: [a, b]` · `concepts:` + 블록 리스트 · 키 없음.
+    #   한 형태만 가정하면 나머지에서 **중복 줄이 생겨 YAML 이 깨진다**(2026-08-14 사이트 정지 2회).
+    #   그래서 어떤 형태든 **기존 블록을 통째로 걷어내고** 새 줄을 넣는다.
+    new_line = 'concepts: [' + ', '.join(paths) + ']'
+    lines, out, i, replaced = txt.split('\n'), [], 0, False
+    while i < len(lines):
+        if lines[i].startswith('concepts:'):
+            i += 1
+            while i < len(lines) and lines[i].startswith('  - '):   # 블록 리스트 본체
+                i += 1
+            if not replaced:
+                out.append(new_line); replaced = True
+            continue
+        out.append(lines[i]); i += 1
+    txt = '\n'.join(out)
+    if not replaced:            # 키가 아예 없던 파일 — unit 줄 뒤에 만든다
+        txt = re.sub(r'(?m)^(unit: .*)$', r'\1\n' + new_line, txt, count=1)
     if meta.get('exam_intent'):
         txt = re.sub(r'(?m)^exam_intent: ".*?"$', f'exam_intent: "{_esc_yaml(meta["exam_intent"])}"', txt, count=1)
     if meta.get('killer_tier'):

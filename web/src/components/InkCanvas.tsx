@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback, type CSSProperties } from 'react';
 import { recognizeShape, shapeToPoints } from '../lib/shape-recognize'; // 도형 모드: 손그림→깔끔한 도형 스냅
-import { normalizeInkDoc, INK_DOC_VERSION } from '../lib/ink-doc.ts';
+import { normalizeInkDoc, newStrokeId, INK_DOC_VERSION } from '../lib/ink-doc.ts';
 
 // 저지연 필기 캔버스 + 레이어 — 애플펜슬/S펜/터치/마우스. 채점·LLM·API 무관.
 //   저지연: desynchronized · getCoalescedEvents · getPredictedEvents · 진행 overlay · 압력 · 팜리젝션
@@ -8,7 +8,9 @@ import { normalizeInkDoc, INK_DOC_VERSION } from '../lib/ink-doc.ts';
 //   벡터 스트로크 모델(선택·변형 토대). 영속=localStorage(per storageKey, v2 레이어 포맷). 스펙: docs/architecture/handwriting-canvas.md
 type PE = PointerEvent & { getPredictedEvents?: () => PointerEvent[] };
 type Pt = { x: number; y: number; p: number };
-type Stroke = { tool: 'pen' | 'eraser'; color: string; width: number; dashed: boolean; pressure: boolean; pts: Pt[] };
+// ★id: v3 의 신원. 없으면 기기 간 합류에서 "이 획과 저 획이 같은가" 를 물을 수 없다.
+//   기존 문서는 로드 시 normalizeInkDoc 이 내용 해시로 채워 넣는다(결정적).
+type Stroke = { id?: string; tool: 'pen' | 'eraser'; color: string; width: number; dashed: boolean; pressure: boolean; pts: Pt[] };
 type LayerMeta = { id: string; name: string; visible: boolean };
 type Action =
   | { type: 'add'; layerId: string; strokes: Stroke[] }
@@ -72,6 +74,17 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
   // 지워진 스트로크 묘비. 삭제를 '없앰' 이 아니라 '표시' 로 남겨야 다른 기기의 합류가
   // 지운 획을 되살리지 않는다(v3).
   const deletedRef = useRef<string[]>([]);
+  // 배열에서 빠진 획은 **묘비로 남긴다.** 안 남기면 다른 기기가 합류할 때 지운 획이 되살아난다.
+  // 되살리는 동작(undo)에서는 묘비를 걷는다 — 안 걷으면 되살렸는데 동기화가 다시 지운다.
+  const markDeleted = (ss: Stroke[]) => {
+    const cur = new Set(deletedRef.current);
+    for (const x of ss) if (x?.id) cur.add(x.id);
+    deletedRef.current = [...cur];
+  };
+  const unmarkDeleted = (ss: Stroke[]) => {
+    const gone = new Set(ss.map((x) => x?.id).filter(Boolean) as string[]);
+    if (gone.size) deletedRef.current = deletedRef.current.filter((i) => !gone.has(i));
+  };
   const elOf = useRef(new Map<string, { c: HTMLCanvasElement; ctx: CanvasRenderingContext2D | null }>());
   const cur = useRef<Stroke | null>(null);
   const removed = useRef<Stroke[]>([]);
@@ -204,7 +217,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
         const doc = normalizeInkDoc(JSON.parse(raw));
         if (doc) {
           strokesOf.current.clear();
-          for (const l of doc.layers) strokesOf.current.set(l.id, doc.strokes[l.id] ?? []);
+          for (const l of doc.layers) strokesOf.current.set(l.id, (doc.strokes[l.id] ?? []) as unknown as Stroke[]);
           deletedRef.current = doc.deletedStrokes;
           setLayers(doc.layers); setActiveId(doc.activeId ?? doc.layers[0].id);
         }
@@ -224,7 +237,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
         const doc = normalizeInkDoc(d?.doc);
         if (cancelled || !doc) return;
         strokesOf.current.clear();
-        for (const l of doc.layers) strokesOf.current.set(l.id, doc.strokes[l.id] ?? []);
+        for (const l of doc.layers) strokesOf.current.set(l.id, (doc.strokes[l.id] ?? []) as unknown as Stroke[]);
         deletedRef.current = doc.deletedStrokes;
         setLayers(doc.layers);
         setActiveId(doc.activeId ?? doc.layers[0]?.id);
@@ -270,7 +283,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     const clearCursor = () => uiCtx.current?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     const eraseStrokeAt = (x: number, y: number) => {
       const id = live.current.activeId, idx = hit(id, x, y, live.current.eraserSize / 2);
-      if (idx >= 0) { const [s] = (strokesOf.current.get(id) ?? []).splice(idx, 1); removed.current.push(s); drawLayer(id); }
+      if (idx >= 0) { const [s] = (strokesOf.current.get(id) ?? []).splice(idx, 1); removed.current.push(s); markDeleted([s]); drawLayer(id); }
     };
     const drawLasso = () => {
       const ctx = uiCtx.current, poly = lassoRef.current; if (!ctx || !poly || poly.length < 2) return;
@@ -316,7 +329,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
       if (L.tool === 'eraser' && L.eraserMode === 'stroke') { removed.current = []; const p0 = pt(e); eraseStrokeAt(p0.x, p0.y); drawEraserCursor(p0.x, p0.y); cur.current = { tool: 'eraser', color: '', width: 0, dashed: false, pressure: false, pts: [] }; return; }
       redoStack.current = [];
       const start = (L.tool === 'pen' && L.lineMode && L.gridSnap) ? snapGrid(pt(e), L.gap) : pt(e); // 직선+격자스냅이면 시작점 격자에
-      cur.current = { tool: L.tool === 'shape' ? 'pen' : L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.tool === 'shape' ? false : L.pressure, pts: [start] };
+      cur.current = { id: newStrokeId(), tool: L.tool === 'shape' ? 'pen' : L.tool, color: L.color, width: L.tool === 'eraser' ? L.eraserSize : L.width, dashed: L.dashed, pressure: L.tool === 'shape' ? false : L.pressure, pts: [start] };
       if (L.tool === 'eraser') { const p0 = pt(e); drawStroke(activeCtx()!, cur.current); drawEraserCursor(p0.x, p0.y); } else renderOverlay();
     };
     const move = (e: PointerEvent) => {
@@ -454,14 +467,14 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
   const moveLayer = (id: string, dir: -1 | 1) => { setLayers((ls) => { const i = ls.findIndex((l) => l.id === id), j = i + dir; if (j < 0 || j >= ls.length) return ls; const n = ls.slice(); [n[i], n[j]] = [n[j], n[i]]; return n; }); setRev((r) => r + 1); save(); };
 
   const applyAct = (a: Action, forward: boolean) => { // forward=redo방향, !forward=undo
-    if (a.type === 'add') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) arr.push(...a.strokes); else for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } drawLayer(a.layerId); }
-    else if (a.type === 'remove') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } else arr.push(...a.strokes); drawLayer(a.layerId); }
+    if (a.type === 'add') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) { arr.push(...a.strokes); unmarkDeleted(a.strokes); } else { for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } markDeleted(a.strokes); } drawLayer(a.layerId); }
+    else if (a.type === 'remove') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) { for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } markDeleted(a.strokes); } else { arr.push(...a.strokes); unmarkDeleted(a.strokes); } drawLayer(a.layerId); }
     else if (a.type === 'mutate') { const arr = strokesOf.current.get(a.layerId) ?? []; const src = forward ? a.after : a.before; a.idxs.forEach((i, k) => { arr[i] = src[k]; }); drawLayer(a.layerId); }
     else { const from = strokesOf.current.get(a.from) ?? [], to = strokesOf.current.get(a.to) ?? []; const [src, dst] = forward ? [from, to] : [to, from]; for (const s of a.strokes) { const i = src.indexOf(s); if (i >= 0) src.splice(i, 1); } dst.push(...a.strokes); drawLayer(a.from); drawLayer(a.to); }
   };
   const undo = () => { const a = undoStack.current.pop(); if (!a) return; redoStack.current.push(a); applyAct(a, false); selRef.current = null; drawSelBox(); save(); setRev((r) => r + 1); };
   const redoFn = () => { const a = redoStack.current.pop(); if (!a) return; undoStack.current.push(a); applyAct(a, true); selRef.current = null; drawSelBox(); save(); setRev((r) => r + 1); };
-  const clearActive = () => { const arr = strokesOf.current.get(activeId) ?? []; if (!arr.length || !confirm('이 레이어 필기를 지울까요?')) return; undoStack.current.push({ type: 'remove', layerId: activeId, strokes: arr.slice() }); redoStack.current = []; arr.length = 0; selRef.current = null; drawLayer(activeId); drawSelBox(); save(); setRev((r) => r + 1); };
+  const clearActive = () => { const arr = strokesOf.current.get(activeId) ?? []; if (!arr.length || !confirm('이 레이어 필기를 지울까요?')) return; undoStack.current.push({ type: 'remove', layerId: activeId, strokes: arr.slice() }); redoStack.current = []; markDeleted(arr.slice()); arr.length = 0; selRef.current = null; drawLayer(activeId); drawSelBox(); save(); setRev((r) => r + 1); };
 
   // ── 갈무리(선택) 조작 ──
   const deselect = () => { selRef.current = null; drawSelBox(); setRev((r) => r + 1); };
@@ -470,12 +483,15 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     const sel = selRef.current; if (!sel) return;
     const arr = strokesOf.current.get(sel.layerId) ?? [], removedS = sel.idxs.map((i) => arr[i]).filter(Boolean);
     [...sel.idxs].sort((a, b) => b - a).forEach((i) => arr.splice(i, 1));
+    markDeleted(removedS);
     undoStack.current.push({ type: 'remove', layerId: sel.layerId, strokes: removedS }); redoStack.current = [];
     selRef.current = null; drawLayer(sel.layerId); drawSelBox(); save(); setRev((r) => r + 1);
   };
   const dupSel = () => {
     const sel = selRef.current; if (!sel) return;
-    const arr = strokesOf.current.get(sel.layerId) ?? [], clones = sel.idxs.map((i) => arr[i]).filter(Boolean).map((s) => translateStroke(s, 18, 18));
+    const arr = strokesOf.current.get(sel.layerId) ?? [], clones = sel.idxs.map((i) => arr[i]).filter(Boolean).map((s) => ({ ...translateStroke(s, 18, 18), id: newStrokeId() }));
+    // ★복제본은 **새 id**. translateStroke 는 `...s` 라 id 까지 복사하는데(이동·재색엔 옳다),
+    //   복제에 그대로 쓰면 두 획이 같은 신원을 갖게 돼 기기 합류에서 하나가 사라진다.
     const start = arr.length; arr.push(...clones);
     undoStack.current.push({ type: 'add', layerId: sel.layerId, strokes: clones }); redoStack.current = [];
     selRef.current = { layerId: sel.layerId, idxs: clones.map((_, k) => start + k) };
