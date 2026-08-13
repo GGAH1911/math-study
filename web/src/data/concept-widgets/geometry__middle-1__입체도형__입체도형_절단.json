@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "단면",
+     "vertices": [
       [
        "=0",
        "=cr"
@@ -42,8 +43,7 @@
        "=ix",
        "=-iy"
       ]
-     ],
-     "label": "단면"
+     ]
     },
     {
      "type": "point",
@@ -140,6 +140,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

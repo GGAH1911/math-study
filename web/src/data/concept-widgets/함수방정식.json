@@ -38,7 +38,18 @@
      "label": "f(x) = cos(x - a/2)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fx"
+    ],
+    [
+     "=a-x0",
+     "=fax"
+    ]
+   ],
+   "pointsLabel": "$(x_0,f(x_0)),\\,(a{-}x_0,f(a{-}x_0))$"
   },
   "readout": [
    {

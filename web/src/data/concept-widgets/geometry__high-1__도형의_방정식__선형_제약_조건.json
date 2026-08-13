@@ -46,7 +46,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "실행가능영역",
+     "vertices": [
       [
        0,
        0
@@ -59,22 +60,19 @@
        0,
        "=vy"
       ]
-     ],
-     "label": "실행가능영역"
+     ]
     },
     {
      "type": "line",
-     "points": [
-      [
-       "=vx",
-       0
-      ],
-      [
-       0,
-       "=vy"
-      ]
+     "label": "ax+by=c",
+     "from": [
+      "=vx",
+      0
      ],
-     "label": "ax+by=c"
+     "to": [
+      0,
+      "=vy"
+     ]
     },
     {
      "type": "point",
@@ -186,6 +184,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

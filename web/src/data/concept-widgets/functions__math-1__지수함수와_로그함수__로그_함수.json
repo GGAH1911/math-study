@@ -63,7 +63,18 @@
      "label": "y = x (대칭축)",
      "color": "#9e9e9e"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xq",
+     "=val"
+    ],
+    [
+     "=val",
+     "=xq"
+    ]
+   ],
+   "pointsLabel": "$(x, \\log_a x)$ 와 대칭점 $(\\log_a x, x)$"
   },
   "readout": [
    {

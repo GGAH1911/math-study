@@ -35,7 +35,18 @@
      "label": "F(x)=∫₀ˣ sin t dt = 1−cos x",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=fb"
+    ],
+    [
+     "=b",
+     "=area"
+    ]
+   ],
+   "pointsLabel": "$x=b$"
   },
   "readout": [
    {

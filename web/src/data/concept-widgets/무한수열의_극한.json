@@ -28,8 +28,30 @@
      "fn": "1+1/x",
      "label": "a_n = 1 + 1/n",
      "color": "blue"
+    },
+    {
+     "fn": "L",
+     "label": "$L=1$",
+     "color": "gray"
+    },
+    {
+     "fn": "L+eps",
+     "label": "$L+\\varepsilon$",
+     "color": "green"
+    },
+    {
+     "fn": "L-eps",
+     "label": "$L-\\varepsilon$",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=N+1",
+     "=an"
+    ]
+   ],
+   "pointsLabel": "$a_{N+1}$"
   },
   "readout": [
    {

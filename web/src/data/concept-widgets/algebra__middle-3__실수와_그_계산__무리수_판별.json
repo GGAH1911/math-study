@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "넓이 n",
+     "vertices": [
       [
        0,
        0
@@ -46,8 +47,7 @@
        0,
        "=r"
       ]
-     ],
-     "label": "넓이 n"
+     ]
     },
     {
      "type": "segment",
@@ -131,6 +131,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

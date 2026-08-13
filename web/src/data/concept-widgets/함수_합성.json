@@ -82,7 +82,26 @@
      "label": "g∘f",
      "color": "purple"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=f_t"
+    ],
+    [
+     "=t",
+     "=g_t"
+    ],
+    [
+     "=t",
+     "=fog_t"
+    ],
+    [
+     "=t",
+     "=gof_t"
+    ]
+   ],
+   "pointsLabel": "$x=t$"
   },
   "readout": [
    {

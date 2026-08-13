@@ -37,7 +37,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "∫ₐᵇ 2x dx (넓이)",
+     "color": "#f59e0b",
+     "vertices": [
       [
        "=a",
        0
@@ -54,9 +56,7 @@
        "=a",
        "=fa"
       ]
-     ],
-     "label": "∫ₐᵇ 2x dx (넓이)",
-     "color": "#f59e0b"
+     ]
     },
     {
      "type": "segment",
@@ -191,6 +191,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

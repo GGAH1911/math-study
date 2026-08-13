@@ -37,7 +37,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "△ABC",
+     "color": "#2563eb",
+     "vertices": [
       [
        "=Ax",
        "=Ay"
@@ -50,13 +52,13 @@
        "=Cx",
        "=Cy"
       ]
-     ],
-     "label": "△ABC",
-     "color": "#2563eb"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "△DEF",
+     "color": "#dc2626",
+     "vertices": [
       [
        "=Dx",
        "=Dy"
@@ -69,9 +71,7 @@
        "=Fx",
        "=Fy"
       ]
-     ],
-     "label": "△DEF",
-     "color": "#dc2626"
+     ]
     },
     {
      "type": "point",
@@ -200,6 +200,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -38,7 +38,18 @@
      "label": "나머지 r(x)",
      "color": "#4caf50"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=-0.5"
+    ],
+    [
+     "=b",
+     "=r"
+    ]
+   ],
+   "pointsLabel": "$a\\text{와 }(b,\\ r)$"
   },
   "readout": [
    {

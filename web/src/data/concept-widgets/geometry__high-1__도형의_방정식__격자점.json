@@ -49,7 +49,14 @@
      "label": "y = x² + bx + c",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=y0"
+    ]
+   ],
+   "pointsLabel": "$(x, y)$"
   },
   "readout": [
    {

@@ -43,7 +43,14 @@
      "label": "|f(x)|=|x²−c| (아래를 위로 반사)",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=absx0"
+    ]
+   ],
+   "pointsLabel": "$(x_0, |f(x_0)|)$"
   },
   "readout": [
    {

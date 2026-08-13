@@ -50,7 +50,18 @@
      "label": "y = x",
      "color": "gray"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=px",
+     "=py"
+    ],
+    [
+     "=qx",
+     "=qy"
+    ]
+   ],
+   "pointsLabel": "$P(t,\\,a^t),\\ Q(a^t,\\,t)$"
   },
   "readout": [
    {

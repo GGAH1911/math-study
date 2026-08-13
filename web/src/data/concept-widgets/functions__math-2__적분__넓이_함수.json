@@ -42,7 +42,9 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "누적 넓이 F(x)",
+     "color": "#3b82f6",
+     "vertices": [
       [
        0,
        0
@@ -55,9 +57,7 @@
        "=x",
        "=fx"
       ]
-     ],
-     "label": "누적 넓이 F(x)",
-     "color": "#3b82f6"
+     ]
     },
     {
      "type": "segment",
@@ -162,6 +162,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

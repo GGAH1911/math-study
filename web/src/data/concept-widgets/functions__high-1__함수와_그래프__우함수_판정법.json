@@ -65,7 +65,18 @@
      "label": "f(-x)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fp"
+    ],
+    [
+     "=-x0",
+     "=fm"
+    ]
+   ],
+   "pointsLabel": "$x_0,\\,-x_0$"
   },
   "readout": [
    {

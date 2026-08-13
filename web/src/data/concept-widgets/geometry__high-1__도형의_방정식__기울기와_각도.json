@@ -49,7 +49,8 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "run=1, rise=m",
+     "vertices": [
       [
        0,
        0
@@ -62,8 +63,7 @@
        "=1",
        "=m"
       ]
-     ],
-     "label": "run=1, rise=m"
+     ]
     },
     {
      "type": "segment",
@@ -148,6 +148,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

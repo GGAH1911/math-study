@@ -57,6 +57,26 @@
       "=b",
       0
      ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=a",
+      0
+     ],
+     "radius": 0.12,
+     "fill": "=inc == 1 ? '#fb7185' : 'none'",
+     "fillOpacity": 1
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=b",
+      0
+     ],
+     "radius": 0.12,
+     "fill": "=inc == 1 ? '#fb7185' : 'none'",
+     "fillOpacity": 1
     }
    ]
   },

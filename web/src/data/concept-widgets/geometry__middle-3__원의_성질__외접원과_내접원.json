@@ -46,7 +46,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "△ABC",
+     "vertices": [
       [
        "=ax",
        "=ay"
@@ -59,8 +60,7 @@
        "=base",
        0
       ]
-     ],
-     "label": "△ABC"
+     ]
     },
     {
      "type": "circle",
@@ -210,6 +210,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -46,7 +46,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "원뿔(전체)",
+     "color": "#cccccc",
+     "vertices": [
       [
        "=-R",
        0
@@ -59,13 +61,13 @@
        0,
        "=H"
       ]
-     ],
-     "label": "원뿔(전체)",
-     "color": "#cccccc"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "원뿔대",
+     "color": "#4488ff",
+     "vertices": [
       [
        "=-R",
        0
@@ -82,9 +84,7 @@
        "=-r",
        "=hc"
       ]
-     ],
-     "label": "원뿔대",
-     "color": "#4488ff"
+     ]
     },
     {
      "type": "segment",
@@ -227,6 +227,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

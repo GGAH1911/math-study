@@ -33,8 +33,20 @@
      "fn": "cos(x)",
      "label": "y=cos(x) (도함수)",
      "color": "red"
+    },
+    {
+     "fn": "m*(x-x0)+y0",
+     "label": "$x_0$에서의 접선",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=y0"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\ \\sin x_0)$"
   },
   "readout": [
    {

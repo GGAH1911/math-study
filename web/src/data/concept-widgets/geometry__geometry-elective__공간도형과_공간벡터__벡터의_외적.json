@@ -55,7 +55,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "|a×b|",
+     "vertices": [
       [
        0,
        0
@@ -72,8 +73,7 @@
        "=b1",
        "=b2"
       ]
-     ],
-     "label": "|a×b|"
+     ]
     },
     {
      "type": "segment",
@@ -211,6 +211,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

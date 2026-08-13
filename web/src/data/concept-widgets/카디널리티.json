@@ -31,7 +31,7 @@
     "step": 1
    }
   ],
-  "scope": "a=nA; b=nB; ab=min(nAB,nA,nB); onlyA=a-ab; onlyB=b-ab; union=a+b-ab",
+  "scope": "a=nA; b=nB; ab=min(nAB,nA,nB); onlyA=a-ab; onlyB=b-ab; union=a+b-ab; rA=0.35+0.13*sqrt(a); rB=0.35+0.13*sqrt(b); mn=max(min(a,b),0.0001); frac=ab/mn; d=(rA+rB)*(1-frac)+0.06*frac; cax=-d/2; cbx=d/2; paxA=cax-rA*0.45; pbxB=cbx+rB*0.45",
   "geometry": {
    "range": [
     -2,
@@ -47,23 +47,23 @@
     {
      "type": "circle",
      "center": [
-      -0.5,
+      "=cax",
       0
      ],
-     "radius": 1
+     "radius": "=rA"
     },
     {
      "type": "circle",
      "center": [
-      0.5,
+      "=cbx",
       0
      ],
-     "radius": 1
+     "radius": "=rB"
     },
     {
      "type": "point",
      "at": [
-      -1,
+      "=paxA",
       0
      ],
      "label": "A만"
@@ -71,7 +71,7 @@
     {
      "type": "point",
      "at": [
-      1,
+      "=pbxB",
       0
      ],
      "label": "B만"
@@ -79,7 +79,7 @@
     {
      "type": "point",
      "at": [
-      0,
+      "=(cax+cbx)/2",
       0
      ],
      "label": "A∩B"

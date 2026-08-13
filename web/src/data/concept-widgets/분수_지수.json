@@ -47,7 +47,14 @@
      "label": "y = x^(m/n)",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=base",
+     "=val"
+    ]
+   ],
+   "pointsLabel": "$(a,\\ a^{m/n})$"
   },
   "readout": [
    {

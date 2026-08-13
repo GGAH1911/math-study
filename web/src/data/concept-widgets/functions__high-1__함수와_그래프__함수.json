@@ -47,7 +47,14 @@
      "label": "y = a·x + b",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {

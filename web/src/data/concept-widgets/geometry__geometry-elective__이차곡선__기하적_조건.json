@@ -47,7 +47,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "자취(타원)",
+     "vertices": [
       [
        "=a*cos(0*pi/12)",
        "=b*sin(0*pi/12)"
@@ -144,8 +145,7 @@
        "=a*cos(23*pi/12)",
        "=b*sin(23*pi/12)"
       ]
-     ],
-     "label": "자취(타원)"
+     ]
     },
     {
      "type": "segment",
@@ -285,6 +285,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

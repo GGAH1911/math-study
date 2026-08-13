@@ -37,8 +37,37 @@
      "fn": "x^2",
      "label": "f(x)=x²",
      "color": "#2563eb"
+    },
+    {
+     "fn": "yLow",
+     "label": "$y=a$",
+     "color": "#f59e0b"
+    },
+    {
+     "fn": "yHigh",
+     "label": "$y=b$",
+     "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=rt_low",
+     "=yLow"
+    ],
+    [
+     "=-rt_low",
+     "=yLow"
+    ],
+    [
+     "=rt_high",
+     "=yHigh"
+    ],
+    [
+     "=-rt_high",
+     "=yHigh"
+    ]
+   ],
+   "pointsLabel": "$(\\pm\\sqrt{a},a),\\ (\\pm\\sqrt{b},b)$"
   },
   "readout": [
    {

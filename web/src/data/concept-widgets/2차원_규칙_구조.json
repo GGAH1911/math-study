@@ -35,7 +35,7 @@
   "geometry": {
    "range": [
     0,
-    6
+    8
    ],
    "yRange": [
     0,
@@ -161,6 +161,27 @@
       "=m"
      ],
      "label": "P"
+    },
+    {
+     "type": "segment",
+     "from": [
+      1,
+      0.5
+     ],
+     "to": [
+      "=C+1",
+      0.5
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=C+1",
+      0.5
+     ],
+     "label": "C",
+     "color": "#2563eb"
     }
    ]
   },

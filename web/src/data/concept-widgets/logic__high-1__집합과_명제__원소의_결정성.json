@@ -40,7 +40,14 @@
      "label": "집합의 지시함수",
      "color": "#d32f2f"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=ind"
+    ]
+   ],
+   "pointsLabel": "$x=x_0$"
   },
   "readout": [
    {

@@ -49,7 +49,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "타원",
+     "vertices": [
       [
        "=a*cos(0*pi/12)",
        "=b*sin(0*pi/12)"
@@ -146,8 +147,7 @@
        "=a*cos(23*pi/12)",
        "=b*sin(23*pi/12)"
       ]
-     ],
-     "label": "타원"
+     ]
     },
     {
      "type": "point",
@@ -303,6 +303,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

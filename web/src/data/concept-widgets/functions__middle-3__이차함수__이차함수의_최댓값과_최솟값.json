@@ -68,7 +68,18 @@
      "label": "f(x)=a(x-p)²+q",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=m",
+     "=fm"
+    ],
+    [
+     "=n",
+     "=fn"
+    ]
+   ],
+   "pointsLabel": "$(m,f(m)),\\,(n,f(n))$"
   },
   "readout": [
    {

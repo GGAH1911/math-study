@@ -52,7 +52,14 @@
      "label": "log_c x / log_c a",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=log(b,a)"
+    ]
+   ],
+   "pointsLabel": "$(b, \\log_a b)$"
   },
   "readout": [
    {

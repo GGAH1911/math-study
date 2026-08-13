@@ -44,7 +44,7 @@
   "plot": {
    "range": [
     "=0",
-    "=max(ak,1)"
+    "=max(max(ak,s),1)"
    ],
    "yRange": [
     0,
@@ -56,7 +56,14 @@
      "label": "P(X=x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=s",
+     "=p"
+    ]
+   ],
+   "pointsLabel": "$P(X=s)$"
   },
   "readout": [
    {

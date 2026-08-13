@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "넓이 = F(x)",
+     "vertices": [
       [
        0,
        0
@@ -42,8 +43,7 @@
        "=x",
        "=fx"
       ]
-     ],
-     "label": "넓이 = F(x)"
+     ]
     },
     {
      "type": "point",
@@ -157,6 +157,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

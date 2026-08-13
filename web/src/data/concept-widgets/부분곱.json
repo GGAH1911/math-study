@@ -48,10 +48,21 @@
    "fns": [
     {
      "fn": "a^x",
-     "label": "y = a^x",
+     "label": "$y = a^x$",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=P"
+    ],
+    [
+     "=n-1",
+     "=prev"
+    ]
+   ],
+   "pointsLabel": "$P_n = a^n$"
   },
   "readout": [
    {

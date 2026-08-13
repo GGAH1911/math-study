@@ -38,7 +38,14 @@
      "label": "y = k/x",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=k/x0"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\ k/x_0)$"
   },
   "readout": [
    {

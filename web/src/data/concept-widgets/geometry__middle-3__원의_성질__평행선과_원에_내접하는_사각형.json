@@ -46,7 +46,8 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#2563eb",
+     "vertices": [
       [
        "=Ax",
        "=Ay"
@@ -63,8 +64,7 @@
        "=Dx",
        "=Dy"
       ]
-     ],
-     "color": "#2563eb"
+     ]
     },
     {
      "type": "segment",
@@ -208,6 +208,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

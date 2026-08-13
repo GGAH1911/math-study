@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "y=12−x²",
+     "vertices": [
       [
        -3.464,
        0
@@ -90,12 +91,12 @@
        3.464,
        0
       ]
-     ],
-     "label": "y=12−x²"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "직사각형 S",
+     "vertices": [
       [
        "=-x",
        0
@@ -112,8 +113,7 @@
        "=-x",
        "=h"
       ]
-     ],
-     "label": "직사각형 S"
+     ]
     },
     {
      "type": "point",
@@ -226,6 +226,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

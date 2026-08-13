@@ -50,7 +50,9 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "넓이 = F(b)−F(a)",
+     "color": "#ff7f0e",
+     "vertices": [
       [
        "=a",
        0
@@ -67,9 +69,7 @@
        "=a",
        "=fa"
       ]
-     ],
-     "label": "넓이 = F(b)−F(a)",
-     "color": "#ff7f0e"
+     ]
     },
     {
      "type": "point",
@@ -189,6 +189,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

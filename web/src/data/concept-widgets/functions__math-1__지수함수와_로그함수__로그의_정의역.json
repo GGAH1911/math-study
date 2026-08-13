@@ -50,7 +50,18 @@
      "label": "y = x (대칭축)",
      "color": "#9ca3af"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=logval"
+    ],
+    [
+     "=x0",
+     0
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\ \\log_a x_0)$"
   },
   "readout": [
    {

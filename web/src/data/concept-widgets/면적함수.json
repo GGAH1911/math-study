@@ -42,7 +42,9 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "누적넓이",
+     "color": "#4f8cff",
+     "vertices": [
       [
        0,
        0
@@ -55,9 +57,7 @@
        "=x",
        "=fx"
       ]
-     ],
-     "label": "누적넓이",
-     "color": "#4f8cff"
+     ]
     },
     {
      "type": "point",
@@ -180,6 +180,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

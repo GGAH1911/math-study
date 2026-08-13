@@ -63,7 +63,14 @@
      "label": "|f(x)|",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fx0"
+    ]
+   ],
+   "pointsLabel": "$x_0$"
   },
   "readout": [
    {

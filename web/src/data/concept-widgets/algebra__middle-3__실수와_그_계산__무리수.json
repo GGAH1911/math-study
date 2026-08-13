@@ -40,7 +40,14 @@
      "label": "최선의 유리수 근사 오차",
      "color": "#d62728"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=q",
+     "=err"
+    ]
+   ],
+   "pointsLabel": "$q=$ 현재 분모"
   },
   "readout": [
    {

@@ -30,7 +30,18 @@
      "label": "y = sin(x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=sin(b)"
+    ],
+    [
+     "=b",
+     "=0"
+    ]
+   ],
+   "pointsLabel": "$x=b$"
   },
   "readout": [
    {

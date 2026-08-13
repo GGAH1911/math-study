@@ -70,7 +70,22 @@
      "label": "f(x)=(k/2)x²+cx",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ],
+    [
+     "=a+b",
+     "=fab"
+    ]
+   ],
+   "pointsLabel": "$(a,f(a)),\\,(b,f(b)),\\,(a{+}b,f(a{+}b))$"
   },
   "readout": [
    {

@@ -25,8 +25,8 @@
   "scope": "pmf(k) = k < 0 ? 0 : (k > n ? 0 : combinations(n,k) * p^k * (1-p)^(n-k)); sumP = pmf(0)+pmf(1)+pmf(2)+pmf(3)+pmf(4)+pmf(5)+pmf(6)+pmf(7)+pmf(8)+pmf(9)+pmf(10)+pmf(11)+pmf(12)+pmf(13)+pmf(14)+pmf(15)+pmf(16)+pmf(17)+pmf(18)+pmf(19)+pmf(20); sumK = 0*pmf(0)+1*pmf(1)+2*pmf(2)+3*pmf(3)+4*pmf(4)+5*pmf(5)+6*pmf(6)+7*pmf(7)+8*pmf(8)+9*pmf(9)+10*pmf(10)+11*pmf(11)+12*pmf(12)+13*pmf(13)+14*pmf(14)+15*pmf(15)+16*pmf(16)+17*pmf(17)+18*pmf(18)+19*pmf(19)+20*pmf(20); sumK2 = 0*pmf(0)+1*pmf(1)+4*pmf(2)+9*pmf(3)+16*pmf(4)+25*pmf(5)+36*pmf(6)+49*pmf(7)+64*pmf(8)+81*pmf(9)+100*pmf(10)+121*pmf(11)+144*pmf(12)+169*pmf(13)+196*pmf(14)+225*pmf(15)+256*pmf(16)+289*pmf(17)+324*pmf(18)+361*pmf(19)+400*pmf(20); varSum = sumK2 - sumK^2",
   "plot": {
    "range": [
-    -1,
-    21
+    "=-1",
+    "=n+1"
    ],
    "yRange": [
     0,
@@ -38,7 +38,14 @@
      "label": "P(X=x)",
      "color": "steelblue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n*p",
+     "=pmf(round(n*p))"
+    ]
+   ],
+   "pointsLabel": "$E(X)=np$"
   },
   "readout": [
    {

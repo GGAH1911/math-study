@@ -30,7 +30,14 @@
      "label": "f(x) = x^2",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xval",
+     "=xval^2"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {

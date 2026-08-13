@@ -38,7 +38,18 @@
      "label": "f(x)=x³−3x",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ]
+   ],
+   "pointsLabel": "$(a,f(a)),\\ (b,f(b))$"
   },
   "readout": [
    {

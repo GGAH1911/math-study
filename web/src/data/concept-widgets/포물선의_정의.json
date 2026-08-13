@@ -37,8 +37,20 @@
      "fn": "x^2/(4*p)",
      "label": "y = x²/(4p)",
      "color": "blue"
+    },
+    {
+     "fn": "-p",
+     "label": "준선 y = -p",
+     "color": "gray"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=px",
+     "=y"
+    ]
+   ],
+   "pointsLabel": "$P$"
   },
   "readout": [
    {

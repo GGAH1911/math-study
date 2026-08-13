@@ -56,7 +56,18 @@
      "label": "y=a(x-p)²+q",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x1",
+     "=y1"
+    ],
+    [
+     "=x2",
+     "=y2"
+    ]
+   ],
+   "pointsLabel": "$(p-d,\\ f(p-d)),\\ (p+d,\\ f(p+d))$"
   },
   "readout": [
    {

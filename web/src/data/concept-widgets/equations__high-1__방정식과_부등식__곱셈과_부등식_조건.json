@@ -46,15 +46,15 @@
    "shapes": [
     {
      "type": "line",
-     "start": [
+     "label": "y=cx",
+     "from": [
       -5,
       "=-5*c"
      ],
-     "end": [
+     "to": [
       5,
       "=5*c"
-     ],
-     "label": "y=cx"
+     ]
     },
     {
      "type": "point",
@@ -90,22 +90,22 @@
     },
     {
      "type": "segment",
-     "start": [
+     "from": [
       "=a",
       0
      ],
-     "end": [
+     "to": [
       "=a",
       "=ac"
      ]
     },
     {
      "type": "segment",
-     "start": [
+     "from": [
       "=b",
       0
      ],
-     "end": [
+     "to": [
       "=b",
       "=bc"
      ]
@@ -200,6 +200,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

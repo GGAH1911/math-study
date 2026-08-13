@@ -37,7 +37,8 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "△OAP=½sinθ",
+     "vertices": [
       [
        0,
        0
@@ -50,12 +51,12 @@
        "=cx",
        "=sy"
       ]
-     ],
-     "label": "△OAP=½sinθ"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "△OAT=½tanθ",
+     "vertices": [
       [
        0,
        0
@@ -68,8 +69,7 @@
        1,
        "=ty"
       ]
-     ],
-     "label": "△OAT=½tanθ"
+     ]
     },
     {
      "type": "point",
@@ -183,6 +183,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -54,7 +54,18 @@
      "label": "y=a^(x+c)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=a^t"
+    ],
+    [
+     "=t+c",
+     "=a^(t+c)"
+    ]
+   ],
+   "pointsLabel": "$t$"
   },
   "readout": [
    {

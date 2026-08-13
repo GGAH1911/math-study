@@ -30,7 +30,14 @@
      "label": "y = f(x) = x² − 2",
      "color": "#2a6fe2"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ]
+   ],
+   "pointsLabel": "$(a, f(a))$"
   },
   "readout": [
    {

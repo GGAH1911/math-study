@@ -29,7 +29,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "원래 도형 S=6",
+     "color": "#888",
+     "vertices": [
       [
        0,
        0
@@ -42,13 +44,13 @@
        0,
        3
       ]
-     ],
-     "label": "원래 도형 S=6",
-     "color": "#888"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "정사영 S'",
+     "color": "#e2467a",
+     "vertices": [
       [
        0,
        0
@@ -61,9 +63,7 @@
        0,
        "=hp"
       ]
-     ],
-     "label": "정사영 S'",
-     "color": "#e2467a"
+     ]
     },
     {
      "type": "point",
@@ -146,6 +146,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

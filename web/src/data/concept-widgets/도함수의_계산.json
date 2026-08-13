@@ -69,8 +69,20 @@
      "fn": "3*a*x^2 + 2*b*x + c",
      "label": "f'(x)",
      "color": "red"
+    },
+    {
+     "fn": "y0 + slope*(x - x0)",
+     "label": "접선",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=y0"
+    ]
+   ],
+   "pointsLabel": "$(x_0, f(x_0))$"
   },
   "readout": [
    {

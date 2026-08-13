@@ -47,7 +47,22 @@
      "label": "y = logₐ x",
      "color": "#2196f3"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=M",
+     "=lM"
+    ],
+    [
+     "=N",
+     "=lN"
+    ],
+    [
+     "=M*N",
+     "=lMN"
+    ]
+   ],
+   "pointsLabel": "$(M,\\log_a M),\\,(N,\\log_a N),\\,(MN,\\log_a MN)$"
   },
   "readout": [
    {

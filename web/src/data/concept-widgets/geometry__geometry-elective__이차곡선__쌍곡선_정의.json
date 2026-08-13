@@ -46,7 +46,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "오른쪽 가지",
+     "vertices": [
       [
        "=a*cosh(-1.4)",
        "=b*sinh(-1.4)"
@@ -83,12 +84,12 @@
        "=a*cosh(1.4)",
        "=b*sinh(1.4)"
       ]
-     ],
-     "label": "오른쪽 가지"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "왼쪽 가지",
+     "vertices": [
       [
        "=-a*cosh(-1.4)",
        "=b*sinh(-1.4)"
@@ -125,8 +126,7 @@
        "=-a*cosh(1.4)",
        "=b*sinh(1.4)"
       ]
-     ],
-     "label": "왼쪽 가지"
+     ]
     },
     {
      "type": "point",
@@ -275,6 +275,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -30,7 +30,14 @@
      "label": "y=x+1 (x≠1)",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=1",
+     "=fa"
+    ]
+   ],
+   "pointsLabel": "$(1,\\,f(1))$"
   },
   "readout": [
    {

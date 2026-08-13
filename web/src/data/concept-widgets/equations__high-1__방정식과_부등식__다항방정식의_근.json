@@ -60,7 +60,14 @@
      "label": "y=(x-r₁)(x-r₂)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=f"
+    ]
+   ],
+   "pointsLabel": "$(t, f(t))$"
   },
   "readout": [
    {

@@ -55,7 +55,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "사다리꼴",
+     "vertices": [
       [
        0,
        0
@@ -72,8 +73,7 @@
        "=d",
        "=h"
       ]
-     ],
-     "label": "사다리꼴"
+     ]
     },
     {
      "type": "segment",
@@ -230,6 +230,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

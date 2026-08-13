@@ -39,7 +39,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "1^k",
+     "vertices": [
       [
        0.58,
        0
@@ -56,12 +57,12 @@
        0.58,
        "=h1"
       ]
-     ],
-     "label": "1^k"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "2^k",
+     "vertices": [
       [
        1.58,
        0
@@ -78,12 +79,12 @@
        1.58,
        "=h2"
       ]
-     ],
-     "label": "2^k"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "3^k",
+     "vertices": [
       [
        2.58,
        0
@@ -100,12 +101,12 @@
        2.58,
        "=h3"
       ]
-     ],
-     "label": "3^k"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "4^k",
+     "vertices": [
       [
        3.58,
        0
@@ -122,12 +123,12 @@
        3.58,
        "=h4"
       ]
-     ],
-     "label": "4^k"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "5^k",
+     "vertices": [
       [
        4.58,
        0
@@ -144,12 +145,12 @@
        4.58,
        "=h5"
       ]
-     ],
-     "label": "5^k"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "6^k",
+     "vertices": [
       [
        5.58,
        0
@@ -166,8 +167,7 @@
        5.58,
        "=h6"
       ]
-     ],
-     "label": "6^k"
+     ]
     }
    ]
   },
@@ -244,6 +244,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

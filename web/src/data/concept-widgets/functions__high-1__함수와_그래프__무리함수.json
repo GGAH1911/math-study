@@ -50,7 +50,14 @@
      "label": "y=√(ax+b)",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=yt"
+    ]
+   ],
+   "pointsLabel": "$(t,\\ f(t))$"
   },
   "readout": [
    {

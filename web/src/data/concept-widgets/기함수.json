@@ -40,7 +40,7 @@
     "step": 0.1
    }
   ],
-  "scope": "fx0 = a*x0^3 + b*x0; fmx0 = a*(-x0)^3 + b*(-x0); oddcheck = fmx0 + fx0; intval = (a/4*c^4 + b/2*c^2) - (a/4*(-c)^4 + b/2*(-c)^2)",
+  "scope": "fx0 = a*x0^3 + b*x0; fmx0 = a*(-x0)^3 + b*(-x0); oddcheck = fmx0 + fx0; intval = (a/4*c^4 + b/2*c^2) - (a/4*(-c)^4 + b/2*(-c)^2); fc = a*c^3 + b*c; fmc = a*(-c)^3 + b*(-c)",
   "plot": {
    "range": [
     -2.5,
@@ -56,7 +56,26 @@
      "label": "f(x) = a x³ + b x",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fx0"
+    ],
+    [
+     "=-x0",
+     "=fmx0"
+    ],
+    [
+     "=c",
+     "=fc"
+    ],
+    [
+     "=-c",
+     "=fmc"
+    ]
+   ],
+   "pointsLabel": "$(x_0,f(x_0)),\\,(-x_0,f(-x_0)),\\,(c,f(c)),\\,(-c,f(-c))$"
   },
   "readout": [
    {

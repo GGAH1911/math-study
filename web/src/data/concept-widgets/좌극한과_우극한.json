@@ -63,7 +63,18 @@
      "label": "우극한",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=-eps",
+     "=fL"
+    ],
+    [
+     "=eps",
+     "=fR"
+    ]
+   ],
+   "pointsLabel": "$(-\\varepsilon,\\,f(-\\varepsilon)),\\ (\\varepsilon,\\,f(\\varepsilon))$"
   },
   "readout": [
    {

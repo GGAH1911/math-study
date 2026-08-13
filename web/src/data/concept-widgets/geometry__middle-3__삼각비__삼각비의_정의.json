@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "직각삼각형",
+     "vertices": [
       [
        0,
        0
@@ -42,12 +43,12 @@
        "=adj",
        "=opp"
       ]
-     ],
-     "label": "직각삼각형"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "직각",
+     "vertices": [
       [
        "=adj-0.4",
        0
@@ -60,8 +61,7 @@
        "=adj",
        0.4
       ]
-     ],
-     "label": "직각"
+     ]
     },
     {
      "type": "point",
@@ -212,6 +212,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

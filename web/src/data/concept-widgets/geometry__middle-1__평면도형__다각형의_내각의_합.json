@@ -30,7 +30,14 @@
      "label": "내각의 합 = (n−2)·180°",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=total"
+    ]
+   ],
+   "pointsLabel": "$n=$ 현재 값"
   },
   "readout": [
    {

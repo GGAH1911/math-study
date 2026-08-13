@@ -29,8 +29,20 @@
      "fn": "5*x^2",
      "label": "위치 s(t)=5t²",
      "color": "#2563eb"
+    },
+    {
+     "fn": "pos + vel*(x - t)",
+     "label": "t에서의 접선 (기울기=속도 v)",
+     "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=pos"
+    ]
+   ],
+   "pointsLabel": "$(t,\\,s(t))$"
   },
   "readout": [
    {

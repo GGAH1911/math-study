@@ -48,7 +48,18 @@
      "label": "f(x)=c x^2",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ]
+   ],
+   "pointsLabel": "$A(a,f(a)),\\ B(b,f(b))$"
   },
   "readout": [
    {

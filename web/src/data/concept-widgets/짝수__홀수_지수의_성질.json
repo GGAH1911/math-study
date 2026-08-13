@@ -38,7 +38,14 @@
      "label": "y = x^n",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=p"
+    ]
+   ],
+   "pointsLabel": "$(a,\\ a^n)$"
   },
   "readout": [
    {

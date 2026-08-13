@@ -39,7 +39,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "r=1+b·cosθ",
+     "vertices": [
       [
        "=(1+b*cos(0*pi/180))*cos(0*pi/180)",
        "=(1+b*cos(0*pi/180))*sin(0*pi/180)"
@@ -136,8 +137,7 @@
        "=(1+b*cos(345*pi/180))*cos(345*pi/180)",
        "=(1+b*cos(345*pi/180))*sin(345*pi/180)"
       ]
-     ],
-     "label": "r=1+b·cosθ"
+     ]
     },
     {
      "type": "segment",
@@ -251,6 +251,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -56,7 +56,26 @@
      "label": "L-ε",
      "color": "#f59e0b"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a-delta",
+     "=fLo"
+    ],
+    [
+     "=a+delta",
+     "=fHi"
+    ],
+    [
+     "=a",
+     "=L+eps"
+    ],
+    [
+     "=a",
+     "=L-eps"
+    ]
+   ],
+   "pointsLabel": "$x=a\\pm\\delta,\\ y=L\\pm\\varepsilon$"
   },
   "readout": [
    {

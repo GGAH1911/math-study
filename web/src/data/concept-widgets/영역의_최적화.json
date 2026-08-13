@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "영역",
+     "vertices": [
       [
        0,
        0
@@ -42,8 +43,7 @@
        0,
        2
       ]
-     ],
-     "label": "영역"
+     ]
     },
     {
      "type": "segment",
@@ -137,6 +137,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

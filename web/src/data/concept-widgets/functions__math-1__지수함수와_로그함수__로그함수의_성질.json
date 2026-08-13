@@ -46,19 +46,39 @@
   "plot": {
    "range": [
     0.1,
-    12
+    17
    ],
    "yRange": [
-    -4,
-    5
+    -16,
+    16
    ],
    "fns": [
     {
      "fn": "log(x,a)",
      "label": "y = log_a(x)",
      "color": "#2563eb"
+    },
+    {
+     "fn": "log(x^k,a)",
+     "label": "y = log_a(x^k) = k·log_a(x)",
+     "color": "#f59e0b"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=lx"
+    ],
+    [
+     "=y",
+     "=ly"
+    ],
+    [
+     "=x",
+     "=lpow"
+    ]
+   ],
+   "pointsLabel": "빨간 점: (x, log_a x), (y, log_a y), (x, log_a(x^k))"
   },
   "readout": [
    {

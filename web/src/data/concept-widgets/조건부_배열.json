@@ -49,7 +49,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "color": "gray",
+     "vertices": [
       [
        0,
        0
@@ -66,12 +67,12 @@
        0,
        1
       ]
-     ],
-     "color": "gray"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "blue",
+     "vertices": [
       [
        0,
        0
@@ -88,12 +89,12 @@
        0,
        1
       ]
-     ],
-     "color": "blue"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "red",
+     "vertices": [
       [
        0,
        0
@@ -118,12 +119,12 @@
        1,
        0
       ]
-     ],
-     "color": "red"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "purple",
+     "vertices": [
       [
        0,
        0
@@ -140,8 +141,7 @@
        "=pA",
        0
       ]
-     ],
-     "color": "purple"
+     ]
     },
     {
      "type": "segment",
@@ -280,6 +280,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

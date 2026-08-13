@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "정삼각형",
+     "vertices": [
       [
        "=ax",
        0
@@ -42,8 +43,7 @@
        0,
        "=h"
       ]
-     ],
-     "label": "정삼각형"
+     ]
     },
     {
      "type": "segment",
@@ -164,6 +164,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

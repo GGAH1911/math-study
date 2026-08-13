@@ -28,7 +28,7 @@
   "plot": {
    "range": [
     0,
-    6
+    4
    ],
    "yRange": [
     0,
@@ -36,11 +36,18 @@
    ],
    "fns": [
     {
-     "fn": "x^n",
-     "label": "방법의 수",
+     "fn": "k^x",
+     "label": "$k^x$ (상자 k개일 때 물건 수에 따른 방법의 수)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=count"
+    ]
+   ],
+   "pointsLabel": "$k^n$ = 방법의 수"
   },
   "readout": [
    {

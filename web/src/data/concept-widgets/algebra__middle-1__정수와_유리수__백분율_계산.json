@@ -26,57 +26,80 @@
   "geometry": {
    "range": [
     0,
-    110
+    520
    ],
    "yRange": [
-    -0.5,
-    1.5
+    -0.6,
+    1.8
    ],
-   "showAxes": true,
+   "showAxes": false,
    "showGrid": false,
    "shapes": [
     {
-     "type": "segment",
-     "from": [
-      0,
-      0
-     ],
-     "to": [
-      100,
-      0
-     ]
-    },
-    {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        0,
        0
       ],
       [
-       "=r",
+       "=W",
        0
       ],
       [
-       "=r",
+       "=W",
        1
       ],
       [
        0,
        1
       ]
-     ]
+     ],
+     "stroke": "#94a3b8",
+     "fill": "#94a3b8",
+     "fillOpacity": 0.15
     },
     {
-     "type": "segment",
-     "from": [
-      "=r",
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       "=p",
+       0
+      ],
+      [
+       "=p",
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ],
+     "stroke": "#ea580c",
+     "fill": "#f97316",
+     "fillOpacity": 0.55
+    },
+    {
+     "type": "point",
+     "at": [
+      "=W",
       0
      ],
-     "to": [
-      "=r",
+     "label": "$W$",
+     "labelDir": "S"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=p",
       1
-     ]
+     ],
+     "label": "$P$",
+     "labelDir": "N"
     }
    ]
   },

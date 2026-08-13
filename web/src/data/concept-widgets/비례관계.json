@@ -47,7 +47,14 @@
      "label": "y",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xval",
+     "=yval"
+    ]
+   ],
+   "pointsLabel": "$(x, y)$"
   },
   "readout": [
    {

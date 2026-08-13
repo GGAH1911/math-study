@@ -45,7 +45,18 @@
      "label": "복원 (with replacement)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=nn",
+     "=p_wo"
+    ],
+    [
+     "=nn",
+     "=p_w"
+    ]
+   ],
+   "pointsLabel": "$n$"
   },
   "readout": [
    {

@@ -44,7 +44,14 @@
      "label": "곡선(아래)",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=Px",
+     "=Py"
+    ]
+   ],
+   "pointsLabel": "$P$"
   },
   "readout": [
    {

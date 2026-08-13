@@ -62,7 +62,9 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "회전할 평면도형",
+     "color": "#e07b39",
+     "vertices": [
       [
        0,
        0
@@ -79,13 +81,13 @@
        "=h",
        0
       ]
-     ],
-     "label": "회전할 평면도형",
-     "color": "#e07b39"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "회전체 단면",
+     "color": "#4a90d9",
+     "vertices": [
       [
        0,
        "=r1"
@@ -102,9 +104,7 @@
        0,
        "=-r1"
       ]
-     ],
-     "label": "회전체 단면",
-     "color": "#4a90d9"
+     ]
     },
     {
      "type": "point",
@@ -213,6 +213,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

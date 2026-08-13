@@ -47,18 +47,16 @@
     },
     {
      "type": "line",
-     "through": [
-      [
-       0,
-       0
-      ],
-      [
-       "=bx",
-       "=by"
-      ]
-     ],
      "label": "직선 AB (무한히 뻗음)",
-     "color": "#bbbbbb"
+     "color": "#bbbbbb",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ]
     },
     {
      "type": "segment",
@@ -180,6 +178,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -55,7 +55,14 @@
      "label": "수렴값 a/(1−r)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=S"
+    ]
+   ],
+   "pointsLabel": "$S_n$"
   },
   "readout": [
    {

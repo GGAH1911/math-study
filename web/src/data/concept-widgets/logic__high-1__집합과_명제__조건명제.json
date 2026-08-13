@@ -25,16 +25,76 @@
   "scope": "imp = 1 - p*(1-q)",
   "geometry": {
    "range": [
-    -1,
-    1
+    -0.6,
+    2.6
    ],
    "yRange": [
-    -1,
-    1
+    -0.6,
+    2.6
    ],
    "showAxes": false,
    "showGrid": false,
-   "shapes": []
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [[0, 0], [1, 0], [1, 1], [0, 1]],
+     "fill": "#22c55e",
+     "fillOpacity": 0.28,
+     "stroke": "#3f3f46"
+    },
+    {
+     "type": "polygon",
+     "vertices": [[0, 1], [1, 1], [1, 2], [0, 2]],
+     "fill": "#22c55e",
+     "fillOpacity": 0.28,
+     "stroke": "#3f3f46"
+    },
+    {
+     "type": "polygon",
+     "vertices": [[1, 0], [2, 0], [2, 1], [1, 1]],
+     "fill": "#ef4444",
+     "fillOpacity": 0.32,
+     "stroke": "#3f3f46"
+    },
+    {
+     "type": "polygon",
+     "vertices": [[1, 1], [2, 1], [2, 2], [1, 2]],
+     "fill": "#22c55e",
+     "fillOpacity": 0.28,
+     "stroke": "#3f3f46"
+    },
+    {
+     "type": "text",
+     "at": [0.5, -0.32],
+     "text": "p=0",
+     "color": "#a1a1aa"
+    },
+    {
+     "type": "text",
+     "at": [1.5, -0.32],
+     "text": "p=1",
+     "color": "#a1a1aa"
+    },
+    {
+     "type": "text",
+     "at": [-0.4, 0.5],
+     "text": "q=0",
+     "color": "#a1a1aa"
+    },
+    {
+     "type": "text",
+     "at": [-0.4, 1.5],
+     "text": "q=1",
+     "color": "#a1a1aa"
+    },
+    {
+     "type": "point",
+     "at": ["=0.5 + p", "=0.5 + q"],
+     "label": "$(p,q)$",
+     "color": "#fafafa",
+     "labelDir": "N"
+    }
+   ]
   },
   "readout": [
    {

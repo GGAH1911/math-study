@@ -37,8 +37,28 @@
      "fn": "x^2/(4*p)",
      "label": "포물선 x²=4py",
      "color": "#ff7f0e"
+    },
+    {
+     "fn": "-p",
+     "label": "준선 y=-p",
+     "color": "#94a3b8"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=py"
+    ],
+    [
+     "=0",
+     "=p"
+    ],
+    [
+     "=t",
+     "=-p"
+    ]
+   ],
+   "pointsLabel": "$P(t,y_P),\\ F(0,p),\\ H(t,-p)$"
   },
   "readout": [
    {

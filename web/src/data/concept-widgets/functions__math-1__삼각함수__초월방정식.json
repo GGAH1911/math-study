@@ -34,7 +34,18 @@
      "label": "y = x/2 (우변)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=s"
+    ],
+    [
+     "=t",
+     "=rhs"
+    ]
+   ],
+   "pointsLabel": "$x = t$"
   },
   "readout": [
    {

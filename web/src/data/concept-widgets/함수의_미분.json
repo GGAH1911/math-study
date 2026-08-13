@@ -37,8 +37,29 @@
      "fn": "x^2",
      "label": "f(x)=x^2",
      "color": "blue"
+    },
+    {
+     "fn": "tan_slope*(x-a)+fa",
+     "label": "$y=f(a)+f'(a)(x-a)$",
+     "color": "red"
+    },
+    {
+     "fn": "sec_slope*(x-a)+fa",
+     "label": "$할선\\ (기울기: \\frac{f(a+h)-f(a)}{h})$",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=a+h",
+     "=fah"
+    ]
+   ],
+   "pointsLabel": "$P(a,f(a)),\\ Q(a+h,f(a+h))$"
   },
   "readout": [
    {

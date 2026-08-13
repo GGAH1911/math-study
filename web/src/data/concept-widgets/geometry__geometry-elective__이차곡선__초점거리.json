@@ -48,7 +48,7 @@
     {
      "type": "polygon",
      "label": "타원",
-     "points": [
+     "vertices": [
       [
        "=a*cos(0)",
        "=b*sin(0)"
@@ -305,6 +305,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

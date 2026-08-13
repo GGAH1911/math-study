@@ -36,7 +36,18 @@
      "label": "치환식 g(t)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=orig"
+    ],
+    [
+     "=t",
+     "=subs"
+    ]
+   ],
+   "pointsLabel": "$(x,f(x))=(a,f(a)),\\ (t,g(t))=(a^2,g(a^2))$"
   },
   "readout": [
    {

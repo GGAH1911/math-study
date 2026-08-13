@@ -50,7 +50,8 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#f59e0b",
+     "vertices": [
       [
        "=ax",
        "=ay"
@@ -63,8 +64,7 @@
        "=cx",
        "=cy"
       ]
-     ],
-     "color": "#f59e0b"
+     ]
     },
     {
      "type": "point",
@@ -170,6 +170,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

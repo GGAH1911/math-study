@@ -38,7 +38,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "원래 삼각형 OAB",
+     "color": "#868e96",
+     "vertices": [
       [
        0,
        0
@@ -51,13 +53,13 @@
        1,
        2
       ]
-     ],
-     "label": "원래 삼각형 OAB",
-     "color": "#868e96"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "변형된 삼각형 O'A'B'",
+     "color": "#e8590c",
+     "vertices": [
       [
        0,
        0
@@ -70,9 +72,7 @@
        "=bx2",
        "=by2"
       ]
-     ],
-     "label": "변형된 삼각형 O'A'B'",
-     "color": "#e8590c"
+     ]
     },
     {
      "type": "segment",
@@ -232,6 +232,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

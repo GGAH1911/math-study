@@ -42,8 +42,28 @@
      "fn": "3*k*x^2 - 1",
      "label": "f'(x)",
      "color": "red"
+    },
+    {
+     "fn": "ft + dt*(x - t)",
+     "label": "$y=f(t)+f'(t)(x-t)$",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xm",
+     "=fm"
+    ],
+    [
+     "=xp",
+     "=fp"
+    ],
+    [
+     "=t",
+     "=ft"
+    ]
+   ],
+   "pointsLabel": "극값점 $(x_m,f(x_m)),(x_p,f(x_p))$ 과 탐색점 $(t,f(t))$"
   },
   "readout": [
    {

@@ -40,7 +40,14 @@
      "label": "F(x) = P(X≤x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=Fvalue"
+    ]
+   ],
+   "pointsLabel": "$F(a)$"
   },
   "readout": [
    {

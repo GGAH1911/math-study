@@ -40,7 +40,18 @@
      "label": "y = k·x²",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=c",
+     "=k*c^2"
+    ],
+    [
+     "=c",
+     "0"
+    ]
+   ],
+   "pointsLabel": "$x = c$"
   },
   "readout": [
    {

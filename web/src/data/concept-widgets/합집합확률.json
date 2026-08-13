@@ -47,7 +47,14 @@
      "label": "P(A∪B)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=pUnion"
+    ]
+   ],
+   "pointsLabel": "$t$"
   },
   "readout": [
    {

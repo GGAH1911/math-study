@@ -41,7 +41,7 @@
   "plot": {
    "range": [
     0,
-    50
+    105
    ],
    "yRange": [
     0,
@@ -58,7 +58,14 @@
      "label": "극한 L = a/2",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=N",
+     "=fN"
+    ]
+   ],
+   "pointsLabel": "$(N,\\ f(N))$"
   },
   "readout": [
    {

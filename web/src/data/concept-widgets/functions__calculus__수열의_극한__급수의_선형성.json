@@ -54,7 +54,26 @@
      "label": "Sₙ(c·aₙ) → c·1",
      "color": "#9333ea"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=N",
+     "=Sa"
+    ],
+    [
+     "=N",
+     "=Sb"
+    ],
+    [
+     "=N",
+     "=Ssum"
+    ],
+    [
+     "=N",
+     "=Scal"
+    ]
+   ],
+   "pointsLabel": "$S_{N}$"
   },
   "readout": [
    {

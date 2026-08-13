@@ -59,45 +59,39 @@
    "shapes": [
     {
      "type": "segment",
-     "coords": [
-      [
-       0,
-       0
-      ],
-      [
-       "=a",
-       "=b"
-      ]
+     "color": "blue",
+     "from": [
+      0,
+      0
      ],
-     "color": "blue"
+     "to": [
+      "=a",
+      "=b"
+     ]
     },
     {
      "type": "segment",
-     "coords": [
-      [
-       0,
-       0
-      ],
-      [
-       "=c",
-       "=d"
-      ]
+     "color": "green",
+     "from": [
+      0,
+      0
      ],
-     "color": "green"
+     "to": [
+      "=c",
+      "=d"
+     ]
     },
     {
      "type": "segment",
-     "coords": [
-      [
-       0,
-       0
-      ],
-      [
-       "=prodRe",
-       "=prodIm"
-      ]
+     "color": "red",
+     "from": [
+      0,
+      0
      ],
-     "color": "red"
+     "to": [
+      "=prodRe",
+      "=prodIm"
+     ]
     },
     {
      "type": "point",
@@ -226,6 +220,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -40,7 +40,18 @@
      "label": "f(x)=x³−5x+2",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ]
+   ],
+   "pointsLabel": "$(a,f(a)),\\ (b,f(b))$"
   },
   "readout": [
    {

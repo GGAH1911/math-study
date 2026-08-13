@@ -53,7 +53,14 @@
      "label": "v(t)=v₀-2t",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=T",
+     "=v0 - 2*T"
+    ]
+   ],
+   "pointsLabel": "$t=T,\\ v(T)$"
   },
   "readout": [
    {

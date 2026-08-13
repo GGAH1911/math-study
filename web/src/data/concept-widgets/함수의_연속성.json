@@ -38,7 +38,18 @@
      "label": "f(x) = x+a (x≠a)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=lim"
+    ],
+    [
+     "=a",
+     "=v"
+    ]
+   ],
+   "pointsLabel": "$\\lim_{x\\to a}f(x)=2a$ 와 $f(a)=v$"
   },
   "readout": [
    {

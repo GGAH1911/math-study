@@ -60,7 +60,22 @@
      "label": "y = ax² + bx + c",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=p",
+     "=q"
+    ],
+    [
+     "=p-t",
+     "=f_left"
+    ],
+    [
+     "=p+t",
+     "=f_right"
+    ]
+   ],
+   "pointsLabel": "$(p,\\,q),\\ (p-t,\\,f(p-t)),\\ (p+t,\\,f(p+t))$"
   },
   "readout": [
    {

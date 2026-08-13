@@ -46,7 +46,7 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        0,
        0
@@ -67,7 +67,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        0,
        0
@@ -88,7 +88,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        0,
        "=sens"
@@ -109,7 +109,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x",
        0
@@ -130,7 +130,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x",
        "=fp"
@@ -242,6 +242,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

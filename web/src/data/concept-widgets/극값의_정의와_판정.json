@@ -53,7 +53,22 @@
      "label": "f(x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=x0^3-3*p*x0"
+    ],
+    [
+     "=-c",
+     "=max_val"
+    ],
+    [
+     "=c",
+     "=min_val"
+    ]
+   ],
+   "pointsLabel": "$(x_0, f(x_0))$"
   },
   "readout": [
    {

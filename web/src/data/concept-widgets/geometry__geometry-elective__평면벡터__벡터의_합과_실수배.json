@@ -64,7 +64,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "평행사변형",
+     "color": "#bbb",
+     "vertices": [
       [
        0,
        0
@@ -81,9 +83,7 @@
        "=bx",
        "=by"
       ]
-     ],
-     "label": "평행사변형",
-     "color": "#bbb"
+     ]
     },
     {
      "type": "segment",
@@ -294,6 +294,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

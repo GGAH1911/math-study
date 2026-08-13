@@ -39,7 +39,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "직각삼각형 ABC",
+     "vertices": [
       [
        0,
        0
@@ -52,8 +53,7 @@
        0,
        "=b"
       ]
-     ],
-     "label": "직각삼각형 ABC"
+     ]
     },
     {
      "type": "segment",
@@ -183,6 +183,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

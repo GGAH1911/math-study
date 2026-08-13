@@ -26,12 +26,12 @@
   "scope": "fa = a^3 - 2*a; fL = (a-h)^3 - 2*(a-h); fR = (a+h)^3 - 2*(a+h); gapL = fa - fL; gapR = fR - fa; maxgap = abs(gapL) + abs(gapR)",
   "plot": {
    "range": [
-    -2.2,
-    2.2
+    -2.6,
+    2.6
    ],
    "yRange": [
-    -7,
-    7
+    -10,
+    10
    ],
    "fns": [
     {
@@ -39,7 +39,22 @@
      "label": "f(x) = x³ − 2x",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=a-h",
+     "=fL"
+    ],
+    [
+     "=a+h",
+     "=fR"
+    ]
+   ],
+   "pointsLabel": "$x=a-h,\\ a,\\ a+h$ 에서의 함숫값 (h가 작아질수록 세 점이 한 점으로 모인다)"
   },
   "readout": [
    {

@@ -16,71 +16,111 @@
   "scope": "n=6; b1=mod(pattern,2); b2=mod(floor(pattern/2),2); b3=mod(floor(pattern/4),2); b4=mod(floor(pattern/8),2); b5=mod(floor(pattern/16),2); g1=1; g2=1+b1; g3=1+b1+b2; g4=1+b1+b2+b3; g5=1+b1+b2+b3+b4; g6=1+b1+b2+b3+b4+b5; s1=(g1==1?1:0)+(g2==1?1:0)+(g3==1?1:0)+(g4==1?1:0)+(g5==1?1:0)+(g6==1?1:0); s2=(g1==2?1:0)+(g2==2?1:0)+(g3==2?1:0)+(g4==2?1:0)+(g5==2?1:0)+(g6==2?1:0); s3=(g1==3?1:0)+(g2==3?1:0)+(g3==3?1:0)+(g4==3?1:0)+(g5==3?1:0)+(g6==3?1:0); s4=(g1==4?1:0)+(g2==4?1:0)+(g3==4?1:0)+(g4==4?1:0)+(g5==4?1:0)+(g6==4?1:0); s5=(g1==5?1:0)+(g2==5?1:0)+(g3==5?1:0)+(g4==5?1:0)+(g5==5?1:0)+(g6==5?1:0); s6=(g1==6?1:0)+(g2==6?1:0)+(g3==6?1:0)+(g4==6?1:0)+(g5==6?1:0)+(g6==6?1:0); k=(s1>0?1:0)+(s2>0?1:0)+(s3>0?1:0)+(s4>0?1:0)+(s5>0?1:0)+(s6>0?1:0); count=factorial(6)/(factorial(s1)*factorial(s2)*factorial(s3)*factorial(s4)*factorial(s5)*factorial(s6))",
   "geometry": {
    "range": [
-    -1.5,
-    1.5
+    0.3,
+    6.7
    ],
    "yRange": [
-    -1.5,
-    1.5
+    -1.2,
+    1.2
    ],
-   "showAxes": true,
-   "showGrid": true,
+   "showAxes": false,
+   "showGrid": false,
    "shapes": [
     {
-     "type": "circle",
-     "center": [
-      0,
-      0
-     ],
-     "radius": 1
+     "type": "line",
+     "from": [1, 0],
+     "to": ["=b1==0 ? 2 : NaN", 0],
+     "color": "#38bdf8"
+    },
+    {
+     "type": "line",
+     "from": [2, 0],
+     "to": ["=b2==0 ? 3 : NaN", 0],
+     "color": "#38bdf8"
+    },
+    {
+     "type": "line",
+     "from": [3, 0],
+     "to": ["=b3==0 ? 4 : NaN", 0],
+     "color": "#38bdf8"
+    },
+    {
+     "type": "line",
+     "from": [4, 0],
+     "to": ["=b4==0 ? 5 : NaN", 0],
+     "color": "#38bdf8"
+    },
+    {
+     "type": "line",
+     "from": [5, 0],
+     "to": ["=b5==0 ? 6 : NaN", 0],
+     "color": "#38bdf8"
+    },
+    {
+     "type": "line",
+     "from": ["=b1==1 ? 1.5 : NaN", -0.4],
+     "to": ["=b1==1 ? 1.5 : NaN", 0.4],
+     "color": "#fb7185"
+    },
+    {
+     "type": "line",
+     "from": ["=b2==1 ? 2.5 : NaN", -0.4],
+     "to": ["=b2==1 ? 2.5 : NaN", 0.4],
+     "color": "#fb7185"
+    },
+    {
+     "type": "line",
+     "from": ["=b3==1 ? 3.5 : NaN", -0.4],
+     "to": ["=b3==1 ? 3.5 : NaN", 0.4],
+     "color": "#fb7185"
+    },
+    {
+     "type": "line",
+     "from": ["=b4==1 ? 4.5 : NaN", -0.4],
+     "to": ["=b4==1 ? 4.5 : NaN", 0.4],
+     "color": "#fb7185"
+    },
+    {
+     "type": "line",
+     "from": ["=b5==1 ? 5.5 : NaN", -0.4],
+     "to": ["=b5==1 ? 5.5 : NaN", 0.4],
+     "color": "#fb7185"
     },
     {
      "type": "point",
-     "at": [
-      "=cos(0)",
-      "=sin(0)"
-     ],
-     "label": "=g1"
+     "at": [1, 0],
+     "label": "=g1",
+     "labelDir": "N"
     },
     {
      "type": "point",
-     "at": [
-      "=cos(pi/3)",
-      "=sin(pi/3)"
-     ],
-     "label": "=g2"
+     "at": [2, 0],
+     "label": "=g2",
+     "labelDir": "N"
     },
     {
      "type": "point",
-     "at": [
-      "=cos(2*pi/3)",
-      "=sin(2*pi/3)"
-     ],
-     "label": "=g3"
+     "at": [3, 0],
+     "label": "=g3",
+     "labelDir": "N"
     },
     {
      "type": "point",
-     "at": [
-      "=cos(pi)",
-      "=sin(pi)"
-     ],
-     "label": "=g4"
+     "at": [4, 0],
+     "label": "=g4",
+     "labelDir": "N"
     },
     {
      "type": "point",
-     "at": [
-      "=cos(4*pi/3)",
-      "=sin(4*pi/3)"
-     ],
-     "label": "=g5"
+     "at": [5, 0],
+     "label": "=g5",
+     "labelDir": "N"
     },
     {
      "type": "point",
-     "at": [
-      "=cos(5*pi/3)",
-      "=sin(5*pi/3)"
-     ],
-     "label": "=g6"
+     "at": [6, 0],
+     "label": "=g6",
+     "labelDir": "N"
     }
    ]
   },

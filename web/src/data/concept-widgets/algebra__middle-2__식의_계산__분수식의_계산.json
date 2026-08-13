@@ -43,7 +43,14 @@
      "label": "통분 결과",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=1/(x0+3)+a/(x0+4)"
+    ]
+   ],
+   "pointsLabel": "$x_0$"
   },
   "readout": [
    {

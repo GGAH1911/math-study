@@ -38,8 +38,8 @@
     },
     {
      "type": "polygon",
-     "points": "=verts",
-     "label": "정n각형"
+     "label": "정n각형",
+     "vertices": "=verts"
     },
     {
      "type": "point",
@@ -131,6 +131,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

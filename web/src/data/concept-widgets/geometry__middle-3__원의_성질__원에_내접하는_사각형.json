@@ -66,7 +66,8 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "ABCD",
+     "vertices": [
       [
        "=Ax",
        "=Ay"
@@ -83,8 +84,7 @@
        "=Dx",
        "=Dy"
       ]
-     ],
-     "label": "ABCD"
+     ]
     },
     {
      "type": "point",
@@ -225,6 +225,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

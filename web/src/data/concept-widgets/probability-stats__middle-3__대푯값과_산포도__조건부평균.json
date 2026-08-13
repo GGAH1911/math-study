@@ -28,7 +28,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "1",
+     "vertices": [
       [
        "=1-0.4",
        0
@@ -45,12 +46,12 @@
        "=1-0.4",
        "=h1"
       ]
-     ],
-     "label": "1"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "2",
+     "vertices": [
       [
        "=2-0.4",
        0
@@ -67,12 +68,12 @@
        "=2-0.4",
        "=h2"
       ]
-     ],
-     "label": "2"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "3",
+     "vertices": [
       [
        "=3-0.4",
        0
@@ -89,12 +90,12 @@
        "=3-0.4",
        "=h3"
       ]
-     ],
-     "label": "3"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "4",
+     "vertices": [
       [
        "=4-0.4",
        0
@@ -111,12 +112,12 @@
        "=4-0.4",
        "=h4"
       ]
-     ],
-     "label": "4"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "5",
+     "vertices": [
       [
        "=5-0.4",
        0
@@ -133,12 +134,12 @@
        "=5-0.4",
        "=h5"
       ]
-     ],
-     "label": "5"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "6",
+     "vertices": [
       [
        "=6-0.4",
        0
@@ -155,8 +156,7 @@
        "=6-0.4",
        "=h6"
       ]
-     ],
-     "label": "6"
+     ]
     },
     {
      "type": "segment",
@@ -236,6 +236,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

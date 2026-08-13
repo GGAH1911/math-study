@@ -50,7 +50,18 @@
      "label": "y = k x²",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=k*a^2"
+    ],
+    [
+     "=b",
+     "=k*b^2"
+    ]
+   ],
+   "pointsLabel": "$x=a,\\ x=b$"
   },
   "readout": [
    {

@@ -29,7 +29,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "color": "#3b82f6",
+     "vertices": [
       [
        0.7,
        0
@@ -46,12 +47,12 @@
        0.7,
        "=Snm1"
       ]
-     ],
-     "color": "#3b82f6"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#3b82f6",
+     "vertices": [
       [
        3,
        0
@@ -68,12 +69,12 @@
        3,
        "=Snm1"
       ]
-     ],
-     "color": "#3b82f6"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#ef4444",
+     "vertices": [
       [
        3,
        "=Snm1"
@@ -90,8 +91,7 @@
        3,
        "=Sn"
       ]
-     ],
-     "color": "#ef4444"
+     ]
     },
     {
      "type": "segment",
@@ -206,6 +206,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

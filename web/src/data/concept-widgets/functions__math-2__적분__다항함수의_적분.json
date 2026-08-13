@@ -72,7 +72,18 @@
      "label": "F(x)=∫f dx",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=ft"
+    ],
+    [
+     "=t",
+     "=FtC"
+    ]
+   ],
+   "pointsLabel": "$(t,f(t)),\\,(t,F(t){+}C)$"
   },
   "readout": [
    {

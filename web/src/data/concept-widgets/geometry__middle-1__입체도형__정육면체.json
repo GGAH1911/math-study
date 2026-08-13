@@ -29,7 +29,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "앞면",
+     "color": "#2563eb",
+     "vertices": [
       [
        0,
        0
@@ -46,13 +48,13 @@
        0,
        "=a"
       ]
-     ],
-     "label": "앞면",
-     "color": "#2563eb"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "뒷면",
+     "color": "#93c5fd",
+     "vertices": [
       [
        "=off",
        "=off"
@@ -69,9 +71,7 @@
        "=off",
        "=a+off"
       ]
-     ],
-     "label": "뒷면",
-     "color": "#93c5fd"
+     ]
     },
     {
      "type": "segment",
@@ -221,6 +221,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

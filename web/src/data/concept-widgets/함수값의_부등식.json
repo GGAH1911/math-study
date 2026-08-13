@@ -47,7 +47,18 @@
      "label": "f(x)=ax",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x1",
+     "=f1"
+    ],
+    [
+     "=x2",
+     "=f2"
+    ]
+   ],
+   "pointsLabel": "$(x_1,f(x_1)),\\ (x_2,f(x_2))$"
   },
   "readout": [
    {

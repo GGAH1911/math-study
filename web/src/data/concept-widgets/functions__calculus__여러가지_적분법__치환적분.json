@@ -34,7 +34,18 @@
      "label": "원시함수 F(g(x))=sin(x²) (누적넓이)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=2*b*cos(b^2)"
+    ],
+    [
+     "=b",
+     "=sin(b^2)"
+    ]
+   ],
+   "pointsLabel": "$x=b$"
   },
   "readout": [
    {

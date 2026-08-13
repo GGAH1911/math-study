@@ -29,7 +29,7 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=ax",
        "=ay"
@@ -165,6 +165,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

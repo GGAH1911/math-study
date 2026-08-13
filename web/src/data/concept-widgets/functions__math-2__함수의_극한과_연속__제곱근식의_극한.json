@@ -38,7 +38,18 @@
      "label": "√f(x)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=L"
+    ],
+    [
+     "=a",
+     "=rfa"
+    ]
+   ],
+   "pointsLabel": "$x=a$일 때: $(a,\\ f(a))$, $(a,\\ \\sqrt{f(a)})$"
   },
   "readout": [
    {

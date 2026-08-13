@@ -38,7 +38,14 @@
      "label": "m^x",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=m^n"
+    ]
+   ],
+   "pointsLabel": "$(n,\\ m^n)$"
   },
   "readout": [
    {

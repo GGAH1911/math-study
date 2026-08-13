@@ -75,7 +75,14 @@
      "label": "c",
      "color": "#d62728"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=y"
+    ]
+   ],
+   "pointsLabel": "$(x_0, f(x_0))$"
   },
   "readout": [
    {

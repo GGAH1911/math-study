@@ -54,8 +54,7 @@
       6,
       0
      ],
-     "color": "#888",
-     "strokeWidth": 2
+     "color": "#888"
     },
     {
      "type": "segment",
@@ -67,8 +66,7 @@
       "=xmax",
       0.5
      ],
-     "color": "#1f77b4",
-     "strokeWidth": 5
+     "color": "#1f77b4"
     },
     {
      "type": "circle",
@@ -89,8 +87,7 @@
       "=xmax",
       -0.5
      ],
-     "color": "#2ca02c",
-     "strokeWidth": 5
+     "color": "#2ca02c"
     },
     {
      "type": "circle",
@@ -111,8 +108,7 @@
       "=b",
       0.2
      ],
-     "color": "#d62728",
-     "strokeWidth": 5
+     "color": "#d62728"
     },
     {
      "type": "circle",
@@ -133,8 +129,7 @@
       "=ix2",
       -0.2
      ],
-     "color": "#ff7f0e",
-     "strokeWidth": 7
+     "color": "#ff7f0e"
     }
    ]
   },
@@ -212,6 +207,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

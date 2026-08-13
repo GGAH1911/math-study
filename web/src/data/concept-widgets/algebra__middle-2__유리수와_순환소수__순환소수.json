@@ -36,7 +36,7 @@
     },
     {
      "type": "polygon",
-     "points": "=vlist"
+     "vertices": "=vlist"
     },
     {
      "type": "point",
@@ -131,6 +131,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

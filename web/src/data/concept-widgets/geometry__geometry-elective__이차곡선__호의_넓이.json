@@ -38,7 +38,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "쓸고 지나간 영역",
+     "vertices": [
       [
        "=a*(1+cos(rad*0/12))*cos(rad*0/12)",
        "=a*(1+cos(rad*0/12))*sin(rad*0/12)"
@@ -95,8 +96,7 @@
        0,
        0
       ]
-     ],
-     "label": "쓸고 지나간 영역"
+     ]
     },
     {
      "type": "segment",
@@ -211,6 +211,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

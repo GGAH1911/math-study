@@ -43,7 +43,18 @@
      "label": "f'(x)=3x²-3a",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=f0"
+    ],
+    [
+     "=x0",
+     "=fp0"
+    ]
+   ],
+   "pointsLabel": "$x_0$"
   },
   "readout": [
    {

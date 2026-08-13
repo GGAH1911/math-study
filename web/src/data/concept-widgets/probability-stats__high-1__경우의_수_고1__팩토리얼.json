@@ -29,7 +29,14 @@
      "label": "n!",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=fact"
+    ]
+   ],
+   "pointsLabel": "$(n,\\ n!)$"
   },
   "readout": [
    {

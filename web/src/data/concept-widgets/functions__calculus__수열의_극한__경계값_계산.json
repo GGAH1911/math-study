@@ -56,7 +56,22 @@
      "label": "L − ε",
      "color": "#d62728"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=an"
+    ],
+    [
+     "=n",
+     "=L + eps"
+    ],
+    [
+     "=n",
+     "=L - eps"
+    ]
+   ],
+   "pointsLabel": "$(n,\\ a_n),\\ (n,\\ L\\pm\\varepsilon)$"
   },
   "readout": [
    {

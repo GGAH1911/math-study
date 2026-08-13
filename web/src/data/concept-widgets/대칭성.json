@@ -49,15 +49,15 @@
    "shapes": [
     {
      "type": "segment",
-     "start": [
+     "label": "대칭축",
+     "from": [
       "=-6*cos(th)",
       "=-6*sin(th)"
      ],
-     "end": [
+     "to": [
       "=6*cos(th)",
       "=6*sin(th)"
-     ],
-     "label": "대칭축"
+     ]
     },
     {
      "type": "point",
@@ -77,11 +77,11 @@
     },
     {
      "type": "segment",
-     "start": [
+     "from": [
       "=px",
       "=py"
      ],
-     "end": [
+     "to": [
       "=rx",
       "=ry"
      ]
@@ -182,6 +182,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

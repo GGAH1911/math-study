@@ -73,8 +73,20 @@
      "fn": "a * n * x^(n-1)",
      "label": "f'(x) = a·n·xⁿ⁻¹",
      "color": "red"
+    },
+    {
+     "fn": "f0 + df0*(x - x0)",
+     "label": "접선",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=f0"
+    ]
+   ],
+   "pointsLabel": "$(x_0, f(x_0))$"
   },
   "readout": [
    {

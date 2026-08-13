@@ -29,7 +29,7 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x0",
        0
@@ -50,7 +50,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x1",
        0
@@ -71,7 +71,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x2",
        0
@@ -92,7 +92,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x3",
        0
@@ -113,7 +113,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x4",
        0
@@ -134,7 +134,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x5",
        0
@@ -155,7 +155,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x6",
        0
@@ -176,7 +176,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x7",
        0
@@ -197,7 +197,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x8",
        0
@@ -218,7 +218,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=x9",
        0
@@ -334,6 +334,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -38,7 +38,18 @@
      "label": "C(n,k)",
      "color": "steelblue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=r_eff",
+     "=c"
+    ],
+    [
+     "=n - r_eff",
+     "=c"
+    ]
+   ],
+   "pointsLabel": "$C(n,r)$"
   },
   "readout": [
    {

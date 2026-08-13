@@ -38,7 +38,14 @@
      "label": "C(n+x-1, x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=k",
+     "=count"
+    ]
+   ],
+   "pointsLabel": "$k=$"
   },
   "readout": [
    {

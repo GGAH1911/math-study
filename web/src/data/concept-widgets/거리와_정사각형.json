@@ -39,7 +39,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "ABCD",
+     "vertices": [
       [
        "=ax",
        "=ay"
@@ -56,8 +57,7 @@
        "=dx",
        "=dy"
       ]
-     ],
-     "label": "ABCD"
+     ]
     },
     {
      "type": "segment",
@@ -220,6 +220,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

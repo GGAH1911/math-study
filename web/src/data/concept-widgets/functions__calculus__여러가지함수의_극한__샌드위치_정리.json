@@ -41,7 +41,22 @@
      "label": "끼인 f(x)=x²sin(1/x)",
      "color": "#ef4444"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=gx"
+    ],
+    [
+     "=a",
+     "=fx"
+    ],
+    [
+     "=a",
+     "=hx"
+    ]
+   ],
+   "pointsLabel": "$x=a$ 에서 세 값이 조여드는 모습"
   },
   "readout": [
    {

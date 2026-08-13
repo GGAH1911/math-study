@@ -35,7 +35,7 @@
   "plot": {
    "range": [
     0.1,
-    2
+    4
    ],
    "yRange": [
     0,
@@ -52,7 +52,14 @@
      "label": "n√(x^m)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=pow"
+    ]
+   ],
+   "pointsLabel": "$(a,\\ a^{m/n})$"
   },
   "readout": [
    {

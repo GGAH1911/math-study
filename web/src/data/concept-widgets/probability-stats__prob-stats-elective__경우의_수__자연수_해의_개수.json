@@ -40,7 +40,14 @@
      "label": "해의 개수",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=k",
+     "=cnt"
+    ]
+   ],
+   "pointsLabel": "$(k,\\ {}_{k-1}\\mathrm{C}_{n-1})$"
   },
   "readout": [
    {

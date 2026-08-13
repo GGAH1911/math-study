@@ -47,7 +47,18 @@
      "label": "y = a^x",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=m",
+     "=a^m"
+    ],
+    [
+     "=n",
+     "=a^n"
+    ]
+   ],
+   "pointsLabel": "$(m, a^m),\\ (n, a^n)$"
   },
   "readout": [
    {

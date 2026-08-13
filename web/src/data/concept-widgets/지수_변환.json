@@ -56,7 +56,18 @@
      "label": "2^(nx)",
      "color": "#2980b9"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=orig"
+    ],
+    [
+     "=t",
+     "=trans"
+    ]
+   ],
+   "pointsLabel": "$x=t$ 에서 두 식이 겹친다"
   },
   "readout": [
    {

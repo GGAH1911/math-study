@@ -29,7 +29,14 @@
      "label": "f(z)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=z",
+     "=fz"
+    ]
+   ],
+   "pointsLabel": "$(z, f(z))$"
   },
   "readout": [
    {

@@ -53,7 +53,22 @@
      "label": "닮음비 = k",
      "color": "#999999"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=k",
+     "=k"
+    ],
+    [
+     "=k",
+     "=areaRatio"
+    ],
+    [
+     "=k",
+     "=volRatio"
+    ]
+   ],
+   "pointsLabel": "$(k,k),\\,(k,k^2),\\,(k,k^3)$"
   },
   "readout": [
    {

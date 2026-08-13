@@ -55,22 +55,22 @@
    "shapes": [
     {
      "type": "segment",
-     "start": [
+     "from": [
       "=p1",
       0
      ],
-     "end": [
+     "to": [
       "=p2",
       0
      ]
     },
     {
      "type": "segment",
-     "start": [
+     "from": [
       "=q1",
       -0.5
      ],
-     "end": [
+     "to": [
       "=q2",
       -0.5
      ]
@@ -195,6 +195,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

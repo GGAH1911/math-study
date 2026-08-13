@@ -38,7 +38,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "삼각형",
+     "vertices": [
       [
        0,
        0
@@ -51,8 +52,7 @@
        "=qx",
        "=qy"
       ]
-     ],
-     "label": "삼각형"
+     ]
     },
     {
      "type": "segment",
@@ -184,6 +184,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

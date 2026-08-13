@@ -29,7 +29,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "color": "#2563eb",
+     "label": "∫v du",
+     "vertices": [
       [
        0,
        0
@@ -58,13 +60,13 @@
        "=a",
        0
       ]
-     ],
-     "color": "#2563eb",
-     "label": "∫v du"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#f59e0b",
+     "label": "∫u dv",
+     "vertices": [
       [
        0,
        0
@@ -93,9 +95,7 @@
        "=a/5",
        "=(a/5)^2"
       ]
-     ],
-     "color": "#f59e0b",
-     "label": "∫u dv"
+     ]
     },
     {
      "type": "point",
@@ -186,6 +186,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -31,7 +31,7 @@
     "step": 1
    }
   ],
-  "scope": "deg=m+n; x0=2; y0=3; val2=a*x0^m*y0^n",
+  "scope": "deg=m+n; x0=2; y0=3; val2=a*x0^m*y0^n; r=0.15+0.15*a",
   "geometry": {
    "range": [
     -0.5,
@@ -62,6 +62,16 @@
       "=m",
       "=n"
      ]
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=m",
+      "=n"
+     ],
+     "radius": "=r",
+     "label": "$a$",
+     "stroke": "#e67e22"
     }
    ]
   },

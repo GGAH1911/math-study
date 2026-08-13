@@ -51,8 +51,24 @@
      "fn": "(x-b)/a",
      "label": "y=f⁻¹(x)",
      "color": "#dc2626"
+    },
+    {
+     "fn": "x",
+     "label": "y=x",
+     "color": "#9ca3af"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fa"
+    ],
+    [
+     "=fa",
+     "=x0"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\,f(x_0))\\,,\\ (f(x_0),\\,x_0)$"
   },
   "readout": [
    {

@@ -38,7 +38,14 @@
      "label": "y = log_a x",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=arg",
+     "=(valid == 1) ? y : NaN"
+    ]
+   ],
+   "pointsLabel": "$(x,\\ \\log_a x)$"
   },
   "readout": [
    {

@@ -57,7 +57,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        0,
        0.05
@@ -78,7 +78,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=s",
        0.05
@@ -99,7 +99,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=s",
        0.05
@@ -217,6 +217,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

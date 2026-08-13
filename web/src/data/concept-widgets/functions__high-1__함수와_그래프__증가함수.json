@@ -46,8 +46,24 @@
      "fn": "x^3 + a*x",
      "label": "f(x)=x³+ax",
      "color": "#2563eb"
+    },
+    {
+     "fn": "f1 + dq*(x - x1)",
+     "label": "평균변화율 직선",
+     "color": "#f59e0b"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x1",
+     "=f1"
+    ],
+    [
+     "=x2",
+     "=f2"
+    ]
+   ],
+   "pointsLabel": "$(x_1,\\,f(x_1)),\\ (x_2,\\,f(x_2))$"
   },
   "readout": [
    {

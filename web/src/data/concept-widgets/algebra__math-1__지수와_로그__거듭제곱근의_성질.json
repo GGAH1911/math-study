@@ -47,7 +47,22 @@
      "label": "y = x^(1/n)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=rootA"
+    ],
+    [
+     "=b",
+     "=rootB"
+    ],
+    [
+     "=a*b",
+     "=rootAB"
+    ]
+   ],
+   "pointsLabel": "$(a, \\sqrt[n]{a}),\\ (b, \\sqrt[n]{b}),\\ (ab, \\sqrt[n]{ab})$"
   },
   "readout": [
    {

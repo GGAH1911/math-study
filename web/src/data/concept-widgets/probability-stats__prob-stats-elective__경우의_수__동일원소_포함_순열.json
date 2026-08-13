@@ -40,7 +40,14 @@
      "label": "n! / a!",
      "color": "#2196f3"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a_eff",
+     "=count"
+    ]
+   ],
+   "pointsLabel": "$(a,\\,n!/a!)$"
   },
   "readout": [
    {

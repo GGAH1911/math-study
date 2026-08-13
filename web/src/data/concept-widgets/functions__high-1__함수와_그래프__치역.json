@@ -50,8 +50,29 @@
      "fn": "x^2",
      "label": "y = x²",
      "color": "#2563eb"
+    },
+    {
+     "fn": "ymax",
+     "label": "$y=$ 치역 최댓값",
+     "color": "#dc2626"
+    },
+    {
+     "fn": "ymin",
+     "label": "$y=$ 치역 최솟값",
+     "color": "#16a34a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=a^2"
+    ],
+    [
+     "=b",
+     "=b^2"
+    ]
+   ],
+   "pointsLabel": "$(a,\\,a^2),\\ (b,\\,b^2)$"
   },
   "readout": [
    {

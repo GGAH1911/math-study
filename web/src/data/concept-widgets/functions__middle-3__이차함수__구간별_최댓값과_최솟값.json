@@ -65,7 +65,22 @@
      "label": "f(x)=ax²+bx+c",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=p",
+     "=fp"
+    ],
+    [
+     "=q",
+     "=fq"
+    ],
+    [
+     "=vx",
+     "=fv"
+    ]
+   ],
+   "pointsLabel": "$p,\\ q,\\ \\text{꼭짓점}$"
   },
   "readout": [
    {

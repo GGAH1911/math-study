@@ -209,6 +209,25 @@
       "=pk"
      ],
      "label": "P(X=k)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=mean",
+      0
+     ],
+     "to": [
+      "=mean",
+      1.05
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=mean",
+      1.05
+     ],
+     "label": "$E(X)=np$"
     }
    ]
   },

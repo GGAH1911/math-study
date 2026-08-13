@@ -53,7 +53,18 @@
      "label": "y = log_a(x)",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x1",
+     "=y1"
+    ],
+    [
+     "=x2",
+     "=y2"
+    ]
+   ],
+   "pointsLabel": "$(x_1,\\,\\log_a x_1),\\,(x_2,\\,\\log_a x_2)$"
   },
   "readout": [
    {

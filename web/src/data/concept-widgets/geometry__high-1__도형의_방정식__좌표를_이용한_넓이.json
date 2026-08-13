@@ -73,7 +73,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "ABC",
+     "vertices": [
       [
        "=x1",
        "=y1"
@@ -86,8 +87,7 @@
        "=x3",
        "=y3"
       ]
-     ],
-     "label": "ABC"
+     ]
     },
     {
      "type": "point",
@@ -211,6 +211,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

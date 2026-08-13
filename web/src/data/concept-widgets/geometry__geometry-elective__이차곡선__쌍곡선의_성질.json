@@ -62,7 +62,22 @@
      "label": "점근선",
      "color": "#bbbbbb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=px",
+     "=py"
+    ],
+    [
+     "=c",
+     0
+    ],
+    [
+     "=-c",
+     0
+    ]
+   ],
+   "pointsLabel": "$P,\\ F,\\ F'$"
   },
   "readout": [
    {

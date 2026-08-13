@@ -53,7 +53,22 @@
      "label": "극한 L",
      "color": "#9ca3af"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=N",
+     "=aN"
+    ],
+    [
+     "=N",
+     "=cN"
+    ],
+    [
+     "=N",
+     "=bN"
+    ]
+   ],
+   "pointsLabel": "$n=N$"
   },
   "readout": [
    {

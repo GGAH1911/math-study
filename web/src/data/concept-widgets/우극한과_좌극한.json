@@ -47,7 +47,18 @@
      "label": "f(x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xl",
+     "=yl"
+    ],
+    [
+     "=xr",
+     "=yr"
+    ]
+   ],
+   "pointsLabel": "$f(a-h),\\ f(a+h)$"
   },
   "readout": [
    {

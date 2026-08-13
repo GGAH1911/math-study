@@ -46,30 +46,31 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
-      [
-       0,
-       0
-      ],
-      [
-       1,
-       0
-      ],
-      [
-       1,
-       1
-      ],
-      [
-       0,
-       1
-      ]
-     ],
      "fill": "none",
-     "stroke": "black"
+     "stroke": "black",
+     "vertices": [
+      [
+       0,
+       0
+      ],
+      [
+       1,
+       0
+      ],
+      [
+       1,
+       1
+      ],
+      [
+       0,
+       1
+      ]
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "fill": "rgba(52,152,219,0.4)",
+     "vertices": [
       [
        0,
        0
@@ -86,12 +87,12 @@
        0,
        "=pBA"
       ]
-     ],
-     "fill": "rgba(52,152,219,0.4)"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "fill": "rgba(231,76,60,0.3)",
+     "vertices": [
       [
        0,
        "=pBA"
@@ -108,12 +109,12 @@
        0,
        1
       ]
-     ],
-     "fill": "rgba(231,76,60,0.3)"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "fill": "rgba(46,204,113,0.3)",
+     "vertices": [
       [
        "=pA",
        0
@@ -130,12 +131,12 @@
        "=pA",
        "=pBAc"
       ]
-     ],
-     "fill": "rgba(46,204,113,0.3)"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "fill": "rgba(149,165,166,0.3)",
+     "vertices": [
       [
        "=pA",
        "=pBAc"
@@ -152,8 +153,7 @@
        "=pA",
        1
       ]
-     ],
-     "fill": "rgba(149,165,166,0.3)"
+     ]
     },
     {
      "type": "segment",
@@ -165,7 +165,7 @@
       "=pA",
       1
      ],
-     "stroke": "black"
+     "color": "black"
     },
     {
      "type": "segment",
@@ -177,7 +177,7 @@
       "=pA",
       "=pBA"
      ],
-     "stroke": "black"
+     "color": "black"
     },
     {
      "type": "segment",
@@ -189,7 +189,7 @@
       1,
       "=pBAc"
      ],
-     "stroke": "black"
+     "color": "black"
     },
     {
      "type": "point",
@@ -273,6 +273,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

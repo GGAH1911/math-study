@@ -52,7 +52,14 @@
      "label": "y = -(b/a)√(x²-a²)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=px",
+     "=py"
+    ]
+   ],
+   "pointsLabel": "$(a\\sec\\theta,\\ b\\tan\\theta)$"
   },
   "readout": [
    {

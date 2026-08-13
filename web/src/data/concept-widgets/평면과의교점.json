@@ -42,7 +42,18 @@
      "label": "f(t)=n·P(t)−c",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=ft"
+    ],
+    [
+     "=tstar",
+     "=0"
+    ]
+   ],
+   "pointsLabel": "$(t,\\,f(t)),\\;(t^*,\\,0)$"
   },
   "readout": [
    {

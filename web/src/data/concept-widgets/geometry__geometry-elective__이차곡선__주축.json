@@ -37,7 +37,7 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=a*cos(0*pi/12)",
        "=b*sin(0*pi/12)"
@@ -286,6 +286,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

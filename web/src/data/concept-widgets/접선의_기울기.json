@@ -29,8 +29,20 @@
      "fn": "x^2",
      "label": "f(x)=x^2",
      "color": "blue"
+    },
+    {
+     "fn": "fa + slope_deriv*(x - a)",
+     "label": "$y=f(a)+f'(a)(x-a)$",
+     "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ]
+   ],
+   "pointsLabel": "$(a,\\ f(a))$"
   },
   "readout": [
    {

@@ -76,7 +76,18 @@
      "label": "점근선 y=−(b/a)x",
      "color": "#d94f1e"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xp",
+     "=yp"
+    ],
+    [
+     "=xp",
+     "=ya"
+    ]
+   ],
+   "pointsLabel": "$x=xp$ 에서 쌍곡선과 점근선의 간격"
   },
   "readout": [
    {

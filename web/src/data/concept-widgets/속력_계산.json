@@ -41,7 +41,22 @@
      "label": "속력 |v(t)|",
      "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=pos"
+    ],
+    [
+     "=t",
+     "=v"
+    ],
+    [
+     "=t",
+     "=speed"
+    ]
+   ],
+   "pointsLabel": "$t$"
   },
   "readout": [
    {

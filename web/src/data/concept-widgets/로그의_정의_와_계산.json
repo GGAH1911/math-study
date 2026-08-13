@@ -109,6 +109,33 @@
       "=logMN",
       0
      ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      -0.6
+     ],
+     "to": [
+      8,
+      -0.6
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      -0.6
+     ],
+     "label": "x"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=logNexp",
+      -0.6
+     ],
+     "label": "log_a(a^x)"
     }
    ]
   },

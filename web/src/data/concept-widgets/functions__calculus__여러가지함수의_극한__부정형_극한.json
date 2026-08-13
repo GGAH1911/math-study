@@ -37,8 +37,20 @@
      "fn": "(x^2 - a^2)/(x - a)",
      "label": "y=(x²−a²)/(x−a)",
      "color": "#2563eb"
+    },
+    {
+     "fn": "2*a",
+     "label": "$y=2a$ (극한값)",
+     "color": "#94a3b8"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xv",
+     "=fval"
+    ]
+   ],
+   "pointsLabel": "$(a+h,\\ f(a+h))$"
   },
   "readout": [
    {

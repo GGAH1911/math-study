@@ -47,7 +47,18 @@
      "label": "f(x)=a^x",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x1",
+     "=a^x1"
+    ],
+    [
+     "=x2",
+     "=a^x2"
+    ]
+   ],
+   "pointsLabel": "$(x_1, f(x_1)),\\ (x_2, f(x_2))$"
   },
   "readout": [
    {

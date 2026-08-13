@@ -60,7 +60,14 @@
      "label": "a^x",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=val"
+    ]
+   ],
+   "pointsLabel": "$a^{p/q}$"
   },
   "readout": [
    {

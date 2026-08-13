@@ -49,7 +49,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "앞면 a×c",
+     "vertices": [
       [
        0,
        0
@@ -66,12 +67,12 @@
        0,
        "=c"
       ]
-     ],
-     "label": "앞면 a×c"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "옆면 b×c",
+     "vertices": [
       [
        "=a",
        0
@@ -88,12 +89,12 @@
        "=a",
        "=c"
       ]
-     ],
-     "label": "옆면 b×c"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "윗면 a×b",
+     "vertices": [
       [
        0,
        "=c"
@@ -110,8 +111,7 @@
        "=d",
        "=c+d"
       ]
-     ],
-     "label": "윗면 a×b"
+     ]
     },
     {
      "type": "segment",
@@ -232,6 +232,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

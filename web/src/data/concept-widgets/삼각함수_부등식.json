@@ -80,7 +80,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=cos(alpha+0*da)",
        "=sin(alpha+0*da)"
@@ -223,6 +223,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

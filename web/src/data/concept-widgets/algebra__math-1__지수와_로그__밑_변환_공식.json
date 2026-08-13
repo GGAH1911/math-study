@@ -44,10 +44,26 @@
    "fns": [
     {
      "fn": "log(x)/log(a)",
-     "label": "y=log_a x",
+     "label": "$y=\\log_a x$",
      "color": "blue"
+    },
+    {
+     "fn": "log(x)/log(c)",
+     "label": "$y=\\log_c x$",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=log(b)/log(a)"
+    ],
+    [
+     "=b",
+     "=log(b)/log(c)"
+    ]
+   ],
+   "pointsLabel": "$(b,\\ \\log_a b),\\ (b,\\ \\log_c b)$"
   },
   "readout": [
    {

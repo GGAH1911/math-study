@@ -44,7 +44,14 @@
      "label": "0",
      "color": "gray"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=n - a*floor(n/a)"
+    ]
+   ],
+   "pointsLabel": "$(a,\\ n \\bmod a)$"
   },
   "readout": [
    {
@@ -135,6 +142,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

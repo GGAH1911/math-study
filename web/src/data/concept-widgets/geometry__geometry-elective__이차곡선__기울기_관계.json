@@ -49,8 +49,24 @@
      "fn": "a*x^2",
      "label": "y=ax²",
      "color": "#1f77b4"
+    },
+    {
+     "fn": "mchord*(x-x1)+y1",
+     "label": "$현: 기울기\\ m$",
+     "color": "#d62728"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x1",
+     "=y1"
+    ],
+    [
+     "=x2",
+     "=y2"
+    ]
+   ],
+   "pointsLabel": "$P_1(x_1,\\,y_1),\\ P_2(x_2,\\,y_2)$"
   },
   "readout": [
    {

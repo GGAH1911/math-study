@@ -62,7 +62,8 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#f59e0b",
+     "vertices": [
       [
        "=x1",
        "=y1"
@@ -75,8 +76,7 @@
        "=x2",
        "=y2"
       ]
-     ],
-     "color": "#f59e0b"
+     ]
     },
     {
      "type": "segment",
@@ -219,6 +219,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

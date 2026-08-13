@@ -40,7 +40,22 @@
      "label": "f(x) = -x² + 4",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=lo",
+     "=-lo^2+4"
+    ],
+    [
+     "=hi",
+     "=-hi^2+4"
+    ],
+    [
+     "=xstar",
+     "=ymax"
+    ]
+   ],
+   "pointsLabel": "$(a,f(a)),\\ (b,f(b)),\\ (x^*, M)$"
   },
   "readout": [
    {

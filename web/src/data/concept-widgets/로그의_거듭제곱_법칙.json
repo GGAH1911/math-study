@@ -54,7 +54,14 @@
      "label": "x·log_a b",
      "color": "orange"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=L"
+    ]
+   ],
+   "pointsLabel": "$(n,\\,\\log_a(b^n))$"
   },
   "readout": [
    {

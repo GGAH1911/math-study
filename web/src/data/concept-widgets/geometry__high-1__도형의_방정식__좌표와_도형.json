@@ -37,7 +37,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "△OAB",
+     "vertices": [
       [
        0,
        0
@@ -50,8 +51,7 @@
        "=xr",
        "=k"
       ]
-     ],
-     "label": "△OAB"
+     ]
     },
     {
      "type": "segment",
@@ -199,6 +199,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

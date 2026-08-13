@@ -41,7 +41,18 @@
      "label": "y = a^x",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=val"
+    ],
+    [
+     "=-x0",
+     "=valneg"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\,a^{x_0})$"
   },
   "readout": [
    {

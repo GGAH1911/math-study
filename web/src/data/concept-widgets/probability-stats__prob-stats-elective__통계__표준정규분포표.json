@@ -14,7 +14,7 @@
     "unit": ""
    }
   ],
-  "scope": "x_z=z/sqrt(2); s=x_z>=0 ? 1 : -1; ax=abs(x_z); t=1/(1+0.3275911*ax); poly=((((1.061405429*t - 1.453152027)*t + 1.421413741)*t - 0.284496736)*t + 0.254829592)*t; erfv=s*(1-poly*exp(-ax*ax)); pz=0.5*(1+erfv); pz_mirror=0.5*(1-erfv)",
+  "scope": "x_z=z/sqrt(2); s=x_z>=0 ? 1 : -1; ax=abs(x_z); t=1/(1+0.3275911*ax); poly=((((1.061405429*t - 1.453152027)*t + 1.421413741)*t - 0.284496736)*t + 0.254829592)*t; erfv=s*(1-poly*exp(-ax*ax)); pz=0.5*(1+erfv); pz_mirror=0.5*(1-erfv); pdf_z=1/sqrt(2*pi)*exp(-z^2/2)",
   "plot": {
    "range": [
     -4,
@@ -32,7 +32,18 @@
      "label": "N(0,1) pdf",
      "color": "steelblue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=z",
+     "=pdf_z"
+    ],
+    [
+     "=z",
+     0
+    ]
+   ],
+   "pointsLabel": "$z$"
   },
   "readout": [
    {

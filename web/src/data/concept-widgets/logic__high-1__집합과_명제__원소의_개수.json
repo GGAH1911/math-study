@@ -31,7 +31,7 @@
     "step": 1
    }
   ],
-  "scope": "ab = min(nAB, nA, nB); a = nA - ab; b = nB - ab; u1 = nA + nB - ab; u2 = a + b + ab; u = u1",
+  "scope": "ab = min(nAB, nA, nB); a = nA - ab; b = nB - ab; u1 = nA + nB - ab; u2 = a + b + ab; u = u1; rA = 0.4 + 0.08*nA; rB = 0.4 + 0.08*nB; denom = max(min(nA, nB), 1); frac = ab / denom; dmax = rA + rB; dmin = abs(rA - rB); d = dmax - frac*(dmax - dmin); cxA = -d/2; cxB = d/2",
   "geometry": {
    "range": [
     -2,
@@ -47,23 +47,23 @@
     {
      "type": "circle",
      "center": [
-      -0.65,
+      "=cxA",
       0
      ],
-     "radius": 0.9
+     "radius": "=rA"
     },
     {
      "type": "circle",
      "center": [
-      0.65,
+      "=cxB",
       0
      ],
-     "radius": 0.9
+     "radius": "=rB"
     },
     {
      "type": "point",
      "at": [
-      -1,
+      "=cxA - rA*0.35",
       0
      ],
      "label": "A만"
@@ -71,7 +71,7 @@
     {
      "type": "point",
      "at": [
-      1,
+      "=cxB + rB*0.35",
       0
      ],
      "label": "B만"
@@ -87,16 +87,16 @@
     {
      "type": "point",
      "at": [
-      -0.65,
-      0.55
+      "=cxA",
+      "=rA*0.65"
      ],
      "label": "A"
     },
     {
      "type": "point",
      "at": [
-      0.65,
-      0.55
+      "=cxB",
+      "=rB*0.65"
      ],
      "label": "B"
     }

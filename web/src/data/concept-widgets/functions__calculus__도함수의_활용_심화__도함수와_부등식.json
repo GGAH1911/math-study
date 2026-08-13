@@ -43,7 +43,18 @@
      "label": "x=a 에서의 접선",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=e^x0"
+    ],
+    [
+     "=x0",
+     "=ea*(x0 - a) + ea"
+    ]
+   ],
+   "pointsLabel": "$x_0$"
   },
   "readout": [
    {

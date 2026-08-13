@@ -49,7 +49,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "△ABP",
+     "color": "#4e79a7",
+     "vertices": [
       [
        0,
        0
@@ -62,13 +64,13 @@
        "=px",
        "=h"
       ]
-     ],
-     "label": "△ABP",
-     "color": "#4e79a7"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "△BCP",
+     "color": "#f28e2b",
+     "vertices": [
       [
        "=b",
        0
@@ -81,9 +83,7 @@
        "=px",
        "=h"
       ]
-     ],
-     "label": "△BCP",
-     "color": "#f28e2b"
+     ]
     },
     {
      "type": "segment",
@@ -223,6 +223,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -56,7 +56,18 @@
      "label": "y=ax²+bx+c",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=p-d",
+     "=yL"
+    ],
+    [
+     "=p+d",
+     "=yR"
+    ]
+   ],
+   "pointsLabel": "$y(p-d)=y(p+d)$"
   },
   "readout": [
    {

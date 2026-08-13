@@ -34,7 +34,14 @@
      "label": "극한 = 1",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=n/(n+1)"
+    ]
+   ],
+   "pointsLabel": "$S_n$"
   },
   "readout": [
    {

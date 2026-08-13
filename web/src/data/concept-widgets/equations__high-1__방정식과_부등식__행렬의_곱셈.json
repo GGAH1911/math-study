@@ -100,33 +100,33 @@
    "shapes": [
     {
      "type": "segment",
-     "start": [
+     "from": [
       0,
       0
      ],
-     "end": [
+     "to": [
       "=vx",
       "=vy"
      ]
     },
     {
      "type": "segment",
-     "start": [
+     "from": [
       0,
       0
      ],
-     "end": [
+     "to": [
       "=u_x",
       "=u_y"
      ]
     },
     {
      "type": "segment",
-     "start": [
+     "from": [
       0,
       0
      ],
-     "end": [
+     "to": [
       "=w_x",
       "=w_y"
      ]
@@ -337,6 +337,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

@@ -48,7 +48,26 @@
      "label": "L-ε",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a-delta",
+     "=(a-delta)^2"
+    ],
+    [
+     "=a+delta",
+     "=(a+delta)^2"
+    ],
+    [
+     "=sqrt(L+epsilon)",
+     "=L+epsilon"
+    ],
+    [
+     "=sqrt(L-epsilon)",
+     "=L-epsilon"
+    ]
+   ],
+   "pointsLabel": "$a\\pm\\delta,\\ f=L\\pm\\varepsilon$"
   },
   "readout": [
    {

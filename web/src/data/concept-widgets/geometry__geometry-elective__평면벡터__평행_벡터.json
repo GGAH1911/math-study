@@ -46,17 +46,15 @@
    "shapes": [
     {
      "type": "line",
-     "through": [
-      [
-       0,
-       0
-      ],
-      [
-       "=a1",
-       "=a2"
-      ]
+     "color": "#bbbbbb",
+     "from": [
+      0,
+      0
      ],
-     "color": "#bbbbbb"
+     "to": [
+      "=a1",
+      "=a2"
+     ]
     },
     {
      "type": "segment",
@@ -191,6 +189,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

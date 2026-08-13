@@ -40,14 +40,22 @@
     {
      "fn": "x - c",
      "label": "v(t)=t-c (변위 적분 대상)",
-     "color": "#2563eb"
+     "color": "#2563eb",
+     "range": ["=0", "=b"],
+     "closed": true
     },
     {
      "fn": "abs(x - c)",
      "label": "|v(t)| (거리 적분 대상)",
-     "color": "#dc2626"
+     "color": "#dc2626",
+     "range": ["=0", "=b"]
     }
-   ]
+   ],
+   "points": [
+    ["=b", "=b - c"],
+    ["=b", "=abs(b - c)"]
+   ],
+   "pointsLabel": "$t=b$: $v(b)$, $|v(b)|$"
   },
   "readout": [
    {

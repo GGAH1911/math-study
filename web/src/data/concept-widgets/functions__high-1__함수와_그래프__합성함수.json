@@ -58,7 +58,18 @@
      "label": "(f∘g)(x)=(ax+b)²",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=gx0"
+    ],
+    [
+     "=x0",
+     "=fgx0"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\,g(x_0)),\\,(x_0,\\,(f\\circ g)(x_0))$"
   },
   "readout": [
    {

@@ -43,7 +43,14 @@
      "label": "S (극한)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=n",
+     "=Sn"
+    ]
+   ],
+   "pointsLabel": "$(n,\\,S_n)$"
   },
   "readout": [
    {

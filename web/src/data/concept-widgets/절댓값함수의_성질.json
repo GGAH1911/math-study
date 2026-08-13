@@ -58,7 +58,14 @@
      "label": "y = |x - a|",
      "color": "#2196F3"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=abs(x0 - a)"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\ |x_0-a|)$"
   },
   "readout": [
    {

@@ -30,7 +30,14 @@
      "label": "P(A) = n(A)/n(S)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=nA",
+     "=nA/nS"
+    ]
+   ],
+   "pointsLabel": "$P(A)$"
   },
   "readout": [
    {

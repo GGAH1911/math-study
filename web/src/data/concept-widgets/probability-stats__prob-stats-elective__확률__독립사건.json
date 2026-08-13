@@ -46,7 +46,7 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=0",
        "=0"
@@ -67,7 +67,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=0",
        "=1"
@@ -88,7 +88,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=0",
        "=2"
@@ -109,7 +109,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        "=0",
        "=3"
@@ -130,15 +130,13 @@
     },
     {
      "type": "segment",
-     "points": [
-      [
-       "=prod",
-       "=2"
-      ],
-      [
-       "=prod",
-       "=2.8"
-      ]
+     "from": [
+      "=prod",
+      "=2"
+     ],
+     "to": [
+      "=prod",
+      "=2.8"
      ]
     }
    ]
@@ -241,6 +239,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

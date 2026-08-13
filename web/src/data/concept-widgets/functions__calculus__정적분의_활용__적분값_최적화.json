@@ -37,7 +37,18 @@
      "label": "I(b)=∫₀ᵇ(t²−4)dt (적분값)",
      "color": "#2aa66a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=fb"
+    ],
+    [
+     "=b",
+     "=Ib"
+    ]
+   ],
+   "pointsLabel": "$t=b$ 위치: 회색점 $f(b)$, 초록점 $I(b)$"
   },
   "readout": [
    {

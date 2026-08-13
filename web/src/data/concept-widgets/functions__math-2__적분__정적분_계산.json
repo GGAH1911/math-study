@@ -22,7 +22,7 @@
     "step": 0.1
    }
   ],
-  "scope": "Fa = a^3/3 - a; Fb = b^3/3 - b; integral = Fb - Fa; integralRev = Fa - Fb; integralAlt = (b^3 - a^3)/3 - (b - a)",
+  "scope": "Fa = a^3/3 - a; Fb = b^3/3 - b; integral = Fb - Fa; integralRev = Fa - Fb; integralAlt = (b^3 - a^3)/3 - (b - a); fa = a^2 - 1; fb = b^2 - 1",
   "plot": {
    "range": [
     -2,
@@ -38,7 +38,18 @@
      "label": "f(x) = x² − 1",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=b",
+     "=fb"
+    ]
+   ],
+   "pointsLabel": "$x=a,\\,x=b$"
   },
   "readout": [
    {

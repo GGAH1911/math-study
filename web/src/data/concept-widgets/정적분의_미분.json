@@ -33,8 +33,24 @@
      "fn": "x^3/3",
      "label": "F(x)=∫₀^x f(t)dt",
      "color": "blue"
+    },
+    {
+     "fn": "f0*(x-x0)+F0",
+     "label": "$y=F'(x_0)(x-x_0)+F(x_0)$ (접선)",
+     "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=F0"
+    ],
+    [
+     "=x0",
+     "=f0"
+    ]
+   ],
+   "pointsLabel": "$(x_0,\\,F(x_0))$, $(x_0,\\,f(x_0))$"
   },
   "readout": [
    {

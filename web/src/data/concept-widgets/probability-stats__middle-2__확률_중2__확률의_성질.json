@@ -57,7 +57,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        -0.2,
        0
@@ -86,7 +86,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        0.8,
        0
@@ -115,7 +115,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        1.8,
        0
@@ -144,7 +144,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        2.8,
        0
@@ -173,7 +173,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        3.8,
        0
@@ -202,7 +202,7 @@
     },
     {
      "type": "polygon",
-     "points": [
+     "vertices": [
       [
        4.8,
        0
@@ -339,6 +339,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

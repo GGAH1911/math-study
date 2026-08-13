@@ -58,7 +58,18 @@
      "label": "f(x) = log(x² - c)",
      "color": "#d00"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=g0"
+    ],
+    [
+     "=x0",
+     "=f0"
+    ]
+   ],
+   "pointsLabel": "$x_0$"
   },
   "readout": [
    {

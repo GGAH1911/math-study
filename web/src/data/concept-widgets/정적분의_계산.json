@@ -43,7 +43,18 @@
      "label": "F(x) = x³/3",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=a^2"
+    ],
+    [
+     "=b",
+     "=b^2"
+    ]
+   ],
+   "pointsLabel": "$a, b$"
   },
   "readout": [
    {

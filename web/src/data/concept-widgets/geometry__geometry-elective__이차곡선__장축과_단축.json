@@ -37,7 +37,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "타원",
+     "vertices": [
       [
        "=a*cos(2*pi*0/36)",
        "=b*sin(2*pi*0/36)"
@@ -182,8 +183,7 @@
        "=a*cos(2*pi*35/36)",
        "=b*sin(2*pi*35/36)"
       ]
-     ],
-     "label": "타원"
+     ]
     },
     {
      "type": "segment",
@@ -336,6 +336,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

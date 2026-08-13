@@ -47,7 +47,14 @@
      "label": "x^(m/n)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=a^(m/n)"
+    ]
+   ],
+   "pointsLabel": "$(a,\\ a^{m/n})$"
   },
   "readout": [
    {

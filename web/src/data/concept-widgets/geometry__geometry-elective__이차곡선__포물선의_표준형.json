@@ -39,7 +39,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "color": "#1f77b4",
+     "label": "y²=4px",
+     "vertices": [
       [
        "=9/(4*p)",
        -3
@@ -92,9 +94,7 @@
        "=9/(4*p)",
        3
       ]
-     ],
-     "color": "#1f77b4",
-     "label": "y²=4px"
+     ]
     },
     {
      "type": "segment",
@@ -248,6 +248,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

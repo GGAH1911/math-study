@@ -30,7 +30,18 @@
      "label": "y = cosh(x)",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=fb"
+    ],
+    [
+     "=0",
+     "=1"
+    ]
+   ],
+   "pointsLabel": "$(b,\\ \\cosh b)$"
   },
   "readout": [
    {

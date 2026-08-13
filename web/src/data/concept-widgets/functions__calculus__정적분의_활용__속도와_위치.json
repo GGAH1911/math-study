@@ -47,7 +47,18 @@
      "label": "s(t)=s₀+6t−t² (위치)",
      "color": "#1c7ed6"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=t",
+     "=vt"
+    ],
+    [
+     "=t",
+     "=pos"
+    ]
+   ],
+   "pointsLabel": "$t$"
   },
   "readout": [
    {

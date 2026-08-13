@@ -40,7 +40,14 @@
      "label": "P(n,r)",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=R",
+     "=R<=N ? factorial(N)/factorial(N-R) : 0"
+    ]
+   ],
+   "pointsLabel": "$P(n,r)$"
   },
   "readout": [
    {

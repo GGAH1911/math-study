@@ -37,7 +37,18 @@
      "label": "y = |f(x)|",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=fb"
+    ],
+    [
+     "=b",
+     "=absfb"
+    ]
+   ],
+   "pointsLabel": "$x=b$"
   },
   "readout": [
    {

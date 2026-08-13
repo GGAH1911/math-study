@@ -39,7 +39,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "옆면1",
+     "vertices": [
       [
        0,
        0
@@ -56,12 +57,12 @@
        0,
        "=h"
       ]
-     ],
-     "label": "옆면1"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "옆면2",
+     "vertices": [
       [
        "=a",
        0
@@ -78,12 +79,12 @@
        "=a",
        "=h"
       ]
-     ],
-     "label": "옆면2"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "옆면3",
+     "vertices": [
       [
        "=2*a",
        0
@@ -100,12 +101,12 @@
        "=2*a",
        "=h"
       ]
-     ],
-     "label": "옆면3"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "밑면(위)",
+     "vertices": [
       [
        0,
        "=h"
@@ -118,12 +119,12 @@
        "=a/2",
        "=h+apex"
       ]
-     ],
-     "label": "밑면(위)"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "밑면(아래)",
+     "vertices": [
       [
        0,
        0
@@ -136,8 +137,7 @@
        "=a/2",
        "=-apex"
       ]
-     ],
-     "label": "밑면(아래)"
+     ]
     }
    ]
   },
@@ -214,6 +214,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

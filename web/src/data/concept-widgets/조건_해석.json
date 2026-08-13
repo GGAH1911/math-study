@@ -46,7 +46,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "fill": "rgba(0, 100, 255, 0.2)",
+     "stroke": "blue",
+     "vertices": [
       [
        "=L",
        -0.15
@@ -63,9 +65,7 @@
        "=L",
        0.15
       ]
-     ],
-     "fill": "rgba(0, 100, 255, 0.2)",
-     "stroke": "blue"
+     ]
     },
     {
      "type": "point",
@@ -182,6 +182,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

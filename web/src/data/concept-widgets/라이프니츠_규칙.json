@@ -46,7 +46,26 @@
      "label": "총 도함수 dF/dx",
      "color": "purple"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=s",
+     "=term_b"
+    ],
+    [
+     "=s",
+     "=term_a"
+    ],
+    [
+     "=s",
+     "=interior"
+    ],
+    [
+     "=s",
+     "=total"
+    ]
+   ],
+   "pointsLabel": "$x=s$ 에서의 각 항의 값"
   },
   "readout": [
    {

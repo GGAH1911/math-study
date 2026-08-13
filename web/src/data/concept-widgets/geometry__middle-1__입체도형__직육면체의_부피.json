@@ -34,22 +34,23 @@
     "unit": "층"
    }
   ],
-  "scope": "base=a*b; V=a*b*c",
+  "scope": "base=a*b; V=a*b*c; d=b*0.35355339",
   "geometry": {
    "range": [
     -1,
-    7
+    9
    ],
    "yRange": [
     -1,
-    7
+    9
    ],
    "showAxes": true,
    "showGrid": true,
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "앞면 a×c",
+     "vertices": [
       [
        0,
        0
@@ -60,22 +61,90 @@
       ],
       [
        "=a",
-       "=b"
+       "=c"
       ],
       [
        0,
-       "=b"
+       "=c"
       ]
-     ],
-     "label": "밑면 a×b"
+     ]
     },
     {
-     "type": "point",
-     "at": [
-      "=a",
-      "=b"
+     "type": "polygon",
+     "label": "옆면 b×c",
+     "vertices": [
+      [
+       "=a",
+       0
+      ],
+      [
+       "=a+d",
+       "=d"
+      ],
+      [
+       "=a+d",
+       "=c+d"
+      ],
+      [
+       "=a",
+       "=c"
+      ]
+     ]
+    },
+    {
+     "type": "polygon",
+     "label": "밑면 a×b",
+     "vertices": [
+      [
+       0,
+       "=c"
+      ],
+      [
+       "=a",
+       "=c"
+      ],
+      [
+       "=a+d",
+       "=c+d"
+      ],
+      [
+       "=d",
+       "=c+d"
+      ]
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
      ],
-     "label": "밑넓이=base"
+     "to": [
+      "=d",
+      "=d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      "=d"
+     ],
+     "to": [
+      "=a+d",
+      "=d"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=d",
+      "=d"
+     ],
+     "to": [
+      "=d",
+      "=c+d"
+     ]
     }
    ]
   },
@@ -160,6 +229,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

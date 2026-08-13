@@ -59,7 +59,22 @@
      "label": "y=f(-x) : y축 대칭",
      "color": "#16a34a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=px",
+     "=py"
+    ],
+    [
+     "=qx",
+     "=qy"
+    ],
+    [
+     "=rx",
+     "=ry"
+    ]
+   ],
+   "pointsLabel": "$P(p,f(p)),\\ Q(p,-f(p)),\\ R(-p,f(p))$"
   },
   "readout": [
    {

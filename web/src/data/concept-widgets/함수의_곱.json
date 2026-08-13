@@ -61,7 +61,13 @@
      "label": "(f·g)(x)",
      "color": "green"
     }
-   ]
+   ],
+   "points": [
+    ["=x0", "=x0+1"],
+    ["=x0", "=a*x0+1"],
+    ["=x0", "=(x0+1)*(a*x0+1)"]
+   ],
+   "pointsLabel": "$x=x_0$"
   },
   "readout": [
    {

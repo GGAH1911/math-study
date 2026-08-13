@@ -30,7 +30,18 @@
      "label": "y = x²",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=a^2"
+    ],
+    [
+     "=a",
+     "0"
+    ]
+   ],
+   "pointsLabel": "$x = a$"
   },
   "readout": [
    {

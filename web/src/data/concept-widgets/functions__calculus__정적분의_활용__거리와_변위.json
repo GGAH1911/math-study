@@ -45,7 +45,18 @@
      "label": "|v(t)| (속력)",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=b",
+     "=v0-2*b"
+    ],
+    [
+     "=b",
+     "0"
+    ]
+   ],
+   "pointsLabel": "$t=b$"
   },
   "readout": [
    {

@@ -22,7 +22,7 @@
     "step": 0.1
    }
   ],
-  "scope": "a=0; disc=4-k; r1=2-sqrt(disc); r2=2+sqrt(disc); sel1=((r1>=a) and (r1<=b))?1:0; sel2=((r2>=a) and (r2<=b))?1:0; rootsum=sel1*r1+sel2*r2; cnt=sel1+sel2",
+  "scope": "a=0; disc=4-k; r1=2-sqrt(disc); r2=2+sqrt(disc); sel1=((r1>=a) and (r1<=b))?1:0; sel2=((r2>=a) and (r2<=b))?1:0; rootsum=sel1*r1+sel2*r2; cnt=sel1+sel2; fb=-b^2+4*b",
   "plot": {
    "range": [
     -1.5,
@@ -43,7 +43,26 @@
      "label": "y = k",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "0",
+     "0"
+    ],
+    [
+     "=b",
+     "0"
+    ],
+    [
+     "=b",
+     "=fb"
+    ],
+    [
+     "-1",
+     "=k"
+    ]
+   ],
+   "pointsLabel": "$[0,\\ b]$ 구간, 오른쪽 끝점 $(b,\\ f(b))$, 높이 $k$"
   },
   "readout": [
    {

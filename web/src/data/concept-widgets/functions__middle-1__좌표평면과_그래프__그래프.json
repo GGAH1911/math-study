@@ -40,7 +40,18 @@
      "label": "y = a·x²",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=a*x0^2"
+    ],
+    [
+     "=-x0",
+     "=a*x0^2"
+    ]
+   ],
+   "pointsLabel": "$(x_0, f(x_0))$"
   },
   "readout": [
    {

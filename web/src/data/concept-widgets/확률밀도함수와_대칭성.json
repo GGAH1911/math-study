@@ -38,7 +38,22 @@
      "label": "f(x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a-k",
+     "=f_left"
+    ],
+    [
+     "=a+k",
+     "=f_right"
+    ],
+    [
+     "=a",
+     "=1/h"
+    ]
+   ],
+   "pointsLabel": "$a-k,\\ a,\\ a+k$"
   },
   "readout": [
    {

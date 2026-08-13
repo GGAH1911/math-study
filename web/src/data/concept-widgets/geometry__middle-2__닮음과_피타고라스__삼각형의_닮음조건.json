@@ -56,7 +56,9 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "label": "△A'B'C' (k배)",
+     "color": "#f59e0b",
+     "vertices": [
       [
        0,
        0
@@ -69,13 +71,13 @@
        "=C2x",
        "=C2y"
       ]
-     ],
-     "label": "△A'B'C' (k배)",
-     "color": "#f59e0b"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "label": "△ABC",
+     "color": "#2563eb",
+     "vertices": [
       [
        0,
        0
@@ -88,9 +90,7 @@
        "=Cx",
        "=Cy"
       ]
-     ],
-     "label": "△ABC",
-     "color": "#2563eb"
+     ]
     },
     {
      "type": "point",
@@ -247,6 +247,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

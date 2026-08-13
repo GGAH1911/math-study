@@ -37,7 +37,8 @@
    "shapes": [
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        0.6,
        0
@@ -54,12 +55,12 @@
        0.6,
        "=((1>=m) and (1<=n)) ? 1 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        1.6,
        0
@@ -76,12 +77,12 @@
        1.6,
        "=((2>=m) and (2<=n)) ? 2 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        2.6,
        0
@@ -98,12 +99,12 @@
        2.6,
        "=((3>=m) and (3<=n)) ? 3 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        3.6,
        0
@@ -120,12 +121,12 @@
        3.6,
        "=((4>=m) and (4<=n)) ? 4 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        4.6,
        0
@@ -142,12 +143,12 @@
        4.6,
        "=((5>=m) and (5<=n)) ? 5 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        5.6,
        0
@@ -164,12 +165,12 @@
        5.6,
        "=((6>=m) and (6<=n)) ? 6 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        6.6,
        0
@@ -186,12 +187,12 @@
        6.6,
        "=((7>=m) and (7<=n)) ? 7 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        7.6,
        0
@@ -208,12 +209,12 @@
        7.6,
        "=((8>=m) and (8<=n)) ? 8 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        8.6,
        0
@@ -230,12 +231,12 @@
        8.6,
        "=((9>=m) and (9<=n)) ? 9 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     },
     {
      "type": "polygon",
-     "points": [
+     "color": "#4caf50",
+     "vertices": [
       [
        9.6,
        0
@@ -252,8 +253,7 @@
        9.6,
        "=((10>=m) and (10<=n)) ? 10 : 0"
       ]
-     ],
-     "color": "#4caf50"
+     ]
     }
    ]
   },
@@ -330,6 +330,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }
