@@ -53,7 +53,8 @@ def targets() -> list[dict]:
         g = lambda p, d='': (re.search(p, t, re.M).group(1).strip() if re.search(p, t, re.M) else d)  # noqa: E731
         # 고등 회차인지 — 경로로 판정(수능·모평·고3·예시). grade 가 비어도 중학 후보는 막는다.
         is_high = any(k in str(f) for k in ('수능', '모평', '고3', '예시'))
-        out.append({'md': f, 'slug': f.stem, 'is_high': is_high, 'subject': g(r'^  subject: (.+)$'),
+        out.append({'md': f, 'slug': f.stem, 'is_high': is_high, 'year': g(r'^  year: (\d+)$', '0'),
+                    'subject': g(r'^  subject: (.+)$'),
                     'grade': g(r'^  grade: (.+)$'), 'number': g(r'^  number: (\d+)$', '0'),
                     'score': g(r'^  score: (\d+)$', '3'),
                     'image': g(r'^problem_image: (.+)$'), 'before': m.group(1)[:120]})
@@ -97,9 +98,10 @@ def main() -> int:
     t_start = time.time()
 
     def work(t: dict) -> dict:
-        key = (t['subject'], t['grade'], t['is_high'])
+        key = (t['subject'], t['grade'], t['is_high'], t['year'])
         if key not in idx_cache:
-            idx_cache[key] = IR.load_concept_index(IR.scope_for(t['subject'], t['grade'], t['is_high']))
+            idx_cache[key] = IR.load_concept_index(
+                IR.scope_for(t['subject'], t['grade'], t['is_high'], int(t['year'] or 0)))
         index = idx_cache[key]
         if not index:
             return {'slug': t['slug'], 'status': 'no-scope'}

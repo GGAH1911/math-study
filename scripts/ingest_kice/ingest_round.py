@@ -603,6 +603,25 @@ GRADE_SCOPE: dict[str, list[str]] = {
 }
 
 
+# 2022 개정 교육과정(2028학년도 수능~) — **선택과목 폐지, 통합형.**
+#
+# ★연도를 키로 삼는 이유: 2028부터 과목명이 다시 '단일' 이 되는데 그건 고1·고2 학평이 이미
+#   쓰는 이름이라 과목으로는 못 가른다. 그대로 두면 내년 6월 모평이 들어올 때 **조용히**
+#   잘못된 스코프로 매핑된다 — 이번 사고와 똑같은 실패 방식이다. year 는 인제스트가 항상 채운다.
+#
+# ★개념 노트를 새로 쓰지 않는다. 필요한 내용은 트리에 이미 다 있고, 다만 확률·통계가
+#   2015 개정 기준의 **선택과목 디렉터리 아래에만** 있을 뿐이다. 그래서 그 단원 3개만
+#   경로로 집어서 허용한다(나형에 수열의_극한 하나만 허용한 것과 같은 방식).
+#   ⚠️ 근본적으로는 개념 트리의 디렉터리가 2015 개정 과목 구분에 묶여 있다.
+#      2028 문항이 늘어나면 트리 재편을 검토해야 한다.
+INTEGRATED_2028 = [
+    'math-1', 'math-2', 'high-1',
+    'probability-stats/prob-stats-elective/확률',
+    'probability-stats/prob-stats-elective/통계',
+    'probability-stats/prob-stats-elective/경우의_수',
+]
+CURRICULUM_YEAR_2028 = 2028      # 이 연도부터 통합형
+
 # 고등 문제인데 과목·학년으로 못 좁힐 때의 기본값 — **중학은 뺀다.**
 # (2028 예시문항처럼 grade 가 없는 30건이 여기 해당한다. 전 범위를 열면 중학 개념이
 #  후보에 남아 이번 사고와 같은 유형이 다시 가능해진다.)
@@ -611,12 +630,15 @@ HIGH_DEFAULT = ['high-1', 'math-1', 'math-2', 'calculus',
 
 
 def scope_for(subject: str | None = None, grade: str | None = None,
-              is_high: bool = False) -> list[str] | None:
+              is_high: bool = False, year: int | None = None) -> list[str] | None:
     """이 문제에 허용할 범위. 학년 디렉터리(`math-1`) 또는 **단원 경로**(`a/b/단원`) 혼용 가능.
 
     ★단원 단위 허용이 필요한 이유: 옛 가/나형처럼 한 과목이 어떤 영역의 **일부만** 포함하는
       경우가 있다. 학년 디렉터리로만 자르면 전부 넣거나 전부 빼야 해서, 어느 쪽이든 틀린다.
     """
+    # ★연도를 **가장 먼저** 본다. 교육과정이 바뀌면 과목·학년 규칙 자체가 무효다.
+    if year and int(year) >= CURRICULUM_YEAR_2028:
+        return INTEGRATED_2028
     if subject and subject in SUBJECT_SCOPE:
         return SUBJECT_SCOPE[subject]
     if grade:
