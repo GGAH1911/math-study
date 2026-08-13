@@ -1,0 +1,175 @@
+{
+ "id": "probability-stats/middle-3/대푯값과_산포도/줄기와_잎_그림",
+ "spec": {
+  "title": "줄기와 잎 그림 탐구",
+  "params": [
+   {
+    "name": "n",
+    "label": "자료 개수",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 5,
+    "step": 1,
+    "unit": "개"
+   }
+  ],
+  "scope": "s1=23;s2=24;s3=27;s4=31;s5=35;k1=floor(s1/10);l1=mod(s1,10);k2=floor(s2/10);l2=mod(s2,10);k3=floor(s3/10);l3=mod(s3,10);k4=floor(s4/10);l4=mod(s4,10);k5=floor(s5/10);l5=mod(s5,10);x1=n>=1?l1:-100;y1=n>=1?k1:-100;x2=n>=2?l2:-100;y2=n>=2?k2:-100;x3=n>=3?l3:-100;y3=n>=3?k3:-100;x4=n>=4?l4:-100;y4=n>=4?k4:-100;x5=n>=5?l5:-100;y5=n>=5?k5:-100;cur=n==1?s1:n==2?s2:n==3?s3:n==4?s4:s5;cur_stem=floor(cur/10);cur_leaf=mod(cur,10);sum_selected=(n>=1?s1:0)+(n>=2?s2:0)+(n>=3?s3:0)+(n>=4?s4:0)+(n>=5?s5:0);sum_recon=(n>=1?k1*10+l1:0)+(n>=2?k2*10+l2:0)+(n>=3?k3*10+l3:0)+(n>=4?k4*10+l4:0)+(n>=5?k5*10+l5:0);cnt_visible=(n>=1?1:0)+(n>=2?1:0)+(n>=3?1:0)+(n>=4?1:0)+(n>=5?1:0)",
+  "geometry": {
+   "range": [
+    0,
+    10
+   ],
+   "yRange": [
+    0,
+    4
+   ],
+   "showAxes": true,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "point",
+     "at": [
+      0.2,
+      "=n>=1?2:-100"
+     ],
+     "label": "2"
+    },
+    {
+     "type": "point",
+     "at": [
+      0.2,
+      "=n>=4?3:-100"
+     ],
+     "label": "3"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "label": "3"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "label": "4"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x3",
+      "=y3"
+     ],
+     "label": "7"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x4",
+      "=y4"
+     ],
+     "label": "1"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x5",
+      "=y5"
+     ],
+     "label": "5"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "자료 개수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "마지막 추가 값",
+    "expr": "cur",
+    "digits": 0
+   },
+   {
+    "label": "줄기",
+    "expr": "cur_stem",
+    "digits": 0
+   },
+   {
+    "label": "잎",
+    "expr": "cur_leaf",
+    "digits": 0
+   },
+   {
+    "label": "복원된 값",
+    "expr": "cur_stem*10+cur_leaf",
+    "digits": 0
+   },
+   {
+    "label": "누적 합",
+    "expr": "sum_selected",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "n": 1
+   },
+   {
+    "n": 3
+   },
+   {
+    "n": 5
+   }
+  ],
+  "invariants": [
+   "abs(sum_selected - sum_recon)",
+   "abs(cur_stem*10+cur_leaf - cur)",
+   "cnt_visible - n"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "n": 1
+    },
+    "expect": {
+     "cur": 23,
+     "cur_stem": 2,
+     "cur_leaf": 3,
+     "sum_selected": 23
+    }
+   },
+   {
+    "params": {
+     "n": 3
+    },
+    "expect": {
+     "cur": 27,
+     "cur_stem": 2,
+     "cur_leaf": 7,
+     "sum_selected": 74
+    }
+   },
+   {
+    "params": {
+     "n": 5
+    },
+    "expect": {
+     "cur": 35,
+     "cur_stem": 3,
+     "cur_leaf": 5,
+     "sum_selected": 140
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
