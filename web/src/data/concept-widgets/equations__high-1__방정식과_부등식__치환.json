@@ -4,37 +4,93 @@
   "title": "치환으로 방정식 단순화하기",
   "params": [
    {
-    "name": "a",
-    "label": "x",
+    "name": "p",
+    "label": "p  (x⁴ + p·x² + q)",
     "type": "slider",
-    "min": -2,
-    "max": 2,
-    "init": 1,
+    "min": -6,
+    "max": 4,
+    "init": -3,
     "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "q",
+    "type": "slider",
+    "min": -4,
+    "max": 6,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "a",
+    "label": "추적점 x",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.05
    }
   ],
-  "scope": "t = a^2; orig = a^4 - 3*a^2 + 2; subs = t^2 - 3*t + 2;",
+  "scope": "t = a^2; orig = a^4 + p*a^2 + q; subs = t^2 + p*t + q; D = p^2 - 4*q; sq = D >= 0 ? sqrt(D) : 0; t1 = D >= 0 ? (-p - sq)/2 : -1; t2 = D >= 0 ? (-p + sq)/2 : -1; n1 = (D >= 0 and t1 > 0) ? 2 : ((D >= 0 and t1 == 0) ? 1 : 0); n2 = (D >= 0 and t2 > 0) ? 2 : ((D >= 0 and t2 == 0) ? 1 : 0); nx = D < 0 ? 0 : (D == 0 ? n1 : n1 + n2);",
   "plot": {
    "range": [
-    -2,
-    2
+    -3,
+    3
    ],
    "yRange": [
-    -1,
-    8
+    -6,
+    10
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "x^4 - 3*x^2 + 2",
-     "label": "원래 식 f(x)",
+     "fn": "x^4 + p*x^2 + q",
+     "label": "$f(x)=x^4+px^2+q$",
      "color": "blue"
     },
     {
-     "fn": "x^2 - 3*x + 2",
-     "label": "치환식 g(t)",
-     "color": "red"
+     "fn": "x^2 + p*x + q",
+     "label": "$g(t)=t^2+pt+q$",
+     "color": "red",
+     "dashed": true
+    }
+   ],
+   "roots": [
+    {
+     "fn": "x^4 + p*x^2 + q",
+     "in": [-3, -1.2],
+     "label": "x근"
+    },
+    {
+     "fn": "x^4 + p*x^2 + q",
+     "in": [-1.2, -0.02],
+     "label": "x근"
+    },
+    {
+     "fn": "x^4 + p*x^2 + q",
+     "in": [0.02, 1.2],
+     "label": "x근"
+    },
+    {
+     "fn": "x^4 + p*x^2 + q",
+     "in": [1.2, 3],
+     "label": "x근"
+    },
+    {
+     "fn": "x^2 + p*x + q",
+     "in": [-3, 0],
+     "label": "t근"
+    },
+    {
+     "fn": "x^2 + p*x + q",
+     "in": [0, 1.5],
+     "label": "t근"
+    },
+    {
+     "fn": "x^2 + p*x + q",
+     "in": [1.5, 3],
+     "label": "t근"
     }
    ],
    "points": [
@@ -47,7 +103,7 @@
      "=subs"
     ]
    ],
-   "pointsLabel": "$(x,f(x))=(a,f(a)),\\ (t,g(t))=(a^2,g(a^2))$"
+   "pointsLabel": "$(x,f(x))$, $(t,g(t))$"
   },
   "readout": [
    {
@@ -64,22 +120,55 @@
     "label": "g(t)",
     "expr": "subs",
     "digits": 4
+   },
+   {
+    "label": "판별식 D = p²−4q",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "t₁",
+    "expr": "t1",
+    "digits": 3
+   },
+   {
+    "label": "t₂",
+    "expr": "t2",
+    "digits": 3
+   },
+   {
+    "label": "x의 실근 개수",
+    "expr": "nx",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": -1
-   },
-   {
-    "a": 0
-   },
-   {
+    "p": -3,
+    "q": 2,
     "a": 1
    },
    {
-    "a": 2
+    "p": -3,
+    "q": 2,
+    "a": 0
+   },
+   {
+    "p": 2,
+    "q": 1,
+    "a": 1
+   },
+   {
+    "p": -1,
+    "q": -2,
+    "a": 1.5
+   },
+   {
+    "p": 0,
+    "q": -4,
+    "a": -2
    }
   ],
   "invariants": [
@@ -88,26 +177,64 @@
   "oracle": [
    {
     "params": {
-     "a": 0
-    },
-    "expect": {
-     "t": 0,
-     "orig": 2,
-     "subs": 2
-    }
-   },
-   {
-    "params": {
+     "p": -3,
+     "q": 2,
      "a": 1
     },
     "expect": {
      "t": 1,
      "orig": 0,
-     "subs": 0
+     "subs": 0,
+     "D": 1,
+     "t1": 1,
+     "t2": 2,
+     "nx": 4
     }
    },
    {
     "params": {
+     "p": -3,
+     "q": 2,
+     "a": 0
+    },
+    "expect": {
+     "t": 0,
+     "orig": 2,
+     "subs": 2,
+     "D": 1,
+     "nx": 4
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "q": 1,
+     "a": 1
+    },
+    "expect": {
+     "D": 0,
+     "t1": -1,
+     "t2": -1,
+     "nx": 0
+    }
+   },
+   {
+    "params": {
+     "p": -1,
+     "q": -2,
+     "a": 1
+    },
+    "expect": {
+     "D": 9,
+     "t1": -1,
+     "t2": 2,
+     "nx": 2
+    }
+   },
+   {
+    "params": {
+     "p": -3,
+     "q": 2,
      "a": 2
     },
     "expect": {

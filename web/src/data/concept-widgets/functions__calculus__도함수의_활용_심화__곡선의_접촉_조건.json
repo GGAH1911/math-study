@@ -1,117 +1,279 @@
 {
  "id": "functions/calculus/도함수의_활용_심화/곡선의_접촉_조건",
  "spec": {
-  "title": "곡선의 접촉 조건 — 3차곡선 y=x³과 접선",
+  "title": "곡선의 접촉 조건 — 두 조건을 껐다 켜며 만남과 접함을 가른다",
   "params": [
    {
     "name": "a",
-    "label": "접점 x좌표 a",
+    "label": "접점 후보 a",
     "type": "slider",
-    "min": -1,
-    "max": 1,
+    "min": -1.5,
+    "max": 1.5,
     "init": 0.5,
     "step": 0.05
+   },
+   {
+    "name": "p",
+    "label": "곡선 모양 p ($f(x)=x^3+px$)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "dk",
+    "label": "높이 어긋남 Δk = g(a) − f(a)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "dm",
+    "label": "기울기 어긋남 Δm = g'(a) − f'(a)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "g의 휘어짐 q (0이면 직선)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
    }
   ],
-  "scope": "fa = a^3; dfa = 3*a^2; ga = dfa*(a-a) + fa; cx3 = -2*a; y3 = cx3^3; gx3 = dfa*(cx3 - a) + fa",
+  "scope": "fa = a^3 + p*a; dfa = 3*a^2 + p; d2fa = 6*a; ga = fa + dk; dga = dfa + dm; qc = 3*a; gap0 = fa - ga; gap1 = dfa - dga; ordn = abs(gap0) > 0.001 ? -1 : (abs(gap1) > 0.001 ? 0 : (abs(q - qc) < 0.001 ? 2 : 1))",
   "plot": {
    "range": [
-    -2,
-    2
+    -2.5,
+    2.5
    ],
    "yRange": [
-    -6,
-    6
+    -8,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3",
-     "label": "y=f(x)=x³",
+     "fn": "x^3 + p*x",
+     "label": "$y=f(x)=x^3+px$",
      "color": "#2563eb"
     },
     {
-     "fn": "dfa*(x - a) + fa",
-     "label": "접선 y=g(x)",
+     "fn": "q*(x - a)^2 + dga*(x - a) + ga",
+     "label": "$y=g(x)$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "(x^3 + p*x) - (q*(x - a)^2 + dga*(x - a) + ga)",
+     "label": "$y=f(x)-g(x)$ (차 함수)",
+     "color": "#6b7280",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "(x^3 + p*x) - (q*(x - a)^2 + dga*(x - a) + ga)",
+     "in": [
+      -2.5,
+      -0.8
+     ],
+     "label": "$f(x)=g(x)$ 인 점"
+    },
+    {
+     "fn": "(x^3 + p*x) - (q*(x - a)^2 + dga*(x - a) + ga)",
+     "in": [
+      -0.8,
+      0.8
+     ],
+     "label": "$f(x)=g(x)$ 인 점"
+    },
+    {
+     "fn": "(x^3 + p*x) - (q*(x - a)^2 + dga*(x - a) + ga)",
+     "in": [
+      0.8,
+      2.5
+     ],
+     "label": "$f(x)=g(x)$ 인 점"
+    }
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=a",
+     "=ga"
+    ]
+   ],
+   "pointsLabel": "곡선 위의 점 $(a,f(a))$ 와 $g$ 위의 점 $(a,g(a))$"
   },
   "readout": [
    {
-    "label": "f(a)",
-    "expr": "fa",
-    "digits": 4
+    "label": "f(a) − g(a) (0이어야 만난다)",
+    "expr": "gap0",
+    "digits": 3
    },
    {
-    "label": "g(a)",
-    "expr": "ga",
-    "digits": 4
+    "label": "f'(a) − g'(a) (0이어야 접한다)",
+    "expr": "gap1",
+    "digits": 3
    },
    {
-    "label": "f'(a)=접선 기울기",
+    "label": "접촉 차수 (−1 안 지남 · 0 교차만 · 1 접함 · 2 이차접촉)",
+    "expr": "ordn",
+    "digits": 0
+   },
+   {
+    "label": "접선 기울기 f'(a)",
     "expr": "dfa",
-    "digits": 4
+    "digits": 3
    },
    {
-    "label": "또 다른 교점 x",
-    "expr": "cx3",
-    "digits": 4
+    "label": "이차접촉이 되는 q 값 = f''(a)/2",
+    "expr": "qc",
+    "digits": 3
+   },
+   {
+    "label": "f''(a)",
+    "expr": "d2fa",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 0.5
+    "a": 0.5,
+    "p": 0,
+    "dk": 0,
+    "dm": 0,
+    "q": 0
    },
    {
-    "a": -0.5
+    "a": 0.5,
+    "p": 0,
+    "dk": 0,
+    "dm": 1.5,
+    "q": 0
    },
    {
-    "a": 1
+    "a": 0.5,
+    "p": 0,
+    "dk": 0.8,
+    "dm": 0,
+    "q": 0
    },
    {
-    "a": -0.8
+    "a": 0,
+    "p": 0,
+    "dk": 0,
+    "dm": 0,
+    "q": 0
+   },
+   {
+    "a": 0.5,
+    "p": -2,
+    "dk": 0,
+    "dm": 0,
+    "q": 1.5
    }
   ],
   "invariants": [
-   "a^3 - ga",
-   "3*a^2 - dfa",
-   "y3 - gx3",
-   "fa - ga"
+   "fa - (a^3 + p*a)",
+   "dfa - (3*a^2 + p)",
+   "ga - (fa + dk)",
+   "dga - (dfa + dm)",
+   "qc - 3*a",
+   "gap0 + dk",
+   "gap1 + dm"
   ],
   "oracle": [
    {
     "params": {
-     "a": 0.5
+     "a": 0.5,
+     "p": 0,
+     "dk": 0,
+     "dm": 0,
+     "q": 0
     },
     "expect": {
      "fa": 0.125,
      "dfa": 0.75,
-     "cx3": -1,
-     "y3": -1
+     "ga": 0.125,
+     "dga": 0.75,
+     "gap0": 0,
+     "gap1": 0,
+     "qc": 1.5,
+     "ordn": 1
     }
    },
    {
     "params": {
-     "a": 1
+     "a": 0.5,
+     "p": 0,
+     "dk": 0,
+     "dm": 1.5,
+     "q": 0
     },
     "expect": {
-     "fa": 1,
-     "dfa": 3,
-     "cx3": -2,
-     "y3": -8
+     "dga": 2.25,
+     "gap1": -1.5,
+     "ordn": 0
     }
    },
    {
     "params": {
-     "a": -0.5
+     "a": 0.5,
+     "p": 0,
+     "dk": 0.8,
+     "dm": 0,
+     "q": 0
     },
     "expect": {
-     "fa": -0.125,
-     "dfa": 0.75,
-     "cx3": 1,
-     "y3": 1
+     "ga": 0.925,
+     "gap0": -0.8,
+     "ordn": -1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "p": 0,
+     "dk": 0,
+     "dm": 0,
+     "q": 0
+    },
+    "expect": {
+     "fa": 0,
+     "dfa": 0,
+     "qc": 0,
+     "ordn": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "p": -2,
+     "dk": 0,
+     "dm": 0,
+     "q": 1.5
+    },
+    "expect": {
+     "fa": -0.875,
+     "dfa": -1.25,
+     "d2fa": 3,
+     "qc": 1.5,
+     "ordn": 2
     }
    }
   ],

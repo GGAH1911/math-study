@@ -125,6 +125,14 @@ export default function Interactive({
         points: spec.plot.points
           ? (resolveValue(spec.plot.points, scope) as PlotSpec['points'])
           : spec.plot.points,
+        // roots/intersections 의 `in:[lo,hi]` 도 '=식' 을 쓸 수 있다(극값 x좌표로
+        // 구간을 쪼개는 패턴). fn 문자열 자체는 `=`로 시작하지 않으니 그대로 통과.
+        roots: spec.plot.roots
+          ? (resolveValue(spec.plot.roots, scope) as PlotSpec['roots'])
+          : spec.plot.roots,
+        intersections: spec.plot.intersections
+          ? (resolveValue(spec.plot.intersections, scope) as PlotSpec['intersections'])
+          : spec.plot.intersections,
       };
     }
     const readouts = (spec.readout ?? []).map((r) => {

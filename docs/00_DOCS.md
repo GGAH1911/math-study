@@ -13,7 +13,7 @@ updated: 2026-06-28
 - 📁 [[00_ARCHITECTURE|architecture/]]
 - 📁 [[00_AUDITS|audits/]]
 - 📁 [[00_HANDOVER|handover/]]
-- 📁 [[00_OPS|ops/]]
+- 📁 [[00_DOCS_OPS|ops/]]
 - 📁 [[00_REPORT|report/]]
 - 📁 [[00_TOOLS|tools/]]
 - `TODO.md` — 등록 자산

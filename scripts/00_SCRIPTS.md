@@ -11,6 +11,7 @@ updated: 2026-06-28
 
 <!-- AUTO_INDEX_SECTION -->
 - 📁 [[00_INGEST_KICE|ingest_kice/]]
+- 📁 [[00_SCRIPTS_OPS|ops/]]
 - `ab_concept_mapping.py` — 등록 자산
 - `ab_path_leak.py` — 등록 자산
 - `audit_searchable_ocr.py` — 등록 자산

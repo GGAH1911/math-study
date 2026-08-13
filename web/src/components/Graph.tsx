@@ -273,23 +273,29 @@ function bisectRoot(expr: string, a0: number, b0: number,
 function solvePlotPoints(spec: PlotSpec,
                          evalFn: ((e: string, s: object) => number) | null): Array<[number, number]> {
   if (!evalFn) return [];
+  // ★슬라이더/scope 변수(aa,b,c,d 등)를 평가 scope 에 주입 — 안 하면 bisectRoot 의
+  // evalFn({x}) 가 파라미터를 "Undefined symbol" 로 throw→null 반환해 근 점이
+  // 조용히 안 찍힌다. Interactive.tsx 가 이미 모든 fns[] 항목에 liveScope 를
+  // 주입해 두므로 첫 fn 의 scope 를 그대로 재사용한다.
+  const sc = spec.fns?.[0]?.scope ?? {};
+  const wrap = (e: string, s: object): number => evalFn(e, { ...sc, ...s });
   const out: Array<[number, number]> = [];
   for (const it of spec.intersections ?? []) {
     const f = normExpr(it.f), g = normExpr(it.g);
-    const x = bisectRoot(`(${f})-(${g})`, it.in[0], it.in[1], evalFn);
+    const x = bisectRoot(`(${f})-(${g})`, it.in[0], it.in[1], wrap);
     if (x == null) continue;
     let fy = NaN, gy = NaN;
-    try { const a = evalFn(f, { x }); if (typeof a === 'number') fy = a; } catch { /* */ }
-    try { const b = evalFn(g, { x }); if (typeof b === 'number') gy = b; } catch { /* */ }
+    try { const a = wrap(f, { x }); if (typeof a === 'number') fy = a; } catch { /* */ }
+    try { const b = wrap(g, { x }); if (typeof b === 'number') gy = b; } catch { /* */ }
     if (Number.isFinite(x) && Number.isFinite(fy) && Number.isFinite(gy)
         && Math.abs(fy - gy) < 1e-3 * (1 + Math.abs(fy))) out.push([x, fy]);
   }
   for (const it of spec.roots ?? []) {
     const fn = normExpr(it.fn);
-    const x = bisectRoot(fn, it.in[0], it.in[1], evalFn);
+    const x = bisectRoot(fn, it.in[0], it.in[1], wrap);
     if (x == null) continue;
     let y = NaN;
-    try { const v = evalFn(fn, { x }); if (typeof v === 'number') y = v; } catch { /* */ }
+    try { const v = wrap(fn, { x }); if (typeof v === 'number') y = v; } catch { /* */ }
     if (Number.isFinite(x) && Number.isFinite(y) && Math.abs(y) < 1e-3) out.push([x, 0]);
   }
   return out;

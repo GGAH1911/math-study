@@ -4,8 +4,38 @@
   "title": "방정식의 근의 개수 (삼차함수)",
   "params": [
    {
-    "name": "k",
-    "label": "상수항 k",
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
     "type": "slider",
     "min": -4,
     "max": 4,
@@ -14,102 +44,234 @@
     "unit": ""
    }
   ],
-  "scope": "delta=27*(4 - k^2); ymax=k+2; ymin=k-2; prod=ymax*ymin; cnt=(prod<0 ? 3 : (prod>0 ? 1 : 2));",
-  "geometry": {
+  "scope": "aa = (abs(a) < 0.05 ? 0.1 : a); disc = b^2 - 3*aa*c; xr = (disc > 0 ? sqrt(disc) : 0); xp = (-b - xr)/(3*aa); xq = (-b + xr)/(3*aa); xL = min(xp, xq); xR = max(xp, xq); fL = aa*xL^3 + b*xL^2 + c*xL + d; fR = aa*xR^3 + b*xR^2 + c*xR + d; ymax = (aa > 0 ? fL : fR); ymin = (aa > 0 ? fR : fL); prod = fL*fR; cnt = (disc <= 0 ? 1 : (prod < 0 ? 3 : (prod > 0 ? 1 : 2)));",
+  "plot": {
    "range": [
-    -3,
-    3
+    -4,
+    4
    ],
    "yRange": [
-    -6,
-    6
+    -8,
+    8
    ],
    "showAxes": true,
    "showGrid": true,
-   "shapes": []
-  },
-  "plot": {
-   "range": [
-    -3,
-    3
-   ],
-   "yRange": [
-    -6,
-    6
-   ],
    "fns": [
     {
-     "fn": "x^3 - 3*x + k",
-     "label": "f(x)",
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "label": "$y=ax^3+bx^2+cx+d$",
      "color": "#2196F3"
+    },
+    {
+     "fn": "ymax",
+     "label": "$극댓값$",
+     "color": "#f59e0b",
+     "dashed": true
+    },
+    {
+     "fn": "ymin",
+     "label": "$극솟값$",
+     "color": "#10b981",
+     "dashed": true
+    }
+   ],
+   "points": [
+    [
+     "=xL",
+     "=fL"
+    ],
+    [
+     "=xR",
+     "=fR"
+    ]
+   ],
+   "pointsLabel": "$극값$",
+   "roots": [
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "in": [
+      "=-20",
+      "=xL"
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "in": [
+      "=xL",
+      "=xR"
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "in": [
+      "=xR",
+      "=20"
+     ],
+     "label": "근"
     }
    ]
   },
   "readout": [
    {
     "label": "실근의 개수",
-    "expr": "cnt"
+    "expr": "cnt",
+    "digits": 0
    },
    {
-    "label": "판별식",
-    "expr": "delta"
+    "label": "극값 판별식 b²−3ac",
+    "expr": "disc",
+    "digits": 2
    },
    {
     "label": "극댓값",
-    "expr": "ymax"
+    "expr": "ymax",
+    "digits": 2
    },
    {
     "label": "극솟값",
-    "expr": "ymin"
+    "expr": "ymin",
+    "digits": 2
+   },
+   {
+    "label": "극댓값 × 극솟값",
+    "expr": "prod",
+    "digits": 2
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "k": -3
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "k": -2
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 2
    },
    {
-    "k": 0
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 3
    },
    {
-    "k": 2
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0
    },
    {
-    "k": 3
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "d": 0
    }
   ],
   "invariants": [
-   "delta + 27*prod",
-   "cnt - (delta>0 ? 3 : (delta<0 ? 1 : 2))",
-   "cnt - (prod<0 ? 3 : (prod>0 ? 1 : 2))"
+   "prod - fL*fR",
+   "cnt - (disc <= 0 ? 1 : (prod < 0 ? 3 : (prod > 0 ? 1 : 2)))",
+   "(disc > 0 ? 3*aa*xL^2 + 2*b*xL + c : 0)",
+   "(disc > 0 ? 3*aa*xR^2 + 2*b*xR + c : 0)",
+   "ymax - (aa > 0 ? fL : fR)",
+   "xR - xL - (disc > 0 ? 2*sqrt(disc)/abs(3*aa) : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "k": -3
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
     },
     "expect": {
-     "cnt": 1
+     "cnt": 3,
+     "disc": 9,
+     "ymax": 2,
+     "ymin": -2,
+     "prod": -4
     }
    },
    {
     "params": {
-     "k": -2
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 2
     },
     "expect": {
-     "cnt": 2
+     "cnt": 2,
+     "ymax": 4,
+     "ymin": 0,
+     "prod": 0
     }
    },
    {
     "params": {
-     "k": 0
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 3
     },
     "expect": {
-     "cnt": 3
+     "cnt": 1,
+     "ymax": 5,
+     "ymin": 1,
+     "prod": 5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "cnt": 1,
+     "disc": -9
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "cnt": 3,
+     "ymax": 2,
+     "ymin": -2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "aa": 0.1
     }
    }
   ],

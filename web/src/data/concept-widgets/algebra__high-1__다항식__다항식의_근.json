@@ -68,22 +68,22 @@
      "fn": "a*x^3 + b*x^2 + c*x + d",
      "in": [
       -6,
-      -2
+      "=min(xe1,xe2)"
      ],
      "label": "근"
     },
     {
      "fn": "a*x^3 + b*x^2 + c*x + d",
      "in": [
-      -2,
-      2
+      "=min(xe1,xe2)",
+      "=max(xe1,xe2)"
      ],
      "label": "근"
     },
     {
      "fn": "a*x^3 + b*x^2 + c*x + d",
      "in": [
-      2,
+      "=max(xe1,xe2)",
       6
      ],
      "label": "근"

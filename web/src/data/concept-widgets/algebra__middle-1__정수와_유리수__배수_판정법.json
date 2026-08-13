@@ -4,16 +4,61 @@
   "title": "배수 판정법 탐구",
   "params": [
    {
-    "name": "n",
-    "label": "N",
+    "name": "d3",
+    "label": "천의 자리",
     "type": "slider",
     "min": 0,
-    "max": 9999,
-    "init": 1234,
+    "max": 9,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "d2",
+    "label": "백의 자리",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "d1",
+    "label": "십의 자리",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "d0",
+    "label": "일의 자리",
+    "type": "slider",
+    "min": 0,
+    "max": 9,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "나눗수 d",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 9,
+    "step": 1
+   },
+   {
+    "name": "rule",
+    "label": "판정식 (1=일의 자리 · 2=자리합 · 3=교대합)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 2,
     "step": 1
    }
   ],
-  "scope": "ones=mod(n,10); tens=mod(floor(n/10),10); hundreds=mod(floor(n/100),10); thousands=mod(floor(n/1000),10); sumD=ones+tens+hundreds+thousands; altSum=ones-tens+hundreds-thousands; r9=mod(n,9); r9sum=mod(sumD,9); r11=mod(n,11); r11alt=mod(altSum,11); div2=mod(ones,2)==0?1:0; div5=(ones==0 or ones==5)?1:0; div3=mod(sumD,3)==0?1:0; div9=mod(sumD,9)==0?1:0; div11=mod(altSum,11)==0?1:0",
+  "scope": "ones=d0; tens=d1; hundreds=d2; thousands=d3; n=1000*d3+100*d2+10*d1+d0; sumD=d0+d1+d2+d3; altSum=d0-d1+d2-d3; dd=(d<2)?2:d; test=(rule==1)?ones:((rule==2)?sumD:altSum); rN=mod(n,dd); rTest=mod(test,dd); works=(rN==rTest)?1:0; isMulN=(rN==0)?1:0; isMulT=(rTest==0)?1:0; p0=mod(1,dd); p1=mod(10,dd); p2=mod(100,dd); p3=mod(1000,dd)",
   "geometry": {
    "range": [
     -2.5,
@@ -29,7 +74,7 @@
     {
      "type": "circle",
      "center": [
-      -1.2,
+      -1.4,
       0
      ],
      "radius": 1
@@ -37,26 +82,26 @@
     {
      "type": "point",
      "at": [
-      "=-1.2+cos(2*pi*r9/9-pi/2)",
-      "=sin(2*pi*r9/9-pi/2)"
+      "=-1.4+cos(2*pi*rN/dd-pi/2)",
+      "=sin(2*pi*rN/dd-pi/2)"
      ],
-     "label": "mod 9"
+     "label": "$N \\bmod d$"
     },
     {
      "type": "segment",
      "from": [
-      -1.2,
+      -1.4,
       0
      ],
      "to": [
-      "=-1.2+cos(2*pi*r9/9-pi/2)",
-      "=sin(2*pi*r9/9-pi/2)"
+      "=-1.4+cos(2*pi*rN/dd-pi/2)",
+      "=sin(2*pi*rN/dd-pi/2)"
      ]
     },
     {
      "type": "circle",
      "center": [
-      1.2,
+      1.4,
       0
      ],
      "radius": 1
@@ -64,21 +109,37 @@
     {
      "type": "point",
      "at": [
-      "=1.2+cos(2*pi*r11/11-pi/2)",
-      "=sin(2*pi*r11/11-pi/2)"
+      "=1.4+cos(2*pi*rTest/dd-pi/2)",
+      "=sin(2*pi*rTest/dd-pi/2)"
      ],
-     "label": "mod 11"
+     "label": "$($판정식$) \\bmod d$"
     },
     {
      "type": "segment",
      "from": [
-      1.2,
+      1.4,
       0
      ],
      "to": [
-      "=1.2+cos(2*pi*r11/11-pi/2)",
-      "=sin(2*pi*r11/11-pi/2)"
+      "=1.4+cos(2*pi*rTest/dd-pi/2)",
+      "=sin(2*pi*rTest/dd-pi/2)"
      ]
+    },
+    {
+     "type": "text",
+     "at": [
+      -1.4,
+      -1.3
+     ],
+     "text": "N"
+    },
+    {
+     "type": "text",
+     "at": [
+      1.4,
+      -1.3
+     ],
+     "text": "판정식"
     }
    ]
   },
@@ -87,6 +148,16 @@
    {
     "label": "N",
     "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "나눗수 d",
+    "expr": "dd",
+    "digits": 0
+   },
+   {
+    "label": "판정식 값",
+    "expr": "test",
     "digits": 0
    },
    {
@@ -100,48 +171,38 @@
     "digits": 0
    },
    {
-    "label": "2의 배수",
-    "expr": "div2",
+    "label": "N mod d",
+    "expr": "rN",
     "digits": 0
    },
    {
-    "label": "3의 배수",
-    "expr": "div3",
+    "label": "판정식 mod d",
+    "expr": "rTest",
     "digits": 0
    },
    {
-    "label": "5의 배수",
-    "expr": "div5",
+    "label": "두 나머지 일치",
+    "expr": "works",
     "digits": 0
    },
    {
-    "label": "9의 배수",
-    "expr": "div9",
+    "label": "N은 d의 배수",
+    "expr": "isMulN",
     "digits": 0
    },
    {
-    "label": "11의 배수",
-    "expr": "div11",
+    "label": "10 mod d",
+    "expr": "p1",
     "digits": 0
    },
    {
-    "label": "N mod 9",
-    "expr": "r9",
+    "label": "100 mod d",
+    "expr": "p2",
     "digits": 0
    },
    {
-    "label": "자리합 mod 9",
-    "expr": "r9sum",
-    "digits": 0
-   },
-   {
-    "label": "N mod 11",
-    "expr": "r11",
-    "digits": 0
-   },
-   {
-    "label": "교대합 mod 11",
-    "expr": "r11alt",
+    "label": "1000 mod d",
+    "expr": "p3",
     "digits": 0
    }
   ]
@@ -149,16 +210,40 @@
  "recipe": {
   "samples": [
    {
-    "n": 1234
+    "d3": 1,
+    "d2": 2,
+    "d1": 3,
+    "d0": 4,
+    "d": 9,
+    "rule": 2
    },
    {
-    "n": 567
+    "d3": 0,
+    "d2": 5,
+    "d1": 6,
+    "d0": 7,
+    "d": 7,
+    "rule": 2
    },
    {
-    "n": 99
+    "d3": 0,
+    "d2": 0,
+    "d1": 9,
+    "d0": 9,
+    "d": 11,
+    "rule": 3
+   },
+   {
+    "d3": 1,
+    "d2": 2,
+    "d1": 3,
+    "d0": 4,
+    "d": 2,
+    "rule": 1
    }
   ],
   "invariants": [
+   "n-(1000*d3+100*d2+10*d1+d0)",
    "mod(n,2)-mod(ones,2)",
    "mod(n,5)-mod(ones,5)",
    "mod(n,3)-mod(sumD,3)",
@@ -168,56 +253,85 @@
   "oracle": [
    {
     "params": {
-     "n": 1234
+     "d3": 1,
+     "d2": 2,
+     "d1": 3,
+     "d0": 4,
+     "d": 9,
+     "rule": 2
     },
     "expect": {
+     "n": 1234,
      "sumD": 10,
      "altSum": 2,
-     "r9": 1,
-     "r9sum": 1,
-     "r11": 2,
-     "r11alt": 2,
-     "div2": 1,
-     "div3": 0,
-     "div5": 0,
-     "div9": 0,
-     "div11": 0
+     "rN": 1,
+     "rTest": 1,
+     "works": 1,
+     "isMulN": 0,
+     "p1": 1,
+     "p2": 1,
+     "p3": 1
     }
    },
    {
     "params": {
-     "n": 567
+     "d3": 0,
+     "d2": 5,
+     "d1": 6,
+     "d0": 7,
+     "d": 7,
+     "rule": 2
     },
     "expect": {
+     "n": 567,
      "sumD": 18,
-     "altSum": 6,
-     "r9": 0,
-     "r9sum": 0,
-     "r11": 6,
-     "r11alt": 6,
-     "div2": 0,
-     "div3": 1,
-     "div5": 0,
-     "div9": 1,
-     "div11": 0
+     "rN": 0,
+     "rTest": 4,
+     "works": 0,
+     "isMulN": 1,
+     "p1": 3,
+     "p2": 2,
+     "p3": 6
     }
    },
    {
     "params": {
-     "n": 99
+     "d3": 0,
+     "d2": 0,
+     "d1": 9,
+     "d0": 9,
+     "d": 11,
+     "rule": 3
     },
     "expect": {
-     "sumD": 18,
+     "n": 99,
      "altSum": 0,
-     "r9": 0,
-     "r9sum": 0,
-     "r11": 0,
-     "r11alt": 0,
-     "div2": 0,
-     "div3": 1,
-     "div5": 0,
-     "div9": 1,
-     "div11": 1
+     "rN": 0,
+     "rTest": 0,
+     "works": 1,
+     "isMulN": 1,
+     "p1": 10,
+     "p2": 1,
+     "p3": 10
+    }
+   },
+   {
+    "params": {
+     "d3": 1,
+     "d2": 2,
+     "d1": 3,
+     "d0": 4,
+     "d": 2,
+     "rule": 1
+    },
+    "expect": {
+     "test": 4,
+     "rN": 0,
+     "rTest": 0,
+     "works": 1,
+     "p1": 0,
+     "p2": 0,
+     "p3": 0
     }
    }
   ],
