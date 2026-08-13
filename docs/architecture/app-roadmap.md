@@ -213,7 +213,37 @@ Phase 2~7 은 그대로 진행 가능하고, **주소가 공개되는 건 Phase 
 
       ⚠️ 로그 개시(2026-08-13) **이전** 이력은 복원 대상이 아니다. 그때는 이벤트를 남기지 않았다.
       검증기는 이걸 "불일치(로그 개시 이전)" 로 따로 세어 진짜 결함이 묻히지 않게 한다.
-- [ ] `problem_attempts` 를 정본으로, mastery·problem_state 는 재계산
+- [x] **`problem_attempts` 를 정본으로, mastery·problem_state 는 재계산** ✅ 2026-08-13
+      (`web/src/lib/recompute.ts` · `web/scripts/recompute_derived.mjs`)
+
+      정본 = `problem_attempts`(무슨 일이 있었나) + `learning_events`(무엇을 의도했나).
+      파생 상태는 언제든 버리고 다시 만들 수 있다 — 그게 오프라인 두 기기를 합칠 수 있는 유일한
+      방법이다(**상태**를 합치면 어느 쪽이 이겨야 할지 알 수 없다).
+
+      **실물 증명 — Phase 4 통과 조건의 후반부를 그대로 실행:**
+      ```
+      시도(정답) → mark-mastered → skip     ⇒ solved/mature/2026-08-20/1
+      problem_state 전삭제(재해 모사)        ⇒ 0행
+      recompute --apply                      ⇒ solved/mature/2026-08-20/1  (완전 복원)
+
+      개념 승급(proficient + 근거 1건)       ⇒ evidence 기록
+      concept_mastery 삭제                   ⇒ 없음
+      recompute --apply                      ⇒ mastery·evidence 문자열까지 동일
+      ```
+      재현: `docker compose -f deploy/docker-compose.yml exec -T web node --experimental-strip-types
+      --import ./scripts/ts-resolve-hook.mjs scripts/recompute_derived.mjs` (기본 dry-run)
+
+      ★**적용은 이벤트 로그로 이력이 온전히 덮이는 대상에만** 한다. 로그 개시(2026-08-13) 이전
+      이력을 가진 행을 덮어쓰면 그 시절의 mark-mastered·숙련도가 조용히 사라진다.
+      억지로 하려면 `--include-legacy` 를 명시해야 한다.
+
+      ★재생 규칙은 `recompute.ts` **한 곳**에만 둔다. 검증기(`verify_event_replay.mjs`)도 같은
+      모듈을 import 한다 — 규칙이 두 벌이면 반드시 갈라진다.
+
+      ⚠️ **사고 하나와 그 교훈**: 재해 모사로 `problem_state` 를 전삭제했는데 **먼저 백업하지
+      않았다.** 로그 이전 2행은 재계산 대상이 아니라 그대로 유실될 뻔했고,
+      **오늘 아침 넣은 N1 야간 백업(`mathstudy_20260813_1744.dump`)으로 복구**했다.
+      → 파괴적 검증은 **반드시 대상 테이블을 먼저 덤프**하고 시작한다. N1 의 값어치가 반나절 만에 증명됐다
 - [ ] 필기 문서 **v2 → v3** — 레이어 tombstone 포함 구조
       `{v:3, layers:[{id,name,visible,deleted?}], strokes:{layerId:[{id,...}]}, deletedStrokes:[id]}`
 - [ ] InkCanvas 의 **인덱스 기반 undo/선택/mutate 를 id 기반으로 전환** + v2 마이그레이션

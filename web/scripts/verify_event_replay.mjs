@@ -10,7 +10,7 @@
 // 실행: docker compose -f deploy/docker-compose.yml exec -T web \
 //         node --experimental-strip-types --import ./scripts/ts-resolve-hook.mjs scripts/verify_event_replay.mjs
 import sql from '../src/lib/db.ts';
-import { nextSrsState } from '../src/lib/srs.ts';
+import { replayProblemStates, isCovered, key } from '../src/lib/recompute.ts';
 
 const events = await sql`
   SELECT user_id, kind, payload->>'problemId' AS problem_id, payload, occurred_at, seq
@@ -26,45 +26,20 @@ const [{ started }] = await sql`SELECT min(recorded_at) AS started FROM learning
 const legacyBefore = started ? +new Date(started) : Infinity;
 const firstTouch = new Map();
 for (const a of attempts) {
-  const k = `${a.user_id}|${a.problem_id}`;
+  const k = key(a.user_id, a.problem_id);
   if (!firstTouch.has(k)) firstTouch.set(k, +new Date(a.attempted_at));
 }
 
-// 시도와 이벤트를 하나의 시간축으로 — 오프라인 기기가 늦게 합류해도 순서는 occurred_at 이 정한다.
-const timeline = [
-  ...attempts.map((a) => ({ t: +new Date(a.attempted_at), kind: 'attempt', ...a })),
-  ...events.map((e) => ({ t: +new Date(e.occurred_at), ...e })),
-].sort((x, y) => x.t - y.t || (Number(x.seq ?? 0) - Number(y.seq ?? 0)));
-
-const key = (r) => `${r.user_id}|${r.problem_id}`;
-const replayed = new Map();
-for (const ev of timeline) {
-  if (!ev.problem_id) continue;
-  const k = key(ev);
-  if (ev.kind === 'problem.reset') { replayed.delete(k); continue; }
-  const cur = replayed.get(k) ?? { status: 'unsolved', review_state: 'new', next_review: null, attempt_count: 0 };
-  if (ev.kind === 'problem.mark_mastered') {
-    replayed.set(k, { ...cur, status: 'solved', review_state: 'mature', next_review: ev.payload.nextReview, attempt_count: Math.max(1, cur.attempt_count) });
-  } else if (ev.kind === 'problem.skip') {
-    // skip 은 next_review 만 민다(신규면 행을 만든다) — API 의 ON CONFLICT 와 같은 규칙.
-    replayed.set(k, replayed.has(k) ? { ...cur, next_review: ev.payload.nextReview }
-                                    : { status: 'review', review_state: 'new', next_review: ev.payload.nextReview, attempt_count: 0 });
-  } else if (ev.kind === 'attempt') {
-    // ★재생은 **그 시도가 있었던 시각** 기준 — 그래서 nextSrsState 에 at 을 넘긴다.
-    const tr = nextSrsState({ review_state: cur.review_state, attempt_count: cur.attempt_count }, ev.is_correct === true, new Date(ev.attempted_at));
-    replayed.set(k, { status: tr.status, review_state: tr.reviewState, next_review: tr.nextReview, attempt_count: cur.attempt_count + 1 });
-  }
-}
-
+const replayed = replayProblemStates(attempts, events);
 let same = 0; const diffs = [];
 const seen = new Set();
 for (const a of actual) {
-  const k = key(a); seen.add(k);
+  const k = key(a.user_id, a.problem_id); seen.add(k);
   const r = replayed.get(k);
   const norm = (v) => (v == null ? null : (v instanceof Date ? v.toISOString().slice(0, 10) : String(v).slice(0, 10)));
   if (r && r.status === a.status && r.review_state === a.review_state
       && norm(r.next_review) === norm(a.next_review) && r.attempt_count === a.attempt_count) same++;
-  else diffs.push({ k, legacy: (firstTouch.get(k) ?? Infinity) < legacyBefore, actual: { s: a.status, r: a.review_state, n: norm(a.next_review), c: a.attempt_count },
+  else diffs.push({ k, legacy: !isCovered(firstTouch.get(k), legacyBefore), actual: { s: a.status, r: a.review_state, n: norm(a.next_review), c: a.attempt_count },
                        replay: r ? { s: r.status, r: r.review_state, n: norm(r.next_review), c: r.attempt_count } : '(없음)' });
 }
 const extra = [...replayed.keys()].filter((k) => !seen.has(k));
