@@ -1,43 +1,103 @@
 {
  "id": "functions/math-1/지수함수와_로그함수/실근의_개수_분석",
  "spec": {
-  "title": "실근의 개수 분석: 2^x = x + k",
+  "title": "실근의 개수 분석: a^x = mx + k",
   "params": [
    {
-    "name": "k",
-    "label": "k (직선 y=x+k의 y절편)",
+    "name": "a",
+    "label": "a (지수함수의 밑 y=a^x)",
     "type": "slider",
-    "min": -1,
-    "max": 5,
+    "min": 1.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "m (직선의 기울기)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
     "init": 1,
     "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "k (직선의 y절편)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "snap",
+    "label": "접선에 맞추기 (0=자유, 1=k를 임계값 k*로 고정)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
    }
   ],
-  "scope": "ln2 = log(2); x0 = log2(1/ln2); kstar = pow(2,x0) - x0; hmin = kstar - k; nroots = hmin > 0 ? 0 : (hmin < 0 ? 2 : 1)",
+  "scope": "lna = log(a); x0 = log(m / lna) / lna; kstar = pow(a, x0) - m * x0; keff = snap > 0 ? kstar : k; hmin = kstar - keff; nroots = hmin < -1e-9 ? 2 : (hmin > 1e-9 ? 0 : 1); xa = min(max(x0, -6), 7)",
   "geometry": null,
   "plot": {
    "range": [
-    -5,
-    4
+    -6,
+    7
    ],
    "yRange": [
-    -1,
-    9
+    -8,
+    14
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "2^x",
-     "label": "y = 2^x",
+     "fn": "a^x",
+     "label": "$y=a^x$",
      "color": "#2563eb"
     },
     {
-     "fn": "x + k",
-     "label": "y = x + k",
+     "fn": "m*x + keff",
+     "label": "$y=mx+k$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "m*x + kstar",
+     "label": "$y=mx+k^{*}$ (접선)",
+     "color": "#16a34a",
+     "dashed": true
     }
-   ]
+   ],
+   "intersections": [
+    {
+     "f": "a^x",
+     "g": "m*x + keff",
+     "in": [
+      -6,
+      "=xa"
+     ],
+     "label": "실근"
+    },
+    {
+     "f": "a^x",
+     "g": "m*x + keff",
+     "in": [
+      "=xa",
+      7
+     ],
+     "label": "실근"
+    }
+   ],
+   "points": [
+    [
+     "=x0",
+     "=pow(a,x0)"
+    ]
+   ],
+   "pointsLabel": "접점 $(x^{*},\\ a^{x^{*}})$ · 빨간 점 = 두 그래프의 교점(실근)"
   },
   "readout": [
    {
@@ -46,13 +106,18 @@
     "digits": 0
    },
    {
-    "label": "최소간격 min(2^x-(x+k))",
-    "expr": "hmin",
+    "label": "극솟점 x* (a^x·ln a = m)",
+    "expr": "x0",
     "digits": 3
    },
    {
-    "label": "접선이 되는 임계값 k*",
+    "label": "접선의 y절편 k*(임계값)",
     "expr": "kstar",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 h(x*) = k* − k",
+    "expr": "hmin",
     "digits": 3
    }
   ]
@@ -60,40 +125,63 @@
  "recipe": {
   "samples": [
    {
-    "k": -1
+    "a": 2,
+    "m": 1,
+    "k": 1,
+    "snap": 0
    },
    {
-    "k": 0
+    "a": 2,
+    "m": 1,
+    "k": 0,
+    "snap": 0
    },
    {
-    "k": 1
+    "a": 2,
+    "m": 1,
+    "k": 1,
+    "snap": 1
    },
    {
-    "k": 3
+    "a": 2,
+    "m": 3,
+    "k": 0,
+    "snap": 0
+   },
+   {
+    "a": 3,
+    "m": 2,
+    "k": -1,
+    "snap": 0
+   },
+   {
+    "a": 1.5,
+    "m": 0.2,
+    "k": -6,
+    "snap": 0
+   },
+   {
+    "a": 3,
+    "m": 3,
+    "k": 6,
+    "snap": 0
    }
   ],
   "invariants": [
-   "pow(2,x0)*log(2) - 1",
-   "pow(2,x0) - x0 - kstar",
-   "hmin - (pow(2,x0) - x0 - k)"
+   "pow(a,x0)*lna - m",
+   "pow(a,x0) - m*x0 - kstar",
+   "(pow(a,x0) - (m*x0 + keff)) - hmin"
   ],
   "oracle": [
    {
     "params": {
-     "k": 0
+     "a": 2,
+     "m": 1,
+     "k": 1,
+     "snap": 0
     },
     "expect": {
      "x0": 0.5287664,
-     "kstar": 0.9139287,
-     "hmin": 0.9139287,
-     "nroots": 0
-    }
-   },
-   {
-    "params": {
-     "k": 1
-    },
-    "expect": {
      "kstar": 0.9139287,
      "hmin": -0.0860713,
      "nroots": 2
@@ -101,10 +189,67 @@
    },
    {
     "params": {
-     "k": 5
+     "a": 2,
+     "m": 1,
+     "k": 0,
+     "snap": 0
     },
     "expect": {
-     "hmin": -4.0860713,
+     "hmin": 0.9139287,
+     "nroots": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "m": 1,
+     "k": 1,
+     "snap": 1
+    },
+    "expect": {
+     "keff": 0.9139287,
+     "hmin": 0,
+     "nroots": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "m": 3,
+     "k": 0,
+     "snap": 0
+    },
+    "expect": {
+     "x0": 2.1137289,
+     "kstar": -2.0131015,
+     "hmin": -2.0131015,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "m": 2,
+     "k": -1,
+     "snap": 0
+    },
+    "expect": {
+     "x0": 0.5453237,
+     "kstar": 0.7298310,
+     "hmin": 1.7298310,
+     "nroots": 0
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "m": 3,
+     "k": 6,
+     "snap": 0
+    },
+    "expect": {
+     "kstar": -0.0124643,
+     "hmin": -6.0124643,
      "nroots": 2
     }
    }

@@ -4,78 +4,239 @@
   "title": "닮음비와 부피 비율 — 닮음비 m:n이면 부피비 m³:n³",
   "params": [
    {
-    "name": "k",
-    "label": "닮음비 (작은쪽=1 기준 배율)",
+    "name": "m",
+    "label": "닮음비 앞항 m (입체 A)",
     "type": "slider",
     "min": 1,
     "max": 4,
     "init": 2,
-    "step": 0.1,
-    "unit": "배"
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "닮음비 뒷항 n (입체 B)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 3,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "차원 d (1=길이 · 2=넓이 · 3=부피)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 3,
+    "step": 1
    }
   ],
-  "scope": "lr = k; sr = k^2; vr = k^3",
-  "geometry": null,
-  "plot": {
+  "scope": "mm = m < 1 ? 1 : m; nn = n < 1 ? 1 : n; r = nn / mm; lr = r; sr = r^2; vr = r^3; dr = r^d; mc = mm^3; nc = nn^3; sA = 1.2; sB = 1.2 * r; oA = 0.35 * sA; oB = 0.35 * sB; bx = 0.4 + sA * 1.35 + 1.0",
+  "geometry": {
    "range": [
     0,
-    4
+    11
    ],
    "yRange": [
     0,
-    64
+    7.5
    ],
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [
+      ["=0.4", "=0.4"],
+      ["=0.4+sA", "=0.4"],
+      ["=0.4+sA", "=0.4+sA"],
+      ["=0.4", "=0.4+sA"]
+     ],
+     "fill": "#2a9d8f",
+     "fillOpacity": 0.18,
+     "stroke": "#2a9d8f",
+     "closed": true
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      ["=0.4+oA", "=0.4+oA"],
+      ["=0.4+sA+oA", "=0.4+oA"],
+      ["=0.4+sA+oA", "=0.4+sA+oA"],
+      ["=0.4+oA", "=0.4+sA+oA"]
+     ],
+     "fillOpacity": 0,
+     "stroke": "#a8dad8",
+     "closed": true
+    },
+    {
+     "type": "segment",
+     "from": ["=0.4", "=0.4"],
+     "to": ["=0.4+oA", "=0.4+oA"],
+     "color": "#2a9d8f"
+    },
+    {
+     "type": "segment",
+     "from": ["=0.4+sA", "=0.4"],
+     "to": ["=0.4+sA+oA", "=0.4+oA"],
+     "color": "#2a9d8f"
+    },
+    {
+     "type": "segment",
+     "from": ["=0.4+sA", "=0.4+sA"],
+     "to": ["=0.4+sA+oA", "=0.4+sA+oA"],
+     "color": "#2a9d8f"
+    },
+    {
+     "type": "segment",
+     "from": ["=0.4", "=0.4+sA"],
+     "to": ["=0.4+oA", "=0.4+sA+oA"],
+     "color": "#2a9d8f"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      ["=bx", "=0.4"],
+      ["=bx+sB", "=0.4"],
+      ["=bx+sB", "=0.4+sB"],
+      ["=bx", "=0.4+sB"]
+     ],
+     "fill": "#e63946",
+     "fillOpacity": 0.18,
+     "stroke": "#e63946",
+     "closed": true
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      ["=bx+oB", "=0.4+oB"],
+      ["=bx+sB+oB", "=0.4+oB"],
+      ["=bx+sB+oB", "=0.4+sB+oB"],
+      ["=bx+oB", "=0.4+sB+oB"]
+     ],
+     "fillOpacity": 0,
+     "stroke": "#f1a3a9",
+     "closed": true
+    },
+    {
+     "type": "segment",
+     "from": ["=bx", "=0.4"],
+     "to": ["=bx+oB", "=0.4+oB"],
+     "color": "#e63946"
+    },
+    {
+     "type": "segment",
+     "from": ["=bx+sB", "=0.4"],
+     "to": ["=bx+sB+oB", "=0.4+oB"],
+     "color": "#e63946"
+    },
+    {
+     "type": "segment",
+     "from": ["=bx+sB", "=0.4+sB"],
+     "to": ["=bx+sB+oB", "=0.4+sB+oB"],
+     "color": "#e63946"
+    },
+    {
+     "type": "segment",
+     "from": ["=bx", "=0.4+sB"],
+     "to": ["=bx+oB", "=0.4+sB+oB"],
+     "color": "#e63946"
+    },
+    {
+     "type": "text",
+     "at": ["=0.4", "=0.1"],
+     "text": "입체 A (닮음비 항 m)",
+     "color": "#2a9d8f"
+    },
+    {
+     "type": "text",
+     "at": ["=bx", "=0.1"],
+     "text": "입체 B (닮음비 항 n)",
+     "color": "#e63946"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    0,
+    4.2
+   ],
+   "yRange": [
+    0,
+    66
+   ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
      "fn": "x",
-     "label": "길이 비 (x)",
+     "label": "$x$ — 길이 비 (1차원)",
      "color": "#888888"
     },
     {
      "fn": "x^2",
-     "label": "겉넓이 비 (x²)",
+     "label": "$x^2$ — 넓이 비 (2차원)",
      "color": "#2a9d8f"
     },
     {
      "fn": "x^3",
-     "label": "부피 비 (x³)",
+     "label": "$x^3$ — 부피 비 (3차원)",
      "color": "#e63946"
+    },
+    {
+     "fn": "x^d",
+     "label": "$x^{d}$ — 지금 고른 차원",
+     "color": "#1d3557",
+     "dashed": true
     }
    ],
    "points": [
     [
-     "=k",
-     "=k"
+     "=r",
+     "=r"
     ],
     [
-     "=k",
-     "=k^2"
+     "=r",
+     "=r^2"
     ],
     [
-     "=k",
-     "=k^3"
+     "=r",
+     "=r^3"
     ]
    ],
-   "pointsLabel": "$k$"
+   "pointsLabel": "$x=\\frac{n}{m}$"
   },
   "readout": [
    {
-    "label": "닮음비 (길이 비)",
-    "expr": "lr",
-    "digits": 2
+    "label": "닮음비 배율 n/m",
+    "expr": "r",
+    "digits": 3
    },
    {
-    "label": "겉넓이 비",
+    "label": "넓이 비 (n/m)²",
     "expr": "sr",
-    "digits": 2
+    "digits": 3
    },
    {
-    "label": "부피 비 = k³",
+    "label": "부피 비 (n/m)³",
     "expr": "vr",
-    "digits": 2
+    "digits": 3
    },
    {
-    "label": "작은 입체는 큰 입체의",
+    "label": "m³ — 부피비 앞항",
+    "expr": "mc",
+    "digits": 0
+   },
+   {
+    "label": "n³ — 부피비 뒷항",
+    "expr": "nc",
+    "digits": 0
+   },
+   {
+    "label": "고른 차원에서의 비 (n/m)^d",
+    "expr": "dr",
+    "digits": 3
+   },
+   {
+    "label": "A는 B의 (부피)",
     "expr": "1/vr",
     "digits": 4
    }
@@ -84,54 +245,98 @@
  "recipe": {
   "samples": [
    {
-    "k": 1
+    "m": 1,
+    "n": 2,
+    "d": 3
    },
    {
-    "k": 2
+    "m": 2,
+    "n": 3,
+    "d": 3
    },
    {
-    "k": 3
+    "m": 3,
+    "n": 1,
+    "d": 3
    },
    {
-    "k": 1.5
+    "m": 2,
+    "n": 2,
+    "d": 2
+   },
+   {
+    "m": 1,
+    "n": 4,
+    "d": 1
    }
   ],
   "invariants": [
-   "vr - k^3",
-   "sr - k^2",
-   "lr - k",
-   "vr - lr^3",
-   "vr - sr*lr"
+   "r - n/m",
+   "sr - r^2",
+   "vr - r^3",
+   "vr - sr*r",
+   "dr - r^d",
+   "vr - nc/mc",
+   "lr - r"
   ],
   "oracle": [
    {
     "params": {
-     "k": 2
+     "m": 1,
+     "n": 2,
+     "d": 3
     },
     "expect": {
-     "lr": 2,
+     "r": 2,
      "sr": 4,
-     "vr": 8
+     "vr": 8,
+     "dr": 8,
+     "mc": 1,
+     "nc": 8
     }
    },
    {
     "params": {
-     "k": 3
+     "m": 2,
+     "n": 3,
+     "d": 2
     },
     "expect": {
-     "lr": 3,
-     "sr": 9,
-     "vr": 27
+     "r": 1.5,
+     "sr": 2.25,
+     "vr": 3.375,
+     "dr": 2.25,
+     "mc": 8,
+     "nc": 27
     }
    },
    {
     "params": {
-     "k": 1
+     "m": 4,
+     "n": 1,
+     "d": 3
     },
     "expect": {
-     "lr": 1,
-     "sr": 1,
-     "vr": 1
+     "r": 0.25,
+     "sr": 0.0625,
+     "vr": 0.015625,
+     "dr": 0.015625,
+     "mc": 64,
+     "nc": 1
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3,
+     "d": 1
+    },
+    "expect": {
+     "r": 3,
+     "dr": 3,
+     "vr": 27,
+     "mc": 1,
+     "nc": 27
     }
    }
   ],

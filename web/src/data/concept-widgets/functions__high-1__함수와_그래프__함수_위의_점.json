@@ -4,100 +4,245 @@
   "title": "함수 위의 점 (a, f(a))",
   "params": [
    {
+    "name": "p",
+    "label": "f의 x² 계수 p",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "f의 x 계수 q",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "f의 상수항 r",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
     "name": "a",
-    "label": "a (x좌표)",
+    "label": "점의 x좌표 a",
     "type": "slider",
     "min": -3,
     "max": 3,
     "init": 1,
     "step": 0.1,
     "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "점의 y좌표 b",
+    "type": "slider",
+    "min": -6,
+    "max": 8,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
    }
   ],
-  "scope": "fa = a^2 - 2",
+  "scope": "fa = p*a^2 + q*a + r; d = b - fa; onCurve = abs(d) < 0.05 ? 1 : 0; xv = abs(p) > 0.000001 ? -q/(2*p) : 0; xvc = max(-3, min(3, xv))",
   "plot": {
    "range": [
     -3,
     3
    ],
    "yRange": [
-    -3,
-    7
+    -6,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^2 - 2",
-     "label": "y = f(x) = x² − 2",
+     "fn": "p*x^2 + q*x + r",
+     "label": "$y=f(x)=px^2+qx+r$",
      "color": "#2a6fe2"
+    },
+    {
+     "fn": "b + 0*x",
+     "label": "$y=b$ (점의 높이)",
+     "color": "#c05621",
+     "dashed": true
+    }
+   ],
+   "roots": [
+    {
+     "fn": "p*x^2 + q*x + r - b",
+     "in": [
+      -3,
+      "=xvc"
+     ],
+     "label": "$f(x)=b$ 인 $x$"
+    },
+    {
+     "fn": "p*x^2 + q*x + r - b",
+     "in": [
+      "=xvc",
+      3
+     ],
+     "label": "$f(x)=b$ 인 $x$"
     }
    ],
    "points": [
     [
      "=a",
+     "=b"
+    ],
+    [
+     "=a",
      "=fa"
     ]
    ],
-   "pointsLabel": "$(a, f(a))$"
+   "pointsLabel": "$(a,\\,b)$ 와 $(a,\\,f(a))$"
   },
   "readout": [
-   {
-    "label": "a",
-    "expr": "a",
-    "digits": 2
-   },
    {
     "label": "f(a)",
     "expr": "fa",
     "digits": 2
    },
    {
-    "label": "점이 곡선 위인지 검사 f(a)−(a²−2)",
-    "expr": "fa - (a^2 - 2)",
-    "digits": 6
+    "label": "b (점의 y좌표)",
+    "expr": "b",
+    "digits": 2
+   },
+   {
+    "label": "b − f(a)  (0이면 곡선 위)",
+    "expr": "d",
+    "digits": 3
+   },
+   {
+    "label": "점이 곡선 위인가 (1=예, 0=아니오)",
+    "expr": "onCurve",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 1
+    "p": 1,
+    "q": 0,
+    "r": -2,
+    "a": 1,
+    "b": -1
    },
    {
-    "a": 2
+    "p": 1,
+    "q": 0,
+    "r": -2,
+    "a": 1,
+    "b": 2
    },
    {
-    "a": -1
+    "p": 0,
+    "q": 2,
+    "r": 1,
+    "a": -1,
+    "b": -1
    },
    {
-    "a": 0
+    "p": -1,
+    "q": 2,
+    "r": 0,
+    "a": 2,
+    "b": 0
+   },
+   {
+    "p": 0.5,
+    "q": -1,
+    "r": 0,
+    "a": 0,
+    "b": 3
    }
   ],
   "invariants": [
-   "fa - (a^2 - 2)"
+   "d - (b - fa)",
+   "fa - (p*a^2 + q*a + r)"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "p": 1,
+     "q": 0,
+     "r": -2,
+     "a": 1,
+     "b": -1
     },
     "expect": {
-     "fa": -1
+     "fa": -1,
+     "d": 0,
+     "onCurve": 1
     }
    },
    {
     "params": {
-     "a": 2
+     "p": 1,
+     "q": 0,
+     "r": -2,
+     "a": 1,
+     "b": 2
     },
     "expect": {
-     "fa": 2
+     "fa": -1,
+     "d": 3,
+     "onCurve": 0
     }
    },
    {
     "params": {
-     "a": -1
+     "p": 0,
+     "q": 2,
+     "r": 1,
+     "a": -1,
+     "b": -1
     },
     "expect": {
-     "fa": -1
+     "fa": -1,
+     "d": 0,
+     "onCurve": 1
+    }
+   },
+   {
+    "params": {
+     "p": -1,
+     "q": 2,
+     "r": 0,
+     "a": 2,
+     "b": 0
+    },
+    "expect": {
+     "fa": 0,
+     "d": 0,
+     "onCurve": 1
+    }
+   },
+   {
+    "params": {
+     "p": -1,
+     "q": 2,
+     "r": 0,
+     "a": 2,
+     "b": 1
+    },
+    "expect": {
+     "fa": 0,
+     "d": 1,
+     "onCurve": 0
     }
    }
   ],

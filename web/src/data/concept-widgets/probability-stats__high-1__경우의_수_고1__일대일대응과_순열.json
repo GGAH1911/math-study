@@ -1,48 +1,85 @@
 {
  "id": "probability-stats/high-1/경우의_수_고1/일대일대응과_순열",
  "spec": {
-  "title": "일대일대응과 순열: n!의 증가",
+  "title": "일대일대응과 순열: nPr이 n!과 만나는 순간",
   "params": [
    {
     "name": "n",
-    "label": "n (원소의 개수)",
+    "label": "n (전체 원소의 개수)",
     "type": "slider",
     "min": 1,
     "max": 6,
-    "init": 3,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "r",
+    "label": "r (순서대로 뽑아 배열할 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 2,
     "step": 1,
     "unit": "개"
    }
   ],
-  "scope": "fact = factorial(n)",
+  "scope": "fact = factorial(n); perm = r <= n ? factorial(n) / factorial(n - r) : 0; total = n^r; bij = r == n ? 1 : 0",
   "plot": {
    "range": [
-    1,
+    0,
     6
    ],
    "yRange": [
     0,
-    750
+    760
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
      "fn": "factorial(x)",
-     "label": "n!",
+     "label": "$x!$ (전부 배열할 때)",
+     "color": "gray",
+     "dashed": true
+    },
+    {
+     "fn": "x <= n ? factorial(n) / factorial(n - x) : 0",
+     "label": "$_n\\mathrm{P}_r$ (지금의 $n$ 고정)",
      "color": "blue"
     }
    ],
    "points": [
     [
+     "=r",
+     "=perm"
+    ],
+    [
      "=n",
      "=fact"
     ]
    ],
-   "pointsLabel": "$n!$"
+   "pointsLabel": "$(r,\\ _n\\mathrm{P}_r)$ 와 $(n,\\ n!)$"
   },
   "readout": [
    {
-    "label": "n! (일대일대응/순열의 수)",
+    "label": "$_n\\mathrm{P}_r$ — 서로 다른 $n$개에서 $r$개를 순서대로 배열하는 수",
+    "expr": "perm",
+    "digits": 0
+   },
+   {
+    "label": "$n!$ — 전부 배열하는 수(일대일대응의 개수)",
     "expr": "fact",
+    "digits": 0
+   },
+   {
+    "label": "$n^r$ — 같은 것을 다시 써도 될 때의 배열 수",
+    "expr": "total",
+    "digits": 0
+   },
+   {
+    "label": "지금 일대일대응인가? (1이면 예, 0이면 아니다)",
+    "expr": "bij",
     "digits": 0
    }
   ]
@@ -50,41 +87,70 @@
  "recipe": {
   "samples": [
    {
-    "n": 1
+    "n": 4,
+    "r": 2
    },
    {
-    "n": 3
+    "n": 5,
+    "r": 5
    },
    {
-    "n": 6
+    "n": 3,
+    "r": 5
+   },
+   {
+    "n": 6,
+    "r": 0
    }
   ],
   "invariants": [
+   "abs(perm - (r >= 1 and r <= n ? n * factorial(n-1) / factorial(n-r) : perm))",
+   "abs(r == n ? perm - fact : 0)",
+   "max(0, perm - total)",
    "abs(fact - n * factorial(n-1))"
   ],
   "oracle": [
    {
     "params": {
-     "n": 2
+     "n": 5,
+     "r": 2
     },
     "expect": {
-     "fact": 2
+     "perm": 20,
+     "fact": 120,
+     "total": 25,
+     "bij": 0
     }
    },
    {
     "params": {
-     "n": 4
+     "n": 4,
+     "r": 4
     },
     "expect": {
-     "fact": 24
+     "perm": 24,
+     "fact": 24,
+     "bij": 1
     }
    },
    {
     "params": {
-     "n": 5
+     "n": 3,
+     "r": 5
     },
     "expect": {
-     "fact": 120
+     "perm": 0,
+     "bij": 0
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "r": 0
+    },
+    "expect": {
+     "perm": 1,
+     "fact": 720
     }
    }
   ],

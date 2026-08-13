@@ -1,59 +1,150 @@
 {
  "id": "functions/calculus/도함수의_활용_심화/도함수를_이용한_교점_개수_분석",
  "spec": {
-  "title": "도함수를 이용한 교점 개수 분석 (y=x³−3x 와 y=k)",
+  "title": "도함수를 이용한 교점 개수 분석 (y=f(x)와 y=g(x))",
   "params": [
    {
-    "name": "k",
-    "label": "k (직선 y=k)",
+    "name": "a",
+    "label": "a ($x^3$ 계수)",
     "type": "slider",
-    "min": -3.5,
-    "max": 3.5,
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b ($x^2$ 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c ($x$ 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "m",
+    "label": "m (직선 $y=mx+k$ 의 기울기)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "k (직선의 y절편)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
     "init": 1,
     "step": 0.1
    }
   ],
-  "scope": "hmax = 2 - k; hmin = -2 - k; prd = hmax*hmin; cnt = 2 - sign(prd)",
+  "scope": "aa = (a == 0 ? 0.1 : a); p = c - m; disc = 4*b^2 - 12*aa*p; sd = (disc > 0 ? sqrt(disc) : 0); x1 = (-2*b - sd)/(6*aa); x2 = (-2*b + sd)/(6*aa); xl = min(x1, x2); xr = max(x1, x2); hl = aa*xl^3 + b*xl^2 + p*xl - k; hr = aa*xr^3 + b*xr^2 + p*xr - k; hmax = max(hl, hr); hmin = min(hl, hr); prd = hmax*hmin; cnt = (disc <= 0 ? 1 : 2 - sign(prd)); ncrit = (disc > 0 ? 2 : 0); px = (disc > 0 ? xl : 1000); qx = (disc > 0 ? xr : 1000)",
   "plot": {
    "range": [
-    -2.5,
-    2.5
+    -4,
+    4
    ],
    "yRange": [
-    -5,
-    5
+    -8,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x",
-     "label": "f(x)=x³−3x",
+     "fn": "aa*x^3 + b*x^2 + c*x",
+     "label": "$f(x)=ax^3+bx^2+cx$",
      "color": "#2563eb"
     },
     {
-     "fn": "0*x + k",
-     "label": "g(x)=k",
+     "fn": "m*x + k",
+     "label": "$g(x)=mx+k$",
      "color": "#dc2626"
     },
     {
-     "fn": "x^3 - 3*x - k",
-     "label": "h(x)=f−g",
+     "fn": "aa*x^3 + b*x^2 + (c-m)*x - k",
+     "label": "$h(x)=f(x)-g(x)$",
      "color": "#16a34a"
+    },
+    {
+     "fn": "3*aa*x^2 + 2*b*x + (c-m)",
+     "label": "$h'(x)$",
+     "color": "#9333ea",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "aa*x^3 + b*x^2 + (c-m)*x - k",
+     "in": [
+      "=xl - 120",
+      "=xl"
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + (c-m)*x - k",
+     "in": [
+      "=xl",
+      "=xr"
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + (c-m)*x - k",
+     "in": [
+      "=xr",
+      "=xr + 120"
+     ],
+     "label": "근"
+    }
+   ],
+   "points": [
+    [
+     "=px",
+     "=hl"
+    ],
+    [
+     "=qx",
+     "=hr"
+    ]
+   ],
+   "pointsLabel": "$h$의 극점"
   },
   "readout": [
    {
-    "label": "h 극댓값 (2−k)",
+    "label": "$h'$의 판별식 $4b^2-12a(c-m)$ (양수여야 극값 2개)",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "극점 개수",
+    "expr": "ncrit",
+    "digits": 0
+   },
+   {
+    "label": "h 극댓값",
     "expr": "hmax",
     "digits": 2
    },
    {
-    "label": "h 극솟값 (−2−k)",
+    "label": "h 극솟값",
     "expr": "hmin",
     "digits": 2
    },
    {
-    "label": "극값의 곱 (양수=1교점·0=접함2교점·음수=3교점)",
+    "label": "극값의 곱 (양수=1교점 · 0=접함 2교점 · 음수=3교점)",
     "expr": "prd",
     "digits": 2
    },
@@ -67,29 +158,66 @@
  "recipe": {
   "samples": [
    {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "m": 0,
     "k": 0
    },
    {
-    "k": 1.5
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "m": 0,
+    "k": 2
    },
    {
-    "k": 3
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "m": 0,
+    "k": 1
    },
    {
-    "k": -2.5
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "m": 0,
+    "k": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "m": 0,
+    "k": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "m": 3,
+    "k": 0
    }
   ],
   "invariants": [
-   "hmax - hmin - 4",
-   "prd - (k^2 - 4)",
-   "cnt - 2 + sign(prd)"
+   "disc - (4*b^2 - 12*aa*(c-m))",
+   "3*aa*xl^2 + 2*b*xl + (c-m)",
+   "3*aa*xr^2 + 2*b*xr + (c-m)",
+   "hmax - hmin - abs(hl - hr)",
+   "cnt - (disc <= 0 ? 1 : 2 - sign(prd))"
   ],
   "oracle": [
    {
     "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "m": 0,
      "k": 0
     },
     "expect": {
+     "disc": 36,
      "hmax": 2,
      "hmin": -2,
      "prd": -4,
@@ -98,9 +226,14 @@
    },
    {
     "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "m": 0,
      "k": 2
     },
     "expect": {
+     "disc": 36,
      "hmax": 0,
      "hmin": -4,
      "prd": 0,
@@ -109,13 +242,66 @@
    },
    {
     "params": {
-     "k": 3
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "m": 0,
+     "k": 1
     },
     "expect": {
+     "disc": -36,
      "hmax": -1,
-     "hmin": -5,
-     "prd": 5,
+     "hmin": -1,
+     "prd": 1,
      "cnt": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "m": 0,
+     "k": 0
+    },
+    "expect": {
+     "disc": 36,
+     "hmax": 2,
+     "hmin": -2,
+     "prd": -4,
+     "cnt": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "m": 0,
+     "k": 0
+    },
+    "expect": {
+     "disc": 36,
+     "hmax": 4,
+     "hmin": 0,
+     "prd": 0,
+     "cnt": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "m": 3,
+     "k": 0
+    },
+    "expect": {
+     "disc": 36,
+     "hmax": 2,
+     "hmin": -2,
+     "prd": -4,
+     "cnt": 3
     }
    }
   ],

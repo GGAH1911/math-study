@@ -4,17 +4,27 @@
   "title": "두 직선의 수직 조건 (m₁·m₂ = −1)",
   "params": [
    {
-    "name": "theta",
-    "label": "직선1의 기울기각 θ",
+    "name": "theta1",
+    "label": "직선1의 기울기각 θ₁",
     "type": "slider",
-    "min": 10,
-    "max": 170,
+    "min": 0,
+    "max": 180,
     "init": 30,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "theta2",
+    "label": "직선2의 기울기각 θ₂",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 120,
     "step": 1,
     "unit": "°"
    }
   ],
-  "scope": "rad=theta*pi/180; c1=cos(rad); s1=sin(rad); c2=-sin(rad); s2=cos(rad); m1=s1/c1; m2=s2/c2; dot=c1*c2+s1*s2; prod=m1*m2",
+  "scope": "r1=theta1*pi/180; r2=theta2*pi/180; c1=cos(r1); s1=sin(r1); c2=cos(r2); s2=sin(r2); v1=abs(c1)<1e-6 ? 0 : 1; v2=abs(c2)<1e-6 ? 0 : 1; both=v1*v2; m1=v1>0 ? s1/c1 : 0; m2=v2>0 ? s2/c2 : 0; prod=both>0 ? m1*m2 : 0; dot=c1*c2+s1*s2; gen=(-s1)*(-s2)+c1*c2; d=abs(theta2-theta1); ang=d>90 ? 180-d : d; perp=abs(dot)<1e-6 ? 1 : 0",
   "geometry": {
    "range": [
     -2.4,
@@ -27,6 +37,16 @@
    "showAxes": true,
    "showGrid": true,
    "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "stroke": "#94a3b8",
+     "fill": "none"
+    },
     {
      "type": "segment",
      "from": [
@@ -91,69 +111,140 @@
     "digits": 4
    },
    {
-    "label": "m₁·m₂",
+    "label": "m₁·m₂  (−1 이면 수직)",
     "expr": "prod",
     "digits": 4
    },
    {
-    "label": "방향벡터 내적",
+    "label": "두 직선이 이루는 각 (°)",
+    "expr": "ang",
+    "digits": 1
+   },
+   {
+    "label": "방향벡터 내적 (0 이면 수직)",
     "expr": "dot",
     "digits": 4
+   },
+   {
+    "label": "a₁a₂+b₁b₂ (일반형 판정, 0 이면 수직)",
+    "expr": "gen",
+    "digits": 4
+   },
+   {
+    "label": "수직인가? (1=수직, 0=아님)",
+    "expr": "perp",
+    "digits": 0
+   },
+   {
+    "label": "기울기가 둘 다 존재하는가? (1=존재, 0=수직선 포함)",
+    "expr": "both",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "theta": 30
+    "theta1": 30,
+    "theta2": 120
    },
    {
-    "theta": 60
+    "theta1": 30,
+    "theta2": 60
    },
    {
-    "theta": 120
+    "theta1": 0,
+    "theta2": 90
    },
    {
-    "theta": 150
+    "theta1": 45,
+    "theta2": 45
+   },
+   {
+    "theta1": 150,
+    "theta2": 60
    }
   ],
   "invariants": [
-   "dot",
-   "prod+1",
-   "c1^2+s1^2-1"
+   "dot-cos((theta2-theta1)*pi/180)",
+   "dot-gen",
+   "c1^2+s1^2-1",
+   "c2^2+s2^2-1"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 30
+     "theta1": 30,
+     "theta2": 120
     },
     "expect": {
      "m1": 0.5773502691896257,
      "m2": -1.7320508075688774,
      "prod": -1,
-     "dot": 0
+     "dot": 0,
+     "gen": 0,
+     "perp": 1,
+     "both": 1,
+     "ang": 90
     }
    },
    {
     "params": {
-     "theta": 45
+     "theta1": 30,
+     "theta2": 60
+    },
+    "expect": {
+     "m1": 0.5773502691896257,
+     "m2": 1.7320508075688767,
+     "prod": 1,
+     "dot": 0.8660254037844387,
+     "perp": 0,
+     "both": 1,
+     "ang": 30
+    }
+   },
+   {
+    "params": {
+     "theta1": 0,
+     "theta2": 90
+    },
+    "expect": {
+     "m1": 0,
+     "m2": 0,
+     "prod": 0,
+     "dot": 0,
+     "gen": 0,
+     "perp": 1,
+     "both": 0,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta1": 45,
+     "theta2": 45
     },
     "expect": {
      "m1": 1,
-     "m2": -1,
-     "prod": -1,
-     "dot": 0
+     "m2": 1,
+     "prod": 1,
+     "dot": 1,
+     "perp": 0,
+     "both": 1,
+     "ang": 0
     }
    },
    {
     "params": {
-     "theta": 135
+     "theta1": 150,
+     "theta2": 60
     },
     "expect": {
-     "m1": -1,
-     "m2": 1,
      "prod": -1,
-     "dot": 0
+     "dot": 0,
+     "perp": 1,
+     "both": 1,
+     "ang": 90
     }
    }
   ],

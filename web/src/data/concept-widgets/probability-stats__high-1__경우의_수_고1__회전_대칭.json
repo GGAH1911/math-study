@@ -1,20 +1,38 @@
 {
  "id": "probability-stats/high-1/경우의_수_고1/회전_대칭",
  "spec": {
-  "title": "회전 대칭 - 정사각형의 회전",
+  "title": "회전 대칭 - 정n각형의 회전",
   "params": [
    {
-    "name": "theta",
-    "label": "회전각 θ",
+    "name": "n",
+    "label": "정n각형의 변의 수 n",
+    "type": "slider",
+    "min": 3,
+    "max": 12,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "turn",
+    "label": "몇 칸 회전 (k)",
     "type": "slider",
     "min": 0,
-    "max": 360,
+    "max": 12,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "fine",
+    "label": "미세 어긋남",
+    "type": "slider",
+    "min": -60,
+    "max": 60,
     "init": 0,
     "step": 1,
     "unit": "°"
    }
   ],
-  "scope": "r=1; rad=theta*pi/180; rx0=r*cos(rad); ry0=r*sin(rad); rx1=r*cos(rad+pi/2); ry1=r*sin(rad+pi/2); rx2=r*cos(rad+pi); ry2=r*sin(rad+pi); rx3=r*cos(rad+3*pi/2); ry3=r*sin(rad+3*pi/2); direct=mod(theta,90); sym_dist=min(direct, 90-direct)",
+  "scope": "N=round(n); stepdeg=360/N; theta=turn*stepdeg+fine; rad=theta*pi/180;\na0=2*pi*min(0,N-1)/N; a1=2*pi*min(1,N-1)/N; a2=2*pi*min(2,N-1)/N; a3=2*pi*min(3,N-1)/N; a4=2*pi*min(4,N-1)/N; a5=2*pi*min(5,N-1)/N; a6=2*pi*min(6,N-1)/N; a7=2*pi*min(7,N-1)/N; a8=2*pi*min(8,N-1)/N; a9=2*pi*min(9,N-1)/N; a10=2*pi*min(10,N-1)/N; a11=2*pi*min(11,N-1)/N;\nbx0=cos(a0); by0=sin(a0); bx1=cos(a1); by1=sin(a1); bx2=cos(a2); by2=sin(a2); bx3=cos(a3); by3=sin(a3); bx4=cos(a4); by4=sin(a4); bx5=cos(a5); by5=sin(a5); bx6=cos(a6); by6=sin(a6); bx7=cos(a7); by7=sin(a7); bx8=cos(a8); by8=sin(a8); bx9=cos(a9); by9=sin(a9); bx10=cos(a10); by10=sin(a10); bx11=cos(a11); by11=sin(a11);\nrx0=cos(rad+a0); ry0=sin(rad+a0); rx1=cos(rad+a1); ry1=sin(rad+a1); rx2=cos(rad+a2); ry2=sin(rad+a2); rx3=cos(rad+a3); ry3=sin(rad+a3); rx4=cos(rad+a4); ry4=sin(rad+a4); rx5=cos(rad+a5); ry5=sin(rad+a5); rx6=cos(rad+a6); ry6=sin(rad+a6); rx7=cos(rad+a7); ry7=sin(rad+a7); rx8=cos(rad+a8); ry8=sin(rad+a8); rx9=cos(rad+a9); ry9=sin(rad+a9); rx10=cos(rad+a10); ry10=sin(rad+a10); rx11=cos(rad+a11); ry11=sin(rad+a11);\nm=mod(theta, stepdeg); sym_dist=min(m, stepdeg-m); match=sym_dist < 0.000001 ? 1 : 0; circ=factorial(N-1)",
   "geometry": {
    "range": [
     -1.7,
@@ -31,22 +49,56 @@
      "type": "polygon",
      "vertices": [
       [
-       1,
-       0
+       "=bx0",
+       "=by0"
       ],
       [
-       0,
-       1
+       "=bx1",
+       "=by1"
       ],
       [
-       -1,
-       0
+       "=bx2",
+       "=by2"
       ],
       [
-       0,
-       -1
+       "=bx3",
+       "=by3"
+      ],
+      [
+       "=bx4",
+       "=by4"
+      ],
+      [
+       "=bx5",
+       "=by5"
+      ],
+      [
+       "=bx6",
+       "=by6"
+      ],
+      [
+       "=bx7",
+       "=by7"
+      ],
+      [
+       "=bx8",
+       "=by8"
+      ],
+      [
+       "=bx9",
+       "=by9"
+      ],
+      [
+       "=bx10",
+       "=by10"
+      ],
+      [
+       "=bx11",
+       "=by11"
       ]
-     ]
+     ],
+     "stroke": "#94a3b8",
+     "closed": true
     },
     {
      "type": "polygon",
@@ -66,8 +118,43 @@
       [
        "=rx3",
        "=ry3"
+      ],
+      [
+       "=rx4",
+       "=ry4"
+      ],
+      [
+       "=rx5",
+       "=ry5"
+      ],
+      [
+       "=rx6",
+       "=ry6"
+      ],
+      [
+       "=rx7",
+       "=ry7"
+      ],
+      [
+       "=rx8",
+       "=ry8"
+      ],
+      [
+       "=rx9",
+       "=ry9"
+      ],
+      [
+       "=rx10",
+       "=ry10"
+      ],
+      [
+       "=rx11",
+       "=ry11"
       ]
-     ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.12,
+     "closed": true
     },
     {
      "type": "circle",
@@ -92,16 +179,45 @@
       0
      ],
      "to": [
+      "=bx0",
+      "=by0"
+     ],
+     "dashed": true,
+     "color": "#94a3b8"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
       "=rx0",
       "=ry0"
-     ]
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=rx0",
+      "=ry0"
+     ],
+     "label": "A′",
+     "color": "#2563eb"
     }
    ]
   },
   "readout": [
    {
-    "label": "θ (도)",
-    "expr": "theta"
+    "label": "회전각 θ (도)",
+    "expr": "theta",
+    "digits": 2
+   },
+   {
+    "label": "한 칸 회전각 360/n (도)",
+    "expr": "stepdeg",
+    "digits": 2
    },
    {
     "label": "대칭 오차 (°)",
@@ -109,66 +225,145 @@
     "digits": 2
    },
    {
-    "label": "일치 (1) / 불일치 (0)",
-    "expr": "sym_dist == 0 ? 1 : 0"
+    "label": "원래 도형과 일치 (1) / 불일치 (0)",
+    "expr": "match"
+   },
+   {
+    "label": "회전 대칭의 개수 (한 바퀴 중 겹치는 횟수)",
+    "expr": "N"
+   },
+   {
+    "label": "원탁에 n명 앉히는 경우의 수 (n-1)!",
+    "expr": "circ"
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "theta": 0
+    "n": 4,
+    "turn": 0,
+    "fine": 0
    },
    {
-    "theta": 45
+    "n": 4,
+    "turn": 1,
+    "fine": 0
    },
    {
-    "theta": 90
+    "n": 3,
+    "turn": 1,
+    "fine": 0
    },
    {
-    "theta": 135
+    "n": 6,
+    "turn": 0,
+    "fine": 30
+   },
+   {
+    "n": 5,
+    "turn": 2,
+    "fine": 0
+   },
+   {
+    "n": 12,
+    "turn": 5,
+    "fine": -10
    }
   ],
   "invariants": [
    "rx0^2 + ry0^2 - 1",
-   "(rx1-rx0)^2 + (ry1-ry0)^2 - 2",
-   "rx0 + rx1 + rx2 + rx3"
+   "(rx1-rx0)^2 + (ry1-ry0)^2 - (2 - 2*cos(2*pi/N))",
+   "stepdeg*N - 360",
+   "theta - (turn*stepdeg + fine)"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 0
+     "n": 4,
+     "turn": 0,
+     "fine": 0
     },
     "expect": {
+     "stepdeg": 90,
+     "theta": 0,
      "rx0": 1,
-     "ry0": 0
+     "ry0": 0,
+     "sym_dist": 0,
+     "match": 1,
+     "circ": 6
     }
    },
    {
     "params": {
-     "theta": 45
+     "n": 4,
+     "turn": 1,
+     "fine": 0
     },
     "expect": {
-     "rx0": 0.7071067811865476,
-     "ry0": 0.7071067811865476
-    }
-   },
-   {
-    "params": {
-     "theta": 90
-    },
-    "expect": {
+     "theta": 90,
      "rx0": 0,
-     "ry0": 1
+     "ry0": 1,
+     "sym_dist": 0,
+     "match": 1
     }
    },
    {
     "params": {
-     "theta": 180
+     "n": 3,
+     "turn": 1,
+     "fine": 0
     },
     "expect": {
-     "rx0": -1,
-     "ry0": 0
+     "stepdeg": 120,
+     "theta": 120,
+     "rx0": -0.5,
+     "ry0": 0.8660254037844387,
+     "sym_dist": 0,
+     "match": 1,
+     "circ": 2
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "turn": 0,
+     "fine": 30
+    },
+    "expect": {
+     "stepdeg": 60,
+     "theta": 30,
+     "sym_dist": 30,
+     "match": 0
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "turn": 2,
+     "fine": 0
+    },
+    "expect": {
+     "stepdeg": 72,
+     "theta": 144,
+     "rx0": -0.8090169943749475,
+     "ry0": 0.5877852522924731,
+     "sym_dist": 0,
+     "match": 1,
+     "circ": 24
+    }
+   },
+   {
+    "params": {
+     "n": 12,
+     "turn": 5,
+     "fine": -10
+    },
+    "expect": {
+     "stepdeg": 30,
+     "theta": 140,
+     "sym_dist": 10,
+     "match": 0
     }
    }
   ],

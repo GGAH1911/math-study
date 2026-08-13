@@ -1,115 +1,268 @@
 {
  "id": "geometry/geometry-elective/이차곡선/접선",
  "spec": {
-  "title": "포물선 y=x²의 접선",
+  "title": "이차곡선의 접선 — 할선이 접선이 되는 순간",
   "params": [
+   {
+    "name": "p",
+    "label": "x² 계수 p",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "x 계수 q",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "상수항 r",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
    {
     "name": "a",
     "label": "접점의 x좌표 a",
     "type": "slider",
     "min": -3,
     "max": 3,
-    "init": 2,
-    "step": 0.1,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "할선 간격 h  (두 번째 점의 x좌표 = a+h)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.05,
     "unit": ""
    }
   ],
-  "scope": "fa = a^2; slope = 2*a; intercept = fa - slope*a",
+  "scope": "fa = p*a^2 + q*a + r; slope = 2*p*a + q; intercept = fa - slope*a; xh = a + h; fh = p*xh^2 + q*xh + r; secSlope = abs(h) < 1e-9 ? slope : (fh - fa)/h; secIntercept = fa - secSlope*a; gap = secSlope - slope; vx = abs(p) < 1e-9 ? a : -q/(2*p); vlo = max(-4, min(4, vx))",
   "plot": {
    "range": [
-    -3,
-    3
+    -4,
+    4
    ],
    "yRange": [
-    -1,
-    9
+    -8,
+    12
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^2",
-     "label": "y = x²",
+     "fn": "p*x^2 + q*x + r",
+     "label": "$y=px^2+qx+r$",
      "color": "#2563eb"
     },
     {
      "fn": "slope*x + intercept",
-     "label": "접선 y = f'(a)(x−a)+f(a)",
+     "label": "$접선:\\ y=f'(a)(x-a)+f(a)$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "secSlope*x + secIntercept",
+     "label": "$할선:\\ 두\\ 점\\ (a,f(a)),\\ (a+h,f(a+h))$",
+     "color": "#059669",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "p*x^2 + q*x + r",
+     "in": [
+      -4,
+      "=vlo"
+     ],
+     "label": "곡선의 x절편"
+    },
+    {
+     "fn": "p*x^2 + q*x + r",
+     "in": [
+      "=vlo",
+      4
+     ],
+     "label": "곡선의 x절편"
+    },
+    {
+     "fn": "slope*x + intercept",
+     "in": [
+      -4,
+      4
+     ],
+     "label": "접선의 x절편"
+    }
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=xh",
+     "=fh"
+    ]
+   ],
+   "pointsLabel": "$접점\\ (a,f(a))\\ 와\\ (a+h,f(a+h))$"
   },
   "readout": [
    {
-    "label": "접점 (a, f(a))",
-    "expr": "a",
-    "digits": 2
-   },
-   {
-    "label": "f(a) = a²",
+    "label": "f(a) — 접점의 y좌표",
     "expr": "fa",
     "digits": 2
    },
    {
-    "label": "접선 기울기 f'(a) = 2a",
+    "label": "접선 기울기 f'(a) = 2pa+q",
     "expr": "slope",
+    "digits": 3
+   },
+   {
+    "label": "접선의 y절편",
+    "expr": "intercept",
     "digits": 2
    },
    {
-    "label": "y절편",
-    "expr": "intercept",
-    "digits": 2
+    "label": "할선 기울기 (f(a+h)−f(a))/h",
+    "expr": "secSlope",
+    "digits": 3
+   },
+   {
+    "label": "할선 − 접선 기울기 차 ( = p·h )",
+    "expr": "gap",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 2
+    "p": 1,
+    "q": 0,
+    "r": 0,
+    "a": 1,
+    "h": 1
    },
    {
-    "a": 1
+    "p": 1,
+    "q": 0,
+    "r": 0,
+    "a": 1,
+    "h": 0
    },
    {
-    "a": -1
+    "p": -2,
+    "q": 3,
+    "r": 1,
+    "a": -1,
+    "h": 0.5
    },
    {
-    "a": 0
+    "p": 0,
+    "q": 2,
+    "r": -1,
+    "a": 2,
+    "h": 1.5
+   },
+   {
+    "p": 0.5,
+    "q": -2,
+    "r": 0,
+    "a": 0,
+    "h": 2
    }
   ],
   "invariants": [
-   "slope - 2*a",
-   "fa - a^2",
+   "fa - (p*a^2 + q*a + r)",
+   "slope - (2*p*a + q)",
    "slope*a + intercept - fa",
-   "intercept + a^2"
+   "secSlope - (slope + p*h)",
+   "secSlope*a + secIntercept - fa",
+   "secSlope*xh + secIntercept - fh",
+   "(p*(a+1)^2 + q*(a+1) + r) - (slope*(a+1) + intercept) - p"
   ],
   "oracle": [
    {
     "params": {
-     "a": 2
+     "p": 1,
+     "q": 0,
+     "r": 0,
+     "a": 2,
+     "h": 1
     },
     "expect": {
      "fa": 4,
      "slope": 4,
+     "intercept": -4,
+     "fh": 9,
+     "secSlope": 5,
+     "secIntercept": -6,
+     "gap": 1
+    }
+   },
+   {
+    "params": {
+     "p": 1,
+     "q": 0,
+     "r": 0,
+     "a": 2,
+     "h": 0
+    },
+    "expect": {
+     "slope": 4,
+     "secSlope": 4,
+     "gap": 0,
      "intercept": -4
     }
    },
    {
     "params": {
-     "a": 1
+     "p": -1,
+     "q": 2,
+     "r": 3,
+     "a": 1,
+     "h": 0.5
     },
     "expect": {
-     "fa": 1,
-     "slope": 2,
-     "intercept": -1
+     "fa": 4,
+     "slope": 0,
+     "intercept": 4,
+     "fh": 3.75,
+     "secSlope": -0.5,
+     "secIntercept": 4.5,
+     "gap": -0.5
     }
    },
    {
     "params": {
-     "a": -1
+     "p": 0,
+     "q": 2,
+     "r": -1,
+     "a": 2,
+     "h": 1
     },
     "expect": {
-     "fa": 1,
-     "slope": -2,
-     "intercept": -1
+     "fa": 3,
+     "slope": 2,
+     "intercept": -1,
+     "secSlope": 2,
+     "gap": 0
     }
    }
   ],

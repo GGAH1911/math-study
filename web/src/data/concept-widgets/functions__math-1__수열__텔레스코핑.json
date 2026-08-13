@@ -1,8 +1,26 @@
 {
  "id": "functions/math-1/수열/텔레스코핑",
  "spec": {
-  "title": "텔레스코핑: ∑1/(k(k+1)) = 1 − 1/(n+1)",
+  "title": "텔레스코핑: ∑1/((pk+q)(pk+p+q)) = (b₁ − b_{n+1})/p",
   "params": [
+   {
+    "name": "p",
+    "label": "분모 간격 p (분모는 pk+q, pk+p+q)",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "분모 시작 보정 q",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 1
+   },
    {
     "name": "n",
     "label": "항의 개수 n",
@@ -13,7 +31,7 @@
     "step": 1
    }
   ],
-  "scope": "Sn = n/(n+1); telescoped = 1 - 1/(n+1); remainder = 1/(n+1); limit = 1; term = 1/(n*(n+1)); diff = 1/n - 1/(n+1)",
+  "scope": "ps = (p < 1 ? 1 : p); qs = (ps + q > 0 ? q : 1 - ps); g(k) = 1 ./ ((ps*k + qs) .* (ps*k + ps + qs)); Sn = sum(g(range(1, n))); b1 = 1/(ps + qs); bn1 = 1/(ps*(n+1) + qs); telescoped = (b1 - bn1)/ps; limit = 1/(ps*(ps + qs)); term = g(n); diff = (1/(ps*n + qs) - 1/(ps*n + ps + qs))/ps; gap = limit - Sn",
   "plot": {
    "range": [
     0,
@@ -25,48 +43,80 @@
    ],
    "fns": [
     {
-     "fn": "x/(x+1)",
-     "label": "부분합 S_n = n/(n+1)",
+     "fn": "(1/(ps+qs) - 1/(ps*(x+1)+qs))/ps",
+     "label": "부분합 $S_n$",
      "color": "#2563eb"
     },
     {
-     "fn": "1",
-     "label": "극한 = 1",
-     "color": "#dc2626"
+     "fn": "1/(ps*(ps+qs))",
+     "label": "극한 $1/(p(p+q))$",
+     "color": "#dc2626",
+     "dashed": true
+    },
+    {
+     "fn": "1/(ps*x+qs)",
+     "label": "망원경 항 $b_k = 1/(pk+q)$",
+     "color": "#94a3b8",
+     "range": [1, 30]
     }
    ],
    "points": [
     [
      "=n",
-     "=n/(n+1)"
+     "=Sn"
+    ],
+    [
+     "=1",
+     "=b1"
+    ],
+    [
+     "=n+1",
+     "=bn1"
     ]
    ],
-   "pointsLabel": "$S_n$"
+   "pointsLabel": "$S_n$ 과 소거되지 않고 살아남는 두 항 $b_1$, $b_{n+1}$",
+   "roots": [
+    {
+     "fn": "((1/(ps+qs) - 1/(ps*(x+1)+qs))/ps) - 0.8/(ps*(ps+qs))",
+     "in": [0, 30],
+     "label": "극한의 80%에 닿는 n"
+    }
+   ]
   },
   "readout": [
    {
-    "label": "부분합 S_n = ∑1/(k(k+1))",
+    "label": "직접 더한 부분합 $S_n=\\sum a_k$",
     "expr": "Sn",
     "digits": 5
    },
    {
-    "label": "텔레스코핑 값 1 − 1/(n+1)",
+    "label": "텔레스코핑 값 $(b_1-b_{n+1})/p$",
     "expr": "telescoped",
     "digits": 5
    },
    {
-    "label": "소거 후 남는 항 b_n = 1/(n+1)",
-    "expr": "remainder",
+    "label": "살아남는 첫 항 $b_1=1/(p+q)$",
+    "expr": "b1",
     "digits": 5
    },
    {
-    "label": "n번째 항 1/(n(n+1))",
+    "label": "살아남는 끝 항 $b_{n+1}$",
+    "expr": "bn1",
+    "digits": 5
+   },
+   {
+    "label": "$n$번째 항 $a_n$",
     "expr": "term",
-    "digits": 5
+    "digits": 6
    },
    {
-    "label": "= 1/n − 1/(n+1) (부분분수)",
+    "label": "부분분수로 쪼갠 값 $\\frac1p(1/(pn+q)-1/(pn+p+q))$",
     "expr": "diff",
+    "digits": 6
+   },
+   {
+    "label": "극한 $1/(p(p+q))$",
+    "expr": "limit",
     "digits": 5
    }
   ]
@@ -74,52 +124,102 @@
  "recipe": {
   "samples": [
    {
-    "n": 1
-   },
-   {
-    "n": 3
-   },
-   {
+    "p": 1,
+    "q": 0,
     "n": 5
    },
    {
-    "n": 9
+    "p": 2,
+    "q": -1,
+    "n": 7
+   },
+   {
+    "p": 1,
+    "q": 1,
+    "n": 3
+   },
+   {
+    "p": 3,
+    "q": -2,
+    "n": 10
+   },
+   {
+    "p": 4,
+    "q": -3,
+    "n": 1
+   },
+   {
+    "p": 1,
+    "q": -3,
+    "n": 4
    }
   ],
   "invariants": [
    "Sn - telescoped",
-   "Sn + remainder - limit",
-   "term - diff"
+   "term - diff",
+   "limit - Sn - bn1/ps",
+   "b1*(ps+qs) - 1"
   ],
   "oracle": [
    {
     "params": {
-     "n": 1
-    },
-    "expect": {
-     "Sn": 0.5,
-     "remainder": 0.5,
-     "term": 0.5,
-     "diff": 0.5
-    }
-   },
-   {
-    "params": {
-     "n": 3
-    },
-    "expect": {
-     "Sn": 0.75,
-     "remainder": 0.25,
-     "term": 0.0833333333
-    }
-   },
-   {
-    "params": {
+     "p": 1,
+     "q": 0,
      "n": 5
     },
     "expect": {
      "Sn": 0.8333333333,
-     "remainder": 0.1666666667
+     "telescoped": 0.8333333333,
+     "limit": 1,
+     "bn1": 0.1666666667,
+     "term": 0.0333333333
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "q": -1,
+     "n": 5
+    },
+    "expect": {
+     "Sn": 0.4545454545,
+     "limit": 0.5,
+     "term": 0.0101010101
+    }
+   },
+   {
+    "params": {
+     "p": 1,
+     "q": 1,
+     "n": 3
+    },
+    "expect": {
+     "Sn": 0.3,
+     "limit": 0.5,
+     "b1": 0.5,
+     "bn1": 0.2
+    }
+   },
+   {
+    "params": {
+     "p": 3,
+     "q": -2,
+     "n": 2
+    },
+    "expect": {
+     "Sn": 0.2857142857,
+     "limit": 0.3333333333
+    }
+   },
+   {
+    "params": {
+     "p": 1,
+     "q": -3,
+     "n": 1
+    },
+    "expect": {
+     "Sn": 0.5,
+     "limit": 1
     }
    }
   ],

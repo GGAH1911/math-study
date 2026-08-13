@@ -1,8 +1,35 @@
 {
  "id": "functions/math-1/삼각함수/치환을_이용한_함수_분석",
  "spec": {
-  "title": "치환을 이용한 함수 분석: y = (2sin x − 1)²",
+  "title": "치환을 이용한 함수 분석: y = (a·sin x + b − p)²",
   "params": [
+   {
+    "name": "a",
+    "label": "내부 계수 a  (u = a·sin x + b)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "내부 상수 b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.5
+   },
+   {
+    "name": "p",
+    "label": "외부함수 꼭짓점  y = (u − p)²",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.5
+   },
    {
     "name": "t",
     "label": "x (각도)",
@@ -14,31 +41,75 @@
     "unit": "°"
    }
   ],
-  "scope": "rad=t*pi/180; s=sin(rad); u=2*s-1; y=u^2",
+  "scope": "rad=t*pi/180; s=sin(rad); u=a*s+b; y=(u-p)^2; umax=b+abs(a); umin=b-abs(a); inside=(umax-p)*(p-umin)>=0?1:0; ymin=inside==1?0:min((umin-p)^2,(umax-p)^2); ymax=max((umin-p)^2,(umax-p)^2)",
   "plot": {
    "range": [
     0,
     360
    ],
    "yRange": [
-    -3.5,
-    9.5
+    -4.5,
+    12
    ],
    "fns": [
     {
      "fn": "sin(x*pi/180)",
-     "label": "sin x  (범위 [-1,1])",
+     "label": "$\\sin x$ (원래 내부함수)",
      "color": "#9ca3af"
     },
     {
-     "fn": "2*sin(x*pi/180)-1",
-     "label": "u = 2sin x − 1  (범위 [-3,1])",
+     "fn": "a*sin(x*pi/180)+b",
+     "label": "$u = a\\sin x + b$",
      "color": "#2563eb"
     },
     {
-     "fn": "(2*sin(x*pi/180)-1)^2",
-     "label": "y = u² = (2sin x − 1)²  (범위 [0,9])",
+     "fn": "(a*sin(x*pi/180)+b-p)^2",
+     "label": "$y = (u-p)^2$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "0*x + (b+abs(a))",
+     "dashed": true,
+     "color": "#93c5fd",
+     "label": "$u$의 최댓값"
+    },
+    {
+     "fn": "0*x + (b-abs(a))",
+     "dashed": true,
+     "color": "#93c5fd",
+     "label": "$u$의 최솟값"
+    },
+    {
+     "fn": "0*x + p",
+     "dashed": true,
+     "color": "#16a34a",
+     "label": "외부함수 꼭짓점 $u=p$"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "a*sin(x*pi/180)+b-p",
+     "in": [
+      0,
+      90
+     ],
+     "label": "$u=p$"
+    },
+    {
+     "fn": "a*sin(x*pi/180)+b-p",
+     "in": [
+      90,
+      270
+     ],
+     "label": "$u=p$"
+    },
+    {
+     "fn": "a*sin(x*pi/180)+b-p",
+     "in": [
+      270,
+      360
+     ],
+     "label": "$u=p$"
     }
    ],
    "points": [
@@ -64,12 +135,37 @@
     "digits": 3
    },
    {
-    "label": "치환변수  u = 2sin x − 1",
+    "label": "치환변수  u = a·sin x + b",
     "expr": "u",
     "digits": 3
    },
    {
-    "label": "외부함수 출력  y = u²",
+    "label": "u의 범위 (최솟값)",
+    "expr": "umin",
+    "digits": 3
+   },
+   {
+    "label": "u의 범위 (최댓값)",
+    "expr": "umax",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점 u=p가 범위 안? (1=예, 0=아니오)",
+    "expr": "inside",
+    "digits": 0
+   },
+   {
+    "label": "y의 최솟값",
+    "expr": "ymin",
+    "digits": 3
+   },
+   {
+    "label": "y의 최댓값",
+    "expr": "ymax",
+    "digits": 3
+   },
+   {
+    "label": "현재 y 값",
     "expr": "y",
     "digits": 3
    }
@@ -78,52 +174,100 @@
  "recipe": {
   "samples": [
    {
+    "a": 2,
+    "b": -1,
+    "p": 0,
     "t": 30
    },
    {
+    "a": 2,
+    "b": -1,
+    "p": 0,
+    "t": 270
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "p": 0,
     "t": 90
    },
    {
-    "t": 150
-   },
-   {
-    "t": 270
+    "a": 0,
+    "b": 1,
+    "p": 0,
+    "t": 45
    }
   ],
   "invariants": [
-   "u-(2*sin(rad)-1)",
-   "y-u^2",
+   "u-(a*sin(rad)+b)",
+   "y-(u-p)^2",
+   "umax-umin-2*abs(a)",
    "sin(rad)^2+cos(rad)^2-1"
   ],
   "oracle": [
    {
     "params": {
+     "a": 2,
+     "b": -1,
+     "p": 0,
      "t": 30
     },
     "expect": {
      "s": 0.5,
      "u": 0,
-     "y": 0
+     "y": 0,
+     "umin": -3,
+     "umax": 1,
+     "inside": 1,
+     "ymin": 0,
+     "ymax": 9
     }
    },
    {
     "params": {
-     "t": 90
-    },
-    "expect": {
-     "s": 1,
-     "u": 1,
-     "y": 1
-    }
-   },
-   {
-    "params": {
+     "a": 2,
+     "b": -1,
+     "p": 0,
      "t": 270
     },
     "expect": {
-     "s": -1,
      "u": -3,
-     "y": 9
+     "y": 9,
+     "ymax": 9
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "p": 0,
+     "t": 90
+    },
+    "expect": {
+     "u": 3,
+     "y": 9,
+     "umin": 1,
+     "umax": 3,
+     "inside": 0,
+     "ymin": 1,
+     "ymax": 9
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "p": 0,
+     "t": 45
+    },
+    "expect": {
+     "u": 1,
+     "y": 1,
+     "umin": 1,
+     "umax": 1,
+     "inside": 0,
+     "ymin": 1,
+     "ymax": 1
     }
    }
   ],

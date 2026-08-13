@@ -4,50 +4,104 @@
   "title": "극한의 개념",
   "params": [
    {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
     "name": "x0",
     "label": "x",
     "type": "slider",
-    "min": 0,
-    "max": 4,
+    "min": -1,
+    "max": 4.5,
     "init": 1.5,
     "step": 0.01,
     "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "h",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "eps",
+    "label": "ε",
+    "type": "slider",
+    "min": 0.1,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
    }
   ],
-  "scope": "a=2; L=4; fx=(x0^2-4)/(x0-2); gx=x0+2; actual_diff=abs(fx-L); expected_diff=abs(x0-a)",
+  "scope": "L = 2*a; fx = (x0^2 - a^2)/(x0 - a) + (x0 > a ? h : 0); Lleft = 2*a; Lright = 2*a + h; gap = abs(h); delta = abs(h) < eps ? eps - abs(h) : 0; actual_diff = abs(fx - L); expected_diff = abs(x0 - a); inband = actual_diff < eps ? 1 : 0",
   "plot": {
    "range": [
-    0,
-    4
+    -1,
+    4.5
    ],
    "yRange": [
-    0,
-    6
+    -2,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "(x^2-4)/(x-2)",
-     "label": "f(x)",
+     "fn": "x + a",
+     "range": ["=-1", "=a"],
+     "label": "$f(x)\\ (x<a)$",
      "color": "blue"
     },
     {
-     "fn": "x+2",
-     "label": "g(x)=x+2",
-     "color": "red"
+     "fn": "x + a + h",
+     "range": ["=a", "=4.5"],
+     "label": "$f(x)\\ (x>a)$",
+     "color": "blue"
     },
     {
-     "fn": "4",
-     "label": "L=4",
+     "fn": "2*a",
+     "label": "$L=2a$",
      "color": "green"
+    },
+    {
+     "fn": "2*a + eps",
+     "label": "$L+\\varepsilon$",
+     "color": "orange",
+     "dashed": true
+    },
+    {
+     "fn": "2*a - eps",
+     "label": "$L-\\varepsilon$",
+     "color": "orange",
+     "dashed": true
     }
    ],
    "points": [
     [
      "=x0",
      "=fx"
+    ],
+    [
+     "=a-delta",
+     "=L"
+    ],
+    [
+     "=a+delta",
+     "=L"
     ]
    ],
-   "pointsLabel": "$(x, f(x))$"
+   "pointsLabel": "$(x,f(x))$ 와 $\\delta$ 구간"
   },
   "readout": [
    {
@@ -56,78 +110,127 @@
     "digits": 2
    },
    {
-    "label": "f(x)",
+    "label": "$f(x)$",
     "expr": "fx",
     "digits": 4
    },
    {
-    "label": "g(x)=x+2",
-    "expr": "gx",
-    "digits": 4
+    "label": "좌극한",
+    "expr": "Lleft",
+    "digits": 3
    },
    {
-    "label": "|f(x)-4|",
+    "label": "우극한",
+    "expr": "Lright",
+    "digits": 3
+   },
+   {
+    "label": "$|f(x)-L|$",
     "expr": "actual_diff",
     "digits": 4
    },
    {
-    "label": "|x-2|",
-    "expr": "expected_diff",
-    "digits": 4
+    "label": "$\\delta$ (허용 폭)",
+    "expr": "delta",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "x0": 1.5
+    "a": 1,
+    "x0": 0,
+    "h": 0,
+    "eps": 0.5
    },
    {
-    "x0": 1.99
+    "a": 2,
+    "x0": 1.5,
+    "h": 0,
+    "eps": 0.5
    },
    {
-    "x0": 2.01
+    "a": 2,
+    "x0": 2.5,
+    "h": 1,
+    "eps": 0.5
    },
    {
-    "x0": 2.5
+    "a": 0.5,
+    "x0": 1.5,
+    "h": -1,
+    "eps": 1.5
    }
   ],
   "invariants": [
-   "abs(actual_diff - expected_diff)",
-   "abs(fx - gx)"
+   "abs(Lright - Lleft - h)",
+   "abs(L - 2*a)",
+   "abs(fx - (x0 + a + (x0 > a ? h : 0)))"
   ],
   "oracle": [
    {
     "params": {
-     "x0": 1.5
+     "a": 1,
+     "x0": 0,
+     "h": 0,
+     "eps": 0.5
+    },
+    "expect": {
+     "fx": 1,
+     "L": 2,
+     "Lleft": 2,
+     "Lright": 2,
+     "actual_diff": 1,
+     "delta": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "x0": 1.5,
+     "h": 0,
+     "eps": 0.5
     },
     "expect": {
      "fx": 3.5,
-     "gx": 3.5,
+     "L": 4,
+     "Lleft": 4,
+     "Lright": 4,
      "actual_diff": 0.5,
-     "expected_diff": 0.5
+     "delta": 0.5
     }
    },
    {
     "params": {
-     "x0": 1.99
+     "a": 2,
+     "x0": 2.5,
+     "h": 1,
+     "eps": 0.5
     },
     "expect": {
-     "fx": 3.99,
-     "gx": 3.99,
-     "actual_diff": 0.01,
-     "expected_diff": 0.01
+     "fx": 5.5,
+     "L": 4,
+     "Lleft": 4,
+     "Lright": 5,
+     "actual_diff": 1.5,
+     "delta": 0
     }
    },
    {
     "params": {
-     "x0": 2.5
+     "a": 0.5,
+     "x0": 1.5,
+     "h": -1,
+     "eps": 1.5
     },
     "expect": {
-     "fx": 4.5,
-     "gx": 4.5,
-     "actual_diff": 0.5,
-     "expected_diff": 0.5
+     "fx": 1,
+     "L": 1,
+     "Lleft": 1,
+     "Lright": 0,
+     "actual_diff": 0,
+     "delta": 0.5
     }
    }
   ],

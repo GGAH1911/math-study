@@ -4,108 +4,239 @@
   "title": "연속함수: 극한값과 함숫값이 만날 때",
   "params": [
    {
-    "name": "k",
-    "label": "f(1) (함숫값)",
+    "name": "a",
+    "label": "관찰점 a",
     "type": "slider",
     "min": 0,
-    "max": 4,
+    "max": 3,
     "init": 1,
-    "step": 0.1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "기울기 m",
+    "type": "slider",
+    "min": -1,
+    "max": 2,
+    "init": 1,
+    "step": 0.25,
+    "unit": ""
+   },
+   {
+    "name": "j",
+    "label": "점프 j (0이면 이어짐)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.25,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "함숫값 f(a)",
+    "type": "slider",
+    "min": -2,
+    "max": 6,
+    "init": 2,
+    "step": 0.25,
     "unit": ""
    }
   ],
-  "scope": "a = 1; L = a + 1; fa = k; gap = fa - L",
+  "scope": "b = 1; Lm = m*a + b; Lp = m*a + b + j; jump = Lp - Lm; gap = k - Lm; fa = k; hasLim = abs(jump) < 1e-9; cont = (hasLim and abs(gap) < 1e-9) ? 1 : 0",
   "plot": {
    "range": [
     -1,
-    3
+    4
    ],
    "yRange": [
-    -1,
-    5
+    -3,
+    7
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x+1",
-     "label": "y=x+1 (x≠1)",
+     "fn": "m*x + b",
+     "range": [
+      "=-1",
+      "=a"
+     ],
+     "label": "$x<a$ 쪽 조각",
      "color": "#2563eb"
+    },
+    {
+     "fn": "m*x + b + j",
+     "range": [
+      "=a",
+      "=4"
+     ],
+     "label": "$x>a$ 쪽 조각",
+     "color": "#f59e0b"
     }
    ],
    "points": [
     [
-     "=1",
-     "=fa"
+     "=a",
+     "=k"
     ]
    ],
-   "pointsLabel": "$(1,\\,f(1))$"
+   "pointsLabel": "$(a,\\,f(a))$"
   },
   "readout": [
    {
-    "label": "극한값 lim(x→1) f(x)",
-    "expr": "L",
+    "label": "좌극한 $\\lim_{x\\to a^-}f(x)$",
+    "expr": "Lm",
     "digits": 3
    },
    {
-    "label": "함숫값 f(1)",
+    "label": "우극한 $\\lim_{x\\to a^+}f(x)$",
+    "expr": "Lp",
+    "digits": 3
+   },
+   {
+    "label": "좌우 차이 (0이면 극한 존재)",
+    "expr": "jump",
+    "digits": 3
+   },
+   {
+    "label": "함숫값 $f(a)$",
     "expr": "fa",
     "digits": 3
    },
    {
-    "label": "차이 f(1) − L (0이면 연속)",
+    "label": "함숫값 − 극한값 (0이면 일치)",
     "expr": "gap",
     "digits": 6
+   },
+   {
+    "label": "연속이면 1, 불연속이면 0",
+    "expr": "cont",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "k": 0
-   },
-   {
-    "k": 1
-   },
-   {
+    "a": 1,
+    "m": 1,
+    "j": 0,
     "k": 2
    },
    {
-    "k": 3.5
+    "a": 1,
+    "m": 1,
+    "j": 0,
+    "k": 4
+   },
+   {
+    "a": 1,
+    "m": 1,
+    "j": 2,
+    "k": 2
+   },
+   {
+    "a": 2,
+    "m": -1,
+    "j": 0,
+    "k": -1
+   },
+   {
+    "a": 0,
+    "m": 2,
+    "j": -1.5,
+    "k": 1
+   },
+   {
+    "a": 3,
+    "m": 2,
+    "j": 3,
+    "k": 6
    }
   ],
   "invariants": [
-   "L - (a + 1)",
-   "gap - (fa - L)",
-   "fa - k"
+   "Lm - (m*a + b)",
+   "jump - j",
+   "fa - k",
+   "gap - (k - m*a - b)"
   ],
   "oracle": [
    {
     "params": {
+     "a": 1,
+     "m": 1,
+     "j": 0,
      "k": 2
     },
     "expect": {
+     "Lm": 2,
+     "Lp": 2,
      "fa": 2,
-     "L": 2,
-     "gap": 0
+     "jump": 0,
+     "gap": 0,
+     "cont": 1
     }
    },
    {
     "params": {
-     "k": 0
+     "a": 1,
+     "m": 1,
+     "j": 0,
+     "k": 4
     },
     "expect": {
-     "fa": 0,
-     "L": 2,
-     "gap": -2
+     "Lm": 2,
+     "Lp": 2,
+     "jump": 0,
+     "gap": 2,
+     "cont": 0
     }
    },
    {
     "params": {
-     "k": 3.5
+     "a": 1,
+     "m": 1,
+     "j": 2,
+     "k": 2
     },
     "expect": {
-     "fa": 3.5,
-     "L": 2,
-     "gap": 1.5
+     "Lm": 2,
+     "Lp": 4,
+     "jump": 2,
+     "gap": 0,
+     "cont": 0
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "m": -1,
+     "j": 0,
+     "k": -1
+    },
+    "expect": {
+     "Lm": -1,
+     "Lp": -1,
+     "jump": 0,
+     "gap": 0,
+     "cont": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "m": 2,
+     "j": -1.5,
+     "k": 1
+    },
+    "expect": {
+     "Lm": 1,
+     "Lp": -0.5,
+     "jump": -1.5,
+     "gap": 0,
+     "cont": 0
     }
    }
   ],

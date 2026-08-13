@@ -4,38 +4,95 @@
   "title": "최댓값 구하기",
   "params": [
    {
+    "name": "a",
+    "label": "왼쪽 끝점 a",
+    "type": "slider",
+    "min": -4,
+    "max": 3,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
     "name": "b",
     "label": "오른쪽 끝점 b",
     "type": "slider",
-    "min": 0.5,
-    "max": 3.5,
-    "init": 1.5,
+    "min": -3,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "p",
+    "label": "$f'(x)=x^2+px+q$ 의 p",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "$f'(x)=x^2+px+q$ 의 q",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -2,
     "step": 0.1,
     "unit": ""
    }
   ],
-  "scope": "xmax = (b <= 2) ? b : 2; M = (b <= 2) ? (b - 1) : 1",
+  "scope": "lo = min(a, b); hi0 = max(a, b); hi = (hi0 - lo < 0.4) ? (lo + 0.4) : hi0; D = p^2 - 4*q; sq = (D > 0) ? sqrt(D) : 0; x1 = (-p - sq)/2; x2 = (-p + sq)/2; fLo = lo^3/3 + p*lo^2/2 + q*lo; fHi = hi^3/3 + p*hi^2/2 + q*hi; f1 = x1^3/3 + p*x1^2/2 + q*x1; f2 = x2^3/3 + p*x2^2/2 + q*x2; has1 = (D > 0) ? ((x1 >= lo) ? ((x1 <= hi) ? 1 : 0) : 0) : 0; has2 = (D > 0) ? ((x2 >= lo) ? ((x2 <= hi) ? 1 : 0) : 0) : 0; c1 = (has1 == 1) ? f1 : -1e9; c2 = (has2 == 1) ? f2 : -1e9; d1 = (has1 == 1) ? f1 : 1e9; d2 = (has2 == 1) ? f2 : 1e9; M = max(fLo, fHi, c1, c2); xmax = (M == c1) ? x1 : ((M == c2) ? x2 : ((M == fLo) ? lo : hi)); mMin = min(fLo, fHi, d1, d2); xmin = (mMin == d1) ? x1 : ((mMin == d2) ? x2 : ((mMin == fLo) ? lo : hi)); px1 = (has1 == 1) ? x1 : lo; py1 = (has1 == 1) ? f1 : fLo; px2 = (has2 == 1) ? x2 : hi; py2 = (has2 == 1) ? f2 : fHi; xv = -p/2; nCand = has1 + has2",
   "plot": {
-   "range": [
-    0,
-    "=b"
-   ],
-   "yRange": [
-    -1.5,
-    1.5
-   ],
+   "range": [-4, 4],
+   "yRange": [-14, 14],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "1 - abs(x - 2)",
-     "label": "f(x)",
-     "color": "blue"
+     "fn": "x^3/3 + p*x^2/2 + q*x",
+     "label": "$f(x)$ (구간 밖)",
+     "color": "#94a3b8"
+    },
+    {
+     "fn": "x^3/3 + p*x^2/2 + q*x",
+     "range": ["=lo", "=hi"],
+     "label": "$f(x)$, $x\\in[a,b]$",
+     "color": "#2563eb"
     },
     {
      "fn": "M",
-     "label": "최댓값",
-     "color": "red"
+     "label": "최댓값 $M$",
+     "color": "#ef4444"
+    },
+    {
+     "fn": "x^2 + p*x + q",
+     "label": "$f'(x)$",
+     "color": "#22c55e"
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "x^2 + p*x + q",
+     "in": [-4, "=xv"],
+     "label": "$f'(x)=0$ 후보"
+    },
+    {
+     "fn": "x^2 + p*x + q",
+     "in": ["=xv", 4],
+     "label": "$f'(x)=0$ 후보"
+    }
+   ],
+   "points": [
+    ["=lo", "=fLo"],
+    ["=hi", "=fHi"],
+    ["=px1", "=py1"],
+    ["=px2", "=py2"],
+    ["=xmax", "=M"]
+   ],
+   "pointsLabel": "후보점: 양 끝점 · 극값 (이 중 가장 높은 것이 최댓값)"
   },
   "readout": [
    {
@@ -49,57 +106,62 @@
     "digits": 3
    },
    {
-    "label": "우측 끝점 f(b)",
-    "expr": "1 - abs(b - 2)",
+    "label": "왼쪽 끝점 f(a)",
+    "expr": "fLo",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 끝점 f(b)",
+    "expr": "fHi",
+    "digits": 3
+   },
+   {
+    "label": "구간 안 극값 후보 개수",
+    "expr": "nCand",
+    "digits": 0
+   },
+   {
+    "label": "최솟값 f(x)",
+    "expr": "mMin",
     "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
-   {
-    "b": 1.2
-   },
-   {
-    "b": 1.8
-   },
-   {
-    "b": 2
-   },
-   {
-    "b": 3
-   }
+   { "a": -3, "b": 2, "p": -1, "q": -2 },
+   { "a": -3, "b": 4, "p": -1, "q": -2 },
+   { "a": 0, "b": 1.5, "p": -1, "q": -2 },
+   { "a": -1, "b": 2, "p": 0, "q": 2 },
+   { "a": -4, "b": 4, "p": 2, "q": -1 },
+   { "a": 1, "b": 1, "p": -1, "q": -2 }
   ],
   "invariants": [
-   "M - max([-1, 1 - abs(b - 2), (b > 2 ? 1 : -100)])"
+   "M - (xmax^3/3 + p*xmax^2/2 + q*xmax)",
+   "mMin - (xmin^3/3 + p*xmin^2/2 + q*xmin)",
+   "max(0, fLo - M) + max(0, fHi - M)",
+   "max(0, lo - xmax) + max(0, xmax - hi)",
+   "has1*(x1^2 + p*x1 + q) + has2*(x2^2 + p*x2 + q)",
+   "max(0, ((lo+hi)/2)^3/3 + p*((lo+hi)/2)^2/2 + q*((lo+hi)/2) - M)",
+   "max(0, (lo+(hi-lo)/4)^3/3 + p*(lo+(hi-lo)/4)^2/2 + q*(lo+(hi-lo)/4) - M)",
+   "max(0, mMin - M)"
   ],
   "oracle": [
    {
-    "params": {
-     "b": 1.5
-    },
-    "expect": {
-     "xmax": 1.5,
-     "M": 0.5
-    }
+    "params": { "a": -3, "b": 2, "p": -1, "q": -2 },
+    "expect": { "xmax": -1, "M": 1.1666666667, "xmin": -3, "mMin": -7.5, "nCand": 2 }
    },
    {
-    "params": {
-     "b": 2
-    },
-    "expect": {
-     "xmax": 2,
-     "M": 1
-    }
+    "params": { "a": -3, "b": 4, "p": -1, "q": -2 },
+    "expect": { "xmax": 4, "M": 5.3333333333, "xmin": -3, "mMin": -7.5 }
    },
    {
-    "params": {
-     "b": 3
-    },
-    "expect": {
-     "xmax": 2,
-     "M": 1
-    }
+    "params": { "a": 0, "b": 1.5, "p": -1, "q": -2 },
+    "expect": { "xmax": 0, "M": 0, "xmin": 1.5, "mMin": -3, "nCand": 0 }
+   },
+   {
+    "params": { "a": -1, "b": 2, "p": 0, "q": 2 },
+    "expect": { "xmax": 2, "M": 6.6666666667, "xmin": -1, "mMin": -2.3333333333, "nCand": 0 }
    }
   ],
   "tol": 0.000001

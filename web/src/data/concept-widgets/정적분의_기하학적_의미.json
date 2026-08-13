@@ -3,114 +3,63 @@
  "spec": {
   "title": "정적분의 기하학적 의미",
   "params": [
-   {
-    "name": "b",
-    "label": "b (적분 상한)",
-    "type": "slider",
-    "min": 0,
-    "max": 6.283185307179586,
-    "init": 3.141592653589793,
-    "step": 0.1,
-    "unit": "rad"
-   }
+   { "name": "p", "label": "p ($x^2$ 계수)", "type": "slider", "min": -2, "max": 2, "init": 0.5, "step": 0.1 },
+   { "name": "q", "label": "q ($x$ 계수)", "type": "slider", "min": -3, "max": 3, "init": 0, "step": 0.1 },
+   { "name": "r", "label": "r (상수항)", "type": "slider", "min": -3, "max": 3, "init": -2, "step": 0.1 },
+   { "name": "a", "label": "a (아래끝)", "type": "slider", "min": -3.5, "max": 3.5, "init": -3, "step": 0.1 },
+   { "name": "b", "label": "b (위끝)", "type": "slider", "min": -3.5, "max": 3.5, "init": 1, "step": 0.1 }
   ],
-  "scope": "height = sin(b); integral = 1 - cos(b); pos_area = b < pi ? (1 - cos(b)) : 2; neg_area = b < pi ? 0 : (cos(b) + 1)",
+  "scope": "lo = min(a, b); hi = max(a, b); dir = b >= a ? 1 : -1; pd = p != 0 ? p : 1; qd = q != 0 ? q : 1; disc = q^2 - 4*p*r; sq = sqrt(max(disc, 0)); z1 = (-q - sq)/(2*pd); z2 = (-q + sq)/(2*pd); zlin = -r/qd; c1 = p != 0 ? (disc > 0 ? min(z1, z2) : lo) : (q != 0 ? zlin : lo); c2 = p != 0 ? (disc > 0 ? max(z1, z2) : lo) : (q != 0 ? zlin : lo); k1 = min(max(c1, lo), hi); k2 = min(max(c2, lo), hi); Flo = p*lo^3/3 + q*lo^2/2 + r*lo; Fhi = p*hi^3/3 + q*hi^2/2 + r*hi; Fk1 = p*k1^3/3 + q*k1^2/2 + r*k1; Fk2 = p*k2^3/3 + q*k2^2/2 + r*k2; Fa = p*a^3/3 + q*a^2/2 + r*a; Fb = p*b^3/3 + q*b^2/2 + r*b; signed = Fhi - Flo; area = abs(Fk1 - Flo) + abs(Fk2 - Fk1) + abs(Fhi - Fk2); pos_area = (area + signed)/2; neg_area = (area - signed)/2; integral = dir * signed; fa = p*a^2 + q*a + r; fb = p*b^2 + q*b + r; vx = p != 0 ? -q/(2*pd) : 0; hi2 = hi + (hi == lo ? 0.001 : 0)",
   "plot": {
-   "range": [
-    0,
-    6.283185307179586
-   ],
-   "yRange": [
-    -1.2,
-    1.2
-   ],
+   "range": [-4, 4],
+   "yRange": [-6, 6],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
-    {
-     "fn": "sin(x)",
-     "label": "y = sin(x)",
-     "color": "blue"
-    }
+    { "fn": "p*x^2 + q*x + r", "label": "$f(x)=px^2+qx+r$", "color": "#60a5fa" },
+    { "fn": "p*x^2 + q*x + r", "label": "$\\int_a^b f(x)\\,dx$ 영역", "color": "#a5b4fc", "closed": true, "range": ["=lo", "=hi2"] }
    ],
-   "points": [
-    [
-     "=b",
-     "=sin(b)"
-    ],
-    [
-     "=b",
-     "=0"
-    ]
+   "roots": [
+    { "fn": "p*x^2 + q*x + r", "in": [-4, "=min(max(vx, -4), 4)"], "label": "$f(x)=0$" },
+    { "fn": "p*x^2 + q*x + r", "in": ["=min(max(vx, -4), 4)", 4], "label": "$f(x)=0$" }
    ],
-   "pointsLabel": "$x=b$"
+   "points": [["=a", "=fa"], ["=b", "=fb"], ["=a", 0], ["=b", 0]],
+   "pointsLabel": "$x=a,\\ x=b$"
   },
   "readout": [
-   {
-    "label": "정적분 ∫₀ᵇ sin(x)dx",
-    "expr": "integral",
-    "digits": 4
-   },
-   {
-    "label": "양의 영역 넓이",
-    "expr": "pos_area",
-    "digits": 4
-   },
-   {
-    "label": "음의 영역 넓이(절댓값)",
-    "expr": "neg_area",
-    "digits": 4
-   }
+   { "label": "정적분 ∫ₐᵇ f(x)dx", "expr": "integral", "digits": 4 },
+   { "label": "x축 위 넓이", "expr": "pos_area", "digits": 4 },
+   { "label": "x축 아래 넓이", "expr": "neg_area", "digits": 4 },
+   { "label": "실제 넓이 합", "expr": "area", "digits": 4 },
+   { "label": "f(a)", "expr": "fa", "digits": 3 },
+   { "label": "f(b)", "expr": "fb", "digits": 3 }
   ]
  },
  "recipe": {
   "samples": [
-   {
-    "b": 0
-   },
-   {
-    "b": 1.5707963267948966
-   },
-   {
-    "b": 3.141592653589793
-   },
-   {
-    "b": 4.71238898038469
-   }
+   { "p": 0.5, "q": 0, "r": -2, "a": -3, "b": 1 },
+   { "p": 0, "q": 0, "r": 2, "a": 0, "b": 3 },
+   { "p": 0, "q": 1, "r": 0, "a": -2, "b": 2 },
+   { "p": 1, "q": 0, "r": 1, "a": -2, "b": 2 },
+   { "p": -1.5, "q": 2, "r": 1, "a": 2, "b": -1 },
+   { "p": 0.5, "q": 0, "r": -2, "a": 1, "b": 1 },
+   { "p": 2, "q": -3, "r": 0, "a": -3.5, "b": 3.5 }
   ],
   "invariants": [
-   "integral - (1 - cos(b))",
-   "integral - (pos_area - neg_area)"
+   "integral - dir*(Fhi - Flo)",
+   "integral - (Fb - Fa)",
+   "pos_area + neg_area - area",
+   "pos_area - neg_area - signed",
+   "min(pos_area, 0)",
+   "min(neg_area, 0)"
   ],
   "oracle": [
-   {
-    "params": {
-     "b": 1.5707963267948966
-    },
-    "expect": {
-     "integral": 1,
-     "pos_area": 1,
-     "neg_area": 0
-    }
-   },
-   {
-    "params": {
-     "b": 3.141592653589793
-    },
-    "expect": {
-     "integral": 2,
-     "pos_area": 2,
-     "neg_area": 0
-    }
-   },
-   {
-    "params": {
-     "b": 4.71238898038469
-    },
-    "expect": {
-     "integral": 1,
-     "pos_area": 2,
-     "neg_area": 1
-    }
-   }
+   { "params": { "p": 0, "q": 0, "r": 2, "a": 0, "b": 3 }, "expect": { "integral": 6, "pos_area": 6, "neg_area": 0 } },
+   { "params": { "p": 0, "q": 1, "r": 0, "a": -2, "b": 2 }, "expect": { "integral": 0, "pos_area": 2, "neg_area": 2, "area": 4 } },
+   { "params": { "p": 0, "q": 0, "r": 1, "a": 2, "b": 0 }, "expect": { "integral": -2, "pos_area": 2, "neg_area": 0 } },
+   { "params": { "p": 1, "q": 0, "r": -1, "a": 0, "b": 1 }, "expect": { "integral": -0.6666666666666667, "pos_area": 0, "neg_area": 0.6666666666666667 } },
+   { "params": { "p": 0.5, "q": 0, "r": -2, "a": -3, "b": 1 }, "expect": { "integral": -3.3333333333333335, "pos_area": 1.1666666666666667, "neg_area": 4.5 } },
+   { "params": { "p": 1, "q": 0, "r": -1, "a": -2, "b": 2 }, "expect": { "integral": 1.3333333333333333, "pos_area": 2.6666666666666665, "neg_area": 1.3333333333333333 } }
   ],
   "tol": 0.000001
  }

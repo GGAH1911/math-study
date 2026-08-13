@@ -1,140 +1,293 @@
 {
  "id": "functions/high-1/함수와_그래프/함수의_정의와_조건",
  "spec": {
-  "title": "연직선 판정법 — 원 x²+y²=1은 함수인가?",
+  "title": "연직선 판정법 - 이 그래프는 함수인가?",
   "params": [
+   {
+    "name": "mode",
+    "label": "그래프 (0 원·호 / 1 포물선 / 2 누운 포물선)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "thdeg",
+    "label": "원을 그리는 각도 θ° (원 모드 전용)",
+    "type": "slider",
+    "min": 30,
+    "max": 360,
+    "init": 360,
+    "step": 5
+   },
    {
     "name": "a",
     "label": "연직선 위치 x=a",
     "type": "slider",
-    "min": -1,
-    "max": 1,
+    "min": -2.2,
+    "max": 2.2,
     "init": 0.5,
-    "step": 0.01
+    "step": 0.05
    }
   ],
-  "scope": "yt = sqrt(1-a^2); yb = -sqrt(1-a^2); ncut = (abs(a)<1 ? 2 : (abs(a)==1 ? 1 : 0))",
+  "scope": "th = thdeg*pi/180; ac = acos(min(max(a,-1),1)); inC = abs(a)<=1+1e-9; hasT = (mode==0 and inC and ac<=th+1e-9) ? 1 : 0; hasB = (mode==0 and abs(a)<1-1e-9 and (2*pi-ac)<=th+1e-9) ? 1 : 0; inP = (mode==1 and abs(a)<=2); inR = (mode==2 and a>=0 and a<=2.56); ncut = mode==0 ? hasT+hasB : (mode==1 ? (inP ? 1 : 0) : (inR ? (a>0 ? 2 : 1) : 0)); yc = sqrt(max(1-a^2,0)); y1 = mode==0 ? (hasT==1 ? yc : (hasB==1 ? -yc : NaN)) : (mode==1 ? (inP ? a^2-1 : NaN) : (inR ? sqrt(a) : NaN)); y2 = ncut==2 ? (mode==0 ? -yc : -sqrt(a)) : y1; isfn = mode==0 ? (th<=pi+1e-9 ? 1 : 0) : (mode==1 ? 1 : 0)",
   "geometry": {
    "range": [
-    -1.4,
-    1.4
+    -2.4,
+    2.8
    ],
    "yRange": [
-    -1.4,
-    1.4
+    -2.2,
+    3.2
    ],
    "showAxes": true,
    "showGrid": true,
    "shapes": [
     {
-     "type": "circle",
-     "center": [
-      0,
-      0
+     "type": "parametric",
+     "x": "cos(t)",
+     "y": "sin(t)",
+     "tRange": [
+      "=0",
+      "=mode==0 ? th : 0"
      ],
-     "radius": 1,
-     "label": "x²+y²=1"
+     "label": "$x^2+y^2=1$ 의 호"
+    },
+    {
+     "type": "parametric",
+     "x": "t",
+     "y": "t^2-1",
+     "tRange": [
+      "=-2",
+      "=mode==1 ? 2 : -2"
+     ],
+     "label": "$y=x^2-1$"
+    },
+    {
+     "type": "parametric",
+     "x": "t^2",
+     "y": "t",
+     "tRange": [
+      "=-1.6",
+      "=mode==2 ? 1.6 : -1.6"
+     ],
+     "label": "$x=y^2$"
     },
     {
      "type": "segment",
      "from": [
       "=a",
-      -1.35
+      -2.2
      ],
      "to": [
       "=a",
-      1.35
+      3.2
      ],
-     "label": "연직선 x=a"
+     "dashed": true,
+     "label": "$x=a$"
     },
     {
      "type": "point",
      "at": [
       "=a",
-      "=yt"
+      "=y1"
      ],
-     "label": "y=+√(1-a²)"
+     "label": "$y_1$"
     },
     {
      "type": "point",
      "at": [
       "=a",
-      "=yb"
+      "=y2"
      ],
-     "label": "y=−√(1-a²)"
+     "label": "$y_2$"
     }
    ]
   },
   "readout": [
    {
-    "label": "위쪽 교점 y",
-    "expr": "yt",
-    "digits": 3
-   },
-   {
-    "label": "아래쪽 교점 y",
-    "expr": "yb",
-    "digits": 3
-   },
-   {
     "label": "교점 개수",
     "expr": "ncut",
     "digits": 0
+   },
+   {
+    "label": "함수인가 (1=예)",
+    "expr": "isfn",
+    "digits": 0
+   },
+   {
+    "label": "교점 $y_1$",
+    "expr": "y1",
+    "digits": 3
+   },
+   {
+    "label": "교점 $y_2$",
+    "expr": "y2",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
+    "mode": 0,
+    "thdeg": 360,
     "a": 0
    },
    {
+    "mode": 0,
+    "thdeg": 360,
     "a": 0.6
    },
    {
-    "a": 0.8
+    "mode": 0,
+    "thdeg": 180,
+    "a": -0.6
    },
    {
-    "a": -0.6
+    "mode": 0,
+    "thdeg": 270,
+    "a": 0.6
+   },
+   {
+    "mode": 1,
+    "thdeg": 360,
+    "a": 1.5
+   },
+   {
+    "mode": 1,
+    "thdeg": 360,
+    "a": -0.8
+   },
+   {
+    "mode": 2,
+    "thdeg": 360,
+    "a": 1
+   },
+   {
+    "mode": 2,
+    "thdeg": 360,
+    "a": 0.25
    }
   ],
   "invariants": [
-   "a^2 + yt^2 - 1",
-   "a^2 + yb^2 - 1",
-   "yt + yb"
+   "mode==0 ? a^2+y1^2-1 : (mode==1 ? y1-(a^2-1) : a-y1^2)",
+   "mode==0 ? a^2+y2^2-1 : (mode==1 ? y2-(a^2-1) : a-y2^2)",
+   "ncut==2 ? y1+y2 : 0",
+   "ncut==1 ? y1-y2 : 0"
   ],
   "oracle": [
    {
     "params": {
-     "a": 0
-    },
-    "expect": {
-     "yt": 1,
-     "yb": -1,
-     "ncut": 2
-    }
-   },
-   {
-    "params": {
+     "mode": 0,
+     "thdeg": 360,
      "a": 0.6
     },
     "expect": {
-     "yt": 0.8,
-     "yb": -0.8,
-     "ncut": 2
+     "y1": 0.8,
+     "y2": -0.8,
+     "ncut": 2,
+     "isfn": 0
     }
    },
    {
     "params": {
-     "a": 0.8
+     "mode": 0,
+     "thdeg": 180,
+     "a": 0.6
     },
     "expect": {
-     "yt": 0.6,
-     "yb": -0.6,
-     "ncut": 2
+     "y1": 0.8,
+     "y2": 0.8,
+     "ncut": 1,
+     "isfn": 1
+    }
+   },
+   {
+    "params": {
+     "mode": 0,
+     "thdeg": 360,
+     "a": 1
+    },
+    "expect": {
+     "y1": 0,
+     "ncut": 1,
+     "isfn": 0
+    }
+   },
+   {
+    "params": {
+     "mode": 0,
+     "thdeg": 360,
+     "a": 1.8
+    },
+    "expect": {
+     "ncut": 0,
+     "isfn": 0
+    }
+   },
+   {
+    "params": {
+     "mode": 1,
+     "thdeg": 360,
+     "a": 1.5
+    },
+    "expect": {
+     "y1": 1.25,
+     "ncut": 1,
+     "isfn": 1
+    }
+   },
+   {
+    "params": {
+     "mode": 1,
+     "thdeg": 360,
+     "a": -0.8
+    },
+    "expect": {
+     "y1": -0.36,
+     "ncut": 1,
+     "isfn": 1
+    }
+   },
+   {
+    "params": {
+     "mode": 2,
+     "thdeg": 360,
+     "a": 1
+    },
+    "expect": {
+     "y1": 1,
+     "y2": -1,
+     "ncut": 2,
+     "isfn": 0
+    }
+   },
+   {
+    "params": {
+     "mode": 2,
+     "thdeg": 360,
+     "a": 0
+    },
+    "expect": {
+     "ncut": 1,
+     "y1": 0,
+     "isfn": 0
+    }
+   },
+   {
+    "params": {
+     "mode": 2,
+     "thdeg": 360,
+     "a": -0.5
+    },
+    "expect": {
+     "ncut": 0,
+     "isfn": 0
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

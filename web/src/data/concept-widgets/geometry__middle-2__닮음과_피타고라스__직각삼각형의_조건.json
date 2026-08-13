@@ -5,24 +5,33 @@
   "params": [
    {
     "name": "theta",
-    "label": "점 C 위치 θ",
+    "label": "점 C 방향 θ",
     "type": "slider",
     "min": 2,
     "max": 358,
     "init": 60,
     "step": 1,
     "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "중심 O에서 C까지 거리 r (원의 반지름은 1)",
+    "type": "slider",
+    "min": 0.15,
+    "max": 2.0,
+    "init": 1.0,
+    "step": 0.01
    }
   ],
-  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); dax=-1-cx; day=-cy; dbx=1-cx; dby=-cy; dot=dax*dbx+day*dby; a2=dax^2+day^2; b2=dbx^2+dby^2; c2=4; ang=acos(dot/(sqrt(a2)*sqrt(b2)))*180/pi",
+  "scope": "rad=theta*pi/180; cx=r*cos(rad); cy=r*sin(rad); dax=-1-cx; day=-cy; dbx=1-cx; dby=-cy; dot=dax*dbx+day*dby; a2=dax^2+day^2; b2=dbx^2+dby^2; c2=4; den=sqrt(a2)*sqrt(b2); den=den<1e-9?1e-9:den; q=dot/den; q=q>1?1:(q<-1?-1:q); ang=acos(q)*180/pi; gap=a2+b2-c2; verdict=gap>1e-9?1:(gap<-1e-9?-1:0)",
   "geometry": {
    "range": [
-    -1.6,
-    1.6
+    -2.4,
+    2.4
    ],
    "yRange": [
-    -1.3,
-    1.4
+    -2.2,
+    2.4
    ],
    "showAxes": true,
    "showGrid": true,
@@ -45,7 +54,7 @@
       1,
       0
      ],
-     "label": "AB(지름=빗변)"
+     "label": "AB (지름 = c)"
     },
     {
      "type": "point",
@@ -66,6 +75,27 @@
     {
      "type": "point",
      "at": [
+      0,
+      0
+     ],
+     "label": "O"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "dashed": true,
+     "label": "r"
+    },
+    {
+     "type": "point",
+     "at": [
       "=cx",
       "=cy"
      ],
@@ -81,7 +111,7 @@
       -1,
       0
      ],
-     "label": "CA"
+     "label": "CA = b"
     },
     {
      "type": "segment",
@@ -93,7 +123,7 @@
       1,
       0
      ],
-     "label": "CB"
+     "label": "CB = a"
     }
    ]
   },
@@ -117,59 +147,105 @@
     "label": "AB²",
     "expr": "c2",
     "digits": 4
+   },
+   {
+    "label": "(CA²+CB²) − AB²",
+    "expr": "gap",
+    "digits": 4
+   },
+   {
+    "label": "판정 (1: 예각 · 0: 직각 · −1: 둔각)",
+    "expr": "verdict",
+    "digits": 0
+   },
+   {
+    "label": "r² − 1 (= 내적과 같다)",
+    "expr": "r^2-1",
+    "digits": 4
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "theta": 30
+    "theta": 30,
+    "r": 1
    },
    {
-    "theta": 60
+    "theta": 60,
+    "r": 0.5
    },
    {
-    "theta": 120
+    "theta": 120,
+    "r": 1.5
    },
    {
-    "theta": 210
+    "theta": 210,
+    "r": 1
+   },
+   {
+    "theta": 180,
+    "r": 1
+   },
+   {
+    "theta": 90,
+    "r": 0.15
    }
   ],
   "invariants": [
-   "dot",
-   "cx^2+cy^2-1",
-   "a2+b2-c2"
+   "dot-(cx^2+cy^2-1)",
+   "(a2+b2-c2)-2*dot",
+   "cx^2+cy^2-r^2"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 90
+     "theta": 90,
+     "r": 1
     },
     "expect": {
      "cx": 0,
      "cy": 1,
      "dot": 0,
-     "ang": 90
+     "gap": 0,
+     "ang": 90,
+     "verdict": 0
     }
    },
    {
     "params": {
-     "theta": 30
+     "theta": 90,
+     "r": 0.5
     },
     "expect": {
-     "cx": 0.8660254037844387,
+     "cx": 0,
      "cy": 0.5,
-     "dot": 0,
-     "ang": 90
+     "dot": -0.75,
+     "gap": -1.5,
+     "ang": 126.86989764584402,
+     "verdict": -1
     }
    },
    {
     "params": {
-     "theta": 120
+     "theta": 90,
+     "r": 1.5
     },
     "expect": {
-     "cx": -0.5,
-     "cy": 0.8660254037844387,
+     "cx": 0,
+     "cy": 1.5,
+     "dot": 1.25,
+     "gap": 2.5,
+     "ang": 67.38013505195957,
+     "verdict": 1
+    }
+   },
+   {
+    "params": {
+     "theta": 30,
+     "r": 1
+    },
+    "expect": {
      "dot": 0,
      "ang": 90
     }

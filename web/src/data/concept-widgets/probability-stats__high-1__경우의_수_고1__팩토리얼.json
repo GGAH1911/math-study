@@ -5,15 +5,24 @@
   "params": [
    {
     "name": "n",
-    "label": "n",
+    "label": "n (물건 수)",
     "type": "slider",
     "min": 0,
     "max": 10,
     "init": 5,
     "step": 1
+   },
+   {
+    "name": "r",
+    "label": "r (채울 자리)",
+    "type": "slider",
+    "min": 0,
+    "max": 10,
+    "init": 3,
+    "step": 1
    }
   ],
-  "scope": "fact = factorial(n); ratio = factorial(n+1) / fact;",
+  "scope": "rr = r > n ? n : r; fact = factorial(n); restf = factorial(n - rr); perm = fact / restf; ratio = factorial(n+1) / fact;",
   "plot": {
    "range": [
     0,
@@ -26,7 +35,7 @@
    "fns": [
     {
      "fn": "factorial(x)",
-     "label": "n!",
+     "label": "$n!$",
      "color": "#1f77b4"
     }
    ],
@@ -38,13 +47,84 @@
    ],
    "pointsLabel": "$(n,\\ n!)$"
   },
+  "geometry": {
+   "range": [
+    0,
+    11.5
+   ],
+   "yRange": [
+    0,
+    11
+   ],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "text",
+     "at": [0.3, 10.6],
+     "text": "각 자리에 올 수 있는 선택지 수"
+    },
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=1-0.4","0"], ["=1+0.4","0"], ["=1+0.4","=1<=rr ? n-1+1 : NaN"], ["=1-0.4","=1<=rr ? n-1+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=2-0.4","0"], ["=2+0.4","0"], ["=2+0.4","=2<=rr ? n-2+1 : NaN"], ["=2-0.4","=2<=rr ? n-2+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=3-0.4","0"], ["=3+0.4","0"], ["=3+0.4","=3<=rr ? n-3+1 : NaN"], ["=3-0.4","=3<=rr ? n-3+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=4-0.4","0"], ["=4+0.4","0"], ["=4+0.4","=4<=rr ? n-4+1 : NaN"], ["=4-0.4","=4<=rr ? n-4+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=5-0.4","0"], ["=5+0.4","0"], ["=5+0.4","=5<=rr ? n-5+1 : NaN"], ["=5-0.4","=5<=rr ? n-5+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=6-0.4","0"], ["=6+0.4","0"], ["=6+0.4","=6<=rr ? n-6+1 : NaN"], ["=6-0.4","=6<=rr ? n-6+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=7-0.4","0"], ["=7+0.4","0"], ["=7+0.4","=7<=rr ? n-7+1 : NaN"], ["=7-0.4","=7<=rr ? n-7+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=8-0.4","0"], ["=8+0.4","0"], ["=8+0.4","=8<=rr ? n-8+1 : NaN"], ["=8-0.4","=8<=rr ? n-8+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=9-0.4","0"], ["=9+0.4","0"], ["=9+0.4","=9<=rr ? n-9+1 : NaN"], ["=9-0.4","=9<=rr ? n-9+1 : NaN"]]},
+    {"type": "polygon", "fill": "#4f46e5", "fillOpacity": 0.85, "stroke": "#4f46e5", "closed": true,
+     "vertices": [["=10-0.4","0"], ["=10+0.4","0"], ["=10+0.4","=10<=rr ? n-10+1 : NaN"], ["=10-0.4","=10<=rr ? n-10+1 : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=1-0.4","0"], ["=1+0.4","0"], ["=1+0.4","=1>rr ? (1<=n ? n-1+1 : NaN) : NaN"], ["=1-0.4","=1>rr ? (1<=n ? n-1+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=2-0.4","0"], ["=2+0.4","0"], ["=2+0.4","=2>rr ? (2<=n ? n-2+1 : NaN) : NaN"], ["=2-0.4","=2>rr ? (2<=n ? n-2+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=3-0.4","0"], ["=3+0.4","0"], ["=3+0.4","=3>rr ? (3<=n ? n-3+1 : NaN) : NaN"], ["=3-0.4","=3>rr ? (3<=n ? n-3+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=4-0.4","0"], ["=4+0.4","0"], ["=4+0.4","=4>rr ? (4<=n ? n-4+1 : NaN) : NaN"], ["=4-0.4","=4>rr ? (4<=n ? n-4+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=5-0.4","0"], ["=5+0.4","0"], ["=5+0.4","=5>rr ? (5<=n ? n-5+1 : NaN) : NaN"], ["=5-0.4","=5>rr ? (5<=n ? n-5+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=6-0.4","0"], ["=6+0.4","0"], ["=6+0.4","=6>rr ? (6<=n ? n-6+1 : NaN) : NaN"], ["=6-0.4","=6>rr ? (6<=n ? n-6+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=7-0.4","0"], ["=7+0.4","0"], ["=7+0.4","=7>rr ? (7<=n ? n-7+1 : NaN) : NaN"], ["=7-0.4","=7>rr ? (7<=n ? n-7+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=8-0.4","0"], ["=8+0.4","0"], ["=8+0.4","=8>rr ? (8<=n ? n-8+1 : NaN) : NaN"], ["=8-0.4","=8>rr ? (8<=n ? n-8+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=9-0.4","0"], ["=9+0.4","0"], ["=9+0.4","=9>rr ? (9<=n ? n-9+1 : NaN) : NaN"], ["=9-0.4","=9>rr ? (9<=n ? n-9+1 : NaN) : NaN"]]},
+    {"type": "polygon", "fill": "#64748b", "fillOpacity": 0.35, "stroke": "#64748b", "closed": true,
+     "vertices": [["=10-0.4","0"], ["=10+0.4","0"], ["=10+0.4","=10>rr ? (10<=n ? n-10+1 : NaN) : NaN"], ["=10-0.4","=10>rr ? (10<=n ? n-10+1 : NaN) : NaN"]]}
+   ]
+  },
   "readout": [
    {
-    "label": "n!",
+    "label": "$n!$",
     "expr": "fact"
    },
    {
-    "label": "(n+1)! / n!",
+    "label": "앞 $r$자리 채우기 $P(n,r)$",
+    "expr": "perm"
+   },
+   {
+    "label": "남은 자리 $(n-r)!$",
+    "expr": "restf"
+   },
+   {
+    "label": "$P(n,r)\\times(n-r)!$",
+    "expr": "perm*restf"
+   },
+   {
+    "label": "$(n+1)!/n!$",
     "expr": "ratio"
    }
   ]
@@ -52,51 +132,86 @@
  "recipe": {
   "samples": [
    {
-    "n": 0
+    "n": 0,
+    "r": 0
    },
    {
-    "n": 1
+    "n": 1,
+    "r": 1
    },
    {
-    "n": 3
+    "n": 3,
+    "r": 2
    },
    {
-    "n": 5
+    "n": 5,
+    "r": 5
    },
    {
-    "n": 10
+    "n": 10,
+    "r": 3
+   },
+   {
+    "n": 2,
+    "r": 7
    }
   ],
   "invariants": [
    "n>=1 ? fact - n*factorial(n-1) : fact-1",
-   "ratio - (n+1)"
+   "ratio - (n+1)",
+   "perm*restf - fact",
+   "rr - (r>n ? n : r)"
   ],
   "oracle": [
    {
     "params": {
-     "n": 0
-    },
-    "expect": {
-     "fact": 1,
-     "ratio": 1
-    }
-   },
-   {
-    "params": {
-     "n": 3
-    },
-    "expect": {
-     "fact": 6,
-     "ratio": 4
-    }
-   },
-   {
-    "params": {
-     "n": 5
+     "n": 5,
+     "r": 2
     },
     "expect": {
      "fact": 120,
-     "ratio": 6
+     "perm": 20,
+     "restf": 6,
+     "ratio": 6,
+     "rr": 2
+    }
+   },
+   {
+    "params": {
+     "n": 0,
+     "r": 0
+    },
+    "expect": {
+     "fact": 1,
+     "perm": 1,
+     "restf": 1,
+     "ratio": 1,
+     "rr": 0
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "r": 4
+    },
+    "expect": {
+     "fact": 24,
+     "perm": 24,
+     "restf": 1,
+     "ratio": 5,
+     "rr": 4
+    }
+   },
+   {
+    "params": {
+     "n": 3,
+     "r": 7
+    },
+    "expect": {
+     "rr": 3,
+     "perm": 6,
+     "restf": 1,
+     "fact": 6
     }
    }
   ],

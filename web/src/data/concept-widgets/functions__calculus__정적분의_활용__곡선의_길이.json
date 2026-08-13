@@ -1,67 +1,125 @@
 {
  "id": "functions/calculus/정적분의_활용/곡선의_길이",
  "spec": {
-  "title": "곡선의 길이: 현수선 y = cosh(x)의 호의 길이",
+  "title": "곡선의 길이: 현수선 y = c·cosh(x/c) − c + 1의 호의 길이",
   "params": [
+   {
+    "name": "a",
+    "label": "구간 시작 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.05,
+    "unit": ""
+   },
    {
     "name": "b",
     "label": "구간 끝 b",
     "type": "slider",
-    "min": 0,
+    "min": -2,
     "max": 2,
+    "init": 1,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "곡선의 휨 정도 c (작을수록 급히 휨)",
+    "type": "slider",
+    "min": 0.3,
+    "max": 3,
     "init": 1,
     "step": 0.05,
     "unit": ""
    }
   ],
-  "scope": "fb = cosh(b); fpb = sinh(b); integrand_b = sqrt(1 + fpb^2); L = sinh(b); chord = sqrt(b^2 + (fb - 1)^2)",
+  "scope": "cc = c < 0.3 ? 0.3 : c; a0 = min(a, b); b0 = max(a, b); bb = (b0 - a0) < 0.05 ? a0 + 0.05 : b0; aa = a0; fa = cc*cosh(aa/cc) - cc + 1; fb = cc*cosh(bb/cc) - cc + 1; fpa = sinh(aa/cc); fpb = sinh(bb/cc); integrand_a = sqrt(1 + fpa^2); integrand_b = sqrt(1 + fpb^2); L = cc*(sinh(bb/cc) - sinh(aa/cc)); chord = sqrt((bb - aa)^2 + (fb - fa)^2); ratio = L / chord; avg = L / (bb - aa); slope = (fb - fa) / (bb - aa)",
   "plot": {
    "range": [
-    0,
-    2
+    -2.5,
+    2.5
    ],
    "yRange": [
     0,
     4
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "cosh(x)",
-     "label": "y = cosh(x)",
+     "fn": "cc*cosh(x/cc) - cc + 1",
+     "label": "$y=f(x)$ (현수선)",
      "color": "#1f77b4"
+    },
+    {
+     "fn": "sqrt(1 + sinh(x/cc)^2)",
+     "label": "$\\sqrt{1+f'(x)^2}$ — 이 곡선 아래 $[a,b]$ 넓이가 곧 $L$",
+     "color": "#2ca02c",
+     "dashed": true
+    },
+    {
+     "fn": "fa + slope*(x - aa)",
+     "label": "$현\\ \\overline{AB}$",
+     "color": "#d62728",
+     "dashed": true
+    },
+    {
+     "fn": "1",
+     "label": "$y=1$ (최소 피적분값)",
+     "color": "#999999",
+     "dashed": true
     }
    ],
    "points": [
     [
-     "=b",
+     "=aa",
+     "=fa"
+    ],
+    [
+     "=bb",
      "=fb"
     ],
     [
-     "=0",
-     "=1"
+     "=aa",
+     "=integrand_a"
+    ],
+    [
+     "=bb",
+     "=integrand_b"
     ]
    ],
-   "pointsLabel": "$(b,\\ \\cosh b)$"
+   "pointsLabel": "$(a,f(a)),\\ (b,f(b))$ 와 피적분함수 위 대응점"
   },
   "readout": [
    {
-    "label": "호의 길이 L = ∫₀ᵇ√(1+f'²)dx",
+    "label": "호의 길이 L = ∫ₐᵇ√(1+f′²)dx",
     "expr": "L",
     "digits": 5
    },
    {
-    "label": "피적분함수 √(1+f'(b)²) = cosh(b)",
-    "expr": "integrand_b",
-    "digits": 5
-   },
-   {
-    "label": "끝점 기울기 f'(b) = sinh(b)",
-    "expr": "fpb",
-    "digits": 5
-   },
-   {
-    "label": "현(직선거리) √(b²+(cosh b−1)²)",
+    "label": "현(직선거리)",
     "expr": "chord",
+    "digits": 5
+   },
+   {
+    "label": "호 ÷ 현 (항상 1 이상, 직선일수록 1)",
+    "expr": "ratio",
+    "digits": 5
+   },
+   {
+    "label": "구간 길이 b−a (L 의 최솟값)",
+    "expr": "bb - aa",
+    "digits": 5
+   },
+   {
+    "label": "평균 피적분값 L/(b−a)",
+    "expr": "avg",
+    "digits": 5
+   },
+   {
+    "label": "끝점 기울기 f′(b) = sinh(b/c)",
+    "expr": "fpb",
     "digits": 5
    }
   ]
@@ -69,54 +127,133 @@
  "recipe": {
   "samples": [
    {
-    "b": 0
+    "a": 0,
+    "b": 1,
+    "c": 1
    },
    {
-    "b": 0.5
+    "a": -1,
+    "b": 1,
+    "c": 1
    },
    {
-    "b": 1
+    "a": 0,
+    "b": 2,
+    "c": 3
    },
    {
-    "b": 2
+    "a": -1.5,
+    "b": 0.5,
+    "c": 0.5
+   },
+   {
+    "a": 1,
+    "b": 1,
+    "c": 1
+   },
+   {
+    "a": 1,
+    "b": -1,
+    "c": 2
    }
   ],
   "invariants": [
-   "integrand_b - cosh(b)",
-   "fb^2 - fpb^2 - 1",
-   "L - fpb"
+   "integrand_b - cosh(bb/cc)",
+   "((fb + cc - 1)/cc)^2 - fpb^2 - 1",
+   "L - cc*(sinh(bb/cc) - sinh(aa/cc))",
+   "min(L - chord, 0)",
+   "min(L - (bb - aa), 0)"
   ],
   "oracle": [
    {
     "params": {
-     "b": 1
+     "a": 0,
+     "b": 1,
+     "c": 1
     },
     "expect": {
      "L": 1.1752012,
+     "chord": 1.1379528,
+     "ratio": 1.0327328,
+     "fa": 1,
      "fb": 1.5430806,
      "integrand_b": 1.5430806,
      "fpb": 1.1752012,
-     "chord": 1.1379528
+     "avg": 1.1752012
     }
    },
    {
     "params": {
-     "b": 0.5
+     "a": -1,
+     "b": 1,
+     "c": 1
     },
     "expect": {
-     "L": 0.5210953,
-     "fb": 1.127626,
-     "integrand_b": 1.127626
+     "L": 2.3504024,
+     "chord": 2,
+     "ratio": 1.1752012,
+     "fa": 1.5430806,
+     "fb": 1.5430806,
+     "avg": 1.1752012
     }
    },
    {
     "params": {
-     "b": 2
+     "a": 0,
+     "b": 2,
+     "c": 3
     },
     "expect": {
-     "L": 3.6268604,
-     "fb": 3.7621957,
-     "integrand_b": 3.7621957
+     "L": 2.1514754,
+     "chord": 2.1162433,
+     "ratio": 1.0166484,
+     "fb": 1.6917267,
+     "integrand_b": 1.2305756,
+     "fpb": 0.7171585,
+     "avg": 1.0757377
+    }
+   },
+   {
+    "params": {
+     "a": -1.5,
+     "b": 0.5,
+     "c": 0.5
+    },
+    "expect": {
+     "L": 5.5965381,
+     "chord": 4.7081973,
+     "ratio": 1.1886796,
+     "fa": 5.533831,
+     "fb": 1.2715403,
+     "integrand_b": 1.5430806,
+     "avg": 2.798269
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 2
+    },
+    "expect": {
+     "L": 1.0421906,
+     "chord": 1.0320628,
+     "ratio": 1.0098132,
+     "fb": 1.2552519,
+     "integrand_b": 1.127626,
+     "fpb": 0.5210953,
+     "avg": 1.0421906
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -1,
+     "c": 1
+    },
+    "expect": {
+     "L": 2.3504024,
+     "chord": 2
     }
    }
   ],

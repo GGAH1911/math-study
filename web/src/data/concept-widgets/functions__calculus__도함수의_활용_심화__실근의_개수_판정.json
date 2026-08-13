@@ -4,37 +4,91 @@
   "title": "실근의 개수 판정 (f(x)=c)",
   "params": [
    {
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "k",
+    "label": "k (x 계수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.1
+   },
+   {
     "name": "c",
     "label": "c (수평선 y=c)",
     "type": "slider",
-    "min": -4,
-    "max": 4,
+    "min": -8,
+    "max": 8,
     "init": 1,
     "step": 0.1
    }
   ],
-  "scope": "xmax = -1; xmin = 1; M = 2; m = -2; onCurveMax = M - (xmax^3 - 3*xmax); onCurveMin = m - (xmin^3 - 3*xmin); critMax = 3*xmax^2 - 3; critMin = 3*xmin^2 - 3; disc = 27*(4 - c^2); discFactored = -27*(c - M)*(c - m); discCheck = disc - discFactored; nroots = ((c > M or c < m) ? 1 : ((c < M and c > m) ? 3 : 2))",
+  "scope": "aS = (abs(a) < 0.2 ? (a < 0 ? -0.2 : 0.2) : a); Dq = b^2 - 3*aS*k; hasExt = (Dq > 0 ? 1 : 0); sq = sqrt(Dq > 0 ? Dq : 0); xi = -b/(3*aS); xA = xi - sq/(3*aS); xB = xi + sq/(3*aS); xl = min(xA, xB); xr = max(xA, xB); fl = aS*xl^3 + b*xl^2 + k*xl; fr = aS*xr^3 + b*xr^2 + k*xr; M = max(fl, fr); m = min(fl, fr); band = M - m; P = (M - c)*(c - m); critL = 3*aS*xl^2 + 2*b*xl + k; critR = 3*aS*xr^2 + 2*b*xr + k; nroots = (hasExt == 0 ? 1 : ((abs(c - M) < 1e-9 or abs(c - m) < 1e-9) ? 2 : ((c < M and c > m) ? 3 : 1)))",
   "plot": {
    "range": [
-    -2.3,
-    2.3
+    -3.5,
+    3.5
    ],
    "yRange": [
-    -6,
-    6
+    -10,
+    10
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x",
-     "label": "y = f(x) = x³ - 3x",
+     "fn": "aS*x^3 + b*x^2 + k*x",
+     "label": "$y=f(x)=ax^3+bx^2+kx$",
      "color": "#2563eb"
     },
     {
      "fn": "0*x + c",
-     "label": "y = c",
+     "label": "$y=c$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "0*x + M",
+     "label": "$y=M$ (극댓값)",
+     "color": "#94a3b8"
+    },
+    {
+     "fn": "0*x + m",
+     "label": "$y=m$ (극솟값)",
+     "color": "#94a3b8"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "aS*x^3 + b*x^2 + k*x - c",
+     "in": ["=xl-20", "=xl"],
+     "label": "근"
+    },
+    {
+     "fn": "aS*x^3 + b*x^2 + k*x - c",
+     "in": ["=xl", "=xr"],
+     "label": "근"
+    },
+    {
+     "fn": "aS*x^3 + b*x^2 + k*x - c",
+     "in": ["=xr", "=xr+20"],
+     "label": "근"
     }
    ]
   },
@@ -55,8 +109,13 @@
     "digits": 2
    },
    {
-    "label": "판별식 D = 27(4−c²)",
-    "expr": "disc",
+    "label": "극값 존재 판별식 b²−3ak",
+    "expr": "Dq",
+    "digits": 2
+   },
+   {
+    "label": "판정값 (M−c)(c−m)",
+    "expr": "P",
     "digits": 2
    },
    {
@@ -69,51 +128,134 @@
  "recipe": {
   "samples": [
    {
-    "c": -3
-   },
-   {
+    "a": 1,
+    "b": 0,
+    "k": -3,
     "c": 0
    },
    {
-    "c": 1.5
+    "a": 1,
+    "b": 0,
+    "k": -3,
+    "c": 3
    },
    {
-    "c": 3
+    "a": 1,
+    "b": 0,
+    "k": 3,
+    "c": 1
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "k": -3,
+    "c": 0
+   },
+   {
+    "a": 0,
+    "b": 2,
+    "k": 1,
+    "c": 0.5
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "k": 0,
+    "c": -2
    }
   ],
   "invariants": [
-   "onCurveMax",
-   "onCurveMin",
-   "critMax",
-   "critMin",
-   "discCheck"
+   "critL*hasExt",
+   "critR*hasExt",
+   "xl + xr + 2*b/(3*aS)",
+   "band - abs(aS)*(xr-xl)^3/2"
   ],
   "oracle": [
    {
     "params": {
+     "a": 1,
+     "b": 0,
+     "k": -3,
      "c": 0
     },
     "expect": {
-     "nroots": 3,
-     "disc": 108
+     "M": 2,
+     "m": -2,
+     "P": 4,
+     "nroots": 3
     }
    },
    {
     "params": {
-     "c": 3
-    },
-    "expect": {
-     "nroots": 1,
-     "disc": -135
-    }
-   },
-   {
-    "params": {
+     "a": 1,
+     "b": 0,
+     "k": -3,
      "c": 2
     },
     "expect": {
-     "nroots": 2,
-     "disc": 0
+     "P": 0,
+     "nroots": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "k": -3,
+     "c": 3
+    },
+    "expect": {
+     "P": -5,
+     "nroots": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "k": 3,
+     "c": 1
+    },
+    "expect": {
+     "Dq": -9,
+     "hasExt": 0,
+     "nroots": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "k": -3,
+     "c": 0
+    },
+    "expect": {
+     "Dq": -9,
+     "nroots": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -3,
+     "k": 0,
+     "c": -2
+    },
+    "expect": {
+     "M": 0,
+     "m": -4,
+     "nroots": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2,
+     "k": 1,
+     "c": 0.5
+    },
+    "expect": {
+     "aS": 0.2
     }
    }
   ],

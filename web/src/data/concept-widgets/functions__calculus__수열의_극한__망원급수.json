@@ -1,7 +1,7 @@
 {
  "id": "functions/calculus/수열의_극한/망원급수",
  "spec": {
-  "title": "망원급수: ∑ 1/(n(n+1)) 의 부분합과 수렴",
+  "title": "망원급수: a_n = b_n − b_{n+k} (b_n = 1/n^s) 의 부분합과 수렴·발산",
   "params": [
    {
     "name": "N",
@@ -11,35 +11,63 @@
     "max": 50,
     "init": 5,
     "step": 1
+   },
+   {
+    "name": "s",
+    "label": "b_n = 1/n^s 의 지수 s  (s<0 이면 b_n 이 발산)",
+    "type": "slider",
+    "min": -1,
+    "max": 2,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "k",
+    "label": "소거 간격 k  (a_n = b_n − b_{n+k})",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
    }
   ],
-  "scope": "SN = 1 - 1/(N+1); lim = 1; remainder = lim - SN; aN = 1/(N*(N+1))",
+  "scope": "head = 1 + min(1,max(0,k-1))/2^s + min(1,max(0,k-2))/3^s; tail = 1/(N+1)^s + min(1,max(0,k-1))/(N+2)^s + min(1,max(0,k-2))/(N+3)^s; prevTail = 1/N^s + min(1,max(0,k-1))/(N+1)^s + min(1,max(0,k-2))/(N+2)^s; SN = head - tail; SNprev = head - prevTail; aN = 1/N^s - 1/(N+k)^s; remainder = head - SN; converges = s >= 0 ? 1 : 0",
   "plot": {
    "range": [
     "=1",
-    "=N+1"
+    "=max(8, N + k)"
    ],
    "yRange": [
-    0,
-    1.2
+    "=min(-0.5, 1.2*SN)",
+    "=max(1.5, 1.25*head)"
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "1 - 1/(x+1)",
-     "label": "부분합 S_N = 1 − 1/(N+1) = (1/1−1/2)+(1/2−1/3)+···",
+     "fn": "1 + min(1,max(0,k-1))/2^s + min(1,max(0,k-2))/3^s - ( 1/(x+1)^s + min(1,max(0,k-1))/(x+2)^s + min(1,max(0,k-2))/(x+3)^s )",
+     "label": "$S_N = (b_1+\\cdots+b_k) - (b_{N+1}+\\cdots+b_{N+k})$",
      "color": "#2563eb"
     },
     {
-     "fn": "1",
-     "label": "극한값 = 1",
-     "color": "#dc2626"
+     "fn": "1 + min(1,max(0,k-1))/2^s + min(1,max(0,k-2))/3^s",
+     "label": "$b_1+\\cdots+b_k$ (수렴할 때의 극한값)",
+     "color": "#dc2626",
+     "dashed": true
     },
     {
-     "fn": "1/(x*(x+1))",
-     "label": "일반항 a_n = 1/(n(n+1)) → 0",
+     "fn": "1/x^s - 1/(x+k)^s",
+     "label": "$a_n = b_n - b_{n+k}$",
      "color": "#16a34a"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=N",
+     "=SN"
+    ]
+   ],
+   "pointsLabel": "$(N,\\ S_N)$ 현재 부분합"
   },
   "readout": [
    {
@@ -48,71 +76,153 @@
     "digits": 5
    },
    {
-    "label": "극한과의 오차 = 극한 − S_N",
-    "expr": "remainder",
+    "label": "소거되고 남는 앞쪽 k항의 합 = 극한 후보 b_1+…+b_k",
+    "expr": "head",
     "digits": 5
    },
    {
-    "label": "끝까지 안 지워지고 남는 항 b_{N+1} = 1/(N+1)",
-    "expr": "1/(N+1)",
+    "label": "아직 안 지워진 꼬리 k항의 합 = 극한과의 오차",
+    "expr": "tail",
     "digits": 5
    },
    {
-    "label": "일반항 a_N = 1/(N(N+1))",
+    "label": "일반항 a_N = 1/N^s − 1/(N+k)^s",
     "expr": "aN",
     "digits": 6
+   },
+   {
+    "label": "수렴하면 1, 발산하면 0 (b_{N+1} 의 극한 존재 여부)",
+    "expr": "converges",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "N": 1
+    "N": 1,
+    "s": 1,
+    "k": 1
    },
    {
-    "N": 2
+    "N": 5,
+    "s": 1,
+    "k": 1
    },
    {
-    "N": 5
+    "N": 2,
+    "s": 1,
+    "k": 2
    },
    {
-    "N": 20
+    "N": 3,
+    "s": 2,
+    "k": 1
+   },
+   {
+    "N": 4,
+    "s": -1,
+    "k": 1
+   },
+   {
+    "N": 2,
+    "s": 0,
+    "k": 3
+   },
+   {
+    "N": 20,
+    "s": 1,
+    "k": 3
    }
   ],
   "invariants": [
-   "aN - (1/N - 1/(N+1))",
-   "SN - (1 - 1/N) - aN",
-   "remainder - 1/(N+1)"
+   "SN - (head - tail)",
+   "SN - SNprev - aN",
+   "remainder - tail"
   ],
   "oracle": [
    {
     "params": {
-     "N": 1
+     "N": 1,
+     "s": 1,
+     "k": 1
     },
     "expect": {
+     "head": 1,
+     "tail": 0.5,
      "SN": 0.5,
-     "remainder": 0.5,
-     "aN": 0.5
+     "aN": 0.5,
+     "converges": 1
     }
    },
    {
     "params": {
-     "N": 3
+     "N": 3,
+     "s": 1,
+     "k": 1
     },
     "expect": {
+     "head": 1,
+     "tail": 0.25,
      "SN": 0.75,
-     "remainder": 0.25,
-     "aN": 0.0833333333333
+     "aN": 0.0833333333333,
+     "converges": 1
     }
    },
    {
     "params": {
-     "N": 9
+     "N": 2,
+     "s": 1,
+     "k": 2
     },
     "expect": {
-     "SN": 0.9,
-     "remainder": 0.1,
-     "aN": 0.0111111111111
+     "head": 1.5,
+     "tail": 0.5833333333333,
+     "SN": 0.9166666666667,
+     "aN": 0.25,
+     "converges": 1
+    }
+   },
+   {
+    "params": {
+     "N": 3,
+     "s": 2,
+     "k": 1
+    },
+    "expect": {
+     "head": 1,
+     "tail": 0.0625,
+     "SN": 0.9375,
+     "aN": 0.0486111111111,
+     "converges": 1
+    }
+   },
+   {
+    "params": {
+     "N": 4,
+     "s": -1,
+     "k": 1
+    },
+    "expect": {
+     "head": 1,
+     "tail": 5,
+     "SN": -4,
+     "aN": -1,
+     "converges": 0
+    }
+   },
+   {
+    "params": {
+     "N": 2,
+     "s": 0,
+     "k": 3
+    },
+    "expect": {
+     "head": 3,
+     "tail": 3,
+     "SN": 0,
+     "aN": 0,
+     "converges": 1
     }
    }
   ],

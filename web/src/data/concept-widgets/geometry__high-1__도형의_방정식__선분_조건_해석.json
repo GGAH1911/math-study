@@ -1,61 +1,138 @@
 {
  "id": "geometry/high-1/도형의_방정식/선분_조건_해석",
  "spec": {
-  "title": "선분의 매개변수 표현 P = A + t(B−A)",
+  "title": "선분의 매개변수 표현 P = A + t(B−A) — t가 0~1 밖이면?",
   "params": [
    {
-    "name": "t",
-    "label": "t (진행도)",
+    "name": "ax",
+    "label": "A의 x좌표",
     "type": "slider",
-    "min": 0,
-    "max": 1,
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "ay",
+    "label": "A의 y좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 4,
+    "init": 1,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "bx",
+    "label": "B의 x좌표",
+    "type": "slider",
+    "min": -3,
+    "max": 7,
+    "init": 5,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "by",
+    "label": "B의 y좌표",
+    "type": "slider",
+    "min": -2,
+    "max": 5,
+    "init": 3,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "t (진행도) — 0~1 밖도 가보세요",
+    "type": "slider",
+    "min": -0.6,
+    "max": 1.6,
     "init": 0.5,
     "step": 0.01,
     "unit": ""
    }
   ],
-  "scope": "px=1+4*t; py=1+2*t; AP=sqrt((px-1)^2+(py-1)^2); PB=sqrt((px-5)^2+(py-3)^2); AB=sqrt(20); collinear=(px-1)*2-(py-1)*4; sumdiff=AP+PB-AB",
+  "scope": "dx=bx-ax; dy=by-ay; px=ax+t*dx; py=ay+t*dy; AB=sqrt(dx^2+dy^2); AP=sqrt((px-ax)^2+(py-ay)^2); PB=sqrt((px-bx)^2+(py-by)^2); sumdiff=AP+PB-AB; onseg=(t>=0 and t<=1) ? 1 : 0; m=t; n=1-t; collinear=(px-ax)*dy-(py-ay)*dx; chkAP=AP-abs(t)*AB; chkPB=PB-abs(1-t)*AB",
   "geometry": {
    "range": [
-    -1,
-    6
+    -5,
+    9
    ],
    "yRange": [
-    -1,
-    4
+    -4,
+    7
    ],
    "showAxes": true,
    "showGrid": true,
    "shapes": [
     {
-     "type": "segment",
+     "type": "line",
      "from": [
-      1,
-      1
+      "=ax",
+      "=ay"
      ],
      "to": [
-      5,
-      3
+      "=bx",
+      "=by"
      ],
-     "color": "#888"
+     "dashed": true,
+     "color": "#94a3b8"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#334155"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ax",
+      "=ay"
+     ],
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
+      "=py"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#16a34a"
     },
     {
      "type": "point",
      "at": [
-      1,
-      1
+      "=ax",
+      "=ay"
      ],
-     "label": "A(1,1)",
+     "label": "A",
      "color": "#2563eb"
     },
     {
      "type": "point",
      "at": [
-      5,
-      3
+      "=bx",
+      "=by"
      ],
-     "label": "B(5,3)",
-     "color": "#2563eb"
+     "label": "B",
+     "color": "#16a34a"
     },
     {
      "type": "point",
@@ -75,12 +152,12 @@
     "digits": 2
    },
    {
-    "label": "P",
+    "label": "P의 x",
     "expr": "px",
     "digits": 3
    },
    {
-    "label": "Py",
+    "label": "P의 y",
     "expr": "py",
     "digits": 3
    },
@@ -103,56 +180,202 @@
     "label": "|AB|",
     "expr": "AB",
     "digits": 3
+   },
+   {
+    "label": "|AP|+|PB|−|AB| (0이면 선분 위)",
+    "expr": "sumdiff",
+    "digits": 4
+   },
+   {
+    "label": "선분 위? (1=예, 0=연장선)",
+    "expr": "onseg",
+    "digits": 0
+   },
+   {
+    "label": "내분비 m (=t)",
+    "expr": "m",
+    "digits": 2
+   },
+   {
+    "label": "내분비 n (=1−t)",
+    "expr": "n",
+    "digits": 2
    }
   ]
  },
  "recipe": {
   "samples": [
    {
+    "ax": 1,
+    "ay": 1,
+    "bx": 5,
+    "by": 3,
     "t": 0
    },
    {
-    "t": 0.25
-   },
-   {
+    "ax": 1,
+    "ay": 1,
+    "bx": 5,
+    "by": 3,
     "t": 0.5
    },
    {
+    "ax": 1,
+    "ay": 1,
+    "bx": 5,
+    "by": 3,
     "t": 1
+   },
+   {
+    "ax": 1,
+    "ay": 1,
+    "bx": 5,
+    "by": 3,
+    "t": -0.5
+   },
+   {
+    "ax": 1,
+    "ay": 1,
+    "bx": 5,
+    "by": 3,
+    "t": 1.5
+   },
+   {
+    "ax": -2,
+    "ay": 2,
+    "bx": 4,
+    "by": -1,
+    "t": 0.25
+   },
+   {
+    "ax": 0,
+    "ay": 0,
+    "bx": 0,
+    "by": 4,
+    "t": 0.75
+   },
+   {
+    "ax": 2,
+    "ay": 2,
+    "bx": 2,
+    "by": 2,
+    "t": 0.5
    }
   ],
   "invariants": [
    "collinear",
-   "sumdiff"
+   "chkAP",
+   "chkPB"
   ],
   "oracle": [
    {
     "params": {
+     "ax": 1,
+     "ay": 1,
+     "bx": 5,
+     "by": 3,
      "t": 0
     },
     "expect": {
      "px": 1,
      "py": 1,
-     "AP": 0
+     "AP": 0,
+     "onseg": 1,
+     "sumdiff": 0
     }
    },
    {
     "params": {
+     "ax": 1,
+     "ay": 1,
+     "bx": 5,
+     "by": 3,
      "t": 0.5
     },
     "expect": {
      "px": 3,
-     "py": 2
+     "py": 2,
+     "onseg": 1,
+     "sumdiff": 0,
+     "m": 0.5,
+     "n": 0.5
     }
    },
    {
     "params": {
+     "ax": 1,
+     "ay": 1,
+     "bx": 5,
+     "by": 3,
      "t": 1
     },
     "expect": {
      "px": 5,
      "py": 3,
-     "PB": 0
+     "PB": 0,
+     "onseg": 1
+    }
+   },
+   {
+    "params": {
+     "ax": 1,
+     "ay": 1,
+     "bx": 5,
+     "by": 3,
+     "t": 1.5
+    },
+    "expect": {
+     "px": 7,
+     "py": 4,
+     "onseg": 0,
+     "sumdiff": 4.4721359550
+    }
+   },
+   {
+    "params": {
+     "ax": 1,
+     "ay": 1,
+     "bx": 5,
+     "by": 3,
+     "t": -0.5
+    },
+    "expect": {
+     "px": -1,
+     "py": 0,
+     "onseg": 0,
+     "sumdiff": 4.4721359550
+    }
+   },
+   {
+    "params": {
+     "ax": -2,
+     "ay": 2,
+     "bx": 4,
+     "by": -1,
+     "t": 0.25
+    },
+    "expect": {
+     "px": -0.5,
+     "py": 1.25,
+     "onseg": 1,
+     "sumdiff": 0
+    }
+   },
+   {
+    "params": {
+     "ax": 2,
+     "ay": 2,
+     "bx": 2,
+     "by": 2,
+     "t": 0.5
+    },
+    "expect": {
+     "px": 2,
+     "py": 2,
+     "AB": 0,
+     "AP": 0,
+     "PB": 0,
+     "sumdiff": 0
     }
    }
   ],

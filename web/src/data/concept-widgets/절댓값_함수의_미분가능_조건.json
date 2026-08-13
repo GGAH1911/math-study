@@ -4,40 +4,129 @@
   "title": "절댓값 함수의 미분가능 조건",
   "params": [
    {
-    "name": "m",
-    "label": "m",
+    "name": "a",
+    "label": "$a$ (이차항)",
     "type": "slider",
-    "min": -1,
-    "max": 1,
-    "init": 0.5,
-    "step": 0.1,
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.25,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "$b$ (일차항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -0.5,
+    "step": 0.25,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "$c$ (상수항)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -0.5,
+    "step": 0.25,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "검사할 근 (1=왼쪽, 2=오른쪽)",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 1,
+    "step": 1,
     "unit": ""
    }
   ],
-  "scope": "leftDeriv = -abs(m); rightDeriv = abs(m); diffable = (leftDeriv == rightDeriv ? 1 : 0)",
+  "scope": "A = (a == 0 ? 0.25 : a); D = b^2 - 4*A*c; xv = -b/(2*A); sq = (D > 0 ? sqrt(D) : 0); r1 = (-b - sq)/(2*A); r2 = (-b + sq)/(2*A); rL = min(r1, r2); rR = max(r1, r2); rootCount = (D > 0 ? 2 : (D == 0 ? 1 : 0)); rk = (rootCount == 0 ? xv : (k < 1.5 ? rL : rR)); gp = 2*A*rk + b; leftDeriv = -abs(gp); rightDeriv = abs(gp); cornerCount = (D > 0 ? 2 : 0); diffable = (D > 0 ? 0 : 1)",
   "plot": {
    "range": [
-    -1,
-    1
+    -3,
+    3
    ],
    "yRange": [
-    -0.5,
-    2.5
+    -2,
+    4
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "abs(x^2 + m*x)",
-     "label": "f(x)=|g(x)|",
+     "fn": "abs(A*x^2 + b*x + c)",
+     "label": "$f(x)=|g(x)|$",
      "color": "red"
     },
     {
-     "fn": "x^2 + m*x",
-     "label": "g(x)",
-     "color": "blue"
+     "fn": "A*x^2 + b*x + c",
+     "label": "$g(x)$",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "fn": "gp*(x - rk)",
+     "label": "$x=r$ 에서 $g$ 의 접선",
+     "color": "gray",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "A*x^2 + b*x + c",
+     "in": [
+      "=xv - 10",
+      "=xv"
+     ],
+     "label": "$g(x)=0$"
+    },
+    {
+     "fn": "A*x^2 + b*x + c",
+     "in": [
+      "=xv",
+      "=xv + 10"
+     ],
+     "label": "$g(x)=0$"
+    }
+   ],
+   "points": [
+    [
+     "=rk",
+     "=abs(A*rk^2 + b*rk + c)"
+    ]
+   ],
+   "pointsLabel": "검사 중인 점 $x=r$"
   },
   "readout": [
+   {
+    "label": "판별식 D",
+    "expr": "b^2-4ac",
+    "digits": 3
+   },
+   {
+    "label": "실근의 개수",
+    "expr": "rootCount",
+    "digits": 0
+   },
+   {
+    "label": "꺾인 점의 개수",
+    "expr": "cornerCount",
+    "digits": 0
+   },
+   {
+    "label": "검사점 x=r",
+    "expr": "rk",
+    "digits": 3
+   },
+   {
+    "label": "g'(r)",
+    "expr": "gp",
+    "digits": 3
+   },
    {
     "label": "좌미분계수",
     "expr": "leftDeriv",
@@ -58,29 +147,89 @@
  "recipe": {
   "samples": [
    {
-    "m": -1
+    "a": 1,
+    "b": -0.5,
+    "c": -0.5,
+    "k": 1
    },
    {
-    "m": -0.5
+    "a": 1,
+    "b": 2,
+    "c": 1,
+    "k": 1
    },
    {
-    "m": 0
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "k": 1
    },
    {
-    "m": 0.5
+    "a": -1,
+    "b": 0,
+    "c": 1,
+    "k": 2
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "k": 2
    }
   ],
   "invariants": [
-   "leftDeriv + abs(m)",
-   "rightDeriv - abs(m)",
-   "diffable - (m == 0 ? 1 : 0)"
+   "leftDeriv + abs(gp)",
+   "rightDeriv - abs(gp)",
+   "leftDeriv + rightDeriv",
+   "diffable - (D > 0 ? 0 : 1)",
+   "rootCount - (D > 0 ? 2 : (D == 0 ? 1 : 0))",
+   "(rootCount > 0 ? A*rk^2 + b*rk + c : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "m": 0
+     "a": 1,
+     "b": -0.5,
+     "c": -0.5,
+     "k": 1
     },
     "expect": {
+     "D": 2.25,
+     "rootCount": 2,
+     "rk": -0.5,
+     "gp": -1.5,
+     "leftDeriv": -1.5,
+     "rightDeriv": 1.5,
+     "diffable": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": -0.5,
+     "c": -0.5,
+     "k": 2
+    },
+    "expect": {
+     "rk": 1,
+     "gp": 1.5,
+     "leftDeriv": -1.5,
+     "rightDeriv": 1.5,
+     "diffable": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 1,
+     "k": 1
+    },
+    "expect": {
+     "D": 0,
+     "rootCount": 1,
+     "rk": -1,
+     "gp": 0,
      "leftDeriv": 0,
      "rightDeriv": 0,
      "diffable": 1
@@ -88,19 +237,50 @@
    },
    {
     "params": {
-     "m": 0.5
+     "a": 1,
+     "b": 0,
+     "c": 1,
+     "k": 1
     },
     "expect": {
-     "leftDeriv": -0.5,
-     "rightDeriv": 0.5,
+     "D": -4,
+     "rootCount": 0,
+     "rk": 0,
+     "gp": 0,
+     "leftDeriv": 0,
+     "rightDeriv": 0,
+     "diffable": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 1,
+     "k": 2
+    },
+    "expect": {
+     "D": 4,
+     "rootCount": 2,
+     "rk": 1,
+     "gp": -2,
+     "leftDeriv": -2,
+     "rightDeriv": 2,
      "diffable": 0
     }
    },
    {
     "params": {
-     "m": -1
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "k": 2
     },
     "expect": {
+     "D": 1,
+     "rootCount": 2,
+     "rk": 0,
+     "gp": 1,
      "leftDeriv": -1,
      "rightDeriv": 1,
      "diffable": 0

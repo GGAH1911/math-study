@@ -1,20 +1,50 @@
 {
  "id": "functions/calculus/정적분의_활용/넓이의_이등분",
  "spec": {
-  "title": "넓이의 이등분 — y = x² 아래 넓이를 x = a로 자르기",
+  "title": "넓이의 이등분 — y = xⁿ 아래 넓이를 x = a로 자르기",
   "params": [
    {
     "name": "a",
-    "label": "이등분선 x = a",
+    "label": "내가 자르는 위치 x = a",
     "type": "slider",
     "min": 0,
     "max": 2,
     "init": 1,
     "step": 0.01,
     "unit": ""
+   },
+   {
+    "name": "n",
+    "label": "곡선의 지수 n (y = xⁿ)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "오른쪽 끝 x = b",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 2,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "p",
+    "label": "왼쪽이 차지할 비율 p (0.5 = 이등분)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 0.95,
+    "init": 0.5,
+    "step": 0.05,
+    "unit": ""
    }
   ],
-  "scope": "S = 8/3; areaL = a^3/3; areaR = (8 - a^3)/3; diff = areaL - areaR; half = S/2",
+  "scope": "bb = b < 1 ? 1 : b; aC = a < 0 ? 0 : (a > bb ? bb : a); S = bb^(n+1)/(n+1); areaL = aC^(n+1)/(n+1); areaR = S - areaL; target = p*S; diff = areaL - target; aStar = bb*p^(1/(n+1)); mid = bb/2; gap = aC - aStar",
   "plot": {
    "range": [
     0,
@@ -22,51 +52,86 @@
    ],
    "yRange": [
     0,
-    4
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^2",
-     "label": "y = x²",
+     "fn": "x^n",
+     "label": "$y = x^{n}$",
      "color": "#2563eb"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "x^(n+1) - p*b^(n+1)",
+     "in": [
+      0,
+      2
+     ],
+     "label": "$a^*$ (넓이를 p:1−p 로 나누는 점)"
     }
    ],
    "points": [
     [
-     "=a",
-     "=a^2"
+     "=aC",
+     "=aC^n"
     ],
     [
-     "=a",
+     "=aC",
+     "0"
+    ],
+    [
+     "=mid",
+     "0"
+    ],
+    [
+     "=aStar",
      "0"
     ]
    ],
-   "pointsLabel": "$x = a$"
+   "pointsLabel": "$x = a$ (내가 자른 위치) · $x = b/2$ (중점) · $x = a^*$ (정답 위치)"
   },
   "readout": [
    {
-    "label": "전체 넓이 S = ∫₀² x²dx",
+    "label": "전체 넓이 S = ∫₀ᵇ xⁿ dx",
     "expr": "S",
     "digits": 4
    },
    {
-    "label": "왼쪽 넓이 ∫₀ᵃ x²dx",
+    "label": "왼쪽 넓이 ∫₀ᵃ xⁿ dx",
     "expr": "areaL",
     "digits": 4
    },
    {
-    "label": "오른쪽 넓이 ∫ₐ² x²dx",
+    "label": "오른쪽 넓이 ∫ₐᵇ xⁿ dx",
     "expr": "areaR",
     "digits": 4
    },
    {
-    "label": "절반 목표 S/2",
-    "expr": "half",
+    "label": "목표 넓이 p·S",
+    "expr": "target",
     "digits": 4
    },
    {
-    "label": "왼−오 (0이면 이등분, a=∛4)",
+    "label": "왼쪽 − 목표 (0이면 성공)",
     "expr": "diff",
+    "digits": 4
+   },
+   {
+    "label": "정답 위치 a* = b·p^(1/(n+1))",
+    "expr": "aStar",
+    "digits": 4
+   },
+   {
+    "label": "구간 중점 b/2 (a*와 비교해 보세요)",
+    "expr": "mid",
+    "digits": 4
+   },
+   {
+    "label": "내 위치 − 정답 위치",
+    "expr": "gap",
     "digits": 4
    }
   ]
@@ -74,54 +139,133 @@
  "recipe": {
   "samples": [
    {
-    "a": 0.5
+    "a": 1,
+    "n": 2,
+    "b": 2,
+    "p": 0.5
    },
    {
-    "a": 1
+    "a": 1.587401052,
+    "n": 2,
+    "b": 2,
+    "p": 0.5
    },
    {
-    "a": 1.587401051968
+    "a": 1,
+    "n": 1,
+    "b": 2,
+    "p": 0.5
    },
    {
-    "a": 1.8
+    "a": 0.5,
+    "n": 3,
+    "b": 1,
+    "p": 0.5
+   },
+   {
+    "a": 1,
+    "n": 2,
+    "b": 2,
+    "p": 0.25
+   },
+   {
+    "a": 2,
+    "n": 2,
+    "b": 1.5,
+    "p": 0.5
    }
   ],
   "invariants": [
    "areaL + areaR - S",
-   "(areaL + areaR)/2 - half"
+   "target - p*S",
+   "aStar^(n+1)/(n+1) - target",
+   "gap - (aC - aStar)"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "a": 1,
+     "n": 2,
+     "b": 2,
+     "p": 0.5
     },
     "expect": {
      "S": 2.6666666667,
      "areaL": 0.3333333333,
      "areaR": 2.3333333333,
-     "half": 1.3333333333,
-     "diff": -2
+     "target": 1.3333333333,
+     "diff": -1,
+     "aStar": 1.587401052,
+     "mid": 1
     }
    },
    {
     "params": {
-     "a": 2
-    },
-    "expect": {
-     "S": 2.6666666667,
-     "areaL": 2.6666666667,
-     "areaR": 0,
-     "diff": 2.6666666667
-    }
-   },
-   {
-    "params": {
-     "a": 1.587401051968
+     "a": 1.587401052,
+     "n": 2,
+     "b": 2,
+     "p": 0.5
     },
     "expect": {
      "areaL": 1.3333333333,
      "areaR": 1.3333333333,
-     "diff": 0
+     "diff": 0,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "n": 1,
+     "b": 2,
+     "p": 0.5
+    },
+    "expect": {
+     "S": 2,
+     "areaL": 0.5,
+     "areaR": 1.5,
+     "target": 1,
+     "aStar": 1.4142135624,
+     "mid": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "n": 3,
+     "b": 1,
+     "p": 0.5
+    },
+    "expect": {
+     "S": 0.25,
+     "areaL": 0.015625,
+     "target": 0.125,
+     "aStar": 0.8408964153,
+     "mid": 0.5
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "n": 2,
+     "b": 2,
+     "p": 0.25
+    },
+    "expect": {
+     "target": 0.6666666667,
+     "aStar": 1.2599210499
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "n": 2,
+     "b": 1.5,
+     "p": 0.5
+    },
+    "expect": {
+     "aC": 1.5,
+     "areaR": 0
     }
    }
   ],

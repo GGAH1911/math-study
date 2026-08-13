@@ -9,102 +9,96 @@
     "type": "slider",
     "min": 3,
     "max": 12,
-    "init": 5,
+    "init": 6,
     "step": 1,
     "unit": "각형"
+   },
+   {
+    "name": "way",
+    "label": "자르는 기준점 (0=꼭짓점, 1=안쪽 점)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "wob",
+    "label": "모양 찌그러뜨리기",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 0.05
    }
   ],
-  "scope": "tri = n-2; total = tri*180",
+  "scope": "amp = 0.55*pi*wob/n; A(k) = pi/2 + 2*pi*mod(k,n)/n + amp*sin(2.3*mod(k,n) + 0.7); sx = 1 + 0.30*wob; sy = 1 - 0.22*wob; sh = 0.28*wob; PX(k) = sx*cos(A(k)) + sh*sy*sin(A(k)); PY(k) = sy*sin(A(k)); QX(k) = PX(min(k, n-1)); QY(k) = PY(min(k, n-1)); cnt = way < 0.5 ? n-2 : n; overlap = way < 0.5 ? 0 : 360; A0 = pi/2 + 2*pi*mod(0,n)/n + amp*sin(2.3*mod(0,n) + 0.7); PX0 = sx*cos(A0) + sh*sy*sin(A0); PY0 = sy*sin(A0); HX = way < 0.5 ? PX0 : 0; HY = way < 0.5 ? PY0 : 0; I1(k) = way < 0.5 ? k : k-1; I2(k) = I1(k) + 1; TX1(k) = k <= cnt ? PX(I1(k)) : HX; TY1(k) = k <= cnt ? PY(I1(k)) : HY; TX2(k) = k <= cnt ? PX(I2(k)) : HX; TY2(k) = k <= cnt ? PY(I2(k)) : HY; DX(k) = PX(k+1) - PX(k); DY(k) = PY(k+1) - PY(k); EXT(k) = atan2(DX(k-1)*DY(k) - DY(k-1)*DX(k), DX(k-1)*DX(k) + DY(k-1)*DY(k))*180/pi; IA(k) = 180 - EXT(k); IAM(k) = k <= n-1 ? IA(k) : 0; meas = IAM(0)+IAM(1)+IAM(2)+IAM(3)+IAM(4)+IAM(5)+IAM(6)+IAM(7)+IAM(8)+IAM(9)+IAM(10)+IAM(11); tri = n-2; total = tri*180; one = total/n; step = total - (n-3)*180",
+  "geometry": {
+   "range": [-1.45, 1.45],
+   "yRange": [-1.45, 1.45],
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(1)", "=TY1(1)"], ["=TX2(1)", "=TY2(1)"]], "fill": "#38bdf8", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(2)", "=TY1(2)"], ["=TX2(2)", "=TY2(2)"]], "fill": "#fbbf24", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(3)", "=TY1(3)"], ["=TX2(3)", "=TY2(3)"]], "fill": "#38bdf8", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(4)", "=TY1(4)"], ["=TX2(4)", "=TY2(4)"]], "fill": "#fbbf24", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(5)", "=TY1(5)"], ["=TX2(5)", "=TY2(5)"]], "fill": "#38bdf8", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(6)", "=TY1(6)"], ["=TX2(6)", "=TY2(6)"]], "fill": "#fbbf24", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(7)", "=TY1(7)"], ["=TX2(7)", "=TY2(7)"]], "fill": "#38bdf8", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(8)", "=TY1(8)"], ["=TX2(8)", "=TY2(8)"]], "fill": "#fbbf24", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(9)", "=TY1(9)"], ["=TX2(9)", "=TY2(9)"]], "fill": "#38bdf8", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(10)", "=TY1(10)"], ["=TX2(10)", "=TY2(10)"]], "fill": "#fbbf24", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(11)", "=TY1(11)"], ["=TX2(11)", "=TY2(11)"]], "fill": "#38bdf8", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=HX", "=HY"], ["=TX1(12)", "=TY1(12)"], ["=TX2(12)", "=TY2(12)"]], "fill": "#fbbf24", "fillOpacity": 0.22, "stroke": "#64748b" },
+    { "type": "polygon", "vertices": [["=QX(0)", "=QY(0)"], ["=QX(1)", "=QY(1)"], ["=QX(2)", "=QY(2)"], ["=QX(3)", "=QY(3)"], ["=QX(4)", "=QY(4)"], ["=QX(5)", "=QY(5)"], ["=QX(6)", "=QY(6)"], ["=QX(7)", "=QY(7)"], ["=QX(8)", "=QY(8)"], ["=QX(9)", "=QY(9)"], ["=QX(10)", "=QY(10)"], ["=QX(11)", "=QY(11)"]], "fill": "none", "stroke": "#e2e8f0" },
+    { "type": "point", "at": ["=HX", "=HY"], "label": "나누는 기준점", "color": "#f43f5e" }
+   ]
+  },
   "plot": {
-   "range": [
-    3,
-    12
-   ],
-   "yRange": [
-    0,
-    1900
-   ],
+   "range": [3, 12],
+   "yRange": [0, 1900],
    "fns": [
-    {
-     "fn": "(x-2)*180",
-     "label": "내각의 합 = (n−2)·180°",
-     "color": "#2563eb"
-    }
+    { "fn": "(x-2)*180", "label": "$y=(n-2)\\times 180$", "color": "#2563eb" },
+    { "fn": "0*x + total", "label": "지금의 내각의 합", "color": "#f59e0b", "dashed": true }
    ],
-   "points": [
-    [
-     "=n",
-     "=total"
-    ]
-   ],
-   "pointsLabel": "$n=$ 현재 값"
+   "points": [["=n", "=total"], ["=max(3, n-1)", "=(max(3, n-1)-2)*180"]],
+   "pointsLabel": "$n$ 과 $n-1$ (차이가 늘 $180°$)"
   },
   "readout": [
-   {
-    "label": "만들어지는 삼각형 개수 (n−2)",
-    "expr": "tri",
-    "digits": 0
-   },
-   {
-    "label": "내각의 합(°)",
-    "expr": "total",
-    "digits": 0
-   },
-   {
-    "label": "n 하나 늘 때 증가량(°)",
-    "expr": "180",
-    "digits": 0
-   }
+   { "label": "잘라낸 삼각형 개수", "expr": "cnt", "digits": 0 },
+   { "label": "삼각형 각의 합(°)", "expr": "cnt*180", "digits": 0 },
+   { "label": "가운데서 빼는 각(°)", "expr": "overlap", "digits": 0 },
+   { "label": "내각의 합 (n−2)×180°", "expr": "total", "digits": 0 },
+   { "label": "실제로 잰 내각의 합(°)", "expr": "meas", "digits": 1 },
+   { "label": "정n각형이면 한 내각(°)", "expr": "one", "digits": 2 }
   ]
  },
  "recipe": {
   "samples": [
-   {
-    "n": 3
-   },
-   {
-    "n": 5
-   },
-   {
-    "n": 6
-   },
-   {
-    "n": 8
-   }
+   { "n": 3, "way": 0, "wob": 0 },
+   { "n": 5, "way": 0, "wob": 0 },
+   { "n": 6, "way": 1, "wob": 0 },
+   { "n": 7, "way": 0, "wob": 1 },
+   { "n": 12, "way": 0, "wob": 1 },
+   { "n": 12, "way": 1, "wob": 1 },
+   { "n": 4, "way": 1, "wob": 0.5 },
+   { "n": 9, "way": 1, "wob": 0.35 }
   ],
   "invariants": [
    "total - (n-2)*180",
-   "total - tri*180",
-   "tri - (n-2)"
+   "meas - total",
+   "cnt*180 - overlap - total",
+   "one*n - total",
+   "cnt - (way < 0.5 ? n-2 : n)",
+   "step - 180"
   ],
   "oracle": [
-   {
-    "params": {
-     "n": 3
-    },
-    "expect": {
-     "tri": 1,
-     "total": 180
-    }
-   },
-   {
-    "params": {
-     "n": 5
-    },
-    "expect": {
-     "tri": 3,
-     "total": 540
-    }
-   },
-   {
-    "params": {
-     "n": 6
-    },
-    "expect": {
-     "tri": 4,
-     "total": 720
-    }
-   }
+   { "params": { "n": 3, "way": 0, "wob": 0 }, "expect": { "cnt": 1, "total": 180, "meas": 180, "one": 60 } },
+   { "params": { "n": 5, "way": 0, "wob": 0 }, "expect": { "cnt": 3, "total": 540, "meas": 540, "one": 108 } },
+   { "params": { "n": 6, "way": 1, "wob": 0 }, "expect": { "cnt": 6, "overlap": 360, "total": 720, "meas": 720 } },
+   { "params": { "n": 12, "way": 1, "wob": 1 }, "expect": { "cnt": 12, "total": 1800, "meas": 1800, "one": 150 } },
+   { "params": { "n": 8, "way": 0, "wob": 0.6 }, "expect": { "cnt": 6, "total": 1080, "meas": 1080 } }
   ],
   "tol": 0.000001
  }

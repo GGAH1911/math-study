@@ -1,72 +1,103 @@
 {
  "id": "functions/high-1/함수와_그래프/함수의_기본조건",
  "spec": {
-  "title": "수직선 판정법: y²=x는 함수일까?",
+  "title": "수직선 판정법: 어떤 관계가 함수인가 (관계 0-3 을 바꿔 보라)",
   "params": [
+   {
+    "name": "rel",
+    "label": "관계",
+    "type": "slider",
+    "min": 0,
+    "max": 3,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "모양 k",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.25,
+    "unit": ""
+   },
    {
     "name": "a",
     "label": "수직선 x=a",
     "type": "slider",
-    "min": 0,
-    "max": 4,
+    "min": -3,
+    "max": 3.5,
     "init": 2,
     "step": 0.25,
     "unit": ""
    }
   ],
-  "scope": "yp = sqrt(a); yn = -sqrt(a); diff = yp - yn",
+  "scope": "k = max(k, 0.5); up = rel==0 ? k*a : (rel==1 ? k*a^2 : (rel==2 ? (a>=0 ? sqrt(k*a) : 0/0) : (abs(a)<=k ? sqrt(k^2 - a^2) : 0/0))); yp = up; yn = rel<=1 ? 0/0 : -up; n = rel<=1 ? 1 : (rel==2 ? (a>0 ? 2 : (a==0 ? 1 : 0)) : (abs(a)<k ? 2 : (abs(a)==k ? 1 : 0))); isfunc = rel<=1 ? 1 : 0; gap = n>1 ? 2*up : 0/0; pyp = n>0 ? up : 99; pyn = n>1 ? -up : 99",
   "plot": {
    "range": [
-    -1,
-    4.5
+    -3.5,
+    3.5
    ],
    "yRange": [
-    -2.5,
-    2.5
+    -3,
+    3
    ],
    "fns": [
     {
-     "fn": "sqrt(x)",
-     "label": "y=√x (위쪽 가지)",
+     "fn": "rel==0 ? k*x : (rel==1 ? k*x^2 : (rel==2 ? sqrt(k*x) : sqrt(k^2 - x^2)))",
+     "label": "$0{:}\\,y=kx,\\ 1{:}\\,y=kx^2,\\ 2{:}\\,y^2=kx,\\ 3{:}\\,x^2+y^2=k^2$ (위쪽)",
      "color": "#059669"
     },
     {
-     "fn": "-sqrt(x)",
-     "label": "y=-√x (아래쪽 가지)",
+     "fn": "rel<=1 ? 0/0 : (rel==2 ? -sqrt(k*x) : -sqrt(k^2 - x^2))",
+     "label": "아래쪽 가지 — 관계 2·3 에서만 생긴다",
      "color": "#059669"
+    },
+    {
+     "fn": "80*(x - a)",
+     "label": "수직선 $x=a$",
+     "color": "#f59e0b",
+     "dashed": true
     }
    ],
    "points": [
     [
      "=a",
-     "=yp"
+     "=pyp"
     ],
     [
      "=a",
-     "=yn"
+     "=pyn"
     ]
    ],
-   "pointsLabel": "$x=a$ 에서의 대응점"
+   "pointsLabel": "$x=a$ 가 그래프와 만나는 점"
   },
   "readout": [
    {
-    "label": "위쪽 대응값 yp",
+    "label": "x=a 에 대응하는 y 개수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "함수인가 (1=예, 0=아니오)",
+    "expr": "isfunc",
+    "digits": 0
+   },
+   {
+    "label": "위쪽 대응값",
     "expr": "yp",
     "digits": 3
    },
    {
-    "label": "아래쪽 대응값 yn",
+    "label": "아래쪽 대응값",
     "expr": "yn",
     "digits": 3
    },
    {
-    "label": "한 x=a 에 대응하는 y 개수",
-    "expr": "a>0 ? 2 : 1",
-    "digits": 0
-   },
-   {
-    "label": "두 값의 간격 |yp-yn|",
-    "expr": "diff",
+    "label": "두 대응값의 간격",
+    "expr": "gap",
     "digits": 3
    }
   ]
@@ -74,53 +105,119 @@
  "recipe": {
   "samples": [
    {
-    "a": 1
+    "rel": 0,
+    "k": 2,
+    "a": 1.5
    },
    {
-    "a": 4
+    "rel": 1,
+    "k": 1,
+    "a": -2
    },
    {
+    "rel": 2,
+    "k": 1,
     "a": 2.25
    },
    {
-    "a": 0.25
+    "rel": 2,
+    "k": 1,
+    "a": -1
+   },
+   {
+    "rel": 3,
+    "k": 2,
+    "a": 0
+   },
+   {
+    "rel": 3,
+    "k": 2,
+    "a": 2
    }
   ],
   "invariants": [
-   "yp^2 - a",
-   "yn^2 - a",
-   "yp + yn",
-   "diff - 2*sqrt(a)"
+   "rel==0 ? yp - k*a : 0",
+   "rel==1 ? yp - k*a^2 : 0",
+   "rel==2 and a>0 ? yp^2 - k*a : 0",
+   "rel==3 and abs(a)<=k ? yp^2 + a^2 - k^2 : 0",
+   "isfunc - (rel<=1 ? 1 : 0)",
+   "n>1 ? gap - (yp - yn) : 0"
   ],
   "oracle": [
    {
     "params": {
-     "a": 4
+     "rel": 0,
+     "k": 2,
+     "a": 1.5
     },
     "expect": {
-     "yp": 2,
-     "yn": -2,
-     "diff": 4
+     "yp": 3,
+     "n": 1,
+     "isfunc": 1
     }
    },
    {
     "params": {
-     "a": 1
+     "rel": 1,
+     "k": 1,
+     "a": -2
     },
     "expect": {
-     "yp": 1,
-     "yn": -1,
-     "diff": 2
+     "yp": 4,
+     "n": 1,
+     "isfunc": 1
     }
    },
    {
     "params": {
+     "rel": 2,
+     "k": 1,
      "a": 2.25
     },
     "expect": {
      "yp": 1.5,
      "yn": -1.5,
-     "diff": 3
+     "n": 2,
+     "gap": 3,
+     "isfunc": 0
+    }
+   },
+   {
+    "params": {
+     "rel": 2,
+     "k": 1,
+     "a": -1
+    },
+    "expect": {
+     "n": 0,
+     "isfunc": 0
+    }
+   },
+   {
+    "params": {
+     "rel": 3,
+     "k": 2,
+     "a": 0
+    },
+    "expect": {
+     "yp": 2,
+     "yn": -2,
+     "n": 2,
+     "gap": 4,
+     "isfunc": 0
+    }
+   },
+   {
+    "params": {
+     "rel": 3,
+     "k": 2,
+     "a": 2
+    },
+    "expect": {
+     "yp": 0,
+     "yn": 0,
+     "n": 1,
+     "isfunc": 0
     }
    }
   ],

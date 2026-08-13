@@ -4,17 +4,34 @@
   "title": "조건부 계산: 단위원에서 부호로 값 확정하기",
   "params": [
    {
-    "name": "theta",
-    "label": "θ",
+    "name": "k",
+    "label": "주어진 값 $k$",
     "type": "slider",
-    "min": 0,
-    "max": 360,
-    "init": 30,
-    "step": 1,
-    "unit": "°"
+    "min": -0.99,
+    "max": 0.99,
+    "init": 0.6,
+    "step": 0.01
+   },
+   {
+    "name": "given",
+    "label": "무엇이 주어졌나 (1: $\\sin\\theta=k$, 2: $\\cos\\theta=k$)",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "quad",
+    "label": "조건: $\\theta$가 속한 사분면",
+    "type": "slider",
+    "min": 1,
+    "max": 4,
+    "init": 1,
+    "step": 1
    }
   ],
-  "scope": "rad=theta*pi/180; sy=sin(rad); cx=cos(rad); tn=tan(rad); quad=floor(mod(theta,360)/90)+1",
+  "scope": "kk = k; s = sqrt(max(0, 1 - kk^2)); ss = (quad == 1 or quad == 2) ? 1 : -1; cs = (quad == 1 or quad == 4) ? 1 : -1; sy = (given == 1) ? kk : ss * s; cx = (given == 1) ? cs * s : kk; ok = (given == 1) ? ((kk * ss >= -1e-9) ? 1 : 0) : ((kk * cs >= -1e-9) ? 1 : 0); tn = (abs(cx) < 1e-9) ? 0 / 0 : sy / cx; th = mod(atan2(sy, cx) * 180 / pi, 360); ax = (given == 1) ? s : kk; ay = (given == 1) ? kk : s; bx = (given == 1) ? -s : kk; by = (given == 1) ? kk : -s; px = (ok == 1) ? cx : 99; py = (ok == 1) ? sy : 99",
   "geometry": {
    "range": [
     -1.4,
@@ -38,26 +55,41 @@
     {
      "type": "segment",
      "from": [
-      0,
-      0
+      "=given==1?-1.3:kk",
+      "=given==1?kk:-1.3"
      ],
      "to": [
-      "=cx",
-      "=sy"
+      "=given==1?1.3:kk",
+      "=given==1?kk:1.3"
      ],
-     "label": "r=1"
+     "dashed": true,
+     "color": "#aaa"
     },
     {
-     "type": "segment",
-     "from": [
-      "=cx",
-      0
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
      ],
-     "to": [
-      "=cx",
-      "=sy"
+     "label": "후보 A",
+     "color": "#999"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=bx",
+      "=by"
      ],
-     "label": "sinθ",
+     "label": "후보 B",
+     "color": "#999"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=px",
+      "=py"
+     ],
+     "label": "P (조건이 고른 점)",
      "color": "#e11"
     },
     {
@@ -67,19 +99,72 @@
       0
      ],
      "to": [
-      "=cx",
+      "=px",
+      "=py"
+     ],
+     "label": "$r=1$"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=px",
       0
      ],
-     "label": "cosθ",
+     "to": [
+      "=px",
+      "=py"
+     ],
+     "label": "$\\sin\\theta$",
+     "color": "#e11"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=px",
+      0
+     ],
+     "label": "$\\cos\\theta$",
      "color": "#1a1"
     },
     {
-     "type": "point",
+     "type": "text",
      "at": [
-      "=cx",
-      "=sy"
+      0.75,
+      0.75
      ],
-     "label": "P"
+     "text": "I",
+     "color": "#bbb"
+    },
+    {
+     "type": "text",
+     "at": [
+      -0.75,
+      0.75
+     ],
+     "text": "II",
+     "color": "#bbb"
+    },
+    {
+     "type": "text",
+     "at": [
+      -0.75,
+      -0.75
+     ],
+     "text": "III",
+     "color": "#bbb"
+    },
+    {
+     "type": "text",
+     "at": [
+      0.75,
+      -0.75
+     ],
+     "text": "IV",
+     "color": "#bbb"
     }
    ]
   },
@@ -100,8 +185,13 @@
     "digits": 4
    },
    {
-    "label": "사분면",
-    "expr": "quad",
+    "label": "확정된 θ(도)",
+    "expr": "th",
+    "digits": 1
+   },
+   {
+    "label": "조건 충족?(1=가능, 0=모순)",
+    "expr": "ok",
     "digits": 0
    }
   ]
@@ -109,51 +199,80 @@
  "recipe": {
   "samples": [
    {
-    "theta": 30
+    "k": 0.6,
+    "given": 1,
+    "quad": 1
    },
    {
-    "theta": 150
+    "k": 0.6,
+    "given": 1,
+    "quad": 2
    },
    {
-    "theta": 210
+    "k": 0.6,
+    "given": 1,
+    "quad": 4
    },
    {
-    "theta": 300
+    "k": -0.8,
+    "given": 2,
+    "quad": 3
    }
   ],
   "invariants": [
    "cx^2+sy^2-1",
+   "s^2+kk^2-1",
    "tn*cx-sy"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 30
+     "k": 0.6,
+     "given": 1,
+     "quad": 2
     },
     "expect": {
-     "sy": 0.5,
-     "cx": 0.8660254037844387,
-     "tn": 0.5773502691896257
+     "sy": 0.6,
+     "cx": -0.8,
+     "tn": -0.75,
+     "ok": 1,
+     "th": 143.13010235415598
     }
    },
    {
     "params": {
-     "theta": 150
+     "k": 0.6,
+     "given": 1,
+     "quad": 4
     },
     "expect": {
-     "sy": 0.5,
-     "cx": -0.8660254037844387,
-     "tn": -0.5773502691896257
+     "ok": 0
     }
    },
    {
     "params": {
-     "theta": 300
+     "k": -0.8,
+     "given": 2,
+     "quad": 3
     },
     "expect": {
-     "sy": -0.8660254037844387,
-     "cx": 0.5,
-     "tn": -1.7320508075688767
+     "cx": -0.8,
+     "sy": -0.6,
+     "tn": 0.75,
+     "ok": 1
+    }
+   },
+   {
+    "params": {
+     "k": 0.6,
+     "given": 2,
+     "quad": 1
+    },
+    "expect": {
+     "cx": 0.6,
+     "sy": 0.8,
+     "tn": 1.3333333333333333,
+     "ok": 1
     }
    }
   ],

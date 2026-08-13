@@ -12,17 +12,26 @@
     "init": 45,
     "step": 1,
     "unit": "°"
+   },
+   {
+    "name": "k",
+    "label": "정수 k",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 1
    }
   ],
-  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); ty=tan(rad)",
+  "scope": "rad=theta*pi/180; cx=cos(rad); sy=sin(rad); ty=tan(rad); d=sqrt(1+k^2); tx=2.3/d; tyv=2.3*k/d; nsin=abs(k)>1 ? 0 : (abs(k)==1 ? 1 : 2); ncos=nsin; ntan=2; latt=abs(cx*sy); fitsin=abs(sy-k); fitcos=abs(cx-k)",
   "geometry": {
    "range": [
-    -1.4,
-    1.4
+    -2.4,
+    2.4
    ],
    "yRange": [
-    -1.4,
-    1.4
+    -2.4,
+    2.4
    ],
    "showAxes": true,
    "showGrid": true,
@@ -85,8 +94,70 @@
       "=sy"
      ],
      "label": "P=(cosθ,sinθ)"
+    },
+    {
+     "type": "segment",
+     "from": ["=-2.3", "=k"],
+     "to": ["=2.3", "=k"],
+     "dashed": true,
+     "color": "#fbbf24"
+    },
+    {
+     "type": "text",
+     "at": ["=1.9", "=k+0.18"],
+     "text": "sinθ=k",
+     "color": "#fbbf24"
+    },
+    {
+     "type": "segment",
+     "from": ["=k", "=-2.3"],
+     "to": ["=k", "=2.3"],
+     "dashed": true,
+     "color": "#34d399"
+    },
+    {
+     "type": "text",
+     "at": ["=k+0.22", "=2.0"],
+     "text": "cosθ=k",
+     "color": "#34d399"
+    },
+    {
+     "type": "segment",
+     "from": ["=-tx", "=-tyv"],
+     "to": ["=tx", "=tyv"],
+     "dashed": true,
+     "color": "#f472b6"
+    },
+    {
+     "type": "text",
+     "at": ["=tx*0.55", "=tyv*0.55+0.2"],
+     "text": "tanθ=k",
+     "color": "#f472b6"
     }
    ]
+  },
+  "plot": {
+   "range": [0, 360],
+   "yRange": [-3, 3],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {"fn": "sin(x*pi/180)", "label": "$y=\\sin\\theta$", "color": "#60a5fa"},
+    {"fn": "cos(x*pi/180)", "label": "$y=\\cos\\theta$", "color": "#34d399"},
+    {"fn": "tan(x*pi/180)", "label": "$y=\\tan\\theta$", "color": "#f472b6", "dashed": true},
+    {"fn": "k", "label": "$y=k$", "color": "#fbbf24"}
+   ],
+   "roots": [
+    {"fn": "sin(x*pi/180)-k", "in": [0, 90], "label": "sinθ=k"},
+    {"fn": "sin(x*pi/180)-k", "in": [90, 270]},
+    {"fn": "sin(x*pi/180)-k", "in": [270, 360]},
+    {"fn": "cos(x*pi/180)-k", "in": [0, 180], "label": "cosθ=k"},
+    {"fn": "cos(x*pi/180)-k", "in": [180, 360]},
+    {"fn": "tan(x*pi/180)-k", "in": [0, 89.9], "label": "tanθ=k"},
+    {"fn": "tan(x*pi/180)-k", "in": [90.1, 269.9]},
+    {"fn": "tan(x*pi/180)-k", "in": [270.1, 360]}
+   ],
+   "pointsLabel": "$\\theta$ 해"
   },
   "readout": [
    {
@@ -105,58 +176,98 @@
     "digits": 3
    },
    {
-    "label": "두 좌표 정수까지 거리(0이면 격자점)",
-    "expr": "abs(cx)*abs(sy)",
-    "digits": 4
+    "label": "sinθ=k 인 θ 개수 (0°이상 360°미만)",
+    "expr": "nsin",
+    "digits": 0
+   },
+   {
+    "label": "cosθ=k 인 θ 개수",
+    "expr": "ncos",
+    "digits": 0
+   },
+   {
+    "label": "tanθ=k 인 θ 개수",
+    "expr": "ntan",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "theta": 30
+    "theta": 30,
+    "k": 1
    },
    {
-    "theta": 45
+    "theta": 45,
+    "k": 0
    },
    {
-    "theta": 90
+    "theta": 90,
+    "k": 1
    },
    {
-    "theta": 135
+    "theta": 135,
+    "k": 2
+   },
+   {
+    "theta": 200,
+    "k": -1
    }
   ],
   "invariants": [
    "cx^2+sy^2-1",
    "sin(2*rad)-2*sy*cx",
-   "cos(2*rad)-(cx^2-sy^2)"
+   "cos(2*rad)-(cx^2-sy^2)",
+   "tx^2+tyv^2-5.29",
+   "ncos-nsin"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 30
+     "theta": 30,
+     "k": 1
     },
     "expect": {
      "cx": 0.8660254037844387,
-     "sy": 0.5
+     "sy": 0.5,
+     "nsin": 1,
+     "ntan": 2
     }
    },
    {
     "params": {
-     "theta": 90
+     "theta": 90,
+     "k": 2
     },
     "expect": {
      "cx": 0,
-     "sy": 1
+     "sy": 1,
+     "nsin": 0,
+     "ncos": 0,
+     "ntan": 2
     }
    },
    {
     "params": {
-     "theta": 60
+     "theta": 60,
+     "k": 0
     },
     "expect": {
      "cx": 0.5,
-     "sy": 0.8660254037844387
+     "sy": 0.8660254037844387,
+     "nsin": 2,
+     "ntan": 2
+    }
+   },
+   {
+    "params": {
+     "theta": 45,
+     "k": 1
+    },
+    "expect": {
+     "tx": 1.6263455967290593,
+     "tyv": 1.6263455967290593
     }
    }
   ],

@@ -1,19 +1,46 @@
 {
  "id": "geometry/high-1/도형의_방정식/수직_조건",
  "spec": {
-  "title": "수직 조건: 기울기의 곱 = -1",
+  "title": "수직 조건: 두 기울기의 곱이 언제 -1이 되는가",
   "params": [
    {
     "name": "m1",
-    "label": "직선 ℓ₁의 기울기 m₁",
+    "label": "ℓ₁ 기울기 m₁",
     "type": "slider",
-    "min": 0.2,
-    "max": 4,
-    "init": 1,
+    "min": -3.95,
+    "max": 4.05,
+    "init": 1.05,
     "step": 0.1
+   },
+   {
+    "name": "m2",
+    "label": "ℓ₂ 기울기 m₂",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "b2",
+    "label": "ℓ₂ y절편 b₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "snap",
+    "label": "수직 자동맞춤(1=켬)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1
    }
   ],
-  "scope": "m2 = -1/m1; prod = m1*m2",
+  "scope": "m1s = abs(m1) < 0.02 ? 0.05 : m1; mperp = -1/m1s; m2e = snap >= 0.5 ? mperp : m2; prod = m1s*m2e; dot = 1 + m1s*m2e; a1 = atan(m1s)*180/pi; a2 = atan(m2e)*180/pi; dd = abs(a2 - a1); theta = dd > 90 ? 180 - dd : dd; perp = abs(prod + 1) < 0.02 ? 1 : 0",
   "plot": {
    "range": [
     -4,
@@ -23,81 +50,196 @@
     -4,
     4
    ],
+   "grid": true,
    "fns": [
     {
-     "fn": "m1*x",
-     "label": "ℓ₁: y=m₁x",
+     "fn": "m1s*x",
+     "label": "$\\ell_1:\\ y=m_1x$",
      "color": "#2563eb"
     },
     {
-     "fn": "(-1/m1)*x",
-     "label": "ℓ₂: y=-x/m₁",
+     "fn": "m2e*x + b2",
+     "label": "$\\ell_2:\\ y=m_2x+b_2$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "mperp*x + b2",
+     "label": "목표선 $y=-\\dfrac{1}{m_1}x+b_2$ (ℓ₁에 수직인 방향)",
+     "color": "#94a3b8"
+    }
+   ],
+   "intersections": [
+    {
+     "f": "m1s*x",
+     "g": "m2e*x + b2",
+     "in": [
+      -4,
+      4
+     ],
+     "label": "두 직선의 교점"
     }
    ]
   },
   "readout": [
    {
     "label": "m₁",
-    "expr": "m1",
-    "digits": 3
+    "expr": "m1s",
+    "digits": 2
    },
    {
-    "label": "m₂ = -1/m₁",
-    "expr": "m2",
-    "digits": 3
+    "label": "m₂",
+    "expr": "m2e",
+    "digits": 2
    },
    {
     "label": "m₁·m₂",
     "expr": "prod",
-    "digits": 6
+    "digits": 3
+   },
+   {
+    "label": "사잇각(°)",
+    "expr": "theta",
+    "digits": 1
+   },
+   {
+    "label": "1+m₁m₂ (방향벡터 내적)",
+    "expr": "dot",
+    "digits": 3
+   },
+   {
+    "label": "수직? 1=예",
+    "expr": "perp",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "m1": 1
+    "m1": 1,
+    "m2": 2,
+    "b2": 0,
+    "snap": 0
    },
    {
-    "m1": 2
+    "m1": 1,
+    "m2": 1,
+    "b2": 2,
+    "snap": 0
    },
    {
-    "m1": 0.5
+    "m1": -0.5,
+    "m2": 2,
+    "b2": -2,
+    "snap": 0
    },
    {
-    "m1": 4
+    "m1": 2,
+    "m2": 5,
+    "b2": 3,
+    "snap": 1
+   },
+   {
+    "m1": 0.05,
+    "m2": 1,
+    "b2": 0,
+    "snap": 1
+   },
+   {
+    "m1": -3.95,
+    "m2": -4,
+    "b2": 1.5,
+    "snap": 1
    }
   ],
   "invariants": [
-   "m1*m2+1",
-   "1*1+m1*m2"
+   "mperp*m1s + 1",
+   "dot - (1 + m1s*m2e)",
+   "snap >= 0.5 ? m1s*m2e + 1 : 0",
+   "snap >= 0.5 ? theta - 90 : 0",
+   "perp*(perp - 1)"
   ],
   "oracle": [
    {
     "params": {
-     "m1": 1
+     "m1": 1,
+     "m2": 1,
+     "b2": 0,
+     "snap": 0
     },
     "expect": {
+     "m2e": 1,
+     "prod": 1,
+     "dot": 2,
+     "theta": 0,
+     "perp": 0
+    }
+   },
+   {
+    "params": {
+     "m1": 1,
+     "m2": 0,
+     "b2": 0,
+     "snap": 0
+    },
+    "expect": {
+     "prod": 0,
+     "dot": 1,
+     "theta": 45,
+     "perp": 0
+    }
+   },
+   {
+    "params": {
+     "m1": 1,
      "m2": -1,
-     "prod": -1
+     "b2": 0,
+     "snap": 0
+    },
+    "expect": {
+     "prod": -1,
+     "dot": 0,
+     "theta": 90,
+     "perp": 1
     }
    },
    {
     "params": {
-     "m1": 2
+     "m1": -0.5,
+     "m2": 2,
+     "b2": -2,
+     "snap": 0
     },
     "expect": {
-     "m2": -0.5,
-     "prod": -1
+     "prod": -1,
+     "dot": 0,
+     "theta": 90,
+     "perp": 1
     }
    },
    {
     "params": {
-     "m1": 0.5
+     "m1": 2,
+     "m2": 5,
+     "b2": 3,
+     "snap": 1
     },
     "expect": {
-     "m2": -2,
+     "m2e": -0.5,
+     "prod": -1,
+     "theta": 90,
+     "perp": 1
+    }
+   },
+   {
+    "params": {
+     "m1": 0.05,
+     "m2": 1,
+     "b2": 0,
+     "snap": 1
+    },
+    "expect": {
+     "m2e": -20,
      "prod": -1
     }
    }

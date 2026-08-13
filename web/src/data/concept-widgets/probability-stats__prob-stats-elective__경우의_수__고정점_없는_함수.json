@@ -12,43 +12,99 @@
     "init": 5,
     "step": 1,
     "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "k (고정점 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 0,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "m (포함배제 항 수)",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 2,
+    "step": 1,
+    "unit": ""
    }
   ],
-  "scope": "d_n = round(factorial(n)/e); d_nm1 = (n-1) > 0 ? round(factorial(n-1)/e) : 1; d_nm2 = (n-2) > 0 ? round(factorial(n-2)/e) : 1; p = d_n / factorial(n); approx = 1/e",
+  "scope": "kk = min(k, n); r = n - kk; d_r = r == 0 ? 1 : round(factorial(r)/e); cnt_k = combinations(n, kk) * d_r; p_k = cnt_k / factorial(n); d_n = round(factorial(n)/e); d_nm1 = (n-1) > 0 ? round(factorial(n-1)/e) : 1; d_nm2 = (n-2) > 0 ? round(factorial(n-2)/e) : 1; p = d_n / factorial(n); mm = min(m, n); d_m = mm == 0 ? 1 : round(factorial(mm)/e); s_m = d_m / factorial(mm); approx_m = factorial(n) * s_m; err_m = approx_m - d_n; approx = 1/e",
   "plot": {
    "range": [
-    1,
+    0,
     12
    ],
    "yRange": [
     0,
-    200000000
+    0.55
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "round(factorial(floor(x))/e)",
-     "label": "D(n)",
+     "fn": "round(factorial(n-floor(x))/e)/(factorial(floor(x))*factorial(n-floor(x)))",
+     "range": [
+      "=0",
+      "=n - 0.5"
+     ],
+     "nSamples": 1200,
+     "label": "$P(\\text{고정점 }k\\text{개})$",
      "color": "blue"
+    },
+    {
+     "fn": "1/e",
+     "dashed": true,
+     "label": "$1/e$",
+     "color": "gray"
     }
    ],
    "points": [
     [
+     "=kk",
+     "=p_k"
+    ],
+    [
      "=n",
-     "=d_n"
+     "=1/factorial(n)"
+    ],
+    [
+     "=mm",
+     "=s_m"
     ]
    ],
-   "pointsLabel": "$D(n)$"
+   "pointsLabel": "$P(k)\\text{ / 부분합 근사}$"
   },
   "readout": [
    {
-    "label": "완전순열 수 D(n)",
+    "label": "완전순열 수 $D_n$",
     "expr": "d_n",
     "digits": 0
    },
    {
-    "label": "확률 P(n)",
-    "expr": "p",
+    "label": "고정점 $k$개인 순열 수 $\\binom{n}{k}D_{n-k}$",
+    "expr": "cnt_k",
+    "digits": 0
+   },
+   {
+    "label": "그 확률 $P(k)$",
+    "expr": "p_k",
     "digits": 6
+   },
+   {
+    "label": "$m$항까지 포함배제 근사 $n!\\sum_{i=0}^{m}\\frac{(-1)^i}{i!}$",
+    "expr": "approx_m",
+    "digits": 2
+   },
+   {
+    "label": "근사 오차 (항 하나 늘 때마다 부호가 뒤집힘)",
+    "expr": "err_m",
+    "digits": 2
    },
    {
     "label": "1/e (극한)",
@@ -60,42 +116,96 @@
  "recipe": {
   "samples": [
    {
-    "n": 2
+    "n": 2,
+    "k": 0,
+    "m": 2
    },
    {
-    "n": 3
+    "n": 3,
+    "k": 1,
+    "m": 3
    },
    {
-    "n": 5
+    "n": 5,
+    "k": 0,
+    "m": 2
    },
    {
-    "n": 8
+    "n": 5,
+    "k": 2,
+    "m": 5
+   },
+   {
+    "n": 8,
+    "k": 1,
+    "m": 8
+   },
+   {
+    "n": 12,
+    "k": 12,
+    "m": 0
    }
   ],
   "invariants": [
-   "abs(d_n - (n-1)*(d_nm1 + d_nm2))"
+   "abs(d_n - (n-1)*(d_nm1 + d_nm2))",
+   "abs(mm == n ? approx_m - d_n : 0)",
+   "abs(cnt_k - round(cnt_k))",
+   "abs(p_k - cnt_k/factorial(n))"
   ],
   "oracle": [
    {
     "params": {
-     "n": 3
+     "n": 3,
+     "k": 1,
+     "m": 3
     },
     "expect": {
      "d_n": 2,
-     "d_nm1": 1,
-     "d_nm2": 0,
-     "p": 0.3333333333333333
+     "cnt_k": 3,
+     "p_k": 0.5,
+     "approx_m": 2,
+     "err_m": 0
     }
    },
    {
     "params": {
-     "n": 5
+     "n": 5,
+     "k": 0,
+     "m": 2
     },
     "expect": {
      "d_n": 44,
-     "d_nm1": 9,
-     "d_nm2": 2,
-     "p": 0.36666666666666664
+     "cnt_k": 44,
+     "p_k": 0.36666666666666664,
+     "s_m": 0.5,
+     "approx_m": 60,
+     "err_m": 16
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "k": 2,
+     "m": 5
+    },
+    "expect": {
+     "cnt_k": 20,
+     "p_k": 0.16666666666666666,
+     "approx_m": 44,
+     "err_m": 0
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "k": 1,
+     "m": 3
+    },
+    "expect": {
+     "cnt_k": 45,
+     "p_k": 0.375,
+     "approx_m": 40,
+     "err_m": -4
     }
    }
   ],

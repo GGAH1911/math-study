@@ -1,7 +1,7 @@
 {
  "id": "functions/calculus/여러가지_적분법/치환적분",
  "spec": {
-  "title": "치환적분: 넓이는 보존된다 — ∫₀ᵇ 2x·cos(x²)dx = ∫₀^(b²) cos(u)du",
+  "title": "치환적분: ∫₀ᵇ f(g(x))g′(x)dx = ∫_{g(0)}^{g(b)} f(u)du — g(x)=k·xⁿ+c 를 직접 바꿔보기 (f(u)=cos u 고정)",
   "params": [
    {
     "name": "b",
@@ -9,130 +9,393 @@
     "type": "slider",
     "min": 0,
     "max": 2.5,
+    "init": 1.2,
+    "step": 0.05
+   },
+   {
+    "name": "k",
+    "label": "치환 계수 k (g=k·xⁿ+c)",
+    "type": "slider",
+    "min": 0.3,
+    "max": 1.0,
     "init": 1,
     "step": 0.05
+   },
+   {
+    "name": "n",
+    "label": "차수 n (1=선형치환, 2=이차치환)",
+    "type": "slider",
+    "min": 1,
+    "max": 2,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "c",
+    "label": "상수 c (u 하한 = g(0) = c)",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0,
+    "step": 0.1
    }
   ],
-  "scope": "ub = b^2; Ax = sin(b^2); Au = sin(ub); gp = 2*b; fend = cos(b^2); hend = 2*b*cos(b^2)",
+  "scope": "g0 = c; gb = k*b^n + c; gp = k*n*b^(n-1); fgb = cos(gb); hb = fgb*gp; Ax = sin(gb) - sin(c); Au = sin(gb) - sin(c); dA = Ax - Au; xm1 = min(2.5, ((pi - c)/k)^(1/n)); xm2 = min(2.5, ((2*pi - c)/k)^(1/n)); xm3 = min(2.5, ((3*pi - c)/k)^(1/n))",
   "plot": {
    "range": [
     0,
     2.5
    ],
    "yRange": [
-    -5.5,
-    5.5
+    -5.2,
+    5.2
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "2*x*cos(x^2)",
-     "label": "피적분함수 f(g(x))g'(x)=2x·cos(x²)",
+     "fn": "k*n*x^(n-1)*cos(k*x^n+c)",
+     "label": "$f(g(x))\\,g'(x)$ 실제 피적분함수",
      "color": "#2563eb"
     },
     {
-     "fn": "sin(x^2)",
-     "label": "원시함수 F(g(x))=sin(x²) (누적넓이)",
+     "fn": "cos(k*x^n+c)",
+     "label": "$f(g(x))=\\cos g(x)$ 겉함수 부분",
+     "color": "#16a34a",
+     "dashed": true
+    },
+    {
+     "fn": "k*n*x^(n-1)",
+     "label": "$g'(x)$ 치환의 늘림 배율",
+     "color": "#f59e0b",
+     "dashed": true
+    },
+    {
+     "fn": "sin(k*x^n+c) - sin(c)",
+     "label": "$\\int_0^x f(g(t))g'(t)\\,dt$ 누적 넓이",
      "color": "#dc2626"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "k*n*x^(n-1)*cos(k*x^n+c)",
+     "in": [
+      "=0.02",
+      "=xm1"
+     ],
+     "label": "$f(g(x))g'(x)=0$ (누적 넓이의 극점)"
+    },
+    {
+     "fn": "k*n*x^(n-1)*cos(k*x^n+c)",
+     "in": [
+      "=xm1",
+      "=xm2"
+     ],
+     "label": "$f(g(x))g'(x)=0$ (누적 넓이의 극점)"
+    },
+    {
+     "fn": "k*n*x^(n-1)*cos(k*x^n+c)",
+     "in": [
+      "=xm2",
+      "=xm3"
+     ],
+     "label": "$f(g(x))g'(x)=0$ (누적 넓이의 극점)"
     }
    ],
    "points": [
     [
      "=b",
-     "=2*b*cos(b^2)"
+     "=hb"
     ],
     [
      "=b",
-     "=sin(b^2)"
+     "=Ax"
     ]
    ],
    "pointsLabel": "$x=b$"
   },
+  "geometry": {
+   "range": [
+    -2.2,
+    10
+   ],
+   "yRange": [
+    -1.6,
+    1.6
+   ],
+   "shapes": [
+    {
+     "type": "text",
+     "at": [
+      -2.0,
+      1.15
+     ],
+     "text": "x-세계",
+     "color": "#2563eb"
+    },
+    {
+     "type": "text",
+     "at": [
+      -2.0,
+      -1.15
+     ],
+     "text": "u-세계",
+     "color": "#dc2626"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0.8
+     ],
+     "to": [
+      2.5,
+      0.8
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0.8
+     ],
+     "to": [
+      "=b",
+      0.8
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      -2,
+      -0.8
+     ],
+     "to": [
+      9.8,
+      -0.8
+     ],
+     "color": "#9ca3af"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=c",
+      -0.8
+     ],
+     "to": [
+      "=gb",
+      -0.8
+     ],
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      0,
+      0.8
+     ],
+     "label": "$x=0$",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=b",
+      0.8
+     ],
+     "label": "$x=b$",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=c",
+      -0.8
+     ],
+     "label": "$u=g(0)=c$",
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=gb",
+      -0.8
+     ],
+     "label": "$u=g(b)$",
+     "color": "#dc2626"
+    },
+    {
+     "type": "vector",
+     "from": [
+      0,
+      0.7
+     ],
+     "to": [
+      "=c",
+      -0.7
+     ],
+     "color": "#6b7280"
+    },
+    {
+     "type": "vector",
+     "from": [
+      "=b",
+      0.7
+     ],
+     "to": [
+      "=gb",
+      -0.7
+     ],
+     "color": "#6b7280"
+    }
+   ]
+  },
   "readout": [
    {
-    "label": "치환변수 u = g(b) = b²",
-    "expr": "ub",
+    "label": "u 하한 g(0)=c",
+    "expr": "g0",
     "digits": 3
    },
    {
-    "label": "x-세계 넓이 ∫₀ᵇ 2x·cos(x²)dx",
-    "expr": "Ax",
-    "digits": 5
+    "label": "u 상한 g(b)=k·bⁿ+c",
+    "expr": "gb",
+    "digits": 3
    },
    {
-    "label": "u-세계 넓이 ∫₀^(b²) cos(u)du",
-    "expr": "Au",
-    "digits": 5
-   },
-   {
-    "label": "g'(b)=2b (du=g'(x)dx)",
+    "label": "늘림 배율 g′(b)=k·n·b^(n−1)",
     "expr": "gp",
     "digits": 3
    },
    {
-    "label": "피적분함수 끝점값 f(g(b))·g'(b)",
-    "expr": "hend",
-    "digits": 4
+    "label": "x-세계 넓이 ∫₀ᵇ f(g(x))g′(x)dx",
+    "expr": "Ax",
+    "digits": 5
+   },
+   {
+    "label": "u-세계 넓이 ∫_{g(0)}^{g(b)} cos u du",
+    "expr": "Au",
+    "digits": 5
+   },
+   {
+    "label": "두 넓이의 차 (항상 0)",
+    "expr": "dA",
+    "digits": 5
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "b": 0.5
+    "b": 1.2,
+    "k": 1,
+    "n": 2,
+    "c": 0
    },
    {
-    "b": 1
+    "b": 1.2,
+    "k": 1,
+    "n": 1,
+    "c": 0
    },
    {
-    "b": 1.5
+    "b": 2,
+    "k": 0.6,
+    "n": 2,
+    "c": 1
    },
    {
-    "b": 2
+    "b": 0.8,
+    "k": 0.3,
+    "n": 1,
+    "c": -1.2
+   },
+   {
+    "b": 0,
+    "k": 1,
+    "n": 2,
+    "c": 0.5
    }
   ],
   "invariants": [
    "Ax - Au",
-   "hend - fend*gp",
-   "ub - b^2"
+   "dA",
+   "gb - (k*b^n + c)",
+   "gp - k*n*b^(n-1)",
+   "hb - fgb*gp",
+   "g0 - c"
   ],
   "oracle": [
    {
     "params": {
-     "b": 0
+     "b": 0,
+     "k": 1,
+     "n": 2,
+     "c": 0
     },
     "expect": {
-     "ub": 0,
+     "g0": 0,
+     "gb": 0,
+     "gp": 0,
      "Ax": 0,
      "Au": 0,
-     "gp": 0,
-     "hend": 0
+     "dA": 0,
+     "hb": 0
     }
    },
    {
     "params": {
-     "b": 1
+     "b": 1,
+     "k": 1,
+     "n": 2,
+     "c": 0
     },
     "expect": {
-     "ub": 1,
+     "g0": 0,
+     "gb": 1,
+     "gp": 2,
      "Ax": 0.8414709848078965,
      "Au": 0.8414709848078965,
-     "gp": 2,
-     "hend": 1.0806046117362795
+     "dA": 0,
+     "hb": 1.0806046117362795
     }
    },
    {
     "params": {
-     "b": 0.5
+     "b": 1,
+     "k": 1,
+     "n": 1,
+     "c": 0
     },
     "expect": {
-     "ub": 0.25,
-     "Ax": 0.24740395925452294,
-     "Au": 0.24740395925452294,
+     "g0": 0,
+     "gb": 1,
      "gp": 1,
-     "hend": 0.9689124217106447
+     "Ax": 0.8414709848078965,
+     "Au": 0.8414709848078965,
+     "dA": 0,
+     "hb": 0.5403023058681398
+    }
+   },
+   {
+    "params": {
+     "b": 1.5,
+     "k": 0.6,
+     "n": 2,
+     "c": 1
+    },
+    "expect": {
+     "g0": 1,
+     "gb": 2.35,
+     "gp": 1.8,
+     "Ax": -0.12999763201705183,
+     "Au": -0.12999763201705183,
+     "dA": 0,
+     "hb": -1.2648835381923966
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

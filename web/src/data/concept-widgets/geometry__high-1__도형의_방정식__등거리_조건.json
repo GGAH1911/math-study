@@ -1,55 +1,138 @@
 {
  "id": "geometry/high-1/도형의_방정식/등거리_조건",
  "spec": {
-  "title": "등거리 조건: 두 점의 수직이등분선",
+  "title": "등거리 조건: 수직이등분선 · 외심 · 원",
   "params": [
+   {
+    "name": "ax",
+    "label": "점 A의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "ay",
+    "label": "점 A의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "bx",
+    "label": "점 B의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "by",
+    "label": "점 B의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "cx",
+    "label": "점 C의 x좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "cy",
+    "label": "점 C의 y좌표",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 4,
+    "step": 0.1,
+    "unit": ""
+   },
    {
     "name": "t",
     "label": "수직이등분선 위 P의 위치",
     "type": "slider",
-    "min": -3,
-    "max": 3,
+    "min": -5,
+    "max": 5,
     "init": 1,
     "step": 0.05,
     "unit": ""
    }
   ],
-  "scope": "ax=-2; ay=-1; bx=3; by=1; mx=(ax+bx)/2; my=(ay+by)/2; dx=bx-ax; dy=by-ay; L=sqrt(dx^2+dy^2); nx=-dy/L; ny=dx/L; px=mx+t*nx; py=my+t*ny; da=sqrt((px-ax)^2+(py-ay)^2); db=sqrt((px-bx)^2+(py-by)^2)",
+  "scope": "dx=bx-ax; dy=by-ay; L=sqrt(dx^2+dy^2); Ls=L<1e-9?1:L; mx=(ax+bx)/2; my=(ay+by)/2; nx=-dy/Ls; ny=dx/Ls; px=mx+t*nx; py=my+t*ny; da=sqrt((px-ax)^2+(py-ay)^2); db=sqrt((px-bx)^2+(py-by)^2); ex=cx-bx; ey=cy-by; L2=sqrt(ex^2+ey^2); L2s=L2<1e-9?1:L2; m2x=(bx+cx)/2; m2y=(by+cy)/2; n2x=-ey/L2s; n2y=ex/L2s; det=2*((bx-ax)*(cy-ay)-(by-ay)*(cx-ax)); col=abs(det)<1e-6?1:0; ds=col==1?1:det; qa=ax^2+ay^2; qb=bx^2+by^2; qc=cx^2+cy^2; ux=(qa*(by-cy)+qb*(cy-ay)+qc*(ay-by))/ds; uy=(qa*(cx-bx)+qb*(ax-cx)+qc*(bx-ax))/ds; ox=col==1?mx:ux; oy=col==1?my:uy; R=col==1?0:sqrt((ox-ax)^2+(oy-ay)^2); ra=sqrt((ox-ax)^2+(oy-ay)^2); rb=sqrt((ox-bx)^2+(oy-by)^2); rc=sqrt((ox-cx)^2+(oy-cy)^2)",
   "geometry": {
    "range": [
-    -4,
-    5
+    -8,
+    8
    ],
    "yRange": [
-    -4,
-    5
+    -8,
+    8
    ],
    "showAxes": true,
    "showGrid": true,
    "shapes": [
     {
-     "type": "segment",
-     "from": [
-      "=ax",
-      "=ay"
+     "type": "polygon",
+     "vertices": [
+      ["=ax", "=ay"],
+      ["=bx", "=by"],
+      ["=cx", "=cy"]
      ],
-     "to": [
-      "=bx",
-      "=by"
-     ],
-     "label": "AB"
+     "labels": ["A", "B", "C"],
+     "fillOpacity": 0.06,
+     "closed": true
     },
     {
      "type": "segment",
      "from": [
-      "=mx-4.2*nx",
-      "=my-4.2*ny"
+      "=mx-9*nx",
+      "=my-9*ny"
      ],
      "to": [
-      "=mx+4.2*nx",
-      "=my+4.2*ny"
+      "=mx+9*nx",
+      "=my+9*ny"
      ],
-     "label": "수직이등분선"
+     "label": "AB의 수직이등분선"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m2x-9*n2x",
+      "=m2y-9*n2y"
+     ],
+     "to": [
+      "=m2x+9*n2x",
+      "=m2y+9*n2y"
+     ],
+     "dashed": true,
+     "label": "BC의 수직이등분선"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=ox",
+      "=oy"
+     ],
+     "radius": "=R",
+     "fill": "none",
+     "fillOpacity": 0,
+     "stroke": "#e0455f"
     },
     {
      "type": "point",
@@ -70,10 +153,26 @@
     {
      "type": "point",
      "at": [
+      "=cx",
+      "=cy"
+     ],
+     "label": "C"
+    },
+    {
+     "type": "point",
+     "at": [
       "=mx",
       "=my"
      ],
-     "label": "M(중점)"
+     "label": "M(AB의 중점)"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ox",
+      "=oy"
+     ],
+     "label": "O(외심)"
     },
     {
      "type": "point",
@@ -106,6 +205,45 @@
       "=by"
      ],
      "label": "PB"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ox",
+      "=oy"
+     ],
+     "to": [
+      "=ax",
+      "=ay"
+     ],
+     "dashed": true,
+     "color": "#e0455f"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ox",
+      "=oy"
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "dashed": true,
+     "color": "#e0455f"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=ox",
+      "=oy"
+     ],
+     "to": [
+      "=cx",
+      "=cy"
+     ],
+     "dashed": true,
+     "color": "#e0455f"
     }
    ]
   },
@@ -124,55 +262,134 @@
     "label": "|PA|-|PB| (항상 0)",
     "expr": "da-db",
     "digits": 6
+   },
+   {
+    "label": "|OA|",
+    "expr": "ra",
+    "digits": 4
+   },
+   {
+    "label": "|OB|",
+    "expr": "rb",
+    "digits": 4
+   },
+   {
+    "label": "|OC|",
+    "expr": "rc",
+    "digits": 4
+   },
+   {
+    "label": "외접원의 반지름 R",
+    "expr": "R",
+    "digits": 4
+   },
+   {
+    "label": "세 점이 한 직선 위면 1 (외심 없음)",
+    "expr": "col",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "t": -2
-   },
-   {
+    "ax": -2,
+    "ay": -1,
+    "bx": 3,
+    "by": 1,
+    "cx": 0,
+    "cy": 4,
     "t": 0
    },
    {
-    "t": 1
+    "ax": -2,
+    "ay": -1,
+    "bx": 3,
+    "by": 1,
+    "cx": 0,
+    "cy": 4,
+    "t": 2
    },
    {
-    "t": 3
+    "ax": 1,
+    "ay": 2,
+    "bx": -3,
+    "by": 0,
+    "cx": 2,
+    "cy": -2,
+    "t": -1
+   },
+   {
+    "ax": -2,
+    "ay": -1,
+    "bx": 0,
+    "by": 0,
+    "cx": 2,
+    "cy": 1,
+    "t": 1
    }
   ],
   "invariants": [
    "da-db",
    "da^2-db^2",
+   "col==1 ? 0 : (ra-rb)",
+   "col==1 ? 0 : (rb-rc)",
+   "col==1 ? 0 : ((ox-mx)*dx+(oy-my)*dy)",
    "da^2-((mx-ax)^2+(my-ay)^2+t^2)"
   ],
   "oracle": [
    {
     "params": {
+     "ax": -2,
+     "ay": -1,
+     "bx": 3,
+     "by": 1,
+     "cx": 0,
+     "cy": 4,
      "t": 0
     },
     "expect": {
      "da": 2.692582403567252,
-     "db": 2.692582403567252
+     "db": 2.692582403567252,
+     "ox": 0.07142857142857142,
+     "oy": 1.0714285714285714,
+     "R": 2.929442378436957,
+     "ra": 2.929442378436957,
+     "rb": 2.929442378436957,
+     "rc": 2.929442378436957
     }
    },
    {
     "params": {
+     "ax": -2,
+     "ay": -1,
+     "bx": 3,
+     "by": 1,
+     "cx": 0,
+     "cy": 4,
      "t": 1
     },
     "expect": {
      "da": 2.8722813232690143,
-     "db": 2.8722813232690143
+     "db": 2.8722813232690143,
+     "ox": 0.07142857142857142,
+     "oy": 1.0714285714285714,
+     "R": 2.929442378436957
     }
    },
    {
     "params": {
-     "t": 2
+     "ax": -2,
+     "ay": -1,
+     "bx": 0,
+     "by": 0,
+     "cx": 2,
+     "cy": 1,
+     "t": 1
     },
     "expect": {
-     "da": 3.3541019662496847,
-     "db": 3.3541019662496847
+     "col": 1,
+     "R": 0
     }
    }
   ],

@@ -5,15 +5,42 @@
   "params": [
    {
     "name": "px",
-    "label": "x (→ 0 으로 이동)",
+    "label": "관찰 위치 x (0 에 가까이 가져가 보세요)",
     "type": "slider",
     "min": -1.5,
     "max": 1.5,
     "init": 0.8,
     "step": 0.01
+   },
+   {
+    "name": "p",
+    "label": "분자 f(x) = e^{px} − 1 + c 의 지수 계수 p",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "q",
+    "label": "분모 g(x) = e^{qx} − 1 의 지수 계수 q",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "분자에 더한 상수 c (c≠0 이면 f(0)≠0 → 0/0 부정형이 아님)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.05
    }
   ],
-  "scope": "R = (exp(2*px) - 1)/(exp(px) - 1); D = 2*exp(2*px)/exp(px); L = 2",
+  "scope": "xs = abs(px) < 0.0001 ? 0.0001 : px; qs = abs(q) < 0.1 ? 0.1 : q; R = (exp(p*xs) - 1 + c)/(exp(qs*xs) - 1); D = p*exp(p*xs)/(qs*exp(qs*xs)); L = p/qs; F0 = c; IND = abs(c) < 0.0001 ? 1 : 0",
   "geometry": {
    "range": [
     -1.5,
@@ -33,41 +60,60 @@
     1.5
    ],
    "yRange": [
-    -0.5,
-    7
+    -4,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "(exp(2*x) - 1)/(exp(x) - 1)",
-     "label": "f/g = (e^{2x}−1)/(e^x−1)  (x=0 에서 0/0)",
+     "fn": "(exp(p*x) - 1 + c)/(exp(q*x) - 1)",
+     "label": "$f/g$ — 원래 비",
      "color": "#2563eb"
     },
     {
-     "fn": "2*exp(2*x)/exp(x)",
-     "label": "f'/g' = 2e^{2x}/e^x",
+     "fn": "p*exp(p*x)/(q*exp(q*x))",
+     "label": "$f'/g'$ — 도함수 비 (상수 $c$ 와 무관)",
      "color": "#dc2626"
     },
     {
-     "fn": "2",
-     "label": "극한값 L = f'(0)/g'(0) = 2",
-     "color": "#16a34a"
+     "fn": "p/q",
+     "label": "$L = f'(0)/g'(0) = p/q$",
+     "color": "#16a34a",
+     "dashed": true
+    },
+    {
+     "fn": "exp(p*x) - 1 + c",
+     "label": "분자 $f(x)$ — $x=0$ 에서 값이 $c$",
+     "color": "#94a3b8",
+     "dashed": true
+    },
+    {
+     "fn": "exp(q*x) - 1",
+     "label": "분모 $g(x)$ — $x=0$ 에서 항상 0",
+     "color": "#cbd5e1",
+     "dashed": true
     }
    ],
    "points": [
     [
-     "=px",
+     "=xs",
      "=R"
     ],
     [
-     "=px",
+     "=xs",
      "=D"
+    ],
+    [
+     "=0",
+     "=L"
     ]
    ],
-   "pointsLabel": "$x$ 위치의 f/g(파랑)·f'/g'(빨강) — x가 0 으로 가면 두 점 모두 L=2 로 모인다"
+   "pointsLabel": "$x$ 에서의 $f/g$(파랑)·$f'/g'$(빨강) 과 목표값 $L$(초록). $c=0$ 이면 $x\\to 0$ 에서 두 점이 $L$ 로 모이고, $c\\neq 0$ 이면 파랑만 $\\pm\\infty$ 로 달아난다"
   },
   "readout": [
    {
-    "label": "f/g  (원래 비, x=0 이면 부정형)",
+    "label": "f/g  (원래 비 — c≠0 이면 x→0 에서 발산)",
     "expr": "R",
     "digits": 5
    },
@@ -77,9 +123,19 @@
     "digits": 5
    },
    {
-    "label": "극한값 L = f'(0)/g'(0)",
+    "label": "L = f'(0)/g'(0) = p/q",
     "expr": "L",
+    "digits": 4
+   },
+   {
+    "label": "f(0) 의 값 (0 이어야 로피탈 적용 가능)",
+    "expr": "F0",
     "digits": 3
+   },
+   {
+    "label": "0/0 부정형인가?  1 = 예, 0 = 아니오",
+    "expr": "IND",
+    "digits": 0
    },
    {
     "label": "|f/g − L|",
@@ -96,52 +152,95 @@
  "recipe": {
   "samples": [
    {
-    "px": 1
+    "px": 1,
+    "p": 2,
+    "q": 1,
+    "c": 0
    },
    {
-    "px": -1
+    "px": -0.7,
+    "p": 3,
+    "q": 1.5,
+    "c": 0
    },
    {
-    "px": 0.5
+    "px": 0.4,
+    "p": 2,
+    "q": 1,
+    "c": 0.5
    },
    {
-    "px": -0.7
+    "px": 0.05,
+    "p": 1,
+    "q": 2,
+    "c": 0
    }
   ],
   "invariants": [
-   "R - (exp(px) + 1)",
-   "D - 2*exp(px)",
-   "2*px/px - L"
+   "R*(exp(q*xs) - 1) - (exp(p*xs) - 1 + c)",
+   "D - (p/q)*exp((p - q)*xs)",
+   "L - p/q",
+   "F0 - c"
   ],
   "oracle": [
    {
     "params": {
-     "px": 1
+     "px": 1,
+     "p": 2,
+     "q": 1,
+     "c": 0
     },
     "expect": {
      "R": 3.718281828,
      "D": 5.436563657,
-     "L": 2
+     "L": 2,
+     "F0": 0,
+     "IND": 1
     }
    },
    {
     "params": {
-     "px": -1
+     "px": -0.7,
+     "p": 3,
+     "q": 1.5,
+     "c": 0
     },
     "expect": {
-     "R": 1.367879441,
-     "D": 0.735758882,
-     "L": 2
+     "R": 1.349937749,
+     "D": 0.699875498,
+     "L": 2,
+     "F0": 0,
+     "IND": 1
     }
    },
    {
     "params": {
-     "px": 0.5
+     "px": 0.4,
+     "p": 2,
+     "q": 1,
+     "c": 0.5
     },
     "expect": {
-     "R": 2.648721271,
-     "D": 3.297442541,
-     "L": 2
+     "R": 3.508447089,
+     "D": 2.983649395,
+     "L": 2,
+     "F0": 0.5,
+     "IND": 0
+    }
+   },
+   {
+    "params": {
+     "px": 0.05,
+     "p": 1,
+     "q": 2,
+     "c": 0
+    },
+    "expect": {
+     "R": 0.487502604,
+     "D": 0.475614712,
+     "L": 0.5,
+     "F0": 0,
+     "IND": 1
     }
    }
   ],

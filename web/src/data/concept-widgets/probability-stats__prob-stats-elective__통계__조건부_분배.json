@@ -4,8 +4,26 @@
   "title": "조건부 분배 탐구",
   "params": [
    {
-    "name": "t",
-    "label": "사건 B: X ≥ t",
+    "name": "tLo",
+    "label": "사건 B의 하한 a",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "tHi",
+    "label": "사건 B의 상한 b  (B: a ≤ X ≤ b)",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 9,
+    "step": 1
+   },
+   {
+    "name": "x0",
+    "label": "들여다볼 값 x",
     "type": "slider",
     "min": 2,
     "max": 12,
@@ -13,7 +31,7 @@
     "step": 1
    }
   ],
-  "scope": "p2=1/36; p3=2/36; p4=3/36; p5=4/36; p6=5/36; p7=6/36; p8=5/36; p9=4/36; p10=3/36; p11=2/36; p12=1/36; PB=(2>=t?p2:0)+(3>=t?p3:0)+(4>=t?p4:0)+(5>=t?p5:0)+(6>=t?p6:0)+(7>=t?p7:0)+(8>=t?p8:0)+(9>=t?p9:0)+(10>=t?p10:0)+(11>=t?p11:0)+(12>=t?p12:0); q2=(2>=t?p2/PB:0); q3=(3>=t?p3/PB:0); q4=(4>=t?p4/PB:0); q5=(5>=t?p5/PB:0); q6=(6>=t?p6/PB:0); q7=(7>=t?p7/PB:0); q8=(8>=t?p8/PB:0); q9=(9>=t?p9/PB:0); q10=(10>=t?p10/PB:0); q11=(11>=t?p11/PB:0); q12=(12>=t?p12/PB:0); sumQ=q2+q3+q4+q5+q6+q7+q8+q9+q10+q11+q12; err=(2>=t?q2*PB-p2:0)+(3>=t?q3*PB-p3:0)+(4>=t?q4*PB-p4:0)+(5>=t?q5*PB-p5:0)+(6>=t?q6*PB-p6:0)+(7>=t?q7*PB-p7:0)+(8>=t?q8*PB-p8:0)+(9>=t?q9*PB-p9:0)+(10>=t?q10*PB-p10:0)+(11>=t?q11*PB-p11:0)+(12>=t?q12*PB-p12:0); zeroBelow=(2<t?abs(q2):0)+(3<t?abs(q3):0)+(4<t?abs(q4):0)+(5<t?abs(q5):0)+(6<t?abs(q6):0)+(7<t?abs(q7):0)+(8<t?abs(q8):0)+(9<t?abs(q9):0)+(10<t?abs(q10):0)+(11<t?abs(q11):0)+(12<t?abs(q12):0)",
+  "scope": "lo=min(tLo,tHi); hi=max(tLo,tHi); p2=1/36; p3=2/36; p4=3/36; p5=4/36; p6=5/36; p7=6/36; p8=5/36; p9=4/36; p10=3/36; p11=2/36; p12=1/36; i2=(2>=lo?(2<=hi?1:0):0); i3=(3>=lo?(3<=hi?1:0):0); i4=(4>=lo?(4<=hi?1:0):0); i5=(5>=lo?(5<=hi?1:0):0); i6=(6>=lo?(6<=hi?1:0):0); i7=(7>=lo?(7<=hi?1:0):0); i8=(8>=lo?(8<=hi?1:0):0); i9=(9>=lo?(9<=hi?1:0):0); i10=(10>=lo?(10<=hi?1:0):0); i11=(11>=lo?(11<=hi?1:0):0); i12=(12>=lo?(12<=hi?1:0):0); PBraw=i2*p2+i3*p3+i4*p4+i5*p5+i6*p6+i7*p7+i8*p8+i9*p9+i10*p10+i11*p11+i12*p12; PB=(PBraw>0?PBraw:1); scale=1/PB; q2=i2*p2/PB; q3=i3*p3/PB; q4=i4*p4/PB; q5=i5*p5/PB; q6=i6*p6/PB; q7=i7*p7/PB; q8=i8*p8/PB; q9=i9*p9/PB; q10=i10*p10/PB; q11=i11*p11/PB; q12=i12*p12/PB; sumQ=q2+q3+q4+q5+q6+q7+q8+q9+q10+q11+q12; err=(q2*PB-i2*p2)+(q3*PB-i3*p3)+(q4*PB-i4*p4)+(q5*PB-i5*p5)+(q6*PB-i6*p6)+(q7*PB-i7*p7)+(q8*PB-i8*p8)+(q9*PB-i9*p9)+(q10*PB-i10*p10)+(q11*PB-i11*p11)+(q12*PB-i12*p12); zeroOutside=(1-i2)*abs(q2)+(1-i3)*abs(q3)+(1-i4)*abs(q4)+(1-i5)*abs(q5)+(1-i6)*abs(q6)+(1-i7)*abs(q7)+(1-i8)*abs(q8)+(1-i9)*abs(q9)+(1-i10)*abs(q10)+(1-i11)*abs(q11)+(1-i12)*abs(q12); px0=(x0==2?p2:0)+(x0==3?p3:0)+(x0==4?p4:0)+(x0==5?p5:0)+(x0==6?p6:0)+(x0==7?p7:0)+(x0==8?p8:0)+(x0==9?p9:0)+(x0==10?p10:0)+(x0==11?p11:0)+(x0==12?p12:0); inx0=(x0>=lo?(x0<=hi?1:0):0); qx0=inx0*px0/PB; ratio=(px0>0?qx0/px0:0); scaleErr=abs(qx0-inx0*px0*scale)",
   "geometry": {
    "range": [
     1.5,
@@ -21,7 +39,7 @@
    ],
    "yRange": [
     0,
-    1.1
+    1.05
    ],
    "showAxes": true,
    "showGrid": true,
@@ -45,7 +63,10 @@
        1.6,
        "=q2"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -66,7 +87,10 @@
        2.6,
        "=q3"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -87,7 +111,10 @@
        3.6,
        "=q4"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -108,7 +135,10 @@
        4.6,
        "=q5"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -129,7 +159,10 @@
        5.6,
        "=q6"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -150,7 +183,10 @@
        6.6,
        "=q7"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -171,7 +207,10 @@
        7.6,
        "=q8"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -192,7 +231,10 @@
        8.6,
        "=q9"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -213,7 +255,10 @@
        9.6,
        "=q10"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -234,7 +279,10 @@
        10.6,
        "=q11"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
     },
     {
      "type": "polygon",
@@ -255,25 +303,352 @@
        11.6,
        "=q12"
       ]
-     ]
+     ],
+     "fill": "#f59e0b",
+     "fillOpacity": 0.3,
+     "stroke": "#f59e0b"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       1.82,
+       0
+      ],
+      [
+       2.18,
+       0
+      ],
+      [
+       2.18,
+       "=p2"
+      ],
+      [
+       1.82,
+       "=p2"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       2.82,
+       0
+      ],
+      [
+       3.18,
+       0
+      ],
+      [
+       3.18,
+       "=p3"
+      ],
+      [
+       2.82,
+       "=p3"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       3.82,
+       0
+      ],
+      [
+       4.18,
+       0
+      ],
+      [
+       4.18,
+       "=p4"
+      ],
+      [
+       3.82,
+       "=p4"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       4.82,
+       0
+      ],
+      [
+       5.18,
+       0
+      ],
+      [
+       5.18,
+       "=p5"
+      ],
+      [
+       4.82,
+       "=p5"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       5.82,
+       0
+      ],
+      [
+       6.18,
+       0
+      ],
+      [
+       6.18,
+       "=p6"
+      ],
+      [
+       5.82,
+       "=p6"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       6.82,
+       0
+      ],
+      [
+       7.18,
+       0
+      ],
+      [
+       7.18,
+       "=p7"
+      ],
+      [
+       6.82,
+       "=p7"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       7.82,
+       0
+      ],
+      [
+       8.18,
+       0
+      ],
+      [
+       8.18,
+       "=p8"
+      ],
+      [
+       7.82,
+       "=p8"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       8.82,
+       0
+      ],
+      [
+       9.18,
+       0
+      ],
+      [
+       9.18,
+       "=p9"
+      ],
+      [
+       8.82,
+       "=p9"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       9.82,
+       0
+      ],
+      [
+       10.18,
+       0
+      ],
+      [
+       10.18,
+       "=p10"
+      ],
+      [
+       9.82,
+       "=p10"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       10.82,
+       0
+      ],
+      [
+       11.18,
+       0
+      ],
+      [
+       11.18,
+       "=p11"
+      ],
+      [
+       10.82,
+       "=p11"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       11.82,
+       0
+      ],
+      [
+       12.18,
+       0
+      ],
+      [
+       12.18,
+       "=p12"
+      ],
+      [
+       11.82,
+       "=p12"
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.9,
+     "stroke": "#2563eb"
     },
     {
      "type": "segment",
      "from": [
-      "=t",
+      "=lo-0.5",
       0
      ],
      "to": [
-      "=t",
+      "=lo-0.5",
       1
-     ]
+     ],
+     "dashed": true,
+     "color": "#6b7280"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=hi+0.5",
+      0
+     ],
+     "to": [
+      "=hi+0.5",
+      1
+     ],
+     "dashed": true,
+     "color": "#6b7280"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x0",
+      "=px0"
+     ],
+     "to": [
+      "=x0",
+      "=qx0"
+     ],
+     "dashed": true,
+     "color": "#111827"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=px0"
+     ],
+     "label": "$P(X=x)$",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x0",
+      "=qx0"
+     ],
+     "label": "$P(X=x\\mid B)$",
+     "color": "#f59e0b"
+    },
+    {
+     "type": "text",
+     "at": [
+      7,
+      1.0
+     ],
+     "text": "B: a ≤ X ≤ b",
+     "color": "#6b7280"
     }
    ]
   },
   "readout": [
    {
-    "label": "P(B) = P(X≥t)",
+    "label": "P(B) = P(a ≤ X ≤ b)",
     "expr": "PB",
+    "digits": 4
+   },
+   {
+    "label": "정규화 배율 1/P(B)",
+    "expr": "scale",
     "digits": 4
    },
    {
@@ -282,18 +657,18 @@
     "digits": 10
    },
    {
-    "label": "P(X=5|B)",
-    "expr": "q5",
+    "label": "원래 확률 P(X=x)",
+    "expr": "px0",
     "digits": 6
    },
    {
-    "label": "P(X=7|B)",
-    "expr": "q7",
+    "label": "조건부 확률 P(X=x|B)",
+    "expr": "qx0",
     "digits": 6
    },
    {
-    "label": "P(X=9|B)",
-    "expr": "q9",
+    "label": "두 확률의 비 (= 1/P(B))",
+    "expr": "ratio",
     "digits": 6
    }
   ]
@@ -301,55 +676,117 @@
  "recipe": {
   "samples": [
    {
-    "t": 5
+    "tLo": 5,
+    "tHi": 9,
+    "x0": 7
    },
    {
-    "t": 8
+    "tLo": 2,
+    "tHi": 12,
+    "x0": 7
    },
    {
-    "t": 11
+    "tLo": 8,
+    "tHi": 12,
+    "x0": 7
+   },
+   {
+    "tLo": 7,
+    "tHi": 7,
+    "x0": 7
+   },
+   {
+    "tLo": 10,
+    "tHi": 4,
+    "x0": 3
    }
   ],
   "invariants": [
    "abs(sumQ-1)",
    "abs(err)",
-   "abs(zeroBelow)"
+   "abs(zeroOutside)",
+   "scaleErr"
   ],
   "oracle": [
    {
     "params": {
-     "t": 5
+     "tLo": 5,
+     "tHi": 9,
+     "x0": 7
     },
     "expect": {
-     "PB": 0.8333333333333334,
+     "PB": 0.6666666666666666,
+     "scale": 1.5,
      "sumQ": 1,
+     "q7": 0.25,
+     "q5": 0.16666666666666666,
      "q4": 0,
-     "q5": 0.13333333333333333,
-     "q7": 0.2
+     "px0": 0.16666666666666666,
+     "qx0": 0.25,
+     "ratio": 1.5
     }
    },
    {
     "params": {
-     "t": 8
+     "tLo": 2,
+     "tHi": 12,
+     "x0": 7
+    },
+    "expect": {
+     "PB": 1,
+     "scale": 1,
+     "sumQ": 1,
+     "q7": 0.16666666666666666,
+     "q2": 0.027777777777777776,
+     "ratio": 1
+    }
+   },
+   {
+    "params": {
+     "tLo": 8,
+     "tHi": 12,
+     "x0": 7
     },
     "expect": {
      "PB": 0.4166666666666667,
+     "scale": 2.4,
      "sumQ": 1,
      "q7": 0,
      "q8": 0.3333333333333333,
-     "q9": 0.26666666666666666
+     "q9": 0.26666666666666666,
+     "qx0": 0,
+     "ratio": 0
     }
    },
    {
     "params": {
-     "t": 11
+     "tLo": 7,
+     "tHi": 7,
+     "x0": 7
     },
     "expect": {
-     "PB": 0.08333333333333333,
+     "PB": 0.16666666666666666,
+     "scale": 6,
      "sumQ": 1,
-     "q10": 0,
-     "q11": 0.6666666666666666,
-     "q12": 0.3333333333333333
+     "q7": 1,
+     "q6": 0,
+     "q8": 0,
+     "ratio": 6
+    }
+   },
+   {
+    "params": {
+     "tLo": 10,
+     "tHi": 4,
+     "x0": 3
+    },
+    "expect": {
+     "PB": 0.8333333333333334,
+     "scale": 1.2,
+     "sumQ": 1,
+     "q3": 0,
+     "q7": 0.2,
+     "qx0": 0
     }
    }
   ],

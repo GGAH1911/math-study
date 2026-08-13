@@ -1,28 +1,68 @@
 {
  "id": "방정식의_실근_개수",
  "spec": {
-  "title": "방정식의 실근 개수 (삼차함수 y=x³-3x+k)",
+  "title": "방정식의 실근 개수 (y=ax³+bx²+cx+d 와 y=k)",
   "params": [
    {
-    "name": "k",
-    "label": "상수항 k",
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
     "type": "slider",
     "min": -3,
     "max": 3,
     "init": 0,
     "step": 0.1,
     "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "직선 y = k",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
    }
   ],
-  "scope": "yMax = k+2; yMin = k-2; product = yMax*yMin; disc = 108 - 27*k^2; rootCount = (disc > 0) ? 3 : ((disc < 0) ? 1 : 2)",
+  "scope": "aa = (abs(a) < 0.05 ? 0.1 : a); disc = b^2 - 3*aa*c; xr = (disc > 0 ? sqrt(disc) : 0); xp = (-b - xr)/(3*aa); xq = (-b + xr)/(3*aa); xL = min(xp, xq); xR = max(xp, xq); fL = aa*xL^3 + b*xL^2 + c*xL + d; fR = aa*xR^3 + b*xR^2 + c*xR + d; yMax = (aa > 0 ? fL : fR); yMin = (aa > 0 ? fR : fL); gMax = yMax - k; gMin = yMin - k; product = gMax*gMin; rootCount = (disc <= 0 ? 1 : (product < 0 ? 3 : (product > 0 ? 1 : 2)))",
   "geometry": {
    "range": [
-    -3,
-    3
+    -4,
+    4
    ],
    "yRange": [
-    -6,
-    6
+    -8,
+    8
    ],
    "showAxes": true,
    "showGrid": true,
@@ -30,25 +70,86 @@
   },
   "plot": {
    "range": [
-    -3,
-    3
+    -4,
+    4
    ],
    "yRange": [
-    -6,
-    6
+    -8,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x + k",
-     "label": "f(x) = x³ - 3x + k",
-     "color": "blue"
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "label": "$y=ax^3+bx^2+cx+d$",
+     "color": "#2196F3"
+    },
+    {
+     "fn": "k",
+     "label": "$y=k$",
+     "color": "#ef4444"
+    },
+    {
+     "fn": "yMax",
+     "label": "$극댓값$",
+     "color": "#f59e0b",
+     "dashed": true
+    },
+    {
+     "fn": "yMin",
+     "label": "$극솟값$",
+     "color": "#10b981",
+     "dashed": true
+    }
+   ],
+   "points": [
+    [
+     "=xL",
+     "=fL"
+    ],
+    [
+     "=xR",
+     "=fR"
+    ]
+   ],
+   "pointsLabel": "$극점$",
+   "roots": [
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d - k",
+     "in": [
+      "=-20",
+      "=xL"
+     ],
+     "label": "교점"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d - k",
+     "in": [
+      "=xL",
+      "=xR"
+     ],
+     "label": "교점"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d - k",
+     "in": [
+      "=xR",
+      "=20"
+     ],
+     "label": "교점"
     }
    ]
   },
   "readout": [
    {
-    "label": "k",
-    "expr": "k",
+    "label": "실근의 개수",
+    "expr": "rootCount",
+    "digits": 0
+   },
+   {
+    "label": "극값 판별식 b²−3ac",
+    "expr": "disc",
     "digits": 2
    },
    {
@@ -62,83 +163,179 @@
     "digits": 2
    },
    {
-    "label": "극값의 곱",
-    "expr": "product",
+    "label": "극댓값 − k",
+    "expr": "gMax",
     "digits": 2
    },
    {
-    "label": "판별식 Δ",
-    "expr": "disc",
+    "label": "극솟값 − k",
+    "expr": "gMin",
     "digits": 2
-   },
-   {
-    "label": "실근의 개수",
-    "expr": "rootCount",
-    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "k": -3
-   },
-   {
-    "k": -2
-   },
-   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
     "k": 0
    },
    {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
     "k": 2
    },
    {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
     "k": 3
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0,
+    "k": 0
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0,
+    "k": 0
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 1,
+    "k": 0
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "d": 0,
+    "k": 0
    }
   ],
   "invariants": [
-   "yMax - (k+2)",
-   "yMin - (k-2)",
-   "product - (k^2 - 4)",
-   "disc - (108 - 27*k^2)",
-   "product + disc/27",
-   "rootCount - ((product < 0) ? 3 : ((product > 0) ? 1 : 2))"
+   "product - gMax*gMin",
+   "gMax - (yMax - k)",
+   "rootCount - (disc <= 0 ? 1 : (product < 0 ? 3 : (product > 0 ? 1 : 2)))",
+   "(disc > 0 ? 3*aa*xL^2 + 2*b*xL + c : 0)",
+   "(disc > 0 ? 3*aa*xR^2 + 2*b*xR + c : 0)",
+   "xR - xL - (disc > 0 ? 2*sqrt(disc)/abs(3*aa) : 0)",
+   "yMax - (aa > 0 ? fL : fR)"
   ],
   "oracle": [
    {
     "params": {
-     "k": -2
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "k": 0
     },
     "expect": {
-     "yMax": 0,
-     "yMin": -4,
+     "disc": 9,
+     "yMax": 2,
+     "yMin": -2,
+     "product": -4,
+     "rootCount": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "k": 2
+    },
+    "expect": {
+     "gMax": 0,
+     "gMin": -4,
      "product": 0,
-     "disc": 0,
      "rootCount": 2
     }
    },
    {
     "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
+     "k": 3
+    },
+    "expect": {
+     "gMax": -1,
+     "gMin": -5,
+     "product": 5,
+     "rootCount": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0,
+     "k": 0
+    },
+    "expect": {
+     "disc": -9,
+     "rootCount": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0,
      "k": 0
     },
     "expect": {
      "yMax": 2,
      "yMin": -2,
      "product": -4,
-     "disc": 108,
      "rootCount": 3
     }
    },
    {
     "params": {
-     "k": 3
+     "a": 1,
+     "b": -3,
+     "c": 0,
+     "d": 1,
+     "k": 0
     },
     "expect": {
-     "yMax": 5,
-     "yMin": 1,
-     "product": 5,
-     "disc": -135,
-     "rootCount": 1
+     "xL": 0,
+     "xR": 2,
+     "yMax": 1,
+     "yMin": -3,
+     "rootCount": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "d": 0,
+     "k": 0
+    },
+    "expect": {
+     "aa": 0.1
     }
    }
   ],

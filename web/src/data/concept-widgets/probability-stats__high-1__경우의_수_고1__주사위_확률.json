@@ -4,31 +4,49 @@
   "title": "주사위 확률 (정의)",
   "params": [
    {
-    "name": "k",
-    "label": "k (k 이상이 나올)",
+    "name": "a",
+    "label": "a (a 이상)",
     "type": "slider",
     "min": 1,
-    "max": 7,
+    "max": 6,
     "init": 4,
+    "step": 1
+   },
+   {
+    "name": "b",
+    "label": "b (b 이하)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 6,
+    "step": 1
+   },
+   {
+    "name": "mult",
+    "label": "m의 배수만 (m=1이면 조건 없음)",
+    "type": "slider",
+    "min": 1,
+    "max": 6,
+    "init": 1,
     "step": 1
    }
   ],
-  "scope": "n=7-k; prob=n/6; unfav=(k-1)/6",
+  "scope": "lo = min(a,b); hi = max(a,b); i1 = (1 >= lo and 1 <= hi and mod(1,mult) == 0) ? 1 : 0; i2 = (2 >= lo and 2 <= hi and mod(2,mult) == 0) ? 1 : 0; i3 = (3 >= lo and 3 <= hi and mod(3,mult) == 0) ? 1 : 0; i4 = (4 >= lo and 4 <= hi and mod(4,mult) == 0) ? 1 : 0; i5 = (5 >= lo and 5 <= hi and mod(5,mult) == 0) ? 1 : 0; i6 = (6 >= lo and 6 <= hi and mod(6,mult) == 0) ? 1 : 0; n = i1+i2+i3+i4+i5+i6; prob = n/6; unfav = 1-prob",
   "geometry": {
    "range": [
     0,
     6
    ],
    "yRange": [
-    -0.2,
-    1.4
+    -0.7,
+    2.1
    ],
-   "showAxes": true,
+   "showAxes": false,
    "showGrid": false,
    "shapes": [
     {
      "type": "polygon",
-     "label": "전체",
+     "label": "전체 S (6가지)",
      "vertices": [
       [
        0,
@@ -50,25 +68,147 @@
     },
     {
      "type": "polygon",
-     "label": "A",
      "vertices": [
       [
-       "=k-1",
+       0,
        0
       ],
       [
-       6,
+       1,
        0
       ],
       [
-       6,
+       1,
        1
       ],
       [
-       "=k-1",
+       0,
        1
       ]
-     ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": "=i1*0.45",
+     "stroke": "none"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       1,
+       0
+      ],
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       1
+      ],
+      [
+       1,
+       1
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": "=i2*0.45",
+     "stroke": "none"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       2,
+       0
+      ],
+      [
+       3,
+       0
+      ],
+      [
+       3,
+       1
+      ],
+      [
+       2,
+       1
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": "=i3*0.45",
+     "stroke": "none"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       3,
+       0
+      ],
+      [
+       4,
+       0
+      ],
+      [
+       4,
+       1
+      ],
+      [
+       3,
+       1
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": "=i4*0.45",
+     "stroke": "none"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       4,
+       0
+      ],
+      [
+       5,
+       0
+      ],
+      [
+       5,
+       1
+      ],
+      [
+       4,
+       1
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": "=i5*0.45",
+     "stroke": "none"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       5,
+       0
+      ],
+      [
+       6,
+       0
+      ],
+      [
+       6,
+       1
+      ],
+      [
+       5,
+       1
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": "=i6*0.45",
+     "stroke": "none"
     },
     {
      "type": "segment",
@@ -172,17 +312,112 @@
       0.5
      ],
      "label": "6"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=lo-1",
+      -0.25
+     ],
+     "to": [
+      "=hi",
+      -0.25
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=lo-1",
+      -0.38
+     ],
+     "to": [
+      "=lo-1",
+      -0.12
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=hi",
+      -0.38
+     ],
+     "to": [
+      "=hi",
+      -0.12
+     ]
+    },
+    {
+     "type": "text",
+     "at": [
+      "=(lo-1+hi)/2",
+      -0.58
+     ],
+     "text": "a 이상 b 이하"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       1.45
+      ],
+      [
+       6,
+       1.45
+      ],
+      [
+       6,
+       1.8
+      ],
+      [
+       0,
+       1.8
+      ]
+     ],
+     "fill": "none",
+     "stroke": "#94a3b8"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [
+       0,
+       1.45
+      ],
+      [
+       "=6*prob",
+       1.45
+      ],
+      [
+       "=6*prob",
+       1.8
+      ],
+      [
+       0,
+       1.8
+      ]
+     ],
+     "fill": "#2563eb",
+     "fillOpacity": 0.5
+    },
+    {
+     "type": "text",
+     "at": [
+      0.05,
+      2.0
+     ],
+     "text": "P(A) = 칠해진 칸 수 ÷ 6"
     }
    ]
   },
   "readout": [
    {
-    "label": "k",
-    "expr": "k",
+    "label": "전체 경우의 수 n(S)",
+    "expr": "6",
     "digits": 0
    },
    {
-    "label": "n (사건의 경우의 수)",
+    "label": "사건의 경우의 수 n(A)",
     "expr": "n",
     "digits": 0
    },
@@ -201,27 +436,71 @@
  "recipe": {
   "samples": [
    {
-    "k": 1
+    "a": 1,
+    "b": 6,
+    "mult": 1
    },
    {
-    "k": 3
+    "a": 4,
+    "b": 6,
+    "mult": 1
    },
    {
-    "k": 5
+    "a": 1,
+    "b": 6,
+    "mult": 2
    },
    {
-    "k": 7
+    "a": 3,
+    "b": 3,
+    "mult": 1
+   },
+   {
+    "a": 5,
+    "b": 2,
+    "mult": 1
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "mult": 3
+   },
+   {
+    "a": 2,
+    "b": 5,
+    "mult": 3
+   },
+   {
+    "a": 1,
+    "b": 6,
+    "mult": 6
    }
   ],
   "invariants": [
    "prob - n/6",
    "prob + unfav - 1",
-   "n - (7-k)"
+   "n - (i1+i2+i3+i4+i5+i6)",
+   "lo - min(a,b)",
+   "hi - max(a,b)"
   ],
   "oracle": [
    {
     "params": {
-     "k": 4
+     "a": 1,
+     "b": 6,
+     "mult": 1
+    },
+    "expect": {
+     "n": 6,
+     "prob": 1,
+     "unfav": 0
+    }
+   },
+   {
+    "params": {
+     "a": 4,
+     "b": 6,
+     "mult": 1
     },
     "expect": {
      "n": 3,
@@ -230,20 +509,57 @@
    },
    {
     "params": {
-     "k": 1
+     "a": 1,
+     "b": 6,
+     "mult": 2
     },
     "expect": {
-     "n": 6,
-     "prob": 1
+     "n": 3,
+     "prob": 0.5
     }
    },
    {
     "params": {
-     "k": 6
+     "a": 1,
+     "b": 6,
+     "mult": 3
+    },
+    "expect": {
+     "n": 2
+    }
+   },
+   {
+    "params": {
+     "a": 3,
+     "b": 3,
+     "mult": 1
     },
     "expect": {
      "n": 1,
      "prob": 0.16666666666666666
+    }
+   },
+   {
+    "params": {
+     "a": 5,
+     "b": 2,
+     "mult": 1
+    },
+    "expect": {
+     "n": 4,
+     "prob": 0.6666666666666666
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "mult": 3
+    },
+    "expect": {
+     "n": 0,
+     "prob": 0,
+     "unfav": 1
     }
    }
   ],

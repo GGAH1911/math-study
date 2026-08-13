@@ -1,7 +1,7 @@
 {
  "id": "geometry/middle-1/평면도형/정삼각형의_조건",
  "spec": {
-  "title": "정삼각형의 조건: 두 변이 같을 때 꼭지각이 60°이면 정삼각형",
+  "title": "정삼각형의 조건: 두 변이 같고 끼인각이 60°일 때만 정삼각형",
   "params": [
    {
     "name": "theta",
@@ -12,17 +12,26 @@
     "init": 60,
     "step": 1,
     "unit": "°"
+   },
+   {
+    "name": "b",
+    "label": "변 AC 길이 (AB=1 고정)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 2.5,
+    "init": 1,
+    "step": 0.05
    }
   ],
-  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); a=sqrt(2-2*cos(rad))",
+  "scope": "rad=theta*pi/180; cx=b*cos(rad); cy=b*sin(rad); a=sqrt(1+b^2-2*b*cos(rad)); cosB=max(-1,min(1,(1+a^2-b^2)/(2*a))); angB=acos(cosB)*180/pi; angC=180-theta-angB; spread=max(1,b,a)-min(1,b,a)",
   "geometry": {
    "range": [
-    -1.4,
-    1.4
+    -2.8,
+    2.8
    ],
    "yRange": [
-    -0.4,
-    1.4
+    -0.6,
+    2.8
    ],
    "showAxes": true,
    "showGrid": true,
@@ -34,7 +43,17 @@
       0
      ],
      "radius": 1,
-     "label": "AC=AB=1 자취"
+     "dashed": true,
+     "label": "AB=1 (여기 있으면 AC=AB)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": "=b",
+     "label": "C의 자취 (AC=b)"
     },
     {
      "type": "polygon",
@@ -52,7 +71,14 @@
        "=cx",
        "=cy"
       ]
-     ]
+     ],
+     "labels": [
+      "A",
+      "B",
+      "C"
+     ],
+     "closed": true,
+     "fillOpacity": 0.12
     },
     {
      "type": "point",
@@ -82,8 +108,13 @@
   },
   "readout": [
    {
-    "label": "변 AB = 변 AC",
+    "label": "변 AB",
     "expr": "1",
+    "digits": 3
+   },
+   {
+    "label": "변 AC",
+    "expr": "b",
     "digits": 3
    },
    {
@@ -92,18 +123,28 @@
     "digits": 3
    },
    {
-    "label": "BC - AB (0이면 정삼각형)",
-    "expr": "a-1",
+    "label": "AC − AB (0이면 두 변이 같음)",
+    "expr": "b-1",
+    "digits": 3
+   },
+   {
+    "label": "가장 긴 변 − 가장 짧은 변 (0이면 정삼각형)",
+    "expr": "spread",
     "digits": 3
    },
    {
     "label": "꼭지각 ∠A",
     "expr": "theta",
-    "digits": 0
+    "digits": 1
    },
    {
-    "label": "밑각 ∠B = ∠C",
-    "expr": "(180-theta)/2",
+    "label": "∠B",
+    "expr": "angB",
+    "digits": 1
+   },
+   {
+    "label": "∠C",
+    "expr": "angC",
     "digits": 1
    }
   ]
@@ -111,52 +152,84 @@
  "recipe": {
   "samples": [
    {
-    "theta": 60
+    "theta": 60,
+    "b": 1
    },
    {
-    "theta": 90
+    "theta": 60,
+    "b": 2
    },
    {
-    "theta": 30
+    "theta": 90,
+    "b": 1
    },
    {
-    "theta": 120
+    "theta": 120,
+    "b": 1
+   },
+   {
+    "theta": 40,
+    "b": 0.5
    }
   ],
   "invariants": [
-   "cx^2 + cy^2 - 1",
+   "cx^2 + cy^2 - b^2",
    "(cx-1)^2 + cy^2 - a^2",
-   "(180 - theta - 2*((180-theta)/2))"
+   "theta + angB + angC - 180",
+   "spread - (max(1,b,a) - min(1,b,a))"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 60
+     "theta": 60,
+     "b": 1
     },
     "expect": {
      "cx": 0.5,
      "cy": 0.8660254037844386,
-     "a": 1
+     "a": 1,
+     "angB": 60,
+     "angC": 60,
+     "spread": 0
     }
    },
    {
     "params": {
-     "theta": 90
+     "theta": 60,
+     "b": 2
+    },
+    "expect": {
+     "cx": 1,
+     "cy": 1.7320508075688772,
+     "a": 1.7320508075688772,
+     "angB": 90,
+     "angC": 30
+    }
+   },
+   {
+    "params": {
+     "theta": 90,
+     "b": 1
     },
     "expect": {
      "cx": 0,
      "cy": 1,
-     "a": 1.4142135623730951
+     "a": 1.4142135623730951,
+     "angB": 45,
+     "angC": 45
     }
    },
    {
     "params": {
-     "theta": 120
+     "theta": 120,
+     "b": 1
     },
     "expect": {
      "cx": -0.5,
      "cy": 0.8660254037844387,
-     "a": 1.7320508075688772
+     "a": 1.7320508075688772,
+     "angB": 30,
+     "angC": 30
     }
    }
   ],

@@ -11,48 +11,104 @@
     "max": 4,
     "init": 2,
     "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "x축 평행이동 p (점근선 x=p)",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "q",
+    "label": "y축 평행이동 q",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "k",
+    "label": "기준선 y = k (방정식·부등식)",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
    }
   ],
-  "scope": "a = (abs(a_raw - 1) < 0.001) ? 1.001 : a_raw; y1 = log(1,a); ya = log(a,a); y3 = log(3,a); inv = a^y3 - 3; p4 = log(4,a) - 2*log(2,a); slope2 = 1/(2*log(a))",
-  "geometry": {
+  "scope": "a = (abs(a_raw - 1) < 0.05) ? 1.05 : a_raw; asym = p; ypass = log((p+1) - p, a) + q; dir = sign(a - 1); xsol = p + a^(k - q); chk = log(xsol - p, a) + q - k; xc = (log(a) > 0) ? (p + 1/log(a)) : (p + 0.001); slope_x0 = 1/log(a); y3 = log(3, a); inv = a^y3 - 3; p4 = log(4, a) - 2*log(2, a)",
+  "plot": {
    "range": [
-    0.1,
-    5
+    -3,
+    9
    ],
    "yRange": [
     -4,
-    4
+    6
    ],
    "showAxes": true,
    "showGrid": true,
-   "shapes": []
-  },
-  "plot": {
-   "range": [
-    0.1,
-    5
-   ],
-   "yRange": [
-    -4,
-    4
-   ],
    "fns": [
     {
-     "fn": "log(x,a)",
-     "label": "y = log_a x",
+     "fn": "log(x - p, a) + q",
+     "label": "$y=\\log_a(x-p)+q$",
      "color": "#d32f2f"
     },
     {
-     "fn": "a^x",
-     "label": "y = a^x",
+     "fn": "a^(x - q) + p",
+     "label": "$y=a^{x-q}+p$ (역함수)",
      "color": "#1976d2"
     },
     {
      "fn": "x",
-     "label": "y = x",
-     "color": "#888888"
+     "label": "$y=x$",
+     "color": "#888888",
+     "dashed": true
+    },
+    {
+     "fn": "k",
+     "label": "$y=k$",
+     "color": "#2e7d32",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "log(x - p, a) + q - k",
+     "in": [
+      "=p+0.000001",
+      "=p+200"
+     ],
+     "label": "$\\log_a(x-p)+q=k$ 의 해"
+    },
+    {
+     "fn": "log(x - p, a) + q - x",
+     "in": [
+      "=p+0.000001",
+      "=xc"
+     ],
+     "label": "$y=x$ 와의 교점"
+    },
+    {
+     "fn": "log(x - p, a) + q - x",
+     "in": [
+      "=xc",
+      "=p+200"
+     ],
+     "label": "$y=x$ 와의 교점"
+    }
+   ],
+   "points": [
+    [
+     "=p+1",
+     "=q"
+    ]
+   ],
+   "pointsLabel": "$(p+1,\\ q)$ — 밑과 무관하게 항상 지나는 점"
   },
   "readout": [
    {
@@ -61,74 +117,131 @@
     "digits": 3
    },
    {
-    "label": "log_a(1)",
-    "expr": "y1",
+    "label": "점근선 x =",
+    "expr": "asym",
+    "digits": 2
+   },
+   {
+    "label": "항상 지나는 점의 y (=q 인지 확인)",
+    "expr": "ypass",
     "digits": 3
    },
    {
-    "label": "log_a(a)",
-    "expr": "ya",
-    "digits": 3
+    "label": "증가(+1) / 감소(−1)",
+    "expr": "dir",
+    "digits": 0
    },
    {
-    "label": "log_a(4) - 2log_a(2)",
+    "label": "방정식의 해 x = p + a^(k−q)",
+    "expr": "xsol",
+    "digits": 4
+   },
+   {
+    "label": "검산: log_a(x−p)+q−k",
+    "expr": "chk",
+    "digits": 6
+   },
+   {
+    "label": "log_a 4 − 2log_a 2",
     "expr": "p4",
-    "digits": 3
-   },
-   {
-    "label": "기울기 (x=2)",
-    "expr": "slope2",
-    "digits": 3
+    "digits": 6
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a_raw": 0.5
+    "a_raw": 2,
+    "p": 1,
+    "q": -1,
+    "k": 0
    },
    {
-    "a_raw": 1.1
+    "a_raw": 0.5,
+    "p": 0,
+    "q": 0,
+    "k": 1
    },
    {
-    "a_raw": 2
+    "a_raw": 4,
+    "p": -2,
+    "q": 2,
+    "k": 2
    },
    {
-    "a_raw": 4
+    "a_raw": 1.1,
+    "p": 0.5,
+    "q": 0,
+    "k": -1
+   },
+   {
+    "a_raw": 3,
+    "p": 2,
+    "q": 1,
+    "k": 3
    }
   ],
   "invariants": [
-   "y1",
-   "ya - 1",
+   "ypass - q",
+   "chk",
+   "asym - p",
    "inv",
    "p4",
-   "slope2*2*log(a) - 1"
+   "slope_x0*log(a) - 1"
   ],
   "oracle": [
    {
     "params": {
-     "a_raw": 2
+     "a_raw": 2,
+     "p": 1,
+     "q": -1,
+     "k": 0
     },
     "expect": {
-     "y1": 0,
-     "ya": 1,
-     "y3": 1.584962500721156,
+     "xsol": 3,
+     "chk": 0,
+     "ypass": -1,
+     "dir": 1,
+     "slope_x0": 1.4426950408889634,
+     "y3": 1.5849625007211563,
      "inv": 0,
-     "p4": 0,
-     "slope2": 0.7213475204444817
+     "p4": 0
     }
    },
    {
     "params": {
-     "a_raw": 0.5
+     "a_raw": 0.5,
+     "p": 0,
+     "q": 0,
+     "k": 1
     },
     "expect": {
-     "y1": 0,
-     "ya": 1,
-     "y3": -1.584962500721156,
+     "xsol": 0.5,
+     "chk": 0,
+     "ypass": 0,
+     "dir": -1,
+     "slope_x0": -1.4426950408889634,
+     "y3": -1.5849625007211563,
      "inv": 0,
-     "p4": 0,
-     "slope2": -0.7213475204444817
+     "p4": 0
+    }
+   },
+   {
+    "params": {
+     "a_raw": 4,
+     "p": -2,
+     "q": 2,
+     "k": 2
+    },
+    "expect": {
+     "xsol": -1,
+     "chk": 0,
+     "ypass": 2,
+     "dir": 1,
+     "slope_x0": 0.7213475204444817,
+     "y3": 0.7924812503605781,
+     "inv": 0,
+     "p4": 0
     }
    }
   ],

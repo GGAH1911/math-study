@@ -1,28 +1,47 @@
 {
  "id": "geometry/high-1/도형의_방정식/직각_조건",
  "spec": {
-  "title": "직각 조건: 두 직선의 수직 (기울기의 곱 = -1, 내적 = 0)",
+  "title": "직각 조건: 두 직선을 각각 움직여 m₁·m₂ = -1, 내적 = 0 이 되는 순간 찾기",
   "params": [
    {
-    "name": "theta",
-    "label": "ℓ₁의 방향각 θ",
+    "name": "theta1",
+    "label": "ℓ₁의 방향각 θ₁",
     "type": "slider",
-    "min": 10,
-    "max": 170,
+    "min": 0,
+    "max": 180,
     "init": 30,
     "step": 1,
     "unit": "°"
+   },
+   {
+    "name": "theta2",
+    "label": "ℓ₂의 방향각 θ₂",
+    "type": "slider",
+    "min": 0,
+    "max": 180,
+    "init": 110,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "len2",
+    "label": "|OB| (벡터 길이)",
+    "type": "slider",
+    "min": 0.3,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
    }
   ],
-  "scope": "rad=theta*pi/180; ax=cos(rad); ay=sin(rad); bx=-sin(rad); by=cos(rad); dot=ax*bx+ay*by; m1=ay/ax; m2=by/bx; mprod=m1*m2",
+  "scope": "t1=theta1*pi/180; t2=theta2*pi/180; ax=cos(t1); ay=sin(t1); bx=len2*cos(t2); by=len2*sin(t2); dot=ax*bx+ay*by; m1=abs(cos(t1))<1e-9 ? 0/0 : sin(t1)/cos(t1); m2=abs(cos(t2))<1e-9 ? 0/0 : sin(t2)/cos(t2); mprod=m1*m2; dang=abs(theta2-theta1); ang=dang>90 ? 180-dang : dang; px=-sin(t1); py=cos(t1); projx=dot*ax; projy=dot*ay",
   "geometry": {
    "range": [
-    -1.5,
-    1.5
+    -1.6,
+    1.6
    ],
    "yRange": [
-    -1.5,
-    1.5
+    -1.6,
+    1.6
    ],
    "showAxes": true,
    "showGrid": true,
@@ -38,31 +57,45 @@
     {
      "type": "segment",
      "from": [
-      "=-1.35*ax",
-      "=-1.35*ay"
+      "=-1.5*cos(t1)",
+      "=-1.5*sin(t1)"
      ],
      "to": [
-      "=1.35*ax",
-      "=1.35*ay"
+      "=1.5*cos(t1)",
+      "=1.5*sin(t1)"
      ],
-     "label": "ℓ₁ (기울기 m₁)",
-     "color": "#2563eb"
+     "color": "#2563eb",
+     "label": "$\\ell_1$"
     },
     {
      "type": "segment",
      "from": [
-      "=-1.35*bx",
-      "=-1.35*by"
+      "=-1.5*cos(t2)",
+      "=-1.5*sin(t2)"
      ],
      "to": [
-      "=1.35*bx",
-      "=1.35*by"
+      "=1.5*cos(t2)",
+      "=1.5*sin(t2)"
      ],
-     "label": "ℓ₂ (기울기 m₂)",
-     "color": "#dc2626"
+     "color": "#dc2626",
+     "label": "$\\ell_2$"
     },
     {
      "type": "segment",
+     "from": [
+      "=-1.5*px",
+      "=-1.5*py"
+     ],
+     "to": [
+      "=1.5*px",
+      "=1.5*py"
+     ],
+     "dashed": true,
+     "color": "#94a3b8",
+     "label": "$\\ell_1$에 수직인 방향"
+    },
+    {
+     "type": "vector",
      "from": [
       0,
       0
@@ -72,18 +105,6 @@
       "=ay"
      ],
      "color": "#2563eb"
-    },
-    {
-     "type": "segment",
-     "from": [
-      0,
-      0
-     ],
-     "to": [
-      "=bx",
-      "=by"
-     ],
-     "color": "#dc2626"
     },
     {
      "type": "point",
@@ -94,12 +115,46 @@
      "label": "A"
     },
     {
+     "type": "vector",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=bx",
+      "=by"
+     ],
+     "color": "#dc2626"
+    },
+    {
      "type": "point",
      "at": [
       "=bx",
       "=by"
      ],
      "label": "B"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=bx",
+      "=by"
+     ],
+     "to": [
+      "=projx",
+      "=projy"
+     ],
+     "dashed": true,
+     "color": "#dc2626"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=projx",
+      "=projy"
+     ],
+     "label": "H",
+     "color": "#dc2626"
     }
    ]
   },
@@ -115,78 +170,119 @@
     "digits": 3
    },
    {
-    "label": "m₁·m₂ (항상 -1)",
+    "label": "m₁·m₂ (수직이면 -1)",
     "expr": "mprod",
     "digits": 3
    },
    {
-    "label": "내적 OA·OB (항상 0)",
+    "label": "내적 OA·OB (수직이면 0)",
     "expr": "dot",
     "digits": 4
+   },
+   {
+    "label": "두 직선의 사잇각",
+    "expr": "ang",
+    "digits": 1,
+    "unit": "°"
+   },
+   {
+    "label": "|OB| (길이)",
+    "expr": "len2",
+    "digits": 2
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "theta": 30
+    "theta1": 30,
+    "theta2": 120,
+    "len2": 1
    },
    {
-    "theta": 45
+    "theta1": 30,
+    "theta2": 110,
+    "len2": 1
    },
    {
-    "theta": 60
+    "theta1": 30,
+    "theta2": 60,
+    "len2": 1
    },
    {
-    "theta": 120
+    "theta1": 0,
+    "theta2": 90,
+    "len2": 1
+   },
+   {
+    "theta1": 90,
+    "theta2": 0,
+    "len2": 1
+   },
+   {
+    "theta1": 30,
+    "theta2": 120,
+    "len2": 0.5
    }
   ],
   "invariants": [
-   "ax*bx+ay*by",
    "ax^2+ay^2-1",
-   "bx^2+by^2-1",
-   "m1*m2+1"
+   "bx^2+by^2-len2^2",
+   "dot-len2*cos(t2-t1)",
+   "projx*px+projy*py"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 45
+     "theta1": 30,
+     "theta2": 120,
+     "len2": 1
     },
     "expect": {
-     "ax": 0.7071067811865476,
-     "ay": 0.7071067811865476,
-     "bx": -0.7071067811865476,
-     "by": 0.7071067811865476,
      "dot": 0,
-     "m1": 1,
-     "m2": -1,
-     "mprod": -1
-    }
-   },
-   {
-    "params": {
-     "theta": 30
-    },
-    "expect": {
+     "mprod": -1,
+     "ang": 90,
+     "m1": 0.5773502691896257,
+     "m2": -1.7320508075688772,
      "ax": 0.8660254037844387,
      "ay": 0.5,
      "bx": -0.5,
-     "by": 0.8660254037844387,
-     "dot": 0,
-     "mprod": -1
+     "by": 0.8660254037844387
     }
    },
    {
     "params": {
-     "theta": 60
+     "theta1": 30,
+     "theta2": 60,
+     "len2": 1
     },
     "expect": {
-     "ax": 0.5,
-     "ay": 0.8660254037844387,
-     "bx": -0.8660254037844387,
-     "by": 0.5,
+     "dot": 0.8660254037844387,
+     "mprod": 1,
+     "ang": 30
+    }
+   },
+   {
+    "params": {
+     "theta1": 30,
+     "theta2": 120,
+     "len2": 0.5
+    },
+    "expect": {
      "dot": 0,
-     "mprod": -1
+     "mprod": -1,
+     "ang": 90
+    }
+   },
+   {
+    "params": {
+     "theta1": 90,
+     "theta2": 0,
+     "len2": 1
+    },
+    "expect": {
+     "dot": 0,
+     "ang": 90
     }
    }
   ],

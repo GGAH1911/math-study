@@ -1,20 +1,57 @@
 {
  "id": "functions/math-1/삼각함수/각의_조건",
  "spec": {
-  "title": "각의 조건 — 같은 삼각함수 값을 갖는 각 (단위원)",
+  "title": "각의 조건 — sin·cos·tan 값이 같아지는 각 (단위원)",
   "params": [
    {
     "name": "beta",
-    "label": "β",
+    "label": "β (기준각)",
     "type": "slider",
     "min": 0,
     "max": 360,
     "init": 35,
     "step": 1,
     "unit": "°"
+   },
+   {
+    "name": "alpha",
+    "label": "α (내가 찾는 각)",
+    "type": "slider",
+    "min": -360,
+    "max": 720,
+    "init": 145,
+    "step": 1,
+    "unit": "°"
+   },
+   {
+    "name": "pick",
+    "label": "비교할 함수 (0: sin · 1: cos · 2: tan)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0,
+    "step": 1
+   },
+   {
+    "name": "branch",
+    "label": "해의 갈래 (0: 첫째 · 1: 둘째)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "회전수 k",
+    "type": "slider",
+    "min": -1,
+    "max": 2,
+    "init": 0,
+    "step": 1
    }
   ],
-  "scope": "rad=beta*pi/180; px=cos(rad); py=sin(rad); qx=-px; qy=py; rx=px; ry=-py",
+  "scope": "rad=beta*pi/180; px=cos(rad); py=sin(rad); arad=alpha*pi/180; ax=cos(arad); ay=sin(arad);\ntheta=(pick<0.5 ? (branch<0.5 ? beta+360*k : 180-beta+360*k) : (pick<1.5 ? (branch<0.5 ? beta+360*k : -beta+360*k) : (branch<0.5 ? beta+360*k : beta+180+360*k)));\ntrad=theta*pi/180; tx=cos(trad); ty=sin(trad);\nfb=(pick<0.5 ? py : (pick<1.5 ? px : (abs(px)<1e-9 ? 1e12 : py/px)));\nft=(pick<0.5 ? ty : (pick<1.5 ? tx : (abs(tx)<1e-9 ? 1e12 : ty/tx)));\nfa=(pick<0.5 ? ay : (pick<1.5 ? ax : (abs(ax)<1e-9 ? 1e12 : ay/ax)));\nresid=ft-fb; gap=fa-fb; hit=(abs(gap)<0.02 ? 1 : 0);\nhx=(pick<0.5 ? 1.35 : 0); hy=(pick<0.5 ? py : 0);\nvx=(pick>0.5 ? (pick<1.5 ? px : 0) : 0); vy=(pick>0.5 ? (pick<1.5 ? 1.35 : 0) : 0);\ngx=(pick>1.5 ? 1.35*px : 0); gy=(pick>1.5 ? 1.35*py : 0)",
   "geometry": {
    "range": [
     -1.5,
@@ -38,6 +75,45 @@
     {
      "type": "segment",
      "from": [
+      "=-hx",
+      "=hy"
+     ],
+     "to": [
+      "=hx",
+      "=hy"
+     ],
+     "color": "#dc2626",
+     "dashed": true
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=vx",
+      "=-vy"
+     ],
+     "to": [
+      "=vx",
+      "=vy"
+     ],
+     "color": "#16a34a",
+     "dashed": true
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-gx",
+      "=-gy"
+     ],
+     "to": [
+      "=gx",
+      "=gy"
+     ],
+     "color": "#9333ea",
+     "dashed": true
+    },
+    {
+     "type": "segment",
+     "from": [
       0,
       0
      ],
@@ -54,8 +130,8 @@
       0
      ],
      "to": [
-      "=qx",
-      "=qy"
+      "=tx",
+      "=ty"
      ],
      "color": "#dc2626"
     },
@@ -66,36 +142,11 @@
       0
      ],
      "to": [
-      "=rx",
-      "=ry"
+      "=ax",
+      "=ay"
      ],
-     "color": "#16a34a"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=px",
-      "=py"
-     ],
-     "to": [
-      "=qx",
-      "=qy"
-     ],
-     "color": "#dc2626",
-     "label": "y좌표 같음 → sin 같음"
-    },
-    {
-     "type": "segment",
-     "from": [
-      "=px",
-      "=py"
-     ],
-     "to": [
-      "=rx",
-      "=ry"
-     ],
-     "color": "#16a34a",
-     "label": "x좌표 같음 → cos 같음"
+     "color": "#f97316",
+     "dashed": true
     },
     {
      "type": "point",
@@ -108,104 +159,207 @@
     {
      "type": "point",
      "at": [
-      "=qx",
-      "=qy"
+      "=tx",
+      "=ty"
      ],
-     "label": "Q(180°−β): sin 짝"
+     "label": "Q: 조건이 주는 각"
     },
     {
      "type": "point",
      "at": [
-      "=rx",
-      "=ry"
+      "=ax",
+      "=ay"
      ],
-     "label": "R(−β): cos 짝"
+     "label": "A(α)"
     }
    ]
   },
   "readout": [
    {
-    "label": "sin β",
-    "expr": "py",
+    "label": "조건의 각 θ",
+    "expr": "theta",
+    "digits": 1
+   },
+   {
+    "label": "f(β)",
+    "expr": "fb",
     "digits": 4
    },
    {
-    "label": "sin(180°−β)",
-    "expr": "qy",
+    "label": "f(θ)",
+    "expr": "ft",
     "digits": 4
    },
    {
-    "label": "cos β",
-    "expr": "px",
+    "label": "f(α)",
+    "expr": "fa",
     "digits": 4
    },
    {
-    "label": "cos(−β)",
-    "expr": "rx",
+    "label": "f(α)−f(β)",
+    "expr": "gap",
     "digits": 4
+   },
+   {
+    "label": "α도 해인가 (1=예)",
+    "expr": "hit",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "beta": 35
+    "beta": 35,
+    "alpha": 145,
+    "pick": 0,
+    "branch": 1,
+    "k": 0
    },
    {
-    "beta": 120
+    "beta": 35,
+    "alpha": 395,
+    "pick": 0,
+    "branch": 0,
+    "k": 1
    },
    {
-    "beta": 210
+    "beta": 120,
+    "alpha": 240,
+    "pick": 1,
+    "branch": 1,
+    "k": 0
    },
    {
-    "beta": 300
+    "beta": 120,
+    "alpha": -120,
+    "pick": 1,
+    "branch": 0,
+    "k": -1
+   },
+   {
+    "beta": 200,
+    "alpha": 20,
+    "pick": 2,
+    "branch": 1,
+    "k": 0
+   },
+   {
+    "beta": 200,
+    "alpha": 20,
+    "pick": 2,
+    "branch": 0,
+    "k": 2
+   },
+   {
+    "beta": 0,
+    "alpha": 360,
+    "pick": 1,
+    "branch": 1,
+    "k": 0
+   },
+   {
+    "beta": 90,
+    "alpha": 90,
+    "pick": 0,
+    "branch": 1,
+    "k": 0
+   },
+   {
+    "beta": 90,
+    "alpha": 270,
+    "pick": 2,
+    "branch": 1,
+    "k": 0
+   },
+   {
+    "beta": 270,
+    "alpha": 90,
+    "pick": 1,
+    "branch": 0,
+    "k": 0
    }
   ],
   "invariants": [
+   "resid",
    "px^2+py^2-1",
-   "qy-py",
-   "rx-px",
-   "qx+px",
-   "ry+py"
+   "tx^2+ty^2-1",
+   "ax^2+ay^2-1"
   ],
   "oracle": [
    {
     "params": {
-     "beta": 30
+     "beta": 30,
+     "alpha": 150,
+     "pick": 0,
+     "branch": 1,
+     "k": 0
     },
     "expect": {
-     "px": 0.8660254038,
-     "py": 0.5,
-     "qx": -0.8660254038,
-     "qy": 0.5,
-     "rx": 0.8660254038,
-     "ry": -0.5
+     "theta": 150,
+     "ty": 0.5,
+     "fb": 0.5,
+     "ft": 0.5,
+     "fa": 0.5,
+     "gap": 0,
+     "hit": 1
     }
    },
    {
     "params": {
-     "beta": 60
+     "beta": 30,
+     "alpha": 30,
+     "pick": 0,
+     "branch": 0,
+     "k": 1
     },
     "expect": {
-     "px": 0.5,
-     "py": 0.8660254038,
-     "qx": -0.5,
-     "qy": 0.8660254038,
-     "rx": 0.5,
-     "ry": -0.8660254038
+     "theta": 390,
+     "ft": 0.5
     }
    },
    {
     "params": {
-     "beta": 90
+     "beta": 60,
+     "alpha": 300,
+     "pick": 1,
+     "branch": 1,
+     "k": 0
     },
     "expect": {
-     "px": 0,
-     "py": 1,
-     "qx": 0,
-     "qy": 1,
-     "rx": 0,
-     "ry": -1
+     "theta": -60,
+     "tx": 0.5,
+     "fb": 0.5,
+     "ft": 0.5,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "beta": 45,
+     "alpha": 225,
+     "pick": 2,
+     "branch": 1,
+     "k": 0
+    },
+    "expect": {
+     "theta": 225,
+     "fb": 1,
+     "ft": 1,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "beta": 90,
+     "alpha": 90,
+     "pick": 2,
+     "branch": 0,
+     "k": 0
+    },
+    "expect": {
+     "fb": 1000000000000,
+     "ft": 1000000000000
     }
    }
   ],

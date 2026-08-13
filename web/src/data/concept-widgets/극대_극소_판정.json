@@ -1,122 +1,317 @@
 {
  "id": "극대_극소_판정",
  "spec": {
-  "title": "극대·극소 판정 – 도함수의 부호 변화",
+  "title": "극대·극소 판정 – $f'$ 의 부호 변화 (일반 삼차 $ax^3+bx^2+cx+d$)",
   "params": [
    {
     "name": "a",
     "label": "a",
     "type": "slider",
-    "min": 0,
-    "max": 2,
+    "min": -1.5,
+    "max": 1.5,
     "init": 1,
-    "step": 0.05
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.5
    }
   ],
-  "scope": "cr = sqrt(a); cl = -cr; h = 0.1; d_left_left = 3*(cl - h)^2 - 3*a; d_left_right = 3*(cl + h)^2 - 3*a; d_right_left = 3*(cr - h)^2 - 3*a; d_right_right = 3*(cr + h)^2 - 3*a;",
+  "scope": "as = abs(a) < 0.1 ? (a < 0 ? -0.1 : 0.1) : a; D = 4*b^2 - 12*as*c; sq = D > 0 ? sqrt(D) : 0; r1 = (-2*b - sq)/(6*as); r2 = (-2*b + sq)/(6*as); xl = min(r1, r2); xr = max(r1, r2); xv = -b/(3*as); gap = xr - xl; h = D > 0 ? min(0.2, gap/3) : 0.2; nCrit = D > 1e-9 ? 2 : (D > -1e-9 ? 1 : 0); dLL = 3*as*(xl-h)^2 + 2*b*(xl-h) + c; dLR = 3*as*(xl+h)^2 + 2*b*(xl+h) + c; dRL = 3*as*(xr-h)^2 + 2*b*(xr-h) + c; dRR = 3*as*(xr+h)^2 + 2*b*(xr+h) + c; judgeL = (dLL > 0 and dLR < 0) ? 1 : ((dLL < 0 and dLR > 0) ? -1 : 0); judgeR = (dRL > 0 and dRR < 0) ? 1 : ((dRL < 0 and dRR > 0) ? -1 : 0); xlD = D >= 0 ? xl : 0/0; xrD = D > 1e-9 ? xr : 0/0; pxA = D > 0 ? (as > 0 ? xl : xr) : 50; pyA = as*pxA^3 + b*pxA^2 + c*pxA + d; pxB = D > 0 ? (as > 0 ? xr : xl) : 50; pyB = as*pxB^3 + b*pxB^2 + c*pxB + d",
   "plot": {
    "range": [
-    -2,
-    2
+    -3,
+    3
    ],
    "yRange": [
-    -6,
-    6
+    -10,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*a*x",
-     "label": "f(x)",
+     "fn": "as*x^3 + b*x^2 + c*x + d",
+     "label": "$f(x)=ax^3+bx^2+cx+d$",
      "color": "blue"
     },
     {
-     "fn": "3*x^2 - 3*a",
-     "label": "f'(x)",
-     "color": "red"
+     "fn": "3*as*x^2 + 2*b*x + c",
+     "label": "$f'(x)=3ax^2+2bx+c$",
+     "color": "red",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*as*x^2 + 2*b*x + c",
+     "in": [
+      "=-3",
+      "=xv"
+     ],
+     "label": "$f'=0$"
+    },
+    {
+     "fn": "3*as*x^2 + 2*b*x + c",
+     "in": [
+      "=xv",
+      "=3"
+     ],
+     "label": "$f'=0$"
+    }
+   ],
+   "points": [
+    [
+     "=pxA",
+     "=pyA"
+    ],
+    [
+     "=pxB",
+     "=pyB"
+    ]
+   ],
+   "pointsLabel": "$f$ 위의 극대·극소점"
   },
   "readout": [
    {
-    "label": "좌측 후보 x",
-    "expr": "cl",
+    "label": "판별식 $D=4b^2-12ac$",
+    "expr": "D",
     "digits": 3
    },
    {
-    "label": "우측 후보 x",
-    "expr": "cr",
+    "label": "$f'(x)=0$ 인 $x$ 의 개수",
+    "expr": "nCrit",
+    "digits": 0
+   },
+   {
+    "label": "왼쪽 후보 $x$",
+    "expr": "xlD",
     "digits": 3
    },
    {
-    "label": "좌측 후보 왼쪽 f'",
-    "expr": "d_left_left",
+    "label": "왼쪽 후보 왼쪽 $f'$",
+    "expr": "dLL",
     "digits": 3
    },
    {
-    "label": "좌측 후보 오른쪽 f'",
-    "expr": "d_left_right",
+    "label": "왼쪽 후보 오른쪽 $f'$",
+    "expr": "dLR",
     "digits": 3
    },
    {
-    "label": "우측 후보 왼쪽 f'",
-    "expr": "d_right_left",
+    "label": "왼쪽 후보 판정 (+1 극대 · −1 극소 · 0 극값 아님)",
+    "expr": "judgeL",
+    "digits": 0
+   },
+   {
+    "label": "오른쪽 후보 $x$",
+    "expr": "xrD",
     "digits": 3
    },
    {
-    "label": "우측 후보 오른쪽 f'",
-    "expr": "d_right_right",
+    "label": "오른쪽 후보 왼쪽 $f'$",
+    "expr": "dRL",
     "digits": 3
+   },
+   {
+    "label": "오른쪽 후보 오른쪽 $f'$",
+    "expr": "dRR",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 후보 판정 (+1 극대 · −1 극소 · 0 극값 아님)",
+    "expr": "judgeR",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 0.5
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "a": 1
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 0
    },
    {
-    "a": 2
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "d": 0
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "d": 0
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": -1,
+    "d": 2
+   },
+   {
+    "a": 1.5,
+    "b": -3,
+    "c": -3,
+    "d": -4
    }
   ],
   "invariants": [
-   "abs(cl + cr)",
-   "abs(cr^2 - a)",
-   "abs(cr^3 - a*cr)",
-   "abs(d_left_left - (0.6*cr + 0.03))",
-   "abs(d_left_right - (-0.6*cr + 0.03))",
-   "abs(d_left_left - d_right_right)",
-   "abs(d_left_right - d_right_left)"
+   "abs(D - (4*b^2 - 12*as*c))",
+   "abs(xl + xr + 2*b/(3*as))",
+   "abs(D >= 0 ? (3*as*xl^2 + 2*b*xl + c) : 0)",
+   "abs(D >= 0 ? (3*as*xr^2 + 2*b*xr + c) : 0)",
+   "abs(D > 0 ? judgeL + judgeR : 0)",
+   "abs(D > 0 ? judgeL - sign(as) : 0)",
+   "abs(D < 0 ? nCrit : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
     },
     "expect": {
-     "cr": 1,
-     "cl": -1,
-     "h": 0.1,
-     "d_left_left": 0.63,
-     "d_left_right": -0.57,
-     "d_right_left": -0.57,
-     "d_right_right": 0.63
+     "as": 1,
+     "D": 36,
+     "xl": -1,
+     "xr": 1,
+     "xv": 0,
+     "h": 0.2,
+     "nCrit": 2,
+     "dLL": 1.32,
+     "dLR": -1.08,
+     "dRL": -1.08,
+     "dRR": 1.32,
+     "judgeL": 1,
+     "judgeR": -1
     }
    },
    {
     "params": {
-     "a": 0.25
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 0
     },
     "expect": {
-     "cr": 0.5,
-     "cl": -0.5,
-     "h": 0.1,
-     "d_left_left": 0.33,
-     "d_left_right": -0.27,
-     "d_right_left": -0.27,
-     "d_right_right": 0.33
+     "D": 0,
+     "xl": 0,
+     "xr": 0,
+     "h": 0.2,
+     "nCrit": 1,
+     "dLL": 0.12,
+     "dLR": 0.12,
+     "judgeL": 0,
+     "judgeR": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 1,
+     "d": 0
+    },
+    "expect": {
+     "D": -12,
+     "nCrit": 0,
+     "xl": 0,
+     "xr": 0,
+     "dLL": 1.12,
+     "dLR": 1.12,
+     "judgeL": 0,
+     "judgeR": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "as": -1,
+     "D": 36,
+     "xl": -1,
+     "xr": 1,
+     "dLL": -1.32,
+     "dLR": 1.08,
+     "dRL": 1.08,
+     "dRR": -1.32,
+     "judgeL": -1,
+     "judgeR": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "D": 36,
+     "xl": -2,
+     "xr": 0,
+     "xv": -1,
+     "dLL": 1.32,
+     "dLR": -1.08,
+     "dRL": -1.08,
+     "dRR": 1.32,
+     "judgeL": 1,
+     "judgeR": -1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": -1,
+     "d": 2
+    },
+    "expect": {
+     "as": 0.1
     }
    }
   ],

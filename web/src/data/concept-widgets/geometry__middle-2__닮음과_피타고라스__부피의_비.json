@@ -4,54 +4,146 @@
   "title": "부피의 비 = 닮음비의 세제곱",
   "params": [
    {
-    "name": "k",
-    "label": "닮음비 1:k",
+    "name": "m",
+    "label": "닮음비 앞항 m",
     "type": "slider",
     "min": 1,
-    "max": 4,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "n",
+    "label": "닮음비 뒷항 n",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
     "init": 2,
-    "step": 0.1,
-    "unit": "배"
+    "step": 0.5
+   },
+   {
+    "name": "d",
+    "label": "차원 d (1=길이 2=넓이 3=부피)",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 3,
+    "step": 1
    }
   ],
-  "scope": "areaRatio=k^2; volRatio=k^3",
+  "scope": "mm = m < 0.1 ? 1 : m; k = n/mm; lenRatio = k; areaRatio = k^2; volRatio = k^3; dimRatio = k^d; sc = 2.6/max(m,n); a = m*sc; b = n*sc; px = 0.35; py = 0.28; xA = 0.4; xB = 1.2 + 1.35*a; y0 = 0.4",
   "geometry": {
    "range": [
     0,
-    4
+    8.6
    ],
    "yRange": [
     0,
-    64
+    4.2
    ],
-   "showAxes": true,
-   "showGrid": true,
-   "shapes": []
+   "showAxes": false,
+   "showGrid": false,
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [["=xA","=y0"],["=xA+a","=y0"],["=xA+a","=y0+a"],["=xA","=y0+a"]],
+     "fill": "#4a90d9",
+     "fillOpacity": 0.35,
+     "stroke": "#4a90d9"
+    },
+    {
+     "type": "polygon",
+     "vertices": [["=xA","=y0+a"],["=xA+a","=y0+a"],["=xA+a+px*a","=y0+a+py*a"],["=xA+px*a","=y0+a+py*a"]],
+     "fill": "#4a90d9",
+     "fillOpacity": 0.25,
+     "stroke": "#4a90d9"
+    },
+    {
+     "type": "polygon",
+     "vertices": [["=xA+a","=y0"],["=xA+a+px*a","=y0+py*a"],["=xA+a+px*a","=y0+a+py*a"],["=xA+a","=y0+a"]],
+     "fill": "#4a90d9",
+     "fillOpacity": 0.45,
+     "stroke": "#4a90d9"
+    },
+    {
+     "type": "polygon",
+     "vertices": [["=xB","=y0"],["=xB+b","=y0"],["=xB+b","=y0+b"],["=xB","=y0+b"]],
+     "fill": "#e4572e",
+     "fillOpacity": 0.35,
+     "stroke": "#e4572e"
+    },
+    {
+     "type": "polygon",
+     "vertices": [["=xB","=y0+b"],["=xB+b","=y0+b"],["=xB+b+px*b","=y0+b+py*b"],["=xB+px*b","=y0+b+py*b"]],
+     "fill": "#e4572e",
+     "fillOpacity": 0.25,
+     "stroke": "#e4572e"
+    },
+    {
+     "type": "polygon",
+     "vertices": [["=xB+b","=y0"],["=xB+b+px*b","=y0+py*b"],["=xB+b+px*b","=y0+b+py*b"],["=xB+b","=y0+b"]],
+     "fill": "#e4572e",
+     "fillOpacity": 0.45,
+     "stroke": "#e4572e"
+    },
+    {
+     "type": "segment",
+     "from": ["=xA","=y0"],
+     "to": ["=xA+a","=y0"],
+     "color": "#2c5a8c"
+    },
+    {
+     "type": "segment",
+     "from": ["=xB","=y0"],
+     "to": ["=xB+b","=y0"],
+     "color": "#a83a1c"
+    },
+    {
+     "type": "text",
+     "at": ["=xA+a/2","=y0-0.25"],
+     "text": "한 변 m",
+     "color": "#2c5a8c"
+    },
+    {
+     "type": "text",
+     "at": ["=xB+b/2","=y0-0.25"],
+     "text": "한 변 n",
+     "color": "#a83a1c"
+    }
+   ]
   },
   "plot": {
    "range": [
     0,
-    4
+    3.2
    ],
    "yRange": [
     0,
-    64
+    28
    ],
    "fns": [
     {
      "fn": "x^3",
-     "label": "부피비 = k³",
-     "color": "#e4572e"
+     "label": "$k^3$ (부피비)",
+     "color": "#e4572e",
+     "dashed": true
     },
     {
      "fn": "x^2",
-     "label": "넓이비 = k² (비교)",
-     "color": "#4a90d9"
+     "label": "$k^2$ (겉넓이비)",
+     "color": "#4a90d9",
+     "dashed": true
     },
     {
      "fn": "x",
-     "label": "닮음비 = k",
-     "color": "#999999"
+     "label": "$k$ (닮음비)",
+     "color": "#999999",
+     "dashed": true
+    },
+    {
+     "fn": "x^d",
+     "label": "$k^d$ — 지금 고른 차원",
+     "color": "#f5c518"
     }
    ],
    "points": [
@@ -72,68 +164,132 @@
   },
   "readout": [
    {
-    "label": "닮음비 k",
+    "label": "닮음비 k = n:m",
     "expr": "k",
-    "digits": 2
+    "digits": 3
    },
    {
-    "label": "넓이비 k²",
+    "label": "겉넓이비 k²",
     "expr": "areaRatio",
-    "digits": 2
+    "digits": 3
    },
    {
     "label": "부피비 k³",
     "expr": "volRatio",
-    "digits": 2
+    "digits": 3
+   },
+   {
+    "label": "k^d (고른 차원)",
+    "expr": "dimRatio",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "k": 1
+    "m": 1,
+    "n": 2,
+    "d": 3
    },
    {
-    "k": 2
+    "m": 2,
+    "n": 3,
+    "d": 3
    },
    {
-    "k": 3
+    "m": 2,
+    "n": 1,
+    "d": 3
    },
    {
-    "k": 1.5
+    "m": 1,
+    "n": 3,
+    "d": 2
+   },
+   {
+    "m": 3,
+    "n": 3,
+    "d": 1
+   },
+   {
+    "m": 1.5,
+    "n": 2.5,
+    "d": 3
    }
   ],
   "invariants": [
-   "volRatio - k^3",
+   "k*m - n",
    "areaRatio - k^2",
-   "volRatio - areaRatio*k"
+   "volRatio - k^3",
+   "volRatio - areaRatio*k",
+   "dimRatio - k^d",
+   "a*n - b*m"
   ],
   "oracle": [
    {
     "params": {
-     "k": 2
+     "m": 1,
+     "n": 2,
+     "d": 3
     },
     "expect": {
+     "k": 2,
      "areaRatio": 4,
-     "volRatio": 8
+     "volRatio": 8,
+     "dimRatio": 8
     }
    },
    {
     "params": {
-     "k": 3
+     "m": 2,
+     "n": 3,
+     "d": 3
     },
     "expect": {
+     "k": 1.5,
+     "areaRatio": 2.25,
+     "volRatio": 3.375,
+     "dimRatio": 3.375
+    }
+   },
+   {
+    "params": {
+     "m": 2,
+     "n": 1,
+     "d": 3
+    },
+    "expect": {
+     "k": 0.5,
+     "areaRatio": 0.25,
+     "volRatio": 0.125,
+     "dimRatio": 0.125
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 3,
+     "d": 2
+    },
+    "expect": {
+     "k": 3,
      "areaRatio": 9,
-     "volRatio": 27
+     "volRatio": 27,
+     "dimRatio": 9
     }
    },
    {
     "params": {
-     "k": 1
+     "m": 3,
+     "n": 3,
+     "d": 1
     },
     "expect": {
+     "k": 1,
      "areaRatio": 1,
-     "volRatio": 1
+     "volRatio": 1,
+     "dimRatio": 1
     }
    }
   ],

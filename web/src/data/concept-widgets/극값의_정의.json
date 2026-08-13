@@ -4,31 +4,98 @@
   "title": "극값의 정의 (국소 최대·최소)",
   "params": [
    {
-    "name": "x0",
-    "label": "x₀",
+    "name": "a",
+    "label": "a (x³ 계수)",
     "type": "slider",
-    "min": -2,
-    "max": 2,
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.5
+   },
+   {
+    "name": "x0",
+    "label": "관찰점 x₀ (a·b·c·d로 극값이 2개→1개→0개로 갈리는 걸 직접 만들어보세요)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
     "init": 0.5,
-    "step": 0.1,
-    "unit": ""
+    "step": 0.05
    }
   ],
-  "scope": "f0 = x0^3 - 3*x0; df = 3*x0^2 - 3; d2f = 6*x0; h = 0.1; fL = (x0-h)^3 - 3*(x0-h); fR = (x0+h)^3 - 3*(x0+h); isMax = (f0 > fL and f0 > fR) ? 1 : 0; isMin = (f0 < fL and f0 < fR) ? 1 : 0; type = isMax - isMin",
+  "scope": "f0 = a*x0^3 + b*x0^2 + c*x0 + d; df = 3*a*x0^2 + 2*b*x0 + c; d2f = 6*a*x0 + 2*b; h = 0.15; fL = a*(x0-h)^3 + b*(x0-h)^2 + c*(x0-h) + d; fR = a*(x0+h)^3 + b*(x0+h)^2 + c*(x0+h) + d; isMax = (f0 > fL and f0 > fR) ? 1 : 0; isMin = (f0 < fL and f0 < fR) ? 1 : 0; type = isMax - isMin; disc = 4*b^2 - 12*a*c; xv = (a != 0) ? (-b/(3*a)) : ((b != 0) ? (-c/(2*b)) : 0); nExt = (a != 0) ? ((disc > 0) ? 2 : 0) : ((b != 0) ? 1 : 0)",
   "plot": {
    "range": [
-    -3,
-    3
+    -4,
+    4
    ],
    "yRange": [
     -10,
     10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x",
-     "label": "f(x) = x³ - 3x",
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "$f(x)=ax^3+bx^2+cx+d$",
      "color": "blue"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "$f'(x)$",
+     "color": "red",
+     "dashed": true
+    },
+    {
+     "fn": "(a*x0^3 + b*x0^2 + c*x0 + d) + 0*x",
+     "label": "$y=f(x_0)$",
+     "color": "gray",
+     "dashed": true
+    }
+   ],
+   "roots": [
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": [
+      "=max(-4, xv-8)",
+      "=xv"
+     ],
+     "label": "$f'(x)=0$"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": [
+      "=xv",
+      "=min(4, xv+8)"
+     ],
+     "label": "$f'(x)=0$"
     }
    ],
    "points": [
@@ -67,61 +134,173 @@
     "label": "type (1=극대, -1=극소, 0=아님)",
     "expr": "type",
     "digits": 0
+   },
+   {
+    "label": "f'의 판별식 4b²−12ac",
+    "expr": "disc",
+    "digits": 3
+   },
+   {
+    "label": "극값의 개수",
+    "expr": "nExt",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "x0": -2
-   },
-   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
     "x0": -1
    },
    {
-    "x0": 0.5
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0,
+    "x0": 1
    },
    {
-    "x0": 1.5
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 0,
+    "x0": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0,
+    "x0": 0
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "d": 0,
+    "x0": 0
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0,
+    "x0": 1
    }
   ],
   "invariants": [
-   "f0 - (x0^3 - 3*x0)",
-   "df - (3*x0^2 - 3)",
-   "max(type*d2f, 0)"
+   "f0 - (a*x0^3 + b*x0^2 + c*x0 + d)",
+   "df - (3*a*x0^2 + 2*b*x0 + c)",
+   "d2f - (6*a*x0 + 2*b)",
+   "disc - (4*b^2 - 12*a*c)",
+   "max(type*d2f, 0)",
+   "(a != 0) ? (6*a*xv + 2*b) : 0"
   ],
   "oracle": [
    {
     "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
      "x0": -1
     },
     "expect": {
      "f0": 2,
      "df": 0,
      "d2f": -6,
-     "type": 1
+     "type": 1,
+     "disc": 36,
+     "nExt": 2
     }
    },
    {
     "params": {
-     "x0": 0.5
-    },
-    "expect": {
-     "f0": -1.375,
-     "df": -2.25,
-     "d2f": 3,
-     "type": 0
-    }
-   },
-   {
-    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0,
      "x0": 1
     },
     "expect": {
      "f0": -2,
      "df": 0,
      "d2f": 6,
-     "type": -1
+     "type": -1,
+     "disc": 36,
+     "nExt": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 0,
+     "x0": 0
+    },
+    "expect": {
+     "f0": 0,
+     "df": 0,
+     "d2f": 0,
+     "type": 0,
+     "disc": 0,
+     "nExt": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0,
+     "x0": 0
+    },
+    "expect": {
+     "f0": 0,
+     "df": 3,
+     "d2f": 0,
+     "type": 0,
+     "disc": -36,
+     "nExt": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "d": 0,
+     "x0": 0
+    },
+    "expect": {
+     "f0": 0,
+     "df": 0,
+     "d2f": 2,
+     "type": -1,
+     "disc": 4,
+     "nExt": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 4,
+     "x0": -1
+    },
+    "expect": {
+     "f0": 6,
+     "df": 0,
+     "d2f": -6,
+     "type": 1,
+     "disc": 36,
+     "nExt": 2
     }
    }
   ],

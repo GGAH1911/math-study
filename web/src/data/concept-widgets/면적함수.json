@@ -1,119 +1,141 @@
 {
  "id": "면적함수",
  "spec": {
-  "title": "면적함수 F(x)=∫₀ˣ2t dt — 누적되는 넓이가 곧 함수값",
+  "title": "면적함수 F(x)=∫ₐˣ f(t)dt — f를 바꿔 보라: 넓이가 쌓여 F가 되고, F의 기울기가 다시 f다",
   "params": [
    {
-    "name": "x",
+    "name": "a",
+    "label": "a (x²계수)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (상수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "p",
+    "label": "아래끝 a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "u",
     "label": "윗끝 x",
     "type": "slider",
-    "min": 0,
+    "min": -2,
     "max": 3,
     "init": 1.5,
-    "step": 0.1,
-    "unit": ""
+    "step": 0.1
    }
   ],
-  "scope": "fx=2*x; area=0.5*x*fx; Fx=x^2",
-  "geometry": {
+  "scope": "fu = a*u^2 + b*u + c; Au = a*u^3/3 + b*u^2/2 + c*u; Ap = a*p^3/3 + b*p^2/2 + c*p; Fx = Au - Ap; hh = 0.001; Aup = a*(u+hh)^3/3 + b*(u+hh)^2/2 + c*(u+hh); Aum = a*(u-hh)^3/3 + b*(u-hh)^2/2 + c*(u-hh); dF = (Aup - Aum)/(2*hh); lo = min(p,u); hi = max(p,u); vx = a != 0 ? -b/(2*a) : (u+p)/2; vxc = max(-2.1, min(3.1, vx))",
+  "plot": {
    "range": [
-    -0.3,
-    3.3
+    -2.2,
+    3.2
    ],
    "yRange": [
-    -0.6,
-    6.6
+    -12,
+    14
    ],
    "showAxes": true,
    "showGrid": true,
-   "shapes": [
-    {
-     "type": "segment",
-     "from": [
-      0,
-      0
-     ],
-     "to": [
-      3,
-      6
-     ],
-     "label": "y=f(t)=2t",
-     "color": "#888"
-    },
-    {
-     "type": "polygon",
-     "label": "누적넓이",
-     "color": "#4f8cff",
-     "vertices": [
-      [
-       0,
-       0
-      ],
-      [
-       "=x",
-       0
-      ],
-      [
-       "=x",
-       "=fx"
-      ]
-     ]
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x",
-      "=fx"
-     ],
-     "label": "(x, f(x))",
-     "color": "#e0562e"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x",
-      0
-     ],
-     "label": "x"
-    }
-   ]
-  },
-  "plot": {
-   "range": [
-    0,
-    3
-   ],
-   "yRange": [
-    0,
-    9
-   ],
    "fns": [
     {
-     "fn": "t^2",
-     "label": "F(x)=x²  (누적면적함수)",
+     "fn": "a*x^2+b*x+c",
+     "label": "$y=f(t)$ (적분되는 함수)",
+     "color": "#888888"
+    },
+    {
+     "fn": "a*x^2+b*x+c",
+     "range": [
+      "=lo",
+      "=hi"
+     ],
+     "closed": true,
+     "label": "$\\int_a^x f(t)\\,dt$ 누적 넓이",
+     "color": "#4f8cff"
+    },
+    {
+     "fn": "a*x^3/3+b*x^2/2+c*x-Ap",
+     "label": "$F(x)=\\int_a^x f(t)\\,dt$",
      "color": "#2ca02c"
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "in": [
+      "=-2.2",
+      "=vxc"
+     ],
+     "label": "$f=0$ → $F$의 극값"
+    },
+    {
+     "fn": "a*x^2+b*x+c",
+     "in": [
+      "=vxc",
+      "=3.2"
+     ],
+     "label": "$f=0$ → $F$의 극값"
+    }
+   ],
+   "points": [
+    [
+     "=u",
+     "=fu"
+    ],
+    [
+     "=u",
+     "=Fx"
+    ],
+    [
+     "=p",
+     0
+    ]
+   ],
+   "pointsLabel": "$(x,f(x))$ · $(x,F(x))$ · 아래끝 $a$"
   },
   "readout": [
    {
-    "label": "f(x)=2x",
-    "expr": "fx",
+    "label": "f(x) — 윗끝에서의 함숫값",
+    "expr": "fu",
     "digits": 3
    },
    {
-    "label": "삼각형 넓이 ½·x·f(x)",
-    "expr": "area",
-    "digits": 3
-   },
-   {
-    "label": "F(x)=∫₀ˣ2t dt",
+    "label": "F(x)=∫ₐˣ f(t)dt (부호 있는 넓이)",
     "expr": "Fx",
     "digits": 3
    },
    {
-    "label": "F'(x) 확인 = f(x)",
-    "expr": "fx",
+    "label": "차분몫 (F(x+h)−F(x−h))/2h ≈ f(x)",
+    "expr": "dF",
+    "digits": 3
+   },
+   {
+    "label": "아래끝을 옮겨 생긴 상수 −F₀",
+    "expr": "-Ap",
     "digits": 3
    }
   ]
@@ -121,62 +143,149 @@
  "recipe": {
   "samples": [
    {
-    "x": 0.5
+    "a": 0,
+    "b": 2,
+    "c": 0,
+    "p": 0,
+    "u": 1.5
    },
    {
-    "x": 1.5
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "p": 0,
+    "u": 2
    },
    {
-    "x": 2
+    "a": 0,
+    "b": 1,
+    "c": -2,
+    "p": 0,
+    "u": 3
    },
    {
-    "x": 3
+    "a": -0.5,
+    "b": 1,
+    "c": 1,
+    "p": -1,
+    "u": 2
+   },
+   {
+    "a": 0,
+    "b": 2,
+    "c": 0,
+    "p": 1,
+    "u": 3
+   },
+   {
+    "a": 0.3,
+    "b": -1,
+    "c": 0,
+    "p": 2,
+    "u": 2
    }
   ],
   "invariants": [
-   "area - Fx",
-   "Fx - x^2",
-   "fx - 2*x"
+   "dF - fu",
+   "Fx - (Au - Ap)",
+   "fu - (a*u^2+b*u+c)"
   ],
   "oracle": [
    {
     "params": {
-     "x": 0
+     "a": 0,
+     "b": 2,
+     "c": 0,
+     "p": 0,
+     "u": 1
     },
     "expect": {
-     "fx": 0,
-     "area": 0,
-     "Fx": 0
+     "fu": 2,
+     "Fx": 1,
+     "dF": 2
     }
    },
    {
     "params": {
-     "x": 1
+     "a": 0,
+     "b": 2,
+     "c": 0,
+     "p": 0,
+     "u": 3
     },
     "expect": {
-     "fx": 2,
-     "area": 1,
-     "Fx": 1
+     "fu": 6,
+     "Fx": 9,
+     "dF": 6
     }
    },
    {
     "params": {
-     "x": 2
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "p": 0,
+     "u": 3
     },
     "expect": {
-     "fx": 4,
-     "area": 4,
-     "Fx": 4
+     "fu": 9,
+     "Fx": 9,
+     "dF": 9
     }
    },
    {
     "params": {
-     "x": 3
+     "a": 0,
+     "b": 0,
+     "c": 1,
+     "p": 0,
+     "u": 2
     },
     "expect": {
-     "fx": 6,
-     "area": 9,
-     "Fx": 9
+     "fu": 1,
+     "Fx": 2,
+     "dF": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2,
+     "c": 0,
+     "p": 1,
+     "u": 1
+    },
+    "expect": {
+     "Fx": 0,
+     "dF": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": -2,
+     "p": 0,
+     "u": 2
+    },
+    "expect": {
+     "fu": 0,
+     "Fx": -2,
+     "dF": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 2,
+     "c": 0,
+     "p": 1,
+     "u": 3
+    },
+    "expect": {
+     "fu": 6,
+     "Fx": 8,
+     "dF": 6
     }
    }
   ],

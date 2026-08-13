@@ -4,47 +4,130 @@
   "title": "방정식의 해의 개수",
   "params": [
    {
-    "name": "k",
-    "label": "k",
+    "name": "a",
+    "label": "a (x³ 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b (x² 계수)",
     "type": "slider",
     "min": -3,
     "max": 3,
     "init": 0,
     "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 0,
+    "step": 0.1
    }
   ],
-  "scope": "y_max = k + 2; y_min = k - 2; disc = 108 - 27*k^2; num_roots = disc > 0 ? 3 : (disc < 0 ? 1 : 2)",
+  "scope": "aa = (abs(a) < 0.05 ? 0.1 : a); dsc = b^2 - 3*aa*c; sq = (dsc > 0 ? sqrt(dsc) : 0); xp = (-b - sq)/(3*aa); xq = (-b + sq)/(3*aa); xL = min(xp, xq); xR = max(xp, xq); fL = aa*xL^3 + b*xL^2 + c*xL + d; fR = aa*xR^3 + b*xR^2 + c*xR + d; y_max = (aa > 0 ? fL : fR); y_min = (aa > 0 ? fR : fL); prod = fL*fR; num_roots = (dsc <= 0 ? 1 : (prod < 0 ? 3 : (prod > 0 ? 1 : 2)))",
   "plot": {
    "range": [
-    -3.5,
-    3.5
+    -4,
+    4
    ],
    "yRange": [
-    -6,
-    6
+    -8,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x + k",
-     "label": "y = f(x)",
-     "color": "blue"
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "label": "$y=ax^3+bx^2+cx+d$",
+     "color": "#2196F3"
+    },
+    {
+     "fn": "y_max",
+     "label": "$극댓값$",
+     "color": "#f59e0b",
+     "dashed": true
+    },
+    {
+     "fn": "y_min",
+     "label": "$극솟값$",
+     "color": "#10b981",
+     "dashed": true
+    }
+   ],
+   "points": [
+    [
+     "=xL",
+     "=fL"
+    ],
+    [
+     "=xR",
+     "=fR"
+    ]
+   ],
+   "pointsLabel": "$극값$",
+   "roots": [
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "in": [
+      "=-20",
+      "=xL"
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "in": [
+      "=xL",
+      "=xR"
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "in": [
+      "=xR",
+      "=20"
+     ],
+     "label": "근"
     }
    ]
   },
   "readout": [
    {
-    "label": "극댓값 (x=-1)",
+    "label": "극댓값",
     "expr": "y_max",
     "digits": 2
    },
    {
-    "label": "극솟값 (x=1)",
+    "label": "극솟값",
     "expr": "y_min",
     "digits": 2
    },
    {
-    "label": "판별식 Δ",
-    "expr": "disc",
+    "label": "극댓값 × 극솟값",
+    "expr": "prod",
+    "digits": 2
+   },
+   {
+    "label": "극값 판별식 b²−3ac",
+    "expr": "dsc",
     "digits": 2
    },
    {
@@ -57,54 +140,134 @@
  "recipe": {
   "samples": [
    {
-    "k": 0
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "k": 1.5
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 2
    },
    {
-    "k": 2
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 3
    },
    {
-    "k": 3
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 1
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "d": 0
    }
   ],
   "invariants": [
-   "y_max - y_min - 4",
-   "y_max + y_min - 2*k"
+   "prod - fL*fR",
+   "num_roots - (dsc <= 0 ? 1 : (prod < 0 ? 3 : (prod > 0 ? 1 : 2)))",
+   "(dsc > 0 ? 3*aa*xL^2 + 2*b*xL + c : 0)",
+   "(dsc > 0 ? 3*aa*xR^2 + 2*b*xR + c : 0)",
+   "y_max - (aa > 0 ? fL : fR)",
+   "xR - xL - (dsc > 0 ? 2*sqrt(dsc)/abs(3*aa) : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "k": 0
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
     },
     "expect": {
+     "dsc": 9,
      "y_max": 2,
      "y_min": -2,
-     "disc": 108,
+     "prod": -4,
      "num_roots": 3
     }
    },
    {
     "params": {
-     "k": 2
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 2
     },
     "expect": {
      "y_max": 4,
      "y_min": 0,
-     "disc": 0,
+     "prod": 0,
      "num_roots": 2
     }
    },
    {
     "params": {
-     "k": 3
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 3
     },
     "expect": {
      "y_max": 5,
      "y_min": 1,
-     "disc": -135,
+     "prod": 5,
      "num_roots": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "dsc": -9,
+     "num_roots": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "y_max": 2,
+     "y_min": -2,
+     "num_roots": 3
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "aa": 0.1
     }
    }
   ],

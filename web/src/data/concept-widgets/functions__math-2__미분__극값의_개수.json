@@ -1,40 +1,102 @@
 {
  "id": "functions/math-2/미분/극값의_개수",
  "spec": {
-  "title": "극값의 개수: f(x)=x³−3ax (a로 극값 개수 조절)",
+  "title": "극값의 개수: f(x)=ax³+bx²+cx+d (판별식 b²−3ac 로 갈리는 세 경우)",
   "params": [
    {
     "name": "a",
     "label": "a",
     "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
     "min": -3,
     "max": 3,
-    "init": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
     "step": 0.1
    }
   ],
-  "scope": "numext = (a > 0) ? 2 : 0; nroot = (a > 0) ? 2 : ((a == 0) ? 1 : 0); xc1 = sqrt(max(a, 0)); xc2 = -xc1; fc1 = xc1^3 - 3*a*xc1; fc2 = xc2^3 - 3*a*xc2; symm = fc1 + fc2; fpc1 = 3*xc1^2 - 3*a",
+  "scope": "disc = b^2 - 3*a*c; numext = (a != 0) ? ((disc > 0) ? 2 : 0) : ((b != 0) ? 1 : 0); nroot = (a != 0) ? ((disc > 0) ? 2 : ((disc == 0) ? 1 : 0)) : ((b != 0) ? 1 : 0); sq = sqrt(max(disc, 0)); xa = (a != 0) ? (-b - sq)/(3*a) : ((b != 0) ? -c/(2*b) : 0); xb = (a != 0) ? (-b + sq)/(3*a) : xa; xlo = min(xa, xb); xhi = max(xa, xb); xv = (a != 0) ? -b/(3*a) : 0; flo = a*xlo^3 + b*xlo^2 + c*xlo + d; fhi = a*xhi^3 + b*xhi^2 + c*xhi + d; gap = abs(flo - fhi); prod = flo * fhi; nrealf = (a != 0) ? ((numext == 2) ? ((prod < 0) ? 3 : ((prod == 0) ? 2 : 1)) : 1) : ((b != 0) ? ((c^2 - 4*b*d > 0) ? 2 : ((c^2 - 4*b*d == 0) ? 1 : 0)) : ((c != 0) ? 1 : 0)); xvc = max(-3, min(3, xv)); xloc = max(-3, min(3, xlo)); xhic = max(-3, min(3, xhi)); px1 = (numext == 2) ? xlo : NaN; py1 = (numext == 2) ? flo : NaN; px2 = (numext == 2) ? xhi : NaN; py2 = (numext == 2) ? fhi : NaN; fp_at_crit = (numext == 2) ? (3*a*xlo^2 + 2*b*xlo + c) : 0; infl_sym = (a != 0 and disc > 0) ? ((flo + fhi)/2 - (a*xv^3 + b*xv^2 + c*xv + d)) : 0",
   "plot": {
    "range": [
     -3,
     3
    ],
    "yRange": [
-    -14,
-    14
+    -10,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*a*x",
-     "label": "f(x)=x³−3ax",
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "$f(x)=ax^3+bx^2+cx+d$",
      "color": "#2563eb"
     },
     {
-     "fn": "3*x^2 - 3*a",
-     "label": "f'(x)=3x²−3a (부호 변화↔극값)",
-     "color": "#dc2626"
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "$f'(x)=3ax^2+2bx+c$ (부호가 바뀌는 곳만 극값)",
+     "color": "#dc2626",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": [-3, "=xvc"],
+     "label": "$f'=0$"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": ["=xvc", 3],
+     "label": "$f'=0$"
+    },
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "in": [-3, "=xloc"],
+     "label": "$f=0$"
+    },
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "in": ["=xloc", "=xhic"],
+     "label": "$f=0$"
+    },
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "in": ["=xhic", 3],
+     "label": "$f=0$"
+    }
+   ],
+   "points": [
+    ["=px1", "=py1"],
+    ["=px2", "=py2"]
+   ],
+   "pointsLabel": "$극댓값·극솟값$"
   },
   "readout": [
    {
@@ -43,68 +105,183 @@
     "digits": 0
    },
    {
-    "label": "f'(x)=0의 서로 다른 실근 수",
+    "label": "판별식 $b^2-3ac$ (부호가 경우를 가른다)",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "$f'(x)=0$ 의 서로 다른 실근 수",
     "expr": "nroot",
     "digits": 0
    },
    {
-    "label": "임계점 x = ±√a",
-    "expr": "xc1",
+    "label": "극댓값 − 극솟값 (차)",
+    "expr": "gap",
     "digits": 3
+   },
+   {
+    "label": "$f(x)=0$ 의 실근 개수",
+    "expr": "nrealf",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 0
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "a": 1
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 0
    },
    {
-    "a": 2
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0
    },
    {
-    "a": 3
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 2
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "d": 0
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "d": -1
    }
   ],
   "invariants": [
-   "symm",
-   "fpc1"
+   "fp_at_crit",
+   "infl_sym"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
+    },
+    "expect": {
+     "disc": 9,
+     "numext": 2,
+     "nroot": 2,
+     "xlo": -1,
+     "xhi": 1,
+     "gap": 4,
+     "nrealf": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "disc": 0,
+     "numext": 0,
+     "nroot": 1,
+     "gap": 0,
+     "nrealf": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "disc": -9,
+     "numext": 0,
+     "nroot": 0,
+     "nrealf": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 2
     },
     "expect": {
      "numext": 2,
-     "nroot": 2,
-     "xc1": 1,
-     "fc1": -2
+     "gap": 4,
+     "prod": 0,
+     "nrealf": 2
     }
    },
    {
     "params": {
-     "a": 0
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0
     },
     "expect": {
-     "numext": 0,
+     "disc": 9,
+     "numext": 2,
+     "xlo": -1,
+     "xhi": 1,
+     "gap": 4,
+     "nrealf": 3
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "d": 0
+    },
+    "expect": {
+     "disc": 9,
+     "numext": 2,
+     "xlo": -2,
+     "xhi": 0,
+     "gap": 4,
+     "nrealf": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "d": -1
+    },
+    "expect": {
+     "numext": 1,
      "nroot": 1,
-     "xc1": 0,
-     "fc1": 0
-    }
-   },
-   {
-    "params": {
-     "a": -1
-    },
-    "expect": {
-     "numext": 0,
-     "nroot": 0,
-     "xc1": 0,
-     "fc1": 0
+     "xlo": 0,
+     "xhi": 0,
+     "gap": 0,
+     "nrealf": 2
     }
    }
   ],

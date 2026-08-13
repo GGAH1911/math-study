@@ -1,40 +1,202 @@
 {
  "id": "functions/math-1/삼각함수/일반해의_합",
  "spec": {
-  "title": "일반해의 합: sin x = a 의 두 해와 그 합",
+  "title": "일반해의 합: sin/cos/tan x = a 의 해와 그 합",
   "params": [
    {
-    "name": "a",
-    "label": "a (= sin x)",
+    "name": "t",
+    "label": "함수 (1:sin 2:cos 3:tan)",
     "type": "slider",
-    "min": -0.9,
-    "max": 0.9,
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "a",
+    "label": "우변 a",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
     "init": 0.5,
-    "step": 0.1,
-    "unit": ""
+    "step": 0.05
    }
   ],
-  "scope": "x1 = mod(asin(a), 2*pi); x2 = mod(pi - asin(a), 2*pi); s = x1 + x2",
+  "scope": "md = round(t); hs = (md == 1) ? 1 : 0; hc = (md == 2) ? 1 : 0; ht = (md == 3) ? 1 : 0; al = (md == 1) ? asin(a) : ((md == 2) ? acos(a) : atan(a)); x1 = (md == 2) ? al : mod(al, 2*pi); x2 = (md == 1) ? (pi - al) : ((md == 2) ? (2*pi - al) : mod(al + pi, 2*pi)); s = x1 + x2; mid = s / 2; dif = abs(x2 - x1); eps = (md == 3) ? 0.002 : 0; cnt = ((md < 3) and (abs(a) >= 1)) ? 1 : 2",
   "plot": {
    "range": [
     0,
     6.28318530718
    ],
    "yRange": [
-    -1.2,
-    1.2
+    -1.6,
+    1.6
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "sin(x)",
-     "label": "y = sin x",
+     "fn": "hs*sin(x) + (1-hs)*50",
+     "label": "$y=\\sin x$",
      "color": "#2563eb"
     },
     {
+     "fn": "hc*cos(x) + (1-hc)*50",
+     "label": "$y=\\cos x$",
+     "color": "#0891b2"
+    },
+    {
+     "fn": "(ht*sin(x) + 50*(1-ht)) / (ht*cos(x) + (1-ht))",
+     "label": "$y=\\tan x$",
+     "color": "#7c3aed"
+    },
+    {
      "fn": "a",
-     "label": "y = a",
+     "label": "$y=a$",
+     "color": "#dc2626",
+     "dashed": true
+    }
+   ],
+   "intersections": [
+    {
+     "f": "(md==1 ? sin(x) : (md==2 ? cos(x) : tan(x)))",
+     "g": "a",
+     "in": [
+      "=0",
+      "=pi/2 - eps"
+     ]
+    },
+    {
+     "f": "(md==1 ? sin(x) : (md==2 ? cos(x) : tan(x)))",
+     "g": "a",
+     "in": [
+      "=pi/2 + eps",
+      "=pi"
+     ]
+    },
+    {
+     "f": "(md==1 ? sin(x) : (md==2 ? cos(x) : tan(x)))",
+     "g": "a",
+     "in": [
+      "=pi",
+      "=3*pi/2 - eps"
+     ]
+    },
+    {
+     "f": "(md==1 ? sin(x) : (md==2 ? cos(x) : tan(x)))",
+     "g": "a",
+     "in": [
+      "=3*pi/2 + eps",
+      "=2*pi"
+     ]
+    }
+   ],
+   "points": [
+    [
+     "=mid",
+     0
+    ]
+   ],
+   "pointsLabel": "$대칭축\\ x=\\frac{x_1+x_2}{2}$"
+  },
+  "geometry": {
+   "range": [
+    -1.45,
+    1.45
+   ],
+   "yRange": [
+    -1.45,
+    1.45
+   ],
+   "shapes": [
+    {
+     "type": "circle",
+     "center": [
+      0,
+      0
+     ],
+     "radius": 1,
+     "stroke": "#94a3b8"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos(x1)",
+      "=sin(x1)"
+     ],
+     "color": "#2563eb"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=cos(x2)",
+      "=sin(x2)"
+     ],
+     "color": "#0891b2"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(x1)",
+      "=sin(x1)"
+     ],
+     "label": "$x_1$",
+     "color": "#2563eb"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=cos(x2)",
+      "=sin(x2)"
+     ],
+     "label": "$x_2$",
+     "color": "#0891b2"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=-1.3*cos(mid)",
+      "=-1.3*sin(mid)"
+     ],
+     "to": [
+      "=1.3*cos(mid)",
+      "=1.3*sin(mid)"
+     ],
+     "dashed": true,
+     "color": "#16a34a"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=cos(x1)",
+      "=sin(x1)"
+     ],
+     "to": [
+      "=cos(x2)",
+      "=sin(x2)"
+     ],
+     "dashed": true,
+     "color": "#64748b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=(md==2 ? a : (md==3 ? 0 : -1.3))",
+      "=(md==2 ? -1.3 : (md==3 ? 0 : a))"
+     ],
+     "to": [
+      "=(md==2 ? a : (md==3 ? 0 : 1.3))",
+      "=(md==2 ? 1.3 : (md==3 ? 0 : a))"
+     ],
+     "dashed": true,
      "color": "#dc2626"
     }
    ]
@@ -43,12 +205,12 @@
    {
     "label": "해 x₁",
     "expr": "x1",
-    "digits": 4
+    "digits": 3
    },
    {
     "label": "해 x₂",
     "expr": "x2",
-    "digits": 4
+    "digits": 3
    },
    {
     "label": "두 해의 합 x₁+x₂",
@@ -59,32 +221,65 @@
     "label": "합 ÷ π",
     "expr": "s/pi",
     "digits": 3
+   },
+   {
+    "label": "대칭축 ÷ π",
+    "expr": "mid/pi",
+    "digits": 3
+   },
+   {
+    "label": "해의 개수",
+    "expr": "cnt",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
+    "t": 1,
     "a": 0.5
    },
    {
+    "t": 1,
     "a": -0.5
    },
    {
+    "t": 1,
     "a": 0
    },
    {
-    "a": 0.8
+    "t": 2,
+    "a": 0.5
+   },
+   {
+    "t": 2,
+    "a": -0.5
+   },
+   {
+    "t": 3,
+    "a": 1
+   },
+   {
+    "t": 3,
+    "a": -1
+   },
+   {
+    "t": 2,
+    "a": 1
    }
   ],
   "invariants": [
-   "sin(x1) - a",
-   "sin(x2) - a",
-   "cos(x1) + cos(x2)"
+   "hs*(sin(x1)-a) + hc*(cos(x1)-a) + ht*(tan(x1)-a)",
+   "hs*(sin(x2)-a) + hc*(cos(x2)-a) + ht*(tan(x2)-a)",
+   "hs*(s - ((a >= 0) ? pi : 3*pi)) + hc*(s - 2*pi) + ht*(s - (2*atan(a) + ((a >= 0) ? pi : 3*pi)))",
+   "hs*(sin(x1)-sin(x2)) + hc*(cos(x1)-cos(x2))",
+   "mid - s/2"
   ],
   "oracle": [
    {
     "params": {
+     "t": 1,
      "a": 0.5
     },
     "expect": {
@@ -95,6 +290,7 @@
    },
    {
     "params": {
+     "t": 1,
      "a": -0.5
     },
     "expect": {
@@ -105,12 +301,57 @@
    },
    {
     "params": {
+     "t": 1,
      "a": 0
     },
     "expect": {
      "x1": 0,
      "x2": 3.1415926536,
      "s": 3.1415926536
+    }
+   },
+   {
+    "params": {
+     "t": 2,
+     "a": 0.5
+    },
+    "expect": {
+     "x1": 1.0471975512,
+     "x2": 5.235987756,
+     "s": 6.2831853072
+    }
+   },
+   {
+    "params": {
+     "t": 2,
+     "a": -0.5
+    },
+    "expect": {
+     "x1": 2.0943951024,
+     "x2": 4.1887902048,
+     "s": 6.2831853072
+    }
+   },
+   {
+    "params": {
+     "t": 3,
+     "a": 1
+    },
+    "expect": {
+     "x1": 0.7853981634,
+     "x2": 3.926990817,
+     "s": 4.7123889804
+    }
+   },
+   {
+    "params": {
+     "t": 3,
+     "a": -1
+    },
+    "expect": {
+     "x1": 5.4977871438,
+     "x2": 2.3561944902,
+     "s": 7.853981634
     }
    }
   ],

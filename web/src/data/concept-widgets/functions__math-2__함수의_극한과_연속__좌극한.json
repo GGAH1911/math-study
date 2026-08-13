@@ -1,54 +1,136 @@
 {
  "id": "functions/math-2/함수의_극한과_연속/좌극한",
  "spec": {
-  "title": "좌극한: x → a⁻ 일 때 f(x) → L",
+  "title": "좌극한: $x\\to a^-$ 일 때 $f(x)\\to L$ — 좌극한 $L$·우극한 $R$·함숫값 $f(a)$ 를 직접 움직여 보기",
   "params": [
    {
-    "name": "xv",
-    "label": "x (점 a=1의 왼쪽에서 접근)",
+    "name": "a",
+    "label": "접근점 a",
     "type": "slider",
-    "min": 0,
-    "max": 0.999,
-    "init": 0.6,
-    "step": 0.001,
+    "min": 0.6,
+    "max": 2.4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "gapx",
+    "label": "왼쪽에서의 거리 a − x",
+    "type": "slider",
+    "min": 0.005,
+    "max": 1,
+    "init": 0.4,
+    "step": 0.005,
+    "unit": ""
+   },
+   {
+    "name": "L",
+    "label": "좌극한 L (왼쪽 가지가 향하는 값)",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "R",
+    "label": "우극한 R (오른쪽 가지가 향하는 값)",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "fa",
+    "label": "함숫값 f(a) (x=a 에서 실제 값)",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 0.5,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "왼쪽 가지의 접근 방향/기울기 k",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.1,
     "unit": ""
    }
   ],
-  "scope": "a=1; L=2; fx=xv^2+1; d=a-xv; gap=L-fx",
+  "scope": "xv = a - gapx; fx = L + k*(xv - a) + (xv - a)^2; d = gapx; gap = L - fx; err = abs(gap); jump = R - L; hasLimit = abs(R - L) < 0.0001 ? 1 : 0; contin = abs(R - L) < 0.0001 ? (abs(fa - L) < 0.0001 ? 1 : 0) : 0",
   "plot": {
    "range": [
-    -0.2,
-    2
+    -1.1,
+    4.1
    ],
    "yRange": [
-    -0.3,
-    3.2
+    -1.6,
+    3.8
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "(x<1)*(x^2+1) + (x>=1)*x",
-     "label": "y=f(x)  (x<1: x²+1, x≥1: x)",
+     "fn": "L + k*(x - a) + (x - a)^2",
+     "range": [
+      "=a - 1.6",
+      "=a"
+     ],
+     "label": "$y=f(x)$ (왼쪽 가지, $x<a$)",
      "color": "#2563eb"
     },
     {
-     "fn": "2",
-     "label": "좌극한 L=2",
-     "color": "#dc2626"
+     "fn": "R + 0.6*(x - a)",
+     "range": [
+      "=a",
+      "=a + 1.6"
+     ],
+     "label": "$y=f(x)$ (오른쪽 가지, $x>a$)",
+     "color": "#0891b2"
+    },
+    {
+     "fn": "L",
+     "dashed": true,
+     "color": "#dc2626",
+     "label": "좌극한 $L$"
+    },
+    {
+     "fn": "R",
+     "dashed": true,
+     "color": "#7c3aed",
+     "label": "우극한 $R$"
     }
    ],
    "points": [
+    [
+     "=a",
+     "=L"
+    ],
+    [
+     "=a",
+     "=R"
+    ],
+    [
+     "=a",
+     "=fa"
+    ],
     [
      "=xv",
      "=fx"
     ]
    ],
-   "pointsLabel": "$(x, f(x))$"
+   "pointsLabel": "$(a,L)$ 좌극한 · $(a,R)$ 우극한 · $(a,f(a))$ 함숫값 · $(x,f(x))$ 움직이는 점"
   },
   "readout": [
    {
-    "label": "현재 x (x<a=1)",
+    "label": "x (= a − 거리)",
     "expr": "xv",
     "digits": 3
    },
@@ -58,68 +140,156 @@
     "digits": 4
    },
    {
-    "label": "a − x (왼쪽에서의 거리)",
+    "label": "a − x (왼쪽에서의 거리 δ)",
     "expr": "d",
     "digits": 4
    },
    {
-    "label": "L − f(x) (좌극한까지 남은 값)",
-    "expr": "gap",
-    "digits": 4
+    "label": "$|f(x)-L|$ (좌극한과의 오차 ε)",
+    "expr": "err",
+    "digits": 5
+   },
+   {
+    "label": "R − L (우극한 − 좌극한)",
+    "expr": "jump",
+    "digits": 3
+   },
+   {
+    "label": "극한 $\\lim_{x\\to a}f(x)$ 존재? (1=예)",
+    "expr": "hasLimit",
+    "digits": 0
+   },
+   {
+    "label": "x=a 에서 연속? (1=예)",
+    "expr": "contin",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "xv": 0
+    "a": 1,
+    "gapx": 0.4,
+    "L": 2,
+    "R": 1,
+    "fa": 0.5,
+    "k": 1.5
    },
    {
-    "xv": 0.5
+    "a": 1,
+    "gapx": 0.01,
+    "L": 2,
+    "R": 2,
+    "fa": 2,
+    "k": 1.5
    },
    {
-    "xv": 0.9
+    "a": 2,
+    "gapx": 0.5,
+    "L": 0,
+    "R": 0,
+    "fa": 3,
+    "k": -1
    },
    {
-    "xv": 0.99
+    "a": 0.6,
+    "gapx": 1,
+    "L": -1,
+    "R": 3,
+    "fa": 0,
+    "k": 0
+   },
+   {
+    "a": 1.5,
+    "gapx": 0.005,
+    "L": 1,
+    "R": 1,
+    "fa": 1,
+    "k": -2
    }
   ],
   "invariants": [
-   "fx - (xv^2 + 1)",
-   "L - (a^2 + 1)",
-   "d - (a - xv)",
-   "gap - (L - fx)"
+   "xv - (a - gapx)",
+   "fx - (L + k*(xv - a) + (xv - a)^2)",
+   "d - gapx",
+   "gap - (L - fx)",
+   "jump - (R - L)",
+   "(fx - L) - (gapx^2 - k*gapx)",
+   "err - abs(gap)"
   ],
   "oracle": [
    {
     "params": {
-     "xv": 0
+     "a": 1,
+     "gapx": 0.4,
+     "L": 2,
+     "R": 1,
+     "fa": 0.5,
+     "k": 1.5
     },
     "expect": {
-     "fx": 1,
-     "d": 1,
-     "gap": 1,
-     "L": 2
+     "xv": 0.6,
+     "fx": 1.56,
+     "d": 0.4,
+     "gap": 0.44,
+     "jump": -1,
+     "hasLimit": 0,
+     "contin": 0
     }
    },
    {
     "params": {
-     "xv": 0.5
+     "a": 1,
+     "gapx": 0.01,
+     "L": 2,
+     "R": 2,
+     "fa": 2,
+     "k": 1.5
     },
     "expect": {
-     "fx": 1.25,
-     "d": 0.5,
-     "gap": 0.75
+     "xv": 0.99,
+     "fx": 1.9851,
+     "gap": 0.0149,
+     "jump": 0,
+     "hasLimit": 1,
+     "contin": 1
     }
    },
    {
     "params": {
-     "xv": 0.9
+     "a": 2,
+     "gapx": 0.5,
+     "L": 0,
+     "R": 0,
+     "fa": 3,
+     "k": -1
     },
     "expect": {
-     "fx": 1.81,
-     "d": 0.1,
-     "gap": 0.19
+     "xv": 1.5,
+     "fx": 0.75,
+     "gap": -0.75,
+     "jump": 0,
+     "hasLimit": 1,
+     "contin": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.6,
+     "gapx": 1,
+     "L": -1,
+     "R": 3,
+     "fa": 0,
+     "k": 0
+    },
+    "expect": {
+     "xv": -0.4,
+     "fx": 0,
+     "gap": -1,
+     "jump": 4,
+     "hasLimit": 0,
+     "contin": 0
     }
    }
   ],

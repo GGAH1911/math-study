@@ -4,103 +4,192 @@
   "title": "지수함수와 로그함수의 교점",
   "params": [
    {
-    "name": "c",
-    "label": "교점의 x좌표 c",
+    "name": "aRaw",
+    "label": "밑 a",
     "type": "slider",
-    "min": 1.5,
-    "max": 5,
-    "init": 2,
-    "step": 0.1
+    "min": 0.15,
+    "max": 2.5,
+    "init": 1.3,
+    "step": 0.005
+   },
+   {
+    "name": "x0",
+    "label": "확인점 x₀",
+    "type": "slider",
+    "min": -1,
+    "max": 3,
+    "init": 1,
+    "step": 0.05
    }
   ],
-  "scope": "a = c^(1/c)",
+  "scope": "a = (abs(aRaw - 1) < 0.03 ? (aRaw < 1 ? 0.97 : 1.03) : aRaw); L = log(a); ac = e^(1/e); xs = (L > 0.001 ? -log(L)/L : 3); n = (a < 1 ? 1 : (a < ac ? 2 : (a > ac ? 0 : 1)))",
   "plot": {
    "range": [
-    0,
-    6
+    -1.5,
+    8
    ],
    "yRange": [
-    0,
-    6
+    -3,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
      "fn": "a^x",
-     "label": "y = a^x",
+     "label": "$y=a^x$",
      "color": "#e8590c"
     },
     {
      "fn": "log(x, a)",
-     "label": "y = log_a x",
+     "label": "$y=\\log_a x$",
      "color": "#1c7ed6"
     },
     {
      "fn": "x",
-     "label": "y = x",
-     "color": "#868e96"
+     "label": "$y=x$",
+     "color": "#868e96",
+     "dashed": true
     }
-   ]
+   ],
+   "intersections": [
+    {
+     "f": "a^x",
+     "g": "x",
+     "in": ["=0", "=xs"],
+     "label": "작은 교점"
+    },
+    {
+     "f": "a^x",
+     "g": "x",
+     "in": ["=xs", "=xs*3+20"],
+     "label": "큰 교점"
+    }
+   ],
+   "points": [
+    ["=x0", "=a^x0"],
+    ["=a^x0", "=x0"]
+   ],
+   "pointsLabel": "$(x_0,\\,a^{x_0})$ 와 $y=x$ 대칭점"
   },
   "readout": [
    {
-    "label": "밑 a = c^(1/c)",
+    "label": "밑 a",
     "expr": "a",
-    "digits": 5
-   },
-   {
-    "label": "교점 좌표 c",
-    "expr": "c",
     "digits": 3
    },
    {
-    "label": "검산 a^c (=c 여야)",
-    "expr": "a^c",
-    "digits": 4
+    "label": "임계 밑 e^{1/e}",
+    "expr": "ac",
+    "digits": 5
+   },
+   {
+    "label": "교점 개수",
+    "expr": "n",
+    "digits": 0
+   },
+   {
+    "label": "대칭 확인 log_a(a^{x₀})",
+    "expr": "log(a^x0, a)",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "c": 2
+    "aRaw": 1.3,
+    "x0": 1
    },
    {
-    "c": 3
+    "aRaw": 1.44,
+    "x0": 1
    },
    {
-    "c": 4
+    "aRaw": 1.5,
+    "x0": 0.5
    },
    {
-    "c": 1.5
+    "aRaw": 0.3,
+    "x0": -0.5
+   },
+   {
+    "aRaw": 1.0,
+    "x0": 2
+   },
+   {
+    "aRaw": 2.0,
+    "x0": 1
    }
   ],
   "invariants": [
-   "a^c - c",
-   "log(c, a) - c"
+   "log(a^x0, a) - x0",
+   "ac^e - e",
+   "(L > 0.001 ? a^xs*L - 1 : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "c": 2
+     "aRaw": 1.3,
+     "x0": 1
     },
     "expect": {
-     "a": 1.4142135624
+     "a": 1.3,
+     "L": 0.2623642645,
+     "xs": 5.0998615270,
+     "n": 2
     }
    },
    {
     "params": {
-     "c": 3
+     "aRaw": 1.44,
+     "x0": 1
     },
     "expect": {
-     "a": 1.4422495703
+     "xs": 2.7666398655,
+     "n": 2
     }
    },
    {
     "params": {
-     "c": 4
+     "aRaw": 1.5,
+     "x0": 0.5
     },
     "expect": {
-     "a": 1.4142135624
+     "xs": 2.2263825855,
+     "n": 0
+    }
+   },
+   {
+    "params": {
+     "aRaw": 0.3,
+     "x0": -0.5
+    },
+    "expect": {
+     "a": 0.3,
+     "xs": 3,
+     "n": 1
+    }
+   },
+   {
+    "params": {
+     "aRaw": 1.0,
+     "x0": 2
+    },
+    "expect": {
+     "a": 1.03,
+     "xs": 119.1311364553,
+     "n": 2
+    }
+   },
+   {
+    "params": {
+     "aRaw": 2.0,
+     "x0": 1
+    },
+    "expect": {
+     "xs": 0.5287663729,
+     "n": 0
     }
    }
   ],

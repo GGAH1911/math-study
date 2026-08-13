@@ -4,8 +4,35 @@
   "title": "속력 계산",
   "params": [
    {
+    "name": "A",
+    "label": "진폭 A",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "w",
+    "label": "빠르기 ω",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "등속 c",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1
+   },
+   {
     "name": "t",
-    "label": "시간 t",
+    "label": "시각 t",
     "type": "slider",
     "min": 0,
     "max": 6.283185307179586,
@@ -13,33 +40,66 @@
     "step": 0.01
    }
   ],
-  "scope": "pos = sin(2*t) + t; v = 2*cos(2*t) + 1; speed = abs(v)",
+  "scope": "pos = A*sin(w*t) + c*t; v = A*w*cos(w*t) + c; speed = abs(v); dir = v > 0 ? 1 : (v < 0 ? -1 : 0); turns = abs(A*w) > abs(c) ? 1 : 0",
   "plot": {
    "range": [
     0,
     6.283185307179586
    ],
    "yRange": [
-    -1.5,
-    6.5
+    -12,
+    12
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "sin(2*x)+x",
-     "label": "위치 x(t)",
+     "fn": "A*sin(w*x)+c*x",
+     "label": "위치 $x(t)$",
      "color": "blue"
     },
     {
-     "fn": "2*cos(2*x)+1",
-     "label": "속도 v(t)",
+     "fn": "A*w*cos(w*x)+c",
+     "label": "속도 $v(t)=x'(t)$",
      "color": "red"
     },
     {
-     "fn": "abs(2*cos(2*x)+1)",
-     "label": "속력 |v(t)|",
-     "color": "green"
+     "fn": "abs(A*w*cos(w*x)+c)",
+     "label": "속력 $|v(t)|$",
+     "color": "green",
+     "dashed": true
+    }
+   ],
+   "roots": [
+    {
+     "fn": "A*w*cos(w*x)+c",
+     "in": ["=min(0*pi/w, 2*pi)", "=min(1*pi/w, 2*pi)"],
+     "label": "$v=0$ (정지·방향전환)"
+    },
+    {
+     "fn": "A*w*cos(w*x)+c",
+     "in": ["=min(1*pi/w, 2*pi)", "=min(2*pi/w, 2*pi)"],
+     "label": "$v=0$ (정지·방향전환)"
+    },
+    {
+     "fn": "A*w*cos(w*x)+c",
+     "in": ["=min(2*pi/w, 2*pi)", "=min(3*pi/w, 2*pi)"],
+     "label": "$v=0$ (정지·방향전환)"
+    },
+    {
+     "fn": "A*w*cos(w*x)+c",
+     "in": ["=min(3*pi/w, 2*pi)", "=min(4*pi/w, 2*pi)"],
+     "label": "$v=0$ (정지·방향전환)"
+    },
+    {
+     "fn": "A*w*cos(w*x)+c",
+     "in": ["=min(4*pi/w, 2*pi)", "=min(5*pi/w, 2*pi)"],
+     "label": "$v=0$ (정지·방향전환)"
+    },
+    {
+     "fn": "A*w*cos(w*x)+c",
+     "in": ["=min(5*pi/w, 2*pi)", "=min(6*pi/w, 2*pi)"],
+     "label": "$v=0$ (정지·방향전환)"
     }
    ],
    "points": [
@@ -78,59 +138,138 @@
     "label": "속력 |v(t)|",
     "expr": "speed",
     "digits": 3
+   },
+   {
+    "label": "운동 방향 (+1 오른쪽 · −1 왼쪽 · 0 정지)",
+    "expr": "dir",
+    "digits": 0
+   },
+   {
+    "label": "방향 전환 있는 운동인가 (1 예 · 0 아니오)",
+    "expr": "turns",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
+    "A": 1,
+    "w": 2,
+    "c": 1,
     "t": 0
    },
    {
-    "t": 1.0471975511965976
-   },
-   {
+    "A": 1,
+    "w": 2,
+    "c": 1,
     "t": 1.5707963267948966
    },
    {
-    "t": 3.141592653589793
+    "A": 2,
+    "w": 1,
+    "c": -1.5,
+    "t": 2
+   },
+   {
+    "A": 0,
+    "w": 2,
+    "c": 1,
+    "t": 3
+   },
+   {
+    "A": 1,
+    "w": 3,
+    "c": 0,
+    "t": 1
+   },
+   {
+    "A": -2,
+    "w": 0.5,
+    "c": 1.5,
+    "t": 5
    }
   ],
   "invariants": [
    "speed^2 - v^2",
    "speed - max(v,-v)",
-   "pos - (sin(2*t)+t)",
-   "v - (2*cos(2*t)+1)"
+   "pos - (A*sin(w*t) + c*t)",
+   "v - (A*w*cos(w*t) + c)",
+   "dir*speed - v",
+   "v - (A*sin(w*(t+0.0001)) + c*(t+0.0001) - (A*sin(w*(t-0.0001)) + c*(t-0.0001)))/0.0002"
   ],
   "oracle": [
    {
     "params": {
+     "A": 1,
+     "w": 2,
+     "c": 1,
      "t": 0
     },
     "expect": {
      "pos": 0,
      "v": 3,
-     "speed": 3
+     "speed": 3,
+     "dir": 1,
+     "turns": 1
     }
    },
    {
     "params": {
+     "A": 1,
+     "w": 2,
+     "c": 1,
      "t": 1.5707963267948966
     },
     "expect": {
      "pos": 1.5707963267948966,
      "v": -1,
-     "speed": 1
+     "speed": 1,
+     "dir": -1
     }
    },
    {
     "params": {
+     "A": 1,
+     "w": 2,
+     "c": 1,
      "t": 1.0471975511965976
     },
     "expect": {
-     "pos": 1.9132229549810362,
+     "pos": 1.9132229549810363,
      "v": 0,
-     "speed": 0
+     "speed": 0,
+     "dir": 0
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "w": 1,
+     "c": 2,
+     "t": 3.141592653589793
+    },
+    "expect": {
+     "pos": 6.283185307179586,
+     "v": 1,
+     "speed": 1,
+     "dir": 1,
+     "turns": 0
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "w": 2,
+     "c": 2,
+     "t": 1.5707963267948966
+    },
+    "expect": {
+     "pos": 3.141592653589793,
+     "v": 0,
+     "speed": 0,
+     "dir": 0,
+     "turns": 0
     }
    }
   ],

@@ -1,38 +1,141 @@
 {
  "id": "functions/math-1/삼각함수/초월방정식",
  "spec": {
-  "title": "초월방정식 sin x = x/2 — 두 곡선의 교점으로 해 찾기",
+  "title": "A sin x = mx + b — 두 곡선의 교점이 해다 (해의 개수는 기울기가 정한다)",
   "params": [
    {
-    "name": "t",
-    "label": "검사값 x",
+    "name": "A",
+    "label": "좌변 진폭 A ($y=A\\sin x$)",
     "type": "slider",
-    "min": -4,
-    "max": 7,
-    "init": 1.9,
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.05
+   },
+   {
+    "name": "m",
+    "label": "우변 직선 기울기 m",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.5,
+    "step": 0.01
+   },
+   {
+    "name": "b",
+    "label": "우변 직선 절편 b",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 0,
+    "step": 0.01
+   },
+   {
+    "name": "t",
+    "label": "검사값 x (수치로 더듬기)",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 1.895,
     "step": 0.001
    }
   ],
-  "scope": "s = sin(t); c = cos(t); rhs = t/2; lhs = s; diff = s - t/2",
+  "scope": "s = A*sin(t); rhs = m*t + b; diff = s - rhs; k = abs(m)/A; r = m/A; p = (abs(r) <= 1) ? acos(r) : 0; e1 = max(-8, min(8, -p - 2*pi)); e2 = max(-8, min(8, p - 2*pi)); e3 = max(-8, min(8, -p)); e4 = max(-8, min(8, p)); e5 = max(-8, min(8, -p + 2*pi)); e6 = max(-8, min(8, p + 2*pi)); ys = map(range(-8, 8, 0.02), f(u) = A*sin(u) - (m*u + b)); n = size(ys)[1]; pr = ys[1:(n-1)] .* ys[2:n]; cnt = sum(map(pr, q(v) = (v < 0) ? 1 : 0))",
   "plot": {
    "range": [
-    -4,
-    7
+    -8,
+    8
    ],
    "yRange": [
-    -2,
-    3.5
+    -3.6,
+    3.6
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "sin(x)",
-     "label": "y = sin x (좌변)",
+     "fn": "A*sin(x)",
+     "label": "$y=A\\sin x$ (좌변)",
      "color": "#2563eb"
     },
     {
-     "fn": "x/2",
-     "label": "y = x/2 (우변)",
+     "fn": "m*x + b",
+     "label": "$y=mx+b$ (우변)",
      "color": "#dc2626"
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "label": "$y=A\\sin x-(mx+b)$ (차이)",
+     "color": "#059669",
+     "dashed": true
+    }
+   ],
+   "intersections": [
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=-8", "=e1"],
+     "label": "$교점 = 해$"
+    },
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=e1", "=e2"]
+    },
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=e2", "=e3"]
+    },
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=e3", "=e4"]
+    },
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=e4", "=e5"]
+    },
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=e5", "=e6"]
+    },
+    {
+     "f": "A*sin(x)",
+     "g": "m*x + b",
+     "in": ["=e6", "=8"]
+    }
+   ],
+   "roots": [
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=-8", "=e1"]
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=e1", "=e2"]
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=e2", "=e3"]
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=e3", "=e4"]
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=e4", "=e5"]
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=e5", "=e6"]
+    },
+    {
+     "fn": "A*sin(x) - (m*x + b)",
+     "in": ["=e6", "=8"]
     }
    ],
    "points": [
@@ -45,78 +148,135 @@
      "=rhs"
     ]
    ],
-   "pointsLabel": "$x = t$"
+   "pointsLabel": "$x=t$ 의 좌변·우변"
   },
   "readout": [
    {
-    "label": "좌변 sin x",
+    "label": "좌변 $A\\sin x$",
     "expr": "s",
     "digits": 4
    },
    {
-    "label": "우변 x/2",
+    "label": "우변 $mx+b$",
     "expr": "rhs",
     "digits": 4
    },
    {
-    "label": "차이 sin x − x/2 (0이면 해)",
+    "label": "차이 (0이면 해)",
     "expr": "diff",
     "digits": 4
+   },
+   {
+    "label": "기울기 비 |m|/A (1 넘으면 교점 1개)",
+    "expr": "k",
+    "digits": 3
+   },
+   {
+    "label": "창 −8≤x≤8 안 해의 개수",
+    "expr": "cnt",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "t": 0.5
-   },
-   {
+    "A": 1,
+    "m": 0.5,
+    "b": 0,
     "t": 1.895494267
    },
    {
-    "t": 2.5
+    "A": 1,
+    "m": 0,
+    "b": 0.5,
+    "t": 0.5235987756
    },
    {
-    "t": -1.5
+    "A": 1,
+    "m": 1,
+    "b": -1,
+    "t": 2
+   },
+   {
+    "A": 2.5,
+    "m": -0.8,
+    "b": 1.2,
+    "t": -3
+   },
+   {
+    "A": 0.6,
+    "m": 1.4,
+    "b": 0,
+    "t": 0
    }
   ],
   "invariants": [
-   "s^2 + c^2 - 1",
-   "sin(2*t) - 2*s*c",
-   "diff - (lhs - rhs)"
+   "s - A*sin(t)",
+   "rhs - (m*t + b)",
+   "diff - (s - rhs)",
+   "(abs(m) <= A) ? (A*cos(p) - m) : 0",
+   "((e1 <= e2) and (e2 <= e3) and (e3 <= e4) and (e4 <= e5) and (e5 <= e6)) ? 0 : 1"
   ],
   "oracle": [
    {
     "params": {
+     "A": 1,
+     "m": 0.5,
+     "b": 0,
      "t": 0
     },
     "expect": {
      "s": 0,
-     "c": 1,
      "rhs": 0,
-     "diff": 0
+     "diff": 0,
+     "p": 1.0471975512,
+     "k": 0.5
     }
    },
    {
     "params": {
+     "A": 1,
+     "m": 0,
+     "b": 0.5,
      "t": 1.5707963268
     },
     "expect": {
      "s": 1,
-     "c": 0,
-     "rhs": 0.7853981634,
-     "diff": 0.2146018366
+     "rhs": 0.5,
+     "diff": 0.5,
+     "p": 1.5707963268,
+     "k": 0
     }
    },
    {
     "params": {
+     "A": 2,
+     "m": 1,
+     "b": -1,
      "t": 3.1415926536
     },
     "expect": {
      "s": 0,
-     "c": -1,
-     "rhs": 1.5707963268,
-     "diff": -1.5707963268
+     "rhs": 2.1415926536,
+     "diff": -2.1415926536,
+     "p": 1.0471975512,
+     "k": 0.5
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "m": 1.4,
+     "b": 0,
+     "t": 1
+    },
+    "expect": {
+     "s": 0.8414709848,
+     "rhs": 1.4,
+     "diff": -0.5585290152,
+     "p": 0,
+     "k": 1.4
     }
    }
   ],

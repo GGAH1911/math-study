@@ -1,7 +1,7 @@
 {
  "id": "geometry/high-1/도형의_방정식/매개변수_조건",
  "spec": {
-  "title": "매개변수 조건: 직선 y=mx+3와 원 x²+y²=4의 위치 관계",
+  "title": "매개변수 조건: 직선 y=mx+k 와 원 x²+y²=r² 의 위치 관계",
   "params": [
    {
     "name": "m",
@@ -12,17 +12,37 @@
     "init": 2,
     "step": 0.05,
     "unit": ""
+   },
+   {
+    "name": "k",
+    "label": "y절편 k",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": 3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "반지름 r",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
    }
   ],
-  "scope": "d = 3/sqrt(m^2+1); disc = 16*m^2 - 20; r = 2",
+  "scope": "d = abs(k)/sqrt(m^2+1); disc = 4*(r^2*(m^2+1) - k^2); xv = -m*k/(m^2+1); yv = k/(m^2+1); s = disc > 0 ? sqrt(disc)/(2*(m^2+1)) : 0; x1 = disc >= 0 ? xv - s : 0/0; x2 = disc >= 0 ? xv + s : 0/0; y1 = m*x1 + k; y2 = m*x2 + k; nroot = disc > 1e-9 ? 2 : (disc < -1e-9 ? 0 : 1); mcrit = abs(k) >= r ? sqrt(k^2 - r^2)/r : 0",
   "geometry": {
    "range": [
-    -4,
-    4
+    -6,
+    6
    ],
    "yRange": [
-    -3,
-    4
+    -6,
+    6
    ],
    "showAxes": true,
    "showGrid": true,
@@ -33,96 +53,216 @@
       0,
       0
      ],
-     "radius": 2,
-     "label": "x²+y²=4"
+     "radius": "=r",
+     "label": "$x^2+y^2=r^2$"
     },
     {
      "type": "segment",
      "from": [
-      -4,
-      "=-4*m+3"
+      -6,
+      "=-6*m+k"
      ],
      "to": [
-      4,
-      "=4*m+3"
+      6,
+      "=6*m+k"
      ],
-     "label": "y=mx+3",
+     "label": "$y=mx+k$",
      "color": "red"
     },
     {
      "type": "point",
      "at": [
       0,
-      3
+      "=k"
      ],
-     "label": "(0,3) 고정"
+     "label": "고정점 (0,k)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=xv",
+      "=yv"
+     ],
+     "dashed": true,
+     "color": "blue",
+     "label": "거리 d"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x1",
+      "=y1"
+     ],
+     "color": "green",
+     "label": "교점"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x2",
+      "=y2"
+     ],
+     "color": "green"
+    }
+   ]
+  },
+  "plot": {
+   "range": [
+    -6,
+    6
+   ],
+   "yRange": [
+    -8,
+    20
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "(1+m^2)*x^2 + 2*m*k*x + (k^2 - r^2)",
+     "label": "$(1+m^2)x^2+2mkx+(k^2-r^2)$"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "(1+m^2)*x^2 + 2*m*k*x + (k^2 - r^2)",
+     "in": [
+      -6,
+      "=xv"
+     ],
+     "label": "교점 $x_1$"
+    },
+    {
+     "fn": "(1+m^2)*x^2 + 2*m*k*x + (k^2 - r^2)",
+     "in": [
+      "=xv",
+      6
+     ],
+     "label": "교점 $x_2$"
     }
    ]
   },
   "readout": [
    {
-    "label": "중심~직선 거리 d",
+    "label": "중심-직선 거리 d",
     "expr": "d",
     "digits": 3
    },
    {
     "label": "반지름 r",
     "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "판별식 D",
+    "expr": "disc",
+    "digits": 2
+   },
+   {
+    "label": "교점 개수",
+    "expr": "nroot",
     "digits": 0
    },
    {
-    "label": "판별식 D=16m²-20",
-    "expr": "disc",
-    "digits": 2
+    "label": "접하는 기울기 |m|",
+    "expr": "mcrit",
+    "digits": 3
    }
   ],
-  "note": "고정점 (0,3)을 지나는 직선을 기울기 m으로 회전시킨다. 원과 두 점에서 만나려면 d<r, 즉 D>0 ⇔ |m|>√5/2≈1.118. 접할 때 d=r=2, D=0."
+  "note": "(0,k)를 지나는 직선을 기울기 m으로 회전시킨다. d=|k|/√(m²+1) 를 r 와 견주면 위치 관계가 정해지고, 이는 대입한 이차식의 판별식 D=4(1+m²)(r²−d²) 의 부호와 정확히 같다. |k|>r 이면 |m|>√(k²−r²)/r 에서만 두 점, 같을 때 접함. |k|<r 이면 고정점이 원 안이라 어떤 m 이든 항상 두 점에서 만난다 — 이 경우 임계값 자체가 없다."
  },
  "recipe": {
   "samples": [
    {
-    "m": 0
+    "m": 0,
+    "k": 3,
+    "r": 2
    },
    {
-    "m": 1
+    "m": 2,
+    "k": 3,
+    "r": 2
    },
    {
-    "m": 2
+    "m": 0,
+    "k": 1,
+    "r": 2
    },
    {
-    "m": -3
+    "m": -3,
+    "k": 5,
+    "r": 1
+   },
+   {
+    "m": 0,
+    "k": 2,
+    "r": 2
    }
   ],
   "invariants": [
-   "d^2*(m^2+1) - 9",
-   "disc - 144/d^2 + 36"
+   "d^2*(m^2+1) - k^2",
+   "disc - 4*(m^2+1)*(r^2 - d^2)",
+   "yv - (m*xv + k)",
+   "xv + m*yv"
   ],
   "oracle": [
    {
     "params": {
-     "m": 0
+     "m": 0,
+     "k": 3,
+     "r": 2
     },
     "expect": {
      "d": 3,
-     "disc": -20
+     "disc": -20,
+     "nroot": 0,
+     "xv": 0,
+     "yv": 3,
+     "mcrit": 1.118033988749895
     }
    },
    {
     "params": {
-     "m": 1.118033988749895
-    },
-    "expect": {
-     "d": 2,
-     "disc": 0
-    }
-   },
-   {
-    "params": {
-     "m": 2
+     "m": 2,
+     "k": 3,
+     "r": 2
     },
     "expect": {
      "d": 1.3416407864998738,
-     "disc": 44
+     "disc": 44,
+     "nroot": 2,
+     "xv": -1.2,
+     "yv": 0.6
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "k": 1,
+     "r": 2
+    },
+    "expect": {
+     "d": 1,
+     "disc": 12,
+     "nroot": 2,
+     "mcrit": 0
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "k": 2,
+     "r": 2
+    },
+    "expect": {
+     "d": 2,
+     "disc": 0,
+     "nroot": 1,
+     "mcrit": 0
     }
    }
   ],

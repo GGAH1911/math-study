@@ -4,62 +4,100 @@
   "title": "극값 존재 조건",
   "params": [
    {
-    "name": "b",
-    "label": "b",
+    "name": "a",
+    "label": "a",
     "type": "slider",
     "min": -2,
     "max": 2,
-    "init": 0.5,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -3,
     "step": 0.1
    }
   ],
-  "scope": "eps=0.01; fp0=3*0^2+2*b*0; fpp0=6*0+2*b; isext = fpp0 != 0 ? 1 : 0; fml=3*(-eps)^2+2*b*(-eps); fpl=3*eps^2+2*b*eps;",
+  "scope": "aa = a != 0 ? a : 0.5; D = 4*b^2 - 12*aa*c; xm = -b/(3*aa); r = D > 0 ? sqrt(D)/(6*abs(aa)) : 0; xl = xm - r; xr = xm + r; ncrit = D > 0 ? 2 : (abs(D) < 1e-9 ? 1 : 0); next = D > 0 ? 2 : 0; eps = 0.05; sL = sign(3*aa*(xl-eps)^2 + 2*b*(xl-eps) + c); sR = sign(3*aa*(xl+eps)^2 + 2*b*(xl+eps) + c)",
   "plot": {
    "range": [
-    -1,
-    1
+    -5,
+    5
    ],
    "yRange": [
-    -8,
-    8
+    -10,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 + b*x^2",
-     "label": "f(x)",
+     "fn": "aa*x^3 + b*x^2 + c*x",
+     "label": "$f(x)=ax^3+bx^2+cx$",
      "color": "blue"
     },
     {
-     "fn": "3*x^2 + 2*b*x",
-     "label": "f'(x)",
+     "fn": "3*aa*x^2 + 2*b*x + c",
+     "label": "$f'(x)=3ax^2+2bx+c$",
      "color": "red"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "3*aa*x^2 + 2*b*x + c",
+     "in": [
+      "=xm - 12",
+      "=xm"
+     ],
+     "label": "$f'(x)=0$"
+    },
+    {
+     "fn": "3*aa*x^2 + 2*b*x + c",
+     "in": [
+      "=xm",
+      "=xm + 12"
+     ],
+     "label": "$f'(x)=0$"
     }
    ]
   },
   "readout": [
    {
-    "label": "f'(0)",
-    "expr": "fp0",
+    "label": "판별식 D = 4b²−12ac",
+    "expr": "D",
     "digits": 2
    },
    {
-    "label": "f''(0)",
-    "expr": "fpp0",
-    "digits": 2
+    "label": "f'(x)=0 인 x 의 개수",
+    "expr": "ncrit",
+    "digits": 0
    },
    {
-    "label": "f'(0-)",
-    "expr": "fml",
-    "digits": 3
+    "label": "극값의 개수",
+    "expr": "next",
+    "digits": 0
    },
    {
-    "label": "f'(0+)",
-    "expr": "fpl",
-    "digits": 3
+    "label": "왼쪽 임계점 바로 앞 f' 부호",
+    "expr": "sL",
+    "digits": 0
    },
    {
-    "label": "극값 여부",
-    "expr": "isext",
+    "label": "왼쪽 임계점 바로 뒤 f' 부호",
+    "expr": "sR",
     "digits": 0
    }
   ]
@@ -67,46 +105,107 @@
  "recipe": {
   "samples": [
    {
-    "b": -1
+    "a": 1,
+    "b": 0,
+    "c": -3
    },
    {
-    "b": 0
+    "a": 1,
+    "b": 0,
+    "c": 0
    },
    {
-    "b": 0.5
+    "a": 1,
+    "b": 0,
+    "c": 3
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3
+   },
+   {
+    "a": 0,
+    "b": 1,
+    "c": -1
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 1
    }
   ],
   "invariants": [
-   "fp0",
-   "3*(-2*b/3)^2+2*b*(-2*b/3)",
-   "2*b + (6*(-2*b/3)+2*b)"
+   "xl + xr - 2*xm",
+   "D > 0 ? (3*aa*xl^2 + 2*b*xl + c) : 0",
+   "D > 0 ? (3*aa*xr^2 + 2*b*xr + c) : 0",
+   "next - (D > 0 ? 2 : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "b": 1
+     "a": 1,
+     "b": 0,
+     "c": -3
     },
     "expect": {
-     "fpp0": 2,
-     "isext": 1
+     "D": 36,
+     "ncrit": 2,
+     "next": 2,
+     "xl": -1,
+     "xr": 1
     }
    },
    {
     "params": {
-     "b": -1
+     "a": 1,
+     "b": 0,
+     "c": 0
     },
     "expect": {
-     "fpp0": -2,
-     "isext": 1
+     "D": 0,
+     "ncrit": 1,
+     "next": 0,
+     "sL": 1,
+     "sR": 1
     }
    },
    {
     "params": {
-     "b": 0
+     "a": 1,
+     "b": 0,
+     "c": 3
     },
     "expect": {
-     "fpp0": 0,
-     "isext": 0
+     "D": -36,
+     "ncrit": 0,
+     "next": 0
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3
+    },
+    "expect": {
+     "D": 36,
+     "next": 2,
+     "xl": -1,
+     "xr": 1,
+     "sL": -1,
+     "sR": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 1
+    },
+    "expect": {
+     "D": 24,
+     "next": 2
     }
    }
   ],

@@ -1,124 +1,256 @@
 {
  "id": "functions/math-2/적분/좌표와_넓이",
  "spec": {
-  "title": "좌표와 넓이: 넓이 S = ∫|f(x)|dx — 부호있는 적분 vs 실제 넓이",
+  "title": "좌표와 넓이: f(x)=ax²+bx+c 를 [p,q] 에서 — 부호있는 적분은 상쇄되고, 넓이 S=∫|f|dx 는 상쇄되지 않는다",
   "params": [
    {
-    "name": "b",
-    "label": "적분 상한 b (하한 a=−1 고정)",
+    "name": "a",
+    "label": "a (x² 계수)",
     "type": "slider",
     "min": -1,
     "max": 1,
-    "init": 0.5,
-    "step": 0.01,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (x 계수)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "p",
+    "label": "적분 하한 p",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": -1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "적분 상한 q",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 2,
+    "step": 0.1,
     "unit": ""
    }
   ],
-  "scope": "fb = b^2 - 1; absfb = abs(b^2 - 1); signed = b^3/3 - b - 2/3; S = -b^3/3 + b + 2/3; dSdb = 1 - b^2",
+  "scope": "L = min(p, q); U = max(p, q); disc = b^2 - 4*a*c; sq = disc > 0 ? sqrt(disc) : 0; den = a != 0 ? 2*a : 1; qa = (-b - sq)/den; qb = (-b + sq)/den; lx = b != 0 ? -c/b : 1e6; x1 = a != 0 ? min(qa, qb) : lx; x2 = a != 0 ? max(qa, qb) : 1e6; xv = a != 0 ? -b/(2*a) : 0; xvc = min(max(xv, -3.2), 3.2); c1 = min(max(x1, L), U); c2 = min(max(x2, L), U); FL = a*L^3/3 + b*L^2/2 + c*L; F1 = a*c1^3/3 + b*c1^2/2 + c*c1; F2 = a*c2^3/3 + b*c2^2/2 + c*c2; FU = a*U^3/3 + b*U^2/2 + c*U; d1 = F1 - FL; d2 = F2 - F1; d3 = FU - F2; Apos = max(d1,0) + max(d2,0) + max(d3,0); Aneg = max(-d1,0) + max(-d2,0) + max(-d3,0); S = Apos + Aneg; signed = FU - FL; gap = S - abs(signed); fL = a*L^2 + b*L + c; fM = a*((L+U)/2)^2 + b*((L+U)/2) + c; fU = a*U^2 + b*U + c; simp = (U-L)/6*(fL + 4*fM + fU); in1 = (x1 > L and x1 < U) ? 1 : 0; in2 = (x2 > L and x2 < U and x2 < 1e5) ? 1 : 0; nroot = disc > 1e-9 ? in1 + in2 : 0; dSdq = abs(a*q^2 + b*q + c)",
   "plot": {
    "range": [
-    -1.3,
-    1.3
+    -3.2,
+    3.2
    ],
    "yRange": [
-    -1.2,
-    1.2
+    -6,
+    6
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "x^2 - 1",
-     "label": "y = f(x) = x²−1",
+     "fn": "a*x^2+b*x+c",
+     "label": "$y=f(x)=ax^2+bx+c$",
      "color": "#2563eb"
     },
     {
-     "fn": "abs(x^2 - 1)",
-     "label": "y = |f(x)|",
-     "color": "#dc2626"
+     "fn": "abs(a*x^2+b*x+c)",
+     "label": "$y=|f(x)|$",
+     "color": "#dc2626",
+     "dashed": true
+    },
+    {
+     "fn": "abs(a*x^2+b*x+c)",
+     "range": ["=L", "=U"],
+     "label": "넓이를 재는 부분 $[p,q]$",
+     "color": "#f59e0b"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "in": ["=-3.2", "=xvc"],
+     "label": "$f=0$"
+    },
+    {
+     "fn": "a*x^2+b*x+c",
+     "in": ["=xvc", "=3.2"],
+     "label": "$f=0$"
     }
    ],
    "points": [
-    [
-     "=b",
-     "=fb"
-    ],
-    [
-     "=b",
-     "=absfb"
-    ]
+    ["=L", "=fL"],
+    ["=U", "=fU"],
+    ["=L", "=0"],
+    ["=U", "=0"]
    ],
-   "pointsLabel": "$x=b$"
+   "pointsLabel": "$x=p,\\;x=q$"
   },
   "readout": [
    {
-    "label": "f(b) = b²−1 (구간 [−1,1]에서 ≤0)",
-    "expr": "fb",
-    "digits": 4
-   },
-   {
-    "label": "부호있는 적분 ∫₋₁ᵇ f dx (음수)",
+    "label": "부호있는 적분 $\\int_p^q f\\,dx$",
     "expr": "signed",
     "digits": 4
    },
    {
-    "label": "넓이 S = ∫₋₁ᵇ |f| dx (양수)",
+    "label": "넓이 $S=\\int_p^q |f|\\,dx$",
     "expr": "S",
     "digits": 4
    },
    {
-    "label": "dS/db = |f(b)| (미적분 기본정리)",
-    "expr": "absfb",
+    "label": "x축 위쪽 넓이 (f>0)",
+    "expr": "Apos",
     "digits": 4
+   },
+   {
+    "label": "x축 아래쪽 넓이 (f<0)",
+    "expr": "Aneg",
+    "digits": 4
+   },
+   {
+    "label": "S − |적분값| (0이면 부호 안 바뀜)",
+    "expr": "gap",
+    "digits": 4
+   },
+   {
+    "label": "구간 안 x축 교점 개수",
+    "expr": "nroot",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "b": -0.7
+    "a": 1,
+    "b": 0,
+    "c": -1,
+    "p": -1,
+    "q": 2
    },
    {
-    "b": 0
+    "a": 1,
+    "b": 0,
+    "c": -1,
+    "p": -1,
+    "q": 0.5
    },
    {
-    "b": 0.5
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "p": -2,
+    "q": 1
    },
    {
-    "b": 1
+    "a": -0.5,
+    "b": 1,
+    "c": 1.5,
+    "p": -2,
+    "q": 3
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "p": -1,
+    "q": 1
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1,
+    "p": 1,
+    "q": -1
    }
   ],
   "invariants": [
-   "S + signed",
-   "S - abs(signed)",
-   "dSdb - absfb"
+   "signed - (Apos - Aneg)",
+   "gap - 2*min(Apos, Aneg)",
+   "signed - simp"
   ],
   "oracle": [
    {
     "params": {
-     "b": 0
+     "a": 1,
+     "b": 0,
+     "c": -1,
+     "p": -1,
+     "q": 2
     },
     "expect": {
-     "S": 0.6666666667,
-     "signed": -0.6666666667
+     "signed": 0,
+     "S": 2.6666666667,
+     "Apos": 1.3333333333,
+     "Aneg": 1.3333333333,
+     "nroot": 1
     }
    },
    {
     "params": {
-     "b": 0.5
+     "a": 1,
+     "b": 0,
+     "c": -1,
+     "p": -1,
+     "q": 0.5
     },
     "expect": {
+     "signed": -1.125,
      "S": 1.125,
-     "signed": -1.125
+     "Apos": 0,
+     "Aneg": 1.125,
+     "nroot": 0
     }
    },
    {
     "params": {
-     "b": 1
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "p": -2,
+     "q": 1
     },
     "expect": {
-     "S": 1.3333333333,
-     "signed": -1.3333333333
+     "signed": -1.5,
+     "S": 2.5,
+     "Apos": 0.5,
+     "Aneg": 2,
+     "nroot": 1
+    }
+   },
+   {
+    "params": {
+     "a": -0.5,
+     "b": 1,
+     "c": 1.5,
+     "p": -2,
+     "q": 3
+    },
+    "expect": {
+     "signed": 4.1666666667,
+     "S": 6.5,
+     "Apos": 5.3333333333,
+     "Aneg": 1.1666666667,
+     "nroot": 1
     }
    }
   ],

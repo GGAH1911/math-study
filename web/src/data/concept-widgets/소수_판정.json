@@ -8,28 +8,70 @@
     "label": "n",
     "type": "slider",
     "min": 2,
-    "max": 100,
+    "max": 120,
     "init": 30,
+    "step": 1
+   },
+   {
+    "name": "d",
+    "label": "d",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 2,
     "step": 1
    }
   ],
-  "scope": "s=floor(sqrt(n)); i2=(2<=s and mod(n,2)==0)?1:0; i3=(3<=s and mod(n,3)==0)?1:0; i4=(4<=s and mod(n,4)==0)?1:0; i5=(5<=s and mod(n,5)==0)?1:0; i6=(6<=s and mod(n,6)==0)?1:0; i7=(7<=s and mod(n,7)==0)?1:0; i8=(8<=s and mod(n,8)==0)?1:0; i9=(9<=s and mod(n,9)==0)?1:0; i10=(10<=s and mod(n,10)==0)?1:0; sumDiv=i2+i3+i4+i5+i6+i7+i8+i9+i10; isPrime=(n>=2 and sumDiv==0)?1:0; p2x=(i2==1)?2:999; p2y=(i2==1)?n/2:999; p3x=(i3==1)?3:999; p3y=(i3==1)?n/3:999; p4x=(i4==1)?4:999; p4y=(i4==1)?n/4:999; p5x=(i5==1)?5:999; p5y=(i5==1)?n/5:999; p6x=(i6==1)?6:999; p6y=(i6==1)?n/6:999; p7x=(i7==1)?7:999; p7y=(i7==1)?n/7:999; p8x=(i8==1)?8:999; p8y=(i8==1)?n/8:999; p9x=(i9==1)?9:999; p9y=(i9==1)?n/9:999; p10x=(i10==1)?10:999; p10y=(i10==1)?n/10:999",
+  "scope": "s=floor(sqrt(n)); i2=(2<=s and mod(n,2)==0)?1:0; i3=(3<=s and mod(n,3)==0)?1:0; i4=(4<=s and mod(n,4)==0)?1:0; i5=(5<=s and mod(n,5)==0)?1:0; i6=(6<=s and mod(n,6)==0)?1:0; i7=(7<=s and mod(n,7)==0)?1:0; i8=(8<=s and mod(n,8)==0)?1:0; i9=(9<=s and mod(n,9)==0)?1:0; i10=(10<=s and mod(n,10)==0)?1:0; sumDiv=i2+i3+i4+i5+i6+i7+i8+i9+i10; isPrime=(n>=2 and sumDiv==0)?1:0; p2x=(i2==1)?2:999; p2y=(i2==1)?n/2:999; p3x=(i3==1)?3:999; p3y=(i3==1)?n/3:999; p4x=(i4==1)?4:999; p4y=(i4==1)?n/4:999; p5x=(i5==1)?5:999; p5y=(i5==1)?n/5:999; p6x=(i6==1)?6:999; p6y=(i6==1)?n/6:999; p7x=(i7==1)?7:999; p7y=(i7==1)?n/7:999; p8x=(i8==1)?8:999; p8y=(i8==1)?n/8:999; p9x=(i9==1)?9:999; p9y=(i9==1)?n/9:999; p10x=(i10==1)?10:999; p10y=(i10==1)?n/10:999; q=n/d; isDivD=(mod(n,d)==0)?1:0; dLE=(d<=s)?1:0; dx=d; dy=n/d; prx=(isDivD==1 and n/d<=12)?n/d:999; pry=(isDivD==1 and n/d<=12)?d:999",
   "plot": {
    "range": [
     0.5,
-    12
+    13
    ],
    "yRange": [
     0,
-    60
+    65
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
      "fn": "n/x",
-     "label": "y = n/x",
+     "label": "$y = \\dfrac{n}{x}$",
      "color": "#4a90d9"
+    },
+    {
+     "fn": "x",
+     "label": "$y = x$",
+     "color": "#8a8a8a",
+     "dashed": true
     }
-   ]
+   ],
+   "intersections": [
+    {
+     "f": "n/x",
+     "g": "x",
+     "in": [
+      0.5,
+      13
+     ],
+     "label": "$x=\\sqrt{n}$"
+    }
+   ],
+   "points": [
+    ["=p2x", "=p2y"],
+    ["=p3x", "=p3y"],
+    ["=p4x", "=p4y"],
+    ["=p5x", "=p5y"],
+    ["=p6x", "=p6y"],
+    ["=p7x", "=p7y"],
+    ["=p8x", "=p8y"],
+    ["=p9x", "=p9y"],
+    ["=p10x", "=p10y"],
+    ["=dx", "=dy"],
+    ["=prx", "=pry"]
+   ],
+   "pointsLabel": "$(a,\\ n/a)$ — 격자점이면 $a$ 는 약수"
   },
   "readout": [
    {
@@ -42,7 +84,17 @@
     "digits": 0
    },
    {
-    "label": "약수 개수 (2~√n)",
+    "label": "n ÷ d",
+    "expr": "q",
+    "digits": 3
+   },
+   {
+    "label": "d로 나누어떨어짐 (1=예)",
+    "expr": "isDivD",
+    "digits": 0
+   },
+   {
+    "label": "√n 이하 약수 개수",
     "expr": "sumDiv",
     "digits": 0
    },
@@ -56,62 +108,122 @@
  "recipe": {
   "samples": [
    {
-    "n": 7
+    "n": 7,
+    "d": 2
    },
    {
-    "n": 9
+    "n": 9,
+    "d": 3
    },
    {
-    "n": 13
+    "n": 13,
+    "d": 4
    },
    {
-    "n": 100
+    "n": 97,
+    "d": 9
+   },
+   {
+    "n": 100,
+    "d": 5
+   },
+   {
+    "n": 120,
+    "d": 7
    }
   ],
   "invariants": [
    "max(0, s^2 - n) + max(0, n - (s+1)^2)",
    "abs((p2x==999 ? 0 : p2x*p2y - n)) + abs((p3x==999 ? 0 : p3x*p3y - n)) + abs((p4x==999 ? 0 : p4x*p4y - n)) + abs((p5x==999 ? 0 : p5x*p5y - n)) + abs((p6x==999 ? 0 : p6x*p6y - n)) + abs((p7x==999 ? 0 : p7x*p7y - n)) + abs((p8x==999 ? 0 : p8x*p8y - n)) + abs((p9x==999 ? 0 : p9x*p9y - n)) + abs((p10x==999 ? 0 : p10x*p10y - n))",
-   "abs(i2*(i2-1)) + abs(i3*(i3-1)) + abs(i4*(i4-1)) + abs(i5*(i5-1)) + abs(i6*(i6-1)) + abs(i7*(i7-1)) + abs(i8*(i8-1)) + abs(i9*(i9-1)) + abs(i10*(i10-1))"
+   "abs(i2*(i2-1)) + abs(i3*(i3-1)) + abs(i4*(i4-1)) + abs(i5*(i5-1)) + abs(i6*(i6-1)) + abs(i7*(i7-1)) + abs(i8*(i8-1)) + abs(i9*(i9-1)) + abs(i10*(i10-1))",
+   "abs(isDivD*(isDivD-1))",
+   "(isDivD==1) ? abs(d*q - n) : 0",
+   "isPrime*sumDiv",
+   "abs(dLE*(dLE-1))"
   ],
   "oracle": [
    {
     "params": {
-     "n": 7
+     "n": 7,
+     "d": 2
     },
     "expect": {
      "s": 2,
      "sumDiv": 0,
-     "isPrime": 1
+     "isPrime": 1,
+     "q": 3.5,
+     "isDivD": 0,
+     "dLE": 1
     }
    },
    {
     "params": {
-     "n": 9
+     "n": 9,
+     "d": 3
     },
     "expect": {
      "s": 3,
      "sumDiv": 1,
-     "isPrime": 0
+     "isPrime": 0,
+     "q": 3,
+     "isDivD": 1,
+     "dLE": 1
     }
    },
    {
     "params": {
-     "n": 13
+     "n": 13,
+     "d": 4
     },
     "expect": {
      "s": 3,
      "sumDiv": 0,
-     "isPrime": 1
+     "isPrime": 1,
+     "q": 3.25,
+     "isDivD": 0,
+     "dLE": 0
     }
    },
    {
     "params": {
-     "n": 100
+     "n": 97,
+     "d": 9
+    },
+    "expect": {
+     "s": 9,
+     "sumDiv": 0,
+     "isPrime": 1,
+     "q": 10.777778,
+     "isDivD": 0,
+     "dLE": 1
+    }
+   },
+   {
+    "params": {
+     "n": 100,
+     "d": 5
     },
     "expect": {
      "s": 10,
      "sumDiv": 4,
-     "isPrime": 0
+     "isPrime": 0,
+     "q": 20,
+     "isDivD": 1,
+     "dLE": 1
+    }
+   },
+   {
+    "params": {
+     "n": 120,
+     "d": 7
+    },
+    "expect": {
+     "s": 10,
+     "sumDiv": 7,
+     "isPrime": 0,
+     "q": 17.142857,
+     "isDivD": 0,
+     "dLE": 1
     }
    }
   ],

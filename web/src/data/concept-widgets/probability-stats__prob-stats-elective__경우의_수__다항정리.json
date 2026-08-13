@@ -9,11 +9,29 @@
     "type": "slider",
     "min": 1,
     "max": 6,
-    "init": 3,
+    "init": 4,
+    "step": 1
+   },
+   {
+    "name": "i",
+    "label": "x의 지수 i",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "j",
+    "label": "y의 지수 j",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 1,
     "step": 1
    }
   ],
-  "scope": "maxC=factorial(n)/(factorial(floor(n/3))*factorial(floor((n+1)/3))*factorial(floor((n+2)/3))); c00=factorial(n)/(factorial(0)*factorial(0)*factorial(n)); c01=((1<=n)?factorial(n)/(factorial(0)*factorial(1)*factorial(n-1)):0); c02=((2<=n)?factorial(n)/(factorial(0)*factorial(2)*factorial(n-2)):0); c03=((3<=n)?factorial(n)/(factorial(0)*factorial(3)*factorial(n-3)):0); c04=((4<=n)?factorial(n)/(factorial(0)*factorial(4)*factorial(n-4)):0); c05=((5<=n)?factorial(n)/(factorial(0)*factorial(5)*factorial(n-5)):0); c06=((6<=n)?factorial(n)/(factorial(0)*factorial(6)*factorial(n-6)):0); c10=((1<=n)?factorial(n)/(factorial(1)*factorial(0)*factorial(n-1)):0); c11=((2<=n)?factorial(n)/(factorial(1)*factorial(1)*factorial(n-2)):0); c12=((3<=n)?factorial(n)/(factorial(1)*factorial(2)*factorial(n-3)):0); c13=((4<=n)?factorial(n)/(factorial(1)*factorial(3)*factorial(n-4)):0); c14=((5<=n)?factorial(n)/(factorial(1)*factorial(4)*factorial(n-5)):0); c15=((6<=n)?factorial(n)/(factorial(1)*factorial(5)*factorial(n-6)):0); c20=((2<=n)?factorial(n)/(factorial(2)*factorial(0)*factorial(n-2)):0); c21=((3<=n)?factorial(n)/(factorial(2)*factorial(1)*factorial(n-3)):0); c22=((4<=n)?factorial(n)/(factorial(2)*factorial(2)*factorial(n-4)):0); c23=((5<=n)?factorial(n)/(factorial(2)*factorial(3)*factorial(n-5)):0); c24=((6<=n)?factorial(n)/(factorial(2)*factorial(4)*factorial(n-6)):0); c30=((3<=n)?factorial(n)/(factorial(3)*factorial(0)*factorial(n-3)):0); c31=((4<=n)?factorial(n)/(factorial(3)*factorial(1)*factorial(n-4)):0); c32=((5<=n)?factorial(n)/(factorial(3)*factorial(2)*factorial(n-5)):0); c33=((6<=n)?factorial(n)/(factorial(3)*factorial(3)*factorial(n-6)):0); c40=((4<=n)?factorial(n)/(factorial(4)*factorial(0)*factorial(n-4)):0); c41=((5<=n)?factorial(n)/(factorial(4)*factorial(1)*factorial(n-5)):0); c42=((6<=n)?factorial(n)/(factorial(4)*factorial(2)*factorial(n-6)):0); c50=((5<=n)?factorial(n)/(factorial(5)*factorial(0)*factorial(n-5)):0); c51=((6<=n)?factorial(n)/(factorial(5)*factorial(1)*factorial(n-6)):0); c60=((6<=n)?factorial(n)/(factorial(6)*factorial(0)*factorial(n-6)):0); coefSum=sum([c00,c01,c02,c03,c04,c05,c06,c10,c11,c12,c13,c14,c15,c20,c21,c22,c23,c24,c30,c31,c32,c33,c40,c41,c42,c50,c51,c60])",
+  "scope": "maxC=factorial(n)/(factorial(floor(n/3))*factorial(floor((n+1)/3))*factorial(floor((n+2)/3))); c00=factorial(n)/(factorial(0)*factorial(0)*factorial(n)); c01=((1<=n)?factorial(n)/(factorial(0)*factorial(1)*factorial(n-1)):0); c02=((2<=n)?factorial(n)/(factorial(0)*factorial(2)*factorial(n-2)):0); c03=((3<=n)?factorial(n)/(factorial(0)*factorial(3)*factorial(n-3)):0); c04=((4<=n)?factorial(n)/(factorial(0)*factorial(4)*factorial(n-4)):0); c05=((5<=n)?factorial(n)/(factorial(0)*factorial(5)*factorial(n-5)):0); c06=((6<=n)?factorial(n)/(factorial(0)*factorial(6)*factorial(n-6)):0); c10=((1<=n)?factorial(n)/(factorial(1)*factorial(0)*factorial(n-1)):0); c11=((2<=n)?factorial(n)/(factorial(1)*factorial(1)*factorial(n-2)):0); c12=((3<=n)?factorial(n)/(factorial(1)*factorial(2)*factorial(n-3)):0); c13=((4<=n)?factorial(n)/(factorial(1)*factorial(3)*factorial(n-4)):0); c14=((5<=n)?factorial(n)/(factorial(1)*factorial(4)*factorial(n-5)):0); c15=((6<=n)?factorial(n)/(factorial(1)*factorial(5)*factorial(n-6)):0); c20=((2<=n)?factorial(n)/(factorial(2)*factorial(0)*factorial(n-2)):0); c21=((3<=n)?factorial(n)/(factorial(2)*factorial(1)*factorial(n-3)):0); c22=((4<=n)?factorial(n)/(factorial(2)*factorial(2)*factorial(n-4)):0); c23=((5<=n)?factorial(n)/(factorial(2)*factorial(3)*factorial(n-5)):0); c24=((6<=n)?factorial(n)/(factorial(2)*factorial(4)*factorial(n-6)):0); c30=((3<=n)?factorial(n)/(factorial(3)*factorial(0)*factorial(n-3)):0); c31=((4<=n)?factorial(n)/(factorial(3)*factorial(1)*factorial(n-4)):0); c32=((5<=n)?factorial(n)/(factorial(3)*factorial(2)*factorial(n-5)):0); c33=((6<=n)?factorial(n)/(factorial(3)*factorial(3)*factorial(n-6)):0); c40=((4<=n)?factorial(n)/(factorial(4)*factorial(0)*factorial(n-4)):0); c41=((5<=n)?factorial(n)/(factorial(4)*factorial(1)*factorial(n-5)):0); c42=((6<=n)?factorial(n)/(factorial(4)*factorial(2)*factorial(n-6)):0); c50=((5<=n)?factorial(n)/(factorial(5)*factorial(0)*factorial(n-5)):0); c51=((6<=n)?factorial(n)/(factorial(5)*factorial(1)*factorial(n-6)):0); c60=((6<=n)?factorial(n)/(factorial(6)*factorial(0)*factorial(n-6)):0); coefSum=sum([c00,c01,c02,c03,c04,c05,c06,c10,c11,c12,c13,c14,c15,c20,c21,c22,c23,c24,c30,c31,c32,c33,c40,c41,c42,c50,c51,c60]); kz=max(0, n-i-j); ok=((i+j)<=n)?1:0; sel=(ok==1)?factorial(n)/(factorial(i)*factorial(j)*factorial(kz)):0; termCount=(n+1)*(n+2)/2; binomRow=(i<=n)?factorial(n)/(factorial(i)*factorial(n-i)):0; selX=i+j/2; selY=j*sqrt(3)/2",
   "geometry": {
    "range": [
     -1,
@@ -266,6 +284,53 @@
       0
      ],
      "radius": "=0.35*sqrt(c60/maxC)"
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=selX",
+      "=selY"
+     ],
+     "radius": "=(i+j<=n)?0.45:0",
+     "stroke": "#e11d48",
+     "fillOpacity": 0
+    },
+    {
+     "type": "segment",
+     "from": [
+      0,
+      0
+     ],
+     "to": [
+      "=n",
+      0
+     ],
+     "color": "#2563eb",
+     "dashed": true
+    },
+    {
+     "type": "text",
+     "at": [
+      -0.45,
+      -0.35
+     ],
+     "text": "z만"
+    },
+    {
+     "type": "text",
+     "at": [
+      "=n+0.25",
+      -0.35
+     ],
+     "text": "x만"
+    },
+    {
+     "type": "text",
+     "at": [
+      "=n/2",
+      "=n*sqrt(3)/2+0.4"
+     ],
+     "text": "y만"
     }
    ]
   },
@@ -276,8 +341,18 @@
     "digits": 0
    },
    {
-    "label": "3^n",
-    "expr": "3^n",
+    "label": "선택한 항의 계수",
+    "expr": "sel",
+    "digits": 0
+   },
+   {
+    "label": "z의 지수 (n−i−j)",
+    "expr": "kz",
+    "digits": 0
+   },
+   {
+    "label": "항이 존재?(1=예)",
+    "expr": "ok",
     "digits": 0
    },
    {
@@ -286,13 +361,18 @@
     "digits": 0
    },
    {
-    "label": "계수 합",
+    "label": "계수 합 (=3^n)",
     "expr": "coefSum",
     "digits": 0
    },
    {
-    "label": "c₁₁",
-    "expr": "c11",
+    "label": "서로 다른 항의 개수",
+    "expr": "termCount",
+    "digits": 0
+   },
+   {
+    "label": "밑변 = 이항계수 C(n,i)",
+    "expr": "binomRow",
     "digits": 0
    }
   ]
@@ -300,49 +380,87 @@
  "recipe": {
   "samples": [
    {
-    "n": 1
+    "n": 1,
+    "i": 0,
+    "j": 0
    },
    {
-    "n": 2
+    "n": 2,
+    "i": 1,
+    "j": 1
    },
    {
-    "n": 3
+    "n": 3,
+    "i": 1,
+    "j": 1
    },
    {
-    "n": 6
+    "n": 6,
+    "i": 2,
+    "j": 2
+   },
+   {
+    "n": 4,
+    "i": 3,
+    "j": 2
    }
   ],
   "invariants": [
-   "coefSum - 3^n"
+   "coefSum - 3^n",
+   "termCount - (n+1)*(n+2)/2",
+   "sel - ((i+j<=n)?factorial(n)/(factorial(i)*factorial(j)*factorial(max(0,n-i-j))):0)",
+   "sel*(1-ok)"
   ],
   "oracle": [
    {
     "params": {
-     "n": 2
+     "n": 2,
+     "i": 1,
+     "j": 1
     },
     "expect": {
-     "c10": 2,
-     "c20": 1,
-     "maxC": 2
+     "sel": 2,
+     "maxC": 2,
+     "termCount": 6,
+     "coefSum": 9
     }
    },
    {
     "params": {
-     "n": 3
+     "n": 3,
+     "i": 1,
+     "j": 1
     },
     "expect": {
-     "c11": 6,
-     "c30": 1,
-     "maxC": 6
+     "sel": 6,
+     "maxC": 6,
+     "termCount": 10,
+     "coefSum": 27
     }
    },
    {
     "params": {
-     "n": 6
+     "n": 6,
+     "i": 2,
+     "j": 2
     },
     "expect": {
-     "c22": 90,
-     "maxC": 90
+     "sel": 90,
+     "maxC": 90,
+     "termCount": 28,
+     "binomRow": 15
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "i": 3,
+     "j": 2
+    },
+    "expect": {
+     "ok": 0,
+     "sel": 0,
+     "kz": 0
     }
    }
   ],

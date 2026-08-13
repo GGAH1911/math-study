@@ -4,6 +4,16 @@
   "title": "외접원과 직각 조건 (탈레스 정리)",
   "params": [
    {
+    "name": "phi",
+    "label": "현 AB의 중심각 ∠AOB",
+    "type": "slider",
+    "min": 20,
+    "max": 340,
+    "init": 180,
+    "step": 1,
+    "unit": "°"
+   },
+   {
     "name": "theta",
     "label": "점 C의 위치 θ",
     "type": "slider",
@@ -12,17 +22,26 @@
     "init": 60,
     "step": 1,
     "unit": "°"
+   },
+   {
+    "name": "r",
+    "label": "C와 중심 O의 거리 |OC|",
+    "type": "slider",
+    "min": 0.15,
+    "max": 1.8,
+    "init": 1,
+    "step": 0.05
    }
   ],
-  "scope": "rad=theta*pi/180; cx=cos(rad); cy=sin(rad); ax=-1; ay=0; bx=1; by=0; dot=(ax-cx)*(bx-cx)+(ay-cy)*(by-cy); la=sqrt((ax-cx)^2+(ay-cy)^2); lb=sqrt((bx-cx)^2+(by-cy)^2); ang=acos(dot/(la*lb))*180/pi",
+  "scope": "p=phi*pi/180; hx=sin(p/2); hy=-cos(p/2); ax=-hx; ay=hy; bx=hx; by=hy; rad=theta*pi/180; cx=r*cos(rad); cy=r*sin(rad); ux=ax-cx; uy=ay-cy; vx=bx-cx; vy=by-cy; la=sqrt(ux^2+uy^2); lb=sqrt(vx^2+vy^2); dot=ux*vx+uy*vy; den=(la*lb)<1e-9 ? 1e-9 : la*lb; cv=dot/den; cc=cv>1 ? 1 : (cv<-1 ? -1 : cv); ang=acos(cc)*180/pi; halfAB=hx; mx=0; my=hy; expect=cy>hy ? phi/2 : 180-phi/2",
   "geometry": {
    "range": [
-    -1.6,
-    1.6
+    -2.1,
+    2.1
    ],
    "yRange": [
-    -1.4,
-    1.4
+    -1.85,
+    1.85
    ],
    "showAxes": true,
    "showGrid": true,
@@ -33,7 +52,18 @@
       0,
       0
      ],
-     "radius": 1
+     "radius": 1,
+     "stroke": "#1e6fd9"
+    },
+    {
+     "type": "circle",
+     "center": [
+      0,
+      "=my"
+     ],
+     "radius": "=halfAB",
+     "stroke": "#9ca3af",
+     "fillOpacity": 0
     },
     {
      "type": "point",
@@ -46,16 +76,25 @@
     {
      "type": "point",
      "at": [
-      -1,
-      0
+      "=mx",
+      "=my"
+     ],
+     "label": "M(AB의 중점)",
+     "color": "#9ca3af"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=ax",
+      "=ay"
      ],
      "label": "A"
     },
     {
      "type": "point",
      "at": [
-      1,
-      0
+      "=bx",
+      "=by"
      ],
      "label": "B"
     },
@@ -70,14 +109,14 @@
     {
      "type": "segment",
      "from": [
-      -1,
-      0
+      "=ax",
+      "=ay"
      ],
      "to": [
-      1,
-      0
+      "=bx",
+      "=by"
      ],
-     "label": "지름 AB"
+     "label": "AB"
     },
     {
      "type": "segment",
@@ -86,8 +125,8 @@
       "=cy"
      ],
      "to": [
-      -1,
-      0
+      "=ax",
+      "=ay"
      ]
     },
     {
@@ -97,82 +136,161 @@
       "=cy"
      ],
      "to": [
-      1,
-      0
+      "=bx",
+      "=by"
      ]
     }
    ]
   },
   "readout": [
    {
-    "label": "∠ACB",
+    "label": "∠ACB (실제)",
     "expr": "ang",
     "digits": 2
    },
    {
-    "label": "CA·CB (내적)",
-    "expr": "dot",
-    "digits": 6
+    "label": "이론값 (C쪽 호 기준)",
+    "expr": "expect",
+    "digits": 2
    },
    {
-    "label": "C가 원 위(cx²+cy²)",
-    "expr": "cx^2+cy^2",
-    "digits": 6
+    "label": "CA·CB (0이면 직각)",
+    "expr": "dot",
+    "digits": 4
+   },
+   {
+    "label": "|OC| (1이면 C가 원 위)",
+    "expr": "r",
+    "digits": 2
+   },
+   {
+    "label": "AB의 절반 (=직각삼각형 외접원 반지름)",
+    "expr": "halfAB",
+    "digits": 4
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "theta": 30
+    "phi": 180,
+    "theta": 60,
+    "r": 1
    },
    {
-    "theta": 60
+    "phi": 180,
+    "theta": 250,
+    "r": 1
    },
    {
-    "theta": 120
+    "phi": 90,
+    "theta": 90,
+    "r": 1
    },
    {
-    "theta": 210
+    "phi": 240,
+    "theta": 60,
+    "r": 1
+   },
+   {
+    "phi": 180,
+    "theta": 90,
+    "r": 0.5
+   },
+   {
+    "phi": 180,
+    "theta": 90,
+    "r": 1.5
    }
   ],
   "invariants": [
-   "dot",
-   "cx^2+cy^2-1",
-   "ang-90"
+   "cx^2+cy^2-r^2",
+   "ax^2+ay^2-1",
+   "bx^2+by^2-1"
   ],
   "oracle": [
    {
     "params": {
-     "theta": 90
+     "phi": 180,
+     "theta": 90,
+     "r": 1
     },
     "expect": {
+     "ax": -1,
      "cx": 0,
      "cy": 1,
      "dot": 0,
-     "ang": 90
+     "ang": 90,
+     "halfAB": 1
     }
    },
    {
     "params": {
-     "theta": 30
+     "phi": 180,
+     "theta": 210,
+     "r": 1
     },
     "expect": {
-     "cx": 0.8660254037844387,
-     "cy": 0.5,
+     "cx": -0.8660254037844387,
+     "cy": -0.5,
      "dot": 0,
      "ang": 90
     }
    },
    {
     "params": {
-     "theta": 270
+     "phi": 90,
+     "theta": 90,
+     "r": 1
     },
     "expect": {
-     "cx": 0,
-     "cy": -1,
-     "dot": 0,
-     "ang": 90
+     "ax": -0.7071067811865475,
+     "ay": -0.7071067811865476,
+     "ang": 45,
+     "halfAB": 0.7071067811865475
+    }
+   },
+   {
+    "params": {
+     "phi": 90,
+     "theta": 250,
+     "r": 1
+    },
+    "expect": {
+     "ang": 135
+    }
+   },
+   {
+    "params": {
+     "phi": 240,
+     "theta": 60,
+     "r": 1
+    },
+    "expect": {
+     "ang": 120,
+     "halfAB": 0.8660254037844386
+    }
+   },
+   {
+    "params": {
+     "phi": 180,
+     "theta": 90,
+     "r": 0.5
+    },
+    "expect": {
+     "dot": -0.75,
+     "ang": 126.869897645844
+    }
+   },
+   {
+    "params": {
+     "phi": 180,
+     "theta": 90,
+     "r": 1.5
+    },
+    "expect": {
+     "dot": 1.25,
+     "ang": 67.3801350519596
     }
    }
   ],

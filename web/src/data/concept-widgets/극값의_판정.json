@@ -5,143 +5,291 @@
   "params": [
    {
     "name": "a",
-    "label": "계수 a",
+    "label": "x³의 계수 a",
     "type": "slider",
-    "min": 0,
+    "min": -2,
     "max": 2,
     "init": 1,
     "step": 0.05
+   },
+   {
+    "name": "b",
+    "label": "x²의 계수 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "x의 계수 c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "상수항 d",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
    }
   ],
-  "scope": "x1=sqrt(a); x2=-x1; y1=x1^3-3*a*x1; y2=x2^3-3*a*x2; d2_1=6*x1; d2_2=6*x2",
+  "scope": "isCubic = abs(a) > 1e-9; isQuad = (not isCubic) and (abs(b) > 1e-9); Dq = b^2 - 3*a*c; sq = Dq > 0 ? sqrt(Dq) : 0; den = isCubic ? (3*a) : 1; xa = isCubic ? ((-b - sq)/den) : 0; xb = isCubic ? ((-b + sq)/den) : 0; x1 = isCubic ? min(xa, xb) : (isQuad ? (-c/(2*b)) : 0); x2 = isCubic ? max(xa, xb) : x1; ncrit = isCubic ? (Dq > 1e-9 ? 2 : (Dq > -1e-9 ? 1 : 0)) : (isQuad ? 1 : 0); hasCrit = ncrit > 0; f1 = a*x1^3 + b*x1^2 + c*x1 + d; f2 = a*x2^3 + b*x2^2 + c*x2 + d; s1 = 6*a*x1 + 2*b; s2 = 6*a*x2 + 2*b; xv = isCubic ? (-b/(3*a)) : 0; px1 = hasCrit ? x1 : 9999; py1 = hasCrit ? f1 : 9999; px2 = ncrit == 2 ? x2 : 9999; py2 = ncrit == 2 ? f2 : 9999",
   "plot": {
    "range": [
-    -2,
-    2
+    -4,
+    4
    ],
    "yRange": [
-    -15,
-    15
+    -12,
+    12
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*a*x",
-     "label": "f(x) = x³ - 3ax",
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "$f(x)=ax^3+bx^2+cx+d$",
      "color": "blue"
     },
     {
-     "fn": "3*x^2 - 3*a",
-     "label": "f'(x)",
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "$f'(x)$",
      "color": "red"
+    },
+    {
+     "fn": "6*a*x + 2*b",
+     "label": "$f''(x)$",
+     "color": "green",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": [
+      -4,
+      "=xv"
+     ],
+     "label": "$f'(x)=0$"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": [
+      "=xv",
+      4
+     ],
+     "label": "$f'(x)=0$"
+    }
+   ],
+   "points": [
+    [
+     "=px1",
+     "=py1"
+    ],
+    [
+     "=px2",
+     "=py2"
+    ]
+   ],
+   "pointsLabel": "$f'(x)=0$인 점(극값 후보)"
   },
   "readout": [
    {
-    "label": "임계점 x₁",
+    "label": "임계점 개수 (f'(x)=0의 실근)",
+    "expr": "ncrit",
+    "digits": 0
+   },
+   {
+    "label": "판별식 b²−3ac (양수면 2개·0이면 1개·음수면 없음)",
+    "expr": "b^2 - 3*a*c",
+    "digits": 3
+   },
+   {
+    "label": "왼쪽 임계점 x₁",
     "expr": "x1",
     "digits": 3
    },
    {
-    "label": "f'(x₁)",
-    "expr": "3*x1^2 - 3*a",
+    "label": "f'(x₁) (0 확인)",
+    "expr": "3*a*x1^2 + 2*b*x1 + c",
     "digits": 6
    },
    {
     "label": "f''(x₁)",
-    "expr": "d2_1",
+    "expr": "s1",
     "digits": 3
    },
    {
-    "label": "판정 부호",
-    "expr": "sign(d2_1)",
-    "digits": 1
+    "label": "x₁ 판정 (−1 극대 · +1 극소 · 0 판정 불가)",
+    "expr": "sign(s1)",
+    "digits": 0
    },
    {
-    "label": "임계점 x₂",
+    "label": "극값 f(x₁)",
+    "expr": "f1",
+    "digits": 3
+   },
+   {
+    "label": "오른쪽 임계점 x₂",
     "expr": "x2",
     "digits": 3
    },
    {
-    "label": "f'(x₂)",
-    "expr": "3*x2^2 - 3*a",
-    "digits": 6
-   },
-   {
     "label": "f''(x₂)",
-    "expr": "d2_2",
+    "expr": "s2",
     "digits": 3
    },
    {
-    "label": "판정 부호",
-    "expr": "sign(d2_2)",
-    "digits": 1
+    "label": "x₂ 판정 (−1 극대 · +1 극소 · 0 판정 불가)",
+    "expr": "sign(s2)",
+    "digits": 0
+   },
+   {
+    "label": "변곡점 x = −b/3a (f''=0)",
+    "expr": "xv",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 0
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "a": 0.5
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 0
    },
    {
-    "a": 1
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0
    },
    {
-    "a": 2
+    "a": 0,
+    "b": 1,
+    "c": -2,
+    "d": 0
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": 2,
+    "d": 1
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 2
    }
   ],
   "invariants": [
-   "x1*x1 - a",
-   "x2*x2 - a",
-   "3*x1*x1 - 3*a",
-   "3*x2*x2 - 3*a",
-   "d2_1 - 6*x1",
-   "d2_2 - 6*x2",
-   "sign(d2_1) - sign(x1)",
-   "sign(d2_2) - sign(x2)"
+   "hasCrit ? (3*a*x1^2 + 2*b*x1 + c) : 0",
+   "hasCrit ? (3*a*x2^2 + 2*b*x2 + c) : 0",
+   "s1 - (6*a*x1 + 2*b)",
+   "s2 - (6*a*x2 + 2*b)",
+   "f1 - (a*x1^3 + b*x1^2 + c*x1 + d)",
+   "f2 - (a*x2^3 + b*x2^2 + c*x2 + d)",
+   "ncrit == 2 ? (s1 + s2) : 0",
+   "ncrit == 2 ? (sign(s1) + sign(s2)) : 0",
+   "isCubic ? (6*a*xv + 2*b) : 0",
+   "ncrit == 1 and isCubic ? s1 : 0"
   ],
   "oracle": [
    {
     "params": {
-     "a": 0
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
+    },
+    "expect": {
+     "x1": -1,
+     "x2": 1,
+     "f1": 2,
+     "f2": -2,
+     "s1": -6,
+     "s2": 6,
+     "ncrit": 2,
+     "xv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 0
     },
     "expect": {
      "x1": 0,
      "x2": 0,
-     "y1": 0,
-     "y2": 0,
-     "d2_1": 0,
-     "d2_2": 0
+     "s1": 0,
+     "s2": 0,
+     "ncrit": 1
     }
    },
    {
     "params": {
-     "a": 1
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "ncrit": 0,
+     "xv": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": -2,
+     "d": 0
     },
     "expect": {
      "x1": 1,
-     "x2": -1,
-     "y1": -2,
-     "y2": 2,
-     "d2_1": 6,
-     "d2_2": -6
+     "f1": -1,
+     "s1": 2,
+     "ncrit": 1
     }
    },
    {
     "params": {
-     "a": 2
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0
     },
     "expect": {
-     "x1": 1.4142135623730951,
-     "x2": -1.4142135623730951,
-     "y1": -5.656854249492381,
-     "y2": 5.656854249492381,
-     "d2_1": 8.48528137423857,
-     "d2_2": -8.48528137423857
+     "x1": -1,
+     "x2": 1,
+     "s1": 6,
+     "s2": -6,
+     "f1": -2,
+     "f2": 2,
+     "ncrit": 2
     }
    }
   ],

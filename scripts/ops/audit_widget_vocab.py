@@ -26,11 +26,12 @@ SHAPE_KEYS = {
     'vector':  {'type','from','to','label','color'},
     'angle':   {'type','at','from','to','label','radius','color'},
     'text':    {'type','at','text','color'},
+    'parametric': {'type','x','y','tRange','label','color','dashed','closed','fill'},
 }
-PLOT_KEYS = {'range','yRange','showAxes','showGrid','title','fns','points','pointsLabel',
+PLOT_KEYS = {'range','yRange','showAxes','showGrid','grid','title','fns','points','pointsLabel',
              'roots','intersections','annotations','xLabel','yLabel','height'}
 FN_KEYS   = {'fn','label','color','dashed','range','closed','fnType','graphType','scope',
-             'x','y','points','derivative'}
+             'x','y','points','derivative','nSamples'}
 GEOM_KEYS = {'range','yRange','showAxes','showGrid','title','shapes','height','xLabel','yLabel'}
 PARAM_KEYS= {'name','label','type','min','max','init','step','unit','options'}
 READ_KEYS = {'label','expr','digits','unit'}

@@ -1,7 +1,7 @@
 {
  "id": "functions/calculus/수열의_극한/조건부_정의",
  "spec": {
-  "title": "조건부 수렴: 교대조화급수 Σ(-1)ⁿ⁺¹/n vs 절댓값급수 Σ1/n",
+  "title": "조건부 수렴 vs 절대수렴: Σ(-1)ⁿ⁺¹/nᵖ 과 절댓값급수 Σ1/nᵖ",
   "params": [
    {
     "name": "N",
@@ -12,16 +12,34 @@
     "init": 10,
     "step": 1,
     "unit": "항"
+   },
+   {
+    "name": "p",
+    "label": "지수 p  (급수 Σ(-1)ⁿ⁺¹/nᵖ)",
+    "type": "slider",
+    "min": 0.2,
+    "max": 3,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "r",
+    "label": "재배열 비율 r  (양수항 r개마다 음수항 1개)",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
+    "init": 1,
+    "step": 1
    }
   ],
-  "scope": "nn = 1:N; sg = (-1) .^ (nn + 1); S = sum(sg ./ nn); T = sum(1 ./ nn); P = sum( ((sg + 1) / 2) ./ nn ); Q = sum( ((1 - sg) / 2) ./ nn ); L = log(2); gap = abs(S - L)",
+  "scope": "nn = 1:N; sg = (-1) .^ (nn + 1); ap = 1 ./ (nn .^ p); S = sum(sg .* ap); T = sum(ap); P = sum(((sg + 1) / 2) .* ap); Q = sum(((1 - sg) / 2) .* ap); mm = 1:2000; A = sum(((-1) .^ (mm + 1)) ./ (mm .^ p)); Lstar = A + 0.5 / (2001 ^ p); kk = 1:N; neg = sum(1 ./ ((2 * kk) .^ p)); jj = 1:(N * r); R = sum(1 ./ ((2 * jj - 1) .^ p)) - neg; R1 = sum(1 ./ ((2 * kk - 1) .^ p)) - neg; m2 = 1:(2 * N); S2N = sum(((-1) .^ (m2 + 1)) ./ (m2 .^ p)); gap = abs(S - Lstar); shift = R - Lstar; absConv = p > 1 ? 1 : 0; condConv = p > 1 ? 0 : 1; Sy = min(max(S, -1), 5.6); Ty = min(T, 5.6); Ry = min(max(R, -1), 5.6)",
   "geometry": {
    "range": [
     0,
     100
    ],
    "yRange": [
-    0,
+    -1,
     6
    ],
    "showAxes": true,
@@ -31,85 +49,138 @@
      "type": "segment",
      "from": [
       0,
-      "=L"
+      "=Lstar"
      ],
      "to": [
       100,
-      "=L"
+      "=Lstar"
      ],
-     "label": "극한 ln2 ≈ 0.693",
-     "color": "#999999"
+     "label": "극한 추정값",
+     "color": "#999999",
+     "dashed": true
     },
     {
      "type": "point",
      "at": [
       "=N",
-      "=S"
+      "=Sy"
      ],
-     "label": "Sₙ=Σ(-1)ⁿ⁺¹/n (수렴)",
+     "label": "$S_N=\\sum(-1)^{n+1}/n^p$ (원래 순서)",
      "color": "#1f77b4"
     },
     {
      "type": "point",
      "at": [
       "=N",
-      "=T"
+      "=Ty"
      ],
-     "label": "Tₙ=Σ|aₙ|=Σ1/n (발산)",
+     "label": "$T_N=\\sum 1/n^p$ (절댓값)",
      "color": "#d62728"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=N",
+      "=Ry"
+     ],
+     "label": "$R_N$ (재배열한 합)",
+     "color": "#2ca02c"
     }
    ]
   },
   "readout": [
    {
-    "label": "Sₙ (원래 급수, 교대조화)",
+    "label": "Sₙ (원래 급수)",
     "expr": "S",
     "digits": 6
    },
    {
-    "label": "Tₙ (절댓값 급수, 조화)",
+    "label": "Tₙ (절댓값 급수)",
     "expr": "T",
     "digits": 6
    },
    {
-    "label": "극한값 ln2",
-    "expr": "L",
+    "label": "극한 추정값 (p=1이면 ln2)",
+    "expr": "Lstar",
     "digits": 6
    },
    {
-    "label": "오차 |Sₙ − ln2|",
+    "label": "오차 |Sₙ − 극한|",
     "expr": "gap",
     "digits": 6
+   },
+   {
+    "label": "Rₙ (재배열한 부분합)",
+    "expr": "R",
+    "digits": 6
+   },
+   {
+    "label": "재배열로 옮겨간 양 (Rₙ − 극한)",
+    "expr": "shift",
+    "digits": 6
+   },
+   {
+    "label": "절대수렴인가 (1=예, p>1)",
+    "expr": "absConv",
+    "digits": 0
+   },
+   {
+    "label": "조건부 수렴인가 (1=예, 0<p≤1)",
+    "expr": "condConv",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "N": 1
+    "N": 1,
+    "p": 1,
+    "r": 1
    },
    {
-    "N": 2
+    "N": 2,
+    "p": 1,
+    "r": 1
    },
    {
-    "N": 7
+    "N": 4,
+    "p": 1,
+    "r": 1
    },
    {
-    "N": 20
+    "N": 3,
+    "p": 2,
+    "r": 1
    },
    {
-    "N": 50
+    "N": 20,
+    "p": 0.5,
+    "r": 1
+   },
+   {
+    "N": 2,
+    "p": 1,
+    "r": 2
+   },
+   {
+    "N": 50,
+    "p": 1.5,
+    "r": 3
    }
   ],
   "invariants": [
    "S - (P - Q)",
    "T - (P + Q)",
+   "R1 - S2N",
    "sum(sg .^ 2) - N"
   ],
   "oracle": [
    {
     "params": {
-     "N": 1
+     "N": 1,
+     "p": 1,
+     "r": 1
     },
     "expect": {
      "S": 1,
@@ -120,24 +191,39 @@
    },
    {
     "params": {
-     "N": 2
-    },
-    "expect": {
-     "S": 0.5,
-     "T": 1.5,
-     "P": 1,
-     "Q": 0.5
-    }
-   },
-   {
-    "params": {
-     "N": 4
+     "N": 4,
+     "p": 1,
+     "r": 1
     },
     "expect": {
      "S": 0.5833333333333333,
      "T": 2.0833333333333335,
      "P": 1.3333333333333333,
-     "Q": 0.75
+     "Q": 0.75,
+     "R": 0.6345238095238095
+    }
+   },
+   {
+    "params": {
+     "N": 3,
+     "p": 2,
+     "r": 1
+    },
+    "expect": {
+     "S": 0.8611111111111112,
+     "T": 1.3611111111111112,
+     "P": 1.1111111111111112,
+     "Q": 0.25
+    }
+   },
+   {
+    "params": {
+     "N": 2,
+     "p": 1,
+     "r": 2
+    },
+    "expect": {
+     "R": 0.9261904761904764
     }
    }
   ],

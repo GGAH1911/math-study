@@ -1,8 +1,48 @@
 {
  "id": "functions/high-1/함수와_그래프/함수의_대칭성",
  "spec": {
-  "title": "함수의 대칭성: 짝함수(y축 대칭)와 홀함수(원점 대칭)",
+  "title": "함수의 대칭성: 계수를 바꿔 짝함수·홀함수·어느 쪽도 아닌 함수 만들기",
   "params": [
+   {
+    "name": "c3",
+    "label": "x³ 계수 c₃",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c2",
+    "label": "x² 계수 c₂",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c1",
+    "label": "x 계수 c₁",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c0",
+    "label": "상수항 c₀",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
    {
     "name": "a",
     "label": "기준 x좌표 a",
@@ -14,7 +54,7 @@
     "unit": ""
    }
   ],
-  "scope": "ea = a^2-2; ema = (-a)^2-2; oa = a^3-3*a; oma = (-a)^3-3*(-a); evenDiff = ema-ea; oddSum = oma+oa",
+  "scope": "fa = c3*a^3+c2*a^2+c1*a+c0; fma = -c3*a^3+c2*a^2-c1*a+c0; evenDiff = fma-fa; oddSum = fma+fa; evenBreak = abs(c3)+abs(c1); oddBreak = abs(c2)+abs(c0); idEven = evenDiff + 2*(c3*a^3+c1*a); idOdd = oddSum - 2*(c2*a^2+c0)",
   "geometry": null,
   "plot": {
    "range": [
@@ -29,45 +69,48 @@
    "showGrid": true,
    "fns": [
     {
-     "fn": "x^2-2",
-     "label": "짝함수 f(x)=x²-2 (f(-x)=f(x))",
+     "fn": "c3*x^3+c2*x^2+c1*x+c0",
+     "label": "$f(x)$",
      "color": "#2563eb"
     },
     {
-     "fn": "x^3-3x",
-     "label": "홀함수 g(x)=x³-3x (g(-x)=-g(x))",
-     "color": "#dc2626"
+     "fn": "-c3*x^3+c2*x^2-c1*x+c0",
+     "label": "$f(-x)$ — y축으로 뒤집은 그래프",
+     "color": "#059669",
+     "dashed": true
+    },
+    {
+     "fn": "c3*x^3-c2*x^2+c1*x-c0",
+     "label": "$-f(-x)$ — 원점으로 180° 돌린 그래프",
+     "color": "#dc2626",
+     "dashed": true
     }
    ],
    "points": [
     [
      "=a",
-     "=ea"
+     "=fa"
     ],
     [
      "=-a",
-     "=ema"
-    ],
-    [
-     "=a",
-     "=oa"
+     "=fma"
     ],
     [
      "=-a",
-     "=oma"
+     "=-fa"
     ]
    ],
-   "pointsLabel": "$a,\\,-a$"
+   "pointsLabel": "$(a,f(a)),\\;(-a,f(-a)),\\;(-a,-f(a))$"
   },
   "readout": [
    {
-    "label": "짝함수 f(a)",
-    "expr": "ea",
+    "label": "f(a)",
+    "expr": "fa",
     "digits": 3
    },
    {
-    "label": "짝함수 f(-a)",
-    "expr": "ema",
+    "label": "f(-a)",
+    "expr": "fma",
     "digits": 3
    },
    {
@@ -76,18 +119,18 @@
     "digits": 3
    },
    {
-    "label": "홀함수 g(a)",
-    "expr": "oa",
-    "digits": 3
-   },
-   {
-    "label": "홀함수 g(-a)",
-    "expr": "oma",
-    "digits": 3
-   },
-   {
-    "label": "g(-a) + g(a)  (홀함수면 0)",
+    "label": "f(-a) + f(a)  (홀함수면 0)",
     "expr": "oddSum",
+    "digits": 3
+   },
+   {
+    "label": "y축 대칭을 깨는 항 |c₃|+|c₁|  (0이면 짝함수)",
+    "expr": "evenBreak",
+    "digits": 3
+   },
+   {
+    "label": "원점 대칭을 깨는 항 |c₂|+|c₀|  (0이면 홀함수)",
+    "expr": "oddBreak",
     "digits": 3
    }
   ]
@@ -95,60 +138,101 @@
  "recipe": {
   "samples": [
    {
-    "a": -2
+    "c3": 1,
+    "c2": 0,
+    "c1": -3,
+    "c0": 0,
+    "a": 1.5
    },
    {
-    "a": -1
+    "c3": 0,
+    "c2": 1,
+    "c1": 0,
+    "c0": -2,
+    "a": 1.5
    },
    {
-    "a": 0.5
-   },
-   {
+    "c3": 0,
+    "c2": 1,
+    "c1": 1,
+    "c0": 0,
     "a": 2
+   },
+   {
+    "c3": 1,
+    "c2": 1,
+    "c1": 0,
+    "c0": 0,
+    "a": 1
+   },
+   {
+    "c3": -1,
+    "c2": 0,
+    "c1": 0,
+    "c0": 0,
+    "a": -2
    }
   ],
   "invariants": [
-   "evenDiff",
-   "oddSum"
+   "idEven",
+   "idOdd"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "c3": 1,
+     "c2": 0,
+     "c1": -3,
+     "c0": 0,
+     "a": 1.5
     },
     "expect": {
-     "ea": -1,
-     "ema": -1,
-     "oa": -2,
-     "oma": 2,
-     "evenDiff": 0,
-     "oddSum": 0
+     "fa": -1.125,
+     "fma": 1.125,
+     "evenDiff": 2.25,
+     "oddSum": 0,
+     "evenBreak": 4,
+     "oddBreak": 0,
+     "idEven": 0,
+     "idOdd": 0
     }
    },
    {
     "params": {
+     "c3": 0,
+     "c2": 1,
+     "c1": 0,
+     "c0": -2,
+     "a": 1.5
+    },
+    "expect": {
+     "fa": 0.25,
+     "fma": 0.25,
+     "evenDiff": 0,
+     "oddSum": 0.5,
+     "evenBreak": 0,
+     "oddBreak": 3,
+     "idEven": 0,
+     "idOdd": 0
+    }
+   },
+   {
+    "params": {
+     "c3": 0,
+     "c2": 1,
+     "c1": 1,
+     "c0": 0,
      "a": 2
     },
     "expect": {
-     "ea": 2,
-     "ema": 2,
-     "oa": 2,
-     "oma": -2,
-     "evenDiff": 0,
-     "oddSum": 0
-    }
-   },
-   {
-    "params": {
-     "a": 0.5
-    },
-    "expect": {
-     "ea": -1.75,
-     "ema": -1.75,
-     "oa": -1.375,
-     "oma": 1.375,
-     "evenDiff": 0,
-     "oddSum": 0
+     "fa": 6,
+     "fma": 2,
+     "evenDiff": -4,
+     "oddSum": 8,
+     "evenBreak": 1,
+     "oddBreak": 1,
+     "idEven": 0,
+     "idOdd": 0
     }
    }
   ],

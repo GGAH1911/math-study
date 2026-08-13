@@ -1,46 +1,110 @@
 {
  "id": "functions/calculus/도함수의_활용_심화/도함수를_이용한_극값_판정",
  "spec": {
-  "title": "도함수를 이용한 극값 판정 — f(x)=x³−3x",
+  "title": "도함수를 이용한 극값 판정 — f(x)=kx³+bx²+cx",
   "params": [
+   {
+    "name": "k",
+    "label": "최고차항 부호 k (±1)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 1,
+    "step": 2,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "x² 계수 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "x 계수 c",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
    {
     "name": "a",
     "label": "접점 x=a",
     "type": "slider",
-    "min": -2,
-    "max": 2,
+    "min": -3,
+    "max": 3,
     "init": 0.5,
     "step": 0.1,
     "unit": ""
    }
   ],
-  "scope": "fa = a^3 - 3*a; slope = 3*a^2 - 3; sec = 6*a",
+  "scope": "fa = k*a^3 + b*a^2 + c*a; slope = 3*k*a^2 + 2*b*a + c; sec = 6*k*a + 2*b; D = b^2 - 3*k*c; xi = -b/(3*k); cnt = D > 0 ? 2 : (D == 0 ? 1 : 0)",
   "plot": {
    "range": [
-    -2.5,
-    2.5
+    -3,
+    3
    ],
    "yRange": [
-    -5,
-    5
+    -10,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x",
-     "label": "f(x)=x³−3x",
+     "fn": "k*x^3 + b*x^2 + c*x",
+     "label": "$f(x)$",
      "color": "#2563eb"
     },
     {
-     "fn": "3*x^2 - 3",
-     "label": "f'(x)",
+     "fn": "3*k*x^2 + 2*b*x + c",
+     "label": "$f'(x)$",
      "color": "#16a34a"
     },
     {
+     "fn": "6*k*x + 2*b",
+     "label": "$f''(x)$",
+     "color": "#a855f7",
+     "dashed": true
+    },
+    {
      "fn": "fa + slope*(x - a)",
-     "label": "x=a 에서의 접선",
-     "color": "#dc2626"
+     "label": "$x=a$ 에서의 접선",
+     "color": "#dc2626",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*k*x^2 + 2*b*x + c",
+     "in": [
+      -3,
+      "=xi"
+     ],
+     "label": "$f'(x)=0$"
+    },
+    {
+     "fn": "3*k*x^2 + 2*b*x + c",
+     "in": [
+      "=xi",
+      3
+     ],
+     "label": "$f'(x)=0$"
+    }
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ]
+   ],
+   "pointsLabel": "$(a,\\;f(a))$"
   },
   "readout": [
    {
@@ -57,59 +121,139 @@
     "label": "f''(a)",
     "expr": "sec",
     "digits": 3
+   },
+   {
+    "label": "판별식 b²−3kc",
+    "expr": "D",
+    "digits": 3
+   },
+   {
+    "label": "f'(x)=0 인 x 의 개수",
+    "expr": "cnt",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
+    "k": 1,
+    "b": 0,
+    "c": -3,
     "a": 0.5
    },
    {
-    "a": -1.5
+    "k": 1,
+    "b": 0,
+    "c": 0,
+    "a": 0
    },
    {
+    "k": 1,
+    "b": 0,
+    "c": 2,
+    "a": -1
+   },
+   {
+    "k": -1,
+    "b": 1.5,
+    "c": 1,
+    "a": 0.7
+   },
+   {
+    "k": 1,
+    "b": -2,
+    "c": -1,
     "a": 2
-   },
-   {
-    "a": -0.3
    }
   ],
   "invariants": [
-   "fa - (a^3 - 3*a)",
-   "slope - (3*a^2 - 3)",
-   "sec - 6*a",
-   "sec^2 - 12*(slope + 3)"
+   "fa - (k*a^3 + b*a^2 + c*a)",
+   "slope - (3*k*a^2 + 2*b*a + c)",
+   "sec - (6*k*a + 2*b)",
+   "D - (b^2 - 3*k*c)",
+   "3*k*xi + b",
+   "k^2 - 1"
   ],
   "oracle": [
    {
     "params": {
+     "k": 1,
+     "b": 0,
+     "c": -3,
      "a": 1
     },
     "expect": {
      "fa": -2,
      "slope": 0,
-     "sec": 6
+     "sec": 6,
+     "D": 9,
+     "xi": 0,
+     "cnt": 2
     }
    },
    {
     "params": {
+     "k": 1,
+     "b": 0,
+     "c": -3,
      "a": -1
     },
     "expect": {
      "fa": 2,
      "slope": 0,
-     "sec": -6
+     "sec": -6,
+     "D": 9,
+     "xi": 0,
+     "cnt": 2
     }
    },
    {
     "params": {
+     "k": 1,
+     "b": 0,
+     "c": 0,
      "a": 0
     },
     "expect": {
      "fa": 0,
-     "slope": -3,
-     "sec": 0
+     "slope": 0,
+     "sec": 0,
+     "D": 0,
+     "xi": 0,
+     "cnt": 1
+    }
+   },
+   {
+    "params": {
+     "k": 1,
+     "b": 0,
+     "c": 2,
+     "a": 0
+    },
+    "expect": {
+     "fa": 0,
+     "slope": 2,
+     "sec": 0,
+     "D": -6,
+     "xi": 0,
+     "cnt": 0
+    }
+   },
+   {
+    "params": {
+     "k": -1,
+     "b": 0,
+     "c": 3,
+     "a": 1
+    },
+    "expect": {
+     "fa": 2,
+     "slope": 0,
+     "sec": -6,
+     "D": 9,
+     "xi": 0,
+     "cnt": 2
     }
    }
   ],

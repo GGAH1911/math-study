@@ -4,117 +4,286 @@
   "title": "극값 조건 탐구: f'(a)=0과 임계점",
   "params": [
    {
-    "name": "k",
-    "label": "k",
+    "name": "a",
+    "label": "$a$ ($x^3$ 계수, $a\\neq 0$)",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "$b$ ($x^2$ 계수)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "$c$ ($x$ 계수)",
     "type": "slider",
     "min": -3,
     "max": 3,
     "init": -1,
     "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "$d$ (상수항 — 극값 조건과 무관)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.5
    }
   ],
-  "scope": "D = -12*k; n_crit = k < 0 ? 2 : (k > 0 ? 0 : 1); xc = k < 0 ? sqrt(-k/3) : 0;",
-  "geometry": {
+  "scope": "aa = abs(a) < 0.08 ? (a < 0 ? -0.08 : 0.08) : a; Dq = b^2 - 3*aa*c; D = 4*Dq; n_crit = Dq > 0 ? 2 : (Dq < 0 ? 0 : 1); has_ext = Dq > 0 ? 1 : 0; xv = -b/(3*aa); r = Dq > 0 ? sqrt(Dq) : 0; xs = (-b - r)/(3*aa); xt = (-b + r)/(3*aa); xL = min(xs, xt); xR = max(xs, xt); fL = aa*xL^3 + b*xL^2 + c*xL + d; fR = aa*xR^3 + b*xR^2 + c*xR + d; xmax = aa > 0 ? xL : xR; xmin = aa > 0 ? xR : xL; fmax = aa*xmax^3 + b*xmax^2 + c*xmax + d; fmin = aa*xmin^3 + b*xmin^2 + c*xmin + d; gap = Dq > 0 ? fmax - fmin : 0; px1 = Dq > 0 ? xL : 10000; py1 = Dq > 0 ? fL : 0; px2 = Dq > 0 ? xR : 10000; py2 = Dq > 0 ? fR : 0;",
+  "plot": {
    "range": [
-    -1.5,
-    1.5
+    -3,
+    3
    ],
    "yRange": [
-    -12,
-    12
+    -10,
+    10
    ],
    "showAxes": true,
    "showGrid": true,
-   "shapes": []
-  },
-  "plot": {
-   "range": [
-    -1.5,
-    1.5
-   ],
-   "yRange": [
-    -12,
-    12
-   ],
    "fns": [
     {
-     "fn": "x^3 + k*x",
-     "label": "f(x)",
-     "color": "#1f77b4"
+     "fn": "aa*x^3 + b*x^2 + c*x + d",
+     "label": "$f(x)=ax^3+bx^2+cx+d$",
+     "color": "#2563eb"
     },
     {
-     "fn": "3*x^2 + k",
-     "label": "f'(x)",
-     "color": "#d62728"
+     "fn": "3*aa*x^2 + 2*b*x + c",
+     "label": "$f'(x)=3ax^2+2bx+c$",
+     "color": "#dc2626",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*aa*x^2 + 2*b*x + c",
+     "in": [
+      "=xv - 60",
+      "=xv"
+     ],
+     "label": "$f'(x)=0$ 인 점(임계점)"
+    },
+    {
+     "fn": "3*aa*x^2 + 2*b*x + c",
+     "in": [
+      "=xv",
+      "=xv + 60"
+     ],
+     "label": "$f'(x)=0$ 인 점(임계점)"
+    }
+   ],
+   "points": [
+    [
+     "=px1",
+     "=py1"
+    ],
+    [
+     "=px2",
+     "=py2"
+    ]
+   ],
+   "pointsLabel": "$f$ 위의 극점 $(x,\\ f(x))$ (극값 없으면 사라짐)"
   },
   "readout": [
    {
-    "label": "임계점 개수",
+    "label": "임계점 개수 ($f'(x)=0$ 의 실근)",
     "expr": "n_crit",
     "digits": 0
    },
    {
-    "label": "극값 존재 (0=아니오, 1=예)",
-    "expr": "k < 0 ? 1 : 0",
+    "label": "극값 존재 (1=예, 0=아니오)",
+    "expr": "has_ext",
     "digits": 0
    },
    {
-    "label": "D (f'=0 판별식)",
+    "label": "$b^2-3ac$ (양수여야 극값 존재)",
+    "expr": "Dq",
+    "digits": 3
+   },
+   {
+    "label": "판별식 $D=(2b)^2-4\\cdot 3a\\cdot c$",
     "expr": "D",
-    "digits": 4
+    "digits": 3
+   },
+   {
+    "label": "극댓값 (없으면 0)",
+    "expr": "Dq > 0 ? fmax : 0",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 (없으면 0)",
+    "expr": "Dq > 0 ? fmin : 0",
+    "digits": 3
+   },
+   {
+    "label": "극댓값−극솟값 (0이면 극값 없음)",
+    "expr": "gap",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "k": -2
+    "a": 1,
+    "b": 0,
+    "c": -1,
+    "d": 0
    },
    {
-    "k": -1
+    "a": 1,
+    "b": 0,
+    "c": 0,
+    "d": 0
    },
    {
-    "k": 0
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "d": 0
    },
    {
-    "k": 2
+    "a": -1,
+    "b": 0,
+    "c": 1,
+    "d": 0
+   },
+   {
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "d": -2
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -1,
+    "d": 3
    }
   ],
   "invariants": [
-   "n_crit - (D > 0 ? 2 : (D < 0 ? 0 : 1))",
-   "k < 0 ? (3*xc^2 + k) : 0"
+   "aa - (abs(a) < 0.08 ? (a < 0 ? -0.08 : 0.08) : a)",
+   "Dq - (b^2 - 3*aa*c)",
+   "D - 4*Dq",
+   "n_crit - (Dq > 0 ? 2 : (Dq < 0 ? 0 : 1))",
+   "xL + xR + 2*b/(3*aa)",
+   "Dq >= 0 ? (3*aa*xL^2 + 2*b*xL + c) : 0",
+   "Dq >= 0 ? (3*aa*xR^2 + 2*b*xR + c) : 0",
+   "gap - (Dq > 0 ? fmax - fmin : 0)"
   ],
   "oracle": [
    {
     "params": {
-     "k": -3
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
     },
     "expect": {
+     "Dq": 9,
      "D": 36,
      "n_crit": 2,
-     "xc": 1
+     "has_ext": 1,
+     "xL": -1,
+     "xR": 1,
+     "fmax": 2,
+     "fmin": -2,
+     "gap": 4
     }
    },
    {
     "params": {
-     "k": 0
+     "a": 1,
+     "b": 0,
+     "c": 0,
+     "d": 0
     },
     "expect": {
+     "Dq": 0,
      "D": 0,
      "n_crit": 1,
-     "xc": 0
+     "has_ext": 0,
+     "xL": 0,
+     "xR": 0,
+     "gap": 0
     }
    },
    {
     "params": {
-     "k": 3
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
     },
     "expect": {
+     "Dq": -9,
      "D": -36,
      "n_crit": 0,
-     "xc": 0
+     "has_ext": 0,
+     "gap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "d": -2
+    },
+    "expect": {
+     "Dq": 9,
+     "n_crit": 2,
+     "xv": -1,
+     "xL": -2,
+     "xR": 0,
+     "fmax": 2,
+     "fmin": -2,
+     "gap": 4
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "Dq": 9,
+     "n_crit": 2,
+     "xL": -1,
+     "xR": 1,
+     "xmax": 1,
+     "fmax": 2,
+     "xmin": -1,
+     "fmin": -2,
+     "gap": 4
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 5
+    },
+    "expect": {
+     "Dq": 9,
+     "n_crit": 2,
+     "fmax": 7,
+     "fmin": 3,
+     "gap": 4
     }
    }
   ],

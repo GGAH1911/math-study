@@ -1,41 +1,136 @@
 {
  "id": "functions/calculus/도함수의_활용_심화/기울기의_범위",
  "spec": {
-  "title": "기울기의 범위 — 접선의 기울기 f'(x)의 치역 (f(x)=x³−3x, 정의역 [−2, 2])",
+  "title": "기울기의 범위 — 구간 $[L,R]$에서 $f'(x)$의 치역 (극값이 구간 안이냐 밖이냐로 갈린다)",
   "params": [
    {
     "name": "a",
-    "label": "접점의 x좌표 a",
+    "label": "$x^3$의 계수 a",
     "type": "slider",
-    "min": -2,
-    "max": 2,
+    "min": -1.5,
+    "max": 1.5,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "$x^2$의 계수 b",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "$x$의 계수 c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "L",
+    "label": "구간 왼쪽 끝",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "R",
+    "label": "구간 오른쪽 끝",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "t",
+    "label": "접점의 x좌표",
+    "type": "slider",
+    "min": -2.5,
+    "max": 2.5,
     "init": 1,
     "step": 0.01,
     "unit": ""
    }
   ],
-  "scope": "px = a; py = px^3 - 3*px; m = 3*px^2 - 3; rangeMin = -3; rangeMax = 9",
+  "scope": "Lo = min(L, R); Hi = (max(L, R) - min(L, R)) < 0.2 ? min(L, R) + 0.2 : max(L, R); px = t < Lo ? Lo : (t > Hi ? Hi : t); py = a*px^3 + b*px^2 + c*px; m = 3*a*px^2 + 2*b*px + c; mL = 3*a*Lo^2 + 2*b*Lo + c; mR = 3*a*Hi^2 + 2*b*Hi + c; flat = abs(a) < 0.001 ? 1 : 0; aSafe = flat == 1 ? 1 : a; xv = flat == 1 ? Lo : -b/(3*aSafe); inSide = flat == 1 ? 0 : (xv > Lo ? (xv < Hi ? 1 : 0) : 0); xc = xv < Lo ? Lo : (xv > Hi ? Hi : xv); mv = inSide == 1 ? 3*a*xv^2 + 2*b*xv + c : mL; minM = inSide == 1 ? min(mL, mR, mv) : min(mL, mR); maxM = inSide == 1 ? max(mL, mR, mv) : max(mL, mR)",
   "plot": {
    "range": [
-    -2.5,
-    2.5
+    -3,
+    3
    ],
    "yRange": [
-    -9,
-    9
+    -14,
+    14
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x",
-     "label": "f(x)=x³−3x",
+     "fn": "a*x^3 + b*x^2 + c*x",
+     "label": "$f(x)$",
      "color": "#2563eb"
     },
     {
      "fn": "m*(x - px) + py",
-     "label": "접선 y=f'(a)(x−a)+f(a)",
+     "label": "접선 $y=f'(a)(x-a)+f(a)$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "label": "$f'(x)$ (구간 밖)",
+     "color": "#16a34a",
+     "dashed": true
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "range": ["=Lo", "=Hi"],
+     "label": "$f'(x)$ — 이 부분만 치역이 된다",
+     "color": "#16a34a"
+    },
+    {
+     "fn": "0*x + minM",
+     "label": "$m_{\\min}$",
+     "color": "#a855f7",
+     "dashed": true
+    },
+    {
+     "fn": "0*x + maxM",
+     "label": "$m_{\\max}$",
+     "color": "#a855f7",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": ["=Lo", "=xc"],
+     "label": "$f'(x)=0$"
+    },
+    {
+     "fn": "3*a*x^2 + 2*b*x + c",
+     "in": ["=xc", "=Hi"],
+     "label": "$f'(x)=0$"
+    }
+   ],
+   "points": [
+    ["=px", "=py"],
+    ["=px", "=m"],
+    ["=Lo", "=mL"],
+    ["=Hi", "=mR"]
+   ],
+   "pointsLabel": "접점 · $f'$ 위의 대응점 · 구간 양 끝의 기울기"
   },
   "readout": [
    {
@@ -44,70 +139,177 @@
     "digits": 3
    },
    {
-    "label": "접선의 기울기 f'(a)",
+    "label": "접선의 기울기 $f'(a)$",
     "expr": "m",
     "digits": 3
    },
    {
-    "label": "기울기의 범위 최솟값 (a=0)",
-    "expr": "rangeMin",
+    "label": "기울기의 최솟값",
+    "expr": "minM",
     "digits": 3
    },
    {
-    "label": "기울기의 범위 최댓값 (a=±2)",
-    "expr": "rangeMax",
+    "label": "기울기의 최댓값",
+    "expr": "maxM",
     "digits": 3
+   },
+   {
+    "label": "$f'$의 꼭짓점 x좌표",
+    "expr": "xc",
+    "digits": 3
+   },
+   {
+    "label": "꼭짓점이 구간 안? (1=예)",
+    "expr": "inSide",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 0
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "L": -2,
+    "R": 2,
+    "t": 1
    },
    {
-    "a": 1
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "L": 0.5,
+    "R": 2,
+    "t": 1
    },
    {
-    "a": 2
+    "a": 0,
+    "b": 1,
+    "c": 0,
+    "L": -2,
+    "R": 2,
+    "t": 1
    },
    {
-    "a": -1
+    "a": 1,
+    "b": 3,
+    "c": 0,
+    "L": -2,
+    "R": 1,
+    "t": -1.5
+   },
+   {
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "L": -2,
+    "R": 2,
+    "t": 0
+   },
+   {
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "L": 1,
+    "R": 1,
+    "t": 2.5
+   },
+   {
+    "a": -1.5,
+    "b": -3,
+    "c": 6,
+    "L": 2.5,
+    "R": -2.5,
+    "t": -2.5
    }
   ],
   "invariants": [
-   "py - (px^3 - 3*px)",
-   "m - (3*px^2 - 3)"
+   "py - (a*px^3 + b*px^2 + c*px)",
+   "m - (3*a*px^2 + 2*b*px + c)",
+   "(maxM < minM) ? 1 : 0",
+   "((px < Lo - 1e-9) or (px > Hi + 1e-9)) ? 1 : 0",
+   "((m < minM - 1e-9) or (m > maxM + 1e-9)) ? 1 : 0"
   ],
   "oracle": [
    {
     "params": {
-     "a": 0
-    },
-    "expect": {
-     "px": 0,
-     "py": 0,
-     "m": -3
-    }
-   },
-   {
-    "params": {
-     "a": 1
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "L": -2,
+     "R": 2,
+     "t": 1
     },
     "expect": {
      "px": 1,
      "py": -2,
-     "m": 0
+     "m": 0,
+     "minM": -3,
+     "maxM": 9,
+     "inSide": 1
     }
    },
    {
     "params": {
-     "a": 2
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "L": 0.5,
+     "R": 2,
+     "t": 1
     },
     "expect": {
-     "px": 2,
-     "py": 2,
-     "m": 9
+     "minM": -2.25,
+     "maxM": 9,
+     "inSide": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "b": 1,
+     "c": 0,
+     "L": -2,
+     "R": 2,
+     "t": 1
+    },
+    "expect": {
+     "m": 2,
+     "minM": -4,
+     "maxM": 4,
+     "inSide": 0
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 3,
+     "c": 0,
+     "L": -2,
+     "R": 1,
+     "t": -1.5
+    },
+    "expect": {
+     "minM": -3,
+     "maxM": 9,
+     "xc": -1,
+     "inSide": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "L": -2,
+     "R": 2,
+     "t": 0
+    },
+    "expect": {
+     "minM": -9,
+     "maxM": 3,
+     "inSide": 1
     }
    }
   ],

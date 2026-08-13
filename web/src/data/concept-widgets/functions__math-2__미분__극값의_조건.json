@@ -1,66 +1,113 @@
 {
  "id": "functions/math-2/미분/극값의_조건",
  "spec": {
-  "title": "극값의 조건: f(x)=x³-3ax (f'(a)=0과 부호 변화)",
+  "title": "극값의 조건: f(x)=ax³+bx²+cx+d (f'=0은 필요조건, 부호 변화로 판정)",
   "params": [
    {
     "name": "a",
-    "label": "a",
+    "label": "a (최고차항)",
     "type": "slider",
     "min": -2,
-    "max": 4,
+    "max": 2,
     "init": 1,
     "step": 0.1
+   },
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "c",
+    "label": "c",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": -3,
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 0,
+    "step": 0.5
    }
   ],
-  "scope": "xmin = a>0 ? sqrt(a) : NaN; xmax = -xmin; fmin = xmin^3 - 3*a*xmin; fmax = xmax^3 - 3*a*xmax; fppmin = 6*xmin; fppmax = 6*xmax; nExtrema = a>0 ? 2 : 0",
+  "scope": "sgn = a < 0 ? -1 : 1; A = abs(a) < 0.05 ? 0.05*sgn : a; D = 4*b^2 - 12*A*c; xi = -b/(3*A); fi = A*xi^3 + b*xi^2 + c*xi + d; h = D > 0 ? sqrt(D)/(6*abs(A)) : NaN; xL = xi - h; xR = xi + h; xmax = A > 0 ? xL : xR; xmin = A > 0 ? xR : xL; fmax = A*xmax^3 + b*xmax^2 + c*xmax + d; fmin = A*xmin^3 + b*xmin^2 + c*xmin + d; fppmax = 6*A*xmax + 2*b; fppmin = 6*A*xmin + 2*b; nExtrema = D > 0 ? 2 : 0; xmaxP = D > 0 ? xmax : xi; fmaxP = D > 0 ? fmax : fi; xminP = D > 0 ? xmin : xi; fminP = D > 0 ? fmin : fi",
   "plot": {
    "range": [
-    -3,
-    3
+    -4,
+    4
    ],
    "yRange": [
-    -20,
-    20
+    -15,
+    15
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*a*x",
-     "label": "f(x)=x³-3ax",
+     "fn": "A*x^3 + b*x^2 + c*x + d",
+     "label": "$f(x)=ax^3+bx^2+cx+d$",
      "color": "#2563eb"
     },
     {
-     "fn": "3*x^2 - 3*a",
-     "label": "f'(x)=3x²-3a",
-     "color": "#dc2626"
+     "fn": "3*A*x^2 + 2*b*x + c",
+     "label": "$f'(x)=3ax^2+2bx+c$",
+     "color": "#dc2626",
+     "dashed": true
+    },
+    {
+     "fn": "6*A*x + 2*b",
+     "label": "$f''(x)=6ax+2b$",
+     "color": "#a1a1aa",
+     "dashed": true
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "3*A*x^2 + 2*b*x + c",
+     "in": ["=xi-40", "=xi"],
+     "label": "$f'(x)=0$"
+    },
+    {
+     "fn": "3*A*x^2 + 2*b*x + c",
+     "in": ["=xi", "=xi+40"],
+     "label": "$f'(x)=0$"
+    }
+   ],
+   "points": [
+    ["=xmaxP", "=fmaxP"],
+    ["=xminP", "=fminP"],
+    ["=xi", "=fi"]
+   ],
+   "pointsLabel": "극대점 · 극소점 · 변곡점(두 극점의 중점)"
   },
   "readout": [
    {
-    "label": "극소점 x = √a",
-    "expr": "xmin",
+    "label": "판별식 D = 4b²-12ac (D>0이면 극값 2개)",
+    "expr": "D",
     "digits": 3
    },
    {
-    "label": "극솟값 f(√a)",
-    "expr": "fmin",
-    "digits": 3
+    "label": "극값의 개수",
+    "expr": "nExtrema",
+    "digits": 0
    },
    {
-    "label": "f''(극소점) (>0 → 극소)",
-    "expr": "fppmin",
-    "digits": 3
-   },
-   {
-    "label": "극대점 x = -√a",
+    "label": "극대점 x",
     "expr": "xmax",
     "digits": 3
    },
    {
-    "label": "극댓값 f(-√a)",
+    "label": "극댓값 f(극대점)",
     "expr": "fmax",
     "digits": 3
    },
@@ -70,61 +117,155 @@
     "digits": 3
    },
    {
-    "label": "극값의 개수 (a≤0이면 f'≥0, 극값 없음)",
-    "expr": "nExtrema",
-    "digits": 0
+    "label": "극소점 x",
+    "expr": "xmin",
+    "digits": 3
+   },
+   {
+    "label": "극솟값 f(극소점)",
+    "expr": "fmin",
+    "digits": 3
+   },
+   {
+    "label": "f''(극소점) (>0 → 극소)",
+    "expr": "fppmin",
+    "digits": 3
+   },
+   {
+    "label": "변곡점 x = -b/3a (극대·극소의 중점)",
+    "expr": "xi",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 1
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "a": 4
+    "a": 1,
+    "b": -3,
+    "c": 0,
+    "d": 2
    },
    {
-    "a": 0.25
+    "a": -1,
+    "b": 0,
+    "c": 3,
+    "d": -1
    },
    {
-    "a": 2
+    "a": 0.5,
+    "b": 1.5,
+    "c": -1.2,
+    "d": 2.5
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "c": -4,
+    "d": 0
+   },
+   {
+    "a": -1.5,
+    "b": 2,
+    "c": 1,
+    "d": -2
    }
   ],
   "invariants": [
-   "3*xmin^2 - 3*a",
-   "3*xmax^2 - 3*a",
-   "xmin + xmax",
-   "fmax + fmin",
-   "fppmin + fppmax",
-   "fmin + 2*a*sqrt(a)"
+   "3*A*xmax^2 + 2*b*xmax + c",
+   "3*A*xmin^2 + 2*b*xmin + c",
+   "6*A*xi + 2*b",
+   "xmax + xmin - 2*xi",
+   "xmax*xmin - c/(3*A)",
+   "abs(fppmax) - abs(fppmin)",
+   "abs(fppmax) + fppmax",
+   "abs(fppmin) - fppmin",
+   "abs(fmax - fmin) - (fmax - fmin)"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
     },
     "expect": {
-     "xmin": 1,
      "xmax": -1,
-     "fmin": -2,
      "fmax": 2,
-     "fppmin": 6,
+     "xmin": 1,
+     "fmin": -2,
      "fppmax": -6,
+     "fppmin": 6,
+     "xi": 0,
+     "fi": 0,
+     "D": 36,
      "nExtrema": 2
     }
    },
    {
     "params": {
-     "a": 4
+     "a": 1,
+     "b": -3,
+     "c": 0,
+     "d": 2
     },
     "expect": {
+     "xmax": 0,
+     "fmax": 2,
      "xmin": 2,
-     "xmax": -2,
-     "fmin": -16,
-     "fmax": 16,
-     "fppmin": 12,
-     "fppmax": -12,
+     "fmin": -2,
+     "fppmax": -6,
+     "fppmin": 6,
+     "xi": 1,
+     "fi": 0,
+     "D": 36,
+     "nExtrema": 2
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 3,
+     "d": -1
+    },
+    "expect": {
+     "xmax": 1,
+     "fmax": 1,
+     "xmin": -1,
+     "fmin": -3,
+     "fppmax": -6,
+     "fppmin": 6,
+     "xi": 0,
+     "fi": -1,
+     "D": 36,
+     "nExtrema": 2
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": 0,
+     "c": -1.5,
+     "d": 1
+    },
+    "expect": {
+     "xmax": -1,
+     "fmax": 2,
+     "xmin": 1,
+     "fmin": 0,
+     "fppmax": -3,
+     "fppmin": 3,
+     "xi": 0,
+     "fi": 1,
+     "D": 9,
      "nExtrema": 2
     }
    }

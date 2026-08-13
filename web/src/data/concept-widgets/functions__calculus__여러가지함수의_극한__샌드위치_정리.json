@@ -1,7 +1,7 @@
 {
  "id": "functions/calculus/여러가지함수의_극한/샌드위치_정리",
  "spec": {
-  "title": "샌드위치 정리: x²sin(1/x) → 0",
+  "title": "샌드위치 정리: 두 경계가 f를 조여 L로 몰아넣는다",
   "params": [
    {
     "name": "a",
@@ -11,35 +11,77 @@
     "max": 1,
     "init": 0.6,
     "step": 0.01
+   },
+   {
+    "name": "p",
+    "label": "봉투의 조임 세기 p (봉투 = ±|x|^p)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "k",
+    "label": "진동 속도 k (sin(k/x))",
+    "type": "slider",
+    "min": 1,
+    "max": 8,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "L",
+    "label": "두 경계가 향하는 값 L",
+    "type": "slider",
+    "min": -0.5,
+    "max": 0.5,
+    "init": 0,
+    "step": 0.05
+   },
+   {
+    "name": "m",
+    "label": "경계 사이 벌어짐 m (0이면 조임 성공)",
+    "type": "slider",
+    "min": 0,
+    "max": 0.4,
+    "init": 0,
+    "step": 0.05
    }
   ],
-  "scope": "gx = -a^2; hx = a^2; fx = a^2 * sin(1/a); L = 0; gap = hx - gx",
+  "scope": "env = abs(a)^p; fx = a == 0 ? L : L + env * sin(k/a); gx = L - m - env; hx = L + m + env; gap = hx - gx; limitGap = 2*m",
   "plot": {
    "range": [
     -1,
     1
    ],
    "yRange": [
-    -1,
-    1
+    -2,
+    2
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "-x^2",
-     "label": "하한 g(x)=−x²",
+     "fn": "L - m - abs(x)^p",
+     "label": "하한 $g(x)=L-m-|x|^p$",
      "color": "#3b82f6"
     },
     {
-     "fn": "x^2",
-     "label": "상한 h(x)=x²",
+     "fn": "L + m + abs(x)^p",
+     "label": "상한 $h(x)=L+m+|x|^p$",
      "color": "#3b82f6"
     },
     {
-     "fn": "x^2*sin(1/x)",
-     "label": "끼인 f(x)=x²sin(1/x)",
+     "fn": "L + abs(x)^p*sin(k/x)",
+     "label": "끼인 $f(x)=L+|x|^p\\sin(k/x)$",
      "color": "#ef4444"
+    },
+    {
+     "fn": "L",
+     "label": "목표값 $y=L$",
+     "color": "#9ca3af",
+     "dashed": true
     }
    ],
    "points": [
@@ -54,29 +96,38 @@
     [
      "=a",
      "=hx"
+    ],
+    [
+     "=0",
+     "=L"
     ]
    ],
-   "pointsLabel": "$x=a$ 에서 세 값이 조여드는 모습"
+   "pointsLabel": "$x=a$ 의 세 값과, $x\\to0$ 의 목표점 $(0,L)$"
   },
   "readout": [
    {
-    "label": "하한 g(a)=−a²",
+    "label": "하한 g(a)",
     "expr": "gx",
     "digits": 5
    },
    {
-    "label": "끼인 f(a)=a²sin(1/a)",
+    "label": "끼인 f(a)",
     "expr": "fx",
     "digits": 5
    },
    {
-    "label": "상한 h(a)=a²",
+    "label": "상한 h(a)",
     "expr": "hx",
     "digits": 5
    },
    {
-    "label": "틈새 h−g=2a² (→0이면 f도 0으로 조임)",
+    "label": "지금 틈새 h(a)−g(a)",
     "expr": "gap",
+    "digits": 5
+   },
+   {
+    "label": "x→0 에서 남는 틈새 2m — 0이면 조임 성공, 0보다 크면 정리를 못 쓴다",
+    "expr": "limitGap",
     "digits": 5
    }
   ]
@@ -84,56 +135,110 @@
  "recipe": {
   "samples": [
    {
-    "a": 0.3
+    "a": 0.3,
+    "p": 2,
+    "k": 1,
+    "L": 0,
+    "m": 0
    },
    {
-    "a": 0.7
+    "a": 0.7,
+    "p": 1,
+    "k": 3,
+    "L": 0,
+    "m": 0
    },
    {
-    "a": 1
+    "a": -0.5,
+    "p": 3,
+    "k": 5,
+    "L": 0.2,
+    "m": 0
    },
    {
-    "a": -0.5
+    "a": 0.4,
+    "p": 2,
+    "k": 3,
+    "L": 0.2,
+    "m": 0.1
+   },
+   {
+    "a": 0,
+    "p": 2,
+    "k": 4,
+    "L": -0.3,
+    "m": 0
    }
   ],
   "invariants": [
-   "gx + hx",
    "max(0, gx - fx)",
    "max(0, fx - hx)",
-   "gap - 2*a^2"
+   "gap - 2*(abs(a)^p + m)",
+   "limitGap - 2*m"
   ],
   "oracle": [
    {
     "params": {
-     "a": 0.5
+     "a": 0.5,
+     "p": 2,
+     "k": 1,
+     "L": 0,
+     "m": 0
     },
     "expect": {
      "gx": -0.25,
      "hx": 0.25,
      "gap": 0.5,
-     "fx": 0.2273243567064204
+     "fx": 0.22732435670642043,
+     "limitGap": 0
     }
    },
    {
     "params": {
-     "a": 1
+     "a": 0.4,
+     "p": 2,
+     "k": 3,
+     "L": 0.2,
+     "m": 0.1
     },
     "expect": {
-     "gx": -1,
-     "hx": 1,
-     "gap": 2,
-     "fx": 0.8414709848078965
+     "gx": -0.060000000000000026,
+     "hx": 0.4600000000000001,
+     "gap": 0.52,
+     "fx": 0.35007999628395825,
+     "limitGap": 0.2
     }
    },
    {
     "params": {
-     "a": 0.25
+     "a": -0.6,
+     "p": 1,
+     "k": 1,
+     "L": 0,
+     "m": 0
     },
     "expect": {
-     "gx": -0.0625,
-     "hx": 0.0625,
-     "gap": 0.125,
-     "fx": -0.04730015595674551
+     "gx": -0.6,
+     "hx": 0.6,
+     "gap": 1.2,
+     "fx": -0.597244774651059,
+     "limitGap": 0
+    }
+   },
+   {
+    "params": {
+     "a": 0.25,
+     "p": 3,
+     "k": 5,
+     "L": -0.3,
+     "m": 0
+    },
+    "expect": {
+     "gx": -0.315625,
+     "hx": -0.284375,
+     "gap": 0.03125,
+     "fx": -0.2857352304573808,
+     "limitGap": 0
     }
    }
   ],

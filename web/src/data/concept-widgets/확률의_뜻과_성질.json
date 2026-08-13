@@ -4,100 +4,210 @@
   "title": "확률의 뜻과 성질",
   "params": [
    {
+    "name": "nS",
+    "label": "전체 경우의 수 n(S)",
+    "type": "slider",
+    "min": 2,
+    "max": 12,
+    "init": 6,
+    "step": 1,
+    "unit": "개"
+   },
+   {
     "name": "nA",
     "label": "사건 A의 경우의 수 n(A)",
     "type": "slider",
     "min": 0,
-    "max": 6,
+    "max": 12,
+    "init": 3,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "nB",
+    "label": "사건 B의 경우의 수 n(B)",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
+    "init": 4,
+    "step": 1,
+    "unit": "개"
+   },
+   {
+    "name": "nAB",
+    "label": "두 사건이 겹치는 경우의 수 n(A∩B)",
+    "type": "slider",
+    "min": 0,
+    "max": 12,
     "init": 2,
     "step": 1,
     "unit": "개"
    }
   ],
-  "scope": "nS=6; p=nA/nS;",
+  "scope": "a = min(nA, nS); b = min(nB, nS); i = max(min(nAB, min(a, b)), max(0, a + b - nS)); pA = a/nS; pB = b/nS; pAB = i/nS; pAuB = (a + b - i)/nS; pAc = 1 - pA; rA = max(1.15*sqrt(pA), 0.05); rB = max(1.15*sqrt(pB), 0.05); d = max(abs(rA - rB), rA + rB - 2*1.15*sqrt(pAB)); xA = -d/2; xB = d/2; yA = min(rA + 0.22, 1.25); yB = min(rB + 0.22, 1.25);",
+  "geometry": {
+   "range": [-3, 3],
+   "yRange": [-1.8, 1.8],
+   "shapes": [
+    {
+     "type": "polygon",
+     "vertices": [[-2.6, -1.4], [2.6, -1.4], [2.6, 1.4], [-2.6, 1.4]],
+     "closed": true,
+     "stroke": "gray",
+     "fill": "gray",
+     "fillOpacity": 0.08
+    },
+    {
+     "type": "text",
+     "at": [-2.35, 1.15],
+     "text": "S"
+    },
+    {
+     "type": "circle",
+     "center": ["=xA", 0],
+     "radius": "=rA",
+     "fill": "blue",
+     "fillOpacity": 0.35,
+     "stroke": "blue"
+    },
+    {
+     "type": "circle",
+     "center": ["=xB", 0],
+     "radius": "=rB",
+     "fill": "red",
+     "fillOpacity": 0.35,
+     "stroke": "red"
+    },
+    {
+     "type": "text",
+     "at": ["=xA", "=yA"],
+     "text": "A",
+     "color": "blue"
+    },
+    {
+     "type": "text",
+     "at": ["=xB", "=yB"],
+     "text": "B",
+     "color": "red"
+    },
+    {
+     "type": "text",
+     "at": [0, -1.15],
+     "text": "흰 바탕 = 여사건"
+    }
+   ]
+  },
   "plot": {
-   "range": [
-    0,
-    6
-   ],
-   "yRange": [
-    0,
-    1
-   ],
+   "range": [0, 12],
+   "yRange": [0, 1.1],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
      "fn": "x/nS",
-     "label": "P(A) = n(A)/n(S)",
+     "range": ["=0", "=nS"],
+     "label": "$P=\\dfrac{n(A)}{n(S)}$",
      "color": "blue"
+    },
+    {
+     "fn": "1",
+     "label": "$P=1$ (전사건)",
+     "color": "gray",
+     "dashed": true
     }
    ],
    "points": [
-    [
-     "=nA",
-     "=nA/nS"
-    ]
+    ["=a", "=pA"],
+    ["=nS-a", "=pAc"]
    ],
-   "pointsLabel": "$P(A)$"
+   "pointsLabel": "$P(A)$ 와 $P(A^c)$"
   },
   "readout": [
    {
-    "label": "사건 A의 경우의 수 n(A)",
-    "expr": "nA",
-    "digits": 0
-   },
-   {
-    "label": "전체 경우의 수 n(S)",
-    "expr": "nS",
-    "digits": 0
-   },
-   {
-    "label": "확률 P(A)",
-    "expr": "p",
+    "label": "P(A)",
+    "expr": "pA",
     "digits": 4
+   },
+   {
+    "label": "P(B)",
+    "expr": "pB",
+    "digits": 4
+   },
+   {
+    "label": "P(A∩B)",
+    "expr": "pAB",
+    "digits": 4
+   },
+   {
+    "label": "P(A∪B)",
+    "expr": "pAuB",
+    "digits": 4
+   },
+   {
+    "label": "P(A^c) (여사건)",
+    "expr": "pAc",
+    "digits": 4
+   },
+   {
+    "label": "실제 반영된 n(A∩B)",
+    "expr": "i",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
-   {
-    "nA": 0
-   },
-   {
-    "nA": 1
-   },
-   {
-    "nA": 3
-   },
-   {
-    "nA": 6
-   }
+   { "nS": 6, "nA": 3, "nB": 4, "nAB": 2 },
+   { "nS": 2, "nA": 0, "nB": 0, "nAB": 0 },
+   { "nS": 12, "nA": 12, "nB": 5, "nAB": 5 },
+   { "nS": 4, "nA": 3, "nB": 3, "nAB": 0 }
   ],
   "invariants": [
-   "abs(p - nA/nS)"
+   "abs(pA - a/nS)",
+   "abs(pAc - (1 - pA))",
+   "abs(pAuB - (pA + pB - pAB))",
+   "max(0, pA - 1)",
+   "max(0, -pA)",
+   "max(0, pAuB - 1)",
+   "max(0, pAB - min(pA, pB))"
   ],
   "oracle": [
    {
-    "params": {
-     "nA": 0
-    },
+    "params": { "nS": 6, "nA": 2, "nB": 3, "nAB": 1 },
     "expect": {
-     "p": 0
+     "pA": 0.3333333333333333,
+     "pB": 0.5,
+     "pAB": 0.16666666666666666,
+     "pAuB": 0.6666666666666666,
+     "pAc": 0.6666666666666666
     }
    },
    {
-    "params": {
-     "nA": 2
-    },
+    "params": { "nS": 4, "nA": 3, "nB": 3, "nAB": 0 },
     "expect": {
-     "p": 0.3333333333333333
+     "pAB": 0.5,
+     "pAuB": 1,
+     "pA": 0.75,
+     "pAc": 0.25
     }
    },
    {
-    "params": {
-     "nA": 5
-    },
+    "params": { "nS": 6, "nA": 0, "nB": 4, "nAB": 2 },
     "expect": {
-     "p": 0.8333333333333334
+     "pA": 0,
+     "pAB": 0,
+     "pAuB": 0.6666666666666666,
+     "pAc": 1
+    }
+   },
+   {
+    "params": { "nS": 8, "nA": 8, "nB": 8, "nAB": 8 },
+    "expect": {
+     "pA": 1,
+     "pB": 1,
+     "pAB": 1,
+     "pAuB": 1,
+     "pAc": 0
     }
    }
   ],

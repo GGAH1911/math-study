@@ -1,156 +1,56 @@
 {
  "id": "경우의_수_분석",
  "spec": {
-  "title": "경우의 수 분석: n=6일 때 서로 다른 직선의 개수",
+  "title": "경우의 수 분석: n개 점 중 m개가 한 직선 위 — 직선(k=2)과 삼각형(k=3)",
   "params": [
-   {
-    "name": "m",
-    "label": "한 직선 위의 점의 개수 m",
-    "type": "slider",
-    "min": 2,
-    "max": 6,
-    "init": 3,
-    "step": 1,
-    "unit": ""
-   }
+   {"name":"n","label":"전체 점의 개수 n","type":"slider","min":3,"max":8,"init":6,"step":1,"unit":""},
+   {"name":"m","label":"한 직선 위의 점 m","type":"slider","min":2,"max":8,"init":3,"step":1,"unit":""},
+   {"name":"k","label":"고르는 점 k (2:직선 3:삼각형)","type":"slider","min":2,"max":3,"init":2,"step":1,"unit":""}
   ],
-  "scope": "x1=0; y1=0; x2=1; y2=0; x3=m>=3 ? 2 : 0; y3=m>=3 ? 0 : 2; x4=3; y4=m>=4 ? 0 : 1; x5=m>=5 ? 4 : 5; y5=m>=5 ? 0 : 4; x6=m>=6 ? 5 : 2; y6=m>=6 ? 0 : 5; dup=combinations(m,2)-1; lines=combinations(6,2)-combinations(m,2)+1",
+  "scope": "mm = min(m, n); f = n - mm; tot = combinations(n, k); bad = mm >= k ? combinations(mm, k) : 0; merge = k == 2 ? 1 : 0; dup = bad - merge; ans = tot - dup; c2f = f >= 2 ? combinations(f, 2) : 0; c3f = f >= 3 ? combinations(f, 3) : 0; c2m = mm >= 2 ? combinations(mm, 2) : 0; alt = k == 2 ? c2f + f*mm + 1 : c3f + c2f*mm + f*c2m; x1 = mm >= 1 ? 0 : 0.3; y1 = mm >= 1 ? 0 : 4.4; x2 = mm >= 2 ? 1 : 2.0; y2 = mm >= 2 ? 0 : 5.2; x3 = mm >= 3 ? 2 : 1.1; y3 = mm >= 3 ? 0 : 2.6; x4 = n >= 4 ? (mm >= 4 ? 3 : 3.4) : \"h\"; y4 = n >= 4 ? (mm >= 4 ? 0 : 3.9) : \"h\"; x5 = n >= 5 ? (mm >= 5 ? 4 : 5.2) : \"h\"; y5 = n >= 5 ? (mm >= 5 ? 0 : 5.3) : \"h\"; x6 = n >= 6 ? (mm >= 6 ? 5 : 4.6) : \"h\"; y6 = n >= 6 ? (mm >= 6 ? 0 : 2.4) : \"h\"; x7 = n >= 7 ? (mm >= 7 ? 6 : 6.6) : \"h\"; y7 = n >= 7 ? (mm >= 7 ? 0 : 4.6) : \"h\"; x8 = n >= 8 ? (mm >= 8 ? 7 : 7.4) : \"h\"; y8 = n >= 8 ? (mm >= 8 ? 0 : 2.9) : \"h\"",
   "geometry": {
-   "range": [
-    -0.5,
-    5.5
-   ],
-   "yRange": [
-    -0.5,
-    5.5
-   ],
-   "showAxes": true,
+   "range": [-0.7, 8.2],
+   "yRange": [-1.4, 6.0],
+   "showAxes": false,
    "showGrid": true,
    "shapes": [
-    {
-     "type": "line",
-     "from": [
-      "=-0.5",
-      "=0"
-     ],
-     "to": [
-      "=5.5",
-      "=0"
-     ]
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x1",
-      "=y1"
-     ],
-     "label": "P1"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x2",
-      "=y2"
-     ],
-     "label": "P2"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x3",
-      "=y3"
-     ],
-     "label": "P3"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x4",
-      "=y4"
-     ],
-     "label": "P4"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x5",
-      "=y5"
-     ],
-     "label": "P5"
-    },
-    {
-     "type": "point",
-     "at": [
-      "=x6",
-      "=y6"
-     ],
-     "label": "P6"
-    }
+    {"type":"segment","from":["=-0.45","=0"],"to":["=mm-1+0.45","=0"],"color":"#f59e0b"},
+    {"type":"point","at":["=x1","=y1"],"label":"P1"},
+    {"type":"point","at":["=x2","=y2"],"label":"P2"},
+    {"type":"point","at":["=x3","=y3"],"label":"P3"},
+    {"type":"point","at":["=x4","=y4"],"label":"P4"},
+    {"type":"point","at":["=x5","=y5"],"label":"P5"},
+    {"type":"point","at":["=x6","=y6"],"label":"P6"},
+    {"type":"point","at":["=x7","=y7"],"label":"P7"},
+    {"type":"point","at":["=x8","=y8"],"label":"P8"},
+    {"type":"text","at":["=-0.4","=-0.9"],"text":"=k == 2 ? \"주황 직선 위 m개: 쌍은 많아도 직선은 1개\" : \"주황 직선 위 m개: 3점을 골라도 삼각형은 0개\"","color":"#f59e0b"}
    ]
   },
   "readout": [
-   {
-    "label": "모든 점 쌍의 수 C(6,2)",
-    "expr": "combinations(6,2)",
-    "digits": 0
-   },
-   {
-    "label": "중복되는 직선 수 C(m,2)-1",
-    "expr": "dup",
-    "digits": 0
-   },
-   {
-    "label": "서로 다른 직선의 수",
-    "expr": "lines",
-    "digits": 0
-   }
+   {"label":"전체 선택 C(n,k)","expr":"tot","digits":0},
+   {"label":"일직선 위 선택 C(m,k)","expr":"bad","digits":0},
+   {"label":"빼야 하는 중복·무효","expr":"dup","digits":0},
+   {"label":"결과 (직선 또는 삼각형)","expr":"ans","digits":0}
   ]
  },
  "recipe": {
   "samples": [
-   {
-    "m": 2
-   },
-   {
-    "m": 3
-   },
-   {
-    "m": 4
-   },
-   {
-    "m": 6
-   }
+   {"n":6,"m":3,"k":2},{"n":6,"m":6,"k":2},{"n":6,"m":2,"k":2},
+   {"n":8,"m":3,"k":3},{"n":5,"m":5,"k":3},{"n":3,"m":2,"k":3},
+   {"n":4,"m":8,"k":2},{"n":8,"m":8,"k":3},{"n":3,"m":3,"k":2}
   ],
-  "invariants": [
-   "lines + dup - combinations(6,2)",
-   "lines - (combinations(6,2) - combinations(m,2) + 1)"
-  ],
+  "invariants": ["ans - alt", "ans - (tot - bad + merge)", "mm - min(m,n)"],
   "oracle": [
-   {
-    "params": {
-     "m": 2
-    },
-    "expect": {
-     "lines": 15
-    }
-   },
-   {
-    "params": {
-     "m": 4
-    },
-    "expect": {
-     "lines": 10
-    }
-   },
-   {
-    "params": {
-     "m": 6
-    },
-    "expect": {
-     "lines": 1
-    }
-   }
+   {"params":{"n":6,"m":3,"k":2},"expect":{"ans":13}},
+   {"params":{"n":6,"m":6,"k":2},"expect":{"ans":1}},
+   {"params":{"n":6,"m":2,"k":2},"expect":{"ans":15}},
+   {"params":{"n":8,"m":3,"k":3},"expect":{"ans":55}},
+   {"params":{"n":6,"m":3,"k":3},"expect":{"ans":19}},
+   {"params":{"n":5,"m":5,"k":3},"expect":{"ans":0}},
+   {"params":{"n":5,"m":2,"k":3},"expect":{"ans":10}},
+   {"params":{"n":4,"m":8,"k":2},"expect":{"ans":1}},
+   {"params":{"n":3,"m":2,"k":3},"expect":{"ans":1}}
   ],
-  "tol": 0.000001
+  "tol": 1e-6
  }
 }

@@ -4,47 +4,95 @@
   "title": "라이프니츠 규칙 시각화",
   "params": [
    {
+    "name": "m",
+    "label": "하한 a(x)=x^m 의 지수 m",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "n",
+    "label": "상한 b(x)=x^n 의 지수 n",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 2,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "피적분함수의 x 지수 p (f=x^p·t^q)",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "피적분함수의 t 지수 q",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 2,
+    "step": 1
+   },
+   {
     "name": "s",
-    "label": "x",
+    "label": "보고 있는 위치 x",
     "type": "slider",
     "min": 0.5,
-    "max": 1.5,
+    "max": 1.4,
     "init": 1,
     "step": 0.01
    }
   ],
-  "scope": "a=s; b=s^2; f_a=s*a^2; f_b=s*b^2; da=1; db=2*s; term_b=f_b*db; term_a=-f_a*da; interior=(b^3-a^3)/3; total=term_b+term_a+interior",
+  "scope": "a=s^m; b=s^n; da=(m==0 ? 0 : m*s^(m-1)); db=(n==0 ? 0 : n*s^(n-1)); f_a=s^p*a^q; f_b=s^p*b^q; term_b=f_b*db; term_a=-f_a*da; interior=(p==0 ? 0 : p*s^(p-1)*(b^(q+1)-a^(q+1))/(q+1)); total=term_b+term_a+interior; h=0.0001; Fp=(s+h)^p*((s+h)^(n*(q+1))-(s+h)^(m*(q+1)))/(q+1); Fm=(s-h)^p*((s-h)^(n*(q+1))-(s-h)^(m*(q+1)))/(q+1); Fval=s^p*(s^(n*(q+1))-s^(m*(q+1)))/(q+1); numderiv=(Fp-Fm)/(2*h)",
   "plot": {
    "range": [
     0.5,
-    1.5
+    1.4
    ],
    "yRange": [
-    -5,
-    25
+    -30,
+    30
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "2*x^6",
-     "label": "b 경계항 f(x,b)·b'",
+     "fn": "x^p*(x^n)^q*n*x^(n-1)",
+     "label": "$f(x,b(x))\\,b'(x)$ 상한 경계항",
      "color": "red"
     },
     {
-     "fn": "-x^3",
-     "label": "a 경계항 −f(x,a)·a'",
+     "fn": "-(x^p*(x^m)^q*m*x^(m-1))",
+     "label": "$-f(x,a(x))\\,a'(x)$ 하한 경계항",
      "color": "blue"
     },
     {
-     "fn": "(x^6-x^3)/3",
-     "label": "내부항 ∫∂f/∂x dt",
+     "fn": "p*x^(p-1)*((x^n)^(q+1)-(x^m)^(q+1))/(q+1)",
+     "label": "$\\int \\partial f/\\partial x\\, dt$ 내부항",
      "color": "green"
     },
     {
-     "fn": "(7*x^6-4*x^3)/3",
-     "label": "총 도함수 dF/dx",
+     "fn": "x^p*(x^n)^q*n*x^(n-1)-(x^p*(x^m)^q*m*x^(m-1))+p*x^(p-1)*((x^n)^(q+1)-(x^m)^(q+1))/(q+1)",
+     "label": "$dF/dx$ 총 도함수",
      "color": "purple"
+    },
+    {
+     "fn": "x^m",
+     "label": "$a(x)$",
+     "color": "blue",
+     "dashed": true
+    },
+    {
+     "fn": "x^n",
+     "label": "$b(x)$",
+     "color": "red",
+     "dashed": true
     }
    ],
    "points": [
@@ -63,6 +111,14 @@
     [
      "=s",
      "=total"
+    ],
+    [
+     "=s",
+     "=a"
+    ],
+    [
+     "=s",
+     "=b"
     ]
    ],
    "pointsLabel": "$x=s$ 에서의 각 항의 값"
@@ -79,12 +135,22 @@
     "digits": 3
    },
    {
-    "label": "b 경계항",
+    "label": "a'(x)",
+    "expr": "da",
+    "digits": 3
+   },
+   {
+    "label": "b'(x)",
+    "expr": "db",
+    "digits": 3
+   },
+   {
+    "label": "상한 경계항",
     "expr": "term_b",
     "digits": 4
    },
    {
-    "label": "a 경계항",
+    "label": "하한 경계항",
     "expr": "term_a",
     "digits": 4
    },
@@ -97,45 +163,86 @@
     "label": "총 도함수",
     "expr": "total",
     "digits": 4
+   },
+   {
+    "label": "F(x) 값",
+    "expr": "Fval",
+    "digits": 4
+   },
+   {
+    "label": "수치미분으로 검증한 F'(x)",
+    "expr": "numderiv",
+    "digits": 4
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "s": 0.5
-   },
-   {
+    "m": 1,
+    "n": 2,
+    "p": 1,
+    "q": 2,
     "s": 1
    },
    {
-    "s": 1.5
+    "m": 1,
+    "n": 2,
+    "p": 1,
+    "q": 2,
+    "s": 1.2
    },
    {
-    "s": 2
+    "m": 0,
+    "n": 2,
+    "p": 1,
+    "q": 2,
+    "s": 1.2
+   },
+   {
+    "m": 1,
+    "n": 2,
+    "p": 0,
+    "q": 2,
+    "s": 1.2
+   },
+   {
+    "m": 0,
+    "n": 0,
+    "p": 1,
+    "q": 2,
+    "s": 1.2
+   },
+   {
+    "m": 1,
+    "n": 1,
+    "p": 1,
+    "q": 2,
+    "s": 1.3
+   },
+   {
+    "m": 2,
+    "n": 2,
+    "p": 2,
+    "q": 0,
+    "s": 0.7
    }
   ],
   "invariants": [
    "total - (term_b + term_a + interior)",
-   "interior - (b^3 - a^3)/3",
-   "term_b - 2*s^6",
-   "term_a - (-s^3)",
-   "total - (7*s^6 - 4*s^3)/3"
+   "term_b - s^p*(s^n)^q*n*s^(n-1)",
+   "term_a + s^p*(s^m)^q*m*s^(m-1)",
+   "interior - (p==0 ? 0 : p*s^(p-1)*((s^n)^(q+1)-(s^m)^(q+1))/(q+1))",
+   "a - s^m",
+   "b - s^n"
   ],
   "oracle": [
    {
     "params": {
-     "s": 0.5
-    },
-    "expect": {
-     "term_b": 0.03125,
-     "term_a": -0.125,
-     "interior": -0.0364583333333,
-     "total": -0.1302083333333
-    }
-   },
-   {
-    "params": {
+     "m": 1,
+     "n": 2,
+     "p": 1,
+     "q": 2,
      "s": 1
     },
     "expect": {
@@ -147,13 +254,76 @@
    },
    {
     "params": {
-     "s": 1.5
+     "m": 1,
+     "n": 2,
+     "p": 1,
+     "q": 2,
+     "s": 1.2
     },
     "expect": {
-     "term_b": 22.78125,
-     "term_a": -3.375,
-     "interior": 2.671875,
-     "total": 22.078125
+     "term_b": 5.971968,
+     "term_a": -1.728,
+     "interior": 0.419328,
+     "total": 4.663296
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "n": 2,
+     "p": 1,
+     "q": 2,
+     "s": 1.2
+    },
+    "expect": {
+     "a": 1,
+     "da": 0,
+     "term_a": 0,
+     "term_b": 5.971968,
+     "interior": 0.6619946667,
+     "total": 6.6339626667
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 2,
+     "p": 0,
+     "q": 2,
+     "s": 1.2
+    },
+    "expect": {
+     "term_b": 4.97664,
+     "term_a": -1.44,
+     "interior": 0,
+     "total": 3.53664
+    }
+   },
+   {
+    "params": {
+     "m": 0,
+     "n": 0,
+     "p": 1,
+     "q": 2,
+     "s": 1.2
+    },
+    "expect": {
+     "term_b": 0,
+     "term_a": 0,
+     "interior": 0,
+     "total": 0
+    }
+   },
+   {
+    "params": {
+     "m": 1,
+     "n": 1,
+     "p": 1,
+     "q": 2,
+     "s": 1.3
+    },
+    "expect": {
+     "total": 0
     }
    }
   ],

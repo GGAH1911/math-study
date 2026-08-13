@@ -1,8 +1,48 @@
 {
  "id": "functions/math-2/미분/미분과_접선",
  "spec": {
-  "title": "미분과 접선: y=x² 위의 점에서의 접선",
+  "title": "미분과 접선: 할선을 접선으로 좁혀보기 (f(x)=px³+qx²+rx+s)",
   "params": [
+   {
+    "name": "p",
+    "label": "x³ 계수 p",
+    "type": "slider",
+    "min": -0.6,
+    "max": 0.6,
+    "init": 0.3,
+    "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "x² 계수 q",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "x 계수 r",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "s",
+    "label": "상수항 s",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
    {
     "name": "a",
     "label": "접점 x좌표 a",
@@ -12,17 +52,27 @@
     "init": 1,
     "step": 0.1,
     "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "할선 간격 h",
+    "type": "slider",
+    "min": 0.05,
+    "max": 2,
+    "init": 1.5,
+    "step": 0.05,
+    "unit": ""
    }
   ],
-  "scope": "fa = a^2; fpa = 2*a; b = fa - a*fpa",
+  "scope": "fa = p*a^3 + q*a^2 + r*a + s; fpa = 3*p*a^2 + 2*q*a + r; b = fa - a*fpa; xq = a + h; fq = p*xq^3 + q*xq^2 + r*xq + s; msec = (fq - fa)/h; bsec = fa - a*msec; gap = msec - fpa; xv = (abs(p) < 0.001 ? 0 : -q/(3*p))",
   "geometry": {
    "range": [
-    -3.5,
-    3.5
+    -4,
+    4
    ],
    "yRange": [
-    -3,
-    9
+    -10,
+    10
    ],
    "showAxes": true,
    "showGrid": true,
@@ -30,29 +80,77 @@
   },
   "plot": {
    "range": [
-    -3.5,
-    3.5
+    -4,
+    4
    ],
    "yRange": [
-    -3,
-    9
+    -10,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^2",
-     "label": "f(x)=x²",
+     "fn": "p*x^3 + q*x^2 + r*x + s",
+     "label": "$f(x)=px^3+qx^2+rx+s$",
      "color": "#2563eb"
     },
     {
      "fn": "fpa*x + b",
-     "label": "접선 y=f'(a)x+(f(a)-af'(a))",
+     "label": "$y=f'(a)(x-a)+f(a)$ (접선)",
      "color": "#dc2626"
+    },
+    {
+     "fn": "msec*x + bsec",
+     "label": "$y=\\dfrac{f(a+h)-f(a)}{h}(x-a)+f(a)$ (할선)",
+     "color": "#059669",
+     "dashed": true
+    }
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=xq",
+     "=fq"
+    ]
+   ],
+   "pointsLabel": "$P(a,f(a))$ · $Q(a+h,f(a+h))$",
+   "intersections": [
+    {
+     "f": "p*x^3 + q*x^2 + r*x + s",
+     "g": "fpa*x + b",
+     "in": [
+      -4,
+      4
+     ],
+     "label": "접선이 곡선과 다시 만나는 점"
+    }
+   ],
+   "roots": [
+    {
+     "fn": "3*p*x^2 + 2*q*x + r",
+     "in": [
+      -4,
+      "=xv"
+     ],
+     "label": "접선이 수평이 되는 x"
+    },
+    {
+     "fn": "3*p*x^2 + 2*q*x + r",
+     "in": [
+      "=xv",
+      4
+     ],
+     "label": "접선이 수평이 되는 x"
     }
    ]
   },
   "readout": [
    {
-    "label": "접점 P",
+    "label": "접점 x좌표 a",
     "expr": "a",
     "digits": 3
    },
@@ -67,6 +165,16 @@
     "digits": 3
    },
    {
+    "label": "할선 기울기 (f(a+h)-f(a))/h",
+    "expr": "msec",
+    "digits": 3
+   },
+   {
+    "label": "할선-접선 기울기 차",
+    "expr": "gap",
+    "digits": 3
+   },
+   {
     "label": "접선 y절편",
     "expr": "b",
     "digits": 3
@@ -76,52 +184,130 @@
  "recipe": {
   "samples": [
    {
-    "a": 2
+    "p": 0,
+    "q": 1,
+    "r": 0,
+    "s": 0,
+    "a": 2,
+    "h": 0.5
    },
    {
-    "a": 1
+    "p": 0.3,
+    "q": 0,
+    "r": -2,
+    "s": 0,
+    "a": 1,
+    "h": 1.5
    },
    {
-    "a": -1
+    "p": 1,
+    "q": 0,
+    "r": 0,
+    "s": 0,
+    "a": 1,
+    "h": 1
    },
    {
-    "a": 0.5
+    "p": 0,
+    "q": 0,
+    "r": 2,
+    "s": 1,
+    "a": 1,
+    "h": 1.5
+   },
+   {
+    "p": -0.5,
+    "q": 0.5,
+    "r": 1,
+    "s": -1,
+    "a": 1,
+    "h": 0.5
    }
   ],
   "invariants": [
-   "fpa - 2*a",
-   "fa - a^2",
-   "fpa*a + b - fa"
+   "fa - (p*a^3 + q*a^2 + r*a + s)",
+   "fpa - (3*p*a^2 + 2*q*a + r)",
+   "fpa*a + b - fa",
+   "msec*a + bsec - fa",
+   "msec*xq + bsec - fq",
+   "gap - (msec - fpa)",
+   "msec - fpa - (h*(3*p*a + q) + p*h^2)"
   ],
   "oracle": [
    {
     "params": {
-     "a": 2
+     "p": 0,
+     "q": 1,
+     "r": 0,
+     "s": 0,
+     "a": 2,
+     "h": 0.5
     },
     "expect": {
      "fa": 4,
      "fpa": 4,
-     "b": -4
+     "b": -4,
+     "fq": 6.25,
+     "msec": 4.5,
+     "bsec": -5,
+     "gap": 0.5
     }
    },
    {
     "params": {
-     "a": 1
+     "p": 1,
+     "q": 0,
+     "r": 0,
+     "s": 0,
+     "a": 1,
+     "h": 1
     },
     "expect": {
      "fa": 1,
+     "fpa": 3,
+     "b": -2,
+     "fq": 8,
+     "msec": 7,
+     "bsec": -6,
+     "gap": 4
+    }
+   },
+   {
+    "params": {
+     "p": 0,
+     "q": 0,
+     "r": 2,
+     "s": 1,
+     "a": 1,
+     "h": 1.5
+    },
+    "expect": {
+     "fa": 3,
      "fpa": 2,
-     "b": -1
+     "b": 1,
+     "fq": 6,
+     "msec": 2,
+     "bsec": 1,
+     "gap": 0
     }
    },
    {
     "params": {
-     "a": -1
+     "p": -0.5,
+     "q": 0.5,
+     "r": 1,
+     "s": -1,
+     "a": 1,
+     "h": 0.5
     },
     "expect": {
-     "fa": 1,
-     "fpa": -2,
-     "b": -1
+     "fa": 0,
+     "fpa": 0.5,
+     "b": -0.5,
+     "fq": -0.0625,
+     "msec": -0.125,
+     "bsec": 0.125,
+     "gap": -0.625
     }
    }
   ],

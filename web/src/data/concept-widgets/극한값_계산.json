@@ -4,44 +4,100 @@
   "title": "극한값 계산",
   "params": [
    {
-    "name": "xs",
-    "label": "x 값",
+    "name": "a2",
+    "label": "x² 계수",
     "type": "slider",
-    "min": 0,
-    "max": 4,
-    "init": 0.5,
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "a1",
+    "label": "x 계수",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "a0",
+    "label": "상수항",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "a",
+    "label": "다가가는 점 a",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "xs",
+    "label": "관찰하는 x",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
     "step": 0.01,
     "unit": ""
    }
   ],
-  "scope": "a=2; L=a^2; fxs=xs^2; dist=abs(fxs-L); cx=xs; cy=fxs; rad=0.15;",
+  "scope": "Nxs = a2*xs^2 + a1*xs + a0; Na = a2*a^2 + a1*a + a0; den = xs - a; near = abs(den) < 0.000001 ? 1 : 0; exists = abs(Na) < 0.000001 ? 1 : 0; L = 2*a2*a + a1; fxs = near == 1 ? L : Nxs/den; dist = abs(fxs - L); cx = xs; cy = min(max(fxs, -9.5), 9.5); hx = a; hy = min(max(L, -9.5), 9.5); rad = 0.12;",
   "geometry": {
    "range": [
-    -0.3,
-    4.3
+    -6,
+    6
    ],
    "yRange": [
-    -1,
-    17
+    -10,
+    10
    ],
    "showAxes": true,
    "showGrid": true,
    "shapes": [
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=-9.5"
+     ],
+     "to": [
+      "=a",
+      "=9.5"
+     ],
+     "dashed": true
+    },
+    {
+     "type": "circle",
+     "center": [
+      "=hx",
+      "=hy"
+     ],
+     "radius": "=rad",
+     "stroke": "red",
+     "fill": "none"
+    },
     {
      "type": "circle",
      "center": [
       "=cx",
       "=cy"
      ],
-     "radius": "=rad"
-    },
-    {
-     "type": "circle",
-     "center": [
-      "=a",
-      "=L"
-     ],
-     "radius": "=rad"
+     "radius": "=rad",
+     "fill": "blue",
+     "fillOpacity": 0.9
     },
     {
      "type": "segment",
@@ -50,31 +106,49 @@
       "=cy"
      ],
      "to": [
+      "=hx",
+      "=hy"
+     ],
+     "dashed": true
+    },
+    {
+     "type": "text",
+     "at": [
       "=a",
-      "=L"
-     ]
+      9.2
+     ],
+     "text": "x=a"
     }
    ]
   },
   "plot": {
    "range": [
-    -0.3,
-    4.3
+    -6,
+    6
    ],
    "yRange": [
-    -1,
-    17
+    -10,
+    10
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^2",
-     "label": "f(x)=x²",
+     "fn": "(a2*x^2 + a1*x + a0)/(x - a)",
+     "label": "$f(x)=\\frac{a_2x^2+a_1x+a_0}{x-a}$",
      "color": "blue"
     },
     {
+     "fn": "a2*x + (a1 + a2*a)",
+     "label": "$a_2x+(a_1+a_2a)$",
+     "color": "green",
+     "dashed": true
+    },
+    {
      "fn": "L",
-     "label": "L=4",
-     "color": "red"
+     "label": "$y=L$",
+     "color": "red",
+     "dashed": true
     }
    ]
   },
@@ -90,7 +164,17 @@
     "digits": 4
    },
    {
-    "label": "극한값 L",
+    "label": "분자값 N(a) — 0이면 0/0 꼴",
+    "expr": "Na",
+    "digits": 4
+   },
+   {
+    "label": "0/0 꼴이면 1, 아니면 0(발산)",
+    "expr": "exists",
+    "digits": 0
+   },
+   {
+    "label": "약분 후 극한값 L",
     "expr": "L",
     "digits": 4
    },
@@ -104,56 +188,98 @@
  "recipe": {
   "samples": [
    {
-    "xs": 0.5
-   },
-   {
-    "xs": 1
-   },
-   {
+    "a2": 1,
+    "a1": -3,
+    "a0": 2,
+    "a": 1,
     "xs": 3
    },
    {
-    "xs": 3.5
+    "a2": 1,
+    "a1": 0,
+    "a0": 0,
+    "a": 2,
+    "xs": 3
+   },
+   {
+    "a2": 0,
+    "a1": 1,
+    "a0": -2,
+    "a": 2,
+    "xs": 0
+   },
+   {
+    "a2": 1,
+    "a1": -3,
+    "a0": 2,
+    "a": 1,
+    "xs": 1
    }
   ],
   "invariants": [
-   "fxs - xs^2",
+   "Na - (a2*a^2 + a1*a + a0)",
+   "L - (2*a2*a + a1)",
    "dist - abs(fxs - L)",
-   "cx - xs",
-   "cy - fxs"
+   "cx - xs"
   ],
   "oracle": [
    {
     "params": {
-     "xs": 1
-    },
-    "expect": {
-     "fxs": 1,
-     "dist": 3,
-     "cx": 1,
-     "cy": 1
-    }
-   },
-   {
-    "params": {
+     "a2": 1,
+     "a1": -3,
+     "a0": 2,
+     "a": 1,
      "xs": 3
     },
     "expect": {
-     "fxs": 9,
-     "dist": 5,
-     "cx": 3,
-     "cy": 9
+     "Na": 0,
+     "exists": 1,
+     "L": -1,
+     "fxs": 1,
+     "dist": 2
     }
    },
    {
     "params": {
-     "xs": 2
+     "a2": 1,
+     "a1": 0,
+     "a0": 0,
+     "a": 2,
+     "xs": 3
     },
     "expect": {
-     "fxs": 4,
-     "dist": 0,
-     "cx": 2,
-     "cy": 4
+     "Na": 4,
+     "exists": 0,
+     "fxs": 9
+    }
+   },
+   {
+    "params": {
+     "a2": 0,
+     "a1": 1,
+     "a0": -2,
+     "a": 2,
+     "xs": 0
+    },
+    "expect": {
+     "Na": 0,
+     "exists": 1,
+     "L": 1,
+     "fxs": 1,
+     "dist": 0
+    }
+   },
+   {
+    "params": {
+     "a2": 1,
+     "a1": -3,
+     "a0": 2,
+     "a": 1,
+     "xs": 1
+    },
+    "expect": {
+     "fxs": -1,
+     "dist": 0
     }
    }
   ],

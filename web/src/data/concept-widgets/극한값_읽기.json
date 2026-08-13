@@ -4,110 +4,209 @@
   "title": "극한값 읽기",
   "params": [
    {
-    "name": "xval",
-    "label": "x",
+    "name": "a",
+    "label": "a",
     "type": "slider",
-    "min": 0.01,
-    "max": 1.99,
+    "min": -2,
+    "max": 2,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "L",
+    "label": "좌극한",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "R",
+    "label": "우극한",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 1.5,
+    "step": 0.1
+   },
+   {
+    "name": "fa",
+    "label": "f(a)",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
     "init": 0.5,
-    "step": 0.02,
-    "unit": ""
+    "step": 0.1
+   },
+   {
+    "name": "d",
+    "label": "x-a",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": -1,
+    "step": 0.02
    }
   ],
-  "scope": "a=1; alpha=2; fx=(xval^2-1)/(xval-1)",
+  "scope": "sL=0.9; sR=-0.7; x = a + d; fx = d < 0 ? L + sL*d : (d > 0 ? R + sR*d : fa); same = abs(L - R) < 0.05 ? 1 : 0; alpha = same == 1 ? (L + R)/2 : 0/0; gap = abs(fx - alpha); jump = abs(L - R); yL0 = L + sL*(-4 - a); yR1 = R + sR*(4 - a)",
   "geometry": {
    "range": [
-    0,
-    2
+    -4,
+    4
    ],
    "yRange": [
-    0,
+    -4,
     4
    ],
    "showAxes": true,
    "showGrid": true,
    "shapes": [
     {
-     "type": "point",
-     "at": [
-      "=xval",
-      "=fx"
-     ],
-     "label": "P"
-    },
-    {
      "type": "segment",
      "from": [
-      "=xval",
-      "=fx"
+      -4,
+      "=yL0"
      ],
      "to": [
-      "=xval",
-      "=alpha"
-     ]
-    },
-    {
-     "type": "segment",
-     "from": [
-      0,
-      "=alpha"
+      "=a",
+      "=L"
      ],
-     "to": [
-      2,
-      "=alpha"
-     ]
+     "color": "blue"
     },
     {
      "type": "segment",
      "from": [
       "=a",
-      0
+      "=R"
+     ],
+     "to": [
+      4,
+      "=yR1"
+     ],
+     "color": "blue"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      -4
      ],
      "to": [
       "=a",
       4
-     ]
+     ],
+     "dashed": true
+    },
+    {
+     "type": "segment",
+     "from": [
+      -4,
+      "=L"
+     ],
+     "to": [
+      "=a",
+      "=L"
+     ],
+     "dashed": true
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=a",
+      "=R"
+     ],
+     "to": [
+      4,
+      "=R"
+     ],
+     "dashed": true
     },
     {
      "type": "circle",
      "center": [
       "=a",
-      "=alpha"
+      "=L"
      ],
-     "radius": 0.05
-    }
-   ]
-  },
-  "plot": {
-   "range": [
-    0,
-    2
-   ],
-   "yRange": [
-    0,
-    4
-   ],
-   "fns": [
-    {
-     "fn": "(x^2-1)/(x-1)",
-     "label": "f(x)",
-     "color": "blue"
+     "radius": 0.09,
+     "fillOpacity": 0,
+     "stroke": "blue"
     },
     {
-     "fn": "alpha",
-     "label": "극한값",
+     "type": "circle",
+     "center": [
+      "=a",
+      "=R"
+     ],
+     "radius": 0.09,
+     "fillOpacity": 0,
+     "stroke": "blue"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=a",
+      "=fa"
+     ],
+     "label": "$f(a)$",
+     "color": "yellow"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=x",
+      "=fx"
+     ],
+     "label": "$P$",
      "color": "red"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=x",
+      "=fx"
+     ],
+     "to": [
+      "=x",
+      "=alpha"
+     ],
+     "dashed": true,
+     "color": "red"
+    },
+    {
+     "type": "text",
+     "at": [
+      -3.5,
+      "=L+0.3"
+     ],
+     "text": "왼쪽에서 향하는 높이"
+    },
+    {
+     "type": "text",
+     "at": [
+      2.2,
+      "=R+0.3"
+     ],
+     "text": "오른쪽에서 향하는 높이"
     }
    ]
   },
   "readout": [
    {
     "label": "x",
-    "expr": "xval"
+    "expr": "x"
    },
    {
     "label": "f(x)",
     "expr": "fx"
+   },
+   {
+    "label": "좌극한",
+    "expr": "L"
+   },
+   {
+    "label": "우극한",
+    "expr": "R"
    },
    {
     "label": "극한값 α",
@@ -115,58 +214,104 @@
    },
    {
     "label": "|f(x)-α|",
-    "expr": "abs(fx-alpha)"
+    "expr": "gap"
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "xval": 0.5
+    "a": 0,
+    "L": 1.5,
+    "R": 1.5,
+    "fa": 0.5,
+    "d": -1
    },
    {
-    "xval": 1.2
+    "a": 0,
+    "L": 1.5,
+    "R": 1.5,
+    "fa": 1.5,
+    "d": 0
    },
    {
-    "xval": 1.8
+    "a": 1,
+    "L": 2,
+    "R": -1,
+    "fa": 0,
+    "d": 0.5
    },
    {
-    "xval": 0.98
+    "a": -1.5,
+    "L": -2,
+    "R": -2,
+    "fa": 2,
+    "d": 0.02
    }
   ],
   "invariants": [
-   "abs(fx - (xval+1))",
-   "abs(fx - alpha) - abs(xval - a)"
+   "abs(x - (a + d))",
+   "abs(fx - (d < 0 ? L + 0.9*d : (d > 0 ? R - 0.7*d : fa)))",
+   "abs(L-R) < 0.05 ? abs(alpha - (L+R)/2) : 0",
+   "abs(jump - abs(L-R))"
   ],
   "oracle": [
    {
     "params": {
-     "xval": 0.5
+     "a": 0,
+     "L": 1.5,
+     "R": 1.5,
+     "fa": 0.5,
+     "d": -1
     },
     "expect": {
+     "x": -1,
+     "fx": 0.6,
+     "alpha": 1.5,
+     "gap": 0.9
+    }
+   },
+   {
+    "params": {
+     "a": 0,
+     "L": 1.5,
+     "R": 1.5,
+     "fa": 1.5,
+     "d": 0
+    },
+    "expect": {
+     "x": 0,
      "fx": 1.5,
-     "alpha": 2,
-     "a": 1
+     "alpha": 1.5,
+     "gap": 0
     }
    },
    {
     "params": {
-     "xval": 1.2
+     "a": 1,
+     "L": 2,
+     "R": -1,
+     "fa": 0,
+     "d": 0.5
     },
     "expect": {
-     "fx": 2.2,
-     "alpha": 2,
-     "a": 1
+     "x": 1.5,
+     "fx": -1.35,
+     "jump": 3
     }
    },
    {
     "params": {
-     "xval": 1.8
+     "a": -1.5,
+     "L": -2,
+     "R": -2,
+     "fa": 2,
+     "d": 0.02
     },
     "expect": {
-     "fx": 2.8,
-     "alpha": 2,
-     "a": 1
+     "x": -1.48,
+     "fx": -2.014,
+     "alpha": -2
     }
    }
   ],

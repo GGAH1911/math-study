@@ -1,41 +1,100 @@
 {
  "id": "functions/math-2/미분/곡선의_접선",
  "spec": {
-  "title": "곡선의 접선: y = x³ - 3x 위의 점 P(a, f(a))",
+  "title": "곡선의 접선: 할선 PQ가 h→0에서 접선이 된다 (y = px³+qx²+rx)",
   "params": [
    {
-    "name": "a",
-    "label": "접점의 x좌표 a",
+    "name": "p",
+    "label": "x³의 계수 p",
     "type": "slider",
     "min": -2,
     "max": 2,
     "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "x²의 계수 q",
+    "type": "slider",
+    "min": -3,
+    "max": 3,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "x의 계수 r",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "a",
+    "label": "접점의 x좌표 a",
+    "type": "slider",
+    "min": -2.4,
+    "max": 2.4,
+    "init": 1,
     "step": 0.05,
+    "unit": ""
+   },
+   {
+    "name": "h",
+    "label": "두 번째 점까지의 거리 h (0에 가까울수록 접선)",
+    "type": "slider",
+    "min": -1.5,
+    "max": 1.5,
+    "init": 0.8,
+    "step": 0.01,
     "unit": ""
    }
   ],
-  "scope": "fa = a^3 - 3*a; m = 3*a^2 - 3; b = fa - m*a",
+  "scope": "fa = p*a^3 + q*a^2 + r*a; m = 3*p*a^2 + 2*q*a + r; b = fa - m*a; hh = (h == 0 ? 0.001 : h); aq = a + hh; fq = p*aq^3 + q*aq^2 + r*aq; ms = (fq - fa)/hh; bs = fa - ms*a; dm = ms - m",
   "plot": {
    "range": [
-    -2.2,
-    2.2
+    -2.6,
+    2.6
    ],
    "yRange": [
-    -5,
-    5
+    -8,
+    8
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "x^3 - 3*x",
-     "label": "y = x³ - 3x",
+     "fn": "p*x^3 + q*x^2 + r*x",
+     "label": "$y=f(x)=px^3+qx^2+rx$",
      "color": "#2563eb"
     },
     {
      "fn": "m*x + b",
-     "label": "접선 y = f'(a)(x-a)+f(a)",
+     "label": "접선 $y=f'(a)(x-a)+f(a)$",
      "color": "#dc2626"
+    },
+    {
+     "fn": "ms*x + bs",
+     "label": "할선 $PQ$ (기울기 $\\frac{f(a+h)-f(a)}{h}$)",
+     "color": "#16a34a",
+     "dashed": true
     }
-   ]
+   ],
+   "points": [
+    [
+     "=a",
+     "=fa"
+    ],
+    [
+     "=aq",
+     "=fq"
+    ]
+   ],
+   "pointsLabel": "$P(a,\\,f(a))$ 와 $Q(a+h,\\,f(a+h))$"
   },
   "readout": [
    {
@@ -49,6 +108,16 @@
     "digits": 3
    },
    {
+    "label": "할선 PQ의 기울기",
+    "expr": "ms",
+    "digits": 3
+   },
+   {
+    "label": "할선 − 접선 기울기 차",
+    "expr": "dm",
+    "digits": 3
+   },
+   {
     "label": "접선의 y절편",
     "expr": "b",
     "digits": 3
@@ -58,53 +127,135 @@
  "recipe": {
   "samples": [
    {
-    "a": 1
+    "p": 1,
+    "q": 0,
+    "r": -3,
+    "a": 1,
+    "h": 0.8
    },
    {
-    "a": 2
+    "p": 1,
+    "q": 0,
+    "r": -3,
+    "a": 1,
+    "h": 0
    },
    {
-    "a": 0
+    "p": 0,
+    "q": 1,
+    "r": 0,
+    "a": -1.5,
+    "h": -0.5
    },
    {
-    "a": -1.5
+    "p": -1.5,
+    "q": 2.5,
+    "r": -4,
+    "a": 2.4,
+    "h": 1.5
+   },
+   {
+    "p": 1,
+    "q": 0,
+    "r": -3,
+    "a": 0,
+    "h": 0.05
    }
   ],
   "invariants": [
-   "fa - (a^3 - 3*a)",
-   "m - (3*a^2 - 3)",
-   "(m*a + b) - (a^3 - 3*a)",
-   "b + 2*a^3"
+   "fa - (p*a^3 + q*a^2 + r*a)",
+   "m - (3*p*a^2 + 2*q*a + r)",
+   "(m*a + b) - fa",
+   "(ms*a + bs) - fa",
+   "(ms*aq + bs) - fq",
+   "dm - (ms - m)",
+   "ms - (p*(3*a^2 + 3*a*hh + hh^2) + q*(2*a + hh) + r)",
+   "b - (-2*p*a^3 - q*a^2)"
   ],
   "oracle": [
    {
     "params": {
-     "a": 1
+     "p": 1,
+     "q": 0,
+     "r": -3,
+     "a": 1,
+     "h": 0.5
     },
     "expect": {
      "fa": -2,
      "m": 0,
-     "b": -2
+     "b": -2,
+     "ms": 1.75,
+     "bs": -3.75,
+     "dm": 1.75
     }
    },
    {
     "params": {
-     "a": 2
+     "p": 1,
+     "q": 0,
+     "r": -3,
+     "a": 2,
+     "h": -1
     },
     "expect": {
      "fa": 2,
      "m": 9,
-     "b": -16
+     "b": -16,
+     "ms": 4,
+     "bs": -6,
+     "dm": -5
     }
    },
    {
     "params": {
-     "a": 0
+     "p": 0,
+     "q": 1,
+     "r": 0,
+     "a": -1.5,
+     "h": -0.5
+    },
+    "expect": {
+     "fa": 2.25,
+     "m": -3,
+     "b": -2.25,
+     "ms": -3.5,
+     "bs": -3,
+     "dm": -0.5
+    }
+   },
+   {
+    "params": {
+     "p": 2,
+     "q": -3,
+     "r": 1,
+     "a": 1,
+     "h": 0.5
+    },
+    "expect": {
+     "fa": 0,
+     "m": 1,
+     "b": -1,
+     "ms": 3,
+     "bs": -3,
+     "dm": 2
+    }
+   },
+   {
+    "params": {
+     "p": 1,
+     "q": 0,
+     "r": -3,
+     "a": 0,
+     "h": 1
     },
     "expect": {
      "fa": 0,
      "m": -3,
-     "b": 0
+     "b": 0,
+     "ms": -2,
+     "bs": 0,
+     "dm": 1
     }
    }
   ],

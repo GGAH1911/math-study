@@ -5,7 +5,37 @@
   "params": [
    {
     "name": "a",
-    "label": "x→a (다가가는 점)",
+    "label": "x² 계수 a",
+    "type": "slider",
+    "min": -1,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "x 계수 b",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "상수항 c",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "p",
+    "label": "x → p (다가가는 점)",
     "type": "slider",
     "min": -3,
     "max": 3,
@@ -14,7 +44,7 @@
     "unit": ""
    }
   ],
-  "scope": "L = a^2+1; rootL = sqrt(L); rfa = sqrt(a^2+1)",
+  "scope": "L = a*p^2 + b*p + c; D = b^2 - 4*a*c; ok = L >= 0 ? 1 : 0; rootL = L >= 0 ? sqrt(L) : -1; limRootF = L >= 0 ? sqrt(a*p^2 + b*p + c) : -1; xv = a != 0 ? -b/(2*a) : 0; xvc = max(-3, min(3, xv)); py = L >= 0 ? sqrt(L) : -99",
   "geometry": null,
   "plot": {
    "range": [
@@ -22,102 +52,192 @@
     3
    ],
    "yRange": [
-    0,
-    4
+    -4,
+    8
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "x^2+1",
-     "label": "f(x)=x²+1 (루트 안 식)",
+     "fn": "a*x^2+b*x+c",
+     "label": "$f(x)=ax^2+bx+c$ (루트 안 식)",
      "color": "#2563eb"
     },
     {
-     "fn": "sqrt(x^2+1)",
-     "label": "√f(x)",
+     "fn": "sqrt(a*x^2+b*x+c)",
+     "label": "$\\sqrt{f(x)}$ — $f(x)\\ge 0$인 곳에만 존재",
      "color": "#dc2626"
+    },
+    {
+     "fn": "0*x + L",
+     "label": "$y=L$",
+     "color": "#a1a1aa",
+     "dashed": true
+    }
+   ],
+   "roots": [
+    {
+     "fn": "a*x^2+b*x+c",
+     "in": [
+      "=-3",
+      "=xvc"
+     ],
+     "label": "$f(x)=0$"
+    },
+    {
+     "fn": "a*x^2+b*x+c",
+     "in": [
+      "=xvc",
+      "=3"
+     ],
+     "label": "$f(x)=0$"
     }
    ],
    "points": [
     [
-     "=a",
+     "=p",
      "=L"
     ],
     [
-     "=a",
-     "=rfa"
+     "=p",
+     "=py"
     ]
    ],
-   "pointsLabel": "$x=a$일 때: $(a,\\ f(a))$, $(a,\\ \\sqrt{f(a)})$"
+   "pointsLabel": "$x=p$ 에서 $(p,\\ f(p))$ 와 $(p,\\ \\sqrt{f(p)})$ — 루트 안이 음수면 아래 점이 사라진다"
   },
   "readout": [
    {
-    "label": "L = lim f(x) = f(a)",
+    "label": "$L=\\lim f(x)=f(p)$",
     "expr": "L",
     "digits": 4
    },
    {
-    "label": "먼저 극한→나중 제곱근: √L",
+    "label": "먼저 극한 → 그다음 제곱근: $\\sqrt{L}$ (−1이면 실수 범위에서 정의되지 않음)",
     "expr": "rootL",
     "digits": 4
    },
    {
-    "label": "먼저 제곱근→나중 극한: lim √f(x)",
-    "expr": "rfa",
+    "label": "먼저 제곱근 → 그다음 극한: $\\lim \\sqrt{f(x)}$ (−1이면 실수 범위에서 정의되지 않음)",
+    "expr": "limRootF",
     "digits": 4
+   },
+   {
+    "label": "루트 안이 음수가 아닌가 (1=정의됨, 0=정의 안 됨)",
+    "expr": "ok",
+    "digits": 0
+   },
+   {
+    "label": "판별식 $D=b^2-4ac$ — $f$ 가 $x$축을 지나는지",
+    "expr": "D",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "a": 0
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "p": 1
    },
    {
-    "a": 1
+    "a": 1,
+    "b": 0,
+    "c": 1,
+    "p": 0
    },
    {
-    "a": 2
+    "a": -1,
+    "b": 0,
+    "c": 1,
+    "p": 0.5
    },
    {
-    "a": -1
+    "a": -1,
+    "b": 0,
+    "c": 1,
+    "p": 2
+   },
+   {
+    "a": 1,
+    "b": -2,
+    "c": 1,
+    "p": 1
+   },
+   {
+    "a": 0,
+    "b": 0,
+    "c": -2,
+    "p": 1
    }
   ],
   "invariants": [
-   "rootL^2 - L",
-   "L - (a^2+1)",
-   "rootL - rfa"
+   "L - (a*p^2 + b*p + c)",
+   "D - (b^2 - 4*a*c)",
+   "L >= 0 ? rootL^2 - L : 0",
+   "L >= 0 ? rootL - limRootF : 0",
+   "ok - (L >= 0 ? 1 : 0)",
+   "a != 0 ? a*(2*xv) + b : 0"
   ],
   "oracle": [
    {
     "params": {
-     "a": 0
+     "a": 1,
+     "b": 0,
+     "c": 1,
+     "p": 0
     },
     "expect": {
      "L": 1,
      "rootL": 1,
-     "rfa": 1
+     "limRootF": 1,
+     "D": -4,
+     "ok": 1
     }
    },
    {
     "params": {
-     "a": 2
+     "a": 1,
+     "b": 0,
+     "c": 1,
+     "p": 2
     },
     "expect": {
      "L": 5,
      "rootL": 2.23606797749979,
-     "rfa": 2.23606797749979
+     "D": -4,
+     "ok": 1
     }
    },
    {
     "params": {
-     "a": -1
+     "a": 1,
+     "b": -2,
+     "c": 1,
+     "p": 1
     },
     "expect": {
-     "L": 2,
-     "rootL": 1.4142135623730951,
-     "rfa": 1.4142135623730951
+     "L": 0,
+     "rootL": 0,
+     "limRootF": 0,
+     "D": 0,
+     "ok": 1
+    }
+   },
+   {
+    "params": {
+     "a": -1,
+     "b": 0,
+     "c": 1,
+     "p": 2
+    },
+    "expect": {
+     "L": -3,
+     "rootL": -1,
+     "limRootF": -1,
+     "D": 4,
+     "ok": 0
     }
    }
   ],

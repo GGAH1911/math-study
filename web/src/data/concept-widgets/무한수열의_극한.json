@@ -1,11 +1,56 @@
 {
  "id": "무한수열의_극한",
  "spec": {
-  "title": "무한수열의 극한: a_n = 1 + 1/n",
+  "title": "무한수열의 극한: ε–N 정의와 수렴·발산",
   "params": [
    {
+    "name": "A",
+    "label": "A (극한 후보 · 수렴값)",
+    "type": "slider",
+    "min": -2,
+    "max": 3,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "B",
+    "label": "B (1/n 항 · 접근 속도와 방향)",
+    "type": "slider",
+    "min": -4,
+    "max": 4,
+    "init": 1,
+    "step": 0.5
+   },
+   {
+    "name": "C",
+    "label": "C (n 항 · 0이 아니면 발산)",
+    "type": "slider",
+    "min": -0.3,
+    "max": 0.3,
+    "init": 0,
+    "step": 0.05
+   },
+   {
+    "name": "D",
+    "label": "D ((-1)^n 항 · 0이 아니면 진동)",
+    "type": "slider",
+    "min": -1,
+    "max": 1,
+    "init": 0,
+    "step": 0.1
+   },
+   {
+    "name": "eps",
+    "label": "ε (허용 오차)",
+    "type": "slider",
+    "min": 0.05,
+    "max": 1,
+    "init": 0.5,
+    "step": 0.05
+   },
+   {
     "name": "N",
-    "label": "N (자연수)",
+    "label": "N (기준 번호)",
     "type": "slider",
     "min": 1,
     "max": 30,
@@ -13,112 +58,276 @@
     "step": 1
    }
   ],
-  "scope": "L=1; eps=1/(N+1); an=1+1/(N+1)",
+  "scope": "L = A; aN1 = A + B/(N+1) + C*(N+1) + D*cos(pi*(N+1)); err = abs(aN1 - L); conv = (abs(C) < 0.001 ? (abs(D) < 0.001 ? 1 : 0) : 0); tail = (conv == 1 ? abs(B)/(N+1) : 1000000); ok = (tail < eps ? 1 : 0); Nreq = (conv == 1 ? max(1, ceil(abs(B)/eps)) : -1)",
   "plot": {
    "range": [
     1,
-    35
+    30
    ],
    "yRange": [
-    0.4,
-    2.2
+    -3,
+    6
    ],
+   "showAxes": true,
+   "showGrid": true,
    "fns": [
     {
-     "fn": "1+1/x",
-     "label": "a_n = 1 + 1/n",
-     "color": "blue"
+     "fn": "A + B/x + C*x + D*cos(pi*x)",
+     "label": "$a_n = A + \\dfrac{B}{n} + Cn + D(-1)^n$",
+     "color": "#2196F3"
     },
     {
      "fn": "L",
-     "label": "$L=1$",
-     "color": "gray"
+     "label": "$L = A$",
+     "color": "#9ca3af",
+     "dashed": true
     },
     {
      "fn": "L+eps",
      "label": "$L+\\varepsilon$",
-     "color": "green"
+     "color": "#10b981",
+     "dashed": true
     },
     {
      "fn": "L-eps",
      "label": "$L-\\varepsilon$",
-     "color": "green"
+     "color": "#10b981",
+     "dashed": true
     }
    ],
    "points": [
     [
      "=N+1",
-     "=an"
+     "=aN1"
+    ],
+    [
+     "=N+2",
+     "=A + B/(N+2) + C*(N+2) + D*cos(pi*(N+2))"
+    ],
+    [
+     "=N+3",
+     "=A + B/(N+3) + C*(N+3) + D*cos(pi*(N+3))"
     ]
    ],
-   "pointsLabel": "$a_{N+1}$"
+   "pointsLabel": "$n>N$ 인 항들"
   },
   "readout": [
    {
-    "label": "N",
-    "expr": "N"
+    "label": "극한 후보 L",
+    "expr": "L",
+    "digits": 2
    },
    {
-    "label": "ε = 1/(N+1)",
-    "expr": "eps"
+    "label": "ε",
+    "expr": "eps",
+    "digits": 2
    },
    {
     "label": "a_{N+1}",
-    "expr": "an"
+    "expr": "aN1",
+    "digits": 4
    },
    {
-    "label": "|a_{N+1} - L|",
-    "expr": "abs(an-1)"
+    "label": "|a_{N+1} − L|",
+    "expr": "err",
+    "digits": 4
+   },
+   {
+    "label": "수렴? (1=수렴, 0=발산·진동)",
+    "expr": "conv",
+    "digits": 0
+   },
+   {
+    "label": "n>N 인 모든 항이 밴드 안? (1=예)",
+    "expr": "ok",
+    "digits": 0
+   },
+   {
+    "label": "이 ε에 충분한 N (없으면 −1)",
+    "expr": "Nreq",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "N": 1
-   },
-   {
+    "A": 1,
+    "B": 1,
+    "C": 0,
+    "D": 0,
+    "eps": 0.5,
     "N": 5
    },
    {
-    "N": 10
+    "A": 1,
+    "B": 1,
+    "C": 0,
+    "D": 0,
+    "eps": 0.05,
+    "N": 5
    },
    {
+    "A": 1,
+    "B": 1,
+    "C": 0,
+    "D": 0,
+    "eps": 0.05,
     "N": 20
+   },
+   {
+    "A": 1,
+    "B": 1,
+    "C": 0.2,
+    "D": 0,
+    "eps": 0.5,
+    "N": 5
+   },
+   {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "D": 1,
+    "eps": 0.5,
+    "N": 5
+   },
+   {
+    "A": 2,
+    "B": -3,
+    "C": 0,
+    "D": 0,
+    "eps": 0.5,
+    "N": 5
+   },
+   {
+    "A": 1,
+    "B": 0,
+    "C": 0,
+    "D": 0,
+    "eps": 0.05,
+    "N": 1
    }
   ],
   "invariants": [
-   "abs(an - (1+1/(N+1)))",
-   "abs(eps - 1/(N+1))",
-   "abs(an - L - eps)",
-   "abs((N+1)*eps - 1)"
+   "aN1 - (A + B/(N+1) + C*(N+1) + D*cos(pi*(N+1)))",
+   "err - abs(aN1 - L)",
+   "L - A",
+   "(conv == 1 ? tail - abs(B)/(N+1) : 0)",
+   "ok - (tail < eps ? 1 : 0)",
+   "(conv == 1 ? (abs(B)/(Nreq+1) < eps ? 0 : 1) : 0)",
+   "(abs(C) < 0.001 ? (abs(D) < 0.001 ? conv - 1 : conv) : conv)"
   ],
   "oracle": [
    {
     "params": {
-     "N": 1
-    },
-    "expect": {
+     "A": 1,
+     "B": 1,
+     "C": 0,
+     "D": 0,
      "eps": 0.5,
-     "an": 1.5
-    }
-   },
-   {
-    "params": {
      "N": 5
     },
     "expect": {
-     "eps": 0.16666666666666666,
-     "an": 1.1666666666666667
+     "L": 1,
+     "aN1": 1.1666666666666667,
+     "err": 0.16666666666666666,
+     "conv": 1,
+     "ok": 1,
+     "Nreq": 2
     }
    },
    {
     "params": {
-     "N": 10
+     "A": 1,
+     "B": 1,
+     "C": 0,
+     "D": 0,
+     "eps": 0.05,
+     "N": 5
     },
     "expect": {
-     "eps": 0.09090909090909091,
-     "an": 1.0909090909090908
+     "conv": 1,
+     "ok": 0,
+     "Nreq": 20
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "B": 1,
+     "C": 0,
+     "D": 0,
+     "eps": 0.05,
+     "N": 20
+    },
+    "expect": {
+     "ok": 1,
+     "aN1": 1.0476190476190477
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "B": 1,
+     "C": 0.2,
+     "D": 0,
+     "eps": 0.5,
+     "N": 5
+    },
+    "expect": {
+     "conv": 0,
+     "ok": 0,
+     "Nreq": -1,
+     "aN1": 2.3666666666666667
+    }
+   },
+   {
+    "params": {
+     "A": 0,
+     "B": 0,
+     "C": 0,
+     "D": 1,
+     "eps": 0.5,
+     "N": 5
+    },
+    "expect": {
+     "conv": 0,
+     "ok": 0,
+     "aN1": 1,
+     "err": 1,
+     "Nreq": -1
+    }
+   },
+   {
+    "params": {
+     "A": 2,
+     "B": -3,
+     "C": 0,
+     "D": 0,
+     "eps": 0.5,
+     "N": 5
+    },
+    "expect": {
+     "aN1": 1.5,
+     "err": 0.5,
+     "ok": 0,
+     "Nreq": 6
+    }
+   },
+   {
+    "params": {
+     "A": 1,
+     "B": 0,
+     "C": 0,
+     "D": 0,
+     "eps": 0.05,
+     "N": 1
+    },
+    "expect": {
+     "conv": 1,
+     "ok": 1,
+     "err": 0,
+     "Nreq": 1
     }
    }
   ],

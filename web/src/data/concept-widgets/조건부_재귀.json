@@ -1,28 +1,68 @@
 {
  "id": "조건부_재귀",
  "spec": {
-  "title": "조건부 재귀 탐구: Collatz 수열",
+  "title": "조건부 재귀 탐구: 조건이 규칙을 고르는 수열",
   "params": [
    {
     "name": "init",
     "label": "초기값 a₁",
     "type": "slider",
     "min": 1,
-    "max": 15,
+    "max": 20,
+    "init": 7,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "mode",
+    "label": "조건 기준 (0: 항의 값 aₙ / 1: 항의 번호 n)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "p",
+    "label": "곱하는 수 p",
+    "type": "slider",
+    "min": 1,
+    "max": 5,
     "init": 3,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "q",
+    "label": "더하는 수 q",
+    "type": "slider",
+    "min": 0,
+    "max": 6,
+    "init": 1,
+    "step": 1,
+    "unit": ""
+   },
+   {
+    "name": "r",
+    "label": "나누는 수 r (조건: aₙ이 r의 배수인가?)",
+    "type": "slider",
+    "min": 2,
+    "max": 4,
+    "init": 2,
     "step": 1,
     "unit": ""
    }
   ],
-  "scope": "a1=init; a2=(mod(a1,2)==0 ? a1/2 : 3*a1+1); a3=(mod(a2,2)==0 ? a2/2 : 3*a2+1); a4=(mod(a3,2)==0 ? a3/2 : 3*a3+1); a5=(mod(a4,2)==0 ? a4/2 : 3*a4+1); a6=(mod(a5,2)==0 ? a5/2 : 3*a5+1); a7=(mod(a6,2)==0 ? a6/2 : 3*a6+1); a8=(mod(a7,2)==0 ? a7/2 : 3*a7+1)",
+  "scope": "rr=(r<2 ? 2 : r); a1=init; a2=(mode==0 ? (mod(a1,rr)==0 ? a1/rr : p*a1+q) : a1+q); a3=(mode==0 ? (mod(a2,rr)==0 ? a2/rr : p*a2+q) : a2*p); a4=(mode==0 ? (mod(a3,rr)==0 ? a3/rr : p*a3+q) : a3+q); a5=(mode==0 ? (mod(a4,rr)==0 ? a4/rr : p*a4+q) : a4*p); a6=(mode==0 ? (mod(a5,rr)==0 ? a5/rr : p*a5+q) : a5+q); a7=(mode==0 ? (mod(a6,rr)==0 ? a6/rr : p*a6+q) : a6*p); a8=(mode==0 ? (mod(a7,rr)==0 ? a7/rr : p*a7+q) : a7+q); a9=(mode==0 ? (mod(a8,rr)==0 ? a8/rr : p*a8+q) : a8*p); a10=(mode==0 ? (mod(a9,rr)==0 ? a9/rr : p*a9+q) : a9+q); mx=max(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10); hit=(a1==1 ? 1 : (a2==1 ? 2 : (a3==1 ? 3 : (a4==1 ? 4 : (a5==1 ? 5 : (a6==1 ? 6 : (a7==1 ? 7 : (a8==1 ? 8 : (a9==1 ? 9 : (a10==1 ? 10 : 0))))))))))",
   "geometry": {
    "range": [
     0.5,
-    8.5
+    10.5
    ],
    "yRange": [
     0,
-    200
+    "=max(5, 1.15*mx)"
    ],
    "showAxes": true,
    "showGrid": true,
@@ -33,7 +73,7 @@
       1,
       "=a1"
      ],
-     "label": "a₁"
+     "label": "$a_1$"
     },
     {
      "type": "point",
@@ -41,7 +81,7 @@
       2,
       "=a2"
      ],
-     "label": "a₂"
+     "label": "$a_2$"
     },
     {
      "type": "point",
@@ -49,7 +89,7 @@
       3,
       "=a3"
      ],
-     "label": "a₃"
+     "label": "$a_3$"
     },
     {
      "type": "point",
@@ -57,7 +97,7 @@
       4,
       "=a4"
      ],
-     "label": "a₄"
+     "label": "$a_4$"
     },
     {
      "type": "point",
@@ -65,7 +105,7 @@
       5,
       "=a5"
      ],
-     "label": "a₅"
+     "label": "$a_5$"
     },
     {
      "type": "point",
@@ -73,7 +113,7 @@
       6,
       "=a6"
      ],
-     "label": "a₆"
+     "label": "$a_6$"
     },
     {
      "type": "point",
@@ -81,7 +121,7 @@
       7,
       "=a7"
      ],
-     "label": "a₇"
+     "label": "$a_7$"
     },
     {
      "type": "point",
@@ -89,7 +129,23 @@
       8,
       "=a8"
      ],
-     "label": "a₈"
+     "label": "$a_8$"
+    },
+    {
+     "type": "point",
+     "at": [
+      9,
+      "=a9"
+     ],
+     "label": "$a_9$"
+    },
+    {
+     "type": "point",
+     "at": [
+      10,
+      "=a10"
+     ],
+     "label": "$a_{10}$"
     },
     {
      "type": "segment",
@@ -167,6 +223,49 @@
       8,
       "=a8"
      ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      8,
+      "=a8"
+     ],
+     "to": [
+      9,
+      "=a9"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      9,
+      "=a9"
+     ],
+     "to": [
+      10,
+      "=a10"
+     ]
+    },
+    {
+     "type": "segment",
+     "from": [
+      0.5,
+      1
+     ],
+     "to": [
+      10.5,
+      1
+     ],
+     "dashed": true,
+     "color": "#888"
+    },
+    {
+     "type": "text",
+     "at": [
+      10.2,
+      1
+     ],
+     "text": "$a_n=1$"
     }
    ]
   },
@@ -210,67 +309,94 @@
     "label": "a₈",
     "expr": "a8",
     "digits": 0
+   },
+   {
+    "label": "a₉",
+    "expr": "a9",
+    "digits": 0
+   },
+   {
+    "label": "a₁₀",
+    "expr": "a10",
+    "digits": 0
+   },
+   {
+    "label": "최댓값",
+    "expr": "mx",
+    "digits": 0
+   },
+   {
+    "label": "1에 처음 도달한 항 번호(0이면 10항 내 미도달)",
+    "expr": "hit",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "init": 3
+    "init": 7,
+    "mode": 0,
+    "p": 3,
+    "q": 1,
+    "r": 2
    },
    {
-    "init": 5
+    "init": 6,
+    "mode": 0,
+    "p": 3,
+    "q": 1,
+    "r": 2
    },
    {
-    "init": 7
+    "init": 1,
+    "mode": 1,
+    "p": 2,
+    "q": 3,
+    "r": 2
    },
    {
-    "init": 10
+    "init": 7,
+    "mode": 0,
+    "p": 5,
+    "q": 1,
+    "r": 2
+   },
+   {
+    "init": 9,
+    "mode": 0,
+    "p": 3,
+    "q": 1,
+    "r": 3
+   },
+   {
+    "init": 15,
+    "mode": 0,
+    "p": 3,
+    "q": 1,
+    "r": 2
    }
   ],
   "invariants": [
-   "a2-(mod(a1,2)==0 ? a1/2 : 3*a1+1)",
-   "a3-(mod(a2,2)==0 ? a2/2 : 3*a2+1)",
-   "a4-(mod(a3,2)==0 ? a3/2 : 3*a3+1)",
-   "a5-(mod(a4,2)==0 ? a4/2 : 3*a4+1)",
-   "a6-(mod(a5,2)==0 ? a5/2 : 3*a5+1)",
-   "a7-(mod(a6,2)==0 ? a6/2 : 3*a6+1)",
-   "a8-(mod(a7,2)==0 ? a7/2 : 3*a7+1)"
+   "a2-(mode==0 ? (mod(a1,rr)==0 ? a1/rr : p*a1+q) : a1+q)",
+   "a3-(mode==0 ? (mod(a2,rr)==0 ? a2/rr : p*a2+q) : a2*p)",
+   "a4-(mode==0 ? (mod(a3,rr)==0 ? a3/rr : p*a3+q) : a3+q)",
+   "a5-(mode==0 ? (mod(a4,rr)==0 ? a4/rr : p*a4+q) : a4*p)",
+   "a6-(mode==0 ? (mod(a5,rr)==0 ? a5/rr : p*a5+q) : a5+q)",
+   "a7-(mode==0 ? (mod(a6,rr)==0 ? a6/rr : p*a6+q) : a6*p)",
+   "a8-(mode==0 ? (mod(a7,rr)==0 ? a7/rr : p*a7+q) : a7+q)",
+   "a9-(mode==0 ? (mod(a8,rr)==0 ? a8/rr : p*a8+q) : a8*p)",
+   "a10-(mode==0 ? (mod(a9,rr)==0 ? a9/rr : p*a9+q) : a9+q)",
+   "mx-max(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)"
   ],
   "oracle": [
    {
     "params": {
-     "init": 3
-    },
-    "expect": {
-     "a1": 3,
-     "a2": 10,
-     "a3": 5,
-     "a4": 16,
-     "a5": 8,
-     "a6": 4,
-     "a7": 2,
-     "a8": 1
-    }
-   },
-   {
-    "params": {
-     "init": 5
-    },
-    "expect": {
-     "a1": 5,
-     "a2": 16,
-     "a3": 8,
-     "a4": 4,
-     "a5": 2,
-     "a6": 1,
-     "a7": 4,
-     "a8": 2
-    }
-   },
-   {
-    "params": {
-     "init": 7
+     "init": 7,
+     "mode": 0,
+     "p": 3,
+     "q": 1,
+     "r": 2
     },
     "expect": {
      "a1": 7,
@@ -280,7 +406,103 @@
      "a5": 17,
      "a6": 52,
      "a7": 26,
-     "a8": 13
+     "a8": 13,
+     "a9": 40,
+     "a10": 20,
+     "mx": 52,
+     "hit": 0
+    }
+   },
+   {
+    "params": {
+     "init": 6,
+     "mode": 0,
+     "p": 3,
+     "q": 1,
+     "r": 2
+    },
+    "expect": {
+     "a1": 6,
+     "a2": 3,
+     "a3": 10,
+     "a4": 5,
+     "a5": 16,
+     "a6": 8,
+     "a7": 4,
+     "a8": 2,
+     "a9": 1,
+     "a10": 4,
+     "mx": 16,
+     "hit": 9
+    }
+   },
+   {
+    "params": {
+     "init": 1,
+     "mode": 1,
+     "p": 2,
+     "q": 3,
+     "r": 2
+    },
+    "expect": {
+     "a1": 1,
+     "a2": 4,
+     "a3": 8,
+     "a4": 11,
+     "a5": 22,
+     "a6": 25,
+     "a7": 50,
+     "a8": 53,
+     "a9": 106,
+     "a10": 109,
+     "mx": 109,
+     "hit": 1
+    }
+   },
+   {
+    "params": {
+     "init": 7,
+     "mode": 0,
+     "p": 5,
+     "q": 1,
+     "r": 2
+    },
+    "expect": {
+     "a1": 7,
+     "a2": 36,
+     "a3": 18,
+     "a4": 9,
+     "a5": 46,
+     "a6": 23,
+     "a7": 116,
+     "a8": 58,
+     "a9": 29,
+     "a10": 146,
+     "mx": 146,
+     "hit": 0
+    }
+   },
+   {
+    "params": {
+     "init": 9,
+     "mode": 0,
+     "p": 3,
+     "q": 1,
+     "r": 3
+    },
+    "expect": {
+     "a1": 9,
+     "a2": 3,
+     "a3": 1,
+     "a4": 4,
+     "a5": 13,
+     "a6": 40,
+     "a7": 121,
+     "a8": 364,
+     "a9": 1093,
+     "a10": 3280,
+     "mx": 3280,
+     "hit": 3
     }
    }
   ],
