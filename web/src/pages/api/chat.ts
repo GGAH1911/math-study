@@ -26,7 +26,7 @@ type ChatRequest = {
   slug: string;            // <collection>/<slug> the chat is anchored to ('__nav__' for dashboard)
   collection?: 'concepts' | 'problems' | 'dashboard';
   messages: ChatMessage[]; // full conversation history, last entry is the new user msg
-  model?: 'haiku' | 'sonnet' | 'opus' | 'deepseek';
+  model?: 'haiku' | 'sonnet' | 'opus' | 'tutor';
 };
 
 // --- Security hardening ----------------------------------------------------
@@ -38,10 +38,12 @@ type ChatRequest = {
 const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$|^__nav__$/;
 const ALLOWED_COLLECTIONS: ReadonlySet<'concepts' | 'problems' | 'dashboard'> =
   new Set(['concepts', 'problems', 'dashboard']);
-// 'deepseek' = Nous Portal(DeepSeek V4 Flash). **text-only 모델**이라 이미지가 붙은 턴은
-// 아래에서 claude(비전) 로 자동 폴백한다 — 모델 선택은 요청이 하지만 비전 가능 여부는 서버가 판정.
-const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus' | 'deepseek'> =
-  new Set(['haiku', 'sonnet', 'opus', 'deepseek']);
+// 'tutor' = **제품 경로**(외부 API, 기본 openai/gpt-5.6-luna). 판매 가능해야 하므로 개인 구독에
+// 묶인 claude CLI 를 쓰지 않는다. luna 는 비전 지원이라 이미지 턴도 그대로 처리한다
+// (초기엔 DeepSeek 을 후보로 뒀다가 text-only 라 탈락 — 학생 손풀이를 못 본다).
+// haiku/sonnet/opus 는 구독 경로(개발·폴백용)로 남긴다.
+const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus' | 'tutor'> =
+  new Set(['haiku', 'sonnet', 'opus', 'tutor']);
 const MAX_USER_MESSAGE_CHARS = 4000;
 const MAX_ASSISTANT_MESSAGE_CHARS = 12_000; // 다단 작도 응답 (의존 그래프 + sympy + geometry spec) 수용
 const MAX_HISTORY_TURNS = 30;
@@ -167,7 +169,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       status: 400, headers: { 'Content-Type': 'application/json' },
     });
   }
-  const { slug, collection = 'concepts', messages, model = 'haiku' } = body;
+  // 기본 모델: 제품은 'tutor'(외부 API), 미설정·키없음이면 구독 haiku 로 폴백.
+  //   MS_TUTOR_DEFAULT 로 뒤집을 수 있게 둔다 — 문제가 생기면 재배포 없이 env 만 바꿔 되돌린다.
+  const DEFAULT_MODEL = (process.env.MS_TUTOR_DEFAULT === 'haiku' || !process.env.NOUS_API_KEY) ? 'haiku' : 'tutor';
+  const { slug, collection = 'concepts', messages, model = DEFAULT_MODEL } = body;
 
   if (!slug || typeof slug !== 'string' || !SLUG_RE.test(slug)) {
     return new Response(JSON.stringify({ error: 'invalid slug' }), {
@@ -249,7 +254,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
     } catch { /* 조회 실패 시 frontmatter 폴백 */ }
   }
   // ★userMastery 는 staticPrefix 에 넣지 않는다(아래 dynamicSuffix 로) — 그래야 prefix 가 slug-only 로 고정.
-  const { systemPrompt: basePrompt, allowedDirs: baseDirs } = buildTutorPrompt(slug, collection);
+  // imagePaths = 문제 페이지의 도형/타일 절대경로. claude 경로는 allowedDirs+Read 로 보지만,
+  // 외부 API(tutor) 경로는 이 경로들을 읽어 base64 로 실어 보낸다.
+  const { systemPrompt: basePrompt, allowedDirs: baseDirs, imagePaths: pageImagePaths = [] } = buildTutorPrompt(slug, collection);
   // ★프롬프트 캐싱(실측 확정 2026-06-28): claude CLI 는 `--system-prompt`(및 -p 본문 prefix)를
   //   **prefix 캐싱한다** — 큰 SYS 고정 + 질문만 변경 시 cr 이 SYS 크기만큼 증가(22982→32265),
   //   prefix 한 글자 변경 시 붕괴(12745). production tutor_usage concepts max_cr≈29237 = 본문 캐시됨.
@@ -339,14 +346,13 @@ ${lines}`;
   const enableRead = allowedDirs.length > 0;
 
   // ── 백엔드 라우팅 ─────────────────────────────────────────────────────────────
-  // deepseek 은 text-only 라 **그림을 봐야 하는 턴은 처리할 수 없다**(첨부 이미지 or 문제 이미지 dir).
-  // 그런 턴은 조용히 claude 비전 경로로 되돌린다 — 학생 입장에선 답이 나오는 게 우선.
-  const wantNous = model === 'deepseek';
-  const useNous = wantNous && !enableRead && nousConfigured();
-  if (wantNous && !useNous) {
-    console.warn(`[chat] deepseek 요청이나 폴백: ${enableRead ? '이미지 턴(text-only 모델 불가)' : 'NOUS_API_KEY 없음'}`);
-  }
-  const effectiveModel: 'haiku' | 'sonnet' | 'opus' = useNous ? 'haiku' : (model === 'deepseek' ? 'haiku' : model);
+  // 'tutor' = 제품 경로(외부 API). 비전 모델이라 이미지 턴도 그대로 처리한다 — 이미지는 Read 도구가
+  // 아니라 base64 로 실어 보낸다(외부 API 엔 Read 개념이 없다).
+  // 키가 없을 때만 구독(haiku)으로 폴백한다 — 학생 입장에선 답이 나오는 게 우선.
+  const wantNous = model === 'tutor';
+  const useNous = wantNous && nousConfigured();
+  if (wantNous && !useNous) console.warn('[chat] tutor 경로 요청이나 NOUS_API_KEY 없음 → haiku 폴백');
+  const effectiveModel: 'haiku' | 'sonnet' | 'opus' = model === 'tutor' ? 'haiku' : model;
 
   const args: string[] = [
     '-p',
@@ -395,14 +401,19 @@ ${lines}`;
         const ac = new AbortController();
         state.abort = ac;
         await streamNousTutor(
-          { systemPrompt, userPrompt, signal: ac.signal },
+          {
+            systemPrompt, userPrompt, signal: ac.signal,
+            // 사용자 첨부는 이미 data URL. 문제 페이지 도형·타일은 경로로 넘겨 모듈이 읽는다.
+            imageDataUrls: lastUser.images ?? [],
+            imageFilePaths: pageImagePaths,
+          },
           {
             onDelta: (text) => emit('delta', { text }),
             onError: (message) => emit('error', { message }),
             onDone: (usage) => {
               if (usage) {
                 void logTutorUsage({
-                  userId: learnerUserId, collection, slug, model: 'deepseek', byok: true,
+                  userId: learnerUserId, collection, slug, model: 'tutor', byok: true,
                   inputTokens: usage.inputTokens, outputTokens: usage.outputTokens,
                   cacheReadTokens: usage.cacheReadTokens, cacheCreationTokens: 0,
                 });
