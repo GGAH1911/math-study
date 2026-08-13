@@ -38,10 +38,11 @@ function snapshot() {
     if (!line.trim()) continue;
     try { rows.push(JSON.parse(line)); } catch { /* 쓰는 중인 마지막 줄 */ }
   }
-  return { rows, mtime: statSync(JSONL).mtimeMs };
+  const st = statSync(JSONL);
+  return { rows, mtime: st.mtimeMs, birth: st.birthtimeMs || st.ctimeMs };
 }
 
-function summarize(rows) {
+function summarize(rows, wallSec) {
   const byStatus = {}, byGrade = {}, bySubject = {};
   let sec = 0, flat = 0;
   for (const r of rows) {
@@ -55,9 +56,13 @@ function summarize(rows) {
   }
   const done = rows.length;
   const avg = done ? sec / done : 0;
+  // ★ETA 는 **벽시계** 기준이어야 한다. avgSec 은 '한 건이 걸린 시간' 이라 6병렬에서는
+  //   실제보다 6배 부풀어 나온다(실측 128분을 762분으로 표시했다).
+  const perItem = done && wallSec ? wallSec / done : avg;
   return {
     done, total: totalFromLog(), byStatus, byGrade, bySubject, flat,
     avgSec: Number(avg.toFixed(1)),
+    perItemSec: Number(perItem.toFixed(2)),
     recent: rows.slice(-14).reverse(),
   };
 }
@@ -98,7 +103,8 @@ async function tick(){
   const {done,total,byStatus,byGrade,avgSec,recent,flat}=d;
   const pct=total?Math.min(100,done/total*100):0;
   el('pb').style.width=pct.toFixed(1)+'%';
-  const left=Math.max(0,total-done), eta=avgSec&&left?Math.round(left*avgSec/60):0;
+  const left=Math.max(0,total-done);
+  const eta=d.perItemSec&&left?Math.round(left*d.perItemSec/60):0;
   el('pct').textContent=\`\${done} / \${total} (\${pct.toFixed(1)}%) · 남은 예상 \${eta}분\`;
   el('meta').textContent=new Date().toLocaleTimeString('ko-KR')+' 기준 · 4초마다 갱신';
   el('cards').innerHTML=
@@ -106,7 +112,8 @@ async function tick(){
     card((byStatus['map-fail']||0)+(byStatus['no-scope']||0),'실패',((byStatus['map-fail']||0)?'bad':''))+
     card(byStatus.partial||0,'부분',(byStatus.partial?'warn':''))+
     card(flat||0,'평면 잔존',(flat?'bad':'ok'))+
-    card(avgSec+'s','건당 평균');
+    card(avgSec+'s','호출당(모델)')+
+    card((d.perItemSec??0)+'s','건당(벽시계)');
   el('grades').innerHTML='<div class="sub">학년 분포</div>'+
     Object.entries(byGrade).sort((a,b)=>b[1]-a[1])
       .map(([g,n])=>\`<span class="pill">\${g} \${n}</span>\`).join('');
@@ -122,9 +129,10 @@ tick(); setInterval(tick,4000);
 
 createServer((req, res) => {
   if (req.url === '/data') {
-    const { rows } = snapshot();
+    const { rows, birth } = snapshot();
+    const wallSec = birth ? (Date.now() - birth) / 1000 : 0;
     res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' });
-    res.end(JSON.stringify(summarize(rows)));
+    res.end(JSON.stringify(summarize(rows, wallSec)));
     return;
   }
   res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
