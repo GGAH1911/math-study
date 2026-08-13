@@ -129,6 +129,15 @@ def main() -> int:
                 el = time.time() - t_start
                 print(f'  {i}/{len(ordered)} · {el/i:.1f}s/건 · 남은 예상 {(len(ordered)-i)*el/i/60:.0f}분', flush=True)
 
+    # ★재매핑은 **문제 파일만** 건드려야 한다. 개념 트리가 바뀌었다면 그건 사고다
+    #   (2026-08-13: _ensure_concept_exists 가 실제 노트 186개를 stub 으로 덮었다).
+    dirty_c = subprocess.run(['git', 'status', '--porcelain', '--', 'docs/concepts'],
+                             capture_output=True, text=True, cwd=ROOT).stdout.strip()
+    if dirty_c:
+        n = len(dirty_c.splitlines())
+        print(f'\n[경고] docs/concepts 가 {n}개 변경됐다 — 재매핑은 개념 트리를 건드리면 안 된다.')
+        print('      복구: git checkout -- docs/concepts')
+
     st = defaultdict(int)
     for r in lock_out:
         st[r['status']] += 1

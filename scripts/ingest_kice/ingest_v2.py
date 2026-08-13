@@ -201,11 +201,19 @@ def _ensure_concept_exists(slug: str, parent_unit: str | None,
     if not slug:
         return False
     concepts_root = ROOT / 'docs' / 'concepts'
+    path = concepts_root / f'{slug}.md'
+    # ★★파일이 있으면 **무조건** 손대지 않는다. 이 함수는 이름이 '보장' 이지만 하는 일은
+    #   write 다 — 존재 판정이 한 번만 어긋나면 그 즉시 실제 노트가 stub 으로 사라진다.
+    #   2026-08-13 에 그 일이 실제로 났다(개념 186개가 4-7줄 템플릿으로 덮였다).
+    #   판정 로직이 또 틀려도 **데이터는 살아남아야 한다** — 그래서 판정보다 앞에 둔다.
+    if path.exists():
+        return False
     # 개념트리는 중첩(docs/concepts/<도메인>/<학년>/<단원>.md). 정규화 매칭으로
     # 표기차(언더스코어 등)까지 흡수 — flat 중복 stub 양산 방지(과거 490종 사고).
-    if _norm_concept(slug) in _concept_norm_index():
+    # ★경로 인덱스를 **먼저** 본다. _canonical_concept 가 전체 경로를 돌려주게 바뀌었는데
+    #   잎 이름 인덱스만 보면 'a/b/유리지수' 를 "없는 개념" 으로 판정한다 — 그게 위 사고의 원인.
+    if _norm_concept(slug) in _concept_path_index() or _norm_concept(slug) in _concept_norm_index():
         return False
-    path = concepts_root / f'{slug}.md'
     prereq_line = f'prerequisites: [docs/concepts/{parent_unit}.md]' if parent_unit else 'prerequisites: []'
     fm = (
         '---\n'
