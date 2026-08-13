@@ -37,8 +37,28 @@
      "fn": "x^2/(4*p)",
      "label": "x²=4py",
      "color": "#1f77b4"
+    },
+    {
+     "fn": "-p",
+     "label": "y=-p (준선)",
+     "color": "#ff7f0e"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=py"
+    ],
+    [
+     "=0",
+     "=p"
+    ],
+    [
+     "=x",
+     "=-p"
+    ]
+   ],
+   "pointsLabel": "$P(x,y),\\,F(0,p),\\,H(x,-p)$"
   },
   "readout": [
    {

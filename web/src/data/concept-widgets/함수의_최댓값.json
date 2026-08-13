@@ -61,7 +61,14 @@
      "label": "최댓값 M",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {

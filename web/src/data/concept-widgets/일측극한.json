@@ -55,7 +55,14 @@
      "label": "우극한 L+",
      "color": "orange"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fval"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {

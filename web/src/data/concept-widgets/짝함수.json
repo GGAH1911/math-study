@@ -38,7 +38,18 @@
      "label": "f(x)=a^x+a^{-x}",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fx"
+    ],
+    [
+     "=-x",
+     "=fmx"
+    ]
+   ],
+   "pointsLabel": "$P(x,f(x)),\\ P(-x,f(-x))$"
   },
   "readout": [
    {

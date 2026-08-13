@@ -42,7 +42,14 @@
      "label": "y = logₐx",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x,\\ \\log_a x)$"
   },
   "readout": [
    {

@@ -41,7 +41,13 @@
      "label": "arctan x  (치역 (-π/2, π/2))",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    ["=x", "=asx"],
+    ["=x", "=acx"],
+    ["=x", "=atx"]
+   ],
+   "pointsLabel": "$(x,\\ \\arcsin x),\\ (x,\\ \\arccos x),\\ (x,\\ \\arctan x)$"
   },
   "readout": [
    {

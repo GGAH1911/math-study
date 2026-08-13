@@ -40,7 +40,14 @@
      "label": "y = x",
      "color": "#9ca3af"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=lnx"
+    ]
+   ],
+   "pointsLabel": "$(x,\\ \\ln x)$"
   },
   "readout": [
    {

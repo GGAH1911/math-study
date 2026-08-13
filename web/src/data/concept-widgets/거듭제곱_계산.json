@@ -40,7 +40,14 @@
      "label": "y = a^x",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=val"
+    ]
+   ],
+   "pointsLabel": "$(x, a^x)$"
   },
   "readout": [
    {

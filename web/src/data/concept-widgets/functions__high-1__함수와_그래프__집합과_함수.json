@@ -29,7 +29,14 @@
      "label": "f(x)=x²",
      "color": "#2563eb"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {

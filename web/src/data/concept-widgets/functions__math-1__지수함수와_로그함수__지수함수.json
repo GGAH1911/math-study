@@ -45,7 +45,14 @@
      "label": "y = (1/a)ˣ (y축 대칭)",
      "color": "#f97316"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=ax"
+    ]
+   ],
+   "pointsLabel": "$(x,\\,a^x)$"
   },
   "readout": [
    {

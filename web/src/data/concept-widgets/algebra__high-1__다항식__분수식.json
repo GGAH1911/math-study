@@ -39,7 +39,14 @@
      "label": "x+1 (약분)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=f"
+    ]
+   ],
+   "pointsLabel": "$(x,\\,f(x))$"
   },
   "readout": [
    {

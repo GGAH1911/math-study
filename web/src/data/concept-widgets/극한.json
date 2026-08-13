@@ -4,7 +4,7 @@
   "title": "극한의 개념",
   "params": [
    {
-    "name": "x",
+    "name": "x0",
     "label": "x",
     "type": "slider",
     "min": 0,
@@ -14,7 +14,7 @@
     "unit": ""
    }
   ],
-  "scope": "a=2; L=4; fx=(x^2-4)/(x-2); gx=x+2; actual_diff=abs(fx-L); expected_diff=abs(x-a)",
+  "scope": "a=2; L=4; fx=(x0^2-4)/(x0-2); gx=x0+2; actual_diff=abs(fx-L); expected_diff=abs(x0-a)",
   "plot": {
    "range": [
     0,
@@ -40,12 +40,19 @@
      "label": "L=4",
      "color": "green"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {
     "label": "x",
-    "expr": "x",
+    "expr": "x0",
     "digits": 2
    },
    {
@@ -73,16 +80,16 @@
  "recipe": {
   "samples": [
    {
-    "x": 1.5
+    "x0": 1.5
    },
    {
-    "x": 1.99
+    "x0": 1.99
    },
    {
-    "x": 2.01
+    "x0": 2.01
    },
    {
-    "x": 2.5
+    "x0": 2.5
    }
   ],
   "invariants": [
@@ -92,7 +99,7 @@
   "oracle": [
    {
     "params": {
-     "x": 1.5
+     "x0": 1.5
     },
     "expect": {
      "fx": 3.5,
@@ -103,7 +110,7 @@
    },
    {
     "params": {
-     "x": 1.99
+     "x0": 1.99
     },
     "expect": {
      "fx": 3.99,
@@ -114,7 +121,7 @@
    },
    {
     "params": {
-     "x": 2.5
+     "x0": 2.5
     },
     "expect": {
      "fx": 4.5,

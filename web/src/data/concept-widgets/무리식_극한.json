@@ -38,7 +38,14 @@
      "label": "극한값 1/4",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x,\\,f(x))$"
   },
   "readout": [
    {

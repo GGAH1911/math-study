@@ -47,7 +47,18 @@
      "label": "정규분포 f(x)",
      "color": "blue"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=f_x"
+    ],
+    [
+     "=x_mirror",
+     "=f_mirror"
+    ]
+   ],
+   "pointsLabel": "$(x,\\,f(x))$ 와 대칭점"
   },
   "readout": [
    {

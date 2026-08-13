@@ -35,7 +35,14 @@
      "label": "약분 후: x+1",
      "color": "#f59e0b"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {

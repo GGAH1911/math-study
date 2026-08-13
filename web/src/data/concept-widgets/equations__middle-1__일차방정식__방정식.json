@@ -35,7 +35,18 @@
      "label": "7",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x",
+     "=lhs"
+    ],
+    [
+     "=x",
+     "=rhs"
+    ]
+   ],
+   "pointsLabel": "$(x,\\,x{+}3)\\text{와 }(x,\\,7)$"
   },
   "readout": [
    {

@@ -4,7 +4,7 @@
   "title": "좌극한: x → a⁻ 일 때 f(x) → L",
   "params": [
    {
-    "name": "x",
+    "name": "xv",
     "label": "x (점 a=1의 왼쪽에서 접근)",
     "type": "slider",
     "min": 0,
@@ -14,7 +14,7 @@
     "unit": ""
    }
   ],
-  "scope": "a=1; L=2; fx=x^2+1; d=a-x; gap=L-fx",
+  "scope": "a=1; L=2; fx=xv^2+1; d=a-xv; gap=L-fx",
   "plot": {
    "range": [
     -0.2,
@@ -37,12 +37,19 @@
      "label": "좌극한 L=2",
      "color": "#dc2626"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=xv",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "$(x, f(x))$"
   },
   "readout": [
    {
     "label": "현재 x (x<a=1)",
-    "expr": "x",
+    "expr": "xv",
     "digits": 3
    },
    {
@@ -65,28 +72,28 @@
  "recipe": {
   "samples": [
    {
-    "x": 0
+    "xv": 0
    },
    {
-    "x": 0.5
+    "xv": 0.5
    },
    {
-    "x": 0.9
+    "xv": 0.9
    },
    {
-    "x": 0.99
+    "xv": 0.99
    }
   ],
   "invariants": [
-   "fx - (x^2 + 1)",
+   "fx - (xv^2 + 1)",
    "L - (a^2 + 1)",
-   "d - (a - x)",
+   "d - (a - xv)",
    "gap - (L - fx)"
   ],
   "oracle": [
    {
     "params": {
-     "x": 0
+     "xv": 0
     },
     "expect": {
      "fx": 1,
@@ -97,7 +104,7 @@
    },
    {
     "params": {
-     "x": 0.5
+     "xv": 0.5
     },
     "expect": {
      "fx": 1.25,
@@ -107,7 +114,7 @@
    },
    {
     "params": {
-     "x": 0.9
+     "xv": 0.9
     },
     "expect": {
      "fx": 1.81,
