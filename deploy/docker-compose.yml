@@ -54,7 +54,6 @@ services:
       # 제품 튜터(외부 API). 없으면 구독 haiku 로 폴백하므로 미설정도 안전.
       NOUS_API_KEY: ${MS_NOUS_API_KEY:-}
       NOUS_TUTOR_MODEL: ${MS_TUTOR_MODEL:-openai/gpt-5.6-luna}
-      MS_TUTOR_DEFAULT: ${MS_TUTOR_DEFAULT:-tutor}
       HOME: /home/node
     volumes:
       # 튜터 claude -p 구독 인증·설정. rw: OAuth 토큰 갱신 위해(시크릿은 이미지에 안 구움).

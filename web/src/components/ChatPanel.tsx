@@ -48,7 +48,6 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [streaming, setStreaming] = useState(false);
-  const [model, setModel] = useState<'haiku' | 'sonnet'>('haiku');
   const [error, setError] = useState<string | null>(null);
   const [mathOpen, setMathOpen] = useState(false);
   const [mathLatex, setMathLatex] = useState('');
@@ -218,7 +217,7 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
   // input field. The textarea is left untouched so the user can keep typing
   // their own follow-up while the note request flies off.
   const send = useChatSend({
-    input, pending, pendingDisplay, quoted, streaming, messages, slug, model, collection,
+    input, pending, pendingDisplay, quoted, streaming, messages, slug, collection,
     byokActive, byokApiKey, byokModel, byokBaseURL,
     setMessages, setError, setStreaming, setQuoted, setPendingDisplay, setPending, setInput, setImgError,
   });
@@ -340,35 +339,21 @@ export default function ChatPanel({ slug, unitTitle, collection = 'concepts', fi
         <div>
           <h3 className="text-sm font-semibold">{collection === 'dashboard' ? '🧭 학습 길잡이' : '🤖 튜터 대화'}</h3>
           <p className="text-xs text-[color:var(--color-muted)]">
-            {subtitle} 대화는 이 브라우저(localStorage)에 저장.
+            {subtitle} 대화 내용은 이 기기에 저장돼요.
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs">
           {/* BYOK 활성 시 학생 모델 표시, dev fallback 모드면 claude select */}
-          {byokActive ? (
+          {/* 모델 선택 UI 제거: 제품 튜터 모델은 **서버가 고정**한다(openai/gpt-5.6-luna).
+              학생이 고를 이유가 없고, 프런트가 model 을 명시해 보내면 서버 기본값을 덮어써
+              전환이 조용히 무력화된다(실제로 claude-haiku 가 계속 쓰이고 있었다).
+              BYOK(학생 본인 키)만 활성 시 표시한다. */}
+          {byokActive && (
             <span className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded px-2 py-1 text-[10px] font-mono"
                   title={byokBaseURL}>
               {isOllamaLike ? '🖥 ' : ''}{byokModel}
             </span>
-          ) : (
-            <select
-              value={model}
-              onChange={(e) => setModel(e.target.value as 'haiku' | 'sonnet')}
-              className="bg-[color:var(--color-surface)] border border-[color:var(--color-border)] rounded px-2 py-1 text-xs text-zinc-300 focus:outline-none focus:border-indigo-400"
-            >
-              <option value="haiku">claude-haiku</option>
-              <option value="sonnet">claude-sonnet</option>
-            </select>
           )}
-          <button
-            onClick={() => setByokOpen((v) => !v)}
-            title="내 API 키 설정"
-            className={`text-[10px] tracking-wider px-2 py-1 rounded transition ${
-              byokOpen ? 'bg-indigo-500/20 text-indigo-300' : 'text-zinc-500 hover:text-zinc-200'
-            }`}
-          >
-            ⚙ {byokActive ? '내 키' : '설정'}
-          </button>
           {messages.length > 0 && (
             <button
               onClick={clearChat}

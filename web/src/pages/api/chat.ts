@@ -41,7 +41,7 @@ const ALLOWED_COLLECTIONS: ReadonlySet<'concepts' | 'problems' | 'dashboard'> =
 // 'tutor' = **제품 경로**(외부 API, 기본 openai/gpt-5.6-luna). 판매 가능해야 하므로 개인 구독에
 // 묶인 claude CLI 를 쓰지 않는다. luna 는 비전 지원이라 이미지 턴도 그대로 처리한다
 // (초기엔 DeepSeek 을 후보로 뒀다가 text-only 라 탈락 — 학생 손풀이를 못 본다).
-// haiku/sonnet/opus 는 구독 경로(개발·폴백용)로 남긴다.
+// haiku/sonnet/opus 는 개발·디버깅 전용(요청이 명시할 때만) — 제품 경로의 폴백이 아니다.
 const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus' | 'tutor'> =
   new Set(['haiku', 'sonnet', 'opus', 'tutor']);
 const MAX_USER_MESSAGE_CHARS = 4000;
@@ -169,10 +169,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       status: 400, headers: { 'Content-Type': 'application/json' },
     });
   }
-  // 기본 모델: 제품은 'tutor'(외부 API), 미설정·키없음이면 구독 haiku 로 폴백.
-  //   MS_TUTOR_DEFAULT 로 뒤집을 수 있게 둔다 — 문제가 생기면 재배포 없이 env 만 바꿔 되돌린다.
-  const DEFAULT_MODEL = (process.env.MS_TUTOR_DEFAULT === 'haiku' || !process.env.NOUS_API_KEY) ? 'haiku' : 'tutor';
-  const { slug, collection = 'concepts', messages, model = DEFAULT_MODEL } = body;
+  // ★제품 튜터 모델은 **서버가 고정**한다(tutor = 외부 API, openai/gpt-5.6-luna).
+  //   프런트는 model 을 보내지 않는다 — 보내면 이 기본값을 덮어써 전환이 조용히 무력화된다.
+  //   haiku/sonnet/opus 는 개발·디버깅용으로만 남긴다(요청이 명시할 때만).
+  const { slug, collection = 'concepts', messages, model = 'tutor' } = body;
 
   if (!slug || typeof slug !== 'string' || !SLUG_RE.test(slug)) {
     return new Response(JSON.stringify({ error: 'invalid slug' }), {
@@ -348,10 +348,15 @@ ${lines}`;
   // ── 백엔드 라우팅 ─────────────────────────────────────────────────────────────
   // 'tutor' = 제품 경로(외부 API). 비전 모델이라 이미지 턴도 그대로 처리한다 — 이미지는 Read 도구가
   // 아니라 base64 로 실어 보낸다(외부 API 엔 Read 개념이 없다).
-  // 키가 없을 때만 구독(haiku)으로 폴백한다 — 학생 입장에선 답이 나오는 게 우선.
-  const wantNous = model === 'tutor';
-  const useNous = wantNous && nousConfigured();
-  if (wantNous && !useNous) console.warn('[chat] tutor 경로 요청이나 NOUS_API_KEY 없음 → haiku 폴백');
+  // ★폴백 없음: 키가 없거나 백엔드가 죽으면 **그건 고쳐야 할 장애**지 조용히 열등한 모델로
+  //   내려앉을 일이 아니다. 폴백은 장애를 숨겨 발견을 늦춘다(8/12 에 15시간 늦었다).
+  const useNous = model === 'tutor';
+  if (useNous && !nousConfigured()) {
+    console.error('[chat] NOUS_API_KEY 미설정 — 제품 튜터 불가');
+    return new Response(JSON.stringify({ error: 'tutor backend not configured' }), {
+      status: 503, headers: { 'Content-Type': 'application/json' },
+    });
+  }
   const effectiveModel: 'haiku' | 'sonnet' | 'opus' = model === 'tutor' ? 'haiku' : model;
 
   const args: string[] = [

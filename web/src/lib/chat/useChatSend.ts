@@ -14,7 +14,6 @@ export type ChatSendParams = {
   streaming: boolean;
   messages: ChatMessage[];
   slug: string;
-  model: 'haiku' | 'sonnet';
   collection: 'concepts' | 'problems' | 'dashboard';
   byokActive: boolean;
   byokApiKey: string;
@@ -32,7 +31,7 @@ export type ChatSendParams = {
 
 export function useChatSend(p: ChatSendParams) {
   const {
-    input, pending, pendingDisplay, quoted, streaming, messages, slug, model, collection,
+    input, pending, pendingDisplay, quoted, streaming, messages, slug, collection,
     byokActive, byokApiKey, byokModel, byokBaseURL,
     setMessages, setError, setStreaming, setQuoted, setPendingDisplay, setPending, setInput, setImgError,
   } = p;
@@ -86,7 +85,9 @@ export function useChatSend(p: ChatSendParams) {
               apiKey: byokApiKey || 'ollama', // ollama 등 인증 없는 endpoint 용 dummy
               baseURL: byokBaseURL,
             }
-          : { slug, collection, messages: history.slice(-MAX_HISTORY_TURNS), model };
+          // ★model 을 싣지 않는다 — 제품 모델은 서버가 고정한다. 프런트가 보내면 서버 기본값을
+          //   덮어써 전환이 조용히 무력화된다(claude-haiku 가 계속 쓰이던 원인).
+          : { slug, collection, messages: history.slice(-MAX_HISTORY_TURNS) };
         const res = await fetch(endpoint, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -293,6 +294,6 @@ export function useChatSend(p: ChatSendParams) {
     } finally {
       setStreaming(false);
     }
-  }, [input, pending, quoted, streaming, messages, slug, model, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
+  }, [input, pending, quoted, streaming, messages, slug, collection, byokActive, byokApiKey, byokModel, byokBaseURL]);
   return send;
 }
