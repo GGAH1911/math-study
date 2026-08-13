@@ -17,7 +17,9 @@ const A = process.argv.slice(2);
 // ★생성기·도메인·동시성은 교체 가능해야 한다: Opus(claude -p) ↔ Nous(HTTP) 비교, 도메인 확장(확률통계 등),
 //   HTTP 생성기는 프로세스 스폰이 없어 동시성을 더 올릴 수 있다(claude -p 는 2가 한계였음).
 const GEN = process.env.WIDGET_GEN || 'widget_generate.mjs';
+//   WIDGET_DOMAINS='*' = 도메인 무관 전체(미분류 domain 빈값 노드까지 포함).
 const DOMAINS = (process.env.WIDGET_DOMAINS || '함수,도형').split(',').map((s) => s.trim()).filter(Boolean);
+const ALL_DOMAINS = DOMAINS.includes('*');
 const N = parseInt((A[A.indexOf('--n') + 1]) || '15', 10), PAR = +(process.env.WIDGET_PAR || 2), MAXTRY = 3;
 const PRIORITY = A.includes('--priority'), COMMIT = A.includes('--commit');
 const LOG = `${LOGDIR}/widget_loop_${Math.floor(Date.now() / 1000)}.log`;
@@ -28,13 +30,13 @@ function walk(dir) { const o = []; for (const e of readdirSync(dir, { withFileTy
 function meta(p) { const raw = readFileSync(p, 'utf8'); const fm = raw.match(/^---\n([\s\S]*?)\n---/); if (!fm) return null; const d = (fm[1].match(/^domain:\s*(.+)$/m) || [])[1]?.trim(); const t = (fm[1].match(/^concept_type:\s*(.+)$/m) || [])[1]?.trim(); return { id: p.replace(`${CDIR}/`, '').replace(/\.md$/, ''), domain: d, type: t }; }
 
 const done = new Set(readdirSync(OUT).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', '')));
-const cands = walk(CDIR).map(meta).filter((c) => c && c.type === 'definition' && DOMAINS.includes(c.domain) && !done.has(safe(c.id)));
+const cands = walk(CDIR).map(meta).filter((c) => c && c.type === 'definition' && (ALL_DOMAINS || DOMAINS.includes(c.domain)) && !done.has(safe(c.id)));
 // 수능 단원 중요도(고가치 우선): 미적분 > 수1/2·선택 > 고1 > 중3 > 중2 > 중1
 const lvl = (id) => /\/calculus\//.test(id) ? 7 : /\/(math-[12]|geometry-elective|prob-stats-elective|electives?)\//.test(id) ? 6 : /\/high-1\//.test(id) ? 5 : /\/middle-3\//.test(id) ? 3 : /\/middle-2\//.test(id) ? 2 : /\/middle-1\//.test(id) ? 1 : 4;
 let queue;
 if (PRIORITY) { cands.sort((a, b) => lvl(b.id) - lvl(a.id) || a.id.localeCompare(b.id)); queue = cands.slice(0, N); }
 else { const stepN = Math.max(1, Math.floor(cands.length / N)); queue = cands.filter((_, i) => i % stepN === 0).slice(0, N); }
-log(`══ 워커풀${PRIORITY ? '(고가치순)' : ''}: 미처리후보 ${cands.length}, 이번 큐 ${queue.length}, par ${PAR}, maxtry ${MAXTRY} · gen ${GEN} · domains ${DOMAINS.join('/')} · LOG ${LOG}`);
+log(`══ 워커풀${PRIORITY ? '(고가치순)' : ''}: 미처리후보 ${cands.length}, 이번 큐 ${queue.length}, par ${PAR}, maxtry ${MAXTRY} · gen ${GEN} · domains ${ALL_DOMAINS ? '전체' : DOMAINS.join('/')} · LOG ${LOG}`);
 // ★LLM 모니터(llm_monitor_server) 리셋 신호 — 전체 큐 크기를 알려야 진행률이 맞는다.
 //   생성기는 건별 호출이라 자기 total 을 1 로밖에 못 말한다.
 try {
