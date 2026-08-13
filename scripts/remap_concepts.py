@@ -67,6 +67,9 @@ def main() -> int:
     ap.add_argument('--apply', action='store_true')
     ap.add_argument('--par', type=int, default=4)
     ap.add_argument('--model', default='sonnet')
+    # ★대상 지정 — `--limit` 만으로는 '어떤 30건' 인지 통제할 수 없다. 2028 예시만 다시
+    #   돌리려다 엉뚱한 30건을 처리한 적이 있다(2026-08-13).
+    ap.add_argument('--only', default='', help='슬러그에 이 문자열이 포함된 것만')
     args = ap.parse_args()
 
     if args.apply:
@@ -83,6 +86,8 @@ def main() -> int:
             except Exception: pass
 
     items = [t for t in targets() if t['slug'] not in done]
+    if args.only:
+        items = [t for t in items if args.only in t['slug']]
     # 과목별로 묶는다 — 메뉴(시스템 프롬프트)가 같아야 캐시가 산다.
     by_subj = defaultdict(list)
     for t in items:
