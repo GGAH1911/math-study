@@ -47,6 +47,10 @@ const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus' | 'tutor'> =
 const MAX_USER_MESSAGE_CHARS = 4000;
 const MAX_ASSISTANT_MESSAGE_CHARS = 12_000; // 다단 작도 응답 (의존 그래프 + sympy + geometry spec) 수용
 const MAX_HISTORY_TURNS = 30;
+// ★후속 턴에서도 그림을 기억하게 하는 창(窓). 이 값이 0 이면 학생이 손풀이 사진을 올리고
+//   "그럼 3번째 줄은?" 하고 물었을 때 튜터가 그림을 못 본다 — 필기 채점이 한 턴짜리가 된다.
+//   전 대화 유지는 비용 폭증(이미지는 캐시가 안 걸린다) → 최근 N 턴만.
+const IMAGE_CONTEXT_TURNS = 2;
 const MAX_TOTAL_HISTORY_CHARS = 60_000;
 
 // Only forward env vars the claude CLI actually needs. Strip ssh agents,
@@ -88,13 +92,49 @@ function formatHistory(messages: ChatMessage[]): string {
   // Take all but the last (which is the new user message)
   const history = messages.slice(0, -1);
   if (history.length === 0) return '';
+  // ★이미지가 붙었던 턴을 텍스트로도 표시한다. 첨부 이미지는 아래에서 **최근 N턴만** 실어 보내므로,
+  //   창 밖으로 밀려난 턴은 "사진이 있었다"는 사실이라도 남아야 모델이 맥락을 잃지 않는다.
   return [
     '--- 이전 대화 ---',
-    ...history.map((m) => `[${m.role === 'user' ? '학생' : '튜터'}]: ${m.content}`),
+    ...history.map((m) => {
+      const who = m.role === 'user' ? '학생' : '튜터';
+      const img = m.role === 'user' && m.images?.length ? ` [이미지 ${m.images.length}장 첨부]` : '';
+      return `[${who}]${img}: ${m.content}`;
+    }),
     '',
     '--- 학생의 새 질문 ---',
   ].join('\n');
 }
+
+/**
+ * **최근 N개 사용자 턴 이내**에 붙은 첨부 이미지만 모아 반환(오래된 것 → 최신 순).
+ *
+ * ★거리 기준이지 "이미지 있는 최근 N턴"이 아니다. 후자로 짜면 20턴 전 그림도 영원히 재전송돼
+ *   비용이 단조 증가한다(이미지는 프롬프트 캐시가 안 걸린다).
+ * ★창 밖으로 밀려난 그림의 맥락은 **튜터가 첫 턴에 남긴 전사 요약**이 텍스트로 이어받는다
+ *   (아래 TRANSCRIBE_HINT). 그래서 창을 짧게 둬도 후속 질문이 무너지지 않는다.
+ */
+function recentImages(messages: ChatMessage[], turns: number): { urls: string[]; fromPast: number } {
+  const userIdx = messages.map((m, i) => (m.role === 'user' ? i : -1)).filter((i) => i >= 0);
+  const windowStart = userIdx[Math.max(0, userIdx.length - Math.max(1, turns))] ?? 0;
+  const urls: string[] = [];
+  let fromPast = 0;
+  const lastIdx = messages.length - 1;
+  for (let i = windowStart; i < messages.length; i++) {
+    const m = messages[i];
+    if (m.role !== 'user' || !m.images?.length) continue;
+    for (const u of m.images) urls.push(u);
+    if (i !== lastIdx) fromPast += m.images.length;
+  }
+  return { urls, fromPast };
+}
+
+/** 첨부가 있는 턴에만 붙이는 지시 — 이미지가 창 밖으로 나가도 맥락이 텍스트로 남게 한다. */
+const TRANSCRIBE_HINT =
+  '[중요: 답변 안에 이 이미지에서 읽어낸 **핵심 내용을 한두 문장으로 옮겨 적어라**'
+  + '(학생 풀이면 각 줄의 식, 문제면 문제의 식과 조건). 이후 턴에는 이 이미지가 전달되지 않을 수 있고,'
+  + ' 그때는 네가 남긴 이 기록만이 유일한 단서다.]';
+
 
 // --- 연결된 기출 주입 -------------------------------------------------------
 // 개념 노드의 튜터가 "이 개념에 연결된 기출이 뭔지" 몰라 "DB 접근 못 한다"고 답하던 문제 수정.
@@ -226,19 +266,25 @@ export const POST: APIRoute = async ({ request, locals }) => {
       status: 400, headers: { 'Content-Type': 'application/json' },
     });
   }
-  // 첨부 이미지 검증 — data:image/* base64, 1장, ~5MB.
-  if (lastUser.images !== undefined) {
-    if (!Array.isArray(lastUser.images) || lastUser.images.length > 6) {   // 자동 타일 최대 6장
-      return new Response(JSON.stringify({ error: 'invalid images' }), {
+  // 첨부 이미지 검증 — data:image/* base64, ~5MB.
+  // ★마지막 턴뿐 아니라 **히스토리의 이미지도 검증**한다. 아래에서 최근 턴 이미지를 모델에게
+  //   실어 보내므로, 검증하지 않으면 미검증 데이터가 외부 API 로 나간다.
+  const validateImages = (imgs: unknown): string | null => {
+    if (imgs === undefined) return null;
+    if (!Array.isArray(imgs) || imgs.length > 6) return 'invalid images';   // 자동 타일 최대 6장
+    for (const u of imgs) {
+      if (typeof u !== 'string' || !/^data:image\/(png|jpe?g|webp);base64,/.test(u) || u.length > 7_000_000) {
+        return 'invalid image dataURL';
+      }
+    }
+    return null;
+  };
+  for (const m of messages) {
+    const err = validateImages((m as ChatMessage).images);
+    if (err) {
+      return new Response(JSON.stringify({ error: err }), {
         status: 400, headers: { 'Content-Type': 'application/json' },
       });
-    }
-    for (const u of lastUser.images) {
-      if (typeof u !== 'string' || !/^data:image\/(png|jpe?g|webp);base64,/.test(u) || u.length > 7_000_000) {
-        return new Response(JSON.stringify({ error: 'invalid image dataURL' }), {
-          status: 400, headers: { 'Content-Type': 'application/json' },
-        });
-      }
     }
   }
 
@@ -310,6 +356,18 @@ ${lines}`;
   const convo = (formatHistory(messages) + '\n' + lastUser.content).trim();
   const systemPrompt = staticPrefix;
   let userPrompt = `${dynamicSuffix ? dynamicSuffix + '\n\n' : ''}--- 학생과의 대화 ---\n${convo}`;
+
+  // ★튜터(외부 API) 경로에 실어 보낼 이미지 — **최근 IMAGE_CONTEXT_TURNS 개 사용자 턴**.
+  //   이전엔 마지막 턴만 보내서, 학생이 손풀이 사진을 올리고 후속 질문을 하면 튜터가 그림을 잊었다.
+  const convoImages = recentImages(messages, IMAGE_CONTEXT_TURNS);
+  if ((lastUser.images?.length ?? 0) > 0) userPrompt = `${TRANSCRIBE_HINT}\n\n${userPrompt}`;
+  if (convoImages.fromPast > 0) {
+    // 이전 턴 그림이 섞여 들어가므로 어느 것이 방금 것인지 알려 준다(안 그러면 모델이 혼동한다).
+    const now = lastUser.images?.length ?? 0;
+    userPrompt = `[첨부 이미지 안내: 아래 이미지 ${convoImages.urls.length}장 중 앞의 `
+      + `${convoImages.fromPast}장은 **이전 턴**에서 학생이 올린 것이고, 뒤의 ${now}장이 **이번 턴**의 것이다. `
+      + `이전 것은 맥락 참고용으로만 보고, 학생의 새 질문은 이번 턴 기준으로 답하라.]\n\n${userPrompt}`;
+  }
 
   // 사용자가 첨부한 이미지를 임시 PNG 로 저장 → claude CLI 가 Read 도구로 직접 본다
   // (문제 PNG 와 동일 메커니즘). 응답 종료 시 삭제(cleanup).
@@ -409,7 +467,7 @@ ${lines}`;
           {
             systemPrompt, userPrompt, signal: ac.signal,
             // 사용자 첨부는 이미 data URL. 문제 페이지 도형·타일은 경로로 넘겨 모듈이 읽는다.
-            imageDataUrls: lastUser.images ?? [],
+            imageDataUrls: convoImages.urls,
             imageFilePaths: pageImagePaths,
           },
           {

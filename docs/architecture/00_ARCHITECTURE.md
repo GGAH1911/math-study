@@ -12,6 +12,9 @@ updated: 2026-06-28
 <!-- AUTO_INDEX_SECTION -->
 - `CLAUDE_P_CACHING.md` — 등록 자산
 - `FIGURE_TRIAGE_BLUEPRINT.md` — 등록 자산
+- `android-launch-checklist.md` — 등록 자산
+- `app-release-plan.md` — 등록 자산
+- `app-roadmap.md` — 등록 자산
 - `concept_graph.md` — 등록 자산
 - `handwriting-canvas.md` — 등록 자산
 - `interactive-widget-spec-loop.md` — 등록 자산

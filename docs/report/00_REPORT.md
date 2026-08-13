@@ -12,6 +12,7 @@ updated: 2026-06-28
 <!-- AUTO_INDEX_SECTION -->
 - `BACKFILL_TRACKS.md` — 등록 자산
 - `REDRAW_RUBRIC.md` — 등록 자산
+- `app-release-plan-review-2026-08-13.md` — 등록 자산
 - `commercialization-readiness.md` — 등록 자산
 - `deploy-runbook.md` — 등록 자산
 - `english-market-feasibility.md` — 등록 자산
