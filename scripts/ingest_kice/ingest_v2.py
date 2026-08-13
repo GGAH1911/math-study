@@ -127,6 +127,7 @@ def _ensure_web_symlink(image_path: Path) -> None:
 
 
 _CONCEPT_NORM_INDEX: dict | None = None
+_CONCEPT_PATH_INDEX: dict | None = None
 
 
 def _norm_concept(s: str) -> str:
@@ -146,11 +147,48 @@ def _concept_norm_index() -> dict:
     return _CONCEPT_NORM_INDEX
 
 
-def _canonical_concept(slug: str) -> str:
-    """LLM 슬러그를 기존 정규 개념 basename 으로 정규화 매칭. 없으면 원본(=진짜 신규)."""
+def _concept_path_index() -> dict:
+    """{정규화 상대경로: 실제 상대경로} — 확장자 없는 docs/concepts 기준 경로."""
+    global _CONCEPT_PATH_INDEX
+    if _CONCEPT_PATH_INDEX is None:
+        base = ROOT / 'docs' / 'concepts'
+        _CONCEPT_PATH_INDEX = {}
+        for p in base.rglob('*.md'):
+            rel = p.relative_to(base).as_posix()[:-3]
+            _CONCEPT_PATH_INDEX[_norm_concept(rel)] = rel
+    return _CONCEPT_PATH_INDEX
+
+
+def _canonical_concept(slug: str, scope: list | None = None) -> str:
+    """LLM 이 준 값을 실제 개념 **상대경로**로 정규화한다.
+
+    ★2026-08-13 이전에는 **파일명(잎)만** 보고 매칭했다. `제곱근` 이 중3에도 수1 트리에도
+      있을 수 있는데 이름만으로는 못 가른다 — rglob 순서상 **먼저 걸린 파일이 이겼다.**
+      그래서 수능 지수 문제가 중3 제곱근으로 갔다.
+      이제 ①경로면 경로로 맞추고 ②이름뿐이면 **스코프 안에서** 찾는다.
+      스코프 안에 없으면 원본을 그대로 돌려준다(=진짜 신규로 취급).
+    """
     if not slug:
         return slug
-    return _concept_norm_index().get(_norm_concept(slug), slug)
+    n = _norm_concept(slug)
+    hit = _concept_path_index().get(n)
+    if hit:
+        return hit
+    # 이름만 온 경우 — 스코프(학년 디렉터리)로 좁혀서 고른다.
+    leaf = slug.rsplit('/', 1)[-1]
+    nleaf = _norm_concept(leaf)
+    cands = [rel for k, rel in _concept_path_index().items() if rel.rsplit('/', 1)[-1] == leaf or k.endswith('/' + nleaf)]
+    if scope:
+        scoped = [c for c in cands if any(f'/{g}/' in f'/{c}' for g in scope)]
+        # ★스코프 밖 후보는 **쓰지 않는다.** 예전엔 여기서 학년이 어긋난 개념을 그대로
+        #   집어서 "수능 문제 → 중3 제곱근" 이 나왔다. 못 찾으면 원본을 남겨 게이트가 잡게 한다.
+        if not scoped:
+            return slug
+        cands = scoped
+    if len(cands) == 1:
+        return cands[0]
+    # 여러 개면 고르지 않는다 — 아무거나 집어서 학년을 틀리느니 원본을 남겨 눈에 띄게 한다.
+    return _concept_norm_index().get(n, slug)
 
 
 def _ensure_concept_exists(slug: str, parent_unit: str | None,

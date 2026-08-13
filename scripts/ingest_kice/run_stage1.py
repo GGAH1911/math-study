@@ -25,7 +25,15 @@ from textwrap import dedent
 
 import psycopg
 
-ROOT = Path('/home/insung/Projects/math-study')
+# ★2026-08-13: 여기 `/home/insung/Projects/math-study` 가 박혀 있었다. 레포는 진작
+#   `/home/insung/math-study` 로 옮겨졌고 그 경로는 **존재하지 않는다.** 그래서
+#   load_concept_index() 가 빈 dict 를 돌려줬고(파일이 0개니까), LLM 은 "아래 목록에서
+#   고르라" 는 지시와 함께 **빈 목록**을 받아 개념 이름을 지어냈다. 예외는 안 났다 —
+#   존재하지 않는 디렉터리의 glob 은 조용히 빈 결과다.
+#   → 파일 위치에서 유도하고, 필요하면 MATHSTUDY_ROOT 로 덮어쓴다.
+ROOT = Path(os.environ.get('MATHSTUDY_ROOT') or Path(__file__).resolve().parents[2])
+if not (ROOT / 'docs' / 'concepts').is_dir():
+    raise SystemExit(f'[FATAL] 개념 트리를 찾을 수 없다: {ROOT}/docs/concepts — MATHSTUDY_ROOT 를 확인하라')
 RAW = ROOT / 'db' / 'raw' / '2025_수능'
 PAGES = RAW / 'pages'
 DOCS_PROBLEMS = ROOT / 'docs' / 'problems'
@@ -69,15 +77,20 @@ ANSWER_SYSTEM = dedent("""
     객관식 정답은 "1"~"5", 단답형은 수치 그대로. 출력은 JSON만.
 """).strip()
 
+UNIT_SYSTEM = dedent("""
+    한국 수능 수학 문제를 읽고, 주어진 단원 경로 목록에서 **가장 적합한 하나**를 고른다.
+    출력은 경로 문자열 하나뿐. 설명·따옴표·코드펜스 일절 금지.
+""").strip()
+
 MAP_SYSTEM = dedent("""
     당신은 한국 수능 수학 문제 한 개를 분석하여 메타데이터 JSON을 출력합니다.
 
-    주어진 wiki 단원 목록 (unit slugs)과 그 안의 핵심 spoke 중에서 가장 적합한 unit 1개 + 핵심 spoke 1-3개를 선택.
+    단원은 이미 정해져 있다. 주어진 **개념 경로 목록에서만** 1-3개를 고른다.
+    목록에 없는 개념을 지어내지 마라 — 지어낸 것은 버려진다.
 
     출력 JSON 스키마:
     {
-      "unit": "<unit slug>",                   // 정확히 1개
-      "concepts": ["<spoke1>", "<spoke2>"],     // 0-3개 (unit 안의 정의/정리/예제 slug)
+      "concepts": ["<경로1>", "<경로2>"],       // 1-3개, 반드시 목록에 있는 경로 그대로
       "exam_intent": "<한 줄 요약>",
       "killer_tier": "early|mid|high|killer",
       "cognitive_type": "계산|개념|응용|추론|통합",
@@ -162,65 +175,76 @@ def split_problems(all_md: str) -> list[dict]:
     return problems
 
 
-def load_concept_index() -> dict[str, list[str]]:
-    """Read all unit pages and their spokes for the LLM mapping prompt."""
-    concepts_dir = ROOT / 'docs' / 'concepts'
-    units = {}
-    for p in concepts_dir.glob('*.md'):
-        text = p.read_text(encoding='utf-8')
-        ctype = (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1]
-        if ctype != 'unit':
-            continue
-        # spokes: those whose prereq is this unit
-        units[p.stem] = []
-    # second pass: classify spokes by parent unit
-    for p in concepts_dir.glob('*.md'):
-        text = p.read_text(encoding='utf-8')
-        ctype = (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1]
-        if ctype == 'unit':
-            continue
-        prereq_match = re.search(r'^prerequisites:\s*\[(.*?)\]', text, re.MULTILINE)
-        if not prereq_match:
-            continue
-        for prereq in prereq_match.group(1).split(','):
-            slug = prereq.strip().split('/')[-1].replace('.md', '').strip()
-            if slug in units:
-                units[slug].append(p.stem)
-                break
-    return units
+from ingest_round import (  # noqa: E402  구현은 한 곳에만 — 두 벌이면 반드시 갈라진다
+    load_concept_index, scope_for, unit_menu, spoke_menu, validate_mapping,
+)
 
 
-def map_problem(prob_body: str, number: int, score: int, units_index: dict) -> dict | None:
-    """LLM maps a single problem to unit/concepts/intent/tier/cognitive_type/time."""
-    # Build a concise list: unit -> first 8 spokes
-    units_str = '\n'.join(
-        f'- {u}: {", ".join(spokes[:8])}'
-        for u, spokes in sorted(units_index.items()) if spokes
-    )
-    # Also list unit-only entries (no spokes)
-    units_only = [u for u, s in units_index.items() if not s]
-    if units_only:
-        units_str += '\n(spoke 없음): ' + ', '.join(units_only)
+def map_problem(prob_body: str, number: int, score: int, units_index: dict,
+                subject: str | None = None, grade: str | None = None,
+                model: str = 'haiku') -> dict | None:
+    """문제 1개 → unit/concepts/intent/tier/cognitive. **2단계 + 게이트.**
 
-    user = f"""문제 번호: {number}, 배점: {score}점
+    ★예전에는 한 번에 물었고, 후보 목록이 비어 있어도 그대로 진행했다. 그래서 LLM 이
+      개념 이름을 지어냈고 아무도 실패로 세지 않았다. 이제 ①후보가 비면 즉시 None,
+      ②단원 → 스포크로 나눠 묻고, ③둘 다 후보 안에서 나왔는지 검증한다.
+    """
+    index = units_index or {}
+    if not index:
+        print(f'  ! #{number}: 개념 후보가 0개 — 매핑 중단(스코프/경로 확인)', flush=True)
+        return None
+
+    body = prob_body[:2500]
+    ctx = f'문제 번호: {number}, 배점: {score}점' + (f', 영역: {subject}' if subject else '')
+
+    # ── 1단계: 단원 ──────────────────────────────────────────────────────────
+    u_user = f"""{ctx}
 
 문제 본문:
-{prob_body[:2500]}
+{body}
 
-사용 가능한 wiki unit + 핵심 spoke (한 unit에 spoke 일부만 표시):
-{units_str[:6000]}
+아래 **단원 경로 중 정확히 하나**를 고르라(경로 그대로, 다른 텍스트 금지).
+경로의 가운데 조각은 학년이다 — 이 문제의 학년에 맞는 것을 골라야 한다.
+{unit_menu(index)}"""
+    unit = (claude_p(UNIT_SYSTEM, u_user, model=model, max_turns=1, timeout=60) or '').strip()
+    unit = re.sub(r'^```\w*|```$', '', unit).strip().strip('"\'` ')
+    if unit not in index:
+        # 경로 일부만 답한 경우 구제(예: 마지막 조각만).
+        cand = [u for u in index if u.endswith('/' + unit) or u == unit]
+        unit = cand[0] if len(cand) == 1 else ''
+    if not unit:
+        print(f'  ! #{number}: 단원 선택 실패', flush=True)
+        return None
 
-위 unit/spoke 중에서 적합한 것을 골라 JSON 출력하라."""
-    out = claude_p(MAP_SYSTEM, user, model='haiku', max_turns=1, timeout=60)
+    # ── 2단계: 스포크 + 나머지 메타 ──────────────────────────────────────────
+    s_user = f"""{ctx}
+선택된 단원: {unit}
+
+문제 본문:
+{body}
+
+아래 **개념 경로 중 1-3개**를 고르고 나머지 필드를 채워 JSON 만 출력하라.
+{spoke_menu(index, unit)}"""
+    out = claude_p(MAP_SYSTEM, s_user, model=model, max_turns=1, timeout=60)
     if not out:
         return None
-    # Strip possible code fences
     out = re.sub(r'^```(?:json)?\s*|\s*```$', '', out.strip(), flags=re.MULTILINE)
     try:
-        return json.loads(out)
+        meta = json.loads(out)
     except Exception as e:
         print(f'  ! map JSON parse failed for #{number}: {e}\n  raw: {out[:200]}', flush=True)
         return None
+
+    meta['unit'] = unit
+    meta['concepts'] = [c for c in (meta.get('concepts') or []) if isinstance(c, str)]
+    ok, why = validate_mapping(unit, meta['concepts'], index)
+    if not ok:
+        # 후보 밖 스포크는 버린다 — 지어낸 개념이 프론트매터로 새어 나가는 걸 여기서 끊는다.
+        allowed = set(index[unit])
+        dropped = [c for c in meta['concepts'] if c not in allowed]
+        meta['concepts'] = [c for c in meta['concepts'] if c in allowed]
+        print(f'  ~ #{number}: 후보 밖 개념 {len(dropped)}개 버림 ({why})', flush=True)
+    return meta
 
 
 def extract_answers(pages: list[Path]) -> dict[str, dict[str, str]]:

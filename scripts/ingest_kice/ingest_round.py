@@ -45,7 +45,15 @@ VISION_WORKERS = 4   # parallel claude -p calls (per cta-law pattern)
 MAP_WORKERS = 4
 
 # ROOT는 MATHSTUDY_ROOT 환경변수로 오버라이드 가능 (git worktree에 적재할 때).
-ROOT = Path(os.environ.get('MATHSTUDY_ROOT', '/home/insung/Projects/math-study'))
+# ★2026-08-13: 기본값이 `/home/insung/Projects/math-study` 였다. 그 디렉터리는 **아직 존재하지만
+#   `db/` 만 남은 껍데기**다(레포는 /home/insung/math-study 로 옮겨졌다). 그래서
+#   `(ROOT/'docs'/'concepts').rglob('*.md')` 가 **아무것도 못 찾고**, load_concept_index 는
+#   빈 dict 를 돌려줬다. LLM 은 "아래 목록에서 고르라" 는 지시와 함께 **빈 목록**을 받아
+#   개념 이름을 자기 머리로 지어냈고, 예외도 경고도 나지 않았다 —
+#   **비어 있는 디렉터리와 잘못된 디렉터리는 겉보기에 똑같다.** 그게 이 사고가 오래 산 이유다.
+ROOT = Path(os.environ.get('MATHSTUDY_ROOT') or Path(__file__).resolve().parents[2])
+if not (ROOT / 'docs' / 'concepts').is_dir():
+    raise SystemExit(f'[FATAL] 개념 트리 없음: {ROOT}/docs/concepts — MATHSTUDY_ROOT 를 확인하라')
 DOCS_PROBLEMS = ROOT / 'docs' / 'problems'
 DB = 'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy'
 TODAY = '2026-05-17'
@@ -564,26 +572,119 @@ def split_problems(all_md: str) -> list[dict]:
     return problems
 
 
-def load_concept_index() -> dict[str, list[str]]:
+# 과목 → 후보로 허용할 학년 디렉터리.
+#
+# ★이 표가 재발 방지 장치다. 수능 공통 문제에 중학 개념이 **후보에 아예 없으면**
+#   "9^(1/4) 을 중3 제곱근으로" 같은 결과가 구조적으로 나올 수 없다.
+#   선수 개념으로서의 중학 내용은 개념 그래프의 prerequisites 가 이미 표현한다 —
+#   문제-개념 매핑까지 중학으로 내려보낼 이유가 없다.
+SUBJECT_SCOPE: dict[str, list[str]] = {
+    '공통':       ['math-1', 'math-2', 'high-1'],
+    '미적분':     ['calculus', 'math-2', 'math-1'],
+    '확률과통계': ['prob-stats-elective', 'high-1'],
+    '기하':       ['geometry-elective', 'high-1'],
+    '가형':       ['calculus', 'geometry-elective', 'prob-stats-elective', 'math-1', 'math-2', 'high-1'],
+    '나형':       ['math-1', 'math-2', 'high-1', 'prob-stats-elective'],
+}
+# 과목이 '단일'(고1·고2 학평, 검정고시 등)일 때는 학년으로 정한다.
+GRADE_SCOPE: dict[str, list[str]] = {
+    '고1': ['high-1', 'middle-3'],
+    '고2': ['math-1', 'math-2', 'high-1'],
+    '고3': ['math-1', 'math-2', 'high-1'],
+    '중3': ['middle-3', 'middle-2'],
+    '중2': ['middle-2', 'middle-1'],
+    '중1': ['middle-1'],
+}
+
+
+def scope_for(subject: str | None = None, grade: str | None = None) -> list[str] | None:
+    """이 문제에 허용할 학년 디렉터리. 판단 근거가 없으면 None(=전체 허용)."""
+    if subject and subject in SUBJECT_SCOPE:
+        return SUBJECT_SCOPE[subject]
+    if grade:
+        for g, sc in GRADE_SCOPE.items():
+            if g in str(grade):
+                return sc
+    return None
+
+
+# ── 매핑 프롬프트 조립 + 검증 게이트 ────────────────────────────────────────────
+#
+# ★2단계로 나눈다: ①단원(수십 개 중 1개) ②그 단원 안의 스포크(수십 개 중 1-3개).
+#   한 번에 1,565개를 늘어놓고 고르라고 하면 목록이 잘리거나 모델이 뭉갠다. 선택을 작게
+#   쪼개면 작은 모델도 잘한다 — 모델 성능에 덜 기대는 설계가 목적이다.
+
+def unit_menu(index: dict[str, list[str]], limit: int = 400) -> str:
+    """1단계 프롬프트용 단원 목록. 경로째 보여 줘야 LLM 이 학년을 본다."""
+    return '\n'.join(f'- {u}' for u in sorted(index)[:limit])
+
+
+def spoke_menu(index: dict[str, list[str]], unit: str, limit: int = 220) -> str:
+    """2단계 프롬프트용 — 고른 단원 안의 스포크만."""
+    spokes = sorted(index.get(unit, []))
+    return '\n'.join(f'- {s}' for s in spokes[:limit])
+
+
+def validate_mapping(unit: str | None, concepts: list[str] | None,
+                     index: dict[str, list[str]]) -> tuple[bool, str]:
+    """매핑이 **후보 안에서** 나왔는지 확인한다.
+
+    ★이 게이트가 없어서 사고가 오래 살았다. 후보 목록이 비어 있어도, LLM 이 없는 개념을
+      지어내도, 아무도 실패로 세지 않았다. 여기서 막으면 조용한 오염 대신 재시도가 난다.
+    """
+    if not index:
+        return False, '후보 목록이 비었다 (개념 트리 경로·스코프를 확인하라)'
+    if not unit or unit not in index:
+        return False, f'단원이 후보에 없다: {unit!r}'
+    allowed = set(index[unit])
+    for c in concepts or []:
+        if c not in allowed:
+            return False, f'스포크가 단원 밖이다: {c!r} ∉ {unit}'
+    return True, ''
+
+
+def load_concept_index(scope: list[str] | None = None) -> dict[str, list[str]]:
+    """단원 → 스포크. 키·값 모두 **docs/concepts 기준 상대경로**(확장자 없음).
+
+    ★이름이 아니라 **경로**를 돌려주는 게 핵심이다. `제곱근` 이라는 이름만으로는
+      중3인지 수1인지 알 수 없고, 그래서 LLM 도 매칭 코드도 학년을 틀렸다.
+      경로에는 학년이 들어 있다(`algebra/middle-3/...` vs `algebra/math-1/...`).
+    """
     concepts_dir = ROOT / 'docs' / 'concepts'
-    units = {}
+    def _rel(p: Path) -> str:
+        return p.relative_to(concepts_dir).as_posix()[:-3]
+
+    units: dict[str, list[str]] = {}
     for p in concepts_dir.rglob('*.md'):
         text = p.read_text(encoding='utf-8')
-        ctype = (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1]
-        if ctype == 'unit':
-            units[p.stem] = []
+        if (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1] == 'unit':
+            units[_rel(p)] = []
+    if scope:
+        units = {u: v for u, v in units.items() if any(f'/{g}/' in f'/{u}' for g in scope)}
+    if not units:
+        return {}
+
+    # 스포크 판정 1순위 = **디렉터리 포함**(`<단원>/<스포크>.md`). 실제 트리가 그렇게 생겼고
+    # prerequisites 표기 흔들림(경로/이름 혼용)에 휘둘리지 않는다.
     for p in concepts_dir.rglob('*.md'):
-        text = p.read_text(encoding='utf-8')
-        ctype = (re.search(r'^concept_type:\s*(\w+)', text, re.MULTILINE) or [None, ''])[1]
-        if ctype == 'unit':
+        r = _rel(p)
+        parent = r.rsplit('/', 1)[0] if '/' in r else ''
+        if parent in units and r != parent:
+            units[parent].append(r)
+    # 디렉터리 밖에 있으면서 prerequisites 로만 연결된 것도 줍는다.
+    unit_leaf = {u.rsplit('/', 1)[-1]: u for u in units}
+    placed = {r for v in units.values() for r in v}
+    for p in concepts_dir.rglob('*.md'):
+        r = _rel(p)
+        if r in units or r in placed:
             continue
-        prereq_match = re.search(r'^prerequisites:\s*\[(.*?)\]', text, re.MULTILINE)
-        if not prereq_match:
+        m = re.search(r'^prerequisites:\s*\[(.*?)\]', p.read_text(encoding='utf-8'), re.MULTILINE)
+        if not m:
             continue
-        for prereq in prereq_match.group(1).split(','):
-            slug = prereq.strip().split('/')[-1].replace('.md', '').strip()
-            if slug in units:
-                units[slug].append(p.stem)
+        for prereq in m.group(1).split(','):
+            leaf = prereq.strip().split('/')[-1].replace('.md', '').strip()
+            if leaf in unit_leaf:
+                units[unit_leaf[leaf]].append(r)
                 break
     return units
 
