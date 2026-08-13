@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useCallback, type CSSProperties } from 'react';
 import { recognizeShape, shapeToPoints } from '../lib/shape-recognize'; // 도형 모드: 손그림→깔끔한 도형 스냅
-import { normalizeInkDoc, newStrokeId, INK_DOC_VERSION } from '../lib/ink-doc.ts';
+import { normalizeInkDoc, mergeInkDocs, newStrokeId, INK_DOC_VERSION } from '../lib/ink-doc.ts';
 
 // 저지연 필기 캔버스 + 레이어 — 애플펜슬/S펜/터치/마우스. 채점·LLM·API 무관.
 //   저지연: desynchronized · getCoalescedEvents · getPredictedEvents · 진행 overlay · 압력 · 팜리젝션
@@ -228,16 +228,25 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     if (!strokesOf.current.has('L1') && strokesOf.current.size === 0) strokesOf.current.set('L1', []);
   }, [KEY]);
 
-  // DB(계정) hydration: 로컬에 이 페이지 필기가 없을 때만 DB 에서 불러와 그린다(로컬 작업 보존 우선).
-  //   로그인 시 기기·시크릿·캐시삭제 무관 유지. 비로그인(401)/실패면 아무것도 안 함(로컬 유지).
+  // DB(계정) hydration — **로컬과 서버를 합친다.**
+  //
+  // ★예전에는 "로컬에 필기가 있으면 서버를 아예 안 가져온다" 였다. 덮어쓰기를 막으려던
+  //   방어인데, 그래서 **아이패드에서 쓴 게 노트북에 영영 오지 않았다.** 이제 v3(스트로크 id +
+  //   삭제 묘비)가 있으니 합칠 수 있다 — id 합집합에서 묘비를 뺀다.
+  // ★비로그인(401)·네트워크 실패면 아무것도 안 한다(로컬 유지). 합류가 안 될 뿐 잃지 않는다.
   useEffect(() => {
-    if (localStorage.getItem(KEY)) return;                 // 로컬 우선 — 덮어쓰기 방지
     let cancelled = false;
     fetch(`/api/handwriting?key=${encodeURIComponent(storageKey)}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        const doc = normalizeInkDoc(d?.doc);
-        if (cancelled || !doc) return;
+        const server = normalizeInkDoc(d?.doc);
+        if (cancelled || !server) return;
+        // 로컬본이 있으면 합치고, 없으면 서버본을 그대로 쓴다.
+        let local: ReturnType<typeof normalizeInkDoc> = null;
+        try { const raw = localStorage.getItem(KEY); if (raw) local = normalizeInkDoc(JSON.parse(raw)); } catch { /* */ }
+        const doc = local ? mergeInkDocs(local, server) : server;
+        // ★선택은 배열 위치 기반이라 병합으로 순서가 바뀌면 엉뚱한 획을 가리킨다 → 해제.
+        selRef.current = null;
         strokesOf.current.clear();
         for (const l of doc.layers) strokesOf.current.set(l.id, (doc.strokes[l.id] ?? []) as unknown as Stroke[]);
         deletedRef.current = doc.deletedStrokes;

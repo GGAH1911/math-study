@@ -113,3 +113,42 @@ export function visibleStrokes(doc: InkDoc, layerId: string): InkStroke[] {
   const dead = new Set(doc.deletedStrokes);
   return (doc.strokes[layerId] ?? []).filter((s) => !dead.has(s.id));
 }
+
+
+/**
+ * 두 문서를 합친다 — **id 합집합에서 묘비를 뺀다.**
+ *
+ * ★이게 v3 를 만든 이유다. v2 는 스트로크에 신원이 없어 "이 획과 저 획이 같은가" 를
+ *   물을 수 없었고, 삭제 흔적도 없어 한쪽의 지우개질이 다른 쪽의 합류로 되살아났다.
+ *
+ * ★교환법칙이 성립한다(merge(a,b) === merge(b,a)). 어느 기기가 먼저 도착하든 같은 결과가
+ *   나와야 한다 — 순서에 따라 결과가 달라지면 두 기기가 영원히 서로 다른 상태로 남는다.
+ *
+ * ⚠️ 같은 id 의 획이 양쪽에 있고 내용이 다르면(한쪽에서 옮겼거나 색을 바꿨다) **뒤 인자를
+ *    택한다.** 획 단위 3-way merge 는 이득보다 복잡도가 크다 — 사용자는 그 획 하나를 다시
+ *    옮기면 되지만, 획이 사라지거나 두 벌이 되는 건 복구할 수 없다.
+ */
+export function mergeInkDocs(a: InkDoc, b: InkDoc): InkDoc {
+  const layers: InkLayer[] = [];
+  const seenLayer = new Set<string>();
+  for (const l of [...a.layers, ...b.layers]) {
+    if (seenLayer.has(l.id)) continue;
+    seenLayer.add(l.id);
+    // 레이어 묘비도 합집합 — 한쪽에서 지운 레이어가 합류로 되살아나면 안 된다.
+    const other = (l === a.layers.find((x) => x.id === l.id) ? b : a).layers.find((x) => x.id === l.id);
+    layers.push({ ...l, deleted: !!(l.deleted || other?.deleted) });
+  }
+  const dead = new Set([...a.deletedStrokes, ...b.deletedStrokes]);
+  const strokes: Record<string, InkStroke[]> = {};
+  for (const l of layers) {
+    const byId = new Map<string, InkStroke>();
+    for (const s of a.strokes[l.id] ?? []) byId.set(s.id, s);
+    for (const s of b.strokes[l.id] ?? []) byId.set(s.id, s);   // 같은 id 면 뒤(b)를 택한다
+    strokes[l.id] = [...byId.values()].filter((s) => !dead.has(s.id));
+  }
+  return {
+    v: 3, layers, strokes,
+    deletedStrokes: [...dead],
+    activeId: b.activeId ?? a.activeId ?? layers[0]?.id,
+  };
+}
