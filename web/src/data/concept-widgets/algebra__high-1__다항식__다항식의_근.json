@@ -1,28 +1,50 @@
 {
  "id": "algebra/high-1/다항식/다항식의_근",
  "spec": {
-  "title": "다항식의 근 – 이차함수의 근 탐구",
+  "title": "삼차함수의 근 — a·b·c·d 를 움직이며 실근이 3개·2개·1개로 갈리는 것을 본다",
   "params": [
    {
-    "name": "r1",
-    "label": "근 α",
+    "name": "a",
+    "label": "a (x³ 계수)",
     "type": "slider",
-    "min": -5,
-    "max": 5,
-    "init": 2,
-    "step": 0.1
+    "min": -2,
+    "max": 2,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
    },
    {
-    "name": "r2",
-    "label": "근 β",
+    "name": "b",
+    "label": "b (x² 계수)",
     "type": "slider",
-    "min": -5,
-    "max": 5,
-    "init": 3,
-    "step": 0.1
+    "min": -6,
+    "max": 6,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (x 계수)",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": -3,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "d",
+    "label": "d (상수항)",
+    "type": "slider",
+    "min": -8,
+    "max": 8,
+    "init": 0,
+    "step": 0.1,
+    "unit": ""
    }
   ],
-  "scope": "f(x) = (x - r1)*(x - r2); val0 = f(0); val_r1 = f(r1); val_r2 = f(r2)",
+  "scope": "D = 18*a*b*c*d - 4*b^3*d + b^2*c^2 - 4*a*c^3 - 27*a^2*d^2; nroot = a == 0 ? 0 : (D > 0.0001 ? 3 : (D < -0.0001 ? 1 : 2)); disc1 = 4*b^2 - 12*a*c; xe1 = a == 0 ? 0 : (disc1 > 0 ? (-2*b - sqrt(disc1))/(6*a) : 0); xe2 = a == 0 ? 0 : (disc1 > 0 ? (-2*b + sqrt(disc1))/(6*a) : 0); ye1 = a*xe1^3 + b*xe1^2 + c*xe1 + d; ye2 = a*xe2^3 + b*xe2^2 + c*xe2 + d",
   "plot": {
    "range": [
     -6,
@@ -36,26 +58,68 @@
    "showGrid": true,
    "fns": [
     {
-     "fn": "f(x)",
-     "label": "f(x)",
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "label": "$y = ax^3+bx^2+cx+d$",
      "color": "#1f77b4"
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "in": [
+      -6,
+      -2
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "in": [
+      -2,
+      2
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "a*x^3 + b*x^2 + c*x + d",
+     "in": [
+      2,
+      6
+     ],
+     "label": "근"
+    }
+   ],
+   "points": [
+    [
+     "=xe1",
+     "=ye1"
+    ],
+    [
+     "=xe2",
+     "=ye2"
+    ]
+   ],
+   "pointsLabel": "극값(산·골)"
   },
   "readout": [
    {
-    "label": "f(α)",
-    "expr": "val_r1",
+    "label": "판별식 Δ",
+    "expr": "D",
+    "digits": 2
+   },
+   {
+    "label": "서로 다른 실근의 개수",
+    "expr": "nroot",
     "digits": 0
    },
    {
-    "label": "f(β)",
-    "expr": "val_r2",
-    "digits": 0
+    "label": "극댓값",
+    "expr": "ye1",
+    "digits": 2
    },
    {
-    "label": "f(0)",
-    "expr": "val0",
+    "label": "극솟값",
+    "expr": "ye2",
     "digits": 2
    }
   ]
@@ -63,62 +127,79 @@
  "recipe": {
   "samples": [
    {
-    "r1": 2,
-    "r2": 3
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 0
    },
    {
-    "r1": -1,
-    "r2": 4
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 2
    },
    {
-    "r1": 0,
-    "r2": 0
+    "a": 1,
+    "b": 0,
+    "c": -3,
+    "d": 5
    },
    {
-    "r1": 2,
-    "r2": -3
+    "a": 1,
+    "b": 0,
+    "c": 3,
+    "d": 0
    }
   ],
   "invariants": [
-   "f(r1)",
-   "f(r2)",
-   "f(0) - r1*r2"
+   "D - (18*a*b*c*d - 4*b^3*d + b^2*c^2 - 4*a*c^3 - 27*a^2*d^2)"
   ],
   "oracle": [
    {
     "params": {
-     "r1": 2,
-     "r2": 3
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 0
     },
     "expect": {
-     "val0": 6,
-     "val_r1": 0,
-     "val_r2": 0
+     "nroot": 3
     }
    },
    {
     "params": {
-     "r1": -1,
-     "r2": 4
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 2
     },
     "expect": {
-     "val0": -4,
-     "val_r1": 0,
-     "val_r2": 0
+     "nroot": 2
     }
    },
    {
     "params": {
-     "r1": 0,
-     "r2": 0
+     "a": 1,
+     "b": 0,
+     "c": -3,
+     "d": 5
     },
     "expect": {
-     "val0": 0,
-     "val_r1": 0,
-     "val_r2": 0
+     "nroot": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "c": 3,
+     "d": 0
+    },
+    "expect": {
+     "nroot": 1
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }

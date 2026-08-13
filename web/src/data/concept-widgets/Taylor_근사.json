@@ -56,7 +56,18 @@
      "label": "T_n(x)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=x0",
+     "=exact"
+    ],
+    [
+     "=x0",
+     "=T"
+    ]
+   ],
+   "pointsLabel": "$x_0$"
   },
   "readout": [
    {

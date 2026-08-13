@@ -61,8 +61,8 @@
     3
    ],
    "yRange": [
-    -12,
-    12
+    -20,
+    20
    ],
    "showAxes": true,
    "showGrid": true,
@@ -142,6 +142,33 @@
       -0.5
      ],
      "label": "x"
+    },
+    {
+     "type": "segment",
+     "from": [
+      2.5,
+      0
+     ],
+     "to": [
+      2.5,
+      "=orig"
+     ]
+    },
+    {
+     "type": "point",
+     "at": [
+      2.5,
+      "=orig"
+     ],
+     "label": "대입값"
+    },
+    {
+     "type": "point",
+     "at": [
+      2.5,
+      -0.5
+     ],
+     "label": "x=x값"
     }
    ]
   },
