@@ -20,7 +20,11 @@ const MON = `${REPO}/.llm-monitor`;
 const KEY = process.env.NOUS_API_KEY;
 if (!KEY) { console.error('NOUS_API_KEY 없음'); process.exit(1); }
 const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1';
-const JUDGES = (process.env.JUDGES || 'anthropic/claude-opus-5-fast,openai/gpt-5.6-terra-pro').split(',');
+// ★심판 모델도 비용이다. opus-5-fast(\$8/\$40)를 쓰다가 심판값(\$1.78)이 **측정 대상 전부 + 위젯 470건
+//   생성을 합친 것보다 3배** 나왔다 — 저비용 튜터를 찾는 작업에서 도구가 제일 비싼 건 앞뒤가 안 맞는다.
+//   심판에 필요한 건 최고 지능이 아니라 **일관성**이고, 그건 계열이 다른 둘의 합치도로 검증한다.
+//   luna-pro(\$0.10/\$0.60) + grok-4.5(\$1.60/\$4.80) 로 교체 — 합쳐도 opus 단독의 1/5.
+const JUDGES = (process.env.JUDGES || 'openai/gpt-5.6-luna-pro,x-ai/grok-4.5').split(',');
 
 const results = JSON.parse(readFileSync(`${MON}/vision_results.json`, 'utf8'));
 const SET = JSON.parse(readFileSync(`${MON}/vision_set.json`, 'utf8'));

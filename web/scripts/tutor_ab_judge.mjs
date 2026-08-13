@@ -14,7 +14,11 @@ if (!KEY) { console.error('NOUS_API_KEY 없음'); process.exit(1); }
 const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1';
 // ★심판 2명을 **서로 다른 계열**로 둔다. 후보에 anthropic(haiku)이 있어 심판도 anthropic 하나만 쓰면
 //   가문 편향을 배제할 수 없다. 두 심판의 1위가 갈리는 문항은 그 자체가 '판정 불확실' 신호다.
-const JUDGES = (process.env.JUDGES || 'anthropic/claude-opus-5-fast,openai/gpt-5.6-terra-pro').split(',');
+// ★심판 모델도 비용이다. opus-5-fast(\$8/\$40)를 쓰다가 심판값(\$1.78)이 **측정 대상 전부 + 위젯 470건
+//   생성을 합친 것보다 3배** 나왔다 — 저비용 튜터를 찾는 작업에서 도구가 제일 비싼 건 앞뒤가 안 맞는다.
+//   심판에 필요한 건 최고 지능이 아니라 **일관성**이고, 그건 계열이 다른 둘의 합치도로 검증한다.
+//   luna-pro(\$0.10/\$0.60) + grok-4.5(\$1.60/\$4.80) 로 교체 — 합쳐도 opus 단독의 1/5.
+const JUDGES = (process.env.JUDGES || 'openai/gpt-5.6-luna-pro,x-ai/grok-4.5').split(',');
 
 // 결정적 셔플(seed=문항 인덱스) — 재현 가능하되 문항마다 라벨 위치가 달라진다.
 function shuffled(arr, seed) {
