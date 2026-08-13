@@ -15,7 +15,9 @@ type LayerMeta = { id: string; name: string; visible: boolean };
 type Action =
   | { type: 'add'; layerId: string; strokes: Stroke[] }
   | { type: 'remove'; layerId: string; strokes: Stroke[] }
-  | { type: 'mutate'; layerId: string; idxs: number[]; before: Stroke[]; after: Stroke[] } // 이동·재색(객체 교체)
+  // ★mutate 는 **id 기반**. 배열 위치로 저장하면 다른 기기 작업이 합류해 순서가 바뀐 뒤
+  //   undo 할 때 엉뚱한 획을 덮어쓴다(add·remove 는 원래 객체 정체성으로 동작한다).
+  | { type: 'mutate'; layerId: string; ids: string[]; before: Stroke[]; after: Stroke[] } // 이동·재색(객체 교체)
   | { type: 'move'; from: string; to: string; strokes: Stroke[] };                          // 레이어 이동
 type Paper = 'blank' | 'ruled' | 'grid';
 type Tool = 'pen' | 'eraser' | 'select' | 'shape';
@@ -364,7 +366,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
           const sel = selRef.current;
           if (sel) { const arr = strokesOf.current.get(sel.layerId) ?? [];
             const moved = sel.idxs.some((i, k) => arr[i] !== dragRef.current!.before[k]);
-            if (moved) { undoStack.current.push({ type: 'mutate', layerId: sel.layerId, idxs: sel.idxs.slice(), before: dragRef.current.before, after: sel.idxs.map((i) => arr[i]) }); redoStack.current = []; save(); }
+            if (moved) { undoStack.current.push({ type: 'mutate', layerId: sel.layerId, ids: dragRef.current.before.map((b) => b.id!).filter(Boolean), before: dragRef.current.before, after: sel.idxs.map((i) => arr[i]) }); redoStack.current = []; save(); }
           }
           dragRef.current = null; drawSelBox(); setRev((r) => r + 1); return;
         }
@@ -469,7 +471,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
   const applyAct = (a: Action, forward: boolean) => { // forward=redo방향, !forward=undo
     if (a.type === 'add') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) { arr.push(...a.strokes); unmarkDeleted(a.strokes); } else { for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } markDeleted(a.strokes); } drawLayer(a.layerId); }
     else if (a.type === 'remove') { const arr = strokesOf.current.get(a.layerId) ?? []; if (forward) { for (const s of a.strokes) { const i = arr.indexOf(s); if (i >= 0) arr.splice(i, 1); } markDeleted(a.strokes); } else { arr.push(...a.strokes); unmarkDeleted(a.strokes); } drawLayer(a.layerId); }
-    else if (a.type === 'mutate') { const arr = strokesOf.current.get(a.layerId) ?? []; const src = forward ? a.after : a.before; a.idxs.forEach((i, k) => { arr[i] = src[k]; }); drawLayer(a.layerId); }
+    else if (a.type === 'mutate') { const arr = strokesOf.current.get(a.layerId) ?? []; const src = forward ? a.after : a.before; a.ids.forEach((id, k) => { const i = arr.findIndex((x) => x.id === id); if (i >= 0) arr[i] = src[k]; }); drawLayer(a.layerId); }
     else { const from = strokesOf.current.get(a.from) ?? [], to = strokesOf.current.get(a.to) ?? []; const [src, dst] = forward ? [from, to] : [to, from]; for (const s of a.strokes) { const i = src.indexOf(s); if (i >= 0) src.splice(i, 1); } dst.push(...a.strokes); drawLayer(a.from); drawLayer(a.to); }
   };
   const undo = () => { const a = undoStack.current.pop(); if (!a) return; redoStack.current.push(a); applyAct(a, false); selRef.current = null; drawSelBox(); save(); setRev((r) => r + 1); };
@@ -502,7 +504,7 @@ export default function InkCanvas({ storageKey, height = 560, bgImage, launchLab
     const arr = strokesOf.current.get(sel.layerId) ?? [], idxs = sel.idxs.filter((i) => arr[i]?.tool === 'pen'); if (!idxs.length) return;
     const before = idxs.map((i) => arr[i]), after = before.map((s) => ({ ...s, color: col }));
     idxs.forEach((i, k) => { arr[i] = after[k]; });
-    undoStack.current.push({ type: 'mutate', layerId: sel.layerId, idxs, before, after }); redoStack.current = [];
+    undoStack.current.push({ type: 'mutate', layerId: sel.layerId, ids: before.map((b) => b.id!).filter(Boolean), before, after }); redoStack.current = [];
     drawLayer(sel.layerId); drawSelBox(); save(); setRev((r) => r + 1);
   };
   const moveSelTo = (targetId: string) => {
