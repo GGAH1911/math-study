@@ -10,7 +10,25 @@ import { readFileSync, existsSync, statSync } from 'node:fs';
 
 const PORT = Number(process.argv[2] || 4381);
 const JSONL = '/tmp/remap_concepts.jsonl';
-const TOTAL_HINT = 1476;          // 평면 참조를 가진 문제 수(작업 시작 시점)
+// ★분모를 코드에 박아 두면 대상 기준이 바뀔 때마다 화면이 거짓말을 한다(1476 → 4164 로
+//   넓혔더니 진행률이 3배 부풀어 보였다). 러너 로그의 '대상 N건' 을 읽어 쓴다.
+import { readdirSync } from 'node:fs';
+function totalFromLog() {
+  try {
+    const dir = '/tmp/ingest_logs';
+    // ★이름순이 아니라 **최신순**. 이름순으로 뒤졌더니 옛 파일럿 로그(대상 100건)를 읽어
+    //   진행률이 608% 로 나왔다.
+    const logs = readdirSync(dir).filter((f) => f.startsWith('remap_'))
+      .map((f) => ({ f, t: statSync(`${dir}/${f}`).mtimeMs }))
+      .sort((a, b) => b.t - a.t).map((x) => x.f);
+    for (const f of logs) {
+      const head = readFileSync(`${dir}/${f}`, 'utf8').slice(0, 400);
+      const m = head.match(/대상 (\d+)건/);
+      if (m) return Number(m[1]);
+    }
+  } catch { /* 로그 없으면 폴백 */ }
+  return 4164;
+}
 
 function snapshot() {
   if (!existsSync(JSONL)) return { rows: [], mtime: 0 };
@@ -38,7 +56,7 @@ function summarize(rows) {
   const done = rows.length;
   const avg = done ? sec / done : 0;
   return {
-    done, total: TOTAL_HINT, byStatus, byGrade, bySubject, flat,
+    done, total: totalFromLog(), byStatus, byGrade, bySubject, flat,
     avgSec: Number(avg.toFixed(1)),
     recent: rows.slice(-14).reverse(),
   };
