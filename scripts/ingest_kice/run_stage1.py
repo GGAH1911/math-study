@@ -295,6 +295,25 @@ def map_problem_once(prob_body: str, number: int, score: int, units_index: dict,
         return None
     meta['concepts'] = [c for c in (meta.get('concepts') or []) if isinstance(c, str)]
     ok, why = validate_mapping(meta.get('unit'), meta['concepts'], index)
+    if not ok and meta.get('unit') not in index:
+        # ★단원 자체가 후보 밖이면 개념만 버리고 넘어가면 안 된다 — 범위 밖 단원에
+        #   개념 0개인 반쪽 결과가 파일에 남는다. 목록 안에서 다시 고르게 한다.
+        retry = f"{user}\n\n[다시] 방금 고른 '{meta.get('unit')}' 은 목록에 없다. **위 목록 안에서만** 골라라."
+        out2 = claude_p(system, retry, model=model,
+                        max_turns=6 if tiles else 1, timeout=300 if tiles else 90,
+                        no_tools=not tiles, allow_read=bool(tiles),
+                        add_dir=str(Path(tiles[0]).parent) if tiles else None)
+        if out2:
+            m2 = re.search(r'\{.*\}', re.sub(r'^```(?:json)?\s*|\s*```$', '', out2.strip(), flags=re.MULTILINE), re.S)
+            try:
+                meta2 = json.loads(m2.group(0)) if m2 else None
+            except Exception:
+                meta2 = None
+            if meta2 and meta2.get('unit') in index:
+                meta2['concepts'] = [c for c in (meta2.get('concepts') or [])
+                                     if isinstance(c, str) and c in set(index[meta2['unit']])]
+                return meta2
+        return None          # 두 번 시도해도 목록 밖이면 실패로 센다(조용히 반쪽을 남기지 않는다)
     if not ok:
         allowed = set(index.get(meta.get('unit'), []))
         meta['concepts'] = [c for c in meta['concepts'] if c in allowed]
