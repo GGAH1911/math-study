@@ -141,8 +141,12 @@ def main() -> int:
         props = {}
         for mdl in models:
             t0 = time.time()
+            # ★비전 직독 — 마크다운 본문에는 문제 텍스트가 없고(<img> 뿐), DB 전사본은
+            #   첨자가 뭉개져 있다. 이미지가 유일한 기준이다(심판과 같은 근거로 맞춘다).
+            img = ROOT / 'web' / 'public' / meta['image'].lstrip('/')
             r = map_problem(meta['body'], int(meta['number'] or 0), int(meta['score'] or 3),
-                            index, subject=meta['subject'], grade=meta['grade'], model=mdl)
+                            index, subject=meta['subject'], grade=meta['grade'], model=mdl,
+                            image=img if img.exists() else None)
             props[mdl] = {'unit': (r or {}).get('unit'), 'concepts': (r or {}).get('concepts') or [],
                           'sec': round(time.time() - t0, 1)}
             print(f'[{i}] {meta["slug"]} {mdl}: {props[mdl]["unit"]} '

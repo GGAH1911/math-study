@@ -109,14 +109,14 @@ MAP_SYSTEM = dedent("""
 
 def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1,
              add_dir: str | None = None, timeout: int = 180, retries: int = 2,
-             no_tools: bool = False) -> str | None:
+             no_tools: bool = False, allow_read: bool = False) -> str | None:
     """Invoke `claude -p` with given system/user prompts. Returns stdout text or None on failure.
 
     ★연속 호출에서 간헐적으로 rc=1(빈 stderr)이 난다. 배치에서 이걸 한 번의 실패로 처리하면
       멀쩡한 모델이 '0점' 으로 집계된다(실제로 A/B 첫 측정이 그랬다). 짧게 재시도한다.
     """
     for attempt in range(max(1, retries)):
-        out = _claude_p_once(system, user, model, max_turns, add_dir, timeout, no_tools)
+        out = _claude_p_once(system, user, model, max_turns, add_dir, timeout, no_tools, allow_read)
         if out:
             return out
         time.sleep(1.5 * (attempt + 1))
@@ -124,7 +124,8 @@ def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1,
 
 
 def _claude_p_once(system: str, user: str, model: str, max_turns: int,
-                   add_dir: str | None, timeout: int, no_tools: bool = False) -> str | None:
+                   add_dir: str | None, timeout: int, no_tools: bool = False,
+                   allow_read: bool = False) -> str | None:
     args = ['claude', '-p',
             '--model', model,
             '--max-turns', str(max_turns),
@@ -134,7 +135,9 @@ def _claude_p_once(system: str, user: str, model: str, max_turns: int,
     #   열어보려다 --max-turns 1 을 그 턴에 다 써 `Error: Reached max turns (1)` 로 죽는다.
     #   haiku 가 sonnet 보다 도구를 잘 집어서, A/B 첫 측정에서 haiku 만 0점이 나왔다 —
     #   능력 차이로 오독할 뻔했다. 측정은 기준부터 의심하라.
-    if no_tools:
+    if allow_read:
+        args += ['--allowedTools', 'Read']     # 이미지를 직접 열어야 하는 호출
+    elif no_tools:
         args += ['--tools', '']
     if add_dir:
         args += ['--add-dir', add_dir]
@@ -205,9 +208,42 @@ from ingest_round import (  # noqa: E402  구현은 한 곳에만 — 두 벌이
 )
 
 
+
+VISION_LONG_EDGE = 1568          # Claude vision 긴 변 한도
+_TILE_CACHE = Path('/tmp/mapping_tiles')
+
+
+def vision_tiles(image_path: Path) -> list[Path]:
+    """문제 이미지를 **비전이 손실 없이 읽을 수 있는 조각**으로. 예산 안이면 원본 그대로.
+
+    ★통이미지를 그냥 넘기면 큰 문제에서 다운스케일로 첨자가 뭉개진다 — 그게 이번 사고의
+      본체였다(4^(2/3) 가 4√3/2 로 전사돼 중3 무리수 문제로 매핑됐다).
+      표본 200장 중 90%는 이미 1568 안이라 대부분은 원본이 곧 타일이다.
+    """
+    try:
+        from PIL import Image
+    except Exception:
+        return [image_path]
+    im = Image.open(image_path)
+    w, h = im.size
+    if max(w, h) <= VISION_LONG_EDGE:
+        return [image_path]
+    _TILE_CACHE.mkdir(parents=True, exist_ok=True)
+    rows = -(-h // VISION_LONG_EDGE)
+    ov = 90                                            # 경계에서 식이 잘리지 않게 겹친다
+    out = []
+    for r in range(rows):
+        y0, y1 = max(0, r * (h // rows) - ov), min(h, (r + 1) * (h // rows) + ov)
+        t = _TILE_CACHE / f'{image_path.stem}_t{r}.png'
+        if not t.exists():
+            im.crop((0, y0, w, y1)).save(t)
+        out.append(t)
+    return out
+
+
 def map_problem(prob_body: str, number: int, score: int, units_index: dict,
                 subject: str | None = None, grade: str | None = None,
-                model: str = 'haiku') -> dict | None:
+                model: str = 'haiku', image: Path | str | None = None) -> dict | None:
     """문제 1개 → unit/concepts/intent/tier/cognitive. **2단계 + 게이트.**
 
     ★예전에는 한 번에 물었고, 후보 목록이 비어 있어도 그대로 진행했다. 그래서 LLM 이
@@ -219,7 +255,15 @@ def map_problem(prob_body: str, number: int, score: int, units_index: dict,
         print(f'  ! #{number}: 개념 후보가 0개 — 매핑 중단(스코프/경로 확인)', flush=True)
         return None
 
-    body = prob_body[:2500]
+    # ★비전 직독이 기본이다. 전사 텍스트는 첨자가 뭉개져 있어(지수 → 근호) 그대로 믿으면
+    #   문제 자체가 달라 보인다 — 실제로 그것 때문에 수능 지수 문제가 중3 무리수로 갔다.
+    #   이미지가 있으면 본문 텍스트는 **참고로도 주지 않는다.** 깨진 텍스트가 판단을 끌어당긴다.
+    tiles = vision_tiles(Path(image)) if image and Path(image).exists() else []
+    if tiles:
+        body = ('아래 이미지를 Read 로 **직접 열어** 문제를 읽어라. 이미지가 유일한 근거다.\n'
+                + '\n'.join(str(t) for t in tiles))
+    else:
+        body = prob_body[:2500]
     ctx = f'문제 번호: {number}, 배점: {score}점' + (f', 영역: {subject}' if subject else '')
 
     # ── 1단계: 단원 ──────────────────────────────────────────────────────────
@@ -231,7 +275,10 @@ def map_problem(prob_body: str, number: int, score: int, units_index: dict,
 아래 **단원 경로 중 정확히 하나**를 고르라(경로 그대로, 다른 텍스트 금지).
 경로의 가운데 조각은 학년이다 — 이 문제의 학년에 맞는 것을 골라야 한다.
 {unit_menu(index)}"""
-    unit = (claude_p(UNIT_SYSTEM, u_user, model=model, max_turns=1, timeout=60, no_tools=True) or '').strip()
+    unit = (claude_p(UNIT_SYSTEM, u_user, model=model,
+                     max_turns=6 if tiles else 1, timeout=240 if tiles else 60,
+                     no_tools=not tiles, allow_read=bool(tiles),
+                     add_dir=str(Path(tiles[0]).parent) if tiles else None) or '').strip()
     unit = re.sub(r'^```\w*|```$', '', unit).strip().strip('"\'` ')
     if unit not in index:
         # 경로 일부만 답한 경우 구제(예: 마지막 조각만).
@@ -250,7 +297,10 @@ def map_problem(prob_body: str, number: int, score: int, units_index: dict,
 
 아래 **개념 경로 중 1-3개**를 고르고 나머지 필드를 채워 JSON 만 출력하라.
 {spoke_menu(index, unit)}"""
-    out = claude_p(MAP_SYSTEM, s_user, model=model, max_turns=1, timeout=60, no_tools=True)
+    out = claude_p(MAP_SYSTEM, s_user, model=model,
+                   max_turns=6 if tiles else 1, timeout=240 if tiles else 60,
+                   no_tools=not tiles, allow_read=bool(tiles),
+                   add_dir=str(Path(tiles[0]).parent) if tiles else None)
     if not out:
         return None
     out = re.sub(r'^```(?:json)?\s*|\s*```$', '', out.strip(), flags=re.MULTILINE)
