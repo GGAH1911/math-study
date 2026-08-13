@@ -57,9 +57,13 @@
     [
      "=b",
      "=log(b,a)"
+    ],
+    [
+     "=c",
+     "=log(c,a)"
     ]
    ],
-   "pointsLabel": "$(b, \\log_a b)$"
+   "pointsLabel": "$(b, \\log_a b)$ 와 새 밑 $(c, \\log_a c)$"
   },
   "readout": [
    {

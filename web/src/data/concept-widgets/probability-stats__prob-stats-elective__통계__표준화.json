@@ -34,12 +34,12 @@
   "scope": "xv = mu + z*sigma; phi = exp(-z^2/2)/sqrt(2*pi); fx = phi/sigma",
   "plot": {
    "range": [
-    -3.5,
-    3.5
+    -20,
+    180
    ],
    "yRange": [
     0,
-    0.5
+    0.42
    ],
    "fns": [
     {
@@ -48,11 +48,22 @@
      "color": "blue"
     },
     {
-     "fn": "exp(-x^2/2)/(sqrt(2*pi)*sigma)",
+     "fn": "exp(-(x-mu)^2/(2*sigma^2))/(sqrt(2*pi)*sigma)",
      "label": "원래 분포 N(μ,σ²)",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=mu",
+     "=1/(sqrt(2*pi)*sigma)"
+    ],
+    [
+     "=xv",
+     "=fx"
+    ]
+   ],
+   "pointsLabel": "평균 μ 위치(왼쪽)와 원점수 X 위치(오른쪽) — 그 간격이 zσ"
   },
   "readout": [
    {

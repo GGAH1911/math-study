@@ -43,7 +43,18 @@
      "label": "곱이 홀수인 조건",
      "color": "red"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=k",
+     "=sumParity"
+    ],
+    [
+     "=k",
+     "=prodParity"
+    ]
+   ],
+   "pointsLabel": "$k=\\text{현재 홀수 개수}$"
   },
   "readout": [
    {

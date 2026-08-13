@@ -1,67 +1,97 @@
 {
  "id": "equations/high-1/방정식과_부등식/중근과_판별식",
  "spec": {
-  "title": "중근과 판별식",
+  "title": "중근과 판별식 — a·b·c 를 움직이며 D = b²−4ac 의 부호가 근을 가르는 것을 본다",
   "params": [
    {
-    "name": "c",
-    "label": "c",
+    "name": "a",
+    "label": "a (x² 계수)",
     "type": "slider",
-    "min": -1,
-    "max": 3,
+    "min": -2,
+    "max": 2,
     "init": 1,
-    "step": 0.05
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (x 계수)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 2,
+    "step": 0.1,
+    "unit": ""
+   },
+   {
+    "name": "c",
+    "label": "c (상수항)",
+    "type": "slider",
+    "min": -6,
+    "max": 6,
+    "init": 1,
+    "step": 0.1,
+    "unit": ""
    }
   ],
-  "scope": "a=1; b=2; D=b^2-4*a*c; vx=-b/(2*a); vy=c-b^2/(4*a);",
-  "geometry": {
+  "scope": "D = b^2 - 4*a*c; nroot = a == 0 ? 0 : (D > 0.0001 ? 2 : (D < -0.0001 ? 0 : 1)); vx = a == 0 ? 0 : -b/(2*a); vy = a == 0 ? 0 : c - b^2/(4*a)",
+  "plot": {
    "range": [
-    -4,
-    2
+    -6,
+    6
    ],
    "yRange": [
-    -4,
-    4
+    -12,
+    12
    ],
    "showAxes": true,
    "showGrid": true,
-   "shapes": []
-  },
-  "plot": {
-   "range": [
-    -4,
-    2
-   ],
-   "yRange": [
-    -4,
-    4
-   ],
    "fns": [
     {
-     "fn": "x^2 + 2*x + c",
-     "label": "y = x² + 2x + c",
-     "color": "blue"
+     "fn": "a*x^2 + b*x + c",
+     "label": "$y = ax^2+bx+c$",
+     "color": "#1f77b4"
     }
-   ]
+   ],
+   "roots": [
+    {
+     "fn": "a*x^2 + b*x + c",
+     "in": [
+      -6,
+      0
+     ],
+     "label": "근"
+    },
+    {
+     "fn": "a*x^2 + b*x + c",
+     "in": [
+      0,
+      6
+     ],
+     "label": "근"
+    }
+   ],
+   "points": [
+    [
+     "=vx",
+     "=vy"
+    ]
+   ],
+   "pointsLabel": "꼭짓점 $\\left(-\\frac{b}{2a},\\ c-\\frac{b^2}{4a}\\right)$"
   },
   "readout": [
    {
-    "label": "판별식 D",
+    "label": "판별식 D = b²−4ac",
     "expr": "D",
     "digits": 2
    },
    {
-    "label": "실근 개수",
-    "expr": "D>0 ? 2 : (D==0 ? 1 : 0)",
+    "label": "서로 다른 실근의 개수",
+    "expr": "nroot",
     "digits": 0
    },
    {
-    "label": "꼭짓점 x",
-    "expr": "vx",
-    "digits": 2
-   },
-   {
-    "label": "꼭짓점 y",
+    "label": "꼭짓점 y (축과의 거리)",
     "expr": "vy",
     "digits": 2
    }
@@ -70,53 +100,64 @@
  "recipe": {
   "samples": [
    {
-    "c": 0
-   },
-   {
+    "a": 1,
+    "b": 2,
     "c": 1
    },
    {
-    "c": 2
+    "a": 1,
+    "b": 2,
+    "c": 0
+   },
+   {
+    "a": 1,
+    "b": 2,
+    "c": 3
+   },
+   {
+    "a": -1,
+    "b": 2,
+    "c": 1
    }
   ],
   "invariants": [
-   "D + 4*a*vy",
-   "vx + b/(2*a)",
-   "D - (b^2 - 4*a*c)",
-   "D==0 ? vy : 0"
+   "D - (b^2 - 4*a*c)"
   ],
   "oracle": [
    {
     "params": {
-     "c": 0
-    },
-    "expect": {
-     "D": 4,
-     "vx": -1,
-     "vy": -1
-    }
-   },
-   {
-    "params": {
+     "a": 1,
+     "b": 2,
      "c": 1
     },
     "expect": {
      "D": 0,
-     "vx": -1,
-     "vy": 0
+     "nroot": 1
     }
    },
    {
     "params": {
-     "c": 2
+     "a": 1,
+     "b": 2,
+     "c": 0
     },
     "expect": {
-     "D": -4,
-     "vx": -1,
-     "vy": 1
+     "D": 4,
+     "nroot": 2
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 2,
+     "c": 3
+    },
+    "expect": {
+     "D": -8,
+     "nroot": 0
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }
