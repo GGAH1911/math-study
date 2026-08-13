@@ -74,7 +74,19 @@ def audit_one(path: Path) -> dict | None:
     if not params:
         return None
     scope = spec.get('scope') or ''
-    visual = idents_in({k: spec.get(k) for k in ('plot', 'geometry', 'geometry3d') if spec.get(k)})
+    # ★`fns[].fn` 안의 `x` 는 **그래프의 가로축 변수**이지 슬라이더가 아니다.
+    #   슬라이더 이름이 x 면 fns 에 x 가 널려 있어 "닿는다" 로 오판한다 —
+    #   실제로는 움직여도 아무 일이 없다(2026-08-14 분수식 위젯에서 실측).
+    #   그래서 fns 는 축 변수를 뺀 뒤 본다. points·geometry 의 `=식` 은 그대로 센다.
+    plot = dict(spec.get('plot') or {})
+    axis_free = dict(plot)
+    axis_free['fns'] = [{k: v for k, v in (f or {}).items() if k != 'fn'} for f in (plot.get('fns') or [])]
+    fn_idents = set()
+    for f in (plot.get('fns') or []):
+        fn_idents |= set(IDENT.findall(str((f or {}).get('fn', ''))))
+    fn_idents.discard('x')                       # 축 변수는 의존이 아니다
+    visual = idents_in({k: spec.get(k) for k in ('geometry', 'geometry3d') if spec.get(k)})
+    visual |= idents_in(axis_free) | fn_idents
     readout = idents_in(spec.get('readout'))
     anywhere = visual | readout | set(IDENT.findall(scope))
 

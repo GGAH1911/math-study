@@ -39,11 +39,24 @@ for (const o of (rec.oracle || [])) {
 }
 // ③ ★각 파라미터를 흔들면 **그림 산출물**이 실제로 달라지는가
 const base = Object.fromEntries((spec.params || []).map(p => [p.name, p.init]));
+// ★fns 의 식은 `=` 접두사가 없다 — function-plot 에 scope 를 주입해 평가된다.
+//   문자열 그대로 비교하면 파라미터가 곡선을 움직여도 "안 변했다" 로 나온다(거짓 실패).
+//   그래서 **여러 x 에서 실제로 값을 계산해** 비교한다.
+const SAMPLE_X = [-2.5, -1.3, -0.4, 0.35, 1.1, 2.2, 3.7];
 const visualOf = (params) => {
   const s = run(params);
   const v = {};
   for (const k of ['plot', 'geometry', 'geometry3d']) if (spec[k]) v[k] = res(spec[k], s);
-  return JSON.stringify(v);
+  const curves = [];
+  for (const f of (spec.plot?.fns || [])) {
+    const row = [];
+    for (const x of SAMPLE_X) {
+      let y; try { y = math.evaluate(String(f.fn), { ...s, x }); } catch { y = 'ERR'; }
+      row.push(typeof y === 'number' && Number.isFinite(y) ? Math.round(y * 1e6) / 1e6 : String(y));
+    }
+    curves.push(row);
+  }
+  return JSON.stringify({ v, curves });
 };
 let ref; try { ref = visualOf(base); } catch (e) { out.errors.push('visual: ' + e.message); }
 for (const p of (spec.params || [])) {

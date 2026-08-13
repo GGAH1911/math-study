@@ -52,9 +52,13 @@
     [
      "=k",
      "=prodParity"
+    ],
+    [
+     "=N",
+     "-0.15"
     ]
    ],
-   "pointsLabel": "$k=\\text{현재 홀수 개수}$"
+   "pointsLabel": "$k$(홀수 개수)와 $N$(전체 개수) 위치"
   },
   "readout": [
    {
