@@ -1,0 +1,20 @@
+{
+ "scripts/build_solution_cache.py": 911,
+ "scripts/ingest_kice/bbox.py": 574,
+ "scripts/ingest_kice/hancom_decode.py": 718,
+ "scripts/ingest_kice/ingest_round.py": 1834,
+ "scripts/ingest_kice/ingest_v2.py": 715,
+ "scripts/ingest_kice/run_stage1.py": 651,
+ "web/scripts/extract_figures.py": 540,
+ "web/scripts/gen_concept_figures.mjs": 512,
+ "web/scripts/qa_concept_figures.mjs": 524,
+ "web/src/components/AtlasMap.tsx": 549,
+ "web/src/components/ChatPanel.tsx": 567,
+ "web/src/components/ConceptDAG.tsx": 1056,
+ "web/src/components/Geometry.tsx": 1087,
+ "web/src/components/Geometry3D.tsx": 754,
+ "web/src/components/Graph.tsx": 1130,
+ "web/src/components/InkCanvas.tsx": 656,
+ "web/src/components/chat/Message.tsx": 578,
+ "web/src/pages/api/chat.ts": 596
+}
