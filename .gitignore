@@ -41,3 +41,6 @@ web/scripts/_*
 
 # LLM 모니터 런타임 이벤트(휘발성)
 .llm-monitor/
+
+# LLM 튜터 전용 OpenRouter 키 — 레포 안에 두면 커밋 사고가 난다(레포 밖 ~/.config/math-study/openrouter.key 가 정본)
+openrouterkey.txt
