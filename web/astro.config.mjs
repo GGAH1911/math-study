@@ -125,7 +125,10 @@ function remarkRewritePaths() {
       //   예전엔 `([^/]+)` 로 한 세그먼트만 잡아서 `../concepts/algebra/middle-3/제곱근.md`
       //   같은 중첩 경로가 통째로 매칭 실패 → 깨진 상대경로 그대로 렌더됐다.
       //   (문제 4,164개 중 2,583개가 이 형태였다. 링크를 눌러도 아무 데도 못 갔다.)
-      const inter = node.url.match(/^(?:\.\.\/)+(concepts|problems|mistakes|tools|syntheses)\/(.+)\.md$/);
+      // ★`docs/concepts/...md` 처럼 **레포 루트 기준 경로**로 적힌 것도 잡는다.
+      //   어제는 `../concepts/...` 형태만 고쳤는데, 개념 파일 35개·링크 300개가 이 형태라
+      //   변환되지 않고 `docs/concepts/....md` 가 그대로 href 로 나갔다(눌러도 안 열린다).
+      const inter = node.url.match(/^(?:(?:\.\.\/)+|\.?\/?docs\/)(concepts|problems|mistakes|tools|syntheses)\/(.+)\.md$/);
       if (inter) {
         const col = inter[1];
         let rest = inter[2];
