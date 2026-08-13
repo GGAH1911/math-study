@@ -70,12 +70,29 @@ Phase 2~7 은 그대로 진행 가능하고, **주소가 공개되는 건 Phase 
       창 밖으로 나간 그림의 맥락은 튜터가 첫 턴에 남긴 전사가 텍스트로 이어받는다(`TRANSCRIBE_HINT`).
       실측: 4턴 대화에서 **3·4턴은 이미지를 안 보냈는데도** 이차함수 계수·상수항을 정확히 답했다.
       재현: `python3 web/scripts/verify_tutor_image_context.py` (세션 쿠키 필요)
-- [ ] **chat_history jsonb 비대화** — 대화 1건 568KB(전체 22건 1,006KB). 이미지를 분리하고 참조만 남긴다
-      (2MB 상한은 약 30장에서 걸리므로 급한 불은 아니지만, jsonb 비대화 자체가 문제)
-      ★위 측정으로 **타일(1568)은 반드시 영속해야 함**이 확정됐다 — 512 표시본으로 갈음할 수 없다.
-      즉 이 항목은 "안 저장하기"가 아니라 **"jsonb 밖으로 빼기"**다.
-      ★R2 는 아직 없다 → **내용주소 참조 계층을 먼저** 만들고(해시 키 + 별도 저장소), 백엔드만 나중에 R2 로 교체.
-      참조 간접층이 본질이고 저장 백엔드는 갈아끼우면 된다
+- [x] **chat_history jsonb 비대화** ✅ 2026-08-13 — **내용주소 참조 계층 도입**
+      (`db/migrations/0007_chat_images.sql` · `web/src/lib/chat-images.ts`)
+
+      messages 는 매 턴 **배열 전체가 통째로 재기록**된다. 이미지가 그 안에 dataURL 로 있으면
+      한 턴 주고받을 때마다 568KB 를 다시 쓴다 — 첨부가 쌓일수록 턴당 쓰기가 선형으로 는다.
+      본문을 `chat_images` 로 빼고 `img:sha256:<hex>` 참조만 남겼다.
+
+      | | 백필 전 | 백필 후 |
+      |---|---|---|
+      | chat_history jsonb 합계 | 1,006KB | **189KB** |
+      | 최대 행 | 568KB | **46KB** |
+      | 이미지 | 인라인 17장 | 본문 16개(중복 1건 통합) 517KB |
+
+      검증(실물): ①백필 전 덤프의 이미지 해시 집합 == `chat_images` 본문 == messages 참조,
+      인라인 잔존 0 ②실 API `GET /api/chat-history` 가 11장을 전부 dataURL 로 복원, 미해석 참조 0
+      ③같은 응답을 `POST` 로 되돌려도 jsonb 크기 동일·본문 중복 생성 0(멱등)
+
+      ★백엔드는 지금 postgres `bytea` 다. **참조 형식과 `chat-images.ts` 의 외부 인터페이스는 그대로 두고**
+      Phase 5 에서 R2 로 갈아끼운다 — 호출측이 저장소를 모르게 한 게 이 작업의 본체다.
+      ⚠️ R2 로 나가는 순간 **DB 와 R2 를 같은 시점으로 묶어야** 반쪽 복구가 안 난다(N1 백업 스크립트 주석 참조).
+
+      재현: `docker compose -f deploy/docker-compose.yml exec -T web node --experimental-strip-types
+      --import ./scripts/ts-resolve-hook.mjs scripts/backfill_chat_images.mjs` (기본 dry-run, `--apply` 로 반영)
 - [x] **이미지 리사이즈 정책 재결정** ✅ 2026-08-13 — **결론: LLM 경로는 1568px 유지, 512px 는 표시 전용.**
 
       ★먼저 전제가 틀렸다: "표시용 512 다운스케일이 들어간다"는 맞지만 **LLM 은 512 를 본 적이 없다.**

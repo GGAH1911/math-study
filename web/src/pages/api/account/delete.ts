@@ -62,6 +62,15 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
       await tx`DELETE FROM concept_mastery  WHERE user_id = ${userId}`;
       await tx`DELETE FROM user_profile     WHERE user_id = ${userId}`;
       await tx`DELETE FROM chat_history      WHERE user_id = ${userId}`;
+      // 이미지 본문은 chat_images 에 따로 있다 — 참조가 문자열이라 FK 가 안 걸리므로 여기서 지운다.
+      // 트랜잭션 밖에서 부르면 탈퇴는 됐는데 본문만 남는 상태가 생긴다.
+      await tx`
+        WITH refd AS (
+          SELECT DISTINCT t.m[1] AS hash FROM chat_history c,
+            LATERAL regexp_matches(c.messages::text, 'img:sha256:([0-9a-f]{64})', 'g') AS t(m)
+        )
+        DELETE FROM chat_images ci WHERE NOT EXISTS (SELECT 1 FROM refd r WHERE r.hash = ci.hash)
+      `;
       await tx`DELETE FROM problem_state     WHERE user_id = ${userId}`;
       await tx`DELETE FROM problem_attempts  WHERE user_id = ${userId}`;
       await tx`DELETE FROM users             WHERE id = ${userId}`;

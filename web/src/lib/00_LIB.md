@@ -18,6 +18,7 @@ updated: 2026-06-28
 - `atlas.ts` — 등록 자산
 - `auth.ts` — 등록 자산
 - `chat-context.ts` — 등록 자산
+- `chat-images.ts` — 등록 자산
 - `concept-fs.ts` — 등록 자산
 - `concept-meta.ts` — 등록 자산
 - `concept-misconceptions-server.ts` — 등록 자산
