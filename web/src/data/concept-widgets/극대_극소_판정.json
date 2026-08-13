@@ -1,0 +1,125 @@
+{
+ "id": "극대_극소_판정",
+ "spec": {
+  "title": "극대·극소 판정 – 도함수의 부호 변화",
+  "params": [
+   {
+    "name": "a",
+    "label": "a",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 1,
+    "step": 0.05
+   }
+  ],
+  "scope": "cr = sqrt(a); cl = -cr; h = 0.1; d_left_left = 3*(cl - h)^2 - 3*a; d_left_right = 3*(cl + h)^2 - 3*a; d_right_left = 3*(cr - h)^2 - 3*a; d_right_right = 3*(cr + h)^2 - 3*a;",
+  "plot": {
+   "range": [
+    -2,
+    2
+   ],
+   "yRange": [
+    -6,
+    6
+   ],
+   "fns": [
+    {
+     "fn": "x^3 - 3*a*x",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*x^2 - 3*a",
+     "label": "f'(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "좌측 후보 x",
+    "expr": "cl",
+    "digits": 3
+   },
+   {
+    "label": "우측 후보 x",
+    "expr": "cr",
+    "digits": 3
+   },
+   {
+    "label": "좌측 후보 왼쪽 f'",
+    "expr": "d_left_left",
+    "digits": 3
+   },
+   {
+    "label": "좌측 후보 오른쪽 f'",
+    "expr": "d_left_right",
+    "digits": 3
+   },
+   {
+    "label": "우측 후보 왼쪽 f'",
+    "expr": "d_right_left",
+    "digits": 3
+   },
+   {
+    "label": "우측 후보 오른쪽 f'",
+    "expr": "d_right_right",
+    "digits": 3
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "a": 0.5
+   },
+   {
+    "a": 1
+   },
+   {
+    "a": 2
+   }
+  ],
+  "invariants": [
+   "abs(cl + cr)",
+   "abs(cr^2 - a)",
+   "abs(cr^3 - a*cr)",
+   "abs(d_left_left - (0.6*cr + 0.03))",
+   "abs(d_left_right - (-0.6*cr + 0.03))",
+   "abs(d_left_left - d_right_right)",
+   "abs(d_left_right - d_right_left)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "a": 1
+    },
+    "expect": {
+     "cr": 1,
+     "cl": -1,
+     "h": 0.1,
+     "d_left_left": 0.63,
+     "d_left_right": -0.57,
+     "d_right_left": -0.57,
+     "d_right_right": 0.63
+    }
+   },
+   {
+    "params": {
+     "a": 0.25
+    },
+    "expect": {
+     "cr": 0.5,
+     "cl": -0.5,
+     "h": 0.1,
+     "d_left_left": 0.33,
+     "d_left_right": -0.27,
+     "d_right_left": -0.27,
+     "d_right_right": 0.33
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}

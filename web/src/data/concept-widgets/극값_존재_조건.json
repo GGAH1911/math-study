@@ -1,0 +1,115 @@
+{
+ "id": "극값_존재_조건",
+ "spec": {
+  "title": "극값 존재 조건",
+  "params": [
+   {
+    "name": "b",
+    "label": "b",
+    "type": "slider",
+    "min": -2,
+    "max": 2,
+    "init": 0.5,
+    "step": 0.1
+   }
+  ],
+  "scope": "eps=0.01; fp0=3*0^2+2*b*0; fpp0=6*0+2*b; isext = fpp0 != 0 ? 1 : 0; fml=3*(-eps)^2+2*b*(-eps); fpl=3*eps^2+2*b*eps;",
+  "plot": {
+   "range": [
+    -1,
+    1
+   ],
+   "yRange": [
+    -8,
+    8
+   ],
+   "fns": [
+    {
+     "fn": "x^3 + b*x^2",
+     "label": "f(x)",
+     "color": "blue"
+    },
+    {
+     "fn": "3*x^2 + 2*b*x",
+     "label": "f'(x)",
+     "color": "red"
+    }
+   ]
+  },
+  "readout": [
+   {
+    "label": "f'(0)",
+    "expr": "fp0",
+    "digits": 2
+   },
+   {
+    "label": "f''(0)",
+    "expr": "fpp0",
+    "digits": 2
+   },
+   {
+    "label": "f'(0-)",
+    "expr": "fml",
+    "digits": 3
+   },
+   {
+    "label": "f'(0+)",
+    "expr": "fpl",
+    "digits": 3
+   },
+   {
+    "label": "극값 여부",
+    "expr": "isext",
+    "digits": 0
+   }
+  ]
+ },
+ "recipe": {
+  "samples": [
+   {
+    "b": -1
+   },
+   {
+    "b": 0
+   },
+   {
+    "b": 0.5
+   }
+  ],
+  "invariants": [
+   "fp0",
+   "3*(-2*b/3)^2+2*b*(-2*b/3)",
+   "2*b + (6*(-2*b/3)+2*b)"
+  ],
+  "oracle": [
+   {
+    "params": {
+     "b": 1
+    },
+    "expect": {
+     "fpp0": 2,
+     "isext": 1
+    }
+   },
+   {
+    "params": {
+     "b": -1
+    },
+    "expect": {
+     "fpp0": -2,
+     "isext": 1
+    }
+   },
+   {
+    "params": {
+     "b": 0
+    },
+    "expect": {
+     "fpp0": 0,
+     "isext": 0
+    }
+   }
+  ],
+  "tol": 0.000001
+ }
+}
