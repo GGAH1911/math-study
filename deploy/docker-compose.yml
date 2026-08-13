@@ -47,6 +47,10 @@ services:
       MATH_STUDY_SECURE_COOKIES: ${MS_SECURE_COOKIES:-false}
       # ★프롬프트 캐싱: clean cwd(컨테이너 /tmp 는 깨끗) + chat.ts 가 DISABLE_GIT 주입 → cache_read 유지.
       CLAUDE_P_CWD: /tmp/claude_p_clean
+      # ★튜터 인증: 대화형 로그인이 만든 .credentials.json 은 조용히 만료된다(2026-08-12 claudeAiOauth
+      #   블록이 사라져 튜터가 15시간 죽었고, /api/health 는 내내 200이라 아무도 몰랐다).
+      #   `claude setup-token` 의 1년 장기 토큰을 env 로 고정한다. 없으면 기존 파일 인증으로 폴백.
+      CLAUDE_CODE_OAUTH_TOKEN: ${MS_CLAUDE_OAUTH_TOKEN:-}
       HOME: /home/node
     volumes:
       # 튜터 claude -p 구독 인증·설정. rw: OAuth 토큰 갱신 위해(시크릿은 이미지에 안 구움).

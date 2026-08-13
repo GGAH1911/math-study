@@ -51,8 +51,12 @@ const MAX_TOTAL_HISTORY_CHARS = 60_000;
 // AWS creds, git tokens, anything sensitive that happens to live in
 // process.env.
 function safeChildEnv(): NodeJS.ProcessEnv {
+  // ★CLAUDE_CODE_OAUTH_TOKEN 필수: 대화형 로그인이 만든 ~/.claude/.credentials.json 은
+  //   조용히 만료된다(2026-08-12 실제로 claudeAiOauth 블록이 사라져 **튜터가 15시간 죽어 있었다**).
+  //   `claude setup-token` 의 1년짜리 장기 토큰을 env 로 고정하는 쪽이 서버에 맞다.
+  //   여기 allowlist 에 없으면 값이 있어도 자식에게 안 넘어간다(스트립됨).
   const ALLOW = ['PATH', 'HOME', 'LANG', 'LC_ALL', 'LC_CTYPE', 'TERM',
-                 'ANTHROPIC_API_KEY', 'CLAUDE_CONFIG_DIR'];
+                 'ANTHROPIC_API_KEY', 'CLAUDE_CONFIG_DIR', 'CLAUDE_CODE_OAUTH_TOKEN'];
   const out: NodeJS.ProcessEnv = {};
   for (const k of ALLOW) {
     const v = process.env[k];
