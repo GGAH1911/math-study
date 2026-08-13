@@ -107,18 +107,43 @@ MAP_SYSTEM = dedent("""
 """).strip()
 
 
-def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, add_dir: str | None = None, timeout: int = 180) -> str | None:
-    """Invoke `claude -p` with given system/user prompts. Returns stdout text or None on failure."""
+def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1,
+             add_dir: str | None = None, timeout: int = 180, retries: int = 2,
+             no_tools: bool = False) -> str | None:
+    """Invoke `claude -p` with given system/user prompts. Returns stdout text or None on failure.
+
+    ★연속 호출에서 간헐적으로 rc=1(빈 stderr)이 난다. 배치에서 이걸 한 번의 실패로 처리하면
+      멀쩡한 모델이 '0점' 으로 집계된다(실제로 A/B 첫 측정이 그랬다). 짧게 재시도한다.
+    """
+    for attempt in range(max(1, retries)):
+        out = _claude_p_once(system, user, model, max_turns, add_dir, timeout, no_tools)
+        if out:
+            return out
+        time.sleep(1.5 * (attempt + 1))
+    return None
+
+
+def _claude_p_once(system: str, user: str, model: str, max_turns: int,
+                   add_dir: str | None, timeout: int, no_tools: bool = False) -> str | None:
     args = ['claude', '-p',
             '--model', model,
             '--max-turns', str(max_turns),
             '--output-format', 'text',
             '--no-session-persistence']
+    # ★도구 쓸 일이 없는 분류·매핑 호출은 도구를 **꺼야** 한다. 안 끄면 모델이 파일을
+    #   열어보려다 --max-turns 1 을 그 턴에 다 써 `Error: Reached max turns (1)` 로 죽는다.
+    #   haiku 가 sonnet 보다 도구를 잘 집어서, A/B 첫 측정에서 haiku 만 0점이 나왔다 —
+    #   능력 차이로 오독할 뻔했다. 측정은 기준부터 의심하라.
+    if no_tools:
+        args += ['--tools', '']
     if add_dir:
         args += ['--add-dir', add_dir]
     args += ['--system-prompt', system, user]
     try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=timeout, cwd=_CLEAN_DIR, env=_CLAUDE_ENV)
+        # ★stdin 을 닫아 준다. 안 닫으면 `claude -p` 가 파이프 입력을 3초 기다렸다가
+        #   경고를 내고 실패한다(rc=1). 배치에서 조용히 전부 실패하는 원인이 된다.
+        r = subprocess.run(args, capture_output=True, text=True, timeout=timeout,
+                           cwd=_CLEAN_DIR, env=_CLAUDE_ENV, stdin=subprocess.DEVNULL)
         if r.returncode != 0:
             print(f'  ! claude failed (rc={r.returncode}): stderr={r.stderr[:300]!r}', file=sys.stderr, flush=True)
             return None
@@ -206,7 +231,7 @@ def map_problem(prob_body: str, number: int, score: int, units_index: dict,
 아래 **단원 경로 중 정확히 하나**를 고르라(경로 그대로, 다른 텍스트 금지).
 경로의 가운데 조각은 학년이다 — 이 문제의 학년에 맞는 것을 골라야 한다.
 {unit_menu(index)}"""
-    unit = (claude_p(UNIT_SYSTEM, u_user, model=model, max_turns=1, timeout=60) or '').strip()
+    unit = (claude_p(UNIT_SYSTEM, u_user, model=model, max_turns=1, timeout=60, no_tools=True) or '').strip()
     unit = re.sub(r'^```\w*|```$', '', unit).strip().strip('"\'` ')
     if unit not in index:
         # 경로 일부만 답한 경우 구제(예: 마지막 조각만).
@@ -225,7 +250,7 @@ def map_problem(prob_body: str, number: int, score: int, units_index: dict,
 
 아래 **개념 경로 중 1-3개**를 고르고 나머지 필드를 채워 JSON 만 출력하라.
 {spoke_menu(index, unit)}"""
-    out = claude_p(MAP_SYSTEM, s_user, model=model, max_turns=1, timeout=60)
+    out = claude_p(MAP_SYSTEM, s_user, model=model, max_turns=1, timeout=60, no_tools=True)
     if not out:
         return None
     out = re.sub(r'^```(?:json)?\s*|\s*```$', '', out.strip(), flags=re.MULTILINE)
