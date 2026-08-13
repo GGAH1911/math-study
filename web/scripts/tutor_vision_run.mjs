@@ -24,11 +24,11 @@ if (!KEY) { console.error('NOUS_API_KEY 없음'); process.exit(1); }
 const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1';
 
 const CANDIDATES = [
+  // ★튜터 최종 후보 luna 의 이미지 판독 검증. haiku(현행)·gemma4(품질1위)를 같은 배치에 넣어
+  //   라운드 간 드리프트 없이 비교한다. 필기 채점이 코어라 여기서 무너지면 후보 자격이 없다.
+  { key: 'luna', model: 'openai/gpt-5.6-luna' },
   { key: 'haiku', model: '~anthropic/claude-haiku-latest' },
   { key: 'gemma4-31b', model: 'google/gemma-4-31b-it' },
-  { key: 'llama4-scout', model: 'meta-llama/llama-4-scout' },
-  { key: 'mistral-small', model: 'mistralai/mistral-small-3.2-24b-instruct' },
-  { key: 'qwen3.7-flash', model: 'qwen/qwen3.7-flash' },
 ];
 
 const PROMPT = `아래 이미지는 한국 수능/모의고사 기출 수학 문제다(타일 1장 이상, 위→아래 순).
@@ -70,7 +70,7 @@ async function ask(cand, prob, idx, total) {
         model: cand.model,
         messages: [{ role: 'user', content }],
         max_tokens: 4000,
-        reasoning: { enabled: false },
+        ...(cand.noReasoning === false ? {} : { reasoning: { enabled: false } }),
       }),
     });
     if (!r.ok) {

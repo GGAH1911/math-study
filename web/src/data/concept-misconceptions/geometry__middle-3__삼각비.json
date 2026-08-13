@@ -1,0 +1,27 @@
+{
+ "id": "geometry/middle-3/삼각비",
+ "model": "~deepseek/deepseek-v4-flash-latest",
+ "verified": true,
+ "items": [
+  {
+   "belief": "탄젠트는 대변/빗변으로 구하는 거 아니야?",
+   "why_wrong": "탄젠트는 대변/인접변인데 빗변을 쓰면 사인과 혼동돼.",
+   "fix": "직각삼각형에서 '높이/밑변'을 떠올려 봐. 빗변은 기울기에 안 쓰여.",
+   "from_transcript": true
+  },
+  {
+   "belief": "삼각비는 삼각형이 클수록 값도 커지는 거 아니야?",
+   "why_wrong": "삼각비는 각도가 같으면 삼각형 크기와 상관없이 일정해. 닮은꼴이기 때문이야.",
+   "fix": "같은 각도의 작은 삼각형과 큰 삼각형을 그려서 대응변의 비가 같은지 직접 확인해 봐.",
+   "from_transcript": false
+  },
+  {
+   "belief": "각도가 커지면 사인, 코사인, 탄젠트 값이 모두 커져.",
+   "why_wrong": "사인과 탄젠트는 커지지만 코사인은 작아져. 직각삼각형에서 각이 커지면 인접변이 짧아지기 때문이야.",
+   "fix": "30°, 45°, 60°의 특수각 표를 보면서 사인과 코사인의 값 변화를 비교해 봐.",
+   "from_transcript": false
+  }
+ ],
+ "verifiedBy": "opus",
+ "rejected": []
+}

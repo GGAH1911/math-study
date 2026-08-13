@@ -3,6 +3,7 @@
 import { readdirSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { tutorWidgetMeta } from './concept-widgets-server';
+import { misconceptionsBlock } from './concept-misconceptions-server';
 import { MATH_TYPOGRAPHY_RULE, GRAPHICS_GUIDE, FOLLOWUP_VERIFICATION_RULE } from './prompts/tutor-rules';
 import { type ConceptFM, WEB_ROOT, slugOf, readConcept, listAllConcepts, readProblem } from './concept-fs';
 export { searchConcepts } from './concept-fs';   // 노드별 위젯 메타(bespoke+spec, 튜터 인지용)
@@ -68,7 +69,7 @@ ${hasImage ? `## 문제 이미지 (유일한 원본)
   return { systemPrompt: compact, pageTitle: full.pageTitle, allowedDirs: full.allowedDirs, imagePaths: full.imagePaths };
 }
 
-export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts', userMastery?: string): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
+export function buildTutorPrompt(pageSlug: string, collection: 'concepts' | 'problems' | 'dashboard' = 'concepts', userMastery?: string, opts?: { misconceptions?: boolean }): { systemPrompt: string; pageTitle: string; allowedDirs?: string[]; imagePaths?: string[] } {
   if (collection === 'dashboard') {
     return buildDashboardPrompt();
   }
@@ -129,7 +130,7 @@ ${widget ? `
 --- 이 페이지의 인터랙티브 위젯 (그래픽 그리기보다 우선 활용) ---
 본문에 이 개념의 인터랙티브 위젯(**${widget.label}**)이 있습니다. ${widget.tutorHint}
 직접 그래픽을 그리기 전에 먼저 그 위젯을 직접 조작하도록 안내하는 것이 핵심입니다 — 학생이 직접 만지며 이해하는 게 더 효과적입니다.
-` : ''}
+` : ''}${opts?.misconceptions === true ? misconceptionsBlock(pageSlug) : ''}
 --- 직접 선수 개념 (prerequisites) ---
 ${prereqInfo || '(없음 — 기초 노드)'}
 

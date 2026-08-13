@@ -3,22 +3,19 @@
 //   심판=포털 강모델 2명(서로 다른 계열). 문항당 심판별 1콜(후보 전부 동시 제시) → 위치 편향은 **문항마다 라벨 셔플**로 상쇄.
 //   pairwise 를 N번 도는 것보다 콜 수가 적고, 같은 문맥에서 상대비교라 점수 해상도가 높다.
 // 사용: node web/scripts/tutor_ab_judge.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const REPO = process.env.WT_REPO || fileURLToPath(new URL('../..', import.meta.url)).replace(/\/$/, '');
 const MON = `${REPO}/.llm-monitor`;
 const results = JSON.parse(readFileSync(`${MON}/ab_results.json`, 'utf8'));
-const KEY = process.env.NOUS_API_KEY;
-if (!KEY) { console.error('NOUS_API_KEY 없음'); process.exit(1); }
-const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1';
-// ★심판 2명을 **서로 다른 계열**로 둔다. 후보에 anthropic(haiku)이 있어 심판도 anthropic 하나만 쓰면
-//   가문 편향을 배제할 수 없다. 두 심판의 1위가 갈리는 문항은 그 자체가 '판정 불확실' 신호다.
-// ★심판 모델도 비용이다. opus-5-fast(\$8/\$40)를 쓰다가 심판값(\$1.78)이 **측정 대상 전부 + 위젯 470건
-//   생성을 합친 것보다 3배** 나왔다 — 저비용 튜터를 찾는 작업에서 도구가 제일 비싼 건 앞뒤가 안 맞는다.
-//   심판에 필요한 건 최고 지능이 아니라 **일관성**이고, 그건 계열이 다른 둘의 합치도로 검증한다.
-//   luna-pro(\$0.10/\$0.60) + grok-4.5(\$1.60/\$4.80) 로 교체 — 합쳐도 opus 단독의 1/5.
-const JUDGES = (process.env.JUDGES || 'openai/gpt-5.6-luna-pro,x-ai/grok-4.5').split(',');
+// ★심판은 **구독(claude -p)** 으로 돈다. 포털(유료 API)은 제품용이고 측정·개발에 쓰지 않는다.
+//   opus-5-fast 를 포털 심판으로 쓰다 심판값이 $1.78 나온 전례가 있다(측정 대상 전부보다 3배).
+//   구독 인증은 CLAUDE_CODE_OAUTH_TOKEN(1년 장기 토큰) — .credentials.json 은 조용히 만료된다.
+const JUDGES = (process.env.JUDGES || 'opus,sonnet').split(',');
+const CLEAN = '/tmp/claude_p_clean';
+try { mkdirSync(CLEAN, { recursive: true }); } catch { /* 이미 있음 */ }
 
 // 결정적 셔플(seed=문항 인덱스) — 재현 가능하되 문항마다 라벨 위치가 달라진다.
 function shuffled(arr, seed) {
@@ -50,23 +47,23 @@ const RUBRIC = `너는 한국 수능 수학 튜터 답변을 채점하는 엄격
  "rank":["<라벨>", ...],
  "why":"1등을 그렇게 고른 이유 한두 문장"}`;
 
-async function judge(prompt, model) {
-  try {
-    const r = await fetch(`${BASE}/chat/completions`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model, messages: [{ role: 'user', content: prompt }],
-        max_tokens: 4000, response_format: { type: 'json_object' },
-      }),
+function judge(prompt, model) {
+  return new Promise((res) => {
+    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--tools', ''], {
+      stdio: ['ignore', 'pipe', 'ignore'], cwd: CLEAN, timeout: 300000,
+      env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' },
     });
-    if (!r.ok) { console.error(`심판 ${model} HTTP ${r.status}`); return null; }
-    const j = await r.json();
-    const txt = j.choices?.[0]?.message?.content || '';
-    const m = txt.match(/\{[\s\S]*\}/);
-    if (!m) return null;
-    try { return JSON.parse(m[0]); } catch { return null; }
-  } catch (e) { console.error(`심판 ${model} 오류 ${e.message}`); return null; }
+    let out = '';
+    c.stdout.on('data', (d) => (out += d));
+    c.on('close', () => {
+      let text = out;
+      try { const j = JSON.parse(out); if (j.is_error) { console.error(`심판 ${model}: ${String(j.result).slice(0, 80)}`); return res(null); } text = j.result || out; } catch { /* raw */ }
+      const m = text.match(/\{[\s\S]*\}/);
+      if (!m) return res(null);
+      try { res(JSON.parse(m[0])); } catch { res(null); }
+    });
+    c.on('error', () => res(null));
+  });
 }
 
 // 문항별로 묶기

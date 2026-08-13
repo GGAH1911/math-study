@@ -12,6 +12,7 @@ updated: 2026-06-28
 <!-- AUTO_INDEX_SECTION -->
 - 📁 [[00_LIB_CHAT|chat/]]
 - 📁 [[00_PROMPTS|prompts/]]
+- 📁 [[00_TUTOR|tutor/]]
 - `activity.ts` — 등록 자산
 - `admin.ts` — 등록 자산
 - `atlas.ts` — 등록 자산

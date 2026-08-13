@@ -12,19 +12,18 @@
 //   누락(안 쓴 것)보다 **오독(다르게 읽은 것)** 을 훨씬 무겁게 본다: 튜터가 학생 풀이를 오독하면
 //   틀린 지도를 확신 있게 하게 되고, 그건 아예 못 읽는 것보다 해롭다.
 // 사용: NOUS_API_KEY=... node web/scripts/vision_read_judge.mjs
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const REPO = process.env.WT_REPO || fileURLToPath(new URL('../..', import.meta.url)).replace(/\/$/, '');
 const MON = `${REPO}/.llm-monitor`;
-const KEY = process.env.NOUS_API_KEY;
-if (!KEY) { console.error('NOUS_API_KEY 없음'); process.exit(1); }
-const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1';
-// ★심판 모델도 비용이다. opus-5-fast(\$8/\$40)를 쓰다가 심판값(\$1.78)이 **측정 대상 전부 + 위젯 470건
-//   생성을 합친 것보다 3배** 나왔다 — 저비용 튜터를 찾는 작업에서 도구가 제일 비싼 건 앞뒤가 안 맞는다.
-//   심판에 필요한 건 최고 지능이 아니라 **일관성**이고, 그건 계열이 다른 둘의 합치도로 검증한다.
-//   luna-pro(\$0.10/\$0.60) + grok-4.5(\$1.60/\$4.80) 로 교체 — 합쳐도 opus 단독의 1/5.
-const JUDGES = (process.env.JUDGES || 'openai/gpt-5.6-luna-pro,x-ai/grok-4.5').split(',');
+// ★심판은 **구독(claude -p)**. 포털은 제품 튜터 전용이다.
+//   비전 채점이라 심판이 원본 이미지를 봐야 하는데, claude CLI 는 --add-dir 로 디렉터리를 열어주고
+//   Read 도구로 직접 읽게 하면 된다(제품 문제 페이지 튜터와 동일한 메커니즘).
+const JUDGES = (process.env.JUDGES || 'opus,sonnet').split(',');
+const CLEAN = '/tmp/claude_p_clean';
+try { mkdirSync(CLEAN, { recursive: true }); } catch { /* 이미 있음 */ }
 
 const results = JSON.parse(readFileSync(`${MON}/vision_results.json`, 'utf8'));
 const SET = JSON.parse(readFileSync(`${MON}/vision_set.json`, 'utf8'));
@@ -32,7 +31,7 @@ const TILES = Object.fromEntries(SET.map((x) => [x.id, x.tiles]));
 const HOST_REPO = '/home/insung/math-study';
 const localize = (p) => (p.startsWith(HOST_REPO) && REPO !== HOST_REPO ? REPO + p.slice(HOST_REPO.length) : p);
 
-const RUBRIC = `너는 OCR/판독 충실도를 채점한다. **첨부된 이미지가 원본 문제**다(이것이 유일한 정답 기준).
+const RUBRIC = `너는 OCR/판독 충실도를 채점한다. **Read 도구로 열어 볼 이미지가 원본 문제**다(이것이 유일한 정답 기준).
 아래는 여러 모델이 그 이미지를 보고 옮겨 적은 것이다. 모델이 누구인지는 모른다(라벨 무작위).
 먼저 이미지를 스스로 정확히 읽은 뒤, 각 응답을 이미지와 대조하라.
 
@@ -49,20 +48,30 @@ misreads: 구체적으로 틀리게 읽은 항목을 배열로 나열하라(예 
 출력은 JSON 하나만:
 {"scores":{"<라벨>":{"fidelity":n,"figure":n,"misreads":["..."],"note":"한 줄"}}}`;
 
-async function judge(prompt, model, imgPaths) {
-  const content = [{ type: 'text', text: prompt },
-    ...imgPaths.map((p) => ({ type: 'image_url', image_url: { url: `data:image/png;base64,${readFileSync(localize(p)).toString('base64')}` } }))];
-  try {
-    const r = await fetch(`${BASE}/chat/completions`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model, messages: [{ role: 'user', content }], max_tokens: 4000, response_format: { type: 'json_object' } }),
+function judge(prompt, model, imgPaths) {
+  return new Promise((res) => {
+    const local = imgPaths.map(localize);
+    const dirs = [...new Set(local.map((p) => p.replace(/\/[^/]+$/, '')))];
+    const withImgs = `${prompt}\n\n--- 원본 이미지 (Read 도구로 먼저 열어 볼 것) ---\n${local.map((p, i) => `  ${i + 1}. ${p}`).join('\n')}`;
+    const args = ['-p', withImgs, '--model', model, '--output-format', 'json',
+      '--allowedTools', 'Read', '--disallowedTools', 'Bash,Edit,Write,Glob,Grep,WebFetch,WebSearch',
+      '--max-turns', '8'];
+    for (const d of dirs) args.push('--add-dir', d);
+    const c = spawn('claude', args, {
+      stdio: ['ignore', 'pipe', 'ignore'], cwd: CLEAN, timeout: 420000,
+      env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' },
     });
-    if (!r.ok) { console.error(`심판 ${model} HTTP ${r.status}`); return null; }
-    const txt = (await r.json()).choices?.[0]?.message?.content || '';
-    const m = txt.match(/\{[\s\S]*\}/);
-    return m ? JSON.parse(m[0]) : null;
-  } catch (e) { console.error(`심판 ${model} ${e.message}`); return null; }
+    let out = '';
+    c.stdout.on('data', (d) => (out += d));
+    c.on('close', () => {
+      let text = out;
+      try { const j = JSON.parse(out); if (j.is_error) { console.error(`심판 ${model}: ${String(j.result).slice(0, 80)}`); return res(null); } text = j.result || out; } catch { /* raw */ }
+      const m = text.match(/\{[\s\S]*\}/);
+      if (!m) return res(null);
+      try { res(JSON.parse(m[0])); } catch { res(null); }
+    });
+    c.on('error', () => res(null));
+  });
 }
 
 function shuffled(arr, seed) {

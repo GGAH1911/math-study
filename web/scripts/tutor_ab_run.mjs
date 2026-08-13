@@ -26,11 +26,10 @@ const BASE = process.env.NOUS_BASE || 'https://inference-api.nousresearch.com/v1
 
 // 후보(전부 비전 가능). baseline=현행 튜터와 같은 계열(Haiku).
 const CANDIDATES = [
-  { key: 'haiku', model: '~anthropic/claude-haiku-latest', baseline: true },
-  { key: 'gemma4-31b', model: 'google/gemma-4-31b-it' },
-  { key: 'llama4-scout', model: 'meta-llama/llama-4-scout' },
-  { key: 'mistral-small', model: 'mistralai/mistral-small-3.2-24b-instruct' },
-  { key: 'qwen3.7-flash', model: 'qwen/qwen3.7-flash' },
+  // ★모델 비교가 아니라 **오개념 목록 주입 효과** 측정. 같은 모델(luna)로 ON/OFF 만 다르게 한다.
+  //   블라인드 심판은 둘이 같은 모델인 줄 모르고 채점하므로, 차이가 나면 그건 주입 효과다.
+  { key: 'luna-오개념OFF', model: 'openai/gpt-5.6-luna', misconceptions: false, baseline: true },
+  { key: 'luna-오개념ON', model: 'openai/gpt-5.6-luna', misconceptions: true },
 ];
 
 const A = process.argv.slice(2);
@@ -55,7 +54,7 @@ function buildUserPrompt(c) {
 }
 
 async function ask(cand, c, idx) {
-  const { systemPrompt } = buildTutorPrompt(c.slug, c.collection === 'dashboard' ? 'concepts' : c.collection);
+  const { systemPrompt } = buildTutorPrompt(c.slug, c.collection === 'dashboard' ? 'concepts' : c.collection, undefined, { misconceptions: cand.misconceptions !== false });
   const userPrompt = buildUserPrompt(c);
   const label = `${cand.key} · ${c.slug.split('/').pop()}`;
   emit({ ev: 'start', id: label, idx, total: cases.length * CANDIDATES.length, model: cand.model });
@@ -70,7 +69,8 @@ async function ask(cand, c, idx) {
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
         max_tokens: 3000, stream: true, stream_options: { include_usage: true },
         // 추론형 모델이 예산을 추론으로 다 태워 답이 0자가 되는 사고 방지(qwen3.7-flash 실측).
-        reasoning: { enabled: false },
+        // 단, 추론을 끌 수 없는 모델(gpt-5-nano)은 이 필드를 보내면 400 이라 생략한다.
+        ...(cand.noReasoning === false ? {} : { reasoning: { enabled: false } }),
       }),
     });
     if (!r.ok) {
