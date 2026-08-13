@@ -9,6 +9,7 @@ import { buildLearnerContext } from '../../lib/learner.ts';
 import { getMastery } from '../../lib/mastery.ts';
 import problemIndex from '../../data/problems-by-concept.json';
 import { logTutorUsage, parseUsage } from '../../lib/tutor-usage.ts';
+import { streamNousTutor, nousConfigured } from '../../lib/tutor/nous-stream.ts';
 
 export const prerender = false;
 
@@ -25,7 +26,7 @@ type ChatRequest = {
   slug: string;            // <collection>/<slug> the chat is anchored to ('__nav__' for dashboard)
   collection?: 'concepts' | 'problems' | 'dashboard';
   messages: ChatMessage[]; // full conversation history, last entry is the new user msg
-  model?: 'haiku' | 'sonnet' | 'opus';
+  model?: 'haiku' | 'sonnet' | 'opus' | 'deepseek';
 };
 
 // --- Security hardening ----------------------------------------------------
@@ -37,8 +38,10 @@ type ChatRequest = {
 const SLUG_RE = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9_\-/]+$|^__nav__$/;
 const ALLOWED_COLLECTIONS: ReadonlySet<'concepts' | 'problems' | 'dashboard'> =
   new Set(['concepts', 'problems', 'dashboard']);
-const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus'> =
-  new Set(['haiku', 'sonnet', 'opus']);
+// 'deepseek' = Nous Portal(DeepSeek V4 Flash). **text-only 모델**이라 이미지가 붙은 턴은
+// 아래에서 claude(비전) 로 자동 폴백한다 — 모델 선택은 요청이 하지만 비전 가능 여부는 서버가 판정.
+const ALLOWED_MODELS: ReadonlySet<'haiku' | 'sonnet' | 'opus' | 'deepseek'> =
+  new Set(['haiku', 'sonnet', 'opus', 'deepseek']);
 const MAX_USER_MESSAGE_CHARS = 4000;
 const MAX_ASSISTANT_MESSAGE_CHARS = 12_000; // 다단 작도 응답 (의존 그래프 + sympy + geometry spec) 수용
 const MAX_HISTORY_TURNS = 30;
@@ -331,9 +334,19 @@ ${lines}`;
   // 보안: --add-dir 로 해당 디렉토리만 한정 → 다른 파일은 못 봄.
   const enableRead = allowedDirs.length > 0;
 
+  // ── 백엔드 라우팅 ─────────────────────────────────────────────────────────────
+  // deepseek 은 text-only 라 **그림을 봐야 하는 턴은 처리할 수 없다**(첨부 이미지 or 문제 이미지 dir).
+  // 그런 턴은 조용히 claude 비전 경로로 되돌린다 — 학생 입장에선 답이 나오는 게 우선.
+  const wantNous = model === 'deepseek';
+  const useNous = wantNous && !enableRead && nousConfigured();
+  if (wantNous && !useNous) {
+    console.warn(`[chat] deepseek 요청이나 폴백: ${enableRead ? '이미지 턴(text-only 모델 불가)' : 'NOUS_API_KEY 없음'}`);
+  }
+  const effectiveModel: 'haiku' | 'sonnet' | 'opus' = useNous ? 'haiku' : (model === 'deepseek' ? 'haiku' : model);
+
   const args: string[] = [
     '-p',
-    '--model', model,
+    '--model', effectiveModel,
     // Read 도구 활성화면 LLM 이 turn 을 더 쓸 수 있어야 안전:
     //   1) Read 호출 → 2) 결과 process → 3) python 코드 emit → 4) 답변
     // 부족하면 LLM 이 mid-response 에서 exit code 1 로 빠진다.
@@ -363,10 +376,43 @@ ${lines}`;
     userPrompt,
   );
 
-  const state = { closed: false, child: null as ReturnType<typeof spawn> | null };
+  const state = { closed: false, child: null as ReturnType<typeof spawn> | null, abort: null as AbortController | null };
   const cleanup = () => { while (tmpImagePaths.length) { const p = tmpImagePaths.pop()!; try { unlinkSync(p); } catch { /* */ } } };
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
+      const encoder0 = new TextEncoder();
+      const emit = (event: string, data: unknown) => {
+        if (state.closed) return;
+        try { controller.enqueue(encoder0.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`)); }
+        catch { state.closed = true; }
+      };
+      // ── Nous 경로: claude 스폰 없이 HTTP 스트리밍. SSE 이벤트 계약은 동일. ──────────
+      if (useNous) {
+        const ac = new AbortController();
+        state.abort = ac;
+        await streamNousTutor(
+          { systemPrompt, userPrompt, signal: ac.signal },
+          {
+            onDelta: (text) => emit('delta', { text }),
+            onError: (message) => emit('error', { message }),
+            onDone: (usage) => {
+              if (usage) {
+                void logTutorUsage({
+                  userId: learnerUserId, collection, slug, model: 'deepseek', byok: true,
+                  inputTokens: usage.inputTokens, outputTokens: usage.outputTokens,
+                  cacheReadTokens: usage.cacheReadTokens, cacheCreationTokens: 0,
+                });
+              }
+              emit('done', { status: 'ok' });
+              emit('end', {});
+              if (!state.closed) { state.closed = true; try { controller.close(); } catch { /* already closed */ } }
+              cleanup();
+            },
+          },
+        );
+        return;
+      }
+
       const child = spawn('claude', args, {
         env: safeChildEnv(),
         stdio: ['ignore', 'pipe', 'pipe'],
@@ -456,6 +502,7 @@ ${lines}`;
       // client disconnect — mark closed + kill child so stdout events stop arriving.
       state.closed = true;
       try { state.child?.kill('SIGTERM'); } catch { /* already exited */ }
+      try { state.abort?.abort(); } catch { /* 이미 종료 */ }   // Nous 경로 취소
       cleanup();
     },
   });
