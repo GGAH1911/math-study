@@ -27,10 +27,22 @@
    "fns": [
     {
      "fn": "x^3",
-     "label": "y = x³",
+     "label": "$y = x^3$",
      "color": "#1f77b4"
+    },
+    {
+     "fn": "a",
+     "label": "$y = a$",
+     "color": "#d62728"
     }
-   ]
+   ],
+   "points": [
+    [
+     "=root",
+     "=a"
+    ]
+   ],
+   "pointsLabel": "$(\\sqrt[3]{a},\\ a)$"
   },
   "readout": [
    {
@@ -101,6 +113,6 @@
     }
    }
   ],
-  "tol": 0.000001
+  "tol": 1e-06
  }
 }
