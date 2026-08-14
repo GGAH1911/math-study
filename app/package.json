@@ -1,0 +1,19 @@
+{
+  "name": "math-study-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "math-study 앱 셸(Capacitor). web/ 과 분리 — CI 의 web npm ci 에 앱 의존성을 섞지 않는다.",
+  "scripts": {
+    "sync": "cap sync android",
+    "open": "cap open android",
+    "aab": "cd android && ./gradlew bundleRelease",
+    "apk": "cd android && ./gradlew assembleDebug"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0"
+  }
+}

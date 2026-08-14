@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>수학 학습기</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; min-height: 100dvh; display: grid; place-items: center;
+      background: #0b0f14; color: #e6edf3;
+      font-family: -apple-system, "Noto Sans KR", system-ui, sans-serif;
+      text-align: center; padding: 2rem;
+    }
+    h1 { font-size: 1.25rem; font-weight: 600; margin: 0 0 .5rem; }
+    p  { margin: 0; color: #8b949e; font-size: .875rem; line-height: 1.6; }
+    code { background: #161b22; padding: .1rem .35rem; border-radius: 4px; font-size: .8em; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>수학 학습기</h1>
+    <!--
+      ★Phase 2 전용 껍데기다. 목적은 "기능 0 인 앱이 업로드·구동되는가" 하나뿐 —
+        서명·AAB·Play Console 업로드 경로를 앱을 만들기 **전에** 뚫어 둔다.
+        (포렌식은 targetSdk 34 로 전부 만들어놓고 업로드에서 막혔다.)
+      Phase 3 에서 web/ 이 SPA 로 전환되면 capacitor.config.json 의 webDir 을
+        ../web/dist 로 돌리고 이 파일은 지운다.
+    -->
+    <p>앱 셸 검증용 화면입니다.<br />업로드·구동 경로를 확인하기 위한 <code>Phase 2</code> 껍데기입니다.</p>
+  </main>
+</body>
+</html>

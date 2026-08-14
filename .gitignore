@@ -47,3 +47,17 @@ openrouterkey.txt
 
 # 서빙 계층 WebP 변환 캐시(요청 시 생성 — 리포에 5,728개 파일을 더하지 않기 위해)
 web/.cache/
+
+# ── 안드로이드 앱 셸(app/) ──────────────────────────────────────────────────
+# ★서명 자산은 절대 커밋하지 않는다. 키가 유출되면 앱 서명을 통째로 바꿔야 하고,
+#   기존 설치본은 업데이트를 못 받는다(패키지명+서명이 앱 정체성이다).
+app/android/keystore.properties*
+app/android/app/release.keystore*
+release.keystore*
+keystore.properties*
+app/node_modules/
+app/android/.gradle/
+app/android/build/
+app/android/app/build/
+app/android/local.properties
+app/android/capacitor-cordova-android-plugins/
