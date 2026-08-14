@@ -687,9 +687,15 @@ def _parse(chars, bars, main=None, depth=0, row_sep=None):
                 #   `5^{-}\frac{1}{2}` 로 샜다(2026 고3 7월 1번). y 중심만으로 판정 — placeholder 는
                 #   크기를 안 들고 다닌다. 실측: 지수 +1.09*main · 본문 +0.15~+0.47 → 0.75 로 가른다.
                 #   ⚠️아래첨자는 손대지 않는다: 첨자 +0.09 vs 본문 +0.15 라 y 만으론 못 가른다.
-                if mode == 1 and (y - base) > main * 0.75:
-                    buf += '^{' + (_parse(run, bars, None, depth + 1) if run else '') + pay + '}'
-                    run = []; mode = 0; px = None; continue
+                if (y - base) > main * 0.75:
+                    if mode == 1:                       # 이미 열린 지수 그룹 안 → 그 안에 넣는다
+                        buf += '^{' + (_parse(run, bars, None, depth + 1) if run else '') + pay + '}'
+                        run = []; mode = 0; px = None; continue
+                    # 앞에 작은 글자가 없어 그룹이 안 열린 경우 — 구조물이 **지수 전체**다.
+                    #   25^{3/4} 처럼 밑수가 본문 크기면 mode 가 0 이라 위 분기에 안 걸린다.
+                    _flush()                            # 본문 런(밑수)을 먼저 확정하고
+                    if buf and not buf.endswith(' '):   # 붙일 밑수가 있을 때만(고아 ^{} 방지)
+                        buf += '^{' + pay + '}'; px = None; continue
                 _flush(); mode = 0
                 buf += pay; px = None; continue
             c = pay
