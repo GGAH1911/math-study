@@ -57,6 +57,35 @@ def _perturbations(v, sp):
     return []
 
 
+def _check_variants(m, variants, base, sp) -> list[str]:
+    """`VARIANTS` 로 제시된 파라미터 조합들이 **실제로 새 문제를 만들어내는지** 본다.
+
+    각 항목은 PARAMS 에 덮어쓸 부분 dict. 전부 예외 없이 풀려야 하고, 그중 최소
+    MIN_LIVE 개가 **원문제와 다른 답**을 내야 한다(그래야 재생성이라 부를 수 있다).
+    """
+    bad: list[str] = []
+    if len(variants) < MIN_LIVE:
+        return [f'VARIANTS 가 {len(variants)}개뿐 (최소 {MIN_LIVE})']
+    answers = []
+    for i, ov in enumerate(variants, 1):
+        if not isinstance(ov, dict) or not ov:
+            bad.append(f'VARIANTS[{i}] 가 dict 가 아니다')
+            continue
+        try:
+            got = sp.nsimplify(m.solve({**m.PARAMS, **ov}))
+        except Exception as e:
+            bad.append(f'VARIANTS[{i}] {ov} → 예외: {type(e).__name__}: {e}')
+            continue
+        if not getattr(got, 'is_number', False) or got.has(sp.zoo, sp.nan, sp.oo):
+            bad.append(f'VARIANTS[{i}] {ov} → 유효한 수가 아니다: {got}')
+            continue
+        answers.append(got)
+    moved = [a for a in answers if sp.simplify(a - base) != 0]
+    if len(moved) < MIN_LIVE:
+        bad.append(f'원문제와 답이 다른 VARIANTS 가 {len(moved)}개뿐 (최소 {MIN_LIVE})')
+    return bad
+
+
 def load(path: pathlib.Path):
     spec = importlib.util.spec_from_file_location(path.stem, path)
     mod = importlib.util.module_from_spec(spec)
@@ -93,6 +122,14 @@ def check(stem: str) -> list[str]:
     #   8개 선언에 1개만 살아 있던 솔버가 있었다). 유사문제를 뽑으려면 돌릴 손잡이가
     #   여럿이어야 하므로 **살아 있는 파라미터 2개 이상**을 요구한다.
     #   1개짜리는 사실상 "그 문제 하나 + 스칼라 배" 밖에 못 만든다.
+    #
+    # ★결합 파라미터 예외(2026-08-14): "자연수 m,n 을 구하라" 류는 파라미터가 서로 묶여
+    #   있어서 **하나만 흔들면 정수해가 깨진다**(공통_22: sx 를 1→2 로만 바꾸면 해 없음,
+    #   sx·sy 를 함께 2배 하면 성립). 그런 솔버는 `VARIANTS` 로 **성립하는 조합**을 직접
+    #   제시하면 된다 — 유사문제 재생성 능력을 더 직접적으로 증명하는 방식이다.
+    variants = getattr(m, 'VARIANTS', None)
+    if variants:
+        return bad + _check_variants(m, variants, base, sp)
     dead, live = [], []
     for k, v in m.PARAMS.items():
         for nv in _perturbations(v, sp):

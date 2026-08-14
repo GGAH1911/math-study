@@ -22,14 +22,39 @@ import math
 import sympy as sp
 
 # 문제가 준 수치
+#
+# ★반지름은 **자유 파라미터가 아니다**(2026-08-14 수정). 위 주석의 t=0 특수성이 바로
+#   R² = sx² + sy² 일 때만 성립한다: φ(0) = (-sx)² + (0-sy)² - R² = sx²+sy²-R².
+#   예전엔 radius_sq 를 따로 뒀는데, 그러면 sx 나 sy 만 흔드는 순간 설계가 깨져
+#   교점이 사라지고 solve 가 **조용히 None** 을 돌려줬다(장식 파라미터로 보인 원인).
+#   유도값으로 묶으니 sx·sy 가 진짜 손잡이가 된다.
 PARAMS = dict(
     base=2,                          # 두 곡선의 밑 (y=2^(x-m)+n, y=log_2(...))
     log_shift_x=1,                   # 곡선2 의 x - n + 1 에서 +1
     log_shift_y=7,                   # 곡선2 의 + m - 7 에서 7
-    radius_sq=50,                    # 원의 반지름 5√2 → 반지름의 제곱
     perp_slope=sp.Rational(1, 3),    # (가) AC 와 수직인 직선 y = (1/3)x 의 기울기
     area_ratio=sp.Rational(27, 8),   # (나) [AOB] : [ACB] = 27 : 8
 )
+
+
+# ★파라미터가 서로 묶여 있다. m, n 이 **동시에 자연수**여야 하므로 sx 하나만 1→2 로
+#   바꾸면 해가 사라진다 — 조합으로 움직여야 한다(sx·sy 를 함께 2배 하면 성립).
+#   그래서 성립하는 조합을 직접 제시한다. 게이트가 이걸 돌려 재생성 능력을 확인한다.
+#   (아래는 전수 탐색으로 찾은 94개 유효 조합 중 답이 서로 다른 대표 5개)
+VARIANTS = [
+    dict(log_shift_x=2, log_shift_y=14),                              # → 53 (원문제의 2배 스케일)
+    dict(area_ratio=sp.Rational(15, 8)),                              # → 14 (넓이비만)
+    dict(log_shift_x=2, log_shift_y=6, area_ratio=sp.Rational(4)),    # → 31
+    dict(log_shift_x=1, log_shift_y=3, area_ratio=sp.Rational(9, 4)),  # → 8
+    dict(log_shift_x=1, log_shift_y=3, area_ratio=sp.Rational(5, 2),
+         perp_slope=sp.Rational(1, 5)),                               # → 9 (기울기까지)
+]
+
+
+def radius_sq(prm):
+    """원의 반지름의 제곱 — 설계 불변식 R² = sx² + sy².
+    이 값이라야 A 가 곡선 위 어디에 있든 원이 곡선2 와 만나는 점이 존재한다."""
+    return sp.Integer(prm['log_shift_x'])**2 + sp.Integer(prm['log_shift_y'])**2
 
 # 탐색창(문제 수치가 아니라 계산 설정) — a-m 의 탐색 범위와 격자
 P_LO, P_HI, P_N = -8.0, 12.0, 800
@@ -42,7 +67,7 @@ def _consts(prm):
     base = float(prm['base'])
     sx = float(prm['log_shift_x'])
     sy = float(prm['log_shift_y'])
-    r2 = float(prm['radius_sq'])
+    r2 = float(radius_sq(prm))         # ★유도값 — 자유 파라미터가 아니다
     ps = float(prm['perp_slope'])
     r = float(prm['area_ratio'])
     if base <= 1 or r2 <= 0 or ps == 0:
@@ -196,6 +221,9 @@ def solve(prm):
             tot = m_i + n_i
             if best is None or tot > best:
                 best = tot
+    if best is None:
+        # ★조용히 None 을 돌려주면 "답이 안 바뀐다"와 구별이 안 된다. 크게 실패시킨다.
+        raise ValueError('조건을 만족하는 자연수 (m, n) 이 없다 — 파라미터 조합이 문제로 성립하지 않음')
     return best
 
 
@@ -203,7 +231,7 @@ def statement(prm):
     """같은 유형의 새 문제 문장."""
     base = prm['base']
     sx, sy = prm['log_shift_x'], prm['log_shift_y']
-    rad = sp.nsimplify(sp.sqrt(sp.Integer(prm['radius_sq'])))
+    rad = sp.nsimplify(sp.sqrt(radius_sq(prm)))
     ps, r = sp.nsimplify(prm['perp_slope']), sp.Rational(prm['area_ratio'])
     return (
         f"두 자연수 m, n 에 대하여 곡선 y={base}^(x-m)+n 위의 점 A(a,b)(a<b)가 제1사분면에 있다. "

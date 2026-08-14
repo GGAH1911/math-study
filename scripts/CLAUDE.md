@@ -46,3 +46,38 @@ auto 솔버 사다리(Haiku→Sonnet→Opus, blind/open-book)가 **풀지 못했
 **완료 기준(둘 다 필수):** 모든 문제에 ① 솔버 `db/solutions/<slug>.py`
 (`VERIFY_PASS` + 변이테스트 — 틀린 CANDIDATE 면 `VERIFY_FAIL`) ② `verified: true` 풀이.
 솔버 없는 gold-match, 풀이 없는 항목은 **미완료**로 친다.
+
+## 파라미터화 규격 — 게이트 `scripts/ops/verify_solver_params.py`
+
+`PARAMS` dict + `solve(prm)` + `CANDIDATE` 가 기본형이고, **답을 실제로 바꾸는 파라미터가
+2개 이상**이어야 한다(`MIN_LIVE`). 손잡이가 하나뿐이면 유사문제가 아니라 같은 문제의
+배수밖에 못 뽑는다. 게이트는 각 파라미터를 `+1`·`+2`·`×2`(리스트는 원소별)로 흔들어
+하나라도 답이 바뀌면 살아있다고 본다.
+
+### 객관식은 **값과 보기를 분리**한다
+
+```python
+def value(prm):    ...   # 수학적 답 (예: cosθ = √5/5)
+def choices(prm):  ...   # 보기 목록 — **값에서 유도**한다
+def solve(prm):    ...   # 보기 번호 (CANDIDATE 와 맞춘다)
+```
+
+보기 목록을 `PARAMS` 에 고정 튜플로 박으면 계수를 바꾸는 순간 값이 목록 밖으로 나가
+`solve` 가 죽는다 — 파라미터가 **결합**돼 혼자 못 움직인다. 유도한 보기가 원문제 보기와
+같은지는 파일 안에서 `assert` 로 고정해 둘 것(그게 `CANDIDATE` 번호의 근거다).
+
+### 파라미터가 서로 묶인 문제는 `VARIANTS` 로 증명한다
+
+"자연수 m, n 을 구하시오" 류는 정수해 조건 때문에 **한 개만 흔들면 해가 사라진다.**
+그런 솔버는 성립하는 조합을 직접 제시하면 게이트가 그걸 돌린다:
+
+```python
+VARIANTS = [dict(log_shift_x=2, log_shift_y=14), dict(area_ratio=sp.Rational(15, 8)), ...]
+```
+
+2개 이상이어야 하고, 그중 2개 이상이 **원문제와 다른 답**을 내야 한다.
+
+### 해가 없으면 **예외를 던져라**
+
+`return None` 은 "답이 안 바뀐다"와 구별이 안 돼 결함을 숨긴다(공통_22 실사고).
+파라미터 조합이 문제로 성립하지 않으면 `ValueError` 로 크게 실패시킬 것.

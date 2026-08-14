@@ -4,6 +4,12 @@
 #
 # ★파라미터화 솔버(scripts/CLAUDE.md 규격): PARAMS 를 바꾸면 같은 유형의 새 문제와
 #   검증된 답이 그대로 나온다. 원문제는 PARAMS 기본값으로 재현된다.
+#
+# ★값/보기 분리 규약 (2026-08-14): 객관식 솔버의 **수학적 답은 `value(prm)`**(실제 값)이고
+#   `solve(prm)` 은 그걸 보기와 대조한 **번호**다. 예전엔 보기 목록을 PARAMS 에 고정해 뒀는데,
+#   그러면 계수를 바꾸는 순간 값이 목록 밖으로 나가 `solve` 가 죽는다 — 파라미터가 서로
+#   **결합**돼 있어서 혼자 못 움직였다. 보기를 값에서 **유도**하게 바꿔 결합을 끊었다.
+#   (원문제 보기는 이 유도 규칙이 그대로 재현한다 — 아래 assert 로 고정)
 CANDIDATE = 4
 import sympy as sp
 
@@ -11,11 +17,10 @@ PARAMS = dict(
     a=2,                 # cosθ 의 계수
     b=1,                 # cos(π/2 − θ) 의 계수
     sin_positive=0,      # sinθ 의 부호 조건: 0 → sinθ < 0, 1 → sinθ > 0
-    choices=(-2*sp.sqrt(5)/5, -sp.sqrt(5)/5, sp.Integer(0), sp.sqrt(5)/5, 2*sp.sqrt(5)/5),
 )
 
 
-def cos_value(prm):
+def value(prm):
     """조건을 만족하는 cosθ 의 값(보기 번호가 아니라 실제 값)."""
     th = sp.Symbol('theta', real=True)
     # 여각 공식을 sympy 로 확인한 뒤 cos(π/2 − θ) 를 sinθ 로 바꾼다
@@ -36,23 +41,23 @@ def cos_value(prm):
     return hits[0]
 
 
-def solve(prm):
-    """조건 → 정답 보기 번호. 계산한 값을 보기와 대조해 번호를 정한다."""
-    v = cos_value(prm)
-    for i, ch in enumerate(prm['choices'], 1):
-        if sp.simplify(v - ch) == 0:
-            return i
-    raise ValueError(f'보기에 없는 값: {v}')
-
-
-def make_choices(prm):
+def choices(prm):
     """이 유형의 표준 보기 묶음 — 양의 근 크기 m 에 대해 (−2m, −m, 0, m, 2m).
     2m 이 1 을 넘으면 cosθ 의 범위 밖이라 바로 걸러지는 보기가 되므로
     (−m, −m/2, 0, m/2, m) 로 축소한다.
-    변형문제를 만들 때 새 보기 목록을 뽑는 용도(solve 는 쓰지 않는다)."""
-    m = sp.radsimp(abs(cos_value(prm)))
+    ★값에서 유도한다 — 계수를 바꾸면 보기도 따라 움직여야 문제가 성립한다."""
+    m = sp.radsimp(abs(value(prm)))
     ks = (-2, -1, 0, 1, 2) if 2*m <= 1 else (-1, sp.Rational(-1, 2), 0, sp.Rational(1, 2), 1)
     return tuple(sp.nsimplify(sp.radsimp(k*m)) for k in ks)
+
+
+def solve(prm):
+    """조건 → 정답 **보기 번호**. (수학적 답 자체는 value(prm) 이다.)"""
+    v = value(prm)
+    for i, ch in enumerate(choices(prm), 1):
+        if sp.simplify(v - ch) == 0:
+            return i
+    raise ValueError(f'보기에 없는 값: {v}')
 
 
 def statement(prm):
@@ -60,9 +65,15 @@ def statement(prm):
         return '' if x == 1 else ('-' if x == -1 else sp.latex(x))
     a, b = prm['a'], prm['b']
     cond = '\\sin\\theta > 0' if prm['sin_positive'] else '\\sin\\theta < 0'
-    opts = '  '.join(f'({i}) ${sp.latex(ch)}$' for i, ch in enumerate(prm['choices'], 1))
+    opts = '  '.join(f'({i}) ${sp.latex(ch)}$' for i, ch in enumerate(choices(prm), 1))
     return (f'${coef(a)}\\cos\\theta + {coef(b)}\\cos\\left(\\frac{{\\pi}}{{2}}-\\theta\\right) = 0$ 이고 '
             f'${cond}$ 일 때, $\\cos\\theta$ 의 값은?\n  {opts}')
 
+
+# 유도한 보기가 **원문제 보기와 글자 그대로 같은지** 고정한다.
+# 이게 깨지면 CANDIDATE=4(④번)의 근거가 사라진다.
+_ORIGINAL_CHOICES = (-2*sp.sqrt(5)/5, -sp.sqrt(5)/5, sp.Integer(0), sp.sqrt(5)/5, 2*sp.sqrt(5)/5)
+assert all(sp.simplify(x - y) == 0 for x, y in zip(choices(PARAMS), _ORIGINAL_CHOICES)), \
+    f'유도 보기가 원문제와 다르다: {choices(PARAMS)}'
 
 print('VERIFY_PASS' if solve(PARAMS) == CANDIDATE else 'VERIFY_FAIL')
