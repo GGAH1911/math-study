@@ -114,10 +114,10 @@ def solve(prm=None):
 
 def statement(prm=None):
     prm = PARAMS if prm is None else prm
-    r = sp.Rational(prm['r_num'], prm['r_den'])
+    r = sp.latex(sp.Rational(prm['r_num'], prm['r_den']))
     return (f"두 양수 a, b에 대하여 함수 f(x)는 f(x)=(x-a)(x-{sp.nsimplify(prm['c'])}) "
-            f"({sp.latex(r)}a 이하 구간 a≤x≤{sp.latex(r)}a), f(x)=(x-a)(x-b) "
-            f"(x<a 또는 x>{sp.latex(r)}a) 이다. 양의 실수 t에 대하여 방정식 |f(x)|=t의 "
+            f"(a≤x≤{r}a), f(x)=(x-a)(x-b) "
+            f"(x<a 또는 x>{r}a) 이다. 양의 실수 t에 대하여 방정식 |f(x)|=t의 "
             "서로 다른 실근의 개수를 g(t)라 하자. (가) lim_{t→0+}g(t)=6 "
             "(나) g(t)는 t=α, t=β(α≠β)에서만 불연속이고 lim_{t→α+}g(t)=lim_{t→β-}g(t)=1. "
             "f(0)=p+q√k일 때 p²+q²의 값을 구하시오.")

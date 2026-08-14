@@ -25,6 +25,38 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 SOL = ROOT / 'db' / 'solutions'
 
 
+#: 답을 실제로 바꿔야 하는 파라미터의 최소 개수. 1개면 손잡이가 하나뿐이라
+#: "같은 문제의 배수" 정도밖에 못 만든다 — 유사문제 재생성이라 부르기 어렵다.
+MIN_LIVE = 2
+
+
+def _perturbations(v, sp):
+    """파라미터 하나를 흔드는 여러 방법. **한 방법이라도 답을 바꾸면 살아있다.**
+
+    ★+1 하나만 시도하면 멀쩡한 파라미터를 죽었다고 오판한다: 불리언은 +1 이 무의미하고,
+      보기 목록(list)은 원소를 건드려야 하며, +1 이 우연히 같은 답을 주는 경우도 있다.
+    """
+    if isinstance(v, bool):
+        return [not v]
+    if isinstance(v, (int, float)) or getattr(v, 'is_number', False):
+        out = [v + 1, v + 2]
+        if v != 0:
+            out.append(v * 2)
+        return out
+    if isinstance(v, (list, tuple)):
+        out = []
+        for i, x in enumerate(v):                      # 보기 목록은 원소별로 흔든다
+            try:
+                nx = sp.nsimplify(x) + 1
+            except Exception:
+                continue
+            nv = list(v)
+            nv[i] = nx
+            out.append(type(v)(nv) if isinstance(v, tuple) else nv)
+        return out
+    return []
+
+
 def load(path: pathlib.Path):
     spec = importlib.util.spec_from_file_location(path.stem, path)
     mod = importlib.util.module_from_spec(spec)
@@ -55,21 +87,31 @@ def check(stem: str) -> list[str]:
     if sp.simplify(base - sp.nsimplify(m.CANDIDATE)) != 0:
         bad.append(f'원문제 재현 실패: solve(PARAMS)={base}, CANDIDATE={m.CANDIDATE}')
     # ③ 파라미터를 흔들어 답이 따라 바뀌는지
-    moved = 0
+    #
+    # ★2026-08-14 강화: 예전엔 "하나라도 움직이면 통과" 였다. 그런데 그 잣대로는
+    #   **선언만 해 두고 실제로는 안 쓰는 파라미터**가 얼마든지 통과한다(실측: 46건 중
+    #   8개 선언에 1개만 살아 있던 솔버가 있었다). 유사문제를 뽑으려면 돌릴 손잡이가
+    #   여럿이어야 하므로 **살아 있는 파라미터 2개 이상**을 요구한다.
+    #   1개짜리는 사실상 "그 문제 하나 + 스칼라 배" 밖에 못 만든다.
+    dead, live = [], []
     for k, v in m.PARAMS.items():
-        try:
-            nv = v + 1 if isinstance(v, (int, float)) or getattr(v, 'is_number', False) else None
-            if nv is None:
+        for nv in _perturbations(v, sp):
+            try:
+                got = sp.nsimplify(m.solve({**m.PARAMS, k: nv}))
+            except Exception:
                 continue
-            got = sp.nsimplify(m.solve({**m.PARAMS, k: nv}))
-            if not got.is_number or got.has(sp.zoo, sp.nan, sp.oo):
+            if not getattr(got, 'is_number', False) or got.has(sp.zoo, sp.nan, sp.oo):
                 continue
             if sp.simplify(got - base) != 0:
-                moved += 1
-        except Exception:
-            continue
-    if moved == 0:
+                live.append(k)
+                break
+        else:
+            dead.append(k)
+    if not live:
         bad.append('어떤 파라미터를 바꿔도 답이 그대로 — PARAMS 가 장식이다')
+    elif len(live) < MIN_LIVE:
+        bad.append(f'답을 바꾸는 파라미터가 {len(live)}개뿐 (최소 {MIN_LIVE}) — '
+                   f'살아있음 {live} · 장식 {dead}')
     return bad
 
 
