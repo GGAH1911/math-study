@@ -5,6 +5,7 @@ import { resolve, join } from 'node:path';
 import { tutorWidgetMeta } from './concept-widgets-server';
 import { misconceptionsBlock } from './concept-misconceptions-server';
 import { MATH_TYPOGRAPHY_RULE, GRAPHICS_GUIDE, FOLLOWUP_VERIFICATION_RULE } from './prompts/tutor-rules';
+import { figure3DBlock } from './figures-3d';
 import { type ConceptFM, WEB_ROOT, slugOf, readConcept, listAllConcepts, readProblem } from './concept-fs';
 export { searchConcepts } from './concept-fs';   // 노드별 위젯 메타(bespoke+spec, 튜터 인지용)
 
@@ -353,6 +354,8 @@ ${title} (${src.score ?? '?'}점)
 매핑된 단원: ${fm.unit || '?'}
 
 ${imageBlock}${verifiedTextRef}${solRef}
+${figure3DBlock(slug)}
+
 --- 매핑된 개념 (학생이 이미 wiki에서 학습 중) ---
 ${conceptInfo || '(없음)'}
 
