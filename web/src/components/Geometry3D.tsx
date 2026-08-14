@@ -17,7 +17,14 @@ import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useSta
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Grid, Html, Line, Edges, GizmoHelper, GizmoViewport } from '@react-three/drei';
 import * as THREE from 'three';
-import { create, all } from 'mathjs';
+import {
+  type Geom3DShape, type Geom3DSpec,
+  _math, _eval, triangulate, normalizeMathExprStr, coerceCoord, normalizePoint3, vertexKey,
+} from '../lib/geometry3d-core';
+import { collectPoints, CameraFit } from './Geometry3DCamera';
+// 타입은 여기서 계속 내보낸다 — Graph/Interactive/interactive-samples 의 import 경로를 지키려고.
+export type { Geom3DShape, Geom3DSpec };
+
 import katex from 'katex';
 import { broadcastLatestGraph } from './Graph';
 
@@ -58,85 +65,8 @@ function Label3D({ text, color }: { text: string; color?: string }) {
     : <div className="geom3d-label" style={color ? { color } : undefined}>{text}</div>;
 }
 
-const _math = create(all);
-function _eval(s: string | number): number {
-  if (typeof s === 'number') return s;
-  try { return _math.evaluate(s); } catch { return NaN; }
-}
-
-export type Geom3DShape =
-  | { type: 'point3d'; at: [number, number, number]; label?: string; color?: string; size?: number; labelDir?: string }
-  | { type: 'segment3d'; from: [number, number, number]; to: [number, number, number]; color?: string; dashed?: boolean; label?: string }
-  | { type: 'polyhedron';
-      vertices: Array<[number, number, number]>;
-      faces: number[][];
-      labels?: string[];
-      fill?: string; fillOpacity?: number; stroke?: string; strokeWidth?: number }
-  | { type: 'parametricSurface';
-      x: string; y: string; z: string;
-      uRange: [number | string, number | string]; vRange: [number | string, number | string];
-      uSamples?: number; vSamples?: number;
-      color?: string; opacity?: number; wireframe?: boolean; label?: string }
-  | { type: 'parametricCurve3d';
-      x: string; y: string; z: string;
-      tRange: [number | string, number | string]; samples?: number;
-      color?: string; strokeWidth?: number; label?: string }
-  | { type: 'sphere';
-      center: [number, number, number]; radius: number;
-      color?: string; opacity?: number; wireframe?: boolean; label?: string }
-  | { type: 'plane';
-      origin: [number, number, number];
-      normal: [number, number, number];
-      size?: number; color?: string; opacity?: number; label?: string }
-  | { type: 'text3d'; at: [number, number, number]; text: string; color?: string };
-
-export type Geom3DSpec = {
-  shapes: Geom3DShape[];
-  cameraPosition?: [number, number, number];
-  axes?: boolean;
-  gridSize?: number;
-  bgColor?: string;
-  title?: string;
-};
 
 // 사각형 face → 두 삼각형. 5+각형은 fan triangulation.
-function triangulate(faceIndices: number[]): number[] {
-  if (faceIndices.length === 3) return faceIndices;
-  const out: number[] = [];
-  for (let i = 1; i < faceIndices.length - 1; i++) {
-    out.push(faceIndices[0], faceIndices[i], faceIndices[i + 1]);
-  }
-  return out;
-}
-
-// 좌표 좌표 정규화 — LLM 이 '3*sqrt(3)' 같은 raw 수학식 string 박은 경우
-// 자동 mathjs evaluate. number, evaluable string 모두 number 로. invalid 면 null.
-function normalizeMathExprStr(s: string): string {
-  return s.replace(/√/g, 'sqrt').replace(/π/g, 'pi').replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
-}
-function coerceCoord(v: unknown): number | null {
-  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
-  if (typeof v === 'string') {
-    const expr = normalizeMathExprStr(v.startsWith('=') ? v.slice(1) : v);
-    try {
-      const r = _math.evaluate(expr);
-      if (typeof r === 'number' && Number.isFinite(r)) return r;
-    } catch { /* fall through */ }
-    return null;
-  }
-  return null;
-}
-function normalizePoint3(p: unknown): [number, number, number] | null {
-  if (!Array.isArray(p) || p.length < 3) return null;
-  const x = coerceCoord(p[0]);
-  const y = coerceCoord(p[1]);
-  const z = coerceCoord(p[2]);
-  if (x === null || y === null || z === null) return null;
-  return [x, y, z];
-}
-function vertexKey(p: [number, number, number]): string {
-  return `${p[0].toFixed(4)},${p[1].toFixed(4)},${p[2].toFixed(4)}`;
-}
 
 // Html 라벨이 박힐 DOM portal target — Geometry3D wrapper 안으로 강제.
 // overflow:hidden 으로 자기 박스 밖 안 흘러나감 (sticky 영역 침범 차단).
@@ -463,147 +393,6 @@ function ShapeRouter({ s, idx, palette, polyhedronVertexKeys }: {
 // 도형 vertex 들을 카메라 projection 으로 NDC 변환 → 화면 bbox 가
 // viewport 의 TARGET 분율 채우도록 distance iterate 조정. drei Bounds 의
 // axis-aligned bbox 한계 (isometric viewing 부정확) 우회.
-function collectPoints(shapes: Geom3DShape[]): THREE.Vector3[] {
-  const out: THREE.Vector3[] = [];
-  const pushIfValid = (p: unknown) => {
-    const n = normalizePoint3(p);
-    if (n) out.push(new THREE.Vector3(...n));
-  };
-  for (const s of shapes) {
-    switch (s.type) {
-      case 'point3d': pushIfValid(s.at); break;
-      case 'segment3d':
-        pushIfValid(s.from);
-        pushIfValid(s.to);
-        break;
-      case 'polyhedron':
-        for (const v of s.vertices) pushIfValid(v);
-        break;
-      case 'text3d': pushIfValid(s.at); break;
-      case 'sphere': {
-        const center = normalizePoint3(s.center);
-        const r = coerceCoord(s.radius);
-        if (!center || r === null || r <= 0) break;
-        const [cx, cy, cz] = center;
-        // sphere bbox 6 점
-        out.push(new THREE.Vector3(cx + r, cy, cz));
-        out.push(new THREE.Vector3(cx - r, cy, cz));
-        out.push(new THREE.Vector3(cx, cy + r, cz));
-        out.push(new THREE.Vector3(cx, cy - r, cz));
-        out.push(new THREE.Vector3(cx, cy, cz + r));
-        out.push(new THREE.Vector3(cx, cy, cz - r));
-        break;
-      }
-      case 'parametricCurve3d': {
-        const t0 = _eval(s.tRange[0]), t1 = _eval(s.tRange[1]);
-        if (!Number.isFinite(t0) || !Number.isFinite(t1)) break;
-        try {
-          const xN = _math.parse(s.x).compile();
-          const yN = _math.parse(s.y).compile();
-          const zN = _math.parse(s.z).compile();
-          const n = Math.min(s.samples ?? 60, 200);
-          for (let i = 0; i <= n; i++) {
-            const t = t0 + ((t1 - t0) * i) / n;
-            const xv = xN.evaluate({ t }) as number;
-            const yv = yN.evaluate({ t }) as number;
-            const zv = zN.evaluate({ t }) as number;
-            if (Number.isFinite(xv) && Number.isFinite(yv) && Number.isFinite(zv)) {
-              out.push(new THREE.Vector3(xv, yv, zv));
-            }
-          }
-        } catch { /* skip */ }
-        break;
-      }
-      case 'plane': {
-        const origin = normalizePoint3(s.origin);
-        const sz = Math.min(Math.max(coerceCoord(s.size) ?? 4, 0.5), 10);
-        if (!origin) break;
-        const half = sz / 2;
-        // plane 의 4 corner 대략값 — normal 따라 회전하지만 bbox 추정엔 origin±half 6 방향 충분
-        out.push(new THREE.Vector3(origin[0] + half, origin[1] + half, origin[2]));
-        out.push(new THREE.Vector3(origin[0] - half, origin[1] - half, origin[2]));
-        out.push(new THREE.Vector3(origin[0] + half, origin[1] - half, origin[2]));
-        out.push(new THREE.Vector3(origin[0] - half, origin[1] + half, origin[2]));
-        break;
-      }
-      case 'parametricSurface': {
-        // 성긴 격자(5×5) 로 surface 위 점 일부를 bbox 에 포함 — surface 하나만
-        // 있는 spec 도 CameraFit 이 동작하도록(원점에서 멀거나 큰 곡면 대응).
-        const u0 = _eval(s.uRange[0]), u1 = _eval(s.uRange[1]);
-        const v0 = _eval(s.vRange[0]), v1 = _eval(s.vRange[1]);
-        if (!Number.isFinite(u0) || !Number.isFinite(u1) || !Number.isFinite(v0) || !Number.isFinite(v1)) break;
-        try {
-          const xN = _math.parse(s.x).compile();
-          const yN = _math.parse(s.y).compile();
-          const zN = _math.parse(s.z).compile();
-          const m = 4; // 4 구간 → 5×5 = 25 점
-          for (let i = 0; i <= m; i++) {
-            for (let j = 0; j <= m; j++) {
-              const u = u0 + ((u1 - u0) * i) / m;
-              const v = v0 + ((v1 - v0) * j) / m;
-              const xv = xN.evaluate({ u, v }) as number;
-              const yv = yN.evaluate({ u, v }) as number;
-              const zv = zN.evaluate({ u, v }) as number;
-              if (Number.isFinite(xv) && Number.isFinite(yv) && Number.isFinite(zv)) {
-                out.push(new THREE.Vector3(xv, yv, zv));
-              }
-            }
-          }
-        } catch { /* skip */ }
-        break;
-      }
-    }
-  }
-  return out;
-}
-
-function CameraFit({ points, shapeCount }: { points: THREE.Vector3[]; shapeCount: number }) {
-  const { camera, controls } = useThree();
-  const lastFitCount = useRef(-1);
-  useEffect(() => {
-    if (points.length === 0) return;
-    // slider 변경 (shape 개수 동일) 은 fit 스킵 — 사용자 회전 유지.
-    // 첫 mount + 도형 추가/삭제 시만 fit.
-    if (lastFitCount.current === shapeCount) return;
-    lastFitCount.current = shapeCount;
-    const cam = camera as THREE.PerspectiveCamera;
-    cam.up.set(0, 0, 1); // Z-up 강제
-    const box = new THREE.Box3();
-    for (const p of points) box.expandByPoint(p);
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    // 카메라 viewing direction 유지 (현재 position - center). 첫 mount 시
-    // 카메라가 (4,-4,3) 근처라 isometric direction.
-    const dir = cam.position.clone().sub(center);
-    if (dir.length() < 0.01) dir.set(1, -1, 0.7);
-    dir.normalize();
-
-    const TARGET = 0.85; // NDC max abs — 85% 채움 (15% 여백)
-    let d = Math.max(box.getSize(new THREE.Vector3()).length() * 1.5, 2);
-    for (let iter = 0; iter < 5; iter++) {
-      cam.position.copy(center).addScaledVector(dir, d);
-      cam.lookAt(center);
-      cam.updateMatrixWorld();
-      cam.updateProjectionMatrix();
-      let maxAbs = 0;
-      for (const p of points) {
-        const v = p.clone().project(cam);
-        maxAbs = Math.max(maxAbs, Math.abs(v.x), Math.abs(v.y));
-      }
-      if (maxAbs < 1e-6) break;
-      const scale = maxAbs / TARGET;
-      if (Math.abs(scale - 1) < 0.02) break;
-      d *= scale;
-    }
-    cam.position.copy(center).addScaledVector(dir, d);
-    cam.lookAt(center);
-    cam.updateProjectionMatrix();
-    // OrbitControls 의 회전축도 center 로
-    const c = controls as unknown as { target?: THREE.Vector3; update?: () => void } | null;
-    if (c?.target) { c.target.copy(center); c.update?.(); }
-  }, [points, shapeCount, camera, controls]);
-  return null;
-}
 
 const PALETTE = ['#60a5fa', '#a3e635', '#f472b6', '#fbbf24', '#34d399', '#c084fc'];
 
