@@ -273,8 +273,12 @@ function buildProblemPrompt(slug: string): { systemPrompt: string; pageTitle: st
   // ── 튜터 입력(2026-06-14 전환): searchable_text(로제타 디코드 전사 · 대체로 정확)를 1차 소스로,
   // 도형만 이미지로 첨부. 옛 방식은 전체-이미지 타일만 주고 "searchable_text 부정확"이라 했으나,
   // Rosetta 디코더로 식 전사가 정확해져 전환. 도형: 추출 PNG(figure_image) > 전체 이미지(폴백) > 없음.
+  // ★루트가 `public` 이 아니라 `private` 이다 — 기출 이미지는 인증 게이팅을 살리려고
+  //   정적 서빙 밖으로 뺐다(`media-root.ts`). figure_image 는 669건 **전부**
+  //   `/problem-images/...` 라, 여기가 옛 경로로 남으면 튜터가 도형을 **조용히** 잃는다
+  //   (existsSync 가 false 로 떨어져 에러 없이 텍스트만 나간다 — 알아채기 어렵다).
   const figAbs = fm.figure_image
-    ? resolve(WEB_ROOT, 'public', String(fm.figure_image).replace(/^\//, ''))
+    ? resolve(WEB_ROOT, 'private', String(fm.figure_image).replace(/^\//, ''))
     : null;
   const figExists = figAbs ? existsSync(figAbs) : false;
   const reconText = (fm.searchable_text || prob.body).trim().slice(0, 3500);

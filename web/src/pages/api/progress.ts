@@ -249,7 +249,9 @@ function recentCrops(limit = 24): Array<{
   mtime: number; valid: 'ok' | 'invalid' | 'failed' | 'unknown'; reason?: string;
 }> {
   // cwd = 실행 중인 dev 서버의 web 디렉토리 → 메인 리포든 git worktree든 자동 대응.
-  const imagesDir = join(process.cwd(), 'public', 'problem-images');
+  // ★`public` 이 아니라 `private` — 기출 이미지는 인증 게이팅 때문에 정적 서빙 밖에 있다
+  //   (`lib/media-root.ts`). 옛 경로면 existsSync 가 false 라 **빈 목록**을 조용히 돌려준다.
+  const imagesDir = join(process.cwd(), 'private', 'problem-images');
   if (!existsSync(imagesDir)) return [];
   const validationCache: Record<string, { invalid: Set<string>; failed: Set<string>; reasons: Map<string, string> }> = {};
   const loadVal = (slug: string) => {

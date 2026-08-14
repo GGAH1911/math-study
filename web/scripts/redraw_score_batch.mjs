@@ -72,7 +72,7 @@ N|verdict|total|bonmun|issue
 총 ${items.length}줄만.`;
   items.forEach((it, i) => { prompt += `\n\n[도형 ${i + 1}] 원본: ${it.orig} · 재현: ${it.render} · 본문: ${it.bonmun || '(본문 없음 — 이미지만 대조)'}`; });
   const t0 = Date.now();
-  const out = await claudeCall(prompt, [`${REPO}/web/public/problem-images`, RENDERS]);
+  const out = await claudeCall(prompt, [`${REPO}/web/private/problem-images`, RENDERS]);
   const sec = ((Date.now() - t0) / 1000).toFixed(0);
   const vmap = new Map();
   for (const line of out.split('\n')) {

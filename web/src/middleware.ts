@@ -3,7 +3,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { resolveUser, isSameOrigin, type User } from './lib/auth.ts';
 import { rateLimit, sweep } from './lib/rate-limit.ts';
-import { tryServeWebp } from './lib/webp-serve.ts';
+import { serveProblemImage } from './lib/webp-serve.ts';
 
 // 남용방지: 비싼 POST 엔드포인트 per-user 분당 한도(429). 스팸/DoS 방지(빌링 아님).
 const RATE_LIMITS: Array<[RegExp, number]> = [
@@ -115,16 +115,18 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(`/login?returnTo=${returnTo}`);
   }
 
-  // 기출 이미지: 인증을 통과한 뒤에만 WebP 로 바꿔 준다(경로는 .png 그대로 — 개명은 Phase 5).
-  // 실측 무손실 39.6%. 변환 실패·미지원 클라이언트면 null 이 와서 원본 PNG 가 그대로 나간다.
+  // 기출 이미지: **인증을 통과한 요청만 여기까지 온다.** WebP 우선, 안 되면 원본
+  // (실측 무손실 39.6%). 경로는 `.png` 그대로 — 개명은 Phase 5.
   //
-  // ⛔ **지금 이 블록은 실제 이미지 요청에 닿지 않는다.** `public/` 안에 **있는** 파일은
-  //    정적 핸들러가 미들웨어보다 먼저 응답한다(무인증 200 실측). 없는 파일만 여기까지 내려온다.
-  //    같은 이유로 위 54-56 줄의 "무인증 스크래핑 차단" 도 작동하지 않는다 —
-  //    `/problem-images/` 를 정적 서빙에서 떼어내는 변경(Phase 3)이 선행돼야 둘 다 살아난다.
+  // ★2026-08-14 에 이 블록이 **실제로 동작하기 시작했다.** 그 전까지는 `public/` 안에 있는
+  //   파일을 정적 핸들러가 미들웨어보다 먼저 응답해 **무인증 200** 이었고(기출 5,774장이
+  //   로그인 없이 열림), 같은 이유로 위 54-56 줄의 "무인증 스크래핑 차단" 도 죽어 있었다.
+  //   파일을 `web/private/` 로 옮겨 정적 서빙에서 떼어내니 둘 다 살아났다(`media-root.ts`).
+  //   ⚠️ 이미지를 다시 `web/public/` 로 되돌리면 **게이팅이 조용히 꺼진다.** 티가 안 난다.
   if (method === 'GET' && pathname.startsWith('/problem-images/')) {
-    const webp = await tryServeWebp(pathname, request);
-    if (webp) return webp;
+    const res = await serveProblemImage(pathname, request);
+    // 못 찾으면 없는 파일이다. next() 로 흘리면 SSR 라우터가 받아 엉뚱한 응답을 준다.
+    return res ?? new Response('not found', { status: 404 });
   }
 
   // 남용방지: 인증된 사용자라도 비싼 엔드포인트는 분당 한도 초과 시 429.

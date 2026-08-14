@@ -13,11 +13,16 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
-import { dirname, join, normalize, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { MEDIA_ROOT, mediaPath } from './media-root.ts';
 
-const PUBLIC_DIR = resolve(process.cwd(), 'public');
 const CACHE_DIR = resolve(process.cwd(), '.cache/webp');
 const CONVERTIBLE = /\.(png|jpe?g)$/i;
+
+const MIME: Record<string, string> = {
+  png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg',
+  webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml',
+};
 
 /** 같은 파일을 동시에 변환하지 않도록 — 첫 요청 폭주 시 sharp 프로세스가 겹치는 걸 막는다. */
 const inflight = new Map<string, Promise<Buffer | null>>();
@@ -53,10 +58,10 @@ export async function tryServeWebp(pathname: string, request: Request): Promise<
   if (!CONVERTIBLE.test(pathname)) return null;
   if (!(request.headers.get('accept') ?? '').includes('image/webp')) return null;
 
-  const rel = normalize(decodeURIComponent(pathname)).replace(/^([/\\.]+)/, '');
-  const srcAbs = join(PUBLIC_DIR, rel);
-  if (!srcAbs.startsWith(PUBLIC_DIR + '/') || !existsSync(srcAbs)) return null;
+  const srcAbs = mediaPath(pathname);
+  if (!srcAbs || !existsSync(srcAbs)) return null;
 
+  const rel = srcAbs.slice(MEDIA_ROOT.length + 1);
   const cacheAbs = join(CACHE_DIR, `${rel}.webp`);
   let buf: Buffer | null = null;
   try {
@@ -81,4 +86,40 @@ export async function tryServeWebp(pathname: string, request: Request): Promise<
       'cache-control': 'private, max-age=3600, must-revalidate',
     },
   });
+}
+
+/**
+ * 원본 바이트 서빙 — **WebP 로 못 줄 때의 유일한 길**.
+ *
+ * ★이 함수가 없으면 404 다. 예전엔 `public/` 정적 핸들러가 원본을 대신 줬지만, 인증
+ *   게이팅을 살리려고 파일을 `public/` 밖으로 뺐다(media-root.ts 참조). 이제 폴백을
+ *   우리가 쥐고 있다 — WebP 미지원 브라우저·변환 실패·svg/gif 가 전부 여기로 온다.
+ */
+export async function serveOriginal(pathname: string, request: Request): Promise<Response | null> {
+  const abs = mediaPath(pathname);
+  if (!abs || !existsSync(abs)) return null;
+
+  let buf: Buffer;
+  try { buf = await readFile(abs); } catch { return null; }
+
+  const ext = (abs.split('.').pop() ?? '').toLowerCase();
+  const etag = `W/"${createHash('sha1').update(buf).digest('hex').slice(0, 16)}"`;
+  if (request.headers.get('if-none-match') === etag) {
+    return new Response(null, { status: 304, headers: { etag, vary: 'Accept' } });
+  }
+  return new Response(new Uint8Array(buf), {
+    headers: {
+      'content-type': MIME[ext] ?? 'application/octet-stream',
+      'content-length': String(buf.byteLength),
+      vary: 'Accept',
+      etag,
+      // private: 유료 콘텐츠다. 공유 캐시가 들고 있으면 게이팅을 우회당한다.
+      'cache-control': 'private, max-age=3600, must-revalidate',
+    },
+  });
+}
+
+/** 기출 이미지 요청의 단일 진입점 — WebP 우선, 안 되면 원본. 둘 다 아니면 null(=404). */
+export async function serveProblemImage(pathname: string, request: Request): Promise<Response | null> {
+  return (await tryServeWebp(pathname, request)) ?? (await serveOriginal(pathname, request));
 }
