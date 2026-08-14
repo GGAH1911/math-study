@@ -3,8 +3,8 @@
   "title": "2021 고3 7월 기하 29 — AB ⟂ 평면 ACD 인 사면체 ABCD, 두 평면 PDB 와 CDB 가 이루는 각",
   "cameraPosition": [
    6.1,
-   -6.7,
-   16.6
+   16.6,
+   6.7
   ],
   "axes": false,
   "shapes": [
@@ -18,8 +18,8 @@
      ],
      [
       0,
-      0,
-      4
+      4,
+      0
      ],
      [
       8,
@@ -28,8 +28,8 @@
      ],
      [
       4,
-      6.928203230275509,
-      0
+      0,
+      -6.928203230275509
      ]
     ],
     "faces": [
@@ -70,18 +70,18 @@
     "vertices": [
      [
       3,
-      1.7320508075688772,
-      0
+      0,
+      -1.7320508075688772
      ],
      [
       4,
-      6.928203230275509,
-      0
+      0,
+      -6.928203230275509
      ],
      [
       0,
-      0,
-      4
+      4,
+      0
      ]
     ],
     "faces": [
@@ -105,13 +105,13 @@
     "type": "segment3d",
     "from": [
      4,
-     6.928203230275509,
-     0
+     0,
+     -6.928203230275509
     ],
     "to": [
      0,
-     0,
-     4
+     4,
+     0
     ],
     "color": "#fbbf24"
    },
@@ -124,8 +124,8 @@
     ],
     "to": [
      6,
-     3.4641016151377544,
-     0
+     0,
+     -3.4641016151377544
     ],
     "color": "#60a5fa"
    },
@@ -133,13 +133,13 @@
     "type": "segment3d",
     "from": [
      3,
-     1.7320508075688772,
-     0
+     0,
+     -1.7320508075688772
     ],
     "to": [
      2,
-     3.4641016151377544,
-     2
+     2,
+     -3.4641016151377544
     ],
     "color": "#f472b6"
    },
@@ -147,13 +147,13 @@
     "type": "segment3d",
     "from": [
      2,
-     3.4641016151377544,
-     2
+     2,
+     -3.4641016151377544
     ],
     "to": [
      5.1304951684997055,
-     1.1403116074133042,
-     1.1055728090000843
+     1.1055728090000843,
+     -1.1403116074133042
     ],
     "color": "#a3e635",
     "dashed": true
@@ -162,8 +162,8 @@
     "type": "point3d",
     "at": [
      6,
-     3.4641016151377544,
-     0
+     0,
+     -3.4641016151377544
     ],
     "label": "M",
     "color": "#60a5fa",
@@ -173,8 +173,8 @@
     "type": "point3d",
     "at": [
      2,
-     3.4641016151377544,
-     2
+     2,
+     -3.4641016151377544
     ],
     "label": "N",
     "color": "#f472b6",
@@ -184,8 +184,8 @@
     "type": "text3d",
     "at": [
      2.690451734323509,
-     2.7389243865596,
-     1.4344079299341566
+     1.4344079299341566,
+     -2.7389243865596
     ],
     "text": "θ",
     "color": "#a3e635"
@@ -194,18 +194,13 @@
     "type": "point3d",
     "at": [
      5.1304951684997055,
-     1.1403116074133042,
-     1.1055728090000843
+     1.1055728090000843,
+     -1.1403116074133042
     ],
     "label": "Q",
     "color": "#a3e635",
     "size": 0.11
    }
-  ],
-  "cameraUp": [
-   0,
-   -1,
-   0
   ]
  },
  "conditions": [
@@ -224,6 +219,6 @@
   "40 cos²θ = 25 (정답)",
   "∠PNQ = θ = arccos(√10/4) ≈ 37.8° (예각)"
  ],
- "verify": "s3 = sqrt(3)\ns5 = sqrt(5)\n\n# 좌표계: 평면 ACD 를 z=0 (바닥), AB 를 z 축 방향으로 세운다.\nA = (0, 0, 0)\nB = (0, 0, 4)\nC = (8, 0, 0)\nD = (4, 4*s3, 0)\n\nM = (6, 2*s3, 0)          # CD 의 중점\nN = (2, 2*s3, 2)          # DB 의 중점\nP = (3, s3, 0)            # 선분 AM 위의 점 (AM 의 중점)\n\n# 주어진 길이\nassert_distance3d(A, B, 4, \"AB = 4\")\nassert_distance3d(C, D, 8, \"CD = 8\")\nassert_distance3d(B, C, 4*s5, \"BC = 4sqrt5\")\nassert_distance3d(B, D, 4*s5, \"BD = 4sqrt5\")\n\n# 직선 AB 는 평면 ACD 에 수직 (AC, AD 두 방향과 모두 수직)\nassert_perpendicular(A, B, A, C, \"AB 수직 AC\")\nassert_perpendicular(A, B, A, D, \"AB 수직 AD  (=> 직선 AB 수직 평면 ACD)\")\nassert_coplanar([A, C, D, M], \"A, C, D, M 은 한 평면(평면 ACD) 위\")\n\n# M 은 CD 의 중점\nassert_on_line(M, C, D, \"M 은 직선 CD 위\")\nassert_distance3d(C, M, 4, \"CM = 4  (M 은 CD 의 중점)\")\nassert_distance3d(M, D, 4, \"MD = 4  (M 은 CD 의 중점)\")\n\n# N 은 DB 의 중점\nassert_on_line(N, D, B, \"N 은 직선 DB 위\")\nassert_distance3d(D, N, 2*s5, \"DN = 2sqrt5  (N 은 DB 의 중점)\")\nassert_distance3d(N, B, 2*s5, \"NB = 2sqrt5  (N 은 DB 의 중점)\")\n\n# P 는 선분 AM 위의 점이고 PN 은 DB 에 수직\nassert_on_line(P, A, M, \"P 는 직선 AM 위\")\nassert_distance3d(A, P, 2*s3, \"AP = 2sqrt3\")\nassert_distance3d(P, M, 2*s3, \"PM = 2sqrt3  (AP + PM = AM = 4sqrt3 이므로 P 는 선분 AM 위)\")\nassert_perpendicular(D, B, P, N, \"선분 DB 수직 선분 PN\")\n\n# 평면 CDB 안에서 N 을 지나 DB 에 수직인 보조선 NQ (이면각을 눈에 보이게)\nQ = (2 + 7/s5, 2*s3 - 3*s3/s5, 2 - 2/s5)\nassert_on_plane(Q, [C, D, B], \"Q 는 평면 CDB 위\")\nassert_perpendicular(N, Q, D, B, \"NQ 수직 DB  (=> 각 PNQ 가 두 평면이 이루는 이면각)\")\nassert_distance3d(N, Q, 4, \"NQ = 4\")\n\n# 두 평면 PDB, CDB 가 이루는 예각 theta\nn1 = (Matrix(D) - Matrix(P)).cross(Matrix(B) - Matrix(P))   # 평면 PDB 의 법선\nn2 = (Matrix(D) - Matrix(C)).cross(Matrix(B) - Matrix(C))   # 평면 CDB 의 법선\ncos_t = simplify(abs(n1.dot(n2)) / (n1.norm() * n2.norm()))\nassert_distance((cos_t,), (0,), sqrt(10)/4, \"cos(theta) = sqrt10/4\")\nassert_distance((simplify(40*cos_t**2),), (0,), 25, \"40 cos^2(theta) = 25 (답)\")\n\n# 그림의 각 PNQ 자체가 구하는 예각 theta 다 (cos = sqrt10/4)\nfrom sympy import acos\nassert_angle(N, P, Q, acos(sqrt(10)/4), \"각 PNQ = theta = arccos(sqrt10/4) (예각)\")\n",
+ "verify": "s3 = sqrt(3)\ns5 = sqrt(5)\n\n# 좌표계: 평면 ACD 를 z=0 (바닥), AB 를 z 축 방향으로 세운다.\nA = (0, 0, 0)\nB = (0, 0, 4)\nC = (8, 0, 0)\nD = (4, 4*s3, 0)\n\nM = (6, 2*s3, 0)          # CD 의 중점\nN = (2, 2*s3, 2)          # DB 의 중점\nP = (3, s3, 0)            # 선분 AM 위의 점 (AM 의 중점)\n\n# ★화면 배치를 원본 도판(A 위·C 왼쪽·B 오른쪽·D 아래)에 맞추려고 좌표계를 **강체 회전**했다.\n#   (x,y,z) -> (x, z, -y). 회전은 길이와 각을 모두 보존하므로 아래 조건 검증은 그대로 성립한다.\n#   ★cameraUp 으로 화면을 돌리는 방법도 있었는데, 시선이 up 과 나란해지는 순간\n#     OrbitControls 가 극점에 갇혀 **회전이 잠긴다**(2026-08-14 실제로 그랬다). 좌표를 돌리는 편이 안전하다.\n_R = Matrix([[1, 0, 0], [0, 0, 1], [0, -1, 0]])\n_rot = lambda q: tuple(_R * Matrix(list(q)))\nA, B, C, D, M, N, P = map(_rot, (A, B, C, D, M, N, P))\n\n# 주어진 길이\nassert_distance3d(A, B, 4, \"AB = 4\")\nassert_distance3d(C, D, 8, \"CD = 8\")\nassert_distance3d(B, C, 4*s5, \"BC = 4sqrt5\")\nassert_distance3d(B, D, 4*s5, \"BD = 4sqrt5\")\n\n# 직선 AB 는 평면 ACD 에 수직 (AC, AD 두 방향과 모두 수직)\nassert_perpendicular(A, B, A, C, \"AB 수직 AC\")\nassert_perpendicular(A, B, A, D, \"AB 수직 AD  (=> 직선 AB 수직 평면 ACD)\")\nassert_coplanar([A, C, D, M], \"A, C, D, M 은 한 평면(평면 ACD) 위\")\n\n# M 은 CD 의 중점\nassert_on_line(M, C, D, \"M 은 직선 CD 위\")\nassert_distance3d(C, M, 4, \"CM = 4  (M 은 CD 의 중점)\")\nassert_distance3d(M, D, 4, \"MD = 4  (M 은 CD 의 중점)\")\n\n# N 은 DB 의 중점\nassert_on_line(N, D, B, \"N 은 직선 DB 위\")\nassert_distance3d(D, N, 2*s5, \"DN = 2sqrt5  (N 은 DB 의 중점)\")\nassert_distance3d(N, B, 2*s5, \"NB = 2sqrt5  (N 은 DB 의 중점)\")\n\n# P 는 선분 AM 위의 점이고 PN 은 DB 에 수직\nassert_on_line(P, A, M, \"P 는 직선 AM 위\")\nassert_distance3d(A, P, 2*s3, \"AP = 2sqrt3\")\nassert_distance3d(P, M, 2*s3, \"PM = 2sqrt3  (AP + PM = AM = 4sqrt3 이므로 P 는 선분 AM 위)\")\nassert_perpendicular(D, B, P, N, \"선분 DB 수직 선분 PN\")\n\n# 평면 CDB 안에서 N 을 지나 DB 에 수직인 보조선 NQ (이면각을 눈에 보이게)\nQ = (2 + 7/s5, 2*s3 - 3*s3/s5, 2 - 2/s5)\nQ = _rot(Q)   # 위와 같은 회전 (Q 는 여기서 정의되므로 따로)\nassert_on_plane(Q, [C, D, B], \"Q 는 평면 CDB 위\")\nassert_perpendicular(N, Q, D, B, \"NQ 수직 DB  (=> 각 PNQ 가 두 평면이 이루는 이면각)\")\nassert_distance3d(N, Q, 4, \"NQ = 4\")\n\n# 두 평면 PDB, CDB 가 이루는 예각 theta\nn1 = (Matrix(D) - Matrix(P)).cross(Matrix(B) - Matrix(P))   # 평면 PDB 의 법선\nn2 = (Matrix(D) - Matrix(C)).cross(Matrix(B) - Matrix(C))   # 평면 CDB 의 법선\ncos_t = simplify(abs(n1.dot(n2)) / (n1.norm() * n2.norm()))\nassert_distance((cos_t,), (0,), sqrt(10)/4, \"cos(theta) = sqrt10/4\")\nassert_distance((simplify(40*cos_t**2),), (0,), 25, \"40 cos^2(theta) = 25 (답)\")\n\n# 그림의 각 PNQ 자체가 구하는 예각 theta 다 (cos = sqrt10/4)\nfrom sympy import acos\nassert_angle(N, P, Q, acos(sqrt(10)/4), \"각 PNQ = theta = arccos(sqrt10/4) (예각)\")\n",
  "note": "AB 가 평면 ACD 에 수직이므로 BC=BD=4√5 에서 AC=AD=8 이 나오고, CD=8 과 합쳐 삼각형 ACD 는 한 변 8 인 정삼각형이다. 선분 AM 위에서 DB ⟂ PN 을 만족하는 점 P 는 AM 의 중점이고, 공통 모서리 DB 에 N 에서 수직으로 그은 두 선분 (초록 점선 NQ 는 평면 CDB 안, 분홍 PN 은 평면 PDB 안)이 이루는 각 θ 가 두 평면이 이루는 예각으로 cos θ = √10/4, 즉 40cos²θ = 25 이다."
 }

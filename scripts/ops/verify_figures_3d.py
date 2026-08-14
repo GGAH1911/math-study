@@ -82,6 +82,13 @@ def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:
             if s_.get('type') in ('sphere',):
                 bad.append('구가 있는데 displayScale 을 썼다 — 구가 타원체가 되어 접점이 안 보인다')
                 break
+    cu = spec.get('cameraUp')
+    if cu is not None and cu != [0, 0, 1]:
+        # ★up 을 비틀면 OrbitControls 의 '극점' 이 엉뚱한 방향에 생긴다. 사용자가 그쪽을 보는
+        #   순간 상하 회전이 **잠긴다**(2026-08-14: 시선이 up 과 나란해져 드래그가 안 먹었다).
+        #   화면 배치를 바꾸고 싶으면 **좌표를 강체 회전**해라 — 길이·각이 보존되므로 verify 가
+        #   그대로 통과하고, up 은 표준 +z 로 남아 회전이 자연스럽다.
+        bad.append(f'cameraUp={cu} — 회전이 잠기는 극점을 만든다. 좌표를 강체 회전해라(주석 참조)')
     shapes = spec.get('shapes')
     if not isinstance(shapes, list) or not shapes:
         bad.append('shapes 가 비었다')
