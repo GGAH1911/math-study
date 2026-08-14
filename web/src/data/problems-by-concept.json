@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T14:06:07.905Z",
+  "generatedAt": "2026-08-14T16:20:56.156Z",
   "totalProblems": 4210,
   "conceptsWithProblems": 978,
   "totalMappings": 14782,
@@ -75,6 +75,20 @@
         "format": "numeric",
         "has_image": true,
         "via": "propagated"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "기하",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
       },
       {
         "slug": "2025/9월모평/2025_9월모평_기하_30",
@@ -1951,20 +1965,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "기하",
-        "number": 28,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "geometry/geometry-elective/평면벡터/벡터의_성분": [
@@ -2981,6 +2981,20 @@
         "via": "propagated"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "기하",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
         "slug": "2026/고2_6월모의고사/2026_고2_6월모의고사_단일_20",
         "year": 2026,
         "exam_type": "모의고사",
@@ -3825,6 +3839,20 @@
         "year": 2026,
         "exam_type": "모의고사",
         "session": "3월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
         "grade": "고3",
         "subject": "공통",
         "number": 14,
@@ -9769,34 +9797,6 @@
         "format": "choice",
         "has_image": true,
         "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "기하",
-        "number": 28,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 14,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "functions/calculus/여러가지함수의_극한": [
@@ -11675,6 +11675,20 @@
         "year": 2026,
         "exam_type": "모의고사",
         "session": "3월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
         "grade": "고3",
         "subject": "공통",
         "number": 15,
@@ -22015,20 +22029,6 @@
         "format": "choice",
         "has_image": true,
         "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "geometry/geometry-elective/공간도형과_공간벡터": [
@@ -25427,6 +25427,20 @@
         "format": "numeric",
         "has_image": true,
         "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "propagated"
       },
       {
         "slug": "2026/고2_3월모의고사/2026_고2_3월모의고사_단일_21",
@@ -29417,20 +29431,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 29,
-        "score": 4,
-        "killer_tier": null,
-        "format": "numeric",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "probability-stats/prob-stats-elective/확률/독립사건": [
@@ -32967,6 +32967,20 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
       },
       {
         "slug": "2026/고3_3월모의고사/2026_고3_3월모의고사_확률과통계_26",
@@ -37864,20 +37878,6 @@
         "number": 1,
         "score": 2,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "propagated"
@@ -66337,6 +66337,20 @@
         "via": "propagated"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
         "slug": "2026/6월모평/2026_6월모평_공통_15",
         "year": 2026,
         "exam_type": "모의평가",
@@ -68267,20 +68281,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "functions/calculus/여러가지함수의_미분/매개변수_방정식": [
@@ -68631,6 +68631,20 @@
         "year": 2026,
         "exam_type": "모의고사",
         "session": "3월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
         "grade": "고3",
         "subject": "공통",
         "number": 15,
@@ -76311,20 +76325,6 @@
         "format": "choice",
         "has_image": true,
         "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "functions/calculus/도함수의_활용_심화": [
@@ -76403,6 +76403,20 @@
         "year": 2026,
         "exam_type": "모의고사",
         "session": "3월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
         "grade": "고3",
         "subject": "공통",
         "number": 15,
@@ -80597,20 +80611,6 @@
         "format": "choice",
         "has_image": true,
         "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "functions/math-1/삼각함수": [
@@ -81165,6 +81165,20 @@
         "year": 2026,
         "exam_type": "모의고사",
         "session": "3월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
         "grade": "고3",
         "subject": "공통",
         "number": 14,
@@ -86703,20 +86717,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 14,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "functions/math-1/삼각함수/삼각함수의_대칭성": [
@@ -87945,6 +87945,20 @@
         "via": "propagated"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 28,
+        "score": 3,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2026/수능/2026_수능_미적분_28",
         "year": 2026,
         "exam_type": "수능",
@@ -87969,6 +87983,20 @@
         "score": 4,
         "killer_tier": "killer",
         "format": "numeric",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
         "has_image": true,
         "via": "propagated"
       },
@@ -90687,34 +90715,6 @@
         "format": "choice",
         "has_image": true,
         "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 28,
-        "score": 3,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "functions/calculus/정적분의_활용/정적분과_넓이": [
@@ -90817,6 +90817,20 @@
         "format": "numeric",
         "has_image": true,
         "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 28,
+        "score": 3,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
       },
       {
         "slug": "2026/수능/2026_수능_미적분_28",
@@ -92049,20 +92063,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 28,
-        "score": 3,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
       }
     ],
     "geometry/geometry-elective/이차곡선/포물선_정의": [
@@ -93368,6 +93368,20 @@
         "grade": null,
         "subject": "미적분",
         "number": 28,
+        "score": 3,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 27,
         "score": 3,
         "killer_tier": "high",
         "format": "choice",
@@ -94759,20 +94773,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "functions/calculus/합성함수의_미분/연쇄법칙": [
@@ -95158,6 +95158,20 @@
       }
     ],
     "probability-stats/prob-stats-elective/통계": [
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
       {
         "slug": "2024/수능/2024_수능_확률과통계_30",
         "year": 2024,
@@ -96597,20 +96611,6 @@
         "score": 3,
         "killer_tier": "early",
         "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 29,
-        "score": 4,
-        "killer_tier": null,
-        "format": "numeric",
         "has_image": true,
         "via": "direct"
       }
@@ -102253,6 +102253,20 @@
         "via": "propagated"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2026/고3_3월모의고사/2026_고3_3월모의고사_확률과통계_26",
         "year": 2026,
         "exam_type": "모의고사",
@@ -105317,20 +105331,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "probability-stats/high-1/경우의_수_고1/인접_조건": [
@@ -105526,6 +105526,20 @@
         "number": 17,
         "score": 4,
         "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -105820,20 +105834,6 @@
         "number": 9,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -106718,6 +106718,20 @@
         "exam_type": "모의평가",
         "session": "6월",
         "grade": null,
+        "subject": "확률과통계",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "propagated"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
         "subject": "확률과통계",
         "number": 27,
         "score": 3,
@@ -108612,20 +108626,6 @@
         "number": 1,
         "score": 2,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "propagated"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "propagated"
@@ -111035,6 +111035,20 @@
     ],
     "probability-stats/prob-stats-elective/통계/확률변수의_선형변환": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2025/고3_7월모의고사/2025_고3_7월모의고사_확률과통계_29",
         "year": 2025,
         "exam_type": "모의고사",
@@ -111184,20 +111198,6 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 29,
-        "score": 4,
-        "killer_tier": null,
         "format": "numeric",
         "has_image": true,
         "via": "direct"
@@ -112057,6 +112057,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "기하",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2025/수능/2025_수능_기하_30",
         "year": 2025,
         "exam_type": "수능",
@@ -112220,20 +112234,6 @@
         "number": 25,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "기하",
-        "number": 28,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -151205,6 +151205,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2024/수능/2024_수능_공통_22",
         "year": 2024,
         "exam_type": "수능",
@@ -151886,20 +151900,6 @@
         "number": 9,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -161413,6 +161413,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2026/고3_3월모의고사/2026_고3_3월모의고사_확률과통계_25",
         "year": 2026,
         "exam_type": "모의고사",
@@ -161982,20 +161996,6 @@
         "number": 4,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -174235,6 +174235,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "mid",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2023/고3_10월모의고사/2023_고3_10월모의고사_확률과통계_27",
         "year": 2023,
         "exam_type": "모의고사",
@@ -174454,20 +174468,6 @@
         "number": 9,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -205561,6 +205561,20 @@
     ],
     "functions/calculus/합성함수의_미분/매개변수_미분": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2026/고3_5월모의고사/2026_고3_5월모의고사_미적분_27",
         "year": 2026,
         "exam_type": "모의고사",
@@ -205794,20 +205808,6 @@
         "number": 7,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -216843,6 +216843,20 @@
     ],
     "probability-stats/prob-stats-elective/통계/이산확률변수": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_확률과통계_30",
         "year": 2021,
         "exam_type": "모의고사",
@@ -217007,20 +217021,6 @@
         "score": 3,
         "killer_tier": "early",
         "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 29,
-        "score": 4,
-        "killer_tier": null,
-        "format": "numeric",
         "has_image": true,
         "via": "direct"
       }
@@ -219155,6 +219155,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "기하",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2025/고3_10월모의고사/2025_고3_10월모의고사_기하_30",
         "year": 2025,
         "exam_type": "모의고사",
@@ -219458,20 +219472,6 @@
         "number": 26,
         "score": 3,
         "killer_tier": "mid",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "기하",
-        "number": 28,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -226511,6 +226511,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "기하",
+        "number": 28,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2024/6월모평/2024_6월모평_기하_28",
         "year": 2024,
         "exam_type": "모의평가",
@@ -226744,20 +226758,6 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_기하_28",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "기하",
-        "number": 28,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -234297,6 +234297,20 @@
     ],
     "functions/math-2/미분/극값의_조건": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2025/6월모평/2025_6월모평_공통_21",
         "year": 2025,
         "exam_type": "모의평가",
@@ -234390,20 +234404,6 @@
         "number": 7,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -237239,6 +237239,20 @@
         "via": "direct"
       },
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2026/수능/2026_수능_공통_14",
         "year": 2026,
         "exam_type": "수능",
@@ -237951,20 +237965,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 14,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "functions/math-1/삼각함수/사인_법칙": [
@@ -238114,6 +238114,20 @@
         "exam_type": "모의평가",
         "session": "6월",
         "grade": null,
+        "subject": "공통",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
         "subject": "공통",
         "number": 14,
         "score": 4,
@@ -238835,20 +238849,6 @@
         "format": "choice",
         "has_image": true,
         "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 14,
-        "score": 4,
-        "killer_tier": null,
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
       }
     ],
     "functions/math-1/삼각함수/외접원의_반지름": [
@@ -238886,6 +238886,20 @@
         "exam_type": "모의평가",
         "session": "6월",
         "grade": null,
+        "subject": "공통",
+        "number": 14,
+        "score": 4,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
         "subject": "공통",
         "number": 14,
         "score": 4,
@@ -239408,20 +239422,6 @@
         "number": 13,
         "score": 4,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_14",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 14,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -259177,6 +259177,20 @@
     ],
     "probability-stats/prob-stats-elective/통계/확률변수_기댓값_분산_공식": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "확률과통계",
+        "number": 29,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "numeric",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2021/고3_10월모의고사/2021_고3_10월모의고사_확률과통계_30",
         "year": 2021,
         "exam_type": "모의고사",
@@ -259312,20 +259326,6 @@
         "number": 24,
         "score": 3,
         "killer_tier": "early",
-        "format": "numeric",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_확률과통계_29",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "확률과통계",
-        "number": 29,
-        "score": 4,
-        "killer_tier": null,
         "format": "numeric",
         "has_image": true,
         "via": "direct"
@@ -261091,6 +261091,20 @@
     ],
     "functions/math-2/미분/절댓값함수의_미분가능성": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "공통",
+        "number": 15,
+        "score": 4,
+        "killer_tier": "killer",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2025/고3_3월모의고사/2025_고3_3월모의고사_공통_22",
         "year": 2025,
         "exam_type": "모의고사",
@@ -261324,20 +261338,6 @@
         "number": 7,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_공통_15",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "공통",
-        "number": 15,
-        "score": 4,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
@@ -284991,6 +284991,20 @@
     ],
     "functions/calculus/합성함수의_미분/매개변수_접선": [
       {
+        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
+        "year": 2026,
+        "exam_type": "모의고사",
+        "session": "7월",
+        "grade": "고3",
+        "subject": "미적분",
+        "number": 27,
+        "score": 3,
+        "killer_tier": "high",
+        "format": "choice",
+        "has_image": true,
+        "via": "direct"
+      },
+      {
         "slug": "2026/고3_5월모의고사/2026_고3_5월모의고사_미적분_27",
         "year": 2026,
         "exam_type": "모의고사",
@@ -285042,20 +285056,6 @@
         "number": 25,
         "score": 3,
         "killer_tier": "early",
-        "format": "choice",
-        "has_image": true,
-        "via": "direct"
-      },
-      {
-        "slug": "2026/고3_7월모의고사/2026_고3_7월모의고사_미적분_27",
-        "year": 2026,
-        "exam_type": "모의고사",
-        "session": "7월",
-        "grade": "고3",
-        "subject": "미적분",
-        "number": 27,
-        "score": 3,
-        "killer_tier": null,
         "format": "choice",
         "has_image": true,
         "via": "direct"
