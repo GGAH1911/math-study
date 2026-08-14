@@ -158,6 +158,17 @@ export const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
      - \`assert_segments_disjoint(p1, p2, q1, q2, tag)\` — 선분 p1p2 와 q1q2 가 **안 만나는지** ("~와 만나지 않도록")
      - \`assert_segments_cross(p1, p2, q1, q2, tag)\` — 선분 p1p2 와 q1q2 가 **만나는지** ("~와 만나도록")
 
+     **3D (점을 (x, y, z) 로 줄 때)** — \`assert_distance\` 는 2D·3D 공통이다:
+     - \`assert_distance3d(p1, p2, expected, tag)\` — 3D 거리
+     - \`assert_coplanar([p1, p2, p3, p4, ...], tag)\` — 네 점 이상이 한 평면 위인지
+     - \`assert_on_plane(point, [q1, q2, q3], tag)\` — point 가 q1q2q3 평면 위인지
+     - \`assert_perpendicular(p1, p2, q1, q2, tag)\` — 두 선분(벡터)이 수직인지
+
+     ⚠️ **위 목록에 없는 헬퍼는 존재하지 않는다.** 이름을 지어내 부르면 NameError 로
+     계산이 통째로 날아가고, 좌표 없이 도형을 추정해 그리게 된다(2026-08-14 \`assert_on_plane\`
+     실사고). 필요한 검증이 목록에 없으면 **sympy 기본 연산으로 직접 계산해 print** 하라
+     (예: 점이 평면 위인지 → 법선벡터와의 내적이 0 인지 \`Matrix(...).dot(...)\` 로).
+
      **검증 호출은 의무 — 빠뜨리면 사고**:
      문제에 명시된 모든 기하 조건 (각·거리·점-on-도형) 마다 대응하는
      assert_* 를 반드시 호출. 단순 print 만으로는 좌표를 유도한 공식 자체가

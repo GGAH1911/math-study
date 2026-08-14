@@ -195,16 +195,50 @@ export function useChatSend(p: ChatSendParams) {
       const MAX_SYMPY_ROUNDS = 3;
       let rounds = 0;
       const hasGeometry = (s: string) => /```geometry(3d)?\s*\n/.test(s);
+      // sympy 출력의 점이 3성분이면 3D 문제다 — 아래 지시문을 거기 맞춘다.
+      //
+      // ★왜 필요한가(2026-08-14): 이 지시문이 `geometry` 와 `at: [x, y]` 를 **못박고** 있었다.
+      //   그래서 sympy 가 A=(0,2,2*sqrt(3)) 처럼 3D 좌표를 정확히 내놔도 튜터가 z 를 버리고
+      //   [0,2] 로 평면에 눌러 그렸다. 사면체가 삼각형이 되고 A 와 G 가 같은 자리에 겹쳤다.
+      //   "3D 를 못 그린다" 로 보였지만 실제로는 **우리가 2D 로 그리라고 시킨** 것이다.
+      const looksThreeD = (stdout: string): boolean => {
+        let three = 0, two = 0;
+        for (const line of stdout.split('\n')) {
+          const m = line.match(/=\s*\((.*)\)\s*$/);   // 예: `A = (0, 2, 2*sqrt(3))`
+          if (!m) continue;
+          let depth = 0, commas = 0;
+          for (const ch of m[1]) {
+            if (ch === '(') depth++;
+            else if (ch === ')') depth--;
+            else if (ch === ',' && depth === 0) commas++;  // sqrt(3) 안의 쉼표는 세지 않는다
+          }
+          if (commas === 2) three++; else if (commas === 1) two++;
+        }
+        return three > two;
+      };
       while (!isFollowupInput && rounds < MAX_SYMPY_ROUNDS) {
         if (hasGeometry(assistantText)) break; // 도형 emit 완료
         const m = extractPy(assistantText);
         if (!m) break; // python 도 도형도 없음 → 종료
         const sympyResult = await runSympy(m[1]);
+        // 실행 자체가 터진 경우(NameError·SyntaxError…)를 **성공과 구분**한다.
+        // ★2026-08-14 실사고: 이 구분이 없어 Traceback 이 그대로 '[자동 계산 결과]' 로 나갔고,
+        //   좌표가 한 줄도 없는데 "출력의 각 점 좌표를 옮겨 적어라" 는 지시가 붙었다.
+        //   튜터는 옮겨 적을 게 없으니 **좌표를 지어내 도형을 그렸다.** 검증기를 통과한
+        //   그림처럼 보이지만 실은 아무것도 검증되지 않은 그림이다.
+        // runSympy 는 실패를 `ok:false` 로 알리고 stderr 를 stdout 자리에 담아 준다(L145).
+        const crashed = !sympyResult.ok
+          || /^Traceback \(most recent call last\)/m.test(sympyResult.stdout);
         const failed = /\[VERIFY FAIL\]/.test(sympyResult.stdout);
-        const prefix = failed ? '[자동 계산 결과 — 검증 실패]' : '[자동 계산 결과]';
-        const tail = failed
+        const prefix = crashed ? '[자동 계산 결과 — 실행 오류]'
+          : failed ? '[자동 계산 결과 — 검증 실패]' : '[자동 계산 결과]';
+        const tail = crashed
+          ? '\n\n**코드가 실행되지 못했다.** 위 오류를 보고 sympy 코드를 고쳐 다시 출력하라. 특히 `NameError` 면 **없는 헬퍼를 부른 것**이다 — 주입된 헬퍼 목록에 있는 것만 쓰고, 없으면 sympy 기본 연산으로 직접 계산하라. 이번 턴에는 ```python``` 코드 블록 하나만 내라. **좌표를 지어내 도형을 그리지 마라.**'
+          : failed
           ? '\n\n위 출력에 `[VERIFY FAIL]` 항목이 있다. **이전 가정/수식이 어디서 틀렸는지** 찾아 단계 정의를 다시 읽고 sympy 코드를 다시 작성해 재계산하라. 추정 금지.'
-          : '\n\n위 출력의 각 점 좌표를 **글자 그대로 ```geometry``` spec 의 `at: [x, y]` 에 옮겨 적어라**. 추정·반올림 금지. 이번 응답에서 바로 geometry block 작성, 대기 메시지 금지, 기술 용어 노출 금지.';
+          : looksThreeD(sympyResult.stdout)
+            ? '\n\n위 출력의 점이 **3차원 좌표**다. 반드시 ```geometry3d``` spec 에 `at: [x, y, z]` 로 **세 성분 모두** 글자 그대로 옮겨 적어라. **z 를 빼고 평면(```geometry```)으로 그리지 마라** — 입체가 납작해지고 서로 다른 점이 같은 자리에 겹친다. 추정·반올림 금지. 이번 응답에서 바로 geometry3d block 작성, 대기 메시지 금지, 기술 용어 노출 금지.'
+            : '\n\n위 출력의 각 점 좌표를 **글자 그대로 ```geometry``` spec 의 `at: [x, y]` 에 옮겨 적어라**. 추정·반올림 금지. 이번 응답에서 바로 geometry block 작성, 대기 메시지 금지, 기술 용어 노출 금지.';
         const injected = `${prefix}\n\`\`\`\n${sympyResult.stdout}\n\`\`\`${tail}`;
         appendTurn({ role: 'user', content: injected });
         assistantText = await callLLM(rawHistory);

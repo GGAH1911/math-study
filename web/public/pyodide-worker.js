@@ -137,6 +137,11 @@ def assert_coplanar(pts, tag):
             print(f"[VERIFY FAIL] {tag}: {q} 가 평면 밖"); return
     print(f"[VERIFY OK] {tag}")
 
+def assert_on_plane(point, plane_pts, tag):
+    """point 가 plane_pts(세 점) 가 정하는 평면 위인지. 3D 작도에서 가장 자주 쓰는 검증이라
+    ★따로 둔다 — 없으면 튜터가 이름을 지어내 NameError 로 계산이 통째로 날아간다."""
+    assert_coplanar([plane_pts[0], plane_pts[1], plane_pts[2], point], tag)
+
 def assert_perpendicular(p1, p2, q1, q2, tag):
     """두 선분(또는 벡터)이 수직인지 — 2D·3D 공통."""
     u = Matrix(p2) - Matrix(p1); v = Matrix(q2) - Matrix(q1)
