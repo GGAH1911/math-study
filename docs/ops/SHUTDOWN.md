@@ -29,6 +29,9 @@ updated: 2026-08-14
       · 줄었으면 `--tighten` 으로 기준선을 내린다(되돌아가는 것까지 막힌다)
       · 정당하게 커져야 하면 **기준선을 고치는 커밋에 이유를 적는다.** 조용히 숫자만
         올리면 그 순간 래칫이 아니다
+- [ ] **sympy 헤더 동기** — `python3 scripts/ops/verify_sympy_header_sync.py`
+      · 헤더가 브라우저(`pyodide-worker.js`)와 서버(`api/sympy.ts`) 두 곳에 복사돼 있다.
+        **브라우저가 1차**라 서버만 고치면 사용자에겐 아무 변화가 없다(2026-08-14 실사고)
 - [ ] **웹 정상** — `/api/health` 200 · 개념 페이지 200(세션 쿠키) · **튜터 실호출로 응답 수신**
 - [ ] **로그 에러 스캔** — `docker compose -f deploy/docker-compose.yml logs --since 1h web`
       에서 미해결 오류. ★**컨테이너가 재시작 루프면 health 가 000 이다** — 200 만 보지 말 것
