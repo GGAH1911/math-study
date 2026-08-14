@@ -527,9 +527,13 @@ def _parse(chars, bars, main=None, depth=0, row_sep=None):
         # 윗줄 본문("2x-" 등)을 분자로 흡수하던 표garble(\frac{x 11}…) 원흉을 결정론적으로 차단. 또 윗줄
         # junk가 섞여 recursion이 중첩분수를 overline 으로 오판하던 것(\frac{\overline{3} 4}…)도 함께 해소.
         def _bandgrab(updir):
+            # ★구성원은 **바 자체 크기(lmain)를 크게 넘을 수 없다.** 지수 속 작은 분수(lmain=5.8)가
+            #   바로 아래 본문 글자(size 8.5)를 분모로 훔쳐 `25^{3/4}` 가 `2\frac{3}{5^{4}}` 가 됐다
+            #   (2026 고3 7월 1번 실측). 밴드 워크의 세로 간격(1.3*main)만으로는 못 막는다 — 지수는
+            #   본문 바로 위라 간격이 4pt 로 좁다. 상한만 걸고 하한은 그대로(x² 분자의 ² 등 포함).
             cand_c = sorted(
                 [c for c in chars if frac_ok and c is not dashc and inx(c) and not cross(c)
-                 and (cy(c) > by if updir else cy(c) < by)
+                 and (cy(c) > by if updir else cy(c) < by) and c.size <= lmain * 1.15
                  and not _han(decode_str(c.get_text())) and id(c) not in consumed],
                 key=lambda c: abs(cy(c) - by))
             grabbed = []
