@@ -54,7 +54,10 @@ git add -- db/solutions 2>/dev/null
 if git diff --cached --quiet -- db/solutions; then
   echo "[$(date '+%F %T')] 변경 없음 — 커밋 생략 (rc=$RC)" | tee -a "$LOG"
 else
-  N=$(git diff --cached --name-only -- db/solutions | grep -c '\.py$')
+  # ★`-z` 필수. 한글 파일명은 git 이 "db/solutions/2019_\352\263\240..._25.py" 처럼
+  #   **이스케이프해 따옴표로 감싼다** → 줄 끝이 `y` 가 아니라 `"` 라 `grep '\.py$'` 가
+  #   전부 빗나가 건수가 늘 0 으로 찍혔다(2026-08-14 실측). -z 는 인용을 아예 끈다.
+  N=$(git diff --cached --name-only -z -- db/solutions | tr '\0' '\n' | grep -c '\.py$')
   git commit -q -m "feat(solver): 파라미터화 일일 배치 — ${N}건 ($MODEL)
 
 $(date '+%F') 07:00 크론. 시간박스 ${MAX_SECONDS}s · 워커 ${WORKERS}.
