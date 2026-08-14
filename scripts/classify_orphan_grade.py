@@ -7,7 +7,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-CONCEPTS = Path('/home/insung/Projects/math-study/docs/concepts')
+CONCEPTS = Path(__import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__)))) / 'docs/concepts'  # ★레포 위치 자동(이동 내성)
 
 # Keyword → grade priority. First match wins.
 RULES: list[tuple[str, str]] = [

@@ -13,7 +13,7 @@ API 사용량 한도(rate limit)에 걸리면 대량 gen-fail 한다. 사람이 
 """
 import os, re, glob, time, subprocess
 
-ROOT = '/home/insung/Projects/math-study/.claude/worktrees/gallant-tu-2c9be7'
+ROOT = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__)))  # ★레포 위치 자동(이동 내성)
 os.chdir(ROOT)
 SLOG = '/tmp/recovery_supervisor.log'
 PASS_LOG = '/tmp/recovery_pass.log'

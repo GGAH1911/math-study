@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(os.environ['MATHSTUDY_ROOT']).resolve()
 SCRIPTS = ROOT / 'scripts'
-VENV = '/home/insung/Projects/math-study/.venv/bin/python'
+VENV = __import__('os').environ.get('MS_PY', __import__('os').path.expanduser('~/.venvs/ms-ingest/bin/python'))  # ★인제스트 venv(레포 .venv 는 빈 마운트포인트)
 SRC = glob.glob('/home/insung/Downloads/taildrop/*.pdf')
 MONTHS = [('4월', '4월'), ('7월', '7월'), ('10월', '10원')]   # (세션라벨, 파일검색어)
 SUBJ_FK = [('미적분', '미적'), ('기하', '기하'), ('확률과통계', '확통')]

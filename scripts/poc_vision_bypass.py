@@ -12,7 +12,7 @@ import sympy as sp
 
 ROOT = Path(__file__).resolve().parent.parent
 IMGDIR = ROOT / 'web' / 'public' / 'problem-images'
-VENV_PY = '/home/insung/Projects/math-study/.venv/bin/python'
+VENV_PY = __import__('os').environ.get('MS_PY', __import__('os').path.expanduser('~/.venvs/ms-ingest/bin/python'))  # ★인제스트 venv(레포 .venv 는 빈 마운트포인트)
 sys.path.insert(0, str(ROOT / 'scripts'))
 from tiling import tile_for_vision  # noqa: E402
 

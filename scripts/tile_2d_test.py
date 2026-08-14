@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-FONT = '/home/insung/Projects/math-study/.venv/lib/python3.11/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf'
+FONT = __import__('os').path.join(__import__('matplotlib').get_data_path(), 'fonts', 'ttf', 'DejaVuSans-Bold.ttf')  # ★matplotlib 이 자기 데이터 경로를 알려준다(옛 venv 하드코딩 제거)
 W, H = 3000, 2000
 ROWS, COLS = 6, 6
 OVERLAP = 100

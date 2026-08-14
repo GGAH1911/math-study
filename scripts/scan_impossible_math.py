@@ -7,7 +7,7 @@ import re, glob
 from pathlib import Path
 import sympy as sp
 
-ROOT = Path('/home/insung/Projects/math-study/.claude/worktrees/gallant-tu-2c9be7')
+ROOT = Path(__import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 
 
 def norm_value(s):

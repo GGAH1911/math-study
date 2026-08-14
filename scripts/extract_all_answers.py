@@ -15,7 +15,7 @@ from pathlib import Path
 import fitz
 import psycopg
 
-ROOT = Path('/home/insung/Projects/math-study')
+ROOT = Path(__import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 RAW = ROOT / 'db' / 'raw'
 PROBLEMS_DIR = ROOT / 'docs' / 'problems'
 DB = 'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy'

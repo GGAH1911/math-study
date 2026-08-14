@@ -6,7 +6,7 @@ import re, json, os, subprocess, tempfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 K = int(os.environ.get('VB2_K', '8'))
-VENV_PY = '/home/insung/Projects/math-study/.venv/bin/python'
+VENV_PY = __import__('os').environ.get('MS_PY', __import__('os').path.expanduser('~/.venvs/ms-ingest/bin/python'))  # ★인제스트 venv(레포 .venv 는 빈 마운트포인트)
 GOLD = '5'
 LATEX = r"\lim_{n\to\infty}\dfrac{\dfrac{5}{n}+\dfrac{3}{n^{2}}}{\dfrac{1}{n}-\dfrac{2}{n^{3}}}"
 

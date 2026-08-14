@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 ROOT = Path(__file__).resolve().parent.parent
 IMGDIR = ROOT / 'web' / 'public' / 'problem-images'
-VENV_PY = str(ROOT.parent.parent.parent / '.venv' / 'bin' / 'python') if False else '/home/insung/Projects/math-study/.venv/bin/python'
+VENV_PY = __import__('os').environ.get('MS_PY', __import__('os').path.expanduser('~/.venvs/ms-ingest/bin/python'))  # ★인제스트 venv(옛 경로·죽은 삼항 제거)
 sys.path.insert(0, str(ROOT / 'scripts'))
 from tiling import tile_for_vision           # noqa: E402
 from build_solution_cache import run_verifier  # noqa: E402  (FORBIDDEN 체크+실행+VERIFY_PASS)

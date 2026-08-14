@@ -4,7 +4,18 @@
 #   2) corrector_batch 반복: 검증게이트·Sonnet자가치유·빌드체크 내장. 쿼터 소진 시 5h 대기 후 재개.
 #   3) 회차마다 corrected 커밋·푸시. 빌드체크 실패 시 즉시 중단(서버 보호).
 set -u
-cd /home/insung/Projects/math-study || exit 1
+# ⚠️ **2026-06 세션 전용 일회성 유물이다.** 아래 커밋 메시지에 그때의 세션 URL 과 작업 내용이
+#    그대로 박혀 있어, 지금 돌리면 무관한 변경에 그 메시지가 붙는다.
+#    ★예전엔 옛 머신 경로(`/home/insung/Projects/math-study`)를 cd 했다. 이전 후에도 그
+#      **껍데기 디렉터리가 남아 cd 가 성공**하고, 이후 git("not a git repository")·node 가
+#      전부 실패하는데 `set -e` 가 없어 **아무 일도 안 하며 무한 루프**를 돌았다(2026-08-15 감사).
+#    되살리려면 커밋 메시지부터 새로 쓰고 AUTO_PIPELINE_OK=1 을 준다.
+[ "${AUTO_PIPELINE_OK:-}" = "1" ] || {
+  echo "⛔ auto_pipeline.sh 는 2026-06 세션 전용 일회성 스크립트다."
+  echo "   커밋 메시지·config 를 지금 작업에 맞게 고친 뒤 AUTO_PIPELINE_OK=1 로 실행하라."
+  exit 2
+}
+cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)" || exit 1
 LOG=/tmp/ingest_logs/auto_pipeline.log
 mkdir -p /tmp/ingest_logs
 exec >> "$LOG" 2>&1

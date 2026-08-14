@@ -8,7 +8,7 @@ answer = 객관식 보기번호(또는 단답 숫자), answer_value = 실제 값
 import re
 from pathlib import Path
 
-ROOT = Path('/home/insung/Projects/math-study/.claude/worktrees/gallant-tu-2c9be7')
+ROOT = Path(__import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 DOCS = ROOT / 'docs' / 'problems'
 
 
