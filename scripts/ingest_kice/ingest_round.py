@@ -30,6 +30,8 @@ from textwrap import dedent
 import psycopg
 import fitz  # pymupdf
 
+from tiers import ALLOWED_COG, ALLOWED_TIER, pick_enum  # 난이도·인지유형 어휘 정본
+
 # Optional DeepSeek-OCR client (preferred for vision when healthy)
 try:
     import sys as _sys
@@ -847,25 +849,13 @@ JSON 출력하라."""
     # Normalize enum-like fields to satisfy DB CHECK constraints. Haiku
     # sometimes returns multi-value strings like '계산|응용' or values
     # outside the allowed set, which would otherwise crash db_upsert.
-    ALLOWED_COG = {'계산', '개념', '응용', '추론', '통합'}
-    ALLOWED_TIER = {'early', 'mid', 'killer'}
-    def _normalize(val, allowed):
-        if not val:
-            return None
-        if isinstance(val, list):
-            val = val[0] if val else None
-            if not val:
-                return None
-        s = str(val).strip()
-        if s in allowed:
-            return s
-        for tok in re.split(r'[|,/、]', s):
-            tok = tok.strip()
-            if tok in allowed:
-                return tok
-        return None
-    parsed['cognitive_type'] = _normalize(parsed.get('cognitive_type'), ALLOWED_COG)
-    parsed['killer_tier'] = _normalize(parsed.get('killer_tier'), ALLOWED_TIER)
+    # ★어휘 정본은 tiers.py. 여기 다시 적으면 또 어긋난다 — 위 프롬프트(:125·가이드)는
+    #   모델에게 high 를 쓰라 하는데 검증기만 high 를 몰라서, 시킨 대로 답한 값이 조용히
+    #   버려져 난이도가 빈 채로 기록됐다(2026-08-14 실측 7건).
+    parsed['cognitive_type'] = pick_enum(parsed.get('cognitive_type'), ALLOWED_COG,
+                                         'cognitive_type', f'#{number}')
+    parsed['killer_tier'] = pick_enum(parsed.get('killer_tier'), ALLOWED_TIER,
+                                      'killer_tier', f'#{number}')
     return parsed
 
 
@@ -1701,24 +1691,14 @@ def ingest_round(year: int, exam_type: str, session: str, pdf_url: str | None = 
     _cache_hits = 0
     _cache_lock = __import__('threading').Lock()
 
-    ALLOWED_COG = {'계산', '개념', '응용', '추론', '통합'}
-    ALLOWED_TIER = {'early', 'mid', 'killer'}
     def _normalize_mapping(m: dict) -> dict:
         """Sanitize enum-like fields from old cache entries that pre-date
         the map_problem-side normalization. Keeps cache hits cheap by
-        avoiding cache invalidation churn."""
-        def pick(val, allowed):
-            if not val: return None
-            if isinstance(val, list): val = val[0] if val else None
-            if not val: return None
-            s = str(val).strip()
-            if s in allowed: return s
-            for tok in re.split(r'[|,/、]', s):
-                tok = tok.strip()
-                if tok in allowed: return tok
-            return None
-        m['cognitive_type'] = pick(m.get('cognitive_type'), ALLOWED_COG)
-        m['killer_tier'] = pick(m.get('killer_tier'), ALLOWED_TIER)
+        avoiding cache invalidation churn.
+
+        ★어휘는 tiers.py 정본을 쓴다. 예전엔 여기에 다시 적어 두어 high 가 빠졌었다."""
+        m['cognitive_type'] = pick_enum(m.get('cognitive_type'), ALLOWED_COG, 'cognitive_type', 'cache')
+        m['killer_tier'] = pick_enum(m.get('killer_tier'), ALLOWED_TIER, 'killer_tier', 'cache')
         return m
 
     def map_one(prob):

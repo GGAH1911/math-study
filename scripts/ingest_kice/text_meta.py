@@ -20,6 +20,7 @@ import fitz  # PyMuPDF
 _HERE = Path(__file__).parent
 sys.path.insert(0, str(_HERE))
 from ingest_round import claude_p, load_concept_index, scope_for, validate_mapping  # noqa: E402
+from tiers import ALLOWED_COG, ALLOWED_TIER, TIER_GUIDE, pick_enum  # 어휘 정본  # noqa: E402
 
 
 def _first_json_object(s: str) -> str | None:
@@ -75,14 +76,11 @@ META_SYSTEM = """너는 한국 수능 수학 기출문제 분류 전문가다.
   "unit": "단원 slug — 아래 단원 목록 중 하나",
   "concepts": ["관련 spoke 1", "spoke 2"]  # unit 하위 spoke 1-4개 (모르면 빈 배열)
   "exam_intent": "이 문제의 출제 의도 한 문장 (50자 이내)",
-  "killer_tier": "early" / "mid" / "killer"
+  "killer_tier": "early" / "mid" / "high" / "killer"
   "cognitive_type": "계산" / "개념" / "응용" / "추론" / "통합"
 }
 
-killer_tier:
-- early: 1-15번 수준 (2-3점)
-- mid: 16-22번 또는 23-27번 (3-4점)
-- killer: 21-22, 28-30 같은 최고난도 (4점)
+""" + TIER_GUIDE + """
 
 오직 JSON. 코드펜스/주석/설명 금지."""
 
@@ -244,6 +242,13 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
             last_err = f'non-dict (try {attempt+1})'
             continue
         normalized = _normalize(parsed)
+        # ★난이도가 규격 밖이라 버려졌으면 **한 번은 다시 묻는다.** 예전엔 조용히 빈 값으로
+        #   나갔고(2026 고3 7월 46문제 중 7건), 비결정적이라 인제스트마다 몇 건씩 샜다.
+        #   마지막 시도에서도 비면 그땐 받아들인다 — 무한정 붙잡느니 로그를 남기고 넘긴다.
+        if not normalized.get('killer_tier') and attempt < 2:
+            last_err = f'killer_tier 규격 밖 (try {attempt+1}) — 재질의'
+            base_user += f'\n\n중요: killer_tier 는 반드시 {sorted(ALLOWED_TIER)} 중 하나여야 한다.'
+            continue
         # ★텍스트 폴백에도 게이트를 건다 — 지어낸 개념이 frontmatter 로 나가면 stub 이 생긴다.
         ok, why = validate_mapping(normalized.get('unit'), normalized.get('concepts'), index)
         if not ok:
@@ -267,8 +272,7 @@ def extract_metadata(pdf_path: Path, page_num: int, bbox_pdf: tuple,
 
 
 _ALLOWED_FORMAT = {'choice', 'numeric'}
-_ALLOWED_TIER = {'early', 'mid', 'killer'}
-_ALLOWED_COG = {'계산', '개념', '응용', '추론', '통합'}
+# 난이도·인지유형 어휘는 tiers.py 정본(ALLOWED_TIER/ALLOWED_COG)을 쓴다 — 여기 다시 적지 않는다.
 
 
 def _normalize(meta: dict) -> dict:
@@ -288,17 +292,6 @@ def _normalize(meta: dict) -> dict:
         out['concepts'] = []
     out['exam_intent'] = str(meta.get('exam_intent', '')).strip()[:200]
 
-    def _pick(val, allowed):
-        if not val:
-            return None
-        s = str(val).strip()
-        if s in allowed:
-            return s
-        for tok in re.split(r'[|,/、]', s):
-            tok = tok.strip()
-            if tok in allowed:
-                return tok
-        return None
-    out['killer_tier'] = _pick(meta.get('killer_tier'), _ALLOWED_TIER)
-    out['cognitive_type'] = _pick(meta.get('cognitive_type'), _ALLOWED_COG)
+    out['killer_tier'] = pick_enum(meta.get('killer_tier'), ALLOWED_TIER, 'killer_tier')
+    out['cognitive_type'] = pick_enum(meta.get('cognitive_type'), ALLOWED_COG, 'cognitive_type')
     return out

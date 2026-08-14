@@ -29,6 +29,7 @@ sys.path.insert(0, str(_SCRIPTS / 'ingest_kice'))
 sys.path.insert(0, str(_SCRIPTS))
 try:
     from ingest_round import claude_p, load_concept_index  # type: ignore
+    from tiers import ALLOWED_COG, ALLOWED_TIER, TIER_GUIDE, pick_enum  # type: ignore  # 어휘 정본
     from tiling import vision_paths  # 큰 문제는 타일로 분할해 vision 입력(통PNG는 vision 다운스케일로 글자 뭉개짐 → 빈응답/타임아웃)
 except Exception as e:
     print(f'failed to import claude_p / load_concept_index / vision_paths: {e}', file=sys.stderr)
@@ -80,7 +81,7 @@ PDF에서 잘라낸 문제 하나의 영역이다 (본문 + 보기 + 그림이 �
   "unit": "단원 slug — 아래 단원 목록 중 하나",
   "concepts": ["spoke slug 1", "spoke slug 2"],
   "exam_intent": "이 문제의 출제 의도 한 문장 (50자 이내, 무엇을 묻는지)",
-  "killer_tier": "early" / "mid" / "killer",
+  "killer_tier": "early" / "mid" / "high" / "killer",
   "cognitive_type": "계산" / "개념" / "응용" / "추론" / "통합",
   "expected_time_sec": 60-1800 사이 정수,
   "figure_spec": null  // has_figure=true 면서 우리 spec으로 표현 가능한 도형이면 아래 형식
@@ -108,10 +109,7 @@ PDF에서 잘라낸 문제 하나의 영역이다 (본문 + 보기 + 그림이 �
 
 confidence < 0.5 이거나 표현 어려우면 figure_spec=null. searchable_text 의 [그림: ...] 묘사가 fallback.
 
-killer_tier 기준:
-- early: 1-15번 수준 (2-3점, 단순 계산/개념 확인, 1-3분)
-- mid: 16-22번 수준 또는 23-27번 (3-4점, 응용, 3-7분)
-- killer: 21,22,28,29,30번 같은 최고난도 (4점, 통합 추론, 10-30분)
+""" + TIER_GUIDE + """
 
 === searchable_text 작성 규칙 (중요) ===
 
@@ -243,8 +241,7 @@ def extract_metadata(image_path: Path, units_index: dict[str, list[str]],
 
 
 _ALLOWED_FORMAT = {'choice', 'numeric'}
-_ALLOWED_TIER = {'early', 'mid', 'killer'}
-_ALLOWED_COG = {'계산', '개념', '응용', '추론', '통합'}
+# 난이도·인지유형 어휘는 tiers.py 정본(ALLOWED_TIER/ALLOWED_COG)을 쓴다 — 여기 다시 적지 않는다.
 
 
 def _normalize(meta: dict) -> dict:
@@ -263,19 +260,8 @@ def _normalize(meta: dict) -> dict:
         out['concepts'] = []
     out['exam_intent'] = str(meta.get('exam_intent', '')).strip()[:200]
 
-    def _pick(val, allowed):
-        if not val:
-            return None
-        s = str(val).strip()
-        if s in allowed:
-            return s
-        for tok in re.split(r'[|,/、]', s):
-            tok = tok.strip()
-            if tok in allowed:
-                return tok
-        return None
-    out['killer_tier'] = _pick(meta.get('killer_tier'), _ALLOWED_TIER)
-    out['cognitive_type'] = _pick(meta.get('cognitive_type'), _ALLOWED_COG)
+    out['killer_tier'] = pick_enum(meta.get('killer_tier'), ALLOWED_TIER, 'killer_tier')
+    out['cognitive_type'] = pick_enum(meta.get('cognitive_type'), ALLOWED_COG, 'cognitive_type')
     try:
         et = int(meta.get('expected_time_sec', 0))
         out['expected_time_sec'] = max(60, min(1800, et)) if et else None
