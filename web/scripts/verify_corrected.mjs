@@ -4,6 +4,7 @@
 //   결과는 corrector_verify(ok/issues) frontmatter + raw 로그(verify_corrected.log)에 누적.
 // 사용: node verify_corrected.mjs <round> <subj> <num>
 import { spawn } from 'node:child_process';
+import { claudeEnv } from './lib/claude_p.mjs';   // 구독 인증·캐시 env 정본
 import { readFileSync, writeFileSync, appendFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 
 const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
@@ -14,7 +15,7 @@ if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
 function claudeCall(prompt, imgDir, model = 'sonnet') {
   return new Promise((res) => {
-    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
+    const c = spawn('claude', ['-p', prompt, '--model', model, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: claudeEnv() });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
     c.on('close', () => { try { res(JSON.parse(out).result || ''); } catch { res(''); } });

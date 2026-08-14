@@ -20,6 +20,9 @@ const QLOG = '/tmp/ingest_logs/corrector_quarantine.log';
 const CLEAN_DIR = process.env.CLAUDE_P_CWD || '/tmp/claude_p_clean';
 if (!existsSync(CLEAN_DIR)) mkdirSync(CLEAN_DIR, { recursive: true });
 
+// 구독 인증·캐시 env 는 lib/claude_p.mjs 정본을 쓴다(scripts/claude_auth.py 의 node 판).
+import { claudeEnv, looksUnauthed } from './lib/claude_p.mjs';
+
 // agy(Gemini) = plain text. 쿼터 소진 = 빈 출력.
 function agyCall(prompt, imgDir, retries = 2) {
   return new Promise((res) => {
@@ -46,7 +49,7 @@ function claudeCall(prompt, imgDir, model = 'sonnet', maxTurns = 0) {
     if (maxTurns > 0) args.push('--max-turns', String(maxTurns));
     // ★CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1: git status 블록을 system prompt 에서 제거 → prefix 안정
     //   (clean cwd 와 벨트+멜빵. --add-dir 가 레포를 가리켜도 git 블록이 안 살아남. 실측 cache_read 고정.)
-    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
+    const c = spawn('claude', args, { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: claudeEnv() });
     c.stdout.setEncoding('utf8'); let out = '';
     c.stdout.on('data', (d) => (out += d));
     c.on('close', () => {

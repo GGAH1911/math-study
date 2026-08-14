@@ -6,6 +6,7 @@
 // 멱등: corrector_verify:ok 는 skip (--force 무시). 로그: /tmp/ingest_logs/verify_batch_<ts>.log (append).
 // 사용: node verify_batch.mjs --list slug1,slug2  |  --round 2021_수능 [--subj 나형]  [--chunk 5] [--force] [--model sonnet]
 import { spawn } from 'node:child_process';
+import { claudeEnv } from './lib/claude_p.mjs';   // 구독 인증·캐시 env 정본
 import { readFileSync, writeFileSync, appendFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs';
 
 const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
@@ -60,7 +61,7 @@ function collectSlugs() {
 function claudeCall(prompt, imgDir) {
   return new Promise((res) => {
     // CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1: git 블록 제거 → prefix 안정(clean cwd 보강, 실측 cache_read 고정).
-    const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: { ...process.env, CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS: '1' } });
+    const c = spawn('claude', ['-p', prompt, '--model', MODEL, '--output-format', 'json', '--add-dir', imgDir], { stdio: ['ignore', 'pipe', 'pipe'], cwd: CLEAN_DIR, env: claudeEnv() });
     let out = ''; c.stdout.on('data', (d) => (out += d));
     c.on('close', () => { try { const j = JSON.parse(out); const u = j.usage || {}; appendFileSync(`${LOGDIR}/verify_usage.log`, `${MODEL}\tcr=${u.cache_read_input_tokens ?? '?'}\tcc=${u.cache_creation_input_tokens ?? '?'}\tin=${u.input_tokens ?? '?'}\tout=${u.output_tokens ?? '?'}\n`); res(j.result || ''); } catch { res(''); } });
   });
