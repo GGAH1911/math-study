@@ -8,7 +8,7 @@
 import { readdirSync, readFileSync, existsSync, appendFileSync, mkdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const PROB = `${REPO}/docs/problems`;
 const FILTER = process.argv[2] || '';
 const MAXROUND = parseInt(process.env.MAXROUND || '3', 10);

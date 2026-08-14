@@ -6,7 +6,7 @@
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, appendFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const VLOG = '/tmp/ingest_logs/verify_corrected.log';
 // ★프롬프트 캐싱 위생: clean cwd(벨트) + DISABLE_GIT(멜빵). 이미지는 --add-dir(절대경로)라 cwd 무관.
 const CLEAN_DIR = process.env.CLAUDE_P_CWD || '/tmp/claude_p_clean';

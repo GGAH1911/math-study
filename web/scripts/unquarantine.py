@@ -4,7 +4,7 @@
 #   --st 없으면 기존 searchable_text 유지(텍스트는 정확, 격리 사유가 placeholder뿐인 경우).
 #   --st 주면 그 파일 내용으로 searchable_text 교체(opus 가 이미지 보고 재전사한 경우).
 import re, sys, glob, os
-REPO = '/home/insung/Projects/math-study'
+REPO = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 
 def main():
     slug = sys.argv[1]

@@ -4,7 +4,7 @@
 // 사용: node web/scripts/seed_redraw.mjs [--n 15] [--par 2]
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, existsSync, appendFileSync, mkdirSync } from 'node:fs';
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const SPECS = '/tmp/redraw_specs';
 const LOGDIR = '/tmp/ingest_logs';
 for (const d of [SPECS, LOGDIR]) if (!existsSync(d)) mkdirSync(d, { recursive: true });

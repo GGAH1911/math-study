@@ -6,7 +6,7 @@
 #   격리(agy 재시도도 실패) → opus 손교정 대상으로 남김.
 #   로그: /tmp/ingest_logs/recorrect_issues.log
 import glob, re, subprocess, os, time, sys, fcntl
-REPO = '/home/insung/Projects/math-study'
+REPO = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 LOG = '/tmp/ingest_logs/recorrect_issues.log'
 os.makedirs('/tmp/ingest_logs', exist_ok=True)
 def log(m):

@@ -3,7 +3,7 @@
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
 
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const MODEL = process.env.CORR_MODEL || 'Gemini 3.5 Flash (Medium)';
 const FULL = !!process.env.CORR_FULL, OUT_DIR = '/tmp/corrector_full';
 if (FULL) try { mkdirSync(OUT_DIR, { recursive: true }); } catch { /* */ }

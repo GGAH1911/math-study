@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const idx = JSON.parse(readFileSync(`${REPO}/web/src/data/figure-triage.json`, 'utf-8'));
 function suggest(c) {
   if (c.type === 'junk') return ['delete', '추출오류(텍스트조각)'];

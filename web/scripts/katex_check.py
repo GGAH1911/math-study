@@ -3,7 +3,7 @@
 # SolutionPanel 경로 그대로: '**' 제거 → '\n' 분리 → 각 줄을 renderMathSegments(line, katex, {display:true}).
 # renderMathSegments는 throwOnError시 원본 `$...$`로 폴백 → 출력에 '$'가 남으면 = 페이지에 raw 누출(렌더실패).
 import glob, re, yaml, json, subprocess
-REPO = '/home/insung/Projects/math-study'
+REPO = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 steps = []
 for md in glob.glob(f'{REPO}/docs/problems/**/*.md', recursive=True):
     t = open(md, encoding='utf-8').read()

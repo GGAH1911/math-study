@@ -11,7 +11,7 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DIR = dirname(fileURLToPath(import.meta.url));
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const GEMINI = process.env.CORR_MODEL || 'Gemini 3.5 Flash (Medium)';
 const QLOG = '/tmp/ingest_logs/corrector_quarantine.log';
 // ★claude -p 캐시 친화: 레포 cwd면 git status(미커밋 변경)가 매 호출 시스템 프롬프트 env 블록을

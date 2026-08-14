@@ -10,8 +10,8 @@
 import fitz, json, re, sys, os
 from PIL import Image, ImageChops
 
-REPO = '/home/insung/Projects/math-study'
-PUB = f'{REPO}/web/public/problem-images'
+REPO = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
+PUB = f'{REPO}/web/private/problem-images'   # ★public 아님 — 인증 게이팅 때문에 정적 서빙 밖(web/src/lib/media-root.ts)
 sys.path.insert(0, f'{REPO}/scripts/ingest_kice')
 try:  # 표 셀의 한컴 PUA 폰트 디코드(hancom_rosetta 사전)
     from hancom_decode import decode_str, load_rosetta

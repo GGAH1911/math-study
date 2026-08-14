@@ -2,7 +2,7 @@
 # 풀이 step KaTeX 변환 적용 — /tmp/conversions.json([{slug,i,latex}])을 읽어 해당 step 교체.
 # steps 블록만 재직렬화(json.dumps 이스케이프), yaml 재파싱 검증 후 기록.
 import glob, re, yaml, json, sys
-REPO='/home/insung/Projects/math-study'
+REPO = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 conv=json.load(open('/tmp/conversions.json'))
 by_slug={}
 for c in conv: by_slug.setdefault(c['slug'],{})[c['i']]=c['latex']

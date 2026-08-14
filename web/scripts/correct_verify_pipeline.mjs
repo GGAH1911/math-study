@@ -9,7 +9,7 @@
 import { readdirSync, readFileSync, existsSync, appendFileSync, mkdirSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const PROB = `${REPO}/docs/problems`;
 const FILTER = process.argv[2] || '';
 const PAR_C = Math.max(1, parseInt(process.env.PAR_C || '1', 10));   // 교정 동시수(gemma 맥북 1대 → 1)

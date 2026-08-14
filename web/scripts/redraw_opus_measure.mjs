@@ -5,7 +5,7 @@
 // 사용: node web/scripts/redraw_opus_measure.mjs <img> <bonmunFile> <out> [feedbackFile]
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync } from 'node:fs';
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const [imgPath, bonmunFile, outPath, fbFile] = process.argv.slice(2);
 const bonmun = readFileSync(bonmunFile, 'utf8').trim();
 const feedback = (fbFile && existsSync(fbFile)) ? readFileSync(fbFile, 'utf8').trim() : '';

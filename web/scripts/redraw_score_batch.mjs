@@ -7,7 +7,7 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, appendFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs';
 
-const REPO = '/home/insung/Projects/math-study';
+const REPO = process.env.MATHSTUDY_ROOT || new URL('../..', import.meta.url).pathname.replace(/\/$/, '');  // ★레포 위치 자동(이동 내성)
 const SPECS = '/tmp/redraw_specs';
 const RENDERS = '/tmp/redraw_renders';
 const LOGDIR = '/tmp/ingest_logs';

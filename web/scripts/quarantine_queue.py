@@ -2,7 +2,7 @@
 # quarantine_queue.py — 격리(corrector_quarantine: true) 문제를 오케스트레이터(opus)가 직접 손교정하기 위한 큐 뷰.
 #   각 문제의 slug·타일이미지경로·격리사유·현재 searchable_text 를 출력. opus 가 이미지 보고 정확히 교정.
 import re, glob, os, sys, json
-REPO = '/home/insung/Projects/math-study'
+REPO = __import__('os').environ.get('MATHSTUDY_ROOT') or __import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.dirname(__import__('os').path.abspath(__file__))))  # ★레포 위치 자동(이동 내성)
 
 def tile_path(round_, subj, num):
     # LLM 이미지 소비는 타일만 — tile_for_vision 우선, 없으면 images 통이미지(작은 문제는 동일).
