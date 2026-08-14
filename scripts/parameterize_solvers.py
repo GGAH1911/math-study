@@ -125,10 +125,25 @@ print('VERIFY_PASS' if solve(PARAMS) == CANDIDATE else 'VERIFY_FAIL')
 '''
 
 
+def _stdout_is(path: Path) -> bool:
+    """stdout 이 이미 이 파일을 가리키는가.
+
+    ★백그라운드로 띄울 때 `>> log` 로 stdout 을 로그파일에 붙이는데, 그 상태에서
+      파일에도 또 쓰면 **모든 줄이 두 번 찍힌다**(2026-08-14 실측). 어떻게 띄우든
+      스스로 알아채도록 inode 를 비교한다.
+    """
+    try:
+        st = os.fstat(sys.stdout.fileno())
+        ps = path.stat()
+        return st.st_dev == ps.st_dev and st.st_ino == ps.st_ino
+    except Exception:
+        return False
+
+
 def log(msg: str, path: Path | None = None) -> None:
     line = f'[{time.strftime("%H:%M:%S")}] {msg}'
     print(line, flush=True)
-    if path:
+    if path and not _stdout_is(path):
         with path.open('a', encoding='utf-8') as f:
             f.write(line + '\n')
 
@@ -328,8 +343,9 @@ def main() -> int:
             rate = done / max(1e-9, (time.time() - t0) / 3600)
             log(f'{"✅" if ok else "🔴"} {s} — {why}   [{done}/{len(todo)} · 성공 {n_ok} · '
                 f'시간당 {rate:.0f}건 · 남은 예상 {(len(todo)-done)/max(rate,1e-9):.1f}h]', logf)
-            if done % 10 == 0:
-                STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding='utf-8')
+            # ★매 건 기록한다. 10건마다 쓰면 중단 시 마지막 9건이 상태에서 증발해
+            #   재개할 때 다시 돌린다(방금 그렇게 날렸다). 파일이 작아 비용은 무시할 만하다.
+            STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding='utf-8')
 
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
         list(ex.map(worker, todo))
