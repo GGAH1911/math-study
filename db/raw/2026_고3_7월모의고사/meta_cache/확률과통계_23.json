@@ -1,0 +1,16 @@
+{
+  "text_sha": "10f8b5896686",
+  "meta": {
+    "searchable_text": "23. 두 사건 A, B는 서로 독립이고\nP(A)=\\frac{2}{3},  P(B)=\\frac{3}{4}\n일 때, P(A∩B)의 값은? [2점]\n①\\frac{1}{4}②\\frac{5}{16}③\\frac{3}{8}④\\frac{7}{16}⑤\\frac{1}{2}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "probability-stats/prob-stats-elective/확률",
+    "concepts": [
+      "probability-stats/prob-stats-elective/확률/독립사건",
+      "probability-stats/prob-stats-elective/확률/확률의_곱셈정리"
+    ],
+    "exam_intent": "두 사건의 독립 정의를 이용해 교사건의 확률을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

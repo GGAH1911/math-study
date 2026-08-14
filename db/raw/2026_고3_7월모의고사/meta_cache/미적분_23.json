@@ -1,0 +1,17 @@
+{
+  "text_sha": "1ab119f00b07",
+  "meta": {
+    "searchable_text": "23. \\lim_{x→0}\\frac{tan6x}{e^{2x}-1}의 값은? [2점]\n① 1 ② 2 ③ 3 ④ 4 ⑤ 5",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/calculus/여러가지함수의_극한",
+    "concepts": [
+      "functions/calculus/여러가지함수의_극한/극한의_기본_공식",
+      "functions/calculus/여러가지함수의_극한/지수로그_극한",
+      "functions/calculus/여러가지함수의_극한/삼각함수_극한"
+    ],
+    "exam_intent": "tan/sin과 지수함수의 x→0 기본극한 공식을 결합해 부정형 극한값을 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

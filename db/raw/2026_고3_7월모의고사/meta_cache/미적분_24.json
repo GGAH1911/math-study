@@ -1,0 +1,16 @@
+{
+  "text_sha": "1e52c816121f",
+  "meta": {
+    "searchable_text": "24. 실수 전체의 집합에서 미분가능한 함수 f(x)가\n모든 실수 x에 대하여\nf(x^{3}+2x+2)=3-sinπx\n를 만족시킬 때, f′(5)의 값은? [3점]\n①\\frac{π}{10}②\\frac{π}{5}③\\frac{3π}{10}④\\frac{2π}{5}⑤\\frac{π}{2}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/calculus/합성함수의_미분",
+    "concepts": [
+      "functions/calculus/합성함수의_미분/연쇄법칙",
+      "합성함수_미분법"
+    ],
+    "exam_intent": "함수방정식 f(g(x))=h(x) 형태에서 연쇄법칙으로 f'(5)를 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

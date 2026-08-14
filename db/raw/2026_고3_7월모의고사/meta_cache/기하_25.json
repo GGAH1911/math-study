@@ -1,0 +1,17 @@
+{
+  "text_sha": "24fa0a1d7f94",
+  "meta": {
+    "searchable_text": "25. 점 (3\\sqrt{2},0)을 지나고 방향벡터가 \\vec{u}=(1,2\\sqrt{2})인 직선\n위의 점 P에 대하여 |\\vec{OP}|의 최솟값은? (단, O는 원점이다.)\n[3점]\n①\\frac{8}{3}② 3 ③\\frac{10}{3}④\\frac{11}{3}⑤ 4",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "geometry/geometry-elective/평면벡터",
+    "concepts": [
+      "geometry/geometry-elective/평면벡터/직선의_방향벡터",
+      "geometry/geometry-elective/평면벡터/거리의_최소화",
+      "geometry/geometry-elective/평면벡터/벡터_최적화"
+    ],
+    "exam_intent": "방향벡터로 주어진 직선 위의 점을 매개변수화하여 원점까지 거리의 최솟값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

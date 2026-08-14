@@ -1,0 +1,17 @@
+{
+  "text_sha": "c44c58d3d61d",
+  "meta": {
+    "searchable_text": "30. 공간에 \\overline{AB}=10\\sqrt{5}인 선분 AB를 지름으로 하는 구 S가\n있다. 구 S 위의 두 점 C, D에 대하여 네 점 A, B, C, D는\n평면 α 위에 있고, \\overline{AD}=\\overline{BC}=10이다. 구 S 위의 점 P가\n다음 조건을 만족시킨다.\n(가) 점 P의 평면 α 위로의 정사영은 선분 BD 위에 있다.\n(나) 평면 PAD와 평면 α가 이루는 예각의 크기는 \\frac{π}{4}이다.\n평면 PAB와 평면 PBC가 이루는 예각의 크기를 θ라 할 때,\ncos^{2}θ=\\frac{q}{p}이다. p+q의 값을 구하시오. (단, \\overline{CD}<\\overline{AB}이고,\np와 q는 서로소인 자연수이다.) [4점]\nP\nS\nD\nC\nA\nB",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "geometry/geometry-elective/공간도형과_공간벡터",
+    "concepts": [
+      "geometry/geometry-elective/공간도형과_공간벡터/이면각",
+      "geometry/geometry-elective/공간도형과_공간벡터/정사영",
+      "geometry/geometry-elective/공간도형과_공간벡터/구"
+    ],
+    "exam_intent": "구에 내접하는 사면체에서 정사영·평면이 이루는 각 조건으로 점의 위치를 결정하고 두 평면이 이루는 이면각의 코사인제곱을 벡터/좌표로 구하는 고난도 공간도형 문제",
+    "killer_tier": "killer",
+    "cognitive_type": "통합"
+  }
+}

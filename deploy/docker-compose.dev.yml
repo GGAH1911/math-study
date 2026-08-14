@@ -20,6 +20,10 @@ services:
       #   node_modules 만 named volume 으로 오버라이드(바인드에 안 가려지게, 호스트오염 방지).
       - ..:/app
       - ms_devnode:/app/web/node_modules
+      # ★인제스트 로그를 호스트와 공유 — /progress 가 이 디렉터리를 읽는데, 인제스트는
+      #   호스트에서 돌고 웹은 컨테이너 안이라 **서로 다른 /tmp 를 보고 있었다**(2026-08-14:
+      #   진행 상황이 /progress 에 아예 안 떴다). tme 이전 때 생긴 구멍이다.
+      - /tmp/ingest_logs:/tmp/ingest_logs
       # ★.venv 도 named volume 으로 가려 준다. 안 그러면 레포 바인드가 이미지에 구워 둔
       #   /app/.venv 를 덮어 /api/sympy 가 'spawn /app/.venv/bin/python ENOENT' 로 죽는다.
       #   브라우저 Pyodide 가 1차라 평소엔 안 드러나지만, Pyodide 로딩이 실패하는 기기에서는

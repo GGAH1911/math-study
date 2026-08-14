@@ -1,0 +1,13 @@
+{
+  "text_sha": "48f46c193f5f",
+  "meta": {
+    "searchable_text": "25. 주머니에 숫자 1부터 7까지의 자연수가 하나씩 적혀 있는\n7장의 카드가 들어 있다. 이 주머니에서 임의로 2장의 카드를\n동시에 꺼낼 때, 꺼낸 2장의 카드에 적힌 수의 차가\n2의 배수일 확률은? [3점]\n①\\frac{3}{7}②\\frac{10}{21}③\\frac{11}{21}④\\frac{4}{7}⑤\\frac{13}{21}",
+    "format": "choice",
+    "has_figure": false,
+    "unit": "probability-stats/prob-stats-elective/확률",
+    "concepts": [],
+    "exam_intent": "조합으로 경우의 수를 세고 홀짝성 조건으로 확률을 구하는 능력",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -7,9 +7,10 @@
     "unit": "functions/math-2/미분",
     "concepts": [
       "functions/math-2/미분/곡선의_접선",
+      "functions/math-2/미분/삼차함수",
       "functions/math-2/미분/미분과_접선"
     ],
-    "exam_intent": "삼차함수 위의 점에서의 접선이 특정 점을 지나도록 하는 매개변수 t의 값 구하기",
+    "exam_intent": "삼차함수 위의 점에서의 접선이 주어진 점을 지나도록 하는 매개변수 값을 미분계수를 이용해 구하는 능력을 평가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

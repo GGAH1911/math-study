@@ -29,7 +29,22 @@ from solve_prompts import build_prompt, build_text_prompt, build_openbook_prompt
 
 ROOT = Path(__file__).resolve().parent.parent
 IMGDIR = ROOT / 'web' / 'public' / 'problem-images'
-VENV_PY = Path('/home/insung/Projects/math-study/.venv/bin/python')
+def _venv_py() -> Path:
+    """솔버(.py)를 실행할 파이썬. sympy 가 있어야 한다.
+
+    ★예전엔 tme-laptop 절대경로가 박혀 있었다(/home/insung/Projects/...). tme 에는 없어서
+      솔버 실행이 전부 FileNotFoundError 로 죽었고, 스크립트는 그걸 "8연속 실패 — API 한도"
+      로 **오진**해 중단했다(2026-08-14). 호스트 절대경로를 박지 않는다.
+    """
+    import sys as _s
+    for c in (os.environ.get('MS_SOLVER_PY', ''), str(Path.home() / '.venvs/ms-ingest/bin/python'),
+              '/home/insung/Projects/math-study/.venv/bin/python'):
+        if c and Path(c).exists():
+            return Path(c)
+    return Path(_s.executable)
+
+
+VENV_PY = _venv_py()
 VERIFIER_DIR = ROOT / 'db' / 'solutions'
 MODEL = 'sonnet'
 # ★claude -p 캐시 친화: 레포 cwd면 git status(미커밋 변경)가 시스템 프롬프트 env 블록을 매 호출 바꿔
@@ -39,7 +54,9 @@ CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
 os.makedirs(CLEAN_DIR, exist_ok=True)
 # ★git 블록 제거 → prompt 캐시 prefix 안정(cache_read 고정). clean cwd 와 벨트+멜빵.
 #   --add-dir 가 레포(이미지)를 가리켜도 git status 가 system prompt 를 안 흔든다(실측 검증).
-CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
+sys.path.insert(0, str(ROOT / 'scripts'))
+from claude_auth import claude_env  # noqa: E402  인증 한 곳(주석은 그 파일 참조)
+CLAUDE_ENV = claude_env()
 
 # ── usage/절감 로깅 (cta-law llm_client 패턴) — 모델별 단가로 API환산 net 절감 기록 ──
 # net = cr×0.9×p − cc×0.25×p (cache_read=0.1×·write5m=1.25×). 사다리 haiku/sonnet/opus 각 단가.

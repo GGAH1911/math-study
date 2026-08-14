@@ -1,0 +1,17 @@
+{
+  "text_sha": "a69a4985e54c",
+  "meta": {
+    "searchable_text": "27. 남학생 4명, 여학생 3명이 있다. 이 7명의 학생이 일정한\n간격을 두고 원 모양의 탁자에 모두 둘러앉을 때, 자신과\n이웃한 두 학생이 모두 남학생인 여학생의 수가 1이 되도록\n하는 경우의 수는? (단, 회전하여 일치하는 것은 같은 것으로\n본다.) [3점]\n① 396 ② 432 ③ 468 ④ 504 ⑤ 540",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "probability-stats/high-1/경우의_수_고1",
+    "concepts": [
+      "probability-stats/high-1/경우의_수_고1/원순열",
+      "probability-stats/high-1/경우의_수_고1/인접_조건",
+      "probability-stats/high-1/경우의_수_고1/경우의_수_세기"
+    ],
+    "exam_intent": "원순열 배열에서 이웃 조건을 만족하는 특정 배치 패턴의 경우의 수를 조건 분류를 통해 세는 능력 평가",
+    "killer_tier": null,
+    "cognitive_type": "추론"
+  }
+}

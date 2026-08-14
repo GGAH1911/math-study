@@ -1,0 +1,17 @@
+{
+  "text_sha": "dbf684fffd40",
+  "meta": {
+    "searchable_text": "27. 공간에 점 A에서 서로 수직으로 만나는 두 직선 l, m을\n포함하는 평면 α가 있다. 평면 α 위에 있지 않은 점 P에서\n두 직선 l, m에 내린 수선의 발을 각각 B, C라 할 때,\n\\overline{AB}=2\\sqrt{3}, \\overline{AC}=2이다. \\overline{PA}=5일 때, 삼각형 ABC의\n평면 PBC 위로의 정사영의 넓이는? (단, 점 B는 점 A가\n아니고, 점 C는 점 A가 아니다.) [3점]\n①\\frac{\\sqrt{3}}{3}②\\frac{\\sqrt{6}}{2}③\\sqrt{3}④ 2\\sqrt{2}⑤\\frac{4\\sqrt{6}}{3}\nP\nm\nC\nα l B A",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "geometry/geometry-elective/공간도형과_공간벡터",
+    "concepts": [
+      "geometry/geometry-elective/공간도형과_공간벡터/정사영",
+      "geometry/geometry-elective/공간도형과_공간벡터/정사영의_넓이_계산",
+      "geometry/geometry-elective/공간도형과_공간벡터/이면각"
+    ],
+    "exam_intent": "공간에서 두 직선에 내린 수선의 발 관계로부터 삼각형 ABC를 결정하고, 평면 ABC와 평면 PBC가 이루는 이면각의 코사인을 구해 정사영의 넓이를 계산하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "035d4361746d",
+  "meta": {
+    "searchable_text": "15. 두 실수 a, b에 대하여 두 함수\nf(x)=\\frac{1}{6}x^{3}+\\frac{1}{2}ax^{2}+b,  g(x)=\\frac{2}{3}x^{3}+ax^{2}\n이 있다. 함수 h(x)를\nh(x)=f(x)+|f(x)-g(x)|\n라 할 때, 함수 h(x)는 다음 조건을 만족시킨다.\n(가) 함수 h(x)는 x=-1에서만 미분가능하지 않다.\n(나) 함수 h(x)는 x=0에서 극대이고\nx=α, x=β(α<β)에서 극소이다.\nh(α)≥h(β)일 때, a+b의 최댓값을 M, 최솟값을 m이라\n하자. M-m의 값은? [4점]\n①\\frac{3}{2}②\\frac{9}{4}③ 3 ④\\frac{15}{4}⑤\\frac{9}{2}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/미분",
+    "concepts": [
+      "functions/math-2/미분/절댓값함수의_미분가능성",
+      "functions/math-2/미분/극값의_조건",
+      "functions/math-2/미분/삼차함수의_극값"
+    ],
+    "exam_intent": "절댓값을 포함한 함수 h(x)=f(x)+|f(x)-g(x)|의 미분가능성과 극대·극소 조건을 분석하여 a,b의 관계식을 세우고 a+b의 최댓값·최솟값을 구하는 능력을 평가함",
+    "killer_tier": null,
+    "cognitive_type": "추론"
+  }
+}

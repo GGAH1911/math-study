@@ -1,0 +1,13 @@
+{
+  "text_sha": "721a3761a452",
+  "meta": {
+    "searchable_text": "16. 수열 {a_{n}}은 a_{1}=2이고, 모든 자연수 n에 대하여\na_{n+1}=\\frac{a_{n}}{n}+4\n를 만족시킨다. a_{3}의 값을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/수열",
+    "concepts": [],
+    "exam_intent": "재귀적 정의 수열의 항 계산",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

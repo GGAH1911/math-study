@@ -1,0 +1,16 @@
+{
+  "text_sha": "17bbfa76f954",
+  "meta": {
+    "searchable_text": "24. 다항식 (3x+1)^{5}의 전개식에서 x^{2}의 계수를 a,\nx^{3}의 계수를 b라 할 때, a+b의 값은? [3점]\n① 315 ② 330 ③ 345 ④ 360 ⑤ 375",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "probability-stats/prob-stats-elective/경우의_수",
+    "concepts": [
+      "probability-stats/prob-stats-elective/경우의_수/이항정리",
+      "probability-stats/prob-stats-elective/경우의_수/이항계수_항_구하기"
+    ],
+    "exam_intent": "이항정리를 이용해 다항식 전개식에서 특정 차수의 계수를 구하고 그 합을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

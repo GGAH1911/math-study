@@ -55,7 +55,25 @@ ROOT = Path(os.environ.get('MATHSTUDY_ROOT') or Path(__file__).resolve().parents
 if not (ROOT / 'docs' / 'concepts').is_dir():
     raise SystemExit(f'[FATAL] 개념 트리 없음: {ROOT}/docs/concepts — MATHSTUDY_ROOT 를 확인하라')
 DOCS_PROBLEMS = ROOT / 'docs' / 'problems'
-DB = 'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy'
+def _db_url() -> str:
+    """DB 접속 문자열. env 우선, 없으면 deploy/.env 의 비밀번호로 조립.
+
+    ★예전엔 비밀번호까지 하드코딩돼 있었다(tme-laptop 시절). tme 로 옮긴 뒤 비밀번호가
+      달라져 인제스트가 DB 단계에서 죽었다(2026-08-14). 호스트마다 다른 값은 박아 두지 않는다.
+    """
+    u = os.environ.get('MATH_STUDY_DATABASE_URL', '').strip()
+    if u:
+        return u
+    pw, port = 'mathstudy', os.environ.get('MS_DB_PORT', '5434')
+    f = Path(__file__).resolve().parents[2] / 'deploy' / '.env'
+    if f.exists():
+        for line in f.read_text(encoding='utf-8').splitlines():
+            if line.startswith('MS_DB_PASSWORD='):
+                pw = line.split('=', 1)[1].strip()
+    return f'postgresql://mathstudy:{pw}@127.0.0.1:{port}/mathstudy'
+
+
+DB = _db_url()
 TODAY = '2026-05-17'
 
 VISION_SYSTEM = dedent("""

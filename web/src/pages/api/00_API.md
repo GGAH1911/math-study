@@ -12,6 +12,7 @@ updated: 2026-06-28
 <!-- AUTO_INDEX_SECTION -->
 - 📁 [[00_ACCOUNT|account/]]
 - 📁 [[00_AUTH|auth/]]
+- 📁 [[00_API_DEV|dev/]]
 - `attempt.ts` — 등록 자산
 - `chat-history.ts` — 등록 자산
 - `chat.ts` — 등록 자산

@@ -10,6 +10,7 @@ updated: 2026-06-28
 ## 전수 명세
 
 <!-- AUTO_INDEX_SECTION -->
+- `geometry3d.css` — 등록 자산
 - `global.css` — 등록 자산
 
 ---

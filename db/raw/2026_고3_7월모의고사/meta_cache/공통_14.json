@@ -1,0 +1,17 @@
+{
+  "text_sha": "53a6a2348e1d",
+  "meta": {
+    "searchable_text": "14. 그림과 같이 \\overline{AB}=4, \\overline{AC}=8, ∠CBA>\\frac{π}{2}인\n삼각형 ABC의 외접원의 반지름의 길이가 \\frac{16\\sqrt{15}}{15}이다.\n선분 AB의 중점을 M, 선분 AC의 중점을 N이라 할 때,\n두 점 M, N을 각각 중심으로 하고 점 A를 지나는 두 원\nC_{1}, C_{2}가 있다. 두 원 C_{1}, C_{2}가 만나는 점 중 A가 아닌\n점을 D라 하고, 점 M에서 선분 DN에 내린 수선의 발을\nH라 하자. 선분 MH의 길이는? [4점]\nC_{2}\nA\nC_{1}\nM N\nH\nD B C\n①\\frac{5\\sqrt{15}}{16}②\\frac{11\\sqrt{15}}{32}③\\frac{5\\sqrt{5}}{8}\n④\\frac{3\\sqrt{15}}{8}⑤\\frac{3\\sqrt{5}}{4}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+      "functions/math-1/삼각함수/외접원의_반지름",
+      "functions/math-1/삼각함수/코사인_법칙",
+      "functions/math-1/삼각함수/사인_법칙"
+    ],
+    "exam_intent": "외접원의 반지름과 두 변의 길이로 코사인법칙·사인법칙을 이용해 각과 변을 구한 뒤, 중점을 중심으로 하는 두 원의 교점 구조(공통현의 수직이등분)를 이용해 수선의 길이를 계산하는 삼각함수-도형 융합 문항",
+    "killer_tier": null,
+    "cognitive_type": "응용"
+  }
+}

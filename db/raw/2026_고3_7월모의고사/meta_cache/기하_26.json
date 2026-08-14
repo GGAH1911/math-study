@@ -1,0 +1,17 @@
+{
+  "text_sha": "34e2cf8868ee",
+  "meta": {
+    "searchable_text": "26. 두 점 F(c,0), F′(-c,0)(c>0)을 초점으로 하는\n타원 \\frac{x^{2}}{48}+\\frac{y^{2}}{4b^{2}}=1 위에 있는 제1사분면 위의\n점 P(6,b)에서의 접선이 x축, y축과 만나는 점을 각각\nA, B라 하자. \\overline{PF}+\\overline{PF′}=\\overline{AB}일 때, b^{2}×c의 값은? [3점]\n① 20 ② 24 ③ 28 ④ 32 ⑤ 36",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "geometry/geometry-elective/이차곡선",
+    "concepts": [
+      "geometry/geometry-elective/이차곡선/타원의_표준형",
+      "geometry/geometry-elective/이차곡선/초점",
+      "geometry/geometry-elective/이차곡선/이차곡선_접선"
+    ],
+    "exam_intent": "타원의 정의(PF+PF'=2a)와 접선 조건을 결합해 접선이 x,y축과 만나는 점 사이 거리(AB)를 구하고 b²×c를 계산하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

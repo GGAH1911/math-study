@@ -1,0 +1,16 @@
+{
+  "text_sha": "6d46ffcefd7b",
+  "meta": {
+    "searchable_text": "26. 양수 t에 대하여 곡선 y=e^{x}과 두 직선 y=t, y=t+2가\n만나는 점을 각각 P, Q라 할 때, 두 점 P, Q의 x좌표의\n차를 f(t)라 하자. \\int_{\\frac{2}{3}}^{2}\\frac{f(t)}{t^{2}}dt의 값은? [3점]\n① -1+3ln2 ② -1+4ln2 ③ 4ln2\n④ 1+3ln2 ⑤ 1+4ln2",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/calculus/여러가지_적분법",
+    "concepts": [
+      "functions/calculus/여러가지_적분법/부분적분",
+      "functions/calculus/여러가지_적분법/로그_적분"
+    ],
+    "exam_intent": "역함수 그래프로 f(t)를 로그함수로 표현한 뒤 부분적분으로 정적분을 계산하는 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

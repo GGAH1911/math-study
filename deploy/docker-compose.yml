@@ -23,7 +23,11 @@ services:
       timeout: 5s
       retries: 5
     mem_limit: 4g
-    # ★호스트 포트 미노출 — web 컨테이너(내부 네트워크)만 접근. 포렌식 postgres(5432)와 완전 분리.
+    # ★호스트에는 **127.0.0.1:5434 로만** 노출한다(외부 노출 아님). 포렌식 postgres(5432)와
+    #   포트가 갈려 충돌하지 않는다. 인제스트 파이프라인이 호스트에서 돌면서 psycopg 로 직접
+    #   붙어야 하는데, 미노출이면 아예 닿을 수 없다(2026-08-14 tme 실측: connection refused).
+    ports:
+      - "127.0.0.1:${MS_DB_PORT:-5434}:5432"
     dns: &dns [1.1.1.1, 8.8.8.8]
     # ★tme 호스트의 /etc/resolv.conf 는 Tailscale MagicDNS(100.100.100.100, tailscale0 전용)라
     #   Docker 브리지망 컨테이너에선 라우팅 불가 → 임베디드 DNS(127.0.0.11)가 외부 도메인 전부

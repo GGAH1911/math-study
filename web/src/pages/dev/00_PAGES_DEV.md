@@ -1,10 +1,10 @@
 ---
 sources: []
-created: 2026-06-28
-updated: 2026-06-28
+created: 2026-08-14
+updated: 2026-08-14
 ---
 
-# 📝 00_DEV (자동 생성 인덱스)
+# 📝 00_PAGES_DEV (자동 생성 인덱스)
 > 분류: Wiki / Auto-Generated
 
 ## 전수 명세

@@ -1,0 +1,17 @@
+{
+  "text_sha": "0cd10bae96cf",
+  "meta": {
+    "searchable_text": "18. 부등식\nlog_{3}(x+4)≤3+log\\frac{1}{3}(x-2)\n를 만족시키는 모든 정수 x의 값의 합을 구하시오. [3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/지수함수와_로그함수",
+    "concepts": [
+      "functions/math-1/지수함수와_로그함수/로그_부등식",
+      "functions/math-1/지수함수와_로그함수/로그의_정의역",
+      "functions/math-1/지수함수와_로그함수/로그부등식_풀이"
+    ],
+    "exam_intent": "밑이 다른 로그부등식을 밑 변환·정의역 조건과 함께 풀어 정수해의 합을 구할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

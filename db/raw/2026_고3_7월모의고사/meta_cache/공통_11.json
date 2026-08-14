@@ -1,0 +1,17 @@
+{
+  "text_sha": "e7d92b63f894",
+  "meta": {
+    "searchable_text": "11. 시각 t=0일 때 원점을 출발하여 수직선 위를 움직이는\n점 P가 있다. 실수 k에 대하여 시각이 t(t≥0)일 때\n점 P의 속도 v(t)가\nv(t)=3t^{2}-6t+k\n이다. <보기>에서 옳은 것만을 있는 대로 고른 것은? [4점]\n<보기>\nㄱ. k=0이면, 시각 t=1일 때 점 P의 위치는 -2이다.\nㄴ. k=2이면, 시각 t=0에서 t=3까지 점 P가 움직인\n거리는 점 P의 위치의 변화량과 같다.\nㄷ. k=-9이면, 시각 t=0에서 t=4까지 점 P가\n움직인 거리는 34이다.\n① ㄱ ② ㄱ,ㄴ ③ ㄱ,ㄷ\n④ ㄴ,ㄷ ⑤ ㄱ,ㄴ,ㄷ",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/적분",
+    "concepts": [
+      "functions/math-2/적분/속도_적분",
+      "functions/math-2/적분/속도_거리_적분",
+      "functions/math-2/적분/정적분"
+    ],
+    "exam_intent": "속도함수 v(t)로부터 위치변화량과 이동거리를 정적분으로 구분하여 계산할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

@@ -7,10 +7,9 @@
     "unit": "algebra/math-1/지수와_로그",
     "concepts": [
       "algebra/math-1/지수와_로그/지수_법칙",
-      "algebra/math-1/지수와_로그/유리지수",
-      "algebra/math-1/지수와_로그/거듭제곱의_계산"
+      "algebra/math-1/지수와_로그/유리지수"
     ],
-    "exam_intent": "유리수 지수 거듭제곱의 곱셈을 지수법칙으로 계산할 수 있는지 확인",
+    "exam_intent": "유리지수 거듭제곱의 곱셈을 지수법칙으로 계산할 수 있는지 평가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

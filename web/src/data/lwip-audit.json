@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-14T02:13:40.815Z",
-  "entropy": 183,
+  "generatedAt": "2026-08-14T06:58:43.451Z",
+  "entropy": 182,
   "thresholds": {
     "flatWarn": 50,
     "flatHard": 1500,
@@ -121,12 +121,11 @@
     }
   ],
   "congestedHardCount": 0,
-  "isolatedConceptCount": 183,
+  "isolatedConceptCount": 182,
   "isolatedConcepts": [
     "2차원_규칙_구조",
     "Taylor_근사",
     "각의_변환",
-    "거듭제곱_계산",
     "거듭제곱의_미분",
     "거듭제곱함수_미분",
     "거리와_정사각형",
@@ -172,7 +171,8 @@
     "라이프니츠_규칙",
     "로그의_거듭제곱_법칙",
     "로그의_덧셈_분해",
-    "로그의_차_공식"
+    "로그의_차_공식",
+    "로그함수의_교점"
   ],
   "missingFmCount": 0,
   "missingFm": []

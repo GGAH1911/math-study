@@ -1,0 +1,17 @@
+{
+  "text_sha": "e4985315577f",
+  "meta": {
+    "searchable_text": "19. 닫힌구간 [0,3]에서 정의된 함수\nf(x)=x^{3}-12x+k\n의 최댓값이 40일 때, 최솟값을 구하시오. (단, k는 상수이다.)\n[3점]",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/미분",
+    "concepts": [
+      "functions/math-2/미분/최대·최소",
+      "functions/math-2/미분/극값_구하기",
+      "functions/math-2/미분/극값과_최댓값·최솟값"
+    ],
+    "exam_intent": "닫힌구간에서 삼차함수의 극값과 양 끝점의 함숫값을 비교하여 최댓값 조건으로 미정계수를 구하고 최솟값을 계산하는 능력을 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "f69095542dcf",
+  "meta": {
+    "searchable_text": "12. 모든 항이 양수인 등비수열 {a_{n}}의 첫째항부터\n제n항까지의 합을 S_{n}이라 하자.\na_{5}×(a_{6}+a_{7})=20a_{10},  S_{4}=65\n일 때, a_{2}의 값은? [4점]\n① 12 ② 14 ③ 16 ④ 18 ⑤ 20",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/수열",
+    "concepts": [
+      "functions/math-1/수열/등비수열의_일반항",
+      "functions/math-1/수열/등비수열의_합",
+      "functions/math-1/수열/공비"
+    ],
+    "exam_intent": "등비수열의 조건식과 첫째항부터 제4항까지의 합을 이용해 공비와 첫째항을 구한 뒤 특정 항의 값을 계산하는 능력을 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

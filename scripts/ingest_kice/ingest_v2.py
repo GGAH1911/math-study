@@ -572,7 +572,13 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         default_ans_subj = '공통'
     work = raw / 'work'
     work.mkdir(exist_ok=True)
-    if not ans_pdf.exists():
+    # 교육청 고3 은 별도 정답.pdf 없이 **해설 PDF 의 정답표**가 유일한 소스인 회차가 있다
+    # (2026 7월: 통합본·정답표 없이 과목별 문제+해설만 배포).
+    # ★이 계산은 if-체인 **앞**에 있어야 한다 — 아래 첫 분기가 '정답.pdf 없음'을 먼저
+    #   잡아채 answers={} 로 끝내 버려서, else 안에 두면 영영 도달하지 않는다(2026-08-14 실사고:
+    #   해설 파서를 붙였는데도 answers 0 entries 로 나왔다).
+    haesol = {f.stem.split('_', 1)[1]: f for f in sorted(raw.glob('해설_*.pdf'))}
+    if not ans_pdf.exists() and not haesol:
         answers = {}
     elif single:
         # 통합형 단일 30문항 — 3열 정답표 전용 파서로 전부 '단일' 버킷에.
@@ -585,8 +591,7 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         # 교육청 고3 은 별도 정답.pdf 없이 **해설 PDF 의 정답표**가 유일한 소스인 회차가 있다
         # (2026 7월 실측: 통합본·정답표 없이 과목별 문제+해설만 배포). 파서는 이미 있었는데
         # (answer_textlayer.parse_haesol_answers) ingest_v2 가 부르지 않아 그 형태를 못 받았다.
-        haesol = {f.stem.split('_', 1)[1]: f for f in sorted(raw.glob('해설_*.pdf'))}
-        if default_ans_subj == '공통' and not ans_pdf.exists() and haesol:
+        if default_ans_subj == '공통' and haesol:
             try:
                 flat = parse_haesol_answers({k: str(v) for k, v in haesol.items()})
                 if flat and any(s != '공통' for s, _n in flat):

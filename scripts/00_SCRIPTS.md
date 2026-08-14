@@ -20,6 +20,7 @@ updated: 2026-06-28
 - `backfill_solved_by.py` — 등록 자산
 - `backfill_solvers.py` — 등록 자산
 - `backfill_tiles.py` — 등록 자산
+- `build_figures_3d.py` — 등록 자산
 - `build_solution_cache.py` — 등록 자산
 - `cache_hand_solution.py` — 등록 자산
 - `classify_orphan_grade.py` — 등록 자산

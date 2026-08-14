@@ -1,0 +1,17 @@
+{
+  "text_sha": "2c1391357197",
+  "meta": {
+    "searchable_text": "13. 그림과 같이 함수 f(x)=x^{3}+2x^{2}+x+2에 대하여\n곡선 y=f(x)와 직선 y=4x+2가 제1사분면에서 만나는\n점을 P, y축 위에서 만나는 점을 Q라 하자.\n직선 y=4x+2가 x축과 만나는 점을 R이라 할 때, 곡선\ny=f(x)와 x축 및 선분 RQ로 둘러싸인 부분의 넓이를 A,\n곡선 y=f(x)와 선분 QP로 둘러싸인 부분의 넓이를 B라\n하자. A-B의 값은? [4점]\ny\ny=4x+2\nP\nB\ny=f(x)\nQ\nA\nR O x\n① 2 ②\\frac{9}{4}③\\frac{5}{2}④\\frac{11}{4}⑤ 3",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/적분",
+    "concepts": [
+      "functions/math-2/적분/두_곡선_사이_넓이",
+      "functions/math-2/적분/정적분_계산",
+      "functions/math-2/적분/도형의_넓이"
+    ],
+    "exam_intent": "삼차함수와 직선으로 둘러싸인 두 영역의 넓이 차를 정적분으로 계산할 수 있는지 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

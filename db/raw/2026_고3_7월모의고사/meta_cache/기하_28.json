@@ -1,0 +1,17 @@
+{
+  "text_sha": "3fccc6d07734",
+  "meta": {
+    "searchable_text": "28. 좌표평면에 \\overline{AB}=6, \\overline{AD}=8인 직사각형 ABCD가 있다.\n선분 CD 위의 한 점 P와 직사각형 ABCD 내부의 한 점 Q가\n다음 조건을 만족시킨다.\n(가) P\\vec{PQ}\\vec{PQ}|^{2}\n(나) 1\\frac{\\vec{A}⋅}{0BQ}→=\\frac{=|}{2BA}→+\\overline{3AD}→\n→ →)⋅\\overline{(PR}→+\\overline{QR}→)=0을 만족시키는 점 R에 대하여\n\\frac{\\overline{(AR}}{BR}→⋅\\frac{+\\overline{QR}}{QP}→의 최댓값을 M, 최솟값을 m이라 할 때,\nM+m의 값은? [4점]\n①\\frac{226}{5}②\\frac{236}{5}③\\frac{246}{5}④\\frac{256}{5}⑤\\frac{266}{5}\nA D\nB C",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "geometry/geometry-elective/평면벡터",
+    "concepts": [
+      "geometry/geometry-elective/평면벡터/내적의_기하적_의미",
+      "geometry/geometry-elective/평면벡터/벡터_방정식과_조건",
+      "geometry/geometry-elective/평면벡터/조건부_최댓값과_최솟값"
+    ],
+    "exam_intent": "내적이 0이 되는 조건으로 두 개의 원 자취(P에 대한 Q, R의 자취)를 구성하고 위치벡터 조건으로 점을 특정한 뒤 내적의 최대·최소를 구하는 통합 추론력 평가",
+    "killer_tier": null,
+    "cognitive_type": "추론"
+  }
+}

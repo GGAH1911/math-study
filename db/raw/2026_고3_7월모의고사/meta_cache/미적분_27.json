@@ -1,0 +1,16 @@
+{
+  "text_sha": "97f01c3d7360",
+  "meta": {
+    "searchable_text": "27. 매개변수 t(0<t<\\frac{π}{2})로 나타내어진 곡선\nx=cost+tsint,  y=sint-tcost\n에 대하여 t=k일 때, 곡선 위의 점을 P(a,b)라 하자.\n곡선 위의 점 P에서의 접선과 직선 y=\\frac{1}{2}x가 이루는\n예각의 크기를 θ라 하면 tanθ=\\frac{1}{2}이다.\n3a+4b+tank의 값은? (단, k는 0<k<\\frac{π}{2}인 상수이다.)\n[3점]\n①\\frac{10}{3}②\\frac{13}{3}③\\frac{16}{3}④\\frac{19}{3}⑤\\frac{22}{3}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/calculus/합성함수의_미분",
+    "concepts": [
+      "functions/calculus/합성함수의_미분/매개변수_미분",
+      "functions/calculus/합성함수의_미분/매개변수_접선"
+    ],
+    "exam_intent": "매개변수로 나타낸 곡선의 접선의 기울기를 구하고, 다른 직선과 이루는 예각의 탄젠트 조건을 이용해 매개변수 k를 결정한 뒤 좌표와 tan k를 종합해 값을 구한다",
+    "killer_tier": null,
+    "cognitive_type": "응용"
+  }
+}

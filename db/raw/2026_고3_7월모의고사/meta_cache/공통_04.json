@@ -7,10 +7,10 @@
     "unit": "functions/math-2/함수의_극한과_연속",
     "concepts": [
       "functions/math-2/함수의_극한과_연속/구간별_함수의_연속",
-      "functions/math-2/함수의_극한과_연속/미정상수_결정",
-      "functions/math-2/함수의_극한과_연속/연속_판별"
+      "functions/math-2/함수의_극한과_연속/연속_판별",
+      "functions/math-2/함수의_극한과_연속/미정상수_결정"
     ],
-    "exam_intent": "구간별 정의된 함수가 실수 전체에서 연속이 되도록 하는 미정계수 a를 x=1에서의 좌극한=우극한=함숫값 조건으로 구한다.",
+    "exam_intent": "구간별로 정의된 함수가 실수 전체에서 연속이 되도록 하는 미정계수 a를 구할 수 있는지 평가",
     "killer_tier": "early",
     "cognitive_type": "계산"
   }

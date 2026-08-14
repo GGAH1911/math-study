@@ -11,6 +11,7 @@ updated: 2026-06-28
 
 <!-- AUTO_INDEX_SECTION -->
 - 📁 [[00_COMPONENTS_CHAT|chat/]]
+- 📁 [[00_COMPONENTS_DEV|dev/]]
 - `ActivityFeed.astro` — 등록 자산
 - `AtlasMap.tsx` — 등록 자산
 - `ChatPanel.tsx` — 등록 자산
@@ -25,6 +26,7 @@ updated: 2026-06-28
 - `ExamRunner.tsx` — 등록 자산
 - `Geometry.tsx` — 등록 자산
 - `Geometry3D.tsx` — 등록 자산
+- `Geometry3DCamera.tsx` — 등록 자산
 - `Graph.tsx` — 등록 자산
 - `GraphicsTest.tsx` — 등록 자산
 - `Header.astro` — 등록 자산

@@ -1,0 +1,17 @@
+{
+  "text_sha": "2f7c1e85e0d7",
+  "meta": {
+    "searchable_text": "25. 모든 항이 양수인 수열 {a_{n}}에 대하여 \\lim_{n→∞}\\frac{a_{n}+n^{2}}{2n^{2}+4}=2\n일 때, \\lim_{n→∞}\\frac{1}{\\sqrt{a_{n}+3n}-\\sqrt{a_{n}+n}}의 값은? [3점]\n①\\frac{\\sqrt{3}}{9}②\\frac{1}{3}③\\frac{\\sqrt{3}}{3}④ 1 ⑤\\sqrt{3}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/calculus/수열의_극한",
+    "concepts": [
+      "functions/calculus/수열의_극한/극한의_유리화",
+      "functions/calculus/수열의_극한/분자분모_최고차항_비교",
+      "functions/calculus/수열의_극한/조건부_정의"
+    ],
+    "exam_intent": "주어진 극한 조건으로 수열 a_n의 최고차항 계수를 파악한 뒤, 무리식 극한을 유리화하여 값을 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "계산"
+  }
+}

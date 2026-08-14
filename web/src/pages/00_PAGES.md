@@ -12,7 +12,7 @@ updated: 2026-06-28
 <!-- AUTO_INDEX_SECTION -->
 - 📁 [[00_API|api/]]
 - 📁 [[00_CONCEPTS|concepts/]]
-- 📁 [[00_DEV|dev/]]
+- 📁 [[00_PAGES_DEV|dev/]]
 - 📁 [[00_EXAM|exam/]]
 - 📁 [[00_MISTAKES|mistakes/]]
 - 📁 [[00_PROBLEMS|problems/]]

@@ -1,0 +1,290 @@
+{
+ "spec": {
+  "title": "2026 고3 7월 기하 30 — 구 S 에 내접한 A, B, C, D, P 와 두 평면 PAB · PBC",
+  "cameraPosition": [
+   -5,
+   -38,
+   12
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     0,
+     0,
+     0
+    ],
+    "radius": 11.18034,
+    "color": "#94a3b8",
+    "opacity": 0.1
+   },
+   {
+    "type": "plane",
+    "origin": [
+     0,
+     0,
+     0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 25,
+    "color": "#64748b",
+    "opacity": 0.09
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "11.180340*cos(t)",
+    "y": "11.180340*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307
+    ],
+    "samples": 220,
+    "color": "#94a3b8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -9.2,
+     -5.4,
+     8.2
+    ],
+    "text": "구 $S$",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -11.6,
+     -7.2,
+     -0.9
+    ],
+    "text": "$\\alpha$",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.236068,
+      4.472136,
+      10.0
+     ],
+     [
+      -11.18034,
+      0.0,
+      0.0
+     ],
+     [
+      11.18034,
+      0.0,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "P",
+     "A",
+     "B"
+    ],
+    "fill": "#60a5fa",
+    "fillOpacity": 0.3,
+    "stroke": "#bfdbfe",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.236068,
+      4.472136,
+      10.0
+     ],
+     [
+      11.18034,
+      0.0,
+      0.0
+     ],
+     [
+      6.708204,
+      8.944272,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "",
+     "",
+     "C"
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.26,
+    "stroke": "#fbcfe8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.236068,
+      4.472136,
+      10.0
+     ],
+     [
+      -11.18034,
+      0.0,
+      0.0
+     ],
+     [
+      -6.708204,
+      8.944272,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "",
+     "",
+     "D"
+    ],
+    "fill": "#fbbf24",
+    "fillOpacity": 0.18,
+    "stroke": "#fcd34d",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -6.708204,
+     8.944272,
+     0.0
+    ],
+    "to": [
+     6.708204,
+     8.944272,
+     0.0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     11.18034,
+     0.0,
+     0.0
+    ],
+    "to": [
+     -6.708204,
+     8.944272,
+     0.0
+    ],
+    "color": "#34d399",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.236068,
+     4.472136,
+     10.0
+    ],
+    "to": [
+     2.236068,
+     4.472136,
+     0.0
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2.236068,
+     4.472136,
+     0.0
+    ],
+    "label": "H",
+    "color": "#fbbf24",
+    "size": 0.2
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.0,
+     -2.2,
+     -1.2
+    ],
+    "text": "$10\\sqrt{5}$",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -10.8,
+     5.2,
+     1.1
+    ],
+    "text": "$10$",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     10.6,
+     5.2,
+     1.1
+    ],
+    "text": "$10$",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -3.4,
+     7.3,
+     1.6
+    ],
+    "text": "$\\pi/4$",
+    "color": "#fcd34d"
+   }
+  ]
+ },
+ "conditions": [
+  "AB 는 구 S 의 지름이고 AB = 10√5 (중심 O 가 AB 의 중점, 반지름 5√5)",
+  "C, D, P 는 모두 구 S 위의 점이다",
+  "네 점 A, B, C, D 는 평면 α(= xy평면) 위에 있다",
+  "AD = BC = 10",
+  "CD < AB (CD = 6√5)",
+  "AB 가 지름이므로 각 ADB = 각 ACB = π/2, 따라서 BD = AC = 20",
+  "(가) P 의 평면 α 위로의 정사영 H 가 선분 BD 위에 있다 (PH ⟂ 평면 α, H 는 BD 의 중점)",
+  "(나) 평면 PAD 와 평면 α 가 이루는 예각 = π/4 (교선 AD 에 DH ⟂ AD, DP ⟂ AD 이므로 이면각은 각 PDH)",
+  "평면 PAB 와 평면 PBC 가 이루는 예각 θ 에 대해 cos²θ 가 기약분수 q/p 로 나온다"
+ ],
+ "verify": "# 평면 alpha = xy평면(z=0), 구 S 의 중심 O = 원점, 반지름 R = 5*sqrt(5)\nR = 5*sqrt(5)\nO = (0, 0, 0)\nA = (-5*sqrt(5),      0,  0)\nB = ( 5*sqrt(5),      0,  0)\nD = (-3*sqrt(5), 4*sqrt(5), 0)\nC = ( 3*sqrt(5), 4*sqrt(5), 0)\nP = (   sqrt(5), 2*sqrt(5), 10)\nH = (   sqrt(5), 2*sqrt(5), 0)      # P 의 평면 alpha 위로의 정사영\nalpha = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]\n\n# (1) AB 가 구 S 의 지름이고 AB = 10*sqrt(5)  (O 가 AB 의 중점 & OA = OB = R)\nassert_distance3d(A, B, 10*sqrt(5), \"AB = 10*sqrt(5)\")\nassert_on_line(O, A, B, \"구의 중심 O 가 직선 AB 위 (AB 가 지름)\")\nassert_distance3d(O, A, R, \"OA = R = 5*sqrt(5)\")\nassert_distance3d(O, B, R, \"OB = R = 5*sqrt(5)\")\n\n# (2) C, D, P 도 구 S 위의 점\nassert_on_sphere(C, O, R, \"C 가 구 S 위\")\nassert_on_sphere(D, O, R, \"D 가 구 S 위\")\nassert_on_sphere(P, O, R, \"P 가 구 S 위\")\n\n# (3) 네 점 A, B, C, D 는 평면 alpha 위에 있다\nassert_on_plane(A, alpha, \"A 가 평면 alpha 위\")\nassert_on_plane(B, alpha, \"B 가 평면 alpha 위\")\nassert_on_plane(C, alpha, \"C 가 평면 alpha 위\")\nassert_on_plane(D, alpha, \"D 가 평면 alpha 위\")\nassert_coplanar([A, B, C, D], \"A, B, C, D 가 한 평면 위\")\n\n# (4) AD = BC = 10\nassert_distance3d(A, D, 10, \"AD = 10\")\nassert_distance3d(B, C, 10, \"BC = 10\")\n\n# (5) 단서: CD < AB\nprint(\"[VERIFY OK] CD < AB (CD = 6*sqrt(5) < 10*sqrt(5))\"\n      if simplify(sqrt(sum((c - d)**2 for c, d in zip(C, D)))) < 10*sqrt(5)\n      else \"[VERIFY FAIL] CD < AB 가 아니다\")\n\n# (6) AB 가 지름이므로 각 ADB = 각 ACB = pi/2 → BD = AC = 20\nassert_angle(D, A, B, pi/2, \"각 ADB = pi/2 (AB 가 지름)\")\nassert_angle(C, A, B, pi/2, \"각 ACB = pi/2 (AB 가 지름)\")\nassert_distance3d(B, D, 20, \"BD = 20\")\nassert_distance3d(A, C, 20, \"AC = 20\")\n\n# (7) 조건 (가): P 의 평면 alpha 위로의 정사영 H 가 선분 BD 위에 있다\nassert_on_plane(H, alpha, \"정사영 H 가 평면 alpha 위\")\nassert_perpendicular(P, H, A, B, \"PH 가 평면 alpha 위 직선 AB 와 수직\")\nassert_perpendicular(P, H, A, D, \"PH 가 평면 alpha 위 직선 AD 와 수직\")\nassert_on_line(H, B, D, \"H 가 직선 BD 위\")\nt = (Matrix(H) - Matrix(B)).dot(Matrix(D) - Matrix(B)) / (Matrix(D) - Matrix(B)).dot(Matrix(D) - Matrix(B))\nprint(f\"[VERIFY OK] H 가 선분 BD 의 내부 (BD 를 t = {simplify(t)} 로 내분)\"\n      if 0 < simplify(t) < 1 else \"[VERIFY FAIL] H 가 선분 BD 밖\")\n\n# (8) 조건 (나): 평면 PAD 와 평면 alpha 가 이루는 예각 = pi/4\n#     두 평면의 교선은 직선 AD 이고, DH ⟂ AD, DP ⟂ AD 이므로 이면각은 각 PDH 이다\nassert_perpendicular(D, H, A, D, \"DH ⟂ AD (교선에 수직)\")\nassert_perpendicular(D, P, A, D, \"DP ⟂ AD (교선에 수직)\")\nassert_angle(D, P, H, pi/4, \"이면각 각 PDH = pi/4 → 평면 PAD 와 alpha 가 이루는 예각 = pi/4\")\nnPAD = (Matrix(A) - Matrix(D)).cross(Matrix(P) - Matrix(D))\nnAlpha = Matrix([0, 0, 1])\nprint(\"[VERIFY OK] 법선으로 다시 확인: 평면 PAD 와 alpha 의 예각 = pi/4\"\n      if simplify(abs(nPAD.dot(nAlpha)) / (nPAD.norm() * nAlpha.norm()) - cos(pi/4)) == 0\n      else \"[VERIFY FAIL] 평면 PAD 와 alpha 의 예각이 pi/4 가 아니다\")\n\n# (9) 답: 평면 PAB 와 평면 PBC 가 이루는 예각 theta, cos^2(theta) = q/p\nn1 = (Matrix(A) - Matrix(B)).cross(Matrix(P) - Matrix(B))\nn2 = (Matrix(C) - Matrix(B)).cross(Matrix(P) - Matrix(B))\ncos2 = simplify((n1.dot(n2))**2 / (n1.dot(n1) * n2.dot(n2)))\nfrom math import gcd as _gcd\nq, p = cos2.as_numer_denom()\nprint(f\"[VERIFY OK] cos^2(theta) = {cos2} (기약분수), p + q = {p + q}\"\n      if _gcd(int(p), int(q)) == 1 else f\"[VERIFY FAIL] 기약분수가 아니다: {cos2}\")\n",
+ "note": "평면 α 를 xy평면, 구의 중심을 원점으로 잡으면 A(−5√5,0,0)·B(5√5,0,0)·D(−3√5,4√5,0)·C(3√5,4√5,0) 이고, 조건 (가)·(나) 를 함께 쓰면 P 의 정사영 H 는 선분 BD 의 중점, 높이 PH = 10 으로 정해진다. 파란 삼각형이 평면 PAB, 분홍 삼각형이 평면 PBC 이며 이 둘이 이루는 예각이 θ 다."
+}
