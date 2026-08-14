@@ -1,0 +1,199 @@
+{
+  "spec": {
+    "title": "2022 수능 기하 27 — 한 모서리가 4인 정육면체 ABCD-EFGH, 선분 AD 의 중점 M 과 삼각형 MEG",
+    "cameraPosition": [
+      8.0,
+      -8.0,
+      7.5
+    ],
+    "axes": false,
+    "shapes": [
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            0.0,
+            0.0,
+            4.0
+          ],
+          [
+            4.0,
+            0.0,
+            4.0
+          ],
+          [
+            4.0,
+            4.0,
+            4.0
+          ],
+          [
+            0.0,
+            4.0,
+            4.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            4.0,
+            0.0,
+            0.0
+          ],
+          [
+            4.0,
+            4.0,
+            0.0
+          ],
+          [
+            0.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6,
+            7
+          ],
+          [
+            0,
+            1,
+            5,
+            4
+          ],
+          [
+            3,
+            2,
+            6,
+            7
+          ],
+          [
+            1,
+            2,
+            6,
+            5
+          ],
+          [
+            0,
+            3,
+            7,
+            4
+          ]
+        ],
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        "fill": "#94a3b8",
+        "fillOpacity": 0.1,
+        "stroke": "#475569",
+        "strokeWidth": 1
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            0.0,
+            2.0,
+            4.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            4.0,
+            4.0,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "labels": [
+          "M",
+          "",
+          ""
+        ],
+        "fill": "#f472b6",
+        "fillOpacity": 0.35,
+        "stroke": "#db2777",
+        "strokeWidth": 2
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          2.0,
+          4.0
+        ],
+        "to": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "color": "#db2777"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          4.0,
+          4.0,
+          0.0
+        ],
+        "color": "#db2777"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          4.0,
+          4.0,
+          0.0
+        ],
+        "to": [
+          0.0,
+          2.0,
+          4.0
+        ],
+        "color": "#db2777"
+      }
+    ]
+  },
+  "conditions": [
+    "정육면체 ABCD-EFGH 의 12개 모서리 길이가 모두 4",
+    "여섯 면(ABCD, EFGH, ABFE, DCGH, BCGF, ADHE)이 각각 한 평면 위",
+    "꼭짓점 A 에서 AB ⟂ AD, AB ⟂ AE, AD ⟂ AE",
+    "꼭짓점 E 에서 EF ⟂ EH, EF ⟂ EA, EH ⟂ EA",
+    "M 은 선분 AD 위의 점이며 AM = MD = 2 (AD 의 중점)",
+    "ME = 2√5, MG = 6, EG = 4√2",
+    "삼각형 MEG 의 넓이 = 12"
+  ],
+  "verify": "A = (0, 0, 4); B = (4, 0, 4); C = (4, 4, 4); D = (0, 4, 4)\nE = (0, 0, 0); F = (4, 0, 0); G = (4, 4, 0); H = (0, 4, 0)\nM = (0, 2, 4)\n\n# ① 정육면체의 12개 모서리 길이가 모두 4\nfor (p, q, nm) in [(A,B,\"AB\"), (B,C,\"BC\"), (C,D,\"CD\"), (D,A,\"DA\"),\n                   (E,F,\"EF\"), (F,G,\"FG\"), (G,H,\"GH\"), (H,E,\"HE\"),\n                   (A,E,\"AE\"), (B,F,\"BF\"), (C,G,\"CG\"), (D,H,\"DH\")]:\n    assert_distance3d(p, q, 4, f\"모서리 {nm} = 4\")\n\n# ② 각 면이 평면(사각형)인지\nassert_coplanar([A,B,C,D], \"면 ABCD 가 한 평면\")\nassert_coplanar([E,F,G,H], \"면 EFGH 가 한 평면\")\nassert_coplanar([A,B,F,E], \"면 ABFE 가 한 평면\")\nassert_coplanar([D,C,G,H], \"면 DCGH 가 한 평면\")\nassert_coplanar([B,C,G,F], \"면 BCGF 가 한 평면\")\nassert_coplanar([A,D,H,E], \"면 ADHE 가 한 평면\")\n\n# ③ 꼭짓점 A·E 에서 세 모서리가 서로 수직 (정육면체)\nassert_perpendicular(A, B, A, D, \"AB ⟂ AD\")\nassert_perpendicular(A, B, A, E, \"AB ⟂ AE\")\nassert_perpendicular(A, D, A, E, \"AD ⟂ AE\")\nassert_perpendicular(E, F, E, H, \"EF ⟂ EH\")\nassert_perpendicular(E, F, E, A, \"EF ⟂ EA\")\nassert_perpendicular(E, H, E, A, \"EH ⟂ EA\")\n\n# ④ M 은 선분 AD 의 중점\nassert_on_line(M, A, D, \"M 이 직선 AD 위\")\nassert_distance3d(A, M, 2, \"AM = 2\")\nassert_distance3d(M, D, 2, \"MD = 2\")\n\n# ⑤ 삼각형 MEG 의 세 변 (정답 검증용)\nassert_distance3d(M, E, 2*sqrt(5), \"ME = 2√5\")\nassert_distance3d(M, G, 6, \"MG = 6\")\nassert_distance3d(E, G, 4*sqrt(2), \"EG = 4√2 (밑면 대각선)\")\n\n# ⑥ 삼각형 MEG 의 넓이 = 12 (외적)\nu = Matrix(E) - Matrix(M)\nv = Matrix(G) - Matrix(M)\narea = u.cross(v).norm() / 2\nprint(\"[VERIFY OK] 삼각형 MEG 의 넓이 = 12\" if _close(area, 12)\n      else f\"[VERIFY FAIL] 삼각형 MEG 의 넓이: {area} != 12\")\n",
+  "note": "E 를 원점으로 잡으면 정육면체의 여덟 꼭짓점이 좌표 0 또는 4 로 놓이고, AD 의 중점 M=(0,2,4) 이다. 분홍 삼각형 MEG 의 넓이는 두 벡터 ME, MG 의 외적 크기의 절반으로 12."
+}

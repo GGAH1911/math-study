@@ -23,6 +23,12 @@ if (src === 'test') {
     const row = arr.find((r: any) => r.concept === id && (!backend || r.backend === backend));
     spec3d = row?.spec ?? null;
   } catch { /* 없음 */ }
+} else if (src === 'prob3d') {
+  // 기출 3D 레지스트리 단독 렌더 — ?src=prob3d&id=<문제 stem>
+  try {
+    const { readFigure3D } = await import('../../lib/figures-3d');
+    spec3d = readFigure3D(id)?.spec ?? null;
+  } catch { /* 없음 */ }
 } else if (src === 'corr') {
   // 교정기 measure-then-build 결과(/tmp/corrector_full/<id>.json) 단독 렌더 — redraw 검증용
   try {

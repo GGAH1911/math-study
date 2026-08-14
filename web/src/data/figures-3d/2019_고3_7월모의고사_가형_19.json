@@ -1,0 +1,298 @@
+{
+  "spec": {
+    "title": "직육면체 ABCD-EFGH — 삼각형 PHQ 의 밑면 정사영(정삼각형)과 삼각형 EQH 의 평면 PHQ 위로의 정사영",
+    "cameraPosition": [
+      5.4,
+      -8.9,
+      5.4
+    ],
+    "shapes": [
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            0.0,
+            0.0,
+            3.872983346207417
+          ],
+          [
+            3.863703305156273,
+            0.0,
+            3.872983346207417
+          ],
+          [
+            3.863703305156273,
+            3.863703305156273,
+            3.872983346207417
+          ],
+          [
+            0.0,
+            3.863703305156273,
+            3.872983346207417
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            3.863703305156273,
+            0.0,
+            0.0
+          ],
+          [
+            3.863703305156273,
+            3.863703305156273,
+            0.0
+          ],
+          [
+            0.0,
+            3.863703305156273,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6,
+            7
+          ],
+          [
+            0,
+            1,
+            5,
+            4
+          ],
+          [
+            1,
+            2,
+            6,
+            5
+          ],
+          [
+            2,
+            3,
+            7,
+            6
+          ],
+          [
+            3,
+            0,
+            4,
+            7
+          ]
+        ],
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        "fill": "#94a3b8",
+        "fillOpacity": 0.06,
+        "stroke": "#334155",
+        "strokeWidth": 2
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            3.863703305156273,
+            2.8284271247461903,
+            3.872983346207417
+          ],
+          [
+            0.0,
+            3.863703305156273,
+            0.0
+          ],
+          [
+            1.0352761804100827,
+            0.0,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "labels": [
+          "P",
+          "",
+          ""
+        ],
+        "fill": "#f97316",
+        "fillOpacity": 0.34,
+        "stroke": "#ea580c",
+        "strokeWidth": 3
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            3.863703305156273,
+            2.8284271247461903,
+            0.0
+          ],
+          [
+            0.0,
+            3.863703305156273,
+            0.0
+          ],
+          [
+            1.0352761804100827,
+            0.0,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "labels": [
+          "P'",
+          "",
+          ""
+        ],
+        "fill": "#2563eb",
+        "fillOpacity": 0.32,
+        "stroke": "#1d4ed8",
+        "strokeWidth": 3
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0352761804100827,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            3.863703305156273,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "labels": [
+          "",
+          "Q",
+          ""
+        ],
+        "fill": "#64748b",
+        "fillOpacity": 0.55,
+        "stroke": "#1f2937",
+        "strokeWidth": 3
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            0.5366254590494823,
+            0.1437883583902893,
+            -0.49690399499995325
+          ],
+          [
+            1.0352761804100827,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            3.863703305156273,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "labels": [
+          "E'",
+          "",
+          ""
+        ],
+        "fill": "#a855f7",
+        "fillOpacity": 0.4,
+        "stroke": "#7e22ce",
+        "strokeWidth": 3
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          3.863703305156273,
+          2.8284271247461903,
+          3.872983346207417
+        ],
+        "to": [
+          3.863703305156273,
+          2.8284271247461903,
+          0.0
+        ],
+        "color": "#64748b",
+        "dashed": true
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          0.5366254590494823,
+          0.1437883583902893,
+          -0.49690399499995325
+        ],
+        "color": "#7e22ce",
+        "dashed": true
+      }
+    ]
+  },
+  "conditions": [
+    "직육면체 ABCD-EFGH 에서 AB = AD (밑면 EFGH 는 정사각형)",
+    "AE = √15 (직육면체의 높이)",
+    "세 모서리 AB, AD, AE 가 서로 수직이고 마주보는 모서리가 평행·같은 길이 (직육면체)",
+    "P 는 선분 BC 위의 점 (BP = 2√2)",
+    "Q 는 선분 EF 위의 점 (EQ = √6−√2)",
+    "P' 은 P 의 평면 EFGH 위로의 정사영 (PP' ⟂ EF, PP' ⟂ EH)",
+    "H, Q 는 이미 평면 EFGH 위의 점이므로 삼각형 PHQ 의 평면 EFGH 위로의 정사영은 삼각형 P'HQ",
+    "삼각형 P'HQ 는 P'H = HQ = QP' = 4 인 정삼각형",
+    "삼각형 EQH 의 넓이 = 2",
+    "E' 은 E 의 평면 PHQ 위로의 정사영 (EE' ⟂ PH, EE' ⟂ HQ)",
+    "삼각형 EQH 의 평면 PHQ 위로의 정사영(삼각형 E'QH) 의 넓이 = 4/3 (정답 ④)"
+  ],
+  "verify": "def check(cond, tag):\n    print(f\"[VERIFY OK] {tag}\" if cond else f\"[VERIFY FAIL] {tag}\")\n\n\n# ---- 직육면체 ABCD-EFGH : 밑면 EFGH 를 z=0, 윗면 ABCD 를 z=√15 ----\nh = sqrt(15)                 # AE\na = sqrt(6) + sqrt(2)        # AB = AD (밑면은 한 변 a 인 정사각형)\ns = sqrt(6) - sqrt(2)        # EQ\nt = 2*sqrt(2)                # BP\n\nE = (S(0), S(0), S(0))\nF = (a,    S(0), S(0))\nG = (a,    a,    S(0))\nH = (S(0), a,    S(0))\nA = (S(0), S(0), h)\nB = (a,    S(0), h)\nC = (a,    a,    h)\nD = (S(0), a,    h)\n\nP  = (a, t, h)          # 선분 BC 위의 점\nQ  = (s, S(0), S(0))    # 선분 EF 위의 점\nPp = (a, t, S(0))       # P 의 평면 EFGH 위로의 정사영\n\n# ① 직육면체: AB=AD, AE=√15, 세 모서리 서로 수직\nassert_distance3d(A, B, a, 'AB = √6+√2')\nassert_distance3d(A, D, a, 'AD = AB (AB=AD)')\nassert_distance3d(A, E, h, 'AE = √15')\nassert_perpendicular(A, B, A, D, 'AB ⟂ AD')\nassert_perpendicular(A, B, A, E, 'AB ⟂ AE')\nassert_perpendicular(A, D, A, E, 'AD ⟂ AE')\n# 마주보는 모서리가 평행·같은 길이 (직육면체 닫힘)\nfor (p, q, r, u, tg) in [(E, F, A, B, 'EF ∥ AB'), (E, H, A, D, 'EH ∥ AD'),\n                         (E, A, F, B, 'EA ∥ FB'), (G, C, F, B, 'GC ∥ FB')]:\n    v1 = Matrix(q) - Matrix(p)\n    v2 = Matrix(u) - Matrix(r)\n    check(_close(simplify((v1 - v2).norm()), 0), f'{tg} 이고 길이 같음')\n\n# ② P 는 선분 BC 위, Q 는 선분 EF 위\nassert_on_line(P, B, C, 'P 는 직선 BC 위')\ncheck(0 < float(t) < float(a), 'P 가 선분 BC 의 내부 (0<BP<BC)')\nassert_on_line(Q, E, F, 'Q 는 직선 EF 위')\ncheck(0 < float(s) < float(a), 'Q 가 선분 EF 의 내부 (0<EQ<EF)')\n\n# ③ 삼각형 PHQ 의 평면 EFGH 위로의 정사영 = 삼각형 P'HQ\nassert_on_plane(Pp, [E, F, G], \"P' 은 평면 EFGH 위\")\nassert_perpendicular(P, Pp, E, F, \"PP' ⟂ EF\")\nassert_perpendicular(P, Pp, E, H, \"PP' ⟂ EH\")\nassert_on_plane(H, [E, F, G], 'H 는 평면 EFGH 위')\nassert_on_plane(Q, [E, F, G], 'Q 는 평면 EFGH 위')\n\n# ④ 그 정사영이 한 변의 길이 4 인 정삼각형\nassert_distance3d(Pp, H, 4, \"P'H = 4\")\nassert_distance3d(H,  Q, 4, 'HQ = 4')\nassert_distance3d(Q, Pp, 4, \"QP' = 4\")\n\n# ⑤ 삼각형 EQH 의 넓이 = 2\nareaEQH = (Matrix(Q) - Matrix(E)).cross(Matrix(H) - Matrix(E)).norm() / 2\ncheck(_close(simplify(areaEQH - 2), 0), '삼각형 EQH 의 넓이 = 2')\n\n# ⑥ E 의 평면 PHQ 위로의 정사영 E' (Q, H 는 평면 PHQ 위의 점이므로 그대로)\nn = simplify((Matrix(H) - Matrix(P)).cross(Matrix(Q) - Matrix(P)))\nlam = simplify((Matrix(P) - Matrix(E)).dot(n) / n.dot(n))\nEp = tuple(simplify(x) for x in (Matrix(E) + lam*n))\nassert_on_plane(Ep, [P, H, Q], \"E' 은 평면 PHQ 위\")\nassert_perpendicular(E, Ep, P, H, \"EE' ⟂ PH\")\nassert_perpendicular(E, Ep, H, Q, \"EE' ⟂ HQ\")\n\n# ⑦ 삼각형 EQH 의 평면 PHQ 위로의 정사영 넓이 = 4/3  (정답 ④)\nareaProj = (Matrix(Q) - Matrix(Ep)).cross(Matrix(H) - Matrix(Ep)).norm() / 2\ncheck(_close(simplify(areaProj - Rational(4, 3)), 0),\n      '삼각형 EQH 의 평면 PHQ 위로의 정사영 넓이 = 4/3')\n\nprint('a =', float(a), ' s =', float(s), ' t =', float(t))\nprint(\"E' =\", [float(x) for x in Ep])\nprint('areaProj =', simplify(areaProj), '=', float(areaProj))\n",
+  "note": "밑면에 깔린 파란 삼각형 P'HQ 가 주황 삼각형 PHQ 의 정사영(한 변 4 인 정삼각형)이고, 회색 삼각형 EQH 를 평면 PHQ 로 내린 것이 보라색 삼각형 E'QH 입니다 — E 는 직선 HQ 를 기준으로 P 의 반대쪽이라 E' 은 밑면보다 아래로 내려갑니다."
+}

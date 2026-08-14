@@ -1,0 +1,296 @@
+{
+ "spec": {
+  "title": "2023 고3 7월 기하 30 — 구 위의 네 점 A, B, C, D 와 삼각형 DAH 의 평면 DOC 위로의 정사영",
+  "cameraPosition": [
+   2,
+   -14,
+   8
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     0,
+     0,
+     0
+    ],
+    "radius": 4,
+    "color": "#60a5fa",
+    "opacity": 0.08
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -2.40625,
+      -2.563072,
+      -0.375
+     ],
+     [
+      3.59375,
+      2.728431,
+      -0.375
+     ],
+     [
+      1.40625,
+      5.208823,
+      3.375
+     ],
+     [
+      -4.59375,
+      -0.08268,
+      3.375
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#a78bfa",
+    "fillOpacity": 0.13,
+    "stroke": "#a78bfa",
+    "strokeWidth": 1
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.9,
+     4.1,
+     3.1
+    ],
+    "text": "평면 DOC",
+    "color": "#a78bfa"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -4,
+      0,
+      0
+     ],
+     [
+      4,
+      0,
+      0
+     ],
+     [
+      3,
+      2.6457513110645907,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.1,
+    "stroke": "#cbd5e1",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -1.75,
+      1.984313483298443,
+      3
+     ],
+     [
+      -4,
+      0,
+      0
+     ],
+     [
+      -1.75,
+      1.984313483298443,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "D",
+     "",
+     "H"
+    ],
+    "fill": "#34d399",
+    "fillOpacity": 0.32,
+    "stroke": "#34d399",
+    "strokeWidth": 2
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "O",
+    "color": "#f472b6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.75,
+     1.984313483298443,
+     3
+    ],
+    "to": [
+     -1.75,
+     1.984313483298443,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true,
+    "label": "DH ⟂ 평면 ABC"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     3,
+     2.6457513110645907,
+     0
+    ],
+    "color": "#f472b6",
+    "label": "(가) OC⟂OD"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     -1.75,
+     1.984313483298443,
+     3
+    ],
+    "color": "#f472b6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     -1.75,
+     1.984313483298443,
+     0
+    ],
+    "color": "#38bdf8",
+    "label": "(나) OH⟂AD"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -1.75,
+      1.984313483298443,
+      3
+     ],
+     [
+      -3.015625,
+      -1.1161763343553741,
+      1.3125
+     ],
+     [
+      -0.765625,
+      0.8681371489430689,
+      1.3125
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "",
+     "A'",
+     "H'"
+    ],
+    "fill": "#fb923c",
+    "fillOpacity": 0.45,
+    "stroke": "#fb923c",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -4,
+     0,
+     0
+    ],
+    "to": [
+     -3.015625,
+     -1.1161763343553741,
+     1.3125
+    ],
+    "color": "#fb923c",
+    "dashed": true,
+    "label": "정사영"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.75,
+     1.984313483298443,
+     0
+    ],
+    "to": [
+     -0.765625,
+     0.8681371489430689,
+     1.3125
+    ],
+    "color": "#fb923c",
+    "dashed": true
+   }
+  ]
+ },
+ "conditions": [
+  "A, B, C, D 는 중심 O, 반지름 4 인 구 위의 점",
+  "AB = 8 (구의 지름이므로 O 는 AB 의 중점)",
+  "BC = 2√2",
+  "A, B, C 는 서로 다른 세 점",
+  "D 는 평면 ABC 위에 있지 않다",
+  "H 는 평면 ABC 위의 점이고 DH ⟂ AB, DH ⟂ BC — 즉 D 에서 평면 ABC 에 내린 수선의 발",
+  "H 는 점 O 가 아니다",
+  "조건 (가) 두 직선 OC, OD 가 서로 수직",
+  "조건 (나) 두 직선 AD, OH 가 서로 수직",
+  "삼각형 DAH 의 넓이 = 9/2",
+  "A', H' 는 A, H 의 평면 DOC 위로의 정사영 (AA' ⟂ OC, AA' ⟂ OD, HH' ⟂ OC, HH' ⟂ OD)",
+  "삼각형 DAH 의 평면 DOC 위로의 정사영은 삼각형 DA'H' 이고 그 넓이 S = 27/8, 8S = 27"
+ ],
+ "verify": "from sympy import Rational, sqrt, Matrix, simplify\n\ns7 = sqrt(7)\n\n# 평면 ABC 를 z = 0 으로 두고, AB 가 지름이므로 O 는 AB 의 중점(원점).\nO = (0, 0, 0)\nA = (-4, 0, 0)\nB = (4, 0, 0)\nC = (3, s7, 0)\nD = (Rational(-7, 4), 3*s7/4, 3)\nH = (Rational(-7, 4), 3*s7/4, 0)      # D 에서 평면 ABC 에 내린 수선의 발\n\nR = 4\n\n# ── 구 위의 점\nassert_on_sphere(A, O, R, \"A 는 중심 O, 반지름 4 인 구 위의 점\")\nassert_on_sphere(B, O, R, \"B 는 중심 O, 반지름 4 인 구 위의 점\")\nassert_on_sphere(C, O, R, \"C 는 중심 O, 반지름 4 인 구 위의 점\")\nassert_on_sphere(D, O, R, \"D 는 중심 O, 반지름 4 인 구 위의 점\")\n\n# ── 주어진 길이\nassert_distance3d(A, B, 8, \"AB = 8\")\nassert_distance3d(B, C, 2*sqrt(2), \"BC = 2√2\")\n\n# ── A, B, C 는 서로 다른 점\nprint(\"[VERIFY OK] A, B, C 는 서로 다른 세 점\"\n      if A != B and B != C and C != A else \"[VERIFY FAIL] A, B, C 중 겹치는 점이 있다\")\n\n# ── D 는 평면 ABC 위에 있지 않다\ndD = point_plane_distance(D, [A, B, C])\nprint(\"[VERIFY OK] D 는 평면 ABC 위에 있지 않다\"\n      if not _close(dD, 0) else \"[VERIFY FAIL] D 가 평면 ABC 위에 있다\")\n\n# ── H 는 D 에서 평면 ABC 에 내린 수선의 발\nassert_on_plane(H, [A, B, C], \"H 는 평면 ABC 위의 점\")\nassert_perpendicular(D, H, A, B, \"DH ⟂ AB (DH ⟂ 평면 ABC)\")\nassert_perpendicular(D, H, B, C, \"DH ⟂ BC (DH ⟂ 평면 ABC)\")\n\n# ── 단서: H 는 O 가 아니다\nprint(\"[VERIFY OK] H 는 점 O 가 아니다\"\n      if not _close(_dist(H, O), 0) else \"[VERIFY FAIL] H 가 O 와 같다\")\n\n# ── 조건 (가) 두 직선 OC, OD 가 서로 수직\nassert_perpendicular(O, C, O, D, \"조건 (가) 직선 OC ⟂ 직선 OD\")\n\n# ── 조건 (나) 두 직선 AD, OH 가 서로 수직\nassert_perpendicular(A, D, O, H, \"조건 (나) 직선 AD ⟂ 직선 OH\")\n\n# ── 삼각형 DAH 의 넓이 = 9/2\nmD, mA, mH = Matrix(D), Matrix(A), Matrix(H)\nareaDAH = simplify((mA - mD).cross(mH - mD).norm() / 2)\nprint(\"[VERIFY OK] 삼각형 DAH 의 넓이 = 9/2\"\n      if _close(areaDAH - Rational(9, 2)) else f\"[VERIFY FAIL] 삼각형 DAH 넓이 = {areaDAH}\")\n\n# ── 평면 DOC 위로의 정사영: 세 점을 실제로 평면에 정사영해서 넓이를 잰다\nn = Matrix(D).cross(Matrix(C))          # O 가 원점이므로 OD × OC 가 평면 DOC 의 법벡터\nn = n / n.norm()\ndef proj(P):\n    v = Matrix(P)\n    return v - v.dot(n) * n\npD, pA, pH = proj(D), proj(A), proj(H)\nfor name, p in ((\"D'\", pD), (\"A'\", pA), (\"H'\", pH)):\n    assert_on_plane(tuple(p), [D, O, C], f\"{name} 는 평면 DOC 위 (정사영)\")\nassert_perpendicular(A, tuple(pA), O, C, \"AA' ⟂ OC (정사영 방향)\")\nassert_perpendicular(A, tuple(pA), O, D, \"AA' ⟂ OD (정사영 방향)\")\nassert_perpendicular(H, tuple(pH), O, C, \"HH' ⟂ OC (정사영 방향)\")\nassert_perpendicular(H, tuple(pH), O, D, \"HH' ⟂ OD (정사영 방향)\")\n\nS = simplify((pA - pD).cross(pH - pD).norm() / 2)\nprint(\"[VERIFY OK] 정사영 넓이 S = 27/8, 8S = 27\"\n      if _close(S - Rational(27, 8)) else f\"[VERIFY FAIL] S = {S}\")\nprint(\"[VERIFY OK] 8S = 27 (정답)\" if _close(8*S - 27) else f\"[VERIFY FAIL] 8S = {8*S}\")\n",
+ "note": "AB = 8 은 구의 지름이라 O 가 AB 의 중점이고, 평면 ABC 를 z = 0 으로 두면 A(-4,0,0), B(4,0,0), C(3,√7,0) 입니다. 조건 (가)·(나) 를 벡터로 풀면 D(-7/4, 3√7/4, 3), 수선의 발 H(-7/4, 3√7/4, 0) 이고 DH = AH = 3 이라 삼각형 DAH(초록) 의 넓이는 9/2. D 는 이미 평면 DOC 위에 있으니 A, H 만 보라색 평면 DOC 로 내리면 주황색 삼각형 DA'H' 가 정사영이고, 넓이 S = 27/8 → 8S = 27 입니다."
+}

@@ -1,0 +1,327 @@
+{
+  "spec": {
+    "title": "2022 9월모평 기하 27 — 세 모서리가 서로 수직인 사면체 ABCD 와 BC 위의 점 P",
+    "cameraPosition": [
+      7.0,
+      7.0,
+      5.5
+    ],
+    "axes": false,
+    "shapes": [
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [
+            0.0,
+            0.0,
+            3.0
+          ],
+          [
+            2.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            3.464102,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "faces": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "fill": "#94a3b8",
+        "fillOpacity": 0.09,
+        "stroke": "#e2e8f0",
+        "strokeWidth": 2
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.35,
+          0,
+          0
+        ],
+        "to": [
+          0.35,
+          0.35,
+          0
+        ],
+        "color": "#94a3b8"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.35,
+          0.35,
+          0
+        ],
+        "to": [
+          0,
+          0.35,
+          0
+        ],
+        "color": "#94a3b8"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0,
+          0.35,
+          0
+        ],
+        "to": [
+          0,
+          0.35,
+          0.35
+        ],
+        "color": "#94a3b8"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0,
+          0.35,
+          0.35
+        ],
+        "to": [
+          0,
+          0,
+          0.35
+        ],
+        "color": "#94a3b8"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0,
+          0,
+          0.35
+        ],
+        "to": [
+          0.35,
+          0,
+          0.35
+        ],
+        "color": "#94a3b8"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.35,
+          0,
+          0.35
+        ],
+        "to": [
+          0.35,
+          0,
+          0
+        ],
+        "color": "#94a3b8"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "color": "#fbbf24",
+        "label": "$\\overline{AD}=3$"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "color": "#34d399",
+        "label": "$\\overline{DB}=2$"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          0.0,
+          3.464102,
+          0.0
+        ],
+        "color": "#38bdf8",
+        "label": "$\\overline{DC}=2\\sqrt{3}$"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          0.8,
+          2.078461,
+          0.0
+        ],
+        "color": "#f472b6",
+        "label": "$\\overline{AP}$"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          0.8,
+          2.078461,
+          0.0
+        ],
+        "color": "#f472b6",
+        "label": "$\\overline{DP}$"
+      },
+      {
+        "type": "point3d",
+        "at": [
+          0.8,
+          2.078461,
+          0.0
+        ],
+        "label": "P",
+        "color": "#f472b6",
+        "size": 0.09
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          1.5,
+          0.866025,
+          0.0
+        ],
+        "color": "#ef4444",
+        "dashed": true,
+        "label": "$\\overline{DH}=\\sqrt{3}$"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          1.5,
+          0.866025,
+          0.0
+        ],
+        "color": "#ef4444",
+        "dashed": true,
+        "label": "$\\overline{AH}=2\\sqrt{3}$"
+      },
+      {
+        "type": "point3d",
+        "at": [
+          1.5,
+          0.866025,
+          0.0
+        ],
+        "label": "H",
+        "color": "#ef4444",
+        "size": 0.09
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          1.36,
+          1.108513,
+          0.0
+        ],
+        "to": [
+          1.117513,
+          0.968513,
+          0.0
+        ],
+        "color": "#ef4444"
+      },
+      {
+        "type": "segment3d",
+        "from": [
+          1.117513,
+          0.968513,
+          0.0
+        ],
+        "to": [
+          1.257513,
+          0.726025,
+          0.0
+        ],
+        "color": "#ef4444"
+      }
+    ]
+  },
+  "conditions": [
+    "AD = 3",
+    "DB = 2",
+    "DC = 2√3",
+    "∠ADB = π/2",
+    "∠ADC = π/2",
+    "∠BDC = π/2",
+    "DA ⟂ DB, DA ⟂ DC — 즉 DA 는 평면 BDC 에 수직",
+    "BC = 4",
+    "P 는 선분 BC 위의 점 (그림에서는 BP : PC = 3 : 2 위치)",
+    "H 는 D 에서 선분 BC 에 내린 수선의 발이고 선분 BC 내부에 있다",
+    "DH = √3, AH = 2√3, D 와 직선 BC 의 거리 = √3",
+    "AP + DP 의 최솟값은 P = H 일 때 AH + DH = 3√3 (BC 위 표본 21점 검사)"
+  ],
+  "verify": "import sympy as sp\n\ns3 = sqrt(3)\n\n# DA, DB, DC 가 서로 수직이므로 D 를 원점으로 하는 직교좌표계를 잡는다.\n# 원본 그림 배치(A 가 위, B 가 왼쪽, C 가 오른쪽, D 는 면 ABC 뒤에 숨음)에 맞추려고\n# B 를 +x, C 를 +y, A 를 +z 축 위에 둔다.\nD = (0, 0, 0)\nA = (0, 0, 3)\nB = (2, 0, 0)\nC = (0, 2*s3, 0)\n\n# 주어진 길이\nassert_distance3d(A, D, 3, \"AD = 3\")\nassert_distance3d(D, B, 2, \"DB = 2\")\nassert_distance3d(D, C, 2*s3, \"DC = 2*sqrt(3)\")\n\n# 세 각이 직각\nassert_angle(D, A, B, pi/2, \"angle ADB = pi/2\")\nassert_angle(D, A, C, pi/2, \"angle ADC = pi/2\")\nassert_angle(D, B, C, pi/2, \"angle BDC = pi/2\")\n\n# DA 가 평면 BDC 에 수직 — 평면 위 두 방향 모두에 수직\nassert_perpendicular(D, A, D, B, \"DA ⟂ DB\")\nassert_perpendicular(D, A, D, C, \"DA ⟂ DC\")\n\nassert_distance3d(B, C, 4, \"BC = 4\")\n\n# 그림 속 움직이는 점 P — 원본 그림과 같은 위치(BC 를 3:2 로 내분)\nt = Rational(3, 5)\nP = tuple(sp.Matrix(B) + t*(sp.Matrix(C) - sp.Matrix(B)))\nassert_on_line(P, B, C, \"P 는 직선 BC 위\")\nassert_distance3d(B, P, t*4, \"BP = (3/5)·BC\")\nassert_distance3d(P, C, (1-t)*4, \"PC = (2/5)·BC\")\n\n# AP + DP 가 최소가 되는 위치 H = D 에서 BC 에 내린 수선의 발\nH = (Rational(3, 2), s3/2, 0)\nassert_on_line(H, B, C, \"H 는 직선 BC 위\")\nassert_perpendicular(D, H, B, C, \"DH ⟂ BC (H 는 수선의 발)\")\nassert_point_line_distance(D, B, C, s3, \"D 와 직선 BC 의 거리 = sqrt(3)\")\nassert_distance3d(D, H, s3, \"DH = sqrt(3)\")\nassert_distance3d(A, H, 2*s3, \"AH = 2*sqrt(3)\")\n\n# H 가 선분 BC 의 내부에 있는지 (BH + HC = BC)\nbh = _dist(B, H); hc = _dist(H, C)\nif _close(sp.simplify(bh + hc - 4)):\n    print(\"[VERIFY OK] H 는 선분 BC 내부 (BH + HC = BC)\")\nelse:\n    print(f\"[VERIFY FAIL] H 가 선분 BC 밖: BH+HC={bh+hc}\")\n\n# 최솟값 AP + DP = AH + DH = 3*sqrt(3)\nu = sp.Symbol('u', real=True)\nQ = sp.Matrix(B) + u*(sp.Matrix(C) - sp.Matrix(B))\nf = sp.sqrt((Q - sp.Matrix(A)).dot(Q - sp.Matrix(A))) + sp.sqrt(Q.dot(Q))\nfmin = sp.simplify(f.subs(u, Rational(1, 4)))\nif _close(sp.simplify(fmin - 3*s3)):\n    print(\"[VERIFY OK] AH + DH = 3*sqrt(3)\")\nelse:\n    print(f\"[VERIFY FAIL] AH+DH={fmin} != 3*sqrt(3)\")\n\nworse = [sp.N(f.subs(u, Rational(k, 20))) for k in range(0, 21)]\nif all(w >= sp.N(3*s3) - sp.Float('1e-9') for w in worse):\n    print(\"[VERIFY OK] 선분 BC 위 표본 21점 모두 AP+DP >= 3*sqrt(3)\")\nelse:\n    print(f\"[VERIFY FAIL] 3*sqrt(3) 보다 작은 값 발생: {min(worse)}\")\n",
+  "note": "∠ADB = ∠ADC = ∠BDC = π/2 이므로 DA, DB, DC 는 서로 수직 — D 를 원점으로 잡으면 A(0,0,3), B(2,0,0), C(0,2√3,0) 입니다. DA 가 평면 BDC 에 수직이라 AP² = 3² + DP² 이고, 따라서 AP + DP 는 DP 가 가장 짧을 때, 곧 P 가 D 에서 BC 에 내린 수선의 발 H 일 때 최소가 됩니다. DH = (DB·DC)/BC = √3, AH = √(9+3) = 2√3 이므로 최솟값은 3√3 입니다."
+}

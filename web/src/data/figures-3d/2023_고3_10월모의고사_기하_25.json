@@ -1,0 +1,95 @@
+{
+  "spec": {
+    "title": "2023 고3 10월 기하 25 — 평면 α 위 삼각형 ABC와 그 위의 점 P",
+    "cameraPosition": [7, -14, 7],
+    "axes": false,
+    "shapes": [
+      {
+        "type": "plane",
+        "origin": [0, 2, 0],
+        "normal": [0, 0, 1],
+        "size": 16,
+        "color": "#64748b",
+        "opacity": 0.14,
+        "label": "α"
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [-3, 0, 0],
+          [3, 0, 0],
+          [1, 4, 0]
+        ],
+        "faces": [[0, 1, 2]],
+        "labels": ["A", "B", "C"],
+        "fill": "#38bdf8",
+        "fillOpacity": 0.2,
+        "stroke": "#e2e8f0",
+        "strokeWidth": 2
+      },
+      {
+        "type": "point3d",
+        "at": [1, 4, 2],
+        "label": "P",
+        "color": "#f43f5e",
+        "size": 0.12
+      },
+      {
+        "type": "segment3d",
+        "from": [1, 4, 2],
+        "to": [1, 4, 0],
+        "color": "#f43f5e",
+        "label": "2"
+      },
+      {
+        "type": "point3d",
+        "at": [1, 0, 0],
+        "label": "H",
+        "color": "#f59e0b",
+        "size": 0.1
+      },
+      {
+        "type": "segment3d",
+        "from": [1, 4, 0],
+        "to": [1, 0, 0],
+        "color": "#f59e0b",
+        "dashed": true,
+        "label": "4"
+      },
+      {
+        "type": "segment3d",
+        "from": [1, 4, 2],
+        "to": [1, 0, 0],
+        "color": "#22c55e",
+        "label": "2√5"
+      },
+      {
+        "type": "polyhedron",
+        "vertices": [
+          [1, 4, 2],
+          [1, 4, 0],
+          [1, 0, 0]
+        ],
+        "faces": [[0, 1, 2]],
+        "fill": "#22c55e",
+        "fillOpacity": 0.18,
+        "stroke": "#22c55e",
+        "strokeWidth": 1
+      }
+    ]
+  },
+  "conditions": [
+    "점 A, B, C 는 모두 평면 α(z=0) 위에 있다",
+    "AB = 6",
+    "점 C 와 직선 AB 사이의 거리 = 4 (삼각형 ABC 의 넓이 12)",
+    "삼각형 ABC 의 넓이 = 12",
+    "점 P 는 평면 α 위에 있지 않다",
+    "P 에서 평면 α 에 내린 수선의 발이 C 이다 (PC ⟂ 평면 α 위의 두 방향)",
+    "PC = 2",
+    "H 는 직선 AB 위의 점이고 CH ⟂ AB, CH = 4 (C 에서 AB 에 내린 수선의 발)",
+    "PH ⟂ AB (삼수선의 정리)",
+    "PH = 2√5, 즉 점 P 와 직선 AB 사이의 거리 = 2√5"
+  ],
+  "verify": "# 평면 alpha = z=0\nA = [-3, 0, 0]\nB = [3, 0, 0]\nC = [1, 4, 0]      # 직선 AB 로부터 거리 4 (넓이 12 = 1/2*6*4)\nH = [1, 0, 0]      # C 에서 직선 AB 에 내린 수선의 발\nP = [1, 4, 2]      # C 바로 위, PC = 2\n\n# 삼각형 ABC 는 평면 alpha 위\nassert_on_plane(A, [[0,0,0],[1,0,0],[0,1,0]], \"A 가 평면 alpha 위\")\nassert_on_plane(B, [[0,0,0],[1,0,0],[0,1,0]], \"B 가 평면 alpha 위\")\nassert_on_plane(C, [[0,0,0],[1,0,0],[0,1,0]], \"C 가 평면 alpha 위\")\n\nassert_distance3d(A, B, 6, \"AB=6\")\nassert_point_line_distance(C, A, B, 4, \"C 와 직선 AB 사이 거리=4 (넓이 12)\")\n\n# 넓이 12 직접 확인\narea = Matrix([B[i]-A[i] for i in range(3)]).cross(Matrix([C[i]-A[i] for i in range(3)])).norm()/2\nprint(\"[VERIFY OK] 삼각형 ABC 넓이=12\" if _close(area-12) else f\"[VERIFY FAIL] 넓이={area}\")\n\n# P 는 평면 alpha 위에 있지 않다\nprint(\"[VERIFY OK] P 는 평면 alpha 밖\" if not _close(point_plane_distance(P, [[0,0,0],[1,0,0],[0,1,0]])) else \"[VERIFY FAIL] P 가 평면 위\")\n\n# P 에서 평면 alpha 에 내린 수선의 발이 C\nassert_on_plane(C, [[0,0,0],[1,0,0],[0,1,0]], \"수선의 발 C 가 평면 alpha 위\")\nassert_perpendicular(P, C, A, B, \"PC 수직 AB (PC 가 평면 alpha 에 수직)\")\nassert_perpendicular(P, C, C, [C[0]+1, C[1]+1, 0], \"PC 수직 평면 alpha 위 또다른 방향\")\nassert_distance3d(P, C, 2, \"PC=2\")\n\n# H: C 에서 AB 에 내린 수선의 발\nassert_on_line(H, A, B, \"H 가 직선 AB 위\")\nassert_perpendicular(C, H, A, B, \"CH 수직 AB\")\nassert_distance3d(C, H, 4, \"CH=4\")\n\n# 삼수선의 정리: PH 수직 AB, 그리고 PH = 2*sqrt(5)\nassert_perpendicular(P, H, A, B, \"PH 수직 AB (삼수선의 정리)\")\nassert_distance3d(P, H, 2*sqrt(5), \"PH=2*sqrt(5) — P 와 직선 AB 사이 거리\")\nassert_point_line_distance(P, A, B, 2*sqrt(5), \"P 와 직선 AB 사이 거리=2*sqrt(5)\")\n",
+  "note": "PC가 평면 α에 수직이고 CH⟂AB이므로 AB는 평면 PCH에 수직 → PH⟂AB. 초록 직각삼각형 PCH에서 PH=√(2²+4²)=2√5가 곧 점 P와 직선 AB 사이의 거리입니다."
+}

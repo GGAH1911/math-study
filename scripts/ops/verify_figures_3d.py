@@ -39,6 +39,20 @@ def vocabulary() -> dict[str, set[str]]:
     return vocab
 
 
+
+def _is_prose(v: str) -> bool:
+    """도형 위 글씨가 '설명'인지. 한글이 섞인 긴 문자열 또는 괄호 설명을 잡는다.
+
+    짧은 이름표(`구 S`, `평면 BCD`, `xy평면`)는 통과시킨다 — 그건 라벨이 맞다.
+    KaTeX 수식($...$)은 아무리 길어도 통과 — `$\\dfrac{5\\sqrt{3}}{3}$` 같은 건 정상이다.
+    """
+    core = re.sub(r'\$[^$]*\$', '', v).strip()          # 수식 부분은 길이에서 뺀다
+    has_hangul = bool(re.search(r'[가-힣]', core))
+    if not has_hangul:
+        return False
+    return len(core) > 13 or bool(re.search(r'\([^)]{6,}\)', core))
+
+
 SPEC_KEYS = {'shapes', 'cameraPosition', 'axes', 'gridSize', 'bgColor', 'title'}
 
 
@@ -74,6 +88,13 @@ def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:
         for v in (s.get('vertices') or []):
             if isinstance(v, list) and len(v) != 3:
                 bad.append(f'shapes[{i}]({t}).vertices: 성분 {len(v)}개인 점이 있다')
+        # ④ 라벨에 설명 문장이 들어갔는가 — 도형 위 글씨는 **이름·수식**이어야 한다.
+        #    ★2026-08-14 검수에서 "H 에서 평면 ABD 에 내린 수선" 같은 문장이 도형을 덮어
+        #      정작 봐야 할 입체가 안 보였다. 설명은 note 필드에 쓴다.
+        for key in ('label', 'text'):
+            v = s.get(key)
+            if isinstance(v, str) and _is_prose(v):
+                bad.append(f'shapes[{i}]({t}).{key}: 설명 문장이다 — note 로 옮겨라: "{v[:40]}"')
     if deep and e.get('verify'):
         r = subprocess.run([sys.executable, str(RUNNER)], input=e['verify'].encode('utf-8'),
                            capture_output=True, timeout=300)

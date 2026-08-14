@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 import Lazy3D from '../../components/Lazy3D.tsx';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import '../../styles/global.css';
 
 // 3D 도식 갤러리. 두 소스:
@@ -9,8 +9,42 @@ import '../../styles/global.css';
 //   ?src=cache: 본 캐시 concept-figures.json 의 figure3d 전수(전수 생성분 검토용)
 const src = Astro.url.searchParams.get('src') ?? 'final';
 let items: any[] = [];
+
+/** 문제 md 경로 목록 — stem 으로 slug 를 되찾기 위해서만 쓴다. */
+function glob3dProblems(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string) => {
+    for (const n of readdirSync(dir)) {
+      const p = `${dir}/${n}`;
+      if (statSync(p).isDirectory()) walk(p);
+      else if (n.endsWith('.md')) out.push(p.slice(p.indexOf('docs/problems/')));
+    }
+  };
+  try { walk(new URL('../../../../docs/problems', import.meta.url).pathname); } catch { /* */ }
+  return out;
+}
 const CATS = ['스키마', '좌표정확', 'primitive', '가독성', '충실성'];
-if (src === 'cache') {
+if (src === 'problems') {
+  // 기출 3D 레지스트리(web/src/data/figures-3d/*.json) 검수.
+  // ★원본 문제 그림을 **나란히** 놓는다 — 좌표가 조건을 만족해도 원본과 거울상일 수 있고,
+  //   그건 sympy 로는 절대 안 잡힌다. 눈으로만 갈린다.
+  const { listFigure3D, readFigure3D } = await import('../../lib/figures-3d');
+  const { readProblem } = await import('../../lib/concept-fs');
+  const idx = new Map<string, string>();
+  for (const p of glob3dProblems()) idx.set(p.split('/').pop()!.replace(/\.md$/, ''), p);
+  for (const stem of listFigure3D()) {
+    const e = readFigure3D(stem);
+    if (!e) continue;
+    const slug = (idx.get(stem) ?? '').replace(/^docs\/problems\//, '').replace(/\.md$/, '');
+    const prob = slug ? readProblem(slug) : null;
+    items.push({
+      concept: stem, label: stem, backend: `조건 ${e.conditions?.length ?? 0}개 검증`,
+      score: 0, spec: e.spec, note: e.note ?? '',
+      figure: prob?.fm?.figure_image ?? null,
+      conditions: e.conditions ?? [],
+    });
+  }
+} else if (src === 'cache') {
   try {
     const d = JSON.parse(readFileSync(new URL('../../data/concept-figures.json', import.meta.url), 'utf-8'));
     for (const [id, v] of Object.entries<any>(d.figures ?? {})) {
@@ -24,12 +58,15 @@ if (src === 'cache') {
 // ★페이지네이션: 한 페이지에 WebGL Canvas 가 많으면(~16+) 브라우저 컨텍스트 한계로 빈화면.
 //   페이지당 PER 개만 마운트. ?page=N (1-base).
 items.sort((a, b) => String(a.concept).localeCompare(String(b.concept)));
-const PER = 12;  // Lazy3D(IntersectionObserver)가 화면 보이는 것만 마운트 → 동시 컨텍스트 안전.
+// Lazy3D(IntersectionObserver)가 화면 보이는 것만 마운트 → 동시 컨텍스트 안전.
+// ★헤드리스(swiftshader)는 컨텍스트 한계가 훨씬 낮아 12개면 'Context Lost' 로 검게 뜬다.
+//   자동 검수용으로 ?per=3 처럼 줄일 수 있게 뒀다.
+const PER = Math.min(24, Math.max(1, Number(Astro.url.searchParams.get('per') ?? 12)));
 const total = items.length;
 const pages = Math.max(1, Math.ceil(total / PER));
 const page = Math.min(pages, Math.max(1, Number(Astro.url.searchParams.get('page') ?? 1)));
 const pageItems = items.slice((page - 1) * PER, page * PER);
-const qsBase = `?src=${src}`;
+const qsBase = `?src=${src}&per=${PER}`;
 ---
 <!doctype html>
 <html lang="ko">
@@ -60,10 +97,24 @@ const qsBase = `?src=${src}`;
             {it.backend}{it.score > 0 ? (it.score >= 45 ? ' · ✓ 합격' : ' · 미달(참고)') : ''}
             {it.scores && ` · ${CATS.map((c, i) => `${c} ${it.scores[i]}`).join(' · ')}`}
           </div>
+          {it.figure && (
+            <div style="margin-bottom:8px;">
+              <div style="font-size:10px;color:#666;margin-bottom:3px;">원본 (이 배치와 같아야 한다)</div>
+              <img src={it.figure} style="width:100%;background:#fff;border-radius:6px;" />
+            </div>
+          )}
           {it.spec
             ? <Lazy3D client:only="react" spec={it.spec} width={340} height={290} />
             : <p style="color:#777;font-size:12px;">spec 없음</p>}
           {it.note && <p style="font-size:11px;color:#71717a;margin:8px 0 0;">{it.note}</p>}
+          {it.conditions?.length > 0 && (
+            <details style="margin-top:6px;">
+              <summary style="font-size:11px;color:#71717a;cursor:pointer;">검증된 조건 {it.conditions.length}개</summary>
+              <ul style="font-size:11px;color:#a1a1aa;margin:4px 0 0;padding-left:16px;">
+                {it.conditions.map((c: string) => <li>{c}</li>)}
+              </ul>
+            </details>
+          )}
         </div>
       ))}
     </div>
