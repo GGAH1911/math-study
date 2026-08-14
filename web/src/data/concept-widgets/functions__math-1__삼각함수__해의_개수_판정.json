@@ -1,7 +1,7 @@
 {
  "id": "functions/math-1/삼각함수/해의_개수_판정",
  "spec": {
-  "title": "삼각방정식 sin x = a 의 해의 개수",
+  "title": "삼각방정식 f(kx)=a 의 해의 개수 (함수 0=sin, 1=cos, 2=tan)",
   "params": [
    {
     "name": "a",
@@ -10,32 +10,82 @@
     "min": -1.5,
     "max": 1.5,
     "init": 0.5,
-    "step": 0.1
+    "step": 0.05
+   },
+   {
+    "name": "k",
+    "label": "k",
+    "type": "slider",
+    "min": 1,
+    "max": 3,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "L",
+    "label": "L",
+    "type": "slider",
+    "min": 0.5,
+    "max": 3,
+    "init": 2,
+    "step": 0.5
+   },
+   {
+    "name": "sel",
+    "label": "함수",
+    "type": "slider",
+    "min": 0,
+    "max": 2,
+    "init": 0,
+    "step": 1
    }
   ],
-  "scope": "n = abs(a) > 1 ? 0 : (abs(a) == 1 ? 1 : 2); x1 = abs(a) <= 1 ? mod(asin(a), 2*pi) : 0; x2 = abs(a) <= 1 ? pi - asin(a) : 0",
+  "scope": "Lpi = L*pi; ep = 0.002/k; per = sel > 1.5 ? pi/k : 2*pi/k; F(t) = sel < 0.5 ? sin(k*t) : (sel < 1.5 ? cos(k*t) : tan(k*t)); C(j) = (sel > 0.5 and sel < 1.5) ? j*pi/k : (j - 0.5)*pi/k; U(j) = j < 1 ? 0 : min(C(j), Lpi); AS(u) = (sel > 1.5 and abs(cos(k*u)) < 1e-6) ? 1 : 0; LOx(j) = min(U(j) + (AS(U(j)) == 1 ? ep : 0), Lpi); HIx(j) = max(U(j+1) - (AS(U(j+1)) == 1 ? ep : 0), LOx(j)); Z(u) = abs(F(u) - a) < 1e-9 ? 0 : F(u) - a; X(j) = (HIx(j) - LOx(j) > 1e-12 and Z(LOx(j))*Z(HIx(j)) < 0) ? 1 : 0; NH(j) = ((j < 1 or U(j) > U(j-1) + 1e-12) and abs(F(U(j)) - a) < 1e-9) ? 1 : 0; n = sum([X(0),X(1),X(2),X(3),X(4),X(5),X(6),X(7),X(8),X(9)]) + sum([NH(0),NH(1),NH(2),NH(3),NH(4),NH(5),NH(6),NH(7),NH(8),NH(9),NH(10)])",
   "plot": {
    "range": [
-    0,
-    6.283185307179586
+    -0.2,
+    9.6
    ],
    "yRange": [
-    -1.5,
-    1.5
+    -1.7,
+    1.7
    ],
    "showAxes": true,
    "showGrid": true,
    "fns": [
     {
-     "fn": "sin(x)",
-     "label": "y = sin x",
+     "fn": "sel < 0.5 ? sin(k*x) : 0/0",
+     "label": "$y=\\sin kx$ (함수 0)",
      "color": "#2563eb"
     },
     {
+     "fn": "sel < 0.5 ? 0/0 : (sel < 1.5 ? cos(k*x) : 0/0)",
+     "label": "$y=\\cos kx$ (함수 1)",
+     "color": "#0891b2"
+    },
+    {
+     "fn": "sel < 1.5 ? 0/0 : tan(k*x)",
+     "label": "$y=\\tan kx$ (함수 2)",
+     "color": "#7c3aed"
+    },
+    {
      "fn": "a",
-     "label": "y = a",
-     "color": "#dc2626"
+     "label": "$y=a$ (구간 $[0,L\\pi]$)",
+     "color": "#dc2626",
+     "range": ["=0", "=Lpi"]
     }
+   ],
+   "intersections": [
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(0)", "=HIx(0)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(1)", "=HIx(1)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(2)", "=HIx(2)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(3)", "=HIx(3)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(4)", "=HIx(4)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(5)", "=HIx(5)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(6)", "=HIx(6)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(7)", "=HIx(7)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(8)", "=HIx(8)"]},
+    {"f": "sel < 0.5 ? sin(k*x) : (sel < 1.5 ? cos(k*x) : tan(k*x))", "g": "a", "in": ["=LOx(9)", "=HIx(9)"]}
    ]
   },
   "readout": [
@@ -45,7 +95,17 @@
     "digits": 2
    },
    {
-    "label": "교점(해)의 개수",
+    "label": "주기",
+    "expr": "per",
+    "digits": 2
+   },
+   {
+    "label": "구간 길이 $L\\pi$",
+    "expr": "Lpi",
+    "digits": 2
+   },
+   {
+    "label": "구간 $[0,L\\pi]$ 의 교점(해) 개수",
     "expr": "n",
     "digits": 0
    }
@@ -53,49 +113,69 @@
  },
  "recipe": {
   "samples": [
-   {
-    "a": 0.5
-   },
-   {
-    "a": -0.3
-   },
-   {
-    "a": 0.9
-   },
-   {
-    "a": -0.7
-   }
+   {"a": 0.5, "k": 1, "L": 2, "sel": 0},
+   {"a": 1, "k": 1, "L": 2, "sel": 0},
+   {"a": 1.4, "k": 1, "L": 2, "sel": 0},
+   {"a": 0, "k": 1, "L": 2, "sel": 0},
+   {"a": 0.5, "k": 2, "L": 2, "sel": 0},
+   {"a": 0.5, "k": 3, "L": 3, "sel": 0},
+   {"a": 0.5, "k": 1, "L": 1, "sel": 0},
+   {"a": 0.5, "k": 1, "L": 0.5, "sel": 0},
+   {"a": 0.5, "k": 1, "L": 2, "sel": 1},
+   {"a": 1, "k": 1, "L": 2, "sel": 1},
+   {"a": 0.5, "k": 1, "L": 2, "sel": 2},
+   {"a": 0, "k": 1, "L": 2, "sel": 2}
   ],
   "invariants": [
-   "sin(x1) - a",
-   "sin(x2) - a"
+   "n - round(n)",
+   "min(0, n)",
+   "U(10) - Lpi",
+   "sum([max(0,LOx(0)-HIx(0)),max(0,LOx(1)-HIx(1)),max(0,LOx(2)-HIx(2)),max(0,LOx(3)-HIx(3)),max(0,LOx(4)-HIx(4)),max(0,LOx(5)-HIx(5)),max(0,LOx(6)-HIx(6)),max(0,LOx(7)-HIx(7)),max(0,LOx(8)-HIx(8)),max(0,LOx(9)-HIx(9))])"
   ],
   "oracle": [
    {
-    "params": {
-     "a": 0.5
-    },
-    "expect": {
-     "n": 2,
-     "x1": 0.5235987755982988
-    }
+    "params": {"a": 0.5, "k": 1, "L": 2, "sel": 0},
+    "expect": {"n": 2, "per": 6.283185307179586}
    },
    {
-    "params": {
-     "a": 1.5
-    },
-    "expect": {
-     "n": 0
-    }
+    "params": {"a": 1, "k": 1, "L": 2, "sel": 0},
+    "expect": {"n": 1}
    },
    {
-    "params": {
-     "a": -1
-    },
-    "expect": {
-     "n": 1,
-     "x1": 4.71238898038469
-    }
+    "params": {"a": 1.4, "k": 1, "L": 2, "sel": 0},
+    "expect": {"n": 0}
+   },
+   {
+    "params": {"a": 0, "k": 1, "L": 2, "sel": 0},
+    "expect": {"n": 3}
+   },
+   {
+    "params": {"a": 0.5, "k": 2, "L": 2, "sel": 0},
+    "expect": {"n": 4}
+   },
+   {
+    "params": {"a": 0.5, "k": 1, "L": 1, "sel": 0},
+    "expect": {"n": 2}
+   },
+   {
+    "params": {"a": 0.5, "k": 1, "L": 0.5, "sel": 0},
+    "expect": {"n": 1}
+   },
+   {
+    "params": {"a": 0.5, "k": 1, "L": 2, "sel": 1},
+    "expect": {"n": 2}
+   },
+   {
+    "params": {"a": 1, "k": 1, "L": 2, "sel": 1},
+    "expect": {"n": 2}
+   },
+   {
+    "params": {"a": 0.5, "k": 1, "L": 2, "sel": 2},
+    "expect": {"n": 2}
+   },
+   {
+    "params": {"a": 0, "k": 1, "L": 2, "sel": 2},
+    "expect": {"n": 3}
    }
   ],
   "tol": 0.000001

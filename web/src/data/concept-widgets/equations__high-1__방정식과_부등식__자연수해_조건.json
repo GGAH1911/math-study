@@ -1,28 +1,58 @@
 {
  "id": "equations/high-1/방정식과_부등식/자연수해_조건",
  "spec": {
-  "title": "자연수해의 개수: 2x - 1 ≤ k",
+  "title": "부등식 ax + b ≤ k 의 자연수해 개수",
   "params": [
+   {
+    "name": "a",
+    "label": "a (기울기, >0)",
+    "type": "slider",
+    "min": 0.5,
+    "max": 4,
+    "init": 2,
+    "step": 0.5,
+    "unit": ""
+   },
+   {
+    "name": "b",
+    "label": "b (상수항)",
+    "type": "slider",
+    "min": -5,
+    "max": 5,
+    "init": -1,
+    "step": 1,
+    "unit": ""
+   },
    {
     "name": "k",
     "label": "k",
     "type": "slider",
-    "min": 0,
-    "max": 10,
+    "min": -3,
+    "max": 12,
     "init": 3,
     "step": 0.1,
     "unit": ""
+   },
+   {
+    "name": "m",
+    "label": "m (목표 개수)",
+    "type": "slider",
+    "min": 0,
+    "max": 8,
+    "init": 4,
+    "step": 1,
+    "unit": ""
    }
   ],
-  "scope": "B=(k+1)/2; count=floor(B)",
+  "scope": "A = a == 0 ? 1 : a; B = (k - b)/A; count = max(0, min(floor(B), 12)); kLo = A*m + b; kHi = A*(m+1) + b; hit = (count == m) ? 1 : 0",
   "geometry": {
    "range": [
-    -1,
-    11
+    -1.5,
+    12.5
    ],
    "yRange": [
     -0.6,
-    0.6
+    0.9
    ],
    "showAxes": true,
    "showGrid": false,
@@ -30,13 +60,14 @@
     {
      "type": "segment",
      "from": [
-      -0.5,
+      "=max(B,-1.2)",
       0
      ],
      "to": [
-      "=B",
+      -1.2,
       0
-     ]
+     ],
+     "color": "#38bdf8"
     },
     {
      "type": "point",
@@ -44,83 +75,300 @@
       "=B",
       0
      ],
-     "label": "B"
+     "label": "B",
+     "color": "#38bdf8"
     },
     {
      "type": "point",
      "at": [
       1,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       2,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       3,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       4,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       5,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       6,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       7,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       8,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       9,
       0
-     ]
+     ],
+     "color": "#71717a"
     },
     {
      "type": "point",
      "at": [
       10,
       0
-     ]
+     ],
+     "color": "#71717a"
+    },
+    {
+     "type": "point",
+     "at": [
+      11,
+      0
+     ],
+     "color": "#71717a"
+    },
+    {
+     "type": "point",
+     "at": [
+      12,
+      0
+     ],
+     "color": "#71717a"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=1 <= B ? 1 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=2 <= B ? 2 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=3 <= B ? 3 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=4 <= B ? 4 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=5 <= B ? 5 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=6 <= B ? 6 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=7 <= B ? 7 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=8 <= B ? 8 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=9 <= B ? 9 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=10 <= B ? 10 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=11 <= B ? 11 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=12 <= B ? 12 : 0/0",
+      0
+     ],
+     "color": "#f43f5e"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=m",
+      0.35
+     ],
+     "to": [
+      "=m+1",
+      0.35
+     ],
+     "color": "#f59e0b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m",
+      0.35
+     ],
+     "label": "m",
+     "color": "#f59e0b"
+    },
+    {
+     "type": "point",
+     "at": [
+      "=m+1",
+      0.35
+     ],
+     "label": "m+1",
+     "color": "#f59e0b"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=B",
+      0
+     ],
+     "to": [
+      "=B",
+      0.35
+     ],
+     "dashed": true,
+     "color": "#a1a1aa"
+    },
+    {
+     "type": "text",
+     "at": [
+      "=m+0.5",
+      0.62
+     ],
+     "text": "B가 이 구간에 있으면 자연수해가 m개",
+     "color": "#f59e0b"
     }
    ]
   },
+  "plot": {
+   "range": [
+    -1.5,
+    12.5
+   ],
+   "yRange": [
+    -8,
+    14
+   ],
+   "showAxes": true,
+   "showGrid": true,
+   "fns": [
+    {
+     "fn": "a*x+b",
+     "label": "$y=ax+b$",
+     "color": "#38bdf8"
+    },
+    {
+     "fn": "k",
+     "label": "$y=k$",
+     "color": "#f43f5e",
+     "dashed": true
+    }
+   ],
+   "roots": [
+    {
+     "fn": "a*x+b-k",
+     "in": [
+      -3,
+      30
+     ],
+     "label": "$x=B$"
+    }
+   ],
+   "points": [
+    [
+     "=B",
+     "=k"
+    ]
+   ],
+   "pointsLabel": "$(B,\\;k)$"
+  },
   "readout": [
    {
-    "label": "B",
+    "label": "B (경계)",
     "expr": "B",
     "digits": 2
    },
@@ -128,63 +376,159 @@
     "label": "자연수해의 개수",
     "expr": "count",
     "digits": 0
+   },
+   {
+    "label": "k의 하한",
+    "expr": "kLo",
+    "digits": 2
+   },
+   {
+    "label": "k의 상한(미만)",
+    "expr": "kHi",
+    "digits": 2
+   },
+   {
+    "label": "목표 m개 달성",
+    "expr": "hit",
+    "digits": 0
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "k": 0
+    "a": 2,
+    "b": -1,
+    "k": 3,
+    "m": 2
    },
    {
-    "k": 1
+    "a": 2,
+    "b": -1,
+    "k": 7,
+    "m": 4
    },
    {
-    "k": 3
+    "a": 1,
+    "b": 0,
+    "k": 5.5,
+    "m": 5
    },
    {
-    "k": 10
+    "a": 3,
+    "b": 2,
+    "k": 2,
+    "m": 0
+   },
+   {
+    "a": 0.5,
+    "b": -1,
+    "k": 1,
+    "m": 4
+   },
+   {
+    "a": 2,
+    "b": -1,
+    "k": -2,
+    "m": 0
    }
   ],
   "invariants": [
-   "B - (k+1)/2",
-   "count - sum([1<=B?1:0,2<=B?1:0,3<=B?1:0,4<=B?1:0,5<=B?1:0,6<=B?1:0,7<=B?1:0,8<=B?1:0,9<=B?1:0,10<=B?1:0])"
+   "B - (k-b)/a",
+   "count - sum([1<=B?1:0,2<=B?1:0,3<=B?1:0,4<=B?1:0,5<=B?1:0,6<=B?1:0,7<=B?1:0,8<=B?1:0,9<=B?1:0,10<=B?1:0,11<=B?1:0,12<=B?1:0])",
+   "kLo - (a*m+b)",
+   "kHi - (a*(m+1)+b)",
+   "hit - ((count==m)?1:0)"
   ],
   "oracle": [
    {
     "params": {
-     "k": 1
-    },
-    "expect": {
-     "B": 1,
-     "count": 1
-    }
-   },
-   {
-    "params": {
-     "k": 3
+     "a": 2,
+     "b": -1,
+     "k": 3,
+     "m": 2
     },
     "expect": {
      "B": 2,
-     "count": 2
+     "count": 2,
+     "kLo": 3,
+     "kHi": 5,
+     "hit": 1
     }
    },
    {
     "params": {
-     "k": 10
+     "a": 2,
+     "b": -1,
+     "k": 7,
+     "m": 4
+    },
+    "expect": {
+     "B": 4,
+     "count": 4,
+     "kLo": 7,
+     "kHi": 9,
+     "hit": 1
+    }
+   },
+   {
+    "params": {
+     "a": 1,
+     "b": 0,
+     "k": 5.5,
+     "m": 5
     },
     "expect": {
      "B": 5.5,
-     "count": 5
+     "count": 5,
+     "kLo": 5,
+     "kHi": 6,
+     "hit": 1
     }
    },
    {
     "params": {
-     "k": 0
+     "a": 3,
+     "b": 2,
+     "k": 2,
+     "m": 0
     },
     "expect": {
-     "B": 0.5,
-     "count": 0
+     "B": 0,
+     "count": 0,
+     "kLo": 2,
+     "kHi": 5,
+     "hit": 1
+    }
+   },
+   {
+    "params": {
+     "a": 0.5,
+     "b": -1,
+     "k": 1,
+     "m": 4
+    },
+    "expect": {
+     "B": 4,
+     "count": 4,
+     "kLo": 1,
+     "kHi": 1.5,
+     "hit": 1
+    }
+   },
+   {
+    "params": {
+     "a": 2,
+     "b": -1,
+     "k": -2,
+     "m": 0
+    },
+    "expect": {
+     "B": -0.5,
+     "count": 0,
+     "kLo": -1,
+     "kHi": 1,
+     "hit": 1
     }
    }
   ],

@@ -5,15 +5,42 @@
   "params": [
    {
     "name": "n",
-    "label": "n",
+    "label": "원소 개수 n",
     "type": "slider",
     "min": 0,
     "max": 10,
-    "init": 3,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "p",
+    "label": "반드시 포함할 원소 개수 p",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "q",
+    "label": "반드시 제외할 원소 개수 q",
+    "type": "slider",
+    "min": 0,
+    "max": 5,
+    "init": 1,
+    "step": 1
+   },
+   {
+    "name": "pr",
+    "label": "진부분집합만 세기 (0=전체 · 1=자기 자신 제외)",
+    "type": "slider",
+    "min": 0,
+    "max": 1,
+    "init": 0,
     "step": 1
    }
   ],
-  "scope": "y0=n>=0?combinations(n,0):0; y1=n>=1?combinations(n,1):0; y2=n>=2?combinations(n,2):0; y3=n>=3?combinations(n,3):0; y4=n>=4?combinations(n,4):0; y5=n>=5?combinations(n,5):0; y6=n>=6?combinations(n,6):0; y7=n>=7?combinations(n,7):0; y8=n>=8?combinations(n,8):0; y9=n>=9?combinations(n,9):0; y10=n>=10?combinations(n,10):0; sumc=sum([y0,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10]); total=2^n",
+  "scope": "pe=min(p,n); qe=min(q,n-pe); free=n-pe-qe; y0=free>=0?combinations(free,0):0; y1=free>=1?combinations(free,1):0; y2=free>=2?combinations(free,2):0; y3=free>=3?combinations(free,3):0; y4=free>=4?combinations(free,4):0; y5=free>=5?combinations(free,5):0; y6=free>=6?combinations(free,6):0; y7=free>=7?combinations(free,7):0; y8=free>=8?combinations(free,8):0; y9=free>=9?combinations(free,9):0; y10=free>=10?combinations(free,10):0; sumc=sum([y0,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10]); free2=2^free; total=2^n; selfok=qe==0?1:0; cnt=pr==1?free2-selfok:free2; ratio=total>0?cnt/total:0",
   "geometry": {
    "range": [
     -0.5,
@@ -45,7 +72,10 @@
        0.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -66,7 +96,10 @@
        1.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -87,7 +120,10 @@
        2.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -108,7 +144,10 @@
        3.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -129,7 +168,10 @@
        4.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -150,7 +192,10 @@
        5.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -171,7 +216,10 @@
        6.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -192,7 +240,10 @@
        7.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -213,7 +264,10 @@
        8.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -234,7 +288,10 @@
        9.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
     },
     {
      "type": "polygon",
@@ -255,59 +312,161 @@
        10.3,
        0
       ]
-     ]
+     ],
+     "fill": "#3b82f6",
+     "fillOpacity": 0.35,
+     "stroke": "#1d4ed8"
+    },
+    {
+     "type": "text",
+     "at": [
+      0.2,
+      255
+     ],
+     "text": "높이 = C(n−p−q, k)"
+    },
+    {
+     "type": "text",
+     "at": [
+      0.2,
+      235
+     ],
+     "text": "막대 전체 합 = 2^(n−p−q)"
+    },
+    {
+     "type": "segment",
+     "from": [
+      "=free+0.5",
+      0
+     ],
+     "to": [
+      "=free+0.5",
+      270
+     ],
+     "dashed": true,
+     "color": "#94a3b8"
+    },
+    {
+     "type": "circle",
+     "center": [
+      9.7,
+      260
+     ],
+     "radius": 0.18,
+     "fill": "=pr==1?'#dc2626':'#16a34a'",
+     "stroke": "=pr==1?'#991b1b':'#15803d'"
+    },
+    {
+     "type": "text",
+     "at": [
+      6.7,
+      246
+     ],
+     "text": "=pr==1?'● 진부분집합 모드(A 자신 제외)':'● 전체 부분집합 모드(A 자신 포함)'"
     }
    ]
   },
   "readout": [
    {
-    "label": "부분집합 총 개수 (2^n)",
+    "label": "전체 부분집합 개수 (2^n)",
     "expr": "total",
     "digits": 0
    },
    {
-    "label": "C(n,k)의 합",
+    "label": "자유롭게 정할 수 있는 원소 개수 (n−p−q)",
+    "expr": "free",
+    "digits": 0
+   },
+   {
+    "label": "조건을 만족하는 부분집합 개수",
+    "expr": "cnt",
+    "digits": 0
+   },
+   {
+    "label": "막대 C(n−p−q,k)의 합",
     "expr": "sumc",
     "digits": 0
+   },
+   {
+    "label": "전체 대비 비율",
+    "expr": "ratio",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "n": 0
+    "n": 0,
+    "p": 0,
+    "q": 0,
+    "pr": 0
    },
    {
-    "n": 3
+    "n": 3,
+    "p": 0,
+    "q": 0,
+    "pr": 0
    },
    {
-    "n": 5
+    "n": 5,
+    "p": 1,
+    "q": 1,
+    "pr": 0
    },
    {
-    "n": 10
+    "n": 5,
+    "p": 2,
+    "q": 0,
+    "pr": 1
+   },
+   {
+    "n": 2,
+    "p": 3,
+    "q": 0,
+    "pr": 0
+   },
+   {
+    "n": 10,
+    "p": 0,
+    "q": 0,
+    "pr": 0
    }
   ],
   "invariants": [
-   "sumc-total",
-   "y0-1"
+   "sumc-free2",
+   "y0-1",
+   "cnt-(free2-(pr==1?(qe==0?1:0):0))",
+   "free-(n-pe-qe)"
   ],
   "oracle": [
    {
     "params": {
-     "n": 0
+     "n": 0,
+     "p": 0,
+     "q": 0,
+     "pr": 0
     },
     "expect": {
+     "free": 0,
      "sumc": 1,
+     "free2": 1,
+     "cnt": 1,
      "total": 1,
      "y0": 1
     }
    },
    {
     "params": {
-     "n": 3
+     "n": 3,
+     "p": 0,
+     "q": 0,
+     "pr": 0
     },
     "expect": {
+     "free": 3,
      "sumc": 8,
+     "cnt": 8,
      "total": 8,
      "y2": 3,
      "y3": 1
@@ -315,13 +474,73 @@
    },
    {
     "params": {
-     "n": 5
+     "n": 5,
+     "p": 1,
+     "q": 1,
+     "pr": 0
     },
     "expect": {
-     "sumc": 32,
+     "free": 3,
+     "sumc": 8,
+     "cnt": 8,
      "total": 32,
-     "y3": 10,
-     "y5": 1
+     "y3": 1
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "p": 2,
+     "q": 0,
+     "pr": 1
+    },
+    "expect": {
+     "free": 3,
+     "sumc": 8,
+     "cnt": 7,
+     "total": 32
+    }
+   },
+   {
+    "params": {
+     "n": 5,
+     "p": 0,
+     "q": 2,
+     "pr": 1
+    },
+    "expect": {
+     "free": 3,
+     "sumc": 8,
+     "cnt": 8
+    }
+   },
+   {
+    "params": {
+     "n": 2,
+     "p": 3,
+     "q": 0,
+     "pr": 0
+    },
+    "expect": {
+     "pe": 2,
+     "qe": 0,
+     "free": 0,
+     "sumc": 1,
+     "cnt": 1
+    }
+   },
+   {
+    "params": {
+     "n": 10,
+     "p": 0,
+     "q": 0,
+     "pr": 0
+    },
+    "expect": {
+     "free": 10,
+     "sumc": 1024,
+     "cnt": 1024,
+     "y5": 252
     }
    }
   ],

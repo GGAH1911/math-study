@@ -1,127 +1,245 @@
 {
  "id": "제약_조건하_경우의_수",
  "spec": {
-  "title": "제약 조건하 경우의 수: 특정 두 사람이 이웃하는 경우",
+  "title": "제약 조건하 경우의 수: 이웃·비이웃·여사건",
   "params": [
    {
     "name": "n",
-    "label": "n (사람 수)",
+    "label": "n (전체 사람 수)",
+    "type": "slider",
+    "min": 3,
+    "max": 9,
+    "init": 5,
+    "step": 1
+   },
+   {
+    "name": "k",
+    "label": "k (제약 대상 인원)",
     "type": "slider",
     "min": 2,
-    "max": 8,
-    "init": 4,
+    "max": 4,
+    "init": 2,
     "step": 1
    }
   ],
-  "scope": "cnt = 2*factorial(n-1); total = factorial(n)",
+  "scope": "total = factorial(n); kk = min(k, n); gaps = n - kk + 1; adj = factorial(gaps) * factorial(kk); nonadj = gaps >= kk ? factorial(n-kk) * (factorial(gaps) / factorial(gaps-kk)) : 0; mid = total - adj - nonadj; pAdj = adj/total; pNon = nonadj/total; pMid = mid/total; block = factorial(gaps); inner = factorial(kk)",
   "geometry": {
    "range": [
     0,
-    9
+    5
    ],
    "yRange": [
     0,
-    45000
+    1.2
    ],
-   "showAxes": true,
+   "showAxes": false,
    "showGrid": true,
    "shapes": [
     {
-     "type": "segment",
-     "from": [
-      "=n-0.2",
-      0
+     "type": "polygon",
+     "vertices": [
+      [0.6, 0],
+      [1.2, 0],
+      [1.2, 1],
+      [0.6, 1]
      ],
-     "to": [
-      "=n-0.2",
-      "=total"
-     ]
+     "closed": true,
+     "fill": "#999999",
+     "fillOpacity": 0.25,
+     "stroke": "#999999"
     },
     {
-     "type": "segment",
-     "from": [
-      "=n+0.2",
-      0
+     "type": "text",
+     "at": [0.9, 1.1],
+     "text": "전체 n!",
+     "color": "#666666"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [1.6, 0],
+      [2.2, 0],
+      [2.2, "=pAdj"],
+      [1.6, "=pAdj"]
      ],
-     "to": [
-      "=n+0.2",
-      "=cnt"
-     ]
+     "closed": true,
+     "fill": "#3b82f6",
+     "fillOpacity": 0.6,
+     "stroke": "#3b82f6"
     },
     {
      "type": "point",
-     "at": [
-      "=n-0.2",
-      "=total"
+     "at": [1.9, "=pAdj"],
+     "label": "k명이 모두 이웃",
+     "color": "#3b82f6"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [2.6, 0],
+      [3.2, 0],
+      [3.2, "=pNon"],
+      [2.6, "=pNon"]
      ],
-     "label": "전체"
+     "closed": true,
+     "fill": "#22c55e",
+     "fillOpacity": 0.6,
+     "stroke": "#22c55e"
     },
     {
      "type": "point",
-     "at": [
-      "=n+0.2",
-      "=cnt"
+     "at": [2.9, "=pNon"],
+     "label": "어느 둘도 이웃 아님",
+     "color": "#22c55e"
+    },
+    {
+     "type": "polygon",
+     "vertices": [
+      [3.6, 0],
+      [4.2, 0],
+      [4.2, "=pMid"],
+      [3.6, "=pMid"]
      ],
-     "label": "이웃"
+     "closed": true,
+     "fill": "#f97316",
+     "fillOpacity": 0.6,
+     "stroke": "#f97316"
+    },
+    {
+     "type": "point",
+     "at": [3.9, "=pMid"],
+     "label": "일부만 이웃 (k=2면 0)",
+     "color": "#f97316"
     }
    ]
   },
   "readout": [
    {
-    "label": "이웃하는 경우의 수",
-    "expr": "cnt"
-   },
-   {
     "label": "전체 경우의 수",
     "expr": "total"
+   },
+   {
+    "label": "k명이 모두 이웃",
+    "expr": "adj"
+   },
+   {
+    "label": "덩어리 포함 배열 (n-k+1)!",
+    "expr": "block"
+   },
+   {
+    "label": "덩어리 내부 k!",
+    "expr": "inner"
+   },
+   {
+    "label": "어느 둘도 이웃하지 않음",
+    "expr": "nonadj"
+   },
+   {
+    "label": "그 밖(일부만 이웃)",
+    "expr": "mid"
+   },
+   {
+    "label": "이웃 비율",
+    "expr": "pAdj",
+    "digits": 3
    }
   ]
  },
  "recipe": {
   "samples": [
    {
-    "n": 2
+    "n": 5,
+    "k": 2
    },
    {
-    "n": 3
+    "n": 5,
+    "k": 3
    },
    {
-    "n": 5
+    "n": 4,
+    "k": 2
    },
    {
-    "n": 8
+    "n": 4,
+    "k": 3
+   },
+   {
+    "n": 6,
+    "k": 3
+   },
+   {
+    "n": 9,
+    "k": 4
+   },
+   {
+    "n": 3,
+    "k": 4
    }
   ],
   "invariants": [
-   "total - n*(cnt/2)",
-   "cnt - 2*factorial(n-1)"
+   "adj + nonadj + mid - total",
+   "adj - block*inner",
+   "pAdj - adj/total"
   ],
   "oracle": [
    {
     "params": {
-     "n": 2
+     "n": 5,
+     "k": 2
     },
     "expect": {
-     "cnt": 2,
-     "total": 2
+     "total": 120,
+     "adj": 48,
+     "nonadj": 72,
+     "mid": 0
     }
    },
    {
     "params": {
-     "n": 3
+     "n": 5,
+     "k": 3
     },
     "expect": {
-     "cnt": 4,
-     "total": 6
+     "total": 120,
+     "adj": 36,
+     "nonadj": 12,
+     "mid": 72
     }
    },
    {
     "params": {
-     "n": 4
+     "n": 4,
+     "k": 2
     },
     "expect": {
-     "cnt": 12,
-     "total": 24
+     "total": 24,
+     "adj": 12,
+     "nonadj": 12,
+     "mid": 0
+    }
+   },
+   {
+    "params": {
+     "n": 4,
+     "k": 3
+    },
+    "expect": {
+     "total": 24,
+     "adj": 12,
+     "nonadj": 0,
+     "mid": 12
+    }
+   },
+   {
+    "params": {
+     "n": 6,
+     "k": 3
+    },
+    "expect": {
+     "total": 720,
+     "adj": 144,
+     "nonadj": 144,
+     "mid": 432
     }
    }
   ],
