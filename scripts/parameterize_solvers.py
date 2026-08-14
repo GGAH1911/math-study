@@ -41,6 +41,8 @@ from claude_auth import claude_env, looks_unauthed  # noqa: E402
 CLAUDE_ENV = claude_env()
 TIMEOUT_S = int(os.environ.get('PARAM_TIMEOUT', '900'))
 GATE_TIMEOUT_S = 180
+#: hermes 경로에서 `-m` 과 **반드시 짝지어** 넘길 provider (아래 _run_hermes 주석 참조)
+HERMES_PROVIDER = os.environ.get('PARAM_HERMES_PROVIDER', 'custom:nousapi')
 
 # ★프롬프트 캐시 레인(2026-08-14). `claude -p` 의 시스템 프롬프트에는 **cwd 경로와 그
 #   내용**이 들어간다. 항목마다 새 임시폴더를 cwd 로 주면 prefix 가 매번 달라져
@@ -266,7 +268,12 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
     # ★게이트 **원본을 그대로** 복사한다. 규격을 프롬프트로 옮겨 적으면 갈라진다.
     shutil.copy(ROOT / 'scripts/ops/verify_solver_params.py', work / 'gate.py')
 
-    if '/' in model:                       # deepseek/... 처럼 provider 접두가 있으면 Nous Portal
+    if model.startswith('hermes'):         # hermes[:<모델>] — 터미널을 쥐고 게이트를 직접 돈다
+        try:
+            _run_hermes(work, model.split(':', 1)[1] if ':' in model else '')
+        except subprocess.TimeoutExpired:
+            return stem, False, f'모델 타임아웃({TIMEOUT_S}s)'
+    elif '/' in model:                     # deepseek/... 처럼 provider 접두가 있으면 Nous Portal
         spec = PROMPT.split('## 작업 방법')[0].split('\n', 1)[1]   # 규격 부분만(파일 경로 안내 제외)
         try:
             param_nous.run_nous(work, model, spec, SYSTEM)
@@ -307,6 +314,33 @@ def _run_claude(work: Path, cwd: Path, model: str) -> None:
     if looks_unauthed(r.stdout, r.stderr):
         raise SystemExit('claude -p 인증 실패 — 배치 중단 (claude_auth.py 참조)')
     _record_cache(r.stdout)
+
+
+def _run_hermes(work: Path, model: str) -> None:
+    """hermes -z 로 돌린다 — 에이전트가 **터미널을 쥐고** `gate.py` 를 직접 돌린다.
+
+    채팅 API(param_nous) 가 밀리는 단 하나의 이유가 "코드를 못 돌려 본다" 였다. 여기선
+    돌려 볼 수 있고, 부분 수정이라 라운드마다 파일 전체를 재생성하지 않으니 잘림(max_tokens)과
+    게이트웨이 524 도 같이 사라진다.
+
+    ★hermes 0.20.0 실측(2026-08-14)에서 나온 네 가지 — 전부 한 번씩 밟고 얻었다:
+      · `-m deepseek/...` 만 주면 모델 문자열에서 provider 를 **다시 추론**해
+        "No LLM provider configured" 로 죽는다. `--provider` 를 반드시 짝지어 준다.
+      · `--yolo` 는 **필요 없다.** 이 경로는 승인 없이도 파일 생성·python3 실행이 된다.
+        안 쓰는 편이 안전하다 — 무승인 권한을 괜히 넓히지 않는다.
+      · `--in` **단독으로는 격리되지 않는다.** 세션 cwd 복원이 이겨서 레포 루트에
+        `probe.py` 를 만들어 버렸다(실측). `cwd=work` + `--in` + `--no-restore-cwd`
+        3중으로 묶어야 작업폴더 안에 머문다.
+      · **종료코드를 믿지 않는다.** 에이전트가 실패해도 0 을 준다("No LLM provider
+        configured" 때도 0 이었다). 성공 판정은 호출부가 `work/solver.py` 를 다시 읽어
+        **두 게이트로** 한다 — 그래서 모델이 통과했다고 거짓말해도 채택되지 않는다.
+    """
+    args = ['hermes', '-z', PROMPT.format(work=str(work), py=VENV),
+            '--in', str(work), '--no-restore-cwd']
+    if model:
+        args += ['-m', model, '--provider', HERMES_PROVIDER]
+    subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S,
+                   cwd=str(work), stdin=subprocess.DEVNULL)
 
 
 def load_state() -> dict:
