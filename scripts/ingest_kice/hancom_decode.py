@@ -691,10 +691,14 @@ def _parse(chars, bars, main=None, depth=0, row_sep=None):
                     if mode == 1:                       # 이미 열린 지수 그룹 안 → 그 안에 넣는다
                         buf += '^{' + (_parse(run, bars, None, depth + 1) if run else '') + pay + '}'
                         run = []; mode = 0; px = None; continue
-                    # 앞에 작은 글자가 없어 그룹이 안 열린 경우 — 구조물이 **지수 전체**다.
-                    #   25^{3/4} 처럼 밑수가 본문 크기면 mode 가 0 이라 위 분기에 안 걸린다.
+                    # 앞에 작은 글자가 없어 그룹이 안 열린 경우 — 구조물이 **지수 전체**다
+                    #   (25^{3/4}: 밑수가 본문 크기라 mode 가 0 이다). 두 겹으로 좁힌다:
+                    #   ① 분수만. `\overline`·`\vec` 는 **바가 글자 위**라 y 가 바 위치로 기록돼
+                    #      늘 높게 잡힌다 → 넓게 열면 `\overline{AP}+\overline{BQ}` 가
+                    #      `\overline{AP}+^{\overline{BQ}}` 로 개악된다(스냅샷에서 실제로 잡혔다).
+                    #   ② 앞이 밑수여야 한다. `+`·`=` 뒤의 지수는 성립하지 않는다.
                     _flush()                            # 본문 런(밑수)을 먼저 확정하고
-                    if buf and not buf.endswith(' '):   # 붙일 밑수가 있을 때만(고아 ^{} 방지)
+                    if pay.startswith('\\frac') and buf and (buf[-1].isalnum() or buf[-1] in ')}]'):
                         buf += '^{' + pay + '}'; px = None; continue
                 _flush(); mode = 0
                 buf += pay; px = None; continue
