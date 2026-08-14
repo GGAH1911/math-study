@@ -82,9 +82,24 @@ def answer_of(p: Path) -> str:
     return (m.group(1).strip() if m else '')
 
 
+def problem_fingerprint(md_path) -> str:
+    """스펙이 낡았는지 볼 때 쓰는 지문 — **문제 본문과 정답만** 본다.
+
+    ★파일 전체를 해시하면 풀이(solution) 를 채워 넣기만 해도 "본문이 바뀌었다" 는 오탐이 난다
+      (2026-08-14 실제 발생: 손풀이를 기록하자 멀쩡한 스펙 2건이 빨간 줄). 도형이 의존하는 것은
+      문제 문장과 정답뿐이므로 그 둘만 지문에 넣는다.
+    """
+    import hashlib, re
+    t = Path(md_path).read_text(encoding='utf-8', errors='ignore')
+    m = re.search(r'searchable_text:\s*(?:[|>][-+]?\s*\n)?((?:.|\n)*?)\n[a-z_]+:', t)
+    body = m.group(1) if m else t
+    ans = re.search(r'^answer:\s*"?([^"\n]+)', t, re.M)
+    key = body + '|' + (ans.group(1).strip() if ans else '')
+    return hashlib.sha256(key.encode('utf-8')).hexdigest()[:16]
+
+
 def source_sha(p: Path) -> str:
-    """문제 본문의 해시 — 나중에 본문이 바뀌면 스펙이 낡았음을 게이트가 잡는다."""
-    return hashlib.sha256(p.read_bytes()).hexdigest()[:16]
+    return problem_fingerprint(p)
 
 
 def dev_token() -> str | None:
