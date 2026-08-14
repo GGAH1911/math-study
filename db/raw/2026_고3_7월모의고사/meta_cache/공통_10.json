@@ -1,0 +1,17 @@
+{
+  "text_sha": "6c791c443274",
+  "meta": {
+    "searchable_text": "10. 양수 a에 대하여 닫힌구간 [0,2a]에서 정의된\n함수 f(x)=cos\\frac{πx}{a}가 있다.\n함수 y=f(x)의 그래프가 직선 y=\\frac{1}{2}과 만나는 두 점을\n각각 A, B라 하고, 함수 y=f(x)의 그래프가\n직선 y=-\\frac{1}{2}과 만나는 두 점을 각각 C, D라 하자.\n사각형 ACDB의 넓이가 \\frac{3}{2}일 때, a×\\overline{AB}의 값은?\n(단, 점 A의 x좌표는 점 B의 x좌표보다 작고,\n점 C의 x좌표는 점 D의 x좌표보다 작다.) [4점]\n① 3 ②\\frac{19}{6}③\\frac{10}{3}④\\frac{7}{2}⑤\\frac{11}{3}\ny\ny=f(x)\n1\nA B y=\\frac{1}{2}\nO 2a x\nC D y=-\\frac{1}{2}\n-1",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+      "functions/math-1/삼각함수/삼각방정식_풀이",
+      "functions/math-1/삼각함수/삼각함수의_그래프",
+      "functions/math-1/삼각함수/기하학적_조건과_넓이"
+    ],
+    "exam_intent": "코사인함수 그래프와 두 수평선의 교점, 대칭성을 이용해 사각형 넓이 조건으로 매개변수 a와 선분길이를 구하는 능력 평가",
+    "killer_tier": "mid",
+    "cognitive_type": "응용"
+  }
+}

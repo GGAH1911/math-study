@@ -36,7 +36,7 @@ from ingest_round import (  # noqa: E402
     ROOT, DOCS_PROBLEMS, TODAY,
 )
 from answer_textlayer import (parse_answer_table, parse_single_answer_table,  # noqa: E402
-                              has_text_layer)  # 정답표 텍스트레이어 우선
+                              parse_haesol_answers, has_text_layer)  # 정답표 텍스트레이어 우선
 import fitz  # noqa: E402
 from PIL import Image  # noqa: E402
 
@@ -582,7 +582,22 @@ def ingest_round_v2(year: int, exam_type: str, session: str,
         # 공통+선택(평가원 수능/모평·교육청 고3) 정답표는 텍스트레이어 좌표파싱이
         # 비전보다 정확하다 — 비전은 다중컬럼에서 선택 3과목에 같은 답을 복사하는
         # 오류가 잦다(2027_6월모평 실측: vision 10/46 → textlayer 46/46).
-        if default_ans_subj == '공통' and ans_pdf.exists() and has_text_layer(ans_pdf):
+        # 교육청 고3 은 별도 정답.pdf 없이 **해설 PDF 의 정답표**가 유일한 소스인 회차가 있다
+        # (2026 7월 실측: 통합본·정답표 없이 과목별 문제+해설만 배포). 파서는 이미 있었는데
+        # (answer_textlayer.parse_haesol_answers) ingest_v2 가 부르지 않아 그 형태를 못 받았다.
+        haesol = {f.stem.split('_', 1)[1]: f for f in sorted(raw.glob('해설_*.pdf'))}
+        if default_ans_subj == '공통' and not ans_pdf.exists() and haesol:
+            try:
+                flat = parse_haesol_answers({k: str(v) for k, v in haesol.items()})
+                if flat and any(s != '공통' for s, _n in flat):
+                    answers = {}
+                    for (s, n), a in flat.items():
+                        answers.setdefault(s, {})[str(n)] = a
+                    print(f'  ✓ answers: 해설 정답표 파싱 ({len(flat)} entries)', flush=True)
+            except Exception as e:
+                print(f'  ⚠ 해설 정답표 파싱 실패: {e}', flush=True)
+                answers = None
+        if answers is None and default_ans_subj == '공통' and ans_pdf.exists() and has_text_layer(ans_pdf):
             try:
                 flat = parse_answer_table(ans_pdf)  # {(subject, number): answer}
                 if flat and any(s != '공통' for s, _n in flat):  # 선택과목까지 잡혔는지

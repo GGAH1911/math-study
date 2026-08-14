@@ -1,0 +1,16 @@
+{
+  "text_sha": "c6f90a8a89d5",
+  "meta": {
+    "searchable_text": "2. 함수 f(x)=x^{2}+3x-1에 대하여 \\lim_{h→0}\\frac{f(3+h)-f(3)}{h}의\n값은? [2점]\n① 7 ② 9 ③ 11 ④ 13 ⑤ 15",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/미분",
+    "concepts": [
+      "functions/math-2/미분/미분계수",
+      "functions/math-2/미분/도함수의_정의"
+    ],
+    "exam_intent": "미분계수의 정의(극한 표현)를 이용해 다항함수의 미분계수 값을 계산할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "text_sha": "abbf4ce52e85",
+  "meta": {
+    "searchable_text": "6. 1보다 큰 두 실수 a, b가\nlog\\sqrt{a}b=6,  log_{4}a+log_{2}b=14\n를 만족시킬 때, log_{2}\\frac{b}{a}의 값은? [3점]\n① 6 ② 7 ③ 8 ④ 9 ⑤ 10",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "algebra/math-1/지수와_로그",
+    "concepts": [
+      "algebra/math-1/지수와_로그/로그의_성질",
+      "algebra/math-1/지수와_로그/밑_변환_공식",
+      "algebra/math-1/지수와_로그/로그_값_구하기"
+    ],
+    "exam_intent": "밑이 다른 로그 조건식을 밑변환으로 통일해 연립방정식을 세우고 log₂(b/a) 값을 구하는 능력 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

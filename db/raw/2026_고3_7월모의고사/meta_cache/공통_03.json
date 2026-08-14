@@ -1,0 +1,17 @@
+{
+  "text_sha": "09acedb5e58e",
+  "meta": {
+    "searchable_text": "3. 수열 {a_{n}}에 대하여 \\sum_{k=1}^{5}(k+3a_{k})=27일 때, \\sum_{k=1}^{5}a_{k}의 값은?\n[3점]\n① 4 ② 5 ③ 6 ④ 7 ⑤ 8",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/수열",
+    "concepts": [
+      "functions/math-1/수열/시그마_계산",
+      "functions/math-1/수열/시그마_합기호",
+      "functions/math-1/수열/합의_선형성"
+    ],
+    "exam_intent": "시그마의 선형성을 이용해 합을 분리하고 미지의 수열합을 구하는 기초 계산력 확인",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

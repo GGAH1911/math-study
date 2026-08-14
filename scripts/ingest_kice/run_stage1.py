@@ -44,7 +44,23 @@ WORK.mkdir(parents=True, exist_ok=True)
 #   system prompt 를 바꿔 claude 내장 base 캐시까지 깬다. 파일접근은 --add-dir(절대경로)로.
 _CLEAN_DIR = os.environ.get('CLAUDE_P_CWD', '/tmp/claude_p_clean')
 os.makedirs(_CLEAN_DIR, exist_ok=True)
+def _oauth() -> str:
+    """구독 토큰. env 에 없으면 deploy/.env 에서. ★디스크 자격증명이 죽은 호스트가 있다
+    (2026-08-14 tme: "Not logged in" → 인제스트 전 문항 unit=? 실패)."""
+    t = os.environ.get('CLAUDE_CODE_OAUTH_TOKEN', '').strip()
+    if t:
+        return t
+    f = Path(__file__).resolve().parents[2] / 'deploy' / '.env'
+    if f.exists():
+        for line in f.read_text(encoding='utf-8').splitlines():
+            if line.startswith('MS_CLAUDE_OAUTH_TOKEN='):
+                return line.split('=', 1)[1].strip()
+    return ''
+
+
 _CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
+if _oauth():
+    _CLAUDE_ENV['CLAUDE_CODE_OAUTH_TOKEN'] = _oauth()
 
 DB = 'postgresql://mathstudy:mathstudy@127.0.0.1:5434/mathstudy'
 TODAY = '2026-05-17'

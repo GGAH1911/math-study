@@ -144,9 +144,23 @@ def claude_p(system: str, user: str, model: str = 'sonnet', max_turns: int = 1, 
         args += ['--add-dir', add_dir]
     args += ['--system-prompt', system, user]
 
-    # 중첩 Claude Code 의 만료 가능한 OAuth env 토큰을 빼고 호출 → subprocess claude 가 디스크
-    # 자격증명(~/.claude/.credentials.json, 자동 refresh)을 쓰게 한다. (env 토큰 상속 시 401.)
+    # 인증: 예전엔 env 토큰을 무조건 빼고 디스크 자격증명(~/.claude/.credentials.json)을 쓰게 했다
+    # (중첩 Claude Code 의 만료된 env 토큰이 401 을 냈기 때문).
+    # ★그런데 호스트에 따라 **디스크 쪽이 죽어 있다.** tme 에서 실측하면 디스크 자격증명은
+    #   "Not logged in" 이고 deploy/.env 의 토큰은 정상 동작한다(2026-08-14, 인제스트가 이것 때문에
+    #   전 문항 unit=? 로 실패). 그래서 **명시적으로 주어진 토큰이 있으면 그걸 쓰고**,
+    #   없을 때만 디스크에 맡긴다.
     sub_env = {k: v for k, v in os.environ.items() if k != 'CLAUDE_CODE_OAUTH_TOKEN'}
+    _tok = os.environ.get('MS_CLAUDE_OAUTH_TOKEN', '').strip()
+    if not _tok:
+        _envf = Path(__file__).resolve().parents[2] / 'deploy' / '.env'
+        if _envf.exists():
+            for _l in _envf.read_text(encoding='utf-8').splitlines():
+                if _l.startswith('MS_CLAUDE_OAUTH_TOKEN='):
+                    _tok = _l.split('=', 1)[1].strip()
+                    break
+    if _tok:
+        sub_env['CLAUDE_CODE_OAUTH_TOKEN'] = _tok
     # ★git 블록 제거 → prefix 안정(prompt 캐시 cache_read 고정). clean cwd 보강. 매핑은 git 정보 불필요.
     sub_env['CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS'] = '1'
     for attempt in range(retries + 1):

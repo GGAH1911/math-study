@@ -1,0 +1,16 @@
+{
+  "text_sha": "652f045a3bc2",
+  "meta": {
+    "searchable_text": "8. 2cosθ+cos(\\frac{π}{2}-θ)=0이고 sinθ<0일 때, cosθ의 값은?\n[3점]\n① 5 ② ③ 0\n④\\frac{-\\frac{2√}{5 \\sqrt{5}}}{5}⑤\\frac{-\\frac{\\sqrt{5}}{5 \\sqrt{5}} 2}{5}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-1/삼각함수",
+    "concepts": [
+      "functions/math-1/삼각함수/기본_삼각함수_항등식",
+      "functions/math-1/삼각함수/사분면별_부호"
+    ],
+    "exam_intent": "여각 공식과 피타고라스 항등식을 이용해 조건을 만족하는 코사인 값을 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

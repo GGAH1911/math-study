@@ -1,0 +1,17 @@
+{
+  "text_sha": "15b7e17048be",
+  "meta": {
+    "searchable_text": "7. 함수 f(x)=x^{3}+x^{2}+a에 대하여\n\\int_{0}^{2}f(x)dx=\\frac{40}{3}+\\int_{0}^{-2}f(x)dx\n일 때, 상수 a의 값은? [3점]\n①\\frac{11}{6}② 2 ③\\frac{13}{6}④\\frac{7}{3}⑤\\frac{5}{2}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/적분",
+    "concepts": [
+      "functions/math-2/적분/정적분_계산",
+      "functions/math-2/적분/조건부상수결정",
+      "functions/math-2/적분/다항함수의_적분"
+    ],
+    "exam_intent": "정적분 조건식을 세워 미지상수 a를 구할 수 있는지 평가",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "text_sha": "866d46daf0c9",
+  "meta": {
+    "searchable_text": "9. 양수 t에 대하여 함수 f(x)=2x^{3}-7x^{2}+1의 그래프 위의\n점 (t,f(t))에서의 접선이 점 (0,1)을 지나도록 하는 t의\n값은? [4점]\n①\\frac{3}{4}② 1 ③\\frac{5}{4}④\\frac{3}{2}⑤\\frac{7}{4}",
+    "format": "numeric",
+    "has_figure": false,
+    "unit": "functions/math-2/미분",
+    "concepts": [
+      "functions/math-2/미분/곡선의_접선",
+      "functions/math-2/미분/미분과_접선"
+    ],
+    "exam_intent": "삼차함수 위의 점에서의 접선이 특정 점을 지나도록 하는 매개변수 t의 값 구하기",
+    "killer_tier": "early",
+    "cognitive_type": "계산"
+  }
+}
