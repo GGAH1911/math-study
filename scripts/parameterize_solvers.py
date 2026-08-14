@@ -244,6 +244,15 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
         return stem, False, '정답 없음'
     original = src.read_text(encoding='utf-8', errors='replace')
 
+    # ★모델을 부르기 전에 **이미 통과하는지** 먼저 본다. 중단·재개 때 상태에 기록되지
+    #   못한 성공분이 남는데(파일은 갱신됐는데 state 는 못 쓴 경우), 그걸 다시 모델에
+    #   보내면 "고칠 게 없다"는 답이 오고 예전 코드는 그걸 실패로 처리했다.
+    #   규격 미달인 대다수는 PARAMS 부재로 즉시 떨어지므로 선검사 비용은 작다.
+    if 'PARAMS' in original and 'def solve(' in original:
+        ok1, _ = gate_params(stem)
+        if ok1 and gate_hardcode(stem, gold, fmt)[0]:
+            return stem, True, '이미 규격 충족(모델 호출 안 함)'
+
     cwd, work = lane_dirs()
     (work / 'solver.py').write_text(original, encoding='utf-8')
     (work / 'problem.txt').write_text(
@@ -265,10 +274,9 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
     _record_cache(r.stdout)
 
     new = (work / 'solver.py').read_text(encoding='utf-8', errors='replace')
-    if new.strip() == original.strip():
-        return stem, False, '변경 없음'
     if 'PARAMS' not in new or 'def solve(' not in new:
         return stem, False, '규격 미작성'
+    # 손대지 않았더라도 **게이트로 판정한다** — 안 고친 게 옳은 경우가 있다.
 
     src.write_text(new, encoding='utf-8')
     ok1, why1 = gate_params(stem)
