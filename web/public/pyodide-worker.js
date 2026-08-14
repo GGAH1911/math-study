@@ -118,66 +118,6 @@ def assert_segments_disjoint(p1, p2, q1, q2, tag):
         except Exception:
             where = inter
         print(f"[VERIFY FAIL] {tag}: segments {tuple(p1)}-{tuple(p2)} & {tuple(q1)}-{tuple(q2)} MEET at {where}")
-\`;
-
-type RunRequest = { code: string };
-
-export const POST: APIRoute = async ({ request }) => {
-  let body: RunRequest;
-  try { body = await request.json(); }
-  catch { return new Response(JSON.stringify({ error: 'bad json' }), { status: 400 }); }
-
-  const code = (body.code ?? '').trim();
-  if (!code) return new Response(JSON.stringify({ error: 'empty code' }), { status: 400 });
-  if (code.length > 4000) return new Response(JSON.stringify({ error: 'code too long' }), { status: 400 });
-
-  // ★샌드박싱(2026-06): sympy 계산 외 위험 토큰 차단 — 임의 코드실행·파일/네트워크/내부 접근 방지.
-  //   HEADER가 필요한 심볼·헬퍼를 모두 제공하므로 사용자 코드엔 import·시스템 접근이 불필요하다.
-  if (/__|\b(import|os|sys|subprocess|socket|shutil|importlib|pickle|marshal|ctypes|eval|exec|compile|open|input|globals|locals|getattr|setattr|delattr|breakpoint|exit|quit)\b/.test(code)) {
-    return new Response(JSON.stringify({ error: 'disallowed token (sympy 계산만 허용)' }), { status: 400 });
-  }
-
-  return new Promise<Response>((resolveResp) => {
-    const child = spawn(VENV_PYTHON, ['-c', HEADER + code], {
-      // ★최소 env — process.env(DATABASE_URL·세션시크릿·OAuth토큰) 상속 금지(코드가 os.environ 못 읽게 이중방어).
-      env: { PYTHONIOENCODING: 'utf-8', PATH: '/usr/bin:/bin', HOME: '/tmp', LANG: 'C.UTF-8' },
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-
-    let stdout = '';
-    let stderr = '';
-    let truncated = false;
-    const onChunk = (s: string) => (chunk: Buffer) => {
-      const t = chunk.toString('utf-8');
-      if (s === 'out') {
-        if (stdout.length + t.length > MAX_OUTPUT) { stdout += t.slice(0, MAX_OUTPUT - stdout.length); truncated = true; }
-        else stdout += t;
-      } else {
-        if (stderr.length + t.length > MAX_OUTPUT) { stderr += t.slice(0, MAX_OUTPUT - stderr.length); truncated = true; }
-        else stderr += t;
-      }
-    };
-    child.stdout.on('data', onChunk('out'));
-    child.stderr.on('data', onChunk('err'));
-
-    const killer = setTimeout(() => { child.kill('SIGKILL'); }, TIMEOUT_MS);
-
-    child.on('close', (code) => {
-      clearTimeout(killer);
-      resolveResp(new Response(JSON.stringify({
-        ok: code === 0,
-        exit_code: code,
-        stdout: stdout.trim(),
-        stderr: stderr.trim(),
-        truncated,
-      }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
-    });
-    child.on('error', (e) => {
-      clearTimeout(killer);
-      resolveResp(new Response(JSON.stringify({ ok: false, error: e.message }), { status: 500 }));
-    });
-  });
-};
 
 def assert_distance3d(p1, p2, expected, tag):
     """3D 거리 검증. 튜터 프롬프트(geometry3d STEP B)가 이 이름을 쓰라고 지시한다."""
