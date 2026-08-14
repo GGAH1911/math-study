@@ -1,0 +1,161 @@
+# ============================================================================
+# math-study — 세션 부팅/셧다운 프로토콜 (session-lifecycle 스킬이 읽는다)
+#
+# ★설계 원칙: 서비스·DB·크론은 전부 tme 에만 있다. 그래서 모든 헬스체크·게이트는
+#   scripts/ops/on_tme.sh 로 감싼다 — tme 직결 세션에서는 로컬 실행, 맥북 원격개발
+#   세션에서는 ssh tme 로 넘어간다. 덕분에 **어느 기계에서 세션을 열든 같은 절차**가 돈다.
+#
+# 사람이 읽는 판정 기준·사고 이력은 docs/ops/SHUTDOWN.md 와 CLAUDE.md 에 있다.
+# 여기는 "무엇을 읽고 · 무엇을 확인하고 · 무엇을 돌리고 · 어디에 적는지"만 적는다.
+# 비밀값은 절대 넣지 않는다(값은 deploy/.env · ~/.config/math-study/ 에만).
+# ============================================================================
+version: 1
+
+project:
+  name: math-study
+  description: "한국 수능·평가원·교육청 기출 학습 메시(LWIP) + Astro 웹앱 + LLM 튜터. 실행 실체는 tme."
+
+boot:
+  # ── 1. 컨텍스트 복원 — "어디까지 했나 / 다음에 뭘 하나" ──────────────────────
+  context:
+    - path: CLAUDE.md
+      role: "운영 규칙·위험목록·원격개발 흐름 (먼저 읽을 것)"
+    - path: docs/TODO.md
+      role: "미룬 일 + 판정 근거 (진행 중인 작업의 실질 SSOT)"
+    - path: docs/architecture/app-roadmap.md
+      role: "출시 로드맵 — 무엇을 어떤 순서로 (게이트 기준, 날짜 없음)"
+    - path: "docs/handover/{YYYY}/{MM}/{DD}_session.md"
+      select: latest
+      role: "최신 세션 핸드오버 — 「차기 과제」·「잔류 리스크」부터 읽는다"
+    - run: "git log --oneline -15"
+      role: "최근 커밋 15건"
+    - run: "git status --short"
+      role: "미커밋 변경"
+
+  # ── 2. 인프라 헬스체크 ──────────────────────────────────────────────────────
+  health:
+    # ★false 유지. dev 서버·컨테이너를 세션이 마음대로 흔들지 않는다.
+    #   사장님이 학습 중일 수 있다(docs/ops/SHUTDOWN.md 고유 규칙).
+    auto_restart: false
+    services:
+      - name: "postgres (deploy-db-1 · 127.0.0.1:5434)"
+        check: "bash scripts/ops/on_tme.sh 'docker inspect -f \"{{.State.Health.Status}}\" deploy-db-1 | grep -q healthy'"
+        restart: "bash scripts/ops/on_tme.sh 'docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml up -d db'"
+        restartable: false
+      - name: "web 컨테이너 (deploy-web-1 · :4324 · dev 오버레이/HMR)"
+        check: "bash scripts/ops/on_tme.sh 'docker inspect -f \"{{.State.Health.Status}}\" deploy-web-1 | grep -q healthy'"
+        restart: "bash scripts/ops/on_tme.sh 'docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml up -d web'"
+        restartable: false
+      - name: "웹 얕은 헬스 (/api/health)"
+        check: "bash scripts/ops/on_tme.sh 'curl -sf --max-time 15 http://127.0.0.1:4324/api/health > /dev/null'"
+        restartable: false
+      - name: "튜터 딥 헬스 (/api/health?deep=1 — 튜터를 실제 호출)"
+        # ★얕은 헬스만 보면 안 된다. 2026-08-12 에 /api/health 는 15시간 내내 200 인데
+        #   튜터는 죽어 있었다. 호출당 $0.00001 수준이라 매 부팅 1회는 싸다.
+        check: "bash scripts/ops/on_tme.sh 'curl -sf --max-time 60 \"http://127.0.0.1:4324/api/health?deep=1\" | grep -q .\\\"tutor\\\":\\\"ok\\\".'"
+        restartable: false
+
+  # ── 3. 코드베이스 감사 (읽기 전용) ──────────────────────────────────────────
+  audit:
+    git_status: true
+    log_scan:
+      paths: ["/tmp/tutor_health.log", "/tmp/widget_daily.log", "/tmp/daily-illustration.log"]
+      pattern: "실패|ERROR|██"
+    gates_preview:
+      - name: "파일 크기 래칫 (미리보기)"
+        command: "bash scripts/ops/on_tme.sh 'python3 scripts/ops/verify_file_size_ratchet.py'"
+        readonly: true
+      - name: "sympy 헤더 동기 (미리보기)"
+        command: "bash scripts/ops/on_tme.sh 'python3 scripts/ops/verify_sympy_header_sync.py'"
+        readonly: true
+      - name: "돌고 있는 배치 확인"
+        # ★pgrep 은 자기 명령줄을 물 수 있다(2026-08-13 오판). 실제 cmdline 을 읽어 확인한다.
+        command: "bash scripts/ops/on_tme.sh 'for p in $(pgrep -f \"scripts/(backfill|parameterize|ingest)\" 2>/dev/null); do tr \"\\0\" \" \" < /proc/$p/cmdline 2>/dev/null; echo \" [pid $p]\"; done; true'"
+        readonly: true
+
+  brief:
+    summary: "가동/정지 · 미커밋 · 돌고 있는 배치 · 다음 착수 지점을 보고한다."
+    role_recommendation:
+      source: "docs/TODO.md"
+      note: "TODO 최상단 항목과 로드맵의 「지금 당장」을 대조해 다음 작업을 제안한다."
+
+shutdown:
+  reconcile:
+    git_diff: true
+    git_status: true
+
+  # ── 기록 (Append-Only) ──────────────────────────────────────────────────────
+  record:
+    handover:
+      # 규약은 docs/handover/00_HANDOVER.md — 하루 1파일, 같은 날 여러 세션은 이어붙인다.
+      path: "docs/handover/{YYYY}/{MM}/{DD}_session.md"
+      mode: append-only
+    roadmap:
+      - path: "docs/architecture/app-roadmap.md"
+      - path: "docs/TODO.md"
+
+  # ── 검증 게이트 (실패하면 커밋을 막는다) ────────────────────────────────────
+  gates:
+    - name: "파일 크기 래칫"
+      command: "bash scripts/ops/on_tme.sh 'python3 scripts/ops/verify_file_size_ratchet.py'"
+      blocking: true
+      expect: "500줄 초과 파일이 **더 커지지 않았다**(초과 금지가 아니라 증가 금지)"
+      on_fail: "줄이거나, 정당하면 기준선을 고치는 커밋에 **이유를 적는다**. 조용히 숫자만 올리면 래칫이 아니다."
+    - name: "sympy 헤더 동기"
+      command: "bash scripts/ops/on_tme.sh 'python3 scripts/ops/verify_sympy_header_sync.py'"
+      blocking: true
+      expect: "브라우저(pyodide-worker.js)와 서버(api/sympy.ts) 헤더 일치"
+      on_fail: "★브라우저가 1차다. 서버만 고치면 사용자에겐 아무 변화가 없다(2026-08-14 실사고)."
+    - name: "웹 정상 + 튜터 실호출"
+      command: "bash scripts/ops/on_tme.sh 'curl -sf --max-time 60 \"http://127.0.0.1:4324/api/health?deep=1\" | grep -q .\\\"tutor\\\":\\\"ok\\\".'"
+      blocking: true
+      expect: "status/db/tutor 모두 ok"
+      on_fail: "★컨테이너가 재시작 루프면 health 가 000 이다. 200 만 보지 말고 docker compose logs 를 본다."
+    - name: "web 타입체크·빌드 (CI 와 동일)"
+      # push 하면 .github/workflows/ci.yml 이 같은 걸 돈다. 여기서 먼저 깨뜨려 잡는다.
+      command: "bash scripts/ops/on_tme.sh 'docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml exec -T web sh -c \"cd /app/web && npm run prebuild && npx astro check && npx astro build\"'"
+      blocking: false
+      expect: "astro check/build 통과"
+      on_fail: "CI 가 main 에서 같은 지점에서 깨진다. 푸시 전에 고치는 편이 싸다."
+
+  remediation:
+    auto_run: false
+    tools:
+      - name: "래칫 기준선 내리기"
+        command: "bash scripts/ops/on_tme.sh 'python3 scripts/ops/verify_file_size_ratchet.py --tighten'"
+        note: "파일이 **줄었을 때만**. 되돌아가는 것까지 막는다. 커진 걸 덮는 용도가 아니다."
+      - name: "문서 자동인덱스 갱신"
+        command: "bash scripts/ops/on_tme.sh 'node web/scripts/ensure-doc-indices.mjs'"
+        note: "00_*.md 인덱스 갱신. 직접 쓴 설명은 보존된다."
+
+  safety_checks:
+    git_status: true
+    infra_running: true
+    # ★셧다운은 전원차단이 아니다. dev 서버·컨테이너·크론은 그대로 둔다.
+    #   server.sh 는 watchdog 이 재시작하므로 명시적 stop 만이 죽인다 — stop 금지.
+    keep_services_running: true
+    log_scan:
+      paths: ["/tmp/tutor_health.log"]
+      pattern: "실패|██"
+
+  commit:
+    enabled: true
+    scope: changed
+    message_template: "session: {summary}"
+    exclude:
+      - ".env"
+      - "deploy/.env"
+      - "openrouterkey.txt"
+      - "*.local"
+      - ".llm-monitor/**"
+
+  push:
+    enabled: true
+    rebase: true
+    # ★confirm 유지. 03:00 widget_spec_loop 크론이 tme 에서 같은 브랜치에 커밋·푸시한다 —
+    #   rebase 없이 밀면 충돌하거나 크론 커밋을 덮는다. 사람 눈으로 한 번 본다.
+    confirm: true
+    remote: origin
+
+  brief:
+    summary: "완료 / 잔류 리스크 / 차기 과제를 구분해 보고한다. **못 잰 것은 「못 쟀다」고 적는다** — 「깨졌다」와 다르다."
