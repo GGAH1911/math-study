@@ -1,485 +1,486 @@
 {
-  "spec": {
-    "shapes": [
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "sqrt(2*u) + v*(sqrt(2*u)+1)",
-        "z": "0",
-        "uRange": [
-          0,
-          2
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 8,
-        "color": "#60a5fa",
-        "opacity": 0.3
-      },
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "sqrt(2*u) + v*(sqrt(2*u)+1)",
-        "z": "sqrt(2*u)+1",
-        "uRange": [
-          0,
-          2
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 8,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "sqrt(2*u)",
-        "z": "v*(sqrt(2*u)+1)",
-        "uRange": [
-          0,
-          2
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 8,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "2*sqrt(2*u)+1",
-        "z": "v*(sqrt(2*u)+1)",
-        "uRange": [
-          0,
-          2
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 8,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "0",
-        "y": "u",
-        "z": "v",
-        "uRange": [
-          0,
-          1
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 8,
-        "vSamples": 8,
-        "color": "#60a5fa",
-        "opacity": 0.35
-      },
-      {
-        "type": "parametricSurface",
-        "x": "2",
-        "y": "2+3*u",
-        "z": "3*v",
-        "uRange": [
-          0,
-          1
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 8,
-        "vSamples": 8,
-        "color": "#60a5fa",
-        "opacity": 0.35
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "sqrt(2*t)",
-        "z": "0",
-        "tRange": [
-          0,
-          3.0
-        ],
-        "samples": 300,
-        "color": "#f472b6",
-        "strokeWidth": 2.5
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "2*sqrt(2*t)+1",
-        "z": "0",
-        "tRange": [
-          0,
-          3.0
-        ],
-        "samples": 300,
-        "color": "#f472b6",
-        "strokeWidth": 2.5
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "sqrt(2*t)",
-        "z": "sqrt(2*t)+1",
-        "tRange": [
-          0,
-          2
-        ],
-        "samples": 300,
-        "color": "#93c5fd",
-        "strokeWidth": 2
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "2*sqrt(2*t)+1",
-        "z": "sqrt(2*t)+1",
-        "tRange": [
-          0,
-          2
-        ],
-        "samples": 300,
-        "color": "#93c5fd",
-        "strokeWidth": 2
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          0,
-          1,
-          0
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          1,
-          0
-        ],
-        "to": [
-          0,
-          1,
-          1
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          1,
-          1
-        ],
-        "to": [
-          0,
-          0,
-          1
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          1
-        ],
-        "to": [
-          0,
-          0,
-          0
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2,
-          2,
-          0
-        ],
-        "to": [
-          2,
-          5,
-          0
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2,
-          5,
-          0
-        ],
-        "to": [
-          2,
-          5,
-          3
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2,
-          5,
-          3
-        ],
-        "to": [
-          2,
-          2,
-          3
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2,
-          2,
-          3
-        ],
-        "to": [
-          2,
-          2,
-          0
-        ],
-        "color": "#93c5fd"
-      },
-      {
-        "type": "parametricSurface",
-        "x": "0.5",
-        "y": "1+2*u",
-        "z": "2*v",
-        "uRange": [
-          0,
-          1
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 8,
-        "vSamples": 8,
-        "color": "#fbbf24",
-        "opacity": 0.5
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.5,
-          1,
-          0
-        ],
-        "to": [
-          0.5,
-          3,
-          0
-        ],
-        "color": "#fbbf24"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.5,
-          3,
-          0
-        ],
-        "to": [
-          0.5,
-          3,
-          2
-        ],
-        "color": "#fbbf24"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.5,
-          3,
-          2
-        ],
-        "to": [
-          0.5,
-          1,
-          2
-        ],
-        "color": "#fbbf24"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.5,
-          1,
-          2
-        ],
-        "to": [
-          0.5,
-          1,
-          0
-        ],
-        "color": "#fbbf24"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          3.4,
-          0,
-          0
-        ],
-        "color": "#71717a"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          0,
-          6.2,
-          0
-        ],
-        "color": "#71717a"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2,
-          0,
-          0
-        ],
-        "to": [
-          2,
-          5.4,
-          0
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          0
-        ],
-        "label": "O",
-        "color": "#fafafa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          3.6,
-          0,
-          0
-        ],
-        "text": "x",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          0,
-          6.5,
-          0
-        ],
-        "text": "y",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          2,
-          -0.45,
-          0
-        ],
-        "text": "2",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          3.0,
-          3.05,
-          0
-        ],
-        "text": "$y=\\sqrt{2x}$",
-        "color": "#f472b6"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          3.0,
-          6.5,
-          0
-        ],
-        "text": "$y=2\\sqrt{2x}+1$",
-        "color": "#f472b6"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          0.5,
-          2,
-          2.45
-        ],
-        "text": "$\\sqrt{2x}+1$",
-        "color": "#fbbf24"
-      }
+ "spec": {
+  "shapes": [
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt(2*u) + v*(sqrt(2*u)+1)",
+    "z": "0",
+    "uRange": [
+     0,
+     2
     ],
-    "cameraPosition": [
-      7.5,
-      -8.5,
-      6.0
+    "vRange": [
+     0,
+     1
     ],
-    "title": "밑면이 두 곡선 사이의 영역이고 x축에 수직인 단면이 정사각형인 입체"
-  },
-  "conditions": [
-    "밑면의 아래쪽 경계가 곡선 y=√(2x) 위에 있다 (x=0, 1/2, 2에서 확인)",
-    "밑면의 위쪽 경계가 곡선 y=2√(2x)+1 위에 있다 (x=0, 1/2, 2에서 확인)",
-    "x=0, 1/2, 2에서 자른 단면의 네 변 길이가 모두 √(2x)+1 로 같다 (각각 1, 2, 3)",
-    "그 단면의 이웃한 두 변이 서로 수직이다 (정사각형)",
-    "그 단면의 네 꼭짓점이 한 평면 위에 있다",
-    "그 단면의 두 변이 모두 x축에 수직이다 (x축에 수직인 평면으로 자른 단면)",
-    "밑면의 왼쪽 경계 (0,0,0)-(0,1,0) 이 y축 위에 있다",
-    "밑면의 오른쪽 경계 (2,2,0)-(2,5,0) 이 평면 x=2 위에 있다",
-    "부피 V = ∫₀² (√(2x)+1)² dx = 34/3",
-    "30V = 340 (문제의 답)"
+    "uSamples": 64,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.3
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt(2*u) + v*(sqrt(2*u)+1)",
+    "z": "sqrt(2*u)+1",
+    "uRange": [
+     0,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt(2*u)",
+    "z": "v*(sqrt(2*u)+1)",
+    "uRange": [
+     0,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "2*sqrt(2*u)+1",
+    "z": "v*(sqrt(2*u)+1)",
+    "uRange": [
+     0,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "0",
+    "y": "u",
+    "z": "v",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 8,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.35
+   },
+   {
+    "type": "parametricSurface",
+    "x": "2",
+    "y": "2+3*u",
+    "z": "3*v",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 8,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.35
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(2*t)",
+    "z": "0",
+    "tRange": [
+     0,
+     3.0
+    ],
+    "samples": 300,
+    "color": "#f472b6",
+    "strokeWidth": 2.5
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "2*sqrt(2*t)+1",
+    "z": "0",
+    "tRange": [
+     0,
+     3.0
+    ],
+    "samples": 300,
+    "color": "#f472b6",
+    "strokeWidth": 2.5
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(2*t)",
+    "z": "sqrt(2*t)+1",
+    "tRange": [
+     0,
+     2
+    ],
+    "samples": 300,
+    "color": "#93c5fd",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "2*sqrt(2*t)+1",
+    "z": "sqrt(2*t)+1",
+    "tRange": [
+     0,
+     2
+    ],
+    "samples": 300,
+    "color": "#93c5fd",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     0,
+     1,
+     0
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     1,
+     0
+    ],
+    "to": [
+     0,
+     1,
+     1
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     1,
+     1
+    ],
+    "to": [
+     0,
+     0,
+     1
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     1
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     2,
+     0
+    ],
+    "to": [
+     2,
+     5,
+     0
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     5,
+     0
+    ],
+    "to": [
+     2,
+     5,
+     3
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     5,
+     3
+    ],
+    "to": [
+     2,
+     2,
+     3
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     2,
+     3
+    ],
+    "to": [
+     2,
+     2,
+     0
+    ],
+    "color": "#93c5fd"
+   },
+   {
+    "type": "parametricSurface",
+    "x": "0.5",
+    "y": "1+2*u",
+    "z": "2*v",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 8,
+    "vSamples": 8,
+    "color": "#fbbf24",
+    "opacity": 0.5
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     1,
+     0
+    ],
+    "to": [
+     0.5,
+     3,
+     0
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     3,
+     0
+    ],
+    "to": [
+     0.5,
+     3,
+     2
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     3,
+     2
+    ],
+    "to": [
+     0.5,
+     1,
+     2
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     1,
+     2
+    ],
+    "to": [
+     0.5,
+     1,
+     0
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     3.4,
+     0,
+     0
+    ],
+    "color": "#71717a"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     0,
+     6.2,
+     0
+    ],
+    "color": "#71717a"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     0,
+     0
+    ],
+    "to": [
+     2,
+     5.4,
+     0
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "O",
+    "color": "#fafafa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3.6,
+     0,
+     0
+    ],
+    "text": "x",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     6.5,
+     0
+    ],
+    "text": "y",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2,
+     -0.45,
+     0
+    ],
+    "text": "2",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3.0,
+     3.05,
+     0
+    ],
+    "text": "$y=\\sqrt{2x}$",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3.0,
+     6.5,
+     0
+    ],
+    "text": "$y=2\\sqrt{2x}+1$",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.5,
+     2,
+     2.45
+    ],
+    "text": "$\\sqrt{2x}+1$",
+    "color": "#fbbf24"
+   }
   ],
-  "verify": "from sympy import Rational, sqrt, simplify, integrate, symbols\n\nX = symbols('X', nonnegative=True)\nlower = sqrt(2*X)              # 아래 곡선 y = sqrt(2x)\nupper = 2*sqrt(2*X) + 1        # 위 곡선 y = 2*sqrt(2x)+1\nh = simplify(upper - lower)    # 단면 정사각형 한 변 = sqrt(2x)+1\n\ndef sq(a):\n    lo = simplify(lower.subs(X, a)); up = simplify(upper.subs(X, a))\n    s = simplify(up - lo)\n    return [(a, lo, 0), (a, up, 0), (a, up, s), (a, lo, s)], s\n\ndef assert_on_curve(pt, expr, tag):\n    val = simplify(expr.subs(X, pt[0]))\n    if _close(pt[1] - val) and _close(pt[2]):\n        print(f\"[VERIFY OK] {tag}\")\n    else:\n        print(f\"[VERIFY FAIL] {tag}: y={pt[1]} != {val} 또는 z={pt[2]} != 0\")\n\nXAX = ((0, 0, 0), (1, 0, 0))\n\nfor a in [0, Rational(1, 2), 2]:\n    (A, B, C, D), s = sq(a)\n    tg = f\"x={a}\"\n    assert_on_curve(A, lower, f\"{tg} 단면 아래끝이 곡선 y=sqrt(2x) 위\")\n    assert_on_curve(B, upper, f\"{tg} 단면 위끝이 곡선 y=2sqrt(2x)+1 위\")\n    assert_distance(A, B, s, f\"{tg} 단면 밑변 = sqrt(2x)+1 = {s}\")\n    assert_distance(B, C, s, f\"{tg} 단면 오른변 = {s}\")\n    assert_distance(C, D, s, f\"{tg} 단면 윗변 = {s}\")\n    assert_distance(D, A, s, f\"{tg} 단면 왼변 = {s}\")\n    assert_perpendicular(A, B, B, C, f\"{tg} 단면 B 직각\")\n    assert_perpendicular(C, D, D, A, f\"{tg} 단면 D 직각\")\n    assert_coplanar([A, B, C, D], f\"{tg} 단면 네 점이 한 평면\")\n    assert_perpendicular(A, B, XAX[0], XAX[1], f\"{tg} 단면 밑변이 x축에 수직\")\n    assert_perpendicular(A, D, XAX[0], XAX[1], f\"{tg} 단면 옆변이 x축에 수직\")\n\n# 밑면의 왼쪽 경계는 y축 위 (x=0), 오른쪽 경계는 평면 x=2 위\n(A0, B0, C0, D0), s0 = sq(0)\nassert_on_line(A0, (0, 0, 0), (0, 5, 0), \"밑면 왼쪽 경계 아래끝이 y축 위\")\nassert_on_line(B0, (0, 0, 0), (0, 5, 0), \"밑면 왼쪽 경계 위끝이 y축 위\")\n(A2, B2, C2, D2), s2 = sq(2)\nPL2 = [(2, 0, 0), (2, 1, 0), (2, 0, 1)]\nassert_on_plane(A2, PL2, \"밑면 오른쪽 경계 아래끝이 평면 x=2 위\")\nassert_on_plane(B2, PL2, \"밑면 오른쪽 경계 위끝이 평면 x=2 위\")\n\n# 부피\nV = simplify(integrate(h**2, (X, 0, 2)))\nif _close(V - Rational(34, 3)):\n    print(\"[VERIFY OK] 부피 V = 적분 0..2 (sqrt(2x)+1)^2 dx = 34/3\")\nelse:\n    print(f\"[VERIFY FAIL] 부피: V={V} != 34/3\")\nif _close(30*V - 340):\n    print(\"[VERIFY OK] 30V = 340 (문제의 답)\")\nelse:\n    print(f\"[VERIFY FAIL] 30V={30*V} != 340\")\n",
-  "note": "밑면은 두 곡선 y=√(2x), y=2√(2x)+1 과 y축, 직선 x=2 로 둘러싸인 영역이고, x축에 수직으로 자른 단면은 한 변의 길이가 (2√(2x)+1)-√(2x)=√(2x)+1 인 정사각형입니다. 노란 단면은 x=1/2 에서 자른 한 변 2 인 정사각형입니다."
+  "cameraPosition": [
+   7.5,
+   -8.5,
+   6.0
+  ],
+  "title": "밑면이 두 곡선 사이의 영역이고 x축에 수직인 단면이 정사각형인 입체"
+ },
+ "conditions": [
+  "밑면의 아래쪽 경계가 곡선 y=√(2x) 위에 있다 (x=0, 1/2, 2에서 확인)",
+  "밑면의 위쪽 경계가 곡선 y=2√(2x)+1 위에 있다 (x=0, 1/2, 2에서 확인)",
+  "x=0, 1/2, 2에서 자른 단면의 네 변 길이가 모두 √(2x)+1 로 같다 (각각 1, 2, 3)",
+  "그 단면의 이웃한 두 변이 서로 수직이다 (정사각형)",
+  "그 단면의 네 꼭짓점이 한 평면 위에 있다",
+  "그 단면의 두 변이 모두 x축에 수직이다 (x축에 수직인 평면으로 자른 단면)",
+  "밑면의 왼쪽 경계 (0,0,0)-(0,1,0) 이 y축 위에 있다",
+  "밑면의 오른쪽 경계 (2,2,0)-(2,5,0) 이 평면 x=2 위에 있다",
+  "부피 V = ∫₀² (√(2x)+1)² dx = 34/3",
+  "30V = 340 (문제의 답)"
+ ],
+ "verify": "from sympy import Rational, sqrt, simplify, integrate, symbols\n\nX = symbols('X', nonnegative=True)\nlower = sqrt(2*X)              # 아래 곡선 y = sqrt(2x)\nupper = 2*sqrt(2*X) + 1        # 위 곡선 y = 2*sqrt(2x)+1\nh = simplify(upper - lower)    # 단면 정사각형 한 변 = sqrt(2x)+1\n\ndef sq(a):\n    lo = simplify(lower.subs(X, a)); up = simplify(upper.subs(X, a))\n    s = simplify(up - lo)\n    return [(a, lo, 0), (a, up, 0), (a, up, s), (a, lo, s)], s\n\ndef assert_on_curve(pt, expr, tag):\n    val = simplify(expr.subs(X, pt[0]))\n    if _close(pt[1] - val) and _close(pt[2]):\n        print(f\"[VERIFY OK] {tag}\")\n    else:\n        print(f\"[VERIFY FAIL] {tag}: y={pt[1]} != {val} 또는 z={pt[2]} != 0\")\n\nXAX = ((0, 0, 0), (1, 0, 0))\n\nfor a in [0, Rational(1, 2), 2]:\n    (A, B, C, D), s = sq(a)\n    tg = f\"x={a}\"\n    assert_on_curve(A, lower, f\"{tg} 단면 아래끝이 곡선 y=sqrt(2x) 위\")\n    assert_on_curve(B, upper, f\"{tg} 단면 위끝이 곡선 y=2sqrt(2x)+1 위\")\n    assert_distance(A, B, s, f\"{tg} 단면 밑변 = sqrt(2x)+1 = {s}\")\n    assert_distance(B, C, s, f\"{tg} 단면 오른변 = {s}\")\n    assert_distance(C, D, s, f\"{tg} 단면 윗변 = {s}\")\n    assert_distance(D, A, s, f\"{tg} 단면 왼변 = {s}\")\n    assert_perpendicular(A, B, B, C, f\"{tg} 단면 B 직각\")\n    assert_perpendicular(C, D, D, A, f\"{tg} 단면 D 직각\")\n    assert_coplanar([A, B, C, D], f\"{tg} 단면 네 점이 한 평면\")\n    assert_perpendicular(A, B, XAX[0], XAX[1], f\"{tg} 단면 밑변이 x축에 수직\")\n    assert_perpendicular(A, D, XAX[0], XAX[1], f\"{tg} 단면 옆변이 x축에 수직\")\n\n# 밑면의 왼쪽 경계는 y축 위 (x=0), 오른쪽 경계는 평면 x=2 위\n(A0, B0, C0, D0), s0 = sq(0)\nassert_on_line(A0, (0, 0, 0), (0, 5, 0), \"밑면 왼쪽 경계 아래끝이 y축 위\")\nassert_on_line(B0, (0, 0, 0), (0, 5, 0), \"밑면 왼쪽 경계 위끝이 y축 위\")\n(A2, B2, C2, D2), s2 = sq(2)\nPL2 = [(2, 0, 0), (2, 1, 0), (2, 0, 1)]\nassert_on_plane(A2, PL2, \"밑면 오른쪽 경계 아래끝이 평면 x=2 위\")\nassert_on_plane(B2, PL2, \"밑면 오른쪽 경계 위끝이 평면 x=2 위\")\n\n# 부피\nV = simplify(integrate(h**2, (X, 0, 2)))\nif _close(V - Rational(34, 3)):\n    print(\"[VERIFY OK] 부피 V = 적분 0..2 (sqrt(2x)+1)^2 dx = 34/3\")\nelse:\n    print(f\"[VERIFY FAIL] 부피: V={V} != 34/3\")\nif _close(30*V - 340):\n    print(\"[VERIFY OK] 30V = 340 (문제의 답)\")\nelse:\n    print(f\"[VERIFY FAIL] 30V={30*V} != 340\")\n",
+ "note": "밑면은 두 곡선 y=√(2x), y=2√(2x)+1 과 y축, 직선 x=2 로 둘러싸인 영역이고, x축에 수직으로 자른 단면은 한 변의 길이가 (2√(2x)+1)-√(2x)=√(2x)+1 인 정사각형입니다. 노란 단면은 x=1/2 에서 자른 한 변 2 인 정사각형입니다.",
+ "source_sha": "1d34d029011b5df6"
 }

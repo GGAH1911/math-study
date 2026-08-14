@@ -11,32 +11,88 @@
    {
     "type": "polyhedron",
     "vertices": [
-     [-13, -11, 0],
-     [13, -11, 0],
-     [13, 11, 0],
-     [-13, 11, 0]
+     [
+      -13,
+      -11,
+      0
+     ],
+     [
+      13,
+      -11,
+      0
+     ],
+     [
+      13,
+      11,
+      0
+     ],
+     [
+      -13,
+      11,
+      0
+     ]
     ],
-    "faces": [[0, 1, 2, 3]],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
     "fill": "#38bdf8",
     "fillOpacity": 0.16,
     "stroke": "#7dd3fc",
     "strokeWidth": 1,
-    "labels": ["β", "", "", ""]
+    "labels": [
+     "β",
+     "",
+     "",
+     ""
+    ]
    },
    {
     "type": "polyhedron",
     "vertices": [
-     [-13, -4.982019, 9.807114],
-     [13, -4.982019, 9.807114],
-     [13, 4.982019, -9.807114],
-     [-13, 4.982019, -9.807114]
+     [
+      -13,
+      -4.982019,
+      9.807114
+     ],
+     [
+      13,
+      -4.982019,
+      9.807114
+     ],
+     [
+      13,
+      4.982019,
+      -9.807114
+     ],
+     [
+      -13,
+      4.982019,
+      -9.807114
+     ]
     ],
-    "faces": [[0, 1, 2, 3]],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
     "fill": "#fbbf24",
     "fillOpacity": 0.14,
     "stroke": "#fcd34d",
     "strokeWidth": 1,
-    "labels": ["α", "", "", ""]
+    "labels": [
+     "α",
+     "",
+     "",
+     ""
+    ]
    },
    {
     "type": "segment3d",
@@ -209,5 +265,6 @@
   "두 평면 α, β 가 이루는 각 θ 에 대해 cos θ = 2√78/39"
  ],
  "verify": "from sympy import acos, Rational\n\n# 평면 beta = xy평면(z=0), 교선 AB = x축, AB 중점 = 원점\nA  = (-9, 0, 0)\nB  = ( 9, 0, 0)\nO  = ( 0, 0, 0)                      # AB 의 중점 = 원 C1 의 중심\nF  = (-3*sqrt(3), 0, 0)              # 타원 C2 의 초점 (A 쪽)\nFp = ( 3*sqrt(3), 0, 0)              # 타원 C2 의 초점 F' (B 쪽)\nH  = ( sqrt(3), -4, 0)               # P 의 평면 beta 위 수선의 발\nQ  = ( 3*sqrt(3), -6, 0)             # 직선 HF 와 타원의 교점 중 H 에 가까운 점\nR  = (-5*sqrt(3),  2, 0)             # 직선 HF 와 타원의 나머지 교점 (H 에서 먼 쪽)\nP  = ( sqrt(3), -4, sqrt(62))        # 원 C1 위의 점\n\nnA = (Matrix(B) - Matrix(A)).cross(Matrix(P) - Matrix(A))   # 평면 alpha 의 법선\n\n# --- 1. AB = 18, 원 C1 은 AB 를 지름으로 (중심 O, 반지름 9, 평면 alpha 위) ---\nassert_distance3d(A, B, 18, \"AB=18\")\nassert_distance3d(O, A, 9, \"O 는 AB 의 중점 (OA=9)\")\nassert_distance3d(O, B, 9, \"O 는 AB 의 중점 (OB=9)\")\nassert_on_circle(P, O, 9, \"P 는 원 C1 위 (평면 alpha, 반지름 9)\", normal=list(nA))\nassert_angle(P, A, B, pi/2, \"AB 가 지름이므로 ∠APB=pi/2\")\n\n# --- 2. 타원 C2 는 평면 beta 위, 장축 AB(2a=18), 초점 F, F' ---\nassert_on_plane(A,  [O, Fp, H], \"A 는 평면 beta 위\")\nassert_on_plane(B,  [O, Fp, H], \"B 는 평면 beta 위\")\nassert_on_line(F,  A, B, \"초점 F 는 장축 AB 위\")\nassert_on_line(Fp, A, B, \"초점 F' 는 장축 AB 위\")\nassert_on_plane(Q, [A, B, H], \"Q 는 평면 beta 위\")\nif _close(_dist(Q, F) + _dist(Q, Fp), 18):\n    print(\"[VERIFY OK] Q 는 타원 C2 위 (QF+QF'=2a=18)\")\nelse:\n    print(\"[VERIFY FAIL] Q 가 타원 위가 아님\")\nif _close(_dist(R, F) + _dist(R, Fp), 18):\n    print(\"[VERIFY OK] R 도 타원 C2 위 (RF+RF'=2a=18)\")\nelse:\n    print(\"[VERIFY FAIL] R 이 타원 위가 아님\")\n\n# --- 3. H 는 P 에서 평면 beta 에 내린 수선의 발 ---\nassert_on_plane(H, [A, B, Q], \"H 는 평면 beta 위\")\nassert_perpendicular(P, H, A, B, \"PH ⟂ AB\")\nassert_perpendicular(P, H, H, Q, \"PH ⟂ HQ (⟹ PH ⟂ 평면 beta)\")\nif not _close(_dist(P, H), 0):\n    print(\"[VERIFY OK] P 는 평면 beta 위의 점이 아님\")\nelse:\n    print(\"[VERIFY FAIL] P 가 평면 beta 위에 있음\")\n\n# --- 4. HF' < HF, ∠HFF' = pi/6 ---\nassert_distance3d(H, F, 8, \"HF=8\")\nassert_distance3d(H, Fp, 2*sqrt(7), \"HF'=2√7\")\nif float(_dist(H, Fp)) < float(_dist(H, F)):\n    print(\"[VERIFY OK] HF' < HF\")\nelse:\n    print(\"[VERIFY FAIL] HF' < HF 가 아님\")\nassert_angle(F, H, Fp, pi/6, \"∠HFF'=pi/6\")\n\n# --- 5. Q 는 직선 HF 와 타원의 교점 중 H 에 가까운 쪽, FH < FQ ---\nassert_on_line(Q, H, F, \"Q 는 직선 HF 위\")\nassert_on_line(R, H, F, \"R 은 직선 HF 위\")\nif float(_dist(F, H)) < float(_dist(F, Q)):\n    print(\"[VERIFY OK] FH < FQ\")\nelse:\n    print(\"[VERIFY FAIL] FH < FQ 가 아님\")\nif float(_dist(H, Q)) < float(_dist(H, R)):\n    print(\"[VERIFY OK] Q 가 R 보다 H 에 가깝다\")\nelse:\n    print(\"[VERIFY FAIL] Q 가 H 에 더 가깝지 않음\")\n\n# --- 6. H 중심·Q 를 지나는 평면 beta 위의 원: 반지름 4, 직선 AB 에 접함 ---\nassert_distance3d(H, Q, 4, \"원의 반지름 HQ=4\")\nassert_point_line_distance(H, A, B, 4, \"H 와 직선 AB 의 거리=4 (원이 AB 에 접함)\")\n\n# --- 7. 두 평면이 이루는 각 theta: cos(theta)=2√78/39 ---\nuB = (0, -1, 0)                     # 평면 beta 위, AB 에 수직, H 쪽\nuA = (0, -4, sqrt(62))              # 평면 alpha 위, AB 에 수직, P 쪽\nassert_perpendicular(O, uB, A, B, \"uB ⟂ AB\")\nassert_perpendicular(O, uA, A, B, \"uA ⟂ AB\")\nassert_on_plane(tuple(Matrix(O) + Matrix(uA)), [A, B, P], \"uA 는 평면 alpha 위\")\nassert_angle(O, uB, uA, acos(2*sqrt(78)/39), \"이면각 theta: cos(theta)=2√78/39\")\n",
- "note": "평면 β 를 xy평면, 교선 AB 를 x축(중점이 원점)으로 두면 A(-9,0,0), B(9,0,0), F(-3√3,0,0), F'(3√3,0,0), H(√3,-4,0), Q(3√3,-6,0), P(√3,-4,√62) — H 는 P 의 그림자이고, 평면 α 안에서 P 까지의 거리 √78 이 β 위로 4 로 줄어들어 cos θ = 4/√78 = 2√78/39 이 된다."
+ "note": "평면 β 를 xy평면, 교선 AB 를 x축(중점이 원점)으로 두면 A(-9,0,0), B(9,0,0), F(-3√3,0,0), F'(3√3,0,0), H(√3,-4,0), Q(3√3,-6,0), P(√3,-4,√62) — H 는 P 의 그림자이고, 평면 α 안에서 P 까지의 거리 √78 이 β 위로 4 로 줄어들어 cos θ = 4/√78 = 2√78/39 이 된다.",
+ "source_sha": "a04d223206a761f8"
 }

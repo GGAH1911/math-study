@@ -1,360 +1,361 @@
 {
-  "spec": {
-    "title": "정사각형 ABCD 와 직사각형 ABEF — 평면 ABEF 위로의 정사영",
-    "cameraPosition": [
-      -12,
-      -8,
-      9
-    ],
-    "axes": false,
-    "shapes": [
-      {
-        "type": "segment3d",
-        "from": [
-          -5,
-          -3,
-          0
-        ],
-        "to": [
-          11,
-          -3,
-          0
-        ],
-        "color": "#64748b"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          11,
-          -3,
-          0
-        ],
-        "to": [
-          11,
-          13.5,
-          0
-        ],
-        "color": "#64748b"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          11,
-          13.5,
-          0
-        ],
-        "to": [
-          -5,
-          13.5,
-          0
-        ],
-        "color": "#64748b"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -5,
-          13.5,
-          0
-        ],
-        "to": [
-          -5,
-          -3,
-          0
-        ],
-        "color": "#64748b"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          -3.6,
-          -1.5,
-          0
-        ],
-        "text": "α",
-        "color": "#94a3b8"
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            6,
-            0,
-            0
-          ],
-          [
-            6,
-            3,
-            5.196152422706632
-          ],
-          [
-            0,
-            3,
-            5.196152422706632
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2,
-            3
-          ]
-        ],
-        "labels": [
-          "A",
-          "B",
-          "C",
-          "D"
-        ],
-        "fill": "#f97316",
-        "fillOpacity": 0.3,
-        "stroke": "#fb923c",
-        "strokeWidth": 3
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          6,
-          0,
-          0
-        ],
-        "to": [
-          6,
-          10.392304845413264,
-          6
-        ],
-        "color": "#e2e8f0"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          6,
-          10.392304845413264,
-          6
-        ],
-        "to": [
-          0,
-          10.392304845413264,
-          6
-        ],
-        "color": "#e2e8f0"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          10.392304845413264,
-          6
-        ],
-        "to": [
-          0,
-          0,
-          0
-        ],
-        "color": "#e2e8f0"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          6,
-          10.392304845413264,
-          6
-        ],
-        "label": "E",
-        "color": "#e2e8f0"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          10.392304845413264,
-          6
-        ],
-        "label": "F",
-        "color": "#e2e8f0"
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            6,
-            0,
-            0
-          ],
-          [
-            6,
-            4.5,
-            2.598076211353316
-          ],
-          [
-            0,
-            4.5,
-            2.598076211353316
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2,
-            3
-          ]
-        ],
-        "labels": [
-          "",
-          "",
-          "C'",
-          "D'"
-        ],
-        "fill": "#22c55e",
-        "fillOpacity": 0.5,
-        "stroke": "#16a34a",
-        "strokeWidth": 3
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          3,
-          5.196152422706632
-        ],
-        "to": [
-          0,
-          4.5,
-          2.598076211353316
-        ],
-        "color": "#16a34a",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          6,
-          3,
-          5.196152422706632
-        ],
-        "to": [
-          6,
-          4.5,
-          2.598076211353316
-        ],
-        "color": "#16a34a",
-        "dashed": true
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            6,
-            0,
-            0
-          ],
-          [
-            6,
-            3,
-            0
-          ],
-          [
-            0,
-            3,
-            0
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2,
-            3
-          ]
-        ],
-        "fill": "#38bdf8",
-        "fillOpacity": 0.35,
-        "stroke": "#0ea5e9",
-        "strokeWidth": 2
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          3,
-          5.196152422706632
-        ],
-        "to": [
-          0,
-          3,
-          0
-        ],
-        "color": "#0ea5e9",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          6,
-          3,
-          5.196152422706632
-        ],
-        "to": [
-          6,
-          3,
-          0
-        ],
-        "color": "#0ea5e9",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          10.392304845413264,
-          6
-        ],
-        "to": [
-          0,
-          10.392304845413264,
-          0
-        ],
-        "color": "#cbd5e1"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          10.392304845413264,
-          0
-        ],
-        "label": "H",
-        "color": "#cbd5e1"
-      }
-    ]
-  },
-  "conditions": [
-    "A, B 는 평면 α 위에 있고 C, D, E, F 는 평면 α 위에 있지 않다",
-    "사각형 ABCD 는 한 변의 길이가 6 인 정사각형 (AB=BC=CD=DA=6, ∠DAB=∠ABC=90°)",
-    "사각형 ABEF 는 AF=BE=12, FE=AB=6 인 직사각형 (∠FAB=∠ABE=90°)",
-    "정사각형 ABCD 의 평면 α 위로의 정사영의 넓이 = 18",
-    "F 의 평면 α 위로의 정사영이 H 이고 FH=6 (FH 는 평면 α 에 수직)",
-    "∠DAF = 30° 이므로 0 < ∠DAF < π/2 를 만족",
-    "D', C' 는 D, C 의 평면 ABEF 위로의 정사영이고 DD', CC' 는 평면 ABEF 에 수직",
-    "정사각형 ABCD 의 평면 ABEF 위로의 정사영 ABC'D' 의 넓이 = 18√3 (정답 ⑤)"
+ "spec": {
+  "title": "정사각형 ABCD 와 직사각형 ABEF — 평면 ABEF 위로의 정사영",
+  "cameraPosition": [
+   -12,
+   -8,
+   9
   ],
-  "verify": "s3 = sqrt(3)\n\n# --- 평면 alpha = xy 평면 (z=0). A, B 는 alpha 위, 나머지는 alpha 밖 ---\nalpha = [(10, 0, 0), (0, 10, 0), (-7, -4, 0)]   # z=0 평면을 정하는 세 점(도형의 점과 겹치지 않게)\n\nA = (S(0), S(0),   S(0))\nB = (S(6), S(0),   S(0))\n# 정사각형 ABCD: AD 가 alpha 와 이루는 각 t1, 36*cos(t1)=18 -> t1=60 도\nD = (S(0), S(3), 3*s3)\nC = (S(6), S(3), 3*s3)\n# 직사각형 ABEF: AF=12, F 의 alpha 위로의 정사영 H 에 대해 FH=6 -> AF 가 alpha 와 30 도\nF = (S(0), 6*s3, S(6))\nE = (S(6), 6*s3, S(6))\nH = (S(0), 6*s3, S(0))\n\n# 정사영 발 (평면 ABEF 위로)\nDp = (S(0), Rational(9, 2), 3*s3/2)\nCp = (S(6), Rational(9, 2), 3*s3/2)\n# 정사영 발 (평면 alpha 위로)\nDa = (S(0), S(3), S(0))\nCa = (S(6), S(3), S(0))\n\n\ndef check(cond, tag):\n    print(f\"[VERIFY OK] {tag}\" if cond else f\"[VERIFY FAIL] {tag}\")\n\n\ndef proj_area(P, Q, R, plane_pts):\n    \"\"\"P 를 꼭짓점으로 하고 변이 PQ, PR 인 평행사변형의 평면 위로의 정사영 넓이.\"\"\"\n    o, n = _plane_normal(plane_pts)\n    nn = n / n.norm()\n    u = Matrix(Q) - Matrix(P); v = Matrix(R) - Matrix(P)\n    up = u - (u.dot(nn)) * nn\n    vp = v - (v.dot(nn)) * nn\n    return simplify(up.cross(vp).norm())\n\n\n# --- (1) A, B 는 평면 alpha 위 / C, D, E, F 는 alpha 밖 ---\nassert_point_plane_distance(A, alpha, 0, \"A 는 평면 alpha 위\")\nassert_point_plane_distance(B, alpha, 0, \"B 는 평면 alpha 위\")\nfor P, tg in [(C, 'C'), (D, 'D'), (E, 'E'), (F, 'F')]:\n    check(point_plane_distance(P, alpha) != 0, f\"{tg} 는 평면 alpha 위에 있지 않다\")\n\n# --- (2) 사각형 ABCD 는 한 변의 길이가 6 인 정사각형 ---\nassert_coplanar([A, B, C, D], \"A, B, C, D 는 한 평면 위 (사각형 ABCD)\")\nassert_distance3d(A, B, 6, \"AB=6\")\nassert_distance3d(B, C, 6, \"BC=6\")\nassert_distance3d(C, D, 6, \"CD=6\")\nassert_distance3d(D, A, 6, \"DA=6\")\nassert_perpendicular(A, B, A, D, \"각 DAB = 90도\")\nassert_perpendicular(B, A, B, C, \"각 ABC = 90도\")\n\n# --- (3) 사각형 ABEF 는 AF=12 인 직사각형 ---\nassert_coplanar([A, B, E, F], \"A, B, E, F 는 한 평면 위 (사각형 ABEF)\")\nassert_distance3d(A, F, 12, \"AF=12\")\nassert_distance3d(B, E, 12, \"BE=12\")\nassert_distance3d(F, E, 6, \"FE=6 (=AB)\")\nassert_perpendicular(A, B, A, F, \"각 FAB = 90도\")\nassert_perpendicular(B, A, B, E, \"각 ABE = 90도\")\n\n# --- (4) 정사각형 ABCD 의 평면 alpha 위로의 정사영 넓이 = 18 ---\ncheck(proj_area(A, B, D, alpha) == 18, \"정사각형 ABCD 의 평면 alpha 위로의 정사영 넓이 = 18\")\nassert_on_plane(Da, alpha, \"D 의 alpha 위 정사영 발 Da 는 alpha 위\")\nassert_on_plane(Ca, alpha, \"C 의 alpha 위 정사영 발 Ca 는 alpha 위\")\nassert_perpendicular(D, Da, A, B, \"DDa ⟂ AB (alpha 로의 수선)\")\nassert_perpendicular(D, Da, Da, Ca, \"DDa ⟂ DaCa (alpha 로의 수선)\")\n\n# --- (5) F 의 alpha 위로의 정사영이 H 이고 FH=6 ---\nassert_on_plane(H, alpha, \"H 는 평면 alpha 위\")\nassert_perpendicular(F, H, A, B, \"FH ⟂ AB\")\nassert_perpendicular(F, H, H, Da, \"FH ⟂ 평면 alpha 의 또 다른 방향 (H 는 F 의 정사영)\")\nassert_distance3d(F, H, 6, \"FH=6\")\n\n# --- (6) 0 < 각 DAF < pi/2 ---\nassert_angle(A, D, F, pi/6, \"각 DAF = 30도\")\ncheck(0 < float(pi/6) < float(pi/2), \"0 < 각 DAF < pi/2\")\n\n# --- (7) 구하는 값: 정사각형 ABCD 의 평면 ABEF 위로의 정사영 넓이 = 18*sqrt(3) ---\nassert_on_plane(Dp, [A, B, F], \"D 의 평면 ABEF 위 정사영 발 D' 는 평면 ABEF 위\")\nassert_on_plane(Cp, [A, B, F], \"C 의 평면 ABEF 위 정사영 발 C' 는 평면 ABEF 위\")\nassert_perpendicular(D, Dp, A, B, \"DD' ⟂ AB\")\nassert_perpendicular(D, Dp, A, F, \"DD' ⟂ AF\")\nassert_perpendicular(C, Cp, A, B, \"CC' ⟂ AB\")\nassert_perpendicular(C, Cp, A, F, \"CC' ⟂ AF\")\narea = proj_area(A, B, D, [A, B, F])\ncheck(simplify(area - 18*s3) == 0,\n      \"정사각형 ABCD 의 평면 ABEF 위로의 정사영 넓이 = 18*sqrt(3) (정답 5번)\")\nquad = simplify((Matrix(B) - Matrix(A)).cross(Matrix(Dp) - Matrix(A)).norm())\ncheck(simplify(quad - 18*s3) == 0,\n      \"정사영으로 생기는 사각형 ABC'D' 의 넓이 = 18*sqrt(3)\")\ncheck(all(simplify(Cp[i] - Dp[i] - (B[i] - A[i])) == 0 for i in range(3)),\n      \"벡터 D'C' = 벡터 AB (ABC'D' 는 평행사변형)\")\nprint('area =', simplify(area), '=', float(area))\n",
-  "note": "주황색이 정사각형 ABCD, 흰 테두리가 직사각형 ABEF 입니다. 바닥의 파란 사각형은 ABCD 를 평면 α 에 내린 정사영(넓이 18, 여기서 이면각 60° 가 나옵니다)이고, 초록 사각형 ABC'D' 가 구하는 정사영으로 넓이는 18√3 입니다."
+  "axes": false,
+  "shapes": [
+   {
+    "type": "segment3d",
+    "from": [
+     -5,
+     -3,
+     0
+    ],
+    "to": [
+     11,
+     -3,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     11,
+     -3,
+     0
+    ],
+    "to": [
+     11,
+     13.5,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     11,
+     13.5,
+     0
+    ],
+    "to": [
+     -5,
+     13.5,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -5,
+     13.5,
+     0
+    ],
+    "to": [
+     -5,
+     -3,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -3.6,
+     -1.5,
+     0
+    ],
+    "text": "α",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      6,
+      0,
+      0
+     ],
+     [
+      6,
+      3,
+      5.196152422706632
+     ],
+     [
+      0,
+      3,
+      5.196152422706632
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "fill": "#f97316",
+    "fillOpacity": 0.3,
+    "stroke": "#fb923c",
+    "strokeWidth": 3
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     0,
+     0
+    ],
+    "to": [
+     6,
+     10.392304845413264,
+     6
+    ],
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     10.392304845413264,
+     6
+    ],
+    "to": [
+     0,
+     10.392304845413264,
+     6
+    ],
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     10.392304845413264,
+     6
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     6,
+     10.392304845413264,
+     6
+    ],
+    "label": "E",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     10.392304845413264,
+     6
+    ],
+    "label": "F",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      6,
+      0,
+      0
+     ],
+     [
+      6,
+      4.5,
+      2.598076211353316
+     ],
+     [
+      0,
+      4.5,
+      2.598076211353316
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "",
+     "",
+     "C'",
+     "D'"
+    ],
+    "fill": "#22c55e",
+    "fillOpacity": 0.5,
+    "stroke": "#16a34a",
+    "strokeWidth": 3
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     3,
+     5.196152422706632
+    ],
+    "to": [
+     0,
+     4.5,
+     2.598076211353316
+    ],
+    "color": "#16a34a",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     3,
+     5.196152422706632
+    ],
+    "to": [
+     6,
+     4.5,
+     2.598076211353316
+    ],
+    "color": "#16a34a",
+    "dashed": true
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      6,
+      0,
+      0
+     ],
+     [
+      6,
+      3,
+      0
+     ],
+     [
+      0,
+      3,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.35,
+    "stroke": "#0ea5e9",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     3,
+     5.196152422706632
+    ],
+    "to": [
+     0,
+     3,
+     0
+    ],
+    "color": "#0ea5e9",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     3,
+     5.196152422706632
+    ],
+    "to": [
+     6,
+     3,
+     0
+    ],
+    "color": "#0ea5e9",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     10.392304845413264,
+     6
+    ],
+    "to": [
+     0,
+     10.392304845413264,
+     0
+    ],
+    "color": "#cbd5e1"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     10.392304845413264,
+     0
+    ],
+    "label": "H",
+    "color": "#cbd5e1"
+   }
+  ]
+ },
+ "conditions": [
+  "A, B 는 평면 α 위에 있고 C, D, E, F 는 평면 α 위에 있지 않다",
+  "사각형 ABCD 는 한 변의 길이가 6 인 정사각형 (AB=BC=CD=DA=6, ∠DAB=∠ABC=90°)",
+  "사각형 ABEF 는 AF=BE=12, FE=AB=6 인 직사각형 (∠FAB=∠ABE=90°)",
+  "정사각형 ABCD 의 평면 α 위로의 정사영의 넓이 = 18",
+  "F 의 평면 α 위로의 정사영이 H 이고 FH=6 (FH 는 평면 α 에 수직)",
+  "∠DAF = 30° 이므로 0 < ∠DAF < π/2 를 만족",
+  "D', C' 는 D, C 의 평면 ABEF 위로의 정사영이고 DD', CC' 는 평면 ABEF 에 수직",
+  "정사각형 ABCD 의 평면 ABEF 위로의 정사영 ABC'D' 의 넓이 = 18√3 (정답 ⑤)"
+ ],
+ "verify": "s3 = sqrt(3)\n\n# --- 평면 alpha = xy 평면 (z=0). A, B 는 alpha 위, 나머지는 alpha 밖 ---\nalpha = [(10, 0, 0), (0, 10, 0), (-7, -4, 0)]   # z=0 평면을 정하는 세 점(도형의 점과 겹치지 않게)\n\nA = (S(0), S(0),   S(0))\nB = (S(6), S(0),   S(0))\n# 정사각형 ABCD: AD 가 alpha 와 이루는 각 t1, 36*cos(t1)=18 -> t1=60 도\nD = (S(0), S(3), 3*s3)\nC = (S(6), S(3), 3*s3)\n# 직사각형 ABEF: AF=12, F 의 alpha 위로의 정사영 H 에 대해 FH=6 -> AF 가 alpha 와 30 도\nF = (S(0), 6*s3, S(6))\nE = (S(6), 6*s3, S(6))\nH = (S(0), 6*s3, S(0))\n\n# 정사영 발 (평면 ABEF 위로)\nDp = (S(0), Rational(9, 2), 3*s3/2)\nCp = (S(6), Rational(9, 2), 3*s3/2)\n# 정사영 발 (평면 alpha 위로)\nDa = (S(0), S(3), S(0))\nCa = (S(6), S(3), S(0))\n\n\ndef check(cond, tag):\n    print(f\"[VERIFY OK] {tag}\" if cond else f\"[VERIFY FAIL] {tag}\")\n\n\ndef proj_area(P, Q, R, plane_pts):\n    \"\"\"P 를 꼭짓점으로 하고 변이 PQ, PR 인 평행사변형의 평면 위로의 정사영 넓이.\"\"\"\n    o, n = _plane_normal(plane_pts)\n    nn = n / n.norm()\n    u = Matrix(Q) - Matrix(P); v = Matrix(R) - Matrix(P)\n    up = u - (u.dot(nn)) * nn\n    vp = v - (v.dot(nn)) * nn\n    return simplify(up.cross(vp).norm())\n\n\n# --- (1) A, B 는 평면 alpha 위 / C, D, E, F 는 alpha 밖 ---\nassert_point_plane_distance(A, alpha, 0, \"A 는 평면 alpha 위\")\nassert_point_plane_distance(B, alpha, 0, \"B 는 평면 alpha 위\")\nfor P, tg in [(C, 'C'), (D, 'D'), (E, 'E'), (F, 'F')]:\n    check(point_plane_distance(P, alpha) != 0, f\"{tg} 는 평면 alpha 위에 있지 않다\")\n\n# --- (2) 사각형 ABCD 는 한 변의 길이가 6 인 정사각형 ---\nassert_coplanar([A, B, C, D], \"A, B, C, D 는 한 평면 위 (사각형 ABCD)\")\nassert_distance3d(A, B, 6, \"AB=6\")\nassert_distance3d(B, C, 6, \"BC=6\")\nassert_distance3d(C, D, 6, \"CD=6\")\nassert_distance3d(D, A, 6, \"DA=6\")\nassert_perpendicular(A, B, A, D, \"각 DAB = 90도\")\nassert_perpendicular(B, A, B, C, \"각 ABC = 90도\")\n\n# --- (3) 사각형 ABEF 는 AF=12 인 직사각형 ---\nassert_coplanar([A, B, E, F], \"A, B, E, F 는 한 평면 위 (사각형 ABEF)\")\nassert_distance3d(A, F, 12, \"AF=12\")\nassert_distance3d(B, E, 12, \"BE=12\")\nassert_distance3d(F, E, 6, \"FE=6 (=AB)\")\nassert_perpendicular(A, B, A, F, \"각 FAB = 90도\")\nassert_perpendicular(B, A, B, E, \"각 ABE = 90도\")\n\n# --- (4) 정사각형 ABCD 의 평면 alpha 위로의 정사영 넓이 = 18 ---\ncheck(proj_area(A, B, D, alpha) == 18, \"정사각형 ABCD 의 평면 alpha 위로의 정사영 넓이 = 18\")\nassert_on_plane(Da, alpha, \"D 의 alpha 위 정사영 발 Da 는 alpha 위\")\nassert_on_plane(Ca, alpha, \"C 의 alpha 위 정사영 발 Ca 는 alpha 위\")\nassert_perpendicular(D, Da, A, B, \"DDa ⟂ AB (alpha 로의 수선)\")\nassert_perpendicular(D, Da, Da, Ca, \"DDa ⟂ DaCa (alpha 로의 수선)\")\n\n# --- (5) F 의 alpha 위로의 정사영이 H 이고 FH=6 ---\nassert_on_plane(H, alpha, \"H 는 평면 alpha 위\")\nassert_perpendicular(F, H, A, B, \"FH ⟂ AB\")\nassert_perpendicular(F, H, H, Da, \"FH ⟂ 평면 alpha 의 또 다른 방향 (H 는 F 의 정사영)\")\nassert_distance3d(F, H, 6, \"FH=6\")\n\n# --- (6) 0 < 각 DAF < pi/2 ---\nassert_angle(A, D, F, pi/6, \"각 DAF = 30도\")\ncheck(0 < float(pi/6) < float(pi/2), \"0 < 각 DAF < pi/2\")\n\n# --- (7) 구하는 값: 정사각형 ABCD 의 평면 ABEF 위로의 정사영 넓이 = 18*sqrt(3) ---\nassert_on_plane(Dp, [A, B, F], \"D 의 평면 ABEF 위 정사영 발 D' 는 평면 ABEF 위\")\nassert_on_plane(Cp, [A, B, F], \"C 의 평면 ABEF 위 정사영 발 C' 는 평면 ABEF 위\")\nassert_perpendicular(D, Dp, A, B, \"DD' ⟂ AB\")\nassert_perpendicular(D, Dp, A, F, \"DD' ⟂ AF\")\nassert_perpendicular(C, Cp, A, B, \"CC' ⟂ AB\")\nassert_perpendicular(C, Cp, A, F, \"CC' ⟂ AF\")\narea = proj_area(A, B, D, [A, B, F])\ncheck(simplify(area - 18*s3) == 0,\n      \"정사각형 ABCD 의 평면 ABEF 위로의 정사영 넓이 = 18*sqrt(3) (정답 5번)\")\nquad = simplify((Matrix(B) - Matrix(A)).cross(Matrix(Dp) - Matrix(A)).norm())\ncheck(simplify(quad - 18*s3) == 0,\n      \"정사영으로 생기는 사각형 ABC'D' 의 넓이 = 18*sqrt(3)\")\ncheck(all(simplify(Cp[i] - Dp[i] - (B[i] - A[i])) == 0 for i in range(3)),\n      \"벡터 D'C' = 벡터 AB (ABC'D' 는 평행사변형)\")\nprint('area =', simplify(area), '=', float(area))\n",
+ "note": "주황색이 정사각형 ABCD, 흰 테두리가 직사각형 ABEF 입니다. 바닥의 파란 사각형은 ABCD 를 평면 α 에 내린 정사영(넓이 18, 여기서 이면각 60° 가 나옵니다)이고, 초록 사각형 ABC'D' 가 구하는 정사영으로 넓이는 18√3 입니다.",
+ "source_sha": "97706c762aab38bf"
 }

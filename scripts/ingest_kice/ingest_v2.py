@@ -707,6 +707,10 @@ if __name__ == '__main__':
             print(f'\n══════ 체이닝 1/2: 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
             subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
                             '--list', ','.join(slugs), '--parallel', '10'])   # 킬러-먼저는 build_solution_cache가 정렬
+            # 3D 도형 스펙 — 풀이 캐시 **뒤**에 둔다. 검증된 정답이 있어야 작성 에이전트에게
+            # "이 값은 답이니 그림에 쓰지 마라" 를 알려 줄 수 있다. 후보가 없으면 즉시 끝난다.
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_figures_3d.py'),
+                            '--list', ','.join(slugs), '--parallel', '3'])
         # 동기화는 항상(--no-sync 아니면): 새 문제가 /problems·/concepts 에 안 보이는 것 방지
         if not args.no_sync:
             print('\n══════ 체이닝 2/2: 후처리 동기화 (개념 역인덱스·그래프 + dev 리프레시) ══════', flush=True)

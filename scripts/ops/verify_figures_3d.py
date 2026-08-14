@@ -11,7 +11,7 @@
 사용: python3 scripts/ops/verify_figures_3d.py [--deep]
 """
 from __future__ import annotations
-import json, re, subprocess, sys
+import hashlib, json, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -82,6 +82,16 @@ def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:
             if s_.get('type') in ('sphere',):
                 bad.append('구가 있는데 displayScale 을 썼다 — 구가 타원체가 되어 접점이 안 보인다')
                 break
+    # ★본문이 바뀌었는데 스펙이 그대로면 **틀린 그림이 조용히 남는다.** 레지스트리가
+    #   docs/ 바깥이라 재인제스트·교정에도 살아남는 것이 장점이자 위험이다.
+    sha = e.get('source_sha')
+    if sha:
+        hits = list((ROOT / 'docs/problems').rglob(f'{path.stem}.md'))
+        if hits:
+            cur = hashlib.sha256(hits[0].read_bytes()).hexdigest()[:16]
+            if cur != sha:
+                bad.append(f'문제 본문이 바뀌었다(source_sha {sha} → {cur}) — 스펙이 낡았을 수 있다. '
+                           f'확인 후 재작성하거나 source_sha 를 갱신해라')
     cu = spec.get('cameraUp')
     if cu is not None and cu != [0, 0, 1]:
         # ★up 을 비틀면 OrbitControls 의 '극점' 이 엉뚱한 방향에 생긴다. 사용자가 그쪽을 보는

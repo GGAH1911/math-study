@@ -289,6 +289,10 @@ if __name__ == '__main__':
             print(f'\n══════ 풀이 캐시 {len(slugs)}문제 ══════', flush=True)
             subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_solution_cache.py'),
                             '--list', ','.join(slugs), '--parallel', '20'])
+            # 3D 도형 스펙 — 풀이 캐시 **뒤**에 둔다. 검증된 정답이 있어야 작성 에이전트에게
+            # "이 값은 답이니 그림에 쓰지 마라" 를 알려 줄 수 있다. 후보가 없으면 즉시 끝난다.
+            subprocess.run([sys.executable, str(ROOT / 'scripts' / 'build_figures_3d.py'),
+                            '--list', ','.join(slugs), '--parallel', '3'])
         if not a.no_sync:
             print('\n══════ 후처리 동기화 (역인덱스·그래프 + dev 리프레시) ══════', flush=True)
             subprocess.run([sys.executable, str(ROOT / 'scripts' / 'post_ingest_sync.py')],
