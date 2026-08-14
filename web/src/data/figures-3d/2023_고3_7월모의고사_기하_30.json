@@ -52,7 +52,7 @@
      ]
     ],
     "fill": "#a78bfa",
-    "fillOpacity": 0.18,
+    "fillOpacity": 0.1,
     "stroke": "#a78bfa",
     "strokeWidth": 2
    },
@@ -134,7 +134,7 @@
      "H"
     ],
     "fill": "#34d399",
-    "fillOpacity": 0.32,
+    "fillOpacity": 0.22,
     "stroke": "#34d399",
     "strokeWidth": 2
    },
@@ -240,7 +240,7 @@
      "H'"
     ],
     "fill": "#fb923c",
-    "fillOpacity": 0.45,
+    "fillOpacity": 0.22,
     "stroke": "#fb923c",
     "strokeWidth": 2
    },
@@ -257,8 +257,7 @@
      1.3125
     ],
     "color": "#fb923c",
-    "dashed": true,
-    "label": "정사영"
+    "dashed": true
    },
    {
     "type": "segment3d",

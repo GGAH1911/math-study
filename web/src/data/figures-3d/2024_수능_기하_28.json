@@ -2,45 +2,41 @@
  "spec": {
   "title": "2024 수능 기하 28 — 두 평면 α, β 의 교선 AB 위의 원 C₁ 과 타원 C₂, 수선의 발 H",
   "cameraPosition": [
-   15.0,
+   -15.0,
    -34.0,
    17.0
   ],
   "axes": false,
   "shapes": [
    {
-    "type": "plane",
-    "origin": [
-     0,
-     0,
-     0
+    "type": "polyhedron",
+    "vertices": [
+     [-13, -11, 0],
+     [13, -11, 0],
+     [13, 11, 0],
+     [-13, 11, 0]
     ],
-    "normal": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "size": 26,
-    "color": "#38bdf8",
-    "opacity": 0.22,
-    "label": "β"
+    "faces": [[0, 1, 2, 3]],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.16,
+    "stroke": "#7dd3fc",
+    "strokeWidth": 1,
+    "labels": ["β", "", "", ""]
    },
    {
-    "type": "plane",
-    "origin": [
-     0,
-     0,
-     0
+    "type": "polyhedron",
+    "vertices": [
+     [-13, -4.982019, 9.807114],
+     [13, -4.982019, 9.807114],
+     [13, 4.982019, -9.807114],
+     [-13, 4.982019, -9.807114]
     ],
-    "normal": [
-     0.0,
-     0.8915558282417286,
-     0.45291081365783825
-    ],
-    "size": 22,
-    "color": "#fbbf24",
-    "opacity": 0.22,
-    "label": "α"
+    "faces": [[0, 1, 2, 3]],
+    "fill": "#fbbf24",
+    "fillOpacity": 0.14,
+    "stroke": "#fcd34d",
+    "strokeWidth": 1,
+    "labels": ["α", "", "", ""]
    },
    {
     "type": "segment3d",

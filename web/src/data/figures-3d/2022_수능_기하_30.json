@@ -2,9 +2,9 @@
  "spec": {
   "title": "2022 수능 기하 30 — 구 S, 평면 OPC 와의 교원 위의 Q, 구 위의 R, 그리고 xy평면 정사영 Q₁·R₁",
   "cameraPosition": [
-   17.0,
-   -16.0,
-   12.0
+   3.0,
+   -22.0,
+   14.0
   ],
   "axes": true,
   "gridSize": 14,
@@ -35,8 +35,7 @@
     ],
     "size": 10,
     "color": "#a78bfa",
-    "opacity": 0.22,
-    "label": "평면 $OPC$"
+    "opacity": 0.22
    },
    {
     "type": "parametricCurve3d",
@@ -229,6 +228,16 @@
     "label": "C",
     "color": "#0284c7",
     "size": 0.13
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3.3333,
+     3.7268,
+     9.5
+    ],
+    "text": "평면 $OPC$",
+    "color": "#a78bfa"
    }
   ]
  },

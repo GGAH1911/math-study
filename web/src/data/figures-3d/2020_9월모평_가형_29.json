@@ -2,9 +2,14 @@
  "spec": {
   "title": "2020 9월모평 가형 29 — 두 평면의 교선 위의 점 P 와 |OP|",
   "cameraPosition": [
-   19,
-   5,
-   9
+   11,
+   7,
+   15
+  ],
+  "cameraTarget": [
+   3,
+   -3,
+   -1
   ],
   "axes": true,
   "shapes": [
@@ -99,6 +104,7 @@
      3.6,
      1.8
     ],
+    "text": "$x=\\frac{11}{2}$",
     "color": "#f472b6"
    },
    {

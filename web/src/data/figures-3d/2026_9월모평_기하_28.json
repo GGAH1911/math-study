@@ -18,8 +18,7 @@
     ],
     "radius": 6,
     "color": "#93c5fd",
-    "opacity": 0.15,
-    "label": "구 S"
+    "opacity": 0.15
    },
    {
     "type": "segment3d",
@@ -94,7 +93,7 @@
      3.464101615138
     ],
     "color": "#fbbf24",
-    "label": "BC ∥ xy평면"
+    "label": "BC"
    },
    {
     "type": "segment3d",
@@ -348,6 +347,39 @@
     ],
     "text": "xy평면",
     "color": "#94a3b8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -1.0,
+     -5.5,
+     4.0
+    ],
+    "text": "S",
+    "color": "#93c5fd"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.0,
+     5.6,
+     4.6
+    ],
+    "text": "BC ∥ xy평면",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "6*cos(t)",
+    "y": "6*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 160,
+    "color": "#64748b",
+    "strokeWidth": 1.5
    }
   ]
  },

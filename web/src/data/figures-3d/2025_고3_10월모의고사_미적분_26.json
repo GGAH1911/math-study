@@ -24,7 +24,7 @@
     ],
     "to": [
      0,
-     1.45,
+     3.4,
      0
     ],
     "color": "#71717a"
@@ -43,7 +43,7 @@
     "type": "text3d",
     "at": [
      0,
-     1.56,
+     3.6,
      0
     ],
     "text": "$y$",
@@ -72,6 +72,16 @@
     "color": "#f8fafc",
     "strokeWidth": 2,
     "label": "$y=2\\sqrt{x}e^{-x^2}$"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.5,
+     0.6,
+     0
+    ],
+    "text": "$y=2\\sqrt{x}e^{-x^2}$",
+    "color": "#e5e7eb"
    },
    {
     "type": "parametricSurface",

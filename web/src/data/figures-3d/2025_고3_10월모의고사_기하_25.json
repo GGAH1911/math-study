@@ -2,8 +2,8 @@
  "spec": {
   "title": "2025 고3 10월 기하 25 — 사각뿔 A-BCDE (밑면 정사각형, AC 와 밑면이 이루는 각 π/3)",
   "cameraPosition": [
-   5.4,
-   -6.4,
+   3.4,
+   -7.6,
    4.3
   ],
   "axes": false,
@@ -120,8 +120,7 @@
      -1,
      0
     ],
-    "color": "#38bdf8",
-    "label": "2"
+    "color": "#38bdf8"
    },
    {
     "type": "segment3d",
@@ -212,7 +211,7 @@
      -0.62,
      0.3
     ],
-    "text": "$\\frac{\\pi}{3}$",
+    "text": "$\\pi/3$",
     "color": "#fbbf24"
    }
   ]

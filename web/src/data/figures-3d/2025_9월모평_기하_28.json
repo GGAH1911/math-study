@@ -17,8 +17,20 @@
     ],
     "radius": 10.0,
     "color": "#93c5fd",
-    "opacity": 0.15,
-    "label": "구 S"
+    "opacity": 0.15
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "10*cos(t)",
+    "y": "10*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 180,
+    "color": "#64748b",
+    "strokeWidth": 1.5
    },
    {
     "type": "segment3d",
@@ -414,6 +426,36 @@
     ],
     "text": "θ",
     "color": "#fbbf24"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.8,
+     -11.5,
+     9.2
+    ],
+    "text": "구 S",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     5.477225575051661,
+     -9.8,
+     -1.0
+    ],
+    "text": "C_1",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -3.0,
+     7.0710678118654755,
+     -8.6
+    ],
+    "text": "C_2",
+    "color": "#38bdf8"
    }
   ]
  },

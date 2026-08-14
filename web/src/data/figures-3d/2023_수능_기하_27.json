@@ -12,7 +12,7 @@
     "type": "plane",
     "origin": [
      2.0,
-     0.5,
+     0.8,
      0.0
     ],
     "normal": [
@@ -20,19 +20,19 @@
      0.0,
      1.0
     ],
-    "size": 11.0,
+    "size": 7.0,
     "color": "#94a3b8",
     "opacity": 0.22
    },
    {
     "type": "text3d",
     "at": [
-     -3.0,
-     -3.6,
+     -0.9,
+     -1.9,
      0.0
     ],
     "text": "α",
-    "color": "#475569"
+    "color": "#94a3b8"
    },
    {
     "type": "segment3d",
@@ -46,8 +46,7 @@
      0.0,
      0.0
     ],
-    "color": "#111827",
-    "label": "직선 AB"
+    "color": "#e2e8f0"
    },
    {
     "type": "segment3d",
@@ -61,8 +60,7 @@
      3.4394767043839676,
      3.9
     ],
-    "color": "#111827",
-    "label": "직선 AC"
+    "color": "#e2e8f0"
    },
    {
     "type": "segment3d",
@@ -76,7 +74,7 @@
      -0.6349803146555018,
      -0.72
     ],
-    "color": "#111827",
+    "color": "#e2e8f0",
     "dashed": true
    },
    {
@@ -91,9 +89,8 @@
      2.6457513110645907,
      0.0
     ],
-    "color": "#2563eb",
-    "dashed": true,
-    "label": "CH ⟂ α"
+    "color": "#60a5fa",
+    "dashed": true
    },
    {
     "type": "segment3d",
@@ -107,9 +104,8 @@
      2.6457513110645907,
      0.0
     ],
-    "color": "#2563eb",
-    "dashed": true,
-    "label": "AH"
+    "color": "#60a5fa",
+    "dashed": true
    },
    {
     "type": "segment3d",
@@ -123,9 +119,8 @@
      0.0,
      0.0
     ],
-    "color": "#dc2626",
-    "dashed": true,
-    "label": "HM ⟂ AB"
+    "color": "#f87171",
+    "dashed": true
    },
    {
     "type": "segment3d",
@@ -139,8 +134,7 @@
      2.6457513110645907,
      3.0
     ],
-    "color": "#dc2626",
-    "label": "CM ⟂ AB"
+    "color": "#f87171"
    },
    {
     "type": "point3d",
@@ -150,7 +144,7 @@
      0.0
     ],
     "label": "A",
-    "color": "#111827",
+    "color": "#e2e8f0",
     "size": 0.12
    },
    {
@@ -161,7 +155,7 @@
      0.0
     ],
     "label": "B",
-    "color": "#111827",
+    "color": "#e2e8f0",
     "size": 0.12
    },
    {
@@ -172,7 +166,7 @@
      3.0
     ],
     "label": "C",
-    "color": "#111827",
+    "color": "#e2e8f0",
     "size": 0.12
    },
    {
@@ -183,7 +177,7 @@
      0.0
     ],
     "label": "H",
-    "color": "#2563eb",
+    "color": "#60a5fa",
     "size": 0.1
    },
    {
@@ -194,7 +188,7 @@
      0.0
     ],
     "label": "M",
-    "color": "#dc2626",
+    "color": "#f87171",
     "size": 0.1
    },
    {
@@ -205,7 +199,7 @@
      0.5
     ],
     "text": "θ₁",
-    "color": "#111827"
+    "color": "#e2e8f0"
    },
    {
     "type": "text3d",
@@ -215,7 +209,7 @@
      0.75
     ],
     "text": "θ₂",
-    "color": "#dc2626"
+    "color": "#f87171"
    }
   ]
  },

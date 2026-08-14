@@ -2,7 +2,7 @@
  "spec": {
   "title": "2024 고3 7월 기하 30 — 평면 α 위로의 정사영 A′, B′ 와 직선 BM",
   "cameraPosition": [
-   1.6,
+   0,
    -10.5,
    10.4
   ],
@@ -78,12 +78,27 @@
      0
     ],
     "to": [
+     4,
+     0,
+     0
+    ],
+    "color": "#bfdbfe",
+    "label": "4"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     0,
+     0
+    ],
+    "to": [
      8,
      0,
      0
     ],
     "color": "#bfdbfe",
-    "label": "8"
+    "label": "4"
    },
    {
     "type": "point3d",

@@ -2,9 +2,14 @@
  "spec": {
   "title": "2023 고3 10월 기하 25 — 평면 α 위 삼각형 ABC와 그 위의 점 P",
   "cameraPosition": [
-   7,
-   -14,
-   7
+   8,
+   -9,
+   10
+  ],
+  "cameraTarget": [
+   0.5,
+   1.5,
+   0.5
   ],
   "axes": false,
   "shapes": [
@@ -154,6 +159,11 @@
       1,
       2
      ]
+    ],
+    "labels": [
+     "P",
+     "",
+     "H"
     ],
     "fill": "#22c55e",
     "fillOpacity": 0.18,

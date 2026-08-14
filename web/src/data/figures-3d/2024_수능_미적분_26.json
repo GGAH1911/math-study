@@ -261,8 +261,7 @@
      0,
      0
     ],
-    "color": "#a1a1aa",
-    "label": "$x$"
+    "color": "#a1a1aa"
    },
    {
     "type": "segment3d",
@@ -317,6 +316,16 @@
      0
     ],
     "text": "O",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     5.5,
+     -0.5,
+     0
+    ],
+    "text": "$x$",
     "color": "#a1a1aa"
    },
    {

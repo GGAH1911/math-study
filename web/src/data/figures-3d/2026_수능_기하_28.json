@@ -141,8 +141,7 @@
     ],
     "radius": 1.1547005383792515,
     "color": "#60a5fa",
-    "opacity": 0.2,
-    "label": "S"
+    "opacity": 0.2
    },
    {
     "type": "parametricCurve3d",
@@ -190,6 +189,16 @@
     ],
     "text": "T'",
     "color": "#f97316"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     1.2,
+     0.5
+    ],
+    "text": "S",
+    "color": "#60a5fa"
    }
   ]
  },

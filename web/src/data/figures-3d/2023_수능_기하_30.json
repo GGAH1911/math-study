@@ -2,9 +2,9 @@
  "spec": {
   "title": "2023 수능 기하 30 — 정사면체 ABCD, 정삼각형 BCD 의 외심을 중심으로 하고 B 를 지나는 구 S, 점 P 에서의 접평면 α",
   "cameraPosition": [
-   17.0,
-   -2.5,
-   8.0
+   16.0,
+   -4.0,
+   13.0
   ],
   "axes": false,
   "shapes": [
@@ -17,8 +17,7 @@
     ],
     "radius": 6.0,
     "color": "#38bdf8",
-    "opacity": 0.15,
-    "label": "구 S"
+    "opacity": 0.15
    },
    {
     "type": "polyhedron",
@@ -220,6 +219,16 @@
     ],
     "color": "#b45309",
     "dashed": true
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -2.0,
+     -5.5,
+     -3.0
+    ],
+    "text": "구 $S$",
+    "color": "#38bdf8"
    }
   ]
  },

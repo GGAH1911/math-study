@@ -21,10 +21,9 @@
      0,
      1
     ],
-    "size": 11,
+    "size": 7,
     "color": "#64748b",
-    "opacity": 0.22,
-    "label": "xy평면"
+    "opacity": 0.22
    },
    {
     "type": "sphere",
@@ -35,8 +34,17 @@
     ],
     "radius": 3,
     "color": "#60a5fa",
-    "opacity": 0.15,
-    "label": "S"
+    "opacity": 0.15
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -1.4,
+     1.4,
+     4.6
+    ],
+    "text": "S",
+    "color": "#60a5fa"
    },
    {
     "type": "parametricCurve3d",
@@ -61,23 +69,6 @@
     ],
     "text": "C(원)",
     "color": "#38bdf8"
-   },
-   {
-    "type": "plane",
-    "origin": [
-     2,
-     0,
-     1.7
-    ],
-    "normal": [
-     1,
-     0,
-     0
-    ],
-    "size": 5.4,
-    "color": "#a78bfa",
-    "opacity": 0.22,
-    "label": "평면 BCD"
    },
    {
     "type": "polyhedron",
@@ -177,8 +168,7 @@
      1.9364916731037085,
      3.3541019662496847
     ],
-    "color": "#f472b6",
-    "label": "√15"
+    "color": "#f472b6"
    },
    {
     "type": "segment3d",
@@ -237,12 +227,12 @@
    {
     "type": "text3d",
     "at": [
-     0.15,
-     1.15,
-     1.05
+     -3.0,
+     2.6,
+     0.05
     ],
-    "text": "정사영 ABC'",
-    "color": "#f97316"
+    "text": "xy평면",
+    "color": "#94a3b8"
    }
   ]
  },

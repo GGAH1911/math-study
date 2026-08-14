@@ -188,7 +188,8 @@
           0.7071067811865476,
           0.7071067811865476
         ],
-        "color": "#e5e7eb"
+        "color": "#e5e7eb",
+        "dashed": true
       },
       {
         "type": "segment3d",
@@ -216,8 +217,7 @@
           0,
           0
         ],
-        "color": "#e5e7eb",
-        "dashed": true
+        "color": "#e5e7eb"
       },
       {
         "type": "segment3d",
@@ -345,7 +345,7 @@
         ],
         "to": [
           0,
-          1.75,
+          2.4,
           0
         ],
         "color": "#a1a1aa"
@@ -364,7 +364,7 @@
         "type": "text3d",
         "at": [
           0,
-          1.95,
+          2.65,
           0
         ],
         "text": "$y$",
@@ -405,6 +405,11 @@
       4.2,
       -5.0,
       3.4
+    ],
+    "cameraTarget": [
+      1.28,
+      0.35,
+      0.45
     ],
     "axes": true,
     "gridSize": 10
