@@ -168,11 +168,25 @@ Phase 2~7 은 그대로 진행 가능하고, **주소가 공개되는 건 Phase 
 
 ★**업로드 실패는 가장 늦게 드러나는 실패**다. 아무것도 안 만든 상태에서 먼저 뚫는다.
 
-- [ ] Capacitor **8** 프로젝트 생성 (targetSdk **36** · minSdk 24 · AGP 8.13.0 · Gradle 8.14.3 · Java 21)
-- [ ] 서명 키 4096-bit 생성 — 비밀번호는 `keystore.properties`(gitignore) 또는 환경변수,
-      **소스에 넣지 않는다**. 둘 다 없으면 **빌드가 멈추게** 한다
-- [ ] `.gitignore` 패턴 `release.keystore*` · `keystore.properties*`
-- [ ] AAB 빌드 → **내부 테스트 트랙 업로드** → 실기기 설치·구동
+- [x] Capacitor **8** 프로젝트 생성 ✅ 2026-08-15 — `app/`(레포 루트. `web/` 과 분리해 CI 의
+      `npm ci` 에 앱 의존성을 안 섞는다). 사양이 요구와 그대로 일치 — **AGP 8.13.0 · Gradle
+      8.14.3 · minSdk 24 · compile/target 36 · Java 21**(Capacitor 8 기본값).
+      `appId kr.co.mathstudy` · `webDir www`(기능 0 껍데기 — Phase 3 에서 `../web/dist` 로 전환).
+      **검증: `assembleDebug` → BUILD SUCCESSFUL, APK 4.0MB.**
+- [x] **빌드가 멈추는 서명 게이트** ✅ 2026-08-15 — 값은 `app/android/keystore.properties`
+      (gitignore) 또는 `MS_ANDROID_*` 환경변수. 소스에 비밀번호 없음.
+      검증: `bundleRelease`(키 없음) → 안내와 함께 **멈춤** · `assembleDebug` → 성공.
+
+      ★**포렌식 패턴을 그대로 쓰면 안 된다.** 거기선 `signingConfigs` 블록 안에서 throw 하는데,
+      그 블록은 **어떤 태스크를 돌리든 configuration 단계에서 평가**되므로 디버그 빌드까지
+      막힌다(실측: `assembleDebug` 실패). 값이 있을 때만 서명을 구성하고
+      `gradle.taskGraph.whenReady` 에서 판정해야 한다. 또 서명 변수는 **최상위 스코프**에
+      둬야 한다 — `android{}` 안에 두면 taskGraph 클로저에서 `unknown property` 로 죽는다.
+- [x] `.gitignore` 패턴 ✅ `release.keystore*` · `keystore.properties*` · `app/android/local.properties` 등
+- [ ] 🔶 **서명 키 4096-bit 생성** — **사장님 몫**(비밀번호 소유). 키를 잃으면 같은 패키지명으로
+      업데이트를 **영구히** 못 낸다. 절차: `app/README.md`
+- [ ] 🔶 AAB 빌드 → **내부 테스트 트랙 업로드** → 실기기 설치·구동 — 업로드·설치는 **사장님 몫**
+      (Play Console 로그인 · 물리 단말). 키가 생기면 AAB 빌드까지는 에이전트가 할 수 있다
 - ~~N2 결과가 개인 계정이면: 테스터 12명 모집~~ → **조직 계정이라 불필요**
 
 **통과 조건**: 기능 0 인 앱이 업로드·구동
