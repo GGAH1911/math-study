@@ -41,6 +41,17 @@ export type Geom3DSpec = {
   shapes: Geom3DShape[];
   cameraPosition?: [number, number, number];
   axes?: boolean;
+  /**
+   * **표시 전용** 축 배율 [sx, sy, sz]. 좌표는 그대로 두고 그릴 때만 늘린다.
+   *
+   * ★왜: 기출 도판은 실제 비율이 아니다 — 일부러 과장해 그린다. 예로 2020 9월모평 가형 14 는
+   *   밑면 폭이 0.59 인데 단면 한 변이 7.69 라, 실제 좌표로는 **어떤 카메라를 잡아도** 세 단면이
+   *   겹쳐 바늘처럼 보인다. 원본은 x 를 크게 늘려 그렸다.
+   * ★좌표 자체를 늘리지 않는 이유: 그 좌표는 sympy 로 검증된 값이다. 늘리면 검증이 무의미해진다.
+   * ⚠️ 축을 따로 늘리면 **각도와 길이가 눈으로는 거짓말을 한다** — 직각이 직각으로 안 보이고
+   *   구는 타원체가 된다. 그래서 구·원이 있는 스펙에는 쓰지 않고, 쓴 그림에는 캡션으로 알린다.
+   */
+  displayScale?: [number, number, number];
   gridSize?: number;
   bgColor?: string;
   title?: string;

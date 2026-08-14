@@ -16,7 +16,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / 'web/src/data/figures-3d'
-TSX = ROOT / 'web/src/components/Geometry3D.tsx'
+# 타입 정의는 2026-08-14 에 geometry3d-core.ts 로 갈라졌다(Geometry3D.tsx 래칫 초과).
+TSX = ROOT / 'web/src/lib/geometry3d-core.ts'
 RUNNER = ROOT / 'scripts/ops/sympy_run.py'
 
 
@@ -29,7 +30,7 @@ def vocabulary() -> dict[str, set[str]]:
     #   유니온의 끝은 `};` + **빈 줄** 이므로 거기까지 간다.
     m = re.search(r'export type Geom3DShape =(.*?);\s*\n\s*\n', src, re.S)
     if not m:
-        sys.exit('Geom3DShape 타입 정의를 못 찾았다 — Geometry3D.tsx 구조가 바뀌었나?')
+        sys.exit(f'Geom3DShape 타입 정의를 못 찾았다 — {TSX.relative_to(ROOT)} 구조가 바뀌었나?')
     vocab: dict[str, set[str]] = {}
     for branch in m.group(1).split('| {')[1:]:
         t = re.search(r"type:\s*'([a-zA-Z0-9]+)'", branch)
@@ -53,7 +54,7 @@ def _is_prose(v: str) -> bool:
     return len(core) > 13 or bool(re.search(r'\([^)]{6,}\)', core))
 
 
-SPEC_KEYS = {'shapes', 'cameraPosition', 'axes', 'gridSize', 'bgColor', 'title'}
+SPEC_KEYS = {'shapes', 'cameraPosition', 'axes', 'gridSize', 'bgColor', 'title', 'displayScale'}
 
 
 def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:
@@ -69,6 +70,18 @@ def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:
     for k in spec:
         if k not in SPEC_KEYS:
             bad.append(f'spec 최상위에 모르는 키 `{k}`')
+    ds = spec.get('displayScale')
+    if ds is not None:
+        # ★축을 따로 늘리면 각도·길이가 눈으로는 거짓말을 한다. 구·원이 있으면 찌그러져
+        #   "접한다" 가 안 보이므로 금지하고, 배율도 상식선(1/8배 ~ 8배)으로 묶는다.
+        if not (isinstance(ds, list) and len(ds) == 3 and all(isinstance(v, (int, float)) and 0.125 <= v <= 8 for v in ds)):
+            bad.append(f'displayScale 이 [sx,sy,sz] (각 0.125-8) 가 아니다: {ds}')
+        elif all(v == 1 for v in ds):
+            bad.append('displayScale 이 [1,1,1] 이다 — 뺄 것 (캡션만 붙는다)')
+        for s_ in (spec.get('shapes') or []):
+            if s_.get('type') in ('sphere',):
+                bad.append('구가 있는데 displayScale 을 썼다 — 구가 타원체가 되어 접점이 안 보인다')
+                break
     shapes = spec.get('shapes')
     if not isinstance(shapes, list) or not shapes:
         bad.append('shapes 가 비었다')

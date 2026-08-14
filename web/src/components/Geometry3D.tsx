@@ -422,7 +422,15 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
     if (spec.shapes.length === 0) return;
     broadcastLatestGraph({ kind: 'geom3d', geom3dSpec: spec });
   }, [spec, noBroadcast]);
-  const cameraFitPoints = useMemo(() => collectPoints(spec.shapes), [spec.shapes]);
+  // 카메라도 **늘린 뒤의** 점에 맞춰야 한다 — 원래 좌표로 맞추면 늘린 도형이 화면을 벗어난다.
+  const dispScale = useMemo<[number, number, number]>(() => {
+    const d = spec.displayScale;
+    return Array.isArray(d) && d.length === 3 && d.every((v) => Number.isFinite(v) && v > 0)
+      ? [d[0], d[1], d[2]] : [1, 1, 1];
+  }, [spec.displayScale]);
+  const cameraFitPoints = useMemo(
+    () => collectPoints(spec.shapes).map((p) => p.clone().multiply(new THREE.Vector3(...dispScale))),
+    [spec.shapes, dispScale]);
   const polyhedronVertexKeys = useMemo(() => {
     const keys = new Set<string>();
     for (const s of spec.shapes) {
@@ -492,15 +500,25 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
           </>
         )}
         <Suspense fallback={null}>
-          {spec.shapes.map((s, i) => (
-            <ShapeRouter key={i} s={s} idx={i} palette={PALETTE}
-                         polyhedronVertexKeys={polyhedronVertexKeys} />
-          ))}
+          {/* displayScale 은 **그릴 때만** 축을 늘린다 — 좌표는 검증된 값 그대로다. */}
+          <group scale={dispScale}>
+            {spec.shapes.map((s, i) => (
+              <ShapeRouter key={i} s={s} idx={i} palette={PALETTE}
+                           polyhedronVertexKeys={polyhedronVertexKeys} />
+            ))}
+          </group>
         </Suspense>
         {interactive && <OrbitControls makeDefault enableDamping dampingFactor={0.12} />}
         <CameraFit points={cameraFitPoints} shapeCount={spec.shapes.length} />
         </PortalCtx.Provider>
       </Canvas>
+      {/* 축을 늘려 그렸으면 반드시 알린다 — 안 그러면 학생이 그림에서 길이를 잰다.
+          교과서도 "그림은 실제와 다를 수 있음" 을 적는다. */}
+      {dispScale.some((v) => v !== 1) && (
+        <div className="absolute bottom-1 left-2 text-[10px] text-zinc-400/80 pointer-events-none">
+          비율을 과장한 그림입니다 (길이·각도는 실제와 다름)
+        </div>
+      )}
       {onOpen && (
         <button
           type="button"
