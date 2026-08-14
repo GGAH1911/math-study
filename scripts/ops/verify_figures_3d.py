@@ -54,7 +54,7 @@ def _is_prose(v: str) -> bool:
     return len(core) > 13 or bool(re.search(r'\([^)]{6,}\)', core))
 
 
-SPEC_KEYS = {'shapes', 'cameraPosition', 'cameraTarget', 'axes', 'gridSize', 'bgColor', 'title', 'displayScale'}
+SPEC_KEYS = {'shapes', 'cameraPosition', 'cameraTarget', 'cameraUp', 'axes', 'gridSize', 'bgColor', 'title', 'displayScale'}
 
 
 def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:

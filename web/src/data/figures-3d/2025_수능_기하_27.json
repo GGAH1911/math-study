@@ -168,7 +168,8 @@
      0.0,
      0.0
     ],
-    "color": "#fbbf24"
+    "color": "#fbbf24",
+    "label": "$4$"
    },
    {
     "type": "segment3d",
@@ -183,7 +184,8 @@
      0.0
     ],
     "color": "#fbbf24",
-    "dashed": true
+    "dashed": true,
+    "label": "$4$"
    },
    {
     "type": "parametricCurve3d",

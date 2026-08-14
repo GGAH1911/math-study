@@ -102,8 +102,8 @@ export function collectPoints(shapes: Geom3DShape[]): THREE.Vector3[] {
   return out;
 }
 
-export function CameraFit({ points, shapeCount, target }:
-  { points: THREE.Vector3[]; shapeCount: number; target?: [number, number, number] }) {
+export function CameraFit({ points, shapeCount, target, up }:
+  { points: THREE.Vector3[]; shapeCount: number; target?: [number, number, number]; up?: [number, number, number] }) {
   const { camera, controls } = useThree();
   const lastFitCount = useRef(-1);
   useEffect(() => {
@@ -117,7 +117,9 @@ export function CameraFit({ points, shapeCount, target }:
     if (lastFitCount.current === shapeCount && controls) return;
     if (controls) lastFitCount.current = shapeCount;
     const cam = camera as THREE.PerspectiveCamera;
-    cam.up.set(0, 0, 1); // Z-up 강제
+    // 기본은 Z-up. 스펙이 up 을 주면 그걸 쓴다 — 카메라 위치만으로는 화면 회전(roll)을
+    // 만들 수 없어서, 원본 도판 배치를 못 맞추는 경우가 생긴다(cameraUp 주석 참조).
+    if (up) cam.up.set(up[0], up[1], up[2]); else cam.up.set(0, 0, 1);
     const box = new THREE.Box3();
     for (const p of points) box.expandByPoint(p);
     const center = new THREE.Vector3();
@@ -153,7 +155,7 @@ export function CameraFit({ points, shapeCount, target }:
     // OrbitControls 의 회전축도 center 로
     const c = controls as unknown as { target?: THREE.Vector3; update?: () => void } | null;
     if (c?.target) { c.target.copy(center); c.update?.(); }
-  }, [points, shapeCount, camera, controls, target]);
+  }, [points, shapeCount, camera, controls, target, up]);
   return null;
 }
 

@@ -2,9 +2,9 @@
  "spec": {
   "title": "2021 고3 7월 기하 29 — AB ⟂ 평면 ACD 인 사면체 ABCD, 두 평면 PDB 와 CDB 가 이루는 각",
   "cameraPosition": [
-   7.4,
-   17,
-   16.4
+   6.1,
+   -6.7,
+   16.6
   ],
   "axes": false,
   "shapes": [
@@ -201,6 +201,11 @@
     "color": "#a3e635",
     "size": 0.11
    }
+  ],
+  "cameraUp": [
+   0,
+   -1,
+   0
   ]
  },
  "conditions": [

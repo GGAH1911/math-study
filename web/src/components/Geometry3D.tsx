@@ -512,7 +512,7 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
           </group>
         </Suspense>
         {interactive && <OrbitControls makeDefault enableDamping dampingFactor={0.12} />}
-        <CameraFit points={cameraFitPoints} shapeCount={spec.shapes.length} target={spec.cameraTarget} />
+        <CameraFit points={cameraFitPoints} shapeCount={spec.shapes.length} target={spec.cameraTarget} up={spec.cameraUp} />
         {onCamera && <CameraProbe onChange={onCamera} />}
         </PortalCtx.Provider>
       </Canvas>

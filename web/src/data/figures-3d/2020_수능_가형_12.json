@@ -1,427 +1,427 @@
 {
-  "spec": {
-    "shapes": [
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "v*sqrt(exp(u)/(exp(u)+1))",
-        "z": "0",
-        "uRange": [
-          0,
-          2.5649493574615367
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 4,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "v*sqrt(exp(u)/(exp(u)+1))",
-        "z": "sqrt(exp(u)/(exp(u)+1))",
-        "uRange": [
-          0,
-          2.5649493574615367
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 4,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "sqrt(exp(u)/(exp(u)+1))",
-        "z": "v*sqrt(exp(u)/(exp(u)+1))",
-        "uRange": [
-          0,
-          2.5649493574615367
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 4,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "u",
-        "y": "0",
-        "z": "v*sqrt(exp(u)/(exp(u)+1))",
-        "uRange": [
-          0,
-          2.5649493574615367
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 64,
-        "vSamples": 4,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "0",
-        "y": "u*0.7071067811865476",
-        "z": "v*0.7071067811865476",
-        "uRange": [
-          0,
-          1
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 4,
-        "vSamples": 4,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricSurface",
-        "x": "2.5649493574615367",
-        "y": "u*0.9636241116594315",
-        "z": "v*0.9636241116594315",
-        "uRange": [
-          0,
-          1
-        ],
-        "vRange": [
-          0,
-          1
-        ],
-        "uSamples": 4,
-        "vSamples": 4,
-        "color": "#60a5fa",
-        "opacity": 0.22
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "sqrt(exp(t)/(exp(t)+1))",
-        "z": "0",
-        "tRange": [
-          0,
-          2.5649493574615367
-        ],
-        "samples": 200,
-        "color": "#e5e7eb",
-        "strokeWidth": 2.5
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "sqrt(exp(t)/(exp(t)+1))",
-        "z": "sqrt(exp(t)/(exp(t)+1))",
-        "tRange": [
-          0,
-          2.5649493574615367
-        ],
-        "samples": 200,
-        "color": "#e5e7eb",
-        "strokeWidth": 2.5
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "t",
-        "y": "0",
-        "z": "sqrt(exp(t)/(exp(t)+1))",
-        "tRange": [
-          0,
-          2.5649493574615367
-        ],
-        "samples": 200,
-        "color": "#e5e7eb",
-        "strokeWidth": 2.5
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          2.5649493574615367,
-          0,
-          0
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          0,
-          0.7071067811865476,
-          0
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0.7071067811865476,
-          0
-        ],
-        "to": [
-          0,
-          0.7071067811865476,
-          0.7071067811865476
-        ],
-        "color": "#e5e7eb",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0.7071067811865476,
-          0.7071067811865476
-        ],
-        "to": [
-          0,
-          0,
-          0.7071067811865476
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0.7071067811865476
-        ],
-        "to": [
-          0,
-          0,
-          0
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.5649493574615367,
-          0,
-          0
-        ],
-        "to": [
-          2.5649493574615367,
-          0.9636241116594315,
-          0
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.5649493574615367,
-          0.9636241116594315,
-          0
-        ],
-        "to": [
-          2.5649493574615367,
-          0.9636241116594315,
-          0.9636241116594315
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.5649493574615367,
-          0.9636241116594315,
-          0.9636241116594315
-        ],
-        "to": [
-          2.5649493574615367,
-          0,
-          0.9636241116594315
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.5649493574615367,
-          0,
-          0.9636241116594315
-        ],
-        "to": [
-          2.5649493574615367,
-          0,
-          0
-        ],
-        "color": "#e5e7eb"
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            1.2824746787307684,
-            0,
-            0
-          ],
-          [
-            1.2824746787307684,
-            0.8847998231490938,
-            0
-          ],
-          [
-            1.2824746787307684,
-            0.8847998231490938,
-            0.8847998231490938
-          ],
-          [
-            1.2824746787307684,
-            0,
-            0.8847998231490938
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2,
-            3
-          ]
-        ],
-        "fill": "#f472b6",
-        "fillOpacity": 0.45,
-        "stroke": "#f472b6",
-        "strokeWidth": 2
-      },
-      {
-        "type": "text3d",
-        "at": [
-          1.2824746787307684,
-          0.4423999115745469,
-          1.0647998231490938
-        ],
-        "text": "단면(정사각형)",
-        "color": "#f9a8d4"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -0.45,
-          0,
-          0
-        ],
-        "to": [
-          3.25,
-          0,
-          0
-        ],
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          -0.35,
-          0
-        ],
-        "to": [
-          0,
-          2.4,
-          0
-        ],
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          3.45,
-          0,
-          0
-        ],
-        "text": "$x$",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          0,
-          2.65,
-          0
-        ],
-        "text": "$y$",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          -0.16,
-          -0.16,
-          0
-        ],
-        "text": "$\\mathrm{O}$",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          2.95,
-          1.35,
-          0
-        ],
-        "text": "$y=\\sqrt{\\dfrac{e^{x}}{e^{x}+1}}$",
-        "color": "#93c5fd"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          2.5649493574615367,
-          -0.45,
-          0
-        ],
-        "text": "$x=k$",
-        "color": "#93c5fd"
-      }
+ "spec": {
+  "shapes": [
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt(exp(u)/(exp(u)+1))",
+    "z": "0",
+    "uRange": [
+     0,
+     2.5649493574615367
     ],
-    "cameraPosition": [
-      4.2,
-      -5.0,
-      3.4
+    "vRange": [
+     0,
+     1
     ],
-    "cameraTarget": [
-      1.28,
-      0.35,
-      0.45
+    "uSamples": 64,
+    "vSamples": 4,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt(exp(u)/(exp(u)+1))",
+    "z": "sqrt(exp(u)/(exp(u)+1))",
+    "uRange": [
+     0,
+     2.5649493574615367
     ],
-    "axes": true,
-    "gridSize": 10
-  },
-  "conditions": [
-    "밑면은 곡선 y=√(eˣ/(eˣ+1)) 과 x축, y축, 직선 x=k 로 둘러싸인 부분",
-    "x축에 수직인 평면으로 자른 단면이 모두 정사각형 (한 변 = f(x) = √(eˣ/(eˣ+1)))",
-    "단면의 네 꼭짓점이 한 평면 위에 있고 그 평면은 x축에 수직",
-    "단면의 이웃한 두 변이 수직이고 네 변의 길이가 모두 f(x), 대각선 = √2·f(x)",
-    "입체의 부피 ∫₀ᵏ eˣ/(eˣ+1) dx = ln 7",
-    "k = ln 13 (f(0)=1/√2, f(k)=√(13/14))"
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 4,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt(exp(u)/(exp(u)+1))",
+    "z": "v*sqrt(exp(u)/(exp(u)+1))",
+    "uRange": [
+     0,
+     2.5649493574615367
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 4,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "0",
+    "z": "v*sqrt(exp(u)/(exp(u)+1))",
+    "uRange": [
+     0,
+     2.5649493574615367
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 4,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "0",
+    "y": "u*0.7071067811865476",
+    "z": "v*0.7071067811865476",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 4,
+    "vSamples": 4,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "2.5649493574615367",
+    "y": "u*0.9636241116594315",
+    "z": "v*0.9636241116594315",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 4,
+    "vSamples": 4,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(exp(t)/(exp(t)+1))",
+    "z": "0",
+    "tRange": [
+     0,
+     2.5649493574615367
+    ],
+    "samples": 200,
+    "color": "#e5e7eb",
+    "strokeWidth": 2.5
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(exp(t)/(exp(t)+1))",
+    "z": "sqrt(exp(t)/(exp(t)+1))",
+    "tRange": [
+     0,
+     2.5649493574615367
+    ],
+    "samples": 200,
+    "color": "#e5e7eb",
+    "strokeWidth": 2.5
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "0",
+    "z": "sqrt(exp(t)/(exp(t)+1))",
+    "tRange": [
+     0,
+     2.5649493574615367
+    ],
+    "samples": 200,
+    "color": "#e5e7eb",
+    "strokeWidth": 2.5
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     2.5649493574615367,
+     0,
+     0
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     0,
+     0.7071067811865476,
+     0
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0.7071067811865476,
+     0
+    ],
+    "to": [
+     0,
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "color": "#e5e7eb",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "to": [
+     0,
+     0,
+     0.7071067811865476
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0.7071067811865476
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.5649493574615367,
+     0,
+     0
+    ],
+    "to": [
+     2.5649493574615367,
+     0.9636241116594315,
+     0
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.5649493574615367,
+     0.9636241116594315,
+     0
+    ],
+    "to": [
+     2.5649493574615367,
+     0.9636241116594315,
+     0.9636241116594315
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.5649493574615367,
+     0.9636241116594315,
+     0.9636241116594315
+    ],
+    "to": [
+     2.5649493574615367,
+     0,
+     0.9636241116594315
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.5649493574615367,
+     0,
+     0.9636241116594315
+    ],
+    "to": [
+     2.5649493574615367,
+     0,
+     0
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      1.2824746787307684,
+      0,
+      0
+     ],
+     [
+      1.2824746787307684,
+      0.8847998231490938,
+      0
+     ],
+     [
+      1.2824746787307684,
+      0.8847998231490938,
+      0.8847998231490938
+     ],
+     [
+      1.2824746787307684,
+      0,
+      0.8847998231490938
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.45,
+    "stroke": "#f472b6",
+    "strokeWidth": 2
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.2824746787307684,
+     0.4423999115745469,
+     1.0647998231490938
+    ],
+    "text": "단면(정사각형)",
+    "color": "#f9a8d4"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -0.45,
+     0,
+     0
+    ],
+    "to": [
+     3.25,
+     0,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     -0.35,
+     0
+    ],
+    "to": [
+     0,
+     2.4,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3.45,
+     0,
+     0
+    ],
+    "text": "$x$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     2.65,
+     0
+    ],
+    "text": "$y$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.16,
+     -0.16,
+     0
+    ],
+    "text": "$\\mathrm{O}$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.95,
+     1.35,
+     0
+    ],
+    "text": "$y=\\sqrt{\\dfrac{e^{x}}{e^{x}+1}}$",
+    "color": "#93c5fd"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.5649493574615367,
+     -0.45,
+     0
+    ],
+    "text": "$x=k$",
+    "color": "#93c5fd"
+   }
   ],
-  "verify": "# 2020 수능 가형 12 — 밑면은 곡선 y=sqrt(e^x/(e^x+1)) 과 x축·y축·직선 x=k 로 둘러싸인 부분,\n# x축에 수직인 단면이 모두 정사각형인 입체. 부피가 ln7 이므로 k = ln13.\nkval = log(13)\n\ndef fx(X):\n    return sqrt(exp(X)/(exp(X)+1))\n\ndef assert_value(got, expected, tag):\n    print(f\"[VERIFY OK] {tag}\" if _close(got, expected)\n          else f\"[VERIFY FAIL] {tag}: {got} != {expected}\")\n\n# ① 부피 = ∫_0^k (한 변)^2 dx = ∫_0^k e^x/(e^x+1) dx = ln7\nV = simplify(integrate(exp(x)/(exp(x)+1), (x, 0, kval)))\nassert_value(V, log(7), \"부피 = ∫_0^k e^x/(e^x+1) dx = ln 7\")\nassert_value(kval, log(13), \"k = ln 13\")\n\n# ② 밑면 경계 — 곡선 위 점 / y축 / x축 / 직선 x=k\nf0, fk = fx(0), fx(kval)\nassert_value(f0**2*(exp(S(0))+1) - exp(S(0)), 0, \"점 (0, f(0), 0) 이 곡선 위\")\nassert_value(fk**2*(exp(kval)+1) - exp(kval), 0, \"점 (k, f(k), 0) 이 곡선 위\")\nassert_value(fk, sqrt(Rational(13, 14)), \"f(k) = sqrt(13/14)\")\nassert_value(f0, 1/sqrt(2), \"f(0) = 1/sqrt(2)\")\nassert_on_line((0, f0, 0), (0, 0, 0), (0, 1, 0), \"밑면의 왼쪽 변이 y축 위\")\nassert_on_line((kval, 0, 0), (0, 0, 0), (1, 0, 0), \"밑면의 아래쪽 변이 x축 위\")\nassert_on_line((kval, fk, 0), (kval, 0, 0), (kval, 1, 0), \"밑면의 오른쪽 변이 직선 x=k 위\")\n\n# ③ x축에 수직인 단면이 한 변 f(x) 인 정사각형 — 표본 세 곳(x=0, x=k/2, x=k)\nfor X, tag in [(S(0), \"x=0\"), (kval/2, \"x=ln13/2\"), (kval, \"x=k\")]:\n    s = fx(X)\n    P1 = (X, 0, 0); P2 = (X, s, 0); P3 = (X, s, s); P4 = (X, 0, s)\n    assert_coplanar([P1, P2, P3, P4], f\"{tag} 단면의 네 꼭짓점이 한 평면 위\")\n    assert_perpendicular(P1, P2, (0, 0, 0), (1, 0, 0), f\"{tag} 단면이 x축에 수직(변 P1P2)\")\n    assert_perpendicular(P1, P4, (0, 0, 0), (1, 0, 0), f\"{tag} 단면이 x축에 수직(변 P1P4)\")\n    assert_distance3d(P1, P2, s, f\"{tag} 단면 변 P1P2 = f(x)\")\n    assert_distance3d(P2, P3, s, f\"{tag} 단면 변 P2P3 = f(x)\")\n    assert_distance3d(P3, P4, s, f\"{tag} 단면 변 P3P4 = f(x)\")\n    assert_distance3d(P4, P1, s, f\"{tag} 단면 변 P4P1 = f(x)\")\n    assert_perpendicular(P1, P2, P2, P3, f\"{tag} 단면의 이웃한 두 변이 수직\")\n    assert_distance3d(P1, P3, s*sqrt(2), f\"{tag} 단면 대각선 = sqrt(2)·f(x)\")\n    assert_value(s**2*(exp(X)+1) - exp(X), 0, f\"{tag} 단면의 한 변이 곡선의 y좌표 f(x)\")\n\n# ④ 스펙에 실제로 박은 좌표(소수)와 정확값이 일치하는지\nassert_value(nsimplify(2.5649493574615367, [log(13)], rational=False), log(13), \"spec 의 k 좌표 = ln13\")\nprint(\"k        =\", float(kval))\nprint(\"f(0)     =\", float(f0))\nprint(\"f(k/2)   =\", float(fx(kval/2)))\nprint(\"f(k)     =\", float(fk))\nprint(\"k/2      =\", float(kval/2))\n",
-  "note": "밑면 위에 x축과 수직인 정사각형 단면을 촘촘히 쌓아 만든 입체입니다. 단면 넓이가 f(x)²=eˣ/(eˣ+1) 이므로 부피는 이 넓이를 0부터 k까지 적분한 ln((eᵏ+1)/2) 이고, 이것이 ln7 이라 k=ln13 입니다."
+  "cameraPosition": [
+   4.2,
+   -5.0,
+   3.4
+  ],
+  "cameraTarget": [
+   1.28,
+   0.35,
+   0.45
+  ],
+  "axes": true,
+  "gridSize": 10
+ },
+ "conditions": [
+  "밑면은 곡선 y=√(eˣ/(eˣ+1)) 과 x축, y축, 직선 x=k 로 둘러싸인 부분",
+  "x축에 수직인 평면으로 자른 단면이 모두 정사각형 (한 변 = f(x) = √(eˣ/(eˣ+1)))",
+  "단면의 네 꼭짓점이 한 평면 위에 있고 그 평면은 x축에 수직",
+  "단면의 이웃한 두 변이 수직이고 네 변의 길이가 모두 f(x), 대각선 = √2·f(x)",
+  "입체의 부피 ∫₀ᵏ eˣ/(eˣ+1) dx = ln 7",
+  "k = ln 13 (f(0)=1/√2, f(k)=√(13/14))"
+ ],
+ "verify": "# 2020 수능 가형 12 — 밑면은 곡선 y=sqrt(e^x/(e^x+1)) 과 x축·y축·직선 x=k 로 둘러싸인 부분,\n# x축에 수직인 단면이 모두 정사각형인 입체. 부피가 ln7 이므로 k = ln13.\nkval = log(13)\n\ndef fx(X):\n    return sqrt(exp(X)/(exp(X)+1))\n\ndef assert_value(got, expected, tag):\n    print(f\"[VERIFY OK] {tag}\" if _close(got, expected)\n          else f\"[VERIFY FAIL] {tag}: {got} != {expected}\")\n\n# ① 부피 = ∫_0^k (한 변)^2 dx = ∫_0^k e^x/(e^x+1) dx = ln7\nV = simplify(integrate(exp(x)/(exp(x)+1), (x, 0, kval)))\nassert_value(V, log(7), \"부피 = ∫_0^k e^x/(e^x+1) dx = ln 7\")\nassert_value(kval, log(13), \"k = ln 13\")\n\n# ② 밑면 경계 — 곡선 위 점 / y축 / x축 / 직선 x=k\nf0, fk = fx(0), fx(kval)\nassert_value(f0**2*(exp(S(0))+1) - exp(S(0)), 0, \"점 (0, f(0), 0) 이 곡선 위\")\nassert_value(fk**2*(exp(kval)+1) - exp(kval), 0, \"점 (k, f(k), 0) 이 곡선 위\")\nassert_value(fk, sqrt(Rational(13, 14)), \"f(k) = sqrt(13/14)\")\nassert_value(f0, 1/sqrt(2), \"f(0) = 1/sqrt(2)\")\nassert_on_line((0, f0, 0), (0, 0, 0), (0, 1, 0), \"밑면의 왼쪽 변이 y축 위\")\nassert_on_line((kval, 0, 0), (0, 0, 0), (1, 0, 0), \"밑면의 아래쪽 변이 x축 위\")\nassert_on_line((kval, fk, 0), (kval, 0, 0), (kval, 1, 0), \"밑면의 오른쪽 변이 직선 x=k 위\")\n\n# ③ x축에 수직인 단면이 한 변 f(x) 인 정사각형 — 표본 세 곳(x=0, x=k/2, x=k)\nfor X, tag in [(S(0), \"x=0\"), (kval/2, \"x=ln13/2\"), (kval, \"x=k\")]:\n    s = fx(X)\n    P1 = (X, 0, 0); P2 = (X, s, 0); P3 = (X, s, s); P4 = (X, 0, s)\n    assert_coplanar([P1, P2, P3, P4], f\"{tag} 단면의 네 꼭짓점이 한 평면 위\")\n    assert_perpendicular(P1, P2, (0, 0, 0), (1, 0, 0), f\"{tag} 단면이 x축에 수직(변 P1P2)\")\n    assert_perpendicular(P1, P4, (0, 0, 0), (1, 0, 0), f\"{tag} 단면이 x축에 수직(변 P1P4)\")\n    assert_distance3d(P1, P2, s, f\"{tag} 단면 변 P1P2 = f(x)\")\n    assert_distance3d(P2, P3, s, f\"{tag} 단면 변 P2P3 = f(x)\")\n    assert_distance3d(P3, P4, s, f\"{tag} 단면 변 P3P4 = f(x)\")\n    assert_distance3d(P4, P1, s, f\"{tag} 단면 변 P4P1 = f(x)\")\n    assert_perpendicular(P1, P2, P2, P3, f\"{tag} 단면의 이웃한 두 변이 수직\")\n    assert_distance3d(P1, P3, s*sqrt(2), f\"{tag} 단면 대각선 = sqrt(2)·f(x)\")\n    assert_value(s**2*(exp(X)+1) - exp(X), 0, f\"{tag} 단면의 한 변이 곡선의 y좌표 f(x)\")\n\n# ④ 스펙에 실제로 박은 좌표(소수)와 정확값이 일치하는지\nassert_value(nsimplify(2.5649493574615367, [log(13)], rational=False), log(13), \"spec 의 k 좌표 = ln13\")\nprint(\"k        =\", float(kval))\nprint(\"f(0)     =\", float(f0))\nprint(\"f(k/2)   =\", float(fx(kval/2)))\nprint(\"f(k)     =\", float(fk))\nprint(\"k/2      =\", float(kval/2))\n",
+ "note": "밑면 위에 x축과 수직인 정사각형 단면을 촘촘히 쌓아 만든 입체입니다. 단면 넓이가 f(x)²=eˣ/(eˣ+1) 이므로 부피는 이 넓이를 0부터 k까지 적분한 ln((eᵏ+1)/2) 이고, 이것이 ln7 이라 k=ln13 입니다."
 }

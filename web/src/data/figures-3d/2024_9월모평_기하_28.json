@@ -71,7 +71,7 @@
      4.3,
      -0.5
     ],
-    "text": "원 $C$",
+    "text": "원 $C$ (반지름 $\\sqrt{15}$)",
     "color": "#4ade80"
    },
    {
@@ -94,7 +94,7 @@
      -2.9,
      2.6
     ],
-    "text": "교선원",
+    "text": "교선원 (반지름 $2\\sqrt{3}$)",
     "color": "#c4b5fd"
    },
    {
@@ -197,7 +197,8 @@
      0.0
     ],
     "color": "#94a3b8",
-    "dashed": true
+    "dashed": true,
+    "label": "$3$"
    },
    {
     "type": "segment3d",
@@ -211,7 +212,8 @@
      3.4641016151377544,
      0.0
     ],
-    "color": "#fbbf24"
+    "color": "#fbbf24",
+    "label": "$4\\sqrt{3}$"
    },
    {
     "type": "segment3d",
