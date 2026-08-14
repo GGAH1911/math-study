@@ -104,6 +104,10 @@ const unitTitle = fm.source?.subject
 // 회차 내 이전/다음 네비게이션. 같은 회차(연도·시험·세션·학년·기관) 전체를 모아
 // 공통(1-22)↔선택(23-30) 경계에서 분기: 공통 마지막 → 선택과목 선택, 선택 첫 → 공통 복귀.
 // 가/나형·단일(검정고시·고1·2)은 공통이 없어 같은 과목 내 선형 이동.
+// 이 문제에 **미리 검증된 3D 도형**이 있는지 — 있으면 학생에게 알린다.
+// 있는 줄 모르면 아무도 안 물어본다(2026-08-14 사장님 지적).
+const { readFigure3D } = await import('../../lib/figures-3d');
+const has3D = !!readFigure3D(entry.id);
 const src = fm.source;
 type ProbEntry = Awaited<ReturnType<typeof getCollection<'problems'>>>[number];
 const byNum = (a: ProbEntry, b: ProbEntry) => Number(a.data.source?.number ?? 0) - Number(b.data.source?.number ?? 0);
@@ -157,6 +161,13 @@ if (src) {
         <div class="mb-4"><RoundNav prev={prevEntry} nexts={nextEntries} curSubject={src.subject} currentLabel={`${subjLabel}${src.number}번`} /></div>
       )}
       <article class="max-w-none">
+        {has3D && (
+          <button type="button" id="ask-3d"
+            class="inline-flex items-center gap-1.5 mb-4 mr-3 px-3 py-1.5 rounded-lg border border-[color:var(--color-border)] text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
+            title="튜터가 이 문제의 입체 도형을 바로 그려 줍니다">
+            <span aria-hidden="true">🧊</span> 입체로 보기
+          </button>
+        )}
         {reconHTML && (
           <div class="prob-toggle inline-flex rounded-lg border border-[color:var(--color-border)] overflow-hidden mb-4 text-sm" role="tablist" aria-label="문제 보기 방식">
             <button type="button" id="pv-raw" class="px-3.5 py-1.5 font-medium">🖼 원본 이미지</button>
@@ -318,6 +329,18 @@ if (src) {
     })();
   </script>
 
+  {/* "입체로 보기" — 튜터 입력창에 요청을 넣어 준다.
+       바로 전송하지 않는 이유: 학생이 문장을 다듬거나 취소할 수 있어야 한다. */}
+  <script is:inline>
+    (function () {
+      const b = document.getElementById('ask-3d');
+      if (!b) return;
+      b.addEventListener('click', function () {
+        window.dispatchEvent(new CustomEvent('math-study:chat-insert',
+          { detail: { text: '이 문제의 도형을 입체로 그려줘.' } }));
+      });
+    })();
+  </script>
   {/* 원본 이미지 ↔ 재구성(LaTeX) 토글 — 선택 기억 */}
   <script is:inline>
     (function () {
