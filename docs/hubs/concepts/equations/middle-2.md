@@ -1,7 +1,7 @@
 ---
 sources: []
-created: 2026-08-13
-updated: 2026-08-13
+created: 2026-08-14
+updated: 2026-08-14
 hub_type: concepts-grade
 domain: equations
 grade: middle-2

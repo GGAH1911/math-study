@@ -68,8 +68,14 @@ def assert_on_circle(point, center, radius, tag):
             dval, rval = d, radius
         print(f"[VERIFY FAIL] {tag}: dist={dval} != r={rval}")
 
+def _dist(p1, p2):
+    """차원 무관 거리. ★2D 식으로 3D 점을 재면 z 가 버려져 **거리가 0 으로 나온다**
+    (2026-08-14 실측: |(0,0,4)-(0,0,1)| 이 0.0). 그래서 짧은 쪽에 맞춰 전 성분을 쓴다."""
+    n = min(len(p1), len(p2))
+    return sqrt(sum((p1[i]-p2[i])**2 for i in range(n)))
+
 def assert_distance(p1, p2, expected, tag):
-    d = sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
+    d = _dist(p1, p2)
     if _close(d, expected):
         print(f"[VERIFY OK] {tag}")
     else:
@@ -78,6 +84,33 @@ def assert_distance(p1, p2, expected, tag):
         except Exception:
             dval, eval_ = d, expected
         print(f"[VERIFY FAIL] {tag}: |{p1}-{p2}|={dval} != {eval_}")
+
+def assert_distance3d(p1, p2, expected, tag):
+    """3D 거리 검증. 이름만 다르고 assert_distance 와 동작이 같다 —
+    튜터 프롬프트(geometry3d STEP B)가 이 이름을 쓰라고 지시하기 때문에 존재해야 한다."""
+    assert_distance(p1, p2, expected, tag)
+
+def assert_coplanar(pts, tag):
+    """네 점 이상이 한 평면에 있는지. 공간도형 작도에서 밑면·단면이 뒤틀리는 사고를 잡는다."""
+    if len(pts) < 4:
+        print(f"[VERIFY OK] {tag}"); return
+    o = Matrix(pts[0])
+    v1 = Matrix(pts[1]) - o; v2 = Matrix(pts[2]) - o
+    n = v1.cross(v2)
+    if n.norm() == 0:
+        print(f"[VERIFY FAIL] {tag}: 처음 세 점이 일직선"); return
+    for q in pts[3:]:
+        if not _close(n.dot(Matrix(q) - o), 0):
+            print(f"[VERIFY FAIL] {tag}: {q} 가 평면 밖"); return
+    print(f"[VERIFY OK] {tag}")
+
+def assert_perpendicular(p1, p2, q1, q2, tag):
+    """두 선분(또는 벡터)이 수직인지 — 2D·3D 공통."""
+    u = Matrix(p2) - Matrix(p1); v = Matrix(q2) - Matrix(q1)
+    if u.norm() == 0 or v.norm() == 0:
+        print(f"[VERIFY FAIL] {tag}: 길이 0 벡터"); return
+    print(f"[VERIFY OK] {tag}" if _close(u.dot(v), 0)
+          else f"[VERIFY FAIL] {tag}: 내적={float(u.dot(v))} != 0")
 
 def assert_angle(vertex, a, b, expected, tag):
     """∠a-vertex-b 가 expected (radian) 인지. 부호·사분면 오류 직격 검증."""
