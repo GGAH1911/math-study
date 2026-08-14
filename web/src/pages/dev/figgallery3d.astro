@@ -107,7 +107,13 @@ const qsBase = `?src=${src}&per=${PER}`;
               </div>
             )}
             <div style="flex:1 1 0;min-width:0;">
-              <div style="font-size:10px;color:#666;margin-bottom:3px;">우리 3D (드래그 회전)</div>
+              <div style="font-size:10px;color:#666;margin-bottom:3px;display:flex;justify-content:space-between;">
+                <span>우리 3D (드래그 회전)</span>
+                {src === 'problems' && (
+                  <a href={`/dev/figrender3d?src=prob3d&id=${encodeURIComponent(it.concept)}&w=800&review=1`}
+                     style="color:#60a5fa;text-decoration:none;">검수 →</a>
+                )}
+              </div>
               {it.spec
                 ? <Lazy3D client:only="react" spec={it.spec} width={340} height={290} />
                 : <p style="color:#777;font-size:12px;">spec 없음</p>}

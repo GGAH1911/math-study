@@ -18,6 +18,13 @@ const src = Astro.url.searchParams.get('src') ?? 'concept';
 // ?review=1 — 드래그로 각도를 찾아 스펙에 저장하는 검수 모드.
 // 기본(스크린샷 캡처용)은 interactive=false 라 회전이 막혀 있다.
 const review = Astro.url.searchParams.get('review') === '1';
+// 스펙을 못 찾았을 때 보여 줄 목록 — stem 을 외우고 있을 리 없다(2026-08-14: 사장님이
+// 안내 URL 의 <stem> 자리표시자를 그대로 열었다. 링크로 못 준 내 잘못이다).
+let stemList: string[] = [];
+if (src === 'prob3d') {
+  const { listFigure3D } = await import('../../lib/figures-3d');
+  stemList = listFigure3D().sort();
+}
 
 let spec3d: any = null;
 let spec2d: any = null;
@@ -70,7 +77,23 @@ if (src === 'test') {
           <Geometry client:load spec={spec2d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast fixedWidth={w - 18} noLabelBg={src === 'corr'} />
         </div>
       )}
-      {!spec3d && !spec2d && <p id="nofig" style="color:#aaa;font-family:sans-serif;">no figure for id={id}</p>}
+      {!spec3d && !spec2d && (
+      <div style="color:#a1a1aa;font-family:sans-serif;">
+        <p style="margin:0 0 10px;">
+          {id ? <>id=<code style="color:#e4e4e7;">{id}</code> 에 해당하는 3D 스펙이 없습니다.</> : '검수할 도형을 고르세요.'}
+        </p>
+        {stemList.length > 0 && (
+          <>
+            <p style="font-size:12px;color:#71717a;margin:0 0 8px;">등록된 3D 스펙 {stemList.length}건 — 클릭하면 검수 화면(드래그 회전 · 우클릭으로 회전축 이동)으로 갑니다.</p>
+            <ul style="columns:3;font-size:13px;line-height:1.9;padding-left:18px;margin:0;">
+              {stemList.map((st) => (
+                <li><a style="color:#60a5fa;text-decoration:none;" href={`/dev/figrender3d?src=prob3d&id=${encodeURIComponent(st)}&w=800&review=1`}>{st}</a></li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+    )}
     </div>
     <div style={`width:${w}px;color:#888;font:12px sans-serif;margin-top:8px;`}>
       {id} {spec3d?.title ? `· 3D: ${spec3d.title}` : ''} {spec2d ? '· +2D' : ''}
