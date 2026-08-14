@@ -2,9 +2,16 @@
 # ============================================================================
 # 솔버 파라미터화 — 일일 소넷 드립 (크론 07:00)
 #
-#   scripts/ops/run_param_daily.sh              # 기본: 소넷 · 워커 8 · 2시간 박스
-#   MAX_SECONDS=14400 scripts/ops/run_param_daily.sh    # 버스트(4시간)
-#   WORKERS=12 MAX_SECONDS=21600 scripts/ops/run_param_daily.sh
+#   scripts/ops/run_param_daily.sh              # 기본: 소넷 · 워커 8 · 30분 박스
+#   MAX_SECONDS=7200 scripts/ops/run_param_daily.sh     # 버스트(2시간)
+#   WORKERS=12 MAX_SECONDS=14400 scripts/ops/run_param_daily.sh
+#
+# ★왜 30분뿐인가: **파라미터화된 솔버를 쓰는 프로덕션 기능이 아직 없다.**
+#   소비자는 `web/src/pages/dev/variants-test.astro`(스스로 "PoC" 라 적힌 dev 페이지)
+#   하나뿐이고, `docs/architecture/app-roadmap.md` 에는 파라미터화·솔버가 한 번도
+#   나오지 않는다 — 출시 임계경로가 아니다. 그래서 **수요가 생길 때까지 얕게만 쌓는다.**
+#   30분/일 ≈ 30건 → 잔여 4,049건은 4개월이 걸리지만, 급할 이유가 없다는 게 요점이다.
+#   유사문제 기능이 로드맵에 오르면 그때 MAX_SECONDS 를 올려 따라잡으면 된다.
 #
 # ★왜 소넷인가: 구독 쿼터라 **한계비용이 0** 이다. Hermes/DeepSeek 은 통과율이 더 좋아도
 #   **Nous Portal 이 종량제라**(2026-08-14 확인) 건당 $0.03 이 진짜 나간다 — 잔여
@@ -31,7 +38,7 @@ cd "$REPO" || exit 1
 
 MODEL="${MODEL:-sonnet}"
 WORKERS="${WORKERS:-8}"
-MAX_SECONDS="${MAX_SECONDS:-7200}"          # 기본 2시간
+MAX_SECONDS="${MAX_SECONDS:-1800}"          # 기본 30분 (수요가 없으므로 얕게 — 헤더 참조)
 LOCK="/tmp/math-study-param-daily.lock"
 LOG_DIR="${PARAM_LOG_DIR:-/tmp/ingest_logs}"   # ★/progress 가 읽는 디렉터리
 LOG="$LOG_DIR/param_daily_$(date +%Y%m%d_%H%M%S).log"

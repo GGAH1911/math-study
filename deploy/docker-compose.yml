@@ -55,7 +55,13 @@ services:
       #   블록이 사라져 튜터가 15시간 죽었고, /api/health 는 내내 200이라 아무도 몰랐다).
       #   `claude setup-token` 의 1년 장기 토큰을 env 로 고정한다. 없으면 기존 파일 인증으로 폴백.
       CLAUDE_CODE_OAUTH_TOKEN: ${MS_CLAUDE_OAUTH_TOKEN:-}
-      # 제품 튜터(외부 API). 없으면 구독 haiku 로 폴백하므로 미설정도 안전.
+      # ★제품 튜터(외부 API) — **필수다. 미설정이면 튜터가 죽는다(503).**
+      #   이 줄엔 "없으면 구독 haiku 로 폴백하므로 미설정도 안전" 이라고 적혀 있었는데
+      #   **코드와 어긋난다**(chat.ts «폴백 없음» — 키가 없으면 503). 폴백은 장애를 숨겨
+      #   발견을 늦추므로 의도적으로 뺀 것이다(8/12 에 15시간 늦었다).
+      #   학생 트래픽은 **전부 이 경로**다 — 프런트가 model 을 안 보내 기본값 'tutor' 로
+      #   고정되고, haiku/sonnet/opus 는 요청이 명시할 때만 쓰는 개발용이다.
+      #   따라서 구독 쿼터는 튜터가 아니라 개발 세션·배치만 쓴다.
       NOUS_API_KEY: ${MS_NOUS_API_KEY:-}
       NOUS_TUTOR_MODEL: ${MS_TUTOR_MODEL:-openai/gpt-5.6-luna}
       HOME: /home/node
