@@ -134,8 +134,27 @@ def check(path: Path, vocab: dict[str, set[str]], deep: bool) -> list[str]:
         for line in out.splitlines():
             if '[VERIFY FAIL]' in line:
                 bad.append(f'verify {line.strip()}')
-        if '[VERIFY OK]' not in out:
+        n_ok = out.count('[VERIFY OK]')
+        if n_ok == 0:
             bad.append('verify 가 [VERIFY OK] 를 하나도 안 냈다 — 검증하는 척만 한 코드다')
+        else:
+            # ★검증이 성기면 좌표가 우연히 맞은 것일 수 있다. 하한은 감이 아니라 기존 73건
+            #   실측 분포에서 잡았다: 최소 8회, 그리고 **라벨 붙은 점 수 이상**(모든 점이
+            #   적어도 하나의 조건으로 고정돼야 한다). 73건 전부 이 둘을 넘는다.
+            #   ★세는 것은 conditions 배열이 아니라 **실제로 실행된 [VERIFY OK]** 다 —
+            #     conditions 는 사람이 읽는 산문이라 실제 검증량과 어긋난다(어떤 스펙은
+            #     conditions 9개에 assert 27개였다).
+            pts = set()
+            for sh in (spec.get('shapes') or []):
+                if sh.get('type') == 'point3d' and sh.get('label'):
+                    pts.add(sh['label'])
+                for l in (sh.get('labels') or []):
+                    if l:
+                        pts.add(l)
+            floor = max(8, len(pts))
+            if n_ok < floor:
+                bad.append(f'검증이 성기다 — [VERIFY OK] {n_ok}회 (하한 {floor}: '
+                           f'최소 8, 라벨 점 {len(pts)}개 이상). 조건을 더 검증해라')
     return bad
 
 
