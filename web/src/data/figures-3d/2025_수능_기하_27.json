@@ -1,0 +1,306 @@
+{
+ "spec": {
+  "title": "사면체 $ABCD$ — $\\triangle ACD$ 의 내접원과 평면 $BCD$ 위로의 정사영",
+  "cameraPosition": [
+   -4,
+   -13,
+   7
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.0,
+      0.0,
+      3.4641016151377544
+     ],
+     [
+      0.0,
+      4.47213595499958,
+      0.0
+     ],
+     [
+      0.0,
+      -4.47213595499958,
+      0.0
+     ],
+     [
+      4.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "$A$",
+     "$B$",
+     "$C$",
+     "$D$"
+    ],
+    "fill": "#3b82f6",
+    "fillOpacity": 0.18,
+    "stroke": "#93c5fd",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.0,
+      0.0,
+      3.4641016151377544
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      4.0,
+      0.0,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "",
+     "$M$",
+     ""
+    ],
+    "fill": "#f59e0b",
+    "fillOpacity": 0.3,
+    "stroke": "#fbbf24",
+    "strokeWidth": 2
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.5,
+     1.7,
+     1.9
+    ],
+    "text": "평면 $AMD$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     4.47213595499958,
+     0.0
+    ],
+    "to": [
+     0.0,
+     -4.47213595499958,
+     0.0
+    ],
+    "color": "#f87171",
+    "label": "$4\\sqrt{5}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     0.0,
+     3.4641016151377544
+    ],
+    "to": [
+     0.0,
+     4.47213595499958,
+     0.0
+    ],
+    "color": "#cbd5e1",
+    "label": "$6$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     0.0,
+     3.4641016151377544
+    ],
+    "to": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "color": "#fbbf24",
+    "label": "$4$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "color": "#fbbf24",
+    "dashed": true,
+    "label": "$4$"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "2.25 + 0.7071067811865476*cos(t) - 0.75*sin(t)",
+    "y": "-1.118033988749895 - 1.118033988749895*sin(t)",
+    "z": "1.299038105676658 - 1.224744871391589*cos(t) - 0.4330127018922193*sin(t)",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#22c55e",
+    "strokeWidth": 3
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2.25,
+     -1.118033988749895,
+     1.299038105676658
+    ],
+    "label": "$I$",
+    "color": "#22c55e"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.0,
+     -2.6,
+     3.15
+    ],
+    "text": "$\\triangle ACD$ 의 내접원",
+    "color": "#4ade80"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "2.25 + 0.7071067811865476*cos(t) - 0.75*sin(t)",
+    "y": "-1.118033988749895 - 1.118033988749895*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#f472b6",
+    "strokeWidth": 3
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2.25,
+     -1.118033988749895,
+     0.0
+    ],
+    "label": "$I'$",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.6,
+     -3.3,
+     -0.55
+    ],
+    "text": "정사영 $\\dfrac{\\sqrt{10}}{4}\\pi$",
+    "color": "#f9a8d4"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.25,
+     -1.118033988749895,
+     1.299038105676658
+    ],
+    "to": [
+     2.25,
+     -1.118033988749895,
+     0.0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.5428932188134523,
+     -1.118033988749895,
+     2.523782977068247
+    ],
+    "to": [
+     1.5428932188134523,
+     -1.118033988749895,
+     0.0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.5,
+     -2.23606797749979,
+     0.8660254037844387
+    ],
+    "to": [
+     1.5,
+     -2.23606797749979,
+     0.0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   }
+  ]
+ },
+ "conditions": [
+  "AB = 6",
+  "BC = 4√5",
+  "M 은 직선 BC 위의 점이고 BM = CM = 2√5 (M 은 BC 의 중점)",
+  "AM = MD = DA = 4 (삼각형 AMD 는 정삼각형)",
+  "BC ⊥ AM, BC ⊥ MD, BC ⊥ AD — 즉 직선 BC 는 평면 AMD 와 수직",
+  "A 는 평면 BCD 밖의 점 (사면체 ABCD 가 성립)",
+  "삼각형 ACD 의 세 변: AC = 6, CD = 6, AD = 4",
+  "내심 I = (2.25, −√5/2, 3√3/4) 는 평면 ACD 위",
+  "I 에서 직선 AC, CD, DA 까지의 거리가 모두 √2 (내접원 반지름 r = √2)",
+  "내접원 위의 여섯 점이 중심 I, 반지름 √2, 평면 ACD 위의 원 위에 있음",
+  "평면 BCD 는 z = 0 평면 (B, C, D 가 모두 z = 0)",
+  "내심의 정사영 I′ 는 평면 BCD 위이고 II′ ⊥ BC, II′ ⊥ CD (II′ ⊥ 평면 BCD)",
+  "평면 ACD 와 평면 BCD 가 이루는 각 θ 에 대해 cos θ = √10/8",
+  "내접원의 평면 BCD 위로의 정사영 넓이 = πr²cos θ = (√10/4)π"
+ ],
+ "verify": "s3 = sqrt(3); s5 = sqrt(5)\n\n# 좌표계: 평면 BCD 를 z=0 (수평면), 직선 BC 를 y축, M 을 원점으로 잡는다.\n# 직선 BC ⊥ 평면 AMD 이므로 평면 AMD 는 y=0 (xz평면).\nM = Matrix([0, 0, 0])\nB = Matrix([0,  2*s5, 0])\nC = Matrix([0, -2*s5, 0])\nD = Matrix([4, 0, 0])\nA = Matrix([2, 0, 2*s3])\n\n# --- 문제에 주어진 조건 ------------------------------------------------\nassert_distance3d(A, B, 6, \"AB = 6\")\nassert_distance3d(B, C, 4*s5, \"BC = 4*sqrt(5)\")\nassert_on_line(M, B, C, \"M 은 직선 BC 위\")\nassert_distance3d(B, M, 2*s5, \"BM = 2*sqrt(5) : M 은 BC 의 중점\")\nassert_distance3d(C, M, 2*s5, \"CM = 2*sqrt(5) : M 은 BC 의 중점\")\n\n# 삼각형 AMD 가 정삼각형 (한 변 4)\nassert_distance3d(A, M, 4, \"AM = 4\")\nassert_distance3d(M, D, 4, \"MD = 4\")\nassert_distance3d(D, A, 4, \"DA = 4 : 삼각형 AMD 는 정삼각형\")\n\n# 직선 BC 가 평면 AMD 와 수직\nassert_perpendicular(B, C, A, M, \"BC ⊥ AM\")\nassert_perpendicular(B, C, M, D, \"BC ⊥ MD\")\nassert_perpendicular(B, C, A, D, \"BC ⊥ AD : 직선 BC ⊥ 평면 AMD\")\n\n# 사면체가 찌그러지지 않았는지 (A 가 평면 BCD 밖)\nassert not _close(point_plane_distance(A, [B, C, D])), \"A 가 평면 BCD 위에 있다\"\nprint(\"[VERIFY OK] A 는 평면 BCD 밖 : 사면체 ABCD 성립\")\n\n# --- 삼각형 ACD 와 그 내접원 -------------------------------------------\nassert_distance3d(A, C, 6, \"AC = 6\")\nassert_distance3d(C, D, 6, \"CD = 6\")\nassert_distance3d(A, D, 4, \"AD = 4\")\n\n# 내심 = (대변길이) 가중평균, 내접원 반지름 r = 넓이/s = 8*sqrt(2)/8 = sqrt(2)\nI = (6*A + 4*C + 6*D) / 16\nr = sqrt(2)\nprint(\"I =\", simplify(I).T, \"  r =\", r)\nassert_on_plane(I, [A, C, D], \"내심 I 는 평면 ACD 위\")\nassert_point_line_distance(I, A, C, r, \"I 에서 직선 AC 까지 거리 = sqrt(2)\")\nassert_point_line_distance(I, C, D, r, \"I 에서 직선 CD 까지 거리 = sqrt(2)\")\nassert_point_line_distance(I, D, A, r, \"I 에서 직선 DA 까지 거리 = sqrt(2)\")\n\n# 평면 ACD 안의 정규직교 기저 u, v (내접원 매개화용)\nn1 = (A - C).cross(D - C)\nu = (D - A) / 4\nv = n1.cross(u) / n1.norm()\nassert _close(simplify(u.dot(u) - 1)) and _close(simplify(v.dot(v) - 1)), \"기저가 단위벡터가 아니다\"\nassert _close(simplify(u.dot(v))), \"기저가 직교가 아니다\"\nprint(\"[VERIFY OK] u, v 는 평면 ACD 의 정규직교 기저\")\nprint(\"u =\", [float(x) for x in u], \" v =\", [float(x) for x in v])\nprint(\"n1 =\", simplify(n1).T, \" |n1| =\", simplify(n1.norm()))\n\n# 내접원 위의 점들이 실제로 평면 ACD 안의 반지름 sqrt(2) 원 위인지\nfor k in range(6):\n    th = 2*pi*k/6\n    P = simplify(I + r*(cos(th)*u + sin(th)*v))\n    assert_on_circle(list(P), list(I), r, f\"내접원 위의 점 (t={k}pi/3)\", normal=list(n1))\n    assert_on_plane(P, [A, C, D], f\"내접원 위의 점 (t={k}pi/3) 은 평면 ACD 위\")\n\n# --- 평면 BCD 위로의 정사영 --------------------------------------------\nXY = [Matrix([0, 0, 0]), Matrix([1, 0, 0]), Matrix([0, 1, 0])]\nassert_on_plane(B, XY, \"B 는 평면 z=0 위\")\nassert_on_plane(C, XY, \"C 는 평면 z=0 위\")\nassert_on_plane(D, XY, \"D 는 평면 z=0 위\")\nprint(\"[VERIFY OK] 평면 BCD = 평면 z=0 : 정사영은 z 성분만 버리면 된다\")\n\nIp = Matrix([I[0], I[1], 0])          # 내심의 정사영\nassert_on_plane(Ip, XY, \"내심의 정사영 I' 는 평면 BCD 위\")\nassert_distance3d(I, Ip, I[2], \"I -> I' 는 평면 BCD 로 내린 수선\")\nassert_perpendicular(I, Ip, B, C, \"II' ⊥ BC\")\nassert_perpendicular(I, Ip, C, D, \"II' ⊥ CD : II' ⊥ 평면 BCD\")\n\n# 두 평면이 이루는 각 theta : cos(theta) = sqrt(10)/8\nn2 = (C - B).cross(D - B)\ncosT = simplify(abs(n1.dot(n2)) / (n1.norm() * n2.norm()))\nassert _close(simplify(cosT - sqrt(10)/8)), f\"cos(theta) = {cosT} != sqrt(10)/8\"\nprint(\"[VERIFY OK] 평면 ACD 와 평면 BCD 가 이루는 각 theta : cos(theta) = sqrt(10)/8\")\n\n# 정사영된 타원의 넓이 = pi*r^2*|u' x v'| = pi*r^2*cos(theta)\nup_ = Matrix([u[0], u[1], 0]); vp_ = Matrix([v[0], v[1], 0])\ndetJ = simplify(abs(up_[0]*vp_[1] - up_[1]*vp_[0]))\nassert _close(simplify(detJ - sqrt(10)/8)), f\"정사영 축소비 {detJ} != sqrt(10)/8\"\nS = simplify(pi * r**2 * detJ)\nassert _close(simplify(S - sqrt(10)*pi/4)), f\"정사영 넓이 {S} != sqrt(10)*pi/4\"\nprint(\"[VERIFY OK] 내접원의 평면 BCD 위로의 정사영 넓이 = sqrt(10)*pi/4  (답 1번)\")\n",
+ "note": "직선 BC 가 평면 AMD 와 수직이라는 조건 덕분에 평면 AMD(주황)를 세로로 세우고 밑면 BCD 를 바닥에 눕힐 수 있습니다. 초록색이 삼각형 ACD 의 내접원(반지름 √2), 분홍색이 그것을 바닥면 BCD 로 곧장 내려찍은 정사영 타원이며, 두 평면이 이루는 각 θ 가 cos θ = √10/8 이므로 넓이는 2π × √10/8 = (√10/4)π 가 됩니다."
+}

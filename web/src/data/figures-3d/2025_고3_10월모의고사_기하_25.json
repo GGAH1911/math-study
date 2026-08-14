@@ -1,0 +1,247 @@
+{
+ "spec": {
+  "title": "2025 고3 10월 기하 25 — 사각뿔 A-BCDE (밑면 정사각형, AC 와 밑면이 이루는 각 π/3)",
+  "cameraPosition": [
+   5.4,
+   -6.4,
+   4.3
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      2.449489742783178
+     ],
+     [
+      -1,
+      -1,
+      0
+     ],
+     [
+      1,
+      -1,
+      0
+     ],
+     [
+      1,
+      1,
+      0
+     ],
+     [
+      -1,
+      1,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      1,
+      2,
+      3,
+      4
+     ],
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      0,
+      3,
+      4
+     ],
+     [
+      0,
+      4,
+      1
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      2.449489742783178
+     ],
+     [
+      -1,
+      -1,
+      0
+     ],
+     [
+      1,
+      -1,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.24,
+    "stroke": "#38bdf8",
+    "strokeWidth": 3
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1,
+     -1,
+     0
+    ],
+    "to": [
+     1,
+     -1,
+     0
+    ],
+    "color": "#38bdf8",
+    "label": "2"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     2.449489742783178
+    ],
+    "to": [
+     0,
+     -1,
+     0
+    ],
+    "color": "#f472b6",
+    "label": "$\\sqrt{7}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     2.449489742783178
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true,
+    "label": "$\\sqrt{6}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     1,
+     -1,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     2.449489742783178
+    ],
+    "to": [
+     1,
+     -1,
+     0
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "O",
+    "color": "#fbbf24",
+    "size": 0.09
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     -1,
+     0
+    ],
+    "label": "M",
+    "color": "#f472b6",
+    "size": 0.09
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.62,
+     -0.62,
+     0.3
+    ],
+    "text": "$\\frac{\\pi}{3}$",
+    "color": "#fbbf24"
+   }
+  ]
+ },
+ "conditions": [
+  "BC=2",
+  "CD=2",
+  "DE=2",
+  "EB=2",
+  "∠EBC=90°",
+  "∠BCD=90°",
+  "∠CDE=90°",
+  "B, C, D, E 는 한 평면 위 (밑면 BCDE 는 한 변의 길이가 2인 정사각형)",
+  "AB=2√2",
+  "AC=2√2",
+  "AD=2√2",
+  "AE=2√2 (AB=AC=AD=AE)",
+  "O 는 평면 BCDE 위 (정사각형 BCDE 의 중심)",
+  "AO ⊥ BC",
+  "AO ⊥ CD (AO 는 밑면에 수직)",
+  "A 와 평면 BCDE 사이 거리 = AO = √6",
+  "직선 AC 와 평면 BCDE 가 이루는 각 ∠ACO = π/3",
+  "M 은 직선 BC 위",
+  "BM=1",
+  "MC=1 (M 은 BC 의 중점)",
+  "AM ⊥ BC",
+  "AM=√7",
+  "삼각형 ABC 의 넓이 = √7 (정답 ④)"
+ ],
+ "verify": "# 2025 고3 10월 기하 25 — 사각뿔 A-BCDE\n# 밑면: 한 변 2인 정사각형 BCDE, AB=AC=AD=AE, 직선 AC와 평면 BCDE가 이루는 각 = π/3\nO = (0, 0, 0)                      # 정사각형 BCDE 의 중심 (A 에서 내린 수선의 발)\nB = (-1, -1, 0)\nC = (1, -1, 0)\nD = (1, 1, 0)\nE = (-1, 1, 0)\nh = sqrt(6)\nA = (0, 0, h)\nM = (0, -1, 0)                     # BC 의 중점\n\n# 밑면이 한 변 2인 정사각형\nassert_distance3d(B, C, 2, \"BC=2\")\nassert_distance3d(C, D, 2, \"CD=2\")\nassert_distance3d(D, E, 2, \"DE=2\")\nassert_distance3d(E, B, 2, \"EB=2\")\nassert_angle(B, E, C, pi/2, \"∠EBC=90°\")\nassert_angle(C, B, D, pi/2, \"∠BCD=90°\")\nassert_angle(D, C, E, pi/2, \"∠CDE=90°\")\nassert_coplanar([B, C, D, E], \"B, C, D, E 는 한 평면 위 (밑면)\")\n\n# 옆모서리가 모두 같다\nassert_distance3d(A, B, sqrt(2 + 6), \"AB=2√2\")\nassert_distance3d(A, C, sqrt(2 + 6), \"AC=2√2\")\nassert_distance3d(A, D, sqrt(2 + 6), \"AD=2√2\")\nassert_distance3d(A, E, sqrt(2 + 6), \"AE=2√2\")\n\n# A 에서 밑면에 내린 수선의 발이 O (정사각형의 중심)\nassert_on_plane(O, [B, C, D], \"O 는 평면 BCDE 위\")\nassert_perpendicular(A, O, B, C, \"AO ⊥ BC\")\nassert_perpendicular(A, O, C, D, \"AO ⊥ CD\")\nassert_point_plane_distance(A, [B, C, D], h, \"A 와 평면 BCDE 사이 거리 = AO = √6\")\n\n# 직선 AC 와 평면 BCDE 가 이루는 각 = ∠ACO = π/3\nassert_angle(C, A, O, pi/3, \"직선 AC 와 평면 BCDE 가 이루는 각 = π/3\")\n\n# 삼각형 ABC: M 은 BC 의 중점, AM ⊥ BC, AM = √7\nassert_on_line(M, B, C, \"M 은 직선 BC 위\")\nassert_distance3d(B, M, 1, \"BM=1 (M 은 BC 의 중점)\")\nassert_distance3d(M, C, 1, \"MC=1 (M 은 BC 의 중점)\")\nassert_perpendicular(A, M, B, C, \"AM ⊥ BC\")\nassert_distance3d(A, M, sqrt(7), \"AM=√7\")\n\ndef _area(P, Q, R):\n    u = Matrix(Q) - Matrix(P)\n    v = Matrix(R) - Matrix(P)\n    return u.cross(v).norm() / 2\n\naABC = _area(A, B, C)\nprint(\"[VERIFY OK] 삼각형 ABC 의 넓이 = √7 (정답 ④)\" if _close(aABC - sqrt(7))\n      else f\"[VERIFY FAIL] 삼각형 ABC 의 넓이={aABC} != √7\")\n",
+ "note": "AB=AC=AD=AE 이므로 꼭짓점 A 에서 내린 수선의 발은 정사각형 BCDE 의 중심 O 이고, 직선 AC 의 밑면 정사영이 OC 라서 구하는 각은 ∠ACO=π/3 입니다. 여기서 높이 AO=√6 이 나오고, BC 의 중점 M 에 대해 AM=√7 이므로 파란 삼각형 ABC 의 넓이는 √7 입니다."
+}

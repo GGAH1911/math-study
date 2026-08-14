@@ -1,0 +1,312 @@
+{
+ "spec": {
+  "title": "2025 고1 10월 29 — 직육면체 ABCD-EFGH 와 그 안의 직육면체 ABQP-EFSR",
+  "cameraPosition": [
+   3.4,
+   -4.6,
+   2.6
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      1.5,
+      1.0
+     ],
+     [
+      0,
+      0,
+      1.0
+     ],
+     [
+      1.5,
+      0,
+      1.0
+     ],
+     [
+      1.5,
+      1.5,
+      1.0
+     ],
+     [
+      0,
+      1.5,
+      0
+     ],
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      1.5,
+      0,
+      0
+     ],
+     [
+      1.5,
+      1.5,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ],
+     [
+      4,
+      5,
+      6,
+      7
+     ],
+     [
+      1,
+      2,
+      6,
+      5
+     ],
+     [
+      0,
+      3,
+      7,
+      4
+     ],
+     [
+      0,
+      1,
+      5,
+      4
+     ],
+     [
+      3,
+      2,
+      6,
+      7
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F",
+     "G",
+     "H"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      1.5,
+      1.0
+     ],
+     [
+      0,
+      0,
+      1.0
+     ],
+     [
+      1.0,
+      0,
+      1.0
+     ],
+     [
+      1.0,
+      1.5,
+      1.0
+     ],
+     [
+      0,
+      1.5,
+      0
+     ],
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      1.0,
+      0,
+      0
+     ],
+     [
+      1.0,
+      1.5,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ],
+     [
+      4,
+      5,
+      6,
+      7
+     ],
+     [
+      1,
+      2,
+      6,
+      5
+     ],
+     [
+      0,
+      3,
+      7,
+      4
+     ],
+     [
+      0,
+      1,
+      5,
+      4
+     ],
+     [
+      3,
+      2,
+      6,
+      7
+     ]
+    ],
+    "labels": [
+     "",
+     "",
+     "Q",
+     "P",
+     "",
+     "",
+     "S",
+     "R"
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.22,
+    "stroke": "#38bdf8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     1.0
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#34d399",
+    "label": "$\\overline{BF}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     1.5,
+     1.0
+    ],
+    "to": [
+     1.0,
+     1.5,
+     1.0
+    ],
+    "color": "#34d399",
+    "label": "$\\overline{AP}=\\overline{BF}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     1.0
+    ],
+    "to": [
+     1.0,
+     0,
+     1.0
+    ],
+    "color": "#34d399",
+    "label": "$\\overline{BQ}=\\overline{BF}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     1.5,
+     1.0
+    ],
+    "to": [
+     1.0,
+     1.5,
+     0
+    ],
+    "color": "#a3e635",
+    "label": "$\\overline{PR}\\perp \\overline{EH}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     0,
+     1.0
+    ],
+    "to": [
+     1.0,
+     0,
+     0
+    ],
+    "color": "#a3e635",
+    "label": "$\\overline{QS}\\perp \\overline{FG}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     0,
+     0
+    ],
+    "to": [
+     1.5,
+     1.5,
+     1.0
+    ],
+    "color": "#fbbf24",
+    "label": "$\\overline{SD}$"
+   }
+  ]
+ },
+ "conditions": [
+  "A, B, C, D 는 한 평면 위이고 사각형 ABCD 는 정사각형 (AB=BC=CD=DA, AB ⟂ BC)",
+  "E, F, G, H 는 한 평면 위 (직육면체의 마주 보는 면)",
+  "옆모서리 AE=BF=CG=DH 이고 모두 정사각형면 ABCD 에 수직 (직육면체 ABCD-EFGH)",
+  "P 는 선분 AD 위의 점이고 AP = BF",
+  "Q 는 선분 BC 위의 점이고 BQ = BF",
+  "R 는 직선 EH 위의 점이고 PR ⟂ EH (P 에서 EH 에 내린 수선의 발)",
+  "S 는 직선 FG 위의 점이고 QS ⟂ FG (Q 에서 FG 에 내린 수선의 발)",
+  "(AB + BF) × SD² = 35/4",
+  "V₁ + V₂ = 15/4 (V₁ = 직육면체 ABCD-EFGH 의 부피, V₂ = 직육면체 ABQP-EFSR 의 부피)",
+  "AB > BF",
+  "(AB + BF)³ = 125/8 이므로 p=8, q=125, p+q=133"
+ ],
+ "verify": "# 2025 고1 10월 29 — 정사각형 ABCD 를 밑면으로 하는 직육면체 ABCD-EFGH\n# AB = a, BF = h.  조건: (a+h)*SD^2 = 35/4,  V1+V2 = 15/4,  a > h\n#   => a^3+h^3 = 35/8, ah(a+h) = 15/4  =>  a = 3/2, h = 1\na = Rational(3, 2)   # AB (정사각형 밑면의 한 변)\nh = 1                # BF (직육면체의 높이)\n\n# 그림과 같은 배치: 정사각형면 ABCD 가 위, EFGH 가 아래.\n# x = B->C 방향(오른쪽), y = B->A 방향(안쪽), z = 위쪽.\nA = (0, a, h); B = (0, 0, h); C = (a, 0, h); D = (a, a, h)\nE = (0, a, 0); F = (0, 0, 0); G = (a, 0, 0); H = (a, a, 0)\nP = (h, a, h)   # 선분 AD 위,  AP = BF\nQ = (h, 0, h)   # 선분 BC 위,  BQ = BF\nR = (h, a, 0)   # P 에서 선분 EH 에 내린 수선의 발\nS = (h, 0, 0)   # Q 에서 선분 FG 에 내린 수선의 발\n\n# ① 밑면 ABCD 는 정사각형 (네 변이 같고 이웃한 변이 수직, 한 평면 위)\nassert_coplanar([A, B, C, D], \"A,B,C,D 는 한 평면 위\")\nfor (X, Y, nm) in ((A, B, 'AB'), (B, C, 'BC'), (C, D, 'CD'), (D, A, 'DA')):\n    assert_distance3d(X, Y, a, f\"{nm} = a (정사각형 ABCD)\")\nassert_perpendicular(A, B, B, C, \"AB ⟂ BC (정사각형 ABCD)\")\n\n# ② 직육면체: 옆모서리 AE, BF, CG, DH 가 모두 길이 h 이고 밑면에 수직\nassert_coplanar([E, F, G, H], \"E,F,G,H 는 한 평면 위\")\nfor (X, Y, nm) in ((A, E, 'AE'), (B, F, 'BF'), (C, G, 'CG'), (D, H, 'DH')):\n    assert_distance3d(X, Y, h, f\"{nm} = h (직육면체의 높이)\")\n    assert_perpendicular(X, Y, A, B, f\"{nm} ⟂ AB\")\n    assert_perpendicular(X, Y, B, C, f\"{nm} ⟂ BC\")\n\n# ③ P 는 선분 AD 위, Q 는 선분 BC 위이고 AP = BQ = BF\nassert_on_line(P, A, D, \"P 는 직선 AD 위\")\nassert_distance3d(A, P, h, \"AP = BF\")\nassert_distance3d(P, D, a - h, \"PD = a - h (P 가 선분 AD 의 내부)\")\nassert_on_line(Q, B, C, \"Q 는 직선 BC 위\")\nassert_distance3d(B, Q, h, \"BQ = BF\")\nassert_distance3d(Q, C, a - h, \"QC = a - h (Q 가 선분 BC 의 내부)\")\n\n# ④ R = P 에서 선분 EH 에 내린 수선의 발, S = Q 에서 선분 FG 에 내린 수선의 발\nassert_on_line(R, E, H, \"R 는 직선 EH 위\")\nassert_perpendicular(P, R, E, H, \"PR ⟂ EH (R 는 수선의 발)\")\nassert_distance3d(E, R, h, \"ER = h (R 가 선분 EH 의 내부)\")\nassert_on_line(S, F, G, \"S 는 직선 FG 위\")\nassert_perpendicular(Q, S, F, G, \"QS ⟂ FG (S 는 수선의 발)\")\nassert_distance3d(F, S, h, \"FS = h (S 가 선분 FG 의 내부)\")\n\n# ⑤ (AB + BF) x SD^2 = 35/4\nSD2 = sum((D[i] - S[i])**2 for i in range(3))\ntag = \"(AB + BF) x SD^2 = 35/4\"\nprint(f\"[VERIFY OK] {tag}\" if _close((a + h) * SD2, Rational(35, 4))\n      else f\"[VERIFY FAIL] {tag}: {float((a+h)*SD2)} != {float(Rational(35,4))}\")\n\n# ⑥ V1 + V2 = 15/4  (V1 = 직육면체 ABCD-EFGH, V2 = 직육면체 ABQP-EFSR)\nV1 = a * a * h\nV2 = a * h * h\ntag = \"V1 + V2 = 15/4\"\nprint(f\"[VERIFY OK] {tag}\" if _close(V1 + V2, Rational(15, 4))\n      else f\"[VERIFY FAIL] {tag}: {float(V1+V2)} != {float(Rational(15,4))}\")\n\n# ⑦ AB > BF\ntag = \"AB > BF\"\nprint(f\"[VERIFY OK] {tag}\" if a > h else f\"[VERIFY FAIL] {tag}: {float(a)} <= {float(h)}\")\n\n# ⑧ 답 확인: (AB+BF)^3 = 125/8 = q/p, p+q = 133\ntag = \"(AB + BF)^3 = 125/8  (p+q = 133)\"\nprint(f\"[VERIFY OK] {tag}\" if _close((a + h)**3, Rational(125, 8))\n      else f\"[VERIFY FAIL] {tag}: {float((a+h)**3)}\")\nprint(\"좌표:\", {n: [float(t) for t in p] for n, p in\n                (('A',A),('B',B),('C',C),('D',D),('E',E),('F',F),('G',G),('H',H),\n                 ('P',P),('Q',Q),('R',R),('S',S))})\n",
+ "note": "정사각형 ABCD 가 윗면, EFGH 가 아랫면인 직육면체입니다. 파란색 부분이 AP=BQ=BF 로 잘라낸 작은 직육면체 ABQP-EFSR(부피 V₂)이고, 노란 선분 SD 가 조건식에 쓰이는 대각선입니다. AB=3/2, BF=1 인 실제 비율로 그렸습니다."
+}

@@ -1,0 +1,327 @@
+{
+ "spec": {
+  "title": "2024 고3 7월 기하 30 — 평면 α 위로의 정사영 A′, B′ 와 직선 BM",
+  "cameraPosition": [
+   1.6,
+   -10.5,
+   10.4
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     4,
+     1.5,
+     0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 15,
+    "color": "#64748b",
+    "opacity": 0.22
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -2.6,
+     7.4,
+     0
+    ],
+    "text": "α",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      4,
+      3,
+      9
+     ],
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      8,
+      0,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "A",
+     "P",
+     "B'"
+    ],
+    "fill": "#60a5fa",
+    "fillOpacity": 0.26,
+    "stroke": "#bfdbfe",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     8,
+     0,
+     0
+    ],
+    "color": "#bfdbfe",
+    "label": "8"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4,
+     3,
+     0
+    ],
+    "label": "A'",
+    "color": "#fbbf24",
+    "size": 0.14
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4,
+     0,
+     0
+    ],
+    "label": "M",
+    "color": "#f472b6",
+    "size": 0.14
+   },
+   {
+    "type": "point3d",
+    "at": [
+     8,
+     0,
+     10
+    ],
+    "label": "B",
+    "color": "#e2e8f0",
+    "size": 0.14
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     3,
+     9
+    ],
+    "to": [
+     4,
+     3,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true,
+    "label": "9"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     3,
+     0
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#94a3b8",
+    "dashed": true,
+    "label": "5"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     3,
+     0
+    ],
+    "to": [
+     8,
+     0,
+     0
+    ],
+    "color": "#94a3b8",
+    "dashed": true,
+    "label": "5"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8,
+     0,
+     10
+    ],
+    "to": [
+     8,
+     0,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     3,
+     9
+    ],
+    "to": [
+     4,
+     0,
+     0
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     3,
+     9
+    ],
+    "to": [
+     8,
+     0,
+     10
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8,
+     0,
+     10
+    ],
+    "to": [
+     4,
+     0,
+     0
+    ],
+    "color": "#f472b6",
+    "label": "θ"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     2.7154,
+     8.14619
+    ],
+    "to": [
+     4.70602,
+     2.18589,
+     8.32269
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4.70602,
+     2.47049,
+     9.1765
+    ],
+    "to": [
+     4.70602,
+     2.18589,
+     8.32269
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     3,
+     0.7
+    ],
+    "to": [
+     3.44,
+     2.58,
+     0.7
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.44,
+     2.58,
+     0
+    ],
+    "to": [
+     3.44,
+     2.58,
+     0.7
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8,
+     0,
+     0.7
+    ],
+    "to": [
+     7.3,
+     0,
+     0.7
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     7.3,
+     0,
+     0
+    ],
+    "to": [
+     7.3,
+     0,
+     0.7
+    ],
+    "color": "#fbbf24"
+   }
+  ]
+ },
+ "conditions": [
+  "P, A', B' 는 평면 α 위에 있고, A 와 B 는 평면 α 위에 있지 않은 서로 다른 두 점이다",
+  "A' 은 A 의 평면 α 위로의 정사영이다 (AA' 가 평면 α 위의 두 직선 PB', PA' 와 수직)",
+  "B' 은 B 의 평면 α 위로의 정사영이다 (BB' 가 평면 α 위의 두 직선 PB', PA' 와 수직)",
+  "AA' = 9",
+  "A'P = 5",
+  "A'B' = 5",
+  "PB' = 8",
+  "M 은 선분 PB' 의 중점이다 (M 이 직선 PB' 위, MP = MB' = 4)",
+  "각 MAB = π/2",
+  "직선 BM 과 평면 APB' 이 이루는 예각 θ 에 대해 cos²θ = 53/58 이고 p+q = 111 (정답)"
+ ],
+ "verify": "# 평면 alpha = xy평면(z=0), P 를 원점으로\nP  = (0, 0, 0)\nBp = (8, 0, 0)          # B'\nAp = (4, 3, 0)          # A'\nA  = (4, 3, 9)\nB  = (8, 0, 10)\nM  = (4, 0, 0)          # 선분 PB' 의 중점\n\nalpha = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]   # 평면 alpha\n\n# (1) P, A', B' 는 평면 alpha 위 / A, B 는 평면 alpha 위에 있지 않다\nassert_on_plane(P,  alpha, \"P 가 평면 alpha 위\")\nassert_on_plane(Ap, alpha, \"A' 가 평면 alpha 위\")\nassert_on_plane(Bp, alpha, \"B' 가 평면 alpha 위\")\nprint(\"[VERIFY OK] A 는 평면 alpha 위에 있지 않다\" if A[2] != 0 else \"[VERIFY FAIL] A 가 평면 alpha 위\")\nprint(\"[VERIFY OK] B 는 평면 alpha 위에 있지 않다\" if B[2] != 0 else \"[VERIFY FAIL] B 가 평면 alpha 위\")\nprint(\"[VERIFY OK] A 와 B 는 서로 다른 점\" if A != B else \"[VERIFY FAIL] A = B\")\n\n# (2) A' 은 A 의 평면 alpha 위로의 정사영 (AA' ⟂ alpha)\nassert_perpendicular(A, Ap, P, Bp, \"AA' 가 평면 alpha 의 직선 PB' 와 수직\")\nassert_perpendicular(A, Ap, P, Ap, \"AA' 가 평면 alpha 의 직선 PA' 와 수직\")\n\n# (3) B' 은 B 의 평면 alpha 위로의 정사영 (BB' ⟂ alpha)\nassert_perpendicular(B, Bp, P, Bp, \"BB' 가 평면 alpha 의 직선 PB' 와 수직\")\nassert_perpendicular(B, Bp, P, Ap, \"BB' 가 평면 alpha 의 직선 PA' 와 수직\")\n\n# (4) 주어진 길이\nassert_distance3d(A, Ap, 9, \"AA' = 9\")\nassert_distance3d(Ap, P, 5, \"A'P = 5\")\nassert_distance3d(Ap, Bp, 5, \"A'B' = 5\")\nassert_distance3d(P, Bp, 8, \"PB' = 8\")\n\n# (5) M 은 선분 PB' 의 중점\nassert_on_line(M, P, Bp, \"M 이 직선 PB' 위\")\nassert_distance3d(M, P, 4, \"MP = 4 (PB'=8 의 절반)\")\nassert_distance3d(M, Bp, 4, \"MB' = 4 (PB'=8 의 절반)\")\n\n# (6) 각 MAB = pi/2\nassert_angle(A, M, B, pi/2, \"각 MAB = pi/2\")\n\n# (7) 답: 직선 BM 과 평면 APB' 이 이루는 예각 theta 에 대해 cos^2(theta) = 53/58\nn  = (Matrix(A) - Matrix(P)).cross(Matrix(Bp) - Matrix(P))   # 평면 APB' 의 법벡터\nBM = Matrix(M) - Matrix(B)\nsin2 = simplify((BM.dot(n))**2 / (BM.dot(BM) * n.dot(n)))\ncos2 = simplify(1 - sin2)\nprint(\"[VERIFY OK] cos^2(theta) = 53/58, p+q = 111 (정답)\"\n      if simplify(cos2 - Rational(53, 58)) == 0\n      else f\"[VERIFY FAIL] cos^2(theta) = {cos2}\")\n",
+ "note": "평면 α 를 xy평면, P 를 원점으로 잡으면 B'(8,0,0)·A'(4,3,0)·A(4,3,9) 이고, 각 MAB = π/2 조건에서 BB' = 10 이 나와 B(8,0,10) 이다. 파란 삼각형이 평면 APB', 분홍 선분이 그 평면과 각 θ 를 이루는 직선 BM 이며, M(4,0,0) 은 PB' 의 중점이다."
+}

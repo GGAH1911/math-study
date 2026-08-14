@@ -1,188 +1,188 @@
 {
-  "spec": {
-    "title": "2020 수능 가형 29 — 선분 AB 를 품고 단위구에 접하는 두 평면 α, β 와 접점 C, D",
-    "cameraPosition": [
-      11,
-      3.5,
-      11
-    ],
-    "axes": true,
-    "gridSize": 10,
-    "shapes": [
-      {
-        "type": "plane",
-        "origin": [
-          0.5,
-          2.0,
-          0.5
-        ],
-        "normal": [
-          -0.2440169358562924,
-          0.3333333333333333,
-          0.9106836025229591
-        ],
-        "size": 14,
-        "color": "#34d399",
-        "opacity": 0.12,
-        "label": "α"
-      },
-      {
-        "type": "plane",
-        "origin": [
-          0.5,
-          2.0,
-          0.5
-        ],
-        "normal": [
-          0.9106836025229591,
-          0.3333333333333333,
-          -0.2440169358562924
-        ],
-        "size": 14,
-        "color": "#f472b6",
-        "opacity": 0.12,
-        "label": "β"
-      },
-      {
-        "type": "sphere",
-        "center": [
-          0,
-          0,
-          0
-        ],
-        "radius": 1,
-        "color": "#60a5fa",
-        "opacity": 0.3,
-        "label": "x²+y²+z²=1"
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            3,
-            -3,
-            3
-          ],
-          [
-            -2,
-            7,
-            -2
-          ],
-          [
-            -0.2440169358562924,
-            0.3333333333333333,
-            0.9106836025229591
-          ],
-          [
-            0.9106836025229591,
-            0.3333333333333333,
-            -0.2440169358562924
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2
-          ],
-          [
-            0,
-            1,
-            3
-          ],
-          [
-            0,
-            2,
-            3
-          ],
-          [
-            1,
-            2,
-            3
-          ]
-        ],
-        "labels": [
-          "A",
-          "B",
-          "C",
-          "D"
-        ],
-        "fill": "#94a3b8",
-        "fillOpacity": 0.1,
-        "stroke": "#e2e8f0",
-        "strokeWidth": 2
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          -3,
-          3
-        ],
-        "to": [
-          -2,
-          7,
-          -2
-        ],
-        "color": "#fbbf24",
-        "label": "AB"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          -0.2440169358562924,
-          0.3333333333333333,
-          0.9106836025229591
-        ],
-        "color": "#34d399",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          0.9106836025229591,
-          0.3333333333333333,
-          -0.2440169358562924
-        ],
-        "color": "#f472b6",
-        "dashed": true
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          0
-        ],
-        "label": "O",
-        "color": "#e2e8f0",
-        "size": 0.07
-      }
-    ]
-  },
-  "conditions": [
-    "A(3, −3, 3), B(−2, 7, −2), 구 x²+y²+z²=1 (중심 O 는 원점, 반지름 1)",
-    "C 는 구 위의 점 (|OC| = 1)",
-    "D 는 구 위의 점 (|OD| = 1)",
-    "평면 α (C 에서의 접평면) 는 구에 접한다 — O 와의 거리 = 1",
-    "평면 β (D 에서의 접평면) 는 구에 접한다 — O 와의 거리 = 1",
-    "두 평면 α, β 는 모두 A 와 B 를 지난다 (선분 AB 를 포함한다)",
-    "OC ⟂ AB 이고 OC ⟂ AC — 반지름 OC 가 평면 α 에 수직이므로 C 가 α 의 접점",
-    "OD ⟂ AB 이고 OD ⟂ AD — 반지름 OD 가 평면 β 에 수직이므로 D 가 β 의 접점",
-    "두 접점은 서로 다르다: CD = 2√6/3",
-    "원점에서 직선 AB 까지의 거리 = √3 (> 1 이므로 직선 AB 는 구 밖에 있다)",
-    "사면체 ABCD 의 부피 = (20/9)√3 → p = 9, q = 20, p+q = 29"
+ "spec": {
+  "title": "2020 수능 가형 29 — 선분 AB 를 품고 단위구에 접하는 두 평면 α, β 와 접점 C, D",
+  "cameraPosition": [
+   11,
+   3.5,
+   11
   ],
-  "verify": "s3 = sqrt(3)\n\nO = (0, 0, 0)                       # 구의 중심 (원점), 반지름 1\nR = 1\nA = (3, -3, 3)\nB = (-2, 7, -2)\n\n# 두 접점 (평면 alpha, beta 와 구의 접점)\nC = ((1 - s3)/3, Rational(1, 3), (1 + s3)/3)\nD = ((1 + s3)/3, Rational(1, 3), (1 - s3)/3)\n\n# ── 접점은 구 위의 점\nassert_on_sphere(C, O, R, \"C 는 구 x^2+y^2+z^2=1 위의 점\")\nassert_on_sphere(D, O, R, \"D 는 구 x^2+y^2+z^2=1 위의 점\")\n\n# ── C 에서의 접평면 alpha 를 세 점으로 만든다 (법선 = OC, |OC| = 1)\ndef tangent_plane_pts(P):\n    n = Matrix(list(P))\n    w1 = n.cross(Matrix([1, 0, 0]))\n    if w1.norm() == 0:\n        w1 = n.cross(Matrix([0, 1, 0]))\n    w2 = n.cross(w1)\n    Q1 = tuple(Matrix(list(P)) + w1)\n    Q2 = tuple(Matrix(list(P)) + w2)\n    return [P, Q1, Q2]\n\nalpha = tangent_plane_pts(C)\nbeta = tangent_plane_pts(D)\n\nassert_tangent_plane(O, R, alpha, \"평면 alpha (C 에서의 접평면) 는 구에 접한다\")\nassert_tangent_plane(O, R, beta, \"평면 beta (D 에서의 접평면) 는 구에 접한다\")\n\n# ── 두 접평면이 선분 AB 를 포함한다\nassert_on_plane(A, alpha, \"A 는 평면 alpha 위\")\nassert_on_plane(B, alpha, \"B 는 평면 alpha 위\")\nassert_on_plane(A, beta, \"A 는 평면 beta 위\")\nassert_on_plane(B, beta, \"B 는 평면 beta 위\")\n\n# ── 접점이 맞는지: 반지름 OC 는 평면 alpha 에 수직 (OC ⟂ AB, OC ⟂ AC)\nassert_perpendicular(O, C, A, B, \"OC 수직 AB\")\nassert_perpendicular(O, C, A, C, \"OC 수직 AC  (=> OC 수직 평면 alpha, C 가 접점)\")\nassert_perpendicular(O, D, A, B, \"OD 수직 AB\")\nassert_perpendicular(O, D, A, D, \"OD 수직 AD  (=> OD 수직 평면 beta, D 가 접점)\")\n\n# ── 두 평면은 서로 다르다 (접점 C != D)\nassert_distance(C, D, 2*sqrt(6)/3, \"두 접점은 서로 다르다: CD = 2sqrt6/3\")\n\n# ── 직선 AB 는 구 밖에 있다 (원점에서 직선 AB 까지 거리 = sqrt3 > 1)\nassert_point_line_distance(O, A, B, s3, \"원점에서 직선 AB 까지 거리 = sqrt3\")\n\n# ── 사면체 ABCD 의 부피 = (20/9)sqrt3\nM = Matrix([[B[i] - A[i] for i in range(3)],\n            [C[i] - A[i] for i in range(3)],\n            [D[i] - A[i] for i in range(3)]])\nV = simplify(abs(M.det()) / 6)\nassert_distance((V,), (0,), Rational(20, 9)*s3, \"사면체 ABCD 의 부피 = (20/9)sqrt3\")\n",
-  "note": "직선 AB 는 구 밖(원점과의 거리 √3)을 지나므로 AB 를 품는 평면 중 구에 접하는 것이 두 개 생긴다. 접점 C(=(1−√3, 1, 1+√3)/3), D(=(1+√3, 1, 1−√3)/3) 는 각각 반지름 OC, OD 가 그 평면에 수직인 점이며, 사면체 ABCD 의 부피는 (20/9)√3 이다."
+  "axes": true,
+  "gridSize": 10,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     0.5,
+     2.0,
+     0.5
+    ],
+    "normal": [
+     -0.2440169358562924,
+     0.3333333333333333,
+     0.9106836025229591
+    ],
+    "size": 14,
+    "color": "#34d399",
+    "opacity": 0.22,
+    "label": "α"
+   },
+   {
+    "type": "plane",
+    "origin": [
+     0.5,
+     2.0,
+     0.5
+    ],
+    "normal": [
+     0.9106836025229591,
+     0.3333333333333333,
+     -0.2440169358562924
+    ],
+    "size": 14,
+    "color": "#f472b6",
+    "opacity": 0.22,
+    "label": "β"
+   },
+   {
+    "type": "sphere",
+    "center": [
+     0,
+     0,
+     0
+    ],
+    "radius": 1,
+    "color": "#60a5fa",
+    "opacity": 0.3,
+    "label": "x²+y²+z²=1"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      3,
+      -3,
+      3
+     ],
+     [
+      -2,
+      7,
+      -2
+     ],
+     [
+      -0.2440169358562924,
+      0.3333333333333333,
+      0.9106836025229591
+     ],
+     [
+      0.9106836025229591,
+      0.3333333333333333,
+      -0.2440169358562924
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     -3,
+     3
+    ],
+    "to": [
+     -2,
+     7,
+     -2
+    ],
+    "color": "#fbbf24",
+    "label": "AB"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     -0.2440169358562924,
+     0.3333333333333333,
+     0.9106836025229591
+    ],
+    "color": "#34d399",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     0.9106836025229591,
+     0.3333333333333333,
+     -0.2440169358562924
+    ],
+    "color": "#f472b6",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "O",
+    "color": "#e2e8f0",
+    "size": 0.07
+   }
+  ]
+ },
+ "conditions": [
+  "A(3, −3, 3), B(−2, 7, −2), 구 x²+y²+z²=1 (중심 O 는 원점, 반지름 1)",
+  "C 는 구 위의 점 (|OC| = 1)",
+  "D 는 구 위의 점 (|OD| = 1)",
+  "평면 α (C 에서의 접평면) 는 구에 접한다 — O 와의 거리 = 1",
+  "평면 β (D 에서의 접평면) 는 구에 접한다 — O 와의 거리 = 1",
+  "두 평면 α, β 는 모두 A 와 B 를 지난다 (선분 AB 를 포함한다)",
+  "OC ⟂ AB 이고 OC ⟂ AC — 반지름 OC 가 평면 α 에 수직이므로 C 가 α 의 접점",
+  "OD ⟂ AB 이고 OD ⟂ AD — 반지름 OD 가 평면 β 에 수직이므로 D 가 β 의 접점",
+  "두 접점은 서로 다르다: CD = 2√6/3",
+  "원점에서 직선 AB 까지의 거리 = √3 (> 1 이므로 직선 AB 는 구 밖에 있다)",
+  "사면체 ABCD 의 부피 = (20/9)√3 → p = 9, q = 20, p+q = 29"
+ ],
+ "verify": "s3 = sqrt(3)\n\nO = (0, 0, 0)                       # 구의 중심 (원점), 반지름 1\nR = 1\nA = (3, -3, 3)\nB = (-2, 7, -2)\n\n# 두 접점 (평면 alpha, beta 와 구의 접점)\nC = ((1 - s3)/3, Rational(1, 3), (1 + s3)/3)\nD = ((1 + s3)/3, Rational(1, 3), (1 - s3)/3)\n\n# ── 접점은 구 위의 점\nassert_on_sphere(C, O, R, \"C 는 구 x^2+y^2+z^2=1 위의 점\")\nassert_on_sphere(D, O, R, \"D 는 구 x^2+y^2+z^2=1 위의 점\")\n\n# ── C 에서의 접평면 alpha 를 세 점으로 만든다 (법선 = OC, |OC| = 1)\ndef tangent_plane_pts(P):\n    n = Matrix(list(P))\n    w1 = n.cross(Matrix([1, 0, 0]))\n    if w1.norm() == 0:\n        w1 = n.cross(Matrix([0, 1, 0]))\n    w2 = n.cross(w1)\n    Q1 = tuple(Matrix(list(P)) + w1)\n    Q2 = tuple(Matrix(list(P)) + w2)\n    return [P, Q1, Q2]\n\nalpha = tangent_plane_pts(C)\nbeta = tangent_plane_pts(D)\n\nassert_tangent_plane(O, R, alpha, \"평면 alpha (C 에서의 접평면) 는 구에 접한다\")\nassert_tangent_plane(O, R, beta, \"평면 beta (D 에서의 접평면) 는 구에 접한다\")\n\n# ── 두 접평면이 선분 AB 를 포함한다\nassert_on_plane(A, alpha, \"A 는 평면 alpha 위\")\nassert_on_plane(B, alpha, \"B 는 평면 alpha 위\")\nassert_on_plane(A, beta, \"A 는 평면 beta 위\")\nassert_on_plane(B, beta, \"B 는 평면 beta 위\")\n\n# ── 접점이 맞는지: 반지름 OC 는 평면 alpha 에 수직 (OC ⟂ AB, OC ⟂ AC)\nassert_perpendicular(O, C, A, B, \"OC 수직 AB\")\nassert_perpendicular(O, C, A, C, \"OC 수직 AC  (=> OC 수직 평면 alpha, C 가 접점)\")\nassert_perpendicular(O, D, A, B, \"OD 수직 AB\")\nassert_perpendicular(O, D, A, D, \"OD 수직 AD  (=> OD 수직 평면 beta, D 가 접점)\")\n\n# ── 두 평면은 서로 다르다 (접점 C != D)\nassert_distance(C, D, 2*sqrt(6)/3, \"두 접점은 서로 다르다: CD = 2sqrt6/3\")\n\n# ── 직선 AB 는 구 밖에 있다 (원점에서 직선 AB 까지 거리 = sqrt3 > 1)\nassert_point_line_distance(O, A, B, s3, \"원점에서 직선 AB 까지 거리 = sqrt3\")\n\n# ── 사면체 ABCD 의 부피 = (20/9)sqrt3\nM = Matrix([[B[i] - A[i] for i in range(3)],\n            [C[i] - A[i] for i in range(3)],\n            [D[i] - A[i] for i in range(3)]])\nV = simplify(abs(M.det()) / 6)\nassert_distance((V,), (0,), Rational(20, 9)*s3, \"사면체 ABCD 의 부피 = (20/9)sqrt3\")\n",
+ "note": "직선 AB 는 구 밖(원점과의 거리 √3)을 지나므로 AB 를 품는 평면 중 구에 접하는 것이 두 개 생긴다. 접점 C(=(1−√3, 1, 1+√3)/3), D(=(1+√3, 1, 1−√3)/3) 는 각각 반지름 OC, OD 가 그 평면에 수직인 점이며, 사면체 ABCD 의 부피는 (20/9)√3 이다."
 }

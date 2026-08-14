@@ -1,0 +1,241 @@
+{
+ "spec": {
+  "title": "2023 수능 기하 30 — 정사면체 ABCD, 정삼각형 BCD 의 외심을 중심으로 하고 B 를 지나는 구 S, 점 P 에서의 접평면 α",
+  "cameraPosition": [
+   17.0,
+   -2.5,
+   8.0
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "radius": 6.0,
+    "color": "#38bdf8",
+    "opacity": 0.15,
+    "label": "구 S"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0.0,
+      0.0,
+      8.485281374238571
+     ],
+     [
+      6.0,
+      0.0,
+      0.0
+     ],
+     [
+      -3.0,
+      5.196152422706632,
+      0.0
+     ],
+     [
+      -3.0,
+      -5.196152422706632,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      0,
+      3,
+      1
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#334155",
+    "strokeWidth": 2
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "O",
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     0.0,
+     5.656854249492381
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.0,
+      0.0,
+      5.656854249492381
+     ],
+     [
+      -1.0,
+      1.7320508075688772,
+      5.656854249492381
+     ],
+     [
+      -1.0,
+      -1.7320508075688772,
+      5.656854249492381
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "P",
+     "Q",
+     "R"
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.5,
+    "stroke": "#db2777",
+    "strokeWidth": 2
+   },
+   {
+    "type": "plane",
+    "origin": [
+     0.2222222222222223,
+     0.0,
+     6.285393610547089
+    ],
+    "normal": [
+     1.0,
+     0.0,
+     2.8284271247461903
+    ],
+    "size": 7.0,
+    "color": "#22c55e",
+    "opacity": 0.22,
+    "label": "평면 $\\alpha$"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2.0,
+      0.0,
+      5.656854249492381
+     ],
+     [
+      -0.6666666666666666,
+      1.7320508075688772,
+      6.599663291074443
+     ],
+     [
+      -0.6666666666666666,
+      -1.7320508075688772,
+      6.599663291074443
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "",
+     "Q'",
+     "R'"
+    ],
+    "fill": "#f59e0b",
+    "fillOpacity": 0.45,
+    "stroke": "#b45309",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.0,
+     1.7320508075688772,
+     5.656854249492381
+    ],
+    "to": [
+     -0.6666666666666666,
+     1.7320508075688772,
+     6.599663291074443
+    ],
+    "color": "#b45309",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.0,
+     -1.7320508075688772,
+     5.656854249492381
+    ],
+    "to": [
+     -0.6666666666666666,
+     -1.7320508075688772,
+     6.599663291074443
+    ],
+    "color": "#b45309",
+    "dashed": true
+   }
+  ]
+ },
+ "conditions": [
+  "정사면체 ABCD 의 여섯 모서리 AB=AC=AD=BC=CD=DB=6√3",
+  "O 는 정삼각형 BCD 의 외심 (평면 BCD 위에 있고 OB=OC=OD=6)",
+  "구 S 는 중심 O, 반지름 6 이며 B, C, D 를 지난다",
+  "P 는 선분 AB 위의 구 S 위 점 (AP=2√3, PB=4√3)",
+  "Q 는 선분 AC 위의 구 S 위 점 (AQ=2√3, QC=4√3)",
+  "R 는 선분 AD 위의 구 S 위 점 (AR=2√3, RD=4√3)",
+  "삼각형 PQR 는 한 변이 2√3 인 정삼각형",
+  "평면 α 는 점 P 에서 구 S 에 접한다 (O 와 α 의 거리 = 6, OP ⟂ α)",
+  "Q', R' 는 각각 Q, R 의 평면 α 위로의 정사영 (QQ' ⟂ α, RR' ⟂ α)",
+  "Q'R' = 2√3, 점 P 에서 직선 Q'R' 까지의 거리 = 2√2",
+  "삼각형 PQR 의 평면 α 위의 정사영 넓이 k = 2√6 이므로 k² = 24"
+ ],
+ "verify": "# 정사면체 한 모서리 = 6√3, 정삼각형 BCD 의 외접원 반지름 = 6√3/√3 = 6 = 구 S 의 반지름\nO  = (0, 0, 0)                       # 정삼각형 BCD 의 외심 = 구 S 의 중심\nA  = (0, 0, 6*sqrt(2))\nB  = (6, 0, 0)\nC  = (-3,  3*sqrt(3), 0)\nD  = (-3, -3*sqrt(3), 0)\n\nP  = (2, 0, 4*sqrt(2))\nQ  = (-1,  sqrt(3), 4*sqrt(2))\nR  = (-1, -sqrt(3), 4*sqrt(2))\n\n# 평면 alpha 위로의 정사영 (alpha: P 를 지나고 OP 에 수직인 평면)\nQ1 = (Rational(-2,3),  sqrt(3), 14*sqrt(2)/3)\nR1 = (Rational(-2,3), -sqrt(3), 14*sqrt(2)/3)\n\n# ① 정사면체 ABCD — 여섯 모서리가 모두 같다\nfor (p, q, nm) in [(A,B,\"AB\"), (A,C,\"AC\"), (A,D,\"AD\"), (B,C,\"BC\"), (C,D,\"CD\"), (D,B,\"DB\")]:\n    assert_distance3d(p, q, 6*sqrt(3), f\"모서리 {nm} = 6√3\")\n\n# ② O 가 정삼각형 BCD 의 외심 (평면 BCD 위 + B,C,D 에서 등거리 6)\nassert_on_plane(O, [B, C, D], \"O 가 평면 BCD 위\")\nassert_distance3d(O, B, 6, \"OB = 6\")\nassert_distance3d(O, C, 6, \"OC = 6\")\nassert_distance3d(O, D, 6, \"OD = 6\")\n\n# ③ 구 S : 중심 O, 반지름 6 — B, C, D 가 구 위\nassert_on_sphere(B, O, 6, \"B 가 구 S 위\")\nassert_on_sphere(C, O, 6, \"C 가 구 S 위\")\nassert_on_sphere(D, O, 6, \"D 가 구 S 위\")\n\n# ④ P 는 선분 AB 와 구 S 의 교점 중 B 아닌 점\nassert_on_line(P, A, B, \"P 가 직선 AB 위\")\nassert_distance3d(A, P, 2*sqrt(3), \"AP = 2√3\")\nassert_distance3d(P, B, 4*sqrt(3), \"PB = 4√3 (AP + PB = AB → P 는 선분 AB 위)\")\nassert_on_sphere(P, O, 6, \"P 가 구 S 위\")\n\n# ⑤ Q 는 선분 AC 위, R 는 선분 AD 위의 구 S 와의 교점\nassert_on_line(Q, A, C, \"Q 가 직선 AC 위\")\nassert_distance3d(A, Q, 2*sqrt(3), \"AQ = 2√3\")\nassert_distance3d(Q, C, 4*sqrt(3), \"QC = 4√3 (Q 는 선분 AC 위)\")\nassert_on_sphere(Q, O, 6, \"Q 가 구 S 위\")\nassert_on_line(R, A, D, \"R 가 직선 AD 위\")\nassert_distance3d(A, R, 2*sqrt(3), \"AR = 2√3\")\nassert_distance3d(R, D, 4*sqrt(3), \"RD = 4√3 (R 는 선분 AD 위)\")\nassert_on_sphere(R, O, 6, \"R 가 구 S 위\")\n\n# ⑥ 삼각형 PQR — 한 변 2√3 인 정삼각형\nassert_distance3d(P, Q, 2*sqrt(3), \"PQ = 2√3\")\nassert_distance3d(Q, R, 2*sqrt(3), \"QR = 2√3\")\nassert_distance3d(R, P, 2*sqrt(3), \"RP = 2√3\")\n\n# ⑦ 평면 alpha = 점 P 에서 구 S 에 접하는 평면\n#    (P, Q1, R1 이 alpha 를 정한다 — Q1, R1 이 alpha 위임은 바로 아래에서 확인)\nassert_perpendicular(O, P, P, Q1, \"PQ' ⟂ OP → Q' 가 평면 α 위\")\nassert_perpendicular(O, P, P, R1, \"PR' ⟂ OP → R' 가 평면 α 위\")\nassert_tangent_plane(O, 6, [P, Q1, R1], \"평면 α 가 구 S 에 접함 (O 와의 거리 = 6)\")\nassert_point_plane_distance(P, [P, Q1, R1], 0, \"접점 P 가 평면 α 위\")\n\n# ⑧ Q1, R1 은 Q, R 의 평면 alpha 위로의 정사영 (QQ' ⟂ α, RR' ⟂ α)\nassert_perpendicular(Q, Q1, P, Q1, \"QQ' ⟂ PQ'\")\nassert_perpendicular(Q, Q1, P, R1, \"QQ' ⟂ PR' → QQ' ⟂ 평면 α\")\nassert_perpendicular(R, R1, P, Q1, \"RR' ⟂ PQ'\")\nassert_perpendicular(R, R1, P, R1, \"RR' ⟂ PR' → RR' ⟂ 평면 α\")\nassert_point_plane_distance(Q1, [P, Q1, R1], 0, \"Q' 가 평면 α 위\")\nassert_point_plane_distance(R1, [P, Q1, R1], 0, \"R' 가 평면 α 위\")\n\n# ⑨ 정사영 삼각형 PQ'R' 의 넓이 k = 2√6  →  k^2 = 24\nassert_distance3d(Q1, R1, 2*sqrt(3), \"Q'R' = 2√3\")\nassert_point_line_distance(P, Q1, R1, 2*sqrt(2), \"P 에서 직선 Q'R' 까지 거리 = 2√2\")\nu = Matrix(list(Q1)) - Matrix(list(P))\nv = Matrix(list(R1)) - Matrix(list(P))\nk_area = simplify(u.cross(v).norm() / 2)\nprint(\"[VERIFY OK] 정사영 넓이 k = 2√6\" if _close(k_area, 2*sqrt(6))\n      else f\"[VERIFY FAIL] 정사영 넓이 k = {k_area} != 2√6\")\nprint(\"[VERIFY OK] k^2 = 24\" if _close(k_area**2, 24)\n      else f\"[VERIFY FAIL] k^2 = {simplify(k_area**2)} != 24\")\n",
+ "note": "정삼각형 BCD 의 외심 O 를 중심으로 하는 반지름 6 의 구 S 가 정사면체의 세 모서리 AB, AC, AD 를 P, Q, R 에서 자른다. 주황색 삼각형 PQ'R' 이 삼각형 PQR 를 접평면 α 위에 정사영한 것이다."
+}

@@ -1,0 +1,436 @@
+{
+ "spec": {
+  "title": "2025 9월모평 기하 28 — 구 S 위의 두 자취원 C₁, C₂ 와 교점 N₁, N₂",
+  "cameraPosition": [
+   17.0,
+   9.0,
+   8.0
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "radius": 10.0,
+    "color": "#93c5fd",
+    "opacity": 0.15,
+    "label": "구 S"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -14.0,
+     0,
+     0
+    ],
+    "to": [
+     -10.0,
+     0,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -10.0,
+     0,
+     0
+    ],
+    "to": [
+     10.0,
+     0,
+     0
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     10.0,
+     0,
+     0
+    ],
+    "to": [
+     21.0,
+     0,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     -14.0,
+     0
+    ],
+    "to": [
+     0,
+     -10.0,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     -10.0,
+     0
+    ],
+    "to": [
+     0,
+     10.0,
+     0
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     10.0,
+     0
+    ],
+    "to": [
+     0,
+     17.5,
+     0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     -14.0
+    ],
+    "to": [
+     0,
+     0,
+     -10.0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     -10.0
+    ],
+    "to": [
+     0,
+     0,
+     10.0
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     10.0
+    ],
+    "to": [
+     0,
+     0,
+     14.0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     22.0,
+     0,
+     0
+    ],
+    "text": "x",
+    "color": "#64748b"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     18.6,
+     0
+    ],
+    "text": "y",
+    "color": "#64748b"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     0,
+     15.2
+    ],
+    "text": "z",
+    "color": "#64748b"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "5.477225575051661",
+    "y": "8.366600265340756*cos(t)",
+    "z": "8.366600265340756*sin(t)",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#f472b6",
+    "strokeWidth": 4,
+    "label": "C_1"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "7.0710678118654755*cos(t)",
+    "y": "7.0710678118654755",
+    "z": "7.0710678118654755*sin(t)",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#38bdf8",
+    "strokeWidth": 4,
+    "label": "C_2"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     18.257418583505537,
+     0.0,
+     0.0
+    ],
+    "to": [
+     5.477225575051661,
+     0.0,
+     8.366600265340756
+    ],
+    "color": "#f472b6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     5.477225575051661,
+     0.0,
+     8.366600265340756
+    ],
+    "to": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "color": "#f472b6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     14.142135623730951,
+     0.0
+    ],
+    "to": [
+     0.0,
+     7.0710678118654755,
+     7.0710678118654755
+    ],
+    "color": "#38bdf8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     7.0710678118654755,
+     7.0710678118654755
+    ],
+    "to": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "color": "#38bdf8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     5.477225575051661,
+     7.0710678118654755,
+     4.47213595499958
+    ],
+    "color": "#fbbf24",
+    "label": "10"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     5.477225575051661,
+     7.0710678118654755,
+     -4.47213595499958
+    ],
+    "color": "#fbbf24",
+    "label": "10"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     5.477225575051661,
+     7.0710678118654755,
+     4.47213595499958
+    ],
+    "to": [
+     5.477225575051661,
+     7.0710678118654755,
+     -4.47213595499958
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "O",
+    "color": "#e2e8f0",
+    "size": 0.26
+   },
+   {
+    "type": "point3d",
+    "at": [
+     18.257418583505537,
+     0.0,
+     0.0
+    ],
+    "label": "A",
+    "color": "#34d399",
+    "size": 0.26
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     14.142135623730951,
+     0.0
+    ],
+    "label": "B",
+    "color": "#34d399",
+    "size": 0.26
+   },
+   {
+    "type": "point3d",
+    "at": [
+     5.477225575051661,
+     0.0,
+     8.366600265340756
+    ],
+    "label": "P",
+    "color": "#f472b6",
+    "size": 0.26
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     7.0710678118654755,
+     7.0710678118654755
+    ],
+    "label": "Q",
+    "color": "#38bdf8",
+    "size": 0.26
+   },
+   {
+    "type": "point3d",
+    "at": [
+     5.477225575051661,
+     7.0710678118654755,
+     4.47213595499958
+    ],
+    "label": "N_1",
+    "color": "#fbbf24",
+    "size": 0.26
+   },
+   {
+    "type": "point3d",
+    "at": [
+     5.477225575051661,
+     7.0710678118654755,
+     -4.47213595499958
+    ],
+    "label": "N_2",
+    "color": "#fbbf24",
+    "size": 0.26
+   },
+   {
+    "type": "text3d",
+    "at": [
+     6.477225575051661,
+     0.9,
+     7.1666002653407554
+    ],
+    "text": "π/2",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.0,
+     7.971067811865476,
+     5.871067811865475
+    ],
+    "text": "π/2",
+    "color": "#38bdf8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.3004347415216975,
+     2.9698484809834995,
+     0.0
+    ],
+    "text": "θ",
+    "color": "#fbbf24"
+   }
+  ]
+ },
+ "conditions": [
+  "구 S: x²+y²+z²=100 (중심 O, 반지름 10)",
+  "A(a, 0, 0), B(0, 10√2, 0), a = 10√30/3 이고 a > 10√2",
+  "P, Q, N₁, N₂ 는 모두 구 S 위의 점",
+  "∠APO = π/2 (P 는 자취 C₁ 위의 점)",
+  "∠BQO = π/2 (Q 는 자취 C₂ 위의 점)",
+  "∠AN₁O = ∠AN₂O = π/2 (N₁, N₂ 는 C₁ 위)",
+  "∠BN₁O = ∠BN₂O = π/2 (N₁, N₂ 는 C₂ 위)",
+  "C₁ 은 중심 (√30, 0, 0), 반지름 √70, 법선이 x축인 원 (평면 x = √30)",
+  "C₂ 는 중심 (0, 5√2, 0), 반지름 5√2, 법선이 y축인 원 (평면 y = 5√2)",
+  "N₁ ≠ N₂ 이고 N₁N₂ = 4√5",
+  "cos(∠N₁ON₂) = 3/5",
+  "ON₁ = ON₂ = 10, OB = 10√2, OA = a"
+ ],
+ "verify": "from sympy import sqrt, acos, Rational, pi\n\n# 구 S: x^2+y^2+z^2=100  (중심 O, 반지름 10)\nO = (0, 0, 0)\nR = 10\na = 10*sqrt(30)/3                      # 정답 a\nA = (a, 0, 0)\nB = (0, 10*sqrt(2), 0)\n\n# C1 : angle APO = pi/2  =>  x = 100/a = sqrt(30) 인 구 위의 원\nx1 = 100/a                              # = sqrt(30)\nK1 = (x1, 0, 0)                         # C1 의 중심\nr1 = sqrt(100 - x1**2)                  # = sqrt(70)\n\n# C2 : angle BQO = pi/2  =>  y = 100/(10*sqrt(2)) = 5*sqrt(2) 인 구 위의 원\ny2 = 100/(10*sqrt(2))                   # = 5*sqrt(2)\nK2 = (0, y2, 0)                         # C2 의 중심\nr2 = sqrt(100 - y2**2)                  # = 5*sqrt(2)\n\n# C1, C2 의 교점\nzN = sqrt(100 - x1**2 - y2**2)          # = 2*sqrt(5)\nN1 = (x1, y2, zN)\nN2 = (x1, y2, -zN)\n\n# 그림에 찍는 대표점 P (C1 위), Q (C2 위)\nP = (x1, 0, r1)\nQ = (0, y2, r2)\n\n# --- a 의 범위 ---\nassert a > 10*sqrt(2), \"a > 10*sqrt(2)\"\nprint(\"[VERIFY OK] a = 10*sqrt(30)/3 > 10*sqrt(2)\")\n\n# --- 구 위의 점들 ---\nfor nm, pt in [(\"P\", P), (\"Q\", Q), (\"N1\", N1), (\"N2\", N2)]:\n    assert_on_sphere(pt, O, R, nm + \" 은(는) 구 S 위의 점\")\n\n# --- 직각 조건 (자취의 정의) ---\nassert_angle(P, A, O, pi/2, \"angle APO = pi/2 (P 는 C1 위)\")\nassert_angle(Q, B, O, pi/2, \"angle BQO = pi/2 (Q 는 C2 위)\")\nassert_angle(N1, A, O, pi/2, \"angle A N1 O = pi/2 (N1 은 C1 위)\")\nassert_angle(N2, A, O, pi/2, \"angle A N2 O = pi/2 (N2 는 C1 위)\")\nassert_angle(N1, B, O, pi/2, \"angle B N1 O = pi/2 (N1 은 C2 위)\")\nassert_angle(N2, B, O, pi/2, \"angle B N2 O = pi/2 (N2 는 C2 위)\")\n\n# --- C1, C2 가 실제로 원 (중심/반지름/법선) ---\nassert_on_circle(P,  K1, r1, \"P 는 원 C1 위 (중심 (sqrt(30),0,0), 반지름 sqrt(70))\", normal=(1, 0, 0))\nassert_on_circle(N1, K1, r1, \"N1 은 원 C1 위\", normal=(1, 0, 0))\nassert_on_circle(N2, K1, r1, \"N2 는 원 C1 위\", normal=(1, 0, 0))\nassert_on_circle(Q,  K2, r2, \"Q 는 원 C2 위 (중심 (0,5*sqrt(2),0), 반지름 5*sqrt(2))\", normal=(0, 1, 0))\nassert_on_circle(N1, K2, r2, \"N1 은 원 C2 위\", normal=(0, 1, 0))\nassert_on_circle(N2, K2, r2, \"N2 는 원 C2 위\", normal=(0, 1, 0))\n\n# --- 두 교점이 서로 다르다 ---\nassert_distance3d(N1, N2, 4*sqrt(5), \"N1 != N2 (N1N2 = 4*sqrt(5))\")\n\n# --- 각 조건 ---\nassert_angle(O, N1, N2, acos(Rational(3, 5)), \"cos(angle N1 O N2) = 3/5\")\n\n# --- 반지름 / 주어진 길이 ---\nassert_distance3d(O, N1, 10, \"ON1 = 10\")\nassert_distance3d(O, N2, 10, \"ON2 = 10\")\nassert_distance3d(O, B, 10*sqrt(2), \"OB = 10*sqrt(2)\")\nassert_distance3d(O, A, a, \"OA = a\")\n",
+ "note": "∠APO=π/2 는 PA·PO=0, 즉 −ax+100=0 이므로 C₁ 은 평면 x=100/a 로 자른 구의 단면원이고, 같은 식으로 C₂ 는 평면 y=5√2 로 자른 단면원입니다. 두 평면의 교선이 구를 만나는 두 점이 N₁, N₂ 이고, 이등변삼각형 ON₁N₂ 에서 cos∠N₁ON₂=3/5 를 쓰면 a 가 정해집니다."
+}

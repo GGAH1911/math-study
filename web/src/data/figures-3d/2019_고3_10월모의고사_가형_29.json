@@ -1,257 +1,257 @@
 {
-  "spec": {
-    "title": "P 는 구 (A, 2) 위, Q 는 원 (중심 O, 반지름 √3) 위 — |PQ| 의 최댓값 12",
-    "cameraPosition": [
-      11,
-      -13,
-      8
-    ],
-    "axes": true,
-    "gridSize": 12,
-    "shapes": [
-      {
-        "type": "sphere",
-        "center": [
-          -1.0,
-          0.0,
-          6.0
-        ],
-        "radius": 2,
-        "color": "#2563eb",
-        "opacity": 0.13
-      },
-      {
-        "type": "sphere",
-        "center": [
-          3.0,
-          0.0,
-          0.0
-        ],
-        "radius": 3.4641016151377544,
-        "color": "#14b8a6",
-        "opacity": 0.1
-      },
-      {
-        "type": "plane",
-        "origin": [
-          3.3,
-          3.2908965343808667,
-          2.4
-        ],
-        "normal": [
-          1,
-          1.7320508075688772,
-          0
-        ],
-        "size": 10,
-        "color": "#f59e0b",
-        "opacity": 0.1
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "4.5 + 1.5*sin(t)",
-        "y": "2.598076211353316 - 0.8660254037844386*sin(t)",
-        "z": "1.7320508075688772*cos(t)",
-        "tRange": [
-          0,
-          6.283185307179586
-        ],
-        "samples": 360,
-        "color": "#ea580c",
-        "strokeWidth": 4,
-        "label": "Q 의 자취"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          -1.0,
-          0.0,
-          6.0
-        ],
-        "label": "A",
-        "color": "#1d4ed8"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          2.0,
-          -1.7320508075688772,
-          0.0
-        ],
-        "label": "B",
-        "color": "#334155"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          3.0,
-          0.0,
-          0.0
-        ],
-        "label": "C",
-        "color": "#334155"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          4.5,
-          2.598076211353316,
-          0.0
-        ],
-        "label": "O",
-        "color": "#ea580c"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          1.5,
-          4.330127018922193,
-          6.0
-        ],
-        "label": "H",
-        "color": "#7c3aed"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          -2.25,
-          -0.4330127018922193,
-          7.5
-        ],
-        "label": "P",
-        "color": "#dc2626"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          5.25,
-          2.1650635094610964,
-          -1.5
-        ],
-        "label": "Q",
-        "color": "#dc2626"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.0,
-          -1.7320508075688772,
-          0.0
-        ],
-        "to": [
-          3.0,
-          0.0,
-          0.0
-        ],
-        "color": "#334155"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          4.5,
-          2.598076211353316,
-          0.0
-        ],
-        "color": "#0f766e",
-        "dashed": true,
-        "label": "$3$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4.5,
-          2.598076211353316,
-          0.0
-        ],
-        "to": [
-          5.25,
-          2.1650635094610964,
-          -1.5
-        ],
-        "color": "#ea580c",
-        "label": "$\\sqrt{3}$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -1.0,
-          0.0,
-          6.0
-        ],
-        "to": [
-          1.5,
-          4.330127018922193,
-          6.0
-        ],
-        "color": "#7c3aed",
-        "dashed": true,
-        "label": "$5$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          1.5,
-          4.330127018922193,
-          6.0
-        ],
-        "to": [
-          5.25,
-          2.1650635094610964,
-          -1.5
-        ],
-        "color": "#7c3aed",
-        "dashed": true,
-        "label": "$5\\sqrt{3}$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -2.25,
-          -0.4330127018922193,
-          7.5
-        ],
-        "to": [
-          -1.0,
-          0.0,
-          6.0
-        ],
-        "color": "#dc2626",
-        "label": "$2$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -1.0,
-          0.0,
-          6.0
-        ],
-        "to": [
-          5.25,
-          2.1650635094610964,
-          -1.5
-        ],
-        "color": "#dc2626",
-        "label": "$10$"
-      }
-    ]
-  },
-  "conditions": [
-    "세 점 A(-1, 0, 6), B(2, -√3, 0), C(3, 0, 0) — 여기서 |BC|=2",
-    "|AP|=2 : P 는 중심 A, 반지름 2 인 구면 위",
-    "|CQ|=2√3 : Q 는 중심 C, 반지름 2√3 인 구면 위",
-    "BC·CQ=6 : Q 는 BC 에 수직이고 C 에서 BC 방향으로 3 만큼 간 점 O 를 지나는 평면 위",
-    "따라서 Q 의 자취는 중심 O(=C+3·BC/|BC|), 반지름 √3 인 원 (OQ ⟂ BC)",
-    "H 는 A 에서 그 평면에 내린 수선의 발이고 |AH|=5, |HO|=4√3 (∠AHO=∠AHQ=90°)",
-    "H, O, Q 가 한 직선 위이고 |HQ|=|HO|+√3=5√3",
-    "|AQ|=√(5²+(5√3)²)=10 이고, 원 위 모든 점에 대해 |AQ(t)|²=76+24sin(t−π/3) ≤ 100 이므로 10 이 최댓값",
-    "P, A, Q 가 이 순서로 한 직선 위 → |PQ|=|PA|+|AQ|=2+10=12",
-    "두 자취 위 점들을 격자로 표본해도 |PQ| ≤ 12 (최댓값 12 가 정답)"
+ "spec": {
+  "title": "P 는 구 (A, 2) 위, Q 는 원 (중심 O, 반지름 √3) 위 — |PQ| 의 최댓값 12",
+  "cameraPosition": [
+   11,
+   -13,
+   8
   ],
-  "verify": "import math\ns3 = sqrt(3)\n\n# --- 문제가 준 세 점 ---\nA = (S(-1), S(0), S(6))\nB = (S(2), -s3, S(0))\nC = (S(3), S(0), S(0))\n\nBC = Matrix([C[i] - B[i] for i in range(3)])          # (1, √3, 0), |BC| = 2\n\n# --- Q 의 자취: 구(C, 2√3) ∩ 평면(BC·CQ=6) = 중심 O, 반지름 √3 인 원 ---\nO = (Rational(9, 2), 3*s3/2, S(0))                    # O = C + 3·BC/|BC|\nH = (Rational(3, 2), 5*s3/2, S(6))                    # A 에서 그 평면에 내린 수선의 발\n\n# --- |PQ| 가 최대일 때의 두 점 ---\nQ = (Rational(21, 4), 5*s3/4, Rational(-3, 2))\nP = (Rational(-9, 4), -s3/4, Rational(15, 2))\n\n\ndef check(cond, tag):\n    print(f\"[VERIFY OK] {tag}\" if cond else f\"[VERIFY FAIL] {tag}\")\n\n\n# ① 좌표에서 따라 나오는 값\nassert_distance3d(B, C, 2, '|BC|=2')\n\n# ② |AP|=2 — P 는 구 (A, 2) 위\nassert_on_sphere(P, A, 2, 'P 는 구면 |AP|=2 위')\nassert_distance3d(A, P, 2, '|AP|=2')\n\n# ③ |CQ|=2√3 — Q 는 구 (C, 2√3) 위\nassert_on_sphere(Q, C, 2*s3, 'Q 는 구면 |CQ|=2√3 위')\nassert_distance3d(C, Q, 2*s3, '|CQ|=2√3')\n\n# ④ BC·CQ = 6\nCQ = Matrix([Q[i] - C[i] for i in range(3)])\ncheck(_close(BC.dot(CQ), 6), '내적 BC·CQ = 6')\n\n# ⑤ Q 의 자취 = 중심 O, 반지름 √3 인 원\nassert_on_line(O, B, C, 'O 는 직선 BC 위')\nassert_distance3d(C, O, 3, '|CO|=3 (CQ 의 BC 방향 정사영 길이)')\nassert_on_circle(Q, O, s3, 'Q 는 중심 O·반지름 √3 인 원 위', normal=list(BC))\nassert_perpendicular(O, Q, B, C, 'OQ ⟂ BC (원이 놓인 평면은 BC 에 수직)')\n\n# ⑥ H 는 A 에서 그 평면(BC·CX=6)에 내린 수선의 발\nHC = Matrix([H[i] - C[i] for i in range(3)])\ncheck(_close(BC.dot(HC), 6), 'H 는 평면 BC·CX=6 위')\nassert_perpendicular(A, H, H, O, 'AH ⟂ HO (H 가 수선의 발)')\nassert_perpendicular(A, H, H, Q, 'AH ⟂ HQ (삼각형 AHQ 는 H 에서 직각)')\nassert_distance3d(A, H, 5, '|AH|=5 (A 와 평면 사이의 거리)')\nassert_distance3d(H, O, 4*s3, '|HO|=4√3')\nR1 = (Rational(9, 2), 3*s3/2, s3)          # 원 위의 점 (t=0)\nR2 = (S(6), s3, S(0))                      # 원 위의 점 (t=π/2)\nassert_on_circle(R1, O, s3, 'R1 은 원 위', normal=list(BC))\nassert_on_circle(R2, O, s3, 'R2 는 원 위', normal=list(BC))\nassert_point_plane_distance(A, [H, R1, R2], 5, 'A 와 원이 놓인 평면 사이의 거리 = 5')\nassert_on_line(O, H, Q, 'H, O, Q 는 한 직선 위 (원의 중심을 지나는 방향)')\nassert_distance3d(H, Q, 5*s3, '|HQ|=|HO|+√3=5√3')\n\n# ⑦ 최댓값의 구조: P, A, Q 가 한 직선 위 → |PQ| = |PA| + |AQ|\nassert_on_line(A, P, Q, 'A 는 직선 PQ 위 (P·A·Q 공선)')\nassert_distance3d(A, Q, 10, '|AQ|=10 = √(5²+(5√3)²)')\nassert_distance3d(P, Q, 12, '|PQ|=12 = 2 + 10')\n\n# ⑧ 원 전체에서 |AQ| ≤ 10 (10 이 진짜 최댓값)\nQt = (Rational(9, 2) + Rational(3, 2)*sin(t),\n      3*s3/2 - s3/2*sin(t),\n      s3*cos(t))\ncheck(_close(simplify(sum((Qt[i] - Matrix(O)[i])**2 for i in range(3)) - 3), 0),\n      '매개화 Q(t) 는 항상 원 위 (|Q(t)−O|=√3)')\nf = expand(sum((Qt[i] - A[i])**2 for i in range(3)))\ncheck(_close(simplify(f - (76 + 24*sin(t - pi/3))), 0),\n      '|AQ(t)|² = 76 + 24·sin(t−π/3) ≤ 100, 즉 |AQ| ≤ 10')\ncheck(_close(simplify(f.subs(t, 5*pi/6) - 100), 0), 't=5π/6 에서 |AQ|²=100 (최댓값 도달)')\ncheck(all(_close(simplify(Qt[i].subs(t, 5*pi/6) - Q[i]), 0) for i in range(3)),\n      '그때의 원 위 점이 위에서 쓴 Q 와 일치')\n\n# ⑨ 두 자취 위 임의의 점에 대해 |PQ| ≤ 12 (격자 표본)\nAf = [float(v) for v in A]\nworst = 0.0\nfor i in range(36):\n    tv = 2*math.pi*i/36\n    Qv = (4.5 + 1.5*math.sin(tv),\n          3*math.sqrt(3)/2 - math.sqrt(3)/2*math.sin(tv),\n          math.sqrt(3)*math.cos(tv))\n    for j in range(24):\n        for k2 in range(24):\n            th = math.pi*j/23\n            ph = 2*math.pi*k2/24\n            Pv = (Af[0] + 2*math.sin(th)*math.cos(ph),\n                  Af[1] + 2*math.sin(th)*math.sin(ph),\n                  Af[2] + 2*math.cos(th))\n            d = math.dist(Pv, Qv)\n            if d > worst:\n                worst = d\ncheck(worst <= 12 + 1e-9, f'격자 표본 전체에서 |PQ| ≤ 12 (표본 최대 {worst:.6f})')\nprint('|PQ| 의 최댓값 =', 12)\n",
-  "note": "파란 구가 P 가 움직이는 자취(|AP|=2), 청록 구가 |CQ|=2√3, 노란 평면이 BC·CQ=6 입니다. 둘이 만나 생기는 주황 원이 Q 의 자취예요. A 에서 그 평면에 내린 수선의 발 H 로 만든 직각삼각형 AHQ 에서 |AQ|의 최댓값 10 이 나오고, 거기에 반지름 2 를 더한 12 가 |PQ| 의 최댓값입니다."
+  "axes": true,
+  "gridSize": 12,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     -1.0,
+     0.0,
+     6.0
+    ],
+    "radius": 2,
+    "color": "#2563eb",
+    "opacity": 0.15
+   },
+   {
+    "type": "sphere",
+    "center": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "radius": 3.4641016151377544,
+    "color": "#14b8a6",
+    "opacity": 0.15
+   },
+   {
+    "type": "plane",
+    "origin": [
+     3.3,
+     3.2908965343808667,
+     2.4
+    ],
+    "normal": [
+     1,
+     1.7320508075688772,
+     0
+    ],
+    "size": 10,
+    "color": "#f59e0b",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "4.5 + 1.5*sin(t)",
+    "y": "2.598076211353316 - 0.8660254037844386*sin(t)",
+    "z": "1.7320508075688772*cos(t)",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 360,
+    "color": "#ea580c",
+    "strokeWidth": 4,
+    "label": "Q 의 자취"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     -1.0,
+     0.0,
+     6.0
+    ],
+    "label": "A",
+    "color": "#1d4ed8"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2.0,
+     -1.7320508075688772,
+     0.0
+    ],
+    "label": "B",
+    "color": "#334155"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "C",
+    "color": "#334155"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4.5,
+     2.598076211353316,
+     0.0
+    ],
+    "label": "O",
+    "color": "#ea580c"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     1.5,
+     4.330127018922193,
+     6.0
+    ],
+    "label": "H",
+    "color": "#7c3aed"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     -2.25,
+     -0.4330127018922193,
+     7.5
+    ],
+    "label": "P",
+    "color": "#dc2626"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     5.25,
+     2.1650635094610964,
+     -1.5
+    ],
+    "label": "Q",
+    "color": "#dc2626"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     -1.7320508075688772,
+     0.0
+    ],
+    "to": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "color": "#334155"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     4.5,
+     2.598076211353316,
+     0.0
+    ],
+    "color": "#0f766e",
+    "dashed": true,
+    "label": "$3$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4.5,
+     2.598076211353316,
+     0.0
+    ],
+    "to": [
+     5.25,
+     2.1650635094610964,
+     -1.5
+    ],
+    "color": "#ea580c",
+    "label": "$\\sqrt{3}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.0,
+     0.0,
+     6.0
+    ],
+    "to": [
+     1.5,
+     4.330127018922193,
+     6.0
+    ],
+    "color": "#7c3aed",
+    "dashed": true,
+    "label": "$5$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.5,
+     4.330127018922193,
+     6.0
+    ],
+    "to": [
+     5.25,
+     2.1650635094610964,
+     -1.5
+    ],
+    "color": "#7c3aed",
+    "dashed": true,
+    "label": "$5\\sqrt{3}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -2.25,
+     -0.4330127018922193,
+     7.5
+    ],
+    "to": [
+     -1.0,
+     0.0,
+     6.0
+    ],
+    "color": "#dc2626",
+    "label": "$2$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.0,
+     0.0,
+     6.0
+    ],
+    "to": [
+     5.25,
+     2.1650635094610964,
+     -1.5
+    ],
+    "color": "#dc2626",
+    "label": "$10$"
+   }
+  ]
+ },
+ "conditions": [
+  "세 점 A(-1, 0, 6), B(2, -√3, 0), C(3, 0, 0) — 여기서 |BC|=2",
+  "|AP|=2 : P 는 중심 A, 반지름 2 인 구면 위",
+  "|CQ|=2√3 : Q 는 중심 C, 반지름 2√3 인 구면 위",
+  "BC·CQ=6 : Q 는 BC 에 수직이고 C 에서 BC 방향으로 3 만큼 간 점 O 를 지나는 평면 위",
+  "따라서 Q 의 자취는 중심 O(=C+3·BC/|BC|), 반지름 √3 인 원 (OQ ⟂ BC)",
+  "H 는 A 에서 그 평면에 내린 수선의 발이고 |AH|=5, |HO|=4√3 (∠AHO=∠AHQ=90°)",
+  "H, O, Q 가 한 직선 위이고 |HQ|=|HO|+√3=5√3",
+  "|AQ|=√(5²+(5√3)²)=10 이고, 원 위 모든 점에 대해 |AQ(t)|²=76+24sin(t−π/3) ≤ 100 이므로 10 이 최댓값",
+  "P, A, Q 가 이 순서로 한 직선 위 → |PQ|=|PA|+|AQ|=2+10=12",
+  "두 자취 위 점들을 격자로 표본해도 |PQ| ≤ 12 (최댓값 12 가 정답)"
+ ],
+ "verify": "import math\ns3 = sqrt(3)\n\n# --- 문제가 준 세 점 ---\nA = (S(-1), S(0), S(6))\nB = (S(2), -s3, S(0))\nC = (S(3), S(0), S(0))\n\nBC = Matrix([C[i] - B[i] for i in range(3)])          # (1, √3, 0), |BC| = 2\n\n# --- Q 의 자취: 구(C, 2√3) ∩ 평면(BC·CQ=6) = 중심 O, 반지름 √3 인 원 ---\nO = (Rational(9, 2), 3*s3/2, S(0))                    # O = C + 3·BC/|BC|\nH = (Rational(3, 2), 5*s3/2, S(6))                    # A 에서 그 평면에 내린 수선의 발\n\n# --- |PQ| 가 최대일 때의 두 점 ---\nQ = (Rational(21, 4), 5*s3/4, Rational(-3, 2))\nP = (Rational(-9, 4), -s3/4, Rational(15, 2))\n\n\ndef check(cond, tag):\n    print(f\"[VERIFY OK] {tag}\" if cond else f\"[VERIFY FAIL] {tag}\")\n\n\n# ① 좌표에서 따라 나오는 값\nassert_distance3d(B, C, 2, '|BC|=2')\n\n# ② |AP|=2 — P 는 구 (A, 2) 위\nassert_on_sphere(P, A, 2, 'P 는 구면 |AP|=2 위')\nassert_distance3d(A, P, 2, '|AP|=2')\n\n# ③ |CQ|=2√3 — Q 는 구 (C, 2√3) 위\nassert_on_sphere(Q, C, 2*s3, 'Q 는 구면 |CQ|=2√3 위')\nassert_distance3d(C, Q, 2*s3, '|CQ|=2√3')\n\n# ④ BC·CQ = 6\nCQ = Matrix([Q[i] - C[i] for i in range(3)])\ncheck(_close(BC.dot(CQ), 6), '내적 BC·CQ = 6')\n\n# ⑤ Q 의 자취 = 중심 O, 반지름 √3 인 원\nassert_on_line(O, B, C, 'O 는 직선 BC 위')\nassert_distance3d(C, O, 3, '|CO|=3 (CQ 의 BC 방향 정사영 길이)')\nassert_on_circle(Q, O, s3, 'Q 는 중심 O·반지름 √3 인 원 위', normal=list(BC))\nassert_perpendicular(O, Q, B, C, 'OQ ⟂ BC (원이 놓인 평면은 BC 에 수직)')\n\n# ⑥ H 는 A 에서 그 평면(BC·CX=6)에 내린 수선의 발\nHC = Matrix([H[i] - C[i] for i in range(3)])\ncheck(_close(BC.dot(HC), 6), 'H 는 평면 BC·CX=6 위')\nassert_perpendicular(A, H, H, O, 'AH ⟂ HO (H 가 수선의 발)')\nassert_perpendicular(A, H, H, Q, 'AH ⟂ HQ (삼각형 AHQ 는 H 에서 직각)')\nassert_distance3d(A, H, 5, '|AH|=5 (A 와 평면 사이의 거리)')\nassert_distance3d(H, O, 4*s3, '|HO|=4√3')\nR1 = (Rational(9, 2), 3*s3/2, s3)          # 원 위의 점 (t=0)\nR2 = (S(6), s3, S(0))                      # 원 위의 점 (t=π/2)\nassert_on_circle(R1, O, s3, 'R1 은 원 위', normal=list(BC))\nassert_on_circle(R2, O, s3, 'R2 는 원 위', normal=list(BC))\nassert_point_plane_distance(A, [H, R1, R2], 5, 'A 와 원이 놓인 평면 사이의 거리 = 5')\nassert_on_line(O, H, Q, 'H, O, Q 는 한 직선 위 (원의 중심을 지나는 방향)')\nassert_distance3d(H, Q, 5*s3, '|HQ|=|HO|+√3=5√3')\n\n# ⑦ 최댓값의 구조: P, A, Q 가 한 직선 위 → |PQ| = |PA| + |AQ|\nassert_on_line(A, P, Q, 'A 는 직선 PQ 위 (P·A·Q 공선)')\nassert_distance3d(A, Q, 10, '|AQ|=10 = √(5²+(5√3)²)')\nassert_distance3d(P, Q, 12, '|PQ|=12 = 2 + 10')\n\n# ⑧ 원 전체에서 |AQ| ≤ 10 (10 이 진짜 최댓값)\nQt = (Rational(9, 2) + Rational(3, 2)*sin(t),\n      3*s3/2 - s3/2*sin(t),\n      s3*cos(t))\ncheck(_close(simplify(sum((Qt[i] - Matrix(O)[i])**2 for i in range(3)) - 3), 0),\n      '매개화 Q(t) 는 항상 원 위 (|Q(t)−O|=√3)')\nf = expand(sum((Qt[i] - A[i])**2 for i in range(3)))\ncheck(_close(simplify(f - (76 + 24*sin(t - pi/3))), 0),\n      '|AQ(t)|² = 76 + 24·sin(t−π/3) ≤ 100, 즉 |AQ| ≤ 10')\ncheck(_close(simplify(f.subs(t, 5*pi/6) - 100), 0), 't=5π/6 에서 |AQ|²=100 (최댓값 도달)')\ncheck(all(_close(simplify(Qt[i].subs(t, 5*pi/6) - Q[i]), 0) for i in range(3)),\n      '그때의 원 위 점이 위에서 쓴 Q 와 일치')\n\n# ⑨ 두 자취 위 임의의 점에 대해 |PQ| ≤ 12 (격자 표본)\nAf = [float(v) for v in A]\nworst = 0.0\nfor i in range(36):\n    tv = 2*math.pi*i/36\n    Qv = (4.5 + 1.5*math.sin(tv),\n          3*math.sqrt(3)/2 - math.sqrt(3)/2*math.sin(tv),\n          math.sqrt(3)*math.cos(tv))\n    for j in range(24):\n        for k2 in range(24):\n            th = math.pi*j/23\n            ph = 2*math.pi*k2/24\n            Pv = (Af[0] + 2*math.sin(th)*math.cos(ph),\n                  Af[1] + 2*math.sin(th)*math.sin(ph),\n                  Af[2] + 2*math.cos(th))\n            d = math.dist(Pv, Qv)\n            if d > worst:\n                worst = d\ncheck(worst <= 12 + 1e-9, f'격자 표본 전체에서 |PQ| ≤ 12 (표본 최대 {worst:.6f})')\nprint('|PQ| 의 최댓값 =', 12)\n",
+ "note": "파란 구가 P 가 움직이는 자취(|AP|=2), 청록 구가 |CQ|=2√3, 노란 평면이 BC·CQ=6 입니다. 둘이 만나 생기는 주황 원이 Q 의 자취예요. A 에서 그 평면에 내린 수선의 발 H 로 만든 직각삼각형 AHQ 에서 |AQ|의 최댓값 10 이 나오고, 거기에 반지름 2 를 더한 12 가 |PQ| 의 최댓값입니다."
 }

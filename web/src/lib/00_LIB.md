@@ -29,6 +29,7 @@ updated: 2026-06-28
 - `daily-concept.mjs` — 등록 자산
 - `db.ts` — 등록 자산
 - `exam-build.ts` — 등록 자산
+- `figures-3d.ts` — 등록 자산
 - `fonts.ts` — 등록 자산
 - `health.ts` — 등록 자산
 - `image-utils.ts` — 등록 자산

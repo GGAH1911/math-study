@@ -1,222 +1,223 @@
 {
-  "spec": {
-    "title": "사면체 ABCD — 수선의 발 H 와 A 에서 CM 에 내린 수선 AQ",
-    "cameraPosition": [
-      26,
-      11,
-      14
-    ],
-    "axes": false,
-    "shapes": [
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            4,
-            -3.4641016151377544,
-            3
-          ],
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            6,
-            -10.392304845413264,
-            0
-          ],
-          [
-            12,
-            0,
-            0
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2
-          ],
-          [
-            0,
-            1,
-            3
-          ],
-          [
-            0,
-            2,
-            3
-          ],
-          [
-            1,
-            2,
-            3
-          ]
-        ],
-        "labels": [
-          "A",
-          "B",
-          "C",
-          "D"
-        ],
-        "fill": "#60a5fa",
-        "fillOpacity": 0.13,
-        "stroke": "#e2e8f0"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          -3.4641016151377544,
-          3
-        ],
-        "to": [
-          4,
-          -3.4641016151377544,
-          0
-        ],
-        "color": "#fbbf24",
-        "dashed": true,
-        "label": "3"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          4,
-          -3.4641016151377544,
-          0
-        ],
-        "label": "H",
-        "color": "#fbbf24",
-        "size": 0.25
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          -3.4641016151377544,
-          0
-        ],
-        "to": [
-          0,
-          0,
-          0
-        ],
-        "color": "#64748b",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          -3.4641016151377544,
-          0
-        ],
-        "to": [
-          6,
-          -10.392304845413264,
-          0
-        ],
-        "color": "#64748b",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          -3.4641016151377544,
-          0
-        ],
-        "to": [
-          12,
-          0,
-          0
-        ],
-        "color": "#64748b",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          6,
-          -10.392304845413264,
-          0
-        ],
-        "to": [
-          6,
-          0,
-          0
-        ],
-        "color": "#34d399"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          6,
-          0,
-          0
-        ],
-        "label": "M",
-        "color": "#34d399",
-        "size": 0.25
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          -3.4641016151377544,
-          3
-        ],
-        "to": [
-          6,
-          -3.4641016151377544,
-          0
-        ],
-        "color": "#f472b6",
-        "label": "$\\sqrt{13}$"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          6,
-          -3.4641016151377544,
-          0
-        ],
-        "label": "Q",
-        "color": "#f472b6",
-        "size": 0.25
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          -3.4641016151377544,
-          0
-        ],
-        "to": [
-          6,
-          -3.4641016151377544,
-          0
-        ],
-        "color": "#f472b6",
-        "dashed": true,
-        "label": "2"
-      }
-    ]
-  },
-  "conditions": [
-    "삼각형 BCD 는 한 변의 길이가 12 인 정삼각형 (BC = CD = DB = 12)",
-    "H 는 평면 BCD 위의 점이고 AH ⟂ BC, AH ⟂ BD, AH ⟂ CD (A 에서 평면 BCD 에 내린 수선의 발)",
-    "AH = 3",
-    "삼각형 BCH·DBH·CDH 의 밑변이 모두 12 로 같으므로 넓이비 = H 에서 각 변까지의 거리비: d(H,BC) = √3, d(H,DB) = 2√3, d(H,CD) = 3√3 → [DBH] = 2[BCH], [CDH] = 3[BCH]",
-    "H 는 삼각형 BCD 의 내부에 있다 (직선 CH 가 변 BD 와 점 (3,0,0) 에서 만나고 H 는 그 사이)",
-    "M 은 선분 BD 의 중점 (BM = MD = 6), CM = 6√3",
-    "Q 는 직선 CM 위의 점이고 AQ ⟂ CM (A 에서 선분 CM 에 내린 수선의 발)",
-    "CQ = 4√3, QM = 2√3 — 합이 CM 이므로 Q 는 선분 CM 위에 있다",
-    "HQ ⟂ CM 이고 HQ = 2 (삼수선의 정리)",
-    "AQ = √13 (= √(AH² + HQ²) = √(9+4), 정답 ③)"
+ "spec": {
+  "title": "사면체 ABCD — 수선의 발 H 와 A 에서 CM 에 내린 수선 AQ",
+  "cameraPosition": [
+   26,
+   11,
+   14
   ],
-  "verify": "# 2019 수능 가형 19 — 사면체 ABCD, 정삼각형 BCD(한 변 12), A의 수선의 발 H(내부),\n# [CDH]=3[BCH], [DBH]=2[BCH], AH=3, M=BD의 중점, Q=A에서 CM에 내린 수선의 발.\ns3 = sqrt(3)\nB = (0, 0, 0)\nD = (12, 0, 0)\nC = (6, -6*s3, 0)\nH = (4, -2*s3, 0)          # 무게중심좌표 (1/2, 1/3, 1/6) → B,C,D\nA = (4, -2*s3, 3)\nM = (6, 0, 0)              # BD의 중점\nQ = (6, -2*s3, 0)          # A에서 직선 CM에 내린 수선의 발\nP = (3, 0, 0)              # 직선 CH 가 변 BD 와 만나는 점 (H 내부성 확인용)\n\n# ① 밑면이 한 변 12 인 정삼각형\nassert_distance3d(B, C, 12, \"BC = 12\")\nassert_distance3d(C, D, 12, \"CD = 12\")\nassert_distance3d(D, B, 12, \"DB = 12\")\n\n# ② H 는 평면 BCD 위의 점\nassert_on_plane(H, [B, C, D], \"H 는 평면 BCD 위\")\nassert_coplanar([B, C, D, H, M, Q, P], \"B,C,D,H,M,Q,P 가 한 평면(밑면) 위\")\n\n# ③ 넓이 조건 — 세 삼각형의 밑변이 모두 12 로 같으므로 넓이비 = H 에서 각 변까지의 거리비.\n#    [BCH]:[DBH]:[CDH] = 1:2:3, 합이 삼각형 BCD (Viviani: 거리 합 = 높이 6√3)\nassert_point_line_distance(H, B, C, s3,    \"d(H, BC) = √3  → [BCH] = 6√3\")\nassert_point_line_distance(H, D, B, 2*s3,  \"d(H, DB) = 2√3 → [DBH] = 12√3 = 2·[BCH]\")\nassert_point_line_distance(H, C, D, 3*s3,  \"d(H, CD) = 3√3 → [CDH] = 18√3 = 3·[BCH]\")\n\n# ④ H 가 삼각형 BCD 의 내부에 있다 — 직선 CH 의 연장이 변 BD 와 만나고 H 가 그 사이\nassert_on_line(P, B, D, \"P 는 변 BD 위\")\nassert_segments_cross(C, P, B, D, \"선분 CP 가 변 BD 와 만난다\")\nassert_on_line(H, C, P, \"H 는 선분 CP 위 → H 는 삼각형 BCD 내부\")\n\n# ⑤ AH ⟂ 평면 BCD, AH = 3\nassert_perpendicular(H, A, B, C, \"AH ⟂ BC\")\nassert_perpendicular(H, A, B, D, \"AH ⟂ BD\")\nassert_perpendicular(H, A, C, D, \"AH ⟂ CD\")\nassert_distance3d(A, H, 3, \"AH = 3\")\n\n# ⑥ M 은 선분 BD 의 중점\nassert_on_line(M, B, D, \"M 은 직선 BD 위\")\nassert_distance3d(B, M, 6, \"BM = 6\")\nassert_distance3d(M, D, 6, \"MD = 6\")\n\n# ⑦ Q 는 A 에서 선분 CM 에 내린 수선의 발\nassert_on_line(Q, C, M, \"Q 는 직선 CM 위\")\nassert_perpendicular(A, Q, C, M, \"AQ ⟂ CM\")\nassert_distance3d(C, Q, 4*s3, \"CQ = 4√3\")\nassert_distance3d(Q, M, 2*s3, \"QM = 2√3 (CQ+QM = 6√3 = CM → Q 는 선분 CM 위)\")\nassert_distance3d(C, M, 6*s3, \"CM = 6√3\")\n\n# ⑧ 삼수선의 정리 — HQ ⟂ CM, 그래서 AQ² = AH² + HQ²\nassert_perpendicular(H, Q, C, M, \"HQ ⟂ CM (삼수선의 정리)\")\nassert_distance3d(H, Q, 2, \"HQ = 2\")\n\n# ⑨ 구하는 값\nassert_distance3d(A, Q, sqrt(13), \"AQ = √13  (= √(3² + 2²), 정답 ③)\")\n",
-  "note": "B(0,0,0)·D(12,0,0)·C(6,−6√3,0) 로 밑면을 잡으면 넓이비 1:2:3 이 H 의 무게중심좌표 (1/2, 1/3, 1/6) 를 정해 H(4,−2√3,0), A(4,−2√3,3) 이 되고, HQ ⟂ CM (삼수선의 정리) 로 AQ² = AH² + HQ² = 9 + 4 = 13 입니다."
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      4,
+      -3.4641016151377544,
+      3
+     ],
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      6,
+      -10.392304845413264,
+      0
+     ],
+     [
+      12,
+      0,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "fill": "#60a5fa",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -3.4641016151377544,
+     3
+    ],
+    "to": [
+     4,
+     -3.4641016151377544,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true,
+    "label": "3"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4,
+     -3.4641016151377544,
+     0
+    ],
+    "label": "H",
+    "color": "#fbbf24",
+    "size": 0.25
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -3.4641016151377544,
+     0
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -3.4641016151377544,
+     0
+    ],
+    "to": [
+     6,
+     -10.392304845413264,
+     0
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -3.4641016151377544,
+     0
+    ],
+    "to": [
+     12,
+     0,
+     0
+    ],
+    "color": "#64748b",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     -10.392304845413264,
+     0
+    ],
+    "to": [
+     6,
+     0,
+     0
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     6,
+     0,
+     0
+    ],
+    "label": "M",
+    "color": "#34d399",
+    "size": 0.25
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -3.4641016151377544,
+     3
+    ],
+    "to": [
+     6,
+     -3.4641016151377544,
+     0
+    ],
+    "color": "#f472b6",
+    "label": "$\\sqrt{13}$"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     6,
+     -3.4641016151377544,
+     0
+    ],
+    "label": "Q",
+    "color": "#f472b6",
+    "size": 0.25
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -3.4641016151377544,
+     0
+    ],
+    "to": [
+     6,
+     -3.4641016151377544,
+     0
+    ],
+    "color": "#f472b6",
+    "dashed": true,
+    "label": "2"
+   }
+  ]
+ },
+ "conditions": [
+  "삼각형 BCD 는 한 변의 길이가 12 인 정삼각형 (BC = CD = DB = 12)",
+  "H 는 평면 BCD 위의 점이고 AH ⟂ BC, AH ⟂ BD, AH ⟂ CD (A 에서 평면 BCD 에 내린 수선의 발)",
+  "AH = 3",
+  "삼각형 BCH·DBH·CDH 의 밑변이 모두 12 로 같으므로 넓이비 = H 에서 각 변까지의 거리비: d(H,BC) = √3, d(H,DB) = 2√3, d(H,CD) = 3√3 → [DBH] = 2[BCH], [CDH] = 3[BCH]",
+  "H 는 삼각형 BCD 의 내부에 있다 (직선 CH 가 변 BD 와 점 (3,0,0) 에서 만나고 H 는 그 사이)",
+  "M 은 선분 BD 의 중점 (BM = MD = 6), CM = 6√3",
+  "Q 는 직선 CM 위의 점이고 AQ ⟂ CM (A 에서 선분 CM 에 내린 수선의 발)",
+  "CQ = 4√3, QM = 2√3 — 합이 CM 이므로 Q 는 선분 CM 위에 있다",
+  "HQ ⟂ CM 이고 HQ = 2 (삼수선의 정리)",
+  "AQ = √13 (= √(AH² + HQ²) = √(9+4), 정답 ③)"
+ ],
+ "verify": "# 2019 수능 가형 19 — 사면체 ABCD, 정삼각형 BCD(한 변 12), A의 수선의 발 H(내부),\n# [CDH]=3[BCH], [DBH]=2[BCH], AH=3, M=BD의 중점, Q=A에서 CM에 내린 수선의 발.\ns3 = sqrt(3)\nB = (0, 0, 0)\nD = (12, 0, 0)\nC = (6, -6*s3, 0)\nH = (4, -2*s3, 0)          # 무게중심좌표 (1/2, 1/3, 1/6) → B,C,D\nA = (4, -2*s3, 3)\nM = (6, 0, 0)              # BD의 중점\nQ = (6, -2*s3, 0)          # A에서 직선 CM에 내린 수선의 발\nP = (3, 0, 0)              # 직선 CH 가 변 BD 와 만나는 점 (H 내부성 확인용)\n\n# ① 밑면이 한 변 12 인 정삼각형\nassert_distance3d(B, C, 12, \"BC = 12\")\nassert_distance3d(C, D, 12, \"CD = 12\")\nassert_distance3d(D, B, 12, \"DB = 12\")\n\n# ② H 는 평면 BCD 위의 점\nassert_on_plane(H, [B, C, D], \"H 는 평면 BCD 위\")\nassert_coplanar([B, C, D, H, M, Q, P], \"B,C,D,H,M,Q,P 가 한 평면(밑면) 위\")\n\n# ③ 넓이 조건 — 세 삼각형의 밑변이 모두 12 로 같으므로 넓이비 = H 에서 각 변까지의 거리비.\n#    [BCH]:[DBH]:[CDH] = 1:2:3, 합이 삼각형 BCD (Viviani: 거리 합 = 높이 6√3)\nassert_point_line_distance(H, B, C, s3,    \"d(H, BC) = √3  → [BCH] = 6√3\")\nassert_point_line_distance(H, D, B, 2*s3,  \"d(H, DB) = 2√3 → [DBH] = 12√3 = 2·[BCH]\")\nassert_point_line_distance(H, C, D, 3*s3,  \"d(H, CD) = 3√3 → [CDH] = 18√3 = 3·[BCH]\")\n\n# ④ H 가 삼각형 BCD 의 내부에 있다 — 직선 CH 의 연장이 변 BD 와 만나고 H 가 그 사이\nassert_on_line(P, B, D, \"P 는 변 BD 위\")\nassert_segments_cross(C, P, B, D, \"선분 CP 가 변 BD 와 만난다\")\nassert_on_line(H, C, P, \"H 는 선분 CP 위 → H 는 삼각형 BCD 내부\")\n\n# ⑤ AH ⟂ 평면 BCD, AH = 3\nassert_perpendicular(H, A, B, C, \"AH ⟂ BC\")\nassert_perpendicular(H, A, B, D, \"AH ⟂ BD\")\nassert_perpendicular(H, A, C, D, \"AH ⟂ CD\")\nassert_distance3d(A, H, 3, \"AH = 3\")\n\n# ⑥ M 은 선분 BD 의 중점\nassert_on_line(M, B, D, \"M 은 직선 BD 위\")\nassert_distance3d(B, M, 6, \"BM = 6\")\nassert_distance3d(M, D, 6, \"MD = 6\")\n\n# ⑦ Q 는 A 에서 선분 CM 에 내린 수선의 발\nassert_on_line(Q, C, M, \"Q 는 직선 CM 위\")\nassert_perpendicular(A, Q, C, M, \"AQ ⟂ CM\")\nassert_distance3d(C, Q, 4*s3, \"CQ = 4√3\")\nassert_distance3d(Q, M, 2*s3, \"QM = 2√3 (CQ+QM = 6√3 = CM → Q 는 선분 CM 위)\")\nassert_distance3d(C, M, 6*s3, \"CM = 6√3\")\n\n# ⑧ 삼수선의 정리 — HQ ⟂ CM, 그래서 AQ² = AH² + HQ²\nassert_perpendicular(H, Q, C, M, \"HQ ⟂ CM (삼수선의 정리)\")\nassert_distance3d(H, Q, 2, \"HQ = 2\")\n\n# ⑨ 구하는 값\nassert_distance3d(A, Q, sqrt(13), \"AQ = √13  (= √(3² + 2²), 정답 ③)\")\n",
+ "note": "B(0,0,0)·D(12,0,0)·C(6,−6√3,0) 로 밑면을 잡으면 넓이비 1:2:3 이 H 의 무게중심좌표 (1/2, 1/3, 1/6) 를 정해 H(4,−2√3,0), A(4,−2√3,3) 이 되고, HQ ⟂ CM (삼수선의 정리) 로 AQ² = AH² + HQ² = 9 + 4 = 13 입니다."
 }

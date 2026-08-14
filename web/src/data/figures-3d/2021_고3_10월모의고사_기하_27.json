@@ -1,375 +1,375 @@
 {
-  "spec": {
-    "title": "구 S와 xy평면이 만나 생기는 단면원, 그리고 구 S와 z축이 만나는 두 점 B, C",
-    "cameraPosition": [
-      22,
-      -26,
-      17
-    ],
-    "gridSize": 30,
-    "shapes": [
-      {
-        "type": "plane",
-        "origin": [
-          2,
-          1,
-          0
-        ],
-        "normal": [
-          0,
-          0,
-          1
-        ],
-        "size": 26,
-        "color": "#a1a1aa",
-        "opacity": 0.1
-      },
-      {
-        "type": "text3d",
-        "at": [
-          13.5,
-          11.5,
-          0.4
-        ],
-        "text": "$xy$평면",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "sphere",
-        "center": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "radius": 8,
-        "color": "#60a5fa",
-        "opacity": 0.13
-      },
-      {
-        "type": "text3d",
-        "at": [
-          3,
-          1,
-          15.0
-        ],
-        "text": "구 $S$ (반지름 8)",
-        "color": "#93c5fd"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -9,
-          0,
-          0
-        ],
-        "to": [
-          13,
-          0,
-          0
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "text3d",
-        "at": [
-          13.8,
-          0,
-          0
-        ],
-        "text": "$x$",
-        "color": "#71717a"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          -9,
-          0
-        ],
-        "to": [
-          0,
-          11,
-          0
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "text3d",
-        "at": [
-          0,
-          11.8,
-          0
-        ],
-        "text": "$y$",
-        "color": "#71717a"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          -5
-        ],
-        "to": [
-          0,
-          0,
-          -1.1034712299511353
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          13.593467226747933
-        ],
-        "to": [
-          0,
-          0,
-          17.5
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "text3d",
-        "at": [
-          0,
-          0,
-          18.3
-        ],
-        "text": "$z$",
-        "color": "#71717a"
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "3+5*cos(t)",
-        "y": "1+5*sin(t)",
-        "z": "0",
-        "tRange": [
-          0,
-          6.283185307179586
-        ],
-        "samples": 240,
-        "color": "#f59e0b",
-        "strokeWidth": 3
-      },
-      {
-        "type": "text3d",
-        "at": [
-          3,
-          -6.6,
-          0.6
-        ],
-        "text": "넓이 $25\\pi$",
-        "color": "#fbbf24"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "color": "#22c55e",
-        "label": "$7$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "to": [
-          3,
-          1,
-          0
-        ],
-        "color": "#a78bfa",
-        "dashed": true,
-        "label": "$\\sqrt{39}$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          1,
-          0
-        ],
-        "to": [
-          8,
-          1,
-          0
-        ],
-        "color": "#f59e0b",
-        "label": "$5$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "to": [
-          8,
-          1,
-          0
-        ],
-        "color": "#3b82f6",
-        "label": "$8$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "to": [
-          0,
-          0,
-          6.244997998398398
-        ],
-        "color": "#a78bfa",
-        "dashed": true,
-        "label": "$\\sqrt{10}$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "to": [
-          0,
-          0,
-          13.593467226747933
-        ],
-        "color": "#3b82f6",
-        "label": "$8$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          13.593467226747933
-        ],
-        "to": [
-          0,
-          0,
-          -1.1034712299511353
-        ],
-        "color": "#ef4444"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          -2.0,
-          -4.2,
-          8.2
-        ],
-        "text": "$\\overline{BC}=?$",
-        "color": "#fca5a5"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          0
-        ],
-        "label": "O",
-        "color": "#e4e4e7"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          3,
-          1,
-          6.244997998398398
-        ],
-        "label": "A",
-        "color": "#3b82f6"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          3,
-          1,
-          0
-        ],
-        "label": "H",
-        "color": "#f59e0b"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          8,
-          1,
-          0
-        ],
-        "label": "P",
-        "color": "#f59e0b"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          6.244997998398398
-        ],
-        "label": "M",
-        "color": "#a78bfa"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          13.593467226747933
-        ],
-        "label": "B",
-        "color": "#ef4444"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          -1.1034712299511353
-        ],
-        "label": "C",
-        "color": "#ef4444"
-      }
-    ]
-  },
-  "conditions": [
-    "OA = 7 (O는 원점, A는 구 S의 중심)",
-    "구 S의 반지름 = 8",
-    "점 A에서 xy평면까지의 거리 = √39",
-    "H는 A에서 xy평면에 내린 수선의 발 (AH ⟂ x축방향, AH ⟂ y축방향)",
-    "단면원의 중심은 H, 반지름은 5 (넓이 25π)",
-    "단면원 위의 점 P, P₂는 xy평면 위이면서 동시에 구 S 위",
-    "B, C는 z축 위의 점",
-    "B, C는 구 S 위의 점",
-    "M은 A에서 z축에 내린 수선의 발이자 선분 BC의 중점 (MB = MC = 3√6)",
-    "점 A에서 z축까지의 거리 = √10",
-    "AM ⟂ BC (z축)",
-    "BC = 6√6"
+ "spec": {
+  "title": "구 S와 xy평면이 만나 생기는 단면원, 그리고 구 S와 z축이 만나는 두 점 B, C",
+  "cameraPosition": [
+   22,
+   -26,
+   17
   ],
-  "verify": "from sympy import acos\n\ns3 = sqrt(3)\n\n# ── 펼친 마름모 ABCD (평면 z=0). 접는 선 AM, AN, MN 을 지나는 삼각형 AMN 을 바닥으로 둔다.\nA = (0, 0, 0)\nB = (4, 0, 0)\nD = (2, 2*s3, 0)\nC = (6, 2*s3, 0)\nM = (5, s3, 0)          # 변 BC 의 중점\nN = (4, 2*s3, 0)        # 변 CD 의 중점\n\n# ── 접은 뒤 B, C, D 가 합쳐지는 점 P\nP = (Rational(10, 3), 10*s3/9, 4*sqrt(6)/9)\n\n# ── 마름모 조건\nassert_distance(A, B, 4, \"AB = 4\")\nassert_distance(B, C, 4, \"BC = 4\")\nassert_distance(C, D, 4, \"CD = 4\")\nassert_distance(D, A, 4, \"DA = 4\")\nassert_angle(A, B, D, pi/3, \"각 BAD = pi/3\")\n\n# ── M, N 은 중점\nassert_distance(M, tuple((Matrix(B) + Matrix(C))/2), 0, \"M 은 변 BC 의 중점\")\nassert_distance(N, tuple((Matrix(C) + Matrix(D))/2), 0, \"N 은 변 CD 의 중점\")\n\n# ── 접는 선 (접어도 길이 불변)\nassert_distance(A, M, 2*sqrt(7), \"AM = 2sqrt7 (접는 선)\")\nassert_distance(A, N, 2*sqrt(7), \"AN = 2sqrt7 (접는 선)\")\nassert_distance(M, N, 2, \"MN = 2 (접는 선)\")\n\n# ── 접었을 때 P 가 만족해야 하는 길이 (AB=AD -> PA, MB=MC -> PM, NC=ND -> PN)\nassert_distance(P, A, 4, \"PA = AB = AD = 4\")\nassert_distance(P, M, 2, \"PM = MB = MC = 2\")\nassert_distance(P, N, 2, \"PN = NC = ND = 2\")\n\n# ── P 는 평면 AMN 밖(위)에 있다 = 진짜 사면체\nassert_point_plane_distance(P, [A, M, N], 4*sqrt(6)/9, \"P 와 평면 AMN 의 거리 = 4sqrt6/9 > 0 (사면체)\")\n\n# ── 삼각형 AMN 의 넓이 = 3sqrt3\ndef area(p, q, r):\n    return (Matrix(q) - Matrix(p)).cross(Matrix(r) - Matrix(p)).norm() / 2\nassert_distance((area(A, M, N), 0, 0), (3*s3, 0, 0), 0, \"삼각형 AMN 의 넓이 = 3sqrt3\")\n\n# ── 평면 AMN 과 평면 PAM 이 이루는 각 theta, cos theta = 5/9\nn1 = (Matrix(M) - Matrix(A)).cross(Matrix(N) - Matrix(A))     # 평면 AMN 의 법선\nn2 = (Matrix(M) - Matrix(A)).cross(Matrix(P) - Matrix(A))     # 평면 PAM 의 법선\nassert_angle((0, 0, 0), tuple(n1), tuple(n2), acos(Rational(5, 9)),\n             \"평면 AMN 과 평면 PAM 이 이루는 각 theta, cos theta = 5/9\")\n\n# ── N 의 평면 PAM 위로의 정사영 N'\nNp = (Rational(40, 9), 34*s3/27, 10*sqrt(6)/27)\nassert_on_plane(Np, [P, A, M], \"N' 은 평면 PAM 위의 점\")\nassert_perpendicular(N, Np, A, M, \"NN' 수직 AM\")\nassert_perpendicular(N, Np, A, P, \"NN' 수직 AP  (=> NN' 수직 평면 PAM, N' 은 N 의 정사영)\")\n# ── A, M 은 평면 PAM 위에 있으므로 정사영에서 자기 자신\nassert_on_plane(A, [P, A, M], \"A 는 평면 PAM 위 (정사영이 자기 자신)\")\nassert_on_plane(M, [P, A, M], \"M 은 평면 PAM 위 (정사영이 자기 자신)\")\n\n# ── 정사영 삼각형 AMN' 의 넓이 = 5sqrt3/3\nassert_distance((area(A, M, Np), 0, 0), (5*s3/3, 0, 0), 0,\n                \"삼각형 AMN 의 평면 PAM 위로의 정사영 넓이 = (5/3)sqrt3\")\nassert_distance((area(A, M, N) * Rational(5, 9), 0, 0), (area(A, M, Np), 0, 0), 0,\n                \"정사영 넓이 = 원래 넓이 x cos theta\")\n",
-  "note": "구의 중심 A에서 xy평면에 내린 수선의 발 H가 단면원의 중심이고(직각삼각형 AHP: 8²=√39²+5²), z축에 내린 수선의 발 M이 현 BC의 중점입니다(직각삼각형 AMB: 8²=√10²+MB²). 두 직각삼각형이 이 문제의 전부입니다."
+  "gridSize": 30,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     2,
+     1,
+     0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 26,
+    "color": "#a1a1aa",
+    "opacity": 0.22
+   },
+   {
+    "type": "text3d",
+    "at": [
+     13.5,
+     11.5,
+     0.4
+    ],
+    "text": "$xy$평면",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "sphere",
+    "center": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "radius": 8,
+    "color": "#60a5fa",
+    "opacity": 0.15
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3,
+     1,
+     15.0
+    ],
+    "text": "구 $S$ (반지름 8)",
+    "color": "#93c5fd"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -9,
+     0,
+     0
+    ],
+    "to": [
+     13,
+     0,
+     0
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "text3d",
+    "at": [
+     13.8,
+     0,
+     0
+    ],
+    "text": "$x$",
+    "color": "#71717a"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     -9,
+     0
+    ],
+    "to": [
+     0,
+     11,
+     0
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     11.8,
+     0
+    ],
+    "text": "$y$",
+    "color": "#71717a"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     -5
+    ],
+    "to": [
+     0,
+     0,
+     -1.1034712299511353
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     13.593467226747933
+    ],
+    "to": [
+     0,
+     0,
+     17.5
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     0,
+     18.3
+    ],
+    "text": "$z$",
+    "color": "#71717a"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "3+5*cos(t)",
+    "y": "1+5*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#f59e0b",
+    "strokeWidth": 3
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3,
+     -6.6,
+     0.6
+    ],
+    "text": "넓이 $25\\pi$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "color": "#22c55e",
+    "label": "$7$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "to": [
+     3,
+     1,
+     0
+    ],
+    "color": "#a78bfa",
+    "dashed": true,
+    "label": "$\\sqrt{39}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     1,
+     0
+    ],
+    "to": [
+     8,
+     1,
+     0
+    ],
+    "color": "#f59e0b",
+    "label": "$5$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "to": [
+     8,
+     1,
+     0
+    ],
+    "color": "#3b82f6",
+    "label": "$8$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "to": [
+     0,
+     0,
+     6.244997998398398
+    ],
+    "color": "#a78bfa",
+    "dashed": true,
+    "label": "$\\sqrt{10}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "to": [
+     0,
+     0,
+     13.593467226747933
+    ],
+    "color": "#3b82f6",
+    "label": "$8$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     13.593467226747933
+    ],
+    "to": [
+     0,
+     0,
+     -1.1034712299511353
+    ],
+    "color": "#ef4444"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -2.0,
+     -4.2,
+     8.2
+    ],
+    "text": "$\\overline{BC}=?$",
+    "color": "#fca5a5"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "O",
+    "color": "#e4e4e7"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3,
+     1,
+     6.244997998398398
+    ],
+    "label": "A",
+    "color": "#3b82f6"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3,
+     1,
+     0
+    ],
+    "label": "H",
+    "color": "#f59e0b"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     8,
+     1,
+     0
+    ],
+    "label": "P",
+    "color": "#f59e0b"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     6.244997998398398
+    ],
+    "label": "M",
+    "color": "#a78bfa"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     13.593467226747933
+    ],
+    "label": "B",
+    "color": "#ef4444"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     -1.1034712299511353
+    ],
+    "label": "C",
+    "color": "#ef4444"
+   }
+  ]
+ },
+ "conditions": [
+  "OA = 7 (O는 원점, A는 구 S의 중심)",
+  "구 S의 반지름 = 8",
+  "점 A에서 xy평면까지의 거리 = √39",
+  "H는 A에서 xy평면에 내린 수선의 발 (AH ⟂ x축방향, AH ⟂ y축방향)",
+  "단면원의 중심은 H, 반지름은 5 (넓이 25π)",
+  "단면원 위의 점 P, P₂는 xy평면 위이면서 동시에 구 S 위",
+  "B, C는 z축 위의 점",
+  "B, C는 구 S 위의 점",
+  "M은 A에서 z축에 내린 수선의 발이자 선분 BC의 중점 (MB = MC = 3√6)",
+  "점 A에서 z축까지의 거리 = √10",
+  "AM ⟂ BC (z축)",
+  "BC = 6√6"
+ ],
+ "verify": "from sympy import acos\n\ns3 = sqrt(3)\n\n# ── 펼친 마름모 ABCD (평면 z=0). 접는 선 AM, AN, MN 을 지나는 삼각형 AMN 을 바닥으로 둔다.\nA = (0, 0, 0)\nB = (4, 0, 0)\nD = (2, 2*s3, 0)\nC = (6, 2*s3, 0)\nM = (5, s3, 0)          # 변 BC 의 중점\nN = (4, 2*s3, 0)        # 변 CD 의 중점\n\n# ── 접은 뒤 B, C, D 가 합쳐지는 점 P\nP = (Rational(10, 3), 10*s3/9, 4*sqrt(6)/9)\n\n# ── 마름모 조건\nassert_distance(A, B, 4, \"AB = 4\")\nassert_distance(B, C, 4, \"BC = 4\")\nassert_distance(C, D, 4, \"CD = 4\")\nassert_distance(D, A, 4, \"DA = 4\")\nassert_angle(A, B, D, pi/3, \"각 BAD = pi/3\")\n\n# ── M, N 은 중점\nassert_distance(M, tuple((Matrix(B) + Matrix(C))/2), 0, \"M 은 변 BC 의 중점\")\nassert_distance(N, tuple((Matrix(C) + Matrix(D))/2), 0, \"N 은 변 CD 의 중점\")\n\n# ── 접는 선 (접어도 길이 불변)\nassert_distance(A, M, 2*sqrt(7), \"AM = 2sqrt7 (접는 선)\")\nassert_distance(A, N, 2*sqrt(7), \"AN = 2sqrt7 (접는 선)\")\nassert_distance(M, N, 2, \"MN = 2 (접는 선)\")\n\n# ── 접었을 때 P 가 만족해야 하는 길이 (AB=AD -> PA, MB=MC -> PM, NC=ND -> PN)\nassert_distance(P, A, 4, \"PA = AB = AD = 4\")\nassert_distance(P, M, 2, \"PM = MB = MC = 2\")\nassert_distance(P, N, 2, \"PN = NC = ND = 2\")\n\n# ── P 는 평면 AMN 밖(위)에 있다 = 진짜 사면체\nassert_point_plane_distance(P, [A, M, N], 4*sqrt(6)/9, \"P 와 평면 AMN 의 거리 = 4sqrt6/9 > 0 (사면체)\")\n\n# ── 삼각형 AMN 의 넓이 = 3sqrt3\ndef area(p, q, r):\n    return (Matrix(q) - Matrix(p)).cross(Matrix(r) - Matrix(p)).norm() / 2\nassert_distance((area(A, M, N), 0, 0), (3*s3, 0, 0), 0, \"삼각형 AMN 의 넓이 = 3sqrt3\")\n\n# ── 평면 AMN 과 평면 PAM 이 이루는 각 theta, cos theta = 5/9\nn1 = (Matrix(M) - Matrix(A)).cross(Matrix(N) - Matrix(A))     # 평면 AMN 의 법선\nn2 = (Matrix(M) - Matrix(A)).cross(Matrix(P) - Matrix(A))     # 평면 PAM 의 법선\nassert_angle((0, 0, 0), tuple(n1), tuple(n2), acos(Rational(5, 9)),\n             \"평면 AMN 과 평면 PAM 이 이루는 각 theta, cos theta = 5/9\")\n\n# ── N 의 평면 PAM 위로의 정사영 N'\nNp = (Rational(40, 9), 34*s3/27, 10*sqrt(6)/27)\nassert_on_plane(Np, [P, A, M], \"N' 은 평면 PAM 위의 점\")\nassert_perpendicular(N, Np, A, M, \"NN' 수직 AM\")\nassert_perpendicular(N, Np, A, P, \"NN' 수직 AP  (=> NN' 수직 평면 PAM, N' 은 N 의 정사영)\")\n# ── A, M 은 평면 PAM 위에 있으므로 정사영에서 자기 자신\nassert_on_plane(A, [P, A, M], \"A 는 평면 PAM 위 (정사영이 자기 자신)\")\nassert_on_plane(M, [P, A, M], \"M 은 평면 PAM 위 (정사영이 자기 자신)\")\n\n# ── 정사영 삼각형 AMN' 의 넓이 = 5sqrt3/3\nassert_distance((area(A, M, Np), 0, 0), (5*s3/3, 0, 0), 0,\n                \"삼각형 AMN 의 평면 PAM 위로의 정사영 넓이 = (5/3)sqrt3\")\nassert_distance((area(A, M, N) * Rational(5, 9), 0, 0), (area(A, M, Np), 0, 0), 0,\n                \"정사영 넓이 = 원래 넓이 x cos theta\")\n",
+ "note": "구의 중심 A에서 xy평면에 내린 수선의 발 H가 단면원의 중심이고(직각삼각형 AHP: 8²=√39²+5²), z축에 내린 수선의 발 M이 현 BC의 중점입니다(직각삼각형 AMB: 8²=√10²+MB²). 두 직각삼각형이 이 문제의 전부입니다."
 }

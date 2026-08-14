@@ -1,302 +1,302 @@
 {
-  "spec": {
-    "title": "수직인 두 평면 α, β 와 직선 CD 가 평면 α 와 이루는 각 θ",
-    "cameraPosition": [
-      -8,
-      -15,
-      12
-    ],
-    "axes": false,
-    "shapes": [
-      {
-        "type": "plane",
-        "origin": [
-          4.4,
-          -2.6,
-          0.0
-        ],
-        "normal": [
-          0,
-          0,
-          1
-        ],
-        "size": 10,
-        "color": "#a1a1aa",
-        "opacity": 0.1
-      },
-      {
-        "type": "text3d",
-        "at": [
-          8.7,
-          -6.9,
-          0.15
-        ],
-        "text": "$\\alpha$",
-        "color": "#d4d4d8"
-      },
-      {
-        "type": "plane",
-        "origin": [
-          4.4,
-          0.0,
-          2.5
-        ],
-        "normal": [
-          0,
-          1,
-          0
-        ],
-        "size": 10,
-        "color": "#93c5fd",
-        "opacity": 0.1
-      },
-      {
-        "type": "text3d",
-        "at": [
-          1.2,
-          0.0,
-          6.9
-        ],
-        "text": "$\\beta$",
-        "color": "#bfdbfe"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -1.6,
-          0.0,
-          0.0
-        ],
-        "to": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          8.94427190999916,
-          0.0,
-          0.0
-        ],
-        "to": [
-          10.6,
-          0.0,
-          0.0
-        ],
-        "color": "#71717a",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          8.94427190999916,
-          0.0,
-          0.0
-        ],
-        "color": "#e4e4e7"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          8.94427190999916,
-          -6.0,
-          0.0
-        ],
-        "color": "#34d399",
-        "label": "$2\\sqrt{29}$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          8.94427190999916,
-          0.0,
-          0.0
-        ],
-        "to": [
-          8.94427190999916,
-          -6.0,
-          0.0
-        ],
-        "color": "#34d399",
-        "label": "$6$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          4.47213595499958,
-          0.0,
-          4.0
-        ],
-        "color": "#60a5fa",
-        "label": "$6$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          8.94427190999916,
-          0.0,
-          0.0
-        ],
-        "to": [
-          4.47213595499958,
-          0.0,
-          4.0
-        ],
-        "color": "#60a5fa",
-        "label": "$6$"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          8.94427190999916,
-          -6.0,
-          0.0
-        ],
-        "to": [
-          4.47213595499958,
-          0.0,
-          4.0
-        ],
-        "color": "#ef4444"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4.47213595499958,
-          0.0,
-          4.0
-        ],
-        "to": [
-          4.47213595499958,
-          0.0,
-          0.0
-        ],
-        "color": "#a78bfa",
-        "dashed": true
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          8.94427190999916,
-          -6.0,
-          0.0
-        ],
-        "to": [
-          4.47213595499958,
-          0.0,
-          0.0
-        ],
-        "color": "#a78bfa",
-        "dashed": true
-      },
-      {
-        "type": "text3d",
-        "at": [
-          10.5,
-          -1.3,
-          0.9
-        ],
-        "text": "$\\angle ABC=\\frac{\\pi}{2}$",
-        "color": "#a1a1aa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          7.9,
-          -4.6,
-          0.75
-        ],
-        "text": "$\\theta$",
-        "color": "#fca5a5"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "label": "A",
-        "color": "#e4e4e7"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          8.94427190999916,
-          0.0,
-          0.0
-        ],
-        "label": "B",
-        "color": "#e4e4e7"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          8.94427190999916,
-          -6.0,
-          0.0
-        ],
-        "label": "C",
-        "color": "#34d399"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          4.47213595499958,
-          0.0,
-          4.0
-        ],
-        "label": "D",
-        "color": "#60a5fa"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          4.47213595499958,
-          0.0,
-          0.0
-        ],
-        "label": "M",
-        "color": "#a78bfa"
-      }
-    ]
-  },
-  "conditions": [
-    "두 평면 α, β 는 서로 수직",
-    "A, B 는 두 평면 α, β 의 교선 위의 점",
-    "C 는 평면 α 위의 점",
-    "D 는 평면 β 위의 점",
-    "AC = 2√29",
-    "BC = 6",
-    "AD = 6",
-    "BD = 6",
-    "∠ABC = π/2",
-    "D 와 평면 α 사이의 거리 = 4 (D 는 평면 α 밖의 점)",
-    "M 은 선분 AB 의 중점이고 평면 α 위의 점",
-    "DM ⟂ AB, DM ⟂ BC — 즉 DM ⟂ 평면 α 이므로 M 은 D 의 평면 α 위로의 정사영",
-    "CD = 6√2",
-    "CM = 2√14 (선분 CD 의 평면 α 위로의 정사영)",
-    "∠DCM = θ 이고 cos θ = √7/3"
+ "spec": {
+  "title": "수직인 두 평면 α, β 와 직선 CD 가 평면 α 와 이루는 각 θ",
+  "cameraPosition": [
+   -8,
+   -15,
+   12
   ],
-  "verify": "from sympy import acos\n\ns5 = sqrt(5)\n\n# ── 교선을 x축, 평면 alpha 를 z=0, 평면 beta 를 y=0 으로 두고 좌표를 잡는다.\nalpha = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]   # 평면 alpha (z = 0)\nbeta  = [(0, 0, 0), (1, 0, 0), (0, 0, 1)]   # 평면 beta  (y = 0)\n\nA = (0, 0, 0)\nB = (4*s5, 0, 0)\nC = (4*s5, -6, 0)\nD = (2*s5, 0, 4)\nM = (2*s5, 0, 0)      # D 에서 평면 alpha 에 내린 수선의 발 (= AB 의 중점)\n\n# ── 두 평면\nassert_planes_perpendicular(alpha, beta, \"두 평면 alpha, beta 는 서로 수직\")\n\n# ── A, B 는 교선 위 (두 평면 모두 위)\nassert_on_plane(A, alpha, \"A 는 평면 alpha 위\")\nassert_on_plane(A, beta,  \"A 는 평면 beta 위 (=> A 는 교선 위)\")\nassert_on_plane(B, alpha, \"B 는 평면 alpha 위\")\nassert_on_plane(B, beta,  \"B 는 평면 beta 위 (=> B 는 교선 위)\")\n\n# ── C 는 alpha 위, D 는 beta 위\nassert_on_plane(C, alpha, \"C 는 평면 alpha 위\")\nassert_on_plane(D, beta,  \"D 는 평면 beta 위\")\n\n# ── 길이 조건\nassert_distance(A, C, 2*sqrt(29), \"AC = 2sqrt(29)\")\nassert_distance(B, C, 6, \"BC = 6\")\nassert_distance(A, D, 6, \"AD = 6\")\nassert_distance(B, D, 6, \"BD = 6\")\n\n# ── 각 조건\nassert_angle(B, A, C, pi/2, \"각 ABC = pi/2\")\n\n# ── D 는 평면 alpha 밖 (진짜 입체)\nassert_point_plane_distance(D, alpha, 4, \"D 와 평면 alpha 의 거리 = 4\")\n\n# ── M 은 AB 의 중점이자 D 의 alpha 위 정사영\nassert_distance(M, tuple((Matrix(A) + Matrix(B))/2), 0, \"M 은 AB 의 중점\")\nassert_on_plane(M, alpha, \"M 은 평면 alpha 위\")\nassert_perpendicular(D, M, A, B, \"DM 수직 AB\")\nassert_perpendicular(D, M, B, C, \"DM 수직 BC  (=> DM 수직 평면 alpha, M 은 D 의 정사영)\")\n\n# ── 직선 CD 와 평면 alpha 가 이루는 예각 theta\nassert_distance(C, D, 6*sqrt(2), \"CD = 6sqrt(2)\")\nassert_distance(C, M, 2*sqrt(14), \"CM = 2sqrt(14) (CD 의 alpha 위 정사영)\")\nassert_angle(C, D, M, acos(sqrt(7)/3), \"각 DCM = theta, cos(theta) = sqrt(7)/3\")\n",
-  "note": "D 에서 평면 α 에 내린 수선의 발 M 은 AD=BD 때문에 교선 AB 의 중점입니다. 그러면 θ 는 직각삼각형 DMC 의 ∠DCM 이고, cos θ = CM/CD 로 바로 구해집니다."
+  "axes": false,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     4.4,
+     -2.6,
+     0.0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 10,
+    "color": "#a1a1aa",
+    "opacity": 0.22
+   },
+   {
+    "type": "text3d",
+    "at": [
+     8.7,
+     -6.9,
+     0.15
+    ],
+    "text": "$\\alpha$",
+    "color": "#d4d4d8"
+   },
+   {
+    "type": "plane",
+    "origin": [
+     4.4,
+     0.0,
+     2.5
+    ],
+    "normal": [
+     0,
+     1,
+     0
+    ],
+    "size": 10,
+    "color": "#93c5fd",
+    "opacity": 0.22
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.2,
+     0.0,
+     6.9
+    ],
+    "text": "$\\beta$",
+    "color": "#bfdbfe"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.6,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.94427190999916,
+     0.0,
+     0.0
+    ],
+    "to": [
+     10.6,
+     0.0,
+     0.0
+    ],
+    "color": "#71717a",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     8.94427190999916,
+     0.0,
+     0.0
+    ],
+    "color": "#e4e4e7"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     8.94427190999916,
+     -6.0,
+     0.0
+    ],
+    "color": "#34d399",
+    "label": "$2\\sqrt{29}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.94427190999916,
+     0.0,
+     0.0
+    ],
+    "to": [
+     8.94427190999916,
+     -6.0,
+     0.0
+    ],
+    "color": "#34d399",
+    "label": "$6$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     4.47213595499958,
+     0.0,
+     4.0
+    ],
+    "color": "#60a5fa",
+    "label": "$6$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.94427190999916,
+     0.0,
+     0.0
+    ],
+    "to": [
+     4.47213595499958,
+     0.0,
+     4.0
+    ],
+    "color": "#60a5fa",
+    "label": "$6$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.94427190999916,
+     -6.0,
+     0.0
+    ],
+    "to": [
+     4.47213595499958,
+     0.0,
+     4.0
+    ],
+    "color": "#ef4444"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4.47213595499958,
+     0.0,
+     4.0
+    ],
+    "to": [
+     4.47213595499958,
+     0.0,
+     0.0
+    ],
+    "color": "#a78bfa",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.94427190999916,
+     -6.0,
+     0.0
+    ],
+    "to": [
+     4.47213595499958,
+     0.0,
+     0.0
+    ],
+    "color": "#a78bfa",
+    "dashed": true
+   },
+   {
+    "type": "text3d",
+    "at": [
+     10.5,
+     -1.3,
+     0.9
+    ],
+    "text": "$\\angle ABC=\\frac{\\pi}{2}$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     7.9,
+     -4.6,
+     0.75
+    ],
+    "text": "$\\theta$",
+    "color": "#fca5a5"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "A",
+    "color": "#e4e4e7"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     8.94427190999916,
+     0.0,
+     0.0
+    ],
+    "label": "B",
+    "color": "#e4e4e7"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     8.94427190999916,
+     -6.0,
+     0.0
+    ],
+    "label": "C",
+    "color": "#34d399"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4.47213595499958,
+     0.0,
+     4.0
+    ],
+    "label": "D",
+    "color": "#60a5fa"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4.47213595499958,
+     0.0,
+     0.0
+    ],
+    "label": "M",
+    "color": "#a78bfa"
+   }
+  ]
+ },
+ "conditions": [
+  "두 평면 α, β 는 서로 수직",
+  "A, B 는 두 평면 α, β 의 교선 위의 점",
+  "C 는 평면 α 위의 점",
+  "D 는 평면 β 위의 점",
+  "AC = 2√29",
+  "BC = 6",
+  "AD = 6",
+  "BD = 6",
+  "∠ABC = π/2",
+  "D 와 평면 α 사이의 거리 = 4 (D 는 평면 α 밖의 점)",
+  "M 은 선분 AB 의 중점이고 평면 α 위의 점",
+  "DM ⟂ AB, DM ⟂ BC — 즉 DM ⟂ 평면 α 이므로 M 은 D 의 평면 α 위로의 정사영",
+  "CD = 6√2",
+  "CM = 2√14 (선분 CD 의 평면 α 위로의 정사영)",
+  "∠DCM = θ 이고 cos θ = √7/3"
+ ],
+ "verify": "from sympy import acos\n\ns5 = sqrt(5)\n\n# ── 교선을 x축, 평면 alpha 를 z=0, 평면 beta 를 y=0 으로 두고 좌표를 잡는다.\nalpha = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]   # 평면 alpha (z = 0)\nbeta  = [(0, 0, 0), (1, 0, 0), (0, 0, 1)]   # 평면 beta  (y = 0)\n\nA = (0, 0, 0)\nB = (4*s5, 0, 0)\nC = (4*s5, -6, 0)\nD = (2*s5, 0, 4)\nM = (2*s5, 0, 0)      # D 에서 평면 alpha 에 내린 수선의 발 (= AB 의 중점)\n\n# ── 두 평면\nassert_planes_perpendicular(alpha, beta, \"두 평면 alpha, beta 는 서로 수직\")\n\n# ── A, B 는 교선 위 (두 평면 모두 위)\nassert_on_plane(A, alpha, \"A 는 평면 alpha 위\")\nassert_on_plane(A, beta,  \"A 는 평면 beta 위 (=> A 는 교선 위)\")\nassert_on_plane(B, alpha, \"B 는 평면 alpha 위\")\nassert_on_plane(B, beta,  \"B 는 평면 beta 위 (=> B 는 교선 위)\")\n\n# ── C 는 alpha 위, D 는 beta 위\nassert_on_plane(C, alpha, \"C 는 평면 alpha 위\")\nassert_on_plane(D, beta,  \"D 는 평면 beta 위\")\n\n# ── 길이 조건\nassert_distance(A, C, 2*sqrt(29), \"AC = 2sqrt(29)\")\nassert_distance(B, C, 6, \"BC = 6\")\nassert_distance(A, D, 6, \"AD = 6\")\nassert_distance(B, D, 6, \"BD = 6\")\n\n# ── 각 조건\nassert_angle(B, A, C, pi/2, \"각 ABC = pi/2\")\n\n# ── D 는 평면 alpha 밖 (진짜 입체)\nassert_point_plane_distance(D, alpha, 4, \"D 와 평면 alpha 의 거리 = 4\")\n\n# ── M 은 AB 의 중점이자 D 의 alpha 위 정사영\nassert_distance(M, tuple((Matrix(A) + Matrix(B))/2), 0, \"M 은 AB 의 중점\")\nassert_on_plane(M, alpha, \"M 은 평면 alpha 위\")\nassert_perpendicular(D, M, A, B, \"DM 수직 AB\")\nassert_perpendicular(D, M, B, C, \"DM 수직 BC  (=> DM 수직 평면 alpha, M 은 D 의 정사영)\")\n\n# ── 직선 CD 와 평면 alpha 가 이루는 예각 theta\nassert_distance(C, D, 6*sqrt(2), \"CD = 6sqrt(2)\")\nassert_distance(C, M, 2*sqrt(14), \"CM = 2sqrt(14) (CD 의 alpha 위 정사영)\")\nassert_angle(C, D, M, acos(sqrt(7)/3), \"각 DCM = theta, cos(theta) = sqrt(7)/3\")\n",
+ "note": "D 에서 평면 α 에 내린 수선의 발 M 은 AD=BD 때문에 교선 AB 의 중점입니다. 그러면 θ 는 직각삼각형 DMC 의 ∠DCM 이고, cos θ = CM/CD 로 바로 구해집니다."
 }

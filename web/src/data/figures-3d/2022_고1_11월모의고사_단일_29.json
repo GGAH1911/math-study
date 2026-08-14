@@ -1,0 +1,232 @@
+{
+ "spec": {
+  "title": "2022 고1 11월 29 — 정사각뿔 O-ABCD 와 O-EFGH, 사다리꼴 ABFE",
+  "cameraPosition": [
+   2.4,
+   -5.2,
+   2.9
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -1.600722,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      -1.600722,
+      0.0
+     ],
+     [
+      1.600722,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.600722,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.600722
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      1,
+      4
+     ],
+     [
+      1,
+      2,
+      4
+     ],
+     [
+      2,
+      3,
+      4
+     ],
+     [
+      3,
+      0,
+      4
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "O"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -0.520598,
+      0.0,
+      1.080123
+     ],
+     [
+      0.0,
+      -0.520598,
+      1.080123
+     ],
+     [
+      0.520598,
+      0.0,
+      1.080123
+     ],
+     [
+      0.0,
+      0.520598,
+      1.080123
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "E",
+     "F",
+     "G",
+     "H"
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.3,
+    "stroke": "#38bdf8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -1.600722,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      -1.600722,
+      0.0
+     ],
+     [
+      0.0,
+      -0.520598,
+      1.080123
+     ],
+     [
+      -0.520598,
+      0.0,
+      1.080123
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.35,
+    "stroke": "#f472b6",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     1.600722
+    ],
+    "to": [
+     -0.520598,
+     0.0,
+     1.080123
+    ],
+    "color": "#fbbf24",
+    "label": "$\\overline{OE}=b$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.600722,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     -1.600722,
+     0.0
+    ],
+    "color": "#34d399",
+    "label": "$\\overline{AB}=a$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.600722,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     -0.520598,
+     1.080123
+    ],
+    "color": "#f472b6",
+    "label": "$\\overline{AF}=2$"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.53033,
+     -0.53033,
+     0.540062
+    ],
+    "text": "S",
+    "color": "#f472b6"
+   }
+  ]
+ },
+ "conditions": [
+  "정사각뿔 O-ABCD 의 모서리 OA=OB=OC=OD=a",
+  "밑면 정사각형 ABCD 의 변 AB=BC=CD=DA=a",
+  "A, B, C, D 가 한 평면 위 (밑면)",
+  "밑면의 대각선 AC 와 BD 가 서로 수직 (정사각형)",
+  "E, F, G, H 는 각각 직선 OA, OB, OC, OD 위의 점",
+  "OE=OF=OG=OH=b",
+  "EF=FG=GH=HE=b (정사각뿔 O-EFGH 의 밑면도 정사각형)",
+  "두 정사각뿔 O-ABCD, O-EFGH 의 부피의 합 = 2√2",
+  "선분 AF 의 길이 = 2",
+  "A, B, F, E 가 한 평면 위 (사각형 ABFE 는 평면도형)",
+  "사각형 ABFE 의 넓이 S 에 대해 32 × S² = 126"
+ ],
+ "verify": "# 2022 고1 11월 29 — 정사각뿔 O-ABCD (모든 모서리 a), OA·OB·OC·OD 위 E,F,G,H (OE=b)\n# a+b=3, ab=5/3  (a^3+b^3=12, a^2-ab+b^2=4)\naa = Rational(3,2) + sqrt(21)/6\nbb = Rational(3,2) - sqrt(21)/6\nprint(\"a =\", float(aa), \" b =\", float(bb))\n\nd = aa/sqrt(2)            # 밑면 정사각형의 반대각선 = 뿔의 높이\nA = (-d, 0, 0)\nB = (0, -d, 0)\nC = (d, 0, 0)\nD = (0, d, 0)\nO = (0, 0, d)\n\nr = bb/aa                 # OE:OA = b:a\ndef on_ray(P):\n    return tuple(O[i] + r*(P[i]-O[i]) for i in range(3))\nE = on_ray(A); F = on_ray(B); G = on_ray(C); H = on_ray(D)\n\n# ① 정사각뿔 O-ABCD 의 모든 모서리 = a\nfor P, nm in ((A,'A'), (B,'B'), (C,'C'), (D,'D')):\n    assert_distance3d(O, P, aa, f\"O{nm} = a\")\nfor (P,Q,nm) in ((A,B,'AB'), (B,C,'BC'), (C,D,'CD'), (D,A,'DA')):\n    assert_distance3d(P, Q, aa, f\"{nm} = a\")\n\n# ② 밑면 ABCD 가 한 평면 위의 정사각형(대각선 수직·이등분)\nassert_coplanar([A, B, C, D], \"A,B,C,D 는 한 평면 위\")\nassert_perpendicular(A, C, B, D, \"밑면 대각선 AC ⟂ BD (정사각형)\")\n\n# ③ E,F,G,H 는 각각 선분 OA,OB,OC,OD 위이고 OE=OF=OG=OH=b\nfor (P, Q, nm) in ((E,A,'E,OA'), (F,B,'F,OB'), (G,C,'G,OC'), (H,D,'H,OD')):\n    assert_on_line(P, O, Q, f\"{nm[0]} 는 직선 O{nm[-1]} 위\")\n    assert_distance3d(O, P, bb, f\"O{nm[0]} = b\")\nfor (P,Q,nm) in ((E,F,'EF'), (F,G,'FG'), (G,H,'GH'), (H,E,'HE')):\n    assert_distance3d(P, Q, bb, f\"{nm} = b (정사각뿔 O-EFGH 의 모서리)\")\n\n# ④ 두 정사각뿔의 부피의 합 = 2√2\nvol_big = aa**2 * d / 3                       # 밑넓이 a^2 · 높이 d\nvol_small = bb**2 * (d*r) / 3                 # 밑넓이 b^2 · 높이 = O 에서 평면 EFGH 까지\ntag = \"두 정사각뿔 부피의 합 = 2√2\"\nprint(f\"[VERIFY OK] {tag}\" if _close(vol_big + vol_small, 2*sqrt(2))\n      else f\"[VERIFY FAIL] {tag}: {float(vol_big+vol_small)} != {float(2*sqrt(2))}\")\n\n# ⑤ 선분 AF 의 길이 = 2\nassert_distance3d(A, F, 2, \"AF = 2\")\n\n# ⑥ 사각형 ABFE 는 한 평면(=평면 OAB) 위의 사다리꼴, 32S^2 = 126\nassert_coplanar([A, B, F, E], \"A,B,F,E 는 한 평면 위 (사각형 ABFE)\")\nu = Matrix(list(B)) - Matrix(list(A))\nv = Matrix(list(F)) - Matrix(list(A))\nw = Matrix(list(E)) - Matrix(list(A))\nSarea = simplify(u.cross(v).norm()/2 + v.cross(w).norm()/2)\ntag = \"32 x S^2 = 126\"\nprint(f\"[VERIFY OK] {tag}\" if _close(32*Sarea**2, 126)\n      else f\"[VERIFY FAIL] {tag}: {float(32*Sarea**2)} != 126\")\nprint(\"S =\", float(Sarea))\nprint(\"좌표:\", [ [float(t) for t in P] for P in (A,B,C,D,O,E,F,G,H) ])\n",
+ "note": "모든 모서리가 a 인 정사각뿔 O-ABCD 안에, 옆모서리를 O 에서 b 만큼 잘라 만든 작은 정사각뿔 O-EFGH 가 들어 있습니다. 분홍색 사다리꼴 ABFE 가 넓이 S 를 구할 사각형이고, 정삼각형 OAB 안에 통째로 들어 있습니다 (AB=a, EF=b)."
+}

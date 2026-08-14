@@ -1,279 +1,280 @@
 {
-  "spec": {
-    "title": "2022 예시 기하 25 — 수직인 두 평면 α, β 와 교선 l 에 평행한 두 직선 m, n",
-    "cameraPosition": [
-      7,
-      -16,
-      7
-    ],
-    "axes": false,
-    "shapes": [
-      {
-        "type": "plane",
-        "origin": [
-          4,
-          0,
-          1
-        ],
-        "normal": [
-          0,
-          1,
-          0
-        ],
-        "size": 10,
-        "color": "#60a5fa",
-        "opacity": 0.1
-      },
-      {
-        "type": "plane",
-        "origin": [
-          4,
-          -2,
-          0
-        ],
-        "normal": [
-          0,
-          0,
-          1
-        ],
-        "size": 10,
-        "color": "#34d399",
-        "opacity": 0.1
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -1.2,
-          0,
-          0
-        ],
-        "to": [
-          9.2,
-          0,
-          0
-        ],
-        "color": "#94a3b8"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -1.2,
-          0,
-          3
-        ],
-        "to": [
-          0,
-          0,
-          3
-        ],
-        "color": "#94a3b8"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          0,
-          3
-        ],
-        "to": [
-          9.2,
-          0,
-          3
-        ],
-        "color": "#94a3b8"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -1.2,
-          -4,
-          0
-        ],
-        "to": [
-          0,
-          -4,
-          0
-        ],
-        "color": "#94a3b8"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          8,
-          -4,
-          0
-        ],
-        "to": [
-          9.2,
-          -4,
-          0
-        ],
-        "color": "#94a3b8"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          3
-        ],
-        "to": [
-          4,
-          0,
-          3
-        ],
-        "color": "#f472b6",
-        "label": "4"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          3
-        ],
-        "to": [
-          0,
-          0,
-          0
-        ],
-        "color": "#f472b6",
-        "label": "3"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          0,
-          -4,
-          0
-        ],
-        "color": "#f472b6",
-        "label": "4"
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            4,
-            0,
-            3
-          ],
-          [
-            0,
-            -4,
-            0
-          ],
-          [
-            8,
-            -4,
-            0
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2
-          ]
-        ],
-        "labels": [
-          "A",
-          "B",
-          "C"
-        ],
-        "fill": "#fbbf24",
-        "fillOpacity": 0.3,
-        "stroke": "#fbbf24"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          3
-        ],
-        "label": "P",
-        "color": "#f472b6"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          0,
-          0,
-          0
-        ],
-        "label": "Q",
-        "color": "#f472b6"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          9.9,
-          0,
-          0
-        ],
-        "text": "l",
-        "color": "#94a3b8"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          9.9,
-          0,
-          3
-        ],
-        "text": "m",
-        "color": "#94a3b8"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          9.9,
-          -4,
-          0
-        ],
-        "text": "n",
-        "color": "#94a3b8"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          8.6,
-          0,
-          5.6
-        ],
-        "text": "α",
-        "color": "#60a5fa"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          8.4,
-          -6.6,
-          0
-        ],
-        "text": "β",
-        "color": "#34d399"
-      }
-    ]
-  },
-  "conditions": [
-    "평면 α ⟂ 평면 β",
-    "직선 l 은 두 평면 α, β 의 교선",
-    "직선 m 은 평면 α 위에 있고 l 과 평행 (A, P 에서 l 까지 거리 = 3)",
-    "직선 n 은 평면 β 위에 있고 l 과 평행 (B, C 에서 l 까지 거리 = 4)",
-    "A, P 는 직선 m 위의 점이고 AP = 4",
-    "Q 는 P 에서 l 에 내린 수선의 발 (Q 는 l 위, PQ ⟂ l, PQ = 3)",
-    "B 는 Q 에서 n 에 내린 수선의 발 (B 는 n 위, QB ⟂ n, QB = 4)",
-    "C 는 직선 n 위의 점이고 C ≠ B",
-    "AB = AC = √41",
-    "BC = 8, A 에서 직선 BC 까지 거리 = 5, 삼각형 ABC 의 넓이 = 20"
+ "spec": {
+  "title": "2022 예시 기하 25 — 수직인 두 평면 α, β 와 교선 l 에 평행한 두 직선 m, n",
+  "cameraPosition": [
+   7,
+   -16,
+   7
   ],
-  "verify": "# 좌표계: 교선 l = x축, 평면 alpha = xz평면(y=0, 수직), 평면 beta = xy평면(z=0, 수평)\nQ = (0, 0, 0)\nP = (0, 0, 3)\nA = (4, 0, 3)\nB = (0, -4, 0)\nC = (8, -4, 0)\n\nL1, L2 = (-5, 0, 0), (12, 0, 0)     # 직선 l\nM1, M2 = (-5, 0, 3), (12, 0, 3)     # 직선 m (평면 alpha 위)\nN1, N2 = (-5, -4, 0), (12, -4, 0)   # 직선 n (평면 beta 위)\n\nALPHA = [(0, 0, 0), (1, 0, 0), (0, 0, 1)]\nBETA  = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]\n\n# ① 두 평면 alpha, beta 는 서로 수직\nassert_planes_perpendicular(ALPHA, BETA, \"평면 alpha ⟂ 평면 beta\")\n\n# ② l 은 두 평면의 교선\nassert_on_plane(L1, ALPHA, \"l 위의 점 L1 이 평면 alpha 위\")\nassert_on_plane(L2, ALPHA, \"l 위의 점 L2 가 평면 alpha 위\")\nassert_on_plane(L1, BETA, \"l 위의 점 L1 이 평면 beta 위\")\nassert_on_plane(L2, BETA, \"l 위의 점 L2 가 평면 beta 위\")\n\n# ③ 직선 m 은 평면 alpha 위에 있고 l 과 평행 (A, P 가 l 에서 같은 거리 3)\nassert_on_plane(A, ALPHA, \"A 가 평면 alpha 위\")\nassert_on_plane(P, ALPHA, \"P 가 평면 alpha 위\")\nassert_on_line(A, M1, M2, \"A 가 직선 m 위\")\nassert_on_line(P, M1, M2, \"P 가 직선 m 위\")\nassert_point_line_distance(A, L1, L2, 3, \"m∥l: A 와 l 의 거리 = 3\")\nassert_point_line_distance(P, L1, L2, 3, \"m∥l: P 와 l 의 거리 = 3\")\n\n# ④ 직선 n 은 평면 beta 위에 있고 l 과 평행 (B, C 가 l 에서 같은 거리 4)\nassert_on_plane(B, BETA, \"B 가 평면 beta 위\")\nassert_on_plane(C, BETA, \"C 가 평면 beta 위\")\nassert_on_line(B, N1, N2, \"B 가 직선 n 위\")\nassert_on_line(C, N1, N2, \"C 가 직선 n 위\")\nassert_point_line_distance(B, L1, L2, 4, \"n∥l: B 와 l 의 거리 = 4\")\nassert_point_line_distance(C, L1, L2, 4, \"n∥l: C 와 l 의 거리 = 4\")\n\n# ⑤ AP = 4\nassert_distance3d(A, P, 4, \"AP = 4\")\n\n# ⑥ Q 는 P 에서 l 에 내린 수선의 발, PQ = 3\nassert_on_line(Q, L1, L2, \"Q 가 직선 l 위\")\nassert_perpendicular(P, Q, L1, L2, \"PQ ⟂ l (Q 는 P 의 수선의 발)\")\nassert_distance3d(P, Q, 3, \"PQ = 3\")\n\n# ⑦ B 는 Q 에서 n 에 내린 수선의 발, QB = 4\nassert_perpendicular(Q, B, N1, N2, \"QB ⟂ n (B 는 Q 의 수선의 발)\")\nassert_distance3d(Q, B, 4, \"QB = 4\")\n\n# ⑧ C 는 B 가 아닌 n 위의 점이고 AB = AC\nif _close(_dist(B, C), 0):\n    print(\"[VERIFY FAIL] C != B\")\nelse:\n    print(\"[VERIFY OK] C != B (BC = %s)\" % float(_dist(B, C)))\nassert_distance3d(A, B, sqrt(41), \"AB = sqrt(41)\")\nassert_distance3d(A, C, sqrt(41), \"AC = sqrt(41) (즉 AB = AC)\")\n\n# ⑨ 삼각형 ABC 의 넓이 = 20 (밑변 BC = 8, A 에서 직선 n 까지 높이 5)\nassert_distance3d(B, C, 8, \"BC = 8\")\nassert_point_line_distance(A, B, C, 5, \"A 에서 직선 BC 까지 거리 = 5\")\narea = (Matrix(B) - Matrix(A)).cross(Matrix(C) - Matrix(A)).norm() / 2\nif _close(area, 20):\n    print(\"[VERIFY OK] 삼각형 ABC 의 넓이 = 20\")\nelse:\n    print(\"[VERIFY FAIL] 넓이 = %s != 20\" % area)\n",
-  "note": "교선 l 을 x축, 평면 α 를 xz평면, 평면 β 를 xy평면으로 잡으면 Q(0,0,0), P(0,0,3), A(4,0,3), B(0,−4,0) 이고 AB=AC 를 만족하는 n 위의 다른 점은 C(8,−4,0) — 밑변 BC=8, 높이 5 이므로 넓이는 20 이다."
+  "axes": false,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     4,
+     0,
+     1
+    ],
+    "normal": [
+     0,
+     1,
+     0
+    ],
+    "size": 10,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "plane",
+    "origin": [
+     4,
+     -2,
+     0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 10,
+    "color": "#34d399",
+    "opacity": 0.22
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.2,
+     0,
+     0
+    ],
+    "to": [
+     9.2,
+     0,
+     0
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.2,
+     0,
+     3
+    ],
+    "to": [
+     0,
+     0,
+     3
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     0,
+     3
+    ],
+    "to": [
+     9.2,
+     0,
+     3
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.2,
+     -4,
+     0
+    ],
+    "to": [
+     0,
+     -4,
+     0
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8,
+     -4,
+     0
+    ],
+    "to": [
+     9.2,
+     -4,
+     0
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     3
+    ],
+    "to": [
+     4,
+     0,
+     3
+    ],
+    "color": "#f472b6",
+    "label": "4"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     3
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#f472b6",
+    "label": "3"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     0,
+     -4,
+     0
+    ],
+    "color": "#f472b6",
+    "label": "4"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      4,
+      0,
+      3
+     ],
+     [
+      0,
+      -4,
+      0
+     ],
+     [
+      8,
+      -4,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C"
+    ],
+    "fill": "#fbbf24",
+    "fillOpacity": 0.3,
+    "stroke": "#fbbf24",
+    "strokeWidth": 2
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     3
+    ],
+    "label": "P",
+    "color": "#f472b6"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "Q",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     9.9,
+     0,
+     0
+    ],
+    "text": "l",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     9.9,
+     0,
+     3
+    ],
+    "text": "m",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     9.9,
+     -4,
+     0
+    ],
+    "text": "n",
+    "color": "#94a3b8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     8.6,
+     0,
+     5.6
+    ],
+    "text": "α",
+    "color": "#60a5fa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     8.4,
+     -6.6,
+     0
+    ],
+    "text": "β",
+    "color": "#34d399"
+   }
+  ]
+ },
+ "conditions": [
+  "평면 α ⟂ 평면 β",
+  "직선 l 은 두 평면 α, β 의 교선",
+  "직선 m 은 평면 α 위에 있고 l 과 평행 (A, P 에서 l 까지 거리 = 3)",
+  "직선 n 은 평면 β 위에 있고 l 과 평행 (B, C 에서 l 까지 거리 = 4)",
+  "A, P 는 직선 m 위의 점이고 AP = 4",
+  "Q 는 P 에서 l 에 내린 수선의 발 (Q 는 l 위, PQ ⟂ l, PQ = 3)",
+  "B 는 Q 에서 n 에 내린 수선의 발 (B 는 n 위, QB ⟂ n, QB = 4)",
+  "C 는 직선 n 위의 점이고 C ≠ B",
+  "AB = AC = √41",
+  "BC = 8, A 에서 직선 BC 까지 거리 = 5, 삼각형 ABC 의 넓이 = 20"
+ ],
+ "verify": "# 좌표계: 교선 l = x축, 평면 alpha = xz평면(y=0, 수직), 평면 beta = xy평면(z=0, 수평)\nQ = (0, 0, 0)\nP = (0, 0, 3)\nA = (4, 0, 3)\nB = (0, -4, 0)\nC = (8, -4, 0)\n\nL1, L2 = (-5, 0, 0), (12, 0, 0)     # 직선 l\nM1, M2 = (-5, 0, 3), (12, 0, 3)     # 직선 m (평면 alpha 위)\nN1, N2 = (-5, -4, 0), (12, -4, 0)   # 직선 n (평면 beta 위)\n\nALPHA = [(0, 0, 0), (1, 0, 0), (0, 0, 1)]\nBETA  = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]\n\n# ① 두 평면 alpha, beta 는 서로 수직\nassert_planes_perpendicular(ALPHA, BETA, \"평면 alpha ⟂ 평면 beta\")\n\n# ② l 은 두 평면의 교선\nassert_on_plane(L1, ALPHA, \"l 위의 점 L1 이 평면 alpha 위\")\nassert_on_plane(L2, ALPHA, \"l 위의 점 L2 가 평면 alpha 위\")\nassert_on_plane(L1, BETA, \"l 위의 점 L1 이 평면 beta 위\")\nassert_on_plane(L2, BETA, \"l 위의 점 L2 가 평면 beta 위\")\n\n# ③ 직선 m 은 평면 alpha 위에 있고 l 과 평행 (A, P 가 l 에서 같은 거리 3)\nassert_on_plane(A, ALPHA, \"A 가 평면 alpha 위\")\nassert_on_plane(P, ALPHA, \"P 가 평면 alpha 위\")\nassert_on_line(A, M1, M2, \"A 가 직선 m 위\")\nassert_on_line(P, M1, M2, \"P 가 직선 m 위\")\nassert_point_line_distance(A, L1, L2, 3, \"m∥l: A 와 l 의 거리 = 3\")\nassert_point_line_distance(P, L1, L2, 3, \"m∥l: P 와 l 의 거리 = 3\")\n\n# ④ 직선 n 은 평면 beta 위에 있고 l 과 평행 (B, C 가 l 에서 같은 거리 4)\nassert_on_plane(B, BETA, \"B 가 평면 beta 위\")\nassert_on_plane(C, BETA, \"C 가 평면 beta 위\")\nassert_on_line(B, N1, N2, \"B 가 직선 n 위\")\nassert_on_line(C, N1, N2, \"C 가 직선 n 위\")\nassert_point_line_distance(B, L1, L2, 4, \"n∥l: B 와 l 의 거리 = 4\")\nassert_point_line_distance(C, L1, L2, 4, \"n∥l: C 와 l 의 거리 = 4\")\n\n# ⑤ AP = 4\nassert_distance3d(A, P, 4, \"AP = 4\")\n\n# ⑥ Q 는 P 에서 l 에 내린 수선의 발, PQ = 3\nassert_on_line(Q, L1, L2, \"Q 가 직선 l 위\")\nassert_perpendicular(P, Q, L1, L2, \"PQ ⟂ l (Q 는 P 의 수선의 발)\")\nassert_distance3d(P, Q, 3, \"PQ = 3\")\n\n# ⑦ B 는 Q 에서 n 에 내린 수선의 발, QB = 4\nassert_perpendicular(Q, B, N1, N2, \"QB ⟂ n (B 는 Q 의 수선의 발)\")\nassert_distance3d(Q, B, 4, \"QB = 4\")\n\n# ⑧ C 는 B 가 아닌 n 위의 점이고 AB = AC\nif _close(_dist(B, C), 0):\n    print(\"[VERIFY FAIL] C != B\")\nelse:\n    print(\"[VERIFY OK] C != B (BC = %s)\" % float(_dist(B, C)))\nassert_distance3d(A, B, sqrt(41), \"AB = sqrt(41)\")\nassert_distance3d(A, C, sqrt(41), \"AC = sqrt(41) (즉 AB = AC)\")\n\n# ⑨ 삼각형 ABC 의 넓이 = 20 (밑변 BC = 8, A 에서 직선 n 까지 높이 5)\nassert_distance3d(B, C, 8, \"BC = 8\")\nassert_point_line_distance(A, B, C, 5, \"A 에서 직선 BC 까지 거리 = 5\")\narea = (Matrix(B) - Matrix(A)).cross(Matrix(C) - Matrix(A)).norm() / 2\nif _close(area, 20):\n    print(\"[VERIFY OK] 삼각형 ABC 의 넓이 = 20\")\nelse:\n    print(\"[VERIFY FAIL] 넓이 = %s != 20\" % area)\n",
+ "note": "교선 l 을 x축, 평면 α 를 xz평면, 평면 β 를 xy평면으로 잡으면 Q(0,0,0), P(0,0,3), A(4,0,3), B(0,−4,0) 이고 AB=AC 를 만족하는 n 위의 다른 점은 C(8,−4,0) — 밑변 BC=8, 높이 5 이므로 넓이는 20 이다."
 }

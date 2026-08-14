@@ -1,265 +1,264 @@
 {
-  "spec": {
-    "title": "2023 고3 10월 기하 30 — 구 S 위의 사면체 ABCD 와 삼각형 ABC 의 평면 ABD 위로의 정사영",
-    "cameraPosition": [
-      -5,
-      -11.5,
-      6
-    ],
-    "axes": true,
-    "gridSize": 6,
-    "shapes": [
-      {
-        "type": "plane",
-        "origin": [
-          0,
-          0,
-          0
-        ],
-        "normal": [
-          0,
-          0,
-          1
-        ],
-        "size": 11,
-        "color": "#64748b",
-        "opacity": 0.1,
-        "label": "xy평면"
-      },
-      {
-        "type": "sphere",
-        "center": [
-          0,
-          0,
-          2.23606797749979
-        ],
-        "radius": 3,
-        "color": "#60a5fa",
-        "opacity": 0.12,
-        "label": "S"
-      },
-      {
-        "type": "parametricCurve3d",
-        "x": "2*cos(t)",
-        "y": "2*sin(t)",
-        "z": "0",
-        "tRange": [
-          0,
-          6.283185307179586
-        ],
-        "samples": 240,
-        "color": "#38bdf8",
-        "strokeWidth": 3,
-        "label": "원 C (구 S 와 xy평면의 교선, 반지름 2)"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          -0.2,
-          2.35,
-          0.18
-        ],
-        "text": "C(원)",
-        "color": "#38bdf8"
-      },
-      {
-        "type": "plane",
-        "origin": [
-          2,
-          0,
-          1.7
-        ],
-        "normal": [
-          1,
-          0,
-          0
-        ],
-        "size": 5.4,
-        "color": "#a78bfa",
-        "opacity": 0.08,
-        "label": "평면 BCD (직선 AB 에 수직)"
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            -2.0,
-            0.0,
-            0.0
-          ],
-          [
-            2.0,
-            0.0,
-            0.0
-          ],
-          [
-            2.0,
-            -1.9364916731037085,
-            3.3541019662496847
-          ],
-          [
-            2.0,
-            1.9364916731037085,
-            3.3541019662496847
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2
-          ],
-          [
-            0,
-            1,
-            3
-          ],
-          [
-            0,
-            2,
-            3
-          ],
-          [
-            1,
-            2,
-            3
-          ]
-        ],
-        "labels": [
-          "A",
-          "B",
-          "C",
-          "D"
-        ],
-        "fill": "#94a3b8",
-        "fillOpacity": 0.08,
-        "stroke": "#e2e8f0",
-        "strokeWidth": 2
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -2.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          2.0,
-          0.0,
-          0.0
-        ],
-        "color": "#fbbf24",
-        "label": "AB = 4 (원 C 의 지름)"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          2.0,
-          -1.9364916731037085,
-          3.3541019662496847
-        ],
-        "color": "#f472b6",
-        "label": "√15"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          2.0,
-          1.9364916731037085,
-          3.3541019662496847
-        ],
-        "color": "#f472b6",
-        "label": "√15"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.0,
-          -1.9364916731037085,
-          3.3541019662496847
-        ],
-        "to": [
-          2.0,
-          0.9682458365518543,
-          1.6770509831248424
-        ],
-        "color": "#f97316",
-        "dashed": true,
-        "label": "C 에서 평면 ABD 에 내린 수선"
-      },
-      {
-        "type": "point3d",
-        "at": [
-          2.0,
-          0.9682458365518543,
-          1.6770509831248424
-        ],
-        "label": "C'",
-        "color": "#f97316",
-        "size": 0.09
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          -2.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          2.0,
-          0.9682458365518543,
-          1.6770509831248424
-        ],
-        "color": "#f97316"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2.0,
-          0.0,
-          0.0
-        ],
-        "to": [
-          2.0,
-          0.9682458365518543,
-          1.6770509831248424
-        ],
-        "color": "#f97316"
-      },
-      {
-        "type": "text3d",
-        "at": [
-          0.15,
-          1.15,
-          1.05
-        ],
-        "text": "정사영 ABC'",
-        "color": "#f97316"
-      }
-    ]
-  },
-  "conditions": [
-    "구 S 와 xy평면의 교선은 x^2+y^2=4, 즉 중심이 원점이고 반지름이 2 인 원 C 이다",
-    "네 점 A, B, C, D 는 모두 구 S(중심 (0,0,√5), 반지름 3) 위에 있다",
-    "(가) A, B 는 원 C 위의 점이고 AB 의 중점이 원 C 의 중심이다 — 선분 AB 는 원 C 의 지름(AB = 4)",
-    "(나) AB ⟂ BC, AB ⟂ BD, AB ⟂ CD — 직선 AB 는 평면 BCD 에 수직이다",
-    "(다) BC = BD = √15",
-    "두 평면 ABC 와 ABD 가 이루는 각(이면각 C-AB-D)은 ∠CBD = 60°",
-    "삼각형 ABC 의 넓이는 2√15",
-    "C' 는 평면 ABD 위의 점이고 CC' ⟂ AB, CC' ⟂ AD — C' 는 C 의 평면 ABD 위로의 정사영",
-    "정사영 삼각형 ABC' 의 넓이 k = √15 이므로 k^2 = 15",
-    "k = (삼각형 ABC 의 넓이) × cos 60° — 정사영 넓이 공식과 일치"
+ "spec": {
+  "title": "2023 고3 10월 기하 30 — 구 S 위의 사면체 ABCD 와 삼각형 ABC 의 평면 ABD 위로의 정사영",
+  "cameraPosition": [
+   -5,
+   -11.5,
+   6
   ],
-  "verify": "r5 = sqrt(5)\nr15 = sqrt(15)\n\nO = (0, 0, r5)          # 구 S 의 중심\nR = 3                   # 구 S 의 반지름\nOc = (0, 0, 0)          # 원 C 의 중심 (xy평면)\nrc = 2                  # 원 C 의 반지름\n\nA = (-2, 0, 0)\nB = (2, 0, 0)\nC = (2, -r15/2, 3*r5/2)\nD = (2,  r15/2, 3*r5/2)\nCp = (2, r15/4, 3*r5/4)   # C 의 평면 ABD 위로의 정사영 C'\n\n# ── 구 S 와 xy평면의 교선이 원 C (중심 원점, 반지름 2)\nx, y = symbols('x y', real=True)\ncut = expand(x**2 + y**2 + (0 - r5)**2 - 9)\nassert_distance((simplify(cut - (x**2 + y**2 - 4)), 0, 0), (0, 0, 0), 0,\n                \"구 S 와 xy평면의 교선은 x^2+y^2=4, 즉 중심 O 반지름 2 인 원 C\")\n\n# ── 네 점 모두 구 S 위\nfor nm, P in [(\"A\", A), (\"B\", B), (\"C\", C), (\"D\", D)]:\n    assert_on_sphere(P, O, R, f\"{nm} 는 구 S 위의 점\")\n\n# ── (가) 선분 AB 는 원 C 의 지름\nassert_on_circle(A, Oc, rc, \"A 는 원 C 위\", normal=(0, 0, 1))\nassert_on_circle(B, Oc, rc, \"B 는 원 C 위\", normal=(0, 0, 1))\nassert_distance(A, B, 2*rc, \"AB = 4 = 원 C 의 지름 길이\")\nassert_distance(tuple((Matrix(A) + Matrix(B))/2), Oc, 0, \"AB 의 중점 = 원 C 의 중심 (선분 AB 는 지름)\")\n\n# ── (나) 직선 AB 는 평면 BCD 에 수직\nassert_perpendicular(A, B, B, C, \"AB 수직 BC\")\nassert_perpendicular(A, B, B, D, \"AB 수직 BD\")\nassert_perpendicular(A, B, C, D, \"AB 수직 CD (직선 AB 가 평면 BCD 에 수직)\")\n\n# ── (다) BC = BD = sqrt15\nassert_distance(B, C, r15, \"BC = sqrt15\")\nassert_distance(B, D, r15, \"BD = sqrt15\")\n\n# ── 이면각: 평면 ABC 와 평면 ABD 가 이루는 각 = 60도\nassert_angle(B, C, D, pi/3, \"각 CBD = pi/3 (AB 에 수직인 두 반직선이므로 이면각 C-AB-D = 60도)\")\n\n# ── 삼각형 ABC 의 넓이 = 2 sqrt15\nSABC = (Matrix(B) - Matrix(A)).cross(Matrix(C) - Matrix(A)).norm()/2\nassert_distance((simplify(SABC), 0, 0), (2*r15, 0, 0), 0, \"삼각형 ABC 의 넓이 = 2 sqrt15\")\n\n# ── C' 는 C 의 평면 ABD 위로의 정사영\nassert_on_plane(Cp, [A, B, D], \"C' 는 평면 ABD 위의 점\")\nassert_perpendicular(C, Cp, A, B, \"CC' 수직 AB\")\nassert_perpendicular(C, Cp, A, D, \"CC' 수직 AD (즉 CC' 는 평면 ABD 에 수직)\")\n\n# ── 정사영 삼각형 ABC' 의 넓이 k, k^2 = 15\nk = (Matrix(B) - Matrix(A)).cross(Matrix(Cp) - Matrix(A)).norm()/2\nassert_distance((simplify(k), 0, 0), (r15, 0, 0), 0, \"정사영 삼각형 ABC' 의 넓이 k = sqrt15\")\nassert_distance((simplify(k**2), 0, 0), (15, 0, 0), 0, \"k^2 = 15\")\nassert_distance((simplify(2*r15*cos(pi/3) - k), 0, 0), (0, 0, 0), 0,\n                \"k = (삼각형 ABC 넓이) x cos60 (정사영 넓이 공식)\")\n",
-  "note": "구 S 를 xy평면으로 자른 원 C 의 지름이 AB 이므로 A(−2,0,0), B(2,0,0). 직선 AB 가 평면 BCD 에 수직이니 평면 BCD 는 x=2 이고, 여기서 BC=BD=√15 를 구의 방정식과 연립하면 C, D 가 x=2 위에서 z=3√5/2, y=∓√15/2 로 정해진다. 삼각형 ABC 를 평면 ABD 로 정사영하면 C 만 C' 로 내려오고, 두 평면이 이루는 각이 60° 이므로 k = 2√15·cos60° = √15, k^2 = 15."
+  "axes": true,
+  "gridSize": 6,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     0,
+     0,
+     0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 11,
+    "color": "#64748b",
+    "opacity": 0.22,
+    "label": "xy평면"
+   },
+   {
+    "type": "sphere",
+    "center": [
+     0,
+     0,
+     2.23606797749979
+    ],
+    "radius": 3,
+    "color": "#60a5fa",
+    "opacity": 0.15,
+    "label": "S"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "2*cos(t)",
+    "y": "2*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#38bdf8",
+    "strokeWidth": 3,
+    "label": "원 C"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.2,
+     2.35,
+     0.18
+    ],
+    "text": "C(원)",
+    "color": "#38bdf8"
+   },
+   {
+    "type": "plane",
+    "origin": [
+     2,
+     0,
+     1.7
+    ],
+    "normal": [
+     1,
+     0,
+     0
+    ],
+    "size": 5.4,
+    "color": "#a78bfa",
+    "opacity": 0.22,
+    "label": "평면 BCD"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -2.0,
+      0.0,
+      0.0
+     ],
+     [
+      2.0,
+      0.0,
+      0.0
+     ],
+     [
+      2.0,
+      -1.9364916731037085,
+      3.3541019662496847
+     ],
+     [
+      2.0,
+      1.9364916731037085,
+      3.3541019662496847
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -2.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     0.0,
+     0.0
+    ],
+    "color": "#fbbf24",
+    "label": "AB = 4"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     -1.9364916731037085,
+     3.3541019662496847
+    ],
+    "color": "#f472b6",
+    "label": "√15"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     1.9364916731037085,
+     3.3541019662496847
+    ],
+    "color": "#f472b6",
+    "label": "√15"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     -1.9364916731037085,
+     3.3541019662496847
+    ],
+    "to": [
+     2.0,
+     0.9682458365518543,
+     1.6770509831248424
+    ],
+    "color": "#f97316",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2.0,
+     0.9682458365518543,
+     1.6770509831248424
+    ],
+    "label": "C'",
+    "color": "#f97316",
+    "size": 0.09
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -2.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     0.9682458365518543,
+     1.6770509831248424
+    ],
+    "color": "#f97316"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     0.9682458365518543,
+     1.6770509831248424
+    ],
+    "color": "#f97316"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.15,
+     1.15,
+     1.05
+    ],
+    "text": "정사영 ABC'",
+    "color": "#f97316"
+   }
+  ]
+ },
+ "conditions": [
+  "구 S 와 xy평면의 교선은 x^2+y^2=4, 즉 중심이 원점이고 반지름이 2 인 원 C 이다",
+  "네 점 A, B, C, D 는 모두 구 S(중심 (0,0,√5), 반지름 3) 위에 있다",
+  "(가) A, B 는 원 C 위의 점이고 AB 의 중점이 원 C 의 중심이다 — 선분 AB 는 원 C 의 지름(AB = 4)",
+  "(나) AB ⟂ BC, AB ⟂ BD, AB ⟂ CD — 직선 AB 는 평면 BCD 에 수직이다",
+  "(다) BC = BD = √15",
+  "두 평면 ABC 와 ABD 가 이루는 각(이면각 C-AB-D)은 ∠CBD = 60°",
+  "삼각형 ABC 의 넓이는 2√15",
+  "C' 는 평면 ABD 위의 점이고 CC' ⟂ AB, CC' ⟂ AD — C' 는 C 의 평면 ABD 위로의 정사영",
+  "정사영 삼각형 ABC' 의 넓이 k = √15 이므로 k^2 = 15",
+  "k = (삼각형 ABC 의 넓이) × cos 60° — 정사영 넓이 공식과 일치"
+ ],
+ "verify": "r5 = sqrt(5)\nr15 = sqrt(15)\n\nO = (0, 0, r5)          # 구 S 의 중심\nR = 3                   # 구 S 의 반지름\nOc = (0, 0, 0)          # 원 C 의 중심 (xy평면)\nrc = 2                  # 원 C 의 반지름\n\nA = (-2, 0, 0)\nB = (2, 0, 0)\nC = (2, -r15/2, 3*r5/2)\nD = (2,  r15/2, 3*r5/2)\nCp = (2, r15/4, 3*r5/4)   # C 의 평면 ABD 위로의 정사영 C'\n\n# ── 구 S 와 xy평면의 교선이 원 C (중심 원점, 반지름 2)\nx, y = symbols('x y', real=True)\ncut = expand(x**2 + y**2 + (0 - r5)**2 - 9)\nassert_distance((simplify(cut - (x**2 + y**2 - 4)), 0, 0), (0, 0, 0), 0,\n                \"구 S 와 xy평면의 교선은 x^2+y^2=4, 즉 중심 O 반지름 2 인 원 C\")\n\n# ── 네 점 모두 구 S 위\nfor nm, P in [(\"A\", A), (\"B\", B), (\"C\", C), (\"D\", D)]:\n    assert_on_sphere(P, O, R, f\"{nm} 는 구 S 위의 점\")\n\n# ── (가) 선분 AB 는 원 C 의 지름\nassert_on_circle(A, Oc, rc, \"A 는 원 C 위\", normal=(0, 0, 1))\nassert_on_circle(B, Oc, rc, \"B 는 원 C 위\", normal=(0, 0, 1))\nassert_distance(A, B, 2*rc, \"AB = 4 = 원 C 의 지름 길이\")\nassert_distance(tuple((Matrix(A) + Matrix(B))/2), Oc, 0, \"AB 의 중점 = 원 C 의 중심 (선분 AB 는 지름)\")\n\n# ── (나) 직선 AB 는 평면 BCD 에 수직\nassert_perpendicular(A, B, B, C, \"AB 수직 BC\")\nassert_perpendicular(A, B, B, D, \"AB 수직 BD\")\nassert_perpendicular(A, B, C, D, \"AB 수직 CD (직선 AB 가 평면 BCD 에 수직)\")\n\n# ── (다) BC = BD = sqrt15\nassert_distance(B, C, r15, \"BC = sqrt15\")\nassert_distance(B, D, r15, \"BD = sqrt15\")\n\n# ── 이면각: 평면 ABC 와 평면 ABD 가 이루는 각 = 60도\nassert_angle(B, C, D, pi/3, \"각 CBD = pi/3 (AB 에 수직인 두 반직선이므로 이면각 C-AB-D = 60도)\")\n\n# ── 삼각형 ABC 의 넓이 = 2 sqrt15\nSABC = (Matrix(B) - Matrix(A)).cross(Matrix(C) - Matrix(A)).norm()/2\nassert_distance((simplify(SABC), 0, 0), (2*r15, 0, 0), 0, \"삼각형 ABC 의 넓이 = 2 sqrt15\")\n\n# ── C' 는 C 의 평면 ABD 위로의 정사영\nassert_on_plane(Cp, [A, B, D], \"C' 는 평면 ABD 위의 점\")\nassert_perpendicular(C, Cp, A, B, \"CC' 수직 AB\")\nassert_perpendicular(C, Cp, A, D, \"CC' 수직 AD (즉 CC' 는 평면 ABD 에 수직)\")\n\n# ── 정사영 삼각형 ABC' 의 넓이 k, k^2 = 15\nk = (Matrix(B) - Matrix(A)).cross(Matrix(Cp) - Matrix(A)).norm()/2\nassert_distance((simplify(k), 0, 0), (r15, 0, 0), 0, \"정사영 삼각형 ABC' 의 넓이 k = sqrt15\")\nassert_distance((simplify(k**2), 0, 0), (15, 0, 0), 0, \"k^2 = 15\")\nassert_distance((simplify(2*r15*cos(pi/3) - k), 0, 0), (0, 0, 0), 0,\n                \"k = (삼각형 ABC 넓이) x cos60 (정사영 넓이 공식)\")\n",
+ "note": "구 S 를 xy평면으로 자른 원 C 의 지름이 AB 이므로 A(−2,0,0), B(2,0,0). 직선 AB 가 평면 BCD 에 수직이니 평면 BCD 는 x=2 이고, 여기서 BC=BD=√15 를 구의 방정식과 연립하면 C, D 가 x=2 위에서 z=3√5/2, y=∓√15/2 로 정해진다. 삼각형 ABC 를 평면 ABD 로 정사영하면 C 만 C' 로 내려오고, 두 평면이 이루는 각이 60° 이므로 k = 2√15·cos60° = √15, k^2 = 15."
 }

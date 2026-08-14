@@ -61,7 +61,7 @@
      "D"
     ],
     "fill": "#94a3b8",
-    "fillOpacity": 0.09,
+    "fillOpacity": 0.18,
     "stroke": "#e2e8f0",
     "strokeWidth": 2
    },
@@ -78,7 +78,7 @@
      0
     ],
     "color": "#38bdf8",
-    "label": "DE = 4 (직선 DH 가 BC 와 만나는 점이 E)"
+    "label": "DE = 4"
    },
    {
     "type": "point3d",
@@ -103,8 +103,7 @@
      -1.5,
      0
     ],
-    "color": "#34d399",
-    "label": "AE (조건 (가) 의 ∠AEH)"
+    "color": "#34d399"
    },
    {
     "type": "segment3d",
@@ -177,8 +176,7 @@
      0.10825317547305482
     ],
     "color": "#fb923c",
-    "dashed": true,
-    "label": "H 에서 평면 ABD 에 내린 수선"
+    "dashed": true
    },
    {
     "type": "text3d",

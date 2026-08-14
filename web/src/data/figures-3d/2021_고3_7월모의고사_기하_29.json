@@ -1,213 +1,213 @@
 {
-  "spec": {
-    "title": "2021 고3 7월 기하 29 — AB ⟂ 평면 ACD 인 사면체 ABCD, 두 평면 PDB 와 CDB 가 이루는 각",
-    "cameraPosition": [
-      4,
-      22,
-      10.5
-    ],
-    "axes": false,
-    "shapes": [
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            0,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            4
-          ],
-          [
-            8,
-            0,
-            0
-          ],
-          [
-            4,
-            6.928203230275509,
-            0
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2
-          ],
-          [
-            0,
-            1,
-            3
-          ],
-          [
-            0,
-            2,
-            3
-          ],
-          [
-            1,
-            2,
-            3
-          ]
-        ],
-        "labels": [
-          "A",
-          "B",
-          "C",
-          "D"
-        ],
-        "fill": "#94a3b8",
-        "fillOpacity": 0.08,
-        "stroke": "#e2e8f0",
-        "strokeWidth": 2
-      },
-      {
-        "type": "polyhedron",
-        "vertices": [
-          [
-            3,
-            1.7320508075688772,
-            0
-          ],
-          [
-            4,
-            6.928203230275509,
-            0
-          ],
-          [
-            0,
-            0,
-            4
-          ]
-        ],
-        "faces": [
-          [
-            0,
-            1,
-            2
-          ]
-        ],
-        "labels": [
-          "P",
-          "",
-          ""
-        ],
-        "fill": "#34d399",
-        "fillOpacity": 0.22,
-        "stroke": "#34d399",
-        "strokeWidth": 2
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          4,
-          6.928203230275509,
-          0
-        ],
-        "to": [
-          0,
-          0,
-          4
-        ],
-        "color": "#fbbf24"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          0,
-          0,
-          0
-        ],
-        "to": [
-          6,
-          3.4641016151377544,
-          0
-        ],
-        "color": "#60a5fa"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          3,
-          1.7320508075688772,
-          0
-        ],
-        "to": [
-          2,
-          3.4641016151377544,
-          2
-        ],
-        "color": "#f472b6"
-      },
-      {
-        "type": "segment3d",
-        "from": [
-          2,
-          3.4641016151377544,
-          2
-        ],
-        "to": [
-          5.1304951684997055,
-          1.1403116074133042,
-          1.1055728090000843
-        ],
-        "color": "#a3e635",
-        "dashed": true
-      },
-      {
-        "type": "point3d",
-        "at": [
-          6,
-          3.4641016151377544,
-          0
-        ],
-        "label": "M",
-        "color": "#60a5fa",
-        "size": 0.11
-      },
-      {
-        "type": "point3d",
-        "at": [
-          2,
-          3.4641016151377544,
-          2
-        ],
-        "label": "N",
-        "color": "#f472b6",
-        "size": 0.11
-      },
-      {
-        "type": "text3d",
-        "at": [
-          2.690451734323509,
-          2.7389243865596,
-          1.4344079299341566
-        ],
-        "text": "θ",
-        "color": "#a3e635"
-      }
-    ]
-  },
-  "conditions": [
-    "AB = 4",
-    "CD = 8",
-    "BC = 4√5",
-    "BD = 4√5",
-    "AB ⟂ AC 이고 AB ⟂ AD — 즉 직선 AB 는 평면 ACD 에 수직",
-    "A, C, D, M 은 한 평면(평면 ACD) 위에 있다",
-    "M 은 선분 CD 의 중점 (CM = MD = 4, M 은 직선 CD 위)",
-    "N 은 선분 DB 의 중점 (DN = NB = 2√5, N 은 직선 DB 위)",
-    "P 는 선분 AM 위의 점 (AP = PM = 2√3, AP + PM = AM = 4√3)",
-    "선분 DB ⟂ 선분 PN",
-    "보조점 Q 는 평면 CDB 위에 있고 NQ ⟂ DB, NQ = 4",
-    "두 평면 PDB 와 CDB 가 이루는 예각 θ 에 대하여 cos θ = √10/4",
-    "40 cos²θ = 25 (정답)",
-    "∠PNQ = θ = arccos(√10/4) ≈ 37.8° (예각)"
+ "spec": {
+  "title": "2021 고3 7월 기하 29 — AB ⟂ 평면 ACD 인 사면체 ABCD, 두 평면 PDB 와 CDB 가 이루는 각",
+  "cameraPosition": [
+   4,
+   22,
+   10.5
   ],
-  "verify": "s3 = sqrt(3)\ns5 = sqrt(5)\n\n# 좌표계: 평면 ACD 를 z=0 (바닥), AB 를 z 축 방향으로 세운다.\nA = (0, 0, 0)\nB = (0, 0, 4)\nC = (8, 0, 0)\nD = (4, 4*s3, 0)\n\nM = (6, 2*s3, 0)          # CD 의 중점\nN = (2, 2*s3, 2)          # DB 의 중점\nP = (3, s3, 0)            # 선분 AM 위의 점 (AM 의 중점)\n\n# 주어진 길이\nassert_distance3d(A, B, 4, \"AB = 4\")\nassert_distance3d(C, D, 8, \"CD = 8\")\nassert_distance3d(B, C, 4*s5, \"BC = 4sqrt5\")\nassert_distance3d(B, D, 4*s5, \"BD = 4sqrt5\")\n\n# 직선 AB 는 평면 ACD 에 수직 (AC, AD 두 방향과 모두 수직)\nassert_perpendicular(A, B, A, C, \"AB 수직 AC\")\nassert_perpendicular(A, B, A, D, \"AB 수직 AD  (=> 직선 AB 수직 평면 ACD)\")\nassert_coplanar([A, C, D, M], \"A, C, D, M 은 한 평면(평면 ACD) 위\")\n\n# M 은 CD 의 중점\nassert_on_line(M, C, D, \"M 은 직선 CD 위\")\nassert_distance3d(C, M, 4, \"CM = 4  (M 은 CD 의 중점)\")\nassert_distance3d(M, D, 4, \"MD = 4  (M 은 CD 의 중점)\")\n\n# N 은 DB 의 중점\nassert_on_line(N, D, B, \"N 은 직선 DB 위\")\nassert_distance3d(D, N, 2*s5, \"DN = 2sqrt5  (N 은 DB 의 중점)\")\nassert_distance3d(N, B, 2*s5, \"NB = 2sqrt5  (N 은 DB 의 중점)\")\n\n# P 는 선분 AM 위의 점이고 PN 은 DB 에 수직\nassert_on_line(P, A, M, \"P 는 직선 AM 위\")\nassert_distance3d(A, P, 2*s3, \"AP = 2sqrt3\")\nassert_distance3d(P, M, 2*s3, \"PM = 2sqrt3  (AP + PM = AM = 4sqrt3 이므로 P 는 선분 AM 위)\")\nassert_perpendicular(D, B, P, N, \"선분 DB 수직 선분 PN\")\n\n# 평면 CDB 안에서 N 을 지나 DB 에 수직인 보조선 NQ (이면각을 눈에 보이게)\nQ = (2 + 7/s5, 2*s3 - 3*s3/s5, 2 - 2/s5)\nassert_on_plane(Q, [C, D, B], \"Q 는 평면 CDB 위\")\nassert_perpendicular(N, Q, D, B, \"NQ 수직 DB  (=> 각 PNQ 가 두 평면이 이루는 이면각)\")\nassert_distance3d(N, Q, 4, \"NQ = 4\")\n\n# 두 평면 PDB, CDB 가 이루는 예각 theta\nn1 = (Matrix(D) - Matrix(P)).cross(Matrix(B) - Matrix(P))   # 평면 PDB 의 법선\nn2 = (Matrix(D) - Matrix(C)).cross(Matrix(B) - Matrix(C))   # 평면 CDB 의 법선\ncos_t = simplify(abs(n1.dot(n2)) / (n1.norm() * n2.norm()))\nassert_distance((cos_t,), (0,), sqrt(10)/4, \"cos(theta) = sqrt10/4\")\nassert_distance((simplify(40*cos_t**2),), (0,), 25, \"40 cos^2(theta) = 25 (답)\")\n\n# 그림의 각 PNQ 자체가 구하는 예각 theta 다 (cos = sqrt10/4)\nfrom sympy import acos\nassert_angle(N, P, Q, acos(sqrt(10)/4), \"각 PNQ = theta = arccos(sqrt10/4) (예각)\")\n",
-  "note": "AB 가 평면 ACD 에 수직이므로 BC=BD=4√5 에서 AC=AD=8 이 나오고, CD=8 과 합쳐 삼각형 ACD 는 한 변 8 인 정삼각형이다. 선분 AM 위에서 DB ⟂ PN 을 만족하는 점 P 는 AM 의 중점이고, 공통 모서리 DB 에 N 에서 수직으로 그은 두 선분 (초록 점선 NQ 는 평면 CDB 안, 분홍 PN 은 평면 PDB 안)이 이루는 각 θ 가 두 평면이 이루는 예각으로 cos θ = √10/4, 즉 40cos²θ = 25 이다."
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      4
+     ],
+     [
+      8,
+      0,
+      0
+     ],
+     [
+      4,
+      6.928203230275509,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      3,
+      1.7320508075688772,
+      0
+     ],
+     [
+      4,
+      6.928203230275509,
+      0
+     ],
+     [
+      0,
+      0,
+      4
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "P",
+     "",
+     ""
+    ],
+    "fill": "#34d399",
+    "fillOpacity": 0.22,
+    "stroke": "#34d399",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     6.928203230275509,
+     0
+    ],
+    "to": [
+     0,
+     0,
+     4
+    ],
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     0
+    ],
+    "to": [
+     6,
+     3.4641016151377544,
+     0
+    ],
+    "color": "#60a5fa"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     1.7320508075688772,
+     0
+    ],
+    "to": [
+     2,
+     3.4641016151377544,
+     2
+    ],
+    "color": "#f472b6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     3.4641016151377544,
+     2
+    ],
+    "to": [
+     5.1304951684997055,
+     1.1403116074133042,
+     1.1055728090000843
+    ],
+    "color": "#a3e635",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     6,
+     3.4641016151377544,
+     0
+    ],
+    "label": "M",
+    "color": "#60a5fa",
+    "size": 0.11
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2,
+     3.4641016151377544,
+     2
+    ],
+    "label": "N",
+    "color": "#f472b6",
+    "size": 0.11
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.690451734323509,
+     2.7389243865596,
+     1.4344079299341566
+    ],
+    "text": "θ",
+    "color": "#a3e635"
+   }
+  ]
+ },
+ "conditions": [
+  "AB = 4",
+  "CD = 8",
+  "BC = 4√5",
+  "BD = 4√5",
+  "AB ⟂ AC 이고 AB ⟂ AD — 즉 직선 AB 는 평면 ACD 에 수직",
+  "A, C, D, M 은 한 평면(평면 ACD) 위에 있다",
+  "M 은 선분 CD 의 중점 (CM = MD = 4, M 은 직선 CD 위)",
+  "N 은 선분 DB 의 중점 (DN = NB = 2√5, N 은 직선 DB 위)",
+  "P 는 선분 AM 위의 점 (AP = PM = 2√3, AP + PM = AM = 4√3)",
+  "선분 DB ⟂ 선분 PN",
+  "보조점 Q 는 평면 CDB 위에 있고 NQ ⟂ DB, NQ = 4",
+  "두 평면 PDB 와 CDB 가 이루는 예각 θ 에 대하여 cos θ = √10/4",
+  "40 cos²θ = 25 (정답)",
+  "∠PNQ = θ = arccos(√10/4) ≈ 37.8° (예각)"
+ ],
+ "verify": "s3 = sqrt(3)\ns5 = sqrt(5)\n\n# 좌표계: 평면 ACD 를 z=0 (바닥), AB 를 z 축 방향으로 세운다.\nA = (0, 0, 0)\nB = (0, 0, 4)\nC = (8, 0, 0)\nD = (4, 4*s3, 0)\n\nM = (6, 2*s3, 0)          # CD 의 중점\nN = (2, 2*s3, 2)          # DB 의 중점\nP = (3, s3, 0)            # 선분 AM 위의 점 (AM 의 중점)\n\n# 주어진 길이\nassert_distance3d(A, B, 4, \"AB = 4\")\nassert_distance3d(C, D, 8, \"CD = 8\")\nassert_distance3d(B, C, 4*s5, \"BC = 4sqrt5\")\nassert_distance3d(B, D, 4*s5, \"BD = 4sqrt5\")\n\n# 직선 AB 는 평면 ACD 에 수직 (AC, AD 두 방향과 모두 수직)\nassert_perpendicular(A, B, A, C, \"AB 수직 AC\")\nassert_perpendicular(A, B, A, D, \"AB 수직 AD  (=> 직선 AB 수직 평면 ACD)\")\nassert_coplanar([A, C, D, M], \"A, C, D, M 은 한 평면(평면 ACD) 위\")\n\n# M 은 CD 의 중점\nassert_on_line(M, C, D, \"M 은 직선 CD 위\")\nassert_distance3d(C, M, 4, \"CM = 4  (M 은 CD 의 중점)\")\nassert_distance3d(M, D, 4, \"MD = 4  (M 은 CD 의 중점)\")\n\n# N 은 DB 의 중점\nassert_on_line(N, D, B, \"N 은 직선 DB 위\")\nassert_distance3d(D, N, 2*s5, \"DN = 2sqrt5  (N 은 DB 의 중점)\")\nassert_distance3d(N, B, 2*s5, \"NB = 2sqrt5  (N 은 DB 의 중점)\")\n\n# P 는 선분 AM 위의 점이고 PN 은 DB 에 수직\nassert_on_line(P, A, M, \"P 는 직선 AM 위\")\nassert_distance3d(A, P, 2*s3, \"AP = 2sqrt3\")\nassert_distance3d(P, M, 2*s3, \"PM = 2sqrt3  (AP + PM = AM = 4sqrt3 이므로 P 는 선분 AM 위)\")\nassert_perpendicular(D, B, P, N, \"선분 DB 수직 선분 PN\")\n\n# 평면 CDB 안에서 N 을 지나 DB 에 수직인 보조선 NQ (이면각을 눈에 보이게)\nQ = (2 + 7/s5, 2*s3 - 3*s3/s5, 2 - 2/s5)\nassert_on_plane(Q, [C, D, B], \"Q 는 평면 CDB 위\")\nassert_perpendicular(N, Q, D, B, \"NQ 수직 DB  (=> 각 PNQ 가 두 평면이 이루는 이면각)\")\nassert_distance3d(N, Q, 4, \"NQ = 4\")\n\n# 두 평면 PDB, CDB 가 이루는 예각 theta\nn1 = (Matrix(D) - Matrix(P)).cross(Matrix(B) - Matrix(P))   # 평면 PDB 의 법선\nn2 = (Matrix(D) - Matrix(C)).cross(Matrix(B) - Matrix(C))   # 평면 CDB 의 법선\ncos_t = simplify(abs(n1.dot(n2)) / (n1.norm() * n2.norm()))\nassert_distance((cos_t,), (0,), sqrt(10)/4, \"cos(theta) = sqrt10/4\")\nassert_distance((simplify(40*cos_t**2),), (0,), 25, \"40 cos^2(theta) = 25 (답)\")\n\n# 그림의 각 PNQ 자체가 구하는 예각 theta 다 (cos = sqrt10/4)\nfrom sympy import acos\nassert_angle(N, P, Q, acos(sqrt(10)/4), \"각 PNQ = theta = arccos(sqrt10/4) (예각)\")\n",
+ "note": "AB 가 평면 ACD 에 수직이므로 BC=BD=4√5 에서 AC=AD=8 이 나오고, CD=8 과 합쳐 삼각형 ACD 는 한 변 8 인 정삼각형이다. 선분 AM 위에서 DB ⟂ PN 을 만족하는 점 P 는 AM 의 중점이고, 공통 모서리 DB 에 N 에서 수직으로 그은 두 선분 (초록 점선 NQ 는 평면 CDB 안, 분홍 PN 은 평면 PDB 안)이 이루는 각 θ 가 두 평면이 이루는 예각으로 cos θ = √10/4, 즉 40cos²θ = 25 이다."
 }

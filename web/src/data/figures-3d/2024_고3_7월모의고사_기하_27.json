@@ -1,0 +1,252 @@
+{
+ "spec": {
+  "title": "2024 고3 7월 기하 27 — 밑면의 반지름 3, 높이 3 인 원기둥과 삼각형 PAH",
+  "cameraPosition": [
+   8.0,
+   -9.0,
+   6.0
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "parametricSurface",
+    "x": "3*cos(u)",
+    "y": "3*sin(u)",
+    "z": "v",
+    "uRange": [
+     0,
+     6.283185307179586
+    ],
+    "vRange": [
+     0,
+     3
+    ],
+    "uSamples": 96,
+    "vSamples": 4,
+    "color": "#94a3b8",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u*cos(v)",
+    "y": "u*sin(v)",
+    "z": "0",
+    "uRange": [
+     0,
+     3
+    ],
+    "vRange": [
+     0,
+     6.283185307179586
+    ],
+    "uSamples": 8,
+    "vSamples": 96,
+    "color": "#94a3b8",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u*cos(v)",
+    "y": "u*sin(v)",
+    "z": "3",
+    "uRange": [
+     0,
+     3
+    ],
+    "vRange": [
+     0,
+     6.283185307179586
+    ],
+    "uSamples": 8,
+    "vSamples": 96,
+    "color": "#94a3b8",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "3*cos(t)",
+    "y": "3*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 160,
+    "color": "#475569",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "3*cos(t)",
+    "y": "3*sin(t)",
+    "z": "3",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 160,
+    "color": "#475569",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -3.0,
+      0.0,
+      3.0
+     ],
+     [
+      -0.3333333333333333,
+      -2.9814239699997196,
+      0.0
+     ],
+     [
+      1.3333333333333333,
+      -1.4907119849998598,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "P",
+     "A",
+     "H"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.38,
+    "stroke": "#111827",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3.0,
+     0.0,
+     3.0
+    ],
+    "to": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "color": "#6b7280",
+    "dashed": true,
+    "label": "PP' ⟂ 밑면"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -0.3333333333333333,
+     -2.9814239699997196,
+     0.0
+    ],
+    "to": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "color": "#111827"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "color": "#059669",
+    "label": "$\\overline{BP'}=6$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     -0.3333333333333333,
+     -2.9814239699997196,
+     0.0
+    ],
+    "color": "#059669",
+    "label": "P'A ⟂ AB"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     3.0
+    ],
+    "to": [
+     1.3333333333333333,
+     -1.4907119849998598,
+     0.0
+    ],
+    "color": "#2563eb",
+    "label": "$\\overline{OH}=\\sqrt{13}$"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     3.0
+    ],
+    "label": "O",
+    "color": "#2563eb",
+    "size": 0.11
+   },
+   {
+    "type": "point3d",
+    "at": [
+     -3.0,
+     0.0,
+     0.0
+    ],
+    "label": "$P'$",
+    "color": "#111827",
+    "size": 0.11
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "B",
+    "color": "#111827",
+    "size": 0.11
+   }
+  ]
+ },
+ "conditions": [
+  "원기둥의 밑면의 반지름은 3, 높이는 3 (P, P', A, B 가 각 밑면의 둘레 위)",
+  "P 는 윗면 둘레 위, P' 는 아랫면 둘레 위이고 PP'=3",
+  "PP' ⟂ P'A, PP' ⟂ P'B — 즉 P' 는 P 에서 다른 밑면에 내린 수선의 발",
+  "A, B, P' 와 아랫면의 중심은 한 평면(아랫면) 위에 있다",
+  "BP'=6",
+  "H 는 선분 AB 위에 있고 OH ⟂ AB (O 는 P 를 포함하는 밑면의 중심)",
+  "OH=√13",
+  "P'A ⟂ AB (BP' 이 아랫면 원의 지름이므로)",
+  "PA ⟂ AB (삼수선의 정리)",
+  "PA=5, AH=BH=√5 (H 는 AB 의 중점)",
+  "삼각형 PAH 의 넓이 = 5√5/2"
+ ],
+ "verify": "# 2024 고3 7월 기하 27 — 원기둥(반지름 3, 높이 3) 속 공간도형\n# 아랫면 중심 Ob=(0,0,0), 윗면 중심 O=(0,0,3)\nOb = (0, 0, 0)\nO  = (0, 0, 3)\nP  = (-3, 0, 3)\nPp = (-3, 0, 0)\nB  = (3, 0, 0)\nA  = (-Rational(1,3), -4*sqrt(5)/3, 0)\nH  = (Rational(4,3), -2*sqrt(5)/3, 0)\n\n# 원기둥: 반지름 3, 높이 3\nassert_on_circle(P,  O,  3, \"P 는 윗면 둘레 위 (반지름 3)\", normal=(0,0,1))\nassert_on_circle(Pp, Ob, 3, \"P' 는 아랫면 둘레 위 (반지름 3)\", normal=(0,0,1))\nassert_on_circle(A,  Ob, 3, \"A 는 아랫면 둘레 위 (반지름 3)\", normal=(0,0,1))\nassert_on_circle(B,  Ob, 3, \"B 는 아랫면 둘레 위 (반지름 3)\", normal=(0,0,1))\nassert_distance3d(P, Pp, 3, \"원기둥 높이 PP'=3\")\nassert_coplanar([A, B, Pp, Ob], \"A, B, P', 아랫면 중심이 한 평면(아랫면) 위\")\n\n# P 에서 다른 밑면에 내린 수선의 발이 P'\nassert_perpendicular(P, Pp, Pp, A, \"PP' ⟂ P'A\")\nassert_perpendicular(P, Pp, Pp, B, \"PP' ⟂ P'B  (⇒ PP' ⟂ 아랫면)\")\n\n# 주어진 조건\nassert_distance3d(B, Pp, 6, \"BP'=6\")\nassert_on_line(H, A, B, \"H 는 선분 AB 위\")\nassert_perpendicular(O, H, A, B, \"OH ⟂ AB (O 에서 AB 에 내린 수선의 발이 H)\")\nassert_distance3d(O, H, sqrt(13), \"OH=sqrt(13)\")\n\n# 풀이의 핵심 (삼수선의 정리)\nassert_perpendicular(Pp, A, A, B, \"P'A ⟂ AB (BP' 이 지름이므로)\")\nassert_perpendicular(P,  A, A, B, \"PA ⟂ AB (삼수선의 정리)\")\nassert_distance3d(P, A, 5, \"PA=5\")\nassert_distance3d(A, H, sqrt(5), \"AH=sqrt(5) (H 는 AB 의 중점)\")\nassert_distance3d(B, H, sqrt(5), \"BH=sqrt(5) (H 는 AB 의 중점)\")\n\n# 삼각형 PAH 의 넓이 = 5*sqrt(5)/2\nu = Matrix(P) - Matrix(A)\nv = Matrix(H) - Matrix(A)\narea = simplify(u.cross(v).norm() / 2)\ntag = \"삼각형 PAH 의 넓이 = 5*sqrt(5)/2\"\nprint(f\"[VERIFY OK] {tag}\" if _close(area, 5*sqrt(5)/2) else f\"[VERIFY FAIL] {tag}: {area}\")\n",
+ "note": "BP' 이 아랫면 원의 지름이라 P'A ⟂ AB 이고, PP' 이 아랫면에 수직이므로 삼수선의 정리로 PA ⟂ AB. H 는 AB 의 중점이다."
+}

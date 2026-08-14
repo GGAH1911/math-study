@@ -1,0 +1,329 @@
+{
+ "spec": {
+  "shapes": [
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt((5-u)*log(u))",
+    "z": "0",
+    "uRange": [
+     2,
+     4
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt((5-u)*log(u))",
+    "z": "sqrt((5-u)*log(u))",
+    "uRange": [
+     2,
+     4
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt((5-u)*log(u))",
+    "z": "v*sqrt((5-u)*log(u))",
+    "uRange": [
+     2,
+     4
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "0",
+    "z": "v*sqrt((5-u)*log(u))",
+    "uRange": [
+     2,
+     4
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2,
+      0,
+      0
+     ],
+     [
+      2,
+      1.442026886600883,
+      0
+     ],
+     [
+      2,
+      1.442026886600883,
+      1.442026886600883
+     ],
+     [
+      2,
+      0,
+      1.442026886600883
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.22,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      4,
+      0,
+      0
+     ],
+     [
+      4,
+      1.1774100225154747,
+      0
+     ],
+     [
+      4,
+      1.1774100225154747,
+      1.1774100225154747
+     ],
+     [
+      4,
+      0,
+      1.1774100225154747
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.22,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      3,
+      0,
+      0
+     ],
+     [
+      3,
+      1.4823038073675112,
+      0
+     ],
+     [
+      3,
+      1.4823038073675112,
+      1.4823038073675112
+     ],
+     [
+      3,
+      0,
+      1.4823038073675112
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.5,
+    "stroke": "#fb7185",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt((5-t)*log(t))",
+    "z": "0",
+    "tRange": [
+     1,
+     5
+    ],
+    "samples": 220,
+    "color": "#94a3b8",
+    "strokeWidth": 1.5
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt((5-t)*log(t))",
+    "z": "0",
+    "tRange": [
+     2,
+     4
+    ],
+    "samples": 200,
+    "color": "#fbbf24",
+    "strokeWidth": 3
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt((5-t)*log(t))",
+    "z": "sqrt((5-t)*log(t))",
+    "tRange": [
+     2,
+     4
+    ],
+    "samples": 200,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "0",
+    "z": "sqrt((5-t)*log(t))",
+    "tRange": [
+     2,
+     4
+    ],
+    "samples": 200,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     -0.6,
+     0
+    ],
+    "to": [
+     2,
+     2.1,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4,
+     -0.6,
+     0
+    ],
+    "to": [
+     4,
+     2.1,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2,
+     -0.85,
+     0
+    ],
+    "text": "$x=2$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     4,
+     -0.85,
+     0
+    ],
+    "text": "$x=4$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     4.75,
+     0.95,
+     0
+    ],
+    "text": "$y=\\sqrt{(5-x)\\ln x}$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3,
+     0.7411519036837556,
+     1.832303807367511
+    ],
+    "text": "정사각형 단면",
+    "color": "#fb7185"
+   }
+  ],
+  "cameraPosition": [
+   8.5,
+   -5.5,
+   4.5
+  ],
+  "axes": true,
+  "title": "밑면 위에서 x축에 수직으로 자른 단면이 모두 정사각형인 입체"
+ },
+ "conditions": [
+  "밑면의 위쪽 경계가 곡선 y=√((5-x)ln x) 위에 있다 — x=2, 3, 4 에서 확인",
+  "y(2)=√(3ln2), y(3)=√(2ln3), y(4)=√(ln4)=√(2ln2)",
+  "x=2, 3, 4 에서 자른 단면의 네 꼭짓점이 한 평면 위에 있다",
+  "그 단면이 x축에 수직이다 (단면의 두 변이 x축과 수직)",
+  "단면의 네 변의 길이가 모두 그 위치의 곡선의 높이 y(x) 로 같다",
+  "단면의 네 각이 모두 직각이다 (즉 단면은 정사각형)",
+  "각 단면의 밑변이 밑면(xy평면) 위에 있다",
+  "밑면은 x축 및 두 직선 x=2, x=4 로 둘러싸여 있다 (x 방향 폭 = 2)",
+  "부피 V = ∫₂⁴ y(x)² dx = 16ln2 - 7 (정답 ③)"
+ ],
+ "verify": "\n# y = sqrt((5-x) ln x)  (2 <= x <= 4)\ndef f(X):\n    return sqrt((5 - X)*ln(X))\n\ndef assert_eq(actual, expected, tag):\n    if _close(simplify(actual - expected)):\n        print(f\"[VERIFY OK] {tag}\")\n    else:\n        print(f\"[VERIFY FAIL] {tag}: {actual} != {expected}\")\n\nXY = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]      # xy평면(밑면이 놓인 평면)\nXAXIS = ((0, 0, 0), (1, 0, 0))              # x축 방향\n\n# ── ① 밑면의 위쪽 경계가 곡선 위인가 ──\nfor X, nm in [(2, 'x=2'), (3, 'x=3'), (4, 'x=4')]:\n    assert_eq(f(X)**2, (5 - X)*ln(X), f\"{nm} 에서 밑면 위 끝점이 곡선 y=sqrt((5-x)ln x) 위\")\n\nassert_eq(f(2), sqrt(3*ln(2)), \"y(2) = sqrt(3 ln2)\")\nassert_eq(f(3), sqrt(2*ln(3)), \"y(3) = sqrt(2 ln3)\")\nassert_eq(f(4), sqrt(2*ln(2)), \"y(4) = sqrt(ln4) = sqrt(2 ln2)\")\n\n# ── ② x 에 수직인 단면이 한 변 y(x) 인 정사각형인가 ──\ndef check_section(X, nm):\n    s = f(X)\n    P0 = (X, 0, 0); P1 = (X, s, 0); P2 = (X, s, s); P3 = (X, 0, s)\n    assert_coplanar([P0, P1, P2, P3], f\"{nm} 단면의 네 꼭짓점이 한 평면 위\")\n    assert_perpendicular(XAXIS[0], XAXIS[1], P0, P1, f\"{nm} 단면이 x축에 수직 (변 P0P1)\")\n    assert_perpendicular(XAXIS[0], XAXIS[1], P0, P3, f\"{nm} 단면이 x축에 수직 (변 P0P3)\")\n    for A, B, t in [(P0, P1, 'P0P1'), (P1, P2, 'P1P2'), (P2, P3, 'P2P3'), (P3, P0, 'P3P0')]:\n        assert_distance3d(A, B, s, f\"{nm} 단면의 변 {t} 의 길이 = y({X})\")\n    for V, A, B, t in [(P0, P1, P3, 'P0'), (P1, P0, P2, 'P1'), (P2, P1, P3, 'P2'), (P3, P2, P0, 'P3')]:\n        assert_perpendicular(V, A, V, B, f\"{nm} 단면의 각 {t} 가 직각 (정사각형)\")\n    assert_on_plane(P0, XY, f\"{nm} 단면의 밑변 끝점 P0 가 밑면(xy평면) 위\")\n    assert_on_plane(P1, XY, f\"{nm} 단면의 밑변 끝점 P1 이 밑면(xy평면) 위\")\n\ncheck_section(2, \"x=2\")\ncheck_section(3, \"x=3\")\ncheck_section(4, \"x=4\")\n\n# ── ③ 밑면은 x축 및 두 직선 x=2, x=4 로 둘러싸인 부분 ──\nassert_on_plane((2, 0, 0), XY, \"x=2 쪽 밑면 모서리가 x축 위(y=0)\")\nassert_on_plane((4, 0, 0), XY, \"x=4 쪽 밑면 모서리가 x축 위(y=0)\")\nassert_distance3d((2, 0, 0), (4, 0, 0), 2, \"밑면의 x 방향 폭 = 4-2 = 2\")\n\n# ── ④ 부피 ──\nV = integrate((5 - x)*ln(x), (x, 2, 4))\nassert_eq(V, 16*ln(2) - 7, \"부피 V = ∫_2^4 y^2 dx = 16ln2 - 7 (정답 ③)\")\n",
+ "note": "밑면(곡선·x축·x=2·x=4로 둘러싸인 부분) 위에 x축과 수직인 정사각형 단면을 쌓아 올린 입체입니다. 단면의 한 변이 그 자리의 곡선 높이 y(x)라서 단면넓이는 y(x)²=(5-x)ln x이고, 이를 2부터 4까지 적분한 값이 부피입니다."
+}

@@ -1,0 +1,205 @@
+{
+ "spec": {
+  "title": "2023 고1 3월 7 — 한 변의 길이가 2인 정사각형을 밑면으로 하고 부피가 12인 직육면체",
+  "cameraPosition": [
+   8,
+   -9,
+   6
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      2,
+      0,
+      0
+     ],
+     [
+      2,
+      2,
+      0
+     ],
+     [
+      0,
+      2,
+      0
+     ],
+     [
+      0,
+      0,
+      3
+     ],
+     [
+      2,
+      0,
+      3
+     ],
+     [
+      2,
+      2,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ],
+     [
+      4,
+      5,
+      6,
+      7
+     ],
+     [
+      0,
+      1,
+      5,
+      4
+     ],
+     [
+      1,
+      2,
+      6,
+      5
+     ],
+     [
+      2,
+      3,
+      7,
+      6
+     ],
+     [
+      3,
+      0,
+      4,
+      7
+     ]
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      2,
+      0,
+      0
+     ],
+     [
+      2,
+      2,
+      0
+     ],
+     [
+      0,
+      2,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.18,
+    "stroke": "#38bdf8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     0,
+     0
+    ],
+    "to": [
+     2,
+     0,
+     3
+    ],
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1,
+     -0.55,
+     -0.25
+    ],
+    "text": "2",
+    "color": "#38bdf8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.65,
+     1,
+     -0.25
+    ],
+    "text": "2",
+    "color": "#38bdf8"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.6,
+     -0.6,
+     1.5
+    ],
+    "text": "h",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1,
+     1,
+     1.5
+    ],
+    "text": "부피 12",
+    "color": "#e2e8f0"
+   }
+  ]
+ },
+ "conditions": [
+  "밑면 ABCD 의 네 변의 길이가 모두 2이다",
+  "밑면에서 이웃한 두 변이 서로 수직이다 (밑면이 정사각형)",
+  "밑면 ABCD 는 한 평면 위에 있고, 윗면 EFGH 도 한 평면 위에 있다",
+  "옆모서리 AE 는 밑면의 두 변 AB, AD 에 각각 수직이다 (직육면체)",
+  "네 옆모서리 AE, BF, CG, DH 의 길이가 모두 같다 (= 높이 h)",
+  "윗면 EFGH 의 네 변의 길이도 모두 2이다 (밑면과 합동)",
+  "밑면 ABCD 에서 윗면 꼭짓점 E 까지의 거리가 높이 h 와 같다",
+  "부피 = (밑면 넓이 2×2) × 높이 h = 12",
+  "높이 h = 3",
+  "겉넓이 = 2×(2×2) + 4×(2×3) = 32 (정답 ⑤)"
+ ],
+ "verify": "# 2023 고1 3월 7 — 한 변 2인 정사각형을 밑면으로 하는 직육면체, 부피 12\n# 밑면 ABCD (z=0), 윗면 EFGH (z=h).  h 는 부피 조건에서 결정된다.\nh = Rational(12, 4)          # 밑면 넓이 2*2=4, 부피 4h=12  →  h=3\n\nA = (0, 0, 0)\nB = (2, 0, 0)\nC = (2, 2, 0)\nD = (0, 2, 0)\nE = (0, 0, h)\nF = (2, 0, h)\nG = (2, 2, h)\nH = (0, 2, h)\n\n# ① 밑면은 한 변의 길이가 2인 정사각형\nfor (P, Q) in [(A, B), (B, C), (C, D), (D, A)]:\n    assert_distance3d(P, Q, 2, \"밑면의 한 변 = 2\")\nassert_perpendicular(A, B, B, C, \"밑면 AB ⊥ BC (정사각형)\")\nassert_perpendicular(B, C, C, D, \"밑면 BC ⊥ CD (정사각형)\")\nassert_coplanar([A, B, C, D], \"밑면 ABCD 는 한 평면\")\n\n# ② 직육면체: 옆모서리가 밑면의 두 변에 수직이고 길이가 모두 같다\nassert_perpendicular(A, E, A, B, \"옆모서리 AE ⊥ AB\")\nassert_perpendicular(A, E, A, D, \"옆모서리 AE ⊥ AD\")\nassert_coplanar([E, F, G, H], \"윗면 EFGH 는 한 평면\")\nfor (P, Q) in [(A, E), (B, F), (C, G), (D, H)]:\n    assert_distance3d(P, Q, h, \"네 옆모서리의 길이가 모두 같다(= 높이)\")\n\n# ③ 윗면도 한 변 2인 정사각형(밑면과 합동)\nfor (P, Q) in [(E, F), (F, G), (G, H), (H, E)]:\n    assert_distance3d(P, Q, 2, \"윗면의 한 변 = 2\")\n\n# ④ 높이는 밑면 ABCD 로부터 윗면 꼭짓점까지의 거리\nassert_point_plane_distance(E, [A, B, C], h, \"밑면에서 윗면까지의 거리 = 높이\")\n\n# ⑤ 부피 = 밑면 넓이 × 높이 = 12\na = _dist(A, B)\nvol = a * a * h\nprint(\"[VERIFY OK] 부피 = 12\" if _close(vol - 12) else f\"[VERIFY FAIL] 부피 = {vol} != 12\")\n\n# ⑥ 높이 h = 3\nprint(\"[VERIFY OK] 높이 h = 3\" if _close(h - 3) else f\"[VERIFY FAIL] h = {h} != 3\")\n\n# ⑦ 겉넓이 = 2*(밑면) + 4*(옆면) = 2*4 + 4*6 = 32 (정답 ⑤)\nsurface = 2 * (a * a) + 4 * (a * h)\nprint(\"[VERIFY OK] 겉넓이 = 32 (정답 ⑤)\" if _close(surface - 32)\n      else f\"[VERIFY FAIL] 겉넓이 = {surface} != 32\")\n",
+ "note": "파랗게 칠한 밑면이 한 변 2인 정사각형이라 넓이는 4이고, 분홍색 모서리가 높이 h 입니다. 부피 4h = 12 에서 h = 3 이므로, 겉넓이는 밑면·윗면 2개(각 4)와 옆면 4개(각 2×3=6)를 더해 8 + 24 = 32 입니다."
+}

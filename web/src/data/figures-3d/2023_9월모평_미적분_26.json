@@ -1,0 +1,360 @@
+{
+ "spec": {
+  "title": "밑면이 곡선 y=√(8x/(2x²+1)) 아래 영역이고 단면이 정사각형인 입체 (k=8)",
+  "cameraPosition": [
+   5.0,
+   -5.5,
+   3.2
+  ],
+  "axes": true,
+  "gridSize": 10,
+  "shapes": [
+   {
+    "type": "segment3d",
+    "from": [
+     -0.5,
+     0,
+     0
+    ],
+    "to": [
+     3.0,
+     0,
+     0
+    ],
+    "color": "#71717a"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     -0.5,
+     0
+    ],
+    "to": [
+     0,
+     2.2,
+     0
+    ],
+    "color": "#71717a"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     3.2,
+     0,
+     0
+    ],
+    "text": "$x$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     2.4,
+     0
+    ],
+    "text": "$y$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.18,
+     -0.18,
+     0
+    ],
+    "text": "O",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(8*t/(2*t^2+1))",
+    "z": "0",
+    "tRange": [
+     0,
+     2.7
+    ],
+    "samples": 300,
+    "color": "#fbbf24",
+    "strokeWidth": 3
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.95,
+     1.45,
+     0
+    ],
+    "text": "$y=\\sqrt{\\dfrac{8x}{2x^2+1}}$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1,
+     -0.45,
+     0
+    ],
+    "to": [
+     1,
+     2.0,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2,
+     -0.45,
+     0
+    ],
+    "to": [
+     2,
+     2.0,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1,
+     -0.72,
+     0
+    ],
+    "text": "$x=1$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2,
+     -0.72,
+     0
+    ],
+    "text": "$x=2$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt(8*u/(2*u^2+1))",
+    "z": "0",
+    "uRange": [
+     1,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 8,
+    "color": "#60a5fa",
+    "opacity": 0.3
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt(8*u/(2*u^2+1))",
+    "z": "sqrt(8*u/(2*u^2+1))",
+    "uRange": [
+     1,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 8,
+    "color": "#93c5fd",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "0",
+    "z": "v*sqrt(8*u/(2*u^2+1))",
+    "uRange": [
+     1,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 8,
+    "color": "#93c5fd",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt(8*u/(2*u^2+1))",
+    "z": "v*sqrt(8*u/(2*u^2+1))",
+    "uRange": [
+     1,
+     2
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 8,
+    "color": "#93c5fd",
+    "opacity": 0.22
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      1,
+      1.632993161855452,
+      0
+     ],
+     [
+      1,
+      1.632993161855452,
+      1.632993161855452
+     ],
+     [
+      1,
+      0,
+      1.632993161855452
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#93c5fd",
+    "fillOpacity": 0.18,
+    "stroke": "#e0f2fe",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      2,
+      0,
+      0
+     ],
+     [
+      2,
+      1.3333333333333333,
+      0
+     ],
+     [
+      2,
+      1.3333333333333333,
+      1.3333333333333333
+     ],
+     [
+      2,
+      0,
+      1.3333333333333333
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#93c5fd",
+    "fillOpacity": 0.18,
+    "stroke": "#e0f2fe",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      1.5,
+      0,
+      0
+     ],
+     [
+      1.5,
+      1.4770978917519928,
+      0
+     ],
+     [
+      1.5,
+      1.4770978917519928,
+      1.4770978917519928
+     ],
+     [
+      1.5,
+      0,
+      1.4770978917519928
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.45,
+    "stroke": "#fbcfe8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.5,
+     0,
+     0
+    ],
+    "to": [
+     1.5,
+     1.4770978917519928,
+     0
+    ],
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.5,
+     1.7770978917519928,
+     0.7385489458759964
+    ],
+    "text": "$\\sqrt{\\dfrac{8x}{2x^2+1}}$",
+    "color": "#f9a8d4"
+   }
+  ]
+ },
+ "conditions": [
+  "밑면은 곡선 y = √(8x/(2x²+1)) 와 x축, 두 직선 x = 1, x = 2 로 둘러싸인 영역 (xy평면 위)",
+  "x축에 수직인 평면으로 자른 단면은 모두 정사각형 (네 꼭짓점이 한 평면 위·네 변의 길이가 같음·이웃한 두 변이 수직·단면이 x축에 수직)",
+  "단면인 정사각형의 한 변의 길이 = 그 x에서 곡선의 y좌표 √(8x/(2x²+1)) → 단면 넓이 = 8x/(2x²+1)",
+  "입체의 부피 ∫₁² kx/(2x²+1) dx = 2 ln 3 을 만족하는 k 는 8 뿐",
+  "k = 8 일 때 실제 부피 = 2 ln 3",
+  "그림에 쓴 단면의 한 변: x=1 에서 √(8/3), x=1.5 에서 √(12/5.5), x=2 에서 4/3"
+ ],
+ "verify": "# 2023 9월모평 미적분 26\n# 밑면 = 곡선 y = sqrt(kx/(2x^2+1)) 와 x축, 두 직선 x=1, x=2 로 둘러싸인 영역 (xy평면)\n# x축에 수직인 평면으로 자른 단면이 모두 정사각형, 입체의 부피 = 2 ln 3  →  k = 8\nK = 8\ndef f(X):\n    return sqrt(Rational(K) * X / (2 * X**2 + 1))\n\n# ① 부피 조건: k 를 미지수로 두고 ∫_1^2 kx/(2x^2+1) dx = 2 ln 3 을 풀면 k = 8\nkk = Symbol('kk', positive=True)\nVk = simplify(integrate(kk * x / (2 * x**2 + 1), (x, 1, 2)))\nsols = solve(Vk - 2 * ln(3), kk)\nprint(\"[VERIFY OK] 부피 조건 ∫_1^2 kx/(2x^2+1) dx = 2 ln 3 의 해가 k = 8 뿐\"\n      if [simplify(s) for s in sols] == [8]\n      else f\"[VERIFY FAIL] k 의 해 = {sols} != [8]\")\n\n# ② k = 8 일 때 실제 부피 = 2 ln 3 (단면 넓이 = 한 변의 제곱)\nV = simplify(integrate(f(x)**2, (x, 1, 2)))\nprint(\"[VERIFY OK] k = 8 인 입체의 부피 = 2 ln 3\"\n      if _close(simplify(V - 2 * ln(3)))\n      else f\"[VERIFY FAIL] 부피 = {V} != 2 ln 3\")\n\n# ③ 단면의 한 변의 길이 = 곡선의 y좌표 (단면 넓이 = kx/(2x^2+1))\nprint(\"[VERIFY OK] 단면 넓이 = (한 변)^2 = 8x/(2x^2+1)\"\n      if _close(simplify(f(x)**2 - 8 * x / (2 * x**2 + 1)))\n      else \"[VERIFY FAIL] 단면 넓이가 8x/(2x^2+1) 이 아니다\")\n\n# ④ 각 단면(x = c)이 실제로 정사각형인지 — 네 꼭짓점으로 전수 확인\nOx = (0, 0, 0)\nEx = (1, 0, 0)   # x축 방향벡터\nfor c0 in [1, Rational(3, 2), 2]:\n    s = f(c0)\n    P0 = (c0, 0, 0)      # x축 위 (밑면의 아래 경계)\n    P1 = (c0, s, 0)      # 곡선 위 (밑면의 위 경계)\n    P2 = (c0, s, s)\n    P3 = (c0, 0, s)\n    tagc = f\"x = {c0} 단면\"\n    # 곡선 위의 점인가\n    print(f\"[VERIFY OK] {tagc}: 밑면 경계점 ({c0}, {s}) 가 곡선 y=sqrt(8x/(2x^2+1)) 위\"\n          if _close(simplify(P1[1]**2 - 8 * c0 / (2 * c0**2 + 1)))\n          else f\"[VERIFY FAIL] {tagc}: 곡선 위가 아니다\")\n    assert_coplanar([P0, P1, P2, P3], f\"{tagc}: 네 꼭짓점이 한 평면 위\")\n    assert_distance3d(P0, P1, s, f\"{tagc}: 변 길이 = {s}\")\n    assert_distance3d(P1, P2, s, f\"{tagc}: 변 길이 = {s}\")\n    assert_distance3d(P2, P3, s, f\"{tagc}: 변 길이 = {s}\")\n    assert_distance3d(P3, P0, s, f\"{tagc}: 변 길이 = {s}\")\n    assert_perpendicular(P0, P1, P1, P2, f\"{tagc}: 이웃한 두 변이 수직 (정사각형)\")\n    assert_perpendicular(P1, P2, P2, P3, f\"{tagc}: 이웃한 두 변이 수직 (정사각형)\")\n    assert_perpendicular(P0, P1, Ox, Ex, f\"{tagc}: 단면이 x축에 수직\")\n    assert_perpendicular(P0, P3, Ox, Ex, f\"{tagc}: 단면이 x축에 수직\")\n\n# ⑤ 밑면의 두 옆경계는 직선 x = 1, x = 2 (z = 0 인 xy평면 위)\ns1, s2 = f(1), f(2)\nassert_on_line((1, s1, 0), (1, 0, 0), (1, 1, 0), \"x = 1 위의 밑면 경계점\")\nassert_on_line((2, s2, 0), (2, 0, 0), (2, 1, 0), \"x = 2 위의 밑면 경계점\")\nassert_on_line((1, 0, 0), (0, 0, 0), (1, 0, 0), \"밑면의 아래 경계는 x축 (y = 0)\")\nassert_on_line((2, 0, 0), (0, 0, 0), (1, 0, 0), \"밑면의 아래 경계는 x축 (y = 0)\")\n\n# ⑥ 스펙에 박은 소수 좌표가 정확한가\nprint(\"[VERIFY OK] x = 1 단면의 한 변 = sqrt(8/3) = 1.632993161855452\"\n      if _close(float(s1) - 1.632993161855452, 0, 1e-12)\n      else f\"[VERIFY FAIL] f(1) = {float(s1)}\")\nprint(\"[VERIFY OK] x = 2 단면의 한 변 = 4/3 = 1.3333333333333333\"\n      if _close(float(s2) - 1.3333333333333333, 0, 1e-12)\n      else f\"[VERIFY FAIL] f(2) = {float(s2)}\")\nprint(\"[VERIFY OK] x = 1.5 단면의 한 변 = 1.4770978917519928\"\n      if _close(float(f(Rational(3, 2))) - 1.4770978917519928, 0, 1e-12)\n      else f\"[VERIFY FAIL] f(1.5) = {float(f(Rational(3,2)))}\")\n",
+ "note": "xy평면 위 노란 곡선과 x축, 두 직선 x=1·x=2 가 둘러싼 영역이 밑면이고, 거기서 위로 세워진 파란 입체다. 분홍 정사각형이 x=1.5 에서 x축에 수직으로 자른 단면으로, 한 변이 그 자리 곡선의 y좌표와 같으므로 단면 넓이는 8x/(2x²+1) 이 된다. 이걸 1부터 2까지 적분한 값이 2 ln 3 이어서 k=8 이 나온다."
+}

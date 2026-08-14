@@ -1,0 +1,274 @@
+{
+ "spec": {
+  "title": "구 $S$ 와 구 $T$ 의 교선원 위의 점 $B$ 와 삼각형 $BPQ$ 의 $xy$평면 정사영",
+  "cameraPosition": [
+   11,
+   -7,
+   7
+  ],
+  "gridSize": 10,
+  "axes": true,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "radius": 4,
+    "color": "#60a5fa",
+    "opacity": 0.15
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.4,
+     2.4,
+     4.3
+    ],
+    "text": "구 $S$",
+    "color": "#93c5fd"
+   },
+   {
+    "type": "sphere",
+    "center": [
+     -1.7320508075688772,
+     0.0,
+     0.0
+    ],
+    "radius": 3.4641016151377544,
+    "color": "#f59e0b",
+    "opacity": 0.15
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -4.0,
+     -3.0,
+     -2.6
+    ],
+    "text": "구 $T$ (지름 $\\overline{PQ}$)",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "3.872983346207417*cos(t)",
+    "y": "3.872983346207417*sin(t)",
+    "z": "0",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#22c55e",
+    "strokeWidth": 3
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.1,
+     4.3,
+     -0.5
+    ],
+    "text": "원 $C$ (반지름 $\\sqrt{15}$)",
+    "color": "#4ade80"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "-1.732050807568877-1.732050807568877*sin(t)",
+    "y": "3.464101615137754*cos(t)",
+    "z": "3*sin(t)",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#a78bfa",
+    "strokeWidth": 3
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -4.6,
+     -2.9,
+     2.6
+    ],
+    "text": "$S\\cap T$ (반지름 $2\\sqrt{3}$)",
+    "color": "#c4b5fd"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -3.4641016151377544,
+      0.0,
+      3.0
+     ],
+     [
+      -1.7320508075688772,
+      -3.4641016151377544,
+      0.0
+     ],
+     [
+      -1.7320508075688772,
+      3.4641016151377544,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "$B$",
+     "$P$",
+     "$Q$"
+    ],
+    "fill": "#3b82f6",
+    "fillOpacity": 0.3,
+    "stroke": "#60a5fa",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -3.4641016151377544,
+      0.0,
+      0.0
+     ],
+     [
+      -1.7320508075688772,
+      -3.4641016151377544,
+      0.0
+     ],
+     [
+      -1.7320508075688772,
+      3.4641016151377544,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "fill": "#e2e8f0",
+    "fillOpacity": 0.42,
+    "stroke": "#cbd5e1",
+    "strokeWidth": 2
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -4.5,
+     -0.55,
+     -0.45
+    ],
+    "text": "$B'$",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -2.6,
+     1.6,
+     -0.75
+    ],
+    "text": "정사영 넓이 $=6$",
+    "color": "#e2e8f0"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3.4641016151377544,
+     0.0,
+     3.0
+    ],
+    "to": [
+     -3.4641016151377544,
+     0.0,
+     0.0
+    ],
+    "color": "#94a3b8",
+    "dashed": true,
+    "label": "$3$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -1.7320508075688772,
+     -3.4641016151377544,
+     0.0
+    ],
+    "to": [
+     -1.7320508075688772,
+     3.4641016151377544,
+     0.0
+    ],
+    "color": "#fbbf24",
+    "label": "$4\\sqrt{3}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "to": [
+     -1.7320508075688772,
+     0.0,
+     0.0
+    ],
+    "color": "#ef4444",
+    "dashed": true,
+    "label": "$2$"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "label": "$A$",
+    "color": "#ef4444",
+    "size": 0.11
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.1,
+     4.9,
+     -0.6
+    ],
+    "text": "$xy$평면",
+    "color": "#a1a1aa"
+   }
+  ]
+ },
+ "conditions": [
+  "구 S: 중심 A(0,0,1), 반지름 4",
+  "P, Q 는 xy평면 위의 점 (구 S 와 xy평면의 교선인 원 C 위, 반지름 √15)",
+  "A 에서 직선 PQ 까지의 거리 = 2",
+  "PQ = 4√3, 중점 M = PQ 의 중점",
+  "AM ⊥ PQ 이고 AM = 2 (A 에서 선분 PQ 에 내린 수선)",
+  "구 T: 지름이 PQ (중심 M, 반지름 2√3)",
+  "S 와 T 의 교선평면은 √3x + z + 3 = 0, A 에서 그 평면까지의 거리 = 2",
+  "교선원의 중심 = M, 반지름 = 2√3",
+  "B(θ) = (−√3 − √3 sinθ, 2√3 cosθ, 3 sinθ) 는 모든 θ 에서 구 S 와 구 T 위",
+  "B 의 z좌표 = 3 sinθ > 0 ⇔ sinθ > 0",
+  "삼각형 B'PQ (xy평면 정사영) 의 넓이 = 6 sinθ",
+  "최댓값을 주는 B = (−2√3, 0, 3), 이때 B' 에서 직선 PQ 까지의 거리 = √3",
+  "최대 정사영 넓이 = (1/2)·4√3·√3 = 6"
+ ],
+ "verify": "s3 = sqrt(3)\n\n# 구 S: 중심 A(0,0,1), 반지름 4\nA = Matrix([0, 0, 1]); R = 4\nXY = [Matrix([0, 0, 0]), Matrix([1, 0, 0]), Matrix([0, 1, 0])]\n\n# 원 C = S ∩ xy평면 : x^2+y^2 = 15  (중심 O, 반지름 sqrt(15))\nO = Matrix([0, 0, 0]); rC = sqrt(15)\n\n# A 에서 선분 PQ 까지의 거리가 2 가 되도록 원 C 위에 잡은 두 점 (WLOG 회전)\nP = Matrix([-s3, -2*s3, 0])\nQ = Matrix([-s3,  2*s3, 0])\nM = (P + Q) / 2          # PQ 의 중점 = 지름이 PQ 인 구 T 의 중심\n\nassert_on_plane(P, XY, \"P 는 xy평면 위 (원 C 위)\")\nassert_on_plane(Q, XY, \"Q 는 xy평면 위 (원 C 위)\")\nassert_on_sphere(P, A, R, \"P 는 구 S 위\")\nassert_on_sphere(Q, A, R, \"Q 는 구 S 위\")\nassert_distance3d(O, P, rC, \"OP = sqrt(15) : 원 C 의 반지름\")\nassert_distance3d(O, Q, rC, \"OQ = sqrt(15) : 원 C 의 반지름\")\nassert_point_line_distance(A, P, Q, 2, \"A 에서 직선 PQ 까지의 거리 = 2\")\nassert_distance3d(P, Q, 4*s3, \"PQ = 4*sqrt(3)\")\nassert_distance3d(M, P, 2*s3, \"MP = 2*sqrt(3) : 구 T 의 반지름 (PQ 가 지름)\")\nassert_distance3d(M, Q, 2*s3, \"MQ = 2*sqrt(3) : 구 T 의 반지름 (PQ 가 지름)\")\nassert_perpendicular(A, M, P, Q, \"AM ⊥ PQ : AM 이 A 에서 PQ 에 내린 수선\")\nassert_distance3d(A, M, 2, \"AM = 2 : A 에서 선분 PQ 까지의 거리\")\n\n# --- 두 구 S, T 의 교선 원 --------------------------------------\n# S: x^2+y^2+z^2-2z-15=0,  T: x^2+y^2+z^2+2*sqrt(3)x-9=0  →  평면 sqrt(3)x+z+3=0\nPL = [Matrix([0, 0, -3]), Matrix([-s3, 0, 0]), Matrix([0, 1, -3])]\nassert_on_plane(M, PL, \"교선원의 중심 M 은 교선평면 위\")\nassert_point_plane_distance(A, PL, 2, \"A 에서 교선평면까지의 거리 = 2\")\nassert_distance3d(A, M, 2, \"AM = 2 : A 에서 교선평면에 내린 수선의 길이\")\nrK = sqrt(R**2 - 4)      # 교선원의 반지름\nassert _close(rK - 2*s3), \"교선원 반지름이 2*sqrt(3) 이 아니다\"\nprint(\"[VERIFY OK] 교선원의 반지름 = 2*sqrt(3)\")\n\n# 교선원 위의 점 B(th) — u, v 는 교선평면의 정규직교 기저\nth = symbols('th', real=True)\nu = Matrix([0, 1, 0])\nv = Matrix([-Rational(1, 2), 0, s3/2])\nassert _close(u.dot(v)) and _close(u.dot(u) - 1) and _close(v.dot(v) - 1), \"기저가 정규직교가 아니다\"\nB = M + 2*s3*(cos(th)*u + sin(th)*v)\nprint(\"B(th) =\", simplify(B).T)\nassert _close(simplify((B - A).dot(B - A) - R**2)), \"B(th) 가 구 S 위가 아니다\"\nassert _close(simplify((B - M).dot(B - M) - 12)), \"B(th) 가 구 T 위가 아니다\"\nprint(\"[VERIFY OK] B(th) 는 모든 th 에서 구 S 와 구 T 의 교선원 위\")\nassert _close(simplify(B[2] - 3*sin(th))), \"B 의 z좌표가 3*sin(th) 가 아니다\"\nprint(\"[VERIFY OK] B 의 z좌표 = 3*sin(th) > 0  ⇔  sin(th) > 0\")\n\n# --- xy평면 위로의 정사영 넓이 -----------------------------------\nBp = Matrix([B[0], B[1], 0])          # B 의 정사영 B' (P, Q 는 이미 xy평면 위)\ncrossz = (Q - P).cross(Bp - P)[2]\nassert _close(simplify(crossz - 12*sin(th))), \"외적 z성분이 12*sin(th) 가 아니다\"\nprint(\"[VERIFY OK] 삼각형 B'PQ 의 넓이 = 6*sin(th)  (sin th > 0 에서 최댓값 6)\")\n\n# --- 최댓값을 주는 B (sin th = 1) --------------------------------\nBmax = Matrix([-2*s3, 0, 3])\nassert _close(simplify((B - Bmax).subs(th, pi/2).norm())), \"th=pi/2 에서 B 가 (-2sqrt3,0,3) 이 아니다\"\nassert_on_sphere(Bmax, A, R, \"B(최대) 는 구 S 위\")\nassert_on_sphere(Bmax, M, 2*s3, \"B(최대) 는 구 T 위\")\nassert_on_plane(Bmax, PL, \"B(최대) 는 교선평면 위\")\nassert Bmax[2] > 0, \"B 의 z좌표가 양수가 아니다\"\nprint(\"[VERIFY OK] B(최대) = (-2*sqrt(3), 0, 3), z좌표 > 0\")\n\nBpmax = Matrix([-2*s3, 0, 0])\nassert_on_plane(Bpmax, XY, \"B' 는 xy평면 위 (B 의 정사영)\")\nassert_point_line_distance(Bpmax, P, Q, s3, \"B' 에서 직선 PQ 까지의 거리 = sqrt(3)\")\nassert _close(Rational(1, 2)*4*s3*s3 - 6), \"최대 정사영 넓이가 6 이 아니다\"\nprint(\"[VERIFY OK] 최대 정사영 넓이 = (1/2)*4sqrt(3)*sqrt(3) = 6  (정답 ①)\")\n",
+ "note": "구 S 와 구 T 가 만나 생기는 보라색 교선원 위를 점 B 가 움직입니다. B 가 원의 가장 높은 곳(z=3)에 올 때 회색 정사영 삼각형 B'PQ 가 가장 넓어져 넓이 6 이 됩니다."
+}

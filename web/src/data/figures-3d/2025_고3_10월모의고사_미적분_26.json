@@ -1,0 +1,463 @@
+{
+ "spec": {
+  "shapes": [
+   {
+    "type": "segment3d",
+    "from": [
+     -0.15,
+     0,
+     0
+    ],
+    "to": [
+     1.75,
+     0,
+     0
+    ],
+    "color": "#71717a"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     -0.1,
+     0
+    ],
+    "to": [
+     0,
+     1.45,
+     0
+    ],
+    "color": "#71717a"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.85,
+     0,
+     0
+    ],
+    "text": "$x$",
+    "color": "#71717a"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     1.56,
+     0
+    ],
+    "text": "$y$",
+    "color": "#71717a"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.09,
+     -0.13,
+     0
+    ],
+    "text": "O",
+    "color": "#71717a"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "2*sqrt(t)*exp(-t^2)",
+    "z": "0",
+    "tRange": [
+     0,
+     1.7
+    ],
+    "samples": 140,
+    "color": "#f8fafc",
+    "strokeWidth": 2,
+    "label": "$y=2\\sqrt{x}e^{-x^2}$"
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*2*sqrt(u)*exp(-u^2)",
+    "z": "0",
+    "uRange": [
+     0.5,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 6,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*2*sqrt(u)*exp(-u^2)",
+    "z": "2*sqrt(u)*exp(-u^2)",
+    "uRange": [
+     0.5,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 6,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "0",
+    "z": "v*2*sqrt(u)*exp(-u^2)",
+    "uRange": [
+     0.5,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 6,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "2*sqrt(u)*exp(-u^2)",
+    "z": "v*2*sqrt(u)*exp(-u^2)",
+    "uRange": [
+     0.5,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 48,
+    "vSamples": 6,
+    "color": "#60a5fa",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "0.5",
+    "y": "1.1013906298063676*u",
+    "z": "1.1013906298063676*v",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 4,
+    "vSamples": 4,
+    "color": "#fbbf24",
+    "opacity": 0.4
+   },
+   {
+    "type": "parametricSurface",
+    "x": "0.75",
+    "y": "0.9868928017140712*u",
+    "z": "0.9868928017140712*v",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 4,
+    "vSamples": 4,
+    "color": "#fbbf24",
+    "opacity": 0.3
+   },
+   {
+    "type": "parametricSurface",
+    "x": "1",
+    "y": "0.7357588823428847*u",
+    "z": "0.7357588823428847*v",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 4,
+    "vSamples": 4,
+    "color": "#fbbf24",
+    "opacity": 0.4
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     0,
+     0
+    ],
+    "to": [
+     0.5,
+     1.1013906298063676,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     1.1013906298063676,
+     0
+    ],
+    "to": [
+     0.5,
+     1.1013906298063676,
+     1.1013906298063676
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     1.1013906298063676,
+     1.1013906298063676
+    ],
+    "to": [
+     0.5,
+     0,
+     1.1013906298063676
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     0,
+     1.1013906298063676
+    ],
+    "to": [
+     0.5,
+     0,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     0,
+     0
+    ],
+    "to": [
+     1.0,
+     0.7357588823428847,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     0.7357588823428847,
+     0
+    ],
+    "to": [
+     1.0,
+     0.7357588823428847,
+     0.7357588823428847
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     0.7357588823428847,
+     0.7357588823428847
+    ],
+    "to": [
+     1.0,
+     0,
+     0.7357588823428847
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0,
+     0,
+     0.7357588823428847
+    ],
+    "to": [
+     1.0,
+     0,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": false
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.75,
+     0,
+     0
+    ],
+    "to": [
+     0.75,
+     0.9868928017140712,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.75,
+     0.9868928017140712,
+     0
+    ],
+    "to": [
+     0.75,
+     0.9868928017140712,
+     0.9868928017140712
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.75,
+     0.9868928017140712,
+     0.9868928017140712
+    ],
+    "to": [
+     0.75,
+     0,
+     0.9868928017140712
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.75,
+     0,
+     0.9868928017140712
+    ],
+    "to": [
+     0.75,
+     0,
+     0
+    ],
+    "color": "#fbbf24",
+    "dashed": true
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "0",
+    "z": "2*sqrt(t)*exp(-t^2)",
+    "tRange": [
+     0.5,
+     1
+    ],
+    "samples": 60,
+    "color": "#e5e7eb",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "2*sqrt(t)*exp(-t^2)",
+    "z": "2*sqrt(t)*exp(-t^2)",
+    "tRange": [
+     0.5,
+     1
+    ],
+    "samples": 60,
+    "color": "#e5e7eb",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.5,
+     0,
+     0
+    ],
+    "to": [
+     1,
+     0,
+     0
+    ],
+    "color": "#e5e7eb"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.5,
+     -0.28,
+     0
+    ],
+    "text": "$x=\\frac{1}{2}$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.0,
+     -0.28,
+     0
+    ],
+    "text": "$x=1$",
+    "color": "#fbbf24"
+   }
+  ],
+  "cameraPosition": [
+   2.8,
+   -3.4,
+   2.4
+  ],
+  "title": "곡선 $y=2\\sqrt{x}e^{-x^2}$ 아래 밑면 위에 선, 단면이 정사각형인 입체"
+ },
+ "conditions": [
+  "밑면은 곡선 y=2√x e^(-x²), x축, 직선 x=1/2, 직선 x=1 로 둘러싸인 부분 (z=0 평면)",
+  "x=1/2, x=3/4, x=1 세 곳의 단면에서 밑변 AB 의 길이 = 곡선의 y값 f(x)",
+  "각 단면의 네 변 AB, BC, CD, DA 의 길이가 모두 f(x) 로 같다",
+  "각 단면의 이웃한 두 변이 서로 수직이다 (AB⟂AD, BC⟂CD) — 네 변이 같음과 합쳐 정사각형",
+  "각 단면의 네 꼭짓점 A, B, C, D 가 한 평면 위에 있다",
+  "각 단면은 x축에 수직이다",
+  "f(1/2)=√2·e^(-1/4)≈1.1014, f(1)=2/e≈0.7358 — 그림에 쓴 정사각형 한 변의 길이",
+  "f'(1/2)=0 — 곡선은 x=1/2 에서 최대이므로 x=1/2 쪽 단면이 가장 크다",
+  "부피 ∫_{1/2}^{1} f(x)² dx = e^(-1/2) − e^(-2) (정답 ④)"
+ ],
+ "verify": "# ── 2025 고3 10월 미적분 26 ─────────────────────────────────────────\n# 밑면: 곡선 y = 2*sqrt(x)*e^(-x^2), x축, x=1/2, x=1 로 둘러싸인 부분 (z=0 평면)\n# x축에 수직인 평면으로 자른 단면은 모두 정사각형 → 한 변 = f(x)\nx = symbols('x', positive=True)\nf = 2*sqrt(x)*exp(-x**2)\n\ndef sq(x0):\n    \"\"\"x=x0 단면 정사각형의 네 꼭짓점 A,B,C,D (반시계, z 방향으로 세워진 정사각형)\"\"\"\n    s = f.subs(x, x0)\n    A = (x0, 0, 0); B = (x0, s, 0); C = (x0, s, s); D = (x0, 0, s)\n    return A, B, C, D, simplify(s)\n\nfor x0, name in [(Rational(1,2), 'x=1/2'), (Rational(3,4), 'x=3/4'), (1, 'x=1')]:\n    A, B, C, D, s = sq(x0)\n    # 밑변 AB 가 곡선까지 닿는다: |AB| = f(x0)\n    assert_distance3d(A, B, s, f'{name}: 밑변 AB = 곡선의 y값 f({x0})')\n    # 네 변이 모두 같다 → 정사각형\n    assert_distance3d(B, C, s, f'{name}: 변 BC = f({x0})')\n    assert_distance3d(C, D, s, f'{name}: 변 CD = f({x0})')\n    assert_distance3d(D, A, s, f'{name}: 변 DA = f({x0})')\n    # 이웃한 변이 수직 → 직사각형, 위와 합쳐 정사각형\n    assert_perpendicular(A, B, A, D, f'{name}: 변 AB ⟂ 변 AD')\n    assert_perpendicular(B, C, C, D, f'{name}: 변 BC ⟂ 변 CD')\n    # 네 점이 한 평면 위 (단면)\n    assert_coplanar([A, B, C, D], f'{name}: 단면 ABCD 는 한 평면 위')\n    # 그 평면이 x축에 수직\n    assert_perpendicular((0,0,0), (1,0,0), A, B, f'{name}: 단면 ⟂ x축 (AB 성분)')\n    assert_perpendicular((0,0,0), (1,0,0), A, D, f'{name}: 단면 ⟂ x축 (AD 성분)')\n\n# 양 끝 단면의 한 변 길이 (그림에 쓴 좌표가 이 값과 같아야 한다)\ns_half = simplify(f.subs(x, Rational(1,2)))   # = sqrt(2)*e^(-1/4)\ns_one  = simplify(f.subs(x, 1))               # = 2/e\nprint('[VERIFY OK] s(1/2) =', s_half, '=', float(s_half)) if _close(s_half, sqrt(2)*exp(-Rational(1,4))) else print('[VERIFY FAIL] s(1/2)')\nprint('[VERIFY OK] s(1) =', s_one, '=', float(s_one)) if _close(s_one, 2*exp(-1)) else print('[VERIFY FAIL] s(1)')\n\n# 곡선의 최댓값이 x=1/2 (그림에서 x=1/2 쪽이 가장 높다)\ncrit = simplify(diff(f, x).subs(x, Rational(1,2)))\nprint('[VERIFY OK] f\\'(1/2)=0 — x=1/2 에서 최대' if _close(crit, 0) else f'[VERIFY FAIL] f\\'(1/2)={crit}')\n\n# 부피 = ∫ f^2 dx = e^(-1/2) - e^(-2)  (정답 ④)\nV = simplify(integrate(f**2, (x, Rational(1,2), 1)))\nprint('[VERIFY OK] 부피 = e^(-1/2)-e^(-2)' if _close(V, exp(-Rational(1,2)) - exp(-2)) else f'[VERIFY FAIL] 부피={V}')\n",
+ "note": "밑면(파란 부분)의 각 x 에서 세로로 세운 정사각형의 한 변이 곡선의 높이 y=2√x e^(-x²) 와 같다. 주황색 정사각형이 x=1/2, 3/4, 1 에서의 단면이고, 이 단면 넓이 y² 를 x=1/2 부터 1 까지 적분한 것이 부피다."
+}

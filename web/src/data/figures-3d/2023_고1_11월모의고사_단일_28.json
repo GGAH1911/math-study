@@ -1,0 +1,216 @@
+{
+ "spec": {
+  "title": "직육면체 ABCD-EFGH 를 단면 ACF 로 잘라 사면체 F-ABC 를 떼어낸 모습",
+  "cameraPosition": [
+   10.7324,
+   -7.2676,
+   9.5352
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      7.070367516975993
+     ],
+     [
+      3.4648162415120036,
+      3.4648162415120036,
+      7.070367516975993
+     ],
+     [
+      0,
+      3.4648162415120036,
+      7.070367516975993
+     ],
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      3.4648162415120036,
+      0,
+      0
+     ],
+     [
+      3.4648162415120036,
+      3.4648162415120036,
+      0
+     ],
+     [
+      0,
+      3.4648162415120036,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      3,
+      4,
+      5,
+      6
+     ],
+     [
+      0,
+      2,
+      6,
+      3
+     ],
+     [
+      2,
+      1,
+      5,
+      6
+     ],
+     [
+      0,
+      3,
+      4
+     ],
+     [
+      1,
+      5,
+      4
+     ],
+     [
+      0,
+      1,
+      4
+     ]
+    ],
+    "labels": [
+     "A",
+     "C",
+     "D",
+     "E",
+     "F",
+     "G",
+     "H"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      7.070367516975993
+     ],
+     [
+      3.4648162415120036,
+      0,
+      7.070367516975993
+     ],
+     [
+      3.4648162415120036,
+      3.4648162415120036,
+      7.070367516975993
+     ],
+     [
+      3.4648162415120036,
+      0,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ],
+     [
+      0,
+      1,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      0,
+      2,
+      3
+     ]
+    ],
+    "labels": [
+     "",
+     "B",
+     "",
+     ""
+    ],
+    "fill": "#f59e0b",
+    "fillOpacity": 0.28,
+    "stroke": "#fbbf24",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     7.070367516975993
+    ],
+    "to": [
+     3.4648162415120036,
+     3.4648162415120036,
+     7.070367516975993
+    ],
+    "color": "#ef4444"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.4648162415120036,
+     3.4648162415120036,
+     7.070367516975993
+    ],
+    "to": [
+     3.4648162415120036,
+     0,
+     0
+    ],
+    "color": "#ef4444"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.4648162415120036,
+     0,
+     0
+    ],
+    "to": [
+     0,
+     0,
+     7.070367516975993
+    ],
+    "color": "#ef4444"
+   }
+  ]
+ },
+ "conditions": [
+  "ABCD-EFGH 는 직육면체 (꼭짓점 A 에서 AB ⟂ AD, AB ⟂ AE, AD ⟂ AE)",
+  "AB = DC = EF = HG, AD = BC = EH = FG, AE = BF = CG = DH",
+  "여섯 면 ABCD, EFGH, ABFE, BCGF, DCGH, ADHE 가 각각 한 평면 위에 있다",
+  "단면 ACF 로 사면체 F-ABC 를 잘라낸다 (그 부피는 직육면체의 1/6)",
+  "남은 입체 ACD-EFGH 의 모서리 길이의 합 l1 에서 사면체 F-ABC 의 모서리 길이의 합 l2 를 뺀 값이 28",
+  "남은 입체의 겉넓이 S1 에서 사면체의 겉넓이 S2 를 뺀 값이 61",
+  "AC^2 + CF^2 + FA^2 = 148"
+ ],
+ "verify": "# 직육면체 ABCD-EFGH: 밑변 ea x eb, 높이 eh\n# 조건 l1-l2=28, S1-S2=61 을 만족하는 구체적 한 조합 (ea=eb 로 잡음)\ns13 = sqrt(13)\nea = (14 - s13)/3          # AB = DC = EF = HG\neb = (14 - s13)/3          # AD = BC = EH = FG\neh = (14 + 2*s13)/3        # AE = BF = CG = DH\n\nA = (0, 0, eh); B = (ea, 0, eh); C = (ea, eb, eh); D = (0, eb, eh)\nE = (0, 0, 0);  F = (ea, 0, 0);  G = (ea, eb, 0);  H = (0, eb, 0)\n\ndef check(val, target, tag):\n    print(f\"[VERIFY OK] {tag}\" if _close(val, target)\n          else f\"[VERIFY FAIL] {tag}: {float(val)} != {float(target)}\")\n\ndef area(p, q, r):\n    return ((Matrix(q) - Matrix(p)).cross(Matrix(r) - Matrix(p))).norm()/2\n\n# ① 직육면체: 한 꼭짓점 A 에서 세 모서리가 서로 수직\nassert_perpendicular(A, B, A, D, \"AB ⟂ AD\")\nassert_perpendicular(A, B, A, E, \"AB ⟂ AE\")\nassert_perpendicular(A, D, A, E, \"AD ⟂ AE\")\n# ② 마주 보는 모서리 길이가 같다 (직육면체)\nassert_distance3d(A, B, ea, \"AB = ea\")\nassert_distance3d(D, C, ea, \"DC = AB\")\nassert_distance3d(E, F, ea, \"EF = AB\")\nassert_distance3d(H, G, ea, \"HG = AB\")\nassert_distance3d(A, D, eb, \"AD = eb\")\nassert_distance3d(B, C, eb, \"BC = AD\")\nassert_distance3d(E, H, eb, \"EH = AD\")\nassert_distance3d(F, G, eb, \"FG = AD\")\nassert_distance3d(A, E, eh, \"AE = eh\")\nassert_distance3d(B, F, eh, \"BF = AE\")\nassert_distance3d(C, G, eh, \"CG = AE\")\nassert_distance3d(D, H, eh, \"DH = AE\")\n# ③ 각 면이 실제로 평면\nassert_coplanar([A, B, C, D], \"윗면 ABCD 가 한 평면\")\nassert_coplanar([E, F, G, H], \"밑면 EFGH 가 한 평면\")\nassert_coplanar([A, B, F, E], \"옆면 ABFE 가 한 평면\")\nassert_coplanar([B, C, G, F], \"옆면 BCGF 가 한 평면\")\nassert_coplanar([D, C, G, H], \"옆면 DCGH 가 한 평면\")\nassert_coplanar([A, D, H, E], \"옆면 ADHE 가 한 평면\")\n# ④ 단면 ACF 로 잘라낸 사면체 F-ABC 의 부피 = (직육면체 부피)/6\nvol = abs((Matrix(B) - Matrix(A)).dot((Matrix(C) - Matrix(A)).cross(Matrix(F) - Matrix(A))))/6\ncheck(vol, ea*eb*eh/6, \"사면체 F-ABC 의 부피 = 직육면체의 1/6 (B 가 단면 ACF 밖)\")\n\n# ⑤ 모서리 길이의 합: 입체 ACD-EFGH 의 12개 모서리\nl1 = (_dist(A, D) + _dist(D, C) + _dist(C, A)\n      + _dist(E, F) + _dist(F, G) + _dist(G, H) + _dist(H, E)\n      + _dist(A, E) + _dist(D, H) + _dist(C, G)\n      + _dist(A, F) + _dist(C, F))\n# 사면체 F-ABC 의 6개 모서리\nl2 = (_dist(A, B) + _dist(B, C) + _dist(C, A)\n      + _dist(A, F) + _dist(B, F) + _dist(C, F))\ncheck(l1 - l2, 28, \"l1 - l2 = 28\")\n\n# ⑥ 겉넓이: 입체 ACD-EFGH 의 7개 면\nS1 = (area(A, C, D)\n      + area(E, F, G) + area(E, G, H)\n      + area(A, D, H) + area(A, H, E)\n      + area(D, C, G) + area(D, G, H)\n      + area(A, E, F) + area(C, G, F) + area(A, C, F))\n# 사면체 F-ABC 의 4개 면\nS2 = area(A, B, C) + area(A, B, F) + area(B, C, F) + area(A, C, F)\ncheck(S1 - S2, 61, \"S1 - S2 = 61\")\n\n# ⑦ 구하는 값\ncheck(_dist(A, C)**2 + _dist(C, F)**2 + _dist(F, A)**2, 148, \"AC^2 + CF^2 + FA^2 = 148\")\n",
+ "note": "직육면체를 단면 ACF 로 자른 그림입니다. 주황색이 잘라낸 사면체 F-ABC, 회색이 남은 입체 ACD-EFGH 이고, 빨간 세 선분이 구하려는 AC, CF, FA 입니다."
+}

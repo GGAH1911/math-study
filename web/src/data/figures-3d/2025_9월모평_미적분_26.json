@@ -1,0 +1,279 @@
+{
+ "spec": {
+  "shapes": [
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*2*u*sqrt(u*sin(u^2))",
+    "z": "0",
+    "uRange": [
+     0.7236012545582676,
+     1.2533141373155001
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 8,
+    "color": "#cbd5e1",
+    "opacity": 0.45
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "u*sqrt(u*sin(u^2))*(1+cos(v))",
+    "z": "u*sqrt(u*sin(u^2))*sin(v)",
+    "uRange": [
+     0.7236012545582676,
+     1.2533141373155001
+    ],
+    "vRange": [
+     0,
+     3.141592653589793
+    ],
+    "uSamples": 72,
+    "vSamples": 40,
+    "color": "#7dd3fc",
+    "opacity": 0.32
+   },
+   {
+    "type": "parametricSurface",
+    "x": "0.7236012545582676",
+    "y": "0.43524517855348027*(1+u*cos(v))",
+    "z": "0.43524517855348027*u*sin(v)",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     3.141592653589793
+    ],
+    "uSamples": 12,
+    "vSamples": 48,
+    "color": "#38bdf8",
+    "opacity": 0.3
+   },
+   {
+    "type": "parametricSurface",
+    "x": "1.2533141373155001",
+    "y": "1.403104145534216*(1+u*cos(v))",
+    "z": "1.403104145534216*u*sin(v)",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     3.141592653589793
+    ],
+    "uSamples": 12,
+    "vSamples": 48,
+    "color": "#38bdf8",
+    "opacity": 0.3
+   },
+   {
+    "type": "parametricSurface",
+    "x": "1.0233267079464885",
+    "y": "0.9633559394837496*(1+u*cos(v))",
+    "z": "0.9633559394837496*u*sin(v)",
+    "uRange": [
+     0,
+     1
+    ],
+    "vRange": [
+     0,
+     3.141592653589793
+    ],
+    "uSamples": 12,
+    "vSamples": 48,
+    "color": "#f472b6",
+    "opacity": 0.55
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "1.0233267079464885",
+    "y": "0.9633559394837496*(1+cos(t))",
+    "z": "0.9633559394837496*sin(t)",
+    "tRange": [
+     0,
+     3.141592653589793
+    ],
+    "samples": 120,
+    "color": "#fb7185",
+    "strokeWidth": 3
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "0.7236012545582676",
+    "y": "0.43524517855348027*(1+cos(t))",
+    "z": "0.43524517855348027*sin(t)",
+    "tRange": [
+     0,
+     3.141592653589793
+    ],
+    "samples": 120,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "1.2533141373155001",
+    "y": "1.403104145534216*(1+cos(t))",
+    "z": "1.403104145534216*sin(t)",
+    "tRange": [
+     0,
+     3.141592653589793
+    ],
+    "samples": 120,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0233267079464885,
+     0,
+     0
+    ],
+    "to": [
+     1.0233267079464885,
+     1.9267118789674993,
+     0
+    ],
+    "color": "#fb7185"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "2*t*sqrt(t*sin(t^2))",
+    "z": "0",
+    "tRange": [
+     0,
+     1.7724538509055159
+    ],
+    "samples": 240,
+    "color": "#94a3b8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "2*t*sqrt(t*sin(t^2))",
+    "z": "0",
+    "tRange": [
+     0.7236012545582676,
+     1.2533141373155001
+    ],
+    "samples": 200,
+    "color": "#fbbf24",
+    "strokeWidth": 3
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "t*sqrt(t*sin(t^2))",
+    "z": "t*sqrt(t*sin(t^2))",
+    "tRange": [
+     0.7236012545582676,
+     1.2533141373155001
+    ],
+    "samples": 200,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.7236012545582676,
+     -0.45,
+     0
+    ],
+    "to": [
+     0.7236012545582676,
+     3.1,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.2533141373155001,
+     -0.45,
+     0
+    ],
+    "to": [
+     1.2533141373155001,
+     3.1,
+     0
+    ],
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.7236012545582676,
+     -0.8,
+     0
+    ],
+    "text": "$x=\\sqrt{\\dfrac{\\pi}{6}}$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.2533141373155001,
+     -0.8,
+     0
+    ],
+    "text": "$x=\\sqrt{\\dfrac{\\pi}{2}}$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.72,
+     2.45,
+     0
+    ],
+    "text": "$y=2x\\sqrt{x\\sin x^2}$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.0233267079464885,
+     0.9633559394837496,
+     1.2833559394837497
+    ],
+    "text": "반원 단면",
+    "color": "#fb7185"
+   }
+  ],
+  "cameraPosition": [
+   4.2,
+   -4.4,
+   2.9
+  ],
+  "axes": true,
+  "title": "밑면 위에서 x축에 수직으로 자른 단면이 모두 반원인 입체"
+ },
+ "conditions": [
+  "밑면의 위쪽 경계가 곡선 y=2x√(x sin x²) 위에 있다 — x=√(π/6), √(π/3), √(π/2) 에서 확인",
+  "y(√(π/6)) = √2·(π/6)^(3/4), y(√(π/2)) = 2·(π/2)^(3/4)",
+  "밑면의 좌우 경계가 x=√(π/6), x=√(π/2) 이고(x²=π/6, x²=π/2) 그 밑변 끝점이 x축 위에 있다",
+  "각 단면의 지름 양 끝점이 밑면(xy평면) 위에 있다",
+  "각 단면의 지름 길이가 그 자리의 곡선 높이 y(x) 와 같다",
+  "각 단면의 중심이 지름의 중점이다 (반지름 = y(x)/2)",
+  "각 단면의 지름과 높이 방향이 x축에 수직이다 (단면이 x축에 수직)",
+  "각 단면이 밑면에 수직이다",
+  "각 단면의 반원 위 점(각 0, π/4, π/2, 3π/4, π)이 중심에서 반지름만큼 떨어져 있고 그 단면 평면 위에 있다",
+  "반원 꼭대기의 높이가 반지름 y(x)/2 이다",
+  "단면넓이 S(x) = (π/2)·(y/2)² = (π/2)x³ sin x²",
+  "부피 V = ∫ S(x) dx = (√3π² + 6π)/48 (정답 ③)"
+ ],
+ "verify": "\n# 2025 9월모평 미적분 26\n# 밑면 = 곡선 y = 2x*sqrt(x*sin(x^2)) 와 x축, 두 직선 x=sqrt(pi/6), x=sqrt(pi/2) 로 둘러싸인 부분\n# x축에 수직인 평면으로 자른 단면 = 밑면의 세로 선분(길이 y(x))을 지름으로 하는 반원\ndef f(X):\n    return 2*X*sqrt(X*sin(X**2))\n\ndef rad(X):\n    return f(X)/2\n\ndef assert_eq(actual, expected, tag):\n    if _close(simplify(actual - expected)):\n        print(f\"[VERIFY OK] {tag}\")\n    else:\n        print(f\"[VERIFY FAIL] {tag}: {actual} != {expected}\")\n\nA = sqrt(pi/6)          # 왼쪽 경계 x = sqrt(pi/6)\nB = sqrt(pi/2)          # 오른쪽 경계 x = sqrt(pi/2)\nM = sqrt(pi/3)          # 가운데 대표 단면\n\nBASE = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]     # 밑면이 놓인 xy평면(z=0)\nXA, XB = (0, 0, 0), (1, 0, 0)                # x축 방향\n\n# ── ① 적분 구간의 두 경계 ──\nassert_eq(A**2, pi/6, \"왼쪽 경계 x=sqrt(pi/6) (x^2 = pi/6)\")\nassert_eq(B**2, pi/2, \"오른쪽 경계 x=sqrt(pi/2) (x^2 = pi/2)\")\nassert_on_line((A, 0, 0), XA, XB, \"왼쪽 경계의 밑변 끝점이 x축 위\")\nassert_on_line((B, 0, 0), XA, XB, \"오른쪽 경계의 밑변 끝점이 x축 위\")\n\n# ── ② 밑면 위쪽 경계가 곡선 y = 2x*sqrt(x sin x^2) 위 ──\nfor X, nm in [(A, \"x=sqrt(pi/6)\"), (M, \"x=sqrt(pi/3)\"), (B, \"x=sqrt(pi/2)\")]:\n    assert_eq(f(X)**2, 4*X**3*sin(X**2), f\"{nm} 에서 밑면 위 끝점이 곡선 위 (y^2 = 4x^3 sin x^2)\")\nassert_eq(f(A), sqrt(2)*(pi/6)**Rational(3, 4), \"y(sqrt(pi/6)) = sqrt(2)*(pi/6)^(3/4)\")\nassert_eq(f(B), 2*(pi/2)**Rational(3, 4), \"y(sqrt(pi/2)) = 2*(pi/2)^(3/4)\")\n\n# ── ③ 각 단면: 밑면의 세로 선분을 지름으로 하는 반원, x축에 수직 ──\ndef check_section(X, nm):\n    R = rad(X)\n    P0 = (X, 0, 0)            # 지름의 한 끝 (x축 위)\n    P1 = (X, f(X), 0)         # 지름의 다른 끝 (곡선 위)\n    C = (X, R, 0)             # 반원의 중심 = 지름의 중점\n    T = (X, R, R)             # 반원의 꼭대기\n    assert_on_plane(P0, BASE, f\"{nm} 단면의 지름 끝점 P0 가 밑면(xy평면) 위\")\n    assert_on_plane(P1, BASE, f\"{nm} 단면의 지름 끝점 P1 이 밑면(xy평면) 위\")\n    assert_distance3d(P0, P1, f(X), f\"{nm} 단면의 지름 = 그 자리의 곡선 높이 y(x)\")\n    assert_distance3d(C, P0, R, f\"{nm} 중심이 지름의 중점 (반지름 = y(x)/2, P0 쪽)\")\n    assert_distance3d(C, P1, R, f\"{nm} 중심이 지름의 중점 (반지름 = y(x)/2, P1 쪽)\")\n    assert_perpendicular(XA, XB, P0, P1, f\"{nm} 단면의 지름이 x축에 수직\")\n    assert_perpendicular(XA, XB, C, T, f\"{nm} 단면의 높이 방향이 x축에 수직\")\n    assert_planes_perpendicular([P0, P1, T], BASE, f\"{nm} 단면이 밑면에 수직\")\n    for th, tn in [(0, \"0\"), (pi/4, \"pi/4\"), (pi/2, \"pi/2\"), (3*pi/4, \"3pi/4\"), (pi, \"pi\")]:\n        Q = (X, R + R*cos(th), R*sin(th))\n        assert_on_circle(Q, C, R, f\"{nm} 반원 위의 점(각 {tn})이 중심에서 반지름만큼 떨어져 있고 평면 x={nm[2:]} 위\",\n                         normal=(1, 0, 0))\n    assert_distance3d(T, C, R, f\"{nm} 반원의 꼭대기 높이 = 반지름 y(x)/2\")\n\ncheck_section(A, \"x=sqrt(pi/6)\")\ncheck_section(M, \"x=sqrt(pi/3)\")\ncheck_section(B, \"x=sqrt(pi/2)\")\n\n# ── ④ 부피 ──\nS = pi/2*rad(x)**2\nassert_eq(simplify(S), pi/2*x**3*sin(x**2), \"단면(반원)의 넓이 S(x) = (pi/2)*(y/2)^2 = (pi/2) x^3 sin x^2\")\nV = integrate(pi*rad(x)**2/2, (x, A, B))\nassert_eq(V, (sqrt(3)*pi**2 + 6*pi)/48, \"부피 V = ∫ S(x) dx = (sqrt(3)pi^2 + 6pi)/48 (정답 ③)\")\n",
+ "note": "곡선·x축·두 직선 x=√(π/6), x=√(π/2) 로 둘러싸인 밑면 위에, x축에 수직인 반원 단면을 쌓아 올린 입체입니다. 반원의 지름이 그 자리의 곡선 높이 y(x)라서 반지름은 y(x)/2, 단면넓이는 (π/2)(y/2)² = (π/2)x³sin x² 이고, 이를 √(π/6)부터 √(π/2)까지 적분한 값이 부피입니다."
+}

@@ -1,0 +1,369 @@
+{
+ "spec": {
+  "title": "2026 9월모평 기하 28 — 구 S 위의 두 점 A, B 와 삼각형 OAB 의 xy평면 정사영",
+  "cameraPosition": [
+   13.0,
+   -11.5,
+   9.0
+  ],
+  "axes": true,
+  "gridSize": 16,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "radius": 6,
+    "color": "#93c5fd",
+    "opacity": 0.15,
+    "label": "구 S"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     2.0,
+     0.0,
+     3.464101615138
+    ],
+    "color": "#e2e8f0",
+    "label": "4"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     2.0,
+     0.0,
+     3.464101615138
+    ],
+    "to": [
+     3.0,
+     0.0,
+     5.196152422707
+    ],
+    "color": "#e2e8f0",
+    "label": "2"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     4.898979485566,
+     3.464101615138
+    ],
+    "color": "#e2e8f0",
+    "label": "6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.0,
+     0.0,
+     5.196152422707
+    ],
+    "to": [
+     0.0,
+     4.898979485566,
+     3.464101615138
+    ],
+    "color": "#e2e8f0",
+    "label": "6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     4.898979485566,
+     3.464101615138
+    ],
+    "to": [
+     2.0,
+     0.0,
+     3.464101615138
+    ],
+    "color": "#fbbf24",
+    "label": "BC ∥ xy평면"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.0,
+     0.0,
+     5.196152422707
+    ],
+    "to": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "color": "#38bdf8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     4.898979485566,
+     3.464101615138
+    ],
+    "to": [
+     0.0,
+     4.898979485566,
+     0.0
+    ],
+    "color": "#38bdf8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     4.898979485566,
+     0.0
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     4.898979485566,
+     0.0
+    ],
+    "color": "#34d399",
+    "label": "정사영"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.75,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.75,
+     0.75,
+     0.0
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.75,
+     0.75,
+     0.0
+    ],
+    "to": [
+     0.0,
+     0.75,
+     0.0
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.20948631363,
+     -2.962624319272,
+     0.0
+    ],
+    "to": [
+     -1.587450786639,
+     3.888444419045,
+     0.0
+    ],
+    "color": "#f472b6",
+    "dashed": true,
+    "label": "교선"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -0.83152184062,
+     2.0368042195,
+     0.0
+    ],
+    "to": [
+     1.575610418788,
+     3.019511849324,
+     0.0
+    ],
+    "color": "#f472b6",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -0.83152184062,
+     2.0368042195,
+     0.0
+    ],
+    "to": [
+     0.303211188607,
+     2.500057038814,
+     2.292984469589
+    ],
+    "color": "#f472b6",
+    "dashed": true
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "O",
+    "color": "#f8fafc",
+    "size": 0.18
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3.0,
+     0.0,
+     5.196152422707
+    ],
+    "label": "A",
+    "color": "#f8fafc",
+    "size": 0.18
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     4.898979485566,
+     3.464101615138
+    ],
+    "label": "B",
+    "color": "#f8fafc",
+    "size": 0.18
+   },
+   {
+    "type": "point3d",
+    "at": [
+     2.0,
+     0.0,
+     3.464101615138
+    ],
+    "label": "C",
+    "color": "#fbbf24",
+    "size": 0.16
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3.0,
+     0.0,
+     0.0
+    ],
+    "label": "A'",
+    "color": "#34d399",
+    "size": 0.15
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     4.898979485566,
+     0.0
+    ],
+    "label": "B'",
+    "color": "#34d399",
+    "size": 0.15
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.991858428704,
+     0.0,
+     1.15
+    ],
+    "text": "α",
+    "color": "#f8fafc"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     2.018374826743,
+     1.602987195435,
+     4.91894479204
+    ],
+    "text": "β",
+    "color": "#f8fafc"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.399340115409,
+     2.539301508846,
+     0.796853386389
+    ],
+    "text": "θ",
+    "color": "#f472b6"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     6.6,
+     -4.6,
+     0.0
+    ],
+    "text": "xy평면",
+    "color": "#94a3b8"
+   }
+  ]
+ },
+ "conditions": [
+  "A 는 구 S: x²+y²+z²=36 (중심 O, 반지름 6) 위의 점이다",
+  "B 는 구 S 위의 점이다",
+  "A 의 z좌표는 6 이 아닌 양수이다 (A 의 z좌표 = 3√3)",
+  "(가) C 는 선분 OA 위의 점이고 OC = 4 이다",
+  "(가) 직선 BC 는 xy평면과 평행하다 (BC ⟂ z축, 그리고 BC 는 xy평면 위에 있지 않다)",
+  "(나) 직선 OA 와 xy평면이 이루는 예각 α 는 π/3 이다 (sin α = √3/2)",
+  "(나) 직선 AB 와 xy평면이 이루는 예각 β 는 arcsin(√3/6) 이다",
+  "(나) sin α = 3 sin β 이다",
+  "삼각형 OAB 의 xy평면 위로의 정사영 삼각형 OA'B' 는 O 에서 직각인 직각삼각형이다",
+  "평면 OAB 와 xy평면이 이루는 예각 θ 에 대하여 cos θ = √2/3 이다",
+  "정사영 삼각형의 넓이 = 삼각형 OAB 의 넓이 × cos θ (정사영 넓이 공식과 정합)"
+ ],
+ "verify": "from sympy import asin, acos, Abs\n\ndef check_eq(val, target, tag):\n    if _close(val, target):\n        print(f\"[VERIFY OK] {tag}\")\n    else:\n        print(f\"[VERIFY FAIL] {tag}: {val} != {target}\")\n\nR = 6\nO  = (0, 0, 0)\nA  = (3, 0, 3*sqrt(3))\nB  = (0, 2*sqrt(6), 2*sqrt(3))\nC  = (2, 0, 2*sqrt(3))          # C = (2/3)A\nAp = (3, 0, 0)                  # A의 xy평면 정사영\nBp = (0, 2*sqrt(6), 0)          # B의 xy평면 정사영\nZx = (0, 0, 1)\n\n# ① 구 S: x^2+y^2+z^2=36 위의 점\nassert_on_sphere(A, O, R, \"A 는 구 S(반지름 6) 위\")\nassert_on_sphere(B, O, R, \"B 는 구 S(반지름 6) 위\")\n\n# ② 점 A 의 z좌표는 6 이 아닌 양수\ncheck_eq(1 if (A[2] > 0 and A[2] != 6) else 0, 1, \"A의 z좌표는 6이 아닌 양수 (3√3)\")\n\n# ③ 조건 (가): C 는 선분 OA 위, OC = 4\nassert_on_line(C, O, A, \"C 는 직선 OA 위\")\nassert_distance3d(O, C, 4, \"OC = 4\")\ncheck_eq(1 if (0 < 4 < 6) else 0, 1, \"C 는 선분 OA 위 (0 < OC < OA = 6)\")\n\n# ④ 조건 (가): 직선 BC 와 xy평면이 평행 (BC ⟂ z축, 그리고 BC 가 xy평면 위에 있지 않다)\nassert_perpendicular(B, C, O, Zx, \"직선 BC ⟂ z축 → BC 는 xy평면과 평행\")\ncheck_eq(1 if C[2] != 0 else 0, 1, \"직선 BC 는 xy평면 위에 있지 않다 (z = 2√3)\")\n\n# ⑤ 조건 (나): 직선 OA 와 xy평면이 이루는 예각 α, sinα = √3/2 (α = π/3)\nassert_angle(O, A, Ap, pi/3, \"직선 OA 와 xy평면이 이루는 예각 α = π/3\")\nsin_a = A[2] / 6\n\n# ⑥ 조건 (나): 직선 AB 와 xy평면이 이루는 예각 β  (AB 와 그 정사영 A'B' 사이 각)\nAB_proj_end = (A[0] + (Bp[0] - Ap[0]), A[1] + (Bp[1] - Ap[1]), A[2])\nassert_angle(A, B, AB_proj_end, asin(sqrt(3)/6),\n             \"직선 AB 와 xy평면이 이루는 예각 β = arcsin(√3/6)\")\nsin_b = Abs(A[2] - B[2]) / _dist(A, B)\ncheck_eq(sin_b, sqrt(3)/6, \"sinβ = |Δz| / AB = √3/6\")\n\n# ⑦ 조건 (나): sinα = 3 sinβ\ncheck_eq(simplify(sin_a - 3*sin_b), 0, \"sinα = 3 sinβ\")\n\n# ⑧ 삼각형 OAB 의 xy평면 위로의 정사영이 직각삼각형 (O 에서 직각)\nassert_perpendicular(O, Ap, O, Bp, \"정사영 삼각형 OA'B' 는 O 에서 직각\")\ncheck_eq(1 if _dist(Ap, Bp) != 0 and _dist(O, Ap) != 0 and _dist(O, Bp) != 0 else 0, 1,\n         \"정사영이 찌그러지지 않은 삼각형이다\")\n\n# ⑨ 평면 OAB 와 xy평면이 이루는 예각 θ 에 대하여 cosθ = √2/3\nnOAB = (Matrix(A) - Matrix(O)).cross(Matrix(B) - Matrix(O))\ncos_t = Abs(nOAB.dot(Matrix(Zx))) / nOAB.norm()\ncheck_eq(simplify(cos_t - sqrt(2)/3), 0, \"평면 OAB 와 xy평면이 이루는 예각 θ: cosθ = √2/3\")\n\n# ⑩ (참고) 정사영 넓이 공식과의 정합: [OA'B'] = [OAB] · cosθ\nareaOAB = nOAB.norm() / 2\nareaProj = Matrix([Ap[0], Ap[1], 0]).cross(Matrix([Bp[0], Bp[1], 0])).norm() / 2\ncheck_eq(simplify(areaProj - areaOAB * cos_t), 0, \"정사영 넓이 = 원래 넓이 × cosθ\")\n",
+ "note": "A(3, 0, 3√3), B(0, 2√6, 2√3) 로 잡으면 세 조건이 모두 맞는다. OA=OB=AB=6 인 정삼각형 OAB 를 xy평면에 눌러 찍으면 O 에서 직각인 직각삼각형 OA'B' 가 되고, 두 넓이의 비가 곧 cos θ = √2/3 이다."
+}

@@ -1,0 +1,277 @@
+{
+ "spec": {
+  "title": "2021 고1 6월 7 — 직육면체 ABCD-EFGH 와 세 면대각선 BG, GD, DB",
+  "cameraPosition": [
+   10,
+   -12,
+   8
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      4,
+      5
+     ],
+     [
+      0,
+      0,
+      5
+     ],
+     [
+      6,
+      0,
+      5
+     ],
+     [
+      6,
+      4,
+      5
+     ],
+     [
+      0,
+      4,
+      0
+     ],
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      6,
+      0,
+      0
+     ],
+     [
+      6,
+      4,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ],
+     [
+      4,
+      5,
+      6,
+      7
+     ],
+     [
+      1,
+      2,
+      6,
+      5
+     ],
+     [
+      2,
+      3,
+      7,
+      6
+     ],
+     [
+      3,
+      0,
+      4,
+      7
+     ],
+     [
+      0,
+      1,
+      5,
+      4
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F",
+     "G",
+     "H"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.18,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      5
+     ],
+     [
+      6,
+      0,
+      5
+     ],
+     [
+      6,
+      0,
+      0
+     ],
+     [
+      0,
+      0,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.18,
+    "stroke": "#38bdf8",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      6,
+      0,
+      5
+     ],
+     [
+      6,
+      4,
+      5
+     ],
+     [
+      6,
+      4,
+      0
+     ],
+     [
+      6,
+      0,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#34d399",
+    "fillOpacity": 0.18,
+    "stroke": "#34d399",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      4,
+      5
+     ],
+     [
+      0,
+      0,
+      5
+     ],
+     [
+      6,
+      0,
+      5
+     ],
+     [
+      6,
+      4,
+      5
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.18,
+    "stroke": "#f472b6",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     5
+    ],
+    "to": [
+     6,
+     0,
+     0
+    ],
+    "color": "#38bdf8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     0,
+     0
+    ],
+    "to": [
+     6,
+     4,
+     5
+    ],
+    "color": "#34d399"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     6,
+     4,
+     5
+    ],
+    "to": [
+     0,
+     0,
+     5
+    ],
+    "color": "#f472b6"
+   }
+  ]
+ },
+ "conditions": [
+  "직육면체 ABCD-EFGH (꼭짓점 B 에서 나가는 세 모서리 BA, BC, BF 가 서로 수직)",
+  "마주 보는 모서리끼리 길이가 같다 (가로 a, 세로 b, 높이 c)",
+  "윗면 ABCD, 아랫면 EFGH, 옆면 BCGF, 옆면 CDHG 는 각각 한 평면 위에 있다",
+  "모든 모서리의 길이의 합 4(a+b+c) = 60",
+  "겉넓이 2(ab+bc+ca) = 148",
+  "BG 는 옆면 BCGF 의 대각선",
+  "GD 는 옆면 CDHG 의 대각선",
+  "DB 는 윗면 ABCD 의 대각선",
+  "BG² + GD² + DB² = 154 (정답 ④)",
+  "BG² + GD² + DB² = 2(a²+b²+c²)"
+ ],
+ "verify": "# 2021 고1 6월 7 — 직육면체 ABCD-EFGH, 겉넓이 148, 모서리 길이의 합 60\n# 윗면 ABCD / 아랫면 EFGH, A-E, B-F, C-G, D-H 가 세로 모서리\n# 가로 6, 세로(깊이) 4, 높이 5  →  합 15, ab+bc+ca = 74 (한 가지 실현)\nA = (0, 4, 5)\nB = (0, 0, 5)\nC = (6, 0, 5)\nD = (6, 4, 5)\nE = (0, 4, 0)\nF = (0, 0, 0)\nG = (6, 0, 0)\nH = (6, 4, 0)\n\n# ① 직육면체: 한 꼭짓점 B 에서 나가는 세 모서리가 서로 수직\nassert_perpendicular(B, A, B, C, \"BA ⊥ BC (직육면체)\")\nassert_perpendicular(B, A, B, F, \"BA ⊥ BF (직육면체)\")\nassert_perpendicular(B, C, B, F, \"BC ⊥ BF (직육면체)\")\n\n# ② 마주 보는 모서리 길이가 같다(직육면체의 세 모서리 길이 a, b, c)\na = _dist(B, C)   # 가로\nb = _dist(B, A)   # 세로\nc = _dist(B, F)   # 높이\nfor (P, Q) in [(A, D), (E, H), (F, G)]:\n    assert_distance3d(P, Q, a, \"가로 모서리 길이가 모두 같다\")\nfor (P, Q) in [(C, D), (F, E), (G, H)]:\n    assert_distance3d(P, Q, b, \"세로 모서리 길이가 모두 같다\")\nfor (P, Q) in [(A, E), (C, G), (D, H)]:\n    assert_distance3d(P, Q, c, \"높이 모서리 길이가 모두 같다\")\n\n# ③ 여섯 면이 모두 평면(직사각형)\nassert_coplanar([A, B, C, D], \"윗면 ABCD 는 한 평면\")\nassert_coplanar([E, F, G, H], \"아랫면 EFGH 는 한 평면\")\nassert_coplanar([B, C, G, F], \"옆면 BCGF 는 한 평면\")\nassert_coplanar([C, D, H, G], \"옆면 CDHG 는 한 평면\")\n\n# ④ 모든 모서리의 길이의 합 = 60\nedge_sum = 4 * (a + b + c)\nprint(\"[VERIFY OK] 모든 모서리의 길이의 합 = 60\" if _close(edge_sum - 60)\n      else f\"[VERIFY FAIL] 모서리 합 = {edge_sum} != 60\")\n\n# ⑤ 겉넓이 = 148\nsurface = 2 * (a * b + b * c + c * a)\nprint(\"[VERIFY OK] 겉넓이 = 148\" if _close(surface - 148)\n      else f\"[VERIFY FAIL] 겉넓이 = {surface} != 148\")\n\n# ⑥ BG, GD, DB 는 각각 옆면·옆면·윗면의 대각선\nassert_coplanar([B, C, G, F], \"BG 는 면 BCGF 의 대각선\")\nassert_coplanar([C, D, H, G], \"GD 는 면 CDHG 의 대각선\")\nassert_coplanar([A, B, C, D], \"DB 는 면 ABCD 의 대각선\")\n\n# ⑦ 구하는 값 BG² + GD² + DB² = 154 (정답 ④)\nval = _dist(B, G)**2 + _dist(G, D)**2 + _dist(D, B)**2\nprint(\"[VERIFY OK] BG² + GD² + DB² = 154 (정답 ④)\" if _close(val - 154)\n      else f\"[VERIFY FAIL] BG²+GD²+DB² = {val} != 154\")\n\n# ⑧ 세 대각선의 제곱합은 2(a²+b²+c²) 로, 모서리 배분에 무관하다는 확인\nprint(\"[VERIFY OK] BG²+GD²+DB² = 2(a²+b²+c²)\" if _close(val - 2*(a**2 + b**2 + c**2))\n      else f\"[VERIFY FAIL] {val} != 2(a²+b²+c²)\")\n",
+ "note": "BG, GD, DB 는 서로 다른 세 면의 대각선이라 각각 b²+c², c²+a², a²+b² 이고, 셋을 더하면 2(a²+b²+c²) 가 됩니다. 그림의 6×4×5 는 조건(모서리 합 60, 겉넓이 148)을 만족하는 한 예이며, 답 154 는 a, b, c 를 어떻게 잡아도 같습니다."
+}

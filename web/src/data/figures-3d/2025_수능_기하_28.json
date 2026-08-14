@@ -1,0 +1,314 @@
+{
+ "spec": {
+  "title": "2025 수능 기하 28 — AC 를 지름으로 하는 구 S, 평면 π 가 자른 원 O 위의 두 점 P, Q",
+  "cameraPosition": [
+   15.0,
+   -13.0,
+   11.0
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "sphere",
+    "center": [
+     4.0,
+     3.0,
+     0.0
+    ],
+    "radius": 5.0,
+    "color": "#60a5fa",
+    "opacity": 0.15,
+    "label": "S"
+   },
+   {
+    "type": "plane",
+    "origin": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "normal": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "size": 12.0,
+    "color": "#f472b6",
+    "opacity": 0.22,
+    "label": "π"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "color": "#111827",
+    "label": "$\\overline{AB}=8$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     6.0,
+     0.0
+    ],
+    "color": "#111827",
+    "label": "$\\overline{BC}=6$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     6.0,
+     0.0
+    ],
+    "color": "#0f766e",
+    "label": "$\\overline{AC}=10$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.6,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.6,
+     0.6,
+     0.0
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.6,
+     0.6,
+     0.0
+    ],
+    "to": [
+     0.0,
+     0.6,
+     0.0
+    ],
+    "color": "#94a3b8"
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "4 + 4*cos(t)",
+    "y": "0",
+    "z": "4*sin(t)",
+    "tRange": [
+     0,
+     6.283185307179586
+    ],
+    "samples": 240,
+    "color": "#f59e0b",
+    "strokeWidth": 4,
+    "label": "O"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     4.0,
+     3.0,
+     0.0
+    ],
+    "to": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "color": "#2563eb",
+    "dashed": true,
+    "label": "$\\overline{MN}=3$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     5.5,
+     0.0,
+     3.7080992435478315
+    ],
+    "to": [
+     5.5,
+     0.0,
+     -3.7080992435478315
+    ],
+    "color": "#dc2626",
+    "label": "$\\overline{PQ}=\\sqrt{55}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     5.5,
+     0.0,
+     3.7080992435478315
+    ],
+    "to": [
+     6.4,
+     1.2,
+     0.0
+    ],
+    "color": "#dc2626",
+    "dashed": true,
+    "label": "$\\overline{PH}=4$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     5.5,
+     0.0,
+     -3.7080992435478315
+    ],
+    "to": [
+     6.4,
+     1.2,
+     0.0
+    ],
+    "color": "#dc2626",
+    "dashed": true,
+    "label": "$\\overline{QH}=4$"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     8.0,
+     0.0,
+     0.0
+    ],
+    "label": "A",
+    "color": "#111827",
+    "size": 0.16
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "B",
+    "color": "#111827",
+    "size": 0.16
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0.0,
+     6.0,
+     0.0
+    ],
+    "label": "C",
+    "color": "#111827",
+    "size": 0.16
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4.0,
+     3.0,
+     0.0
+    ],
+    "label": "M",
+    "color": "#2563eb",
+    "size": 0.13
+   },
+   {
+    "type": "point3d",
+    "at": [
+     4.0,
+     0.0,
+     0.0
+    ],
+    "label": "N",
+    "color": "#f59e0b",
+    "size": 0.13
+   },
+   {
+    "type": "point3d",
+    "at": [
+     5.5,
+     0.0,
+     3.7080992435478315
+    ],
+    "label": "P",
+    "color": "#dc2626",
+    "size": 0.16
+   },
+   {
+    "type": "point3d",
+    "at": [
+     5.5,
+     0.0,
+     -3.7080992435478315
+    ],
+    "label": "Q",
+    "color": "#dc2626",
+    "size": 0.16
+   },
+   {
+    "type": "point3d",
+    "at": [
+     6.4,
+     1.2,
+     0.0
+    ],
+    "label": "H",
+    "color": "#dc2626",
+    "size": 0.13
+   }
+  ]
+ },
+ "conditions": [
+  "AB = 8",
+  "BC = 6",
+  "각 ABC = π/2 (B 가 직각)",
+  "AC = 10 (빗변)",
+  "M 은 AC 의 중점 — MA = MC = 5 (구 S 의 중심, 반지름 5)",
+  "A 는 구 S 위의 점",
+  "C 는 구 S 위의 점",
+  "B 도 구 S 위의 점 (각 ABC = π/2 이므로)",
+  "평면 π 는 A 를 지난다 (직선 AB 를 포함)",
+  "평면 π 는 B 를 지난다 (직선 AB 를 포함)",
+  "평면 π 는 평면 ABC 에 수직",
+  "원 O 의 중심 N 은 평면 π 위에 있다",
+  "구의 중심 M 에서 평면 π 까지의 거리 = 3",
+  "MN = 3 (N 은 M 의 평면 π 위로의 정사영)",
+  "MN ⟂ AB",
+  "A 는 원 O 위의 점 (중심 N, 반지름 4)",
+  "B 는 원 O 위의 점 (중심 N, 반지름 4)",
+  "P 는 평면 π 위에 있다",
+  "Q 는 평면 π 위에 있다",
+  "P 는 구 S 위에 있다",
+  "Q 는 구 S 위에 있다",
+  "P 는 원 O 위의 점",
+  "Q 는 원 O 위의 점",
+  "P 에서 직선 AC 까지의 거리 = 4",
+  "Q 에서 직선 AC 까지의 거리 = 4",
+  "P 와 Q 는 서로 다른 점이다",
+  "PQ = √55",
+  "H 는 직선 AC 위의 점 (P, Q 공통의 수선의 발)",
+  "PH ⟂ AC, QH ⟂ AC",
+  "PH = 4, QH = 4"
+ ],
+ "verify": "# 2025 수능 기하 28\n# B 를 원점, 직각을 낀 두 변을 x축·y축에 둔다.\nB = (0, 0, 0)\nA = (8, 0, 0)\nC = (0, 6, 0)\n\n# ── 직각삼각형 ABC\nassert_distance3d(A, B, 8, \"AB = 8\")\nassert_distance3d(B, C, 6, \"BC = 6\")\nassert_angle(B, A, C, pi/2, \"angle ABC = pi/2\")\nassert_distance3d(A, C, 10, \"AC = 10 (빗변)\")\n\n# ── 선분 AC 를 지름으로 하는 구 S\nM = (4, 3, 0)          # AC 의 중점 = 구의 중심\nR = 5                  # AC/2\nassert_distance3d(A, M, R, \"M 은 AC 의 중점 — MA = 5\")\nassert_distance3d(C, M, R, \"M 은 AC 의 중점 — MC = 5\")\nassert_on_sphere(A, M, R, \"A 는 구 S 위의 점\")\nassert_on_sphere(C, M, R, \"C 는 구 S 위의 점\")\nassert_on_sphere(B, M, R, \"B 도 구 S 위의 점 (angle ABC = pi/2 이므로)\")\n\n# ── 직선 AB 를 포함하고 평면 ABC 에 수직인 평면 pi  (= xz 평면, y = 0)\nPI  = [B, A, (0, 0, 1)]\nABC = [A, B, C]\nassert_on_plane(A, PI, \"평면 pi 는 A 를 지난다 (직선 AB 를 포함)\")\nassert_on_plane(B, PI, \"평면 pi 는 B 를 지난다 (직선 AB 를 포함)\")\nassert_planes_perpendicular(PI, ABC, \"평면 pi 는 평면 ABC 에 수직\")\n\n# ── 구 S 와 평면 pi 의 교선 = 원 O : 중심 N, 반지름 4\nN = (4, 0, 0)          # M 에서 평면 pi 에 내린 수선의 발\nr_O = 4                # sqrt(5^2 - 3^2)\nassert_on_plane(N, PI, \"원 O 의 중심 N 은 평면 pi 위에 있다\")\nassert_point_plane_distance(M, PI, 3, \"구의 중심 M 에서 평면 pi 까지의 거리 = 3\")\nassert_distance3d(M, N, 3, \"MN = 3 (N 은 M 의 평면 pi 위로의 정사영)\")\nassert_perpendicular(M, N, A, B, \"MN ⟂ AB\")\nassert_on_circle(A, N, r_O, \"A 는 원 O 위의 점\", normal=(0, 1, 0))\nassert_on_circle(B, N, r_O, \"B 는 원 O 위의 점\", normal=(0, 1, 0))\n\n# ── 원 O 위에서 직선 AC 까지의 거리가 4 인 두 점 P, Q\ns55 = sqrt(55)\nP = (Rational(11, 2), 0,  s55/2)\nQ = (Rational(11, 2), 0, -s55/2)\n\nassert_on_plane(P, PI, \"P 는 평면 pi 위에 있다\")\nassert_on_plane(Q, PI, \"Q 는 평면 pi 위에 있다\")\nassert_on_sphere(P, M, R, \"P 는 구 S 위에 있다\")\nassert_on_sphere(Q, M, R, \"Q 는 구 S 위에 있다\")\nassert_on_circle(P, N, r_O, \"P 는 원 O 위의 점\", normal=(0, 1, 0))\nassert_on_circle(Q, N, r_O, \"Q 는 원 O 위의 점\", normal=(0, 1, 0))\nassert_point_line_distance(P, A, C, 4, \"P 에서 직선 AC 까지의 거리 = 4\")\nassert_point_line_distance(Q, A, C, 4, \"Q 에서 직선 AC 까지의 거리 = 4\")\n\n# ── P, Q 는 서로 다른 점이고 PQ = sqrt(55)\nif _close(_dist(P, Q)):\n    raise AssertionError(\"P 와 Q 가 같은 점이다\")\nassert_distance3d(P, Q, s55, \"PQ = sqrt(55)\")\n\n# ── 거리 4 를 보여 주는 수선의 발 H (P, Q 공통)\nH = (Rational(32, 5), Rational(6, 5), 0)\nassert_on_line(H, A, C, \"H 는 직선 AC 위의 점\")\nassert_perpendicular(P, H, A, C, \"PH ⟂ AC\")\nassert_perpendicular(Q, H, A, C, \"QH ⟂ AC\")\nassert_distance3d(P, H, 4, \"PH = 4\")\nassert_distance3d(Q, H, 4, \"QH = 4\")\n\nprint(\"[VERIFY OK] all\")\n",
+ "note": "구 S 의 중심 M(AC 의 중점)에서 평면 π 까지의 거리가 3 이므로 잘린 원 O 는 중심 N(4,0,0)·반지름 4 이고 A, B 를 지납니다. 원 O 위의 점에서 직선 AC 까지의 거리가 4 인 곳은 평면 ABC 를 기준으로 위·아래 대칭인 두 점 P, Q 이며(공통의 수선의 발 H), 두 점은 x좌표가 같아 PQ = √55 입니다."
+}

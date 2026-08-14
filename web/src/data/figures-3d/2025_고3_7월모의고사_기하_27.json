@@ -1,0 +1,220 @@
+{
+ "spec": {
+  "title": "2025 고3 7월 기하 27 — 평행한 두 직선 l, m 과 P 에서 내린 수선의 발 A, B",
+  "cameraPosition": [
+   14.0,
+   -1.0,
+   8.2
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     2.0,
+     2.0,
+     0.0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 10,
+    "color": "#94a3b8",
+    "opacity": 0.22
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -2.2,
+     0.0,
+     0.0
+    ],
+    "to": [
+     6.6,
+     0.0,
+     0.0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -2.2,
+     5.196152422706632,
+     0.0
+    ],
+    "to": [
+     6.6,
+     5.196152422706632,
+     0.0
+    ],
+    "color": "#64748b"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     7.1,
+     0.0,
+     0.0
+    ],
+    "text": "$l$",
+    "color": "#475569"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     7.1,
+     5.196152422706632,
+     0.0
+    ],
+    "text": "$m$",
+    "color": "#475569"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     6.4,
+     -2.4,
+     0.0
+    ],
+    "text": "$\\alpha$",
+    "color": "#475569"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0.0,
+      1.7320508075688772,
+      2.449489742783178
+     ],
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      5.196152422706632,
+      0.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "P",
+     "A",
+     "B"
+    ],
+    "fill": "#94a3b8",
+    "fillOpacity": 0.3,
+    "stroke": "#111827",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     1.7320508075688772,
+     2.449489742783178
+    ],
+    "to": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "color": "#2563eb",
+    "label": "$3$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     1.7320508075688772,
+     2.449489742783178
+    ],
+    "to": [
+     0.0,
+     5.196152422706632,
+     0.0
+    ],
+    "color": "#2563eb",
+    "label": "$3\\sqrt{2}$"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3.674234614174767,
+     0.0,
+     0.0
+    ],
+    "to": [
+     0.0,
+     5.196152422706632,
+     0.0
+    ],
+    "color": "#111827"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0.0,
+     1.7320508075688772,
+     2.449489742783178
+    ],
+    "to": [
+     1.6329931618554518,
+     2.8867513459481287,
+     0.0
+    ],
+    "color": "#dc2626",
+    "label": "$\\sqrt{10}$"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     3.674234614174767,
+     0.0,
+     0.0
+    ],
+    "label": "C",
+    "color": "#111827",
+    "size": 0.1
+   },
+   {
+    "type": "point3d",
+    "at": [
+     1.6329931618554518,
+     2.8867513459481287,
+     0.0
+    ],
+    "label": "H",
+    "color": "#dc2626",
+    "size": 0.1
+   }
+  ]
+ },
+ "conditions": [
+  "두 직선 l, m 은 평면 α 위에 있고 서로 평행하다",
+  "점 A, C 는 직선 l 위, 점 B 는 직선 m 위에 있다",
+  "점 P 는 평면 α 위에 있지 않다 (α 까지의 거리 √6)",
+  "PA ⟂ l — A 는 P 에서 l 에 내린 수선의 발",
+  "PB ⟂ m — B 는 P 에서 m 에 내린 수선의 발",
+  "AP=3",
+  "BP=3√2",
+  "AP/CA = BP/BA (= √6/3)",
+  "BP/BA = BA/BC (= √6/3)",
+  "H 는 선분 BC 위의 내부 점 (BH:HC = 4:5)",
+  "PH ⟂ BC — H 는 P 에서 선분 BC 에 내린 수선의 발",
+  "PH=√10 (구하는 값, 정답 ②)"
+ ],
+ "verify": "# 2025 고3 7월 기하 27 — 평행한 두 직선 l, m 을 품은 평면 alpha 와 그 밖의 점 P\n# 평면 alpha: z=0.  직선 l: y=0 (x축),  직선 m: y=3*sqrt(3)\n# A = P 에서 l 에 내린 수선의 발, B = P 에서 m 에 내린 수선의 발, C 는 l 위의 점\nA = (0, 0, 0)\nC = (3*sqrt(6)/2, 0, 0)\nB = (0, 3*sqrt(3), 0)\nP = (0, sqrt(3), sqrt(6))\nH = (2*sqrt(6)/3, 5*sqrt(3)/3, 0)\n\n# 직선 l, m 을 두 점으로 표현 (그림에서 그리는 구간과 무관하게 직선 자체)\nl1, l2 = (-2, 0, 0), (6, 0, 0)\nm1, m2 = (-2, 3*sqrt(3), 0), (6, 3*sqrt(3), 0)\nalpha = [(-2, 0, 0), (6, 0, 0), (-2, 3*sqrt(3), 0)]   # 평면 alpha (z=0)\n\n# --- 평면 alpha 와 두 직선 l, m ---\nassert_on_line(A, l1, l2, \"A 는 직선 l 위\")\nassert_on_line(C, l1, l2, \"C 는 직선 l 위\")\nassert_on_line(B, m1, m2, \"B 는 직선 m 위\")\nassert_on_plane(A, alpha, \"A 는 평면 alpha 위\")\nassert_on_plane(B, alpha, \"B 는 평면 alpha 위\")\nassert_on_plane(C, alpha, \"C 는 평면 alpha 위\")\n\nd_l = Matrix(l2) - Matrix(l1)\nd_m = Matrix(m2) - Matrix(m1)\ntag = \"직선 l 과 직선 m 은 평행\"\nprint(f\"[VERIFY OK] {tag}\" if _close(simplify(d_l.cross(d_m).norm())) else f\"[VERIFY FAIL] {tag}\")\n\nhP = simplify(point_plane_distance(P, alpha))\ntag = \"P 는 평면 alpha 위에 있지 않다\"\nprint(f\"[VERIFY OK] {tag} (거리 {hP})\" if not _close(hP) else f\"[VERIFY FAIL] {tag}\")\n\n# --- 수선의 발 조건 ---\nassert_perpendicular(P, A, l1, l2, \"PA ⟂ l (A 는 P 에서 l 에 내린 수선의 발)\")\nassert_perpendicular(P, B, m1, m2, \"PB ⟂ m (B 는 P 에서 m 에 내린 수선의 발)\")\n\n# --- 주어진 길이 ---\nassert_distance3d(A, P, 3, \"AP=3\")\nassert_distance3d(B, P, 3*sqrt(2), \"BP=3*sqrt(2)\")\n\n# --- 비례 조건  AP/CA = BP/BA = BA/BC ---\nAP = _dist(A, P); CA = _dist(C, A); BP = _dist(B, P); BA = _dist(B, A); BC = _dist(B, C)\nr1, r2, r3 = simplify(AP/CA), simplify(BP/BA), simplify(BA/BC)\ntag = \"AP/CA = BP/BA (비례 조건 앞 두 항)\"\nprint(f\"[VERIFY OK] {tag} (={r1})\" if _close(r1 - r2) else f\"[VERIFY FAIL] {tag}: {r1} vs {r2}\")\ntag = \"BP/BA = BA/BC (비례 조건 뒤 두 항)\"\nprint(f\"[VERIFY OK] {tag} (={r2})\" if _close(r2 - r3) else f\"[VERIFY FAIL] {tag}: {r2} vs {r3}\")\n\n# --- H 는 P 에서 선분 BC 에 내린 수선의 발 ---\nassert_on_line(H, B, C, \"H 는 직선 BC 위\")\nt = simplify((Matrix(H) - Matrix(B)).dot(Matrix(C) - Matrix(B)) / (Matrix(C) - Matrix(B)).dot(Matrix(C) - Matrix(B)))\ntag = \"H 는 선분 BC 의 내부 (0<t<1)\"\nprint(f\"[VERIFY OK] {tag} (t={t})\" if (t > 0) and (t < 1) else f\"[VERIFY FAIL] {tag}: t={t}\")\nassert_perpendicular(P, H, B, C, \"PH ⟂ BC\")\n\n# --- 구하는 값 ---\nassert_distance3d(P, H, sqrt(10), \"PH=sqrt(10)  (정답 ② )\")\n",
+ "note": "l ∥ m 이고 PA ⟂ l, PB ⟂ m 이므로 AB 도 l 에 수직 — 그래서 삼각형 ABC 는 A 가 직각이고, 비례 조건에서 BA=3√3, CA=3√6/2 가 나온다."
+}

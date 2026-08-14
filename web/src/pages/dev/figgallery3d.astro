@@ -40,7 +40,9 @@ if (src === 'problems') {
     items.push({
       concept: stem, label: stem, backend: `조건 ${e.conditions?.length ?? 0}개 검증`,
       score: 0, spec: e.spec, note: e.note ?? '',
-      figure: prob?.fm?.figure_image ?? null,
+      // 원본은 `/problem-images/<stem>.png`(db/raw 심링크)로 항상 있다.
+      // figure_image(추출 도형)는 대부분 없어서 그것만 보면 원본이 안 뜬다 — 폴백 필수.
+      figure: prob?.fm?.figure_image ?? `/problem-images/${encodeURIComponent(stem)}.png`,
       conditions: e.conditions ?? [],
     });
   }
@@ -86,7 +88,7 @@ const qsBase = `?src=${src}&per=${PER}`;
       ))}
     </div>
     {total === 0 && <p style="color:#f87171;">아직 3D 도식 없음</p>}
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(720px,1fr));gap:20px;">
       {pageItems.map((it) => (
         <div style={`border:1px solid ${it.score >= 45 ? '#22c55e55' : '#52525244'};border-radius:12px;padding:14px;background:#18181b;`}>
           <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
@@ -97,15 +99,20 @@ const qsBase = `?src=${src}&per=${PER}`;
             {it.backend}{it.score > 0 ? (it.score >= 45 ? ' · ✓ 합격' : ' · 미달(참고)') : ''}
             {it.scores && ` · ${CATS.map((c, i) => `${c} ${it.scores[i]}`).join(' · ')}`}
           </div>
-          {it.figure && (
-            <div style="margin-bottom:8px;">
-              <div style="font-size:10px;color:#666;margin-bottom:3px;">원본 (이 배치와 같아야 한다)</div>
-              <img src={it.figure} style="width:100%;background:#fff;border-radius:6px;" />
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            {it.figure && (
+              <div style="flex:1 1 0;min-width:0;">
+                <div style="font-size:10px;color:#666;margin-bottom:3px;">원본</div>
+                <img src={it.figure} style="width:100%;background:#fff;border-radius:6px;" />
+              </div>
+            )}
+            <div style="flex:1 1 0;min-width:0;">
+              <div style="font-size:10px;color:#666;margin-bottom:3px;">우리 3D (드래그 회전)</div>
+              {it.spec
+                ? <Lazy3D client:only="react" spec={it.spec} width={340} height={290} />
+                : <p style="color:#777;font-size:12px;">spec 없음</p>}
             </div>
-          )}
-          {it.spec
-            ? <Lazy3D client:only="react" spec={it.spec} width={340} height={290} />
-            : <p style="color:#777;font-size:12px;">spec 없음</p>}
+          </div>
           {it.note && <p style="font-size:11px;color:#71717a;margin:8px 0 0;">{it.note}</p>}
           {it.conditions?.length > 0 && (
             <details style="margin-top:6px;">

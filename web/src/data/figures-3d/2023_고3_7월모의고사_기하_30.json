@@ -17,7 +17,7 @@
     ],
     "radius": 4,
     "color": "#60a5fa",
-    "opacity": 0.08
+    "opacity": 0.15
    },
    {
     "type": "polyhedron",
@@ -52,9 +52,9 @@
      ]
     ],
     "fill": "#a78bfa",
-    "fillOpacity": 0.13,
+    "fillOpacity": 0.18,
     "stroke": "#a78bfa",
-    "strokeWidth": 1
+    "strokeWidth": 2
    },
    {
     "type": "text3d",
@@ -98,7 +98,7 @@
      "C"
     ],
     "fill": "#94a3b8",
-    "fillOpacity": 0.1,
+    "fillOpacity": 0.18,
     "stroke": "#cbd5e1",
     "strokeWidth": 2
    },

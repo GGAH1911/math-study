@@ -1,0 +1,245 @@
+{
+ "spec": {
+  "title": "2024 수능 기하 26 — 평면 α 위의 정사영 A′B′P 와 평면 ABP",
+  "cameraPosition": [
+   20,
+   -17,
+   21
+  ],
+  "axes": false,
+  "shapes": [
+   {
+    "type": "plane",
+    "origin": [
+     0,
+     3,
+     0
+    ],
+    "normal": [
+     0,
+     0,
+     1
+    ],
+    "size": 10,
+    "color": "#64748b",
+    "opacity": 0.22,
+    "label": "$\\alpha$"
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -3,
+      0,
+      0
+     ],
+     [
+      3,
+      0,
+      0
+     ],
+     [
+      0,
+      6,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "A'",
+     "B'",
+     "P"
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.3,
+    "stroke": "#38bdf8",
+    "strokeWidth": 3
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      -3,
+      0,
+      23.2379000772
+     ],
+     [
+      3,
+      0,
+      23.2379000772
+     ],
+     [
+      0,
+      6,
+      0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2
+     ]
+    ],
+    "labels": [
+     "A",
+     "B",
+     ""
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.18,
+    "stroke": "#f472b6",
+    "strokeWidth": 3
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3,
+     0,
+     23.2379000772
+    ],
+    "to": [
+     -3,
+     0,
+     0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     3,
+     0,
+     23.2379000772
+    ],
+    "to": [
+     3,
+     0,
+     0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     0,
+     23.2379000772
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#94a3b8",
+    "dashed": true
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3,
+     0,
+     0
+    ],
+    "to": [
+     3,
+     0,
+     0
+    ],
+    "color": "#38bdf8",
+    "label": "6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     -3,
+     0,
+     23.2379000772
+    ],
+    "to": [
+     3,
+     0,
+     23.2379000772
+    ],
+    "color": "#f472b6",
+    "label": "6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     6,
+     0
+    ],
+    "to": [
+     0,
+     0,
+     0
+    ],
+    "color": "#a3e635",
+    "label": "6"
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     0,
+     6,
+     0
+    ],
+    "to": [
+     0,
+     0,
+     23.2379000772
+    ],
+    "color": "#f59e0b",
+    "label": "24"
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     23.2379000772
+    ],
+    "label": "M",
+    "color": "#f59e0b",
+    "size": 0.28
+   },
+   {
+    "type": "point3d",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "label": "M'",
+    "color": "#a3e635",
+    "size": 0.28
+   }
+  ]
+ },
+ "conditions": [
+  "A′, B′, M′, P 는 모두 평면 α 위의 점",
+  "A, B 는 평면 α 위에 있지 않은 서로 다른 두 점",
+  "AA′ ⊥ 평면 α (A′ 은 A 의 α 위로의 정사영)",
+  "BB′ ⊥ 평면 α (B′ 은 B 의 α 위로의 정사영)",
+  "MM′ ⊥ 평면 α (M′ 은 M 의 α 위로의 정사영)",
+  "AB = 6",
+  "A′B′ = 6",
+  "M 은 선분 AB 의 중점 (M 은 직선 AB 위, MA = MB = 3)",
+  "PM′ ⊥ A′B′",
+  "PM′ = 6",
+  "삼각형 A′B′P 의 평면 ABP 위로의 정사영의 넓이 = 9/2",
+  "PM = 24 (정답 ⑤)"
+ ],
+ "verify": "# 2024 수능 기하 26 — 평면 α, 정사영 A', B', M', 점 P\n# 평면 α = xy평면(z=0). AB = A'B' = 6 이므로 AB 는 α 에 평행(A, B 의 높이가 같다).\nh = 6 * sqrt(15)          # area 조건에서 결정되는 A, B 의 높이\n\nAp = (-3, 0, 0)           # A'\nBp = (3, 0, 0)            # B'\nMp = (0, 0, 0)            # M'\nP  = (0, 6, 0)\nA  = (-3, 0, h)\nB  = (3, 0, h)\nM  = (0, 0, h)\n\nalpha = [Ap, Bp, P]       # 평면 α (세 점이 한 직선 위에 있지 않다)\n\n# ── 평면 α 위의 점들 ─────────────────────────────────────────\nassert_on_plane(Ap, alpha, \"A' 는 평면 α 위\")\nassert_on_plane(Bp, alpha, \"B' 는 평면 α 위\")\nassert_on_plane(Mp, alpha, \"M' 는 평면 α 위\")\nassert_on_plane(P,  alpha, \"P 는 평면 α 위\")\n\n# ── A, B 는 평면 α 위에 있지 않다 ────────────────────────────\ndA = point_plane_distance(A, alpha)\ndB = point_plane_distance(B, alpha)\nprint(\"[VERIFY OK] A 는 평면 α 위에 있지 않다\" if not _close(dA)\n      else \"[VERIFY FAIL] A 가 평면 α 위에 있다\")\nprint(\"[VERIFY OK] B 는 평면 α 위에 있지 않다\" if not _close(dB)\n      else \"[VERIFY FAIL] B 가 평면 α 위에 있다\")\nprint(\"[VERIFY OK] A != B (서로 다른 두 점)\" if not _close(_dist(A, B))\n      else \"[VERIFY FAIL] A == B\")\n\n# ── A', B', M' 이 각각 A, B, M 의 α 위로의 정사영 ────────────\nfor X, Xp, name in ((A, Ap, \"A\"), (B, Bp, \"B\"), (M, Mp, \"M\")):\n    assert_perpendicular(X, Xp, Ap, Bp, f\"{name}{name}' ⊥ A'B' (α 로의 정사영)\")\n    assert_perpendicular(X, Xp, Mp, P,  f\"{name}{name}' ⊥ M'P (α 로의 정사영)\")\n\n# ── 주어진 길이 ─────────────────────────────────────────────\nassert_distance3d(A, B, 6, \"AB = 6\")\nassert_distance3d(Ap, Bp, 6, \"A'B' = 6\")\n\n# ── M 은 선분 AB 의 중점 ────────────────────────────────────\nassert_on_line(M, A, B, \"M 은 직선 AB 위\")\nassert_distance3d(M, A, 3, \"MA = 3 (M 은 AB 의 중점)\")\nassert_distance3d(M, B, 3, \"MB = 3 (M 은 AB 의 중점)\")\n\n# ── P 의 조건 ───────────────────────────────────────────────\nassert_perpendicular(P, Mp, Ap, Bp, \"PM' ⊥ A'B'\")\nassert_distance3d(P, Mp, 6, \"PM' = 6\")\n\n# ── 삼각형 A'B'P 의 평면 ABP 위로의 정사영 넓이 = 9/2 ────────\ndef _tri_area(X, Y, Z):\n    return ((Matrix(Y) - Matrix(X)).cross(Matrix(Z) - Matrix(X))).norm() / 2\n\nn = (Matrix(B) - Matrix(A)).cross(Matrix(P) - Matrix(A))\nu = n / n.norm()                                   # 평면 ABP 의 단위법선\n\ndef _proj(X):                                      # 평면 ABP 위로의 정사영\n    v = Matrix(X) - Matrix(A)\n    return tuple(Matrix(X) - (v.dot(u)) * u)\n\npA, pB, pP = _proj(Ap), _proj(Bp), _proj(P)\nfor q, tag in ((pA, \"A'\"), (pB, \"B'\"), (pP, \"P\")):\n    assert_on_plane(q, [A, B, P], f\"{tag} 의 정사영은 평면 ABP 위\")\n\narea = simplify(_tri_area(pA, pB, pP))\nprint(f\"[VERIFY OK] 삼각형 A'B'P 의 평면 ABP 위로의 정사영 넓이 = 9/2\" if _close(area - Rational(9, 2))\n      else f\"[VERIFY FAIL] 정사영 넓이 = {area} (9/2 이어야)\")\n\n# ── 구하는 값 ───────────────────────────────────────────────\nassert_distance3d(P, M, 24, \"PM = 24 (정답 ⑤)\")\n",
+ "note": "AB = A′B′ = 6 이라 선분 AB 는 평면 α 와 평행합니다 — 그래서 A, B 는 α 에서 같은 높이(회색 점선)에 있고, 파란 삼각형 A′B′P 를 분홍 평면 ABP 에 정사영한 넓이가 18 × cosθ = 9/2 라는 조건에서 그 높이가 정해져 PM = 24 가 됩니다."
+}

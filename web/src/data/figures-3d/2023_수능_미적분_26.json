@@ -1,0 +1,303 @@
+{
+ "spec": {
+  "shapes": [
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt(1/(cos(u)^2) + tan(u))",
+    "z": "0",
+    "uRange": [
+     0,
+     1.0471975511965976
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "v*sqrt(1/(cos(u)^2) + tan(u))",
+    "z": "sqrt(1/(cos(u)^2) + tan(u))",
+    "uRange": [
+     0,
+     1.0471975511965976
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "sqrt(1/(cos(u)^2) + tan(u))",
+    "z": "v*sqrt(1/(cos(u)^2) + tan(u))",
+    "uRange": [
+     0,
+     1.0471975511965976
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "parametricSurface",
+    "x": "u",
+    "y": "0",
+    "z": "v*sqrt(1/(cos(u)^2) + tan(u))",
+    "uRange": [
+     0,
+     1.0471975511965976
+    ],
+    "vRange": [
+     0,
+     1
+    ],
+    "uSamples": 64,
+    "vSamples": 6,
+    "color": "#7dd3fc",
+    "opacity": 0.22
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      1.0,
+      0
+     ],
+     [
+      0,
+      1.0,
+      1.0
+     ],
+     [
+      0,
+      0,
+      1.0
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.22,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      1.0471975511965976,
+      0,
+      0
+     ],
+     [
+      1.0471975511965976,
+      2.3941701709713272,
+      0
+     ],
+     [
+      1.0471975511965976,
+      2.3941701709713272,
+      2.3941701709713272
+     ],
+     [
+      1.0471975511965976,
+      0,
+      2.3941701709713272
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#38bdf8",
+    "fillOpacity": 0.22,
+    "stroke": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "polyhedron",
+    "vertices": [
+     [
+      0.5235987755982988,
+      0,
+      0
+     ],
+     [
+      0.5235987755982988,
+      1.3822747926960683,
+      0
+     ],
+     [
+      0.5235987755982988,
+      1.3822747926960683,
+      1.3822747926960683
+     ],
+     [
+      0.5235987755982988,
+      0,
+      1.3822747926960683
+     ]
+    ],
+    "faces": [
+     [
+      0,
+      1,
+      2,
+      3
+     ]
+    ],
+    "fill": "#f472b6",
+    "fillOpacity": 0.5,
+    "stroke": "#fb7185",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(1/(cos(t)^2) + tan(t))",
+    "z": "0",
+    "tRange": [
+     0,
+     1.0471975511965976
+    ],
+    "samples": 200,
+    "color": "#fbbf24",
+    "strokeWidth": 3
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "sqrt(1/(cos(t)^2) + tan(t))",
+    "z": "sqrt(1/(cos(t)^2) + tan(t))",
+    "tRange": [
+     0,
+     1.0471975511965976
+    ],
+    "samples": 200,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "parametricCurve3d",
+    "x": "t",
+    "y": "0",
+    "z": "sqrt(1/(cos(t)^2) + tan(t))",
+    "tRange": [
+     0,
+     1.0471975511965976
+    ],
+    "samples": 200,
+    "color": "#e2e8f0",
+    "strokeWidth": 2
+   },
+   {
+    "type": "segment3d",
+    "from": [
+     1.0471975511965976,
+     -0.5,
+     0
+    ],
+    "to": [
+     1.0471975511965976,
+     2.9,
+     0
+    ],
+    "color": "#a1a1aa",
+    "dashed": true
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.0471975511965976,
+     -0.95,
+     0
+    ],
+    "text": "$x=\\dfrac{\\pi}{3}$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -0.12,
+     -0.3,
+     0
+    ],
+    "text": "$O$",
+    "color": "#a1a1aa"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     1.2971975511965976,
+     2.7441701709713273,
+     0
+    ],
+    "text": "$y=\\sqrt{\\sec^2 x+\\tan x}$",
+    "color": "#fbbf24"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0.5235987755982988,
+     0.6911373963480342,
+     1.7822747926960685
+    ],
+    "text": "정사각형 단면",
+    "color": "#fb7185"
+   }
+  ],
+  "cameraPosition": [
+   4.2,
+   -5.0,
+   3.6
+  ],
+  "axes": true,
+  "title": "밑면 위에서 x축에 수직으로 자른 단면이 모두 정사각형인 입체"
+ },
+ "conditions": [
+  "밑면의 위쪽 경계가 곡선 y=√(sec²x+tan x) 위에 있다 — x=0, π/6, π/3 에서 확인",
+  "y(0)=1, y(π/6)=√(3√3+12)/3, y(π/3)=√(4+√3)",
+  "밑면의 왼쪽 경계는 y축(x=0) 위, 아래 경계는 x축(y=0) 위, 오른쪽 경계는 직선 x=π/3 위",
+  "x=0, π/6, π/3 에서 자른 단면의 네 꼭짓점이 한 평면 위에 있다",
+  "그 단면이 x축에 수직이다 (단면의 두 변이 x축과 수직)",
+  "단면의 네 변의 길이가 모두 그 위치의 곡선의 높이 y(x) 로 같다",
+  "단면의 네 각이 모두 직각이다 (즉 단면은 정사각형)",
+  "각 단면의 밑변이 밑면(xy평면) 위에 있다",
+  "부피 V = ∫₀^{π/3}(sec²x+tan x)dx = √3 + ln 2 (정답 ④)"
+ ],
+ "verify": "\n# 2023 수능 미적분 26 — 밑면이 곡선 y=sqrt(sec^2 x + tan x) 아래 영역,\n# x축에 수직인 단면이 모두 정사각형인 입체\ndef f(t):\n    return sqrt(1/cos(t)**2 + tan(t))\n\nA = pi/3          # x = pi/3\nf0 = f(0)         # = 1\nfm = f(pi/6)\nfA = f(A)         # = sqrt(4+sqrt(3))\n\nprint(\"f(0) =\", simplify(f0), \" f(pi/6) =\", simplify(fm), \" f(pi/3) =\", simplify(fA))\n\n# --- 밑면 경계: 곡선 위의 점들이 y^2 = sec^2 x + tan x 를 만족 ---\nfor (nm, xv, yv) in [(\"x=0\", S(0), f0), (\"x=pi/6\", pi/6, fm), (\"x=pi/3\", A, fA)]:\n    ok = _close(simplify(yv**2 - (1/cos(xv)**2 + tan(xv))), 0)\n    print((\"[VERIFY OK] \" if ok else \"[VERIFY FAIL] \") + f\"밑면 경계곡선 위의 점 ({nm}) 이 y^2=sec^2 x+tan x 를 만족\")\n\n# --- 밑면 네 모서리 조건: y축(x=0), x축(y=0), 직선 x=pi/3 ---\nassert_on_line([0, 0, 0], [0, 0, 0], [0, 1, 0], \"밑면의 왼쪽 경계는 y축(x=0) 위\")\nassert_on_line([0, f0, 0], [0, 0, 0], [0, 1, 0], \"곡선의 시작점 (0, 1, 0) 이 y축 위\")\nassert_on_line([A, 0, 0], [0, 0, 0], [1, 0, 0], \"밑면의 아래 경계는 x축(y=0) 위\")\nassert_on_line([A, fA, 0], [A, 0, 0], [A, 1, 0], \"곡선의 끝점이 직선 x=pi/3 위\")\n\n# --- 각 단면(x=상수)이 정사각형인지: x=0, pi/6, pi/3 세 곳에서 전수 검증 ---\nfor (nm, xv, s) in [(\"x=0\", S(0), f0), (\"x=pi/6\", pi/6, fm), (\"x=pi/3\", A, fA)]:\n    P = [xv, 0, 0]; Q = [xv, s, 0]; R = [xv, s, s]; Sp = [xv, 0, s]\n    assert_distance3d(P, Q, s, f\"단면({nm}) 변 PQ = 한 변의 길이 y\")\n    assert_distance3d(Q, R, s, f\"단면({nm}) 변 QR = 한 변의 길이 y\")\n    assert_distance3d(R, Sp, s, f\"단면({nm}) 변 RS = 한 변의 길이 y\")\n    assert_distance3d(Sp, P, s, f\"단면({nm}) 변 SP = 한 변의 길이 y\")\n    assert_perpendicular(P, Q, Q, R, f\"단면({nm}) 네 각이 직각 (PQ ⟂ QR)\")\n    assert_perpendicular(Q, R, R, Sp, f\"단면({nm}) 네 각이 직각 (QR ⟂ RS)\")\n    assert_coplanar([P, Q, R, Sp], f\"단면({nm}) 네 꼭짓점이 한 평면 위\")\n    assert_perpendicular(P, Q, [0, 0, 0], [1, 0, 0], f\"단면({nm}) 이 x축에 수직\")\n    assert_perpendicular(P, Sp, [0, 0, 0], [1, 0, 0], f\"단면({nm}) 이 x축에 수직 (두 번째 변)\")\n    assert_distance3d(P, Q, f(xv), f\"단면({nm}) 한 변의 길이가 곡선의 y좌표와 일치\")\n\n# --- 단면의 밑변이 밑면 위에 놓임 (z=0 평면) ---\nassert_on_plane([pi/6, fm, 0], [[0, 0, 0], [1, 0, 0], [0, 1, 0]], \"단면의 밑변이 밑면(xy평면) 위\")\n\n# --- 부피 = 정적분 ---\nV = integrate(1/cos(x)**2 + tan(x), (x, 0, pi/3))\nok = _close(simplify(V - (sqrt(3) + ln(2))), 0)\nprint((\"[VERIFY OK] \" if ok else f\"[VERIFY FAIL] V={V} \"), \"부피 V = ∫₀^{π/3}(sec²x+tan x)dx = √3 + ln 2\")\n",
+ "note": "밑면(곡선·x축·y축·직선 x=π/3로 둘러싸인 부분) 위에 x축과 수직인 정사각형 단면을 쌓아 올린 입체입니다. 단면의 한 변이 그 자리의 곡선 높이 y(x)라서 단면넓이는 y(x)²=sec²x+tan x이고, 이를 0부터 π/3까지 적분한 값이 부피입니다."
+}
