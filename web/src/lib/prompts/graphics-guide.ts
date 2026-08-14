@@ -111,7 +111,9 @@ export const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
      - \`intersect(o1, o2)\` — 두 객체 교점 리스트
      - \`angle_bisector_dir(vertex, a, b)\` — ∠a-vertex-b 이등분선 방향 단위벡터
      - \`assert_on_line(point, p1, p2, tag)\` — point 가 line(p1,p2) 위인지
-     - \`assert_on_circle(point, center, radius, tag)\`
+     - \`assert_on_circle(point, center, radius, tag, normal=None)\` — **3D 원이면 normal
+       (그 원이 놓인 평면의 법선)을 반드시 같이 줘라.** 안 주면 반지름만 보므로 구면 위
+       아무 점이나 통과한다
      - \`assert_distance(p1, p2, expected, tag)\`
      - \`assert_angle(vertex, a, b, expected_rad, tag)\` — ∠a-vertex-b 가 expected 인지
      - \`assert_segments_disjoint(p1, p2, q1, q2, tag)\` — 선분 p1p2 와 q1q2 가 **안 만나는지** ("~와 만나지 않도록")
@@ -121,6 +123,14 @@ export const GRAPHICS_GUIDE = `--- 그래픽 출력 (UI가 자동 렌더) ---
      - \`assert_distance3d(p1, p2, expected, tag)\` — 3D 거리
      - \`assert_coplanar([p1, p2, p3, p4, ...], tag)\` — 네 점 이상이 한 평면 위인지
      - \`assert_on_plane(point, [q1, q2, q3], tag)\` — point 가 q1q2q3 평면 위인지
+     - \`assert_on_sphere(point, center, radius, tag)\` — 구면 위인지
+     - \`assert_tangent_plane(center, radius, [q1, q2, q3], tag)\` — 구가 그 평면에 **접하는지**
+     - \`assert_planes_perpendicular([p1,p2,p3], [q1,q2,q3], tag)\` — 두 평면이 수직인지
+     - \`assert_point_plane_distance(point, [q1,q2,q3], expected, tag)\` — 점-평면 거리
+     - \`assert_point_line_distance(point, p1, p2, expected, tag)\` — 점-직선 거리(2D·3D 공통)
+     - 값이 필요하면 \`point_plane_distance(point, [q1,q2,q3])\` ·
+       \`point_line_distance(point, p1, p2)\` 로 **거리 자체를 받아 print** 할 수 있다.
+       구가 나오면 **네 면까지 거리를 전부 print** 해 두면 "내부에 있다" 착각을 스스로 잡는다
      - \`assert_perpendicular(p1, p2, q1, q2, tag)\` — 두 선분(벡터)이 수직인지
 
      ⚠️ **위 목록에 없는 헬퍼는 존재하지 않는다.** 이름을 지어내 부르면 NameError 로

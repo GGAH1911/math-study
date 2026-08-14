@@ -30,7 +30,7 @@ def angle_bisector_dir(vertex, a, b):
     if nd == 0:
         raise ValueError("angle_bisector_dir: rays opposite")
     d = d / nd
-    return (d[0], d[1])
+    return tuple(d)   # ★2D 성분만 돌려주면 3D 이등분선이 조용히 납작해진다
 
 def _close(value, target=0, tol=1e-9):
     try:
@@ -57,8 +57,20 @@ def assert_on_line(point, p1, p2, tag):
             dval = d
         print(f"[VERIFY FAIL] {tag}: point {tuple(point)} not on line {tuple(p1)}-{tuple(p2)} (dist={dval})")
 
-def assert_on_circle(point, center, radius, tag):
-    d = sqrt((point[0]-center[0])**2 + (point[1]-center[1])**2)
+def assert_on_circle(point, center, radius, tag, normal=None):
+    """원 위인지. 3D 면 normal(평면 법선)을 같이 줘라.
+
+    ★2D 식으로 3D 점을 재면 z 가 통째로 버려져 **조용히 틀린 [VERIFY OK]** 가 난다.
+      2026-08-14 3D 기출 전수조사에서 2024 9월모평 기하 28·2025 수능 기하 27 두 건에서
+      실제로 걸렸다(assert_distance 는 그날 고쳤는데 이 함수는 남아 있었다).
+    ★3D 에서 '원' 은 중심·반지름만으로 정해지지 않는다 — 그 중심을 지나는 구면 전체가
+      후보다. normal 을 주면 평면까지 함께 보고, 안 주면 거리만 본다."""
+    d = _dist(point, center)
+    if normal is not None and _close(d, radius):
+        n = Matrix(list(normal))
+        if not _close(n.dot(Matrix(list(point)) - Matrix(list(center))), 0):
+            print(f"[VERIFY FAIL] {tag}: 반지름은 맞지만 원의 평면 밖")
+            return
     if _close(d, radius):
         print(f"[VERIFY OK] {tag}")
     else:
@@ -116,6 +128,60 @@ def assert_perpendicular(p1, p2, q1, q2, tag):
         print(f"[VERIFY FAIL] {tag}: 길이 0 벡터"); return
     print(f"[VERIFY OK] {tag}" if _close(u.dot(v), 0)
           else f"[VERIFY FAIL] {tag}: 내적={float(u.dot(v))} != 0")
+
+def assert_on_sphere(point, center, radius, tag):
+    """점이 구면 위인지. assert_on_circle 과 헷갈리지 않게 이름을 따로 둔다."""
+    assert_distance(point, center, radius, tag)
+
+def _plane_normal(pts):
+    o = Matrix(list(pts[0]))
+    n = (Matrix(list(pts[1])) - o).cross(Matrix(list(pts[2])) - o)
+    if n.norm() == 0:
+        raise ValueError("_plane_normal: 세 점이 일직선")
+    return o, n
+
+def point_plane_distance(point, plane_pts):
+    """점에서 평면(세 점)까지 거리 — 값을 그대로 돌려준다(print 안 함)."""
+    o, n = _plane_normal(plane_pts)
+    return abs(n.dot(Matrix(list(point)) - o)) / n.norm()
+
+def assert_point_plane_distance(point, plane_pts, expected, tag):
+    d = point_plane_distance(point, plane_pts)
+    if _close(d, expected):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            print(f"[VERIFY FAIL] {tag}: dist={float(d)} != {float(expected)}")
+        except Exception:
+            print(f"[VERIFY FAIL] {tag}: dist={d} != {expected}")
+
+def assert_tangent_plane(center, radius, plane_pts, tag):
+    """구(center, radius)가 평면에 **접하는지**. 공간도형에서 가장 자주 쓰는 조건인데
+    없어서 매번 손으로 법선을 외적하던 것."""
+    assert_point_plane_distance(center, plane_pts, radius, tag)
+
+def assert_planes_perpendicular(plane1_pts, plane2_pts, tag):
+    """두 평면이 수직인지(법선끼리 수직). '평면 ABH 와 평면 BCD 는 서로 수직' 같은 조건."""
+    _, n1 = _plane_normal(plane1_pts)
+    _, n2 = _plane_normal(plane2_pts)
+    if _close(n1.dot(n2), 0):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        print(f"[VERIFY FAIL] {tag}: 법선 내적={float(n1.dot(n2))} != 0")
+
+def point_line_distance(point, p1, p2):
+    """점에서 직선까지 거리 — 2D·3D 공통(sympy Line 은 3D 도 받는다)."""
+    return L(p1, p2).distance(Point(*point))
+
+def assert_point_line_distance(point, p1, p2, expected, tag):
+    d = point_line_distance(point, p1, p2)
+    if _close(d, expected):
+        print(f"[VERIFY OK] {tag}")
+    else:
+        try:
+            print(f"[VERIFY FAIL] {tag}: dist={float(d)} != {float(expected)}")
+        except Exception:
+            print(f"[VERIFY FAIL] {tag}: dist={d} != {expected}")
 
 def assert_angle(vertex, a, b, expected, tag):
     """∠a-vertex-b 가 expected (radian) 인지. 부호·사분면 오류 직격 검증."""
