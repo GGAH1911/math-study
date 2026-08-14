@@ -20,7 +20,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const user = (locals as { user?: { is_admin?: boolean } }).user;
   if (!user?.is_admin) return new Response('forbidden', { status: 403 });
 
-  let body: { stem?: string; cameraPosition?: unknown };
+  let body: { stem?: string; cameraPosition?: unknown; cameraTarget?: unknown };
   try { body = await request.json(); }
   catch { return new Response('bad json', { status: 400 }); }
 
@@ -37,8 +37,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return new Response('spec 구조가 예상과 다르다 — 쓰지 않음', { status: 409 });
   }
   e.spec.cameraPosition = body.cameraPosition;
+  // 회전 중심은 선택 — 안 주면 기존 값을 지운다(바운딩 박스 중심으로 되돌아간다).
+  if (ok(body.cameraTarget)) e.spec.cameraTarget = body.cameraTarget;
+  else delete e.spec.cameraTarget;
   writeFileSync(path, JSON.stringify(e, null, 1), 'utf-8');
-  return new Response(JSON.stringify({ ok: true, cameraPosition: e.spec.cameraPosition }), {
+  return new Response(JSON.stringify({ ok: true, cameraPosition: e.spec.cameraPosition, cameraTarget: e.spec.cameraTarget ?? null }), {
     headers: { 'Content-Type': 'application/json' },
   });
 };

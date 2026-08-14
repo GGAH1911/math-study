@@ -407,7 +407,7 @@ type Props = {
   /** 회전·줌 인터랙션 허용. 채팅 inline 미리보기는 false (정적), 모달은 true. */
   interactive?: boolean;
   /** 검수 전용 — 카메라 위치 실시간 통지. 제품 화면에서는 안 넘긴다. */
-  onCamera?: (p: [number, number, number]) => void;
+  onCamera?: (v: { position: [number, number, number]; target: [number, number, number] }) => void;
   /** sticky 패널 자신은 mirror 안 함 (무한 루프 방지). */
   noBroadcast?: boolean;
 };
@@ -512,7 +512,7 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
           </group>
         </Suspense>
         {interactive && <OrbitControls makeDefault enableDamping dampingFactor={0.12} />}
-        <CameraFit points={cameraFitPoints} shapeCount={spec.shapes.length} />
+        <CameraFit points={cameraFitPoints} shapeCount={spec.shapes.length} target={spec.cameraTarget} />
         {onCamera && <CameraProbe onChange={onCamera} />}
         </PortalCtx.Provider>
       </Canvas>

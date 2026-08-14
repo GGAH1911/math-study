@@ -52,6 +52,13 @@ export type Geom3DSpec = {
    *   구는 타원체가 된다. 그래서 구·원이 있는 스펙에는 쓰지 않고, 쓴 그림에는 캡션으로 알린다.
    */
   displayScale?: [number, number, number];
+  /**
+   * 회전 중심(OrbitControls 의 target). 안 주면 도형 바운딩 박스의 중심.
+   *
+   * ★왜 필요한가: 기본값(중심)으로 돌리면 **보고 싶은 부분이 화면 밖으로 밀려난다.**
+   *   예로 접은 반원의 접점 근처만 확대해 보려면 회전축이 거기 있어야 한다.
+   */
+  cameraTarget?: [number, number, number];
   gridSize?: number;
   bgColor?: string;
   title?: string;

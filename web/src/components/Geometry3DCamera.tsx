@@ -102,21 +102,28 @@ export function collectPoints(shapes: Geom3DShape[]): THREE.Vector3[] {
   return out;
 }
 
-export function CameraFit({ points, shapeCount }: { points: THREE.Vector3[]; shapeCount: number }) {
+export function CameraFit({ points, shapeCount, target }:
+  { points: THREE.Vector3[]; shapeCount: number; target?: [number, number, number] }) {
   const { camera, controls } = useThree();
   const lastFitCount = useRef(-1);
   useEffect(() => {
     if (points.length === 0) return;
     // slider 변경 (shape 개수 동일) 은 fit 스킵 — 사용자 회전 유지.
     // 첫 mount + 도형 추가/삭제 시만 fit.
-    if (lastFitCount.current === shapeCount) return;
-    lastFitCount.current = shapeCount;
+    // ★controls 는 첫 effect 때 아직 null 이다(OrbitControls 가 makeDefault 로 나중에 등록).
+    //   예전엔 그 첫 실행에서 done 표시를 해 버려, controls 가 생긴 뒤의 재실행이 이 가드에
+    //   막혀 **회전 중심이 영영 적용되지 않았다**(2026-08-14 발견). controls 가 있을 때만
+    //   done 으로 친다.
+    if (lastFitCount.current === shapeCount && controls) return;
+    if (controls) lastFitCount.current = shapeCount;
     const cam = camera as THREE.PerspectiveCamera;
     cam.up.set(0, 0, 1); // Z-up 강제
     const box = new THREE.Box3();
     for (const p of points) box.expandByPoint(p);
     const center = new THREE.Vector3();
     box.getCenter(center);
+    // 스펙이 회전 중심을 지정했으면 그걸 쓴다 — 보고 싶은 곳을 축으로 삼기 위해서다.
+    if (target) center.set(target[0], target[1], target[2]);
     // 카메라 viewing direction 유지 (현재 position - center). 첫 mount 시
     // 카메라가 (4,-4,3) 근처라 isometric direction.
     const dir = cam.position.clone().sub(center);
@@ -146,7 +153,7 @@ export function CameraFit({ points, shapeCount }: { points: THREE.Vector3[]; sha
     // OrbitControls 의 회전축도 center 로
     const c = controls as unknown as { target?: THREE.Vector3; update?: () => void } | null;
     if (c?.target) { c.target.copy(center); c.update?.(); }
-  }, [points, shapeCount, camera, controls]);
+  }, [points, shapeCount, camera, controls, target]);
   return null;
 }
 
@@ -157,14 +164,22 @@ export function CameraFit({ points, shapeCount }: { points: THREE.Vector3[]; sha
  *   없었다. 이 프로브가 있으면 "돌려 보고 → 값 읽어 → cameraPosition 에 저장" 이 된다.
  *   제품 화면에는 안 쓴다(onChange 를 안 넘기면 렌더되지 않는다).
  */
-export function CameraProbe({ onChange }: { onChange: (p: [number, number, number]) => void }) {
-  const { camera } = useThree();
+export function CameraProbe(
+  { onChange }: { onChange: (v: { position: [number, number, number]; target: [number, number, number] }) => void },
+) {
+  const { camera, controls } = useThree();
   const last = useRef('');
   useFrame(() => {
     const r = (v: number) => Math.round(v * 100) / 100;
-    const p: [number, number, number] = [r(camera.position.x), r(camera.position.y), r(camera.position.z)];
-    const key = p.join(',');
-    if (key !== last.current) { last.current = key; onChange(p); }
+    const position: [number, number, number] = [r(camera.position.x), r(camera.position.y), r(camera.position.z)];
+    // 회전 중심(OrbitControls target). 우클릭 드래그(팬)로 옮기면 여기가 바뀐다.
+    const t = (controls as unknown as { target?: THREE.Vector3 } | null)?.target;
+    // ★controls 는 마운트 직후 잠깐 null 이다. 그때 [0,0,0] 을 보고하면 방금 옮긴
+    //   회전 중심이 원점으로 되돌아간 것처럼 보인다(2026-08-14 실제 오작동).
+    if (!t) return;
+    const target: [number, number, number] = [r(t.x), r(t.y), r(t.z)];
+    const key = [...position, ...target].join(',');
+    if (key !== last.current) { last.current = key; onChange({ position, target }); }
   });
   return null;
 }
