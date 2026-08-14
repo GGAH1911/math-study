@@ -45,7 +45,13 @@ def main() -> int:
         if a.round and a.round not in str(f):
             continue
         t = f.read_text(encoding='utf-8')
-        if fm(t, 'verifier') != 'handsolve-pending':
+        ver = fm(t, 'verifier')
+        # ★handsolve-pending 뿐 아니라 **gold-match(솔버 없음)** 도 큐 대상이다.
+        #   명세: "gold-match 는 솔버가 아니다 — 재생성도 독립검증도 불가."
+        #   verified:true 라 아무 게이트에도 안 걸려 **조용히 남는다**(2026 고3 7월 확통 29 실례).
+        need = ver == 'handsolve-pending' or ver == 'gold-match' or (
+            ver.startswith('db/solutions/') and not (ROOT / ver).exists())
+        if not need:
             continue
         if (QUEUE / f'{f.stem}.json').exists():
             skipped += 1
@@ -62,7 +68,7 @@ def main() -> int:
             'format': fm(t, 'format'),
             'has_figure': fm(t, 'has_figure'),
             'tier': fm(t, 'killer_tier'),
-            'reason': 'requeued:handsolve-pending (큐 파일 유실 복구)',
+            'reason': f'requeued:{ver} (솔버 없음 — 재생성·독립검증 불가)',
             'best_answer': fm(t, 'answer_value') or fm(t, 'answer'),
             'best_steps': str(steps_of(t)[:6]),
             'trace': '[]',
