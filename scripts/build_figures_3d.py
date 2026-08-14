@@ -31,6 +31,33 @@ COMPOSE = ['docker', 'compose', '-f', str(ROOT / 'deploy/docker-compose.yml')]
 # git 블록 제거 — 미커밋 변경이 system prompt 를 흔들어 프롬프트 캐시를 깨는 것 방지.
 CLAUDE_ENV = {**os.environ, 'CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS': '1'}
 
+
+def _oauth_token() -> str:
+    """구독 인증 토큰. env 에 없으면 deploy/.env 에서 읽는다.
+
+    ★없으면 claude -p 가 "Not logged in" 한 줄만 뱉고 **exit 0 으로 끝난다.** 반환코드만 보면
+      성공처럼 보인다(2026-08-14: 그래서 인증 실패를 "3D 불필요" 판정으로 오인해 3건을
+      조용히 건너뛰었다). 토큰을 확실히 넣고, 그래도 실패하면 아래 _looks_unauthed 가 잡는다.
+    """
+    t = os.environ.get('CLAUDE_CODE_OAUTH_TOKEN', '').strip()
+    if t:
+        return t
+    envf = ROOT / 'deploy' / '.env'
+    if envf.exists():
+        for line in envf.read_text(encoding='utf-8').splitlines():
+            if line.startswith('MS_CLAUDE_OAUTH_TOKEN='):
+                return line.split('=', 1)[1].strip()
+    return ''
+
+
+_TOK = _oauth_token()
+if _TOK:
+    CLAUDE_ENV['CLAUDE_CODE_OAUTH_TOKEN'] = _TOK
+
+
+def _looks_unauthed(out: str, err: str) -> bool:
+    return 'Not logged in' in (out + err) or 'Invalid API key' in (out + err)
+
 UNIT_3D = '공간도형과_공간벡터'
 # 단원 밖에서도 입체가 쓸모 있는 것들(정적분의 활용 = 단면적분 입체, 정사영 등).
 KW = re.compile(r'회전체|회전시킨|입체도형|정육면체|직육면체|사면체|각뿔|원뿔|원기둥|구면|이면각|정사영')
@@ -117,8 +144,15 @@ def build_prompt(slug: str, md: Path, img: str, answer: str, tokfile: str | None
 
 절차:
 1. 문제 md 를 Read. 원본 도판이 있으면 그것도 Read — **점 이름과 배치를 원본과 맞춘다.**
-2. **입체가 정말 필요한지 판단.** 좌표가 본문에 다 주어진 계산 문항이거나 평면으로 충분하면
-   **파일을 만들지 말고** 한 줄로 이유만 답하고 끝내라. 억지로 만들지 마라.
+2. **입체가 필요한지 판단 — 기본은 "필요" 다.**
+   ★건너뛰어도 되는 경우는 **딱 둘**뿐이다:
+     (가) 좌표가 본문에 그대로 주어져 공식 대입만 하면 되는 문항(무게중심·내분점·거리공식)
+     (나) 원본에 도판이 없고 평면 그림으로 충분한 문항
+   그 밖에는 **만들어라.** 정육면체·사면체·원뿔 같은 입체가 나오는데 건너뛰면, 학생은
+   그 문제에서 3D 를 영영 못 본다. 애매하면 만드는 쪽이다.
+   건너뛸 때는 **어느 경우(가/나)에 해당하는지 명시**해라 — 그냥 "불필요" 는 안 된다.
+   ★막혀서(sympy 가 안 풀려서·시간이 없어서) 건너뛰는 것은 **금지**다. 그럴 땐 그렇다고 말해라 —
+     "불필요" 로 위장하면 그 문제는 조용히 3D 없이 남는다.
 3. 필요하면 문제의 모든 기하 조건을 만족하는 좌표를 세우고, 조건마다 assert_* 를 호출해
    `echo '<코드>' | python3 scripts/ops/sympy_run.py` 로 전수 검증해라. 전부 [VERIFY OK] 가 될 때까지.
    ★**좌표계를 고를 때부터 원본 도판과 같은 배치가 되게 잡아라.** 나중에 화면을 비틀어
@@ -133,11 +167,42 @@ def build_prompt(slug: str, md: Path, img: str, answer: str, tokfile: str | None
    빨간 줄이 없는지 확인해라. 있으면 고쳐라.
 
 라벨 규칙(중요):
-- 도형 위 글씨는 **이름표(A, 구 S, 평면 BCD)나 문제가 준 치수**만.
-- **문제가 묻는 값은 절대 쓰지 마라.** 이 문제의 답은 `{answer}` 다 — 그 값이나 그것으로
-  바로 이어지는 중간 결과를 라벨에 쓰면 학생이 풀 게 없어진다.
+- **허용**: 점·직선·평면의 이름표(A, P, 구 S, 평면 BCD) · 문제가 준 치수(AB=10) ·
+  풀이 도중 나오는 치수(FH=5√5 같은 것). 원본 기출 도판도 치수는 그림에 적는다.
+- **금지**: **발문이 묻는 그 값.** 이 문제의 답은 `{answer}` 다. 그 값을 그림에 적으면
+  학생이 풀 게 없어진다. 그것 **하나만** 빼라 — 중간 치수까지 지우면 그림이 앙상해진다.
 - 설명 문장을 라벨에 쓰지 마라(도형을 덮는다). 설명은 note 에.
+
+★**git 명령을 절대 쓰지 마라.** commit·push·checkout·stash 전부 금지다. 너는 파일 하나를
+  만들 뿐이고, 무엇을 커밋할지는 사람이 정한다. (2026-08-14: 한 에이전트가 스스로 main 에
+  push 했다 — 검수도 안 거친 스펙이 그대로 올라갔다.)
 """
+
+
+def _agent_touched_git(out: str) -> bool:
+    """에이전트가 git 을 만졌는지. 금지했지만 Bash 로 우회할 수 있어 사후에도 본다."""
+    return bool(re.search(r'git (commit|push|checkout|stash|reset)', out))
+
+
+def _log_agent(slug: str, out: str, err: str) -> None:
+    """에이전트의 최종 답변을 남긴다.
+
+    ★처음엔 출력을 통째로 버렸다. 그랬더니 "3D 불필요" 로 건너뛴 건이 **정말 불필요해서인지
+      중간에 막혀서인지 알 길이 없었다**(2026-08-14, 정육면체 문제를 불필요로 판정한 사고).
+    """
+    try:
+        txt = ''
+        try:
+            txt = json.loads(out).get('result', '') or ''
+        except Exception:
+            txt = out[-4000:]
+        d = Path('/tmp/ingest_logs'); d.mkdir(parents=True, exist_ok=True)
+        with open(d / f'figures3d_{slug}.log', 'a', encoding='utf-8') as f:
+            f.write(f'\n===== {datetime.now().isoformat(timespec="seconds")}\n{txt}\n')
+            if err.strip():
+                f.write(f'--- stderr\n{err[-2000:]}\n')
+    except Exception:
+        pass
 
 
 def gate(slug: str) -> tuple[bool, str]:
@@ -167,12 +232,27 @@ def run_one(slug: str, tokfile: str | None, force: bool) -> dict:
     if SYSTEM:
         args[-3:-3] = ['--system-prompt', SYSTEM]
     try:
-        subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S, cwd=ROOT, env=CLAUDE_ENV)
+        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S,
+                           cwd=ROOT, env=CLAUDE_ENV, stdin=subprocess.DEVNULL)
+        _log_agent(slug, r.stdout, r.stderr)   # ★버리면 왜 건너뛰었는지 영영 못 본다
     except subprocess.TimeoutExpired:
         out.unlink(missing_ok=True)
         return {'slug': slug, 'state': 'fail', 'why': f'{TIMEOUT_S}s 타임아웃'}
+    if _agent_touched_git(r.stdout):
+        print(f'   ⚠ {slug}: 에이전트가 git 을 건드렸다 — 로그 확인 필요', flush=True)
+    if _looks_unauthed(r.stdout, r.stderr):
+        return {'slug': slug, 'state': 'fail', 'why': '인증 실패(Not logged in) — 토큰 확인'}
     if not out.exists():
-        return {'slug': slug, 'state': 'none', 'why': '3D 불필요로 판단'}
+        # ★"파일이 없다" 를 곧바로 판정으로 읽지 않는다. 막혀서 못 만든 것과 구별해야 한다.
+        txt = ''
+        try:
+            txt = json.loads(r.stdout).get('result', '') or ''
+        except Exception:
+            txt = r.stdout
+        if re.search(r'\(가\)|\(나\)|불필요|필요\s*없', txt):
+            return {'slug': slug, 'state': 'none', 'why': txt.strip().replace('\n', ' ')[:90]}
+        return {'slug': slug, 'state': 'fail',
+                'why': f'파일도 없고 건너뛴 이유도 없다 — 중간에 막힌 듯: {txt.strip()[:90] or "(출력 없음)"}'}
     ok, detail = gate(slug)
     if not ok:
         out.unlink()
