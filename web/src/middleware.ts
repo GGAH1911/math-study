@@ -45,6 +45,7 @@ const ADMIN_PATHS: RegExp[] = [
   /^\/dev(\/|$)/,              // 개발/디버그 도구 페이지(figure-test·rounds·variants 등)
   /^\/api\/regenerate-body\b/, // 공유 개념 본문 LLM 재생성(저작 행위)
   /^\/api\/figure-triage\b/,   // figure 트리아지 분류 저장(어드민)
+  /^\/api\/dev(\/|$)/,          // dev 도구 API(3D 카메라 저장 등) — 저작 행위라 어드민만
   /^\/log\/?$/,               // LWIP 운영 로그(promote/prune/restructure/ingest…) — 개발 기록
 ];
 

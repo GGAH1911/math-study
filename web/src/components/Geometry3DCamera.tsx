@@ -4,7 +4,7 @@
 //   좌표가 완벽해도 도형이 안 보인다(2026-08-14: 접은 반원 평면의 법선과 시선이 거의
 //   수직이라 반원이 선분 위에 겹쳐 사라졌다). 이 판정은 여기 모아 둔다.
 import { useEffect, useRef } from 'react';
-import { useThree } from '@react-three/fiber';
+import { useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { type Geom3DShape, _eval, _math, coerceCoord, normalizePoint3 } from '../lib/geometry3d-core';
 
@@ -147,5 +147,24 @@ export function CameraFit({ points, shapeCount }: { points: THREE.Vector3[]; sha
     const c = controls as unknown as { target?: THREE.Vector3; update?: () => void } | null;
     if (c?.target) { c.target.copy(center); c.update?.(); }
   }, [points, shapeCount, camera, controls]);
+  return null;
+}
+
+/**
+ * 현재 카메라 위치를 밖으로 알려 준다 — **검수 전용**.
+ *
+ * ★왜: 좋은 각도는 드래그로 찾는 게 제일 빠른데, 찾고 나서 그 값을 스펙에 적을 방법이
+ *   없었다. 이 프로브가 있으면 "돌려 보고 → 값 읽어 → cameraPosition 에 저장" 이 된다.
+ *   제품 화면에는 안 쓴다(onChange 를 안 넘기면 렌더되지 않는다).
+ */
+export function CameraProbe({ onChange }: { onChange: (p: [number, number, number]) => void }) {
+  const { camera } = useThree();
+  const last = useRef('');
+  useFrame(() => {
+    const r = (v: number) => Math.round(v * 100) / 100;
+    const p: [number, number, number] = [r(camera.position.x), r(camera.position.y), r(camera.position.z)];
+    const key = p.join(',');
+    if (key !== last.current) { last.current = key; onChange(p); }
+  });
   return null;
 }

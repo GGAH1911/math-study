@@ -22,7 +22,7 @@ import {
   type Geom3DShape, type Geom3DSpec,
   _math, _eval, triangulate, normalizeMathExprStr, coerceCoord, normalizePoint3, vertexKey,
 } from '../lib/geometry3d-core';
-import { collectPoints, CameraFit } from './Geometry3DCamera';
+import { collectPoints, CameraFit, CameraProbe } from './Geometry3DCamera';
 // 타입은 여기서 계속 내보낸다 — Graph/Interactive/interactive-samples 의 import 경로를 지키려고.
 export type { Geom3DShape, Geom3DSpec };
 
@@ -406,11 +406,13 @@ type Props = {
   hideCaption?: boolean;
   /** 회전·줌 인터랙션 허용. 채팅 inline 미리보기는 false (정적), 모달은 true. */
   interactive?: boolean;
+  /** 검수 전용 — 카메라 위치 실시간 통지. 제품 화면에서는 안 넘긴다. */
+  onCamera?: (p: [number, number, number]) => void;
   /** sticky 패널 자신은 mirror 안 함 (무한 루프 방지). */
   noBroadcast?: boolean;
 };
 
-export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hideCaption, interactive = true, noBroadcast = false }: Props) {
+export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hideCaption, interactive = true, noBroadcast = false, onCamera }: Props) {
   // R3F Canvas 는 SSR 호환 X — SSR pass 에선 placeholder 만 render, hydration 후 실제 mount.
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
@@ -511,6 +513,7 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
         </Suspense>
         {interactive && <OrbitControls makeDefault enableDamping dampingFactor={0.12} />}
         <CameraFit points={cameraFitPoints} shapeCount={spec.shapes.length} />
+        {onCamera && <CameraProbe onChange={onCamera} />}
         </PortalCtx.Provider>
       </Canvas>
       {/* 축을 늘려 그렸으면 반드시 알린다 — 안 그러면 학생이 그림에서 길이를 잰다.
