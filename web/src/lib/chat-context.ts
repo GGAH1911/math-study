@@ -414,7 +414,7 @@ ${FOLLOWUP_VERIFICATION_RULE}
   else if (fm.has_figure) visionImgPaths = imageTiles.length > 1 ? imageTiles : (imageAbs ? [imageAbs] : []);
 
   // Read 도구 화이트리스트(--add-dir). chat.ts 는 imagePaths 가 아니라 allowedDirs 로 이미지를 연다.
-  // 추출 도형 PNG는 web/public/problem-images/ 에 있어 문제이미지 dir(db/raw/.../images)과 다르므로
+  // 추출 도형 PNG는 web/private/problem-images/ 에 있어 문제이미지 dir(db/raw/.../images)과 다르므로
   // figDir 를 반드시 추가해야 Read 가 허용된다. figExists 시엔 안전망으로 전체 이미지 dir 도 함께 열어둠.
   // 도형 없는 문제는 allowedDirs=undefined → Read 비활성(텍스트만, injection 차단). 사용자 첨부 이미지는
   // chat.ts 가 TMP_IMG_DIR 를 따로 추가하므로 그때 Read 가 다시 켜진다.

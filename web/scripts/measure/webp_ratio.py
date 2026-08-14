@@ -3,7 +3,7 @@ import glob, io, os, random, sys
 from PIL import Image
 random.seed(3)
 n = int(sys.argv[1]) if len(sys.argv) > 1 else 30
-s = random.sample(glob.glob(os.path.join(os.path.dirname(__file__), '../../public/problem-images/*.png')), n)
+s = random.sample(glob.glob(os.path.join(os.path.dirname(__file__), '../../private/problem-images/*.png')), n)
 tp = tw = tl = 0
 for f in s:
     im = Image.open(f); tp += os.path.getsize(f)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """도형 백필 — figures.map_to_problems 로 임베드 도형 추출+stitch →
-web/public/problem-images/<stem>_fig.png 저장 + .md frontmatter 에 figure_image 추가.
+web/private/problem-images/<stem>_fig.png 저장 + .md frontmatter 에 figure_image 추가.
 searchable_text 백필(backfill_rosetta)과 별도 필드라 순차 실행. 진행 로그.
 """
 import sys, os, re, glob, time, argparse
@@ -10,7 +10,7 @@ sys.path.insert(0, HERE)
 import figures as FIG
 from backfill_rosetta import parse_md, pdf_for, REPO
 
-PUBIMG = os.path.join(REPO, 'web', 'public', 'problem-images')
+PUBIMG = os.path.join(REPO, 'web', 'private', 'problem-images')   # ★public 아님(인증 게이팅)
 
 
 def set_figure_image(txt, webpath):

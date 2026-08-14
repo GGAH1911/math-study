@@ -3,7 +3,7 @@
 
 사용: python extract_figures.py <round> <subj> <num> [--apply]
   PDF에서 문제 영역 자동 탐지 → 이미지 객체 클러스터(인접 병합) + 캡션([그림N]) 크롭 →
-  web/public/problem-images/ 저장(흰여백 trim) → 이미지 위 텍스트를 앵커로
+  web/private/problem-images/ 저장(흰여백 trim) → 이미지 위 텍스트를 앵커로
   기존 searchable_text(숫자 보존)에 {{FIGn}} placeholder 삽입 → md frontmatter 갱신.
   --apply 없으면 dry-run(출력만).
 """

@@ -3,7 +3,7 @@
 
 Reuses cached pages/, bbox detection, and (where present) meta_cache/
 metadata. Only rewrites db/raw/{slug}/images/*.png and refreshes the
-web/public/problem-images/ symlinks. Markdown, DB, and metadata stay
+web/private/problem-images/ symlinks. Markdown, DB, and metadata stay
 untouched — the only thing changing is the visual crop.
 
 Caching:

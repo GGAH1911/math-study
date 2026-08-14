@@ -28,7 +28,7 @@ from pathlib import Path
 from solve_prompts import build_prompt, build_text_prompt, build_openbook_prompt, build_promote_prompt
 
 ROOT = Path(__file__).resolve().parent.parent
-IMGDIR = ROOT / 'web' / 'public' / 'problem-images'
+IMGDIR = ROOT / 'web' / 'private' / 'problem-images'   # ★public 아님(인증 게이팅 — media-root.ts)
 def _venv_py() -> Path:
     """솔버(.py)를 실행할 파이썬. sympy 가 있어야 한다.
 

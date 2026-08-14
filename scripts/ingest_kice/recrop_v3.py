@@ -3,7 +3,7 @@
 
 Runs the cheap part of the v3 ingest pipeline (PDF render + bbox extract +
 PIL crop) across every round in db/raw/ — no LLM, no metadata, no DB
-upsert. Result: `db/raw/{slug}/images/*.png` + `web/public/problem-images/`
+upsert. Result: `db/raw/{slug}/images/*.png` + `web/private/problem-images/`
 symlinks updated so the /progress preview grid shows the fresh crops.
 
 Typical use: tune crop_with_llm.py knobs (GAP_RATIO, PADDING_RATIO),

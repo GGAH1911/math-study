@@ -43,7 +43,9 @@ from PIL import Image  # noqa: E402
 
 META_WORKERS = 4   # Haiku text-only is fast (~3-5s); 4 parallel is safe
 CROP_WORKERS = 4   # pure-PIL crop_by_gap is CPU-bound and fast (~50ms/problem)
-WEB_PUBLIC_IMAGES = ROOT / 'web' / 'public' / 'problem-images'
+# ★public 아님 — 인증 게이팅 때문에 정적 서빙 밖으로 뺐다(web/src/lib/media-root.ts).
+#   여기가 옛 경로면 새 인제스트가 게이팅 밖에 심링크를 만든다.
+WEB_PUBLIC_IMAGES = ROOT / 'web' / 'private' / 'problem-images'
 
 
 def _validate_crop(image_path: Path, pdf_path: Path, page_num: int,
@@ -106,7 +108,7 @@ def _validate_crop(image_path: Path, pdf_path: Path, page_num: int,
 
 
 def _ensure_web_symlink(image_path: Path) -> None:
-    """Create a symlink in web/public/problem-images/ pointing at the
+    """Create a symlink in web/private/problem-images/ pointing at the
     canonical image under db/raw/. astro dev/build serves this URL as
     /problem-images/<basename>. Idempotent."""
     WEB_PUBLIC_IMAGES.mkdir(parents=True, exist_ok=True)
