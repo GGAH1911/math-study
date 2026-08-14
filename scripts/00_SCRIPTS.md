@@ -24,6 +24,7 @@ updated: 2026-06-28
 - `build_solution_cache.py` — 등록 자산
 - `cache_hand_solution.py` — 등록 자산
 - `classify_orphan_grade.py` — 등록 자산
+- `claude_auth.py` — 등록 자산
 - `clean_corrupted_text.py` — 등록 자산
 - `clean_dev_expressions.py` — 등록 자산
 - `cleanup_adhoc_concepts.py` — 등록 자산
@@ -39,6 +40,8 @@ updated: 2026-06-28
 - `ocr_client.py` — 등록 자산
 - `orchestrate_gyo3.py` — 등록 자산
 - `override_grade_by_name.py` — 등록 자산
+- `param_nous.py` — 등록 자산
+- `parameterize_solvers.py` — 등록 자산
 - `pilot_solved_by.py` — 등록 자산
 - `poc_haiku_iterate.py` — 등록 자산
 - `poc_haiku_iterate2.py` — 등록 자산
@@ -58,6 +61,7 @@ updated: 2026-06-28
 - `regenerate_searchable.py` — 등록 자산
 - `relabel_text_verified.py` — 등록 자산
 - `remap_concepts.py` — 등록 자산
+- `requeue_handsolve.py` — 등록 자산
 - `retry_timeout_killers.py` — 등록 자산
 - `scan_impossible_math.py` — 등록 자산
 - `selfcheck_crop.py` — 등록 자산

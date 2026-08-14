@@ -29,6 +29,7 @@ updated: 2026-06-28
 - `ingest_gyo3.py` — 등록 자산
 - `ingest_round.py` — 등록 자산
 - `ingest_v2.py` — 등록 자산
+- `merge_subject_pdfs.py` — 등록 자산
 - `patch_nested_scripts.py` — 등록 자산
 - `qa_glyphs_for.py` — 등록 자산
 - `qa_invariant_scan.py` — 등록 자산

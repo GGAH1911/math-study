@@ -42,6 +42,7 @@ updated: 2026-06-28
 - `markdown.ts` — 등록 자산
 - `mastery.ts` — 등록 자산
 - `mathish.tsx` — 등록 자산
+- `media-root.ts` — 등록 자산
 - `note-prompts.ts` — 등록 자산
 - `palette.ts` — 등록 자산
 - `problem-card.ts` — 등록 자산
