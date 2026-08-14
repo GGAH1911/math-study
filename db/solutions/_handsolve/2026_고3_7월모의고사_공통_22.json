@@ -1,0 +1,20 @@
+{
+  "slug": "2026_고3_7월모의고사_공통_22",
+  "round": "고3_7월모의고사",
+  "subject": "공통",
+  "number": "22",
+  "gold": "26",
+  "format": "numeric",
+  "has_figure": "false",
+  "tier": "killer",
+  "reason": "requeued:handsolve-pending (큐 파일 유실 복구)",
+  "best_answer": "26",
+  "best_steps": "[]",
+  "trace": "[]",
+  "image": "/problem-images/2026_고3_7월모의고사_공통_22.png",
+  "vision_tiles": [
+    "/home/insung/math-study/db/raw/2026_고3_7월모의고사/images/tiles/2026_고3_7월모의고사_공통_22_t1.png",
+    "/home/insung/math-study/db/raw/2026_고3_7월모의고사/images/tiles/2026_고3_7월모의고사_공통_22_t2.png"
+  ],
+  "instruction": "통이미지 대신 vision_tiles 를 Read 로 직접 보고 풀 것(도형 판독 필수)."
+}
