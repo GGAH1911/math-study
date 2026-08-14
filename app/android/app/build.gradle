@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+
+// ★릴리스 서명 값 해석 — **최상위 스코프**에 둔다.
+//   android{} 안에 두면 아래 gradle.taskGraph 클로저에서 안 보인다
+//   ("Could not get unknown property 'hasSigning'" — 실측).
+def ksPropsFile = rootProject.file('keystore.properties')
+def ksProps = new Properties()
+if (ksPropsFile.exists()) { ksPropsFile.withInputStream { ksProps.load(it) } }
+def storePw = ksProps.getProperty('storePassword') ?: System.getenv('MS_ANDROID_STORE_PASSWORD')
+def keyPw   = ksProps.getProperty('keyPassword')   ?: System.getenv('MS_ANDROID_KEY_PASSWORD')
+def alias   = ksProps.getProperty('keyAlias')      ?: System.getenv('MS_ANDROID_KEY_ALIAS') ?: 'mathstudy'
+def hasSigning = (storePw && keyPw && file('release.keystore').exists()) as boolean
+
+
+android {
+    namespace = "kr.co.mathstudy"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "kr.co.mathstudy"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        release {
+            if (hasSigning) {
+                storeFile file('release.keystore')
+                storePassword storePw
+                keyAlias alias
+                keyPassword keyPw
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (hasSigning) { signingConfig signingConfigs.release }
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+// 릴리스 산출물을 **서명 없이 내보내지 않는다.** 태스크 그래프가 확정된 뒤에만 판정하므로
+// 디버그 빌드는 영향을 받지 않는다.
+gradle.taskGraph.whenReady { graph ->
+    def wantsRelease = graph.allTasks.any { it.name.toLowerCase().contains('release') }
+    if (wantsRelease && !hasSigning) {
+        throw new GradleException(
+            '\n안드로이드 릴리스 서명 정보가 없습니다.\n' +
+            '  app/android/keystore.properties 에 storePassword·keyPassword·keyAlias 를 넣고\n' +
+            '  app/android/app/release.keystore 를 두거나, MS_ANDROID_* 환경변수를 지정하세요.\n' +
+            '  키 생성 절차: app/README.md (★키를 잃으면 앱 업데이트가 영구 불가합니다)')
+    }
+}
