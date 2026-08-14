@@ -1,12 +1,16 @@
 {
  "spec": {
-  "title": "2026 9월모평 기하 26 — 직육면체 ABCD-EFGH와 점 A·직선 FH 사이의 거리",
+  "title": "직육면체 ABCD-EFGH (AB=10, AD=5, AE=1) 와 밑면의 대각선 FH",
   "cameraPosition": [
-   16,
-   15,
-   11
+   31.1,
+   10.7,
+   12.8
   ],
-  "axes": false,
+  "cameraTarget": [
+   5,
+   2.5,
+   0.5
+  ],
   "shapes": [
    {
     "type": "polyhedron",
@@ -101,85 +105,9 @@
      "H"
     ],
     "fill": "#94a3b8",
-    "fillOpacity": 0.18,
-    "stroke": "#e2e8f0",
+    "fillOpacity": 0.2,
+    "stroke": "#334155",
     "strokeWidth": 2
-   },
-   {
-    "type": "polyhedron",
-    "vertices": [
-     [
-      0,
-      0,
-      1
-     ],
-     [
-      10,
-      0,
-      0
-     ],
-     [
-      0,
-      5,
-      0
-     ]
-    ],
-    "faces": [
-     [
-      0,
-      1,
-      2
-     ]
-    ],
-    "fill": "#38bdf8",
-    "fillOpacity": 0.18,
-    "stroke": "#38bdf8",
-    "strokeWidth": 2
-   },
-   {
-    "type": "segment3d",
-    "from": [
-     0,
-     0,
-     1
-    ],
-    "to": [
-     10,
-     0,
-     1
-    ],
-    "color": "#a3e635",
-    "label": "10"
-   },
-   {
-    "type": "segment3d",
-    "from": [
-     0,
-     0,
-     1
-    ],
-    "to": [
-     0,
-     5,
-     1
-    ],
-    "color": "#a3e635",
-    "label": "5"
-   },
-   {
-    "type": "segment3d",
-    "from": [
-     0,
-     0,
-     1
-    ],
-    "to": [
-     0,
-     0,
-     0
-    ],
-    "color": "#a3e635",
-    "label": "1"
    },
    {
     "type": "segment3d",
@@ -193,62 +121,53 @@
      5,
      0
     ],
-    "color": "#fbbf24",
-    "label": "5\\sqrt{5}"
+    "color": "#f59e0b",
+    "dashed": false
    },
    {
-    "type": "segment3d",
-    "from": [
-     0,
-     0,
-     1
-    ],
-    "to": [
-     2,
-     4,
-     0
-    ],
-    "color": "#f472b6",
-    "dashed": true,
-    "label": "\\sqrt{21}"
-   },
-   {
-    "type": "point3d",
+    "type": "text3d",
     "at": [
-     2,
-     4,
-     0
+     5,
+     -1.8,
+     1.0
     ],
-    "label": "P",
-    "color": "#f472b6",
-    "size": 0.16
+    "text": "$\\overline{AB}=10$",
+    "color": "#cbd5e1"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     -2.0,
+     2.5,
+     1.2
+    ],
+    "text": "$\\overline{AD}=5$",
+    "color": "#cbd5e1"
+   },
+   {
+    "type": "text3d",
+    "at": [
+     0,
+     -2.4,
+     0.5
+    ],
+    "text": "$\\overline{AE}=1$",
+    "color": "#cbd5e1"
    }
   ]
  },
  "conditions": [
-  "AB = 10",
+  "직육면체 ABCD-EFGH 에서 AB = 10",
   "AD = 5",
   "AE = 1",
-  "네 점 A, B, C, D 는 한 평면 위 (윗면)",
-  "∠DAB = 90°",
-  "BC = AD = 5",
-  "CD = AB = 10",
-  "네 점 E, F, G, H 는 한 평면 위 (아랫면)",
-  "∠HEF = 90°",
-  "EF = 10",
-  "EH = 5",
-  "AE ⊥ AB",
-  "AE ⊥ AD",
-  "BF = 1",
-  "CG = 1",
-  "DH = 1",
-  "FH = 5√5",
-  "P 는 직선 FH 위의 점",
-  "AP ⊥ FH",
-  "AP = √21",
-  "점 A 와 직선 FH 사이의 거리 = √21 (정답 ①)"
+  "한 꼭짓점에 모인 세 모서리 AB, AD, AE 가 서로 수직 (직육면체)",
+  "마주보는 모서리끼리 평행하고 길이가 같다 (AB ∥ DC ∥ EF ∥ HG, AD ∥ BC ∥ EH ∥ FG, AE ∥ BF ∥ CG ∥ DH)",
+  "윗면 ABCD 와 밑면 EFGH 는 각각 한 평면 위의 직사각형이고, E, F, G, H 는 각각 A, B, C, D 의 바로 아래 꼭짓점",
+  "직선 FH 는 밑면 EFGH 의 대각선이고 FH = 5√5",
+  "점 A 는 밑면 EFGH 위에 있지 않다 (평면 밖의 점)",
+  "A 에서 직선 FH 에 내린 수선의 발은 선분 FH 의 내부에 있다 (F 에서 H 쪽으로 4/5 지점)"
  ],
- "verify": "# 직육면체 ABCD-EFGH : AB=10, AD=5, AE=1\nA = (0, 0, 1); B = (10, 0, 1); C = (10, 5, 1); D = (0, 5, 1)\nE = (0, 0, 0); F = (10, 0, 0); G = (10, 5, 0); H = (0, 5, 0)\n# 점 A 에서 직선 FH 에 내린 수선의 발\nP = (2, 4, 0)\n\nassert_distance3d(A, B, 10, \"AB=10\")\nassert_distance3d(A, D, 5, \"AD=5\")\nassert_distance3d(A, E, 1, \"AE=1\")\n\n# 윗면 ABCD 가 직사각형\nassert_coplanar([A, B, C, D], \"A,B,C,D 는 한 평면 위\")\nassert_perpendicular(A, B, A, D, \"각 DAB = 90도\")\nassert_distance3d(B, C, 5, \"BC=AD=5\")\nassert_distance3d(C, D, 10, \"CD=AB=10\")\n\n# 아랫면 EFGH 가 직사각형\nassert_coplanar([E, F, G, H], \"E,F,G,H 는 한 평면 위\")\nassert_perpendicular(E, F, E, H, \"각 HEF = 90도\")\nassert_distance3d(E, F, 10, \"EF=10\")\nassert_distance3d(E, H, 5, \"EH=5\")\n\n# 옆모서리가 밑면에 수직이고 길이 1 (직육면체)\nassert_perpendicular(A, E, A, B, \"AE 수직 AB\")\nassert_perpendicular(A, E, A, D, \"AE 수직 AD\")\nassert_distance3d(B, F, 1, \"BF=1\")\nassert_distance3d(C, G, 1, \"CG=1\")\nassert_distance3d(D, H, 1, \"DH=1\")\n\n# 구하는 값: 점 A 와 직선 FH 사이의 거리\nassert_distance3d(F, H, sqrt(125), \"FH=5*sqrt(5)\")\nassert_on_line(P, F, H, \"P 는 직선 FH 위\")\nassert_perpendicular(A, P, F, H, \"AP 수직 FH\")\nassert_distance3d(A, P, sqrt(21), \"AP=sqrt(21)\")\nassert_point_line_distance(A, F, H, sqrt(21), \"점 A 와 직선 FH 사이의 거리 = sqrt(21)\")\n",
- "note": "윗면 ABCD·아랫면 EFGH 인 두께 1 의 납작한 직육면체입니다. 노란 선이 아랫면의 대각선 FH 이고, A 에서 그 직선에 내린 수선의 발 P(2,4,0) 까지의 분홍 점선 길이가 구하는 거리 √21 입니다.",
+ "verify": "def check(cond, tag):\n    print(f\"[VERIFY OK] {tag}\" if cond else f\"[VERIFY FAIL] {tag}\")\n\n\n# ---- 직육면체 ABCD-EFGH : 윗면 ABCD 를 z=1, 밑면 EFGH 를 z=0 ----\n#      원본 도판과 같은 배치(ABCD 가 위, EFGH 가 아래, E 가 가려지는 꼭짓점)\np = S(10)   # AB\nq = S(5)    # AD\nh = S(1)    # AE\n\nA = (S(0), S(0), h)\nB = (p,    S(0), h)\nC = (p,    q,    h)\nD = (S(0), q,    h)\nE = (S(0), S(0), S(0))\nF = (p,    S(0), S(0))\nG = (p,    q,    S(0))\nH = (S(0), q,    S(0))\n\n# ① 주어진 세 모서리 길이\nassert_distance3d(A, B, 10, 'AB = 10')\nassert_distance3d(A, D, 5,  'AD = 5')\nassert_distance3d(A, E, 1,  'AE = 1')\n\n# ② 직육면체 — 한 꼭짓점에 모인 세 모서리가 서로 수직\nassert_perpendicular(A, B, A, D, 'AB ⟂ AD')\nassert_perpendicular(A, B, A, E, 'AB ⟂ AE')\nassert_perpendicular(A, D, A, E, 'AD ⟂ AE')\n\n# ③ 직육면체가 닫히는가 — 마주보는 모서리가 평행하고 길이가 같다\nfor (o1, t1, o2, t2, tg) in [\n    (A, B, D, C, 'AB ∥ DC'), (A, B, E, F, 'AB ∥ EF'), (A, B, H, G, 'AB ∥ HG'),\n    (A, D, B, C, 'AD ∥ BC'), (A, D, E, H, 'AD ∥ EH'), (A, D, F, G, 'AD ∥ FG'),\n    (A, E, B, F, 'AE ∥ BF'), (A, E, C, G, 'AE ∥ CG'), (A, E, D, H, 'AE ∥ DH'),\n]:\n    v1 = Matrix(t1) - Matrix(o1)\n    v2 = Matrix(t2) - Matrix(o2)\n    check(_close(simplify((v1 - v2).norm()), 0), f'{tg} 이고 길이 같음')\n\n# ④ 윗면 ABCD 와 밑면 EFGH 가 각각 한 평면 위의 직사각형\nassert_coplanar([A, B, C, D], '네 점 A, B, C, D 가 한 평면 위 (윗면)')\nassert_coplanar([E, F, G, H], '네 점 E, F, G, H 가 한 평면 위 (밑면)')\nassert_perpendicular(A, B, B, C, '윗면의 각 B 가 직각')\nassert_perpendicular(E, F, F, G, '밑면의 각 F 가 직각')\n\n# ⑤ 직선 FH — 밑면의 대각선 (A 는 그 평면 밖의 점)\nassert_on_plane(F, [E, F, G], 'F 는 밑면 EFGH 위')\nassert_on_plane(H, [E, F, G], 'H 는 밑면 EFGH 위')\ncheck(not _close(simplify((Matrix(A) - Matrix(E)).dot(Matrix([0, 0, 1]))), 0),\n      'A 는 밑면 EFGH 위의 점이 아니다 (평면 밖)')\nassert_distance3d(F, H, 5*sqrt(5), 'FH = 5√5 (밑면 대각선)')\n\n# ⑥ 점 A 에서 직선 FH 에 내린 수선의 발 M — 라벨에는 쓰지 않는다(값이 곧 답이므로)\nu = Matrix(H) - Matrix(F)\nt = simplify((Matrix(A) - Matrix(F)).dot(u) / u.dot(u))\nM = tuple(simplify(x) for x in (Matrix(F) + t*u))\nassert_on_line(M, F, H, 'M 은 직선 FH 위')\nassert_perpendicular(A, M, F, H, 'AM ⟂ FH (M 은 A 에서 직선 FH 에 내린 수선의 발)')\ncheck(0 < float(t) < 1, 'M 이 선분 FH 의 내부에 있다')\n\n# ⑦ 구하는 값(점 A 와 직선 FH 사이의 거리) — 좌표가 정답을 재현하는지만 확인\nassert_point_line_distance(A, F, H, sqrt(21), '점 A 와 직선 FH 사이의 거리 = √21')\n\nprint('M =', [float(x) for x in M], ' t =', float(t))\n",
+ "note": "AB=10, AD=5 인 직사각형에 높이 1 만 얹은 아주 납작한 상자입니다 — 굵은 선이 밑면의 대각선 FH 이고, 구하는 것은 윗면 꼭짓점 A 에서 이 직선까지의 거리입니다.",
  "source_sha": "2ecbfd37a2c174f3"
 }
