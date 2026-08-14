@@ -25,7 +25,7 @@
     "uSamples": 64,
     "vSamples": 6,
     "color": "#60a5fa",
-    "opacity": 0.35
+    "opacity": 0.5
    },
    {
     "type": "parametricSurface",
@@ -42,8 +42,8 @@
     ],
     "uSamples": 64,
     "vSamples": 6,
-    "color": "#cbd5e1",
-    "opacity": 0.3
+    "color": "#e2e8f0",
+    "opacity": 0.42
    },
    {
     "type": "parametricSurface",
@@ -60,8 +60,8 @@
     ],
     "uSamples": 64,
     "vSamples": 6,
-    "color": "#cbd5e1",
-    "opacity": 0.3
+    "color": "#e2e8f0",
+    "opacity": 0.42
    },
    {
     "type": "polyhedron",
@@ -90,9 +90,9 @@
      ]
     ],
     "fill": "#e2e8f0",
-    "fillOpacity": 0.35,
+    "fillOpacity": 0.45,
     "stroke": "#334155",
-    "strokeWidth": 2
+    "strokeWidth": 2.5
    },
    {
     "type": "polyhedron",
@@ -121,9 +121,9 @@
      ]
     ],
     "fill": "#e2e8f0",
-    "fillOpacity": 0.35,
+    "fillOpacity": 0.45,
     "stroke": "#334155",
-    "strokeWidth": 2
+    "strokeWidth": 2.5
    },
    {
     "type": "polyhedron",
@@ -152,9 +152,9 @@
      ]
     ],
     "fill": "#f472b6",
-    "fillOpacity": 0.55,
+    "fillOpacity": 0.6,
     "stroke": "#db2777",
-    "strokeWidth": 2
+    "strokeWidth": 2.5
    },
    {
     "type": "parametricCurve3d",
@@ -189,10 +189,10 @@
     "z": "0",
     "tRange": [
      0.03,
-     2.12
+     2.06
     ],
     "samples": 240,
-    "color": "#64748b",
+    "color": "#94a3b8",
     "strokeWidth": 1.5
    },
    {
@@ -260,7 +260,7 @@
     ],
     "to": [
      0.0,
-     8.4,
+     6.4,
      0.0
     ],
     "color": "#94a3b8"
@@ -279,7 +279,7 @@
     "type": "text3d",
     "at": [
      0.0,
-     8.9,
+     6.9,
      0.0
     ],
     "text": "y",
@@ -288,8 +288,8 @@
    {
     "type": "text3d",
     "at": [
-     -0.12,
-     -0.45,
+     -0.1,
+     -0.35,
      0.0
     ],
     "text": "O",
@@ -299,7 +299,7 @@
     "type": "text3d",
     "at": [
      1.4142135623730951,
-     -1.5,
+     -0.7,
      0.0
     ],
     "text": "$x=\\frac{1}{\\sqrt{2k}}$",
@@ -309,7 +309,7 @@
     "type": "text3d",
     "at": [
      2.0,
-     -3.1,
+     -1.6,
      0.0
     ],
     "text": "$x=\\frac{1}{\\sqrt{k}}$",
@@ -318,8 +318,8 @@
    {
     "type": "text3d",
     "at": [
-     2.25,
-     8.6,
+     2.9,
+     9.4,
      0.0
     ],
     "text": "$f(x)=2\\sqrt{x}e^{kx^2}$",
