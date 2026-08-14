@@ -34,7 +34,23 @@ RE_LABEL = re.compile(r'^\s{0,4}[A-Za-z0-9_{}^\\\'′´]{1,4}(\s+[A-Za-z0-9_{}^\
 
 
 def round_dir(rd: str) -> Path | None:
+    """`2022/수능` 또는 `2022_수능`(인제스트 슬러그) 또는 `수능`(연도 유일할 때만) 모두 받는다.
+
+    ★회차 이름은 **연도 간 중복**이다(`수능`·`6월모평`이 해마다 있다). 연도 없이 받아 첫 히트를
+      쓰면 엉뚱한 해를 검사하고 통과시킨다 — 실제로 그렇게 69회차가 19개로 뭉개졌다.
+    """
+    if '/' in rd:
+        p = PROB / rd
+        return p if p.is_dir() else None
     hits = [p for p in PROB.glob(f'*/{rd}') if p.is_dir()]
+    if not hits and '_' in rd:                       # 인제스트 슬러그 `2026_고3_7월모의고사`
+        year, _, name = rd.partition('_')
+        p = PROB / year / name
+        if p.is_dir():
+            return p
+    if len(hits) > 1:
+        print(f'   ! {rd}: 연도가 여럿이다({", ".join(h.parent.name for h in hits)}) — '
+              f'`<연도>/{rd}` 로 지정하라. 우선 {hits[0].parent.name} 만 검사한다.')
     return hits[0] if hits else None
 
 
@@ -133,7 +149,9 @@ def main() -> int:
 
     targets = a.rounds
     if a.all or not targets:
-        targets = sorted({p.name for p in PROB.glob('*/*') if p.is_dir()})
+        # ★`연도/회차` 로 잡는다. 회차명만 쓰면 `수능`·`6월모평` 이 해마다 있어 집합이 뭉개진다
+        #   (실측: 69회차가 19개로 줄어 50회차가 검사조차 안 됐다).
+        targets = sorted(f'{p.parent.name}/{p.name}' for p in PROB.glob('*/*') if p.is_dir())
     bad = 0
     warned = 0
     for rd in targets:
