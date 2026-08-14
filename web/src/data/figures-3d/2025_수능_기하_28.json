@@ -79,8 +79,7 @@
      6.0,
      0.0
     ],
-    "color": "#0f766e",
-    "label": "$\\overline{AC}=10$"
+    "color": "#0f766e"
    },
    {
     "type": "segment3d",
@@ -137,8 +136,7 @@
      0.0
     ],
     "color": "#2563eb",
-    "dashed": true,
-    "label": "$\\overline{MN}=3$"
+    "dashed": true
    },
    {
     "type": "segment3d",
@@ -152,8 +150,7 @@
      0.0,
      -3.7080992435478315
     ],
-    "color": "#dc2626",
-    "label": "$\\overline{PQ}=\\sqrt{55}$"
+    "color": "#dc2626"
    },
    {
     "type": "segment3d",

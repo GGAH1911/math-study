@@ -248,8 +248,7 @@
      0.0
     ],
     "color": "#ef4444",
-    "dashed": true,
-    "label": "$\\overline{DH}=\\sqrt{3}$"
+    "dashed": true
    },
    {
     "type": "segment3d",
@@ -264,8 +263,7 @@
      0.0
     ],
     "color": "#ef4444",
-    "dashed": true,
-    "label": "$\\overline{AH}=2\\sqrt{3}$"
+    "dashed": true
    },
    {
     "type": "point3d",

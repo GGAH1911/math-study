@@ -1,0 +1,27 @@
+/* 3D 도형 렌더러 전용 스타일 — Geometry3D.tsx 인라인 <style> 에서 뺐다(2026-08-14).
+   스타일이 컴포넌트 안에 있으면 CSS 안에 백틱 하나만 들어가도 템플릿 리터럴이 끊겨
+   사이트가 통째로 죽는다. 실제로 그렇게 한 번 죽였다. */
+.geom3d-axis-label {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+  user-select: none;
+  text-shadow: 0 0 4px rgba(0,0,0,0.8);
+}
+.geom3d-label {
+  color: #fafafa;
+  background: rgba(20, 20, 23, 0.78);
+  border: 1px solid #3f3f46;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 13px;
+  line-height: 16px;
+  font-family: var(--font-mono, monospace);
+  white-space: nowrap;
+  user-select: none;
+}
+/* KaTeX 수식 라벨 — 색 상속(흰색) + 크기 보장(작은 박스에 안 뭉개지게) */
+/* global.css 가 .katex 에 max-width:100% + overflow-x:auto 를 걸어 둬서,
+   이 작은 라벨 박스 안에서 스크롤바가 생겼다(2026-08-14 실제 발생).
+   라벨은 절대 스크롤되면 안 된다. */
+.geom3d-label .katex { font-size: 1em; color: inherit; max-width: none; overflow: visible; }

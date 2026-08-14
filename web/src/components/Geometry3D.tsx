@@ -13,6 +13,7 @@
 //   ]}
 //   ```
 
+import '../styles/geometry3d.css';   // 인라인 <style> 에서 분리 — 위 파일 주석 참조
 import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Grid, Html, Line, Edges, GizmoHelper, GizmoViewport } from '@react-three/drei';
@@ -533,29 +534,6 @@ export default function Geometry3D({ spec, width = 560, height = 380, onOpen, hi
       {!hideCaption && spec.title && (
         <div className="text-[11px] text-zinc-400 mt-1 px-1">{spec.title}</div>
       )}
-      <style>{`
-        .geom3d-axis-label {
-          font-size: 13px;
-          font-weight: 600;
-          font-family: var(--font-mono, monospace);
-          user-select: none;
-          text-shadow: 0 0 4px rgba(0,0,0,0.8);
-        }
-        .geom3d-label {
-          color: #fafafa;
-          background: rgba(20, 20, 23, 0.78);
-          border: 1px solid #3f3f46;
-          padding: 1px 5px;
-          border-radius: 3px;
-          font-size: 13px;
-          line-height: 16px;
-          font-family: var(--font-mono, monospace);
-          white-space: nowrap;
-          user-select: none;
-        }
-        /* KaTeX 수식 라벨 — 색 상속(흰색) + 크기 보장(작은 박스에 안 뭉개지게) */
-        .geom3d-label .katex { font-size: 1em; color: inherit; }
-      `}</style>
     </div>
   );
 }

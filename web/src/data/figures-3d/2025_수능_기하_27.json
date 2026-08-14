@@ -153,8 +153,7 @@
      0.0,
      0.0
     ],
-    "color": "#fbbf24",
-    "label": "$4$"
+    "color": "#fbbf24"
    },
    {
     "type": "segment3d",
@@ -169,8 +168,7 @@
      0.0
     ],
     "color": "#fbbf24",
-    "dashed": true,
-    "label": "$4$"
+    "dashed": true
    },
    {
     "type": "parametricCurve3d",
@@ -235,7 +233,6 @@
      -3.3,
      -0.55
     ],
-    "text": "정사영 $\\dfrac{\\sqrt{10}}{4}\\pi$",
     "color": "#f9a8d4"
    },
    {
