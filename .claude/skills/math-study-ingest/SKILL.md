@@ -81,6 +81,10 @@ bash scripts/ops/on_tme.sh "MATHSTUDY_ROOT=/home/insung/math-study \
 
 - **`extract_figures.py` 는 `corrector.mjs` 안 ① 단계**다. 교정을 안 돌리면 도형 크롭도 없다.
   둘이 한 몸이라는 걸 모르면 "도형만 다시 뽑자"고 헤매게 된다.
+- ★**`--no-correct` 는 셋을 함께 끈다.** `box_backfill`·`concept_remap` 도 대상 조건이
+  `corrector_done` 이라 교정이 없으면 **대상 0건**이 된다. 즉 교정·도형·박스·개념재매핑이
+  한꺼번에 빠지고 풀이캐시만 돈다 — 2026 고3 7월이 정확히 그 상태였다.
+  (설계상 맞다: 박스는 *교정된* 텍스트의 줄구조에 삽입해야 하고, 개념은 교정본으로 다시 매겨야 한다.)
 - 백엔드: `gemma`(로컬 맥북·토큰0) / `sonnet`(구독) / `agy`(Gemini) / `or`(OpenRouter).
   **agy 는 현재 사용 불가.** gemma 는 맥북 mlx 서버가 떠 있어야 한다. 소량이면 `sonnet` 이 간단하다.
 - 크롭 결과물은 `web/private/problem-images/` 에 간다(`public` 아님 — 인증 게이팅 때문에

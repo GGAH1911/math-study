@@ -261,6 +261,14 @@ def main():
                        env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # 손상 자동 재전사 (캐시 전)
         subprocess.run([PY, 'scripts/consistency_gate.py', '--list', ','.join(slugs), '--fix'],
                        env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})   # format 오분류 자동교정
+        if a.no_correct:
+            # ★--no-correct 는 교정 하나만 끄는 게 아니다. box_backfill·concept_remap 이
+            #   둘 다 `corrector_done` 을 대상 조건으로 삼으므로 **셋이 함께 죽는다**(대상 0건).
+            #   그 결과 도형 크롭·박스 마커·개념 재매핑이 통째로 빠진 채 풀이캐시만 돈다 —
+            #   2026 고3 7월이 정확히 그 상태였다. 끄더라도 무엇을 잃는지는 알고 끄게 한다.
+            print('\n⚠️  --no-correct: 교정뿐 아니라 **도형 크롭·{{BOX}}·개념 재매핑**도 함께 빠진다\n'
+                  '    (box_backfill·concept_remap 의 대상 조건이 corrector_done 이라 0건이 된다).\n'
+                  '    나중에 회차를 지정해 따로 돌려야 한다 — .claude/skills/math-study-ingest 참조.', flush=True)
         if not a.no_correct:                          # 교정∥검증∥재교정 완전 스트리밍(3큐 동시) — 풀이캐시 前
             rounds_set = sorted({s.rsplit('_', 2)[0] for s in slugs})
             for rd in rounds_set:
@@ -290,6 +298,13 @@ def main():
                     print(f'\n══════ 개념 재매핑 {rd} (교정후·haiku·캐시) ══════', flush=True)
                     subprocess.run([PY, 'scripts/ingest_kice/concept_remap.py', rd],
                                    env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
+        # ★풀이캐시 전에 완결성을 먼저 알린다. 풀이는 **이미지 기반**이라 전사가 깨져 있어도
+        #   태연히 성공한다 — 2026 고3 7월이 교정·도형·박스가 통째로 빠진 채 `46/46 verified`
+        #   로 끝났고, 로그만 보면 정상이었다. 여기서 막지는 않되(풀이는 그 자체로 유효하다)
+        #   **무엇이 빠졌는지 눈에 보이게** 한다. 안 그러면 며칠 뒤 사람이 눈으로 발견한다.
+        for rd in sorted({s.rsplit('_', 2)[0] for s in slugs}):
+            subprocess.run([PY, 'scripts/ops/verify_ingest_complete.py', rd],
+                           env={**os.environ, 'MATHSTUDY_ROOT': str(ROOT)})
         if not a.no_cache:
             print(f'\n══════ 풀이캐시 {len(slugs)}문제 --parallel {a.parallel} ══════', flush=True)
             subprocess.run([PY, 'scripts/build_solution_cache.py', '--list', ','.join(slugs),
