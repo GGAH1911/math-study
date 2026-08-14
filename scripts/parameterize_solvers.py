@@ -140,6 +140,100 @@ def _stdout_is(path: Path) -> bool:
         return False
 
 
+# ── Nous Portal(OpenAI 호환) 경로 ────────────────────────────────────────────
+# ★왜 별도 루프가 필요한가: `claude -p` 는 에이전트 루프(파일 쓰기 → 게이트 실행 →
+#   실패를 읽고 고치기)를 통째로 제공한다. 채팅 API 에는 그게 없으므로 **여기서 돌린다.**
+#   대신 매 콜이 솔버 파일 몇 KB 뿐이라 `claude -p` 의 거대한 시스템 프롬프트(콜당
+#   캐시읽기 약 52만 토큰)를 통째로 걷어낸다. [[reference_nous_portal]]
+NOUS_URL = 'https://inference-api.nousresearch.com/v1/chat/completions'
+NOUS_ROUNDS = int(os.environ.get('PARAM_ROUNDS', '4'))
+
+
+def nous_key() -> str:
+    f = Path.home() / '.hermes' / '.env'
+    if f.exists():
+        for line in f.read_text(encoding='utf-8').splitlines():
+            if line.startswith('NOUS_API_KEY='):
+                return line.split('=', 1)[1].strip()
+    return os.environ.get('NOUS_API_KEY', '').strip()
+
+
+def _chat(model: str, messages: list[dict], key: str) -> str:
+    import urllib.request
+    body = json.dumps({'model': model, 'messages': messages,
+                       'temperature': 0.2, 'max_tokens': 8000}).encode('utf-8')
+    # ★User-Agent 를 반드시 준다. 기본 python-urllib UA 는 게이트웨이가 403 으로 막는다
+    #   (curl 은 되는데 파이썬만 죽어서 인증 문제로 오인하기 쉽다 — 2026-08-14 실측).
+    req = urllib.request.Request(NOUS_URL, data=body, headers={
+        'Content-Type': 'application/json', 'Authorization': f'Bearer {key}',
+        'User-Agent': 'math-study-parameterize/1.0'})
+    for attempt in range(3):               # 524 등 게이트웨이 일시오류는 재시도로 넘긴다
+        try:
+            with urllib.request.urlopen(req, timeout=420) as r:
+                d = json.loads(r.read().decode('utf-8'))
+            break
+        except Exception:
+            if attempt == 2:
+                raise
+            time.sleep(5 * (attempt + 1))
+    with _cache_lock:
+        u = d.get('usage') or {}
+        CACHE['in'] += int(u.get('prompt_tokens') or 0)
+        CACHE['out'] += int(u.get('completion_tokens') or 0)
+        CACHE['n'] += 1
+    return (d['choices'][0]['message'].get('content') or '')
+
+
+def _code_of(text: str) -> str:
+    """응답에서 **파일 전체**인 코드블록을 고른다.
+
+    ★마지막 블록을 그냥 집으면 안 된다. 설명 끝에 붙은 짧은 조각이 파일을 덮어써
+      '규격 미작성' 으로 떨어진다(2026-08-14 실측: 모델 탓으로 오인할 뻔했다).
+      규격 요소를 다 갖춘 블록 중 **가장 긴 것**을 고른다.
+    """
+    blocks = [b.strip() for b in re.findall(r'```(?:python)?\s*\n(.*?)```', text, re.S)]
+    full = [b for b in blocks if 'PARAMS' in b and 'def solve(' in b]
+    pool = full or blocks
+    return max(pool, key=len) if pool else ''
+
+
+def run_nous(work: Path, model: str, spec: str) -> str:
+    """게이트가 통과할 때까지 고쳐 달라고 반복한다. 최종 solver.py 내용을 남긴다."""
+    key = nous_key()
+    if not key:
+        raise SystemExit('NOUS_API_KEY 없음 (~/.hermes/.env)')
+    cur = (work / 'solver.py').read_text(encoding='utf-8', errors='replace')
+    problem = (work / 'problem.txt').read_text(encoding='utf-8', errors='replace')
+    msgs = [{'role': 'system', 'content': SYSTEM},
+            {'role': 'user', 'content':
+             f'{spec}\n\n## 원문제\n{problem}\n\n## 현재 솔버\n```python\n{cur}\n```\n\n'
+             '고친 **파일 전체**를 하나의 ```python 블록으로 주세요. 설명은 짧게.'}]
+    last = ''
+    for _ in range(NOUS_ROUNDS):
+        out = _chat(model, msgs, key)
+        code = _code_of(out)
+        if not code:
+            msgs += [{'role': 'assistant', 'content': out[:2000]},
+                     {'role': 'user', 'content': '코드 블록이 없습니다. ```python 블록으로 파일 전체를 주세요.'}]
+            continue
+        (work / 'solver.py').write_text(code, encoding='utf-8')
+        last = code
+        try:
+            r = subprocess.run([VENV, str(work / 'gate.py'), '--file', str(work / 'solver.py')],
+                               capture_output=True, text=True, timeout=GATE_TIMEOUT_S, cwd=str(work))
+        except subprocess.TimeoutExpired:
+            msgs += [{'role': 'assistant', 'content': '```python\n(생략)\n```'},
+                     {'role': 'user', 'content': '실행이 너무 오래 걸립니다(180초 초과). 탐색 범위를 줄이거나 닫힌 식을 쓰세요. 파일 전체를 다시 주세요.'}]
+            continue
+        if r.returncode == 0:
+            return last
+        msgs += [{'role': 'assistant', 'content': '```python\n(직전 제출)\n```'},
+                 {'role': 'user', 'content':
+                  f'게이트 실패입니다:\n```\n{(r.stdout + r.stderr)[-1500:]}\n```\n'
+                  '원인을 고쳐 **파일 전체**를 다시 주세요.'}]
+    return last
+
+
 def log(msg: str, path: Path | None = None) -> None:
     line = f'[{time.strftime("%H:%M:%S")}] {msg}'
     print(line, flush=True)
@@ -259,25 +353,24 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
         f'[정답] {gold}\n[형식] {fmt}\n\n{body}\n', encoding='utf-8')
     # ★게이트 **원본을 그대로** 복사한다. 규격을 프롬프트로 옮겨 적으면 갈라진다.
     shutil.copy(ROOT / 'scripts/ops/verify_solver_params.py', work / 'gate.py')
-    args = ['claude', '-p', '--output-format', 'json', '--model', model,
-            '--allowedTools', 'Read,Write,Edit,Bash', '--add-dir', str(work),
-            '--disallowedTools', 'WebFetch,WebSearch',
-            '--max-turns', '40', '--system-prompt', SYSTEM, '--',
-            PROMPT.format(work=str(work), py=VENV)]
-    try:
-        r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S,
-                           cwd=str(cwd), env=CLAUDE_ENV, stdin=subprocess.DEVNULL)
-    except subprocess.TimeoutExpired:
-        return stem, False, f'모델 타임아웃({TIMEOUT_S}s)'
-    if looks_unauthed(r.stdout, r.stderr):
-        raise SystemExit('claude -p 인증 실패 — 배치 중단 (claude_auth.py 참조)')
-    _record_cache(r.stdout)
+
+    if '/' in model:                       # deepseek/... 처럼 provider 접두가 있으면 Nous Portal
+        spec = PROMPT.split('## 작업 방법')[0].split('\n', 1)[1]   # 규격 부분만(파일 경로 안내 제외)
+        try:
+            run_nous(work, model, spec)
+        except SystemExit:
+            raise
+        except Exception as e:
+            return stem, False, f'모델 호출 실패: {type(e).__name__}: {e}'
+    else:
+        try:
+            _run_claude(work, cwd, model)
+        except subprocess.TimeoutExpired:
+            return stem, False, f'모델 타임아웃({TIMEOUT_S}s)'
 
     new = (work / 'solver.py').read_text(encoding='utf-8', errors='replace')
     if 'PARAMS' not in new or 'def solve(' not in new:
         return stem, False, '규격 미작성'
-    # 손대지 않았더라도 **게이트로 판정한다** — 안 고친 게 옳은 경우가 있다.
-
     src.write_text(new, encoding='utf-8')
     ok1, why1 = gate_params(stem)
     if not ok1:
@@ -288,6 +381,20 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
         src.write_text(original, encoding='utf-8')
         return stem, False, f'하드코딩 게이트: {why2}'
     return stem, True, 'ok'
+
+
+def _run_claude(work: Path, cwd: Path, model: str) -> None:
+    """claude -p 는 에이전트 루프를 스스로 돈다 — 결과는 work/solver.py 에 남는다."""
+    args = ['claude', '-p', '--output-format', 'json', '--model', model,
+            '--allowedTools', 'Read,Write,Edit,Bash', '--add-dir', str(work),
+            '--disallowedTools', 'WebFetch,WebSearch',
+            '--max-turns', '40', '--system-prompt', SYSTEM, '--',
+            PROMPT.format(work=str(work), py=VENV)]
+    r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S,
+                       cwd=str(cwd), env=CLAUDE_ENV, stdin=subprocess.DEVNULL)
+    if looks_unauthed(r.stdout, r.stderr):
+        raise SystemExit('claude -p 인증 실패 — 배치 중단 (claude_auth.py 참조)')
+    _record_cache(r.stdout)
 
 
 def load_state() -> dict:
