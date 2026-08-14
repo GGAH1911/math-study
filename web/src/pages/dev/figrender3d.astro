@@ -18,6 +18,10 @@ const src = Astro.url.searchParams.get('src') ?? 'concept';
 // ?review=1 — 드래그로 각도를 찾아 스펙에 저장하는 검수 모드.
 // 기본(스크린샷 캡처용)은 interactive=false 라 회전이 막혀 있다.
 const review = Astro.url.searchParams.get('review') === '1';
+// ★회전은 기본으로 켠다. 예전엔 이 페이지가 늘 interactive=false 였는데(스크린샷 흔들림 방지),
+//   사람이 열었을 때도 회전이 안 먹어 "회전이 안 된다" 는 오해를 샀다(2026-08-14).
+//   캡처 스크립트만 ?capture=1 로 정지시킨다.
+const capture = Astro.url.searchParams.get('capture') === '1';
 // 스펙을 못 찾았을 때 보여 줄 목록 — stem 을 외우고 있을 리 없다(2026-08-14: 사장님이
 // 안내 URL 의 <stem> 자리표시자를 그대로 열었다. 링크로 못 준 내 잘못이다).
 let stemList: string[] = [];
@@ -69,7 +73,7 @@ if (src === 'test') {
         <div class="fig3d-slot" style="border:1px solid #3f3f46;border-radius:8px;padding:8px;background:#0c0c0e;">
           {review
             ? <Fig3DReview client:only="react" stem={id} spec={spec3d} width={w - 18} height={Math.round((w - 18) * 0.8)} />
-            : <Geometry3D client:only="react" spec={spec3d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast interactive={false} />}
+            : <Geometry3D client:only="react" spec={spec3d} width={w - 18} height={Math.round((w - 18) * 0.8)} hideCaption noBroadcast interactive={!capture} />}
         </div>
       )}
       {spec2d && (

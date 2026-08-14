@@ -21,7 +21,7 @@ export default function Lazy3D({ spec, width = 340, height = 290 }: { spec: Geom
   return (
     <div ref={ref} style={{ width, height, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       {show
-        ? <Geometry3D spec={spec} width={width} height={height} hideCaption noBroadcast />
+        ? <Geometry3D spec={spec} width={width} height={height} hideCaption noBroadcast interactive />
         : <span style={{ color: '#52525b', fontSize: 12 }}>스크롤하면 3D 로드…</span>}
     </div>
   );

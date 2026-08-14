@@ -32,7 +32,8 @@ await ctx.addCookies([{ name: 'ms_session', value: TOKEN, domain: host, path: '/
 
 for (const stem of stems) {
   const p = await ctx.newPage();
-  const url = `${BASE}/dev/figrender3d?src=prob3d&id=${encodeURIComponent(stem)}&w=800`;
+  const W = process.env.FIG3D_W ?? '800';   // 갤러리(작은 캔버스)와 비교할 때 쓴다
+  const url = `${BASE}/dev/figrender3d?src=prob3d&id=${encodeURIComponent(stem)}&w=${W}&capture=1`;
   try {
     await p.goto(url, { waitUntil: 'networkidle', timeout: 90000 });
     // 첫 프레임 후 __figReady 를 세운다 — 그 전에 찍으면 검은 화면이 나온다.
