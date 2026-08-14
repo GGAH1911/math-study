@@ -43,3 +43,25 @@ def looks_unauthed(*outs: str) -> bool:
     """출력에 인증 실패 흔적이 있는가. exit code 는 0 이라 **본문을 봐야 한다.**"""
     s = ' '.join(o or '' for o in outs)
     return 'Not logged in' in s or 'Invalid API key' in s
+
+
+#: 구독 쿼터 소진 문구. 인증 실패와 **구분해야 한다** — 자격증명은 멀쩡하고 시간만 지나면 풀린다.
+_QUOTA_MARKS = (
+    'usage limit reached',
+    'Usage limit reached',
+    'rate_limit_error',
+    'limit will reset',
+)
+
+
+def looks_quota_exhausted(*outs: str) -> bool:
+    """구독 쿼터가 말랐는가.
+
+    ★왜 따로 필요한가: `looks_unauthed` 는 'Not logged in'/'Invalid API key' 만 본다.
+      쿼터 소진은 **자격증명이 멀쩡한 채로** 오므로 그 검사를 통과하고, 무인 배치는
+      남은 수천 건을 전부 "실패" 로 기록해 버린다(실패 목록이 쓰레기가 되고, 다음
+      재시도 때 멀쩡한 문제까지 다시 돈다). 감지되면 배치를 **멈추는** 것이 맞다 —
+      시간이 지나면 저절로 풀리는 조건이라 계속 두드릴 이유가 없다.
+    """
+    s = ' '.join(o or '' for o in outs)
+    return any(m in s for m in _QUOTA_MARKS)

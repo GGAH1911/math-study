@@ -83,6 +83,7 @@ bash scripts/ops/on_tme.sh 'docker compose -f deploy/docker-compose.yml -f deplo
 |---|---|
 | 매시 :17 | 튜터 딥 헬스체크 → `/tmp/tutor_health.log` (3회 연속 실패 시 `██` 표시) |
 | 03:00 | `widget_spec_loop` — **컨테이너 안에서 git commit → 호스트에서 git push** |
+| **07:00** | `run_param_daily.sh` — 솔버 파라미터화 소넷 드립(**2시간 박스**). 스스로 커밋·푸시 |
 | 04:35 | DB 덤프 → `~/backups/math-study/` + 원격 · 30일 로테이션 |
 | 월 05:20 | 백업 **복구 리허설** (빈 DB 복원 검증) |
 | 23:40 / 06:00 / 12:00 | 일일 삽화 생성 |

@@ -36,7 +36,7 @@ STATE = ROOT / 'db' / 'solutions' / '_paramstate.json'
 VENV = os.environ.get('MS_PY', str(Path.home() / '.venvs/ms-ingest/bin/python'))
 
 sys.path.insert(0, str(ROOT / 'scripts'))
-from claude_auth import claude_env, looks_unauthed  # noqa: E402
+from claude_auth import claude_env, looks_unauthed, looks_quota_exhausted  # noqa: E402
 
 CLAUDE_ENV = claude_env()
 TIMEOUT_S = int(os.environ.get('PARAM_TIMEOUT', '900'))
@@ -313,6 +313,11 @@ def _run_claude(work: Path, cwd: Path, model: str) -> None:
                        cwd=str(cwd), env=CLAUDE_ENV, stdin=subprocess.DEVNULL)
     if looks_unauthed(r.stdout, r.stderr):
         raise SystemExit('claude -p 인증 실패 — 배치 중단 (claude_auth.py 참조)')
+    # ★쿼터 소진은 인증 실패와 다르다 — 자격증명은 멀쩡하고 시간이 지나면 풀린다.
+    #   그래도 **지금은 멈춰야** 한다. 안 멈추면 남은 수천 건이 전부 "실패" 로 기록돼
+    #   실패 목록이 쓰레기가 되고, 다음 재시도가 멀쩡한 문제까지 다시 돈다.
+    if looks_quota_exhausted(r.stdout, r.stderr):
+        raise SystemExit('claude -p 구독 쿼터 소진 — 배치 중단. 리셋 후 재개하면 이어서 간다.')
     _record_cache(r.stdout)
 
 
@@ -361,6 +366,11 @@ def main() -> int:
     ap.add_argument('--stems', nargs='*', default=[])
     ap.add_argument('--retry-failed', action='store_true', help='이전에 실패한 것도 다시 시도')
     ap.add_argument('--log', default='')
+    ap.add_argument('--max-seconds', type=int, default=0,
+                    help='시간 박스(초). 넘으면 새 항목을 더 시작하지 않는다(진행 중인 건은 끝낸다). 0=무제한')
+    ap.add_argument('--abort-after', type=int, default=6,
+                    help='연속 N건 실패 시 회로차단. 쿼터 소진·인증 만료처럼 '
+                         '"전부 실패" 로 흐르는 상황에서 실패 목록이 오염되는 것을 막는다. 0=끄기')
     a = ap.parse_args()
 
     logf = Path(a.log) if a.log else Path(f'/tmp/ingest_logs/parameterize_{time.strftime("%Y%m%d_%H%M%S")}.log')
@@ -381,25 +391,48 @@ def main() -> int:
 
     log(f'대상 {len(todo)}건 · 모델 {a.model} · 병렬 {a.workers} · 로그 {logf}', logf)
     lock = threading.Lock()
-    n_ok = n_no = 0
+    n_ok = n_no = n_skip = n_consec = 0
     t0 = time.time()
+    #: 멈춤 사유. 한 번 정해지면 남은 항목은 시작하지 않는다(진행 중인 건은 끝낸다).
+    stop = {'why': ''}
 
     def worker(stem: str):
-        nonlocal n_ok, n_no
+        nonlocal n_ok, n_no, n_skip, n_consec
+        with lock:
+            if not stop['why'] and a.max_seconds and (time.time() - t0) >= a.max_seconds:
+                stop['why'] = f'시간 박스 {a.max_seconds}s 도달'
+                log(f'⏱ {stop["why"]} — 새 항목은 더 시작하지 않는다.', logf)
+            if stop['why']:
+                n_skip += 1
+                return
         try:
             s, ok, why = run_one(stem, a.model, logf)
-        except SystemExit:
-            raise
+        except SystemExit as e:
+            # 인증 실패·쿼터 소진. 예외를 위로 던지면 진행 중인 워커의 결과까지 잃는다 →
+            # 깃발만 세우고 조용히 빠진다. 상태는 이미 매 건 저장돼 있어 재개하면 이어진다.
+            with lock:
+                if not stop['why']:
+                    stop['why'] = str(e)
+                    log(f'🛑 {e}', logf)
+                n_skip += 1
+            return
         except Exception as e:
             s, ok, why = stem, False, f'예외 {type(e).__name__}: {e}'
         with lock:
             if ok:
                 n_ok += 1
+                n_consec = 0
                 state['done'][s] = time.strftime('%Y-%m-%d %H:%M')
                 state['failed'].pop(s, None)
             else:
                 n_no += 1
+                n_consec += 1
                 state['failed'][s] = why
+                # ★회로차단: 쿼터 문구가 바뀌어도 "연속 전멸" 은 잡힌다. 이게 없으면
+                #   남은 수천 건이 전부 실패로 기록돼 실패 목록이 못 쓰게 된다.
+                if a.abort_after and n_consec >= a.abort_after and not stop['why']:
+                    stop['why'] = f'연속 {n_consec}건 실패 — 회로차단'
+                    log(f'🛑 {stop["why"]}. 원인을 확인하고 재개할 것.', logf)
             done = n_ok + n_no
             rate = done / max(1e-9, (time.time() - t0) / 3600)
             log(f'{"✅" if ok else "🔴"} {s} — {why}   [{done}/{len(todo)} · 성공 {n_ok} · '
@@ -411,8 +444,13 @@ def main() -> int:
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
         list(ex.map(worker, todo))
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding='utf-8')
-    log(f'끝 — 성공 {n_ok} · 실패 {n_no} (누적 완료 {len(state["done"])})', logf)
+    tail = f' · 미착수 {n_skip}' if n_skip else ''
+    log(f'끝 — 성공 {n_ok} · 실패 {n_no}{tail} (누적 완료 {len(state["done"])})', logf)
     log(cache_line(), logf)
+    if stop['why']:
+        log(f'중단 사유: {stop["why"]} — 다음 실행이 죽은 자리에서 이어간다.', logf)
+        # 시간 박스는 **정상 종료**다(크론이 매일 이걸로 끝난다). 그 외는 실패로 알린다.
+        return 0 if stop['why'].startswith('시간 박스') else 1
     return 0
 
 
