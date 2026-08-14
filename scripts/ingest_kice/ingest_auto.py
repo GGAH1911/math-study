@@ -161,6 +161,11 @@ def _stage(slug, meta, files, d: Path):
         if name.endswith('.zip'):
             continue                                          # zip 은 사용자가 미리 풀어야
         shutil.copy2(src, dst / name)
+    # 교육청 고3 과목별 배포(통합본 없음) → 검증된 통합본 경로를 타도록 여기서 합친다.
+    # ★공통을 어느 PDF 에서 가져오는지가 정확성을 가른다 — merge_subject_pdfs 주석 참조.
+    if backend == 'v2_haesol':
+        from merge_subject_pdfs import merge as _merge_subject
+        _merge_subject(dst)
 
 
 def _dispatch(slug, meta, parallel, no_sync):
@@ -220,10 +225,7 @@ def main():
         nfiles = len(r['files'])
         print(f'  {tag} {slug:22} [{meta["backend"]:9}] {nfiles}파일{sub}')
         if not skip and (not a.only or a.only == slug):
-            if meta['backend'] == 'v2_haesol':            # 교육청 고3 과목별 해설 — 스테이징 미검증
-                print('       ↑ 교육청 고3 과목별 해설은 디스패처 자동적재 미지원(수동) — 제외')
-            else:
-                todo.append(slug)
+            todo.append(slug)
     if ambig:
         print('  ⚠ 연도불명(수동 필요):')
         for nf, why in ambig: print(f'     - {nf}  ({why})')
