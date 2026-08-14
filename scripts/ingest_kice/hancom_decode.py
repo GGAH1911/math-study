@@ -678,6 +678,14 @@ def _parse(chars, bars, main=None, depth=0, row_sep=None):
 
         for (y, x, kind, pay) in ln:
             if kind == 'p':
+                # ★지수 그룹 안의 구조물은 그룹을 닫지 말고 **안에** 넣는다. 예전엔 placeholder 를
+                #   만나면 무조건 mode=0 이라 구조물이 ^{} 안에 못 들어갔다 → 5^{-1/2} 가
+                #   `5^{-}\frac{1}{2}` 로 샜다(2026 고3 7월 1번). y 중심만으로 판정 — placeholder 는
+                #   크기를 안 들고 다닌다. 실측: 지수 +1.09*main · 본문 +0.15~+0.47 → 0.75 로 가른다.
+                #   ⚠️아래첨자는 손대지 않는다: 첨자 +0.09 vs 본문 +0.15 라 y 만으론 못 가른다.
+                if mode == 1 and (y - base) > main * 0.75:
+                    buf += '^{' + (_parse(run, bars, None, depth + 1) if run else '') + pay + '}'
+                    run = []; mode = 0; px = None; continue
                 _flush(); mode = 0
                 buf += pay; px = None; continue
             c = pay
