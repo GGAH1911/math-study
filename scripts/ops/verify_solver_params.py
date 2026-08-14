@@ -94,7 +94,18 @@ def load(path: pathlib.Path):
 
 
 def check(stem: str) -> list[str]:
-    path = SOL / f'{stem}.py'
+    return check_path(SOL / f'{stem}.py')
+
+
+def check_path(path: pathlib.Path) -> list[str]:
+    """솔버 **파일 하나**를 검사한다.
+
+    ★`--file` 로 노출해 둔 이유: 파라미터화 배치의 에이전트가 **이 게이트를 직접 돌려
+      통과할 때까지 고칠 수 있어야** 한다. 손으로 짐작하게 두면 절반이 떨어진다
+      (2026-08-14 실측: 게이트 없이 48% 통과). 이 파일은 sympy 말고는 의존이 없어
+      스크래치 폴더에 그대로 복사해 쓸 수 있다 — 사본이 아니라 **원본을 복사**하므로
+      규격이 갈라지지 않는다.
+    """
     if not path.exists():
         return ['솔버 파일 없음']
     bad: list[str] = []
@@ -156,7 +167,18 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('stems', nargs='*')
     ap.add_argument('--round', default='')
+    ap.add_argument('--file', default='', help='솔버 .py 경로 하나만 검사(레포 밖에서도 동작)')
     a = ap.parse_args()
+    if a.file:
+        bad = check_path(pathlib.Path(a.file))
+        if bad:
+            print(f'🔴 {a.file}')
+            for b in bad:
+                print(f'     {b}')
+            print('\n미충족 — 위 항목을 고치고 다시 실행하세요.')
+            return 1
+        print('✅ 파라미터화 규격 충족')
+        return 0
     stems = a.stems
     if a.round:
         stems = sorted(p.stem for p in (ROOT / 'docs' / 'problems').rglob('*.md') if a.round in str(p))

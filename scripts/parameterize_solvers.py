@@ -107,13 +107,21 @@ print('VERIFY_PASS' if solve(PARAMS) == CANDIDATE else 'VERIFY_FAIL')
 7. 실행이 **40초를 넘으면 안 됩니다.** 탐색 범위를 좁히거나 닫힌 식을 쓰세요.
 8. 주석은 한국어로, 어떤 수학 구조를 파라미터로 뽑았는지 적으세요.
 
-## 작업 방법
-- `python3 {work}/solver.py` 로 직접 돌려 `VERIFY_PASS` 를 확인하세요.
-- 파라미터를 하나씩 바꿔 답이 달라지는지도 직접 돌려 확인하세요.
-- 최종 결과를 **`{work}/solver.py` 에 그대로 저장**하세요. 다른 파일은 채점하지 않습니다.
-- 임시 파일이 필요하면 `{work}` 안에만 만드세요.
+## 작업 방법 — ★채점 게이트를 직접 돌리세요
+`{work}/gate.py` 가 **실제 채점 게이트**입니다. 짐작하지 말고 이걸로 확인하세요:
 
-원문제의 답이 재현되지 않으면 그 결과는 버려집니다. 확인하고 끝내세요.
+```
+{py} {work}/gate.py --file {work}/solver.py
+```
+
+`✅ 파라미터화 규격 충족` 이 나올 때까지 고치고 다시 돌리세요. 실패하면 무엇이 부족한지
+(어떤 파라미터가 장식인지) 그대로 알려줍니다. **통과를 확인하지 않고 끝내지 마세요.**
+
+- `{py} {work}/solver.py` 로도 돌려 `VERIFY_PASS` 를 확인하세요.
+- 최종 결과를 **`{work}/solver.py` 에 그대로 저장**하세요. 다른 파일은 채점하지 않습니다.
+- 임시 파일이 필요하면 `{work}` 안에만 만드세요. `gate.py` 는 수정하지 마세요.
+
+게이트를 통과하지 못한 결과는 버려지고 원본이 복구됩니다.
 '''
 
 
@@ -225,11 +233,13 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
     (work / 'solver.py').write_text(original, encoding='utf-8')
     (work / 'problem.txt').write_text(
         f'[정답] {gold}\n[형식] {fmt}\n\n{body}\n', encoding='utf-8')
+    # ★게이트 **원본을 그대로** 복사한다. 규격을 프롬프트로 옮겨 적으면 갈라진다.
+    shutil.copy(ROOT / 'scripts/ops/verify_solver_params.py', work / 'gate.py')
     args = ['claude', '-p', '--output-format', 'json', '--model', model,
             '--allowedTools', 'Read,Write,Edit,Bash', '--add-dir', str(work),
             '--disallowedTools', 'WebFetch,WebSearch',
             '--max-turns', '40', '--system-prompt', SYSTEM, '--',
-            PROMPT.format(work=str(work))]
+            PROMPT.format(work=str(work), py=VENV)]
     try:
         r = subprocess.run(args, capture_output=True, text=True, timeout=TIMEOUT_S,
                            cwd=str(cwd), env=CLAUDE_ENV, stdin=subprocess.DEVNULL)
