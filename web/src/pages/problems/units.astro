@@ -1,43 +1,9 @@
 ---
+// Phase 3 전환 6호 — 껍데기는 서버, 목록·필터는 클라이언트(`/api/content-index/problems`).
+// 단원→과목 매핑은 방출기가 `concept-graph.json` 에서 만들어 목록에 `unitDomain` 으로 얹어 준다.
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProblemCard from '../../components/ProblemCard.astro';
-import ProblemFilters from '../../components/ProblemFilters.tsx';
-import { getCollection } from 'astro:content';
-import { groupByUnit, buildFilterAxes, cardProps, dataAttrs } from '../../lib/problem-card';
-import { readConceptGraph } from '../../lib/health.ts';
-import { DOMAIN_ORDER, DOMAIN_COLOR } from '../../lib/concept-meta';
-
-const problems = await getCollection('problems');
-const unitGroups = groupByUnit(problems);
-const axes = buildFilterAxes(problems);
-
-// 단원(basename) → 과목(domain) 매핑: concept-graph 의 unit 노드에서 가져온다.
-// 문제 frontmatter 의 unit 값(예: "삼각함수")은 concept 단원 노드의 basename 과 일치한다.
-const graph = readConceptGraph();
-const unitDomain = new Map<string, string>();
-for (const n of graph.nodes) {
-  if (n.concept_type !== 'unit' || !n.domain) continue;
-  unitDomain.set((n.id.split('/').pop() ?? '').normalize('NFC'), n.domain);
-}
-const domainOf = (unit: string) => unitDomain.get(unit.normalize('NFC')) ?? '기타';
-
-// UnitGroup 들을 과목으로 묶고 DOMAIN_ORDER 로 정렬 (concepts 탭과 동일한 과목 순서).
-type UG = (typeof unitGroups)[number];
-const byDomain = new Map<string, UG[]>();
-for (const g of unitGroups) {
-  const d = g.unit === '기타' ? '기타' : domainOf(g.unit);
-  (byDomain.get(d) ?? byDomain.set(d, []).get(d)!).push(g);
-}
-const orderedDomains = [
-  ...DOMAIN_ORDER.filter((d) => byDomain.has(d)),
-  ...[...byDomain.keys()].filter((d) => !DOMAIN_ORDER.includes(d as any)),
-];
-const domainGroups = orderedDomains.map((d) => ({
-  domain: d,
-  units: byDomain.get(d)!,
-  problemCount: byDomain.get(d)!.reduce((a, g) => a + g.problems.length, 0),
-}));
+import ProblemsByUnit from '../../components/ProblemsByUnit.tsx';
 ---
 <BaseLayout title="기출 — 단원별">
   <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
@@ -51,76 +17,47 @@ const domainGroups = orderedDomains.map((d) => ({
       </nav>
     </header>
 
-    <ProblemFilters client:load axes={axes} total={problems.length} collapsible />
-
-    {domainGroups.length === 0 ? (
-      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 문제가 없습니다.</p>
-    ) : (
-      domainGroups.map((dg) => (
-        <section class="problem-domain-section space-y-2" data-pdomain-section={dg.domain}>
-          <button
-            type="button"
-            class="pdomain-toggle w-full flex items-center gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)] text-left hover:bg-[color:var(--color-surface)]/50 transition-colors"
-            data-pdomain={dg.domain}
-            aria-expanded="false"
-          >
-            <span class="pdomain-chevron text-[color:var(--color-subtle)] text-xs w-3 shrink-0 select-none">▸</span>
-            <h2 class="text-base font-semibold flex items-center gap-2">
-              <span class="size-2.5 rounded-full inline-block" style={`background:${DOMAIN_COLOR[dg.domain] ?? '#71717a'}`}></span>
-              {dg.domain === '기타' ? '기타' : dg.domain}
-            </h2>
-            <span class="text-xs text-[color:var(--color-muted)]">
-              {dg.units.length}단원 · {dg.problemCount}문제
-            </span>
-          </button>
-
-          <div class="pdomain-body collapsed space-y-2" data-pdomain-body={dg.domain}>
-            {dg.units.map((g) => (
-              <div class="problem-unit-group" data-punit-group={g.unit}>
-                <div class="flex items-center gap-2 py-1">
-                  <button
-                    type="button"
-                    class="punit-toggle shrink-0 size-6 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-subtle)] hover:text-[color:var(--color-text)] hover:border-[color:var(--color-border-strong)] grid place-items-center text-xs select-none"
-                    data-punit={g.unit}
-                    aria-expanded="false"
-                    aria-label={`${g.problems.length}개 문제 펼치기`}
-                  >▸</button>
-                  <h3 class="text-sm font-medium">
-                    {g.unit.replace(/_/g, ' ')}
-                    <span class="ml-1.5 text-xs text-[color:var(--color-muted)] font-normal">{g.problems.length}문항</span>
-                  </h3>
-                </div>
-                <ul
-                  class="punit-problems collapsed grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ml-8"
-                  data-punit-problems={g.unit}
-                >
-                  {g.problems.map((p) => (
-                    <li class="problem-card-wrap" {...dataAttrs(p)}>
-                      <ProblemCard {...cardProps(p)} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-      ))
-    )}
+    <ProblemsByUnit client:load />
   </div>
 </BaseLayout>
 
-<style>
-  /* content-visibility 는 펼쳐진 본문에만 — 섹션(=sticky 헤더 포함)에 걸면 접혀도 공간을
-     예약해 빈 틈이 생긴다(concepts 와 동일 방침). 접힌 본문은 display:none 이라 무관. */
-  .pdomain-body { content-visibility: auto; contain-intrinsic-size: 600px 1200px; }
+<style is:global>
+  /* ★`ProblemCard.astro` 의 컴포넌트 스코프 스타일을 여기로 옮겼다 — React 아일랜드는
+     Astro 의 스코프 `<style>` 을 못 쓴다. 클래스 이름은 `ProblemCard.tsx` 와 동일하다.
+     ⚠️ 클래스를 바꾸려면 양쪽을 같이 고칠 것. */
+  .problem-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    transition: border-color 150ms ease;
+  }
+  .problem-card:hover { border-color: var(--color-accent); }
+  .thumb-wrap {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+    /* 짧은 문제는 이미지가 박스보다 짧아 하단에 배경이 드러난다. 라이트는 흰 스캔과 흰 배경이
+       맞아 안 보이지만, 다크는 스캔이 invert 돼 흑연이 되는데 배경만 white 라 '로딩 끊긴 듯'
+       흰 띠가 생겼다. 다크에선 배경도 invert 된 종이톤으로 맞춘다. */
+    background: white;
+    border-bottom: 1px solid var(--color-border);
+  }
+  html.dark .thumb-wrap { background: #141414; }
+  /* 썸네일 = 문제 이미지를 좌우 꽉 채워 상단만 보여준다. object-fit:cover 는 긴 문제를
+     확대-크롭해 무슨 문제인지 안 보였다 → 원본 비율 유지, 넘치는 하단은 wrap 이 클립. */
+  .thumb {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: invert(0.92) hue-rotate(180deg);
+  }
+
   /* 필터로 빈 그룹/섹션 숨김 + 과목/단원 접힘. */
-  :global(.problem-card-wrap.filtered-out),
-  :global(.problem-unit-group.filtered-out),
-  :global(.problem-domain-section.filtered-out) {
-    display: none !important;
-  }
-  :global(.pdomain-body.collapsed),
-  :global(.punit-problems.collapsed) {
-    display: none !important;
-  }
+  .problem-card-wrap.filtered-out,
+  .problem-unit-group.filtered-out,
+  .problem-domain-section.filtered-out { display: none !important; }
+  .pdomain-body.collapsed,
+  .punit-problems.collapsed { display: none !important; }
+  /* content-visibility 는 펼쳐진 본문에만 — 섹션에 걸면 접혀도 공간을 예약해 빈 틈이 생긴다. */
+  .pdomain-body { content-visibility: auto; contain-intrinsic-size: 600px 1200px; }
 </style>

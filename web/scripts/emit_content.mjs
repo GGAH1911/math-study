@@ -100,6 +100,21 @@ const SYN_INDEX = (() => {
   } catch { return new Map(); }
 })();
 
+// 단원(basename) → 과목(domain) 맵. `problems/units` 가 과목별 섹션을 만드는 데 쓴다.
+// ★문항마다 domain 을 넣지 않고 **맵 하나만** 얹는다 — 4,210번 반복하면 목록이 그만큼 커진다.
+//   출처는 `concept-graph.json` 의 unit 노드다(SSR 판 `readConceptGraph()` 와 같은 파일).
+const UNIT_DOMAIN = (() => {
+  try {
+    const g = JSON.parse(readFileSync(join(ROOT, 'web', 'src', 'data', 'concept-graph.json'), 'utf8'));
+    const m = {};
+    for (const n of g.nodes ?? []) {
+      if (n.concept_type !== 'unit' || !n.domain) continue;
+      m[(n.id.split('/').pop() ?? '').normalize('NFC')] = n.domain;
+    }
+    return m;
+  } catch { return {}; }
+})();
+
 const pickFields = (col, data) => {
   const keys = LIST_FIELDS[col];
   if (!keys) return {};
@@ -159,7 +174,9 @@ for (const col of COLLECTIONS) {
   // 표본 실행(--limit)은 목록을 덮어쓰지 않는다 — 20건짜리 목록이 전체를 가리면 화면이 텅 빈다.
   let idxKb = 0, gzKb = 0;
   if (!limit) {
-    const body = JSON.stringify({ collection: col, n: index.length, entries: index });
+    // problems 목록에만 단원→과목 맵을 함께 싣는다(요청 한 번으로 화면이 완성되게).
+    const extra = col === 'problems' ? { unitDomain: UNIT_DOMAIN } : {};
+    const body = JSON.stringify({ collection: col, n: index.length, entries: index, ...extra });
     writeBoth(join(OUT, `${col}.index.json`), body);
     idxKb = Math.round(body.length / 1024);
     gzKb = Math.round(gzipSync(body, { level: 9 }).length / 1024);
