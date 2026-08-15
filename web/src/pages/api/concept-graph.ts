@@ -7,7 +7,7 @@
 import type { APIRoute } from 'astro';
 import { readConceptGraph } from '../../lib/health.ts';
 import { getMasteryMap } from '../../lib/mastery.ts';
-import synthesesIndex from '../data/syntheses-by-concept.json';
+import synthesesIndex from '../../data/syntheses-by-concept.json';
 
 export const prerender = false;
 
