@@ -55,11 +55,19 @@ boot:
         check: "bash scripts/ops/on_tme.sh 'curl -sf --max-time 60 \"http://127.0.0.1:4324/api/health?deep=1\" | grep -q .\\\"tutor\\\":\\\"ok\\\".'"
         restartable: false
 
+      - name: "백업 3부 신선도 (36시간·다른 디스크)"
+        # ★로그에 [WARN] 을 남기는 것만으로는 아무도 모른다 — 크론이 출력을 버리던 시절
+        #   tme-laptop 한 곳에만 의존하는 상태가 조용히 유지됐다. 매 부팅에 드러나게 한다.
+        #   보는 것: ① 최신 덤프가 36시간 이내 ② 다른 물리 디스크(sdc) 사본이 있다.
+        check: "bash scripts/ops/on_tme.sh 'test -n \"$(find ~/backups/math-study -name \"mathstudy_*.dump\" -mtime -1.5 -print -quit)\" && test -n \"$(find /tme_engine/backups/math-study -name \"mathstudy_*.dump\" -mtime -1.5 -print -quit)\"'"
+        restartable: false
+
   # ── 3. 코드베이스 감사 (읽기 전용) ──────────────────────────────────────────
   audit:
     git_status: true
     log_scan:
-      paths: ["/tmp/tutor_health.log", "/tmp/widget_daily.log", "/tmp/daily-illustration.log"]
+      paths: ["/tmp/tutor_health.log", "/tmp/widget_daily.log", "/tmp/daily-illustration.log",
+              "~/backups/math-study/cron.log"]
       pattern: "실패|ERROR|██"
     gates_preview:
       - name: "파일 크기 래칫 (미리보기)"
