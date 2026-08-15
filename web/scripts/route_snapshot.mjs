@@ -6,11 +6,16 @@
 //   뒤집지 않는다" 고 경고한 그 공사다. 눈으로 몇 개 열어보고 판단하면 나머지가 조용히 깨진다.
 //   (같은 날 디코더 파서에서 안전망이 개악 430건을 잡았다 — 없었으면 그대로 나갔다.)
 //
-// ★인증: 페이지 대부분이 로그인 게이팅이라 무인증 스냅샷은 전부 302 라 쓸모가 없다.
-//   `DEV_NOAUTH=1` (dev 모드 + 127.0.0.1 전용, middleware.ts 참조)로 띄운 검증 서버를 쓴다.
+// ★인증: 페이지 대부분이 로그인 게이팅이라 무인증 스냅샷은 전부 302 라 쓸모가 없다. 두 방법이 있다.
+//   ① `DEV_NOAUTH=1` — 미들웨어가 합성 admin 을 **주입**한다. 빠르지만 인증 경로를 건너뛰므로
+//      **인증을 바꾸는 변경은 검증하지 못한다**(게이팅 이전·쿠키→토큰·CSRF→베어러가 전부 여기다).
+//   ② `--cookie` — `snapshot_session.mjs --mint` 로 받은 진짜 세션 쿠키를 들고 간다. 실제
+//      미들웨어가 실제로 해석하므로 인증 변경이 **정면으로** 검증된다. 인증을 건드릴 땐 ②를 쓴다.
 //
 // 사용:
 //   node web/scripts/route_snapshot.mjs --base http://127.0.0.1:4399 --out /tmp/routes_before.json
+//   T=$(node web/scripts/snapshot_session.mjs --mint)
+//   node web/scripts/route_snapshot.mjs --base http://127.0.0.1:4324 --cookie "$T" --out /tmp/a.json
 //   node web/scripts/route_snapshot.mjs --diff /tmp/routes_before.json /tmp/routes_after.json
 //
 // 저장하는 것(렌더 방식이 바뀌어도 의미가 남는 것만):
@@ -47,13 +52,17 @@ function extract(html) {
   };
 }
 
-async function snap(base, out) {
+async function snap(base, out, cookie) {
   const res = {};
+  // 세션 쿠키 이름은 auth.ts 의 SESSION_COOKIE 와 같아야 한다. 값만 넘겨도 되고 `이름=값` 도 받는다.
+  const headers = cookie
+    ? { cookie: cookie.includes('=') ? cookie : `ms_session=${cookie}` }
+    : undefined;
   for (const r of ROUTES) {
     const url = base.replace(/\/$/, '') + r;
     try {
       const t0 = Date.now();
-      const resp = await fetch(url, { redirect: 'manual' });
+      const resp = await fetch(url, { redirect: 'manual', headers });
       const html = resp.status === 200 ? await resp.text() : '';
       res[r] = { status: resp.status, ms: Date.now() - t0, ...(html ? extract(html) : {}) };
       const s = res[r];
@@ -65,7 +74,15 @@ async function snap(base, out) {
   }
   writeFileSync(out, JSON.stringify(res, null, 1));
   const ok = Object.values(res).filter((v) => v.status === 200).length;
-  console.log(`\n✓ ${Object.keys(res).length}개 라우트 → ${out}  (200: ${ok})`);
+  const redir = Object.values(res).filter((v) => v.status === 302 || v.status === 301).length;
+  console.log(`\n✓ ${Object.keys(res).length}개 라우트 → ${out}  (200: ${ok} · 리다이렉트: ${redir})`);
+  // ★쿠키를 줬는데 리다이렉트가 쏟아지면 **인증이 안 붙은 것**이다. 그 상태로 찍은 스냅샷은
+  //   "전부 로그인 화면"이라 서로 똑같고, 비교하면 늘 통과한다 — 안전망이 아니라 장식이 된다.
+  if (cookie && redir > ok) {
+    console.error(`\n🔴 쿠키를 줬는데 리다이렉트(${redir})가 200(${ok})보다 많다 — 세션이 안 먹었다.`);
+    console.error(`   토큰이 만료됐거나(발급 후 1시간), 쿠키 이름이 auth.ts 의 SESSION_COOKIE 와 다르다.`);
+    process.exitCode = 1;
+  }
   return res;
 }
 
@@ -98,4 +115,4 @@ function diff(aP, bP) {
 
 const d = arg('--diff') ? [arg('--diff'), args[args.indexOf('--diff') + 2]] : null;
 if (d) process.exit(diff(d[0], d[1]));
-else await snap(arg('--base', 'http://127.0.0.1:4399'), arg('--out', '/tmp/routes.json'));
+else await snap(arg('--base', 'http://127.0.0.1:4399'), arg('--out', '/tmp/routes.json'), arg('--cookie'));
