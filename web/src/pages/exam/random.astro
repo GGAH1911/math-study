@@ -1,9 +1,8 @@
 ---
 export const prerender = false; // 매 요청 새 무작위 시험
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ExamRunner from '../../components/ExamRunner.tsx';
-import { getCollection } from 'astro:content';
-import { buildRandomExam, ELECTIVES, FORMATS, type ExamFormat } from '../../lib/exam-build';
+import ExamRandomLoader from '../../components/ExamRandomLoader.tsx';
+import { ELECTIVES, FORMATS, type ExamFormat } from '../../lib/exam-build';
 
 const q = Astro.url.searchParams;
 const fmtRaw = String(q.get('format') ?? '2028');
@@ -24,20 +23,13 @@ if (format === 'gongseon') {
   optionChips = ['가형', '나형']; optionLabel = '계열';
 }
 
-const all = await getCollection('problems');
-const picks = buildRandomExam(all, { format, option, difficulty: diff / 100 });
-const examProblems = picks.map((p, i) => {
-  const s = p.data.source ?? {};
-  return {
-    slug: p.id,
-    number: i + 1,
-    subject: String(s.subject ?? ''),
-    format: p.data.format ?? 'choice',
-    image: p.data.problem_image ?? `/problem-images/${p.id.split('/').pop()}.png`,
-    score: Number(s.score ?? 0),
-  };
-});
-const durationSec = 100 * 60;
+// ★시험 구성은 `/api/exam/random` 이 한다 — 30문항 뽑으려고 코퍼스 4,210건을 여기서 읽지 않는다.
+//   아래 UI(양식·옵션·난이도)는 URL 파라미터만 쓰므로 서버 렌더 그대로 둔다.
+const apiQuery = (() => {
+  const u = new URLSearchParams({ format, diff: String(diff) });
+  if (option) u.set('option', option);
+  return u.toString();
+})();
 
 const fmt = FORMATS.find((f) => f.key === format);
 // URL 빌더 (빈 값 생략). 양식 전환 시 option=''로 초기화.
@@ -91,17 +83,11 @@ const diffLabel = diff <= 20 ? '기초' : diff <= 45 ? '쉬움' : diff <= 65 ? '
     </div>
   </div>
 
-  {examProblems.length === 0 ? (
-    <div class="max-w-3xl mx-auto px-6 py-12 text-center text-[color:var(--color-muted)]">시험을 구성하지 못했습니다.</div>
-  ) : (
-    <ExamRunner
-      client:load
-      composed={true}
-      title={`랜덤 · ${fmt?.label}${option ? ' ' + option : ''} · ${diffLabel}`}
-      problems={examProblems}
-      durationSec={durationSec}
-    />
-  )}
+  <ExamRandomLoader
+    client:load
+    query={apiQuery}
+    title={`랜덤 · ${fmt?.label}${option ? ' ' + option : ''} · ${diffLabel}`}
+  />
 </BaseLayout>
 
 <script>
