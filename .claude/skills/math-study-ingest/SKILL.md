@@ -110,6 +110,14 @@ bash scripts/ops/on_tme.sh '~/.venvs/ms-ingest/bin/python scripts/ops/verify_ing
 
 ## 4단계 — 커밋
 
+**먼저 소유권을 되돌린다.** 인제스트·크롭은 컨테이너(root)가 파일을 만들므로 호스트에서 root
+소유로 남고, 그러면 rsync/git 이 **조용히** 막힌다 — 실제로 이 상태가 두 달간 후처리 동기화를
+세워놨고 아무도 몰랐다. 커밋 전에 한 번 돌리면 그 자리에서 드러난다.
+
+```bash
+bash scripts/ops/on_tme.sh 'bash scripts/ops/heal_file_ownership.sh'
+```
+
 산출물은 `docs/problems/<연도>/<회차>/` 와 `web/private/problem-images/` 두 곳이다.
 크론(`03:00 widget_spec_loop`)이 경로 미지정 `git commit` 을 하므로 **스테이징만 남기지 마라** —
 남의 변경까지 딸려 간다.

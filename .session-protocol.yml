@@ -111,6 +111,14 @@ shutdown:
       blocking: true
       expect: "status/db/tutor 모두 ok"
       on_fail: "★컨테이너가 재시작 루프면 health 가 000 이다. 200 만 보지 말고 docker compose logs 를 본다."
+    - name: "바인드마운트 소유권 (자가치유)"
+      # ★게이트가 아니라 치유다. dev 컨테이너가 root 로 돌아 컨테이너가 만든 파일이 호스트에서
+      #   root 소유로 남고, 그러면 rsync/git 이 **조용히** 막힌다. 실제로 두 달간 후처리 동기화가
+      #   서 있었고 아무도 몰랐다. 조용한 게 문제였으므로 매 셧다운마다 소리를 내고 되돌린다.
+      command: "bash scripts/ops/on_tme.sh 'bash scripts/ops/heal_file_ownership.sh'"
+      blocking: true
+      expect: "남의 소유 파일 0 (볼륨 마운트포인트는 제외하고 센다)"
+      on_fail: "컨테이너가 안 떠 있으면 chown 할 수단이 없다 — 띄우고 다시 돌린다. 근본 해결은 compose 의 user: \"1000:1000\" 인데 named volume 소유권 이전이 얽혀 정지 창이 필요하다."
     - name: "web 타입체크·빌드 (CI 와 동일)"
       # push 하면 .github/workflows/ci.yml 이 같은 걸 돈다. 여기서 먼저 깨뜨려 잡는다.
       command: "bash scripts/ops/on_tme.sh 'docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml exec -T web sh -c \"cd /app/web && npm run prebuild && npx astro check && npx astro build\"'"
