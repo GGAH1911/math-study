@@ -64,6 +64,28 @@ function walk(dir, out = []) {
 
 const count = (s, re) => (s.match(re) || []).length;
 
+// ── 목록용 필드 화이트리스트 ────────────────────────────────────────────────
+// ★왜 화이트리스트인가: 문항 frontmatter 에는 `searchable_text`·`solution`·`corrector_fixes`
+//   처럼 **본문급으로 큰** 필드가 있다. 목록에 그대로 실으면 4,210건 × 수 KB 라 목록이
+//   본문보다 커진다 — SPA 로 옮기는 이유가 사라진다. 그래서 화면이 실제로 쓰는 것만 담는다.
+// ★출처: 각 index 페이지와 `lib/problem-card.ts` 가 읽는 필드를 세어서 정했다(추측 아님).
+//   페이지가 새 필드를 쓰기 시작하면 **여기에 추가해야 한다** — 안 하면 화면에서 조용히 빈다.
+const LIST_FIELDS = {
+  concepts:  ['title', 'concept_type', 'domain', 'grade', 'unit'],
+  problems:  ['source', 'unit', 'killer_tier', 'cognitive_type', 'format', 'status', 'problem_image', 'exam_intent'],
+  syntheses: ['title', 'created', 'origin_concept', 'review_state'],
+  mistakes:  ['error_type', 'lesson', 'problem', 'revisit_date'],
+  tools:     ['kind', 'title', 'url'],
+};
+
+const pickFields = (col, data) => {
+  const keys = LIST_FIELDS[col];
+  if (!keys) return {};
+  const out = {};
+  for (const k of keys) if (data[k] !== undefined) out[k] = data[k];
+  return out;
+};
+
 const proc = processor();
 const summary = [];
 let failures = 0;
@@ -79,6 +101,7 @@ for (const col of COLLECTIONS) {
   mkdirSync(outDir, { recursive: true });
 
   let katex = 0, links = 0, bytes = 0, errs = 0;
+  const index = [];   // 컬렉션 목록 — 요청마다 수천 파일을 읽을 수는 없다
   for (const f of files) {
     // id 는 Astro content id 와 같아야 한다 — 확장자 제거 + NFC(맥 파일명은 NFD 로 온다).
     const id = relative(join(DOCS, col), f).replace(/\.md$/, '').normalize('NFC');
@@ -91,6 +114,7 @@ for (const col of COLLECTIONS) {
       const dst = join(outDir, id + '.json');
       mkdirSync(dirname(dst), { recursive: true });
       writeFileSync(dst, JSON.stringify({ id, collection: col, data, html }));
+      index.push({ id, ...pickFields(col, data) });
       katex += count(html, /class="[^"]*\bkatex\b/g);
       links += count(html, /<a\s[^>]*href="\//g);
       bytes += html.length;
@@ -99,8 +123,15 @@ for (const col of COLLECTIONS) {
       if (errs <= 3) console.error(`  🔴 ${col}/${id}: ${String(e).slice(0, 110)}`);
     }
   }
-  summary.push({ col, n: files.length, katex, links, kb: Math.round(bytes / 1024), errs });
-  console.log(`  ${col.padEnd(10)} ${String(files.length).padStart(5)}건  수식 ${String(katex).padStart(6)}  내부링크 ${String(links).padStart(6)}  ${String(Math.round(bytes / 1024)).padStart(6)}KB  실패 ${errs}`);
+  // 표본 실행(--limit)은 목록을 덮어쓰지 않는다 — 20건짜리 목록이 전체를 가리면 화면이 텅 빈다.
+  let idxKb = 0;
+  if (!limit) {
+    const body = JSON.stringify({ collection: col, n: index.length, entries: index });
+    writeFileSync(join(OUT, `${col}.index.json`), body);
+    idxKb = Math.round(body.length / 1024);
+  }
+  summary.push({ col, n: files.length, katex, links, kb: Math.round(bytes / 1024), errs, idxKb });
+  console.log(`  ${col.padEnd(10)} ${String(files.length).padStart(5)}건  수식 ${String(katex).padStart(6)}  내부링크 ${String(links).padStart(6)}  본문 ${String(Math.round(bytes / 1024)).padStart(6)}KB  목록 ${String(idxKb).padStart(5)}KB  실패 ${errs}`);
 }
 
 const tot = summary.reduce((a, s) => ({ n: a.n + s.n, katex: a.katex + s.katex, links: a.links + s.links, kb: a.kb + s.kb }), { n: 0, katex: 0, links: 0, kb: 0 });
