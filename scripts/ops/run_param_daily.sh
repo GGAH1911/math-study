@@ -36,6 +36,13 @@ set -uo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$REPO" || exit 1
 
+# ★크론의 PATH 는 `/usr/bin:/bin` 뿐이라 `~/.local/bin/claude` 가 안 보인다.
+#   2026-08-15 07:00 에 이것 하나로 배치가 8초 만에 죽고 **13건이 "실패" 로 기록**됐다
+#   (문항이 아니라 환경이 틀린 건데 문항 탓으로 남았다). 로그인 셸과 같은 자리를 덧댄다.
+#   배치 본체에도 preflight(`claude_auth.require_claude`)가 있어 이게 빠져도 조용히
+#   실패하진 않지만, **크론이 로그인 셸과 다른 PATH 로 돈다는 사실 자체**를 여기서 막는다.
+export PATH="$HOME/.local/bin:$PATH"
+
 MODEL="${MODEL:-sonnet}"
 WORKERS="${WORKERS:-8}"
 MAX_SECONDS="${MAX_SECONDS:-1800}"          # 기본 30분 (수요가 없으므로 얕게 — 헤더 참조)

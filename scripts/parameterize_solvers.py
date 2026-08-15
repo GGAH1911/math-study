@@ -36,7 +36,8 @@ STATE = ROOT / 'db' / 'solutions' / '_paramstate.json'
 VENV = os.environ.get('MS_PY', str(Path.home() / '.venvs/ms-ingest/bin/python'))
 
 sys.path.insert(0, str(ROOT / 'scripts'))
-from claude_auth import claude_env, looks_unauthed, looks_quota_exhausted  # noqa: E402
+from claude_auth import (claude_env, claude_bin, require_claude,  # noqa: E402
+                         looks_unauthed, looks_quota_exhausted)
 
 CLAUDE_ENV = claude_env()
 TIMEOUT_S = int(os.environ.get('PARAM_TIMEOUT', '900'))
@@ -304,7 +305,9 @@ def run_one(stem: str, model: str, logf: Path) -> tuple[str, bool, str]:
 
 def _run_claude(work: Path, cwd: Path, model: str) -> None:
     """claude -p 는 에이전트 루프를 스스로 돈다 — 결과는 work/solver.py 에 남는다."""
-    args = ['claude', '-p', '--output-format', 'json', '--model', model,
+    # ★이름이 아니라 절대경로로 부른다 — `env=CLAUDE_ENV` 를 넘기므로 해석은 그 env 의
+    #   PATH 를 따른다. 크론처럼 PATH 가 좁으면 이름으로는 못 찾는다(2026-08-15).
+    args = [claude_bin() or 'claude', '-p', '--output-format', 'json', '--model', model,
             '--allowedTools', 'Read,Write,Edit,Bash', '--add-dir', str(work),
             '--disallowedTools', 'WebFetch,WebSearch',
             '--max-turns', '40', '--system-prompt', SYSTEM, '--',
@@ -375,6 +378,11 @@ def main() -> int:
 
     logf = Path(a.log) if a.log else Path(f'/tmp/ingest_logs/parameterize_{time.strftime("%Y%m%d_%H%M%S")}.log')
     logf.parent.mkdir(parents=True, exist_ok=True)
+
+    # ── preflight: 쓸 모델의 실행 수단이 있는지 **한 건도 건드리기 전에** 확인 ──────
+    # 모델 라우팅은 run_one 과 같은 규칙이다: hermes* → hermes · '/' 포함 → Nous · 그 외 → claude.
+    if not a.model.startswith('hermes') and '/' not in a.model:
+        require_claude()
 
     state = load_state()
     if a.stems:
