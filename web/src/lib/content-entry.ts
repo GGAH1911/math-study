@@ -55,3 +55,43 @@ export function useContentEntry<D = Record<string, unknown>>(collection: string,
   }, [collection, id]);
   return s;
 }
+
+// ── 임의 JSON 엔드포인트용 공유 캐시 ────────────────────────────────────────
+// ★상세 페이지는 한 화면에서 섬이 둘(본문 + 서랍)이고 **같은 엔드포인트**를 쓴다.
+//   각자 fetch 하면 요청이 두 번 나간다 — 브라우저 캐시는 동시 요청을 합쳐 주지 않는다.
+const jsonCache = new Map<string, Promise<unknown>>();
+
+export function loadJsonOnce<T>(url: string): Promise<T> {
+  const hit = jsonCache.get(url);
+  if (hit) return hit as Promise<T>;
+  const p = fetch(url, { headers: { accept: 'application/json' } }).then(async (r) => {
+    const body = await r.json().catch(() => ({}));
+    if (!r.ok) throw Object.assign(new Error(String((body as { error?: string }).error ?? `HTTP ${r.status}`)), { status: r.status, body });
+    return body as T;
+  });
+  p.catch(() => jsonCache.delete(url));   // 실패를 캐시에 남기면 재시도가 영원히 막힌다
+  jsonCache.set(url, p);
+  return p;
+}
+
+export type JsonState<T> =
+  | { status: 'loading' }
+  | { status: 'error'; message: string; body?: unknown }
+  | { status: 'ready'; data: T };
+
+export function useJsonOnce<T>(url: string): JsonState<T> {
+  const [s, setS] = useState<JsonState<T>>({ status: 'loading' });
+  useEffect(() => {
+    let alive = true;
+    setS({ status: 'loading' });
+    loadJsonOnce<T>(url)
+      .then((data) => { if (alive) setS({ status: 'ready', data }); })
+      .catch((e: unknown) => {
+        if (!alive) return;
+        const err = e as Error & { body?: unknown };
+        setS({ status: 'error', message: err.message, body: err.body });
+      });
+    return () => { alive = false; };
+  }, [url]);
+  return s;
+}
