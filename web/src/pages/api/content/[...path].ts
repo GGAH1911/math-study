@@ -10,8 +10,9 @@
 // ★ETag 를 준다 — 앱이 오프라인 캐시를 갱신할 때 바뀐 것만 받게 하려는 것이다. 콘텐츠는 5,852건
 //   64MB 라, 전부 다시 받게 하면 앱이 못 쓴다.
 import type { APIRoute } from 'astro';
-import { statSync, readFileSync } from 'node:fs';
+import { statSync } from 'node:fs';
 import { mediaPath } from '../../../lib/media-root.ts';
+import { serveMaybeGzip } from '../content-index/[collection].ts';
 
 export const prerender = false;
 
@@ -35,18 +36,9 @@ export const GET: APIRoute = async ({ params, request }) => {
 
   const etag = `W/"${st.size.toString(36)}-${st.mtimeMs.toString(36)}"`;
   if (request.headers.get('if-none-match') === etag) {
-    return new Response(null, { status: 304, headers: { etag } });
+    return new Response(null, { status: 304, headers: { etag, vary: 'Accept-Encoding' } });
   }
 
-  let buf: Buffer;
-  try { buf = readFileSync(abs); } catch { return json({ error: 'not found' }, 404); }
-  return new Response(buf, {
-    status: 200,
-    headers: {
-      'content-type': 'application/json; charset=utf-8',
-      etag,
-      // private — 공유 캐시(프록시)에 남으면 게이팅의 의미가 없다.
-      'cache-control': 'private, max-age=300',
-    },
-  });
+  try { return serveMaybeGzip(abs, etag, request); }
+  catch { return json({ error: 'not found' }, 404); }
 };

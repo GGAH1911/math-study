@@ -40,15 +40,35 @@ export const GET: APIRoute = async ({ params, request }) => {
 
   const etag = `W/"${st.size.toString(36)}-${st.mtimeMs.toString(36)}"`;
   if (request.headers.get('if-none-match') === etag) {
-    return new Response(null, { status: 304, headers: { etag } });
+    return new Response(null, { status: 304, headers: { etag, vary: 'Accept-Encoding' } });
   }
 
-  return new Response(readFileSync(abs), {
-    status: 200,
-    headers: {
-      'content-type': 'application/json; charset=utf-8',
-      etag,
-      'cache-control': 'private, max-age=300',
-    },
-  });
+  return serveMaybeGzip(abs, etag, request);
 };
+
+/**
+ * 미리 압축된 `.gz` 가 있고 클라이언트가 받는다면 그것을 준다.
+ *
+ * ★실측: 문항 목록 2,380KB → 245KB (**9.7배**). 그리고 **이 서버는 응답을 전혀 압축하지 않는다** —
+ *   `--compressed` 로 요청해도 원본 크기가 그대로 온다. 방출물은 정적이라 요청마다 압축할 이유가
+ *   없으므로 빌드 때 굽고 여기서 그대로 흘린다(요청당 CPU 0, 압축률은 gzip -9).
+ * ★ETag 는 **압축 여부와 무관하게 원본 기준**이고 `Vary: Accept-Encoding` 을 준다. 안 그러면
+ *   캐시가 gzip 응답을 gzip 을 못 받는 클라이언트에게 줄 수 있다.
+ */
+export function serveMaybeGzip(abs: string, etag: string, request: Request): Response {
+  const wantsGzip = (request.headers.get('accept-encoding') ?? '').includes('gzip');
+  const base = {
+    'content-type': 'application/json; charset=utf-8',
+    etag,
+    vary: 'Accept-Encoding',
+    // private — 공유 캐시(프록시)에 남으면 게이팅의 의미가 없다.
+    'cache-control': 'private, max-age=300',
+  };
+  if (wantsGzip) {
+    try {
+      const gz = readFileSync(abs + '.gz');
+      return new Response(gz, { status: 200, headers: { ...base, 'content-encoding': 'gzip' } });
+    } catch { /* .gz 가 없으면 원본으로 떨어진다 — 방출기를 옛 버전으로 돌린 경우 */ }
+  }
+  return new Response(readFileSync(abs), { status: 200, headers: base });
+}

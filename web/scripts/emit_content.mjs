@@ -19,6 +19,7 @@
 //   node web/scripts/emit_content.mjs --col concepts  # 한 컬렉션만
 //   node web/scripts/emit_content.mjs --limit 20      # 표본만(빠른 확인)
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
 import matter from 'gray-matter';
@@ -63,6 +64,16 @@ function walk(dir, out = []) {
 }
 
 const count = (s, re) => (s.match(re) || []).length;
+
+// ★미리 압축해서 굽는다. 실측: 문항 목록 2,380KB → 245KB (**9.7배**).
+//   서버는 지금 응답을 **전혀 압축하지 않는다**(gzip 을 요청해도 원본 크기 그대로 온다).
+//   방출물은 정적이라 요청마다 압축할 이유가 없다 — 빌드 때 한 번, 최대 압축률로 굽는다.
+//   요청당 CPU 0, 압축률은 gzip -9. CDN 이 하는 일을 그대로 한다.
+function writeBoth(path, body) {
+  writeFileSync(path, body);
+  writeFileSync(path + '.gz', gzipSync(body, { level: 9 }));
+  return body.length;
+}
 
 // ── 목록용 필드 화이트리스트 ────────────────────────────────────────────────
 // ★왜 화이트리스트인가: 문항 frontmatter 에는 `searchable_text`·`solution`·`corrector_fixes`
@@ -113,7 +124,7 @@ for (const col of COLLECTIONS) {
       html = String(proc.processSync(new VFile({ value: content, path: f })));
       const dst = join(outDir, id + '.json');
       mkdirSync(dirname(dst), { recursive: true });
-      writeFileSync(dst, JSON.stringify({ id, collection: col, data, html }));
+      writeBoth(dst, JSON.stringify({ id, collection: col, data, html }));
       index.push({ id, ...pickFields(col, data) });
       katex += count(html, /class="[^"]*\bkatex\b/g);
       links += count(html, /<a\s[^>]*href="\//g);
@@ -124,14 +135,15 @@ for (const col of COLLECTIONS) {
     }
   }
   // 표본 실행(--limit)은 목록을 덮어쓰지 않는다 — 20건짜리 목록이 전체를 가리면 화면이 텅 빈다.
-  let idxKb = 0;
+  let idxKb = 0, gzKb = 0;
   if (!limit) {
     const body = JSON.stringify({ collection: col, n: index.length, entries: index });
-    writeFileSync(join(OUT, `${col}.index.json`), body);
+    writeBoth(join(OUT, `${col}.index.json`), body);
     idxKb = Math.round(body.length / 1024);
+    gzKb = Math.round(gzipSync(body, { level: 9 }).length / 1024);
   }
   summary.push({ col, n: files.length, katex, links, kb: Math.round(bytes / 1024), errs, idxKb });
-  console.log(`  ${col.padEnd(10)} ${String(files.length).padStart(5)}건  수식 ${String(katex).padStart(6)}  내부링크 ${String(links).padStart(6)}  본문 ${String(Math.round(bytes / 1024)).padStart(6)}KB  목록 ${String(idxKb).padStart(5)}KB  실패 ${errs}`);
+  console.log(`  ${col.padEnd(10)} ${String(files.length).padStart(5)}건  수식 ${String(katex).padStart(6)}  내부링크 ${String(links).padStart(6)}  본문 ${String(Math.round(bytes / 1024)).padStart(6)}KB  목록 ${String(idxKb).padStart(5)}KB→${String(gzKb).padStart(4)}KB  실패 ${errs}`);
 }
 
 const tot = summary.reduce((a, s) => ({ n: a.n + s.n, katex: a.katex + s.katex, links: a.links + s.links, kb: a.kb + s.kb }), { n: 0, katex: 0, links: 0, kb: 0 });
