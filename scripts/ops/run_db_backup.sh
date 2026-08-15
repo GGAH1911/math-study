@@ -27,7 +27,11 @@ RDIR="/mnt/webdav/Cloud/db_backup/math-study"
 # ★2부는 **다른 물리 디스크**(sda)다. LOCAL_DIR 은 루트(sdb)에 있으므로 sdb 가 죽으면 같이 죽는다.
 #   가장 흔한 고장이 디스크 한 장 사망이고, 그건 네트워크도 남의 기계도 필요 없이 막을 수 있다.
 #   원격 1부(tme-laptop)는 off-machine 보호로 남긴다 — 다만 **비정본 기계**라 그것만 믿지 않는다.
-MIRROR_DIR="${MS_BACKUP_MIRROR:-/mnt/marshall_disk/backup/math-study}"
+#   ※ /mnt/marshall_disk 는 쓰지 않는다 — 읽기전용(fuseblk ro)이고 대체 불가한 개인 아카이브가
+#     든 디스크다. 1.7MB 덤프 두자고 거기에 쓰기를 여는 건 나쁜 거래다.
+#   ※ /tme_engine 은 시스템 이미지 파티션이다. 다시 구우면 이 사본은 사라진다 — 그래서 **3부 중
+#     2부**이지 유일본이 아니다. 로컬(sdb)·원격(tme-laptop)·이곳(sdc) 셋이 서로를 덮는다.
+MIRROR_DIR="${MS_BACKUP_MIRROR:-/tme_engine/backups/math-study}"
 KEEP_DAYS=30
 LOG="$HOME/backups/math-study/backup.log"
 SSH="ssh -o ConnectTimeout=20 -o BatchMode=yes -o ServerAliveInterval=30"
