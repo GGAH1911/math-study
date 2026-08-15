@@ -1,29 +1,9 @@
 ---
+// Phase 3 전환 4호 — 껍데기는 서버, 목록·필터는 클라이언트(`/api/content-index/problems`).
+// 필터와 목록은 **같은 섬**(`ProblemsByRound`)이다 — 따로 두면 필터가 빈 DOM 을 훑고 죽는다.
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProblemFilters from '../../components/ProblemFilters.tsx';
-import RoundDetails from '../../components/RoundDetails.astro';
-import { getCollection } from 'astro:content';
-import { groupByRound, buildFilterAxes } from '../../lib/problem-card';
-
-const problems = await getCollection('problems');
-const byYear = groupByRound(problems);
-const axes = buildFilterAxes(problems);
-
-// 시험종류 대분류 (= /exam 과 동일 로직). 연도 desc 평탄화 후 종류별 버킷.
-const allRounds = [...byYear.values()].flat();
-const ofType = (t: string) => allRounds.filter((r) => r.meta.exam_type === t);
-const isYeshi = (r: { meta: { session: string } }) => /예시/.test(r.meta.session ?? '');
-const suneung = ofType('수능').filter((r) => !isYeshi(r));
-const yeshi = ofType('수능').filter(isYeshi);
-const mopyeong = ofType('모의평가');
-const mock = ofType('모의고사');
-const mockByGrade = ['고3', '고2', '고1']
-  .map((grade) => ({ grade, rounds: mock.filter((r) => r.meta.grade === grade) }))
-  .filter((x) => x.rounds.length > 0);
-
-const h2cls = 'text-lg font-semibold border-b border-[color:var(--color-border)] pb-1.5';
-const hint = 'text-xs font-normal text-[color:var(--color-subtle)] ml-1.5';
+import ProblemsByRound from '../../components/ProblemsByRound.tsx';
 ---
 <BaseLayout title="기출">
   <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
@@ -47,50 +27,6 @@ const hint = 'text-xs font-normal text-[color:var(--color-subtle)] ml-1.5';
       <a href="/exam/random" class="chip hover:border-[color:var(--color-accent)] whitespace-nowrap">▶ 시작</a>
     </section>
 
-    <ProblemFilters client:load axes={axes} total={problems.length} groupSelector=".problem-group" />
-
-    {problems.length === 0 ? (
-      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 문제가 없습니다.</p>
-    ) : (
-      <div class="space-y-6">
-        {suneung.length > 0 && (
-          <section class="problem-lens-section space-y-2">
-            <h2 class={h2cls}>수능<span class={hint}>대학수학능력시험</span></h2>
-            {suneung.map((r) => <RoundDetails round={r} />)}
-          </section>
-        )}
-        {yeshi.length > 0 && (
-          <section class="problem-lens-section space-y-2">
-            <h2 class={h2cls}>예시문항<span class={hint}>평가원 통합형 수능 예시 · 실제 시행 아님</span></h2>
-            {yeshi.map((r) => <RoundDetails round={r} />)}
-          </section>
-        )}
-        {mopyeong.length > 0 && (
-          <section class="problem-lens-section space-y-2">
-            <h2 class={h2cls}>모의평가<span class={hint}>모평 · 평가원 6·9월</span></h2>
-            {mopyeong.map((r) => <RoundDetails round={r} />)}
-          </section>
-        )}
-        {mock.length > 0 && (
-          <section class="problem-lens-section space-y-3">
-            <h2 class={h2cls}>모의고사<span class={hint}>교육청 학력평가 · 시행연도</span></h2>
-            {mockByGrade.map((g) => (
-              <div class="problem-lens-section space-y-2">
-                <h3 class="text-sm font-medium text-[color:var(--color-muted)]">{g.grade}</h3>
-                {g.rounds.map((r) => <RoundDetails round={r} />)}
-              </div>
-            ))}
-          </section>
-        )}
-      </div>
-    )}
+    <ProblemsByRound client:load />
   </div>
 </BaseLayout>
-
-<style>
-  :global(.problem-card-wrap.filtered-out),
-  :global(.problem-group.filtered-out),
-  :global(.problem-lens-section.filtered-out) {
-    display: none !important;
-  }
-</style>

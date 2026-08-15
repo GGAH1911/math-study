@@ -45,6 +45,8 @@ export default function ProblemFilters({ axes, total, groupSelector, collapsible
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
   const [allDomainIds, setAllDomainIds] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement | null>(null);
+  // 목록이 클라이언트에서 다시 그려졌음을 알리는 카운터(아래 problems:rendered 참조).
+  const [renderTick, setRenderTick] = useState(0);
 
   // 마운트 후 URL 상태 replay. document 완료 전엔 카드가 아직 스트리밍 중이라
   // (2584장) querySelectorAll 이 놓치므로 readyState==='complete' 까지 첫 패스 보류.
@@ -71,6 +73,16 @@ export default function ProblemFilters({ axes, total, groupSelector, collapsible
     const t = setTimeout(() => setDebounced(search.trim().toLowerCase()), 200);
     return () => clearTimeout(t);
   }, [search]);
+
+  // ★Phase 3: 목록이 **클라이언트에서** 그려지면 카드가 `readyState==='complete'` **이후**에
+  //   생긴다. 위 hydrated 가드는 SSR 스트리밍만 기다리므로, 그대로 두면 첫 필터 패스가
+  //   빈 DOM 을 훑고 끝나 **필터가 죽는다**(카드는 보이는데 검색·칩이 아무 반응 없음).
+  //   목록 섬이 다 그린 뒤 `problems:rendered` 를 쏘면 여기서 다시 훑는다.
+  useEffect(() => {
+    const onRendered = () => setRenderTick((n) => n + 1);
+    window.addEventListener('problems:rendered', onRendered);
+    return () => window.removeEventListener('problems:rendered', onRendered);
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -128,7 +140,7 @@ export default function ProblemFilters({ axes, total, groupSelector, collapsible
       sec.classList.toggle('filtered-out', !sec.querySelector('.problem-card-wrap:not(.filtered-out)'));
     }
     setVisibleCount(visible);
-  }, [hydrated, sets, debounced, axes, groupSelector]);
+  }, [hydrated, sets, debounced, axes, groupSelector, renderTick]);
 
   // URL 동기화 (새로고침/북마크 복원). hydrated 가드로 마운트 replay 가 방금 읽은 param 을 즉시 지우지 않게.
   useEffect(() => {
