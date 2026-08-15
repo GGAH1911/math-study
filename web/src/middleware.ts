@@ -71,10 +71,31 @@ function isAssetOrInternal(pathname: string): boolean {
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  const { request, url } = context;
+  if (isAssetOrInternal(url.pathname)) return next();
+
+  // ★CORS 는 **바깥에서** 감싼다. 아래 handle() 은 공개경로 통과·401·403·429·리다이렉트 등
+  //   여러 갈래로 빠져나가는데, 앱은 그 응답들도 읽어야 한다(에러를 못 읽으면 화면이 침묵한다).
+  //   안쪽 각 return 마다 헤더를 붙이면 새 갈래가 생길 때마다 조용히 빠진다 — 실제로 첫 구현이
+  //   그랬고 `/api/health`(공개경로)가 헤더 없이 나갔다.
+  const xOrigin = corsOrigin(request);
+  // preflight 는 자격증명이 실리기 **전에** 오므로 인증·게이팅보다 앞서 답한다.
+  // (dev 에서는 Vite 개발서버가 OPTIONS 를 먼저 가로채므로 이 줄은 프로덕션 빌드에서만 닿는다.)
+  if (request.method.toUpperCase() === 'OPTIONS' && xOrigin) return preflight(xOrigin);
+
+  const res = await handle(context, next);
+  if (!xOrigin) return res;
+  const headers = new Headers(res.headers);
+  for (const [k, v] of Object.entries(corsHeaders(xOrigin))) headers.set(k, v);
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+});
+
+async function handle(
+  context: Parameters<Parameters<typeof defineMiddleware>[0]>[0],
+  next: Parameters<Parameters<typeof defineMiddleware>[0]>[1],
+): Promise<Response> {
   const { request, cookies, url } = context;
   const pathname = url.pathname;
-
-  if (isAssetOrInternal(pathname)) return next();
 
   // 로컬 검증 전용 포트: 합성 admin 주입 후 모든 게이팅 우회(real 서버는 DEV_NOAUTH 미설정).
   if (DEV_NOAUTH) {
@@ -83,10 +104,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   const method = request.method.toUpperCase();
-
-  // 교차출처 preflight 는 자격증명이 실리기 **전에** 온다 — 인증·게이팅보다 앞서 답해야 한다.
-  const xOrigin = corsOrigin(request);
-  if (method === 'OPTIONS' && xOrigin) return preflight(xOrigin);
 
   // 세션 → 유저 해석(fail-safe). ★CSRF 검사보다 **먼저** 한다: 베어러로 인증됐는지 알아야
   //   동일출처 검사를 건너뛸지 판단할 수 있기 때문이다(아래).
@@ -172,14 +189,5 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect('/');
   }
 
-  // 허용 출처(앱)의 응답에만 CORS 헤더를 얹는다. 동일출처(웹)는 xOrigin 이 null 이라 그대로 나간다 —
-  // 즉 이 블록은 웹 응답을 한 바이트도 바꾸지 않는다.
-  if (xOrigin) {
-    const res = await next();
-    const headers = new Headers(res.headers);
-    for (const [k, v] of Object.entries(corsHeaders(xOrigin))) headers.set(k, v);
-    return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
-  }
-
   return next();
-});
+}
