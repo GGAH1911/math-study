@@ -201,5 +201,8 @@ if (CONCEPT_LEAF_MAP.size === 0) {
 }
 
 /** 빌드와 방출기가 **같은 것**을 쓰도록 여기 한 벌만 둔다. */
+/** @type {import('astro').AstroUserConfig['markdown']['remarkPlugins']} */
 export const remarkPlugins = [remarkMath, remarkKatexCompat, remarkRewritePaths, remarkStripSolutionPlaceholder];
+// ★튜플로 명시해야 한다. 그냥 두면 TS 가 `(Plugin|Options)[][]` 로 넓혀 astro.config 에서 거부된다.
+/** @type {import('astro').AstroUserConfig['markdown']['rehypePlugins']} */
 export const rehypePlugins = [[rehypeKatex, katexOptions]];
