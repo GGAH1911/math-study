@@ -89,11 +89,33 @@ const LIST_FIELDS = {
   tools:     ['kind', 'title', 'url'],
 };
 
+// syntheses 목록은 `title`·`excerpt`·`origin_title` 을 쓰는데, 이건 frontmatter 가 아니라
+// **별도 빌드 산출물**(`src/data/syntheses-by-concept.json`)에 있다. 본문에서 다시 뽑으면
+// 기존 화면과 미묘하게 달라지므로(제목 정제 규칙이 그 안에 있다) **있는 것을 그대로 합친다.**
+// 없으면 조용히 넘어간다 — 그 경우 화면은 id 로 떨어지고, 그건 SSR 때도 같았다.
+const SYN_INDEX = (() => {
+  try {
+    const j = JSON.parse(readFileSync(join(ROOT, 'web', 'src', 'data', 'syntheses-by-concept.json'), 'utf8'));
+    return new Map((j.recent ?? []).map((r) => [r.slug, r]));
+  } catch { return new Map(); }
+})();
+
 const pickFields = (col, data) => {
   const keys = LIST_FIELDS[col];
   if (!keys) return {};
   const out = {};
   for (const k of keys) if (data[k] !== undefined) out[k] = data[k];
+  return out;
+};
+
+/** 컬렉션별 보강 — frontmatter 밖에서 오는 목록 필드. */
+const enrich = (col, id, out) => {
+  if (col !== 'syntheses') return out;
+  const r = SYN_INDEX.get(id);
+  if (!r) return out;
+  for (const k of ['title', 'excerpt', 'origin_concept', 'origin_title', 'created', 'review_state']) {
+    if (r[k] !== undefined && out[k] === undefined) out[k] = r[k];
+  }
   return out;
 };
 
@@ -125,7 +147,7 @@ for (const col of COLLECTIONS) {
       const dst = join(outDir, id + '.json');
       mkdirSync(dirname(dst), { recursive: true });
       writeBoth(dst, JSON.stringify({ id, collection: col, data, html }));
-      index.push({ id, ...pickFields(col, data) });
+      index.push({ id, ...enrich(col, id, pickFields(col, data)) });
       katex += count(html, /class="[^"]*\bkatex\b/g);
       links += count(html, /<a\s[^>]*href="\//g);
       bytes += html.length;
