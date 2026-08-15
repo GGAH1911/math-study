@@ -75,12 +75,19 @@ async function snap(base, out, cookie) {
   writeFileSync(out, JSON.stringify(res, null, 1));
   const ok = Object.values(res).filter((v) => v.status === 200).length;
   const redir = Object.values(res).filter((v) => v.status === 302 || v.status === 301).length;
-  console.log(`\n✓ ${Object.keys(res).length}개 라우트 → ${out}  (200: ${ok} · 리다이렉트: ${redir})`);
-  // ★쿠키를 줬는데 리다이렉트가 쏟아지면 **인증이 안 붙은 것**이다. 그 상태로 찍은 스냅샷은
-  //   "전부 로그인 화면"이라 서로 똑같고, 비교하면 늘 통과한다 — 안전망이 아니라 장식이 된다.
-  if (cookie && redir > ok) {
-    console.error(`\n🔴 쿠키를 줬는데 리다이렉트(${redir})가 200(${ok})보다 많다 — 세션이 안 먹었다.`);
-    console.error(`   토큰이 만료됐거나(발급 후 1시간), 쿠키 이름이 auth.ts 의 SESSION_COOKIE 와 다르다.`);
+  const err = Object.values(res).filter((v) => v.status === 0).length;
+  console.log(`\n✓ ${Object.keys(res).length}개 라우트 → ${out}  (200: ${ok} · 리다이렉트: ${redir} · 실패: ${err})`);
+
+  // ★내용 없는 스냅샷이 조용히 저장되는 것을 막는다. 전부 302 면 "로그인 화면 22장", 전부 ERR 이면
+  //   "빈 파일 22개" — 둘 다 자기들끼리는 똑같아서 **비교하면 늘 통과한다.** 안전망이 아니라 장식이 된다.
+  //   (첫 시도에서 실제로 겪었다: 포트를 틀려 22개 전부 fetch failed 인데 exit 0 이었다.)
+  if (ok === 0) {
+    console.error(`\n🔴 200 이 하나도 없다 — 이 스냅샷은 비교 기준으로 쓸 수 없다.`);
+    if (err) console.error(`   ${err}개가 연결 실패다. --base 를 확인한다(컨테이너 안이면 :8080, 호스트면 :4324).`);
+    else if (redir) console.error(`   ${redir}개가 리다이렉트다. 쿠키가 안 먹었다 — 만료됐거나 이름이 auth.ts 의 SESSION_COOKIE 와 다르다.`);
+    process.exitCode = 1;
+  } else if (cookie && redir > ok) {
+    console.error(`\n🔴 쿠키를 줬는데 리다이렉트(${redir})가 200(${ok})보다 많다 — 세션이 부분적으로만 먹었다.`);
     process.exitCode = 1;
   }
   return res;
