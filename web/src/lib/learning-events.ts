@@ -5,7 +5,12 @@
 //   들어오기 전까지 파생 상태가 여전히 읽기 경로이기 때문이다. 트랜잭션을 나누면
 //   "이벤트는 남았는데 화면은 그대로" 또는 그 반대가 생기고, 그게 정확히 재계산이 못 고치는
 //   불일치다.
-import type { Sql } from 'postgres';
+// ★`Sql` 이 아니라 `ISql` 이다. postgres.js 에서 `Sql`(풀 클라이언트)과
+//   `TransactionSql`(sql.begin 이 넘겨주는 핸들)은 **형제** 이고 둘 다 `ISql` 을 확장한다
+//   — `TransactionSql` 은 `Sql` 의 하위 타입이 «아니다»(CLOSE·END·options·begin 등이 없다).
+//   그래서 매개변수를 `Sql` 로 잡으면 트랜잭션 안에서 부르는 호출부가 전부 ts(2345) 로 깨진다.
+//   이 함수가 실제로 쓰는 것은 태그드 템플릿 호출 하나뿐이고, 그건 `ISql` 에 있다.
+import type { ISql } from 'postgres';
 import sql from './db.ts';
 
 export const EVENT_KINDS = [
@@ -36,7 +41,7 @@ export interface RecordEventInput {
  */
 export async function recordEvent(
   input: RecordEventInput,
-  tx: Sql = sql,
+  tx: ISql = sql,
 ): Promise<number | null> {
   const { userId, kind, target, payload = {}, eventId, occurredAt } = input;
   // ★신뢰하지 않는 값이 그대로 들어오면 kind 오타가 조용히 저장돼 재계산에서 통째로 누락된다.
