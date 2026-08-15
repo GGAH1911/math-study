@@ -122,7 +122,7 @@ KaTeX 폰트로, **앱에선 한 번만 받으면 되는 것들**이다.
         `heal_file_ownership.sh` 를 돌려야 rsync/git 이 막히지 않는다.
         · 치유 직후 재집계가 **동시 쓰기와 경합**해 "1개 남음"으로 뜰 수 있다 — 한 번 더 돌리면
           깨끗해진다. 실패로 오해하지 말 것(2026-08-15 두 번 겪었다).
-- [ ] B 그룹 8개를 목록 API 소비로 전환 — **6/8**
+- [ ] B 그룹 8개를 목록 API 소비로 전환 — **7/8**
       · [x] `tools` ✅ 19건 렌더 확인
       · [x] `mistakes/index` ✅ 칩·요약·메타·날짜 확인
       · [x] `syntheses/index` ✅ 제목·출처·칩·요약 + **목록에서 KaTeX 수식까지** 렌더 확인
@@ -137,7 +137,7 @@ KaTeX 폰트로, **앱에선 한 번만 받으면 되는 것들**이다.
       | `problems/index` | 없음 | **✅ 완료** — 104회차·4,210문항 렌더, 필터 동작 확인 |
       | `exam/round/[key]` | 없음 | **✅ 완료** — 전용 API 로 갔다. 30문항·타이머·선택과목 전환 확인 |
       | `problems/units` | `readConceptGraph` | **✅ 완료** — 단원→과목 맵을 목록에 얹었다. ★원래 있던 버그도 잡았다 |
-      | `exam/random` | `buildRandomExam` | **서버에 남기는 게 맞다** — 30문항 뽑으려고 전 문항을 보낼 수 없다 |
+      | `exam/random` | `buildRandomExam` | **✅ 완료** — `/api/exam/random` 으로. 30문항·난이도 반영 확인 |
       | `concepts/index` | mastery(DB)·`computeUnitProgress`·`recommendUnits`·산출물 2개 | **목록이 아니라 대시보드.** 전용 API |
 
       ★**`problems/index` 에서 필터가 죽을 뻔했다.** `ProblemFilters` 는 `readyState==='complete'`
