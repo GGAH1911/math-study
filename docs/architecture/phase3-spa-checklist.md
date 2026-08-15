@@ -61,10 +61,15 @@ A(마크다운)가 **가장 어렵고 가장 근본**이다. 링크 재작성이
       · `CONCEPT_LEAF_MAP` 이 `docs/` 를 디스크에서 훑으므로 **맵이 비면 던지는 가드**를 넣었다.
         조용히 비면 링크 재작성이 전부 no-op 이 되고 문항 2,583개 링크가 죽는데 티가 안 난다.
       · 검증: 타입체크 0 에러 · 라우트 22개 **변경 0 · 차단 0**(수식18 등 지표 전부 동일)
-- [ ] **빌드 시 콘텐츠 → HTML+JSON 방출**
-      · 4개 컬렉션(`concepts` `problems` `mistakes` `syntheses`)을 빌드 때 렌더해 파일로 굽는다
-      · remark 4종 + rehype-katex 를 **그대로 재사용**한다 — 클라이언트 포팅이 아니다
-      · 검증: 방출된 HTML 과 현재 SSR HTML 이 **같은 수의 `.katex`·내부링크**를 갖는가
+- [x] **빌드 시 콘텐츠 → HTML+JSON 방출** ✅ 2026-08-15 — `web/scripts/emit_content.mjs`
+      · 5개 컬렉션을 `web/private/content/<col>/<id>.json` 으로 굽는다 (`{id, collection, data, html}`)
+      · 파이프라인은 공유 모듈 한 벌 + Astro 기본값(gfm·smartypants·raw HTML)을 앞뒤로 얹는다
+      · **검증(동일 문서 대조)**: `concepts/algebra/math-1/지수와_로그`
+        방출물 **수식 18 · 이미지 0 · 오류 0** = SSR **수식 18 · 이미지 0 · 오류 0** — 일치
+      · ★**크기 9.7KB vs SSR 374KB (38배)** — SPA 의 이득이 이 숫자다. 나머지 364KB 는
+        레이아웃·인라인 CSS·KaTeX 폰트로, 앱에선 한 번만 받으면 되는 것들이다.
+      · ⚠️ `vfile` 의 `path` 를 반드시 넘긴다 — `remarkRewritePaths` 가 그걸로 컬렉션을 판별한다.
+        빠뜨리면 **예외가 안 나고** sibling 링크 재작성만 조용히 죽는다.
 - [ ] **링크 재작성 결과를 방출물에 굳힌다**
       · `CONCEPT_LEAF_MAP`/`CONCEPT_FULL_SET` 은 빌드 산물이므로 이 시점에 이미 적용돼 있다
       · 검증: 기존에 깨졌던 다중세그먼트 링크(2,583 문항분)가 방출물에서 정상인가
