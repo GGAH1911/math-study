@@ -118,6 +118,10 @@ KaTeX 폰트로, **앱에선 한 번만 받으면 되는 것들**이다.
       · `Vary: Accept-Encoding` 을 준다. 없으면 캐시가 gzip 응답을 gzip 못 받는 쪽에 줄 수 있다.
       · ⚠️ **SSR·API 응답은 여전히 무압축**이다(SSR 평균 1MB, `/problems/units` 5.5MB).
         전 구간 문제라 로드맵 Phase 5 에 등록했다 — 터널/프록시에서 켜는 게 가장 싸다.
+      · ⚠️ **방출은 매번 root 소유 파일 11,981개를 만든다**(컨테이너에서 돌기 때문). 방출 직후
+        `heal_file_ownership.sh` 를 돌려야 rsync/git 이 막히지 않는다.
+        · 치유 직후 재집계가 **동시 쓰기와 경합**해 "1개 남음"으로 뜰 수 있다 — 한 번 더 돌리면
+          깨끗해진다. 실패로 오해하지 말 것(2026-08-15 두 번 겪었다).
 - [ ] B 그룹 8개를 목록 API 소비로 전환
       · 순서: `tools`(35줄) → `syntheses/index`(70) → `mistakes/index`(39) → `problems/index`(96)
         → `concepts/index`(310) → `problems/units`(126) → `exam/*`
