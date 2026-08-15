@@ -161,7 +161,10 @@ for (const col of COLLECTIONS) {
       html = String(proc.processSync(new VFile({ value: content, path: f })));
       const dst = join(outDir, id + '.json');
       mkdirSync(dirname(dst), { recursive: true });
-      writeBoth(dst, JSON.stringify({ id, collection: col, data, html }));
+      // ★`derived` = frontmatter 밖에서 온 값(별도 빌드 산출물). `data` 를 오염시키지 않으려고
+      //   따로 담는다 — 상세 페이지가 제목을 여기서 읽는다.
+      const derived = enrich(col, id, {});
+      writeBoth(dst, JSON.stringify({ id, collection: col, data, html, ...(Object.keys(derived).length ? { derived } : {}) }));
       index.push({ id, ...enrich(col, id, pickFields(col, data)) });
       katex += count(html, /class="[^"]*\bkatex\b/g);
       links += count(html, /<a\s[^>]*href="\//g);
