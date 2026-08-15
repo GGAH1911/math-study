@@ -74,7 +74,21 @@ bash scripts/ops/on_tme.sh 'curl -sf "http://127.0.0.1:4324/api/health?deep=1"'
 ```
 
 **재빌드는 보통 필요 없다.** 지금 도는 건 dev 오버레이라 레포 루트가 컨테이너에
-바인드마운트(`..:/app`)돼 있고 `astro dev` 의 HMR 이 `git pull` 을 그대로 집어간다.
+바인드마운트(`..:/app`)돼 있고 `astro dev` 의 HMR 이 대개 `git pull` 을 집어간다.
+
+> ⚠️ **「대개」다 — 반영됐다고 가정하지 마라**(2026-08-15 실측). `git pull` 로 파일 하나만
+> 바뀐 경우 Vite 가 **변경을 못 보고 옛 모듈을 계속 쥐고 있었다.** 무서운 건 증상이다:
+> 컨테이너 안에서 `grep` 하면 **새 코드가 보이는데 동작은 옛 코드**라, 파일을 확인하는
+> 방식의 점검은 전부 통과한다. 그 상태로 "고쳤는데 안 먹는다"를 한 바퀴 돌았다.
+>
+> - **판정은 파일이 아니라 동작으로 한다.** 새 코드에서만 나오는 응답 헤더·출력을 본다.
+> - 안 먹었으면 **컨테이너 안에서** touch 해 이벤트를 만든다(재기동 불필요):
+>   ```bash
+>   bash scripts/ops/on_tme.sh 'cd deploy && docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T web sh -c "touch /app/web/src/lib/<바뀐파일>"'
+>   ```
+> - 이건 "tme 가 뒤처진 채 게이트를 돌리면 옛 코드를 검사한다"의 **한 칸 안쪽 변종**이다.
+>   거기선 레포가 뒤처졌고, 여기선 레포는 최신인데 **런타임이 뒤처진다.**
+
 의존성(`web/package.json`)이 바뀌었을 때만 재기동한다:
 
 ```bash
