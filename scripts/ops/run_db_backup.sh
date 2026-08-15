@@ -91,10 +91,12 @@ else
 fi
 
 # ── 사본 2부: 다른 물리 디스크 ────────────────────────────────────────────────
-# 마운트돼 있을 때만 쓴다. 마운트가 빠졌는데 루트 파일시스템에 조용히 쌓으면
-# "다른 디스크에 있다"는 **거짓 안심**이 된다 — 그게 없느니만 못하다.
-if mountpoint -q "$(df -P "$MIRROR_DIR" 2>/dev/null | awk 'NR==2{print $6}')" 2>/dev/null \
-   || findmnt -T "$(dirname "$MIRROR_DIR")" >/dev/null 2>&1; then
+# ★조건은 "마운트돼 있나"가 아니라 **"원본과 다른 디스크인가"** 다. 마운트가 빠져 루트에
+# 조용히 쌓이면 "다른 디스크에 있다"는 **거짓 안심**이 되어 없느니만 못하다. 그래서 장치를
+# 직접 비교한다. (대상 디렉터리는 아직 없을 수 있으므로 **존재하는 가장 가까운 상위**로 잰다.)
+dev_of(){ p="$1"; while [ ! -e "$p" ] && [ "$p" != / ]; do p="$(dirname "$p")"; done
+          df -P "$p" 2>/dev/null | awk 'NR==2{print $1}'; }
+if [ -n "$(dev_of "$MIRROR_DIR")" ] && [ "$(dev_of "$MIRROR_DIR")" != "$(dev_of "$LOCAL_DIR")" ]; then
   mkdir -p "$MIRROR_DIR" 2>/dev/null
   if cp "$LOCAL_DIR/$FILE" "$MIRROR_DIR/$FILE.partial" 2>>"$LOG" \
      && mv "$MIRROR_DIR/$FILE.partial" "$MIRROR_DIR/$FILE"; then
@@ -104,7 +106,7 @@ if mountpoint -q "$(df -P "$MIRROR_DIR" 2>/dev/null | awk 'NR==2{print $6}')" 2>
     log "[WARN] 2부 복사 실패 — $MIRROR_DIR"; rm -f "$MIRROR_DIR/$FILE.partial"; MIRROR_FAIL=1
   fi
 else
-  log "[WARN] $MIRROR_DIR 가 마운트돼 있지 않다 — 2부 없음"; MIRROR_FAIL=1
+  log "[WARN] $MIRROR_DIR 가 원본과 같은 디스크($(dev_of "$LOCAL_DIR"))거나 없다 — 2부 없음"; MIRROR_FAIL=1
 fi
 
 # ── 로테이션 ──────────────────────────────────────────────────────────────────
