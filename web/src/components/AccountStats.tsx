@@ -3,6 +3,7 @@
 // ★계정 정보와 **회원 탈퇴 흐름은 페이지에 서버 렌더로 남긴다.** 탈퇴는 파괴적 동작이고
 //   인라인 스크립트가 비번 재확인·확인 문구·API 호출을 엮고 있다 — 표시 부분을 옮기자고
 //   그 흐름을 다시 쓰는 건 위험 대비 이득이 없다. `hasPassword` 도 그래서 페이지에 남는다.
+import { useEffect } from 'react';
 import { useJsonOnce } from '../lib/content-entry.ts';
 
 type Data = {
@@ -60,4 +61,24 @@ export function AccountWeakness() {
       ))}
     </ul>
   );
+}
+
+/**
+ * 학습자 프로필 폼의 **초기값만** 채운다.
+ *
+ * ★폼 자체와 저장 스크립트(`#profile-form`)는 페이지에 그대로 둔다. 값만 넣으면 되는데
+ *   폼을 통째로 React 로 옮기면 저장 흐름까지 다시 써야 한다 — 이득 없이 위험만 는다.
+ * ★사용자가 이미 타이핑을 시작했으면 덮어쓰지 않는다(늦게 도착한 응답이 입력을 지우면 안 된다).
+ */
+export function AccountProfileFill() {
+  const s = useJsonOnce<Data & { profile: Record<string, string | null> | null }>('/api/account');
+  useEffect(() => {
+    if (s.status !== 'ready' || !s.data.profile) return;
+    const p = s.data.profile;
+    for (const k of ['self_reported_level', 'goals', 'learning_pace', 'notes']) {
+      const el = document.getElementById(k) as HTMLInputElement | HTMLTextAreaElement | null;
+      if (el && !el.value) el.value = String(p[k] ?? '');
+    }
+  }, [s]);
+  return null;
 }
