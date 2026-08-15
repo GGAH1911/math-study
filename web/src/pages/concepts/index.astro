@@ -1,184 +1,11 @@
 ---
+// Phase 3 전환 8호(B그룹 마지막) — 껍데기는 서버, 나머지는 `/api/concepts-overview`.
+//
+// ★이 화면은 목록이 아니라 대시보드다. 계산(사용자별 mastery·단원 진행도·추천·요약·기출 수·
+//   단원↔스포크 매칭)은 전부 `lib/concepts-overview.ts` 에 있고 API 가 완성된 트리를 준다.
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ConceptCard from '../../components/ConceptCard.astro';
-import ConceptFilters from '../../components/ConceptFilters.tsx';
-import { hasWidget } from '../../lib/concept-widgets';
-import { getCollection } from 'astro:content';
-
-import {
-  DOMAIN_ORDER,
-  DOMAIN_COLOR,
-  TYPE_LABEL_KO,
-  TYPE_ICON,
-  GRADE_ORDER,
-  MASTERY_ORDER,
-  MASTERY_LABEL_KO,
-} from '../../lib/concept-meta';
-import { computeUnitProgress, recommendUnits } from '../../lib/health.ts';
-import { getMasteryMap } from '../../lib/mastery.ts';
-import summariesJson from '../../data/concept-summaries.json';
-import problemsByConcept from '../../data/problems-by-concept.json';
-
-const summaries: Record<string, string> = (summariesJson as any).summaries ?? {};
-
-const concepts = await getCollection('concepts');
-// 멀티유저: 로그인 사용자의 mastery 를 단원진행·per-concept 표시에 사용(전역 frontmatter 대신).
-const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
-const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'learning' | 'proficient' | 'mastered';
-const cmOf = (id: string) => masteryMap.get(id) ?? 'unknown';
-// 단원 카드에 표시할 롤업 진행도 (unitId → UnitProgress).
-const unitProgress = new Map(computeUnitProgress(mof).map((u) => [u.unitId, u] as const));
-
-// 상단 진행도 추천 행 (이어서학습·다음추천·복습) — 빈 행은 숨김.
-const rec = recommendUnits(mof);
-const recRows = [
-  { icon: '▶', label: '이어서 학습', units: rec.continuing },
-  { icon: '✦', label: '다음 추천', units: rec.ready },
-  { icon: '↻', label: '복습', units: rec.review },
-].filter((r) => r.units.length > 0);
-
-// 단원별 기출 수 (problems-by-concept: direct+propagated).
-const byConcept: Record<string, any[]> = (problemsByConcept as any).byConcept ?? {};
-const problemCountOf = (unitId: string) => (byConcept[unitId]?.length ?? 0);
-
-// 트랙 프리셋 (grade 필터 set 설정용).
-const tracks = [
-  { key: '미적분', grades: ['수학1', '수학2', '미적분'] },
-  { key: '확통', grades: ['수학1', '수학2', '확률과통계'] },
-  { key: '기하', grades: ['수학1', '수학2', '기하'] },
-  { key: '고1', grades: ['고1'] },
-  { key: '중등', grades: ['중1', '중2', '중3'] },
-];
-
-const byMastery = { unknown: 0, learning: 0, proficient: 0, mastered: 0 } as Record<string, number>;
-for (const c of concepts) byMastery[cmOf(c.id)]++;
-const byType = { unit: 0, definition: 0, theorem: 0, lemma: 0, example: 0 } as Record<string, number>;
-for (const c of concepts) byType[c.data.concept_type]++;
-const byGrade: Record<string, number> = {};
-for (const c of concepts) if (c.data.grade) byGrade[c.data.grade] = (byGrade[c.data.grade] ?? 0) + 1;
-const byDomain: Record<string, number> = {};
-for (const c of concepts) {
-  const d = c.data.domain ?? 'misc';
-  byDomain[d] = (byDomain[d] ?? 0) + 1;
-}
-
-// Group: domain → unit → [unit card, then spokes belonging to that unit].
-// Spokes without a resolvable home unit fall into a per-domain "기타" bucket
-// shown after all units.
-type C = (typeof concepts)[number];
-const byDomainNodes: Record<string, C[]> = {};
-for (const c of concepts) {
-  const d = c.data.domain ?? 'misc';
-  (byDomainNodes[d] ??= []).push(c);
-}
-const orderedDomains = [
-  ...DOMAIN_ORDER.filter((d) => byDomainNodes[d]),
-  ...Object.keys(byDomainNodes).filter((d) => !DOMAIN_ORDER.includes(d as any)),
-];
-
-type Group = { unitId: string | null; unit: C | null; spokes: C[] };
-function groupByUnit(items: C[]): Group[] {
-  const unitsHere = items.filter((c) => c.data.concept_type === 'unit');
-  unitsHere.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
-  const groups: Group[] = unitsHere.map((u) => ({ unitId: u.id, unit: u, spokes: [] }));
-  // 단원↔스포크 매칭은 content-collection c.id 의 경로 부모로만 한다.
-  // graph 의 home_unit 에 기대면 build-script(Node readdir)와 Astro 가 한글
-  // 파일명을 서로 다른 유니코드 정규화로 디코딩해 일부 스포크가 매칭에 실패하고
-  // "기타(단원 미연결)" 로 떨어진다. 양쪽 다 NFC 로 통일해 같은 파일을 가리키는
-  // id 가 항상 일치하게 한다. (파일 레이아웃 <domain>/<grade>/<unit>/<spoke>
-  // 이 권위 있는 소속이므로 경로 부모 = 소속 단원.)
-  const idxByUnit = new Map(groups.map((g, i) => [g.unitId!.normalize('NFC'), i]));
-  const orphans: C[] = [];
-  for (const c of items) {
-    if (c.data.concept_type === 'unit') continue;
-    const home = c.id.includes('/') ? c.id.slice(0, c.id.lastIndexOf('/')).normalize('NFC') : null;
-    if (home && idxByUnit.has(home)) {
-      groups[idxByUnit.get(home)!].spokes.push(c);
-    } else {
-      orphans.push(c);
-    }
-  }
-  for (const g of groups) {
-    g.spokes.sort((a, b) => {
-      // definitions first (학습 시작점), then theorems, lemmas, examples
-      const order = { definition: 0, theorem: 1, lemma: 2, example: 3 } as Record<string, number>;
-      const ta = order[a.data.concept_type] ?? 9;
-      const tb = order[b.data.concept_type] ?? 9;
-      if (ta !== tb) return ta - tb;
-      return a.id.localeCompare(b.id, 'ko-KR');
-    });
-  }
-  if (orphans.length) {
-    orphans.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
-    groups.push({ unitId: null, unit: null, spokes: orphans });
-  }
-  return groups;
-}
-
-const groupedByDomain: Record<string, Group[]> = {};
-for (const d of orderedDomains) groupedByDomain[d] = groupByUnit(byDomainNodes[d]);
-
-function cardProps(c: C, options: { emphasized?: boolean } = {}) {
-  const path = c.id.includes('/') ? c.id.slice(0, c.id.lastIndexOf('/')) : '';
-  const label = (c.id.split('/').pop() ?? c.id).replace(/_/g, ' ');
-  const typeKo = TYPE_LABEL_KO[c.data.concept_type] ?? c.data.concept_type;
-  const mlvl = cmOf(c.id);
-  const masteryKo = MASTERY_LABEL_KO[mlvl] ?? mlvl;
-  const up = c.data.concept_type === 'unit' ? unitProgress.get(c.id) : undefined;
-  const pc = c.data.concept_type === 'unit' ? problemCountOf(c.id) : 0;
-  return {
-    href: `/concepts/${c.id}`,
-    graphHref: `/graph?highlight=${encodeURIComponent(c.id)}`,
-    title: label,
-    subtitle: path,
-    emphasized: options.emphasized,
-    description: summaries[c.id],
-    progress: up ? { percent: up.progressPercent, status: up.status } : undefined,
-    practice: pc > 0 ? { count: pc, href: `/problems?q=${encodeURIComponent(c.data.unit ?? label)}` } : undefined,
-    chips: [
-      { label: masteryKo, class: `chip-mastery-${mlvl}` },
-      { label: typeKo, class: '' },
-      ...(c.data.grade ? [{ label: c.data.grade, class: '' }] : []),
-      ...(hasWidget(c.id) ? [{ label: '🔭 인터랙티브', class: 'chip-interactive' }] : []),
-    ],
-  };
-}
-
-function dataAttrs(c: C) {
-  const label = (c.id.split('/').pop() ?? c.id).replace(/_/g, ' ');
-  return {
-    'data-mastery': cmOf(c.id),
-    'data-domain': c.data.domain ?? 'misc',
-    'data-grade': c.data.grade ?? '',
-    'data-type': c.data.concept_type,
-    'data-label': label.toLowerCase(),
-    'data-id': c.id.toLowerCase(),
-    'data-unit': (c.data.unit ?? '').toLowerCase(),
-    'data-interactive': hasWidget(c.id) ? '1' : '',
-  };
-}
-
-// Used by the filter island to populate option chips. Keeps order
-// consistent with the rest of the UI.
-const filterOptions = {
-  masteries: MASTERY_ORDER.map((m) => ({
-    key: m,
-    label: MASTERY_LABEL_KO[m] ?? m,
-    count: byMastery[m] ?? 0,
-  })),
-  domains: orderedDomains.map((d) => ({
-    key: d,
-    label: d === 'misc' ? '기타' : d,
-    color: DOMAIN_COLOR[d] ?? '#71717a',
-    count: byDomain[d] ?? 0,
-  })),
-  grades: GRADE_ORDER.filter((g) => byGrade[g]).map((g) => ({
-    key: g,
-    label: g,
-    count: byGrade[g],
-  })),
-};
+import ConceptsOverview from '../../components/ConceptsOverview.tsx';
 ---
 <BaseLayout title="개념">
   <div class="max-w-6xl mx-auto px-6 py-6 space-y-5">
@@ -187,124 +14,29 @@ const filterOptions = {
         개념
         <span class="text-xs text-[color:var(--color-muted)] font-normal">— 과목 → 단원 → 하위 개념</span>
       </h1>
-      <p class="text-sm text-[color:var(--color-muted)]">
-        {concepts.length}개 노드 · 단원 {byType.unit} / 정의 {byType.definition} / 정리 {byType.theorem} / 예제 {byType.example}
-      </p>
     </header>
 
-    <ConceptFilters client:load options={filterOptions} tracks={tracks} totalConcepts={concepts.length} interactiveCount={concepts.filter((c) => hasWidget(c.id)).length} />
-
-    {recRows.length > 0 && (
-      <div class="space-y-3">
-        {recRows.map((row) => (
-          <section class="space-y-1.5">
-            <h3 class="text-xs font-semibold text-[color:var(--color-muted)]">
-              {row.icon} {row.label} <span class="text-[color:var(--color-subtle)] tabular-nums">{row.units.length}</span>
-            </h3>
-            <div class="flex gap-2 overflow-x-auto pb-1">
-              {row.units.slice(0, 12).map((u) => (
-                <a href={`/concepts/${u.unitId}`} class="shrink-0 w-44 card p-2.5 hover:border-[color:var(--color-accent)] transition">
-                  <div class="text-sm font-medium truncate">{u.label}</div>
-                  <div class="text-[10px] text-[color:var(--color-subtle)] truncate">{u.grade ?? ''} · {u.domain ?? ''}</div>
-                  <div class="mt-1.5 h-1.5 rounded-full bg-[color:var(--color-surface-2)] overflow-hidden">
-                    <div class="h-full rounded-full" style={`width:${Math.max(2, u.progressPercent)}%;background:var(--color-mastery-${u.status})`}></div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    )}
-
-    {concepts.length === 0 ? (
-      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 개념이 없습니다.</p>
-    ) : (
-      orderedDomains.map((d) => (
-        <section class="concept-domain-section space-y-3" data-domain-section={d}>
-          <button
-            type="button"
-            class="domain-toggle w-full flex items-center gap-3 sticky top-16 bg-[color:var(--color-bg)]/85 backdrop-blur py-2 -mx-6 px-6 z-10 border-b border-[color:var(--color-border)] text-left hover:bg-[color:var(--color-surface)]/50 transition-colors"
-            data-domain={d}
-            aria-expanded="false"
-          >
-            <span class="domain-chevron text-[color:var(--color-subtle)] text-xs w-3 shrink-0 select-none">▸</span>
-            <h2 class="text-base font-semibold flex items-center gap-2">
-              <span class="size-2.5 rounded-full inline-block" style={`background:${DOMAIN_COLOR[d] ?? '#71717a'}`}></span>
-              {d === 'misc' ? '기타' : d}
-            </h2>
-            <span class="text-xs text-[color:var(--color-muted)]">
-              {byDomainNodes[d].length}개 노드
-              ({groupedByDomain[d].filter((g) => g.unit).length} 단원)
-            </span>
-          </button>
-
-          <div class="concept-domain-body collapsed space-y-3" data-domain-body={d}>
-          {groupedByDomain[d].map((g) => (
-            <div class="concept-unit-group space-y-2" data-unit-group={g.unitId ?? 'orphan'}>
-              {g.unit && (
-                <div class="flex items-stretch gap-2">
-                  {g.spokes.length > 0 && (
-                    <button
-                      type="button"
-                      class="unit-toggle shrink-0 w-7 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-subtle)] hover:text-[color:var(--color-text)] hover:border-[color:var(--color-border-strong)] grid place-items-center text-xs select-none"
-                      data-unit={g.unitId}
-                      aria-expanded="false"
-                      aria-label={`${g.spokes.length}개 하위 개념 펼치기`}
-                      title={`${g.spokes.length}개 하위 개념`}
-                    >▸</button>
-                  )}
-                  <div class="concept-card-wrap flex-1 min-w-0" {...dataAttrs(g.unit)}>
-                    <ConceptCard {...cardProps(g.unit, { emphasized: true })} />
-                  </div>
-                </div>
-              )}
-              {g.spokes.length > 0 && (
-                <ul
-                  class:list={[
-                    "concept-spokes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3",
-                    g.unit && "collapsed ml-0 md:ml-9 border-l-2 border-[color:var(--color-border)]/40 pl-3 md:pl-4",
-                  ]}
-                  data-unit-spokes={g.unitId ?? 'orphan'}
-                >
-                  {g.spokes.map((c) => (
-                    <li class="concept-card-wrap" {...dataAttrs(c)}>
-                      <ConceptCard {...cardProps(c)} />
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {!g.unit && g.spokes.length > 0 && (
-                <p class="text-[11px] text-[color:var(--color-subtle)] -mt-1">기타 (단원 미연결)</p>
-              )}
-            </div>
-          ))}
-          </div>
-        </section>
-      ))
-    )}
+    <ConceptsOverview client:load />
   </div>
 </BaseLayout>
 
-<style>
-  /* Browser skips layout/paint for off-screen sections. Each section is
-     2789 cards-worth of work otherwise, so this keeps initial paint fast. */
+<style is:global>
+  /* ★`ConceptCard.astro` 의 스코프 스타일과 이 페이지의 스타일을 전역으로 옮겼다 —
+     React 아일랜드는 Astro 의 스코프 `<style>` 을 못 쓴다. */
+  .concept-card { --hover-border: color-mix(in oklab, var(--color-primary, #3b82f6) 50%, transparent); }
+  .concept-card:hover { border-color: var(--hover-border); }
+  .concept-card-unit { border-left-width: 3px; }
+
   /* 펼쳐진 도메인 본문만 content-visibility 로 오프스크린 페인트 스킵.
-     도메인 헤더는 본문 밖 sticky 버튼이라 무관, 접힌 본문은 display:none 이라
-     공간을 차지하지 않는다(예전 .section 에 걸면 접혀도 4000px 예약돼 큰 빈공간 생김). */
-  .concept-domain-body {
-    content-visibility: auto;
-    contain-intrinsic-size: 800px 2000px;
-  }
-  /* Filter-driven hide: keeps the DOM but takes the card out of flow. */
-  :global(.concept-card-wrap.filtered-out),
-  :global(.concept-domain-section.filtered-out),
-  :global(.concept-unit-group.filtered-out) {
-    display: none !important;
-  }
+     접힌 본문은 display:none 이라 공간을 차지하지 않는다(섹션에 걸면 접혀도 예약돼 빈 공간). */
+  .concept-domain-body { content-visibility: auto; contain-intrinsic-size: 800px 2000px; }
+
+  /* 필터가 숨길 때 — DOM 은 남기고 흐름에서만 뺀다. */
+  .concept-card-wrap.filtered-out,
+  .concept-domain-section.filtered-out,
+  .concept-unit-group.filtered-out { display: none !important; }
+
   /* 도메인(과목) 접기 + 단원 접기 — ConceptFilters 가 .collapsed 토글. */
-  :global(.concept-domain-body.collapsed),
-  :global(.concept-spokes.collapsed) {
-    display: none !important;
-  }
+  .concept-domain-body.collapsed,
+  .concept-spokes.collapsed { display: none !important; }
 </style>

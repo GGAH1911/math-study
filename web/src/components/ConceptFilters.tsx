@@ -50,6 +50,11 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts, in
   const [debounced, setDebounced] = useState('');
   const [interactiveOnly, setInteractiveOnly] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  // ★Phase 3: 목록이 **클라이언트에서** 그려지면 카드가 `readyState==='complete'` **이후**에
+  //   생긴다. 아래 hydrated 가드는 SSR 스트리밍만 기다리므로, 그대로 두면 첫 필터 패스가
+  //   빈 DOM 을 훑고 끝나 **필터가 죽는다**(카드는 보이는데 검색·칩이 무반응).
+  //   목록 섬이 `concepts:rendered` 를 쏘면 여기서 다시 훑는다(ProblemFilters 와 동일).
+  const [renderTick, setRenderTick] = useState(0);
   const [visibleCount, setVisibleCount] = useState<number>(totalConcepts);
   const [expandedUnits, setExpandedUnits] = useState<Set<string>>(() => new Set());
   const [expandedDomains, setExpandedDomains] = useState<Set<string>>(() => new Set());
@@ -66,6 +71,13 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts, in
   // it. If we apply filters before the DOM is complete, querySelectorAll
   // misses cards that haven't been parsed yet and the page renders in a
   // half-filtered state.
+  // 목록이 클라이언트에서 그려졌음을 받는다(위 renderTick 설명 참조).
+  useEffect(() => {
+    const onRendered = () => setRenderTick((n) => n + 1);
+    window.addEventListener('concepts:rendered', onRendered);
+    return () => window.removeEventListener('concepts:rendered', onRendered);
+  }, []);
+
   useEffect(() => {
     const m = readQuerySet('mastery');
     if (m) setMastery(m);
@@ -150,7 +162,7 @@ export default function ConceptFilters({ options, tracks = [], totalConcepts, in
       s.classList.toggle('filtered-out', !anyVisible);
     }
     setVisibleCount(visible);
-  }, [hydrated, mastery, domain, grade, debounced, interactiveOnly]);
+  }, [hydrated, mastery, domain, grade, debounced, interactiveOnly, renderTick]);
 
   // Sync each filter set back to the URL so refresh / bookmarks restore state.
   // Guarded by `hydrated` so the mount-time URL replay doesn't immediately
