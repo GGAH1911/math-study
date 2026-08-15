@@ -1,12 +1,8 @@
 ---
+// Phase 3 전환 2호 — 껍데기는 서버, 목록은 클라이언트(`/api/content-index/mistakes`).
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ConceptCard from '../../components/ConceptCard.astro';
-import { getCollection } from 'astro:content';
-
-const mistakes = await getCollection('mistakes');
-mistakes.sort((a, b) => a.id.localeCompare(b.id, 'ko-KR'));
-const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
+import MistakesList from '../../components/MistakesList.tsx';
 ---
 <BaseLayout title="Mistakes">
   <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
@@ -15,25 +11,6 @@ const fmtPath = (p: string) => p.split('/').pop()?.replace(/\.md$/, '') ?? p;
       <p class="text-sm text-[color:var(--color-muted)] mt-1">D6 — 틀린 문제는 반드시 등록 · 같은 error_type 3회 누적 시 root concept 보강 자동 제안</p>
     </header>
 
-    {mistakes.length === 0 ? (
-      <p class="text-sm text-[color:var(--color-muted)] py-12 text-center">아직 오답 노트가 없습니다.</p>
-    ) : (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {mistakes.map((m) => (
-          <li>
-            <ConceptCard
-              href={`/mistakes/${encodeURIComponent(m.id)}`}
-              title={m.id}
-              chips={[{ label: m.data.error_type, class: `chip-error-${m.data.error_type}` }]}
-              description={m.data.lesson ?? ''}
-              meta={[
-                { key: '문제', value: m.data.problem ? fmtPath(m.data.problem) : '—' },
-                { key: '복습', value: m.data.revisit_date ? m.data.revisit_date.toISOString().slice(0,10) : '—' },
-              ]}
-            />
-          </li>
-        ))}
-      </ul>
-    )}
+    <MistakesList client:load />
   </div>
 </BaseLayout>
