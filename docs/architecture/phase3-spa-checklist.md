@@ -122,11 +122,16 @@ KaTeX 폰트로, **앱에선 한 번만 받으면 되는 것들**이다.
         `heal_file_ownership.sh` 를 돌려야 rsync/git 이 막히지 않는다.
         · 치유 직후 재집계가 **동시 쓰기와 경합**해 "1개 남음"으로 뜰 수 있다 — 한 번 더 돌리면
           깨끗해진다. 실패로 오해하지 말 것(2026-08-15 두 번 겪었다).
-- [ ] B 그룹 8개를 목록 API 소비로 전환 — **2/8**
-      · [x] `tools` ✅ 19건 렌더 확인 · [x] `mistakes/index` ✅ 칩·요약·메타 확인
-      · [ ] `syntheses/index` — `data/syntheses-by-concept.json`(excerpt·origin_title)이 별도 빌드
-            산출물이라 **방출 필드를 늘려야** 한다. 다음 차례.
+- [ ] B 그룹 8개를 목록 API 소비로 전환 — **3/8**
+      · [x] `tools` ✅ 19건 렌더 확인
+      · [x] `mistakes/index` ✅ 칩·요약·메타·날짜 확인
+      · [x] `syntheses/index` ✅ 제목·출처·칩·요약 + **목록에서 KaTeX 수식까지** 렌더 확인
+            ★`title`·`excerpt`·`origin_title` 은 frontmatter 가 아니라 **별도 빌드 산출물**
+            (`src/data/syntheses-by-concept.json`)에 있다. 본문에서 다시 뽑으면 제목 정제 규칙이
+            달라 기존 화면과 어긋나므로 방출기가 **있는 것을 합친다**(`enrich()`).
       · [ ] `problems/index` `problems/units` `concepts/index` `exam/random` `exam/round/[key]`
+            ★남은 5개는 **필터·그룹핑 로직**이 있다(`groupByRound`·`buildFilterAxes`). 앞의 셋보다
+            무겁고, 그 로직이 `.astro` 가 아니라 `lib/` 에 있으므로 React 에서 그대로 쓸 수 있다.
 
 **전환 패턴(확정)** — 나머지는 이 반복이다:
 1. 껍데기(제목·h1·설명)는 `.astro` 에 **남긴다**. 전부 옮기면 원본 HTML 이 비어 회귀를 못 잰다.
