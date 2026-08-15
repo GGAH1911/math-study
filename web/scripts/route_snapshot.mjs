@@ -48,6 +48,14 @@ function extract(html) {
     links: all(/<a\s[^>]*href=/gi),
     scripts: all(/<script\b/gi),
     forms: all(/<form\b/gi),
+    // ── Phase 3(마크다운 선렌더) 전용 지표 ──────────────────────────────────
+    // ★위 항목만 보면 **수식이 전부 깨져도 통과한다**(title·h1·링크 수는 그대로이므로).
+    //   선렌더로 옮길 때 성패가 갈리는 건 여기다.
+    katex: all(/class="[^"]*\bkatex\b/gi),   // KaTeX 가 실제로 돌았는가
+    mathfail: all(/katex-error|ParseError/gi), // 수식 파싱 실패의 흔적
+    inlinks: all(/<a\s[^>]*href="\//gi),      // 내부 링크(재작성 결과) — 외부 링크와 구분
+    imgs: all(/<img\s/gi),
+    figleft: all(/\{\{FIG/g),                 // 치환 안 된 도형 자리표시자 잔여
     len: html.length,
   };
 }
@@ -66,7 +74,10 @@ async function snap(base, out, cookie) {
       const html = resp.status === 200 ? await resp.text() : '';
       res[r] = { status: resp.status, ms: Date.now() - t0, ...(html ? extract(html) : {}) };
       const s = res[r];
-      console.log(`  ${String(resp.status).padEnd(3)} ${r.padEnd(42)} ${s.len ?? '-'}B ${s.ms}ms ${s.title ?? ''}`);
+      const mk = s.katex ? ` 수식${s.katex}` : '';
+      const mf = s.mathfail ? ` ★오류${s.mathfail}` : '';
+      const fg = s.figleft ? ` ★FIG${s.figleft}` : '';
+      console.log(`  ${String(resp.status).padEnd(3)} ${r.padEnd(42)} ${s.len ?? '-'}B ${s.ms}ms${mk}${mf}${fg} ${s.title ?? ''}`);
     } catch (e) {
       res[r] = { status: 0, error: String(e).slice(0, 120) };
       console.log(`  ERR ${r} — ${res[r].error}`);
@@ -108,10 +119,18 @@ function diff(aP, bP) {
     if (x.h2count != null && y.h2count != null && x.h2count !== y.h2count) notes.push(`h2 ${x.h2count}→${y.h2count}`);
     if (x.links != null && y.links != null && Math.abs(x.links - y.links) > Math.max(3, x.links * 0.2))
       notes.push(`링크 ${x.links}→${y.links}`);
+    // ★렌더 지표는 **정확히 일치**해야 한다. 링크처럼 20% 여유를 주면 수식 한 뭉텅이가 죽어도 통과한다.
+    if (x.katex != null && y.katex != null && x.katex !== y.katex) notes.push(`수식 ${x.katex}→${y.katex}`);
+    if (x.inlinks != null && y.inlinks != null && x.inlinks !== y.inlinks) notes.push(`내부링크 ${x.inlinks}→${y.inlinks}`);
+    if (x.imgs != null && y.imgs != null && x.imgs !== y.imgs) notes.push(`이미지 ${x.imgs}→${y.imgs}`);
+    if (y.mathfail) notes.push(`★수식오류 ${y.mathfail}건`);
+    if (y.figleft) notes.push(`★FIG 미치환 ${y.figleft}건`);
     if (!notes.length) continue;
-    // status 회귀·콘텐츠 소실은 차단 신호
+    // status 회귀·콘텐츠 소실은 차단 신호. 수식/도형이 죽는 것도 마찬가지다 —
+    // 화면은 멀쩡해 보이는데 내용이 비는 형태라 눈으로는 놓친다.
     const blocking = x.status === 200 && y.status !== 200
-      || (x.h1 && !y.h1) || (x.title && !y.title);
+      || (x.h1 && !y.h1) || (x.title && !y.title)
+      || (x.katex > 0 && y.katex < x.katex) || !!y.mathfail || !!y.figleft;
     if (blocking) bad++;
     changed++;
     console.log(`${blocking ? '🔴' : '🟡'} ${k}\n     ${notes.join(' · ')}`);
