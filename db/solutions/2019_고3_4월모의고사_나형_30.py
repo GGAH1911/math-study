@@ -1,47 +1,92 @@
-"""2019 고3 4월모의고사 나형 30번 — 파라미터 솔버 (수동 작성).
-문제: f(x)=ax+b, g(x)=1/(ax+b-2)+3. (가) x>0서 1<g<3. (나) y=f 와 y=1/(x-2)+3 의 교점이
-      제4사분면(x>0,y<0)에 없음. R={(a,b)} 에서 a²+b²의 최댓값 M. 100M. (a≠0) (답 306)
-구조: (가) ⟺ a<0, b≤3/2 (x→0+서 ax+b→b<3/2 필요, a<0이면 x>0서 감소).
-      쌍곡선 y=1/(x-2)+3 은 y=0 을 x=5/3(>0)서 지남 — Q4 진입 경계 코너.
-      최댓점: 절편 최대 b=3/2 이고 직선이 (5/3,0) 통과 → a·(5/3)+b=0 → a=-3b/5=-9/10.
-      M = a²+b² = 81/100 + 9/4 = 306/100 = 3.06 → 100M = 306.
-재생산: 쌍곡선 상수(asymptote·shift) 파라미터화.
+"""2019 고3 4월모의고사 나형 30번 — 파라미터화 솔버.
+
+원문제: f(x)=ax+b, g(x)=1/(ax+b-2)+3.
+  (가) x>0 일 때 1<g(x)<3
+  (나) y=f(x) 와 y=1/(x-2)+3 의 교점이 제4사분면 위에 있지 않다.
+  영역 R={(a,b)} 에서 a²+b² 의 최댓값 M, 100M 의 값 (답 306)
+
+수학 구조 파라미터화:
+  g(x)=1/(ax+b-c)+d  는 "쌍곡선 y=1/(x-c)+d 에 f(x) 를 대입한 것"이다 — 조건 (나)의
+  쌍곡선과 (가)의 쌍곡선이 같은 c(수직 점근선), d(수평 점근선) 로 묶여 있다.
+    c : 쌍곡선의 수직 점근선 x 좌표         (원문제 2)
+    d : 쌍곡선의 수평 점근선 y 좌표          (원문제 3)
+    k : (가)의 상한 hi=d, 하한 lo=d-k 를 정하는 폭 (원문제 1<g<3 은 k=2)
+    mult : "이 M의 값을 구하시오" 앞에 곱해지는 배수  (원문제 100)
+
+  풀이 구조(모두 sympy 로 계산):
+    (가) x>0, lo<g(x)<hi(=d) ⟺ a<0, b ≤ c-1/k =: bmax   (t=ax+b-c 의 상한 분석)
+    쌍곡선이 y=0 을 지나는 점(코너) x0 = c-1/d 를 sympy.solve 로 구한다.
+    최댓점은 b=bmax, 직선이 코너 (x0,0) 을 지나는 경우 → sympy.solve 로 a 결정.
+    M=a²+b², 답 = mult*M. 이때 (나) 가 실제로 지켜지는지(교점이 Q4에 없는지)
+    ax²+Bx+C=0 의 실근을 sympy.solve 로 구해 검증한다.
 """
-import numpy as np
-from fractions import Fraction as Fr
-
-b = Fr(3, 2)                       # (가): 절편 최대
-a = -Fr(3, 5) * b                  # 직선이 (5/3,0) 통과: a*(5/3)+b=0
-M = a * a + b * b                  # = 3.06
-
-
-def feasible(a, b):
-    if a >= 0 or b > 1.5 + 1e-12:
-        return False
-    xs = np.linspace(1e-4, 500, 800)            # (가) x>0서 1<g<3
-    g = 1 / (a * xs + b - 2) + 3
-    if not np.all((g > 1) & (g < 3)):
-        return False
-    A, B, C = a, b - 2 * a - 3, 5 - 2 * b        # 교점 ax²+Bx+C=0
-    disc = B * B - 4 * A * C
-    if disc >= 0 and abs(A) > 1e-15:
-        for x in [(-B + np.sqrt(disc)) / (2 * A), (-B - np.sqrt(disc)) / (2 * A)]:
-            if abs(x - 2) < 1e-9:
-                continue
-            if x > 1e-9 and a * x + b < -1e-9:   # 교점이 Q4
-                return False
-    return True
-
-
-# 수치 검증: feasible 영역에서 M 을 넘는 점이 없음 (해석적 최적이 진짜 최대)
-mx = 0.0
-for aa in np.linspace(-3, -1e-3, 300):
-    for bb in np.linspace(-3, 1.5, 300):
-        if feasible(aa, bb):
-            mx = max(mx, aa * aa + bb * bb)
-assert abs(float(M) - 3.06) < 1e-12, float(M)
-assert mx <= float(M) + 2e-2, (mx, float(M))    # 그리드 해상도 오차 허용
+import sympy as sp
 
 CANDIDATE = 306
-assert round(100 * float(M)) == CANDIDATE
-print('VERIFY_PASS')
+
+# 문제를 정하는 값들: c(수직 점근선), d(수평 점근선), k((가)의 폭), mult(구하는 배수)
+PARAMS = dict(c=2, d=3, k=2, mult=100)
+
+
+def solve(prm):
+    c = sp.Rational(prm['c'])
+    d = sp.Rational(prm['d'])
+    k = sp.Rational(prm['k'])
+    mult = sp.Rational(prm['mult'])
+    if k <= 0 or d == 0:
+        raise ValueError('k>0, d≠0 이어야 (가)의 폭·점근선이 정의된다')
+
+    x = sp.symbols('x', real=True)
+    a, b = sp.symbols('a b', real=True)
+
+    # (가) x>0, d-k < g(x) < d ⟺ a<0, b<=bmax  (t=ax+b-c 를 x>0에서 분석해 나오는 상한)
+    bmax = c - 1 / k
+
+    # 쌍곡선 y=1/(x-c)+d 가 y=0 을 지나는 코너점 — 제4사분면 진입 경계
+    corner = [s for s in sp.solve(sp.Eq(1 / (x - c) + d, 0), x) if s.is_real]
+    if not corner:
+        raise ValueError('쌍곡선이 x축과 만나지 않아 (나)의 경계 코너가 없다')
+    x0 = corner[0]
+    if x0 == 0:
+        raise ValueError('코너점이 원점 — 퇴화된 조합')
+
+    # 최댓점: b=bmax, 직선이 코너 (x0,0) 을 통과 (a*x0+b=0) 하는 순간이 a²+b² 최댓값
+    b_val = bmax
+    a_val = sp.solve(sp.Eq(a * x0 + b_val, 0), a)[0]
+    if not (a_val < 0):
+        raise ValueError('a<0 조건이 깨짐 — 이 파라미터 조합은 문제로 성립하지 않는다')
+    if x0 <= 0:
+        raise ValueError('코너점이 x<=0 — (나)의 제4사분면 구조가 성립하지 않는다')
+
+    # (나) 검증: (a_val*x+b_val - d)(x-c) = 1 의 실근이 실제로 제4사분면(x>0,y<0)에 없는지 확인
+    B = b_val - d - a_val * c
+    C = -c * (b_val - d) - 1
+    roots = sp.solve(sp.Eq(a_val * x ** 2 + B * x + C, 0), x)
+    for r in roots:
+        if r.is_real and sp.simplify(r - c) != 0:
+            y = a_val * r + b_val
+            if r > 0 and y < 0:
+                raise ValueError('최댓점 후보에서 (나) 위배 — 코너-접촉 가정이 이 조합엔 안 맞음')
+
+    M = a_val ** 2 + b_val ** 2
+    return sp.nsimplify(mult * M)
+
+
+def statement(prm):
+    c, d, k, mult = prm['c'], prm['d'], prm['k'], prm['mult']
+    lo, hi = d - k, d
+    return (
+        f"두 실수 a, b에 대하여 두 함수\n"
+        f"  f(x)=ax+b,\n"
+        f"  g(x)=1/(ax+b-{c})+{d}\n"
+        f"이 다음 조건을 만족시키도록 하는 두 실수 a, b의 순서쌍 (a, b)를 좌표평면에\n"
+        f"나타낸 영역을 R라 하자.\n"
+        f"(가) x > 0일 때, {lo} < g(x) < {hi}\n"
+        f"(나) 두 함수 y = f(x)와 y = 1/(x-{c})+{d}의 그래프의 교점이 제4사분면 위에는\n"
+        f"있지 않다.\n"
+        f"영역 R에 속하는 점 (a, b)에 대하여 a^2+b^2의 최댓값을 M이라 할 때, {mult}M의\n"
+        f"값을 구하시오. (단, a ≠ 0)"
+    )
+
+
+print('VERIFY_PASS' if solve(PARAMS) == CANDIDATE else 'VERIFY_FAIL')

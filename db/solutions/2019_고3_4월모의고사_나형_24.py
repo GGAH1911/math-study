@@ -1,18 +1,48 @@
-"""2019 고3 4월모의고사 나형 24번 — 파라미터 솔버 (수동 작성).
-문제: (ax+1)⁶ 전개식에서 x의 계수와 x³의 계수가 같을 때, 양수 a에 대하여 20a². (답 6)
-구조: x계수=C(6,1)a=6a, x³계수=C(6,3)a³=20a³. 6a=20a³ → a²=3/10 → 20a²=6.
-재생산: (지수 n, 배수) 파라미터화.
+"""2019 고3 4월모의고사 나형 24번 — 파라미터화 솔버.
+
+원문제: (ax+1)^6 의 전개식에서 x의 계수와 x^3의 계수가 같을 때,
+        양수 a에 대하여 20a^2의 값을 구하시오. (정답 6)
+
+수학 구조:
+  (ax+1)^n 의 전개식에서 x^p의 계수 = C(n,p) a^p,
+                          x^q의 계수 = C(n,q) a^q  (p<q).
+  두 계수가 같다는 조건 C(n,p) a^p = C(n,q) a^q 을 양수 a에 대해 풀면
+  a^(q-p) = C(n,p)/C(n,q) → a 를 구하고, 마지막으로 mult*a^2 를 구한다.
+
+파라미터화:
+  n    : 이항식의 지수 (원문제 6)
+  p, q : 비교하는 두 항의 차수 (원문제 x의 계수 ↔ p=1, x^3의 계수 ↔ q=3)
+  mult : 최종적으로 구하는 식 mult*a^2 의 계수 (원문제 20)
 """
 import sympy as sp
 
 
-def solve(n=6, mult=20):
-    a, x = sp.symbols('a x', positive=True)
+def value(prm):
+    """조건을 만족하는 양수 a 를 구한다."""
+    n, p, q = prm['n'], prm['p'], prm['q']
+    a = sp.symbols('a', positive=True)
+    x = sp.symbols('x')
     e = sp.expand((a * x + 1) ** n)
-    aval = [s for s in sp.solve(sp.Eq(e.coeff(x, 1), e.coeff(x, 3)), a) if s > 0][0]
-    return mult * aval ** 2
+    cp = e.coeff(x, p)
+    cq = e.coeff(x, q)
+    sols = [s for s in sp.solve(sp.Eq(cp, cq), a) if s.is_real and s > 0]
+    if not sols:
+        raise ValueError(f'조건을 만족하는 양수 a가 없음: n={n}, p={p}, q={q}')
+    return sols[0]
+
+
+def solve(prm):
+    a = value(prm)
+    return prm['mult'] * a ** 2
+
+
+def statement(prm):
+    n, p, q, mult = prm['n'], prm['p'], prm['q'], prm['mult']
+    return (f"다항식 (ax+1)^{n}의 전개식에서 x^{p}의 계수와 x^{q}의 계수가 같을 때, "
+            f"양수 a에 대하여 {mult}a^2의 값을 구하시오.")
 
 
 CANDIDATE = 6
-assert solve() == CANDIDATE, solve()
-print('VERIFY_PASS')
+PARAMS = dict(n=6, p=1, q=3, mult=20)
+
+print('VERIFY_PASS' if solve(PARAMS) == CANDIDATE else 'VERIFY_FAIL')
