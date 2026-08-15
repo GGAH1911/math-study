@@ -129,9 +129,19 @@ KaTeX 폰트로, **앱에선 한 번만 받으면 되는 것들**이다.
             ★`title`·`excerpt`·`origin_title` 은 frontmatter 가 아니라 **별도 빌드 산출물**
             (`src/data/syntheses-by-concept.json`)에 있다. 본문에서 다시 뽑으면 제목 정제 규칙이
             달라 기존 화면과 어긋나므로 방출기가 **있는 것을 합친다**(`enrich()`).
-      · [ ] `problems/index` `problems/units` `concepts/index` `exam/random` `exam/round/[key]`
-            ★남은 5개는 **필터·그룹핑 로직**이 있다(`groupByRound`·`buildFilterAxes`). 앞의 셋보다
-            무겁고, 그 로직이 `.astro` 가 아니라 `lib/` 에 있으므로 React 에서 그대로 쓸 수 있다.
+      · [ ] 남은 5개 — ★**분류 정정.** 처음에 `getCollection` grep 만으로 "B = 콘텐츠 목록"으로
+            묶었는데, 열어 보니 **셋은 목록이 아니라 합성 화면**이다. 남은 작업량 추정이 달라진다.
+
+      | 페이지 | 컬렉션 밖 의존 | 판정 |
+      |---|---|---|
+      | `problems/index` | 없음 | 패턴 적용 가능 (단 `RoundDetails.astro` → React 포팅 필요) |
+      | `exam/round/[key]` | 없음 | 패턴 적용 가능 (회차 하나 보려고 2.3MB 목록을 받는 게 맞는지는 판단 필요) |
+      | `problems/units` | `readConceptGraph` | **전용 API 필요** — 단원→과목 매핑이 그래프 파일에 있다 |
+      | `exam/random` | `buildRandomExam` | **서버에 남기는 게 맞다** — 30문항 뽑으려고 전 문항을 보낼 수 없다 |
+      | `concepts/index` | mastery(DB)·`computeUnitProgress`·`recommendUnits`·산출물 2개 | **목록이 아니라 대시보드.** 전용 API |
+
+      → 교훈: **`getCollection` 을 쓴다고 목록 페이지가 아니다.** 합성 화면은 페이지 전용
+        엔드포인트가 답이고, 그건 "목록을 클라이언트로 던지는" 것과 **다른 종류의 일**이다.
 
 **전환 패턴(확정)** — 나머지는 이 반복이다:
 1. 껍데기(제목·h1·설명)는 `.astro` 에 **남긴다**. 전부 옮기면 원본 HTML 이 비어 회귀를 못 잰다.
