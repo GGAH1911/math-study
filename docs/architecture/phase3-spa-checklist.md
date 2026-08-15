@@ -94,8 +94,15 @@ KaTeX 폰트로, **앱에선 한 번만 받으면 되는 것들**이다.
 
 ## 2단계 — 콘텐츠 목록 API (B 그룹 8개)
 
-- [ ] **목록 JSON 엔드포인트** — 컬렉션을 읽어 목록을 주는 API (지금 하나도 없다)
-      · 검증: 응답 크기가 현재 SSR HTML 보다 **작아야 한다**(`problems/units` 5.5MB 가 기준)
+- [x] **목록 JSON 엔드포인트** ✅ 2026-08-15 — `GET /api/content-index/<collection>`
+      방출 시점에 컬렉션당 목록 한 벌(`<col>.index.json`)을 굽는다 — 요청마다 4,210개를 읽을 수 없다.
+      · **필드 화이트리스트**(`LIST_FIELDS`). 문항 frontmatter 의 `searchable_text`·`solution` 은
+        본문급이라 통째로 실으면 **목록이 본문보다 커진다** — 옮기는 이유가 사라진다.
+        집합은 각 index 페이지와 `lib/problem-card.ts` 가 읽는 것을 세어서 정했다(추측 아님).
+      · ⚠️ 페이지가 **새 필드를 쓰기 시작하면 화이트리스트에 추가**해야 한다. 안 하면 화면에서
+        조용히 빈다 — 이 파일의 유일한 함정이다.
+      · 목록 파일이 없으면 빈 배열이 아니라 **503 + 실행할 명령**을 준다. 빈 목록은 "문서 0건"
+        으로 조용히 비어 원인을 못 찾게 만든다.
 - [ ] B 그룹 8개를 목록 API 소비로 전환
       · 순서: `tools`(35줄) → `syntheses/index`(70) → `mistakes/index`(39) → `problems/index`(96)
         → `concepts/index`(310) → `problems/units`(126) → `exam/*`
