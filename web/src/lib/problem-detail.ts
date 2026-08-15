@@ -168,3 +168,18 @@ export async function buildProblemDetail(slug: string, isAdmin: boolean) {
     }),
   };
 }
+
+/**
+ * 튜터 채팅 헤더용 제목만 — 방출물 **한 건**만 읽는다(컬렉션 전수 조회 없음).
+ * `TutorChat` 은 서버 렌더로 남기므로 페이지가 이 값을 알아야 한다.
+ */
+export function problemTitle(slug: string): string {
+  const abs = mediaPath(`/content/problems/${slug}.json`);
+  if (!abs) return slug;
+  try {
+    const s = (JSON.parse(readFileSync(abs, 'utf8')) as { data?: { source?: any } }).data?.source;
+    if (!s?.subject) return slug;
+    const subj = s.subject !== '단일' ? `${s.subject} ` : '';
+    return `${yearLabel(s.year, s.exam_type)} ${s.exam_type} ${subj}${s.number}번`;
+  } catch { return slug; }
+}
