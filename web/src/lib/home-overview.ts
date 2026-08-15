@@ -57,7 +57,7 @@ export async function buildHomeOverview(userId: string | null, now = Date.now())
     const illus = JSON.parse(readFileSync(new URL('../data/concept-illustrations.json', import.meta.url), 'utf-8'));
     const entry = todayConcept ? illus[todayConcept.id] : null;
     if (entry) {
-      todaySpec = entry as FigureSpec;
+      todaySpec = entry;   // PaperHero 의 FigureSpec — 여기선 타입을 끌어오지 않는다(순환 임포트 방지)
       if (typeof entry.blurb === 'string') todayBlurb = entry.blurb;
     }
   } catch { /* 캐시 없음 → 폴백 */ }
