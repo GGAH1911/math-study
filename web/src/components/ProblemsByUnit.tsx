@@ -62,7 +62,14 @@ export default function ProblemsByUnit() {
   }
 
   // 단원 그룹 → 과목별 묶음. 순서는 concepts 탭과 같은 DOMAIN_ORDER.
-  const domainOf = (unit: string) => s.unitDomain[unit.normalize('NFC')] ?? '기타';
+  //
+  // ★**basename 으로 맞춘다.** 문항의 `unit` 은 전체 경로(`geometry/geometry-elective/평면벡터`)인데
+  //   그래프의 unit 노드 키는 basename(`평면벡터`)이다. SSR 판은 전체 경로를 그대로 넘겨
+  //   **39단원 4,210문항이 전부 "기타"로 떨어지고 있었다** — 화면은 뜨는데 과목 분류만 죽은
+  //   형태라 아무도 몰랐다(코드 주석은 "unit 값은 basename 과 일치"라고 적혀 있었는데
+  //   실제 데이터가 달랐다). 이전 작업 중 실측으로 드러나 여기서 고친다.
+  const domainOf = (unit: string) =>
+    s.unitDomain[(unit.split('/').pop() ?? unit).normalize('NFC')] ?? '기타';
   const byDomain = new Map<string, typeof unitGroups>();
   for (const g of unitGroups) {
     const d = g.unit === '기타' ? '기타' : domainOf(g.unit);
