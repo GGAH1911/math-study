@@ -1,0 +1,207 @@
+{
+ "/": {
+  "status": 200,
+  "islands": [
+   "ChatPanel",
+   "DueTodayListDb",
+   "Graph",
+   "home-islands"
+  ],
+  "markers": [
+   "data-ink",
+   "data-tutor"
+  ]
+ },
+ "/atlas": {
+  "status": 200,
+  "islands": [
+   "AtlasHero",
+   "ChatPanel",
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/graph": {
+  "status": 200,
+  "islands": [
+   "ConceptGraphView"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/paths": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "LearningPath"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/tools": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "ToolsList"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/log": {
+  "status": 302,
+  "islands": [],
+  "markers": []
+ },
+ "/progress": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "ProgressView"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/concepts/": {
+  "status": 200,
+  "islands": [
+   "ConceptsOverview",
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/problems/": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "ProblemsByRound"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/problems/units": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "ProblemsByUnit"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/mistakes/": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "MistakesList"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/syntheses/": {
+  "status": 200,
+  "islands": [
+   "Graph",
+   "SynthesesList"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/exam/": {
+  "status": 302,
+  "islands": [],
+  "markers": []
+ },
+ "/exam/random": {
+  "status": 200,
+  "islands": [
+   "ExamRandomLoader",
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/account": {
+  "status": 200,
+  "islands": [
+   "AccountStats",
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/settings": {
+  "status": 200,
+  "islands": [
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/login": {
+  "status": 302,
+  "islands": [],
+  "markers": []
+ },
+ "/signup": {
+  "status": 302,
+  "islands": [],
+  "markers": []
+ },
+ "/privacy": {
+  "status": 200,
+  "islands": [
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/terms": {
+  "status": 200,
+  "islands": [
+   "Graph"
+  ],
+  "markers": [
+   "data-ink"
+  ]
+ },
+ "/concepts/algebra/math-1/지수와_로그": {
+  "status": 200,
+  "islands": [
+   "ChatPanel",
+   "ConceptArticle",
+   "ConceptMeta",
+   "Graph"
+  ],
+  "markers": [
+   "data-ink",
+   "data-tutor"
+  ]
+ },
+ "/problems/2026/수능/2026_수능_공통_01": {
+  "status": 200,
+  "islands": [
+   "ChatPanel",
+   "Graph",
+   "ProblemDetail"
+  ],
+  "markers": [
+   "data-ink",
+   "data-tutor"
+  ]
+ }
+}

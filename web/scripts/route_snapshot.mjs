@@ -28,7 +28,8 @@ const args = process.argv.slice(2);
 const arg = (k, d = null) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
 
 // 동적 라우트는 대표 인스턴스로 찍는다(빌드된 실제 URL 이어야 의미가 있다).
-const ROUTES = [
+// ★`verify_feature_inventory.mjs` 가 이 목록을 그대로 import 한다 — 두 벌로 두면 갈라진다.
+export const ROUTES = [
   '/', '/atlas', '/graph', '/paths', '/tools', '/log', '/progress',
   '/concepts/', '/problems/', '/problems/units', '/mistakes/', '/syntheses/',
   '/exam/', '/exam/random',
@@ -37,6 +38,35 @@ const ROUTES = [
   '/concepts/algebra/math-1/지수와_로그',
   '/problems/2026/수능/2026_수능_공통_01',
 ];
+
+/**
+ * 이 페이지가 **실제로 켠 기능**의 집합. 숫자가 아니라 이름이다.
+ *
+ * ★왜 숫자로는 부족한가(2026-08-15 실사고): Phase 3 전환에서 개념 페이지의 `<TutorChat>`
+ *   두 줄이 삭제됐는데 아무도 몰랐다. 스냅샷은 `scripts 12→11` 로 보였고 그건 SPA 전환 중에
+ *   정당한 변화처럼 보인다. `ChatPanel 있음→없음` 이었다면 변명의 여지가 없었다.
+ *
+ * 뽑는 곳 둘:
+ *   · `component-url` — Astro 섬. dev 는 `/src/components/ChatPanel.tsx`,
+ *     프로덕션은 `/_astro/ChatPanel.<해시>.js` 라 **양쪽에서 같은 이름**이 나오게 해시를 턴다.
+ *   · `MARKERS` — 섬이 아닌 `.astro` 컴포넌트는 component-url 이 없다. 마커로 잡는다.
+ *     ⚠️ 마커를 안 붙인 기능은 이 안전망이 **못 본다**. 새 기능엔 마커를 붙일 것.
+ */
+export const MARKERS = ['data-tutor', 'data-ink'];
+
+export function featuresOf(html) {
+  const islands = [...new Set(
+    (html.match(/component-url="([^"]+)"/g) || []).map((m) => {
+      const p = m.slice(15, -1).split('?')[0];          // 쿼리 제거
+      const base = (p.split('/').pop() ?? p)
+        .replace(/\.(tsx|jsx|ts|js|mjs)$/, '')          // 확장자
+        .replace(/\.[A-Za-z0-9_-]{6,}$/, '');           // 프로덕션 번들 해시
+      return base;
+    }).filter(Boolean),
+  )].sort();
+  const markers = MARKERS.filter((m) => html.includes(m)).sort();
+  return { islands, markers };
+}
 
 function extract(html) {
   const pick = (re) => { const m = html.match(re); return m ? m[1].replace(/\s+/g, ' ').trim().slice(0, 120) : null; };
@@ -57,6 +87,7 @@ function extract(html) {
     imgs: all(/<img\s/gi),
     figleft: all(/\{\{FIG/g),                 // 치환 안 된 도형 자리표시자 잔여
     len: html.length,
+    ...featuresOf(html),                      // islands · markers (기능 인벤토리 게이트와 같은 추출)
   };
 }
 
@@ -139,6 +170,10 @@ function diff(aP, bP) {
   return bad ? 1 : 0;
 }
 
-const d = arg('--diff') ? [arg('--diff'), args[args.indexOf('--diff') + 2]] : null;
-if (d) process.exit(diff(d[0], d[1]));
-else await snap(arg('--base', 'http://127.0.0.1:4399'), arg('--out', '/tmp/routes.json'), arg('--cookie'));
+// ★직접 실행할 때만 돈다. `verify_feature_inventory.mjs` 가 ROUTES·featuresOf 를 import 하는데,
+//   가드가 없으면 import 하는 순간 스냅샷이 돌아 버린다.
+if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) {
+  const d = arg('--diff') ? [arg('--diff'), args[args.indexOf('--diff') + 2]] : null;
+  if (d) process.exit(diff(d[0], d[1]));
+  else await snap(arg('--base', 'http://127.0.0.1:4399'), arg('--out', '/tmp/routes.json'), arg('--cookie'));
+}
