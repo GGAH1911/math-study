@@ -5,6 +5,7 @@ import { resolveAuth, isSameOrigin, type User } from './lib/auth.ts';
 import { rateLimit, sweep } from './lib/rate-limit.ts';
 import { serveProblemImage } from './lib/webp-serve.ts';
 import { corsOrigin, corsHeaders, preflight } from './lib/cors.ts';
+import { maybeCompress } from './lib/compress.ts';
 
 // 남용방지: 비싼 POST 엔드포인트 per-user 분당 한도(429). 스팸/DoS 방지(빌링 아님).
 const RATE_LIMITS: Array<[RegExp, number]> = [
@@ -83,11 +84,17 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // (dev 에서는 Vite 개발서버가 OPTIONS 를 먼저 가로채므로 이 줄은 프로덕션 빌드에서만 닿는다.)
   if (request.method.toUpperCase() === 'OPTIONS' && xOrigin) return preflight(xOrigin);
 
+  // ★압축도 CORS 와 같은 이유로 **바깥에서** 감싼다. handle() 은 401·403·429·리다이렉트로
+  //   여러 갈래로 빠져나가고, 큰 응답은 그중 정상 경로에서 나온다 — 안쪽에 붙이면 갈래가
+  //   늘 때마다 조용히 빠진다. 무엇을 압축할지는 경로가 아니라 **content-type** 이 정한다.
   const res = await handle(context, next);
-  if (!xOrigin) return res;
+  if (!xOrigin) return maybeCompress(res, request);
   const headers = new Headers(res.headers);
   for (const [k, v] of Object.entries(corsHeaders(xOrigin))) headers.set(k, v);
-  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+  return maybeCompress(
+    new Response(res.body, { status: res.status, statusText: res.statusText, headers }),
+    request,
+  );
 });
 
 async function handle(
