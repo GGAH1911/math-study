@@ -47,11 +47,9 @@ function addVary(headers: Headers, field: string): void {
  *   원본 길이만큼 기다리다 끊는다.
  */
 export function maybeCompress(res: Response, request: Request): Response {
-  if (!/\bgzip\b/i.test(request.headers.get('accept-encoding') ?? '')) return res;
-
   // ★이미 압축된 것은 건드리지 않는다. Phase 3 방출물은 빌드 때 구운 `.gz` 를 그대로
   //   흘리며(`content-index/[collection].ts`) 요청당 CPU 가 0 이다 — 다시 압축하면
-  //   그 이점을 버리고 **이중 인코딩**으로 응답이 깨진다.
+  //   그 이점을 버리고 **이중 인코딩**으로 응답이 깨진다. (그쪽은 Vary 를 스스로 붙인다.)
   if (res.headers.has('content-encoding')) return res;
 
   if (!res.body) return res;                              // 본문 없음(리다이렉트 등)
@@ -61,13 +59,25 @@ export function maybeCompress(res: Response, request: Request): Response {
 
   // 크기를 아는 경우에만 하한을 적용한다. SSR HTML 은 스트림이라 length 가 없고,
   // 그건 대개 **큰 쪽**이므로 모르면 압축하는 편이 맞다.
+  // (실측: 이 앱은 API 응답에도 content-length 를 대개 안 붙여서 이 하한은 거의 안 문다.
+  //  379B 짜리 `/api/user-state` 도 178B 로 줄었으니 손해는 아니다.)
   const len = Number(res.headers.get('content-length'));
-  if (Number.isFinite(len) && len > 0 && len < MIN_BYTES) return res;
+  const tooSmall = Number.isFinite(len) && len > 0 && len < MIN_BYTES;
 
+  // ★여기까지 왔으면 이 URL 은 **Accept-Encoding 에 따라 다른 바이트를 낸다.** 그러니
+  //   실제로 압축하든 안 하든 `Vary` 를 붙여야 한다. gzip 응답에만 붙이면 캐시가 비압축
+  //   응답을 Accept-Encoding 과 무관하게 저장하게 되고, 같은 자원에 대해 Vary 가 응답마다
+  //   달라진다 — 프록시·CDN 이 들어오는 Phase 5 에서 정확히 문제가 되는 형태다.
   const headers = new Headers(res.headers);
+  addVary(headers, 'Accept-Encoding');
+
+  const wantsGzip = /\bgzip\b/i.test(request.headers.get('accept-encoding') ?? '');
+  if (!wantsGzip || tooSmall) {
+    return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+  }
+
   headers.set('content-encoding', 'gzip');
   headers.delete('content-length');
-  addVary(headers, 'Accept-Encoding');
 
   return new Response(res.body.pipeThrough(new CompressionStream('gzip')), {
     status: res.status,
