@@ -1,40 +1,10 @@
 ---
+// Phase 3 C그룹 — 계산은 `/api/learning-path`(그래프 알고리즘·사용자 mastery).
 export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PathPicker from '../components/PathPicker.tsx';
-import MetroMap from '../components/MetroMap.tsx';
-import type { PathNodeVM, PathEdgeVM } from '../components/MetroMap';
-import { readConceptGraph, recommendUnits } from '../lib/health.ts';
-import { getMasteryMap } from '../lib/mastery.ts';
-import { buildLearningPath } from '../lib/learning-path.ts';
+import LearningPath from '../components/LearningPath.tsx';
 
-const graph = readConceptGraph();
-// 멀티유저: 로그인 사용자의 mastery 로 "미숙 선행"을 판정(전역 frontmatter 아님).
-const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
-const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'learning' | 'proficient' | 'mastered';
-
-const goalId = Astro.url.searchParams.get('goal') ?? '';
-const path = goalId ? buildLearningPath(graph, goalId, mof) : null;
-
-const concepts = graph.nodes.map((n) => ({
-  id: n.id,
-  label: n.label,
-  domain: n.domain ?? null,
-  grade: n.grade ?? null,
-  type: n.concept_type,
-}));
-
-// 빠른 진입용 예시 목표 = 진행 중·시작하기 좋은 단원.
-const rec = recommendUnits(mof);
-const quickGoals = [...rec.continuing, ...rec.ready].slice(0, 6).map((u) => ({ id: u.unitId, label: u.label }));
-
-const todoCount = path ? path.nodes.filter((n) => !n.isGoal).length : 0;
-// React 아일랜드로 넘길 VM — mastery 를 4값 유니온으로 cast(PathNode.mastery 는 string).
-const nodesVM: PathNodeVM[] = (path?.nodes ?? []).map((n) => ({
-  id: n.id, label: n.label, domain: n.domain, grade: n.grade,
-  mastery: n.mastery as PathNodeVM['mastery'], isGoal: n.isGoal, isFrontier: n.isFrontier, layer: n.layer,
-}));
-const edgesVM: PathEdgeVM[] = path?.edges ?? [];
+const goal = Astro.url.searchParams.get('goal') ?? '';
 ---
 <BaseLayout title="학습 경로">
   <div class="max-w-4xl mx-auto px-6 py-8 space-y-6">
@@ -45,57 +15,6 @@ const edgesVM: PathEdgeVM[] = path?.edges ?? [];
       </p>
     </header>
 
-    <section class="card space-y-3">
-      <PathPicker client:load concepts={concepts} />
-      {quickGoals.length > 0 && (
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="text-xs text-[color:var(--color-subtle)]">예시 목표:</span>
-          {quickGoals.map((g) => (
-            <a href={`/paths?goal=${encodeURIComponent(g.id)}`} class="chip hover:border-[color:var(--color-accent)]">{g.label}</a>
-          ))}
-        </div>
-      )}
-    </section>
-
-    {path && path.missingGoal && (
-      <p class="card text-sm text-[color:var(--color-muted)]">
-        해당 개념을 찾지 못했습니다. 위 검색에서 다시 골라주세요.
-      </p>
-    )}
-
-    {path && path.goal && (
-      <section class="space-y-4">
-        <div class="flex items-baseline justify-between gap-3 flex-wrap">
-          <h2 class="text-lg font-semibold">
-            목표: <a href={`/concepts/${path.goal.id}`} class="text-[color:var(--color-accent)] hover:underline">{path.goal.label}</a>
-          </h2>
-          <p class="text-xs text-[color:var(--color-muted)]">
-            선행 {path.totalPrereqs}개 중 {path.donePrereqs}개 이수 · <strong>{todoCount}개 학습 필요</strong>
-          </p>
-        </div>
-
-        {todoCount === 0 ? (
-          <p class="card text-sm">
-            선행 개념을 모두 익혔습니다 🎉 바로
-            <a href={`/concepts/${path.goal.id}`} class="text-[color:var(--color-accent)] hover:underline"> 목표 개념</a>을 학습하세요.
-          </p>
-        ) : (
-          <MetroMap
-            client:load
-            nodes={nodesVM}
-            edges={edgesVM}
-            totalPrereqs={path.totalPrereqs}
-            donePrereqs={path.donePrereqs}
-            todoCount={todoCount}
-          />
-        )}
-      </section>
-    )}
-
-    {!path && (
-      <p class="text-sm text-[color:var(--color-subtle)]">
-        위에서 목표를 고르면 경로가 생성됩니다. 예: 「도함수의 활용」을 목표로 하면 함수·극한·미분 선행 개념이 순서대로 나열됩니다.
-      </p>
-    )}
+    <LearningPath client:load goal={goal} />
   </div>
 </BaseLayout>
