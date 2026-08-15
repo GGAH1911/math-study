@@ -24,6 +24,10 @@ REPO=/home/insung/math-study
 LOCAL_DIR="$HOME/backups/math-study"          # ★레포 밖 — 커밋 사고 방지
 REMOTE="tme-laptop"
 RDIR="/mnt/webdav/Cloud/db_backup/math-study"
+# ★2부는 **다른 물리 디스크**(sda)다. LOCAL_DIR 은 루트(sdb)에 있으므로 sdb 가 죽으면 같이 죽는다.
+#   가장 흔한 고장이 디스크 한 장 사망이고, 그건 네트워크도 남의 기계도 필요 없이 막을 수 있다.
+#   원격 1부(tme-laptop)는 off-machine 보호로 남긴다 — 다만 **비정본 기계**라 그것만 믿지 않는다.
+MIRROR_DIR="${MS_BACKUP_MIRROR:-/mnt/marshall_disk/backup/math-study}"
 KEEP_DAYS=30
 LOG="$HOME/backups/math-study/backup.log"
 SSH="ssh -o ConnectTimeout=20 -o BatchMode=yes -o ServerAliveInterval=30"
@@ -86,6 +90,23 @@ else
   log "[WARN] $REMOTE 미도달 — 로컬본만 있음"; REMOTE_FAIL=1
 fi
 
+# ── 사본 2부: 다른 물리 디스크 ────────────────────────────────────────────────
+# 마운트돼 있을 때만 쓴다. 마운트가 빠졌는데 루트 파일시스템에 조용히 쌓으면
+# "다른 디스크에 있다"는 **거짓 안심**이 된다 — 그게 없느니만 못하다.
+if mountpoint -q "$(df -P "$MIRROR_DIR" 2>/dev/null | awk 'NR==2{print $6}')" 2>/dev/null \
+   || findmnt -T "$(dirname "$MIRROR_DIR")" >/dev/null 2>&1; then
+  mkdir -p "$MIRROR_DIR" 2>/dev/null
+  if cp "$LOCAL_DIR/$FILE" "$MIRROR_DIR/$FILE.partial" 2>>"$LOG" \
+     && mv "$MIRROR_DIR/$FILE.partial" "$MIRROR_DIR/$FILE"; then
+    log "[MIRROR] $MIRROR_DIR/$FILE"
+    find "$MIRROR_DIR" -name 'mathstudy_*.dump' -mtime +$KEEP_DAYS -delete 2>/dev/null
+  else
+    log "[WARN] 2부 복사 실패 — $MIRROR_DIR"; rm -f "$MIRROR_DIR/$FILE.partial"; MIRROR_FAIL=1
+  fi
+else
+  log "[WARN] $MIRROR_DIR 가 마운트돼 있지 않다 — 2부 없음"; MIRROR_FAIL=1
+fi
+
 # ── 로테이션 ──────────────────────────────────────────────────────────────────
 find "$LOCAL_DIR" -name 'mathstudy_*.dump' -mtime +$KEEP_DAYS -delete
 N=$(ls -1 "$LOCAL_DIR"/mathstudy_*.dump 2>/dev/null | wc -l)
@@ -94,4 +115,6 @@ log "[DONE] 보관 ${N}개 (로컬 ${KEEP_DAYS}일)"
 # 로그 무한증식 방지
 tail -3000 "$LOG" > "$LOG.tmp" && mv "$LOG.tmp" "$LOG"
 
-exit ${REMOTE_FAIL:-0}
+# 1부·2부 중 하나라도 빠지면 0 이 아니다. ★크론이 출력을 버리면 이 종료코드도 같이 사라진다 —
+# 크론 항목은 반드시 로그로 리다이렉트할 것(`>> ~/backups/math-study/cron.log 2>&1`).
+exit $(( ${REMOTE_FAIL:-0} | ${MIRROR_FAIL:-0} ))
