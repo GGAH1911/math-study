@@ -31,6 +31,10 @@ boot:
       role: "최근 커밋 15건"
     - run: "git status --short"
       role: "미커밋 변경"
+    # ★원격 세션(맥북)이면 tme 가 뒤처져 있을 수 있다. 그 상태로 세션을 시작하면
+    #   **처음부터 옛 코드를 보게 된다.** 셧다운의 `machines:` 와 같은 확인을 부팅에도 둔다.
+    - run: "bash scripts/ops/on_tme.sh 'git fetch -q origin; echo \"tme 뒤처짐 $(git rev-list --count HEAD..origin/main)커밋 · 미커밋 $(git status --short|wc -l)건\"'"
+      role: "tme 와 origin 정렬 (0커밋·0건이 아니면 먼저 맞춘다)"
 
   # ── 2. 인프라 헬스체크 ──────────────────────────────────────────────────────
   health:
@@ -88,9 +92,31 @@ boot:
       note: "TODO 최상단 항목과 로드맵의 「지금 당장」을 대조해 다음 작업을 제안한다."
 
 shutdown:
+  # ── 0. 두 기계 정렬 (★맥북 원격 세션 전용 — tme 직결이면 자동 통과) ──────────
+  # 원격 세션은 **맥북에서 편집 → git → tme 에서 실행**이라 두 기계가 갈릴 수 있다.
+  # tme 가 뒤처진 채로 게이트를 돌리면 **옛 코드를 검사**한다(2026-08-15 실제로 겪었다:
+  # "타입체크 0 에러"가 푸시 안 된 옛 코드를 검사한 결과였다). 게이트보다 **먼저** 맞춘다.
+  machines:
+    - name: "맥북 로컬 ↔ origin"
+      check: "git fetch -q origin && test $(git rev-list --count HEAD..origin/main) -eq 0"
+      on_fail: "origin 이 앞선다 — 크론(03:00 widget_spec_loop)이 밀었을 수 있다. `git pull --rebase` 후 다시 본다."
+    - name: "tme ↔ origin (원격 세션이면 필수)"
+      check: "bash scripts/ops/on_tme.sh 'git fetch -q origin && test $(git rev-list --count HEAD..origin/main) -eq 0'"
+      on_fail: "tme 가 뒤처졌다. `bash scripts/ops/on_tme.sh \"git pull --rebase\"` — **게이트를 돌리기 전에** 맞춘다."
+    - name: "tme 미커밋 0"
+      check: "bash scripts/ops/on_tme.sh 'test $(git status --short | wc -l) -eq 0'"
+      on_fail: "tme 에서 직접 편집된 것이 있다. 무엇인지 보고 맥북으로 가져올지 버릴지 정한다(덮어쓰지 말 것)."
+
   reconcile:
     git_diff: true
     git_status: true
+    # ★맥북 쪽 잔여 프로세스 — 원격 세션이 만든 것만 정리한다.
+    #   세션 중 브라우저 검증을 위해 `ssh -L 14399:127.0.0.1:4399 tme` 터널을 열 수 있다.
+    #   ⚠️ **사장님 터미널(Warp)의 ssh 세션은 건드리지 않는다.** 구분법: `-L 14399` 를 가진
+    #      것만 우리 것이다. `ControlMaster`·`WARP_` 가 붙은 것은 사장님 것이다.
+    local_processes:
+      list: "ps -eo pid,etime,args | grep -E 'ssh .*-L 14399' | grep -v grep"
+      cleanup: "pkill -f 'ssh.*-L 14399:127.0.0.1:4399' || true"
 
   # ── 기록 (Append-Only) ──────────────────────────────────────────────────────
   record:
