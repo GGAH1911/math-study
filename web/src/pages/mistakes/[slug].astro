@@ -1,53 +1,28 @@
 ---
-// SSR (prerender=false, 인증 게이팅). getStaticPaths/Astro.props 는 prerender=true
-// 에서만 동작 — SSR 에선 entry=undefined → render(undefined) 크래시(500)였다.
-// Astro.params + getEntry 로 직접 조회(concepts/[...slug] 와 동일 패턴).
+// Phase 3 전환 9호(A그룹 1/4) — 본문은 선렌더 방출물(`/api/content/mistakes/<id>`).
+//
+// ★`ContextDrawer` 의 껍데기와 개폐 스크립트는 서버 렌더로 **남긴다.** 그쪽까지 섬으로 옮기면
+//   스크립트가 빈 DOM 을 훑는 타이밍 함정을 또 만든다(ProblemFilters 에서 겪은 것과 같다).
+//   서랍 **안의 내용만** 섬으로 넣는다.
+// ★본문 섬과 메타 섬이 같은 문서를 쓰지만 요청은 한 번이다 — `lib/content-entry.ts` 가
+//   모듈 수준에서 약속을 공유한다.
 export const prerender = false;
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getEntry, render } from 'astro:content';
 import ContextDrawer from '../../components/ContextDrawer.astro';
+import ContentArticle from '../../components/ContentArticle.tsx';
+import MistakeMeta from '../../components/MistakeMeta.tsx';
 
 const slug = Astro.params.slug as string;
-const entry = await getEntry('mistakes', slug);
-if (!entry) {
-  return new Response('Not found', { status: 404 });
-}
-const { Content } = await render(entry);
-const fm = entry.data;
-// 'docs/problems/<slug>.md' (flat) → path-aware slug 'YYYY/round/<slug>'
-const SUBJECT_RE = /^(\d{4})_(.+)_(?:공통|기하|미적분|확률과통계|단일)_\d+$/;
-const fmtProblemPath = (p: string) => {
-  const flat = p.replace(/^docs\/problems\//, '').replace(/\.md$/, '');
-  const m = flat.match(SUBJECT_RE);
-  return m ? `${m[1]}/${m[2]}/${flat}` : flat;
-};
-const labelOf = (slug: string) => slug.split('/').pop() ?? slug;
+if (!slug) return new Response('Not found', { status: 404 });
 ---
-<BaseLayout title={entry.id}>
+<BaseLayout title={slug}>
   <div class="max-w-6xl mx-auto px-6 md:max-xl:pr-14 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="prose prose-invert max-w-none min-w-0">
-      <Content />
+      <ContentArticle client:load collection="mistakes" id={slug} />
     </article>
 
     <ContextDrawer label="오답 정보" icon="✕">
-      <section class="card">
-        <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">오답 정보</h3>
-        <dl class="text-sm space-y-1.5">
-          <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">오류 유형</dt><dd><span class={`chip chip-error-${fm.error_type}`}>{fm.error_type}</span></dd></div>
-          {fm.revisit_date && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다시 풀 날</dt><dd>{fm.revisit_date.toISOString().slice(0,10)}</dd></div>}
-          {fm.next_review && <div class="flex justify-between"><dt class="text-[color:var(--color-muted)]">다음 복습</dt><dd>{fm.next_review.toISOString().slice(0,10)}</dd></div>}
-        </dl>
-        {fm.lesson && (
-          <p class="text-xs text-[color:var(--color-muted)] mt-3 leading-relaxed">{fm.lesson}</p>
-        )}
-      </section>
-
-      {fm.problem && (
-        <section class="card">
-          <h3 class="text-xs uppercase tracking-[0.15em] text-[color:var(--color-subtle)] mb-2">원 문제</h3>
-          <a class="text-sm text-[color:var(--color-accent)] hover:underline" href={`/problems/${fmtProblemPath(fm.problem)}`}>{labelOf(fmtProblemPath(fm.problem))} →</a>
-        </section>
-      )}
+      <MistakeMeta client:load id={slug} />
     </ContextDrawer>
   </div>
 </BaseLayout>
