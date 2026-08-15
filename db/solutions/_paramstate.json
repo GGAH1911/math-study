@@ -97,7 +97,20 @@
   "2019_고3_10월모의고사_나형_08": "2026-08-14 21:45",
   "2019_고3_4월모의고사_가형_23": "2026-08-14 22:01",
   "2019_고3_4월모의고사_가형_24": "2026-08-14 22:04",
-  "2019_고3_4월모의고사_가형_25": "2026-08-14 22:06"
+  "2019_고3_4월모의고사_가형_25": "2026-08-14 22:06",
+  "2019_고3_4월모의고사_나형_03": "2026-08-15 15:40",
+  "2019_고3_4월모의고사_가형_26": "2026-08-15 15:41",
+  "2019_고3_4월모의고사_가형_27": "2026-08-15 15:41",
+  "2019_고3_4월모의고사_가형_28": "2026-08-15 15:41",
+  "2019_고3_4월모의고사_나형_02": "2026-08-15 15:42",
+  "2019_고3_4월모의고사_나형_04": "2026-08-15 15:42",
+  "2019_고3_4월모의고사_가형_29": "2026-08-15 15:43",
+  "2019_고3_4월모의고사_나형_07": "2026-08-15 15:43",
+  "2019_고3_4월모의고사_나형_05": "2026-08-15 15:44",
+  "2019_고3_4월모의고사_나형_01": "2026-08-15 15:45",
+  "2019_고3_4월모의고사_나형_08": "2026-08-15 15:47",
+  "2019_고3_4월모의고사_가형_30": "2026-08-15 15:47",
+  "2019_고3_4월모의고사_나형_06": "2026-08-15 15:50"
  },
  "failed": {
   "2019_고3_10월모의고사_가형_20": "모델 타임아웃(900s)",
@@ -146,19 +159,6 @@
   "2019_고3_3월모의고사_나형_18": "파라미터화 게이트: 어떤 파라미터를 바꿔도 답이 그대로 — PARAMS 가 장식이다",
   "2019_고3_4월모의고사_가형_12": "모델 호출 실패: HTTPError: HTTP Error 524: <none>",
   "2019_고3_4월모의고사_가형_18": "모델 호출 실패: HTTPError: HTTP Error 524: <none>",
-  "2019_고3_4월모의고사_가형_20": "모델 호출 실패: HTTPError: HTTP Error 524: <none>",
-  "2019_고3_4월모의고사_가형_27": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_가형_28": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_02": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_01": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_가형_30": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_가형_26": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_03": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_가형_29": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_04": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_07": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_05": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_06": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'",
-  "2019_고3_4월모의고사_나형_08": "예외 FileNotFoundError: [Errno 2] No such file or directory: 'claude'"
+  "2019_고3_4월모의고사_가형_20": "모델 호출 실패: HTTPError: HTTP Error 524: <none>"
  }
 }
