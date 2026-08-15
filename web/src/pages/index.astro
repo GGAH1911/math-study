@@ -1,109 +1,19 @@
 ---
+// Phase 3 C그룹 — 프론트매터 계산은 `/api/home` 으로 갔다(`lib/home-overview.ts`).
+// ★네 섬이 같은 요청을 쓴다(`useJsonOnce` 캐시). 홈은 마크업이 흩어져 한 섬으로 못 묶는다.
+// ★`HealthCards`·`ActivityFeed`·`TutorChat` 은 자기 데이터를 스스로 읽는 Astro 컴포넌트라 그대로 둔다.
 export const prerender = false;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HealthCards from '../components/HealthCards.astro';
-import DueTodayList from '../components/DueTodayList.astro';
 import DueTodayListDb from '../components/DueTodayListDb.tsx';
 import ActivityFeed from '../components/ActivityFeed.astro';
-import MasteryDonut from '../components/MasteryDonut.tsx';
-import ConceptDAG from '../components/ConceptDAG.tsx';
 import TutorChat from '../components/TutorChat.astro';
-import PaperHero, { type FigureSpec } from '../components/PaperHero.tsx';
-import { MathishText } from '../lib/mathish';
-import { readHealth, readConceptGraph, unitSummary, recommendUnits } from '../lib/health.ts';
-import { getMasteryMap } from '../lib/mastery.ts';
-import { getDueProblemCount, getWeeklyActivity } from '../lib/activity.ts';
-import synthesesIndex from '../data/syntheses-by-concept.json';
-import { pickDailyConcept } from '../lib/daily-concept.mjs';
-import { hasWidget } from '../lib/concept-widgets';
-import { readFileSync } from 'node:fs';
-
-const health = readHealth();
-const graph = readConceptGraph();
-// 멀티유저: 로그인 사용자의 mastery 를 그래프·단원요약에 오버레이(전역 frontmatter 대신).
-const masteryMap = Astro.locals.user ? await getMasteryMap(Astro.locals.user.id) : new Map<string, string>();
-const mof = (id: string) => (masteryMap.get(id) ?? 'unknown') as 'unknown' | 'learning' | 'proficient' | 'mastered';
-const graphForUser = { ...graph, nodes: graph.nodes.map((n) => ({ ...n, mastery: masteryMap.get(n.id) ?? 'unknown' })) };
-const units = unitSummary(mof);
-const us = units.byStatus;
-
-// 히어로 「권장 다음 작업」·Due 버튼 — 박제 소스 교체.
-// 옛 fm.suggested_action(초창기 390개념 시절 문자열)·readHealth.dueToday(단일유저
-// frontmatter 전역 next_review 집계) 대신, 사용자별 라이브 데이터로 문구를 만든다.
-const rec = recommendUnits(mof);
-const dueCount = Astro.locals.user ? await getDueProblemCount(Astro.locals.user.id) : 0;
-const suggestion = (() => {
-  const cont = rec.continuing[0];
-  const ready = rec.ready[0];
-  if (rec.review[0]) return `복습이 기다리는 단원: 「${rec.review[0].label}」 — 기억이 흐려지기 전에 먼저.`;
-  if (cont) return `이어서: 「${cont.label}」 (${cont.progressPercent}%)${ready ? ` · 다음 추천: 「${ready.label}」 (선수 충족)` : ''}`;
-  if (ready) return `새로 시작하기 좋은 단원: 「${ready.label}」 — 선수 개념이 모두 준비됐습니다.`;
-  return '오늘도 한 페이지 — 개념 지도에서 출발점을 골라보세요.';
-})();
-type SynthesisRecent = { slug: string; title: string; created: string | null; origin_concept: string | null; excerpt: string | null };
-const recentSyntheses: SynthesisRecent[] = ((synthesesIndex as any).recent ?? []).slice(0, 5);
-const totalSyntheses: number = (synthesesIndex as any).total ?? 0;
-const leafOf = (p: string | null) => p ? (p.split('/').pop() ?? p).replace(/_/g, ' ') : '';
-
-// 「오늘의 페이지」 히어로 날짜줄 — KST 날짜 + 연속 학습일(streak).
-// 옛 "N번째 페이지"는 2025-01-01 임의 기점이라 사용자와 무관한 숫자였음 → streak 으로 교체.
-// streak 은 오늘부터 역방향 끊기지 않은 학습일(activity.ts). 끊겨 0이면 어색하므로 날짜만 노출.
-const nowKST = new Date(Date.now() + 9 * 3600 * 1000);
-const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
-const datePart = `${nowKST.getUTCMonth() + 1}월 ${nowKST.getUTCDate()}일 ${DAYS[nowKST.getUTCDay()]}요일`;
-const streak = Astro.locals.user ? (await getWeeklyActivity(Astro.locals.user.id)).streak : 0;
-const dateLine = streak >= 1 ? `${datePart} · 연속 ${streak}일째` : datePart;
-// 오늘의 개념 — 전체 개념 풀에서 매일 새로 고른다. 자정(KST)에 바뀐다.
-const todayConcept = pickDailyConcept(graph.nodes, Date.now());
-// 그 개념의 그림(개념별 LLM 생성·캐시). 크론이 미리 채워둠. 없으면 PaperHero 가 일반 곡선 폴백.
-// 런타임 파일 읽기(크론이 갱신한 캐시를 서버 재시작 없이 반영) — readConceptGraph 와 동일 패턴.
-let todaySpec: FigureSpec | null = null;
-let todayBlurb = '';   // 그 개념의 짧은 인사이트 한 줄(그림과 함께 LLM이 생성·캐시)
-try {
-  const illus = JSON.parse(readFileSync(new URL('../data/concept-illustrations.json', import.meta.url), 'utf-8'));
-  const entry = todayConcept ? illus[todayConcept.id] : null;
-  if (entry) {
-    todaySpec = entry as FigureSpec;
-    if (typeof entry.blurb === 'string') todayBlurb = entry.blurb;
-  }
-} catch { /* 캐시 없음 → 폴백 */ }
+import { HomeHero, HomeGraph, HomeProgress, HomeSyntheses, HomeNodeCount } from '../components/home-islands.tsx';
 ---
 <BaseLayout title="홈">
   <!-- 히어로 「오늘의 페이지」 — 모눈이 그대로 비치는 영역(카드로 감싸지 않는다) -->
   <section class="max-w-6xl mx-auto px-6 pt-8 pb-6">
-    <p class="font-hand text-[22px] leading-none text-[color:var(--color-muted)]">{dateLine}</p>
-    <h1 class="mt-2 text-3xl md:text-4xl font-bold tracking-tight">오늘의 페이지</h1>
-    <div class="relative">
-      <PaperHero client:idle spec={todaySpec} label={todayConcept?.label ?? ''} />
-      {/* (히어로 모서리 라이브러리 규모 메모 폐지 — 사용자 지침: 오늘의 페이지에 개념·학습노트 수 언급 불필요) */}
-    </div>
-    {/* 오늘의 개념 — 전체 개념 풀에서 매일 새로 고른 학습 진입점(곡선은 장식) + 짧은 인사이트 */}
-    {todayConcept && (
-      <div class="mt-3 max-w-3xl">
-        <p class="text-sm text-[color:var(--color-muted)]">
-          <span class="font-hand text-[16px] sm:text-[18px] text-[color:var(--color-subtle)] mr-1.5">오늘의 개념</span>
-          <a href={`/concepts/${todayConcept.id}`} class="font-medium text-[color:var(--color-text)] hover:text-[color:var(--color-accent)] hover:underline">「{todayConcept.label}」</a>
-          {hasWidget(todayConcept.id) && <span class="iw-mark" title="인터랙티브 위젯 있음"> 🔭</span>}
-          {(todayConcept.unit || todayConcept.domain) && (
-            <span class="text-[color:var(--color-subtle)]"> · {[todayConcept.domain, todayConcept.unit].filter(Boolean).join(' · ')}</span>
-          )}
-        </p>
-        <p class="mt-1 text-sm leading-relaxed text-[color:var(--color-text)]">
-          {todayBlurb && <span>{todayBlurb} </span>}
-          <a href={`/concepts/${todayConcept.id}`} class="text-[color:var(--color-accent)] hover:underline font-medium whitespace-nowrap">→ 알아보기</a>
-        </p>
-      </div>
-    )}
-    <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
-      <p class="text-sm text-[color:var(--color-muted)] max-w-2xl">
-        <span class="text-[color:var(--color-subtle)]">권장 다음 작업:</span> {suggestion}
-      </p>
-      {/* flex-wrap + nowrap 라벨: 380px 에서 버튼이 압착돼 2줄로 깨지는 대신 다음 줄로 떨어진다 */}
-      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-        <a href="#due-today" class="btn-ink whitespace-nowrap">{dueCount > 0 ? `이어서 풀기 — 복습 ${dueCount}건` : '오늘의 풀이 큐 열기'}</a>
-        <a href="/graph" class="btn-ghost whitespace-nowrap">◈ 개념 지도 열기</a>
-      </div>
-    </div>
+    <HomeHero client:load />
   </section>
 
   <!-- 본문: 모바일 = 「행동 먼저」 order 스택 / lg = 6컬럼 그리드(row 명시로 현행 시각 순서 유지) -->
@@ -120,36 +30,7 @@ try {
 
     <!-- 최근 학습 노트 -->
     <section class="card order-3 lg:order-none lg:row-start-4 lg:col-start-1 lg:col-span-6">
-      <header class="mb-3 flex items-center justify-between">
-        <div>
-          <h2 class="text-sm font-semibold">🗒 최근 학습 노트</h2>
-          <p class="text-xs text-[color:var(--color-muted)]">{totalSyntheses}개 · 채팅에서 저장한 영구 노트</p>
-        </div>
-        <a href="/syntheses" class="text-xs text-[color:var(--color-accent)] hover:underline">전체 보기 →</a>
-      </header>
-      {recentSyntheses.length === 0 ? (
-        <p class="font-hand text-[18px] text-[color:var(--color-muted)] py-3">
-          아직 저장한 노트가 없어요. 컨셉 페이지에서 LLM과 대화한 뒤
-          <span class="text-[color:var(--color-fg)]"> "📝 학습 노트 작성 요청" → "💾 저장"</span> 으로 만들 수 있습니다.
-        </p>
-      ) : (
-        <ul class="divide-y divide-[color:var(--color-border)]/40">
-          {recentSyntheses.map((s) => (
-            <li class="py-2 first:pt-0 last:pb-0">
-              <div class="flex items-baseline gap-2">
-                <a class="text-sm font-medium font-serif text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] truncate" href={`/syntheses/${encodeURIComponent(s.slug)}`}>{s.title}</a>
-                {s.created && <span class="text-[10px] text-[color:var(--color-subtle)] tabular-nums whitespace-nowrap">{s.created}</span>}
-              </div>
-              {s.origin_concept && (
-                <a class="text-[11px] text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] truncate block" href={`/concepts/${s.origin_concept}`} title={s.origin_concept}>
-                  ← {leafOf(s.origin_concept)}{hasWidget(s.origin_concept) && <span class="iw-mark" title="인터랙티브 위젯 있음"> 🔭</span>}
-                </a>
-              )}
-              {s.excerpt && <p class="text-xs text-[color:var(--color-muted)] mt-0.5 line-clamp-1"><MathishText text={s.excerpt} display={false} client:visible /></p>}
-            </li>
-          ))}
-        </ul>
-      )}
+      <HomeSyntheses client:load />
     </section>
 
     <!-- 모바일 전용: 개념 지도 정적 프리뷰 — DAG 하이드레이션 컷의 대체 진입점 -->
@@ -157,7 +38,7 @@ try {
       <span class="text-2xl text-[color:var(--color-accent)]">◈</span>
       <span>
         <span class="block text-sm font-semibold">개념 지도</span>
-        <span class="block text-xs text-[color:var(--color-muted)]">{graph.stats.nodes} 노드 · 탭하여 펼치기</span>
+        <span class="block text-xs text-[color:var(--color-muted)]"><HomeNodeCount client:load /> 노드 · 탭하여 펼치기</span>
       </span>
     </a>
 
@@ -171,29 +52,13 @@ try {
         <a href="/graph" class="text-xs text-[color:var(--color-accent)] hover:underline">풀스크린 →</a>
       </header>
       <div class="h-[340px] border-t border-[color:var(--color-border)]">
-        {graph.stats.nodes > 0 ? (
-          <ConceptDAG client:media="(min-width: 1024px)" data={graphForUser as any} variant="mini" />
-        ) : (
-          <p class="text-sm text-[color:var(--color-muted)] p-6">아직 concept 노드가 없습니다. <code class="text-[color:var(--color-accent)]">docs/concepts/</code>에 첫 페이지를 시드해보세요.</p>
-        )}
+        <HomeGraph client:media="(min-width: 1024px)" />
       </div>
     </section>
 
     <!-- 단원 진행 (스포크 mastery 롤업) -->
     <section class="card order-5 lg:order-none lg:row-start-2 lg:col-start-5 lg:col-span-2">
-      <header class="mb-3">
-        <h2 class="text-sm font-semibold">단원 진행</h2>
-        <p class="text-xs text-[color:var(--color-muted)]">
-          착수 <span class="stat-num text-[color:var(--color-text)]">{units.started}</span> / {units.total} 단원 · 스포크 mastery 롤업
-        </p>
-      </header>
-      <MasteryDonut client:load unknown={us.unknown} learning={us.learning} proficient={us.proficient} mastered={us.mastered} />
-      <ul class="mt-4 space-y-1.5 text-sm">
-        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-unknown)]"></span><span class="text-[color:var(--color-muted)]">미착수</span><span class="ml-auto stat-num">{us.unknown}</span></li>
-        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-learning)]"></span><span class="text-[color:var(--color-muted)]">학습중</span><span class="ml-auto stat-num">{us.learning}</span></li>
-        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-proficient)]"></span><span class="text-[color:var(--color-muted)]">능숙</span><span class="ml-auto stat-num">{us.proficient}</span></li>
-        <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-[color:var(--color-mastery-mastered)]"></span><span class="text-[color:var(--color-muted)]">마스터</span><span class="ml-auto stat-num">{us.mastered}</span></li>
-      </ul>
+      <HomeProgress client:load />
     </section>
 
     <!-- 활동 피드 — 데스크톱 Due 행 우 -->
