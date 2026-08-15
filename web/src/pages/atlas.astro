@@ -276,6 +276,7 @@ import AtlasHero from '../components/AtlasHero.tsx';
 </style>
 
 <script is:inline>
+(function(){function __run(){
   // 모바일 하단 시트 토글(목업 rail-handle 패턴). 데스크톱에선 핸들 숨김 → no-op.
   (function () {
     var rail = document.getElementById('navRail');
@@ -286,4 +287,5 @@ import AtlasHero from '../components/AtlasHero.tsx';
       handle.setAttribute('aria-expanded', String(open));
     });
   })();
+}__run();document.addEventListener('astro:page-load',__run);})();
 </script>

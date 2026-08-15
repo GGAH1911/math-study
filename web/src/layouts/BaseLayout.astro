@@ -4,6 +4,10 @@ import Sidebar from '../components/Sidebar.astro';
 import Header from '../components/Header.astro';
 import { StickyGraphPanel } from '../components/Graph.tsx';
 import { FONT_HREFS, DEFAULT_FONT_ID } from '../lib/fonts.ts';
+// Phase 3 — 클라이언트 라우팅(View Transitions). 페이지 전환이 서버 왕복 없이 일어난다.
+// ★★`is:inline` 스크립트는 **전환 후 다시 돌지 않는다.** 첫 로드는 멀쩡하고 이동한 뒤에만
+//   깨지므로 라우트 스냅샷(매번 새 로드)으로는 못 잡는다 — 전부 `astro:page-load` 로 감쌌다.
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -25,7 +29,7 @@ const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
     <!-- 테마 프리페인트 — FOUC 방지를 위해 CSS·title 보다 먼저 실행(계약 §6-A).
          localStorage['ms-theme'] 우선, 없으면 OS prefers-color-scheme 추종. -->
     <script is:inline>
-      (function () {
+(function(){function __run(){
         try {
           var t = localStorage.getItem('ms-theme');
           if (t !== 'light' && t !== 'dark') {
@@ -33,8 +37,8 @@ const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
           }
           document.documentElement.classList.toggle('dark', t === 'dark');
         } catch (e) {}
-      })();
-    </script>
+      }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
     <meta name="description" content={description} />
     <title>{title} · Math Study</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -44,7 +48,7 @@ const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
         적용하고 그 프리셋의 Google Fonts 만 동적 로드(전 프리셋을 미리 받지 않아 가볍다).
         프리셋 정의는 lib/fonts.ts 단일 진실원천. FOUC 방지로 <head> 상단. */}
     <script is:inline define:vars={{ FONT_HREFS, DEFAULT_FONT_ID }}>
-      (function () {
+(function(){function __run(){
         var f = DEFAULT_FONT_ID;
         try {
           var saved = localStorage.getItem('ms-font');
@@ -54,8 +58,9 @@ const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
         var l = document.createElement('link');
         l.rel = 'stylesheet'; l.id = 'ms-font-link'; l.href = FONT_HREFS[f];
         document.head.appendChild(l);
-      })();
-    </script>
+      }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
+    <ClientRouter />
   </head>
   <body class="min-h-screen flex">
     <Sidebar />
@@ -79,6 +84,7 @@ const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
 
     <!-- Auto-enhance any ```python code block with a Run button (sympy via /api/sympy) -->
     <script is:inline>
+(function(){function __run(){
       (function () {
         const RUNNABLE_LANGS = ['python', 'py'];
         function enhance() {
@@ -143,6 +149,7 @@ const showStickyGraph = !Astro.url.pathname.startsWith('/graph');
         const obs = new MutationObserver(() => enhance());
         obs.observe(document.body, { childList: true, subtree: true });
       })();
-    </script>
+    }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
   </body>
 </html>

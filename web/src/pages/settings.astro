@@ -20,13 +20,15 @@ const allPreviewHref = 'https://fonts.googleapis.com/css2?'
 ---
 <BaseLayout title="설정">
   <script is:inline define:vars={{ allPreviewHref }}>
+(function(){function __run(){
     // 미리보기 폰트 전체 로드(이 페이지 한정).
     (function () {
       var l = document.createElement('link');
       l.rel = 'stylesheet'; l.href = allPreviewHref;
       document.head.appendChild(l);
     })();
-  </script>
+  }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
 
   <main class="max-w-4xl mx-auto px-6 py-8">
     <h1 class="text-3xl font-bold tracking-tight">설정</h1>
@@ -82,7 +84,7 @@ const allPreviewHref = 'https://fonts.googleapis.com/css2?'
   </style>
 
   <script is:inline define:vars={{ DEFAULT_FONT_ID }}>
-    (function () {
+(function(){function __run(){
       var cards = Array.prototype.slice.call(document.querySelectorAll('.font-card'));
       function current() {
         try { return localStorage.getItem('ms-font') || DEFAULT_FONT_ID; } catch (e) { return DEFAULT_FONT_ID; }
@@ -113,6 +115,6 @@ const allPreviewHref = 'https://fonts.googleapis.com/css2?'
           apply(c.getAttribute('data-font-id'), c.getAttribute('data-font-href'));
         });
       });
-    })();
-  </script>
+    }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
 </BaseLayout>

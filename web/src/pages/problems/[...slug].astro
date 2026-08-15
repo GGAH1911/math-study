@@ -36,7 +36,7 @@ const unitTitle = problemTitle(slug);
 
   {/* 채팅 폭 드래그 조절 — 폭은 localStorage 기억 */}
   <script is:inline>
-    (function () {
+(function(){function __run(){
       const grid = document.getElementById('prob-grid');
       const handle = document.getElementById('chat-resize');
       if (!grid || !handle) return;
@@ -65,24 +65,24 @@ const unitTitle = problemTitle(slug);
         if (w) localStorage.setItem(KEY, String(w));
       });
       // (모바일 dock 접기/펴기 폐지 — 이제 우측 하단 FAB → 대화창. TutorChat 가 개폐 처리)
-    })();
-  </script>
+    }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
 
   {/* "입체로 보기" — 튜터 입력창에 요청을 넣어 준다.
        바로 전송하지 않는 이유: 학생이 문장을 다듬거나 취소할 수 있어야 한다. */}
   <script is:inline>
-    (function () {
+(function(){function __run(){
       const b = document.getElementById('ask-3d');
       if (!b) return;
       b.addEventListener('click', function () {
         window.dispatchEvent(new CustomEvent('math-study:chat-insert',
           { detail: { text: '이 문제의 도형을 입체로 그려줘.' } }));
       });
-    })();
-  </script>
+    }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
   {/* 원본 이미지 ↔ 재구성(LaTeX) 토글 — 선택 기억 */}
   <script is:inline>
-    (function () {
+(function(){function __run(){
       const KEY = 'math-study:prob-view';
       const content = document.getElementById('pv-content');
       const recon = document.getElementById('pv-reconview');
@@ -99,8 +99,8 @@ const unitTitle = problemTitle(slug);
       apply(localStorage.getItem(KEY) === 'recon' ? 'recon' : 'raw');
       bRaw.addEventListener('click', function () { localStorage.setItem(KEY, 'raw'); apply('raw'); });
       bRecon.addEventListener('click', function () { localStorage.setItem(KEY, 'recon'); apply('recon'); });
-    })();
-  </script>
+    }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
 
   <style is:global>
     .prob-toggle button { background: var(--color-surface-2, #1b1b1f); color: var(--color-muted, #9ca3af); cursor: pointer; transition: background .15s, color .15s; }

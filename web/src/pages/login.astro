@@ -12,7 +12,7 @@ const googleEnabled = !!process.env.GOOGLE_OAUTH_CLIENT_ID;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- 테마 프리페인트(FOUC 방지) — CSS 로드 전에 html.dark를 확정해야 깜빡임이 없다 -->
     <script is:inline>
-      (function () {
+(function(){function __run(){
         try {
           var t = localStorage.getItem('ms-theme');
           if (t !== 'light' && t !== 'dark') {
@@ -20,8 +20,8 @@ const googleEnabled = !!process.env.GOOGLE_OAUTH_CLIENT_ID;
           }
           document.documentElement.classList.toggle('dark', t === 'dark');
         } catch (e) {}
-      })();
-    </script>
+      }__run();document.addEventListener('astro:page-load',__run);})();
+</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
