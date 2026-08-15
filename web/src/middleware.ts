@@ -1,9 +1,10 @@
 // 전역 미들웨어 — 세션 해석 + 로그인 게이팅 + CSRF(동일출처) 검증.
 // 보안 원칙: fail-safe. 세션 해석 실패는 throw 하지 않고 미인증으로 취급한다.
 import { defineMiddleware } from 'astro:middleware';
-import { resolveUser, isSameOrigin, type User } from './lib/auth.ts';
+import { resolveAuth, isSameOrigin, type User } from './lib/auth.ts';
 import { rateLimit, sweep } from './lib/rate-limit.ts';
 import { serveProblemImage } from './lib/webp-serve.ts';
+import { corsOrigin, corsHeaders, preflight } from './lib/cors.ts';
 
 // 남용방지: 비싼 POST 엔드포인트 per-user 분당 한도(429). 스팸/DoS 방지(빌링 아님).
 const RATE_LIMITS: Array<[RegExp, number]> = [
@@ -81,18 +82,32 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  // CSRF: state-changing 요청은 동일출처만 허용(SameSite=Lax 쿠키 + Origin 검증 이중방어).
   const method = request.method.toUpperCase();
+
+  // 교차출처 preflight 는 자격증명이 실리기 **전에** 온다 — 인증·게이팅보다 앞서 답해야 한다.
+  const xOrigin = corsOrigin(request);
+  if (method === 'OPTIONS' && xOrigin) return preflight(xOrigin);
+
+  // 세션 → 유저 해석(fail-safe). ★CSRF 검사보다 **먼저** 한다: 베어러로 인증됐는지 알아야
+  //   동일출처 검사를 건너뛸지 판단할 수 있기 때문이다(아래).
+  let user = null;
+  let via: 'bearer' | 'cookie' | null = null;
+  try { ({ user, via } = await resolveAuth(request, cookies)); } catch { user = null; via = null; }
+  context.locals.user = user;
+
+  // CSRF: state-changing 요청은 동일출처만 허용(SameSite=Lax 쿠키 + Origin 검증 이중방어).
+  //
+  // ★베어러로 인증된 요청은 면제한다. CSRF 가 성립하는 이유는 브라우저가 쿠키를 **자동으로**
+  //   실어 보내기 때문이다. 베어러는 코드가 명시적으로 붙여야 하므로 남의 페이지가 시킬 수 없고,
+  //   토큰을 이미 가진 공격자에겐 CSRF 가 무의미하다. 그래서 앱(교차출처)이 통과할 수 있다.
+  // ★조건이 `via === 'bearer'` 인 것이 중요하다. "Authorization 헤더가 있으면" 으로 짜면
+  //   쿠키로 로그인한 브라우저에 아무 헤더나 붙여 검사를 무력화할 수 있다. resolveAuth 는
+  //   베어러가 틀리면 쿠키로 떨어지며 via 를 'cookie' 로 돌려주므로 그 구멍이 막힌다.
   if (method === 'POST' || method === 'PUT' || method === 'PATCH' || method === 'DELETE') {
-    if (!isSameOrigin(request)) {
+    if (via !== 'bearer' && !isSameOrigin(request)) {
       return new Response('cross-origin request rejected', { status: 403 });
     }
   }
-
-  // 세션 → 유저 해석(fail-safe).
-  let user = null;
-  try { user = await resolveUser(cookies); } catch { user = null; }
-  context.locals.user = user;
 
   const isPublic = PUBLIC_PATHS.some((re) => re.test(pathname));
   if (isPublic) {
@@ -155,6 +170,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
       });
     }
     return context.redirect('/');
+  }
+
+  // 허용 출처(앱)의 응답에만 CORS 헤더를 얹는다. 동일출처(웹)는 xOrigin 이 null 이라 그대로 나간다 —
+  // 즉 이 블록은 웹 응답을 한 바이트도 바꾸지 않는다.
+  if (xOrigin) {
+    const res = await next();
+    const headers = new Headers(res.headers);
+    for (const [k, v] of Object.entries(corsHeaders(xOrigin))) headers.set(k, v);
+    return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
   }
 
   return next();

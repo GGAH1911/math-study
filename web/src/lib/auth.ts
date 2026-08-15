@@ -119,6 +119,32 @@ export async function resolveUser(cookies: AstroCookies): Promise<User | null> {
   return getUserBySessionToken(cookies.get(SESSION_COOKIE)?.value);
 }
 
+/**
+ * 세션 해석 — **어떤 경로로 인증됐는지까지** 돌려준다.
+ *
+ * ★왜 경로를 알아야 하나: CSRF 방어의 근거는 "브라우저가 자격증명을 **자동으로** 실어 보낸다"는
+ *   점이다. 쿠키가 그렇다. 베어러 토큰은 코드가 명시적으로 붙여야 하므로 남의 페이지가 시킬 수
+ *   없고, 따라서 동일출처 검사가 필요 없다. 그래서 미들웨어는 `via` 를 보고 CSRF 를 건너뛴다.
+ *
+ * ★"Authorization 헤더가 있으면" 이 아니라 "**베어러로 인증됐으면**" 이어야 한다. 전자로 짜면
+ *   쿠키로 로그인한 브라우저에 아무 Authorization 헤더나 붙여 CSRF 검사를 무력화할 수 있다.
+ *   그래서 베어러를 **먼저** 시도하고, 실패하면 쿠키로 떨어지며 via 는 'cookie' 가 된다.
+ */
+export async function resolveAuth(
+  request: Request,
+  cookies: AstroCookies,
+): Promise<{ user: User | null; via: 'bearer' | 'cookie' | null }> {
+  const auth = request.headers.get('authorization');
+  const m = auth?.match(/^Bearer\s+(.+)$/i);
+  if (m) {
+    const user = await getUserBySessionToken(m[1].trim());
+    if (user) return { user, via: 'bearer' };
+    // 베어러가 틀렸다고 곧장 거부하지 않는다 — 쿠키로 붙은 정상 요청일 수 있다. 아래로 떨어진다.
+  }
+  const user = await getUserBySessionToken(cookies.get(SESSION_COOKIE)?.value);
+  return { user, via: user ? 'cookie' : null };
+}
+
 // ─────────────────────────────────────────── CSRF (Origin/Referer 동일출처 검증)
 // state-changing 요청(POST/PUT/PATCH/DELETE)에만 미들웨어가 적용.
 export function isSameOrigin(request: Request): boolean {
