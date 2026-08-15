@@ -127,6 +127,14 @@ shutdown:
       blocking: true
       expect: "남의 소유 파일 0 (볼륨 마운트포인트는 제외하고 센다)"
       on_fail: "컨테이너가 안 떠 있으면 chown 할 수단이 없다 — 띄우고 다시 돌린다. 근본 해결은 compose 의 user: \"1000:1000\" 인데 named volume 소유권 이전이 얽혀 정지 창이 필요하다."
+    - name: "API 인증 게이팅 전수 검사"
+      # ★페이지를 클라이언트로 옮기면 데이터가 새 엔드포인트로 나간다. 미들웨어 게이팅 목록은
+      #   페이지 경로 기준이라 새 API 가 자동 보호되지 않는다 — /log 는 ADMIN_PATHS 에 있지만
+      #   /api/log 는 없었다. "200 이 나온다"가 아니라 "무인증이 401 인가"를 본다.
+      command: "bash scripts/ops/on_tme.sh 'cd deploy && D=\"docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T web sh -c\"; T=$($D \"cd /app/web && node scripts/snapshot_session.mjs --mint\" | tail -1); $D \"cd /app/web && node scripts/verify_api_gating.mjs --cookie $T\"; R=$?; $D \"cd /app/web && node scripts/snapshot_session.mjs --revoke $T\" >/dev/null; exit $R'"
+      blocking: true
+      expect: "전 엔드포인트 무인증 401 (어드민 전용은 인증 후에도 403)"
+      on_fail: "새로 만든 엔드포인트가 게이팅 밖이다. 미들웨어가 아니라 **API 안에서** 막아야 한다."
     - name: "web 타입체크·빌드 (CI 와 동일)"
       # push 하면 .github/workflows/ci.yml 이 같은 걸 돈다. 여기서 먼저 깨뜨려 잡는다.
       command: "bash scripts/ops/on_tme.sh 'docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml exec -T web sh -c \"cd /app/web && npm run prebuild && npx astro check && npx astro build\"'"
