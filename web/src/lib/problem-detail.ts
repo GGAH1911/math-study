@@ -21,7 +21,10 @@ function emittedHtml(id: string): string {
   catch { return ''; }
 }
 
-const navOf = (e: { id: string; data: { source?: { subject?: string; number?: number } } }) => ({
+// ★엔트리 타입을 좁게 쓰면 컬렉션 스키마와 안 맞는다(`number` 가 string|number 다).
+//   읽는 필드만 최소로 받되 값 타입은 넓게 둔다.
+type NavLike = { id: string; data: { source?: { subject?: string; number?: string | number } } };
+const navOf = (e: NavLike) => ({
   id: e.id, subject: String(e.data.source?.subject ?? ''), number: Number(e.data.source?.number ?? 0),
 });
 
@@ -44,7 +47,6 @@ export async function buildProblemDetail(slug: string, isAdmin: boolean) {
   const inlineFigList = Array.isArray(fm.inline_figures)
     ? (fm.inline_figures as any[]).map((f) => String(f.image))
     : [];
-  const figDiv = figSrc ? figDivOf(figSrc, !!figFull) : '';
   // 표·연립 등 복잡한 2D 구조는 텍스트 재구성이 근본적으로 깨진다(표준정규분포표→분수, 연립 2식
   // 뒤섞임) → 재구성 대신 원본 전체이미지로 표시(해당 문제들은 전부 image_paths 보유).
   const _sText = fm.searchable_text ?? '';
@@ -107,7 +109,7 @@ export async function buildProblemDetail(slug: string, isAdmin: boolean) {
   // 가/나형·단일(검정고시·고1·2)은 공통이 없어 같은 과목 내 선형 이동.
   // 이 문제에 **미리 검증된 3D 도형**이 있는지 — 있으면 학생에게 알린다.
   // 있는 줄 모르면 아무도 안 물어본다(2026-08-14 사장님 지적).
-  const { readFigure3D } = await import('../../lib/figures-3d');
+  const { readFigure3D } = await import('./figures-3d');
   const has3D = !!readFigure3D(entry.id);
   const src = fm.source;
   type ProbEntry = Awaited<ReturnType<typeof getCollection<'problems'>>>[number];
