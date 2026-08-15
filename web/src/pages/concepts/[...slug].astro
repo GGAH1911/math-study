@@ -9,15 +9,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContextDrawer from '../../components/ContextDrawer.astro';
 import ConceptArticle from '../../components/ConceptArticle.tsx';
 import ConceptMeta from '../../components/ConceptMeta.tsx';
+// ★`TutorChat` 은 자체 스크립트가 있어 서버 렌더로 남긴다(문항 상세와 같은 처리).
+//   단원명만 방출물 한 건에서 읽는다 — 컬렉션 전수 조회 없음.
+import TutorChat from '../../components/TutorChat.astro';
+import { conceptTitle } from '../../lib/concept-detail.ts';
 
 const slug = Astro.params.slug as string;
 if (!slug) return new Response('Not found', { status: 404 });
+const unitTitle = conceptTitle(slug);
 ---
 <BaseLayout title="개념">
   <div class="max-w-6xl mx-auto px-6 md:max-xl:pr-14 py-8 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_280px] gap-8">
     <article class="max-w-none min-w-0">
       <ConceptArticle client:load slug={slug} />
     </article>
+
+    {/* 튜터 대화 — 본문 하단 인라인 폐지. 모든 화면에서 우측 하단 FAB → 큰 대화창.
+        ★Phase 3 전환(f7eefd7f8)에서 이 줄이 빠져 개념 페이지에만 튜터가 없었다. */}
+    <TutorChat slug={slug} unitTitle={unitTitle} collection="concepts" fab="always" />
 
     <ContextDrawer label="선수 · 후속 · 기출" icon="🧭">
       <ConceptMeta client:load slug={slug} />

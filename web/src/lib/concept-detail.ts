@@ -25,6 +25,24 @@ function emittedHtml(id: string): string {
   catch { return ''; }
 }
 
+/**
+ * 튜터 채팅 헤더용 단원명만 — 방출물 **한 건**만 읽는다(컬렉션 전수 조회 없음).
+ *
+ * ★`TutorChat` 은 자체 스크립트가 있어 서버 렌더로 남는다. 그래서 26줄짜리 껍데기
+ *   페이지가 이 값 하나는 알아야 한다. `problem-detail.ts` 의 `problemTitle` 과 같은 꼴.
+ * ★옛 SSR 페이지의 `fm.unit ?? entry.id` 와 같은 값을 준다.
+ * ★flat-leaf(`지수와_로그`)면 방출물이 없어 slug 를 그대로 돌려준다 — 제목이 덜 예쁠 뿐
+ *   튜터는 뜬다. 정식 경로 해석은 섬이 클라이언트에서 하고, 그걸 위해 여기서 컬렉션을
+ *   전수 조회하면 Phase 3 에서 얻은 것을 도로 잃는다.
+ */
+export function conceptTitle(slug: string): string {
+  const abs = mediaPath(`/content/concepts/${slug}.json`);
+  if (!abs) return slug;
+  try {
+    return (JSON.parse(readFileSync(abs, 'utf8')) as { data?: { unit?: string } }).data?.unit || slug;
+  } catch { return slug; }
+}
+
 /** flat-leaf → 정식(nested) 경로. 없으면 null. 라우트가 302 로 살린다. */
 export async function resolveConceptSlug(slug: string): Promise<string | null> {
   const leafKey = (s: string) => (s.split('/').pop() ?? s).normalize('NFC').replace(/[\s_]/g, '').toLowerCase();
