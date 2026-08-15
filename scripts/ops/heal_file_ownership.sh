@@ -22,8 +22,23 @@ UID_="$(id -u)"; GID_="$(id -g)"
 CHECK=0; [ "${1:-}" = "--check" ] && CHECK=1
 
 cd "$REPO" || exit 2
-mapfile -t BAD < <(find . -not -user "$UID_" -not -path './.git/*' 2>/dev/null)
+
+# named volume 의 마운트포인트는 성질이 다르다 — 도커가 만든 **빈** 디렉터리이고 gitignore 대상이며,
+# 컨테이너 안에서 chown 해도 호스트 엔트리는 안 바뀐다(볼륨이 그 자리를 가리므로). 고칠 수 없고
+# 고칠 필요도 없다. 이걸 실패로 세면 게이트가 늑대소년이 되므로 따로 센다.
+is_volume_mountpoint() {
+  [ -d "$1" ] && [ -z "$(ls -A "$1" 2>/dev/null)" ] && git check-ignore -q "$1" 2>/dev/null
+}
+
+BAD=(); SKIP=()
+while IFS= read -r p; do
+  if is_volume_mountpoint "$p"; then SKIP+=("$p"); else BAD+=("$p"); fi
+done < <(find . -not -user "$UID_" -not -path './.git/*' 2>/dev/null)
 N=${#BAD[@]}
+
+if [ ${#SKIP[@]} -gt 0 ]; then
+  echo "ℹ️  볼륨 마운트포인트 ${#SKIP[@]}개는 건너뛴다(빈 디렉터리·gitignore·chown 불가): ${SKIP[*]}"
+fi
 
 if [ "$N" -eq 0 ]; then
   echo "✅ 소유권 — 남의 소유 파일 없음"
