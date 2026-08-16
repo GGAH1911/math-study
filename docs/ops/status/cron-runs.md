@@ -89,3 +89,4 @@ updated: 2026-06-28
 | 2026-08-14 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-15 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-16 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-17 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
