@@ -94,3 +94,4 @@ updated: 2026-06-28
 | 2026-08-19 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-20 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-08-21 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-08-22 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
