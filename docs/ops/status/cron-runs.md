@@ -172,3 +172,4 @@ updated: 2026-06-28
 | 2026-11-05 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-11-06 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-11-07 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-11-08 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
