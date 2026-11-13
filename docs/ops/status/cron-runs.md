@@ -178,3 +178,4 @@ updated: 2026-06-28
 | 2026-11-11 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-11-12 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-11-13 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-11-14 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
