@@ -191,3 +191,4 @@ updated: 2026-06-28
 | 2026-11-24 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-11-25 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
 | 2026-11-26 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
+| 2026-11-27 03:00 | widget | accept 0 · skip 0 · 0% | cr 없음 |
